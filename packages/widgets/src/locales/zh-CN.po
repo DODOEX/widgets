@@ -1,0 +1,272 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#: src/components/Swap/components/ReviewDialog.tsx:209
+#: src/components/Swap/components/ReviewDialog.tsx:224
+
+#: src/components/Swap/components/ReviewDialog.tsx:237
+msgid "Additional Fee"
+msgstr "额外手续费"
+
+#: src/components/Swap/components/ReviewDialog.tsx:240
+msgid "Additional routing fees set by the Widget user"
+msgstr "由Widget项目方设置的额外路由费用"
+
+#: src/components/Swap/index.tsx:305
+#: src/hooks/Token/useGetTokenStatus.ts:111
+msgid "Approve"
+msgstr "代币授权"
+
+#: src/components/Swap/index.tsx:305
+msgid "Approving"
+msgstr "授权中"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:46
+msgid "Attention：High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
+msgstr "设置一个高容忍滑点可以帮助交易成功，但可能不会得到这么好的价格，请谨慎使用。"
+
+#: src/components/Swap/components/TokenCard/BalanceText.tsx:28
+msgid "Balance:"
+msgstr "余额:"
+
+#: src/components/Swap/components/ReviewDialog.tsx:216
+msgid "Basic Fee"
+msgstr "基础手续费"
+
+#: src/components/WithExecutionDialog/index.tsx:291
+msgid "Close"
+msgstr "关闭"
+
+#: src/components/Swap/components/ReviewDialog.tsx:373
+msgid "Confirm swap"
+msgstr "确认交易"
+
+#: src/components/Swap/components/ReviewDialog.tsx:371
+msgid "Confirming"
+msgstr "确认中"
+
+#: src/components/Swap/components/ConnectWallet/index.tsx:32
+msgid "Connect to a wallet"
+msgstr "链接钱包"
+
+#: src/components/Swap/components/ConnectWallet/ConnectWalletDialog.tsx:19
+msgid "Connect to your wallet"
+msgstr "链接钱包"
+
+#: src/components/Swap/components/ConnectWallet/ConnectWalletDialog.tsx:75
+msgid "Connect to your {0} Wallet"
+msgstr "链接你的第{0}个钱包"
+
+#: src/components/Swap/index.tsx:197
+msgid "Current price impact"
+msgstr "当前价格冲击"
+
+#: src/components/WithExecutionDialog/index.tsx:291
+msgid "Dismiss"
+msgstr "不考虑"
+
+#: src/components/Swap/components/ReviewDialog.tsx:265
+#: src/components/Swap/index.tsx:189
+msgid "Due to the market condition, market price and estimated price may have a slight difference"
+msgstr "由于交易规模，市场价格和估计价格之间存在一定差异"
+
+#: src/components/Swap/index.tsx:311
+msgid "Enter an amount"
+msgstr "输入代币数量"
+
+#: src/components/TokenPicker/index.tsx:141
+msgid "Enter the token symbol or address"
+msgstr "输入代币符号或地址"
+
+#: src/components/Swap/components/ReviewDialog.tsx:218
+msgid "Estimated service provider fees"
+msgstr "估算服务供应商费用"
+
+#: src/components/Swap/index.tsx:317
+msgid "Fetching Price..."
+msgstr "获取价格中..."
+
+#: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
+#: src/components/Swap/index.tsx:238
+msgid "Fetching best price..."
+msgstr "获取最优价格中..."
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:35
+msgid "ForceStop exception"
+msgstr "ForceStop exception"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:43
+msgid "Gas price is too low, please adjust in your wallet and try again"
+msgstr "Gas价格过低, 请调整后重试"
+
+#: src/components/Swap/components/ReviewDialog.tsx:288
+msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
+msgstr "设置一个高容忍滑点可以帮助交易成功，但可能不会得到这么好的价"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:87
+msgid "If your transaction time exceeds the deadline, your transaction will be rescinded."
+msgstr "如果你的交易被确认的时间超过这个时间，你的交易将被退回。 "
+
+#: src/components/Swap/index.tsx:335
+msgid "Insufficient balance"
+msgstr "余额不足"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:12
+msgid "Insufficient funds - Please retry after depositing more {EtherTokenSymbol} into your wallet"
+msgstr "余额不足 - 请在钱包充值{EtherTokenSymbol}后重试"
+
+#: src/components/Swap/components/TokenCard/BalanceText.tsx:47
+msgid "Max"
+msgstr "Max"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:74
+msgid "Maximum slippage do not exceed 50%"
+msgstr "最大滑点不能超过50%"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:47
+msgid "No ForceStop access"
+msgstr "No ForceStop access"
+
+#: src/components/Swap/index.tsx:532
+msgid "Powered by DODO protocol"
+msgstr "Powered by DODO protocol"
+
+#: src/components/Swap/components/ReviewDialog.tsx:262
+msgid "Price Impact"
+msgstr "价格冲击"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:16
+msgid "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
+msgstr "价格冲击超过了你设置的滑点, 请提高滑点后重试"
+
+#: src/components/Swap/components/ReviewDialog.tsx:349
+msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
+msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
+
+#: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
+#: src/components/Swap/index.tsx:324
+msgid "Quote not available"
+msgstr "没有报价"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:31
+msgid "RPC node data exception"
+msgstr "RPC节点异常"
+
+#: src/hooks/Token/useGetTokenStatus.ts:111
+msgid "Reset"
+msgstr "重置"
+
+#: src/components/Swap/index.tsx:344
+msgid "Review Swap"
+msgstr "预览交易"
+
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:38
+msgid "SELECT TOKEN"
+msgstr "选择代币"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:20
+msgid "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
+msgstr "SafeERC20: 交易代币合约执行报错，请联系DODO定位"
+
+#: src/components/Swap/index.tsx:295
+msgid "Select Tokens"
+msgstr "选择代币"
+
+#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:28
+msgid "Select a token"
+msgstr "选择代币"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:65
+msgid "Service update, please wait and try again"
+msgstr "服务升级中, 请等待或重试"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:33
+msgid "Settings"
+msgstr "设置"
+
+#: src/components/Swap/components/ReviewDialog.tsx:285
+msgid "Slippage"
+msgstr "滑点"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:43
+msgid "Slippage Tolerance"
+msgstr "滑点"
+
+#: src/components/WithExecutionDialog/index.tsx:259
+msgid "Something went wrong."
+msgstr "发生异常错误."
+
+#: src/components/Swap/index.tsx:417
+#: src/hooks/Swap/useExecuteSwap.ts:64
+msgid "Swap"
+msgstr "Swap"
+
+#: src/components/Swap/components/ReviewDialog.tsx:189
+msgid "Swap Detail"
+msgstr "交易详情"
+
+#: src/components/Swap/components/ReviewDialog.tsx:81
+msgid "Swap summary"
+msgstr "交易预览"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:61
+msgid "This CP has been settled by other addrs"
+msgstr "此众筹池已被其他地址结算"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:84
+msgid "Transaction Deadline"
+msgstr "交易截止时间"
+
+#: src/components/Swap/index.tsx:288
+msgid "Transaction Pending"
+msgstr "交易进行中"
+
+#: src/components/WithExecutionDialog/index.tsx:180
+msgid "Transaction Time:"
+msgstr "交易时长:"
+
+#: src/hooks/contract/wallet.ts:87
+msgid "Transaction rejected."
+msgstr "交易被拒绝."
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:51
+msgid "Unable to SETTLE during the cooling-off period"
+msgstr "在冷静期无法进行清算"
+
+#: src/components/Swap/index.tsx:254
+msgid "Unsupported network - switch to trade"
+msgstr "未支持网络 - 请切换后进行交易"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:24
+msgid "User denied transaction signature."
+msgstr "用户拒绝交易签名."
+
+#: src/components/WithExecutionDialog/index.tsx:195
+msgid "View on Etherscan"
+msgstr "预览Etherscan"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:57
+msgid "Wallet incompatibility"
+msgstr "钱包不兼容"
+
+#: src/components/WithExecutionDialog/index.tsx:105
+msgid "{0} confirmed"
+msgstr "{0} 已确认"
+
+#: src/components/WithExecutionDialog/index.tsx:106
+msgid "{0} pending"
+msgstr "{0} 等待中"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:99
+msgid "{DEFAULT_SWAP_DDL} minutes"
+msgstr "{DEFAULT_SWAP_DDL} 分钟"

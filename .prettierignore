@@ -1,0 +1,14 @@
+.gitignore
+.prettierignore
+yarn.lock
+yarn-error.log
+package-lock.json
+dist
+build
+coverage
+pnpm-lock.yaml
+packages/dodoex-io-wallet/e2e
+packages/dodoex-io-wallet/example
+packages/dodoex-io-lite-ssr/.next
+packages/dodoex-io-utils/types/
+packages/dodoex-io-token/types

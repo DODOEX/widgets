@@ -1,0 +1,6 @@
+*.css
+*.svg
+*.d.ts
+dist
+build
+sw.js

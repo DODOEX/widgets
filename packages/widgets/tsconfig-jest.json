@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declarationDir": "./types",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "target": "es2016"
+  },
+  "exclude": ["types", "src/locales"],
+  "include": ["e2e/*.tsx", "src/**/*.d.ts"]
+}

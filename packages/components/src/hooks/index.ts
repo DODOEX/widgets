@@ -1,0 +1,1 @@
+export { useDevices } from './mediaQuery';

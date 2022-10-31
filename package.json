@@ -1,0 +1,24 @@
+{
+  "name": "@dodoex-io/widgets",
+  "description": "DODOEX Widgets",
+  "homepage": "https://github.com/DODOEX/widgets#readme",
+  "repository": "https://github.com/DODOEX/widgets",
+  "files": [
+    "dist"
+  ],
+  "private": "true",
+  "scripts": {
+    "prepare": "yarn workspace @dodoex-io/icons build && yarn workspace @dodoex-io/components build",
+    "start": "yarn workspace doc start",
+    "tsc": "lerna run typescript",
+    "test": "lerna run test",
+    "build": "lerna run build"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "lerna": "^5.4.0"
+  }
+}

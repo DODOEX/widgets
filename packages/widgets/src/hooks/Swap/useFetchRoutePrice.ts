@@ -1,0 +1,198 @@
+import axios from 'axios';
+import BigNumber from 'bignumber.js';
+import { useWeb3React } from '@web3-react/core';
+import { BigNumber as EthersBigNumber, parseFixed } from '@ethersproject/bignumber';
+import React, { useCallback, useMemo, useState } from 'react';
+import { getEstimateGas } from '../contract/wallet';
+import { RoutePriceAPI, RoutePriceDevAPI } from '../../constants/api';
+import { ChainId } from '../../constants/chains';
+import { getSwapTxValue } from '../../utils';
+import { useSelector } from 'react-redux';
+import { getGlobalProps } from '../../store/selectors/globals';
+import { DEFAULT_SWAP_SLIPPAGE, DEFAULT_SWAP_DDL } from "../../constants/swap";
+import { getSlippage, getTxDdl } from '../../store/selectors/settings';
+import { EmptyAddress } from '../../constants/address';
+import { usePriceTimer } from './usePriceTimer';
+import { getDefaultChainId } from '../../store/selectors/wallet';
+import useExecuteSwap from './useExecuteSwap';
+import { TokenInfo } from '../Token';
+
+export enum RoutePriceStatus {
+  Initial = 'Initial',
+  Loading = 'Loading',
+  Failed = 'Failed',
+  Success = 'Success',
+}
+export interface FetchRoutePrice {
+  fromToken: TokenInfo | null;
+  toToken: TokenInfo | null;
+  marginAmount: string;
+  fromAmount: string;
+}
+export function useFetchRoutePrice({
+  toToken,
+  fromToken,
+  fromAmount,
+  marginAmount,
+}: FetchRoutePrice) {
+  const { account, chainId: walletChainId, provider } = useWeb3React();
+  const defaultChainId = useSelector(getDefaultChainId);
+  const chainId = useMemo(() => walletChainId || defaultChainId, [walletChainId, defaultChainId])
+  const slippage = useSelector(getSlippage) || DEFAULT_SWAP_SLIPPAGE;
+  const ddl = useSelector(getTxDdl) || DEFAULT_SWAP_DDL;
+  const { feeRate, rebateTo, accessToken } = useSelector(getGlobalProps);
+  const apiDdl = useMemo(
+    () => Math.floor(Date.now() / 1000) + ddl * 60,
+    [ddl],
+  );
+  const [status, setStatus] = useState<RoutePriceStatus>(
+    RoutePriceStatus.Initial,
+  );
+  const [resAmount, setResAmount] = useState<number | null>(null);
+  const [baseFeeAmount, setBaseFeeAmount] = useState<number | null>(null);
+  const [additionalFeeAmount, setAdditionalFeeAmount] = useState<number | null>(null);
+  const [priceImpact, setPriceImpact] = useState<number | null>(null);
+  const [resCostGas, setResCostGas] = useState<EthersBigNumber>(EthersBigNumber.from(0));
+  const [resPricePerFromToken, setResPricePerFromToken] =
+    useState<number | null>(null);
+  const [resPricePerToToken, setResPricePerToToken] =
+    useState<number | null>(null);
+
+  const [to, setTo] = useState<string>('');
+  const [data, setData] = useState<string>('');
+  const [useSource, setUseSource] = useState<string>('');
+  const [duration, setDuration] = useState<number>(0);
+
+  const refetch = useCallback(async () => {
+    if (!chainId || !fromToken || !toToken) return;
+    setStatus(RoutePriceStatus.Loading);
+    const params: any = {
+      chainId,
+      deadLine: apiDdl,
+      accessToken,
+      slippage,
+      source: 'dodoV2AndMixWasm',
+      toTokenAddress: toToken.address,
+      toTokenDecimals: toToken.decimals,
+      fromTokenAddress: fromToken.address,
+      fromTokenDecimals: fromToken.decimals,
+      userAddr: account || EmptyAddress,
+      fromAmount: parseFixed(
+        String(fromAmount || 1),
+        fromToken.decimals,
+      ).toString(),
+    };
+
+    if (!new BigNumber(marginAmount).isNaN()) {
+      params.marginAmount = marginAmount;
+    }
+
+    // TODO: Only specific chains support fee sharing!
+    const isRebateVersion = [
+      ChainId.BSC,
+      ChainId.POLYGON,
+      ChainId.MAINNET,
+    ].includes(chainId);
+
+    if (isRebateVersion && rebateTo && feeRate) {
+      params.rebateTo = rebateTo;
+      params.fee = feeRate;
+    }
+
+    try {
+      const resRoutePrice = await axios.get(
+        `${isRebateVersion ? RoutePriceDevAPI : RoutePriceAPI}/dodoapi/getdodoroute`,
+        { params },
+      )
+      const routeInfo = resRoutePrice.data.data;
+      if (routeInfo?.resAmount) {
+        setStatus(RoutePriceStatus.Success);
+        setResAmount(routeInfo.resAmount);
+        setPriceImpact(routeInfo.priceImpact);
+        setResPricePerFromToken(routeInfo.resPricePerFromToken);
+        setResPricePerToToken(routeInfo.resPricePerToToken);
+        setBaseFeeAmount(routeInfo.baseFeeAmount);
+        setAdditionalFeeAmount(routeInfo.additionalFeeAmount);
+
+        setTo(routeInfo.to);
+        setData(routeInfo.data);
+        setUseSource(routeInfo.useSource);
+        setDuration(routeInfo.duration);
+      } else {
+        setStatus(RoutePriceStatus.Failed);
+      }
+
+      const txValue = getSwapTxValue({
+        tokenAmount: new BigNumber(fromAmount),
+        tokenAddress: params.fromTokenAddress,
+        chainId: params.chainId,
+      })
+
+      if (!account || !provider || !fromAmount) return;
+
+      const gasLimit = await getEstimateGas({
+        from: account,
+        to: routeInfo.to,
+        value: txValue,
+        data: routeInfo.data,
+      }, provider);
+
+      if (gasLimit) {
+        setResCostGas(gasLimit);
+      }
+
+    } catch (error) {
+      setStatus(RoutePriceStatus.Failed);
+      console.error(error);
+    }
+  }, [
+    apiDdl,
+    account,
+    chainId,
+    toToken,
+    feeRate,
+    slippage,
+    rebateTo,
+    fromToken,
+    provider,
+    fromAmount,
+    accessToken,
+  ]);
+
+  usePriceTimer({ refetch });
+
+  const resAmt = useMemo(() => {
+    return status !== RoutePriceStatus.Loading && fromAmount ? resAmount : null;
+  }, [status, fromAmount, resAmount]);
+
+  const execute = useExecuteSwap();
+  const executeSwap = useCallback(
+    (subtitle: React.ReactNode) => {
+      if (!fromToken || !fromAmount) return;
+      execute({
+        to,
+        data,
+        useSource,
+        duration,
+        ddl,
+        fromTokenAddress: fromToken.address,
+        parsedFromAmt: new BigNumber(fromAmount),
+        gasLimit: resCostGas,
+        subtitle,
+      });
+    },
+    [to, ddl, data, duration, useSource, fromToken, fromAmount, resCostGas],
+  );
+
+  return {
+    status,
+    refetch,
+    priceImpact,
+    executeSwap,
+    baseFeeAmount,
+    resAmount: resAmt,
+    additionalFeeAmount,
+    resPricePerToToken,
+    resPricePerFromToken,
+  };
+}
