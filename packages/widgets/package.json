@@ -1,6 +1,6 @@
 {
   "name": "@dodoex-io/widgets",
-  "version": "1.0.9-0",
+  "version": "1.0.9-1",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/index.d.ts",
@@ -10,6 +10,7 @@
   "homepage": "https://github.com/DODOEX/widgets#readme",
   "repository": "https://github.com/DODOEX/widgets",
   "files": [
+    "src",
     "dist",
     "../../LICENSE",
     "../../README.md"
