@@ -3,17 +3,14 @@
   "version": "1.0.9-1",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
-  "types": "dist/index.d.ts",
+  "types": "dist/src/index.d.ts",
   "main": "dist/cjs/index.cjs",
   "module": "dist/index.js",
   "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/DODOEX/widgets#readme",
   "repository": "https://github.com/DODOEX/widgets",
   "files": [
-    "src",
-    "dist",
-    "../../LICENSE",
-    "../../README.md"
+    "dist"
   ],
   "scripts": {
     "prepare": "yarn compile:i18n",
