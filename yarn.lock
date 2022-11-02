@@ -1336,7 +1336,7 @@
 
 "@dodoex-io/widgets@file:/Users/huangzhiwu/Desktop/Work-Space/widgets/packages/widgets":
   "resolved" "file:packages/widgets"
-  "version" "1.0.9-3"
+  "version" "1.0.9-4"
   dependencies:
     "@babel/runtime" "^7.17.0"
     "@dodoex-io/components" "^1.0.6"
