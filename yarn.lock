@@ -286,12 +286,7 @@
   "resolved" "https://registry.npmjs.org/@babel/helper-string-parser/-/helper-string-parser-7.19.4.tgz"
   "version" "7.19.4"
 
-"@babel/helper-validator-identifier@^7.18.6":
-  "integrity" "sha512-MmetCkz9ej86nJQV+sFCxoGGrUbU3q02kgLciwkrt9QqEB7cP39oKEY0PakknEO0Gu20SskMRi+AYZ3b1TpN9g=="
-  "resolved" "https://registry.npmjs.org/@babel/helper-validator-identifier/-/helper-validator-identifier-7.18.6.tgz"
-  "version" "7.18.6"
-
-"@babel/helper-validator-identifier@^7.19.1":
+"@babel/helper-validator-identifier@^7.18.6", "@babel/helper-validator-identifier@^7.19.1":
   "integrity" "sha512-awrNfaMtnHUr653GgGEs++LlAvW6w+DcPrOliSMXWCKo597CwL5Acf/wWdNkf/tfEQE3mjkeD1YOVZOUV/od1w=="
   "resolved" "https://registry.npmjs.org/@babel/helper-validator-identifier/-/helper-validator-identifier-7.19.1.tgz"
   "version" "7.19.1"
@@ -1304,39 +1299,9 @@
   dependencies:
     "@babel/runtime" "^7.17.2"
 
-"@dodoex-io/widgets@^1.0.8":
-  "integrity" "sha512-ChVcLqo5Exks38tGX2kQplItOpCxqdZ2CNLEqGDccI9adlt1OdSyjLelby4V2U+vfW8krFtlCiVVkJgw894lrw=="
-  "resolved" "https://registry.npmjs.org/@dodoex-io/widgets/-/widgets-1.0.8.tgz"
-  "version" "1.0.8"
-  dependencies:
-    "@babel/runtime" "^7.17.0"
-    "@dodoex-io/components" "^1.0.6"
-    "@dodoex-io/icons" "^1.0.1"
-    "@emotion/react" "^11.10.0"
-    "@emotion/styled" "^11.10.0"
-    "@ethersproject/bignumber" "^5.6.2"
-    "@ethersproject/contracts" "^5.7.0"
-    "@lingui/core" "^3.14.0"
-    "@lingui/macro" "^3.14.0"
-    "@lingui/react" "^3.14.0"
-    "@reduxjs/toolkit" "^1.6.1"
-    "@walletconnect/ethereum-provider" "^1.8.0"
-    "@walletconnect/jsonrpc-http-connection" "^1.0.3"
-    "@web3-react/core" "8.0.35-beta.0"
-    "@web3-react/eip1193" "8.0.26-beta.0"
-    "@web3-react/metamask" "8.0.28-beta.0"
-    "@web3-react/types" "8.0.20-beta.0"
-    "@web3-react/walletconnect" "8.0.35-beta.0"
-    "axios" "^0.27.2"
-    "bignumber.js" "^9.0.2"
-    "identicon.js" "^2.3.3"
-    "lodash" "^4.17.21"
-    "make-plural" "^7.0.0"
-    "react-window" "^1.8.7"
-
-"@dodoex-io/widgets@file:/Users/huangzhiwu/Desktop/Work-Space/widgets/packages/widgets":
+"@dodoex-io/widgets@^1.0.8", "@dodoex-io/widgets@file:/Users/huangzhiwu/Desktop/Work-Space/widgets/packages/widgets":
   "resolved" "file:packages/widgets"
-  "version" "1.0.9-4"
+  "version" "1.0.9"
   dependencies:
     "@babel/runtime" "^7.17.0"
     "@dodoex-io/components" "^1.0.6"
