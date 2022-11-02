@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.17.0",
     "@dodoex-io/components": "^1.0.6",
-    "@dodoex-io/widgets": "^1.0.8",
+    "@dodoex-io/widgets": "^1.0.9",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@storybook/addon-docs": "^6.5.7",

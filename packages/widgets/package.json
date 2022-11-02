@@ -1,20 +1,24 @@
 {
   "name": "@dodoex-io/widgets",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
-  "types": "dist/index.d.ts",
+  "types": "dist/src/index.d.ts",
   "main": "dist/cjs/index.cjs",
   "module": "dist/index.js",
   "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/DODOEX/widgets#readme",
   "repository": "https://github.com/DODOEX/widgets",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "prepare": "yarn compile:i18n",
     "extract:i18": "lingui extract --locale en-US",
     "compile:i18n": "yarn extract:i18 && lingui compile",
     "watch": "yarn run rollup -c --watch",
-    "build": "yarn compile:i18n && rollup --config",
+    "prebuild": "yarn workspace @dodoex-io/icons build && yarn workspace @dodoex-io/components build",
+    "build": "yarn prebuild && yarn compile:i18n && rollup --config",
     "prerelease": "yarn build",
     "release": "np --any-branch --no-cleanup --no-tests",
     "test": "jest"
