@@ -98,6 +98,7 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
   const theme = createTheme({
     mode: props.colorMode,
     theme: props.theme,
+    lang: props.locale || defaultLang,
   });
   const defaultChainId = useMemo(
     () => props.defaultChainId || 1,
