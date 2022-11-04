@@ -135,56 +135,6 @@ Primary.args = {
         default: 'rgba(26, 26, 27, 0.04)',
       },
     },
-    typography: {
-      fontFamily:
-        'Manrope,Poppins,Inter,PingFangSC-Regular,"Microsoft YaHei",sans-serif',
-      fontSize: 16,
-      h1: {
-        fontSize: 36,
-        lineHeight: '49px',
-        fontWeight: 600,
-      },
-      h2: {
-        fontSize: 32,
-        fontWeight: 600,
-        lineHeight: '44px',
-      },
-      h3: {
-        fontSize: 28,
-        fontWeight: 600,
-        lineHeight: '38px',
-      },
-      caption: {
-        fontSize: 20,
-        fontWeight: 600,
-        lineHeight: '28px',
-      },
-      h5: {
-        fontSize: 18,
-        lineHeight: '24px',
-        fontWeight: 600,
-      },
-      body1: {
-        fontSize: 16,
-        lineHeight: '22px',
-        fontWeight: 400,
-      },
-      body2: {
-        fontSize: 14,
-        lineHeight: '19px',
-        fontWeight: 400,
-      },
-      h6: {
-        fontSize: 12,
-        lineHeight: '17px',
-        fontWeight: 400,
-      },
-      button: {
-        fontSize: 16,
-        lineHeight: 1,
-        fontWeight: 600,
-      },
-    },
   },
   defaultFromToken: {
     chainId: 4,

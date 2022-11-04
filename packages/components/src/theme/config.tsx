@@ -72,7 +72,9 @@ declare module '@mui/system' {
 }
 
 export const getNormalFontWeight = (lang: string) => {
-  const normalFontWeight = ['zhCN', 'jaJP', 'koKR'].includes(lang) ? 400 : 500;
+  const normalFontWeight = ['zh-CN', 'ja-JP', 'ko-KR'].includes(lang)
+    ? 400
+    : 500;
 
   return normalFontWeight;
 };
@@ -205,7 +207,7 @@ export const getDesignTokens = (
     typography: {
       fontFamily: [
         'Manrope',
-        ...(lang === 'jaJP' ? ['Meiryo'] : []),
+        ...(lang === 'ja-JP' ? ['Meiryo'] : []),
         'Poppins',
         'Inter',
         'PingFangSC-Regular',
