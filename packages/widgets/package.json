@@ -1,5 +1,5 @@
 {
-  "name": "widgets-beta",
+  "name": "@dodoex-io/widgets",
   "version": "1.0.9",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
