@@ -1,14 +1,13 @@
 {
-  "name": "@dodoex-io/widgets",
-  "version": "1.0.9",
+  "name": "widgets-beta",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/src/index.d.ts",
   "main": "dist/cjs/index.cjs",
   "module": "dist/index.js",
   "license": "GPL-3.0-or-later",
-  "homepage": "https://github.com/DODOEX/widgets#readme",
-  "repository": "https://github.com/DODOEX/widgets",
+  "homepage": "https://github.com/shortcutBoy/widgets-beta#readme",
+  "repository": "https://github.com/shortcutBoy/widgets-beta",
   "files": [
     "dist"
   ],
@@ -20,7 +19,7 @@
     "prebuild": "yarn workspace @dodoex-io/icons build && yarn workspace @dodoex-io/components build",
     "build": "yarn prebuild && yarn compile:i18n && rollup --config",
     "prerelease": "yarn build",
-    "release": "np --any-branch --no-cleanup --no-tests",
+    "release": "semantic-release",
     "test": "jest"
   },
   "author": "",
@@ -71,6 +70,9 @@
     "@web3-react/metamask": "8.0.28-beta.0",
     "@web3-react/types": "8.0.20-beta.0",
     "@web3-react/walletconnect": "8.0.35-beta.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "semantic-release": "^19.0.2",
     "axios": "^0.27.2",
     "bignumber.js": "^9.0.2",
     "identicon.js": "^2.3.3",
