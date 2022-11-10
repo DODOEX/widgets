@@ -1,7 +1,7 @@
 name: Release
 on:
   workflow_run:
-    workflows: ["Jest test"]
+    workflows: ["test"]
     #     branches: [ release/widgets ]
     types: 
       - completed
