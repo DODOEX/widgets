@@ -1,12 +1,22 @@
 name: Release
 
 on:
-  workflow_run:
-    workflows: ["Jest test"]
-    # branches: [ release/widgets ]
-    branches: [ feat/release-action ]
-    types: 
-      - completed
+  workflow_dispatch: # manually
+    inputs:
+      dry_run:
+        description: Skip publishing
+        required: false
+        default: true
+        type: boolean
+
+
+# on:
+#   workflow_run:
+#     workflows: ["Jest test"]
+#     # branches: [ release/widgets ]
+#     branches: [ feat/release-action ]
+#     types: 
+#       - completed
 
 
 # on: push
