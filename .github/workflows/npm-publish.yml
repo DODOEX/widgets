@@ -3,9 +3,7 @@
 
 name: Release npm
 
-on:
-  release:
-    types: [created]
+on: push
 
 jobs:
   # test:
