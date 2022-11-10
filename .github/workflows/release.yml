@@ -15,8 +15,6 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
 
-
-
 # on:
 #   workflow_run:
 #     workflows: ["Jest test"]
@@ -24,20 +22,6 @@ jobs:
 #     branches: [ feat/release-action ]
 #     types: 
 #       - completed
-
-
-# on: push
-
-jobs:
-  release:
-    runs-on: ubuntu-latest
-    # if: ${{ always() && contains(join(needs.*.result, ','), 'Test success!') }}
-    # needs: test
-    steps:
-      - name: Hello World          
-        run: echo "Hello Release!"
-
-
 
 # jobs:
 #   test:
