@@ -7,8 +7,8 @@ on: push
 
 jobs:
   release:
-    if: ${{ always() }}
     needs: [test]
+    runs-on: ubuntu-latest
     steps:
       - name: Hello World          
         run: |
