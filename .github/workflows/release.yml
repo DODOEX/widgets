@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Hello World          
-        run: |
-          echo "$NEEDS Test"
+        run: echo "Hello Release!"
 
   # release:
   #   runs-on: ubuntu-latest
