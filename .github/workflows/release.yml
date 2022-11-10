@@ -7,11 +7,15 @@ name: Release
 #     types: 
 #       - completed
 
-on: push
 
-# on:
-#   push:
-#     branches: [ release/widgets ]
+
+# on: push
+
+on:
+  workflow_run:
+    workflows: ["Jest test"]
+    types:
+      - completed
 
 jobs:
   release:
