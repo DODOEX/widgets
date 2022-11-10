@@ -1,0 +1,58 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+name: Release npm
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  # test:
+  #   runs-on: ubuntu-latest
+
+  #   strategy:
+  #     matrix:
+  #       node-version: [16.x]
+
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Use Node.js ${{ matrix.node-version }}
+  #     uses: actions/setup-node@v1
+  #     with:
+  #       node-version: ${{ matrix.node-version }}
+  #   - name: restore lerna
+  #     uses: actions/cache@v3
+  #     with:
+  #       path: '**/node_modules'
+  #       key: ${{ runner.os }}-lerna-${{ hashFiles('**/yarn.lock') }}
+  #   - name: Get yarn cache directory path
+  #     id: yarn-cache-dir-path
+  #     run: echo "::set-output name=dir::$(yarn cache dir)"
+  #   - name: restore yarn
+  #     uses: actions/cache@v3
+  #     id: yarn-cache
+  #     with:
+  #       path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+  #       key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+  #       restore-keys: |
+  #         ${{ runner.os }}-yarn-
+  #   - name: Install dependencies
+  #     run: yarn install
+  #   - name: Build
+  #     run: yarn build
+  #   - name: Run Jest
+  #     run: yarn test
+
+  publish-npm:
+    # needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+      - run: yarn release
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
