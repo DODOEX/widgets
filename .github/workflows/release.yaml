@@ -1,33 +1,38 @@
 name: Release
-# on:
-#   workflow_run:
-#     workflows: ["Jest test"]
-#     # branches: [ release/widgets ]
-#     branches: [ feat/release-action ]
-#     types: 
-#       - completed
+
+on:
+  workflow_run:
+    workflows: ["Jest test"]
+    # branches: [ release/widgets ]
+    branches: [ feat/release-action ]
+    types: 
+      - completed
 
 
-
-on: push
-
-# on:
-#   workflow_run:
-#     workflows: ["Jest test"]
-#     types:
-#       - completed
+# on: push
 
 jobs:
-  test:
-    uses: ./.github/workflows/test.yml
-
   release:
     runs-on: ubuntu-latest
-    if: ${{ always() && contains(join(needs.*.result, ','), 'Test success!') }}
-    needs: test
+    # if: ${{ always() && contains(join(needs.*.result, ','), 'Test success!') }}
+    # needs: test
     steps:
       - name: Hello World          
         run: echo "Hello Release!"
+
+
+
+# jobs:
+#   test:
+#     uses: ./.github/workflows/test.yml
+
+#   release:
+#     runs-on: ubuntu-latest
+#     if: ${{ always() && contains(join(needs.*.result, ','), 'Test success!') }}
+#     needs: test
+#     steps:
+#       - name: Hello World          
+#         run: echo "Hello Release!"
 
   # release:
   #   runs-on: ubuntu-latest
