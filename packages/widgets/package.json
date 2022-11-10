@@ -20,7 +20,7 @@
     "prebuild": "yarn workspace @dodoex-io/icons build && yarn workspace @dodoex-io/components build",
     "build": "yarn prebuild && yarn compile:i18n && rollup --config",
     "prerelease": "yarn build",
-    "release": "np --any-branch --no-cleanup --no-tests",
+    "release": "semantic-release",
     "test": "jest"
   },
   "author": "",
