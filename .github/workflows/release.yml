@@ -1,0 +1,31 @@
+name: Release
+
+on: push
+# on:
+#   push:
+#     branches: [ release/widgets ]
+
+jobs:
+  release:
+    if: ${{ always() }}
+    needs: [test]
+    steps:
+      - name: Hello World          
+        run: |
+          echo "$NEEDS Test"
+
+  # release:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     # - uses: ./.github/workflows/test
+
+  #     - run: yarn test
+  #       if: success()
+
+  #     - run: yarn release --dry-run=${{ inputs.dry_run }}
+  #       if: success()
+  #       env:
+  #         NPM_CONFIG_USERCONFIG: /dev/null
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
