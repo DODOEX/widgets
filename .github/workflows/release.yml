@@ -9,18 +9,22 @@ name: Release
 
 
 
-# on: push
+on: push
 
-on:
-  workflow_run:
-    workflows: ["Jest test"]
-    types:
-      - completed
+# on:
+#   workflow_run:
+#     workflows: ["Jest test"]
+#     types:
+#       - completed
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
   release:
-    # needs: [test]
     runs-on: ubuntu-latest
+    if: ${{ always() && contains(join(needs.*.result, ','), 'Test success!') }}
+    needs: test
     steps:
       - name: Hello World          
         run: echo "Hello Release!"
