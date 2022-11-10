@@ -1,17 +1,21 @@
 name: Release
-
-on: push
+on:
+  workflow_run:
+    workflows: ["Jest test"]
+    #     branches: [ release/widgets ]
+    types: 
+      - completed
 # on:
 #   push:
 #     branches: [ release/widgets ]
 
-jobs:
-  release:
-    needs: [test]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Hello World          
-        run: echo "Hello Release!"
+# jobs:
+#   release:
+#     needs: [test]
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Hello World          
+#         run: echo "Hello Release!"
 
   # release:
   #   runs-on: ubuntu-latest
