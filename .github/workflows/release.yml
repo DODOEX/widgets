@@ -1,10 +1,11 @@
 name: Release
-# on:
-#   workflow_run:
-#     workflows: ["Jest test"]
-#     branches: [ release/widgets ]
-#     types: 
-#       - completed
+on:
+  workflow_run:
+    workflows: ["Jest test"]
+    # branches: [ release/widgets ]
+    branches: [ feat/release-action ]
+    types: 
+      - completed
 
 on: push
 # on:
