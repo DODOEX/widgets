@@ -1,5 +1,10 @@
 name: Release
 
+# on:
+#   push:
+#     branches:
+#       - 'releases/widgets'
+
 on:
   workflow_dispatch: # manually
     inputs:
@@ -77,10 +82,10 @@ jobs:
           ${{ runner.os }}-yarn-
     - name: Install dependencies
       run: yarn install
-    - name: Release package
-      run: yarn release --dry-run=${{ inputs.dry_run }}
-        # if: success()
-        # env:
-        #   # NPM_CONFIG_USERCONFIG: /dev/null
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    # - name: Release package
+    - run: yarn release --dry-run=true
+        if: success()
+        env:
+          # NPM_CONFIG_USERCONFIG: /dev/null
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
