@@ -81,7 +81,7 @@ jobs:
     - name: Release package
       run: yarn release --dry-run=${{ inputs.dry_run }}
       env:
-        GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     
 
