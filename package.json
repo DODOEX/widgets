@@ -12,7 +12,7 @@
     "start": "yarn workspace doc start",
     "tsc": "lerna run typescript",
     "test": "lerna run test",
-    "build": "yarn workspace @dodoex-io/widgets prepare && lerna run build",
+    "build": "lerna run build",
     "release": "yarn workspace @dodoex-io/widgets release"
   },
   "workspaces": [
