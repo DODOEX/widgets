@@ -85,10 +85,10 @@ jobs:
     # - name: Install dependencies
     #   run: yarn install
     steps:
-    - uses: actions/checkout@v3
-    - uses: ./.github/workflows/test
+    - uses: actions/checkout@v2
+    - uses: ./.github/action/test
     - name: Release package
-      run: yarn release --dry-run=true
+      run: yarn release --dry-run=${{ inputs.dry_run }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
