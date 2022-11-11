@@ -58,35 +58,36 @@ jobs:
       matrix:
         node-version: [16.x]
 
-  # steps:
-  # - uses: ./.github/workflows/test
+  
 
+    # steps:
+    # - uses: actions/checkout@v2
+    # - name: Use Node.js ${{ matrix.node-version }}
+    #   uses: actions/setup-node@v1
+    #   with:
+    #     node-version: ${{ matrix.node-version }}
+    # - name: restore lerna
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: '**/node_modules'
+    #     key: ${{ runner.os }}-lerna-${{ hashFiles('**/yarn.lock') }}
+    # - name: Get yarn cache directory path
+    #   id: yarn-cache-dir-path
+    #   run: echo "::set-output name=dir::$(yarn cache dir)"
+    # - name: restore yarn
+    #   uses: actions/cache@v3
+    #   id: yarn-cache
+    #   with:
+    #     path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+    #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-yarn-
+    # - name: Install dependencies
+    #   run: yarn install
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: restore lerna
-      uses: actions/cache@v3
-      with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-lerna-${{ hashFiles('**/yarn.lock') }}
-    - name: Get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(yarn cache dir)"
-    - name: restore yarn
-      uses: actions/cache@v3
-      id: yarn-cache
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
-    - name: Install dependencies
-      run: yarn install
+    - uses: ./.github/workflows/test
     - name: Release package
-      run: yarn release --dry-run=${{ inputs.dry_run }}
+      run: yarn release --dry-run=true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
