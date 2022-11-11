@@ -77,7 +77,6 @@ jobs:
           ${{ runner.os }}-yarn-
     - name: Release package
       run: yarn release --dry-run=${{ inputs.dry_run }}
-        if: success()
         env:
           # NPM_CONFIG_USERCONFIG: /dev/null
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
