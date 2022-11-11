@@ -6,7 +6,7 @@
   "files": [
     "dist"
   ],
-  "private": "true",
+  "private": "false",
   "scripts": {
     "prepare": "yarn workspace @dodoex-io/icons build && yarn workspace @dodoex-io/components build",
     "start": "yarn workspace doc start",
