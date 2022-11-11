@@ -1,5 +1,5 @@
 {
-  "name": "@dodoex-io/widgets",
+  "name": "dodo-widgets-outer",
   "description": "DODOEX Widgets",
   "homepage": "https://github.com/DODOEX/widgets#readme",
   "repository": "https://github.com/DODOEX/widgets",
@@ -13,7 +13,7 @@
     "tsc": "lerna run typescript",
     "test": "lerna run test",
     "build": "lerna run build",
-    "release": "yarn workspace @dodoex-io/widgets release"
+    "release": "yarn workspace dodo-widgets-inner release"
   },
   "workspaces": [
     "packages/*"

@@ -1,5 +1,5 @@
 {
-  "name": "@dodoex-io/widgets",
+  "name": "dodo-widgets-inner",
   "version": "1.0.9",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
