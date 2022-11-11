@@ -16,7 +16,7 @@
     "extract:i18": "lingui extract --locale en-US",
     "compile:i18n": "yarn extract:i18 && lingui compile",
     "watch": "yarn run rollup -c --watch",
-    "prebuild": "yarn workspace @dodoex-io/icons build && yarn workspace @dodoex-io/components build && yarn prepare",
+    "prebuild": "yarn workspace @dodoex-io/icons build && yarn workspace @dodoex-io/components build",
     "build": "yarn prebuild && yarn compile:i18n && rollup --config",
     "prerelease": "yarn build",
     "release": "semantic-release",
