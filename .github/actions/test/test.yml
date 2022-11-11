@@ -36,5 +36,3 @@ jobs:
       run: yarn build
     - name: Run Jest
       run: yarn test
-      # if: success()
-      # run: echo "Test success!"
