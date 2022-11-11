@@ -86,7 +86,7 @@ jobs:
     - name: Install dependencies
       run: yarn install
     - name: Release package
-       run: yarn release --dry-run=${{ inputs.dry_run }}
+      run: yarn release --dry-run=${{ inputs.dry_run }}
       #  env:
       #     # NPM_CONFIG_USERCONFIG: /dev/null
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
