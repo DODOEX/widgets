@@ -60,9 +60,9 @@ jobs:
 
     steps:
     - uses: ./.github/workflows/test
-    - run: yarn release --dry-run=true
-        if: success()
-        env:
+    - name: Release package
+       run: yarn release --dry-run=true
+       env:
           # NPM_CONFIG_USERCONFIG: /dev/null
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
