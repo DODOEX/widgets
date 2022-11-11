@@ -1,0 +1,6 @@
+name: Jest test
+on: push
+jobs:
+  steps:
+    - uses: actions/checkout@v3
+    - uses: ./.github/workflows/test
