@@ -59,9 +59,7 @@ jobs:
         node-version: [16.x]
 
     steps:
-    - name: Run Test
-        uses: ./.github/workflows/test
-    # - name: Release package
+    - uses: ./.github/workflows/test
     - run: yarn release --dry-run=true
         if: success()
         env:
