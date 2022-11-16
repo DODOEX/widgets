@@ -28,6 +28,9 @@ export function useFetchFiatPrice({ fromToken, toToken, chainId }: FetchFiatPric
           addresses: tokens.map((token) => token.address),
           symbols: tokens.map((token) => token.symbol),
           isCache: true,
+        },
+        {
+          headers: { 'apikey': 'dodofrontend777888ofopensource' }
         }
       )
       .then((res) => {
