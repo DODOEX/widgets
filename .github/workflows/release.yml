@@ -18,11 +18,13 @@ jobs:
         node-version: [16.x]
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup
-      - run: yarn build
-        if: success()
-      - run: yarn test
+      - uses: actions/checkout@v2
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Build
+        run: yarn build
+      - name: Run Jest
+        run: yarn test
 
   release:
     runs-on: ubuntu-latest
