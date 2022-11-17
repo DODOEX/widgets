@@ -1,5 +1,5 @@
 import './App.css';
-import { SwapWidget } from '@dodoex-io/widgets';
+import { SwapWidget } from '@dodoex/widgets';
 
 function App() {
   return (

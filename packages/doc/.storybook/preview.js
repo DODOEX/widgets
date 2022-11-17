@@ -1,5 +1,5 @@
 import { DocsPage, DocsContainer } from '@storybook/addon-docs';
-import { Box } from '@dodoex-io/components';
+import { Box } from '@dodoex/components';
 import { RootPage } from '../src/components/RootPage';
 import { setColorMode } from '../src/configure-store/actions/settings';
 import { useDispatch } from 'react-redux';
@@ -7,9 +7,9 @@ import { useEffect, Suspense } from 'react';
 import './global.css';
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  actions: { argTypesRegex: '^on[A-Z].*' },
   backgrounds: {
-    disable: true
+    disable: true,
   },
   controls: {
     matchers: {
@@ -26,19 +26,19 @@ export const parameters = {
     storySort: (a, b) => {
       if (a[1].kind === b[1].kind) {
         if (a[1].name !== b[1].name) {
-          const aMatch = a[1].name === 'Primary' ? 1 : 0
-          const bMatch = b[1].name === 'Primary' ? 1 : 0
-          return bMatch - aMatch
+          const aMatch = a[1].name === 'Primary' ? 1 : 0;
+          const bMatch = b[1].name === 'Primary' ? 1 : 0;
+          return bMatch - aMatch;
         }
       } else {
-        const aMatch = a[1].kind.startsWith('System') ? 1 : 0
-        const bMatch = b[1].kind.startsWith('System') ? 1 : 0
-        return bMatch - aMatch
+        const aMatch = a[1].kind.startsWith('System') ? 1 : 0;
+        const bMatch = b[1].kind.startsWith('System') ? 1 : 0;
+        return bMatch - aMatch;
       }
-      return 0
-    }
-  }
-}
+      return 0;
+    },
+  },
+};
 
 export const globalTypes = {
   theme: {
@@ -58,37 +58,37 @@ export const globalTypes = {
 const SwitchTheme = ({ themeMode }) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setColorMode(themeMode))
-  }, [themeMode])
+    dispatch(setColorMode(themeMode));
+  }, [themeMode]);
   return null;
-}
+};
 
 export const decorators = [
   (Story, context) => {
     return (
       <RootPage>
         <Suspense fallback={<div />}>
-        <SwitchTheme themeMode={context.globals.theme} />
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            backgroundColor: 'background.default',
-          }}
-        />
-        <Box
-          sx={{
-            position: 'relative',
-            zIndex: 1,
-          }}
-        >
-          <Story />
-        </Box>
+          <SwitchTheme themeMode={context.globals.theme} />
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              backgroundColor: 'background.default',
+            }}
+          />
+          <Box
+            sx={{
+              position: 'relative',
+              zIndex: 1,
+            }}
+          >
+            <Story />
+          </Box>
         </Suspense>
       </RootPage>
-    )
-  }
-]
+    );
+  },
+];

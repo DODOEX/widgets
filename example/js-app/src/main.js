@@ -1,5 +1,5 @@
 'use strict';
-import { InitSwapWidget } from '@dodoex-io/widgets';
+import { InitSwapWidget } from '@dodoex/widgets';
 
 function initDodoWidget() {
   InitSwapWidget({
