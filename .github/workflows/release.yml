@@ -19,8 +19,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Setup
-        uses: ./.github/actions/setup
+      - uses: ./.github/actions/setup
+      
       - name: Build
         run: yarn build
       - name: Run Jest
