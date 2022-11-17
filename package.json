@@ -20,6 +20,7 @@
   ],
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "lerna": "^5.4.0"
+    "lerna": "^5.4.0",
+    "dodo-widgets-inner": "^1.0.0"
   }
 }
