@@ -13,10 +13,12 @@ runs:
         path: '**/node_modules'
         key: ${{ runner.os }}-lerna-${{ hashFiles('**/yarn.lock') }}
     - name: Get yarn cache directory path
+      shell: bash
       id: yarn-cache-dir-path
       run: echo "::set-output name=dir::$(yarn cache dir)"
     - name: restore yarn
       uses: actions/cache@v3
+      shell: bash
       id: yarn-cache
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
