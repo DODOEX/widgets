@@ -11,7 +11,7 @@ on:
 
 jobs:
   test:
-    uses: .github/workflows/release@main
+    uses: ./.github/actions/test.yml@main
 
   release:
     runs-on: ubuntu-latest
