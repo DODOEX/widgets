@@ -1,6 +1,6 @@
 {
   "name": "@dodoex-io/widgets",
-  "version": "1.0.9",
+  "version": "1.0.0",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/src/index.d.ts",
@@ -20,7 +20,7 @@
     "prebuild": "yarn workspace @dodoex-io/icons build && yarn workspace @dodoex-io/components build",
     "build": "yarn prebuild && yarn compile:i18n && rollup --config",
     "prerelease": "yarn build",
-    "release": "np --any-branch --no-cleanup --no-tests",
+    "release": "semantic-release",
     "test": "jest"
   },
   "author": "",
