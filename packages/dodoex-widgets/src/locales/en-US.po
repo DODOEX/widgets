@@ -1,0 +1,271 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2022-11-17 23:28+0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en-US\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/components/Swap/components/ReviewDialog.tsx:237
+msgid "Additional Fee"
+msgstr "Additional Fee"
+
+#: src/components/Swap/components/ReviewDialog.tsx:240
+msgid "Additional routing fees set by the Widget user"
+msgstr "Additional routing fees set by the Widget user"
+
+#: src/components/Swap/index.tsx:305
+#: src/hooks/Token/useGetTokenStatus.ts:111
+msgid "Approve"
+msgstr "Approve"
+
+#: src/components/Swap/index.tsx:305
+msgid "Approving"
+msgstr "Approving"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:46
+msgid "Attention：High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
+msgstr "Attention：High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
+
+#: src/components/Swap/components/TokenCard/BalanceText.tsx:28
+msgid "Balance:"
+msgstr "Balance:"
+
+#: src/components/Swap/components/ReviewDialog.tsx:216
+msgid "Basic Fee"
+msgstr "Basic Fee"
+
+#: src/components/WithExecutionDialog/index.tsx:291
+msgid "Close"
+msgstr "Close"
+
+#: src/components/Swap/components/ReviewDialog.tsx:373
+msgid "Confirm swap"
+msgstr "Confirm swap"
+
+#: src/components/Swap/components/ReviewDialog.tsx:371
+msgid "Confirming"
+msgstr "Confirming"
+
+#: src/components/Swap/components/ConnectWallet/index.tsx:32
+msgid "Connect to a wallet"
+msgstr "Connect to a wallet"
+
+#: src/components/Swap/components/ConnectWallet/ConnectWalletDialog.tsx:19
+msgid "Connect to your wallet"
+msgstr "Connect to your wallet"
+
+#: src/components/Swap/components/ConnectWallet/ConnectWalletDialog.tsx:75
+msgid "Connect to your {0} Wallet"
+msgstr "Connect to your {0} Wallet"
+
+#: src/components/Swap/index.tsx:197
+msgid "Current price impact"
+msgstr "Current price impact"
+
+#: src/components/WithExecutionDialog/index.tsx:291
+msgid "Dismiss"
+msgstr "Dismiss"
+
+#: src/components/Swap/components/ReviewDialog.tsx:265
+#: src/components/Swap/index.tsx:189
+msgid "Due to the market condition, market price and estimated price may have a slight difference"
+msgstr "Due to the market condition, market price and estimated price may have a slight difference"
+
+#: src/components/Swap/index.tsx:311
+msgid "Enter an amount"
+msgstr "Enter an amount"
+
+#: src/components/TokenPicker/index.tsx:141
+msgid "Enter the token symbol or address"
+msgstr "Enter the token symbol or address"
+
+#: src/components/Swap/components/ReviewDialog.tsx:218
+msgid "Estimated service provider fees"
+msgstr "Estimated service provider fees"
+
+#: src/components/Swap/index.tsx:317
+msgid "Fetching Price..."
+msgstr "Fetching Price..."
+
+#: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
+#: src/components/Swap/index.tsx:238
+msgid "Fetching best price..."
+msgstr "Fetching best price..."
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:35
+msgid "ForceStop exception"
+msgstr "ForceStop exception"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:43
+msgid "Gas price is too low, please adjust in your wallet and try again"
+msgstr "Gas price is too low, please adjust in your wallet and try again"
+
+#: src/components/Swap/components/ReviewDialog.tsx:288
+msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
+msgstr "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:87
+msgid "If your transaction time exceeds the deadline, your transaction will be rescinded."
+msgstr "If your transaction time exceeds the deadline, your transaction will be rescinded."
+
+#: src/components/Swap/index.tsx:335
+msgid "Insufficient balance"
+msgstr "Insufficient balance"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:12
+msgid "Insufficient funds - Please retry after depositing more {EtherTokenSymbol} into your wallet"
+msgstr "Insufficient funds - Please retry after depositing more {EtherTokenSymbol} into your wallet"
+
+#: src/components/Swap/components/TokenCard/BalanceText.tsx:47
+msgid "Max"
+msgstr "Max"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:74
+msgid "Maximum slippage do not exceed 50%"
+msgstr "Maximum slippage do not exceed 50%"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:47
+msgid "No ForceStop access"
+msgstr "No ForceStop access"
+
+#: src/components/Swap/index.tsx:532
+msgid "Powered by DODO protocol"
+msgstr "Powered by DODO protocol"
+
+#: src/components/Swap/components/ReviewDialog.tsx:262
+msgid "Price Impact"
+msgstr "Price Impact"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:16
+msgid "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
+msgstr "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
+
+#: src/components/Swap/components/ReviewDialog.tsx:349
+msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
+msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
+
+#: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
+#: src/components/Swap/index.tsx:324
+msgid "Quote not available"
+msgstr "Quote not available"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:31
+msgid "RPC node data exception"
+msgstr "RPC node data exception"
+
+#: src/hooks/Token/useGetTokenStatus.ts:111
+msgid "Reset"
+msgstr "Reset"
+
+#: src/components/Swap/index.tsx:344
+msgid "Review Swap"
+msgstr "Review Swap"
+
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:38
+msgid "SELECT TOKEN"
+msgstr "SELECT TOKEN"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:20
+msgid "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
+msgstr "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
+
+#: src/components/Swap/index.tsx:295
+msgid "Select Tokens"
+msgstr "Select Tokens"
+
+#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:28
+msgid "Select a token"
+msgstr "Select a token"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:65
+msgid "Service update, please wait and try again"
+msgstr "Service update, please wait and try again"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:33
+msgid "Settings"
+msgstr "Settings"
+
+#: src/components/Swap/components/ReviewDialog.tsx:285
+msgid "Slippage"
+msgstr "Slippage"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:43
+msgid "Slippage Tolerance"
+msgstr "Slippage Tolerance"
+
+#: src/components/WithExecutionDialog/index.tsx:259
+msgid "Something went wrong."
+msgstr "Something went wrong."
+
+#: src/components/Swap/index.tsx:417
+#: src/hooks/Swap/useExecuteSwap.ts:64
+msgid "Swap"
+msgstr "Swap"
+
+#: src/components/Swap/components/ReviewDialog.tsx:189
+msgid "Swap Detail"
+msgstr "Swap Detail"
+
+#: src/components/Swap/components/ReviewDialog.tsx:81
+msgid "Swap summary"
+msgstr "Swap summary"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:61
+msgid "This CP has been settled by other addrs"
+msgstr "This CP has been settled by other addrs"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:84
+msgid "Transaction Deadline"
+msgstr "Transaction Deadline"
+
+#: src/components/Swap/index.tsx:288
+msgid "Transaction Pending"
+msgstr "Transaction Pending"
+
+#: src/components/WithExecutionDialog/index.tsx:180
+msgid "Transaction Time:"
+msgstr "Transaction Time:"
+
+#: src/hooks/contract/wallet.ts:87
+msgid "Transaction rejected."
+msgstr "Transaction rejected."
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:51
+msgid "Unable to SETTLE during the cooling-off period"
+msgstr "Unable to SETTLE during the cooling-off period"
+
+#: src/components/Swap/index.tsx:254
+msgid "Unsupported network - switch to trade"
+msgstr "Unsupported network - switch to trade"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:24
+msgid "User denied transaction signature."
+msgstr "User denied transaction signature."
+
+#: src/components/WithExecutionDialog/index.tsx:195
+msgid "View on Etherscan"
+msgstr "View on Etherscan"
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:57
+msgid "Wallet incompatibility"
+msgstr "Wallet incompatibility"
+
+#: src/components/WithExecutionDialog/index.tsx:105
+msgid "{0} confirmed"
+msgstr "{0} confirmed"
+
+#: src/components/WithExecutionDialog/index.tsx:106
+msgid "{0} pending"
+msgstr "{0} pending"
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:99
+msgid "{DEFAULT_SWAP_DDL} minutes"
+msgstr "{DEFAULT_SWAP_DDL} minutes"

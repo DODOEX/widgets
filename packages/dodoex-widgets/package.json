@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "1.0.9",
+  "version": "2.0.0",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/src/index.d.ts",
@@ -54,8 +54,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/components": "^1.0.6",
-    "@dodoex/icons": "^1.0.1",
+    "@dodoex/components": "^2.0.0",
+    "@dodoex/icons": "^2.0.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@ethersproject/bignumber": "^5.6.2",

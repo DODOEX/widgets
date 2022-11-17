@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/components",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "UI component library",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
@@ -38,7 +38,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/icons": "^1.0.0",
+    "@dodoex/icons": "^2.0.0",
     "@mui/base": "5.0.0-alpha.85",
     "@mui/system": "5.8.4"
   },

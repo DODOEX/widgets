@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/icons",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "DODO icons distributed as SVG React components.",
   "main": "build/index.js",
   "source": "src/index.js",

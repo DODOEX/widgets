@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@dodoex/widgets": "^1.0.9"
+    "@dodoex/widgets": "^2.0.0"
   },
   "scripts": {
     "start": "webpack serve --node-env --config=./webpack.config.js --progress"
