@@ -11,20 +11,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x]
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup
-        uses: ./.github/actions/setup
-      - name: Build
-        run: yarn build
-      - name: Run Jest
-        run: yarn test
+    uses: .github/workflows/release@main
 
   release:
     runs-on: ubuntu-latest
