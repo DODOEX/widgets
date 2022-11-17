@@ -1,7 +1,16 @@
-name: Setup
-runs:
-  using: composite
-  steps:
+name: Jest test
+on:
+  workflow_call:
+  
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -25,3 +34,7 @@ runs:
           ${{ runner.os }}-yarn-
     - name: Install dependencies
       run: yarn install
+    - name: Build
+      run: yarn build
+    - name: Run Jest
+      run: yarn test
