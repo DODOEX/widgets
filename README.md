@@ -49,7 +49,7 @@ $ cd example/js-app
 Install and run the example:
 
 ```bash
-yarn          # install dependencies
+yarn          # install dependencies 
 yarn start    # run the development server
 # or
 npm           # install dependencies
