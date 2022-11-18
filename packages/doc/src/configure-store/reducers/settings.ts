@@ -1,4 +1,4 @@
-import { PaletteMode } from '@dodoex-io/components';
+import { PaletteMode } from '@dodoex/components';
 import { AnyAction } from 'redux';
 
 export type ColorMode = PaletteMode | 'system';

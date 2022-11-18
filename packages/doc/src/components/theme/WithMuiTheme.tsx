@@ -1,4 +1,9 @@
-import { CssBaseline, ThemeProvider, createTheme, PaletteMode } from '@dodoex-io/components';
+import {
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
+  PaletteMode,
+} from '@dodoex/components';
 import { useSelector } from 'react-redux';
 import React, { useMemo } from 'react';
 import {

@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-<a href="https://www.npmjs.com/package/@dodoex-io/widgets"><img src="https://img.shields.io/npm/v/@dodoex-io/widgets" alt="npm version" /></a>
+<a href="https://www.npmjs.com/package/@dodoex/widgets"><img src="https://img.shields.io/npm/v/@dodoex/widgets" alt="npm version" /></a>
 <p>
 
 To demonstrate how to use the [@dodoex/widgets](https://github.com/DODOEX/widgets) package in js projects.
@@ -36,7 +36,7 @@ html: add container element with `dodo-swap-widget` id in your html.
 js: init dodo widget in your js.
 
 ```js
-import { InitSwapWidget } from '@dodoex-io/widgets';
+import { InitSwapWidget } from '@dodoex/widgets';
 
 function initDodoWidget() {
   InitSwapWidget({

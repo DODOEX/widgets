@@ -1193,31 +1193,31 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-2.0.2.tgz#1bfafe4b7ed0f3e4105837e056e0a89b108ebe36"
   integrity sha512-IkpVW/ehM1hWKln4fCA3NzJU8KwD+kIOvPZA4cqxoJHtE21CCzjyp+Kxbu0i5I4tBNOlXPL9mjwnWlL0VEG4Fg==
 
-"@dodoex-io/components@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@dodoex-io/components/-/components-1.0.6.tgz#0e159c5dc74232089cc0589ae9988c1d1fbfe708"
-  integrity sha512-4Baut1vFsQ1CBIyinf3f0qeCJY8POFFN6Lw6k/lOMK+q71KluvRIuu9D7kWpL86UGqHVvuUjxxMUhUkBjPHrXw==
+"@dodoex/components@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@dodoex/components/-/components-2.0.0.tgz#cfb7e6999f9d0144b7a9d3be4559c5b6a9b68a4b"
+  integrity sha512-Dcq4c6zP6FuVTcjqCY7mCg91yefNZMUVzQqdmtqcLVb8afdZNcaATtVcxCvPww1WZv4+JXpYYxM3+btDvmpgOA==
   dependencies:
     "@babel/runtime" "^7.17.0"
-    "@dodoex-io/icons" "^1.0.0"
+    "@dodoex/icons" "^2.0.0"
     "@mui/base" "5.0.0-alpha.85"
     "@mui/system" "5.8.4"
 
-"@dodoex-io/icons@^1.0.0", "@dodoex-io/icons@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@dodoex-io/icons/-/icons-1.0.1.tgz#cb26c94fa7342f4fb28fba9ce99921b68fc893aa"
-  integrity sha512-Jdqb2dRZZSfQDsy9f1opfiaGnBcCl/RBtvj0H938L9IgeZZm2674tKaS/4ih0mC+qABcu7AgMF/FUx8xlRF+OQ==
+"@dodoex/icons@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@dodoex/icons/-/icons-2.0.0.tgz#7cbc8425f2c0d9a314bc1a65571438dc1d9793ba"
+  integrity sha512-u09YHl32MyHeD5K3vt4njNCOGqNFsFXwZX1Xr//grvWg0JLCZ43iizCQRgPdyIkKqhJprQCuEJwvBMM4jtFJiA==
   dependencies:
     "@babel/runtime" "^7.17.2"
 
-"@dodoex-io/widgets@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@dodoex-io/widgets/-/widgets-1.0.9.tgz#f28af1eaaa5a98705760a8a5b7c2ec0ab34df230"
-  integrity sha512-G/IfDQo9SU8t3K14iT/v/NsaZztH4OW4hQ7/ygUslRfBw18pFZO5Tpbh294wjJRoU8Ej26KLG72oe4i5tcNhsg==
+"@dodoex/widgets@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@dodoex/widgets/-/widgets-2.0.0.tgz#6c4d01f91a697531089dcc6473054ceb0c80e470"
+  integrity sha512-17MhuCscTcKY6qq2ehQMZ1gLp+cEH8GM1oIiKWZYIxLphZtjA3oPrdgPMFq07AoBanV1pWwRMHsbmTuRXAEgag==
   dependencies:
     "@babel/runtime" "^7.17.0"
-    "@dodoex-io/components" "^1.0.6"
-    "@dodoex-io/icons" "^1.0.1"
+    "@dodoex/components" "^2.0.0"
+    "@dodoex/icons" "^2.0.0"
     "@emotion/react" "^11.10.0"
     "@emotion/styled" "^11.10.0"
     "@ethersproject/bignumber" "^5.6.2"

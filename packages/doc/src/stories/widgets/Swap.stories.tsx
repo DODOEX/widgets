@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { SwapWidget } from '@dodoex-io/widgets';
+import { SwapWidget } from '@dodoex/widgets';
 
 export enum ChainId {
   MAINNET = 1,

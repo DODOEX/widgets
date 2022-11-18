@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-<a href="https://www.npmjs.com/package/@dodoex-io/widgets"><img src="https://img.shields.io/npm/v/@dodoex-io/widgets" alt="npm version" /></a>
+<a href="https://www.npmjs.com/package/@dodoex/widgets"><img src="https://img.shields.io/npm/v/@dodoex/widgets" alt="npm version" /></a>
 <p>
 
 To demonstrate how to use the [@dodoex/widgets](https://github.com/DODOEX/widgets) package in your react projects, a [Create React App](https://create-react-app.dev/) project has been created by [`create-react-app`](https://create-react-app.dev/docs/getting-started).

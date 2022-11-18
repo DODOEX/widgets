@@ -1,5 +1,5 @@
 {
-  "name": "@dodoex-io/widgets",
+  "name": "widgets",
   "description": "DODOEX Widgets",
   "homepage": "https://github.com/DODOEX/widgets#readme",
   "repository": "https://github.com/DODOEX/widgets",
@@ -8,7 +8,7 @@
   ],
   "private": "true",
   "scripts": {
-    "prepare": "yarn workspace @dodoex-io/icons build && yarn workspace @dodoex-io/components build",
+    "prepare": "yarn workspace @dodoex/icons build && yarn workspace @dodoex/components build",
     "start": "yarn workspace doc start",
     "tsc": "lerna run typescript",
     "test": "lerna run test",

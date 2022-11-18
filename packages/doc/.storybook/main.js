@@ -25,17 +25,17 @@ module.exports = {
       resolve: {
         ...config.resolve,
         alias: {
-          '@dodoex-io/components': path.resolve(
+          '@dodoex/components': path.resolve(
             __dirname,
-            '../../components',
+            '../../dodoex-components',
             'src/',
           ),
-          '@dodoex-io/widgets': path.resolve(
+          '@dodoex/widgets': path.resolve(
             __dirname,
-            '../../widgets',
+            '../../dodoex-widgets',
             'src/',
           ),
-          '@dodoex-io/icons': path.resolve(__dirname, '../../icons'),
+          '@dodoex/icons': path.resolve(__dirname, '../../dodoex-icons'),
           ...config.resolve.alias,
         },
         fallback: {
