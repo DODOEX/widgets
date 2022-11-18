@@ -6,13 +6,14 @@
   "files": [
     "dist"
   ],
-  "private": "true",
+  "private": "false",
   "scripts": {
     "prepare": "yarn workspace @dodoex/icons build && yarn workspace @dodoex/components build",
     "start": "yarn workspace doc start",
     "tsc": "lerna run typescript",
     "test": "lerna run test",
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "release": "yarn workspace @dodoex/widgets release"
   },
   "workspaces": [
     "packages/*"
