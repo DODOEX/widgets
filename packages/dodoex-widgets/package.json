@@ -21,6 +21,7 @@
     "build": "yarn prebuild && yarn compile:i18n && rollup --config",
     "prerelease": "yarn build",
     "release": "semantic-release",
+    "release:local": "np --any-branch --no-cleanup --no-tests",
     "test": "jest"
   },
   "author": "",
