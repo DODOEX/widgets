@@ -5,7 +5,7 @@
       '由Widget项目方设置的额外路由费用',
     Approve: '代币授权',
     Approving: '授权中',
-    'Attention:High slippage tolerance will increase the success rate of transaction, but might not get the best quote.':
+    'Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote.':
       '设置一个高容忍滑点可以帮助交易成功，但可能不会得到这么好的价格，请谨慎使用。',
     'Balance:': '余额:',
     'Basic Fee': '基础手续费',

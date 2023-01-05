@@ -5,8 +5,8 @@
       'Additional routing fees set by the Widget user',
     Approve: 'Approve',
     Approving: 'Approving',
-    'Attention：High slippage tolerance will increase the success rate of transaction, but might not get the best quote.':
-      'Attention:High slippage tolerance will increase the success rate of transaction, but might not get the best quote.',
+    'Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote.':
+      'Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote.',
     'Balance:': 'Balance:',
     'Basic Fee': 'Basic Fee',
     Close: 'Close',
