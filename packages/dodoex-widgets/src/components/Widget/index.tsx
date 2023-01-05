@@ -82,7 +82,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
-        minWidth: 292,
+        minWidth: 335,
         minHeight: 494,
         borderRadius: 16,
         backgroundColor: 'background.paper',
