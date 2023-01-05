@@ -29,7 +29,7 @@ export function BalanceText({
       {address
         ? formatTokenAmountNumber({
             input: balance,
-            decimals,
+            decimals: Math.min(decimals || 4, 4),
           })
         : '-'}
       {showMaxBtn && balance && balance.gt(0) && (

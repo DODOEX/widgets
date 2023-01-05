@@ -44,7 +44,7 @@ export function SettingsDialog({ open, onClose }: SettingsDialogProps) {
             <QuestionTooltip
               title={
                 <Trans>
-                  Attention：High slippage tolerance will increase the success
+                  Attention: High slippage tolerance will increase the success
                   rate of transaction, but might not get the best quote.
                 </Trans>
               }
