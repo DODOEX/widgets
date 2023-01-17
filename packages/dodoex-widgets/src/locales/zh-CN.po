@@ -32,7 +32,7 @@ msgid "Approving"
 msgstr "授权中"
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:46
-msgid "Attention：High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
+msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "设置一个高容忍滑点可以帮助交易成功，但可能不会得到这么好的价格，请谨慎使用。"
 
 #: src/components/Swap/components/TokenCard/BalanceText.tsx:28

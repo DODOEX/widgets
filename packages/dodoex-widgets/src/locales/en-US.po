@@ -31,8 +31,8 @@ msgid "Approving"
 msgstr "Approving"
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:46
-msgid "Attention：High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
-msgstr "Attention：High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
+msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
+msgstr "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
 #: src/components/Swap/components/TokenCard/BalanceText.tsx:28
 msgid "Balance:"
