@@ -122,6 +122,7 @@ describe('connect and trade', () => {
     await act(() => {
       render(
         <SwapWidget
+          apikey="55ea0a80b62316d9bc" // for default test
           provider={hardhat.provider}
           defaultChainId={chainId}
           tokenList={tokenList}

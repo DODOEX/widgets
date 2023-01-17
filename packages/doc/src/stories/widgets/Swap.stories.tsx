@@ -55,6 +55,11 @@ export default {
       options: ['light', 'dark'],
       control: { type: 'radio' },
     },
+    apikey: {
+      control: {
+        type: 'text',
+      },
+    },
     width: {
       control: {
         type: 'text',
@@ -85,6 +90,7 @@ export default {
 export const Primary = (args) => <SwapWidget {...args} />;
 
 Primary.args = {
+  apikey: '55ea0a80b62316d9bc',
   theme: {
     palette: {
       mode: 'light',

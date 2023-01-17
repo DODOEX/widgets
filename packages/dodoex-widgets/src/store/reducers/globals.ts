@@ -6,7 +6,7 @@ export type State = SwapWidgetProps;
 export const initialState: State = {
   height: undefined,
   width: undefined,
-  accessToken: '',
+  apikey: '',
   feeRate: 0,
   rebateTo: '',
 };

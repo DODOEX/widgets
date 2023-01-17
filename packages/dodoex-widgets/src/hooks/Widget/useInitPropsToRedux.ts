@@ -13,7 +13,7 @@ export function useInitPropsToRedux({
   feeRate,
   rebateTo,
   colorMode,
-  accessToken,
+  apikey,
   defaultChainId,
   defaultToToken,
   defaultFromToken }: WidgetProps) {
@@ -48,14 +48,14 @@ export function useInitPropsToRedux({
   }, [width]);
 
   useEffect(() => {
-    if (accessToken) {
+    if (apikey) {
       dispatch(
         setGlobalProps({
-          accessToken,
+          apikey,
         }),
       );
     }
-  }, [accessToken]);
+  }, [apikey]);
 
   useEffect(() => {
     if (feeRate) {
