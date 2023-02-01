@@ -1200,10 +1200,10 @@
   dependencies:
     "@babel/runtime" "^7.17.2"
 
-"@dodoex/widgets@^2.0.0":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@dodoex/widgets/-/widgets-2.0.2.tgz#df059b1ca3338bad7ac5d2284c20af639a185dca"
-  integrity sha512-WtDVG0LodUZU4eu5rj7tUeJIIOtPcvNv/bBb4pkzzn7eieK0qGFpwnLthP9M/cyIOwDp3oXLmtx0VZOZe8K77w==
+"@dodoex/widgets@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@dodoex/widgets/-/widgets-2.1.0.tgz#5ecbc81248dfd9fe818b5725251a0e630f056e8b"
+  integrity sha512-tJ0RSp1Da6VLMgTEWaKbDjPuBb+Y/qisTD8CORW73oigHyxUfnd9p7WSZd0H8IcF+BVfCtuBbXdK9+ew8ZdVhA==
   dependencies:
     "@babel/runtime" "^7.17.0"
     "@dodoex/components" "^2.0.0"
