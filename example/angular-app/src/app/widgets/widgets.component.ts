@@ -10,7 +10,7 @@ export class WidgetsComponent {
   ngOnInit() {
     InitSwapWidget({
       colorMode: 'dark',
-      // apikey: '55ea0a80b62316d9bc', // for default test
+      apikey: '55ea0a80b62316d9bc', // for default test
     });
   }
 }
