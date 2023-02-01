@@ -4,7 +4,7 @@ import { useWeb3React } from '@web3-react/core';
 import { BigNumber as EthersBigNumber, parseFixed } from '@ethersproject/bignumber';
 import React, { useCallback, useMemo, useState } from 'react';
 import { getEstimateGas } from '../contract/wallet';
-import { RoutePriceAPI, RoutePriceDevAPI } from '../../constants/api';
+import { RoutePriceAPI } from '../../constants/api';
 import { ChainId } from '../../constants/chains';
 import { getSwapTxValue } from '../../utils';
 import { useSelector } from 'react-redux';
@@ -40,7 +40,7 @@ export function useFetchRoutePrice({
   const chainId = useMemo(() => walletChainId || defaultChainId, [walletChainId, defaultChainId])
   const slippage = useSelector(getSlippage) || DEFAULT_SWAP_SLIPPAGE;
   const ddl = useSelector(getTxDdl) || DEFAULT_SWAP_DDL;
-  const { feeRate, rebateTo, accessToken } = useSelector(getGlobalProps);
+  const { feeRate, rebateTo, apikey } = useSelector(getGlobalProps);
   const apiDdl = useMemo(
     () => Math.floor(Date.now() / 1000) + ddl * 60,
     [ddl],
@@ -69,7 +69,7 @@ export function useFetchRoutePrice({
     const params: any = {
       chainId,
       deadLine: apiDdl,
-      accessToken,
+      apikey,
       slippage,
       source: 'dodoV2AndMixWasm',
       toTokenAddress: toToken.address,
@@ -87,21 +87,14 @@ export function useFetchRoutePrice({
       params.marginAmount = marginAmount;
     }
 
-    // TODO: Only specific chains support fee sharing!
-    const isRebateVersion = [
-      ChainId.BSC,
-      ChainId.POLYGON,
-      ChainId.MAINNET,
-    ].includes(chainId);
-
-    if (isRebateVersion && rebateTo && feeRate) {
+    if (rebateTo && feeRate) {
       params.rebateTo = rebateTo;
       params.fee = feeRate;
     }
 
     try {
       const resRoutePrice = await axios.get(
-        `${isRebateVersion ? RoutePriceDevAPI : RoutePriceAPI}/dodoapi/getdodoroute`,
+        RoutePriceAPI,
         { params },
       )
       const routeInfo = resRoutePrice.data.data;
@@ -156,7 +149,7 @@ export function useFetchRoutePrice({
     fromToken,
     provider,
     fromAmount,
-    accessToken,
+    apikey,
   ]);
 
   usePriceTimer({ refetch });

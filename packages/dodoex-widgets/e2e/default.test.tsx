@@ -16,7 +16,11 @@ import { act } from '@testing-library/react-hooks';
 describe('default', () => {
   it('waiting for the wallet to connect', async () => {
     await act(() => {
-      render(<SwapWidget />);
+      render(
+        <SwapWidget
+          apikey="55ea0a80b62316d9bc" // for default test
+        />,
+      );
     });
     expect(screen.queryByTestId(connectWalletBtn)).toBeVisible();
     expect(screen.queryByTestId(swapReviewBtn)).toBeNull();

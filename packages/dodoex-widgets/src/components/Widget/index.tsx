@@ -33,9 +33,9 @@ export interface WidgetProps
   extends Web3ConnectorsProps,
     InitTokenListProps,
     ExecutionProps {
+  apikey: string;
   theme?: ThemeOptions;
   colorMode?: PaletteMode;
-  accessToken?: string;
   defaultChainId?: ChainId;
   width?: string | number;
   height?: string | number;

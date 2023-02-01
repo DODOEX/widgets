@@ -64,7 +64,7 @@ Supported [API](https://docs.dodoex.io/english/developers/swap-widget/api) from 
 
 - `theme`: Can override theme, text, and style. Refer to the Instructions page for more information.
 - `colorMode`: Light or dark mode
-- `accessToken`: Passed onto the access Token of the price inquiry interface
+- `apikey`: Passed onto the apikey provided by DODO
 - `width`: Widget width
 - `height`: Widget height
 - `feeRate`: Transaction fee rate. Unit: 1e18

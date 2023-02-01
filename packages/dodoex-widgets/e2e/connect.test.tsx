@@ -30,7 +30,7 @@ import {
   tokenPickerWrapper,
 } from '../src/constants/testId';
 import { TokenInfo } from '../src/hooks/Token';
-import { RoutePriceDevAPI, FiatPriceAPI } from '../src/constants/api';
+import { RoutePriceAPI, FiatPriceAPI } from '../src/constants/api';
 import {
   tokenListMap,
   tokenList,
@@ -42,7 +42,7 @@ import { mineUpToNext, setBalance } from './utils/hardhat';
 const chainId = 1;
 const baseToken = tokenListMap.ETH;
 const quoteToken = tokenListMap.DODO;
-const routeApi = `${RoutePriceDevAPI}/dodoapi/getdodoroute`;
+const routeApi = `${RoutePriceAPI}`;
 const priceApi = `${FiatPriceAPI}/api/v1/price/current/batch`;
 
 jest.mock('axios', () => ({
@@ -122,6 +122,7 @@ describe('connect and trade', () => {
     await act(() => {
       render(
         <SwapWidget
+          apikey="55ea0a80b62316d9bc" // for default test
           provider={hardhat.provider}
           defaultChainId={chainId}
           tokenList={tokenList}

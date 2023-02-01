@@ -1,4 +1,4 @@
-# React App Example
+# Angular App Example
 
 <p align="center">
   <a>
@@ -10,7 +10,7 @@
 <a href="https://www.npmjs.com/package/@dodoex/widgets"><img src="https://img.shields.io/npm/v/@dodoex/widgets" alt="npm version" /></a>
 <p>
 
-To demonstrate how to use the [@dodoex/widgets](https://github.com/DODOEX/widgets) package in your react projects, a [Create React App](https://create-react-app.dev/) project has been created by [`create-react-app`](https://create-react-app.dev/docs/getting-started).
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.3.
 
 ## dodoex-widgets
 
@@ -24,7 +24,7 @@ npm           # install dependencies
 npm run start # run the development server
 ```
 
-Navigate to [http://localhost:3000](http://localhost:3000) to see the widget.
+Navigate to [http://localhost:4200](http://localhost:4200) to see the widget.
 
 ---
 
@@ -53,9 +53,9 @@ Supported [API](https://docs.dodoex.io/english/developers/swap-widget/api) from 
 
 For all available props (including theming), please refer to the up-to-date [documentation](https://docs.dodoex.io/english/developers/swap-widget).
 
-### Known issues with Create React App
+### Other issues with Angular App
 
-- If your react version is >=18.0.0, please make sure your react-redux is updated to >=8.0.0
+- Please make sure your tsconfig.ts file has set the `skipLibCheck` to `true` to ignore ts check of widgets packages.
 
 ### Additional documentation
 
@@ -72,5 +72,8 @@ For all available props (including theming), please refer to the up-to-date [doc
   Hop into #widgets for help.
 
 - [GitHub](https://github.com/DODOEX/widgets)
-  View the Swap Widget's source.
+  View the Swap Widget's source.  
 
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
