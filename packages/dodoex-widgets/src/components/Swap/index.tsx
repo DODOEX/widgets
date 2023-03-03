@@ -30,7 +30,6 @@ import useGetBalance from '../../hooks/Token/useGetBalance';
 import { useGetTokenStatus } from '../../hooks/Token/useGetTokenStatus';
 import { TokenInfo, ApprovalState } from '../../hooks/Token/type';
 import {
-  useMarginAmount,
   useFetchFiatPrice,
   useFetchRoutePrice,
 } from '../../hooks/Swap';
@@ -115,10 +114,6 @@ export function Swap() {
     () => getPendingRest(isReverseRouting ? toToken : fromToken),
     [fromToken?.address, toToken?.address, getPendingRest, isReverseRouting],
   );
-  const { marginAmount } = useMarginAmount({
-    token: isReverseRouting ? toToken : fromToken,
-    fiatPrice: isReverseRouting ? toFiatPrice : fromFiatPrice,
-  });
   const {
     resAmount,
     priceImpact,
@@ -131,7 +126,6 @@ export function Swap() {
   } = useFetchRoutePrice({
     toToken,
     fromToken,
-    marginAmount,
     fromAmount: fromAmt,
     toAmount: toAmt,
   });
