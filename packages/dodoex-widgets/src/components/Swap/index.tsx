@@ -76,12 +76,13 @@ export function Swap() {
   const [displayingToAmt, setDisplayingToAmt] = useState<string>('');
   const [fromAmt, setFromAmt] = useState<string>('');
   const [toAmt, setToAmt] = useState<string>('');
+  const debounceTime = 1000;
   const debouncedSetFromAmt = useMemo(
-    () => debounce((amt) => setFromAmt(amt), 600),
+    () => debounce((amt) => setFromAmt(amt), debounceTime),
     [],
   );
   const debouncedSetToAmt = useMemo(
-    () => debounce((amt) => setToAmt(amt), 600),
+    () => debounce((amt) => setToAmt(amt), debounceTime),
     [],
   );
 
@@ -192,10 +193,22 @@ export function Swap() {
   }, [defaultToToken, defaultFromToken, chainId, updateFromAmt, updateToAmt]);
 
   const switchTokens = useCallback(() => {
-    setFromToken(toToken);
-    setToToken(fromToken);
     updateFromAmt('');
-  }, [setFromToken, toToken, setToToken, fromToken, updateFromAmt]);
+    updateToAmt('');
+    if (!fromAmt && !toAmt) {
+      setFromToken(toToken);
+      setToToken(fromToken);
+    }
+  }, [
+    setFromToken,
+    toToken,
+    setToToken,
+    fromToken,
+    updateFromAmt,
+    updateToAmt,
+    fromAmt,
+    toAmt,
+  ]);
 
   const handleMaxClick = useCallback(
     (max: string) =>
@@ -573,18 +586,21 @@ export function Swap() {
             }
             onTokenChange={(token: TokenInfo, isOccupied: boolean) => {
               if (isOccupied) return switchTokens();
+              updateFromAmt('');
+              updateToAmt('');
               setFromToken(token);
-              if (!isReverseRouting) {
-                updateFromAmt('');
-              }
             }}
             readOnly={isReverseRouting}
           />
 
-          {/* Switch Icon */}
+          {
+            /* Switch Icon */
+          }
           <SwitchBox onClick={switchTokens} />
 
-          {/* Second Token Card  */}
+          {
+            /* Second Token Card  */
+          }
           <TokenCard
             token={toToken}
             amt={toFinalAmt}
@@ -608,10 +624,9 @@ export function Swap() {
             }
             onTokenChange={(token: TokenInfo, isOccupied: boolean) => {
               if (isOccupied) return switchTokens();
+              updateFromAmt('');
+              updateToAmt('');
               setToToken(token);
-              if (isReverseRouting) {
-                updateToAmt('');
-              }
             }}
             readOnly={!isReverseRouting}
           />

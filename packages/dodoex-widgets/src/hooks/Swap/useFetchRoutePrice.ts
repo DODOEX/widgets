@@ -67,6 +67,8 @@ export function useFetchRoutePrice({
 
   const refetch = useCallback(async () => {
     if (!chainId || !fromToken || !toToken) return;
+    if (!isReverseRouting && !fromAmount) return;
+    if (isReverseRouting && !toAmount) return;
     setStatus(RoutePriceStatus.Loading);
     const params: any = {
       chainId,

@@ -154,12 +154,13 @@ Primary.args = {
   },
   defaultToToken: {
     chainId: 1,
-    address: '0x0f51bb10119727a7e5eA3538074fb341F56B09Ad',
+    address: '0x0f51bb10119727a7e5ea3538074fb341f56b09ad',
     name: 'DAO Maker',
     decimals: 18,
     symbol: 'DAO',
-    logoURI: '',
-    amount: 2000,
+    logoURI:
+      'https://assets.coingecko.com/coins/images/13915/small/4.png?1612838831',
+    amount: 20,
   },
   popularTokenList: [
     {
