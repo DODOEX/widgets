@@ -26,7 +26,7 @@ export enum RoutePriceStatus {
 export interface FetchRoutePrice {
   fromToken: TokenInfo | null;
   toToken: TokenInfo | null;
-  marginAmount: string;
+  marginAmount?: string;
   fromAmount: string;
   toAmount: string;
 }
@@ -51,6 +51,7 @@ export function useFetchRoutePrice({
     RoutePriceStatus.Initial,
   );
   const [resAmount, setResAmount] = useState<number | null>(null);
+  const [resValue, setResValue] = useState<string>('');
   const [baseFeeAmount, setBaseFeeAmount] = useState<number | null>(null);
   const [additionalFeeAmount, setAdditionalFeeAmount] = useState<number | null>(null);
   const [priceImpact, setPriceImpact] = useState<number | null>(null);
@@ -95,10 +96,6 @@ export function useFetchRoutePrice({
       ).toString();
     }
 
-    if (!new BigNumber(marginAmount).isNaN()) {
-      params.marginAmount = marginAmount;
-    }
-
     if (rebateTo && feeRate) {
       params.rebateTo = rebateTo;
       params.fee = feeRate;
@@ -121,24 +118,19 @@ export function useFetchRoutePrice({
 
         setTo(routeInfo.to);
         setData(routeInfo.data);
+        setResValue(routeInfo.value);
         setUseSource(routeInfo.useSource);
         setDuration(routeInfo.duration);
       } else {
         setStatus(RoutePriceStatus.Failed);
-      }
-
-      const txValue = getSwapTxValue({
-        tokenAmount: new BigNumber(isReverseRouting ? routeInfo.resAmount : fromAmount),
-        tokenAddress: params.fromTokenAddress,
-        chainId: params.chainId,
-      });
+      };
 
       if (!account || !provider || !fromAmount) return;
 
       const gasLimit = await getEstimateGas({
         from: account,
         to: routeInfo.to,
-        value: txValue,
+        value: routeInfo.value,
         data: routeInfo.data,
       }, provider);
 
@@ -186,11 +178,12 @@ export function useFetchRoutePrice({
         ddl,
         fromTokenAddress: fromToken.address,
         parsedFromAmt: new BigNumber(finalFromAmount),
+        value: resValue,
         gasLimit: resCostGas,
         subtitle,
       });
     },
-    [to, ddl, data, duration, useSource, fromToken, fromAmount, resCostGas, resAmount, isReverseRouting],
+    [to, ddl, data, duration, useSource, fromToken, fromAmount, resCostGas, resAmount, resValue, isReverseRouting],
   );
 
   return {

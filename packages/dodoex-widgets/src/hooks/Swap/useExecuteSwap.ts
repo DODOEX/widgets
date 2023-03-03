@@ -24,7 +24,9 @@ export default function useExecuteSwap() {
       ddl,
       gasLimit,
       subtitle,
+      resValue,
     }: {
+        resValue: string;
       fromTokenAddress: string;
       parsedFromAmt: BigNumber;
       to: string;
@@ -36,13 +38,7 @@ export default function useExecuteSwap() {
       subtitle: React.ReactNode;
     }) => {
       const ddlSecRel = ddl * 60;
-      const currentChainId = (chainId || ChainId.MAINNET) as ChainId;
-      const txValue = getSwapTxValue({
-        tokenAmount: parsedFromAmt,
-        tokenAddress: fromTokenAddress,
-        chainId: currentChainId,
-      });
-
+      const txValue = resValue;
       if (useSource && useSource.toLowerCase() !== 'weth') {
         if (gasLimit && gasLimit.lt(MIN_GAS_LIMIT)) {
           console.debug('Warning: GasLimit less than the minimum!');
