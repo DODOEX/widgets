@@ -381,20 +381,14 @@ export function Swap() {
   ]);
 
   const swapButton = useMemo(() => {
-    const approvalState = isReverseRouting
-      ? getApprovalState(toToken, toAmt)
-      : getApprovalState(fromToken, fromAmt);
+    const approvalState = getApprovalState(fromToken, fromAmt);
     const isApproving = approvalState === ApprovalState.Approving;
     const needApprove =
       approvalState === ApprovalState.Insufficient && !pendingReset;
 
     const keepChanges = isETH ? 0.1 : 0.02;
-    const isBasicToken = isReverseRouting
-      ? basicTokenAddress === toToken?.address
-      : basicTokenAddress === fromToken?.address;
-    const balance = new BigNumber(
-      (isReverseRouting ? toTokenBalance : fromTokenBalance) || 0,
-    );
+    const isBasicToken = basicTokenAddress === fromToken?.address;
+    const balance = new BigNumber(fromTokenBalance || 0);
 
     if (!account) return <ConnectWallet />;
     if (isInflight) {
@@ -415,12 +409,12 @@ export function Swap() {
         <Button
           fullWidth
           disabled={isApproving}
-          onClick={() => submitApprove(isReverseRouting ? toToken : fromToken)}
+          onClick={() => submitApprove(fromToken)}
         >
           {isApproving ? <Trans>Approving</Trans> : <Trans>Approve</Trans>}
         </Button>
       );
-    if (!new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0))
+    if (!new BigNumber(fromAmt).gt(0))
       return (
         <Button fullWidth disabled data-testid={swapAlertEnterAmountBtn}>
           <Trans>Enter an amount</Trans>
@@ -439,10 +433,7 @@ export function Swap() {
           <Trans>Quote not available</Trans>
         </Button>
       );
-    if (
-      balance.lt(isReverseRouting ? toAmt : fromAmt) ||
-      (isBasicToken && balance.lte(keepChanges))
-    )
+    if (balance.lt(fromAmt) || (isBasicToken && balance.lte(keepChanges)))
       // balance need to greater than reserved gas!
       return (
         <Button
@@ -466,7 +457,6 @@ export function Swap() {
     isETH,
     account,
     fromAmt,
-    toAmt,
     toToken,
     resAmount,
     fromToken,
@@ -475,8 +465,6 @@ export function Swap() {
     pendingReset,
     submitApprove,
     resPriceStatus,
-    isReverseRouting,
-    toTokenBalance,
     fromTokenBalance,
     getApprovalState,
     basicTokenAddress,
@@ -593,14 +581,10 @@ export function Swap() {
             readOnly={isReverseRouting}
           />
 
-          {
-            /* Switch Icon */
-          }
+          {/* Switch Icon */}
           <SwitchBox onClick={switchTokens} />
 
-          {
-            /* Second Token Card  */
-          }
+          {/* Second Token Card  */}
           <TokenCard
             token={toToken}
             amt={toFinalAmt}
@@ -611,8 +595,6 @@ export function Swap() {
               }
               dispatch(setGlobalProps({ isReverseRouting: true }));
             }}
-            onMaxClick={handleMaxClick}
-            showMaxBtn={isReverseRouting && !displayingToAmt}
             occupiedAddrs={[fromToken?.address ?? '']}
             fiatPriceTxt={
               displayToFiatPrice
