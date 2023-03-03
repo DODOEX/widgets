@@ -143,7 +143,7 @@ Primary.args = {
     },
   },
   defaultFromToken: {
-    chainId: 1,
+    chainId: 4,
     symbol: 'DODO',
     address: '0xeaa70c2a40820dF9D38149C84dd943CFcB562587',
     name: 'DODO',
@@ -153,7 +153,7 @@ Primary.args = {
     // amount: 10,
   },
   defaultToToken: {
-    chainId: 1,
+    chainId: 4,
     address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
     name: 'Ether',
     decimals: 18,
