@@ -192,7 +192,7 @@ function TransactionTime({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Trans>View on Tx</Trans>
+        <Trans>Tx</Trans>
         <Box
           component={ArrowTopRightBorder}
           sx={{

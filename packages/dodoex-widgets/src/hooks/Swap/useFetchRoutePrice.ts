@@ -128,10 +128,10 @@ export function useFetchRoutePrice({
       }
 
       const txValue = getSwapTxValue({
-        tokenAmount: new BigNumber(isReverseRouting ? toAmount : fromAmount),
-        tokenAddress: isReverseRouting ? params.toTokenAddress : params.fromTokenAddress,
+        tokenAmount: new BigNumber(isReverseRouting ? routeInfo.resAmount : fromAmount),
+        tokenAddress: params.fromTokenAddress,
         chainId: params.chainId,
-      })
+      });
 
       if (!account || !provider || !fromAmount) return;
 
@@ -176,7 +176,8 @@ export function useFetchRoutePrice({
   const execute = useExecuteSwap();
   const executeSwap = useCallback(
     (subtitle: React.ReactNode) => {
-      if (!fromToken || !fromAmount) return;
+      const finalFromAmount = isReverseRouting ? resAmount : fromAmount;
+      if (!fromToken || !finalFromAmount) return;
       execute({
         to,
         data,
@@ -184,12 +185,12 @@ export function useFetchRoutePrice({
         duration,
         ddl,
         fromTokenAddress: fromToken.address,
-        parsedFromAmt: new BigNumber(fromAmount),
+        parsedFromAmt: new BigNumber(finalFromAmount),
         gasLimit: resCostGas,
         subtitle,
       });
     },
-    [to, ddl, data, duration, useSource, fromToken, fromAmount, resCostGas],
+    [to, ddl, data, duration, useSource, fromToken, fromAmount, resCostGas, resAmount, isReverseRouting],
   );
 
   return {
