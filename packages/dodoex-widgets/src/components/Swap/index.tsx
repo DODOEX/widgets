@@ -195,10 +195,8 @@ export function Swap() {
   const switchTokens = useCallback(() => {
     updateFromAmt('');
     updateToAmt('');
-    if (!fromAmt && !toAmt) {
-      setFromToken(toToken);
-      setToToken(fromToken);
-    }
+    setFromToken(toToken);
+    setToToken(fromToken);
   }, [
     setFromToken,
     toToken,
@@ -206,8 +204,6 @@ export function Swap() {
     fromToken,
     updateFromAmt,
     updateToAmt,
-    fromAmt,
-    toAmt,
   ]);
 
   const handleMaxClick = useCallback(
@@ -230,21 +226,19 @@ export function Swap() {
     [priceImpact],
   );
 
-  const displayFromFiatPrice = useMemo(
-    () =>
-      fromAmt && fromFiatPrice
-        ? new BigNumber(fromFiatPrice).multipliedBy(fromAmt)
-        : null,
-    [fromFiatPrice, fromAmt],
-  );
+  const displayFromFiatPrice = useMemo(() => {
+    const fromAmount = isReverseRouting ? resAmount : fromAmt;
+    return fromAmount && fromFiatPrice
+      ? new BigNumber(fromFiatPrice).multipliedBy(fromAmount)
+      : null;
+  }, [fromFiatPrice, fromAmt, isReverseRouting, resAmount]);
 
-  const displayToFiatPrice = useMemo(
-    () =>
-      resAmount && toFiatPrice
-        ? new BigNumber(toFiatPrice).multipliedBy(resAmount)
-        : null,
-    [toFiatPrice, resAmount],
-  );
+  const displayToFiatPrice = useMemo(() => {
+    const toAmount = isReverseRouting ? toAmt : resAmount;
+    return toAmount && toFiatPrice
+      ? new BigNumber(toFiatPrice).multipliedBy(toAmount)
+      : null;
+  }, [toFiatPrice, toAmt, isReverseRouting, resAmount]);
 
   const priceImpactWarning = useMemo(() => {
     return (
@@ -456,6 +450,7 @@ export function Swap() {
   }, [
     isETH,
     account,
+    toAmt,
     fromAmt,
     toToken,
     resAmount,
