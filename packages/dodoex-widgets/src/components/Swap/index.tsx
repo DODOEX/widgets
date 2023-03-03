@@ -491,7 +491,10 @@ export function Swap() {
               input: resAmount,
               decimals: fromToken?.decimals,
             })} ${fromToken.symbol}`
-          : `${fromAmt} ${fromToken.symbol}`}
+          : `${formatTokenAmountNumber({
+              input: fromAmt,
+              decimals: fromToken?.decimals,
+            })} ${fromToken.symbol}`}
         <Box
           component={DoubleRight}
           sx={{
@@ -509,14 +512,17 @@ export function Swap() {
           }}
         />
         {isReverseRouting
-          ? `${toAmt} ${toToken.symbol}`
+          ? `${formatTokenAmountNumber({
+              input: toAmt,
+              decimals: toToken?.decimals,
+            })} ${toToken.symbol}`
           : `${formatTokenAmountNumber({
               input: resAmount,
               decimals: toToken?.decimals,
             })} ${toToken.symbol}`}
       </Box>
     );
-  }, [fromToken, toToken, fromAmt, toAmt, isReverseRouting, resAmount]);
+  }, [fromToken, toToken, fromAmt, toAmt, resAmount, isReverseRouting]);
 
   return (
     <>

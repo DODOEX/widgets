@@ -163,7 +163,9 @@ export function ReviewDialog({
           <Box sx={{ mt: 12, typography: 'h6' }}>{`1 ${
             fromToken?.symbol
           }  = ${formatTokenAmountNumber({
-            input: toAmount as number,
+            input: new BigNumber(toAmount as number).dividedBy(
+              new BigNumber(fromAmount as number),
+            ),
             decimals: toToken?.decimals,
           })} ${toToken?.symbol}`}</Box>
         </Box>

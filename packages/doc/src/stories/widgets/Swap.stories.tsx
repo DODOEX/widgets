@@ -143,7 +143,7 @@ Primary.args = {
     },
   },
   defaultFromToken: {
-    chainId: 1,
+    chainId: 4,
     symbol: 'USDC',
     address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     name: 'USD Coin',
@@ -153,7 +153,7 @@ Primary.args = {
     // amount: 10,
   },
   defaultToToken: {
-    chainId: 1,
+    chainId: 4,
     address: '0x0f51bb10119727a7e5ea3538074fb341f56b09ad',
     name: 'DAO Maker',
     decimals: 18,
