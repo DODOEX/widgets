@@ -143,21 +143,23 @@ Primary.args = {
     },
   },
   defaultFromToken: {
-    chainId: 4,
+    chainId: 1,
     symbol: 'DODO',
     address: '0xeaa70c2a40820dF9D38149C84dd943CFcB562587',
     name: 'DODO',
     decimals: 18,
     source: 'dodo',
     logoURI: '',
+    // amount: 10,
   },
   defaultToToken: {
-    chainId: 4,
+    chainId: 1,
     address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
     name: 'Ether',
     decimals: 18,
     symbol: 'ETH',
     logoURI: '',
+    // amount: 20,
   },
   popularTokenList: [
     {

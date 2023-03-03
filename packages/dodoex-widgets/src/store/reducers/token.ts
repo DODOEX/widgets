@@ -13,6 +13,9 @@ export type SlippageWithToken = {
   slippage: string;
   tokens: string[];
 };
+export interface DefaultTokenInfo extends TokenInfo {
+  amount?: number,
+}
 
 export type State = {
   tokenList: TokenList;
@@ -21,8 +24,8 @@ export type State = {
   accountBalances: AccountBalances;
   balanceLoadings: { [key in string]: boolean };
   slippageWithTokens: SlippageWithToken[];
-  defaultFromToken?: TokenInfo;
-  defaultToToken?: TokenInfo;
+  defaultFromToken?: DefaultTokenInfo;
+  defaultToToken?: DefaultTokenInfo;
 };
 
 export const initialState: State = {
