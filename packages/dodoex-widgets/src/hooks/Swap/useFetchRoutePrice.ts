@@ -28,11 +28,13 @@ export interface FetchRoutePrice {
   toToken: TokenInfo | null;
   marginAmount: string;
   fromAmount: string;
+  toAmount: string;
 }
 export function useFetchRoutePrice({
   toToken,
   fromToken,
   fromAmount,
+  toAmount,
   marginAmount,
 }: FetchRoutePrice) {
   const { account, chainId: walletChainId, provider } = useWeb3React();
@@ -40,7 +42,7 @@ export function useFetchRoutePrice({
   const chainId = useMemo(() => walletChainId || defaultChainId, [walletChainId, defaultChainId])
   const slippage = useSelector(getSlippage) || DEFAULT_SWAP_SLIPPAGE;
   const ddl = useSelector(getTxDdl) || DEFAULT_SWAP_DDL;
-  const { feeRate, rebateTo, apikey } = useSelector(getGlobalProps);
+  const { feeRate, rebateTo, apikey, isReverseRouting } = useSelector(getGlobalProps);
   const apiDdl = useMemo(
     () => Math.floor(Date.now() / 1000) + ddl * 60,
     [ddl],
@@ -77,11 +79,19 @@ export function useFetchRoutePrice({
       fromTokenAddress: fromToken.address,
       fromTokenDecimals: fromToken.decimals,
       userAddr: account || EmptyAddress,
-      fromAmount: parseFixed(
+    };
+
+    if (isReverseRouting) {
+      params.toAmount = parseFixed(
+        String(toAmount || 1),
+        toToken.decimals,
+      ).toString();
+    } else {
+      params.fromAmount = parseFixed(
         String(fromAmount || 1),
         fromToken.decimals,
-      ).toString(),
-    };
+      ).toString();
+    }
 
     if (!new BigNumber(marginAmount).isNaN()) {
       params.marginAmount = marginAmount;
@@ -116,8 +126,8 @@ export function useFetchRoutePrice({
       }
 
       const txValue = getSwapTxValue({
-        tokenAmount: new BigNumber(fromAmount),
-        tokenAddress: params.fromTokenAddress,
+        tokenAmount: new BigNumber(isReverseRouting ? toAmount : fromAmount),
+        tokenAddress: isReverseRouting ? params.toTokenAddress : params.fromTokenAddress,
         chainId: params.chainId,
       })
 
@@ -149,14 +159,17 @@ export function useFetchRoutePrice({
     fromToken,
     provider,
     fromAmount,
+    toAmount,
     apikey,
+    isReverseRouting,
   ]);
 
   usePriceTimer({ refetch });
 
   const resAmt = useMemo(() => {
-    return status !== RoutePriceStatus.Loading && fromAmount ? resAmount : null;
-  }, [status, fromAmount, resAmount]);
+    const tokenAmount = isReverseRouting ? toAmount : fromAmount;
+    return status !== RoutePriceStatus.Loading && tokenAmount ? resAmount : null;
+  }, [status, isReverseRouting, toAmount, fromAmount, resAmount]);
 
   const execute = useExecuteSwap();
   const executeSwap = useCallback(

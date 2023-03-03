@@ -11,6 +11,7 @@ import TokenLogo from '../../TokenLogo';
 import { DetailBorder, Done, CaretUp } from '@dodoex/icons';
 import useInflights from '../../../hooks/Submission/useInflights';
 import { PRICE_IMPACT_THRESHOLD } from '../../../constants/swap';
+import { getGlobalProps } from '../../../store/selectors/globals';
 import { useSelector } from 'react-redux';
 import { QuestionTooltip } from '../../Tooltip';
 import { getSlippage } from '../../../store/selectors/settings';
@@ -19,12 +20,13 @@ export interface ReviewDialogProps {
   open: boolean;
   execute: () => void;
   onClose: () => void;
+  clearToAmt: () => void;
   clearFromAmt: () => void;
   toToken: TokenInfo | null;
   fromToken: TokenInfo | null;
   priceImpact: string;
-  fromAmount: string;
-  toAmount: number | null;
+  fromAmount: string | number | null;
+  toAmount: string | number | null;
   baseFeeAmount: number | null;
   additionalFeeAmount: number | null;
   curToFiatPrice: BigNumber | null;
@@ -41,6 +43,7 @@ export function ReviewDialog({
   toAmount,
   priceImpact,
   clearFromAmt,
+  clearToAmt,
   baseFeeAmount,
   curToFiatPrice,
   curFromFiatPrice,
@@ -50,6 +53,7 @@ export function ReviewDialog({
   const theme = useTheme();
   const { isInflight } = useInflights();
   const slippage = useSelector(getSlippage);
+  const { isReverseRouting } = useSelector(getGlobalProps);
   const isPriceWaningShown = useMemo(
     () => new BigNumber(priceImpact).gt(PRICE_IMPACT_THRESHOLD),
     [priceImpact],
@@ -61,10 +65,10 @@ export function ReviewDialog({
   useEffect(() => {
     if (isInflight) {
       onClose();
-      clearFromAmt();
+      isReverseRouting ? clearToAmt() : clearFromAmt();
       setIsConfirming(false);
     }
-  }, [isInflight]);
+  }, [isInflight, isReverseRouting]);
 
   useEffect(() => {
     // Need to recheck if price update!

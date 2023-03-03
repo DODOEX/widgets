@@ -18,6 +18,7 @@ export interface TokenCardProps {
   onMaxClick?: (max: string) => void;
   token?: TokenPickerProps['value'];
   onInputChange?: (v: string) => void;
+  onInputFocus?: () => void;
   onTokenChange: TokenPickerProps['onChange'];
 }
 export function TokenCard({
@@ -29,6 +30,7 @@ export function TokenCard({
   onMaxClick,
   fiatPriceTxt,
   occupiedAddrs,
+  onInputFocus,
   onInputChange,
   onTokenChange,
 }: TokenCardProps) {
@@ -75,6 +77,7 @@ export function TokenCard({
 
       <NumberInput
         value={amt}
+        onFocus={onInputFocus}
         onChange={onInputChange}
         readOnly={readOnly}
         withClear
