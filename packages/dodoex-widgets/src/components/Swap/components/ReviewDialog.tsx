@@ -4,15 +4,17 @@ import { useEffect, useState, useMemo } from 'react';
 import Dialog, { DialogProps } from './Dialog';
 import { Box, Button, BaseButton, useTheme } from '@dodoex/components';
 import { TokenInfo } from '../../../hooks/Token';
-import { DoubleRight } from '@dodoex/icons';
 import { formatTokenAmountNumber } from '../../../utils/formatter';
 import { formatReadableNumber } from '../../../utils/formatter';
 import TokenLogo from '../../TokenLogo';
-import { DetailBorder, Done, CaretUp } from '@dodoex/icons';
+import { DetailBorder, Done, CaretUp, DoubleRight } from '@dodoex/icons';
+import { setGlobalProps } from '../../../store/actions/globals';
+import { getGlobalProps } from '../../../store/selectors/globals';
+import { ContractStatus } from '../../../store/reducers/globals';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppThunkDispatch } from '../../../store/actions';
 import useInflights from '../../../hooks/Submission/useInflights';
 import { PRICE_IMPACT_THRESHOLD } from '../../../constants/swap';
-import { getGlobalProps } from '../../../store/selectors/globals';
-import { useSelector } from 'react-redux';
 import { QuestionTooltip } from '../../Tooltip';
 import { getSlippage } from '../../../store/selectors/settings';
 
@@ -51,24 +53,25 @@ export function ReviewDialog({
   additionalFeeAmount,
 }: ReviewDialogProps) {
   const theme = useTheme();
-  const { isInflight } = useInflights();
   const slippage = useSelector(getSlippage);
-  const { isReverseRouting } = useSelector(getGlobalProps);
+  const dispatch = useDispatch<AppThunkDispatch>();
+  const { contractStatus } = useSelector(getGlobalProps);
   const isPriceWaningShown = useMemo(
     () => new BigNumber(priceImpact).gt(PRICE_IMPACT_THRESHOLD),
     [priceImpact],
   );
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
-  const [isConfirming, setIsConfirming] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isInflight) {
+    if (contractStatus !== ContractStatus.Pending) {
       onClose();
-      isReverseRouting ? clearToAmt() : clearFromAmt();
-      setIsConfirming(false);
     }
-  }, [isInflight, isReverseRouting]);
+    if (contractStatus === ContractStatus.Success) {
+      clearToAmt();
+      clearFromAmt();
+    }
+  }, [contractStatus]);
 
   useEffect(() => {
     // Need to recheck if price update!
@@ -79,7 +82,11 @@ export function ReviewDialog({
     <Dialog
       open={open}
       onClose={() => {
-        setIsConfirming(false);
+        dispatch(
+          setGlobalProps({
+            contractStatus: ContractStatus.Initial,
+          }),
+        );
         onClose();
       }}
       title={<Trans>Swap summary</Trans>}
@@ -368,15 +375,19 @@ export function ReviewDialog({
         )}
 
         <Button
-          isLoading={isConfirming}
+          isLoading={contractStatus == ContractStatus.Pending}
           disabled={isPriceWaningShown && !isChecked}
           fullWidth
           onClick={() => {
             execute();
-            setIsConfirming(true);
+            dispatch(
+              setGlobalProps({
+                contractStatus: ContractStatus.Pending,
+              }),
+            );
           }}
         >
-          {isConfirming ? (
+          {contractStatus == ContractStatus.Pending ? (
             <Trans>Confirming</Trans>
           ) : (
             <Trans>Confirm swap</Trans>
