@@ -165,43 +165,31 @@ export function Swap() {
     }
     if (defaultFromToken && defaultFromToken.chainId === chainId) {
       setFromToken(defaultFromToken);
-    }
-    if (defaultToToken && defaultToToken.chainId === chainId) {
-      setToToken(defaultToToken);
-    }
-    if (defaultFromToken && defaultFromToken.amount) {
-      if (isReverseRouting) {
+      if (defaultFromToken.amount) {
         dispatch(
           setGlobalProps({
             isReverseRouting: false,
           }),
         );
+        updateFromAmt(defaultFromToken.amount);
       }
-      updateFromAmt(defaultFromToken.amount);
     }
-    if (
-      defaultToToken &&
-      defaultToToken.amount &&
-      defaultFromToken &&
-      !defaultFromToken.amount
-    ) {
-      if (!isReverseRouting) {
+    if (defaultToToken && defaultToToken.chainId === chainId) {
+      setToToken(defaultToToken);
+      if (
+        defaultToToken.amount &&
+        defaultFromToken &&
+        !defaultFromToken.amount
+      ) {
         dispatch(
           setGlobalProps({
             isReverseRouting: true,
           }),
         );
+        updateToAmt(defaultToToken.amount);
       }
-      updateToAmt(defaultToToken.amount);
     }
-  }, [
-    defaultToToken,
-    defaultFromToken,
-    chainId,
-    updateFromAmt,
-    updateToAmt,
-    isReverseRouting,
-  ]);
+  }, [defaultToToken, defaultFromToken, chainId, updateFromAmt, updateToAmt]);
 
   const switchTokens = useCallback(() => {
     setFromToken(toToken);
