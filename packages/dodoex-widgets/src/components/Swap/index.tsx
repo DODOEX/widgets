@@ -384,63 +384,63 @@ export function Swap() {
     const isBasicToken = basicTokenAddress === fromToken?.address;
     const balance = new BigNumber(fromTokenBalance || 0);
 
-    if (!account) return <ConnectWallet />;
-    if (isInflight) {
-      return (
-        <Button fullWidth isLoading disabled>
-          <Trans>Transaction Pending</Trans>
-        </Button>
-      );
-    }
-    if (!fromToken || !toToken)
-      return (
-        <Button fullWidth disabled data-testid={swapAlertSelectTokenBtn}>
-          <Trans>Select Tokens</Trans>
-        </Button>
-      );
-    if (needApprove)
-      return (
-        <Button
-          fullWidth
-          disabled={isApproving}
-          onClick={() => submitApprove(fromToken)}
-        >
-          {isApproving ? <Trans>Approving</Trans> : <Trans>Approve</Trans>}
-        </Button>
-      );
-    if (!new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0))
-      return (
-        <Button fullWidth disabled data-testid={swapAlertEnterAmountBtn}>
-          <Trans>Enter an amount</Trans>
-        </Button>
-      );
-    if (resPriceStatus === RoutePriceStatus.Loading)
-      return (
-        <Button fullWidth disabled data-testid={swapAlertFetchPriceBtn}>
-          <Trans>Fetching Price...</Trans>
-        </Button>
-      );
+    // if (!account) return <ConnectWallet />;
+    // if (isInflight) {
+    //   return (
+    //     <Button fullWidth isLoading disabled>
+    //       <Trans>Transaction Pending</Trans>
+    //     </Button>
+    //   );
+    // }
+    // if (!fromToken || !toToken)
+    //   return (
+    //     <Button fullWidth disabled data-testid={swapAlertSelectTokenBtn}>
+    //       <Trans>Select Tokens</Trans>
+    //     </Button>
+    //   );
+    // if (needApprove)
+    //   return (
+    //     <Button
+    //       fullWidth
+    //       disabled={isApproving}
+    //       onClick={() => submitApprove(fromToken)}
+    //     >
+    //       {isApproving ? <Trans>Approving</Trans> : <Trans>Approve</Trans>}
+    //     </Button>
+    //   );
+    // if (!new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0))
+    //   return (
+    //     <Button fullWidth disabled data-testid={swapAlertEnterAmountBtn}>
+    //       <Trans>Enter an amount</Trans>
+    //     </Button>
+    //   );
+    // if (resPriceStatus === RoutePriceStatus.Loading)
+    //   return (
+    //     <Button fullWidth disabled data-testid={swapAlertFetchPriceBtn}>
+    //       <Trans>Fetching Price...</Trans>
+    //     </Button>
+    //   );
 
-    if (!resAmount)
-      return (
-        <Button fullWidth disabled>
-          <Trans>Quote not available</Trans>
-        </Button>
-      );
-    if (
-      balance.lt(isReverseRouting ? resAmount : fromAmt) ||
-      (isBasicToken && balance.lte(keepChanges))
-    )
-      // balance need to greater than reserved gas!
-      return (
-        <Button
-          fullWidth
-          disabled
-          data-testid={swapAlertInsufficientBalanceBtn}
-        >
-          <Trans>Insufficient balance</Trans>
-        </Button>
-      );
+    // if (!resAmount)
+    //   return (
+    //     <Button fullWidth disabled>
+    //       <Trans>Quote not available</Trans>
+    //     </Button>
+    //   );
+    // if (
+    //   balance.lt(isReverseRouting ? resAmount : fromAmt) ||
+    //   (isBasicToken && balance.lte(keepChanges))
+    // )
+    //   // balance need to greater than reserved gas!
+    //   return (
+    //     <Button
+    //       fullWidth
+    //       disabled
+    //       data-testid={swapAlertInsufficientBalanceBtn}
+    //     >
+    //       <Trans>Insufficient balance</Trans>
+    //     </Button>
+    //   );
     return (
       <Button
         fullWidth
@@ -486,15 +486,10 @@ export function Swap() {
             mr: 6,
           }}
         />
-        {isReverseRouting
-          ? `${formatTokenAmountNumber({
-              input: resAmount,
-              decimals: fromToken?.decimals,
-            })} ${fromToken.symbol}`
-          : `${formatTokenAmountNumber({
-              input: fromAmt,
-              decimals: fromToken?.decimals,
-            })} ${fromToken.symbol}`}
+        {`${formatTokenAmountNumber({
+          input: isReverseRouting ? resAmount : fromAmt,
+          decimals: fromToken?.decimals,
+        })} ${fromToken.symbol} ${fromToken.symbol}`}
         <Box
           component={DoubleRight}
           sx={{
@@ -511,15 +506,10 @@ export function Swap() {
             mr: 6,
           }}
         />
-        {isReverseRouting
-          ? `${formatTokenAmountNumber({
-              input: toAmt,
-              decimals: toToken?.decimals,
-            })} ${toToken.symbol}`
-          : `${formatTokenAmountNumber({
-              input: resAmount,
-              decimals: toToken?.decimals,
-            })} ${toToken.symbol}`}
+        {`${formatTokenAmountNumber({
+          input: isReverseRouting ? toAmt : resAmount,
+          decimals: toToken?.decimals,
+        })} ${toToken.symbol}`}
       </Box>
     );
   }, [fromToken, toToken, fromAmt, toAmt, resAmount, isReverseRouting]);

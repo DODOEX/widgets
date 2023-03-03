@@ -113,7 +113,10 @@ export function ReviewDialog({
                   address={fromToken?.address ?? ''}
                   marginRight={6}
                 />
-                <Box>{`${fromAmount} ${fromToken?.symbol}`}</Box>
+                <Box>{`${formatTokenAmountNumber({
+                  input: fromAmount as number,
+                  decimals: fromToken?.decimals,
+                })} ${fromToken?.symbol}`}</Box>
               </Box>
               <Box
                 sx={{
