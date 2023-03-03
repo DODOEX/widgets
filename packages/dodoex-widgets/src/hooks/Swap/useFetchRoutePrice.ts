@@ -125,7 +125,7 @@ export function useFetchRoutePrice({
         setStatus(RoutePriceStatus.Failed);
       };
 
-      if (!account || !provider || !fromAmount) return;
+      if (!account || !provider) return;
 
       const gasLimit = await getEstimateGas({
         from: account,
