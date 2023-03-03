@@ -408,7 +408,7 @@ export function Swap() {
           {isApproving ? <Trans>Approving</Trans> : <Trans>Approve</Trans>}
         </Button>
       );
-    if (!new BigNumber(fromAmt).gt(0))
+    if (!new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0))
       return (
         <Button fullWidth disabled data-testid={swapAlertEnterAmountBtn}>
           <Trans>Enter an amount</Trans>
@@ -427,7 +427,10 @@ export function Swap() {
           <Trans>Quote not available</Trans>
         </Button>
       );
-    if (balance.lt(fromAmt) || (isBasicToken && balance.lte(keepChanges)))
+    if (
+      balance.lt(isReverseRouting ? resAmount : fromAmt) ||
+      (isBasicToken && balance.lte(keepChanges))
+    )
       // balance need to greater than reserved gas!
       return (
         <Button
@@ -463,6 +466,7 @@ export function Swap() {
     fromTokenBalance,
     getApprovalState,
     basicTokenAddress,
+    isReverseRouting,
   ]);
 
   const subtitle = useMemo(() => {
