@@ -4,7 +4,8 @@ import { SwapWidgetProps } from '../..';
 export enum ContractStatus {
   Initial = 'Initial',
   Pending = 'Pending',
-  Success = 'Success',
+  ApproveSuccess = 'ApproveSuccess',
+  TxSuccess = 'TxSuccess',
   Failed = 'Failed',
 }
 export interface State extends SwapWidgetProps {

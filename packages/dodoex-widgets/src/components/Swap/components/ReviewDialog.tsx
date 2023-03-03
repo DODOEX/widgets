@@ -67,7 +67,7 @@ export function ReviewDialog({
     if (contractStatus !== ContractStatus.Pending) {
       onClose();
     }
-    if (contractStatus === ContractStatus.Success) {
+    if (contractStatus === ContractStatus.TxSuccess) {
       clearToAmt();
       clearFromAmt();
     }

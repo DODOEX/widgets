@@ -489,7 +489,7 @@ export function Swap() {
         {`${formatTokenAmountNumber({
           input: isReverseRouting ? resAmount : fromAmt,
           decimals: fromToken?.decimals,
-        })} ${fromToken.symbol} ${fromToken.symbol}`}
+        })} ${fromToken.symbol}`}
         <Box
           component={DoubleRight}
           sx={{
