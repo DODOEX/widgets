@@ -176,8 +176,6 @@ export function useFetchRoutePrice({
         useSource,
         duration,
         ddl,
-        fromTokenAddress: fromToken.address,
-        parsedFromAmt: new BigNumber(finalFromAmount),
         value: resValue,
         gasLimit: resCostGas,
         subtitle,

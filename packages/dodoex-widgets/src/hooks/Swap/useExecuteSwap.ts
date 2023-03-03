@@ -15,8 +15,6 @@ export default function useExecuteSwap() {
 
   const execute = useCallback(
     ({
-      fromTokenAddress,
-      parsedFromAmt,
       to,
       data,
       useSource,
@@ -26,9 +24,7 @@ export default function useExecuteSwap() {
       subtitle,
       value,
     }: {
-      value: string;
-      fromTokenAddress: string;
-      parsedFromAmt: BigNumber;
+        value: string;
       to: string;
       data: string;
       useSource?: string;
