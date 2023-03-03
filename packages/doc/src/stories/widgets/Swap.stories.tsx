@@ -154,11 +154,12 @@ Primary.args = {
   },
   defaultToToken: {
     chainId: 4,
-    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-    name: 'ETH',
+    address: '0x0f51bb10119727a7e5ea3538074fb341f56b09ad',
+    name: 'DAO Maker',
     decimals: 18,
-    symbol: 'ETH',
-    logoURI: '',
+    symbol: 'DAO',
+    logoURI:
+      'https://assets.coingecko.com/coins/images/13915/small/4.png?1612838831',
     amount: 20,
   },
   popularTokenList: [

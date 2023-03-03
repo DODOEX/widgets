@@ -26,6 +26,7 @@ export enum RoutePriceStatus {
 export interface FetchRoutePrice {
   fromToken: TokenInfo | null;
   toToken: TokenInfo | null;
+  marginAmount: string;
   fromAmount: string;
   toAmount: string;
 }
@@ -34,6 +35,7 @@ export function useFetchRoutePrice({
   fromToken,
   fromAmount,
   toAmount,
+  marginAmount,
 }: FetchRoutePrice) {
   const { account, chainId: walletChainId, provider } = useWeb3React();
   const defaultChainId = useSelector(getDefaultChainId);
@@ -91,6 +93,10 @@ export function useFetchRoutePrice({
         String(fromAmount || 1),
         fromToken.decimals,
       ).toString();
+    }
+
+    if (!new BigNumber(marginAmount).isNaN()) {
+      params.marginAmount = marginAmount;
     }
 
     if (rebateTo && feeRate) {
