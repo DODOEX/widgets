@@ -174,8 +174,18 @@ export function Swap() {
   }, [setFromToken, toToken, setToToken, fromToken, updateFromAmt]);
 
   const handleMaxClick = useCallback(
-    (max: string) => updateFromAmt(getMaxBalance(fromToken)),
-    [updateFromAmt, getMaxBalance, fromToken],
+    (max: string) =>
+      isReverseRouting
+        ? updateToAmt(getMaxBalance(toToken))
+        : updateFromAmt(getMaxBalance(fromToken)),
+    [
+      updateFromAmt,
+      updateToAmt,
+      getMaxBalance,
+      fromToken,
+      toToken,
+      isReverseRouting,
+    ],
   );
 
   const displayPriceImpact = useMemo(
@@ -561,6 +571,8 @@ export function Swap() {
               }
               dispatch(setGlobalProps({ isReverseRouting: true }));
             }}
+            onMaxClick={handleMaxClick}
+            showMaxBtn={isReverseRouting && !displayingToAmt}
             occupiedAddrs={[fromToken?.address ?? '']}
             fiatPriceTxt={
               displayToFiatPrice
