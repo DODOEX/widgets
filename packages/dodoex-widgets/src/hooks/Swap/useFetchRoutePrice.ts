@@ -177,7 +177,7 @@ export function useFetchRoutePrice({
         duration,
         ddl,
         value: resValue,
-        gasLimit: resCostGas,
+        // gasLimit: resCostGas,
         subtitle,
       });
     },
