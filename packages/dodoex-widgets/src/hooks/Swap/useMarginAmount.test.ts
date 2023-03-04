@@ -42,8 +42,8 @@ describe('useMarginAmount', () => {
     const tokenEther = tokenList[0];
     const { result } = renderHook(() =>
       useMarginAmount({
-        fromToken: tokenEther,
-        fromFiatPrice: '1.2'
+        token: tokenEther,
+        fiatPrice: '1.2'
       }),
     );
     const { marginAmount } = result.current;
@@ -54,8 +54,8 @@ describe('useMarginAmount', () => {
     const tokenUSDT = tokenList[5];
     const { result } = renderHook(() =>
       useMarginAmount({
-        fromToken: tokenUSDT,
-        fromFiatPrice: '1.53'
+        token: tokenUSDT,
+        fiatPrice: '1.53'
       }),
     );
     const { marginAmount } = result.current;
