@@ -4,14 +4,13 @@ import { TokenInfo } from '../Token';
 import { toWei } from '../../utils';
 
 export interface MarginAmountProps {
-  fromToken: TokenInfo | null,
-  fromFiatPrice: string,
+  token: TokenInfo | null,
+  fiatPrice: string,
 }
-export function useMarginAmount({ fromToken, fromFiatPrice }: MarginAmountProps) {
+export function useMarginAmount({ token, fiatPrice }: MarginAmountProps) {
 
   const marginAmt = useMemo(() => {
-    const fiatPrice = fromFiatPrice;
-    const decimals = fromToken?.decimals ?? 6;
+    const decimals = token?.decimals ?? 6;
     const marginAmount =
       fiatPrice != null ? new BigNumber(500).div(fiatPrice) : new BigNumber(0);
     const marginAmountWei = toWei(marginAmount, decimals);
@@ -21,7 +20,7 @@ export function useMarginAmount({ fromToken, fromFiatPrice }: MarginAmountProps)
       ? new BigNumber(0)
       : marginAmountWei;
     return marginAmountString.toString(10);
-  }, [fromToken?.decimals, fromFiatPrice]);
+  }, [token?.decimals, fiatPrice]);
 
   return {
     marginAmount: marginAmt,

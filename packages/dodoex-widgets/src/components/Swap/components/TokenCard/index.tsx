@@ -18,6 +18,8 @@ export interface TokenCardProps {
   onMaxClick?: (max: string) => void;
   token?: TokenPickerProps['value'];
   onInputChange?: (v: string) => void;
+  onInputFocus?: () => void;
+  onTokenClick?: () => void;
   onTokenChange: TokenPickerProps['onChange'];
 }
 export function TokenCard({
@@ -29,6 +31,8 @@ export function TokenCard({
   onMaxClick,
   fiatPriceTxt,
   occupiedAddrs,
+  onInputFocus,
+  onTokenClick,
   onInputChange,
   onTokenChange,
 }: TokenCardProps) {
@@ -75,6 +79,7 @@ export function TokenCard({
 
       <NumberInput
         value={amt}
+        onFocus={onInputFocus}
         onChange={onInputChange}
         readOnly={readOnly}
         withClear
@@ -96,7 +101,10 @@ export function TokenCard({
         value={token}
         open={tokenPickerVisible}
         occupiedAddrs={occupiedAddrs}
-        onClose={() => setTokenPickerVisible(false)}
+        onClose={() => {
+          onTokenClick && onTokenClick();
+          setTokenPickerVisible(false);
+        }}
         onTokenChange={(token: TokenInfo, isOccupied: boolean) => {
           onTokenChange(token, isOccupied);
           setTokenPickerVisible(false);

@@ -6,6 +6,10 @@ import {
   ExecutionProps,
 } from '../../hooks/Submission';
 import Dialog from '../Swap/components/Dialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { setGlobalProps } from '../../store/actions/globals';
+import { ContractStatus } from '../../store/reducers/globals';
+import { AppThunkDispatch } from '../../store/actions';
 import { ReactComponent as LoadingIcon } from '../../assets/approveBorderRight.svg';
 import { t, Trans } from '@lingui/macro';
 import { ArrowTopRightBorder, DoneBorder, ErrorWarn } from '@dodoex/icons';
@@ -192,7 +196,7 @@ function TransactionTime({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Trans>View on Etherscan</Trans>
+        <Trans>Tx</Trans>
         <Box
           component={ArrowTopRightBorder}
           sx={{
@@ -220,6 +224,7 @@ export default function WithExecutionDialog({
     errorMessage,
     transactionTx,
   } = useExecution(props);
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   return (
     <ExecutionContext.Provider value={ctxVal}>
@@ -283,7 +288,14 @@ export default function WithExecutionDialog({
           <Button
             fullWidth
             size={Button.Size.big}
-            onClick={closeShowing}
+            onClick={() => {
+              dispatch(
+                setGlobalProps({
+                  contractStatus: ContractStatus.Initial,
+                }),
+              );
+              closeShowing();
+            }}
             sx={{
               mt: 20,
             }}

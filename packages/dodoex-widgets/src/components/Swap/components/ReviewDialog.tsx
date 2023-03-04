@@ -4,14 +4,17 @@ import { useEffect, useState, useMemo } from 'react';
 import Dialog, { DialogProps } from './Dialog';
 import { Box, Button, BaseButton, useTheme } from '@dodoex/components';
 import { TokenInfo } from '../../../hooks/Token';
-import { DoubleRight } from '@dodoex/icons';
 import { formatTokenAmountNumber } from '../../../utils/formatter';
 import { formatReadableNumber } from '../../../utils/formatter';
 import TokenLogo from '../../TokenLogo';
-import { DetailBorder, Done, CaretUp } from '@dodoex/icons';
+import { DetailBorder, Done, CaretUp, DoubleRight } from '@dodoex/icons';
+import { setGlobalProps } from '../../../store/actions/globals';
+import { getGlobalProps } from '../../../store/selectors/globals';
+import { ContractStatus } from '../../../store/reducers/globals';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppThunkDispatch } from '../../../store/actions';
 import useInflights from '../../../hooks/Submission/useInflights';
 import { PRICE_IMPACT_THRESHOLD } from '../../../constants/swap';
-import { useSelector } from 'react-redux';
 import { QuestionTooltip } from '../../Tooltip';
 import { getSlippage } from '../../../store/selectors/settings';
 
@@ -19,12 +22,13 @@ export interface ReviewDialogProps {
   open: boolean;
   execute: () => void;
   onClose: () => void;
+  clearToAmt: () => void;
   clearFromAmt: () => void;
   toToken: TokenInfo | null;
   fromToken: TokenInfo | null;
   priceImpact: string;
-  fromAmount: string;
-  toAmount: number | null;
+  fromAmount: string | number | null;
+  toAmount: string | number | null;
   baseFeeAmount: number | null;
   additionalFeeAmount: number | null;
   curToFiatPrice: BigNumber | null;
@@ -41,6 +45,7 @@ export function ReviewDialog({
   toAmount,
   priceImpact,
   clearFromAmt,
+  clearToAmt,
   baseFeeAmount,
   curToFiatPrice,
   curFromFiatPrice,
@@ -48,23 +53,25 @@ export function ReviewDialog({
   additionalFeeAmount,
 }: ReviewDialogProps) {
   const theme = useTheme();
-  const { isInflight } = useInflights();
   const slippage = useSelector(getSlippage);
+  const dispatch = useDispatch<AppThunkDispatch>();
+  const { contractStatus } = useSelector(getGlobalProps);
   const isPriceWaningShown = useMemo(
     () => new BigNumber(priceImpact).gt(PRICE_IMPACT_THRESHOLD),
     [priceImpact],
   );
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
-  const [isConfirming, setIsConfirming] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isInflight) {
+    if (contractStatus !== ContractStatus.Pending) {
       onClose();
-      clearFromAmt();
-      setIsConfirming(false);
     }
-  }, [isInflight]);
+    if (contractStatus === ContractStatus.TxSuccess) {
+      clearToAmt();
+      clearFromAmt();
+    }
+  }, [contractStatus]);
 
   useEffect(() => {
     // Need to recheck if price update!
@@ -75,7 +82,11 @@ export function ReviewDialog({
     <Dialog
       open={open}
       onClose={() => {
-        setIsConfirming(false);
+        dispatch(
+          setGlobalProps({
+            contractStatus: ContractStatus.Initial,
+          }),
+        );
         onClose();
       }}
       title={<Trans>Swap summary</Trans>}
@@ -109,7 +120,10 @@ export function ReviewDialog({
                   address={fromToken?.address ?? ''}
                   marginRight={6}
                 />
-                <Box>{`${fromAmount} ${fromToken?.symbol}`}</Box>
+                <Box>{`${formatTokenAmountNumber({
+                  input: fromAmount as number,
+                  decimals: fromToken?.decimals,
+                })} ${fromToken?.symbol}`}</Box>
               </Box>
               <Box
                 sx={{
@@ -159,7 +173,9 @@ export function ReviewDialog({
           <Box sx={{ mt: 12, typography: 'h6' }}>{`1 ${
             fromToken?.symbol
           }  = ${formatTokenAmountNumber({
-            input: toAmount as number,
+            input: new BigNumber(toAmount as number).dividedBy(
+              new BigNumber(fromAmount as number),
+            ),
             decimals: toToken?.decimals,
           })} ${toToken?.symbol}`}</Box>
         </Box>
@@ -359,15 +375,19 @@ export function ReviewDialog({
         )}
 
         <Button
-          isLoading={isConfirming}
+          isLoading={contractStatus == ContractStatus.Pending}
           disabled={isPriceWaningShown && !isChecked}
           fullWidth
           onClick={() => {
             execute();
-            setIsConfirming(true);
+            dispatch(
+              setGlobalProps({
+                contractStatus: ContractStatus.Pending,
+              }),
+            );
           }}
         >
-          {isConfirming ? (
+          {contractStatus == ContractStatus.Pending ? (
             <Trans>Confirming</Trans>
           ) : (
             <Trans>Confirm swap</Trans>

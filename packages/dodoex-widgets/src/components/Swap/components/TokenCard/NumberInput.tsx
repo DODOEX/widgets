@@ -15,12 +15,14 @@ export function NumberInput({
   onChange,
   suffix,
   withClear,
+  onFocus,
   placeholder,
 }: {
   readOnly?: boolean;
   sx?: BoxProps['sx'];
   value?: string;
   decimals?: number;
+  onFocus?: () => void;
   onChange?: (v: string) => void;
   suffix?: React.ReactNode | string;
   withClear?: boolean;
@@ -79,6 +81,7 @@ export function NumberInput({
         value={value}
         readOnly={readOnly}
         placeholder={placeholder || '0.00'}
+        onFocus={onFocus}
         onChange={(evt: any) => {
           const inputVal = evt.target.value;
           const input =

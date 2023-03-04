@@ -1,7 +1,17 @@
 import { AnyAction } from 'redux';
 import { SwapWidgetProps } from '../..';
 
-export type State = SwapWidgetProps;
+export enum ContractStatus {
+  Initial = 'Initial',
+  Pending = 'Pending',
+  ApproveSuccess = 'ApproveSuccess',
+  TxSuccess = 'TxSuccess',
+  Failed = 'Failed',
+}
+export interface State extends SwapWidgetProps {
+  isReverseRouting?: boolean; // true: reverse enquiry & false: normal enquiry 
+  contractStatus?: ContractStatus;
+};
 
 export const initialState: State = {
   height: undefined,
@@ -9,6 +19,8 @@ export const initialState: State = {
   apikey: '',
   feeRate: 0,
   rebateTo: '',
+  isReverseRouting: false,
+  contractStatus: ContractStatus.Initial,
 };
 
 export default (state: State = initialState, action: AnyAction): State => {

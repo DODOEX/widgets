@@ -15,7 +15,7 @@ import {
   useCallback,
   PropsWithChildren,
 } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Setting, Dodo, Warn, DoubleRight } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
 import { TokenCard } from './components/TokenCard';
@@ -53,11 +53,16 @@ import {
   swapReviewBtn,
 } from '../../constants/testId';
 import useInflights from '../../hooks/Submission/useInflights';
+import { getGlobalProps } from '../../store/selectors/globals';
+import { setGlobalProps } from '../../store/actions/globals';
+import { AppThunkDispatch } from '../../store/actions';
 
 export function Swap() {
   const theme = useTheme();
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
+  const dispatch = useDispatch<AppThunkDispatch>();
+  const { isReverseRouting } = useSelector(getGlobalProps);
   const defaultChainId = useSelector(getDefaultChainId);
   const defaultToToken = useSelector(getDefaultToToken);
   const defaultFromToken = useSelector(getDefaultFromToken);
@@ -68,9 +73,16 @@ export function Swap() {
   );
 
   const [displayingFromAmt, setDisplayingFromAmt] = useState<string>('');
+  const [displayingToAmt, setDisplayingToAmt] = useState<string>('');
   const [fromAmt, setFromAmt] = useState<string>('');
+  const [toAmt, setToAmt] = useState<string>('');
+  const debounceTime = 1000;
   const debouncedSetFromAmt = useMemo(
-    () => debounce((amt) => setFromAmt(amt), 600),
+    () => debounce((amt) => setFromAmt(amt), debounceTime),
+    [],
+  );
+  const debouncedSetToAmt = useMemo(
+    () => debounce((amt) => setToAmt(amt), debounceTime),
     [],
   );
 
@@ -89,18 +101,23 @@ export function Swap() {
     () => (fromToken ? getBalance(fromToken) : null),
     [fromToken, getBalance],
   );
+  const toTokenBalance = useMemo(
+    () => (toToken ? getBalance(toToken) : null),
+    [toToken, getBalance],
+  );
+
   const { getApprovalState, submitApprove, getPendingRest, getMaxBalance } =
     useGetTokenStatus({
       account,
       chainId,
     });
   const pendingReset = useMemo(
-    () => getPendingRest(fromToken),
-    [fromToken?.address, getPendingRest],
+    () => getPendingRest(isReverseRouting ? toToken : fromToken),
+    [fromToken?.address, toToken?.address, getPendingRest, isReverseRouting],
   );
   const { marginAmount } = useMarginAmount({
-    fromToken,
-    fromFiatPrice,
+    token: isReverseRouting ? toToken : fromToken,
+    fiatPrice: isReverseRouting ? toFiatPrice : fromFiatPrice,
   });
   const {
     resAmount,
@@ -116,6 +133,7 @@ export function Swap() {
     fromToken,
     marginAmount,
     fromAmount: fromAmt,
+    toAmount: toAmt,
   });
 
   const updateFromAmt = useCallback(
@@ -127,29 +145,80 @@ export function Swap() {
     [setDisplayingFromAmt, debouncedSetFromAmt],
   );
 
+  const updateToAmt = useCallback(
+    (v: string | number) => {
+      const val = v.toString();
+      setDisplayingToAmt(val);
+      debouncedSetToAmt(val);
+    },
+    [setDisplayingToAmt, debouncedSetToAmt],
+  );
+
   useEffect(() => {
     if (chainId) {
       setToToken(null);
       setFromToken(null);
-      updateFromAmt('');
-    }
-    if (defaultToToken && defaultToToken.chainId === chainId) {
-      setToToken(defaultToToken);
+      if (isReverseRouting) {
+        updateToAmt('');
+      } else {
+        updateFromAmt('');
+      }
     }
     if (defaultFromToken && defaultFromToken.chainId === chainId) {
       setFromToken(defaultFromToken);
+      if (defaultFromToken.amount) {
+        dispatch(
+          setGlobalProps({
+            isReverseRouting: false,
+          }),
+        );
+        updateFromAmt(defaultFromToken.amount);
+      }
     }
-  }, [defaultToToken, defaultFromToken, chainId, updateFromAmt]);
+    if (defaultToToken && defaultToToken.chainId === chainId) {
+      setToToken(defaultToToken);
+      if (
+        defaultToToken.amount &&
+        defaultFromToken &&
+        !defaultFromToken.amount
+      ) {
+        dispatch(
+          setGlobalProps({
+            isReverseRouting: true,
+          }),
+        );
+        updateToAmt(defaultToToken.amount);
+      }
+    }
+  }, [defaultToToken, defaultFromToken, chainId, updateFromAmt, updateToAmt]);
 
   const switchTokens = useCallback(() => {
+    updateFromAmt('');
+    updateToAmt('');
     setFromToken(toToken);
     setToToken(fromToken);
-    updateFromAmt('');
-  }, [setFromToken, toToken, setToToken, fromToken, updateFromAmt]);
+  }, [
+    setFromToken,
+    toToken,
+    setToToken,
+    fromToken,
+    updateFromAmt,
+    updateToAmt,
+  ]);
 
   const handleMaxClick = useCallback(
-    (max: string) => updateFromAmt(getMaxBalance(fromToken)),
-    [updateFromAmt, getMaxBalance, fromToken],
+    (max: string) =>
+      isReverseRouting
+        ? updateToAmt(getMaxBalance(toToken))
+        : updateFromAmt(getMaxBalance(fromToken)),
+    [
+      updateFromAmt,
+      updateToAmt,
+      getMaxBalance,
+      fromToken,
+      toToken,
+      isReverseRouting,
+    ],
   );
 
   const displayPriceImpact = useMemo(
@@ -157,21 +226,19 @@ export function Swap() {
     [priceImpact],
   );
 
-  const displayFromFiatPrice = useMemo(
-    () =>
-      fromAmt && fromFiatPrice
-        ? new BigNumber(fromFiatPrice).multipliedBy(fromAmt)
-        : null,
-    [fromFiatPrice, fromAmt],
-  );
+  const displayFromFiatPrice = useMemo(() => {
+    const fromAmount = isReverseRouting ? resAmount : fromAmt;
+    return fromAmount && fromFiatPrice
+      ? new BigNumber(fromFiatPrice).multipliedBy(fromAmount)
+      : null;
+  }, [fromFiatPrice, fromAmt, isReverseRouting, resAmount]);
 
-  const displayToFiatPrice = useMemo(
-    () =>
-      resAmount && toFiatPrice
-        ? new BigNumber(toFiatPrice).multipliedBy(resAmount)
-        : null,
-    [toFiatPrice, resAmount],
-  );
+  const displayToFiatPrice = useMemo(() => {
+    const toAmount = isReverseRouting ? toAmt : resAmount;
+    return toAmount && toFiatPrice
+      ? new BigNumber(toFiatPrice).multipliedBy(toAmount)
+      : null;
+  }, [toFiatPrice, toAmt, isReverseRouting, resAmount]);
 
   const priceImpactWarning = useMemo(() => {
     return (
@@ -271,6 +338,42 @@ export function Swap() {
     isUnSupportChain,
   ]);
 
+  const fromFinalAmt = useMemo(() => {
+    if (isReverseRouting) {
+      return new BigNumber(displayingToAmt).gt(0)
+        ? formatTokenAmountNumber({
+            input: resAmount as number,
+            decimals: fromToken?.decimals,
+          })
+        : '-';
+    }
+    return displayingFromAmt;
+  }, [
+    displayingFromAmt,
+    displayingToAmt,
+    resAmount,
+    fromToken,
+    isReverseRouting,
+  ]);
+
+  const toFinalAmt = useMemo(() => {
+    if (isReverseRouting) {
+      return displayingToAmt;
+    }
+    return new BigNumber(displayingFromAmt).gt(0)
+      ? formatTokenAmountNumber({
+          input: resAmount as number,
+          decimals: toToken?.decimals,
+        })
+      : '-';
+  }, [
+    displayingFromAmt,
+    displayingToAmt,
+    resAmount,
+    toToken,
+    isReverseRouting,
+  ]);
+
   const swapButton = useMemo(() => {
     const approvalState = getApprovalState(fromToken, fromAmt);
     const isApproving = approvalState === ApprovalState.Approving;
@@ -305,7 +408,7 @@ export function Swap() {
           {isApproving ? <Trans>Approving</Trans> : <Trans>Approve</Trans>}
         </Button>
       );
-    if (!new BigNumber(fromAmt).gt(0))
+    if (!new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0))
       return (
         <Button fullWidth disabled data-testid={swapAlertEnterAmountBtn}>
           <Trans>Enter an amount</Trans>
@@ -324,7 +427,10 @@ export function Swap() {
           <Trans>Quote not available</Trans>
         </Button>
       );
-    if (balance.lt(fromAmt) || (isBasicToken && balance.lte(keepChanges)))
+    if (
+      balance.lt(isReverseRouting ? resAmount : fromAmt) ||
+      (isBasicToken && balance.lte(keepChanges))
+    )
       // balance need to greater than reserved gas!
       return (
         <Button
@@ -347,6 +453,7 @@ export function Swap() {
   }, [
     isETH,
     account,
+    toAmt,
     fromAmt,
     toToken,
     resAmount,
@@ -359,6 +466,7 @@ export function Swap() {
     fromTokenBalance,
     getApprovalState,
     basicTokenAddress,
+    isReverseRouting,
   ]);
 
   const subtitle = useMemo(() => {
@@ -378,7 +486,10 @@ export function Swap() {
             mr: 6,
           }}
         />
-        {`${fromAmt} ${fromToken.symbol}`}
+        {`${formatTokenAmountNumber({
+          input: isReverseRouting ? resAmount : fromAmt,
+          decimals: fromToken?.decimals,
+        })} ${fromToken.symbol}`}
         <Box
           component={DoubleRight}
           sx={{
@@ -396,12 +507,12 @@ export function Swap() {
           }}
         />
         {`${formatTokenAmountNumber({
-          input: resAmount,
+          input: isReverseRouting ? toAmt : resAmount,
           decimals: toToken?.decimals,
         })} ${toToken.symbol}`}
       </Box>
     );
-  }, [fromToken, toToken, fromAmt, resAmount]);
+  }, [fromToken, toToken, fromAmt, toAmt, resAmount, isReverseRouting]);
 
   return (
     <>
@@ -437,10 +548,16 @@ export function Swap() {
           <TokenCard
             sx={{ mb: 4 }}
             token={fromToken}
-            amt={displayingFromAmt}
+            amt={fromFinalAmt}
             onMaxClick={handleMaxClick}
             onInputChange={updateFromAmt}
-            showMaxBtn={!displayingFromAmt}
+            onInputFocus={() => {
+              if (isReverseRouting) {
+                updateFromAmt('');
+              }
+              dispatch(setGlobalProps({ isReverseRouting: false }));
+            }}
+            showMaxBtn={!isReverseRouting && !displayingFromAmt}
             occupiedAddrs={[toToken?.address ?? '']}
             fiatPriceTxt={
               displayFromFiatPrice
@@ -452,9 +569,11 @@ export function Swap() {
             }
             onTokenChange={(token: TokenInfo, isOccupied: boolean) => {
               if (isOccupied) return switchTokens();
-              setFromToken(token);
               updateFromAmt('');
+              updateToAmt('');
+              setFromToken(token);
             }}
+            readOnly={isReverseRouting}
           />
 
           {/* Switch Icon */}
@@ -463,14 +582,14 @@ export function Swap() {
           {/* Second Token Card  */}
           <TokenCard
             token={toToken}
-            amt={
-              new BigNumber(displayingFromAmt).gt(0)
-                ? formatTokenAmountNumber({
-                    input: resAmount as number,
-                    decimals: toToken?.decimals,
-                  })
-                : '-'
-            }
+            amt={toFinalAmt}
+            onInputChange={updateToAmt}
+            onInputFocus={() => {
+              if (!isReverseRouting) {
+                updateToAmt('');
+              }
+              dispatch(setGlobalProps({ isReverseRouting: true }));
+            }}
             occupiedAddrs={[fromToken?.address ?? '']}
             fiatPriceTxt={
               displayToFiatPrice
@@ -482,9 +601,11 @@ export function Swap() {
             }
             onTokenChange={(token: TokenInfo, isOccupied: boolean) => {
               if (isOccupied) return switchTokens();
+              updateFromAmt('');
+              updateToAmt('');
               setToToken(token);
             }}
-            readOnly
+            readOnly={!isReverseRouting}
           />
 
           {/* Price Disp or Warnings  */}
@@ -537,8 +658,8 @@ export function Swap() {
       <ReviewDialog
         toToken={toToken}
         fromToken={fromToken}
-        fromAmount={fromAmt}
-        toAmount={resAmount}
+        fromAmount={isReverseRouting ? resAmount : fromAmt}
+        toAmount={isReverseRouting ? toAmt : resAmount}
         open={isReviewDialogOpen}
         baseFeeAmount={baseFeeAmount}
         priceImpact={displayPriceImpact}
@@ -546,6 +667,7 @@ export function Swap() {
         curToFiatPrice={displayToFiatPrice}
         execute={() => executeSwap(subtitle)}
         clearFromAmt={() => updateFromAmt('')}
+        clearToAmt={() => updateToAmt('')}
         curFromFiatPrice={displayFromFiatPrice}
         pricePerFromToken={resPricePerFromToken}
         onClose={() => setIsReviewDialogOpen(false)}

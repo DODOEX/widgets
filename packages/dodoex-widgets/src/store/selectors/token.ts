@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { ChainId } from '../../constants/chains';
-import { TokenInfo } from '../../hooks/Token/type';
+import { DefaultTokenInfo } from '../reducers/token';
 import { store } from '..';
 import { RootState } from '../reducers';
 
@@ -23,11 +23,11 @@ export const getEthBalance = (state?: RootState): BigNumber => {
   return (state ?? store.getState()).token.ethBalance || new BigNumber(NaN);
 };
 
-export const getDefaultFromToken = (state?: RootState): TokenInfo | undefined => {
+export const getDefaultFromToken = (state?: RootState): DefaultTokenInfo | undefined => {
   return (state ?? store.getState()).token.defaultFromToken;
 };
 
-export const getDefaultToToken = (state?: RootState): TokenInfo | undefined => {
+export const getDefaultToToken = (state?: RootState): DefaultTokenInfo | undefined => {
   return (state ?? store.getState()).token.defaultToToken;
 };
 
