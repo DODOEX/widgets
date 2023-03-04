@@ -10,6 +10,10 @@ import { OpCode, Step as StepSpec } from './spec';
 import { ExecutionResult, State, Request, WatchResult, Showing } from './types';
 import { BIG_ALLOWANCE } from '../../constants/token';
 import { useCurrentChainId } from '../ConnectWallet';
+import { useDispatch, useSelector } from 'react-redux';
+import { setGlobalProps } from '../../store/actions/globals';
+import { ContractStatus } from '../../store/reducers/globals';
+import { AppThunkDispatch } from '../../store/actions';
 
 export interface ExecutionProps {
   onTxFail?: (error: Error, data: any) => void;
@@ -28,7 +32,7 @@ export default function useExecution({
   const [requests, setRequests] = useState<Map<string, [Request, State]>>(
     new Map(),
   );
-
+  const dispatch = useDispatch<AppThunkDispatch>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Dialog status
@@ -114,6 +118,11 @@ export default function useExecution({
         setShowing({ spec, brief, subtitle });
         console.error(e);
         if (e.message) {
+          dispatch(
+            setGlobalProps({
+              contractStatus: ContractStatus.Failed,
+            }),
+          );
           const options = { error: e.message, brief };
           if (mixpanelProps) Object.assign(options, mixpanelProps);
           if (onTxFail) {
@@ -136,6 +145,9 @@ export default function useExecution({
         subtitle,
         ...mixpanelProps,
       };
+      setGlobalProps({
+        contractStatus: ContractStatus.Pending,
+      });
       if (onTxSubmit) {
         onTxSubmit(tx, reportInfo);
       }
@@ -163,6 +175,12 @@ export default function useExecution({
         const receipt = await transaction.wait(1);
         setShowingDone(true);
         if (receipt.status === WatchResult.Success) {
+
+          // TODO: Differ TxSuccess and ApproveSuccess based on data.brief
+          setGlobalProps({
+            contractStatus: ContractStatus.TxSuccess,
+          });
+
           if (successBack) {
             successBack(tx);
           }
