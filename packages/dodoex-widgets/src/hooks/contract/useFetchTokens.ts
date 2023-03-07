@@ -22,6 +22,7 @@ type TokenResult = {
   name?: string;
 };
 
+const maxMultiCallAddrLen = 30;
 export default function useFetchTokens({
   tokenList,
   addresses: addressesProps,
@@ -39,6 +40,7 @@ export default function useFetchTokens({
       ...(addressesProps || []),
     ].map((address) => address.toLocaleLowerCase());
   }, [tokenList, addressesProps]);
+
   const { getContract, contractConfig, call } = useMultiContract();
   const [data, setData] = useState<TokenResult[]>();
 
@@ -49,7 +51,6 @@ export default function useFetchTokens({
     const contract = getContract(erc20HelperAddress, erc20Helper);
     if (!contract) return;
     let balanceLoadings = {} as { [key in string]: boolean };
-
     const res = addresses.map((tokenAddress) => {
       balanceLoadings[tokenAddress] = true;
       const encoded = contract.interface.encodeFunctionData('isERC20', [
@@ -95,7 +96,7 @@ export default function useFetchTokens({
     });
     dispatch(setBalanceLoadings(balanceLoadings));
     return res;
-  }, [account, getContract, addresses]);
+  }, [account, getContract, JSON.stringify(addresses)]);
 
   useEffect(() => {
     const computed = async () => {

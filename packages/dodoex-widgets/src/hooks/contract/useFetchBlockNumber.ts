@@ -3,14 +3,16 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppThunkDispatch } from '../../store/actions';
 import { setBlockNumber } from '../../store/actions/wallet';
+import { debounce } from 'lodash';
 
+const kRefreshBlockTime = 15000;
 export default function useFetchBlockNumber() {
   const { provider, chainId } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
   useEffect(() => {
-    const handleChangeBlock = (blockNumber: number) => {
+    const handleChangeBlock = debounce((blockNumber: number) => {
       dispatch(setBlockNumber(blockNumber));
-    };
+    }, kRefreshBlockTime);
     const computed = async () => {
       if (!provider || !chainId) return;
       const blockNumber = await provider.getBlockNumber();
@@ -22,5 +24,5 @@ export default function useFetchBlockNumber() {
     return () => {
       provider?.off('block', handleChangeBlock);
     };
-  }, [provider, dispatch, chainId]);
+  }, [chainId, provider]);
 }

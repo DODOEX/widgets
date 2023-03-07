@@ -53,7 +53,7 @@ export default function useInitTokenList({
 
   useFetchTokens({
     // addresses: checkTokenAddresses,
-    addresses: [],
+    addresses: ['0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'],
     blockNumber,
   });
 
