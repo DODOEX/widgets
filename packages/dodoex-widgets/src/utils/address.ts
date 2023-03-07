@@ -30,6 +30,11 @@ export function isAddress(value: any): string | false {
   }
 }
 
+export function isETHAddress(addr: string): boolean {
+  const ETHAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
+  return addr.toLocaleLowerCase() === ETHAddress.toLocaleLowerCase();
+}
+
 /**
  * Returns true if the string value is zero in hex
  * @param hexNumberString
