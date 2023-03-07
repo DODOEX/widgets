@@ -18,6 +18,7 @@ import {
 } from '../contract';
 import { TokenList } from './type';
 import { useCurrentChainId } from '../ConnectWallet';
+import { useGetCGTokenList } from './useGetCGTokenList';
 
 export interface InitTokenListProps {
   tokenList?: TokenList;
@@ -31,6 +32,7 @@ export default function useInitTokenList({
   const [tokenListOrigin, setTokenListOrigin] = useState<TokenList>([]);
   const { account } = useWeb3React();
   const chainId = useCurrentChainId();
+  const { cgTokenList } = useGetCGTokenList();
   const blockNumber = useSelector(getLatestBlockNumber);
 
   const popularTokenList = useMemo(() => {
@@ -49,10 +51,10 @@ export default function useInitTokenList({
     return res;
   }, [tokenListOrigin, popularTokenListProps]);
 
-  useFetchTokens({
-    addresses: checkTokenAddresses,
-    blockNumber,
-  });
+  // useFetchTokens({
+  //   addresses: checkTokenAddresses,
+  //   blockNumber,
+  // });
 
   useEffect(() => {
     const computed = async () => {
@@ -61,7 +63,7 @@ export default function useInitTokenList({
         allTokenList = tokenList;
       } else {
         const defaultTokenList = await import('../../constants/tokenList');
-        allTokenList = defaultTokenList.default;
+        allTokenList = cgTokenList.toArray() || defaultTokenList.default;
       }
       const defaultChainId = chainId;
       const currentChainTokenList = allTokenList.filter(
@@ -71,7 +73,7 @@ export default function useInitTokenList({
       dispatch(setTokenList(currentChainTokenList));
     };
     computed();
-  }, [tokenList, dispatch, chainId]);
+  }, [tokenList, dispatch, chainId, cgTokenList]);
 
   useEffect(() => {
     dispatch(setTokenBalances({}));

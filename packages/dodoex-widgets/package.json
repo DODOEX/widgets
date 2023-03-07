@@ -65,6 +65,8 @@
     "@lingui/macro": "^3.14.0",
     "@lingui/react": "^3.14.0",
     "@reduxjs/toolkit": "^1.6.1",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
     "@walletconnect/ethereum-provider": "^1.8.0",
     "@walletconnect/jsonrpc-http-connection": "^1.0.3",
     "@web3-react/core": "8.0.35-beta.0",
@@ -72,15 +74,13 @@
     "@web3-react/metamask": "8.0.28-beta.0",
     "@web3-react/types": "8.0.20-beta.0",
     "@web3-react/walletconnect": "8.0.35-beta.0",
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/git": "^10.0.1",
-    "semantic-release": "^19.0.2",
     "axios": "^0.27.2",
     "bignumber.js": "^9.0.2",
     "identicon.js": "^2.3.3",
     "lodash": "^4.17.21",
     "make-plural": "^7.0.0",
-    "react-window": "^1.8.7"
+    "react-window": "^1.8.7",
+    "semantic-release": "^19.0.2"
   },
   "peerDependencies": {
     "@babel/runtime": ">=7.17.0",

@@ -76,6 +76,7 @@ export default function TokenItem({
       <Box
         sx={{
           color: 'text.secondary',
+          textAlign: 'right',
         }}
       >
         {token.name}
