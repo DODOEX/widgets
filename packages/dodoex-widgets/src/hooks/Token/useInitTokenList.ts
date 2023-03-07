@@ -51,10 +51,11 @@ export default function useInitTokenList({
     return res;
   }, [tokenListOrigin, popularTokenListProps]);
 
-  // useFetchTokens({
-  //   addresses: checkTokenAddresses,
-  //   blockNumber,
-  // });
+  useFetchTokens({
+    // addresses: checkTokenAddresses,
+    addresses: [],
+    blockNumber,
+  });
 
   useEffect(() => {
     const computed = async () => {
@@ -63,7 +64,9 @@ export default function useInitTokenList({
         allTokenList = tokenList;
       } else {
         const defaultTokenList = await import('../../constants/tokenList');
-        allTokenList = cgTokenList.toArray() || defaultTokenList.default;
+        const ethTokenList = await import('../../constants/ethTokenList');
+        const allCGTokenList = [...ethTokenList.default, ...cgTokenList.toArray()]
+        allTokenList = cgTokenList.toArray().length ? allCGTokenList : defaultTokenList.default;
       }
       const defaultChainId = chainId;
       const currentChainTokenList = allTokenList.filter(
