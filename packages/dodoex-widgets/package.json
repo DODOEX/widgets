@@ -79,7 +79,7 @@
     "identicon.js": "^2.3.3",
     "lodash": "^4.17.21",
     "make-plural": "^7.0.0",
-    "react-window": "^1.8.7",
+    "react-window": "^1.8.8",
     "semantic-release": "^19.0.2"
   },
   "peerDependencies": {
