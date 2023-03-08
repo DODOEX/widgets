@@ -52,8 +52,8 @@ export default function useInitTokenList({
   }, [tokenListOrigin, popularTokenListProps]);
 
   useFetchTokens({
-    // addresses: checkTokenAddresses,
-    addresses: ['0x67ee3Cb086F8a16f34beE3ca72FAD36F7Db929e2'],
+    addresses: checkTokenAddresses,
+    // addresses: ['0x67ee3Cb086F8a16f34beE3ca72FAD36F7Db929e2'], // TODO: DELETE
     blockNumber,
   });
 
