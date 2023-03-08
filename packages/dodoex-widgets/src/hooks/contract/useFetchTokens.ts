@@ -95,7 +95,7 @@ export default function useFetchTokens({
     });
     dispatch(setBalanceLoadings(balanceLoadings));
     return res;
-  }, [account, getContract, addresses]);
+  }, [account, getContract, JSON.stringify(addresses)]);
 
   useEffect(() => {
     const computed = async () => {

@@ -1,6 +1,7 @@
 import { useWeb3React } from '@web3-react/core';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { unionBy } from 'lodash';
 import {
   getDefaultChainId,
   getLatestBlockNumber,
@@ -61,7 +62,9 @@ export default function useInitTokenList({
         allTokenList = tokenList;
       } else {
         const defaultTokenList = await import('../../constants/tokenList');
-        allTokenList = defaultTokenList.default;
+        allTokenList = unionBy(
+          defaultTokenList.default as TokenList,
+          popularTokenList, 'address');
       }
       const defaultChainId = chainId;
       const currentChainTokenList = allTokenList.filter(
@@ -71,7 +74,7 @@ export default function useInitTokenList({
       dispatch(setTokenList(currentChainTokenList));
     };
     computed();
-  }, [tokenList, dispatch, chainId]);
+  }, [tokenList, dispatch, chainId, popularTokenList]);
 
   useEffect(() => {
     dispatch(setTokenBalances({}));
