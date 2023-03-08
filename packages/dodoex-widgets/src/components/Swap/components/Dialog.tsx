@@ -1,9 +1,11 @@
 import { Box } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
 
+export const transitionTime = 300;
 export interface DialogProps {
   open: boolean;
   onClose?: () => void;
+  afterClose?: () => void;
   title?: string | React.ReactNode;
   rightSlot?: React.ReactNode;
   canBack?: boolean;
@@ -14,6 +16,7 @@ export interface DialogProps {
 export default function Dialog({
   open,
   onClose,
+  afterClose,
   title,
   rightSlot,
   canBack = true,
@@ -26,7 +29,7 @@ export default function Dialog({
       sx={{
         position: 'absolute',
         top: open ? 0 : '100%',
-        transition: 'top 300ms',
+        transition: `top ${transitionTime}ms`,
         zIndex: 1,
         left: 0,
         right: 0,
@@ -63,7 +66,10 @@ export default function Dialog({
             <Box
               component={Error}
               sx={{ color: 'text.secondary', cursor: 'pointer' }}
-              onClick={onClose}
+              onClick={() => {
+                onClose && onClose();
+                setTimeout(() => afterClose && afterClose(), transitionTime);
+              }}
             />
           )}
         </Box>

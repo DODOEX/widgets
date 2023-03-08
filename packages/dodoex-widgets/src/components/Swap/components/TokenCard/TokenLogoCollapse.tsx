@@ -13,7 +13,6 @@ export function TokenLogoCollapse({
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }) {
   const theme = useTheme();
-
   return (
     <Box
       component={BaseButton}
@@ -31,7 +30,7 @@ export function TokenLogoCollapse({
     >
       {token?.address ? (
         <>
-          <TokenLogo address={token?.address ?? ''} marginRight={6} />
+          <TokenLogo url={token?.logoURI} address={token?.address ?? ''} marginRight={6} />
           <Box>{token?.symbol ?? '-'}</Box>
         </>
       ) : (

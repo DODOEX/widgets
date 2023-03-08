@@ -65,8 +65,9 @@ export default function useInitTokenList({
       } else {
         const defaultTokenList = await import('../../constants/tokenList');
         const ethTokenList = await import('../../constants/ethTokenList');
-        const allCGTokenList = [...ethTokenList.default, ...cgTokenList.toArray()]
-        allTokenList = cgTokenList.toArray().length ? allCGTokenList : defaultTokenList.default;
+        const hasCurrentChain = cgTokenList.toArray().findIndex((token) => token.chainId === chainId) > -1;
+        const allCGTokenList = [...ethTokenList.default, ...cgTokenList.toArray()];
+        allTokenList = hasCurrentChain ? allCGTokenList : defaultTokenList.default;
       }
       const defaultChainId = chainId;
       const currentChainTokenList = allTokenList.filter(
@@ -76,7 +77,7 @@ export default function useInitTokenList({
       dispatch(setTokenList(currentChainTokenList));
     };
     computed();
-  }, [tokenList, dispatch, chainId, cgTokenList]);
+  }, [tokenList, dispatch, chainId, cgTokenList, popularTokenList]);
 
   useEffect(() => {
     dispatch(setTokenBalances({}));
