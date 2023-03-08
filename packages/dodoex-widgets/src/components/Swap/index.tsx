@@ -375,7 +375,10 @@ export function Swap() {
   ]);
 
   const swapButton = useMemo(() => {
-    const approvalState = getApprovalState(fromToken, fromAmt);
+    const approvalState = getApprovalState(
+      fromToken,
+      isReverseRouting ? resAmount || 0 : fromAmt,
+    );
     const isApproving = approvalState === ApprovalState.Approving;
     const needApprove =
       approvalState === ApprovalState.Insufficient && !pendingReset;

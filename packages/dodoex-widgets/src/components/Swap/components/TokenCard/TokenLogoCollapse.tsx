@@ -31,7 +31,11 @@ export function TokenLogoCollapse({
     >
       {token?.address ? (
         <>
-          <TokenLogo address={token?.address ?? ''} marginRight={6} />
+          <TokenLogo
+            url={token?.logoURI}
+            address={token?.address ?? ''}
+            marginRight={6}
+          />
           <Box>{token?.symbol ?? '-'}</Box>
         </>
       ) : (
