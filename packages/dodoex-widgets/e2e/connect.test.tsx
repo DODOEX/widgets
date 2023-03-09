@@ -116,6 +116,14 @@ async function selectToken($selectTokenBtn: HTMLElement, token: TokenInfo) {
   );
   expect($tokenItems).toHaveLength(1);
   await fireEvent.click($tokenItems[0]);
+  await waitFor(
+    () => {
+      expect($selectTokenBtn.querySelector('img')).not.toBeNull();
+    },
+    {
+      timeout: 10000,
+    },
+  );
   expect($selectTokenBtn.querySelector('img')?.getAttribute('src')).toBe(
     logoURI,
   );
