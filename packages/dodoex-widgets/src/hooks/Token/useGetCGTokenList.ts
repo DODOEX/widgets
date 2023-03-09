@@ -30,7 +30,6 @@ export function useGetCGTokenList() {
       );
       if (resData && resData.data && resData.data.tokens) {
         setTokenList(List(resData.data.tokens));
-        // setTokenList(resData.data.tokens.slice(0, 100));
       }
       setStatus(FetchStatus.Success);
     } catch (error) {

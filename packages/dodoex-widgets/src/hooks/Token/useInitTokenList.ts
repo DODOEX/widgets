@@ -60,15 +60,15 @@ export default function useInitTokenList({
 
   useEffect(() => {
     const computed = async () => {
-      let allTokenList = [] as TokenList;
+      let allTokenList = [];
       if (tokenList) {
         allTokenList = tokenList;
       } else {
         const defaultTokenList = await import('../../constants/tokenList');
-        const combinedTokenList = cgTokenList.toArray().concat(defaultTokenList.default);
+        const combinedTokenList = (defaultTokenList.default as TokenList).concat(cgTokenList.toArray());
         allTokenList = unionBy(
-          combinedTokenList as TokenList,
-          popularTokenList, 'address');
+          popularTokenList,
+          combinedTokenList, (token) => token.address.toLowerCase());
       }
       const defaultChainId = chainId;
       const currentChainTokenList = allTokenList.filter(
