@@ -52,6 +52,15 @@ export const routeRes = {
   },
 };
 
+export const tokenListRes = {
+  keywords: ["defi"],
+  logoURI: "https://www.coingecko.com/assets/thumbnail-007177f3eca19695592f0b8b0eabbdae282b54154e1be912285c9034ea6cbaf2.png",
+  name: "CoinGecko",
+  timestamp: "2023-03-09T02:03:29.216+00:00",
+  tokens: [],
+  message: 'OK',
+};
+
 export const fiatPriceBatchRes = {
   code: 0,
   data: [

@@ -30,11 +30,16 @@ import {
   tokenPickerWrapper,
 } from '../src/constants/testId';
 import { TokenInfo } from '../src/hooks/Token';
-import { RoutePriceAPI, FiatPriceAPI } from '../src/constants/api';
+import {
+  RoutePriceAPI,
+  FiatPriceAPI,
+  getCGTokenListAPI,
+} from '../src/constants/api';
 import {
   tokenListMap,
   tokenList,
   routeRes,
+  tokenListRes,
   fiatPriceBatchRes,
 } from './constants';
 import { mineUpToNext, setBalance } from './utils/hardhat';
@@ -53,6 +58,14 @@ jest.mock('axios', () => ({
         setTimeout(() => {
           resolve({
             data: routeRes,
+          });
+        }, 100);
+      });
+    } else if (url === getCGTokenListAPI(chainId)) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            data: tokenListRes,
           });
         }, 100);
       });
