@@ -113,10 +113,17 @@ export function ReviewDialog({
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box>
-              <Box sx={{ display: 'flex' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
                 <TokenLogo
                   width={16}
                   height={16}
+                  url={fromToken?.logoURI}
                   address={fromToken?.address ?? ''}
                   marginRight={6}
                 />
@@ -147,6 +154,7 @@ export function ReviewDialog({
                   width={16}
                   height={16}
                   marginRight={6}
+                  url={toToken?.logoURI}
                   address={toToken?.address ?? ''}
                 />
                 <Box>{`${formatTokenAmountNumber({

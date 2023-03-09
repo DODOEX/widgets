@@ -1,6 +1,7 @@
 import { useWeb3React } from '@web3-react/core';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { unionBy } from 'lodash';
 import {
   getDefaultChainId,
   getLatestBlockNumber,
@@ -64,10 +65,10 @@ export default function useInitTokenList({
         allTokenList = tokenList;
       } else {
         const defaultTokenList = await import('../../constants/tokenList');
-        const ethTokenList = await import('../../constants/ethTokenList');
-        const hasCurrentChain = cgTokenList.toArray().findIndex((token) => token.chainId === chainId) > -1;
-        const allCGTokenList = [...ethTokenList.default, ...cgTokenList.toArray()];
-        allTokenList = hasCurrentChain ? allCGTokenList : defaultTokenList.default;
+        const combinedTokenList = cgTokenList.toArray().concat(defaultTokenList.default);
+        allTokenList = unionBy(
+          combinedTokenList as TokenList,
+          popularTokenList, 'address');
       }
       const defaultChainId = chainId;
       const currentChainTokenList = allTokenList.filter(

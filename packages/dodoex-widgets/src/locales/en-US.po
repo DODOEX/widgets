@@ -13,20 +13,20 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/Swap/components/ReviewDialog.tsx:253
+#: src/components/Swap/components/ReviewDialog.tsx:261
 msgid "Additional Fee"
 msgstr "Additional Fee"
 
-#: src/components/Swap/components/ReviewDialog.tsx:256
+#: src/components/Swap/components/ReviewDialog.tsx:264
 msgid "Additional routing fees set by the Widget user"
 msgstr "Additional routing fees set by the Widget user"
 
-#: src/components/Swap/index.tsx:408
+#: src/components/Swap/index.tsx:411
 #: src/hooks/Token/useGetTokenStatus.ts:111
 msgid "Approve"
 msgstr "Approve"
 
-#: src/components/Swap/index.tsx:408
+#: src/components/Swap/index.tsx:411
 msgid "Approving"
 msgstr "Approving"
 
@@ -38,7 +38,7 @@ msgstr "Attention: High slippage tolerance will increase the success rate of tra
 msgid "Balance:"
 msgstr "Balance:"
 
-#: src/components/Swap/components/ReviewDialog.tsx:232
+#: src/components/Swap/components/ReviewDialog.tsx:240
 msgid "Basic Fee"
 msgstr "Basic Fee"
 
@@ -46,11 +46,11 @@ msgstr "Basic Fee"
 msgid "Close"
 msgstr "Close"
 
-#: src/components/Swap/components/ReviewDialog.tsx:393
+#: src/components/Swap/components/ReviewDialog.tsx:401
 msgid "Confirm swap"
 msgstr "Confirm swap"
 
-#: src/components/Swap/components/ReviewDialog.tsx:391
+#: src/components/Swap/components/ReviewDialog.tsx:399
 msgid "Confirming"
 msgstr "Confirming"
 
@@ -74,12 +74,12 @@ msgstr "Current price impact"
 msgid "Dismiss"
 msgstr "Dismiss"
 
-#: src/components/Swap/components/ReviewDialog.tsx:281
+#: src/components/Swap/components/ReviewDialog.tsx:289
 #: src/components/Swap/index.tsx:256
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
 
-#: src/components/Swap/index.tsx:414
+#: src/components/Swap/index.tsx:417
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
@@ -87,11 +87,11 @@ msgstr "Enter an amount"
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
-#: src/components/Swap/components/ReviewDialog.tsx:234
+#: src/components/Swap/components/ReviewDialog.tsx:242
 msgid "Estimated service provider fees"
 msgstr "Estimated service provider fees"
 
-#: src/components/Swap/index.tsx:420
+#: src/components/Swap/index.tsx:423
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
@@ -108,7 +108,7 @@ msgstr "ForceStop exception"
 msgid "Gas price is too low, please adjust in your wallet and try again"
 msgstr "Gas price is too low, please adjust in your wallet and try again"
 
-#: src/components/Swap/components/ReviewDialog.tsx:304
+#: src/components/Swap/components/ReviewDialog.tsx:312
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
@@ -116,7 +116,7 @@ msgstr "High slippage tolerance will increase the success rate of transaction, b
 msgid "If your transaction time exceeds the deadline, your transaction will be rescinded."
 msgstr "If your transaction time exceeds the deadline, your transaction will be rescinded."
 
-#: src/components/Swap/index.tsx:441
+#: src/components/Swap/index.tsx:444
 msgid "Insufficient balance"
 msgstr "Insufficient balance"
 
@@ -136,11 +136,11 @@ msgstr "Maximum slippage do not exceed 50%"
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
-#: src/components/Swap/index.tsx:653
+#: src/components/Swap/index.tsx:656
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
-#: src/components/Swap/components/ReviewDialog.tsx:278
+#: src/components/Swap/components/ReviewDialog.tsx:286
 msgid "Price Impact"
 msgstr "Price Impact"
 
@@ -148,12 +148,12 @@ msgstr "Price Impact"
 msgid "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
 msgstr "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
 
-#: src/components/Swap/components/ReviewDialog.tsx:365
+#: src/components/Swap/components/ReviewDialog.tsx:373
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:427
+#: src/components/Swap/index.tsx:430
 msgid "Quote not available"
 msgstr "Quote not available"
 
@@ -165,11 +165,11 @@ msgstr "RPC node data exception"
 msgid "Reset"
 msgstr "Reset"
 
-#: src/components/Swap/index.tsx:450
+#: src/components/Swap/index.tsx:453
 msgid "Review Swap"
 msgstr "Review Swap"
 
-#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:38
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:42
 msgid "SELECT TOKEN"
 msgstr "SELECT TOKEN"
 
@@ -177,7 +177,7 @@ msgstr "SELECT TOKEN"
 msgid "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
 msgstr "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
 
-#: src/components/Swap/index.tsx:398
+#: src/components/Swap/index.tsx:401
 msgid "Select Tokens"
 msgstr "Select Tokens"
 
@@ -193,7 +193,7 @@ msgstr "Service update, please wait and try again"
 msgid "Settings"
 msgstr "Settings"
 
-#: src/components/Swap/components/ReviewDialog.tsx:301
+#: src/components/Swap/components/ReviewDialog.tsx:309
 msgid "Slippage"
 msgstr "Slippage"
 
@@ -205,12 +205,12 @@ msgstr "Slippage Tolerance"
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
-#: src/components/Swap/index.tsx:528
+#: src/components/Swap/index.tsx:531
 #: src/hooks/Swap/useExecuteSwap.ts:56
 msgid "Swap"
 msgstr "Swap"
 
-#: src/components/Swap/components/ReviewDialog.tsx:205
+#: src/components/Swap/components/ReviewDialog.tsx:213
 msgid "Swap Detail"
 msgstr "Swap Detail"
 
@@ -226,7 +226,7 @@ msgstr "This CP has been settled by other addrs"
 msgid "Transaction Deadline"
 msgstr "Transaction Deadline"
 
-#: src/components/Swap/index.tsx:391
+#: src/components/Swap/index.tsx:394
 msgid "Transaction Pending"
 msgstr "Transaction Pending"
 

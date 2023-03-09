@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "2.0.0",
+  "version": "2.2.1",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/src/index.d.ts",
@@ -17,9 +17,7 @@
     "extract:i18": "lingui extract --locale en-US",
     "compile:i18n": "yarn extract:i18 && lingui compile",
     "watch": "yarn run rollup -c --watch",
-    "prebuild": "yarn workspace @dodoex/icons build && yarn workspace @dodoex/components build",
-    "build": "yarn prebuild && yarn compile:i18n && rollup --config",
-    "prerelease": "yarn build",
+    "build": "yarn compile:i18n && rollup --config",
     "release": "semantic-release",
     "release:local": "np --any-branch --no-cleanup --no-tests",
     "test": "jest"
