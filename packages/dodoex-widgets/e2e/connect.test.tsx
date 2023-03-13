@@ -44,7 +44,7 @@ import {
 } from './constants';
 import { mineUpToNext, setBalance } from './utils/hardhat';
 
-const chainId = 1;
+const chainId = 56;
 const baseToken = tokenListMap.ETH;
 const quoteToken = tokenListMap.DODO;
 const routeApi = `${RoutePriceAPI}`;
