@@ -12239,10 +12239,10 @@ jest-each@^29.2.1:
     jest-util "^29.2.1"
     pretty-format "^29.2.1"
 
-jest-environment-hardhat@^1.1.8:
-  version "1.1.8"
-  resolved "https://registry.npmjs.org/jest-environment-hardhat/-/jest-environment-hardhat-1.1.8.tgz"
-  integrity sha512-1D5dix/cKR3IgS4MMImMbvvWXClUeFRvAo+E17JY6UBhmP29Kc8yrUCMG7r3g1JSvdBYBe64Nl7cqpydJmZMog==
+jest-environment-hardhat@^1.1.9:
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/jest-environment-hardhat/-/jest-environment-hardhat-1.1.9.tgz#7eb29ce63c76e0ab64833eecce79e70eac0ba82a"
+  integrity sha512-tkhzDRZ6XEXfLLYl2L1UbJMXn7AqJhjZSpZmiQMIVhxh3n0FzpRVDetecRa4+e2HSqP8PKQ4aBnPtszjsw9jvg==
   dependencies:
     setimmediate "^1.0.5"
 
@@ -16100,14 +16100,6 @@ react-refresh@^0.13.0:
   version "0.13.0"
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.13.0.tgz"
   integrity sha512-XP8A9BT0CpRBD+NYLLeIhld/RqG9+gktUjW1FkE+Vm7OCinbG1SshcK5tb9ls4kzvjZr9mOQc7HYgBngEyPAXg==
-
-react-window@^1.8.7:
-  version "1.8.7"
-  resolved "https://registry.npmjs.org/react-window/-/react-window-1.8.7.tgz"
-  integrity sha512-JHEZbPXBpKMmoNO1bNhoXOOLg/ujhL/BU4IqVU9r8eQPcy5KQnGHIHDRkJ0ns9IM5+Aq5LNwt3j8t3tIrePQzA==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    memoize-one ">=3.1.1 <6"
 
 react-window@^1.8.8:
   version "1.8.8"
