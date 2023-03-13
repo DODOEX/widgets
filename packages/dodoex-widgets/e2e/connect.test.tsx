@@ -44,12 +44,12 @@ import {
 } from './constants';
 import { mineUpToNext, setBalance } from './utils/hardhat';
 
-const chainId = 56;
+const chainId = 1;
 const baseToken = tokenListMap.ETH;
 const quoteToken = tokenListMap.DODO;
 const routeApi = `${RoutePriceAPI}`;
 const priceApi = `${FiatPriceAPI}/api/v1/price/current/batch`;
-const TIMEOUT = 30000;
+const TIMEOUT = 10000;
 
 jest.mock('axios', () => ({
   ...jest.requireActual('axios'),
