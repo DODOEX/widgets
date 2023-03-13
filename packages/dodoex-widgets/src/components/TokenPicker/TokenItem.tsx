@@ -8,6 +8,7 @@ import { TokenInfo } from './../../hooks/Token';
 import { Loading } from '@dodoex/icons';
 import { tokenPickerItem } from '../../constants/testId';
 import { useTheme } from '@dodoex/components';
+import { useWeb3React } from '@web3-react/core';
 
 export default function TokenItem({
   token,
@@ -22,6 +23,7 @@ export default function TokenItem({
 }) {
   const theme = useTheme();
   const getBalance = useGetBalance();
+  const { account } = useWeb3React();
   const balanceBigNumber = getBalance(token);
   const balance = balanceBigNumber
     ? formatReadableNumber({
@@ -67,33 +69,37 @@ export default function TokenItem({
           >
             {token.symbol}
           </Box>
-          <Box
-            sx={{
-              mt: 4,
-              textAlign: 'left',
-            }}
-          >
-            {new BigNumber(balance).gte(0) ? balance : (
-              <Box
-                component={Loading}
-                width={18}
-                sx={{
-                  '& path': {
-                    fill: theme.palette.text.disabled,
-                  },
-                  animation: 'loadingRotate 1.1s infinite linear',
-                  '@keyframes loadingRotate': {
-                    '0%': {
-                      transform: 'rotate(0deg)',
+          {account && (
+            <Box
+              sx={{
+                mt: 4,
+                textAlign: 'left',
+              }}
+            >
+              {new BigNumber(balance).gte(0) ? (
+                balance
+              ) : (
+                <Box
+                  component={Loading}
+                  width={18}
+                  sx={{
+                    '& path': {
+                      fill: theme.palette.text.disabled,
                     },
-                    '100%': {
-                      transform: 'rotate(359deg)',
+                    animation: 'loadingRotate 1.1s infinite linear',
+                    '@keyframes loadingRotate': {
+                      '0%': {
+                        transform: 'rotate(0deg)',
+                      },
+                      '100%': {
+                        transform: 'rotate(359deg)',
+                      },
                     },
-                  },
-                }}
-              />
-            )}
-          </Box>
+                  }}
+                />
+              )}
+            </Box>
+          )}
         </Box>
       </Box>
       <Box

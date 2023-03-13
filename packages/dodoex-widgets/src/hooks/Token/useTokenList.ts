@@ -6,6 +6,9 @@ import { getTokenList } from '../../store/selectors/token';
 import useGetBalance from './useGetBalance';
 import { TokenInfo, TokenList } from './type';
 import { useCurrentChainId } from '../ConnectWallet';
+import defaultTokens from '../../constants/tokenList';
+import { RootState } from '../../store/reducers';
+import { getPopularTokenList } from '../../store/selectors/token';
 
 enum MatchLevel {
   fully = 1,
@@ -92,6 +95,14 @@ export default function useTokenList({
   const preloaded = useSelector(getTokenList);
   const chainId = useCurrentChainId();
   const getBalance = useGetBalance();
+  const popularTokenList = useSelector((state: RootState) =>
+    getPopularTokenList(chainId, state),
+  );
+  const defaultTokenList = useMemo(() => {
+    return (
+      defaultTokens?.filter((token) => token.chainId === chainId) || []
+    );
+  }, [defaultTokens, chainId]);
 
   const hiddenSet = useMemo(
     () =>
@@ -176,7 +187,25 @@ export default function useTokenList({
           if (!balA.eq(balB)) return balA.gt(balB) ? -1 : 1;
           if (aItem.sort !== bItem.sort)
             return aItem.sort > bItem.sort ? 1 : -1;
-          return a.symbol.localeCompare(b.symbol);
+
+          const popularAddresses = popularTokenList.map((item) => item.address);
+          if (popularAddresses?.includes(a.address)) {
+            return -1;
+          }
+          if (popularAddresses?.includes(b.address)) {
+            return 1;
+          }
+
+          const defaultAddresses = defaultTokenList
+            .map((item) => item.address);
+          if (defaultAddresses?.includes(a.address)) {
+            return -1;
+          }
+          if (defaultAddresses?.includes(b.address)) {
+            return 1;
+          }
+
+          return a.symbol.localeCompare(b.symbol); // A - Z
         })
         .some((item) => {
           if (filter && tokenRes.length > 21) {
@@ -187,7 +216,7 @@ export default function useTokenList({
         });
       return tokenRes;
     },
-    [filter, getBalance, occupiedAddrs, value],
+    [filter, getBalance, occupiedAddrs, value, popularTokenList, defaultTokenList],
   );
 
   const onSelectToken = useCallback(

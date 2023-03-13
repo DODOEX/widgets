@@ -20,6 +20,7 @@ import {
 import { TokenList, TokenListType } from './type';
 import { useCurrentChainId } from '../ConnectWallet';
 import { useGetCGTokenList } from './useGetCGTokenList';
+import defaultTokens from '../../constants/tokenList';
 
 export interface InitTokenListProps {
   tokenList?: TokenList | TokenListType;
@@ -35,6 +36,12 @@ export default function useInitTokenList({
   const chainId = useCurrentChainId();
   const { cgTokenList } = useGetCGTokenList();
   const blockNumber = useSelector(getLatestBlockNumber);
+
+  const defaultTokenList = useMemo(() => {
+    return (
+      defaultTokens?.filter((token) => token.chainId === chainId) || []
+    );
+  }, [defaultTokens, chainId]);
 
   const popularTokenList = useMemo(() => {
     return (
@@ -64,16 +71,14 @@ export default function useInitTokenList({
       if (isArray(tokenList)) {
         allTokenList = tokenList;
       } else if (tokenList === TokenListType.Coingecko || tokenList === TokenListType.All) {
-        const defaultTokenList = await import('../../constants/tokenList');
-        const combinedTokenList = (defaultTokenList.default as TokenList).concat(cgTokenList.toArray());
+        const combinedTokenList = (defaultTokenList as TokenList).concat(cgTokenList.toArray());
         allTokenList = unionBy(
           popularTokenList,
           combinedTokenList, (token) => token.address.toLowerCase());
       } else {
-        const defaultTokenList = await import('../../constants/tokenList');
         allTokenList = unionBy(
           popularTokenList,
-          defaultTokenList.default, (token) => token.address.toLowerCase());
+          defaultTokenList, (token) => token.address.toLowerCase());
       }
       const defaultChainId = chainId;
       const currentChainTokenList = allTokenList.filter(
@@ -83,7 +88,7 @@ export default function useInitTokenList({
       dispatch(setTokenList(currentChainTokenList));
     };
     computed();
-  }, [tokenList, dispatch, chainId, cgTokenList, popularTokenList]);
+  }, [tokenList, dispatch, chainId, cgTokenList, popularTokenList, defaultTokenList]);
 
   useEffect(() => {
     dispatch(setTokenBalances({}));
