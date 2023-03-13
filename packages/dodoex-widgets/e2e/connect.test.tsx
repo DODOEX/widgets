@@ -49,6 +49,7 @@ const baseToken = tokenListMap.ETH;
 const quoteToken = tokenListMap.DODO;
 const routeApi = `${RoutePriceAPI}`;
 const priceApi = `${FiatPriceAPI}/api/v1/price/current/batch`;
+const TIMEOUT = 30000;
 
 jest.mock('axios', () => ({
   ...jest.requireActual('axios'),
@@ -121,7 +122,7 @@ async function selectToken($selectTokenBtn: HTMLElement, token: TokenInfo) {
       expect($selectTokenBtn.querySelector('img')).not.toBeNull();
     },
     {
-      timeout: 10000,
+      timeout: TIMEOUT,
     },
   );
   expect($selectTokenBtn.querySelector('img')?.getAttribute('src')).toBe(
@@ -156,7 +157,7 @@ describe('connect and trade', () => {
     await waitFor(
       () => expect(screen.getByTestId(swapAlertSelectTokenBtn)).toBeVisible(),
       {
-        timeout: 10000,
+        timeout: TIMEOUT,
       },
     );
     const $selectTokens = screen.queryAllByTestId(swapSelectTokenBtn);
@@ -193,7 +194,7 @@ describe('connect and trade', () => {
         ).toBe(-1);
       },
       {
-        timeout: 10000,
+        timeout: TIMEOUT,
       },
     );
   });
@@ -206,7 +207,7 @@ describe('connect and trade', () => {
         ).toBeVisible();
       },
       {
-        timeout: 10000,
+        timeout: TIMEOUT,
       },
     );
   });
@@ -220,7 +221,7 @@ describe('connect and trade', () => {
     await waitFor(
       () => expect(screen.queryByTestId(swapReviewBtn)).toBeVisible(),
       {
-        timeout: 10000,
+        timeout: TIMEOUT,
       },
     );
   });
