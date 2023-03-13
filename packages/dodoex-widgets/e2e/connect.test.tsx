@@ -117,14 +117,9 @@ async function selectToken($selectTokenBtn: HTMLElement, token: TokenInfo) {
   );
   expect($tokenItems).toHaveLength(1);
   await fireEvent.click($tokenItems[0]);
-  await waitFor(
-    () => {
-      expect($selectTokenBtn.querySelector('img')).not.toBeNull();
-    },
-    {
-      timeout: TIMEOUT,
-    },
-  );
+  await waitFor(() => {
+    expect($selectTokenBtn.querySelector('img')).not.toBeNull();
+  });
   expect($selectTokenBtn.querySelector('img')?.getAttribute('src')).toBe(
     logoURI,
   );
@@ -154,11 +149,8 @@ describe('connect and trade', () => {
   });
 
   it('need select token', async () => {
-    await waitFor(
-      () => expect(screen.getByTestId(swapAlertSelectTokenBtn)).toBeVisible(),
-      {
-        timeout: TIMEOUT,
-      },
+    await waitFor(() =>
+      expect(screen.getByTestId(swapAlertSelectTokenBtn)).toBeVisible(),
     );
     const $selectTokens = screen.queryAllByTestId(swapSelectTokenBtn);
     expect($selectTokens).toHaveLength(2);
@@ -187,29 +179,19 @@ describe('connect and trade', () => {
   it('need fetch price', async () => {
     expect(screen.queryByTestId(swapAlertFetchPriceBtn)).toBeVisible();
     const $selectTokens = screen.queryAllByTestId(swapSelectTokenBtn);
-    await waitFor(
-      () => {
-        expect(
-          $selectTokens[0].nextElementSibling?.textContent?.indexOf('-'),
-        ).toBe(-1);
-      },
-      {
-        timeout: TIMEOUT,
-      },
-    );
+    await waitFor(() => {
+      expect(
+        $selectTokens[0].nextElementSibling?.textContent?.indexOf('-'),
+      ).toBe(-1);
+    });
   });
 
   it('alert when the balance is insufficient', async () => {
-    await waitFor(
-      () => {
-        expect(
-          screen.queryByTestId(swapAlertInsufficientBalanceBtn),
-        ).toBeVisible();
-      },
-      {
-        timeout: TIMEOUT,
-      },
-    );
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId(swapAlertInsufficientBalanceBtn),
+      ).toBeVisible();
+    });
   });
 
   it('update the balance when blockNumber is updated', async () => {
@@ -218,11 +200,8 @@ describe('connect and trade', () => {
   });
 
   it('can be trad', async () => {
-    await waitFor(
-      () => expect(screen.queryByTestId(swapReviewBtn)).toBeVisible(),
-      {
-        timeout: TIMEOUT,
-      },
+    await waitFor(() =>
+      expect(screen.queryByTestId(swapReviewBtn)).toBeVisible(),
     );
   });
 });
