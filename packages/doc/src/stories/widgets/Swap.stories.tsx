@@ -191,4 +191,5 @@ Primary.args = {
       logoURI: '',
     },
   ],
+  tokenList: 'all',
 };

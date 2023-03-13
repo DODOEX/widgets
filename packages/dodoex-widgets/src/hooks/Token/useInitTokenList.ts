@@ -1,7 +1,7 @@
 import { useWeb3React } from '@web3-react/core';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { unionBy } from 'lodash';
+import { unionBy, isArray } from 'lodash';
 import {
   getDefaultChainId,
   getLatestBlockNumber,
@@ -17,12 +17,12 @@ import {
   useFetchETHBalance,
   useFetchBlockNumber,
 } from '../contract';
-import { TokenList } from './type';
+import { TokenList, TokenListType } from './type';
 import { useCurrentChainId } from '../ConnectWallet';
 import { useGetCGTokenList } from './useGetCGTokenList';
 
 export interface InitTokenListProps {
-  tokenList?: TokenList;
+  tokenList?: TokenList | TokenListType;
   popularTokenList?: TokenList;
 }
 export default function useInitTokenList({
@@ -61,14 +61,19 @@ export default function useInitTokenList({
   useEffect(() => {
     const computed = async () => {
       let allTokenList = [];
-      if (tokenList) {
+      if (isArray(tokenList)) {
         allTokenList = tokenList;
-      } else {
+      } else if (tokenList === TokenListType.Coingecko || tokenList === TokenListType.All) {
         const defaultTokenList = await import('../../constants/tokenList');
         const combinedTokenList = (defaultTokenList.default as TokenList).concat(cgTokenList.toArray());
         allTokenList = unionBy(
           popularTokenList,
           combinedTokenList, (token) => token.address.toLowerCase());
+      } else {
+        const defaultTokenList = await import('../../constants/tokenList');
+        allTokenList = unionBy(
+          popularTokenList,
+          defaultTokenList.default, (token) => token.address.toLowerCase());
       }
       const defaultChainId = chainId;
       const currentChainTokenList = allTokenList.filter(

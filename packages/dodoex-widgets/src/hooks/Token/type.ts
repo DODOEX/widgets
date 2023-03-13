@@ -10,6 +10,12 @@ export interface TokenInfo {
 }
 export type TokenList = TokenInfo[];
 
+export enum TokenListType {
+  All = 'all',
+  Default = 'default',
+  Coingecko = 'coingecko',
+};
+
 export enum ApprovalState {
   Loading = 'Loading',
   Insufficient = 'ApprovalInsufficient',
