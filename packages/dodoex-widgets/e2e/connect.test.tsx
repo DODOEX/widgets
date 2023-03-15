@@ -217,9 +217,11 @@ describe('connect and trade', () => {
     await mineUpToNext();
   });
 
-  it('can be trad', async () => {
+  it('can be traded', async () => {
     await waitFor(
-      () => expect(screen.queryByTestId(swapReviewBtn)).toBeVisible(),
+      () => {
+        expect(screen.queryByTestId(swapReviewBtn)).toBeVisible();
+      },
       {
         timeout: TIMEOUT,
       },
