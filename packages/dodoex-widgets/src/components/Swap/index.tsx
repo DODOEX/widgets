@@ -424,7 +424,7 @@ export function Swap() {
         </Button>
       );
 
-    if (!resAmount)
+    if (!resAmount || resPriceStatus === RoutePriceStatus.Failed)
       return (
         <Button fullWidth disabled>
           <Trans>Quote not available</Trans>
@@ -465,6 +465,7 @@ export function Swap() {
     executeSwap,
     pendingReset,
     submitApprove,
+    resPriceStatus,
     resPriceStatus,
     fromTokenBalance,
     getApprovalState,

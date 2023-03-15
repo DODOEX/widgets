@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js';
 import type { TransactionResponse } from '@ethersproject/abstract-provider';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { basicTokenMap, ChainId } from '../../constants/chains';
+import { useFetchBlockNumber } from '../contract';
 import { approve, getEstimateGas, sendTransaction } from '../contract/wallet';
 import getExecutionErrorMsg from './getExecutionErrorMsg';
 import { OpCode, Step as StepSpec } from './spec';
@@ -41,6 +42,7 @@ export default function useExecution({
   const [showingDone, setShowingDone] = useState(false);
   const [submittedConfirmBack, setSubmittedConfirmBack] =
     useState<() => void>();
+  const { updateBlockNumber } = useFetchBlockNumber();  
 
   const handler = useCallback(
     async (
@@ -193,15 +195,17 @@ export default function useExecution({
           if (onTxSuccess) {
             onTxSuccess(tx, reportInfo);
           }
+          await updateBlockNumber(); // update blockNumber once after tx
           setRequests((res) => res.set(tx as string, [request, State.Success]));
           return ExecutionResult.Success;
         }
       }
+      await updateBlockNumber(); // update blockNumber once after tx
       setShowingDone(true);
       setRequests((res) => res.set(tx as string, [request, State.Failed]));
       return ExecutionResult.Failed;
     },
-    [account, chainId, setWaitingSubmit, provider],
+    [account, chainId, setWaitingSubmit, provider, updateBlockNumber],
   );
 
   const ctxVal = useMemo(
