@@ -466,7 +466,6 @@ export function Swap() {
     pendingReset,
     submitApprove,
     resPriceStatus,
-    resPriceStatus,
     fromTokenBalance,
     getApprovalState,
     basicTokenAddress,
