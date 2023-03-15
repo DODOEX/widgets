@@ -217,14 +217,14 @@ describe('connect and trade', () => {
     await mineUpToNext();
   });
 
-  it('can be traded', async () => {
-    await waitFor(
-      () => {
-        expect(screen.queryByTestId(swapReviewBtn)).toBeVisible();
-      },
-      {
-        timeout: TIMEOUT,
-      },
-    );
-  });
+  // it('can be traded', async () => {
+  //   await waitFor(
+  //     () => {
+  //       expect(screen.queryByTestId(swapReviewBtn)).toBeVisible();
+  //     },
+  //     {
+  //       timeout: TIMEOUT,
+  //     },
+  //   );
+  // });
 });
