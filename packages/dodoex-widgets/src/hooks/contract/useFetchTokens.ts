@@ -12,6 +12,7 @@ import {
   setTokenBalances,
 } from '../../store/actions/token';
 import { AppThunkDispatch } from '../../store/actions';
+import { isETHAddress } from '../../utils';
 
 type TokenResult = {
   address: string;
@@ -22,6 +23,7 @@ type TokenResult = {
   name?: string;
 };
 
+const maxMultiCallAddrLen = 30;
 export default function useFetchTokens({
   tokenList,
   addresses: addressesProps,
@@ -38,7 +40,8 @@ export default function useFetchTokens({
       ...(tokenList?.map((token) => token.address) || []),
       ...(addressesProps || []),
     ].map((address) => address.toLocaleLowerCase());
-  }, [tokenList, addressesProps]);
+  }, [tokenList, JSON.stringify(addressesProps)]);
+
   const { getContract, contractConfig, call } = useMultiContract();
   const [data, setData] = useState<TokenResult[]>();
 
@@ -49,7 +52,6 @@ export default function useFetchTokens({
     const contract = getContract(erc20HelperAddress, erc20Helper);
     if (!contract) return;
     let balanceLoadings = {} as { [key in string]: boolean };
-
     const res = addresses.map((tokenAddress) => {
       balanceLoadings[tokenAddress] = true;
       const encoded = contract.interface.encodeFunctionData('isERC20', [
@@ -104,6 +106,7 @@ export default function useFetchTokens({
       const accountBalances = {} as AccountBalances;
       if (res) {
         res.forEach((token) => {
+          if (isETHAddress(token.address)) return;
           accountBalances[token.address.toLocaleLowerCase()] = {
             tokenBalances: token.balance,
             tokenAllowances: token.allowance,

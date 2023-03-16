@@ -7,6 +7,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { TokenInfo } from '../../../../hooks/Token';
 import TokenPicker, { TokenPickerProps } from '../../../TokenPicker';
 import useGetBalance from '../../../../hooks/Token/useGetBalance';
+import { transitionTime } from '../Dialog';
 
 export interface TokenCardProps {
   amt: string;
@@ -102,12 +103,13 @@ export function TokenCard({
         open={tokenPickerVisible}
         occupiedAddrs={occupiedAddrs}
         onClose={() => {
-          onTokenClick && onTokenClick();
           setTokenPickerVisible(false);
+          onTokenClick && onTokenClick();
         }}
         onTokenChange={(token: TokenInfo, isOccupied: boolean) => {
-          onTokenChange(token, isOccupied);
           setTokenPickerVisible(false);
+          // change token list order after closing the dialog
+          setTimeout(() => onTokenChange(token, isOccupied), transitionTime);
         }}
       />
     </Box>

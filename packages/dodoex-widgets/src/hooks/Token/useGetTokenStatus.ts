@@ -126,16 +126,16 @@ export const useGetTokenStatus = ({
   const getMaxBalance = useCallback(
     (token: TokenInfo | null) => {
       const defaultVal = new BigNumber(0);
-      if (!token) return defaultVal.toNumber();
+      if (!token) return defaultVal.toString(); // Use toString instead of toNumber to avoid missing decimals!
       const balance = getBalance(token);
-      if (!balance) return defaultVal.toNumber();
+      if (!balance) return defaultVal.toString();
       let val = balance;
       const keepChanges = isETH ? 0.1 : 0.02;
       const isBasicToken = basicTokenAddress === token?.address;
       if (isBasicToken)
         val = balance.gt(keepChanges) ? balance.minus(keepChanges) : defaultVal;
 
-      return val.toNumber();
+      return val.toString();
     },
     [chainId, getBalance, isETH],
   );

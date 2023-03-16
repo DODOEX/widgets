@@ -44,7 +44,6 @@ export default function TokenPicker({
     showAddrs,
   });
   const ref = useRef<HTMLDivElement>(null);
-  const popularRef = useRef<HTMLDivElement>(null);
   const [fixedSizeHeight, setFixedSizeHeight] = useState(0);
 
   useEffect(() => {
@@ -57,11 +56,20 @@ export default function TokenPicker({
   }, [ref, visible]);
 
   const TokenItemFixedSizeMemo = useCallback(
-    ({ index, style }: { index: number; style: CSSProperties }) => {
+    ({
+      key,
+      index,
+      style,
+    }: {
+      key: string;
+      index: number;
+      style: CSSProperties;
+    }) => {
       const hasPopularToken = !!popularTokenList?.length;
       if (index === 0 && hasPopularToken) {
         return (
           <Box
+            key={key}
             sx={{
               position: 'relative',
               display: 'flex',
@@ -78,7 +86,6 @@ export default function TokenPicker({
                 backgroundColor: 'border.main',
               },
             }}
-            ref={popularRef}
             style={{
               ...style,
               // avoid occlusion
@@ -100,6 +107,7 @@ export default function TokenPicker({
       const token = showTokenList[hasPopularToken ? index - 1 : index];
       return (
         <TokenItem
+          key={key}
           token={token}
           disabled={!!value && value.address === token.address}
           style={style}
@@ -107,20 +115,19 @@ export default function TokenPicker({
         />
       );
     },
-    [showTokenList, popularTokenList, popularRef, value],
+    [showTokenList, popularTokenList, value],
   );
-
   const getItemSize = useCallback(
     (index: number) => {
       const itemHeight = 52;
       if (index === 0 && popularTokenList?.length) {
-        const popularHeight = popularRef.current?.offsetHeight || 0;
-        return popularHeight <= itemHeight ? 0 : popularHeight;
+        const popularHeight = 74 + 51 * Math.floor(popularTokenList.length / 3);
+        return popularHeight;
       }
 
       return itemHeight;
     },
-    [popularRef, popularTokenList],
+    [popularTokenList],
   );
 
   return (
@@ -150,14 +157,14 @@ export default function TokenPicker({
         ref={ref}
       >
         <List
-          key={popularRef.current?.offsetHeight}
+          key={popularTokenList.length}
           height={fixedSizeHeight}
           itemCount={showTokenList.length + (popularTokenList?.length ? 1 : 0)}
           itemSize={getItemSize}
           width={'100%'}
           className="token-list"
         >
-          {TokenItemFixedSizeMemo}
+          {TokenItemFixedSizeMemo as any}
         </List>
       </Box>
     </Box>

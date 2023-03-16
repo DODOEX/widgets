@@ -13,7 +13,6 @@ export function TokenLogoCollapse({
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }) {
   const theme = useTheme();
-
   return (
     <Box
       component={BaseButton}

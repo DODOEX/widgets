@@ -8,9 +8,11 @@
   ],
   "private": "false",
   "scripts": {
+    "prepare": "husky install",
     "start": "yarn workspace doc start",
     "tsc": "lerna run typescript",
     "test": "lerna run test",
+    "test:e2e": "lerna run test:e2e",
     "build": "yarn workspace @dodoex/icons build && yarn workspace @dodoex/components build && yarn workspace @dodoex/widgets build",
     "release": "yarn run build && yarn workspace @dodoex/widgets release",
     "build-doc": "yarn run build && yarn workspace doc build"
@@ -20,6 +22,7 @@
   ],
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "lerna": "^5.4.0"
+    "lerna": "^5.4.0",
+    "husky": "^8.0.3"
   }
 }

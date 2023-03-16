@@ -11172,6 +11172,11 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
+husky@^8.0.3:
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-8.0.3.tgz#4936d7212e46d1dea28fef29bb3a108872cd9184"
+  integrity sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==
+
 iconv-lite@0.4.24, iconv-lite@^0.4.24:
   version "0.4.24"
   resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz"
@@ -12239,10 +12244,10 @@ jest-each@^29.2.1:
     jest-util "^29.2.1"
     pretty-format "^29.2.1"
 
-jest-environment-hardhat@^1.1.8:
-  version "1.1.8"
-  resolved "https://registry.npmjs.org/jest-environment-hardhat/-/jest-environment-hardhat-1.1.8.tgz"
-  integrity sha512-1D5dix/cKR3IgS4MMImMbvvWXClUeFRvAo+E17JY6UBhmP29Kc8yrUCMG7r3g1JSvdBYBe64Nl7cqpydJmZMog==
+jest-environment-hardhat@^1.1.9:
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/jest-environment-hardhat/-/jest-environment-hardhat-1.1.9.tgz#7eb29ce63c76e0ab64833eecce79e70eac0ba82a"
+  integrity sha512-tkhzDRZ6XEXfLLYl2L1UbJMXn7AqJhjZSpZmiQMIVhxh3n0FzpRVDetecRa4+e2HSqP8PKQ4aBnPtszjsw9jvg==
   dependencies:
     setimmediate "^1.0.5"
 
@@ -16101,10 +16106,10 @@ react-refresh@^0.13.0:
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.13.0.tgz"
   integrity sha512-XP8A9BT0CpRBD+NYLLeIhld/RqG9+gktUjW1FkE+Vm7OCinbG1SshcK5tb9ls4kzvjZr9mOQc7HYgBngEyPAXg==
 
-react-window@^1.8.7:
-  version "1.8.7"
-  resolved "https://registry.npmjs.org/react-window/-/react-window-1.8.7.tgz"
-  integrity sha512-JHEZbPXBpKMmoNO1bNhoXOOLg/ujhL/BU4IqVU9r8eQPcy5KQnGHIHDRkJ0ns9IM5+Aq5LNwt3j8t3tIrePQzA==
+react-window@^1.8.8:
+  version "1.8.8"
+  resolved "https://registry.yarnpkg.com/react-window/-/react-window-1.8.8.tgz#1b52919f009ddf91970cbdb2050a6c7be44df243"
+  integrity sha512-D4IiBeRtGXziZ1n0XklnFGu7h9gU684zepqyKzgPNzrsrk7xOCxni+TCckjg2Nr/DiaEEGVVmnhYSlT2rB47dQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     memoize-one ">=3.1.1 <6"

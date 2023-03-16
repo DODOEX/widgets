@@ -39,7 +39,7 @@ export interface WidgetProps
   defaultChainId?: ChainId;
   width?: string | number;
   height?: string | number;
-  feeRate?: number; // unit: 1e18
+  feeRate?: number; // Unit: 1e18
   rebateTo?: string; // Receive Address
   defaultFromToken?: TokenInfo;
   defaultToToken?: TokenInfo;
