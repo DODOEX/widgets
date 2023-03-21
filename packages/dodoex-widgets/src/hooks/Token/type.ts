@@ -8,6 +8,10 @@ export interface TokenInfo {
   readonly tags?: string[];
   readonly extensions?: any;
 }
+export interface DefaultTokenInfo extends TokenInfo {
+  amount?: number;
+}
+
 export type TokenList = TokenInfo[];
 
 export enum TokenListType {
