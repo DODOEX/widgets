@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { AnyAction } from 'redux';
-import type { TokenList, TokenInfo } from '../../hooks/Token';
+import type { TokenList, DefaultTokenInfo } from '../../hooks/Token';
 
 export type AccountBalance = {
   tokenBalances?: BigNumber;
@@ -13,9 +13,6 @@ export type SlippageWithToken = {
   slippage: string;
   tokens: string[];
 };
-export interface DefaultTokenInfo extends TokenInfo {
-  amount?: number,
-}
 
 export type State = {
   tokenList: TokenList;

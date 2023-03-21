@@ -25,7 +25,7 @@ import { ExecutionProps } from '../../hooks/Submission';
 import { ChainId } from '../../constants/chains';
 import { reloadWindow } from '../../utils';
 import { useInitPropsToRedux } from '../../hooks/Swap';
-import { TokenInfo } from '../../hooks/Token/type';
+import { DefaultTokenInfo } from '../../hooks/Token/type';
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
@@ -41,8 +41,8 @@ export interface WidgetProps
   height?: string | number;
   feeRate?: number; // Unit: 1e18
   rebateTo?: string; // Receive Address
-  defaultFromToken?: TokenInfo;
-  defaultToToken?: TokenInfo;
+  defaultFromToken?: DefaultTokenInfo;
+  defaultToToken?: DefaultTokenInfo;
   locale?: SupportedLang;
 }
 
