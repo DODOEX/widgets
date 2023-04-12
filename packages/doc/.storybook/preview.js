@@ -11,6 +11,7 @@ export const parameters = {
   backgrounds: {
     disable: true,
   },
+  // https://storybook.js.org/docs/react/essentials/controls
   controls: {
     matchers: {
       color: /(background|color)$/i,

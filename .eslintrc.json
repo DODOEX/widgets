@@ -8,7 +8,8 @@
     "airbnb",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "plugin:react/jsx-runtime"
+    "plugin:react/jsx-runtime",
+    "plugin:valtio/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

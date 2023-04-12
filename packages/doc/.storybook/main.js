@@ -36,6 +36,7 @@ module.exports = {
             'src/',
           ),
           '@dodoex/icons': path.resolve(__dirname, '../../dodoex-icons'),
+          '@dodoex/wallet': path.resolve(__dirname, '../../dodoex-wallet/src'),
           ...config.resolve.alias,
         },
         fallback: {
