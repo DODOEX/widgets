@@ -7,12 +7,7 @@ export async function injectedConnect(
 ) {
   let provider = providerProps || window.ethereum;
   if (provider) {
-    try {
-      await provider.request({ method: 'eth_requestAccounts' });
-    } catch (error) {
-      console.error(error);
-      throw new Error('User Rejected');
-    }
+    await provider.request({ method: 'eth_requestAccounts' });
   } else if (window.web3) {
     provider = window.web3.currentProvider;
   } else if (window.celo) {
@@ -28,7 +23,7 @@ export async function injectedConnect(
   return convertWeb3Provider(provider);
 }
 
-interface AddEthereumChainParameter {
+interface AddChainParameter {
   chainId: string; // A 0x-prefixed hexadecimal string
   chainName: string;
   nativeCurrency: {
@@ -40,9 +35,14 @@ interface AddEthereumChainParameter {
   blockExplorerUrls?: string[];
   iconUrls?: string[]; // Currently ignored.
 }
+// Ethereum chain
+interface AddEthereumChainParameter {
+  // Ethereum | Rinkeby | Goerli | optimistic kovan | boba rinkeby | 97 |
+  chainId: '0x1' | '0x4' | '0x5' | '0x45' | '0x1c' | '0x61';
+}
 
 export interface RegisterNetworkWithMetamaskParams {
-  addChainParameters: AddEthereumChainParameter;
+  addChainParameters: AddChainParameter | AddEthereumChainParameter;
   provider?: any;
 }
 

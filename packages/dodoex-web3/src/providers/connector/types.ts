@@ -1,5 +1,6 @@
 import type { JsonRpcProvider } from '@ethersproject/providers';
 import type { IOptions as PortisConfig } from '@portis/web3';
+import type { IQRCodeModalOptions } from '@walletconnect/types';
 import { FetchGasPrice } from '../../helpers/transactions';
 
 export type ConnectorParams = {
@@ -23,7 +24,15 @@ export type ConnectorParams = {
     bridge?: string;
     qrcode?: boolean;
     infuraId?: string;
-    qrcodeModalOptions?: any;
+    qrcodeModal?: {
+      open: (
+        uri: string,
+        cb: any,
+        qrcodeModalOptions?: IQRCodeModalOptions | undefined,
+      ) => void;
+      close: () => void;
+    };
+    qrcodeModalOptions?: IQRCodeModalOptions;
   };
   ledgerParams?: {
     path: string;

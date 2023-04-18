@@ -1,27 +1,17 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { ref } from 'valtio';
-import { WalletType, Wallet } from '../providers';
-import walletState from '../state';
+import { WalletType, allWalletList } from '../providers';
+import walletState, { Connected } from '../state';
 
 export default class StateController {
   rpcUrl: string | undefined;
   state: typeof walletState;
-  constructor({
-    rpcUrl,
-    walletList,
-  }: {
-    rpcUrl?: string;
-    walletList: Array<Wallet>;
-  }) {
+  constructor({ rpcUrl }: { rpcUrl?: string }) {
     this.rpcUrl = rpcUrl;
-    if (!walletState.provider) {
-      this.initialize();
-    }
     this.state = walletState;
-    walletState.walletList = ref(walletList);
     const disabledPromiseList: Array<() => Promise<void>> = [];
     const syncDisabledWalletTypeSet = new Set<WalletType>();
-    walletList.forEach((item) => {
+    allWalletList.forEach((item) => {
       if (item.disabled) {
         const disabledPromise = item.disabled();
         if (typeof disabledPromise === 'boolean') {
@@ -46,19 +36,27 @@ export default class StateController {
     });
   }
 
+  setConnectLoading(connectLoading: boolean) {
+    walletState.connectLoading = connectLoading;
+  }
+
   async setProvider(provider: JsonRpcProvider, walletType?: WalletType) {
     walletState.provider = ref(provider);
+    const { chainId } = await provider.getNetwork();
+    let accounts: string[] = [];
+    if (walletType) {
+      accounts = await provider.listAccounts();
+    }
+    walletState.chainId = chainId;
     if (walletType) {
       walletState.walletType = walletType;
-      walletState.accounts = await provider.listAccounts();
+      walletState.accounts = accounts;
       walletState.account = walletState.accounts[0];
     } else {
       walletState.account = undefined;
       walletState.accounts = undefined;
       walletState.walletType = undefined;
     }
-    const { chainId } = await provider.getNetwork();
-    walletState.chainId = chainId;
   }
 
   getProvider() {
@@ -67,6 +65,14 @@ export default class StateController {
 
   getState() {
     return walletState;
+  }
+
+  setRpcUrl(url: string) {
+    this.rpcUrl = url;
+    if (!walletState.provider) {
+      const provider = new JsonRpcProvider(this.rpcUrl);
+      this.setProvider(provider);
+    }
   }
 
   setChainId(chainId?: number) {
@@ -78,7 +84,7 @@ export default class StateController {
     walletState.account = accounts.length ? accounts[0] : undefined;
   }
 
-  setConnected(connected: boolean) {
+  setConnected(connected: Connected | undefined) {
     walletState.connected = connected;
   }
 

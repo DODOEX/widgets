@@ -48,7 +48,7 @@ export const getEstimateGas = async (
     return res.add(50000);
   } catch (error) {
     provider
-      .call(estimateTarget)
+      .call(params)
       .then((result) => {
         if (process.env.NODE_ENV !== 'test') {
           throw new Error(
@@ -114,11 +114,15 @@ function getProviderOrSigner(
   return account ? getSigner(provider, account) : provider;
 }
 
-export function getContract(address: string, ABI: ContractInterface): Contract {
+export function getContract(
+  address: string,
+  ABI: ContractInterface,
+  providerProps?: JsonRpcProvider,
+): Contract {
   if (!isAddress(address) || address === AddressZero) {
     throw Error(`Invalid 'address' parameter '${address}'.`);
   }
-  const provider = getProvider();
+  const provider = providerProps ?? getProvider();
   const account = walletState.account;
 
   return new Contract(
@@ -126,6 +130,21 @@ export function getContract(address: string, ABI: ContractInterface): Contract {
     ABI,
     getProviderOrSigner(provider, account) as any,
   );
+}
+
+const providerCacheMap = new Map<number, JsonRpcProvider>();
+export async function getProviderByChain(
+  chainId: number,
+  rpcUrl: string,
+): Promise<JsonRpcProvider> {
+  if (!chainId || (chainId === walletState.chainId && walletState.provider))
+    return walletState.provider as JsonRpcProvider;
+  if (providerCacheMap.has(chainId)) {
+    return providerCacheMap.get(chainId) as JsonRpcProvider;
+  }
+  const result = new JsonRpcProvider(rpcUrl);
+  providerCacheMap.set(chainId, result);
+  return result;
 }
 
 export const approve = async (
@@ -158,15 +177,20 @@ type WatchTxConfig = {
   killSwitch: boolean;
   fastKillSwitch: boolean;
 };
-export async function watchTx(
+type GetTransactionReceipt<T> = (tx: string) => Promise<TransactionReceipt | T>;
+export async function watchTx<
+  T extends {
+    status: boolean | number;
+  } | null,
+>(
   tx: string,
   config: WatchTxConfig,
   nonce?: number,
   addr?: string,
-  getTransactionReceipt?: (tx: string) => Promise<TransactionReceipt>,
+  getTransactionReceipt?: GetTransactionReceipt<T>,
 ): Promise<{
   status: WatchResult;
-  transactionReceipt: TransactionReceipt;
+  transactionReceipt: Awaited<ReturnType<GetTransactionReceipt<T>>>;
 } | null> {
   const provider = getProvider();
   while (!config.killSwitch) {

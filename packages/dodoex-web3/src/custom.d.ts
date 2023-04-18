@@ -21,6 +21,9 @@ declare interface Window {
   okxwallet: ProviderExt;
   kucoin: ProviderExt;
   obethereum: ProviderExt;
+  frontier: {
+    ethereum: ProviderExt;
+  };
 }
 
 declare module 'eth-ens-namehash' {
@@ -30,49 +33,57 @@ declare module 'eth-ens-namehash' {
 declare module 'fake-indexeddb/lib/FDBKeyRange';
 declare module 'fake-indexeddb';
 
+// NextJs
+interface StaticImageData {
+  src: string;
+  height: number;
+  width: number;
+  blurDataURL?: string;
+  blurWidth?: number;
+  blurHeight?: number;
+}
+
 declare module '*.avif' {
-  const src: string;
+  const src: string | StaticImageData;
   export default src;
 }
 
 declare module '*.bmp' {
-  const src: string;
+  const src: string | StaticImageData;
   export default src;
 }
 
 declare module '*.gif' {
-  const src: string;
+  const src: string | StaticImageData;
   export default src;
 }
 
 declare module '*.jpg' {
-  const src: string;
+  const src: string | StaticImageData;
   export default src;
 }
 
 declare module '*.jpeg' {
-  const src: string;
+  const src: string | StaticImageData;
   export default src;
 }
 
 declare module '*.png' {
-  const src: string;
+  const src: string | StaticImageData;
   export default src;
 }
 
 declare module '*.webp' {
-  const src: string;
+  const src: string | StaticImageData;
   export default src;
 }
 declare module '*.svg' {
   import * as React from 'react';
 
-  export const ReactComponent: React.FunctionComponent<
+  const ReactComponent: React.FunctionComponent<
     React.SVGProps<SVGSVGElement> & { title?: string }
   >;
-
-  const src: string;
-  export default src;
+  export default ReactComponent;
 }
 
 declare module 'strip-hex-prefix';

@@ -6,6 +6,7 @@ import DODOWallet, {
   WalletType,
   walletState,
   approve,
+  Wallet,
 } from '@dodoex/wallet';
 import { useSnapshot } from 'valtio';
 
@@ -29,11 +30,6 @@ export default {
   title: 'Wallet/Connect',
   // https://storybook.js.org/docs/react/essentials/controls#annotation
   argTypes: {
-    isMobile: {
-      options: [true, false],
-      control: 'radio',
-      defaultValue: false,
-    },
     excludes: {
       options: Object.keys(allWalletListObject),
       control: {
@@ -131,6 +127,7 @@ async function sign712() {
 
 export const Primary = (args: any) => {
   const [dodoWallet, setDodoWallet] = useState<DODOWallet | null>(null);
+  const [walletList, setWalletList] = useState<Wallet[]>([]);
   const [approveTokenAddress, setApproveTokenAddress] = useState(
     '0xC4106029d03c33731Ca01Ba59b5A6368c660E596',
   );
@@ -152,11 +149,11 @@ export const Primary = (args: any) => {
         walletConnectParams: args.walletConnectParams,
       },
       walletListConfig: {
-        isMobile: args.isMobile,
         excludes: args.excludes,
         includes: args.includes,
       },
     });
+    setWalletList(wallet.getWalletList(args.chainId ?? 1));
     setDodoWallet(wallet);
   }, [JSON.stringify(args)]);
 
@@ -171,7 +168,8 @@ export const Primary = (args: any) => {
     },
   ];
 
-  const walletListLen = walletSnap.walletList.length;
+  const walletListLen = walletList.length;
+  console.log('jie', walletList);
 
   return (
     <WithTheme>
@@ -213,7 +211,7 @@ export const Primary = (args: any) => {
               }, 1fr)`,
             }}
           >
-            {walletSnap.walletList.map((wallet) => (
+            {walletList.map((wallet) => (
               <Box
                 component="li"
                 key={wallet.showName}
@@ -240,10 +238,7 @@ export const Primary = (args: any) => {
                     : {}),
                 }}
                 onClick={() => {
-                  dodoWallet?.clickWallet(wallet, {
-                    disabled: walletSnap.disabledWalletTypeSet.has(wallet.type),
-                    active: walletSnap.walletType === wallet.type,
-                  });
+                  dodoWallet?.clickWallet(wallet);
                 }}
               >
                 <Box

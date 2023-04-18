@@ -56,6 +56,7 @@ export enum WalletType {
   OKX = 'custom-okx',
   uAuth = 'custom-uauth',
   kuCoinWallet = 'custom-kucoin-wallet',
+  frontier = 'custom-frontier',
 }
 
 export type ConnectEvents = {
@@ -80,6 +81,7 @@ export interface Wallet {
   mobileDeepLink?: string;
   mobileAndroidDeepLink?: string;
   mobileIOSDeepLink?: string;
+  supportExtension?: boolean;
   supportMobile?: boolean;
   disabled?: () => boolean | Promise<boolean>;
   /** if return false, not display */

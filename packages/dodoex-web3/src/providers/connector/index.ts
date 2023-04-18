@@ -46,3 +46,8 @@ export async function getWalletConnectConnector(
     )
   ).default(params, events);
 }
+
+export {
+  default as getOpenBlockIframeConnector,
+  getIsOpenBlockIframe,
+} from './openBlockIframe';

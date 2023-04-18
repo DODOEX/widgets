@@ -25,10 +25,13 @@ const config = {
     svgr({
       svgoConfig: {
         plugins: [
-          {
-            name: 'removeViewBox',
-            active: false,
-          },
+          // {
+          //   name: 'removeViewBox',
+          //   active: false,
+          // },
+          'removeTitle',
+          'removeXMLNS',
+          'mergePaths',
         ],
       },
     }),

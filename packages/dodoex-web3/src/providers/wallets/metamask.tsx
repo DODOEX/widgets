@@ -1,5 +1,5 @@
 import { Wallet, WalletType } from './types';
-import { ReactComponent as MetamaskLogo } from './logos/metamask.svg';
+import MetamaskLogo from './logos/metamask.svg';
 import { registerNetworkWithMetamask } from '../connector';
 
 const MetamaskWallet: Wallet = {
@@ -10,7 +10,7 @@ const MetamaskWallet: Wallet = {
   supportMobile: true,
   mobileDeepLink: 'https://metamask.app.link/dapp/$host',
   switchChain: registerNetworkWithMetamask,
-  checked: () => !!window.ethereum,
+  disabled: () => !window.ethereum,
 };
 
 export default MetamaskWallet;

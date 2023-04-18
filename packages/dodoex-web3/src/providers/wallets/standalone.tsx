@@ -1,17 +1,18 @@
 import { Wallet, WalletType, ChainId } from './types';
 import CoinbaseLogo from './logos/coinbase.png';
-import { ReactComponent as BinanceChainLogo } from './logos/binance-chain.svg';
-import { ReactComponent as WalletConnectLogo } from './logos/walletconnect.svg';
-import { ReactComponent as GnosisSafeLogo } from './logos/gnosis-safe.svg';
-import { ReactComponent as PortisLogo } from './logos/portis.svg';
-import { ReactComponent as LedgerLogo } from './logos/ledger.svg';
-import { ReactComponent as OpenBlockLogo } from './logos/openBlock.svg';
-import { ReactComponent as NaboxLogo } from './logos/nabox.svg';
-import { ReactComponent as OnekeyLogo } from './logos/onekey.svg';
-import { ReactComponent as BitkeepLogo } from './logos/bitkeep.svg';
-import { ReactComponent as OKXWalletLogo } from './logos/okx-wallet.svg';
-import { ReactComponent as KuCoinLogo } from './logos/kuCoin.svg';
-import { isMobile, isSupportWebHid } from '../../helpers/devices';
+import FrontierLogo from './logos/frontier.svg';
+import BinanceChainLogo from './logos/binance-chain.svg';
+import WalletConnectLogo from './logos/walletconnect.svg';
+import GnosisSafeLogo from './logos/gnosis-safe.svg';
+import PortisLogo from './logos/portis.svg';
+import LedgerLogo from './logos/ledger.svg';
+import OpenBlockLogo from './logos/openBlock.svg';
+import NaboxLogo from './logos/nabox.svg';
+import OnekeyLogo from './logos/onekey.svg';
+import BitkeepLogo from './logos/bitkeep.svg';
+import OKXWalletLogo from './logos/okx-wallet.svg';
+import KuCoinLogo from './logos/kuCoin.svg';
+import { getIsMobile, isSupportWebHid } from '../../helpers/devices';
 import {
   getGnosisPackage,
   getLedgerUSBPackage,
@@ -26,7 +27,11 @@ import {
 export const WalletLink: Wallet = {
   type: WalletType.WalletLink,
   showName: 'Coinbase Wallet',
-  logo: <img src={CoinbaseLogo} />,
+  logo: (
+    <img
+      src={typeof CoinbaseLogo === 'string' ? CoinbaseLogo : CoinbaseLogo.src}
+    />
+  ),
   supportMobile: true,
   disabled: () =>
     !(
@@ -34,7 +39,7 @@ export const WalletLink: Wallet = {
       (!window.ethereum.isWalletLink &&
         !window.ethereum.isToshi &&
         document &&
-        isMobile)
+        getIsMobile())
     ),
   connector: getWalletLinkConnector,
 };
@@ -45,7 +50,7 @@ export const BSC: Wallet = {
   logo: <BinanceChainLogo />,
   supportChains: [ChainId.MAINNET, ChainId.BSC],
   link: 'https://www.bnbchain.world/en/binance-wallet',
-  supportMobile: true,
+  supportMobile: false,
   disabled: () => !window.BinanceChain,
   connector: (_, events) => injectedConnect(window.BinanceChain, events),
 };
@@ -59,6 +64,15 @@ export const KuCoin: Wallet = {
   connector: (_, events) => injectedConnect(window.kucoin, events),
   switchChain: registerNetworkWithMetamask,
   link: 'https://kuwallet.com/',
+};
+
+export const Frontier: Wallet = {
+  type: WalletType.frontier,
+  showName: 'Frontier',
+  logo: <FrontierLogo />,
+  link: 'https://www.frontier.xyz/download',
+  disabled: () => !window.frontier?.ethereum,
+  connector: (_, events) => injectedConnect(window.frontier?.ethereum, events),
 };
 
 export const Ledger: Wallet = {
@@ -170,7 +184,7 @@ export const Gnosis: Wallet = {
     ChainId.AVALANCHE,
     ChainId.OPTIMISM,
   ],
-  disabled: async () => !(await (await getGnosisPackage()).getConnectedSafe()),
+  disabled: async () => !(await (await getGnosisPackage()).getIsSafe()),
   connector: async (_, events) => (await getGnosisPackage()).default(events),
 };
 

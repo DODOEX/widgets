@@ -1,26 +1,34 @@
-import { ReactComponent as HuobiWalletLogo } from './logos/huobiWallet.svg';
-import { ReactComponent as MathLogo } from './logos/math.svg';
-import { ReactComponent as Coin98Logo } from './logos/Coin98.svg';
-import { ReactComponent as TokenPocketLogo } from './logos/tokenPocket.svg';
+import HuobiWalletLogo from './logos/huobiWallet.svg';
+import MathLogo from './logos/math.svg';
+import Coin98Logo from './logos/Coin98.svg';
+import TokenPocketLogo from './logos/tokenPocket.svg';
 import CoinbaseLogo from './logos/coinbase.png';
 import GameStopLogo from './logos/gameStop.png';
-import { ReactComponent as TrustLogo } from './logos/trust.svg';
-import { ReactComponent as ImTokenLogo } from './logos/imtoken.svg';
-import { ReactComponent as BraveLogo } from './logos/brave.svg';
+import TrustLogo from './logos/trust.svg';
+import ImTokenLogo from './logos/imtoken.svg';
+import BraveLogo from './logos/brave.svg';
 import { Wallet, WalletType } from './types';
 import { registerNetworkWithMetamask } from '../connector';
-import { isMobile } from '../../helpers/devices';
+import { getIsMobile } from '../../helpers/devices';
 
 export const Coinbase: Wallet = {
   type: WalletType.injected,
   showName: 'Coinbase Wallet',
-  logo: <img src={CoinbaseLogo} />,
+  logo: (
+    <img
+      src={typeof CoinbaseLogo === 'string' ? CoinbaseLogo : CoinbaseLogo.src}
+    />
+  ),
   supportMobile: false,
+  // Extension used to ./standalone.tsx
+  supportExtension: false,
   switchChain: registerNetworkWithMetamask,
-  checked: () =>
-    isMobile &&
-    window.ethereum &&
-    (window.ethereum.isWalletLink || window.ethereum.isToshi),
+  disabled: () =>
+    !(
+      getIsMobile() &&
+      window.ethereum &&
+      (window.ethereum.isWalletLink || window.ethereum.isToshi)
+    ),
   mobileAndroidDeepLink: 'https://go.cb-w.com/dapp?cburl=$formattedAPPUrl',
   mobileIOSDeepLink: 'cbwallet://dapp?url=$formattedAPPUrl',
 };
@@ -31,8 +39,9 @@ export const TokenPocket: Wallet = {
   logo: <TokenPocketLogo />,
   link: 'https://www.tokenpocket.pro/',
   supportMobile: true,
+  supportExtension: false,
   switchChain: registerNetworkWithMetamask,
-  checked: () => window.ethereum && window.ethereum.isTokenPocket,
+  disabled: () => !window.ethereum?.isTokenPocket,
   mobileDeepLink: `tpdapp://open?params=${encodeURI(`{
     "url": "$APP_URL"
   }`)}`,
@@ -44,8 +53,9 @@ export const Trust: Wallet = {
   logo: <TrustLogo />,
   link: 'https://trustwallet.com/',
   supportMobile: true,
+  supportExtension: false,
   switchChain: registerNetworkWithMetamask,
-  checked: () => window.ethereum?.isTrust,
+  disabled: () => !window.ethereum?.isTrust,
   mobileDeepLink: 'https://link.trustwallet.com/open_url?url=$APP_URL',
 };
 
@@ -55,8 +65,9 @@ export const ImToken: Wallet = {
   logo: <ImTokenLogo />,
   link: 'https://token.im/',
   supportMobile: true,
+  supportExtension: false,
   switchChain: registerNetworkWithMetamask,
-  checked: () => window.ethereum?.isImToken,
+  disabled: () => !window.ethereum?.isImToken,
   mobileDeepLink: 'imtokenv2://navigate/DappView?url=$formattedAPPUrl',
 };
 
@@ -66,16 +77,22 @@ export const Math: Wallet = {
   logo: <MathLogo />,
   link: 'https://mathwallet.org',
   supportMobile: true,
+  supportExtension: true,
   switchChain: registerNetworkWithMetamask,
-  checked: () => window.ethereum && window.ethereum.isMathWallet,
+  disabled: () => !window.ethereum?.isMathWallet,
 };
 
 export const GameStop: Wallet = {
   type: WalletType.injected,
   showName: 'GameStop Wallet',
-  logo: <img src={GameStopLogo} />,
-  checked: () => window.ethereum?.isGamestop,
+  logo: (
+    <img
+      src={typeof GameStopLogo === 'string' ? GameStopLogo : GameStopLogo.src}
+    />
+  ),
+  disabled: () => !window.ethereum?.isGamestop,
   supportMobile: false,
+  supportExtension: true,
   switchChain: registerNetworkWithMetamask,
   link: 'https://wallet.gamestop.com/',
 };
@@ -84,8 +101,9 @@ export const Brave: Wallet = {
   type: WalletType.injected,
   showName: 'Brave',
   logo: <BraveLogo />,
-  checked: () => window.ethereum?.isBraveWallet,
+  disabled: () => !window.ethereum?.isBraveWallet,
   supportMobile: false,
+  supportExtension: true,
   switchChain: registerNetworkWithMetamask,
   link: 'https://wallet-docs.brave.com/',
 };
@@ -95,8 +113,9 @@ export const Huobi: Wallet = {
   showName: 'Huobi Wallet',
   logo: <HuobiWalletLogo />,
   supportMobile: false,
+  supportExtension: false,
   switchChain: registerNetworkWithMetamask,
-  checked: () => window.ethereum && window.ethereum.isHbWallet,
+  disabled: () => !window.ethereum?.isHbWallet,
 };
 
 export const Coin98: Wallet = {
@@ -104,6 +123,7 @@ export const Coin98: Wallet = {
   showName: 'Coin98',
   logo: <Coin98Logo />,
   supportMobile: false,
+  supportExtension: false,
   switchChain: registerNetworkWithMetamask,
-  checked: () => window.ethereum && window.ethereum.isCoin98,
+  disabled: () => !window.ethereum?.isCoin98,
 };

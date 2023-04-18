@@ -20,6 +20,11 @@ export async function getConnectedSafe() {
   return safe;
 }
 
+export async function getIsSafe() {
+  const res = await getConnectedSafe();
+  return !!res;
+}
+
 export default async function connector(events: ConnectEvents) {
   const currentSafe = await getConnectedSafe();
   if (!currentSafe) throw Error('Could not load Safe information');
