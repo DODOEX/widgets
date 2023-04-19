@@ -3,9 +3,9 @@
   "version": "0.0.3",
   "description": "",
   "source": "src/index.ts",
-  "types": "dist/index.d.ts",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
+  "types": "dist/src/index.d.ts",
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/index.js",
   "files": [
     "dist"
   ],
