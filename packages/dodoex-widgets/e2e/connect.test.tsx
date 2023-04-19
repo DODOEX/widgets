@@ -48,7 +48,7 @@ const chainId = 1;
 const baseToken = tokenListMap.ETH;
 const quoteToken = tokenListMap.DODO;
 const routeApi = `${RoutePriceAPI}`;
-const priceApi = `${FiatPriceAPI}/api/v1/price/current/batch`;
+const priceApi = `${FiatPriceAPI}/current/batch`;
 const TIMEOUT = 10000;
 
 jest.mock('axios', () => ({

@@ -22,7 +22,7 @@ export function useFetchFiatPrice({ fromToken, toToken, chainId }: FetchFiatPric
     const tokens = [fromToken, toToken];
     axios
       .post( // TODO: set timeout value!!
-        `${FiatPriceAPI}/api/v1/price/current/batch`,
+        `${FiatPriceAPI}/current/batch`,
         {
           networks: tokens.map(() => getPlatformId(chainId)),
           addresses: tokens.map((token) => token.address),
