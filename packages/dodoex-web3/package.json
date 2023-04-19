@@ -1,11 +1,14 @@
 {
   "name": "@dodoex/web3",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "main": "src/index.ts",
   "module": "src/index.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "cd example && yarn dev",
     "build": "rollup -c",
@@ -14,6 +17,10 @@
     "release": "np --any-branch --no-cleanup --no-tests"
   },
   "author": "",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "license": "GPL-3.0-or-later",
   "peerDependencies": {
     "valtio": "^1.10.4"
