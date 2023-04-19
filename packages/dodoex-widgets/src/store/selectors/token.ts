@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { ChainId } from '../../constants/chains';
-import { DefaultTokenInfo } from '../reducers/token';
+import type { DefaultTokenInfo } from '../../hooks/Token';
 import { store } from '..';
 import { RootState } from '../reducers';
 

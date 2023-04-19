@@ -1,7 +1,7 @@
 import { ChainId } from './chains';
 
 export const RoutePriceAPI = `https://api.dodoex.io/route-service/v2/widget/getdodoroute`;
-export const FiatPriceAPI = `https://api.dodoex.io/price-api`;
+export const FiatPriceAPI = `https://api.dodoex.io/frontend-price-api`;
 export const AppUrl = `https://app.dodoex.io`;
 
 export const getCGTokenListAPI = (chainId: ChainId) => {
