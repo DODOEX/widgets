@@ -70,7 +70,7 @@ export type ConnectEvents = {
 export interface Wallet {
   type: WalletType;
   showName: string;
-  logo: JSX.Element;
+  logo: string;
   switchChain?: (
     params: RegisterNetworkWithMetamaskParams,
   ) => ReturnType<typeof registerNetworkWithMetamask>;

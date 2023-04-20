@@ -7,7 +7,7 @@ import DODOWallet, {
   walletState,
   approve,
   Wallet,
-} from '@dodoex/wallet';
+} from '@dodoex/web3';
 import { useSnapshot } from 'valtio';
 
 const allWalletListObject = {
@@ -169,7 +169,6 @@ export const Primary = (args: any) => {
   ];
 
   const walletListLen = walletList.length;
-  console.log('jie', walletList);
 
   return (
     <WithTheme>
@@ -242,15 +241,13 @@ export const Primary = (args: any) => {
                 }}
               >
                 <Box
+                  component="img"
+                  src={wallet.logo}
                   sx={{
-                    '& > *': {
-                      width: 60,
-                      height: 60,
-                    },
+                    width: 60,
+                    height: 60,
                   }}
-                >
-                  {wallet.logo}
-                </Box>
+                />
                 <Box
                   sx={{
                     typography: 'h6',

@@ -1,5 +1,4 @@
 /// <reference types="node" />
-/// <reference types="react" />
 
 declare interface Window {
   env: Env;
@@ -33,57 +32,43 @@ declare module 'eth-ens-namehash' {
 declare module 'fake-indexeddb/lib/FDBKeyRange';
 declare module 'fake-indexeddb';
 
-// NextJs
-interface StaticImageData {
-  src: string;
-  height: number;
-  width: number;
-  blurDataURL?: string;
-  blurWidth?: number;
-  blurHeight?: number;
-}
-
 declare module '*.avif' {
-  const src: string | StaticImageData;
+  const src: string;
   export default src;
 }
 
 declare module '*.bmp' {
-  const src: string | StaticImageData;
+  const src: string;
   export default src;
 }
 
 declare module '*.gif' {
-  const src: string | StaticImageData;
+  const src: string;
   export default src;
 }
 
 declare module '*.jpg' {
-  const src: string | StaticImageData;
+  const src: string;
   export default src;
 }
 
 declare module '*.jpeg' {
-  const src: string | StaticImageData;
+  const src: string;
   export default src;
 }
 
 declare module '*.png' {
-  const src: string | StaticImageData;
+  const src: string;
   export default src;
 }
 
 declare module '*.webp' {
-  const src: string | StaticImageData;
+  const src: string;
   export default src;
 }
 declare module '*.svg' {
-  import * as React from 'react';
-
-  const ReactComponent: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement> & { title?: string }
-  >;
-  export default ReactComponent;
+  const src: string;
+  export default src;
 }
 
 declare module 'strip-hex-prefix';

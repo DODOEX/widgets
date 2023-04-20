@@ -6,7 +6,7 @@ const MetamaskWallet: Wallet = {
   type: WalletType.injected,
   showName: 'MetaMask',
   link: 'https://metamask.io',
-  logo: <MetamaskLogo />,
+  logo: MetamaskLogo,
   supportMobile: true,
   mobileDeepLink: 'https://metamask.app.link/dapp/$host',
   switchChain: registerNetworkWithMetamask,

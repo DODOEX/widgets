@@ -27,11 +27,7 @@ import {
 export const WalletLink: Wallet = {
   type: WalletType.WalletLink,
   showName: 'Coinbase Wallet',
-  logo: (
-    <img
-      src={typeof CoinbaseLogo === 'string' ? CoinbaseLogo : CoinbaseLogo.src}
-    />
-  ),
+  logo: CoinbaseLogo,
   supportMobile: true,
   disabled: () =>
     !(
@@ -47,7 +43,7 @@ export const WalletLink: Wallet = {
 export const BSC: Wallet = {
   type: WalletType.BinanceChain,
   showName: 'Binance Chain Wallet',
-  logo: <BinanceChainLogo />,
+  logo: BinanceChainLogo,
   supportChains: [ChainId.MAINNET, ChainId.BSC],
   link: 'https://www.bnbchain.world/en/binance-wallet',
   supportMobile: false,
@@ -58,7 +54,7 @@ export const BSC: Wallet = {
 export const KuCoin: Wallet = {
   type: WalletType.kuCoinWallet,
   showName: 'KuCoin Wallet',
-  logo: <KuCoinLogo />,
+  logo: KuCoinLogo,
   supportMobile: true,
   disabled: () => !window.kucoin,
   connector: (_, events) => injectedConnect(window.kucoin, events),
@@ -69,7 +65,7 @@ export const KuCoin: Wallet = {
 export const Frontier: Wallet = {
   type: WalletType.frontier,
   showName: 'Frontier',
-  logo: <FrontierLogo />,
+  logo: FrontierLogo,
   link: 'https://www.frontier.xyz/download',
   disabled: () => !window.frontier?.ethereum,
   connector: (_, events) => injectedConnect(window.frontier?.ethereum, events),
@@ -78,7 +74,7 @@ export const Frontier: Wallet = {
 export const Ledger: Wallet = {
   type: WalletType.LedgerUSB,
   showName: 'Ledger',
-  logo: <LedgerLogo />,
+  logo: LedgerLogo,
   supportChains: [ChainId.MAINNET, ChainId.BSC, ChainId.POLYGON],
   disabled: () => !isSupportWebHid(),
   connector: async (params) =>
@@ -90,7 +86,7 @@ export const Ledger: Wallet = {
 export const OpenBlock: Wallet = {
   type: WalletType.openBlock,
   showName: 'OpenBlock',
-  logo: <OpenBlockLogo />,
+  logo: OpenBlockLogo,
   supportChains: [
     ChainId.MAINNET,
     ChainId.GOERLI,
@@ -110,7 +106,7 @@ export const OpenBlock: Wallet = {
 export const OneKey: Wallet = {
   type: WalletType.OneKey,
   showName: 'OneKey',
-  logo: <OnekeyLogo />,
+  logo: OnekeyLogo,
   link: 'https://onekey.so',
   supportMobile: true,
   disabled: () => !window.$onekey?.ethereum && !window.onekey,
@@ -122,7 +118,7 @@ export const OneKey: Wallet = {
 export const Bitkeep: Wallet = {
   type: WalletType.Bitkeep,
   showName: 'Bitkeep',
-  logo: <BitkeepLogo />,
+  logo: BitkeepLogo,
   link: 'https://bitkeep.com/download?type=2',
   mobileDeepLink: 'https://bkcode.vip?action=dapp&url=$APP_URL',
   supportMobile: true,
@@ -134,7 +130,7 @@ export const Bitkeep: Wallet = {
 export const Nabox: Wallet = {
   type: WalletType.Nabox,
   showName: 'Nabox',
-  logo: <NaboxLogo />,
+  logo: NaboxLogo,
   link: 'https://nabox.io/',
   supportMobile: true,
   disabled: () => !window.NaboxWallet,
@@ -145,7 +141,7 @@ export const Nabox: Wallet = {
 export const OKXWallet: Wallet = {
   type: WalletType.OKX,
   showName: 'OKX Wallet',
-  logo: <OKXWalletLogo />,
+  logo: OKXWalletLogo,
   supportMobile: false,
   link: 'https://www.okx.com/',
   disabled: () => !window.okxwallet,
@@ -156,7 +152,7 @@ export const OKXWallet: Wallet = {
 export const WalletConnect: Wallet = {
   type: WalletType.WalletConnect,
   showName: 'WalletConnect',
-  logo: <WalletConnectLogo />,
+  logo: WalletConnectLogo,
   supportMobile: true,
   connector: (params, events) => getWalletConnectConnector(params, events),
 };
@@ -164,7 +160,7 @@ export const WalletConnect: Wallet = {
 export const Portis: Wallet = {
   type: WalletType.Portis,
   showName: 'Portis',
-  logo: <PortisLogo />,
+  logo: PortisLogo,
   supportChains: [ChainId.MAINNET, ChainId.GOERLI],
   checked: ({ PORTIS_ID }) => !!PORTIS_ID,
   connector: (params, events) => getPortisConnector(params, events),
@@ -173,7 +169,7 @@ export const Portis: Wallet = {
 export const Gnosis: Wallet = {
   type: WalletType.Gnosis,
   showName: 'Gnosis',
-  logo: <GnosisSafeLogo />,
+  logo: GnosisSafeLogo,
   supportChains: [
     ChainId.MAINNET,
     ChainId.GOERLI,
@@ -191,9 +187,7 @@ export const Gnosis: Wallet = {
 export const UAuth: Wallet = {
   type: WalletType.uAuth,
   showName: 'Unstoppable',
-  logo: (
-    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIyLjczMTkgMi4wNjkzNFY5Ljg3MjI5TDAgMTkuMDk0TDIyLjczMTkgMi4wNjkzNFoiIGZpbGw9IiMyRkU5RkYiLz48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE4LjQ2OTYgMS43MTM4N1YxNS4xOTE3QzE4LjQ2OTYgMTkuMTA5NCAxNS4yODkyIDIyLjI4NTMgMTEuMzY1OSAyMi4yODUzQzcuNDQyNjUgMjIuMjg1MyA0LjI2MjIxIDE5LjEwOTQgNC4yNjIyMSAxNS4xOTE3VjkuNTE2ODJMOC41MjQ0MyA3LjE3NTk0VjE1LjE5MTdDOC41MjQ0MyAxNi41NjI5IDkuNjM3NTkgMTcuNjc0NSAxMS4wMTA3IDE3LjY3NDVDMTIuMzgzOSAxNy42NzQ1IDEzLjQ5NyAxNi41NjI5IDEzLjQ5NyAxNS4xOTE3VjQuNDQ0OUwxOC40Njk2IDEuNzEzODdaIiBmaWxsPSIjNEM0N0Y3Ii8+PC9zdmc+" />
-  ),
+  logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIyLjczMTkgMi4wNjkzNFY5Ljg3MjI5TDAgMTkuMDk0TDIyLjczMTkgMi4wNjkzNFoiIGZpbGw9IiMyRkU5RkYiLz48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE4LjQ2OTYgMS43MTM4N1YxNS4xOTE3QzE4LjQ2OTYgMTkuMTA5NCAxNS4yODkyIDIyLjI4NTMgMTEuMzY1OSAyMi4yODUzQzcuNDQyNjUgMjIuMjg1MyA0LjI2MjIxIDE5LjEwOTQgNC4yNjIyMSAxNS4xOTE3VjkuNTE2ODJMOC41MjQ0MyA3LjE3NTk0VjE1LjE5MTdDOC41MjQ0MyAxNi41NjI5IDkuNjM3NTkgMTcuNjc0NSAxMS4wMTA3IDE3LjY3NDVDMTIuMzgzOSAxNy42NzQ1IDEzLjQ5NyAxNi41NjI5IDEzLjQ5NyAxNS4xOTE3VjQuNDQ0OUwxOC40Njk2IDEuNzEzODdaIiBmaWxsPSIjNEM0N0Y3Ii8+PC9zdmc+',
   connector: async (params, events) =>
     (await getUAuthPackage()).default(
       {

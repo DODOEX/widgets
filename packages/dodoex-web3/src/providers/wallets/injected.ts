@@ -14,11 +14,7 @@ import { getIsMobile } from '../../helpers/devices';
 export const Coinbase: Wallet = {
   type: WalletType.injected,
   showName: 'Coinbase Wallet',
-  logo: (
-    <img
-      src={typeof CoinbaseLogo === 'string' ? CoinbaseLogo : CoinbaseLogo.src}
-    />
-  ),
+  logo: CoinbaseLogo,
   supportMobile: false,
   // Extension used to ./standalone.tsx
   supportExtension: false,
@@ -36,7 +32,7 @@ export const Coinbase: Wallet = {
 export const TokenPocket: Wallet = {
   type: WalletType.injected,
   showName: 'TokenPocket',
-  logo: <TokenPocketLogo />,
+  logo: TokenPocketLogo,
   link: 'https://www.tokenpocket.pro/',
   supportMobile: true,
   supportExtension: false,
@@ -50,7 +46,7 @@ export const TokenPocket: Wallet = {
 export const Trust: Wallet = {
   type: WalletType.injected,
   showName: 'TrustWallet',
-  logo: <TrustLogo />,
+  logo: TrustLogo,
   link: 'https://trustwallet.com/',
   supportMobile: true,
   supportExtension: false,
@@ -62,7 +58,7 @@ export const Trust: Wallet = {
 export const ImToken: Wallet = {
   type: WalletType.injected,
   showName: 'ImToken',
-  logo: <ImTokenLogo />,
+  logo: ImTokenLogo,
   link: 'https://token.im/',
   supportMobile: true,
   supportExtension: false,
@@ -74,7 +70,7 @@ export const ImToken: Wallet = {
 export const Math: Wallet = {
   type: WalletType.injected,
   showName: 'Math Wallet',
-  logo: <MathLogo />,
+  logo: MathLogo,
   link: 'https://mathwallet.org',
   supportMobile: true,
   supportExtension: true,
@@ -85,11 +81,7 @@ export const Math: Wallet = {
 export const GameStop: Wallet = {
   type: WalletType.injected,
   showName: 'GameStop Wallet',
-  logo: (
-    <img
-      src={typeof GameStopLogo === 'string' ? GameStopLogo : GameStopLogo.src}
-    />
-  ),
+  logo: GameStopLogo,
   disabled: () => !window.ethereum?.isGamestop,
   supportMobile: false,
   supportExtension: true,
@@ -100,7 +92,7 @@ export const GameStop: Wallet = {
 export const Brave: Wallet = {
   type: WalletType.injected,
   showName: 'Brave',
-  logo: <BraveLogo />,
+  logo: BraveLogo,
   disabled: () => !window.ethereum?.isBraveWallet,
   supportMobile: false,
   supportExtension: true,
@@ -111,7 +103,7 @@ export const Brave: Wallet = {
 export const Huobi: Wallet = {
   type: WalletType.injected,
   showName: 'Huobi Wallet',
-  logo: <HuobiWalletLogo />,
+  logo: HuobiWalletLogo,
   supportMobile: false,
   supportExtension: false,
   switchChain: registerNetworkWithMetamask,
@@ -121,7 +113,7 @@ export const Huobi: Wallet = {
 export const Coin98: Wallet = {
   type: WalletType.injected,
   showName: 'Coin98',
-  logo: <Coin98Logo />,
+  logo: Coin98Logo,
   supportMobile: false,
   supportExtension: false,
   switchChain: registerNetworkWithMetamask,
