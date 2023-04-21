@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/web3",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "source": "src/index.ts",
   "types": "dist/src/index.d.ts",
