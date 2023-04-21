@@ -1,5 +1,5 @@
 import { Wallet, WalletType, ChainId } from './types';
-import CoinbaseLogo from './logos/coinbase.png';
+import CoinbaseLogo from './logos/coinbase.svg';
 import FrontierLogo from './logos/frontier.svg';
 import BinanceChainLogo from './logos/binance-chain.svg';
 import WalletConnectLogo from './logos/walletconnect.svg';
@@ -12,6 +12,7 @@ import OnekeyLogo from './logos/onekey.svg';
 import BitkeepLogo from './logos/bitkeep.svg';
 import OKXWalletLogo from './logos/okx-wallet.svg';
 import KuCoinLogo from './logos/kuCoin.svg';
+import UAuthLogo from './logos/unstoppabledomains.svg';
 import { getIsMobile, isSupportWebHid } from '../../helpers/devices';
 import {
   getGnosisPackage,
@@ -187,7 +188,7 @@ export const Gnosis: Wallet = {
 export const UAuth: Wallet = {
   type: WalletType.uAuth,
   showName: 'Unstoppable',
-  logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIyLjczMTkgMi4wNjkzNFY5Ljg3MjI5TDAgMTkuMDk0TDIyLjczMTkgMi4wNjkzNFoiIGZpbGw9IiMyRkU5RkYiLz48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE4LjQ2OTYgMS43MTM4N1YxNS4xOTE3QzE4LjQ2OTYgMTkuMTA5NCAxNS4yODkyIDIyLjI4NTMgMTEuMzY1OSAyMi4yODUzQzcuNDQyNjUgMjIuMjg1MyA0LjI2MjIxIDE5LjEwOTQgNC4yNjIyMSAxNS4xOTE3VjkuNTE2ODJMOC41MjQ0MyA3LjE3NTk0VjE1LjE5MTdDOC41MjQ0MyAxNi41NjI5IDkuNjM3NTkgMTcuNjc0NSAxMS4wMTA3IDE3LjY3NDVDMTIuMzgzOSAxNy42NzQ1IDEzLjQ5NyAxNi41NjI5IDEzLjQ5NyAxNS4xOTE3VjQuNDQ0OUwxOC40Njk2IDEuNzEzODdaIiBmaWxsPSIjNEM0N0Y3Ii8+PC9zdmc+',
+  logo: UAuthLogo,
   connector: async (params, events) =>
     (await getUAuthPackage()).default(
       {
