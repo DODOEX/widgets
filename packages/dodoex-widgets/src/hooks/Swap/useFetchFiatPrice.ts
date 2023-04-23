@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { getGlobalProps } from '../../store/selectors/globals';
 import { useEffect, useCallback, useState } from 'react';
 import { FiatPriceAPI } from '../../constants/api';
 import { getPlatformId } from '../../utils';
@@ -13,6 +15,7 @@ export interface FetchFiatPriceProps {
 }
 export function useFetchFiatPrice({ fromToken, toToken, chainId }: FetchFiatPriceProps) {
   const [loading, setLoading] = useState<boolean>(false);
+  const { apikey } = useSelector(getGlobalProps);
   const [fromFiatPrice, setFromFiatPrice] = useState<string>('');
   const [toFiatPrice, setToFiatPrice] = useState<string>('');
 
@@ -20,6 +23,7 @@ export function useFetchFiatPrice({ fromToken, toToken, chainId }: FetchFiatPric
     if (!chainId || !fromToken || !toToken) return;
     setLoading(true);
     const tokens = [fromToken, toToken];
+    
     axios
       .post( // TODO: set timeout value!!
         `${FiatPriceAPI}/current/batch`,
@@ -30,7 +34,7 @@ export function useFetchFiatPrice({ fromToken, toToken, chainId }: FetchFiatPric
           isCache: true,
         },
         {
-          headers: { 'apikey': 'dodofrontend777888ofopensource' }
+          headers: { apikey }
         }
       )
       .then((res) => {
@@ -45,7 +49,7 @@ export function useFetchFiatPrice({ fromToken, toToken, chainId }: FetchFiatPric
         setLoading(false);
         console.error(error);
       });
-  }, [chainId, fromToken, toToken])
+  }, [chainId, fromToken, toToken, apikey])
 
   usePriceTimer({ refetch });
 

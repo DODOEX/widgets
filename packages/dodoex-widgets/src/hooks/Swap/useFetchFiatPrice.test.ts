@@ -6,6 +6,22 @@ import BigNumber from 'bignumber.js';
 import axios from 'axios';
 
 jest.mock('axios');
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: () => jest.fn(),
+  useSelector: (fn: () => any) => {
+    if (typeof fn === 'function') {
+      return fn();
+    }
+    return [];
+  },
+}));
+jest.mock('../../store/selectors/globals', () => ({
+  getGlobalProps: () => new BigNumber(12),
+  getBalanceLoadings: () => ({
+    apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
+  }),
+}));
 describe('useFetchFiatPrice', () => {
   const tokenEther = tokenList[0];
   const tokenUSDT = tokenList[5];
