@@ -90,7 +90,7 @@ export default {
 export const Primary = (args) => <SwapWidget {...args} />;
 
 Primary.args = {
-  apikey: '55ea0a80b62316d9bc',
+  apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
   theme: {
     palette: {
       mode: 'light',

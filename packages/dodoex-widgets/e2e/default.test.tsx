@@ -18,7 +18,7 @@ describe('default', () => {
     await act(() => {
       render(
         <SwapWidget
-          apikey="55ea0a80b62316d9bc" // for default test
+          apikey="ef9apopzq9qrgntjubojbxe7hy4z5eez" // for default test
         />,
       );
     });
