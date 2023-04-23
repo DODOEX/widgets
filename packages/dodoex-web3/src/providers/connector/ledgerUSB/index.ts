@@ -1,7 +1,8 @@
 import { ConnectorParams } from '../types';
 import { createLedgerUSBProvider } from './provider';
 
-export { HD_PATH_LIST, getAccountList } from './account';
+export { HD_PATH_LIST } from './constants';
+export { getAccountList } from './account';
 export type { HDAccountItem } from './account';
 export { getTransport } from './connect';
 export type { Transport } from './connect';

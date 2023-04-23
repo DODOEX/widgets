@@ -6,6 +6,7 @@ export type { WalletLinkConnectorParams } from './walletLink';
 
 export { injectedConnect, registerNetworkWithMetamask } from './injected';
 
+export { HD_PATH_LIST } from './ledgerUSB/constants';
 export function getLedgerUSBPackage() {
   return import(/* webpackChunkName: "LedgerUSBPackage" */ './ledgerUSB');
 }

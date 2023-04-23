@@ -4,6 +4,7 @@
   "description": "",
   "source": "src/index.ts",
   "types": "dist/src/index.d.ts",
+  "typings": "dist/src/index.d.ts",
   "main": "dist/cjs/index.cjs",
   "module": "dist/index.js",
   "files": [

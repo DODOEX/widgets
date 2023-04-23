@@ -15,7 +15,8 @@ import { getTransport } from './connect';
 import { convertTransactionType } from '../../../helpers/transactions';
 import { convertWeb3Provider } from '../../../helpers/providers';
 import { ConnectorParams } from '../types';
-import { getAccountList, HD_PATH_LIST } from './account';
+import { getAccountList } from './account';
+import { HD_PATH_LIST } from './constants';
 
 let nextId = 1;
 
