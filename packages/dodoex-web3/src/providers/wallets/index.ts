@@ -239,3 +239,36 @@ export async function getIsolatedEnvironmentWallet() {
   }
   return undefined;
 }
+
+export async function getWalletDisabledStateFunction() {
+  const injectedDisabledShowNames: string[] = [];
+  const disabledPromiseList: Array<() => Promise<void>> = [];
+  const syncDisabledWalletTypeSet = new Set<WalletType>();
+  allWalletList.forEach((item) => {
+    if (item.disabled) {
+      const disabledPromise = item.disabled();
+      const isInjected = item.type === WalletType.injected;
+      if (typeof disabledPromise === 'boolean') {
+        if (isInjected && disabledPromise) {
+          injectedDisabledShowNames.push(item.showName);
+        } else if (disabledPromise) {
+          syncDisabledWalletTypeSet.add(item.type);
+        }
+      } else {
+        disabledPromiseList.push(async () => {
+          const disabled = await disabledPromise;
+          if (disabled) {
+            syncDisabledWalletTypeSet.add(item.type);
+          }
+        });
+      }
+    }
+  });
+  await Promise.all(disabledPromiseList.map((item) => item()));
+  return (wallet: Wallet) => {
+    if (wallet.type === WalletType.injected) {
+      return injectedDisabledShowNames.includes(wallet.showName);
+    }
+    return syncDisabledWalletTypeSet.has(wallet.type);
+  };
+}

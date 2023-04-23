@@ -7,6 +7,7 @@ import DODOWallet, {
   walletState,
   approve,
   Wallet,
+  getWalletDisabledStateFunction,
 } from '@dodoex/web3';
 import { useSnapshot } from 'valtio';
 
@@ -128,6 +129,8 @@ async function sign712() {
 export const Primary = (args: any) => {
   const [dodoWallet, setDodoWallet] = useState<DODOWallet | null>(null);
   const [walletList, setWalletList] = useState<Wallet[]>([]);
+  const [isDisabledWallet, setIsDisabledWallet] =
+    useState<(wallet: Wallet) => boolean | undefined>();
   const [approveTokenAddress, setApproveTokenAddress] = useState(
     '0xC4106029d03c33731Ca01Ba59b5A6368c660E596',
   );
@@ -156,6 +159,12 @@ export const Primary = (args: any) => {
     setWalletList(wallet.getWalletList(args.chainId ?? 1));
     setDodoWallet(wallet);
   }, [JSON.stringify(args)]);
+
+  useEffect(() => {
+    getWalletDisabledStateFunction().then((res) =>
+      setIsDisabledWallet(() => res),
+    );
+  }, []);
 
   const connectInfo = [
     {
@@ -220,7 +229,7 @@ export const Primary = (args: any) => {
                   listStyle: 'none',
                   textAlign: 'center',
                   borderRadius: 4,
-                  ...(walletSnap.disabledWalletTypeSet.has(wallet.type)
+                  ...(!isDisabledWallet || isDisabledWallet(wallet)
                     ? {
                         opacity: 0.3,
                       }

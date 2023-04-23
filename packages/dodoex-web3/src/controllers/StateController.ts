@@ -9,31 +9,6 @@ export default class StateController {
   constructor({ rpcUrl }: { rpcUrl?: string }) {
     this.rpcUrl = rpcUrl;
     this.state = walletState;
-    const disabledPromiseList: Array<() => Promise<void>> = [];
-    const syncDisabledWalletTypeSet = new Set<WalletType>();
-    allWalletList.forEach((item) => {
-      if (item.disabled) {
-        const disabledPromise = item.disabled();
-        if (typeof disabledPromise === 'boolean') {
-          if (disabledPromise) {
-            walletState.disabledWalletTypeSet.add(item.type);
-          }
-        } else {
-          disabledPromiseList.push(async () => {
-            const disabled = await disabledPromise;
-            if (disabled) {
-              syncDisabledWalletTypeSet.add(item.type);
-            }
-          });
-        }
-      }
-    });
-    Promise.all(disabledPromiseList.map((item) => item())).then(() => {
-      walletState.disabledWalletTypeSet = new Set([
-        ...walletState.disabledWalletTypeSet,
-        ...syncDisabledWalletTypeSet,
-      ]);
-    });
   }
 
   setConnectLoading(connectLoading: boolean) {

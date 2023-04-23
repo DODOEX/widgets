@@ -3,15 +3,11 @@ import StateController from '../controllers/StateController';
 import { getIsAndroid, getIsIOS } from '../helpers/devices';
 import {
   ConnectorParams,
-  getGnosisPackage,
-  getIsOpenBlockIframe,
-  getOpenBlockIframeConnector,
   getWalletList,
   getIsolatedEnvironmentWallet,
   WalletListParams,
 } from '../providers';
-import { Gnosis, OpenBlock } from '../providers/wallets/standalone';
-import { Wallet, WalletType } from '../providers/wallets/types';
+import { Wallet } from '../providers/wallets/types';
 import walletState from '../state';
 
 export interface ICoreOptions {
@@ -116,9 +112,8 @@ export default class Core {
     return this.connectController.disconnectWallet();
   }
 
-  connectWalletBefore(wallet: Wallet) {
+  connectWalletBefore(wallet: Wallet, disabled?: boolean) {
     const active = walletState.walletType === wallet.type;
-    const disabled = walletState.disabledWalletTypeSet.has(wallet.type);
     if (active && walletState.account) {
       return false;
     }

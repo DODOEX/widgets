@@ -1,5 +1,5 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
-import { proxy, ref } from 'valtio';
+import { proxy } from 'valtio';
 import { devtools } from 'valtio/utils';
 import { Wallet, WalletType } from './providers';
 
@@ -14,7 +14,6 @@ const walletState = proxy({
   accounts: undefined as string[] | undefined,
   provider: undefined as JsonRpcProvider | undefined,
   walletType: undefined as WalletType | undefined,
-  disabledWalletTypeSet: new Set() as Set<string>,
   connectLoading: false,
   connected: undefined as Connected | undefined,
 });
