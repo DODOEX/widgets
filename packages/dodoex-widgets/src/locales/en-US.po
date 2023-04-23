@@ -42,7 +42,7 @@ msgstr "Balance:"
 msgid "Basic Fee"
 msgstr "Basic Fee"
 
-#: src/components/WithExecutionDialog/index.tsx:303
+#: src/components/WithExecutionDialog/index.tsx:305
 msgid "Close"
 msgstr "Close"
 
@@ -70,7 +70,7 @@ msgstr "Connect to your {0} Wallet"
 msgid "Current price impact"
 msgstr "Current price impact"
 
-#: src/components/WithExecutionDialog/index.tsx:303
+#: src/components/WithExecutionDialog/index.tsx:305
 msgid "Dismiss"
 msgstr "Dismiss"
 
@@ -83,7 +83,7 @@ msgstr "Due to the market condition, market price and estimated price may have a
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
-#: src/components/TokenPicker/index.tsx:151
+#: src/components/TokenPicker/index.tsx:148
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
@@ -169,13 +169,17 @@ msgstr "Reset"
 msgid "Review Swap"
 msgstr "Review Swap"
 
-#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:42
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:41
 msgid "SELECT TOKEN"
 msgstr "SELECT TOKEN"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:20
-msgid "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
-msgstr "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
+msgid "SafeERC20: low-level call failed. Please contact the DODO team."
+msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:20
+#~ msgid "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
+#~ msgstr "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
 
 #: src/components/Swap/index.tsx:401
 msgid "Select Tokens"
@@ -201,7 +205,7 @@ msgstr "Slippage"
 msgid "Slippage Tolerance"
 msgstr "Slippage Tolerance"
 
-#: src/components/WithExecutionDialog/index.tsx:264
+#: src/components/WithExecutionDialog/index.tsx:266
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
@@ -230,7 +234,7 @@ msgstr "Transaction Deadline"
 msgid "Transaction Pending"
 msgstr "Transaction Pending"
 
-#: src/components/WithExecutionDialog/index.tsx:184
+#: src/components/WithExecutionDialog/index.tsx:186
 msgid "Transaction Time:"
 msgstr "Transaction Time:"
 
@@ -238,7 +242,7 @@ msgstr "Transaction Time:"
 msgid "Transaction rejected."
 msgstr "Transaction rejected."
 
-#: src/components/WithExecutionDialog/index.tsx:199
+#: src/components/WithExecutionDialog/index.tsx:201
 msgid "Tx"
 msgstr "Tx"
 
