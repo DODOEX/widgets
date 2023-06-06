@@ -1334,7 +1334,7 @@
 
 "@dodoex/widgets@file:/home/junjie/code/dodo/widgets/packages/dodoex-widgets":
   "resolved" "file:packages/dodoex-widgets"
-  "version" "2.2.2-0"
+  "version" "2.2.2-1"
   dependencies:
     "@babel/runtime" "^7.17.0"
     "@dodoex/components" "^2.0.0"
@@ -9238,7 +9238,6 @@
     "redux" "^4.2.0"
     "redux-thunk" "^2.4.1"
     "storybook-addon-designs" "^6.2.1"
-    "valtio" "^1.10.4"
 
 "doctrine@^3.0.0":
   "integrity" "sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w=="
