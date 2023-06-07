@@ -7,6 +7,7 @@ export interface TokenInfo {
   readonly logoURI?: string;
   readonly tags?: string[];
   readonly extensions?: any;
+  readonly side?: 'from' | 'to';
 }
 export interface DefaultTokenInfo extends TokenInfo {
   amount?: number;
@@ -18,7 +19,7 @@ export enum TokenListType {
   All = 'all',
   Default = 'default',
   Coingecko = 'coingecko',
-};
+}
 
 export enum ApprovalState {
   Loading = 'Loading',

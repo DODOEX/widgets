@@ -22,6 +22,7 @@ export interface TokenCardProps {
   onInputFocus?: () => void;
   onTokenClick?: () => void;
   onTokenChange: TokenPickerProps['onChange'];
+  side?: TokenPickerProps['side'];
 }
 export function TokenCard({
   sx,
@@ -36,6 +37,7 @@ export function TokenCard({
   onTokenClick,
   onInputChange,
   onTokenChange,
+  side,
 }: TokenCardProps) {
   const theme = useTheme();
   const getBalance = useGetBalance();
@@ -101,6 +103,7 @@ export function TokenCard({
       <TokenPickerDialog
         value={token}
         open={tokenPickerVisible}
+        side={side}
         occupiedAddrs={occupiedAddrs}
         onClose={() => {
           setTokenPickerVisible(false);

@@ -551,6 +551,7 @@ export function Swap() {
           <TokenCard
             sx={{ mb: 4 }}
             token={fromToken}
+            side="from"
             amt={fromFinalAmt}
             onMaxClick={handleMaxClick}
             onInputChange={updateFromAmt}
@@ -585,6 +586,7 @@ export function Swap() {
           {/* Second Token Card  */}
           <TokenCard
             token={toToken}
+            side="to"
             amt={toFinalAmt}
             onInputChange={updateToAmt}
             onInputFocus={() => {
