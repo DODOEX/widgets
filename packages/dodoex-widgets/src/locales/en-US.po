@@ -21,12 +21,12 @@ msgstr "Additional Fee"
 msgid "Additional routing fees set by the Widget user"
 msgstr "Additional routing fees set by the Widget user"
 
-#: src/components/Swap/index.tsx:411
+#: src/components/Swap/index.tsx:449
 #: src/hooks/Token/useGetTokenStatus.ts:111
 msgid "Approve"
 msgstr "Approve"
 
-#: src/components/Swap/index.tsx:411
+#: src/components/Swap/index.tsx:449
 msgid "Approving"
 msgstr "Approving"
 
@@ -66,7 +66,7 @@ msgstr "Connect to your wallet"
 msgid "Connect to your {0} Wallet"
 msgstr "Connect to your {0} Wallet"
 
-#: src/components/Swap/index.tsx:264
+#: src/components/Swap/index.tsx:302
 msgid "Current price impact"
 msgstr "Current price impact"
 
@@ -75,15 +75,15 @@ msgid "Dismiss"
 msgstr "Dismiss"
 
 #: src/components/Swap/components/ReviewDialog.tsx:289
-#: src/components/Swap/index.tsx:256
+#: src/components/Swap/index.tsx:294
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
 
-#: src/components/Swap/index.tsx:417
+#: src/components/Swap/index.tsx:455
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
-#: src/components/TokenPicker/index.tsx:148
+#: src/components/TokenPicker/index.tsx:143
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
@@ -91,12 +91,12 @@ msgstr "Enter the token symbol or address"
 msgid "Estimated service provider fees"
 msgstr "Estimated service provider fees"
 
-#: src/components/Swap/index.tsx:423
+#: src/components/Swap/index.tsx:461
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:305
+#: src/components/Swap/index.tsx:343
 msgid "Fetching best price..."
 msgstr "Fetching best price..."
 
@@ -116,7 +116,7 @@ msgstr "High slippage tolerance will increase the success rate of transaction, b
 msgid "If your transaction time exceeds the deadline, your transaction will be rescinded."
 msgstr "If your transaction time exceeds the deadline, your transaction will be rescinded."
 
-#: src/components/Swap/index.tsx:444
+#: src/components/Swap/index.tsx:482
 msgid "Insufficient balance"
 msgstr "Insufficient balance"
 
@@ -136,7 +136,7 @@ msgstr "Maximum slippage do not exceed 50%"
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
-#: src/components/Swap/index.tsx:656
+#: src/components/Swap/index.tsx:696
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -153,7 +153,7 @@ msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:430
+#: src/components/Swap/index.tsx:468
 msgid "Quote not available"
 msgstr "Quote not available"
 
@@ -165,7 +165,7 @@ msgstr "RPC node data exception"
 msgid "Reset"
 msgstr "Reset"
 
-#: src/components/Swap/index.tsx:453
+#: src/components/Swap/index.tsx:491
 msgid "Review Swap"
 msgstr "Review Swap"
 
@@ -181,11 +181,11 @@ msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
 #~ msgid "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
 #~ msgstr "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
 
-#: src/components/Swap/index.tsx:401
+#: src/components/Swap/index.tsx:439
 msgid "Select Tokens"
 msgstr "Select Tokens"
 
-#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:28
+#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:30
 msgid "Select a token"
 msgstr "Select a token"
 
@@ -209,7 +209,7 @@ msgstr "Slippage Tolerance"
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
-#: src/components/Swap/index.tsx:531
+#: src/components/Swap/index.tsx:569
 #: src/hooks/Swap/useExecuteSwap.ts:56
 msgid "Swap"
 msgstr "Swap"
@@ -230,7 +230,7 @@ msgstr "This CP has been settled by other addrs"
 msgid "Transaction Deadline"
 msgstr "Transaction Deadline"
 
-#: src/components/Swap/index.tsx:394
+#: src/components/Swap/index.tsx:432
 msgid "Transaction Pending"
 msgstr "Transaction Pending"
 
@@ -250,7 +250,7 @@ msgstr "Tx"
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "Unable to SETTLE during the cooling-off period"
 
-#: src/components/Swap/index.tsx:321
+#: src/components/Swap/index.tsx:359
 msgid "Unsupported network - switch to trade"
 msgstr "Unsupported network - switch to trade"
 
