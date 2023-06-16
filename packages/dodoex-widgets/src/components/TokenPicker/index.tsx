@@ -1,16 +1,11 @@
 import { Box, SearchInput } from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
 import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { VariableSizeList as List } from 'react-window';
-import { RootState } from '../../store/reducers';
 import type { TokenInfo, TokenList } from '../../hooks/Token';
 import { useTokenList } from '../../hooks/Token';
-import { getPopularTokenList } from '../../store/selectors/token';
 import PopularToken from './PopularToken';
 import TokenItem from './TokenItem';
 import { t } from '@lingui/macro';
-import { useCurrentChainId } from '../../hooks/ConnectWallet';
 
 export interface TokenPickerProps {
   value?: TokenInfo | null;
@@ -22,6 +17,7 @@ export interface TokenPickerProps {
   /** only show props */
   showAddrs?: string[];
   visible?: boolean;
+  side?: 'from' | 'to';
 }
 
 export default function TokenPicker({
@@ -31,18 +27,17 @@ export default function TokenPicker({
   hiddenAddrs,
   showAddrs,
   visible,
+  side,
 }: TokenPickerProps) {
-  const chainId = useCurrentChainId();
-  const popularTokenList = useSelector((state: RootState) =>
-    getPopularTokenList(chainId, state),
-  );
-  const { showTokenList, filter, setFilter, onSelectToken } = useTokenList({
-    value,
-    onChange,
-    occupiedAddrs,
-    hiddenAddrs,
-    showAddrs,
-  });
+  const { showTokenList, filter, setFilter, onSelectToken, popularTokenList } =
+    useTokenList({
+      value,
+      onChange,
+      occupiedAddrs,
+      hiddenAddrs,
+      showAddrs,
+      side,
+    });
   const ref = useRef<HTMLDivElement>(null);
   const [fixedSizeHeight, setFixedSizeHeight] = useState(0);
 

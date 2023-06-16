@@ -80,6 +80,7 @@ export default function useTokenList({
   occupiedAddrs,
   hiddenAddrs,
   showAddrs,
+  side,
 }: {
   value?: TokenInfo | null;
   onChange: (token: TokenInfo, isOccupied: boolean) => void;
@@ -90,18 +91,18 @@ export default function useTokenList({
   hiddenAddrs?: string[];
   /** only show props */
   showAddrs?: string[];
+  /** token field control */
+  side?: 'from' | 'to';
 }) {
   const [filter, setFilter] = useState('');
   const preloaded = useSelector(getTokenList);
   const chainId = useCurrentChainId();
   const getBalance = useGetBalance();
-  const popularTokenList = useSelector((state: RootState) =>
+  const popularTokenListOrigin = useSelector((state: RootState) =>
     getPopularTokenList(chainId, state),
   );
   const defaultTokenList = useMemo(() => {
-    return (
-      defaultTokens?.filter((token) => token.chainId === chainId) || []
-    );
+    return defaultTokens?.filter((token) => token.chainId === chainId) || [];
   }, [defaultTokens, chainId]);
 
   const hiddenSet = useMemo(
@@ -127,10 +128,18 @@ export default function useTokenList({
         } else {
           isShow = !hiddenSet.has(e.address.toLowerCase());
         }
+        if (isShow && side) {
+          isShow = !e.side || e.side === side;
+        }
         return isShow;
       });
     },
     [showSet, chainId, hiddenSet],
+  );
+
+  const popularTokenList = useMemo(
+    () => getNeedShowList(popularTokenListOrigin),
+    [popularTokenListOrigin, getNeedShowList],
   );
 
   const sortTokenList = useCallback(
@@ -196,8 +205,7 @@ export default function useTokenList({
             return 1;
           }
 
-          const defaultAddresses = defaultTokenList
-            .map((item) => item.address);
+          const defaultAddresses = defaultTokenList.map((item) => item.address);
           if (defaultAddresses?.includes(a.address)) {
             return -1;
           }
@@ -216,7 +224,14 @@ export default function useTokenList({
         });
       return tokenRes;
     },
-    [filter, getBalance, occupiedAddrs, value, popularTokenList, defaultTokenList],
+    [
+      filter,
+      getBalance,
+      occupiedAddrs,
+      value,
+      popularTokenList,
+      defaultTokenList,
+    ],
   );
 
   const onSelectToken = useCallback(
@@ -242,5 +257,7 @@ export default function useTokenList({
     showTokenList,
 
     onSelectToken,
+
+    popularTokenList,
   };
 }

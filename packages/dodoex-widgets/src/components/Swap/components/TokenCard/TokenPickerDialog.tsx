@@ -12,12 +12,14 @@ export function TokenPickerDialog({
   onClose,
   occupiedAddrs,
   onTokenChange,
+  side,
 }: {
   open: boolean;
   occupiedAddrs?: string[];
   onClose: DialogProps['onClose'];
   value?: TokenPickerProps['value'];
   onTokenChange: TokenPickerProps['onChange'];
+  side?: TokenPickerProps['side'];
 }) {
   const { height } = useSelector(getGlobalProps);
   return (
@@ -33,6 +35,7 @@ export function TokenPickerDialog({
         visible={open}
         onChange={onTokenChange}
         occupiedAddrs={occupiedAddrs}
+        side={side}
       />
     </Dialog>
   );

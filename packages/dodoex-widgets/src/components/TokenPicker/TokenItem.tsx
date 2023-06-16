@@ -30,6 +30,7 @@ export default function TokenItem({
         input: balanceBigNumber,
       })
     : '';
+
   return (
     <Box
       sx={{
@@ -76,7 +77,7 @@ export default function TokenItem({
                 textAlign: 'left',
               }}
             >
-              {new BigNumber(balance).gte(0) ? (
+              {balanceBigNumber?.gte(0) ? (
                 balance
               ) : (
                 <Box

@@ -40,6 +40,7 @@ import { getDefaultChainId } from '../../store/selectors/wallet';
 import {
   getDefaultToToken,
   getDefaultFromToken,
+  getTokenList,
 } from '../../store/selectors/token';
 import { AppUrl } from '../../constants/api';
 import { ChainId, basicTokenMap } from '../../constants/chains';
@@ -153,6 +154,39 @@ export function Swap() {
     },
     [setDisplayingToAmt, debouncedSetToAmt],
   );
+  const tokenList = useSelector(getTokenList);
+  const initDefaultToken = () => {
+    let usedToken = null as TokenInfo | null;
+    if (
+      !fromToken &&
+      (!defaultFromToken || defaultFromToken.chainId !== chainId)
+    ) {
+      tokenList.some((token) => {
+        if (
+          token.chainId === chainId &&
+          (!token.side || token.side === 'from')
+        ) {
+          usedToken = token;
+          setFromToken(token);
+          return true;
+        }
+        return false;
+      });
+    }
+    if (!toToken && (!defaultToToken || defaultToToken.chainId !== chainId)) {
+      tokenList.some((token) => {
+        if (
+          token.chainId === chainId &&
+          (!usedToken || usedToken.address !== token.address) &&
+          (!token.side || token.side === 'to')
+        ) {
+          setToToken(token);
+          return true;
+        }
+        return false;
+      });
+    }
+  };
 
   useEffect(() => {
     if (chainId) {
@@ -190,7 +224,11 @@ export function Swap() {
         updateToAmt(defaultToToken.amount);
       }
     }
+    initDefaultToken();
   }, [defaultToToken, defaultFromToken, chainId, updateFromAmt, updateToAmt]);
+  useEffect(() => {
+    initDefaultToken();
+  }, [tokenList]);
 
   const switchTokens = useCallback(() => {
     updateFromAmt('');
@@ -551,6 +589,7 @@ export function Swap() {
           <TokenCard
             sx={{ mb: 4 }}
             token={fromToken}
+            side="from"
             amt={fromFinalAmt}
             onMaxClick={handleMaxClick}
             onInputChange={updateFromAmt}
@@ -585,6 +624,7 @@ export function Swap() {
           {/* Second Token Card  */}
           <TokenCard
             token={toToken}
+            side="to"
             amt={toFinalAmt}
             onInputChange={updateToAmt}
             onInputFocus={() => {

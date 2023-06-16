@@ -6,6 +6,7 @@ import { terser } from 'rollup-plugin-terser';
 import { default as multi } from 'rollup-plugin-multi-input';
 import url from 'rollup-plugin-url';
 import replace from '@rollup/plugin-replace';
+import resolve from '@rollup/plugin-node-resolve';
 import svgr from '@svgr/rollup';
 import pkg from './package.json';
 
@@ -31,13 +32,16 @@ const baseConfig = {
     json(),
     typescript(),
     commonjs(),
+    resolve(),
     babel({
       extensions,
       babelHelpers: 'bundled',
     }),
   ],
   external: [
-    ...Object.keys(pkg.dependencies || {}),
+    ...Object.keys(pkg.dependencies || {}).filter(
+      (key) => !['@dodoex/components'].includes(key),
+    ),
     ...Object.keys(pkg.peerDependencies || {}),
   ],
 };

@@ -153,22 +153,6 @@ describe('connect and trade', () => {
     });
   });
 
-  it('need select token', async () => {
-    await waitFor(
-      () => expect(screen.getByTestId(swapAlertSelectTokenBtn)).toBeVisible(),
-      {
-        timeout: TIMEOUT,
-      },
-    );
-    const $selectTokens = screen.queryAllByTestId(swapSelectTokenBtn);
-    expect($selectTokens).toHaveLength(2);
-
-    await selectToken($selectTokens[0], baseToken);
-    expect(screen.getByTestId(swapAlertSelectTokenBtn)).toBeVisible();
-    await selectToken($selectTokens[1], quoteToken);
-    expect(screen.queryByTestId(swapAlertSelectTokenBtn)).toBeNull();
-  });
-
   it('need enter amount', async () => {
     expect(screen.queryByTestId(swapAlertEnterAmountBtn)).toBeVisible();
     const $numberInput = screen.queryAllByTestId(numberInputWrapper);
