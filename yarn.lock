@@ -1299,42 +1299,9 @@
   dependencies:
     "@babel/runtime" "^7.17.2"
 
-"@dodoex/widgets@^2.2.1":
-  "integrity" "sha512-KIwy8oeIaLE91zkOAMdo+C2CwCo1zTODcnV15/xJ+SaFfVveSfeADWXLOO8Og0rt+73EAIOcW3VWTP0veGlqzQ=="
-  "resolved" "https://registry.npmjs.org/@dodoex/widgets/-/widgets-2.3.1.tgz"
-  "version" "2.3.1"
-  dependencies:
-    "@babel/runtime" "^7.17.0"
-    "@dodoex/components" "^2.0.0"
-    "@dodoex/icons" "^2.0.0"
-    "@emotion/react" "^11.10.0"
-    "@emotion/styled" "^11.10.0"
-    "@ethersproject/bignumber" "^5.6.2"
-    "@ethersproject/contracts" "^5.7.0"
-    "@lingui/core" "^3.14.0"
-    "@lingui/macro" "^3.14.0"
-    "@lingui/react" "^3.14.0"
-    "@reduxjs/toolkit" "^1.6.1"
-    "@semantic-release/changelog" "^6.0.1"
-    "@semantic-release/git" "^10.0.1"
-    "@walletconnect/ethereum-provider" "^1.8.0"
-    "@walletconnect/jsonrpc-http-connection" "^1.0.3"
-    "@web3-react/core" "8.0.35-beta.0"
-    "@web3-react/eip1193" "8.0.26-beta.0"
-    "@web3-react/metamask" "8.0.28-beta.0"
-    "@web3-react/types" "8.0.20-beta.0"
-    "@web3-react/walletconnect" "8.0.35-beta.0"
-    "axios" "^0.27.2"
-    "bignumber.js" "^9.0.2"
-    "identicon.js" "^2.3.3"
-    "lodash" "^4.17.21"
-    "make-plural" "^7.0.0"
-    "react-window" "^1.8.8"
-    "semantic-release" "^19.0.2"
-
-"@dodoex/widgets@file:/home/junjie/code/dodo/widgets/packages/dodoex-widgets":
+"@dodoex/widgets@^2.2.1", "@dodoex/widgets@file:/home/junjie/code/dodo/widgets/packages/dodoex-widgets":
   "resolved" "file:packages/dodoex-widgets"
-  "version" "2.2.2-4"
+  "version" "2.3.2"
   dependencies:
     "@babel/runtime" "^7.17.0"
     "@dodoex/components" "^2.0.0"
@@ -3569,20 +3536,7 @@
   dependencies:
     "@octokit/types" "^7.0.0"
 
-"@octokit/core@^4.0.0", "@octokit/core@>=3", "@octokit/core@>=4":
-  "integrity" "sha512-4R3HeHTYVHCfzSAi0C6pbGXV8UDI5Rk+k3G7kLVNckswN9mvpOzW9oENfjfH3nEmzg8y3AmKmzs8Sg6pLCeOCA=="
-  "resolved" "https://registry.npmjs.org/@octokit/core/-/core-4.0.5.tgz"
-  "version" "4.0.5"
-  dependencies:
-    "@octokit/auth-token" "^3.0.0"
-    "@octokit/graphql" "^5.0.0"
-    "@octokit/request" "^6.0.0"
-    "@octokit/request-error" "^3.0.0"
-    "@octokit/types" "^7.0.0"
-    "before-after-hook" "^2.2.0"
-    "universal-user-agent" "^6.0.0"
-
-"@octokit/core@^4.1.0", "@octokit/core@>=4":
+"@octokit/core@^4.1.0", "@octokit/core@>=3", "@octokit/core@>=4":
   "integrity" "sha512-AgvDRUg3COpR82P7PBdGZF/NNqGmtMq2NiPqeSsDIeCfYFOZ9gddqWNQHnFdEUf+YwOj4aZYmJnlPp7OXmDIDg=="
   "resolved" "https://registry.npmjs.org/@octokit/core/-/core-4.2.0.tgz"
   "version" "4.2.0"
@@ -3628,13 +3582,6 @@
   "resolved" "https://registry.npmjs.org/@octokit/plugin-enterprise-rest/-/plugin-enterprise-rest-6.0.1.tgz"
   "version" "6.0.1"
 
-"@octokit/plugin-paginate-rest@^4.0.0":
-  "integrity" "sha512-2O5K5fpajYG5g62wjzHR7/cWYaCA88CextAW3vFP+yoIHD0KEdlVMHfM5/i5LyV+JMmqiYW7w5qfg46FR+McNw=="
-  "resolved" "https://registry.npmjs.org/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-4.1.0.tgz"
-  "version" "4.1.0"
-  dependencies:
-    "@octokit/types" "^7.1.1"
-
 "@octokit/plugin-paginate-rest@^6.0.0":
   "integrity" "sha512-Sq5VU1PfT6/JyuXPyt04KZNVsFOSBaYOAq2QRZUwzVlI10KFvcbUo8lR258AAQL1Et60b0WuVik+zOWKLuDZxw=="
   "resolved" "https://registry.npmjs.org/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-6.0.0.tgz"
@@ -3646,14 +3593,6 @@
   "integrity" "sha512-mLUsMkgP7K/cnFEw07kWqXGF5LKrOkD+lhCrKvPHXWDywAwuDUeDwWBpc69XK3pNX0uKiVt8g5z96PJ6z9xCFA=="
   "resolved" "https://registry.npmjs.org/@octokit/plugin-request-log/-/plugin-request-log-1.0.4.tgz"
   "version" "1.0.4"
-
-"@octokit/plugin-rest-endpoint-methods@^6.0.0":
-  "integrity" "sha512-qEu2wn6E7hqluZwIEUnDxWROvKjov3zMIAi4H4d7cmKWNMeBprEXZzJe8pE5eStUYC1ysGhD0B7L6IeG1Rfb+g=="
-  "resolved" "https://registry.npmjs.org/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-6.3.0.tgz"
-  "version" "6.3.0"
-  dependencies:
-    "@octokit/types" "^7.0.0"
-    "deprecation" "^2.3.1"
 
 "@octokit/plugin-rest-endpoint-methods@^7.0.0":
   "integrity" "sha512-pnCaLwZBudK5xCdrR823xHGNgqOzRnJ/mpC/76YPpNP7DybdsJtP7mdOwh+wYZxK5jqeQuhu59ogMI4NRlBUvA=="
@@ -3684,7 +3623,7 @@
     "node-fetch" "^2.6.7"
     "universal-user-agent" "^6.0.0"
 
-"@octokit/rest@^19.0.0":
+"@octokit/rest@^19.0.0", "@octokit/rest@^19.0.3":
   "integrity" "sha512-HRtSfjrWmWVNp2uAkEpQnuGMJsu/+dBr47dRc5QVgsCbnIc1+GFEaoKBWkYG+zjrsHpSqcAElMio+n10c0b5JA=="
   "resolved" "https://registry.npmjs.org/@octokit/rest/-/rest-19.0.7.tgz"
   "version" "19.0.7"
@@ -3694,17 +3633,7 @@
     "@octokit/plugin-request-log" "^1.0.4"
     "@octokit/plugin-rest-endpoint-methods" "^7.0.0"
 
-"@octokit/rest@^19.0.3":
-  "integrity" "sha512-LwG668+6lE8zlSYOfwPj4FxWdv/qFXYBpv79TWIQEpBLKA9D/IMcWsF/U9RGpA3YqMVDiTxpgVpEW3zTFfPFTA=="
-  "resolved" "https://registry.npmjs.org/@octokit/rest/-/rest-19.0.4.tgz"
-  "version" "19.0.4"
-  dependencies:
-    "@octokit/core" "^4.0.0"
-    "@octokit/plugin-paginate-rest" "^4.0.0"
-    "@octokit/plugin-request-log" "^1.0.4"
-    "@octokit/plugin-rest-endpoint-methods" "^6.0.0"
-
-"@octokit/types@^7.0.0", "@octokit/types@^7.1.1":
+"@octokit/types@^7.0.0":
   "integrity" "sha512-Dx6cNTORyVaKY0Yeb9MbHksk79L8GXsihbG6PtWqTpkyA2TY1qBWE26EQXVG3dHwY9Femdd/WEeRUEiD0+H3TQ=="
   "resolved" "https://registry.npmjs.org/@octokit/types/-/types-7.1.1.tgz"
   "version" "7.1.1"
@@ -13676,7 +13605,17 @@
   dependencies:
     "yallist" "^4.0.0"
 
-"lru-cache@^7.4.4", "lru-cache@^7.5.1", "lru-cache@^7.7.1":
+"lru-cache@^7.4.4":
+  "integrity" "sha512-EIRtP1GrSJny0dqb50QXRUNBxHJhcpxHC++M5tD7RYbvLLn5KVWKsbyswSSqDuU15UFi3bgTQIY8nhDMeF6aDQ=="
+  "resolved" "https://registry.npmjs.org/lru-cache/-/lru-cache-7.14.0.tgz"
+  "version" "7.14.0"
+
+"lru-cache@^7.5.1":
+  "integrity" "sha512-EIRtP1GrSJny0dqb50QXRUNBxHJhcpxHC++M5tD7RYbvLLn5KVWKsbyswSSqDuU15UFi3bgTQIY8nhDMeF6aDQ=="
+  "resolved" "https://registry.npmjs.org/lru-cache/-/lru-cache-7.14.0.tgz"
+  "version" "7.14.0"
+
+"lru-cache@^7.7.1":
   "integrity" "sha512-EIRtP1GrSJny0dqb50QXRUNBxHJhcpxHC++M5tD7RYbvLLn5KVWKsbyswSSqDuU15UFi3bgTQIY8nhDMeF6aDQ=="
   "resolved" "https://registry.npmjs.org/lru-cache/-/lru-cache-7.14.0.tgz"
   "version" "7.14.0"
@@ -13741,9 +13680,9 @@
   "version" "6.2.2"
 
 "make-plural@^7.0.0":
-  "integrity" "sha512-/K3BC0KIsO+WK2i94LkMPv3wslMrazrQhfi5We9fMbLlLjzoOSJWr7TAdupLlDWaJcWxwoNosBkhFDejiu5VDw=="
-  "resolved" "https://registry.npmjs.org/make-plural/-/make-plural-7.3.0.tgz"
-  "version" "7.3.0"
+  "integrity" "sha512-PKkwVlAxYVo98NrbclaQIT4F5Oy+X58PZM5r2IwUSCe3syya6PXkIRCn2XCdz7p58Scgpp50PBeHmepXVDG3hg=="
+  "resolved" "https://registry.npmjs.org/make-plural/-/make-plural-7.1.0.tgz"
+  "version" "7.1.0"
 
 "makeerror@1.0.12":
   "integrity" "sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg=="
