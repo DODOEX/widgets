@@ -21,6 +21,7 @@ import { TokenList, TokenListType } from './type';
 import { useCurrentChainId } from '../ConnectWallet';
 import { useGetCGTokenList } from './useGetCGTokenList';
 import defaultTokens from '../../constants/tokenList';
+import { getAutoConnectLoading } from '../../store/selectors/globals';
 
 export interface InitTokenListProps {
   tokenList?: TokenList | TokenListType;
@@ -32,15 +33,14 @@ export default function useInitTokenList({
 }: InitTokenListProps) {
   const dispatch = useDispatch<AppThunkDispatch>();
   const [tokenListOrigin, setTokenListOrigin] = useState<TokenList>([]);
+  const autoConnectLoading = useSelector(getAutoConnectLoading);
   const { account } = useWeb3React();
   const chainId = useCurrentChainId();
   const { cgTokenList } = useGetCGTokenList();
   const blockNumber = useSelector(getLatestBlockNumber);
 
   const defaultTokenList = useMemo(() => {
-    return (
-      defaultTokens?.filter((token) => token.chainId === chainId) || []
-    );
+    return defaultTokens?.filter((token) => token.chainId === chainId) || [];
   }, [defaultTokens, chainId]);
 
   const popularTokenList = useMemo(() => {
@@ -70,15 +70,20 @@ export default function useInitTokenList({
       let allTokenList = [];
       if (isArray(tokenList)) {
         allTokenList = tokenList;
-      } else if (tokenList === TokenListType.Coingecko || tokenList === TokenListType.All) {
-        const combinedTokenList = (defaultTokenList as TokenList).concat(cgTokenList.toArray());
-        allTokenList = unionBy(
-          popularTokenList,
-          combinedTokenList, (token) => token.address.toLowerCase());
+      } else if (
+        tokenList === TokenListType.Coingecko ||
+        tokenList === TokenListType.All
+      ) {
+        const combinedTokenList = (defaultTokenList as TokenList).concat(
+          cgTokenList.toArray(),
+        );
+        allTokenList = unionBy(popularTokenList, combinedTokenList, (token) =>
+          token.address.toLowerCase(),
+        );
       } else {
-        allTokenList = unionBy(
-          popularTokenList,
-          defaultTokenList, (token) => token.address.toLowerCase());
+        allTokenList = unionBy(popularTokenList, defaultTokenList, (token) =>
+          token.address.toLowerCase(),
+        );
       }
       const defaultChainId = chainId;
       const currentChainTokenList = allTokenList.filter(
@@ -87,8 +92,18 @@ export default function useInitTokenList({
       setTokenListOrigin(currentChainTokenList);
       dispatch(setTokenList(currentChainTokenList));
     };
-    computed();
-  }, [tokenList, dispatch, chainId, cgTokenList, popularTokenList, defaultTokenList]);
+    if (autoConnectLoading === false) {
+      computed();
+    }
+  }, [
+    tokenList,
+    dispatch,
+    chainId,
+    cgTokenList,
+    popularTokenList,
+    defaultTokenList,
+    autoConnectLoading,
+  ]);
 
   useEffect(() => {
     dispatch(setTokenBalances({}));

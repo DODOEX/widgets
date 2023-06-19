@@ -5,7 +5,7 @@ import {
   Theme,
   Box,
 } from '@dodoex/components';
-import { Provider as ReduxProvider } from 'react-redux';
+import { Provider as ReduxProvider, useDispatch } from 'react-redux';
 import { PropsWithChildren, useEffect, useMemo } from 'react';
 import { LangProvider } from './i18n';
 import { store } from '../../store';
@@ -26,6 +26,8 @@ import { ChainId } from '../../constants/chains';
 import { reloadWindow } from '../../utils';
 import { useInitPropsToRedux } from '../../hooks/Swap';
 import { DefaultTokenInfo } from '../../hooks/Token/type';
+import { AppThunkDispatch } from '../../store/actions';
+import { setAutoConnectLoading } from '../../store/actions/globals';
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
@@ -51,13 +53,22 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useFetchETHBalance();
   useFetchBlockNumber();
   const { provider, connector } = useWeb3React();
+  const dispatch = useDispatch<AppThunkDispatch>();
   useEffect(() => {
-    const defaultChainId = props.defaultChainId || 1;
-    if (connector?.connectEagerly) {
-      connector.connectEagerly(defaultChainId);
-    } else {
-      connector.activate(defaultChainId);
-    }
+    dispatch(setAutoConnectLoading(true));
+    const connectWallet = async () => {
+      const defaultChainId = props.defaultChainId || 1;
+      try {
+        if (connector?.connectEagerly) {
+          await connector.connectEagerly(defaultChainId);
+        } else {
+          await connector.activate(defaultChainId);
+        }
+      } finally {
+        dispatch(setAutoConnectLoading(false));
+      }
+    };
+    connectWallet();
   }, [connector]);
 
   useEffect(() => {

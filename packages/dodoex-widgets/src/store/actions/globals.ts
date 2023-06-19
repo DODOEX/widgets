@@ -9,3 +9,12 @@ export const setGlobalProps = (globalProps: Partial<State>): AppThunkAction => {
     });
   };
 };
+
+export const setAutoConnectLoading = (loading: boolean): AppThunkAction => {
+  return async (dispatch) => {
+    dispatch({
+      type: 'SET_AUTO_CONNECT_LOADING',
+      payload: loading,
+    });
+  };
+};
