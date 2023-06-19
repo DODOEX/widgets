@@ -72,54 +72,6 @@ export default [
       'https://cmp.dodoex.io/mI69kq-S-tNT1W57qYizPd5r2WNFzpAq5y6NhOcrTkY/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vVEZhSVNLVVZIWThLTVhyTkVmZDRXRUJmMGJoSHRweHY3Q1hDT0dKbGY2by9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyeHZaMjlmT0dVeFpEaG1PVEEyWlM1d2JtYy5wbmc.webp',
   },
   {
-    chainId: 4,
-    address: '0x99cf6999fc481663fb10be55827f3584e3c25f3c',
-    name: 'LINE',
-    decimals: 18,
-    symbol: 'LINE',
-    logoURI: '',
-  },
-  {
-    chainId: 4,
-    address: '0xeaa70c2a40820dF9D38149C84dd943CFcB562587',
-    name: 'DODO',
-    decimals: 18,
-    symbol: 'DODO',
-    logoURI: '',
-  },
-  {
-    chainId: 4,
-    address: '0xB26c0d8Be2960c70641A95A9195BE1f59Ac83aC0',
-    name: 'Wrapped Ether',
-    decimals: 18,
-    symbol: 'WETH',
-    logoURI: '',
-  },
-  {
-    chainId: 4,
-    address: '0xab0733588776B8881F7712f6AbCa98F510e6B63D',
-    name: 'USDC',
-    decimals: 6,
-    symbol: 'USDC',
-    logoURI: '',
-  },
-  {
-    chainId: 4,
-    address: '0x0aDCBAE18580120667f7Ff6c6451A426B13c67B7',
-    name: 'USDT Token',
-    decimals: 6,
-    symbol: 'USDT',
-    logoURI: '',
-  },
-  {
-    chainId: 4,
-    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-    name: 'Ether',
-    decimals: 18,
-    symbol: 'ETH',
-    logoURI: '',
-  },
-  {
     chainId: 5,
     symbol: 'USDC',
     address: '0xC4106029d03c33731Ca01Ba59b5A6368c660E596',
@@ -231,69 +183,6 @@ export default [
     symbol: 'WBNB',
     logoURI:
       'https://cmp.dodoex.io/-Pua5rc9k9iW4yuF5ajLVKzMkRhBq06D8HiEZ5gjezA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vMDZOWTdBTmdOYWdFOHpXYUMtX2IzYXVPOUxsTEp6QlpLTUR3VlM5eW9DQS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyeHZaMjlmT1dRellXTmtZMlEzTnk1d2JtYy5wbmc.webp',
-  },
-  {
-    chainId: 128,
-    address: '0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f',
-    name: 'Wrapped HT',
-    decimals: 18,
-    symbol: 'WHT',
-    logoURI:
-      'https://cmp.dodoex.io/6EZiEnx7kuHSxfpDGIpuE4z8LW4wNE1ck8fZrc5zRaQ/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vR010ZUtqTkRTN1ZRT1Jpd0k3TU9OWE1zcFdEc0VYYmxjX1hheXc4cTVEay9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNNeVgyTnZhVzV0WVhKclpYUmpZWEJmWTI5dFgzTjBZWFJwWTE5cGJXZGZZMjlwYm5OZk5qUjROalJmTWpVd01sOHpaRGt5TjJWaE4yVTVMbkJ1WncucG5n.webp',
-  },
-  {
-    chainId: 128,
-    address: '0x0298c2b32eae4da002a15f36fdf7615bea3da047',
-    name: 'Heco-Peg HUSD Token',
-    decimals: 8,
-    symbol: 'HUSD',
-    logoURI:
-      'https://cmp.dodoex.io/LiOyD0GGt0t4bk4xz3RWAxvqFPyYCqfM4z0AqneT3xM/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vVXRWWnNCVUxTREZNR002SUM0OGI0VV9UV05oYUU4MzFkdnh1Y1hkLTE2by9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNNeVgyTnZhVzV0WVhKclpYUmpZWEJmWTI5dFgzTjBZWFJwWTE5cGJXZGZZMjlwYm5OZk5qUjROalJmTkRjM09WODFZbU0yWVdFek9EUTRMbkJ1WncucG5n.webp',
-  },
-  {
-    chainId: 128,
-    address: '0x3d760a45d0887dfd89a2f5385a236b29cb46ed2a',
-    name: 'Heco-Peg DAIHECO Token',
-    decimals: 18,
-    symbol: 'DAI-HECO',
-    logoURI:
-      'https://cmp.dodoex.io/XNbyKKzPthXfYOku9oXt5xzqM1JOWzxmbTLq2kkSvaU/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vWHprMUxKSzJ2V1BYVmN3TmVvVDRfR3NNdnBOVXFmTmliXzgybFZSVUNkWS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNKaGQxOW5hWFJvZFdKMWMyVnlZMjl1ZEdWdWRGOWpiMjFmYzNWemFHbHpkMkZ3WDJsamIyNXpYMjFoYzNSbGNsOTBiMnRsYmw5a1lXbGZPRGhrT0dNeE5HRTBZaTVxY0djLmpwZw.webp',
-  },
-  {
-    chainId: 128,
-    address: '0x64ff637fb478863b7468bc97d30a5bf3a428a1fd',
-    name: 'Heco-Peg ETH Token',
-    decimals: 18,
-    symbol: 'ETH',
-    logoURI:
-      'https://cmp.dodoex.io/prKmKP8yDTuPMHTCZ_DcxG8BqsuHNO8w5KDmJWmPodg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vOUVaWU1ER2ZVN3g2N3ZBZThqWkUxZzA0RExUaFhaV0JIb09wZFhpeXhHRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNNeVgyTnZhVzV0WVhKclpYUmpZWEJmWTI5dFgzTjBZWFJwWTE5cGJXZGZZMjlwYm5OZk5qUjROalJmTVRBeU4xOHhNekkyTjJGbE5EY3dMbkJ1WncucG5n.webp',
-  },
-  {
-    chainId: 128,
-    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-    name: 'HT',
-    decimals: 18,
-    symbol: 'HT',
-    logoURI:
-      'https://cmp.dodoex.io/6EZiEnx7kuHSxfpDGIpuE4z8LW4wNE1ck8fZrc5zRaQ/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vR010ZUtqTkRTN1ZRT1Jpd0k3TU9OWE1zcFdEc0VYYmxjX1hheXc4cTVEay9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNNeVgyTnZhVzV0WVhKclpYUmpZWEJmWTI5dFgzTjBZWFJwWTE5cGJXZGZZMjlwYm5OZk5qUjROalJmTWpVd01sOHpaRGt5TjJWaE4yVTVMbkJ1WncucG5n.webp',
-  },
-  {
-    chainId: 128,
-    address: '0x9362bbef4b8313a8aa9f0c9808b80577aa26b73b',
-    name: 'Heco-Peg USDCHECO Token',
-    decimals: 6,
-    symbol: 'USDC-HECO',
-    logoURI:
-      'https://cmp.dodoex.io/sQ5dF3FkjjQUsmfqFFE5cKq-cthh4u0wUooBE5Epf-k/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTDlEVElLa2dONG5mRkNTSF9GMUdXU3JiZkJDa2JZRTkwbmFDS0dIWnRsby9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMM1Z6WkdOZlpXVTFNbUV4WldReVlpOTFjMlJqWDJWbE5USmhNV1ZrTW1JdWNHNW4ucG5n.webp',
-  },
-  {
-    chainId: 128,
-    address: '0xa71edc38d189767582c38a3145b5873052c3e47a',
-    name: 'Heco-Peg USDTHECO Token',
-    decimals: 18,
-    symbol: 'USDT',
-    logoURI:
-      'https://cmp.dodoex.io/MGklrG5AImwUllGWDPMAHY0qLfdJQn4bj3iPFWSeohA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vUEM3a3JPb252bWl4U3VRaFEwY29pVy1sczFYN25WS1lLNVluekQ2R2lxRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkZSZlpUaGlOekZpTldZeU9TOVZVMFJVWDJVNFlqY3hZalZtTWprdWNHNW4ucG5n.webp',
   },
   {
     chainId: 137,
@@ -431,96 +320,6 @@ export default [
       'https://cmp.dodoex.io/n4n7ccBom2tgcZNN0jBv9YiTq5qGMjX6PHO0YGlpzZo/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vMElrSkQzVEc2SkFQdG1DV24tNnhfa0ozS3lXYXlVVHRhZ19PQmF0TFEwRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMWRDVkVOZmFXTnZibDgzWW1JelpUQTRaak14TDFkQ1ZFTmZhV052Ymw4M1ltSXpaVEE0WmpNeExuQnVady5wbmc.webp',
   },
   {
-    chainId: 1285,
-    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-    name: 'MOVR',
-    decimals: 18,
-    symbol: 'MOVR',
-    logoURI:
-      'https://cmp.dodoex.io/Clhd0YhBfsWh48Ej4taGHcJ7dfKiCbtdMgyhNU7QAJg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vZlBFT3c5LVdpQWhDVDJteGRmQ2gtb2hnQU1aaXBvWnllUl9TcVNpa3R4NC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMemt5T0RWZk4yWTVNREF5T1dNMU1pODVNamcxWHpkbU9UQXdNamxqTlRJdWQyVmljQS53ZWJw.webp',
-  },
-  {
-    chainId: 1285,
-    address: '0x98878b06940ae243284ca214f92bb71a2b032b8a',
-    name: 'Wrapped MOVR',
-    decimals: 18,
-    symbol: 'WMOVR',
-    logoURI:
-      'https://cmp.dodoex.io/oXW0_VSLU29rbyQK3LtaHymbMfdv6F_ri20EeyMVBEU/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vMDVYMDFLd21zZXFRNFB6SGxJdEdvN3dveHVaUkFVbmQ5bDhCNU5VQ2N6by9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMGhmVG1OdmRWOUlNSGhmTkRBd2VEUXdNRjlrTlRBNFpHSmxNVE0yTDBoZlRtTnZkVjlJTUhoZk5EQXdlRFF3TUY5a05UQTRaR0psTVRNMkxtcHdady5qcGc.webp',
-  },
-  {
-    chainId: 1285,
-    address: '0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818',
-    name: 'Binance USD',
-    decimals: 18,
-    symbol: 'BUSD',
-    logoURI:
-      'https://cmp.dodoex.io/SKu1xTvsm3q0RZC9CdiGw0zkq9k1P2ygK4TMenBYNC8/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vQVMtWEpUX3pncF9MSlFxdFJiaE1Fd3lTZlNBMWp0MUhHbUFGYV9QQUdTdy9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNKaGQxOW5hWFJvZFdKMWMyVnlZMjl1ZEdWdWRGOWpiMjFmYzNWemFHbHpkMkZ3WDJsamIyNXpYMjFoYzNSbGNsOTBiMnRsYmw5aWRYTmtYems0TjJNd1lUUmtNRGt1YW5Cbi5qcGc.webp',
-  },
-  {
-    chainId: 1285,
-    address: '0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844',
-    name: 'Dai Stablecoin',
-    decimals: 18,
-    symbol: 'DAI',
-    logoURI:
-      'https://cmp.dodoex.io/XNbyKKzPthXfYOku9oXt5xzqM1JOWzxmbTLq2kkSvaU/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vWHprMUxKSzJ2V1BYVmN3TmVvVDRfR3NNdnBOVXFmTmliXzgybFZSVUNkWS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNKaGQxOW5hWFJvZFdKMWMyVnlZMjl1ZEdWdWRGOWpiMjFmYzNWemFHbHpkMkZ3WDJsamIyNXpYMjFoYzNSbGNsOTBiMnRsYmw5a1lXbGZPRGhrT0dNeE5HRTBZaTVxY0djLmpwZw.webp',
-  },
-  {
-    chainId: 1285,
-    address: '0xE9460BD2FFB12b668fA32919C785C239f974D37C',
-    name: 'DODO bird',
-    decimals: 18,
-    symbol: 'DODO',
-    logoURI:
-      'https://cmp.dodoex.io/onw4bpUWC5-GPBwFMHLE3BcRaQ1S_hqlUxW-8H3l5g0/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTi1ITXhGVWtxUU9fR3cxRFl1empZblgwejFzQ1pIMG1nMWRlOG5Qdmk2NC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMFJQUkU5Zll6SXdZVEl4WTJFNU5pOUVUMFJQWDJNeU1HRXlNV05oT1RZdWNHNW4ucG5n.webp',
-  },
-  {
-    chainId: 1285,
-    address: '0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D',
-    name: 'USD Coin',
-    decimals: 6,
-    symbol: 'USDC',
-    logoURI:
-      'https://cmp.dodoex.io/sQ5dF3FkjjQUsmfqFFE5cKq-cthh4u0wUooBE5Epf-k/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTDlEVElLa2dONG5mRkNTSF9GMUdXU3JiZkJDa2JZRTkwbmFDS0dIWnRsby9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMM1Z6WkdOZlpXVTFNbUV4WldReVlpOTFjMlJqWDJWbE5USmhNV1ZrTW1JdWNHNW4ucG5n.webp',
-  },
-  {
-    chainId: 1285,
-    address: '0xB44a9B6905aF7c801311e8F4E76932ee959c663C',
-    name: 'Tether USD',
-    decimals: 6,
-    symbol: 'USDT',
-    logoURI:
-      'https://cmp.dodoex.io/LyxjB8w94UjDhRuXa9xNlg7YcMuOC6akWBPCtgbq_Qw/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vLXNSOWJzZTlrLTFIY1VUeUE3WE9KZWplQkRRS2ZtSFpRV2I3RE1iemlHMC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMM1Z6WkhSZk1UVTJOREZtWTJRME1DOTFjMlIwWHpFMU5qUXhabU5rTkRBdWMzWm4uc3Zn.webp',
-  },
-  {
-    chainId: 1285,
-    address: '0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c',
-    name: 'WBNB Token',
-    decimals: 18,
-    symbol: 'WBNB',
-    logoURI:
-      'https://cmp.dodoex.io/HSdBZz6OV3HFUq1RqW8hdavA1cfhjWEfqP12BINZppw/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vUTAzVVlDM3hSN0J2SHo5UmgtcHZ0WWctRGdPNlF1b2xKUmE0QjBHaWlmMC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNKaGQxOW5hWFJvZFdKMWMyVnlZMjl1ZEdWdWRGOWpiMjFmYzNWemFHbHpkMkZ3WDJsamIyNXpYMjFoYzNSbGNsOTBiMnRsYmw5aWJtSmZNalE0TmpZeFpHTXhaaTVxY0djLmpwZw.webp',
-  },
-  {
-    chainId: 1285,
-    address: '0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8',
-    name: 'Wrapped Bitcoin',
-    decimals: 8,
-    symbol: 'WBTC',
-    logoURI:
-      'https://cmp.dodoex.io/6qiR9e_WPVs0u8U4DgdGMcaKFzJzypJqME5wUNe7XsY/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vMUMxeHZaUVJ4b0NlTW1sNXg0eUMzTGcySmhNXzYwcHpMMlk3elBwSGJFQS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMnh2WjI5Zk4ySXpNMlU0TW1WbFlTOXNiMmR2WHpkaU16TmxPREpsWldFdWNHNW4ucG5n.webp',
-  },
-  {
-    chainId: 1285,
-    address: '0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C',
-    name: 'Wrapped Ether',
-    decimals: 18,
-    symbol: 'WETH',
-    logoURI:
-      'https://cmp.dodoex.io/KWYmKxU_OCS1PmzuEO0xjdr1Yn08SjGBkyqSI8hxlpE/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vdkkyZF9rdFdyUzQyM0FqZlBLbkxRYloyRGVzTkpacmNTSlZNb1dYRnkyOC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMWRGVkVoZmFXTnZibDh6TVRjd1pqTTBORGcxTDFkRlZFaGZhV052Ymw4ek1UY3daak0wTkRnMUxuQnVady5wbmc.webp',
-  },
-  {
     chainId: 66,
     address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
     name: 'OKT',
@@ -609,87 +408,6 @@ export default [
     symbol: 'WBTCK',
     logoURI:
       'https://cmp.dodoex.io/7Gb1gYkvjWESf9ungWe4YKOrr5GY5UILmTwU_U95kCA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vOTQ4NWZpU2NmUzBNc2V1YVZXWXo2Z1RuNVVidXJvZkxmN1VGSWhMdndjTS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMWRDVkVOTFgyVXlZamRpWVRJNU16TXZWMEpVUTB0ZlpUSmlOMkpoTWprek15NXdibWMucG5n.webp',
-  },
-  {
-    chainId: 288,
-    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-    name: 'Ethereum',
-    decimals: 18,
-    symbol: 'ETH',
-    logoURI:
-      'https://cmp.dodoex.io/WAobi4MZtLSxB59wgpyNlXLI44ZwlBh55qiGS2wLSGU/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vSUVnUUx3TjRMU2dKRDJTM3RmSFlHcmxZbFZQNGlJeFcxeEZVOUwwUExRNC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNKaGQxOW5hWFJvZFdKMWMyVnlZMjl1ZEdWdWRGOWpiMjFmZEhKMWMzUjNZV3hzWlhSZllYTnpaWFJ6WDIxaGMzUmxjbDlpYkc5amEyTm9ZV2x1YzE5bGRHaGxjbVYxYlY5aGMzTmxkSE5mTUhoZlF6QXlZV0ZmUVRNNVlqSXlNMTlHUlY4NFgwUXdYMEV3WlRWZlF6UmZSakkzWlY5QlJGODVNRGd6WDBNM05UWmZRMk15WDJ4dloyOWZZelk0WXprelpHRXlNQzV3Ym1jLnBuZw.webp',
-  },
-  {
-    chainId: 288,
-    address: '0x66a2A913e447d6b4BF33EFbec43aAeF87890FBbc',
-    name: 'USD Coin',
-    decimals: 6,
-    symbol: 'USDC',
-    logoURI:
-      'https://cmp.dodoex.io/EaCi6KUTS-dinU-wGdG2IcundJ0fJfsOw97FRI2vaB8/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vdEVMaUx0Y1FaTVlBb3hkeExLdnRrZ2ltdVB5dmZRdUQ5U1BxU1c1bDZsMC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkVOZmFXTnZibDh5WlRFeU5tSTRaRFV5TDFWVFJFTmZhV052Ymw4eVpURXlObUk0WkRVeUxuQnVady5wbmc.webp',
-  },
-  {
-    chainId: 288,
-    address: '0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b',
-    name: 'Binance',
-    decimals: 18,
-    symbol: 'BNB',
-    logoURI:
-      'https://cmp.dodoex.io/BWNSMMqu68bSFJsr9vsiCV09IonH3yuAkR9gQxaipBw/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vZDhvazF4akd3bU9GUXUtMVdzNEVRLVBNRnJYMW9DLXlmYTc3OGJUUkx0US9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMEpPUWw5alpEUTVNalE0TXpJMkwwSk9RbDlqWkRRNU1qUTRNekkyTG5CdVp3LnBuZw.webp',
-  },
-  {
-    chainId: 288,
-    address: '0xa18bF3994C0Cc6E3b63ac420308E5383f53120D7',
-    name: 'Boba Token',
-    decimals: 18,
-    symbol: 'BOBA',
-    logoURI:
-      'https://cmp.dodoex.io/p7--p24wKrXpF7IGh6Q_RT6J0ZGS2_FURnXxeyMDvO4/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vQlVsWE9GWS1wUTIxbTJJOTdIRFN2VHlvMzR2MGJWQllYU1ByczFwaWNuYy9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMEpQUWtGZk16SmtZamczT1dJMk1TOUNUMEpCWHpNeVpHSTROemxpTmpFdWNHNW4ucG5n.webp',
-  },
-  {
-    chainId: 288,
-    address: '0xf74195Bb8a5cf652411867c5C2C5b8C2a402be35',
-    name: 'Dai Stablecoin',
-    decimals: 18,
-    symbol: 'DAI',
-    logoURI:
-      'https://cmp.dodoex.io/XNbyKKzPthXfYOku9oXt5xzqM1JOWzxmbTLq2kkSvaU/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vWHprMUxKSzJ2V1BYVmN3TmVvVDRfR3NNdnBOVXFmTmliXzgybFZSVUNkWS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNKaGQxOW5hWFJvZFdKMWMyVnlZMjl1ZEdWdWRGOWpiMjFmYzNWemFHbHpkMkZ3WDJsamIyNXpYMjFoYzNSbGNsOTBiMnRsYmw5a1lXbGZPRGhrT0dNeE5HRTBZaTVxY0djLmpwZw.webp',
-  },
-  {
-    chainId: 288,
-    address: '0x572c5B5BF34f75FB62c39b9BFE9A75bb0bb47984',
-    name: 'DODO bird',
-    decimals: 18,
-    symbol: 'DODO',
-    logoURI:
-      'https://cmp.dodoex.io/8CGANX_wy00isVg8PgA_A-IKbfIn55Yu9ZujzUukXlQ/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTDJhLVNEOFJvWDlGaW9IUVNzSkh2WkZzNlBpbVlNTWxTZGhZalJmMXVVQS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMFJQUkU5Zk1tRm1NMll4WkRZd055OUVUMFJQWHpKaFpqTm1NV1EyTURjdWNHNW4ucG5n.webp',
-  },
-  {
-    chainId: 288,
-    address: '0x5DE1677344D3Cb0D7D465c10b72A8f60699C062d',
-    name: 'Tether USD',
-    decimals: 6,
-    symbol: 'USDT',
-    logoURI:
-      'https://cmp.dodoex.io/MGklrG5AImwUllGWDPMAHY0qLfdJQn4bj3iPFWSeohA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vUEM3a3JPb252bWl4U3VRaFEwY29pVy1sczFYN25WS1lLNVluekQ2R2lxRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkZSZlpUaGlOekZpTldZeU9TOVZVMFJVWDJVNFlqY3hZalZtTWprdWNHNW4ucG5n.webp',
-  },
-  {
-    chainId: 288,
-    address: '0xdc0486f8bf31DF57a952bcd3c1d3e166e3d9eC8b',
-    name: 'Wrapped BTC',
-    decimals: 8,
-    symbol: 'WBTC',
-    logoURI:
-      'https://cmp.dodoex.io/n4n7ccBom2tgcZNN0jBv9YiTq5qGMjX6PHO0YGlpzZo/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vMElrSkQzVEc2SkFQdG1DV24tNnhfa0ozS3lXYXlVVHRhZ19PQmF0TFEwRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMWRDVkVOZmFXTnZibDgzWW1JelpUQTRaak14TDFkQ1ZFTmZhV052Ymw4M1ltSXpaVEE0WmpNeExuQnVady5wbmc.webp',
-  },
-  {
-    chainId: 288,
-    address: '0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000',
-    name: 'Wrapped Ethereum',
-    decimals: 18,
-    symbol: 'WETH',
-    logoURI:
-      'https://cmp.dodoex.io/KWYmKxU_OCS1PmzuEO0xjdr1Yn08SjGBkyqSI8hxlpE/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vdkkyZF9rdFdyUzQyM0FqZlBLbkxRYloyRGVzTkpacmNTSlZNb1dYRnkyOC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMWRGVkVoZmFXTnZibDh6TVRjd1pqTTBORGcxTDFkRlZFaGZhV052Ymw4ek1UY3daak0wTkRnMUxuQnVady5wbmc.webp',
   },
   {
     chainId: 1313161554,
@@ -834,24 +552,6 @@ export default [
     symbol: 'WETH.e',
     logoURI:
       'https://cmp.dodoex.io/KWYmKxU_OCS1PmzuEO0xjdr1Yn08SjGBkyqSI8hxlpE/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vdkkyZF9rdFdyUzQyM0FqZlBLbkxRYloyRGVzTkpacmNTSlZNb1dYRnkyOC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMWRGVkVoZmFXTnZibDh6TVRjd1pqTTBORGcxTDFkRlZFaGZhV052Ymw4ek1UY3daak0wTkRnMUxuQnVady5wbmc.webp',
-  },
-  {
-    chainId: 25,
-    address: '0x66e428c3f67a68878562e79A0234c1F83c208770',
-    name: 'USDT',
-    decimals: 6,
-    symbol: 'USDT',
-    logoURI:
-      'https://cmp.dodoex.io/p_nSk7MW-bCcwp-tgtWC8az4e4Q0YMirg6rv6yVjC-I/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vODVNVlpTTllrTFlySWdlX2VQemNVOUpydkNKeFpDM2JhaGV0NnN5S0d5WS9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6RTJPREl3TWpoZk1qQXlNakExTVRjd016STVNakV6TURjdWQyVmljQS53ZWJw.webp',
-  },
-  {
-    chainId: 25,
-    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-    name: 'CRO',
-    decimals: 1,
-    symbol: 'CRO',
-    logoURI:
-      'https://cmp.dodoex.io/HYsQIOyyuC6P1Ik_Rs5a6ws2CKMzJbajJewE77C0rf8/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vZzc2UURUMEIwbHJjc3VTSTlodTZTTnlqMEp3WWNtUEFRWV9qWDV0VVBhMC9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6YzRNRGc0TkRkZk1qQXlNakExTVRjd056UXdNekExTWpFdWNHNW4ucG5n.webp',
   },
   {
     chainId: 10,
