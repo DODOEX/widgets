@@ -41,7 +41,7 @@ export const chainListMap: {
   [ChainId.BSC]: {
     chainId: ChainId.BSC,
     logo: BSCLogo,
-    name: 'Ethereum',
+    name: 'BNBChain',
   },
   [ChainId.OPTIMISM]: {
     chainId: ChainId.OPTIMISM,

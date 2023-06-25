@@ -2,6 +2,8 @@ import tokenList from '../../constants/tokenList';
 import useTokenList, { getFuzzySearchTokenSort } from './useTokenList';
 import { renderHook } from '@testing-library/react-hooks';
 
+jest.mock('./useTokenListFetchBalance');
+
 const USDT = {
   chainId: 1,
   address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
@@ -60,7 +62,7 @@ describe('getFuzzySearchTokenSort', () => {
 
 jest.mock('../../store/selectors/token', () => ({
   getTokenList: () => tokenList,
-  getPopularTokenList: () => ([
+  getPopularTokenList: () => [
     {
       chainId: 1,
       address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -79,7 +81,7 @@ jest.mock('../../store/selectors/token', () => ({
       logoURI:
         'https://cmp.dodoex.io/xZmadzpVOnpuq2jNG_5EGKeqMET0LU_gmfnp4VxkcxI/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vSHQwWXZKMGNnU0lGTFM0aHExTV9jOXVITV9fMHpXaHBKSGVOQU5neTBuby9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMkoxYzJSZk4ySTJOalJpWWpReVpDOWlkWE5rWHpkaU5qWTBZbUkwTW1RdWNHNW4ucG5n.webp',
     },
-  ]),
+  ],
 }));
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

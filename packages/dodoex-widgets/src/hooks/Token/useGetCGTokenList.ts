@@ -1,12 +1,7 @@
 import axios from 'axios';
-import BigNumber from 'bignumber.js';
-import { useCallback, useMemo, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { List } from 'immutable';
-import { getTokenList } from '../../store/selectors/token';
+import { useCallback, useState, useEffect } from 'react';
 import { getCGTokenListAPI } from '../../constants/api';
-import { useCurrentChainId } from '../ConnectWallet';
-import { TokenInfo } from './type';
+import { TokenList } from './type';
 
 export enum FetchStatus {
   Initial = 'Initial',
@@ -14,22 +9,24 @@ export enum FetchStatus {
   Failed = 'Failed',
   Success = 'Success',
 }
-export function useGetCGTokenList() {
-
-  const chainId = useCurrentChainId();
-  const [status, setStatus] = useState<FetchStatus>(
-    FetchStatus.Initial,
-  );
-  const [tokenList, setTokenList] = useState<List<TokenInfo>>(List([]));
+let cgTokenCacheListMap = new Map<number, TokenList>();
+export function useGetCGTokenList({
+  chainId,
+  skip,
+}: {
+  chainId: number;
+  skip?: boolean;
+}) {
+  const [status, setStatus] = useState<FetchStatus>(FetchStatus.Initial);
+  const [tokenList, setTokenList] = useState<TokenList>([]);
   const refetch = useCallback(async () => {
     try {
       setStatus(FetchStatus.Loading);
       const cgAPI = getCGTokenListAPI(chainId);
-      const resData = await axios.get(
-        cgAPI,
-      );
+      const resData = await axios.get(cgAPI);
       if (resData && resData.data && resData.data.tokens) {
-        setTokenList(List(resData.data.tokens));
+        setTokenList(resData.data.tokens);
+        cgTokenCacheListMap.set(chainId, resData.data.tokens);
       }
       setStatus(FetchStatus.Success);
     } catch (error) {
@@ -39,10 +36,21 @@ export function useGetCGTokenList() {
   }, [chainId]);
 
   useEffect(() => {
-    if (chainId) {
-      refetch();
-    }
-  }, [chainId])
+    const time = setTimeout(() => {
+      if (!skip && chainId) {
+        const currentTokenList = cgTokenCacheListMap.get(chainId);
+        if (currentTokenList) {
+          setTokenList(currentTokenList);
+          return;
+        }
+        refetch();
+      }
+    }, 100);
+
+    return () => {
+      clearTimeout(time);
+    };
+  }, [chainId, skip]);
 
   return {
     cgTokenList: tokenList,

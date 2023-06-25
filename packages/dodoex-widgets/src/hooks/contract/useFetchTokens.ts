@@ -28,10 +28,14 @@ export default function useFetchTokens({
   tokenList,
   addresses: addressesProps,
   blockNumber,
+  chainId,
+  skip,
 }: {
   tokenList?: TokenList;
   addresses?: string[];
   blockNumber?: number;
+  chainId?: number;
+  skip?: boolean;
 }) {
   const { account } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
@@ -42,7 +46,7 @@ export default function useFetchTokens({
     ].map((address) => address.toLocaleLowerCase());
   }, [tokenList, JSON.stringify(addressesProps)]);
 
-  const { getContract, contractConfig, call } = useMultiContract();
+  const { getContract, contractConfig, call } = useMultiContract(chainId);
   const [data, setData] = useState<TokenResult[]>();
 
   const thunk = useMemo(() => {
@@ -101,7 +105,7 @@ export default function useFetchTokens({
 
   useEffect(() => {
     const computed = async () => {
-      if (!thunk) return;
+      if (!thunk || skip) return;
       const res = (await call<TokenResult>(thunk)) as TokenResult[];
       const accountBalances = {} as AccountBalances;
       if (res) {
@@ -122,7 +126,7 @@ export default function useFetchTokens({
       dispatch(setBalanceLoadings(balanceLoadings));
     };
     computed();
-  }, [thunk, blockNumber]);
+  }, [thunk, blockNumber, skip]);
 
   return {
     data,

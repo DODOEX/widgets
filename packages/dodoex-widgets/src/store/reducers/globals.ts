@@ -12,6 +12,7 @@ export interface State extends SwapWidgetProps {
   isReverseRouting?: boolean; // true: reverse enquiry & false: normal enquiry
   contractStatus?: ContractStatus;
   autoConnectLoading?: boolean; // default: undefined
+  showCoingecko?: boolean;
 }
 
 export const initialState: State = {
@@ -36,6 +37,11 @@ export default (state: State = initialState, action: AnyAction): State => {
       return {
         ...state,
         autoConnectLoading: action.payload,
+      };
+    case 'SET_SHOW_COINGECKO':
+      return {
+        ...state,
+        showCoingecko: action.payload,
       };
     default:
       return state;

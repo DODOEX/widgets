@@ -9,6 +9,10 @@ import { useCurrentChainId } from '../ConnectWallet';
 import defaultTokens from '../../constants/tokenList';
 import { RootState } from '../../store/reducers';
 import { getPopularTokenList } from '../../store/selectors/token';
+import { useGetCGTokenList } from './useGetCGTokenList';
+import { getShowCoingecko } from '../../store/selectors/globals';
+import { unionBy } from 'lodash';
+import useTokenListFetchBalance from './useTokenListFetchBalance';
 
 enum MatchLevel {
   fully = 1,
@@ -81,6 +85,8 @@ export default function useTokenList({
   hiddenAddrs,
   showAddrs,
   side,
+  chainId: chainIdProps,
+  visible,
 }: {
   value?: TokenInfo | null;
   onChange: (token: TokenInfo, isOccupied: boolean) => void;
@@ -93,11 +99,31 @@ export default function useTokenList({
   showAddrs?: string[];
   /** token field control */
   side?: 'from' | 'to';
+  chainId?: number;
+  /** Token Picker visible */
+  visible?: boolean;
 }) {
   const [filter, setFilter] = useState('');
-  const preloaded = useSelector(getTokenList);
-  const chainId = useCurrentChainId();
+  const preloadedOrigin = useSelector(getTokenList);
+  const currentChainId = useCurrentChainId();
+  const chainId = useMemo(
+    () => chainIdProps ?? currentChainId,
+    [chainIdProps, currentChainId],
+  );
+  const showCoingecko = useSelector(getShowCoingecko);
+  const { cgTokenList } = useGetCGTokenList({
+    chainId,
+    skip: !showCoingecko || visible === false,
+  });
   const getBalance = useGetBalance();
+  const preloaded = useMemo(() => {
+    const preloadedResult = preloadedOrigin.filter(
+      (token) => token.chainId === chainId,
+    );
+    return unionBy(preloadedResult, cgTokenList, (token) =>
+      token.address.toLowerCase(),
+    );
+  }, [preloadedOrigin, chainId, cgTokenList]);
   const popularTokenListOrigin = useSelector((state: RootState) =>
     getPopularTokenList(chainId, state),
   );
@@ -193,10 +219,6 @@ export default function useTokenList({
           const balA = (getBalance && getBalance(a)) || new BigNumber(0);
           const balB = (getBalance && getBalance(b)) || new BigNumber(0);
 
-          if (!balA.eq(balB)) return balA.gt(balB) ? -1 : 1;
-          if (aItem.sort !== bItem.sort)
-            return aItem.sort > bItem.sort ? 1 : -1;
-
           const popularAddresses = popularTokenList.map((item) => item.address);
           if (popularAddresses?.includes(a.address)) {
             return -1;
@@ -204,6 +226,10 @@ export default function useTokenList({
           if (popularAddresses?.includes(b.address)) {
             return 1;
           }
+
+          if (!balA.eq(balB)) return balA.gt(balB) ? -1 : 1;
+          if (aItem.sort !== bItem.sort)
+            return aItem.sort > bItem.sort ? 1 : -1;
 
           const defaultAddresses = defaultTokenList.map((item) => item.address);
           if (defaultAddresses?.includes(a.address)) {
@@ -247,8 +273,26 @@ export default function useTokenList({
 
   const showTokenList = useMemo(() => {
     const needShowList = getNeedShowList(preloaded);
+    const preloadedTokenAddressSet = new Set<string>();
+    needShowList.forEach((token) => {
+      preloadedTokenAddressSet.add(token.address);
+    });
+    popularTokenList.forEach((token) => {
+      if (!preloadedTokenAddressSet.has(token.address)) {
+        needShowList.push(token);
+      }
+    });
     return sortTokenList(needShowList) || ([] as TokenList);
-  }, [preloaded, getNeedShowList, sortTokenList]);
+  }, [preloaded, getNeedShowList, sortTokenList, popularTokenList]);
+
+  useTokenListFetchBalance({
+    chainId,
+    tokenList: showTokenList,
+    popularTokenList,
+    cgTokenList,
+    value,
+    visible,
+  });
 
   return {
     filter,

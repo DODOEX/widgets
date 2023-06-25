@@ -4,8 +4,11 @@ import { AppThunkDispatch } from '../../store/actions';
 import { setGlobalProps } from '../../store/actions/globals';
 import { setDefaultChainId } from '../../store/actions/wallet';
 import { setColorMode } from '../../store/actions/settings';
-import { setDefaultFromToken, setDefaultToToken } from '../../store/actions/token';
-import { WidgetProps } from '../../components/Widget/'
+import {
+  setDefaultFromToken,
+  setDefaultToToken,
+} from '../../store/actions/token';
+import { WidgetProps } from '../../components/Widget/';
 
 export function useInitPropsToRedux({
   width,
@@ -16,7 +19,9 @@ export function useInitPropsToRedux({
   apikey,
   defaultChainId,
   defaultToToken,
-  defaultFromToken }: WidgetProps) {
+  defaultFromToken,
+  jsonRpcUrlMap,
+}: WidgetProps) {
   const dispatch = useDispatch<AppThunkDispatch>();
 
   useEffect(() => {
@@ -79,17 +84,23 @@ export function useInitPropsToRedux({
 
   useEffect(() => {
     if (defaultFromToken) {
-      dispatch(
-        setDefaultFromToken(defaultFromToken),
-      );
+      dispatch(setDefaultFromToken(defaultFromToken));
     }
   }, [defaultFromToken]);
 
   useEffect(() => {
     if (defaultToToken) {
-      dispatch(
-        setDefaultToToken(defaultToToken),
-      );
+      dispatch(setDefaultToToken(defaultToToken));
     }
   }, [defaultToToken]);
+
+  useEffect(() => {
+    if (jsonRpcUrlMap) {
+      dispatch(
+        setGlobalProps({
+          jsonRpcUrlMap,
+        }),
+      );
+    }
+  }, [jsonRpcUrlMap]);
 }

@@ -1,11 +1,12 @@
 import { Box, SearchInput } from '@dodoex/components';
 import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
-import { VariableSizeList as List } from 'react-window';
-import type { TokenInfo, TokenList } from '../../hooks/Token';
+import { FixedSizeList as List } from 'react-window';
+import type { TokenInfo } from '../../hooks/Token';
 import { useTokenList } from '../../hooks/Token';
-import PopularToken from './PopularToken';
 import TokenItem from './TokenItem';
 import { t } from '@lingui/macro';
+import SelectChainItem from './SelectChainItem';
+import { useSelectChainList } from '../../hooks/Token/useSelectChainList';
 
 export interface TokenPickerProps {
   value?: TokenInfo | null;
@@ -29,6 +30,7 @@ export default function TokenPicker({
   visible,
   side,
 }: TokenPickerProps) {
+  const { chainList, selectChainId, setSelectChainId } = useSelectChainList();
   const { showTokenList, filter, setFilter, onSelectToken, popularTokenList } =
     useTokenList({
       value,
@@ -37,6 +39,8 @@ export default function TokenPicker({
       hiddenAddrs,
       showAddrs,
       side,
+      chainId: selectChainId,
+      visible,
     });
   const ref = useRef<HTMLDivElement>(null);
   const [fixedSizeHeight, setFixedSizeHeight] = useState(0);
@@ -60,46 +64,8 @@ export default function TokenPicker({
       index: number;
       style: CSSProperties;
     }) => {
-      const hasPopularToken = !!popularTokenList?.length;
-      if (index === 0 && hasPopularToken) {
-        return (
-          <Box
-            key={key}
-            sx={{
-              position: 'relative',
-              display: 'flex',
-              gap: 8,
-              flexWrap: 'wrap',
-              pb: 32,
-              '&::after': {
-                content: '""',
-                position: 'absolute',
-                bottom: 16,
-                left: 0,
-                right: 0,
-                height: '1px',
-                backgroundColor: 'border.main',
-              },
-            }}
-            style={{
-              ...style,
-              // avoid occlusion
-              visibility: !style.height ? 'hidden' : 'visible',
-              height: !style.height ? 'auto' : style.height,
-            }}
-          >
-            {popularTokenList.map((token) => (
-              <PopularToken
-                key={token.address}
-                token={token}
-                disabled={value?.address === token.address}
-                onClick={() => onSelectToken(token)}
-              />
-            ))}
-          </Box>
-        );
-      }
-      const token = showTokenList[hasPopularToken ? index - 1 : index];
+      const token = showTokenList[index];
+      if (!token) return null;
       return (
         <TokenItem
           key={key}
@@ -111,18 +77,6 @@ export default function TokenPicker({
       );
     },
     [showTokenList, popularTokenList, value],
-  );
-  const getItemSize = useCallback(
-    (index: number) => {
-      const itemHeight = 52;
-      if (index === 0 && popularTokenList?.length) {
-        const popularHeight = 74 + 51 * Math.floor(popularTokenList.length / 3);
-        return popularHeight;
-      }
-
-      return itemHeight;
-    },
-    [popularTokenList],
   );
 
   return (
@@ -144,6 +98,36 @@ export default function TokenPicker({
       />
       <Box
         sx={{
+          position: 'relative',
+          display: 'flex',
+          gap: 8,
+          flexWrap: 'wrap',
+          pt: 16,
+          pb: 32,
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            bottom: 16,
+            left: 0,
+            right: 0,
+            height: '1px',
+            backgroundColor: 'border.main',
+          },
+        }}
+      >
+        {chainList.map((chain) => (
+          <SelectChainItem
+            key={chain.chainId}
+            chain={chain}
+            active={chain.chainId === selectChainId}
+            onClick={() => {
+              setSelectChainId(chain.chainId);
+            }}
+          />
+        ))}
+      </Box>
+      <Box
+        sx={{
           mt: 16,
           pb: 16,
           flex: 1,
@@ -155,7 +139,7 @@ export default function TokenPicker({
           key={popularTokenList.length}
           height={fixedSizeHeight}
           itemCount={showTokenList.length + (popularTokenList?.length ? 1 : 0)}
-          itemSize={getItemSize}
+          itemSize={52}
           width={'100%'}
           className="token-list"
         >

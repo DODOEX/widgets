@@ -34,6 +34,7 @@ export interface TooltipProps {
   transition?: PopperUnstyledProps['transition'];
   // @ts-ignore: Unreachable code error
   componentsProps?: PopperUnstyledProps['componentsProps'];
+  onlyHover?: boolean;
 }
 
 const tooltipClasses = {
@@ -76,6 +77,7 @@ export default function Tooltip({
   maxWidth = 'auto',
   popperOptions,
   children,
+  onlyHover,
   ...attrs
 }: TooltipProps) {
   const theme = useTheme();
@@ -88,15 +90,16 @@ export default function Tooltip({
   const [arrowRef, setArrowRef] = useState<HTMLDivElement>();
 
   const [open, setOpen] = useState(false);
+  const clickEmit = isMobile && !onlyHover;
 
   const handleOverTooltip: MouseEventHandler<HTMLDivElement> = () => {
-    if (isMobile) return;
+    if (clickEmit) return;
     enterTooltip.current = true;
     clearTimeout(leaveTimer.current);
   };
 
   const handleOutTooltip: MouseEventHandler<HTMLDivElement> = () => {
-    if (isMobile) return;
+    if (clickEmit) return;
     enterTooltip.current = false;
     clearTimeout(leaveTimer.current);
     leaveTimer.current = setTimeout(() => {
@@ -113,7 +116,7 @@ export default function Tooltip({
     },
   };
 
-  if (!isMobile) {
+  if (!clickEmit) {
     const onMouseEnter = () => {
       enterTrigger.current = true;
       clearTimeout(leaveTimer.current);
@@ -233,7 +236,7 @@ export default function Tooltip({
       </PopperUnstyled>
       <ClickAwayListener
         onClickAway={() => {
-          if (isMobile) {
+          if (clickEmit) {
             setOpen(false);
           }
         }}
