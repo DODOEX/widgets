@@ -1,4 +1,4 @@
-import ButtonUnstyled from '@mui/base/ButtonUnstyled';
+import ButtonUnstyled from '@mui/base/Button';
 import {
   CSSSelectorObject,
   SystemCssProperties,

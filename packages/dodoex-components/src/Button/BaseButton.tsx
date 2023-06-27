@@ -1,9 +1,8 @@
 import { styled } from '@mui/system';
-import { Box } from '../Box';
-import ButtonUnstyled from '@mui/base/ButtonUnstyled';
+import Button from '@mui/base/Button';
 
 // const BaseButtonStyle = styled(ButtonUnstyled)``;
-const BaseButton = styled(ButtonUnstyled)`
+const BaseButton = styled(Button)`
   margin: 0;
   border: none;
   padding: 0;

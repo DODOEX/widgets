@@ -55,20 +55,12 @@ export default function TokenPicker({
   }, [ref, visible]);
 
   const TokenItemFixedSizeMemo = useCallback(
-    ({
-      key,
-      index,
-      style,
-    }: {
-      key: string;
-      index: number;
-      style: CSSProperties;
-    }) => {
+    ({ index, style }: { index: number; style: CSSProperties }) => {
       const token = showTokenList[index];
       if (!token) return null;
       return (
         <TokenItem
-          key={key}
+          key={token.address + token.chainId}
           token={token}
           disabled={!!value && value.address === token.address}
           style={style}

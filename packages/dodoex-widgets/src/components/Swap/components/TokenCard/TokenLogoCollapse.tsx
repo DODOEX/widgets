@@ -8,9 +8,11 @@ import { swapSelectTokenBtn } from '../../../../constants/testId';
 export function TokenLogoCollapse({
   token,
   onClick,
+  showChainLogo,
 }: {
   token?: TokenPickerProps['value'];
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  showChainLogo?: boolean;
 }) {
   const theme = useTheme();
   return (
@@ -34,6 +36,7 @@ export function TokenLogoCollapse({
             url={token?.logoURI}
             address={token?.address ?? ''}
             marginRight={6}
+            chainId={showChainLogo ? token?.chainId : undefined}
           />
           <Box>{token?.symbol ?? '-'}</Box>
         </>

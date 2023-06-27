@@ -1,5 +1,4 @@
-import InputUnstyled, { inputUnstyledClasses } from '@mui/base/InputUnstyled';
-import inputBaseClasses from '@mui/base/InputUnstyled/inputUnstyledClasses';
+import InputUnstyled, { inputClasses } from '@mui/base/Input';
 import { MuiStyledOptions, useTheme } from '@mui/system';
 import { merge } from 'lodash';
 import { forwardRef, useCallback, useEffect } from 'react';
@@ -51,7 +50,7 @@ function InputBaseRoot({
           borderColor: error ? 'error.main' : 'border.main',
           borderRadius: 8,
           backgroundColor: 'background.input',
-          [`&.${inputBaseClasses.disabled}`]: {
+          [`&.${inputClasses.disabled}`]: {
             color: 'text.disabled',
             cursor: 'default',
           },
@@ -69,7 +68,7 @@ function InputBaseRoot({
           },
           ...(!error
             ? {
-                [`&.${inputUnstyledClasses.focused}`]: {
+                [`&.${inputClasses.focused}`]: {
                   borderColor: 'text.secondary',
                 },
               }
@@ -132,7 +131,7 @@ function InputBaseComponent({
             // Remove the padding when type=search.
             WebkitAppearance: 'none',
           },
-          [`&.${inputBaseClasses.disabled}`]: {
+          [`&.${inputClasses.disabled}`]: {
             opacity: 1, // Reset iOS opacity
             WebkitTextFillColor: theme.palette.text.disabled, // Fix opacity Safari bug
           },
@@ -181,9 +180,9 @@ export default forwardRef(function Input(
   return (
     <>
       <InputUnstyled
-        components={{
-          Root: InputBaseRootMemo,
-          Input: InputBaseComponentMemo,
+        slots={{
+          root: InputBaseRootMemo,
+          input: InputBaseComponentMemo,
         }}
         startAdornment={prefix}
         endAdornment={suffix}

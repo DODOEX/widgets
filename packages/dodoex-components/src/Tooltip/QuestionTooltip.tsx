@@ -2,7 +2,7 @@ import Tooltip from './Tooltip';
 import { QuestionBorder } from '@dodoex/icons';
 import { HoverOpacity } from '../Hover';
 import { BoxProps } from '../Box';
-import { PopperUnstyledProps } from '@mui/base';
+import { PopperProps } from '@mui/base/Popper';
 
 export interface QuestionTooltipProps {
   title?: string | React.ReactNode;
@@ -11,7 +11,8 @@ export interface QuestionTooltipProps {
   mr?: number | string;
   size?: string | number;
   sx?: BoxProps['sx'];
-  container?: PopperUnstyledProps['container'];
+  container?: PopperProps['container'];
+  onlyHover?: boolean;
 }
 
 export default function QuestionTooltip({
@@ -22,6 +23,7 @@ export default function QuestionTooltip({
   sx,
   maxWidth,
   container,
+  onlyHover,
 }: QuestionTooltipProps) {
   if (!title) return null;
 
@@ -31,6 +33,7 @@ export default function QuestionTooltip({
       placement="top"
       container={container}
       maxWidth={maxWidth}
+      onlyHover
     >
       <HoverOpacity
         component={QuestionBorder}

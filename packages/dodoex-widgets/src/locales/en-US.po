@@ -13,6 +13,10 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/SwitchChainDialog/index.tsx:82
+msgid "."
+msgstr "."
+
 #: src/components/Swap/components/ReviewDialog.tsx:261
 msgid "Additional Fee"
 msgstr "Additional Fee"
@@ -21,18 +25,26 @@ msgstr "Additional Fee"
 msgid "Additional routing fees set by the Widget user"
 msgstr "Additional routing fees set by the Widget user"
 
-#: src/components/Swap/index.tsx:449
+#: src/components/Swap/index.tsx:473
 #: src/hooks/Token/useGetTokenStatus.ts:111
 msgid "Approve"
 msgstr "Approve"
 
-#: src/components/Swap/index.tsx:449
+#: src/components/Swap/index.tsx:473
 msgid "Approving"
 msgstr "Approving"
+
+#: src/components/SwitchChainDialog/index.tsx:84
+msgid "Are you sure swapping to another chain?"
+msgstr "Are you sure swapping to another chain?"
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:46
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
+
+#: src/components/SwitchChainDialog/index.tsx:107
+msgid "Auto switch network"
+msgstr "Auto switch network"
 
 #: src/components/Swap/components/TokenCard/BalanceText.tsx:28
 msgid "Balance:"
@@ -42,9 +54,21 @@ msgstr "Balance:"
 msgid "Basic Fee"
 msgstr "Basic Fee"
 
+#: src/components/Bridge/SelectBridgeDialog/RouteTagList.tsx:68
+msgid "Best offer"
+msgstr "Best offer"
+
+#: src/components/SwitchChainDialog/index.tsx:118
+msgid "Cancel"
+msgstr "Cancel"
+
 #: src/components/WithExecutionDialog/index.tsx:305
 msgid "Close"
 msgstr "Close"
+
+#: src/components/SwitchChainDialog/index.tsx:129
+msgid "Confirm"
+msgstr "Confirm"
 
 #: src/components/Swap/components/ReviewDialog.tsx:401
 msgid "Confirm swap"
@@ -66,24 +90,32 @@ msgstr "Connect to your wallet"
 msgid "Connect to your {0} Wallet"
 msgstr "Connect to your {0} Wallet"
 
-#: src/components/Swap/index.tsx:302
+#: src/components/Swap/index.tsx:326
 msgid "Current price impact"
 msgstr "Current price impact"
+
+#: src/utils/time.ts:29
+msgid "Day"
+msgstr "Day"
+
+#: src/utils/time.ts:29
+msgid "Days"
+msgstr "Days"
 
 #: src/components/WithExecutionDialog/index.tsx:305
 msgid "Dismiss"
 msgstr "Dismiss"
 
 #: src/components/Swap/components/ReviewDialog.tsx:289
-#: src/components/Swap/index.tsx:294
+#: src/components/Swap/index.tsx:318
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
 
-#: src/components/Swap/index.tsx:455
+#: src/components/Swap/index.tsx:479
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
-#: src/components/TokenPicker/index.tsx:143
+#: src/components/TokenPicker/index.tsx:89
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
@@ -91,12 +123,20 @@ msgstr "Enter the token symbol or address"
 msgid "Estimated service provider fees"
 msgstr "Estimated service provider fees"
 
-#: src/components/Swap/index.tsx:461
+#: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:141
+msgid "Estimated transaction time"
+msgstr "Estimated transaction time"
+
+#: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:176
+msgid "Fee includes: Bridge fees + Swap fees. Gas fee not included."
+msgstr "Fee includes: Bridge fees + Swap fees. Gas fee not included."
+
+#: src/components/Swap/index.tsx:485
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:343
+#: src/components/Swap/index.tsx:367
 msgid "Fetching best price..."
 msgstr "Fetching best price..."
 
@@ -112,11 +152,19 @@ msgstr "Gas price is too low, please adjust in your wallet and try again"
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
+#: src/utils/time.ts:25
+msgid "Hour"
+msgstr "Hour"
+
+#: src/utils/time.ts:25
+msgid "Hours"
+msgstr "Hours"
+
 #: src/components/Swap/components/SettingsDialog/index.tsx:87
 msgid "If your transaction time exceeds the deadline, your transaction will be rescinded."
 msgstr "If your transaction time exceeds the deadline, your transaction will be rescinded."
 
-#: src/components/Swap/index.tsx:482
+#: src/components/Swap/index.tsx:506
 msgid "Insufficient balance"
 msgstr "Insufficient balance"
 
@@ -132,11 +180,27 @@ msgstr "Max"
 msgid "Maximum slippage do not exceed 50%"
 msgstr "Maximum slippage do not exceed 50%"
 
+#: src/utils/time.ts:19
+msgid "Min"
+msgstr "Min"
+
+#: src/utils/time.ts:17
+msgid "Mins"
+msgstr "Mins"
+
+#: src/utils/time.ts:19
+msgid "Minute"
+msgstr "Minute"
+
+#: src/utils/time.ts:17
+msgid "Minutes"
+msgstr "Minutes"
+
 #: src/hooks/Submission/getExecutionErrorMsg.ts:47
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
-#: src/components/Swap/index.tsx:696
+#: src/components/Swap/index.tsx:723
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -153,7 +217,7 @@ msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:468
+#: src/components/Swap/index.tsx:492
 msgid "Quote not available"
 msgstr "Quote not available"
 
@@ -165,11 +229,11 @@ msgstr "RPC node data exception"
 msgid "Reset"
 msgstr "Reset"
 
-#: src/components/Swap/index.tsx:491
+#: src/components/Swap/index.tsx:515
 msgid "Review Swap"
 msgstr "Review Swap"
 
-#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:41
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:44
 msgid "SELECT TOKEN"
 msgstr "SELECT TOKEN"
 
@@ -181,7 +245,19 @@ msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
 #~ msgid "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
 #~ msgstr "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
 
-#: src/components/Swap/index.tsx:439
+#: src/utils/time.ts:9
+msgid "Second"
+msgstr "Second"
+
+#: src/utils/time.ts:9
+msgid "Seconds"
+msgstr "Seconds"
+
+#: src/components/Bridge/SelectBridgeDialog/index.tsx:178
+msgid "Select Bridge"
+msgstr "Select Bridge"
+
+#: src/components/Swap/index.tsx:463
 msgid "Select Tokens"
 msgstr "Select Tokens"
 
@@ -209,7 +285,7 @@ msgstr "Slippage Tolerance"
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
-#: src/components/Swap/index.tsx:569
+#: src/components/Swap/index.tsx:593
 #: src/hooks/Swap/useExecuteSwap.ts:56
 msgid "Swap"
 msgstr "Swap"
@@ -226,11 +302,15 @@ msgstr "Swap summary"
 msgid "This CP has been settled by other addrs"
 msgstr "This CP has been settled by other addrs"
 
+#: src/components/SwitchChainDialog/index.tsx:80
+msgid "This token is on"
+msgstr "This token is on"
+
 #: src/components/Swap/components/SettingsDialog/index.tsx:84
 msgid "Transaction Deadline"
 msgstr "Transaction Deadline"
 
-#: src/components/Swap/index.tsx:432
+#: src/components/Swap/index.tsx:456
 msgid "Transaction Pending"
 msgstr "Transaction Pending"
 
@@ -250,7 +330,11 @@ msgstr "Tx"
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "Unable to SETTLE during the cooling-off period"
 
-#: src/components/Swap/index.tsx:359
+#: src/components/Bridge/SelectBridgeDialog/RouteTagList.tsx:52
+msgid "Unapproved"
+msgstr "Unapproved"
+
+#: src/components/Swap/index.tsx:383
 msgid "Unsupported network - switch to trade"
 msgstr "Unsupported network - switch to trade"
 
@@ -265,6 +349,15 @@ msgstr "User denied transaction signature."
 #: src/hooks/Submission/getExecutionErrorMsg.ts:57
 msgid "Wallet incompatibility"
 msgstr "Wallet incompatibility"
+
+#: src/components/Bridge/SelectBridgeDialog/TokenWithChain.tsx:166
+#: src/components/TokenPicker/SelectChainItem.tsx:50
+msgid "on"
+msgstr "on"
+
+#: src/utils/time.ts:7
+msgid "s"
+msgstr "s"
 
 #: src/components/WithExecutionDialog/index.tsx:109
 msgid "{0} confirmed"

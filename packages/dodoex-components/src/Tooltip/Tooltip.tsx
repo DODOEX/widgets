@@ -1,8 +1,7 @@
-import {
-  ClickAwayListener,
-  PopperUnstyled,
-  PopperUnstyledProps,
-} from '@mui/base';
+import ClickAwayListener from '@mui/base/ClickAwayListener';
+import PopperUnstyled, {
+  PopperProps as PopperUnstyledProps,
+} from '@mui/base/Popper';
 import { styled } from '@mui/system';
 import { Box, BoxProps } from '../Box';
 import { merge } from 'lodash';
@@ -111,9 +110,6 @@ export default function Tooltip({
 
   const childrenProps: any = {
     ref: setChildrenRef,
-    style: {
-      ['pointer-events']: 'all',
-    },
   };
 
   if (!clickEmit) {
@@ -199,6 +195,7 @@ export default function Tooltip({
             borderColor: 'border.main',
             borderWidth: 1,
             borderStyle: 'solid',
+            whiteSpace: 'pre-wrap',
             ...sx,
           }}
           onMouseEnter={handleOverTooltip}

@@ -5,7 +5,11 @@ import {
   Theme,
   Box,
 } from '@dodoex/components';
-import { Provider as ReduxProvider, useDispatch } from 'react-redux';
+import {
+  Provider as ReduxProvider,
+  useDispatch,
+  useSelector,
+} from 'react-redux';
 import { PropsWithChildren, useEffect, useMemo } from 'react';
 import { LangProvider } from './i18n';
 import { store } from '../../store';
@@ -23,12 +27,10 @@ import WithExecutionDialog from '../WithExecutionDialog';
 import { useFetchBlockNumber, useFetchETHBalance } from '../../hooks/contract';
 import { ExecutionProps } from '../../hooks/Submission';
 import { ChainId } from '../../constants/chains';
-import { reloadWindow } from '../../utils';
 import { useInitPropsToRedux } from '../../hooks/Swap';
 import { DefaultTokenInfo } from '../../hooks/Token/type';
 import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
-
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
@@ -70,12 +72,21 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     };
     connectWallet();
   }, [connector]);
-
   useEffect(() => {
     const _provider = provider?.provider;
     if (_provider && (_provider as any).once) {
-      (_provider as any).once('chainChanged', () => reloadWindow(200));
-      // (_provider as any).once('accountsChanged', () => reloadWindow(200));
+      (_provider as any).on('chainChanged', async () => {
+        dispatch(setAutoConnectLoading(true));
+        try {
+          if (connector?.connectEagerly) {
+            await connector.connectEagerly();
+          } else {
+            await connector.activate();
+          }
+        } finally {
+          dispatch(setAutoConnectLoading(false));
+        }
+      });
     }
   }, [provider]);
 
@@ -129,7 +140,11 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
     <ReduxProvider store={store}>
       <LangProvider locale={props.locale}>
         <ThemeProvider theme={theme}>
-          <Web3ReactProvider connectors={connectors} key={key}>
+          <Web3ReactProvider
+            connectors={connectors}
+            key={key}
+            lookupENS={false}
+          >
             <CssBaseline container={`.${WIDGET_CLASS_NAME}`} />
             <InitStatus {...props} />
           </Web3ReactProvider>

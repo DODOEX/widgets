@@ -22,7 +22,7 @@
   ],
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "lerna": "^5.4.0",
-    "husky": "^8.0.3"
+    "husky": "^8.0.3",
+    "lerna": "^5.4.0"
   }
 }

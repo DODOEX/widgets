@@ -285,14 +285,14 @@ export default function useTokenList({
     return sortTokenList(needShowList) || ([] as TokenList);
   }, [preloaded, getNeedShowList, sortTokenList, popularTokenList]);
 
-  useTokenListFetchBalance({
-    chainId,
-    tokenList: showTokenList,
-    popularTokenList,
-    cgTokenList,
-    value,
-    visible,
-  });
+  // useTokenListFetchBalance({
+  //   chainId,
+  //   tokenList: showTokenList,
+  //   popularTokenList,
+  //   cgTokenList,
+  //   value,
+  //   visible,
+  // });
 
   return {
     filter,

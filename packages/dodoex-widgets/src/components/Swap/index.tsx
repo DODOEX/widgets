@@ -54,9 +54,15 @@ import {
   swapReviewBtn,
 } from '../../constants/testId';
 import useInflights from '../../hooks/Submission/useInflights';
-import { getGlobalProps } from '../../store/selectors/globals';
+import {
+  getAutoConnectLoading,
+  getGlobalProps,
+} from '../../store/selectors/globals';
 import { setGlobalProps } from '../../store/actions/globals';
 import { AppThunkDispatch } from '../../store/actions';
+import { useFetchRoutePriceBridge } from '../../hooks/Bridge/useFetchRoutePriceBridge';
+import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
+import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
 
 export function Swap() {
   const theme = useTheme();
@@ -92,6 +98,10 @@ export function Swap() {
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState<boolean>(false);
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] =
     useState<boolean>(false);
+  const isBridge = useMemo(
+    () => fromToken?.chainId !== toToken?.chainId,
+    [fromToken, toToken],
+  );
   const { toFiatPrice, fromFiatPrice } = useFetchFiatPrice({
     chainId,
     toToken,
@@ -136,6 +146,25 @@ export function Swap() {
     fromAmount: fromAmt,
     toAmount: toAmt,
   });
+  const { bridgeRouteList, status: bridgeRouteStatus } =
+    useFetchRoutePriceBridge({
+      toToken,
+      fromToken,
+      fromAmount: fromAmt,
+      toAmount: toAmt,
+    });
+  const [switchBridgeRouteShow, setSwitchBridgeRouteShow] = useState(false);
+  const [selectedRouteIdOrigin, setSelectRouteId] = useState('');
+  const selectedRouteId = useMemo(() => {
+    if (!selectedRouteIdOrigin && bridgeRouteList.length) {
+      return bridgeRouteList[0].id;
+    }
+    return selectedRouteIdOrigin;
+  }, [selectedRouteIdOrigin, bridgeRouteList]);
+  const selectRoute = useMemo(
+    () => bridgeRouteList.find((route) => route.id === selectedRouteId),
+    [bridgeRouteList, selectedRouteId],
+  );
 
   const updateFromAmt = useCallback(
     (v: string | number) => {
@@ -187,45 +216,54 @@ export function Swap() {
       });
     }
   };
+  const autoConnectLoading = useSelector(getAutoConnectLoading);
 
   useEffect(() => {
-    if (chainId) {
-      setToToken(null);
-      setFromToken(null);
-      if (isReverseRouting) {
-        updateToAmt('');
-      } else {
-        updateFromAmt('');
+    if (autoConnectLoading === false) {
+      if (chainId) {
+        setToToken(null);
+        setFromToken(null);
+        if (isReverseRouting) {
+          updateToAmt('');
+        } else {
+          updateFromAmt('');
+        }
       }
-    }
-    if (defaultFromToken && defaultFromToken.chainId === chainId) {
-      setFromToken(defaultFromToken);
-      if (defaultFromToken.amount) {
-        dispatch(
-          setGlobalProps({
-            isReverseRouting: false,
-          }),
-        );
-        updateFromAmt(defaultFromToken.amount);
+      if (defaultFromToken && defaultFromToken.chainId === chainId) {
+        setFromToken(defaultFromToken);
+        if (defaultFromToken.amount) {
+          dispatch(
+            setGlobalProps({
+              isReverseRouting: false,
+            }),
+          );
+          updateFromAmt(defaultFromToken.amount);
+        }
       }
-    }
-    if (defaultToToken && defaultToToken.chainId === chainId) {
-      setToToken(defaultToToken);
-      if (
-        defaultToToken.amount &&
-        defaultFromToken &&
-        !defaultFromToken.amount
-      ) {
-        dispatch(
-          setGlobalProps({
-            isReverseRouting: true,
-          }),
-        );
-        updateToAmt(defaultToToken.amount);
+      if (defaultToToken && defaultToToken.chainId === chainId) {
+        setToToken(defaultToToken);
+        if (
+          defaultToToken.amount &&
+          defaultFromToken &&
+          !defaultFromToken.amount
+        ) {
+          dispatch(
+            setGlobalProps({
+              isReverseRouting: true,
+            }),
+          );
+          updateToAmt(defaultToToken.amount);
+        }
       }
+      initDefaultToken();
     }
-    initDefaultToken();
-  }, [defaultToToken, defaultFromToken, chainId, updateFromAmt, updateToAmt]);
+  }, [
+    defaultToToken,
+    defaultFromToken,
+    autoConnectLoading,
+    updateFromAmt,
+    updateToAmt,
+  ]);
   useEffect(() => {
     initDefaultToken();
   }, [tokenList]);
@@ -329,7 +367,10 @@ export function Swap() {
   const isUnSupportChain = useMemo(() => !ChainId[chainId || 1], [chainId]);
 
   const priceInfo = useMemo(() => {
-    if (resPriceStatus === RoutePriceStatus.Loading) {
+    if (
+      resPriceStatus === RoutePriceStatus.Loading ||
+      (isBridge && bridgeRouteStatus === RoutePriceStatus.Loading)
+    ) {
       return (
         <Box
           sx={{
@@ -366,6 +407,17 @@ export function Swap() {
     ) {
       return priceImpactWarning;
     }
+    if (isBridge && bridgeRouteList.length) {
+      {
+        /* Bridge select route */
+      }
+      return (
+        <BridgeRouteShortCard
+          route={selectRoute}
+          onClick={() => setSwitchBridgeRouteShow(true)}
+        />
+      );
+    }
     return tokenPairPrice;
   }, [
     resPriceStatus,
@@ -374,6 +426,10 @@ export function Swap() {
     priceImpactWarning,
     displayPriceImpact,
     isUnSupportChain,
+    isBridge,
+    bridgeRouteStatus,
+    bridgeRouteList,
+    selectRoute,
   ]);
 
   const fromFinalAmt = useMemo(() => {
@@ -462,7 +518,15 @@ export function Swap() {
         </Button>
       );
 
-    if (!resAmount || resPriceStatus === RoutePriceStatus.Failed)
+    let routeFailed = false;
+    if (isBridge) {
+      routeFailed =
+        !bridgeRouteList.length ||
+        bridgeRouteStatus === RoutePriceStatus.Failed;
+    } else {
+      routeFailed = !resAmount || resPriceStatus === RoutePriceStatus.Failed;
+    }
+    if (routeFailed)
       return (
         <Button fullWidth disabled>
           <Trans>Quote not available</Trans>
@@ -508,6 +572,9 @@ export function Swap() {
     getApprovalState,
     basicTokenAddress,
     isReverseRouting,
+    isBridge,
+    bridgeRouteStatus,
+    bridgeRouteList,
   ]);
 
   const subtitle = useMemo(() => {
@@ -591,6 +658,7 @@ export function Swap() {
             token={fromToken}
             side="from"
             amt={fromFinalAmt}
+            onlyCurrentChain
             onMaxClick={handleMaxClick}
             onInputChange={updateFromAmt}
             onInputFocus={() => {
@@ -616,6 +684,7 @@ export function Swap() {
               setFromToken(token);
             }}
             readOnly={isReverseRouting}
+            showChainLogo={isBridge}
           />
 
           {/* Switch Icon */}
@@ -648,7 +717,8 @@ export function Swap() {
               updateToAmt('');
               setToToken(token);
             }}
-            readOnly={!isReverseRouting}
+            readOnly={isBridge || !isReverseRouting}
+            showChainLogo={isBridge}
           />
 
           {/* Price Disp or Warnings  */}
@@ -718,6 +788,13 @@ export function Swap() {
       <SettingsDialog
         open={isSettingsDialogOpen}
         onClose={() => setIsSettingsDialogOpen(false)}
+      />
+      <SelectBridgeDialog
+        open={switchBridgeRouteShow}
+        onClose={() => setSwitchBridgeRouteShow(false)}
+        selectedRouteId={selectedRouteId}
+        setSelectRouteId={setSelectRouteId}
+        bridgeRouteList={bridgeRouteList}
       />
     </>
   );

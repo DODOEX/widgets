@@ -193,4 +193,9 @@ export const toWei = (
   return result.dp(0);
 };
 
-export const getDecimalLimit = (decimals: number | undefined | null) => Math.min(decimals ?? 6, 6);
+export const getDecimalLimit = (decimals: number | undefined | null) =>
+  Math.min(decimals ?? 6, 6);
+
+export function getIntegerNumber(v: number) {
+  return Number(v.toString().split('.')[0]);
+}
