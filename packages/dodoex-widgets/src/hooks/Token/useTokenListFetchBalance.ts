@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { getLatestBlockNumber } from '../../store/selectors/wallet';
@@ -11,12 +11,14 @@ export default function useTokenListFetchBalance({
   tokenList,
   popularTokenList,
   visible,
+  defaultLoadBalance,
 }: {
   chainId: number;
   value?: TokenInfo | null;
   tokenList: TokenList;
   popularTokenList?: TokenList;
   visible?: boolean;
+  defaultLoadBalance?: boolean;
 }) {
   const autoConnectLoading = useSelector(getAutoConnectLoading);
   const blockNumber = useSelector(getLatestBlockNumber);
@@ -42,16 +44,20 @@ export default function useTokenListFetchBalance({
     () => (value ? [value.address] : []),
     [value],
   );
+  const selectChainId = useMemo(
+    () => value?.chainId ?? chainId,
+    [value?.chainId, chainId],
+  );
 
   useFetchTokens({
     addresses: checkTokenAddresses,
     chainId,
-    skip: visible === false,
+    skip: visible === false && !defaultLoadBalance,
   });
 
   useFetchTokens({
     addresses: selectTokenAddress,
-    chainId: value?.chainId ?? chainId,
+    chainId: selectChainId,
     blockNumber,
   });
 }

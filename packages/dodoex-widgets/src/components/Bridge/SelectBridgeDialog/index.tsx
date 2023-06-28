@@ -44,6 +44,8 @@ export default function SelectBridgeDialog({
           pt: 20,
           px: 16,
           flex: 1,
+          overflowY: 'auto',
+          overflowx: 'hidden',
           '&::before': {
             content: '""',
             position: 'absolute',

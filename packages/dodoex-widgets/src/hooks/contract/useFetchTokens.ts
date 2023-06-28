@@ -55,9 +55,7 @@ export default function useFetchTokens({
       contractConfig;
     const contract = getContract(erc20HelperAddress, erc20Helper);
     if (!contract) return;
-    let balanceLoadings = {} as { [key in string]: boolean };
     const res = addresses.map((tokenAddress) => {
-      balanceLoadings[tokenAddress] = true;
       const encoded = contract.interface.encodeFunctionData('isERC20', [
         tokenAddress,
         account,
@@ -99,13 +97,17 @@ export default function useFetchTokens({
         },
       };
     });
-    dispatch(setBalanceLoadings(balanceLoadings));
     return res;
   }, [account, getContract, JSON.stringify(addresses)]);
 
   useEffect(() => {
     const computed = async () => {
       if (!thunk || skip) return;
+      let balanceLoadings = {} as { [key in string]: boolean };
+      addresses.forEach((address) => {
+        balanceLoadings[address] = true;
+      });
+      dispatch(setBalanceLoadings(balanceLoadings));
       const res = (await call<TokenResult>(thunk)) as TokenResult[];
       const accountBalances = {} as AccountBalances;
       if (res) {
@@ -119,7 +121,6 @@ export default function useFetchTokens({
         dispatch(setTokenBalances(accountBalances));
       }
       setData(res);
-      let balanceLoadings = {} as { [key in string]: boolean };
       addresses.forEach((address) => {
         balanceLoadings[address] = false;
       });

@@ -69,9 +69,7 @@ export const setTokenBalances = (
     });
   };
 };
-export const setTokenAllowances = (
-  allowance: BigNumber,
-): AppThunkAction => {
+export const setTokenAllowances = (allowance: BigNumber): AppThunkAction => {
   return async (dispatch) => {
     dispatch({
       type: 'SET_ACCOUNT_ALLOWANCES',

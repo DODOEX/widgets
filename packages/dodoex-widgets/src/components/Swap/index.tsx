@@ -15,6 +15,7 @@ import {
   useEffect,
   useCallback,
   PropsWithChildren,
+  useRef,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Setting, Dodo, Warn, DoubleRight } from '@dodoex/icons';
@@ -121,10 +122,6 @@ export function Swap() {
   const fromTokenBalance = useMemo(
     () => (fromToken ? getBalance(fromToken) : null),
     [fromToken, getBalance],
-  );
-  const toTokenBalance = useMemo(
-    () => (toToken ? getBalance(toToken) : null),
-    [toToken, getBalance],
   );
   const fromEtherTokenBalance = useMemo(() => {
     const fromChainId = fromToken?.chainId;
@@ -250,9 +247,15 @@ export function Swap() {
     }
   };
   const autoConnectLoading = useSelector(getAutoConnectLoading);
+  const prevAutoConnectLoading =
+    useRef<boolean | undefined>(autoConnectLoading);
 
   useEffect(() => {
-    if (autoConnectLoading === false) {
+    if (
+      autoConnectLoading === false &&
+      prevAutoConnectLoading.current === undefined
+    ) {
+      prevAutoConnectLoading.current = autoConnectLoading;
       if (chainId) {
         setToToken(null);
         setFromToken(null);
@@ -409,8 +412,37 @@ export function Swap() {
   ]);
 
   const isUnSupportChain = useMemo(() => !ChainId[chainId || 1], [chainId]);
+  const isNotCurrentChain = useMemo(
+    () => !!fromToken?.chainId && fromToken?.chainId !== chainId,
+    [chainId, fromToken?.chainId],
+  );
 
   const priceInfo = useMemo(() => {
+    if (isNotCurrentChain) {
+      return (
+        <Box
+          sx={{
+            textAlign: 'center',
+          }}
+        >
+          <Box
+            component={Warn}
+            sx={{
+              position: 'relative',
+              top: 2,
+              mr: 6,
+              width: 16,
+              height: 16,
+              color: 'warning.main',
+            }}
+          />
+          <Trans>
+            The current network is inconsistent with the wallet - please switch
+            in wallet
+          </Trans>
+        </Box>
+      );
+    }
     if (
       resPriceStatus === RoutePriceStatus.Loading ||
       (isBridge && bridgeRouteStatus === RoutePriceStatus.Loading)
@@ -446,6 +478,7 @@ export function Swap() {
       );
     }
     if (
+      !isBridge &&
       displayingFromAmt &&
       new BigNumber(displayPriceImpact).gt(PRICE_IMPACT_THRESHOLD)
     ) {
@@ -474,6 +507,7 @@ export function Swap() {
     bridgeRouteStatus,
     bridgeRouteList,
     selectedRoute,
+    isNotCurrentChain,
   ]);
 
   const fromFinalAmt = useMemo(() => {
@@ -744,6 +778,7 @@ export function Swap() {
             token={fromToken}
             side="from"
             amt={fromFinalAmt}
+            defaultLoadBalance
             onlyCurrentChain
             onMaxClick={handleMaxClick}
             onInputChange={updateFromAmt}

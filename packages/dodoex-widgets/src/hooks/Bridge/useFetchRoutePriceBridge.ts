@@ -140,8 +140,10 @@ export function useFetchRoutePriceBridge({
       !fromToken ||
       !toToken ||
       !fromAmount
-    )
+    ) {
+      setStatus(RoutePriceStatus.Initial);
       return;
+    }
     setStatus(RoutePriceStatus.Loading);
 
     const fromTokenAddress = fromToken.address;
@@ -164,7 +166,6 @@ export function useFetchRoutePriceBridge({
       options: {
         slippage: slippageNum,
       },
-      // 与 cross_chain_token_list 接口返回的 products 字段保持一致
       products: [
         'lifi',
         'hyphen',
@@ -198,7 +199,6 @@ export function useFetchRoutePriceBridge({
               encodeParams,
               productParams,
             } = route;
-            // 只做 one-click 式的，steps.length=1
             if (step && toAmount !== null) {
               const toTokenAmount = new BigNumber(toAmount);
               if (!toTokenAmount.isNaN() && toTokenAmount.gt(0)) {

@@ -69,7 +69,6 @@ export async function createBridgeOrder({
     data: createParams,
   });
   const data = result.data.data;
-  console.log('jie', data);
 
   return data?.id;
 }

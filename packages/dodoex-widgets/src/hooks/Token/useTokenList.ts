@@ -84,6 +84,7 @@ export default function useTokenList({
   side,
   chainId: chainIdProps,
   visible,
+  defaultLoadBalance,
 }: {
   value?: TokenInfo | null;
   onChange: (token: TokenInfo, isOccupied: boolean) => void;
@@ -99,6 +100,7 @@ export default function useTokenList({
   chainId?: number;
   /** Token Picker visible */
   visible?: boolean;
+  defaultLoadBalance?: boolean;
 }) {
   const [filter, setFilter] = useState('');
   const preloadedOrigin = useSelector(getTokenList);
@@ -281,6 +283,7 @@ export default function useTokenList({
     popularTokenList,
     value,
     visible,
+    defaultLoadBalance,
   });
 
   return {

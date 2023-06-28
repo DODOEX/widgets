@@ -19,6 +19,7 @@ export interface TokenPickerProps {
   showAddrs?: string[];
   visible?: boolean;
   side?: 'from' | 'to';
+  defaultLoadBalance?: boolean;
 }
 
 export default function TokenPicker({
@@ -29,6 +30,7 @@ export default function TokenPicker({
   showAddrs,
   visible,
   side,
+  defaultLoadBalance,
 }: TokenPickerProps) {
   const { chainList, selectChainId, setSelectChainId } = useSelectChainList();
   const { showTokenList, filter, setFilter, onSelectToken, popularTokenList } =
@@ -41,6 +43,7 @@ export default function TokenPicker({
       side,
       chainId: selectChainId,
       visible,
+      defaultLoadBalance,
     });
   const ref = useRef<HTMLDivElement>(null);
   const [fixedSizeHeight, setFixedSizeHeight] = useState(0);

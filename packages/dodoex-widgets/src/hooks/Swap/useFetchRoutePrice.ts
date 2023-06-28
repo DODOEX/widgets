@@ -76,8 +76,10 @@ export function useFetchRoutePrice({
       !fromToken ||
       !toToken ||
       fromToken.chainId !== toToken.chainId
-    )
+    ) {
+      setStatus(RoutePriceStatus.Initial);
       return;
+    }
     if (!isReverseRouting && !fromAmount) return;
     if (isReverseRouting && !toAmount) return;
     setStatus(RoutePriceStatus.Loading);

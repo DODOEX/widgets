@@ -26,6 +26,7 @@ export interface TokenCardProps {
   side?: TokenPickerProps['side'];
   showChainLogo?: boolean;
   onlyCurrentChain?: boolean;
+  defaultLoadBalance?: boolean;
 }
 export function TokenCard({
   sx,
@@ -43,6 +44,7 @@ export function TokenCard({
   side,
   showChainLogo,
   onlyCurrentChain,
+  defaultLoadBalance,
 }: TokenCardProps) {
   const [openSwitchChainDialog, setOpenSwitchChainDialog] = useState(false);
   const theme = useTheme();
@@ -112,6 +114,7 @@ export function TokenCard({
         open={tokenPickerVisible}
         side={side}
         occupiedAddrs={occupiedAddrs}
+        defaultLoadBalance={defaultLoadBalance}
         onClose={() => {
           setTokenPickerVisible(false);
           onTokenClick && onTokenClick();

@@ -13,6 +13,7 @@ export function TokenPickerDialog({
   occupiedAddrs,
   onTokenChange,
   side,
+  defaultLoadBalance,
 }: {
   open: boolean;
   occupiedAddrs?: string[];
@@ -20,6 +21,7 @@ export function TokenPickerDialog({
   value?: TokenPickerProps['value'];
   onTokenChange: TokenPickerProps['onChange'];
   side?: TokenPickerProps['side'];
+  defaultLoadBalance?: boolean;
 }) {
   const { height } = useSelector(getGlobalProps);
   return (
@@ -36,6 +38,7 @@ export function TokenPickerDialog({
         onChange={onTokenChange}
         occupiedAddrs={occupiedAddrs}
         side={side}
+        defaultLoadBalance={defaultLoadBalance}
       />
     </Dialog>
   );
