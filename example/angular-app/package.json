@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@dodoex/widgets": "^2.2.1",
+    "@dodoex/widgets": "^2.3.4",
     "@angular/animations": "^15.1.0",
     "@angular/common": "^15.1.0",
     "@angular/compiler": "^15.1.0",
