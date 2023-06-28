@@ -105,9 +105,11 @@ export function Swap() {
     useState<boolean>(false);
   const isBridge = useMemo(
     () =>
-      fromToken?.chainId &&
-      toToken?.chainId &&
-      fromToken.chainId !== toToken.chainId,
+      !!(
+        fromToken?.chainId &&
+        toToken?.chainId &&
+        fromToken.chainId !== toToken.chainId
+      ),
     [fromToken, toToken],
   );
   const { toFiatPrice, fromFiatPrice } = useFetchFiatPrice({
