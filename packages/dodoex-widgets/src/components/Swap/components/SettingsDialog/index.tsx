@@ -86,31 +86,35 @@ export function SettingsDialog({
           </Box>
         </Box>
 
-        <Box
-          sx={{ py: 20, borderTop: `1px solid ${theme.palette.border.main}` }}
-        >
-          <Box sx={{ mb: 16, display: 'flex', alignItems: 'center' }}>
-            <Trans>Transaction Deadline</Trans>
-            <QuestionTooltip
-              title={
-                <Trans>
-                  If your transaction time exceeds the deadline, your
-                  transaction will be rescinded.
-                </Trans>
-              }
-              ml={7}
+        {isBridge ? (
+          ''
+        ) : (
+          <Box
+            sx={{ py: 20, borderTop: `1px solid ${theme.palette.border.main}` }}
+          >
+            <Box sx={{ mb: 16, display: 'flex', alignItems: 'center' }}>
+              <Trans>Transaction Deadline</Trans>
+              <QuestionTooltip
+                title={
+                  <Trans>
+                    If your transaction time exceeds the deadline, your
+                    transaction will be rescinded.
+                  </Trans>
+                }
+                ml={7}
+              />
+            </Box>
+            <NumberInput
+              value={ddl}
+              fullWidth
+              height={36}
+              placeholder={t`${DEFAULT_SWAP_DDL} minutes`}
+              onInputChange={(val: string | null) => {
+                dispatch(setTxDdl(val ? Math.max(Number(val), 1) : ''));
+              }}
             />
           </Box>
-          <NumberInput
-            value={ddl}
-            fullWidth
-            height={36}
-            placeholder={t`${DEFAULT_SWAP_DDL} minutes`}
-            onInputChange={(val: string | null) => {
-              dispatch(setTxDdl(val ? Math.max(Number(val), 1) : ''));
-            }}
-          />
-        </Box>
+        )}
       </Box>
     </Dialog>
   );

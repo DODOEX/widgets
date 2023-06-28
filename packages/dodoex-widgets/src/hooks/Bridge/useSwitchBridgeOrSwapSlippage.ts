@@ -21,7 +21,7 @@ export function useSwitchBridgeOrSwapSlippage(isBridge: boolean) {
       ? DEFAULT_BRIDGE_SLIPPAGE
       : DEFAULT_SWAP_SLIPPAGE;
     dispatch(setSlippage(defaultSlippage.toString()));
-    // setShowSwitchSlippage(true);
+    setShowSwitchSlippage(true);
     const time = setTimeout(() => {
       setShowSwitchSlippage(false);
     }, 3000);

@@ -10,6 +10,7 @@ import {
   JSXElementConstructor,
   MouseEventHandler,
   ReactElement,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -45,7 +46,7 @@ const StyledTooltipRoot = styled('div')(
   ({ theme }) => `
   z-index: ${(theme.zIndex as ZIndex)?.tooltip};
   &[data-popper-placement*="bottom"] .${tooltipClasses.arrow} {
-    bottom: 0;
+    top: 0;
     margin-top: -${arrowHeight}px;
     &::before {
       transform-origin: 0 100%;
@@ -149,12 +150,8 @@ export default function Tooltip({
       <PopperUnstyled
         open={open}
         anchorEl={childrenRef}
-        // @ts-ignore: Unreachable code error
-        components={{
-          Root: StyledTooltipRoot,
-        }}
-        style={{
-          zIndex: `${(theme.zIndex as ZIndex)?.tooltip}`,
+        slots={{
+          root: StyledTooltipRoot,
         }}
         popperOptions={merge(
           {

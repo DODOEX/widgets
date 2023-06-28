@@ -338,11 +338,22 @@ export function Swap() {
   }, [fromFiatPrice, fromAmt, isReverseRouting, resAmount]);
 
   const displayToFiatPrice = useMemo(() => {
+    if (!toFiatPrice) return null;
+    if (isBridge) {
+      return selectedRoute?.toTokenAmount?.gt(0)
+        ? selectedRoute.toTokenAmount.multipliedBy(toFiatPrice)
+        : null;
+    }
     const toAmount = isReverseRouting ? toAmt : resAmount;
-    return toAmount && toFiatPrice
-      ? new BigNumber(toFiatPrice).multipliedBy(toAmount)
-      : null;
-  }, [toFiatPrice, toAmt, isReverseRouting, resAmount]);
+    return toAmount ? new BigNumber(toFiatPrice).multipliedBy(toAmount) : null;
+  }, [
+    toFiatPrice,
+    toAmt,
+    isReverseRouting,
+    resAmount,
+    selectedRoute,
+    isBridge,
+  ]);
 
   const priceImpactWarning = useMemo(() => {
     return (
@@ -482,6 +493,14 @@ export function Swap() {
     if (isReverseRouting) {
       return displayingToAmt;
     }
+    if (isBridge) {
+      return selectedRoute?.toTokenAmount?.gt(0)
+        ? formatTokenAmountNumber({
+            input: selectedRoute.toTokenAmount,
+            decimals: toToken?.decimals,
+          })
+        : '-';
+    }
     return new BigNumber(displayingFromAmt).gt(0)
       ? formatTokenAmountNumber({
           input: resAmount as number,
@@ -494,6 +513,8 @@ export function Swap() {
     resAmount,
     toToken,
     isReverseRouting,
+    selectedRoute,
+    isBridge,
   ]);
 
   const swapButton = useMemo(() => {
@@ -691,6 +712,7 @@ export function Swap() {
         <Tooltip
           open={showSwitchSlippageTooltip}
           title={<Trans>The setting has been switched to bridge mode</Trans>}
+          placement="bottom-end"
         >
           <Box component={BaseButton}>
             <Box
