@@ -7,7 +7,7 @@ export { Accordion } from '@szhsin/react-accordion';
 export type { AccordionProps } from '@szhsin/react-accordion';
 
 export interface AccordionItemProps extends ItemProps {
-  sx?: BoxProps;
+  sx?: BoxProps['sx'];
 }
 
 export function AccordionItem({
@@ -16,6 +16,7 @@ export function AccordionItem({
   ...props
 }: AccordionItemProps) {
   return (
+    // @ts-ignore
     <Box<any>
       component={Item}
       sx={merge(
@@ -31,7 +32,8 @@ export function AccordionItem({
         sx,
       )}
       buttonProps={{
-        className: ({ isEnter }) => `${isEnter ? 'active' : ''}`,
+        className: ({ isEnter }: { isEnter: boolean }) =>
+          `${isEnter ? 'active' : ''}`,
         ...buttonProps,
       }}
       {...props}

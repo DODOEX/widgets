@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
 import { chainListMap } from '../../../../constants/chainList';
 import { ChainId } from '../../../../constants/chains';
-import { BridgeStepTool } from '../../../../hooks/Bridge';
+import { BridgeStepTool } from '../../../../hooks/Bridge/useFetchRoutePriceBridge';
 import { formatTokenAmountNumber } from '../../../../utils/formatter';
 import { EtherscanLinkButton } from './EtherscanLinkButton';
 
@@ -108,7 +108,7 @@ export function SwapStep({
               color: theme.palette.text.secondary,
             }}
           >
-            {t('bridge.swap.for-what-token')}
+            <Trans>For</Trans>
           </span>
           {formatTokenAmountNumber({
             input: toTokenAmount,
@@ -131,7 +131,7 @@ export function SwapStep({
                 color: theme.palette.text.secondary,
               }}
             >
-              {t('bridge.swap.on-what-bridge')}
+              <Trans>on</Trans>
             </span>
             <Box
               component={chain?.logo}

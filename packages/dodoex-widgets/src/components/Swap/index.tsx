@@ -566,7 +566,7 @@ export function Swap() {
         </Button>
       );
     if (
-      balance.lt(isReverseRouting ? resAmount : fromAmt) ||
+      balance.lt(isReverseRouting ? resAmount ?? 0 : fromAmt) ||
       (isBasicToken && balance.lte(keepChanges))
     )
       // balance need to greater than reserved gas!

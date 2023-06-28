@@ -187,7 +187,7 @@ export function useFetchRoutePriceBridge({
       const routeInfo = resRoutePrice.data.data;
       const newBridgeRouteList: BridgeRouteI[] = [];
       if (routeInfo?.routes?.length) {
-        routeInfo.routes.forEach((route, index) => {
+        routeInfo.routes.forEach((route: any, index: number) => {
           if (route) {
             const {
               toAmount,
@@ -221,7 +221,7 @@ export function useFetchRoutePriceBridge({
                   approvalAddress
                 ) {
                   const newIncludedSteps: BridgeStep['includedSteps'] = [];
-                  includedSteps.forEach((i) => {
+                  includedSteps.forEach((i: any) => {
                     if (
                       i &&
                       i.id &&
