@@ -1,48 +1,54 @@
 import { Box, useTheme } from '@dodoex/components';
+import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { chainListMap } from '../../../../constants/chainList';
 import { ChainId } from '../../../../constants/chains';
-import { BridgeStepTool } from '../../../../hooks/Bridge';
-import { formatTokenAmountNumber } from '../../../../utils/formatter';
+import { BridgeStepTool } from '../../../../hooks/Bridge/useFetchRoutePriceBridge';
+import { formatTokenAmountNumber } from '../../../../utils';
 import { EtherscanLinkButton } from './EtherscanLinkButton';
 
-export function SwapStep({
-  chainId,
+export function CrossStep({
+  fromChainId,
+  toChainId,
   fromTokenAmount,
   toTokenAmount,
   fromTokenDecimals,
   fromTokenSymbol,
   toTokenDecimals,
   toTokenSymbol,
-  hash,
+  fromHash,
+  toHash,
   toolDetails,
 }: {
-  chainId: number;
+  fromChainId: number;
+  toChainId: number;
   fromTokenAmount: BigNumber;
   toTokenAmount: BigNumber;
   fromTokenSymbol: string;
   fromTokenDecimals: number;
   toTokenSymbol: string;
   toTokenDecimals: number;
-  hash: string | null;
+  fromHash: string | null;
+  toHash: string | null;
   toolDetails: BridgeStepTool;
   // isFailedStatus: boolean;
 }) {
-  const { t } = useTranslation();
   const theme = useTheme();
 
-  const chain = useMemo(() => {
-    return chainListMap[chainId as ChainId];
-  }, [chainId]);
+  const [fromChain, toChain] = useMemo(() => {
+    return [
+      chainListMap[fromChainId as ChainId],
+      chainListMap[toChainId as ChainId],
+    ];
+  }, [fromChainId, toChainId]);
 
   return (
     <Box
       sx={{
         borderLeft: `1px dashed ${theme.palette.text.primary}`,
-        // opacity: hash || isFailedStatus ? 1 : 0.5,
-        opacity: hash ? 1 : 0.5,
+        // opacity: toHash || isFailedStatus ? 1 : 0.5,
+        opacity: toHash ? 1 : 0.5,
         pb: 24,
       }}
     >
@@ -61,10 +67,14 @@ export function SwapStep({
           src={toolDetails.logoURI}
           alt={toolDetails.name}
           sx={{
-            width: '20px',
+            width: 20,
+            height: 20,
             marginLeft: -10.5,
             pt: 1,
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: {
+              mobile: theme.palette.background.paper,
+              tablet: theme.palette.background.paper,
+            },
             alignSelf: 'flex-start',
           }}
         />
@@ -105,11 +115,26 @@ export function SwapStep({
           <span
             style={{
               marginLeft: 4,
+              color: theme.palette.text.secondary,
+            }}
+          >
+            <Trans>On</Trans>
+          </span>
+          <Box
+            component={fromChain?.logo}
+            sx={{
+              marginLeft: 4,
+              width: '18px',
+            }}
+          />
+          <span
+            style={{
+              marginLeft: 4,
               marginRight: 4,
               color: theme.palette.text.secondary,
             }}
           >
-            {t('bridge.swap.for-what-token')}
+            <Trans>To</Trans>
           </span>
           {formatTokenAmountNumber({
             input: toTokenAmount,
@@ -117,39 +142,21 @@ export function SwapStep({
           })}
           &nbsp;
           {toTokenSymbol}
-          <Box
-            sx={{
-              alignItems: 'center',
-              display: {
-                mobile: 'none',
-                tablet: 'flex',
-              },
+          <span
+            style={{
+              marginLeft: 4,
+              color: theme.palette.text.secondary,
             }}
           >
-            <span
-              style={{
-                marginLeft: 4,
-                color: theme.palette.text.secondary,
-              }}
-            >
-              {t('bridge.swap.on-what-bridge')}
-            </span>
-            <Box
-              component={chain?.logo}
-              sx={{
-                marginLeft: 4,
-                width: '18px',
-              }}
-            />
-            <Box
-              component="span"
-              sx={{
-                ml: 4,
-              }}
-            >
-              {chain.name}
-            </Box>
-          </Box>
+            <Trans>On</Trans>
+          </span>
+          <Box
+            component={toChain?.logo}
+            sx={{
+              marginLeft: 4,
+              width: '18px',
+            }}
+          />
         </Box>
       </Box>
 
@@ -158,49 +165,22 @@ export function SwapStep({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'flex-end',
-          typography: 'body2',
           mt: {
             mobile: 8,
             tablet: 5,
           },
         }}
       >
+        <EtherscanLinkButton chainId={fromChainId} address={fromHash}>
+          <Trans>Source</Trans>
+        </EtherscanLinkButton>
         <Box
           sx={{
-            alignItems: 'center',
-            display: {
-              mobile: 'flex',
-              tablet: 'none',
-            },
+            width: 16,
           }}
-        >
-          <span
-            style={{
-              color: theme.palette.text.secondary,
-            }}
-          >
-            {t('bridge.swap.on-what-bridge')}
-          </span>
-          <Box
-            component={chain?.logo}
-            sx={{
-              marginLeft: 4,
-              width: '18px',
-            }}
-          />
-          <Box
-            component="span"
-            sx={{
-              ml: 4,
-              mr: 8,
-            }}
-          >
-            {chain.name}
-          </Box>
-        </Box>
-
-        <EtherscanLinkButton chainId={chainId} address={hash}>
-          {t('bridge.order.tx')}
+        />
+        <EtherscanLinkButton chainId={toChainId} address={toHash}>
+          <Trans>Destination</Trans>
         </EtherscanLinkButton>
       </Box>
     </Box>

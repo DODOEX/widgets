@@ -7,7 +7,7 @@ export function DirectionLine({ children }: { children: React.ReactNode }) {
     <Box
       sx={{
         position: 'relative',
-        width: 'calc(100% - 32px)',
+        width: 'calc(100% - 16px)',
         mx: 'auto',
       }}
     >

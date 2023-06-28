@@ -1,31 +1,33 @@
-import { getChain } from '@dodoex/wallet';
-import { Box, CardMedia, useTheme } from '@mui/material';
+import { Box, useTheme } from '@dodoex/components';
 import { CSSProperties, useMemo } from 'react';
-import { BridgeOrderI } from '../../types';
+import { chainListMap } from '../../../../constants/chainList';
+import { ChainId } from '../../../../constants/chains';
+import { BridgeRouteI } from '../../../../hooks/Bridge';
 import { CrossStep } from './CrossStep';
 import { SwapStep } from './SwapStep';
 
 export function RouteSteps({
   marginTop = 20,
-  orderDetail,
+  route,
 }: {
   marginTop?: CSSProperties['marginTop'];
-  orderDetail: BridgeOrderI;
+  route: BridgeRouteI;
 }) {
   const theme = useTheme();
 
-  const { fromChainId, toChainId, fromHash, toHash, route, subStatus } =
-    orderDetail;
+  const { fromChainId, toChainId } = route;
 
   const {
     step: { includedSteps },
   } = route;
 
   const [fromChain, toChain] = useMemo(() => {
-    return [getChain(fromChainId), getChain(toChainId)];
+    return [
+      chainListMap[fromChainId as ChainId],
+      chainListMap[toChainId as ChainId],
+    ];
   }, [fromChainId, toChainId]);
 
-  // const isFailedStatus = isFailedStatusOrder(subStatus);
   return (
     <Box
       sx={{
@@ -46,10 +48,8 @@ export function RouteSteps({
             alignItems: 'flex-start',
           }}
         >
-          <CardMedia
-            component="img"
-            image={fromChain?.logo}
-            alt={fromChain?.showName}
+          <Box
+            component={fromChain?.logo}
             sx={{
               width: '20px',
               marginLeft: -10.5,
@@ -63,7 +63,7 @@ export function RouteSteps({
               typography: 'body1',
             }}
           >
-            {fromChain.showName}
+            {fromChain.name}
           </Box>
         </Box>
       </Box>
@@ -81,7 +81,7 @@ export function RouteSteps({
               fromTokenSymbol={estimate.fromToken.symbol}
               toTokenDecimals={estimate.toToken.decimals}
               toTokenSymbol={estimate.toToken.symbol}
-              hash={index > 0 ? toHash : fromHash}
+              hash={null}
               toolDetails={toolDetails}
             />
           );
@@ -98,8 +98,8 @@ export function RouteSteps({
               fromTokenSymbol={estimate.fromToken.symbol}
               toTokenDecimals={estimate.toToken.decimals}
               toTokenSymbol={estimate.toToken.symbol}
-              fromHash={fromHash}
-              toHash={toHash}
+              fromHash={null}
+              toHash={null}
               toolDetails={toolDetails}
             />
           );
@@ -109,7 +109,7 @@ export function RouteSteps({
 
       <Box
         sx={{
-          opacity: subStatus === 'DONE' ? 1 : 0.5,
+          opacity: 0.5,
           pb: 0,
         }}
       >
@@ -119,10 +119,8 @@ export function RouteSteps({
             alignItems: 'flex-start',
           }}
         >
-          <CardMedia
-            component="img"
-            image={toChain?.logo}
-            alt={toChain?.showName}
+          <Box
+            component={toChain?.logo}
             sx={{
               width: '20px',
               marginLeft: -10.5,
@@ -136,7 +134,7 @@ export function RouteSteps({
               typography: 'body1',
             }}
           >
-            {toChain.showName}
+            {toChain.name}
           </Box>
         </Box>
       </Box>

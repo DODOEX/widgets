@@ -17,11 +17,6 @@ import { Trans } from '@lingui/macro';
 import { useMemo, useState } from 'react';
 import { chainListMap } from '../../../constants/chainList';
 import { ChainId } from '../../../constants/chains';
-import {
-  BRIDGE_MAIN_TOKEN_SLIPPAGE,
-  BRIDGE_OTHER_TOKEN_SLIPPAGE,
-  BRIDGE_STABLE_TOKEN_SLIPPAGE,
-} from '../../../constants/swap';
 import { BridgeRouteI } from '../../../hooks/Bridge/useFetchRoutePriceBridge';
 import {
   formatReadableNumber,
@@ -30,8 +25,13 @@ import {
 } from '../../../utils';
 import { formatReadableTimeDuration } from '../../../utils/time';
 import { QuestionTooltip } from '../../Tooltip';
+import { RouteSteps } from './orderInfoModal/RouteSteps';
 
-export default function BridgeSummary({ route }: { route: BridgeRouteI }) {
+export default function BridgeSummaryDetail({
+  route,
+}: {
+  route: BridgeRouteI;
+}) {
   const theme = useTheme();
   const fromChain = chainListMap[route.fromChainId as ChainId];
   // const [isEditFromAddress, setIsEditFromAddress] = useState(false);
@@ -277,33 +277,11 @@ export default function BridgeSummary({ route }: { route: BridgeRouteI }) {
                   <QuestionTooltip
                     onlyHover
                     title={
-                      <>
-                        <Trans>
-                          When the deviation between the price of the
-                          transaction you submitted and the price at the time of
-                          the transaction on the chain is greater than this set
-                          value, the transaction will fail.
-                        </Trans>
-                        <br />
-                        <br />
-                        <Trans>Suggested Values:</Trans>
-                        <br />
-                        <Trans>Mainstream Asset Pairs:</Trans>&nbsp;
-                        {BRIDGE_MAIN_TOKEN_SLIPPAGE}
-                        <br />
-                        <Trans>Stablecoin Pairs:</Trans>&nbsp;
-                        {BRIDGE_STABLE_TOKEN_SLIPPAGE}
-                        <br />
-                        <Trans>Others:</Trans>&nbsp;
-                        {BRIDGE_OTHER_TOKEN_SLIPPAGE}
-                        <br />
-                        <br />
-                        <Trans>
-                          If there is no swap operation during the
-                          cross-chaining process, the slippage does not take
-                          effect.
-                        </Trans>
-                      </>
+                      <Trans>
+                        Attention: High slippage tolerance will increase the
+                        success rate of transaction, but might not get the best
+                        quote.
+                      </Trans>
                     }
                     ml={6}
                   />
@@ -387,7 +365,7 @@ export default function BridgeSummary({ route }: { route: BridgeRouteI }) {
               </Box>
             }
           >
-            a
+            <RouteSteps route={route} />
           </AccordionItem>
         </Accordion>
       </Box>

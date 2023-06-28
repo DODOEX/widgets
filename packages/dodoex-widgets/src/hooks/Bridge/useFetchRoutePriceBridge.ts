@@ -1,19 +1,14 @@
 import axios from 'axios';
 import { useWeb3React } from '@web3-react/core';
-import {
-  BigNumber as EthersBigNumber,
-  parseFixed,
-} from '@ethersproject/bignumber';
-import React, { useCallback, useMemo, useState } from 'react';
-import { getEstimateGas } from '../contract/wallet';
+import { parseFixed } from '@ethersproject/bignumber';
+import { useCallback, useMemo, useState } from 'react';
 import { BridgeRoutePriceAPI } from '../../constants/api';
 import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
-import { DEFAULT_SWAP_SLIPPAGE, DEFAULT_SWAP_DDL } from '../../constants/swap';
-import { getSlippage, getTxDdl } from '../../store/selectors/settings';
+import { DEFAULT_BRIDGE_SLIPPAGE } from '../../constants/swap';
+import { getSlippage } from '../../store/selectors/settings';
 import { EmptyAddress } from '../../constants/address';
 import { usePriceTimer } from '../Swap/usePriceTimer';
-import useExecuteSwap from '../Swap/useExecuteSwap';
 import { TokenInfo } from '../Token';
 import BigNumber from 'bignumber.js';
 
@@ -126,18 +121,13 @@ export function useFetchRoutePriceBridge({
   toAmount,
 }: FetchRoutePrice) {
   const { account, provider } = useWeb3React();
-  const slippage = useSelector(getSlippage) || DEFAULT_SWAP_SLIPPAGE;
-  const ddl = useSelector(getTxDdl) || DEFAULT_SWAP_DDL;
+  const slippage = useSelector(getSlippage) || DEFAULT_BRIDGE_SLIPPAGE;
   const { apikey } = useSelector(getGlobalProps);
-  const apiDdl = useMemo(() => Math.floor(Date.now() / 1000) + ddl * 60, [ddl]);
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,
   );
   const [bridgeRouteList, setBridgeRouteList] = useState<Array<BridgeRouteI>>(
     [],
-  );
-  const [resCostGas, setResCostGas] = useState<EthersBigNumber>(
-    EthersBigNumber.from(0),
   );
 
   const refetch = useCallback(async () => {
@@ -158,7 +148,7 @@ export function useFetchRoutePriceBridge({
     const toTokenAddress = toToken.address;
     const fromAddress = account || EmptyAddress;
     const toAddress = account || EmptyAddress;
-    const slippageNum = Number(slippage) / 100;
+    const slippageNum = Number(slippage);
 
     const data: any = {
       fromAddress,
@@ -333,7 +323,6 @@ export function useFetchRoutePriceBridge({
       console.error(error);
     }
   }, [
-    apiDdl,
     account,
     toToken,
     slippage,
@@ -350,29 +339,9 @@ export function useFetchRoutePriceBridge({
     return fromAmount ? bridgeRouteList : [];
   }, [status, toAmount, fromAmount, bridgeRouteList]);
 
-  const execute = useExecuteSwap();
-  const executeSwap = useCallback(
-    (subtitle: React.ReactNode) => {
-      const finalFromAmount = fromAmount;
-      if (!fromToken || !finalFromAmount) return;
-      // execute({
-      //   to,
-      //   data,
-      //   useSource,
-      //   duration,
-      //   ddl,
-      //   value: resValue,
-      //   // gasLimit: resCostGas,
-      //   subtitle,
-      // });
-    },
-    [ddl, fromToken, fromAmount, resCostGas],
-  );
-
   return {
     status,
     refetch,
-    executeSwap,
     bridgeRouteList: bridgeRouteListRes,
   };
 }

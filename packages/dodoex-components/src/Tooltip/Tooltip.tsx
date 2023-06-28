@@ -34,6 +34,7 @@ export interface TooltipProps {
   // @ts-ignore: Unreachable code error
   componentsProps?: PopperUnstyledProps['componentsProps'];
   onlyHover?: boolean;
+  open?: boolean;
 }
 
 const tooltipClasses = {

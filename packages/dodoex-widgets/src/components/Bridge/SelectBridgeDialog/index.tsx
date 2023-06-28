@@ -1,10 +1,9 @@
 import { Box, useTheme } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 import { BridgeRouteI } from '../../../hooks/Bridge/useFetchRoutePriceBridge';
 import useGetBalance from '../../../hooks/Token/useGetBalance';
 import Dialog from '../../Swap/components/Dialog';
-import BridgeSummary from './BridgeSummary';
 import RouteCard from './RouteCard';
 
 export default function SelectBridgeDialog({
@@ -77,7 +76,6 @@ export default function SelectBridgeDialog({
             />
           );
         })}
-        {selectRoute ? <BridgeSummary route={selectRoute} /> : ''}
       </Box>
     </Dialog>
   );

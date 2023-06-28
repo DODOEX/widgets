@@ -1,4 +1,3 @@
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { useCallback, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -9,8 +8,6 @@ import { useCurrentChainId } from '../ConnectWallet';
 import defaultTokens from '../../constants/tokenList';
 import { RootState } from '../../store/reducers';
 import { getPopularTokenList } from '../../store/selectors/token';
-import { useGetCGTokenList } from './useGetCGTokenList';
-import { getShowCoingecko } from '../../store/selectors/globals';
 import { unionBy } from 'lodash';
 import useTokenListFetchBalance from './useTokenListFetchBalance';
 
@@ -110,20 +107,13 @@ export default function useTokenList({
     () => chainIdProps ?? currentChainId,
     [chainIdProps, currentChainId],
   );
-  const showCoingecko = useSelector(getShowCoingecko);
-  const { cgTokenList } = useGetCGTokenList({
-    chainId,
-    skip: !showCoingecko || visible === false,
-  });
   const getBalance = useGetBalance();
   const preloaded = useMemo(() => {
     const preloadedResult = preloadedOrigin.filter(
       (token) => token.chainId === chainId,
     );
-    return unionBy(preloadedResult, cgTokenList, (token) =>
-      token.address.toLowerCase(),
-    );
-  }, [preloadedOrigin, chainId, cgTokenList]);
+    return preloadedResult;
+  }, [preloadedOrigin, chainId]);
   const popularTokenListOrigin = useSelector((state: RootState) =>
     getPopularTokenList(chainId, state),
   );
@@ -285,14 +275,13 @@ export default function useTokenList({
     return sortTokenList(needShowList) || ([] as TokenList);
   }, [preloaded, getNeedShowList, sortTokenList, popularTokenList]);
 
-  // useTokenListFetchBalance({
-  //   chainId,
-  //   tokenList: showTokenList,
-  //   popularTokenList,
-  //   cgTokenList,
-  //   value,
-  //   visible,
-  // });
+  useTokenListFetchBalance({
+    chainId,
+    tokenList: showTokenList,
+    popularTokenList,
+    value,
+    visible,
+  });
 
   return {
     filter,

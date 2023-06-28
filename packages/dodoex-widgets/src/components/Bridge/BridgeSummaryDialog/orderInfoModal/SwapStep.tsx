@@ -1,55 +1,47 @@
 import { Box, useTheme } from '@dodoex/components';
+import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { chainListMap } from '../../../../constants/chainList';
 import { ChainId } from '../../../../constants/chains';
-import { BridgeStepTool } from '../../../../hooks/Bridge/useFetchRoutePriceBridge';
-import { formatTokenAmountNumber } from '../../../../utils';
+import { BridgeStepTool } from '../../../../hooks/Bridge';
+import { formatTokenAmountNumber } from '../../../../utils/formatter';
 import { EtherscanLinkButton } from './EtherscanLinkButton';
 
-export function CrossStep({
-  fromChainId,
-  toChainId,
+export function SwapStep({
+  chainId,
   fromTokenAmount,
   toTokenAmount,
   fromTokenDecimals,
   fromTokenSymbol,
   toTokenDecimals,
   toTokenSymbol,
-  fromHash,
-  toHash,
+  hash,
   toolDetails,
 }: {
-  fromChainId: number;
-  toChainId: number;
+  chainId: number;
   fromTokenAmount: BigNumber;
   toTokenAmount: BigNumber;
   fromTokenSymbol: string;
   fromTokenDecimals: number;
   toTokenSymbol: string;
   toTokenDecimals: number;
-  fromHash: string | null;
-  toHash: string | null;
+  hash: string | null;
   toolDetails: BridgeStepTool;
   // isFailedStatus: boolean;
 }) {
-  const { t } = useTranslation();
   const theme = useTheme();
 
-  const [fromChain, toChain] = useMemo(() => {
-    return [
-      chainListMap[fromChainId as ChainId],
-      chainListMap[toChainId as ChainId],
-    ];
-  }, [fromChainId, toChainId]);
+  const chain = useMemo(() => {
+    return chainListMap[chainId as ChainId];
+  }, [chainId]);
 
   return (
     <Box
       sx={{
         borderLeft: `1px dashed ${theme.palette.text.primary}`,
-        // opacity: toHash || isFailedStatus ? 1 : 0.5,
-        opacity: toHash ? 1 : 0.5,
+        // opacity: hash || isFailedStatus ? 1 : 0.5,
+        opacity: hash ? 1 : 0.5,
         pb: 24,
       }}
     >
@@ -68,14 +60,10 @@ export function CrossStep({
           src={toolDetails.logoURI}
           alt={toolDetails.name}
           sx={{
-            width: 20,
-            height: 20,
+            width: '20px',
             marginLeft: -10.5,
             pt: 1,
-            backgroundColor: {
-              mobile: theme.palette.background.paper,
-              tablet: theme.palette.background.paper,
-            },
+            backgroundColor: theme.palette.background.paper,
             alignSelf: 'flex-start',
           }}
         />
@@ -116,26 +104,11 @@ export function CrossStep({
           <span
             style={{
               marginLeft: 4,
-              color: theme.palette.text.secondary,
-            }}
-          >
-            {t('bridge.swap.on-what-bridge')}
-          </span>
-          <Box
-            component={fromChain?.logo}
-            sx={{
-              marginLeft: 4,
-              width: '18px',
-            }}
-          />
-          <span
-            style={{
-              marginLeft: 4,
               marginRight: 4,
               color: theme.palette.text.secondary,
             }}
           >
-            {t('bridge.swap.to-what-bridge')}
+            {t('bridge.swap.for-what-token')}
           </span>
           {formatTokenAmountNumber({
             input: toTokenAmount,
@@ -143,21 +116,39 @@ export function CrossStep({
           })}
           &nbsp;
           {toTokenSymbol}
-          <span
-            style={{
-              marginLeft: 4,
-              color: theme.palette.text.secondary,
+          <Box
+            sx={{
+              alignItems: 'center',
+              display: {
+                mobile: 'none',
+                tablet: 'flex',
+              },
             }}
           >
-            {t('bridge.swap.on-what-bridge')}
-          </span>
-          <Box
-            component={toChain?.logo}
-            sx={{
-              marginLeft: 4,
-              width: '18px',
-            }}
-          />
+            <span
+              style={{
+                marginLeft: 4,
+                color: theme.palette.text.secondary,
+              }}
+            >
+              {t('bridge.swap.on-what-bridge')}
+            </span>
+            <Box
+              component={chain?.logo}
+              sx={{
+                marginLeft: 4,
+                width: '18px',
+              }}
+            />
+            <Box
+              component="span"
+              sx={{
+                ml: 4,
+              }}
+            >
+              {chain.name}
+            </Box>
+          </Box>
         </Box>
       </Box>
 
@@ -166,22 +157,49 @@ export function CrossStep({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'flex-end',
+          typography: 'body2',
           mt: {
             mobile: 8,
             tablet: 5,
           },
         }}
       >
-        <EtherscanLinkButton chainId={fromChainId} address={fromHash}>
-          {t('bridge.order.source')}
-        </EtherscanLinkButton>
         <Box
           sx={{
-            width: 16,
+            alignItems: 'center',
+            display: {
+              mobile: 'flex',
+              tablet: 'none',
+            },
           }}
-        />
-        <EtherscanLinkButton chainId={toChainId} address={toHash}>
-          {t('bridge.order.destination')}
+        >
+          <span
+            style={{
+              color: theme.palette.text.secondary,
+            }}
+          >
+            <Trans>on</Trans>
+          </span>
+          <Box
+            component={chain?.logo}
+            sx={{
+              marginLeft: 4,
+              width: '18px',
+            }}
+          />
+          <Box
+            component="span"
+            sx={{
+              ml: 4,
+              mr: 8,
+            }}
+          >
+            {chain.name}
+          </Box>
+        </Box>
+
+        <EtherscanLinkButton chainId={chainId} address={hash}>
+          <Trans>Tx</Trans>
         </EtherscanLinkButton>
       </Box>
     </Box>

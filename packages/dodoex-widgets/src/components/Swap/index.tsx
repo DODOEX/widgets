@@ -6,6 +6,7 @@ import {
   BaseButton,
   useTheme,
   RotatingIcon,
+  Tooltip,
 } from '@dodoex/components';
 import { formatTokenAmountNumber, isETHChain } from '../../utils';
 import {
@@ -63,6 +64,10 @@ import { AppThunkDispatch } from '../../store/actions';
 import { useFetchRoutePriceBridge } from '../../hooks/Bridge/useFetchRoutePriceBridge';
 import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
 import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
+import { useSendRoute } from '../../hooks/Bridge/useSendRoute';
+import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
+import ErrorMessageDialog from '../ErrorMessageDialog';
+import { useSwitchBridgeOrSwapSlippage } from '../../hooks/Bridge/useSwitchBridgeOrSwapSlippage';
 
 export function Swap() {
   const theme = useTheme();
@@ -116,6 +121,18 @@ export function Swap() {
     () => (toToken ? getBalance(toToken) : null),
     [toToken, getBalance],
   );
+  const fromEtherTokenBalance = useMemo(() => {
+    const fromChainId = fromToken?.chainId;
+    if (!isBridge || !fromChainId) return null;
+    const etherToken = basicTokenMap[fromChainId as ChainId];
+    if (!etherToken) {
+      return null;
+    }
+    return getBalance({
+      ...etherToken,
+      chainId: fromChainId,
+    });
+  }, [isBridge, fromToken?.chainId, getBalance]);
 
   const { getApprovalState, submitApprove, getPendingRest, getMaxBalance } =
     useGetTokenStatus({
@@ -161,10 +178,21 @@ export function Swap() {
     }
     return selectedRouteIdOrigin;
   }, [selectedRouteIdOrigin, bridgeRouteList]);
-  const selectRoute = useMemo(
+  const selectedRoute = useMemo(
     () => bridgeRouteList.find((route) => route.id === selectedRouteId),
     [bridgeRouteList, selectedRouteId],
   );
+  const {
+    sendRouteLoading,
+    sendRouteError,
+    setSendRouteError,
+    bridgeOrderTxRequest,
+
+    handleClickSend: handleSendBridgeRoute,
+  } = useSendRoute();
+  const [bridgeSummaryShow, setBridgeSummaryShow] = useState(false);
+
+  const showSwitchSlippageTooltip = useSwitchBridgeOrSwapSlippage(isBridge);
 
   const updateFromAmt = useCallback(
     (v: string | number) => {
@@ -413,7 +441,7 @@ export function Swap() {
       }
       return (
         <BridgeRouteShortCard
-          route={selectRoute}
+          route={selectedRoute}
           onClick={() => setSwitchBridgeRouteShow(true)}
         />
       );
@@ -429,7 +457,7 @@ export function Swap() {
     isBridge,
     bridgeRouteStatus,
     bridgeRouteList,
-    selectRoute,
+    selectedRoute,
   ]);
 
   const fromFinalAmt = useMemo(() => {
@@ -511,7 +539,12 @@ export function Swap() {
           <Trans>Enter an amount</Trans>
         </Button>
       );
-    if (resPriceStatus === RoutePriceStatus.Loading)
+
+    if (
+      isBridge
+        ? bridgeRouteStatus === RoutePriceStatus.Loading
+        : resPriceStatus === RoutePriceStatus.Loading
+    )
       return (
         <Button fullWidth disabled data-testid={swapAlertFetchPriceBtn}>
           <Trans>Fetching Price...</Trans>
@@ -546,6 +579,25 @@ export function Swap() {
           <Trans>Insufficient balance</Trans>
         </Button>
       );
+
+    if (isBridge) {
+      return (
+        <Button
+          fullWidth
+          onClick={() =>
+            handleSendBridgeRoute({
+              selectedRoute,
+              fromEtherTokenBalance,
+              goNext: () => setBridgeSummaryShow(true),
+            })
+          }
+          data-testid={swapReviewBtn}
+          isLoading={sendRouteLoading}
+        >
+          <Trans>Review Bridge</Trans>
+        </Button>
+      );
+    }
     return (
       <Button
         fullWidth
@@ -575,6 +627,8 @@ export function Swap() {
     isBridge,
     bridgeRouteStatus,
     bridgeRouteList,
+    sendRouteLoading,
+    fromEtherTokenBalance,
   ]);
 
   const subtitle = useMemo(() => {
@@ -634,18 +688,23 @@ export function Swap() {
         }}
       >
         <Trans>Swap</Trans>
-        <Box component={BaseButton}>
-          <Box
-            component={Setting}
-            onClick={() => setIsSettingsDialogOpen(true)}
-            sx={{
-              width: 19,
-              height: 19,
-              color: 'text.primary',
-              cursor: 'pointer',
-            }}
-          />
-        </Box>
+        <Tooltip
+          open={showSwitchSlippageTooltip}
+          title={<Trans>The setting has been switched to bridge mode</Trans>}
+        >
+          <Box component={BaseButton}>
+            <Box
+              component={Setting}
+              onClick={() => setIsSettingsDialogOpen(true)}
+              sx={{
+                width: 19,
+                height: 19,
+                color: 'text.primary',
+                cursor: 'pointer',
+              }}
+            />
+          </Box>
+        </Tooltip>
       </Box>
 
       {/* Scroll Container */}
@@ -788,6 +847,7 @@ export function Swap() {
       <SettingsDialog
         open={isSettingsDialogOpen}
         onClose={() => setIsSettingsDialogOpen(false)}
+        isBridge={isBridge}
       />
       <SelectBridgeDialog
         open={switchBridgeRouteShow}
@@ -795,6 +855,18 @@ export function Swap() {
         selectedRouteId={selectedRouteId}
         setSelectRouteId={setSelectRouteId}
         bridgeRouteList={bridgeRouteList}
+      />
+      <BridgeSummaryDialog
+        open={bridgeSummaryShow}
+        onClose={() => setBridgeSummaryShow(false)}
+        route={selectedRoute}
+        bridgeOrderTxRequest={bridgeOrderTxRequest}
+        clearFromAmt={() => updateFromAmt('')}
+        clearToAmt={() => updateToAmt('')}
+      />
+      <ErrorMessageDialog
+        message={sendRouteError}
+        onClose={() => setSendRouteError('')}
       />
     </>
   );

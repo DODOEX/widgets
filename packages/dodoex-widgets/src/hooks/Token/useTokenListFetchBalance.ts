@@ -10,14 +10,12 @@ export default function useTokenListFetchBalance({
   value,
   tokenList,
   popularTokenList,
-  cgTokenList,
   visible,
 }: {
   chainId: number;
   value?: TokenInfo | null;
   tokenList: TokenList;
   popularTokenList?: TokenList;
-  cgTokenList?: TokenList;
   visible?: boolean;
 }) {
   const autoConnectLoading = useSelector(getAutoConnectLoading);
@@ -37,13 +35,8 @@ export default function useTokenListFetchBalance({
         addressSet.add(token.address);
       }
     });
-    cgTokenList?.forEach((token) => {
-      if (token.chainId === chainId) {
-        addressSet.add(token.address);
-      }
-    });
     return Array.from(addressSet);
-  }, [tokenList, popularTokenList, cgTokenList, chainId, autoConnectLoading]);
+  }, [tokenList, popularTokenList, chainId, autoConnectLoading]);
 
   const selectTokenAddress = useMemo(
     () => (value ? [value.address] : []),

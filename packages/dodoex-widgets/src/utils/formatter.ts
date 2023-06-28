@@ -193,6 +193,13 @@ export const toWei = (
   return result.dp(0);
 };
 
+export const byWei = (
+  amount: BigNumber | string | number,
+  decimals: number,
+) => {
+  return new BigNumber(amount).div(new BigNumber(10).pow(decimals));
+};
+
 export const getDecimalLimit = (decimals: number | undefined | null) =>
   Math.min(decimals ?? 6, 6);
 
