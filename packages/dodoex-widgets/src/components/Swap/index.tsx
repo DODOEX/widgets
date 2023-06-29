@@ -245,16 +245,11 @@ export function Swap() {
       });
     }
   };
-  const autoConnectLoading = useSelector(getAutoConnectLoading);
-  const prevAutoConnectLoading =
-    useRef<boolean | undefined>(autoConnectLoading);
+  const prevChainId = useRef(chainId);
 
   useEffect(() => {
-    if (
-      autoConnectLoading === false &&
-      prevAutoConnectLoading.current === undefined
-    ) {
-      prevAutoConnectLoading.current = autoConnectLoading;
+    if (prevChainId.current === undefined && chainId) {
+      prevChainId.current = chainId;
       if (chainId) {
         setToToken(null);
         setFromToken(null);
@@ -292,13 +287,7 @@ export function Swap() {
       }
       initDefaultToken();
     }
-  }, [
-    defaultToToken,
-    defaultFromToken,
-    autoConnectLoading,
-    updateFromAmt,
-    updateToAmt,
-  ]);
+  }, [defaultToToken, defaultFromToken, chainId, updateFromAmt, updateToAmt]);
   useEffect(() => {
     initDefaultToken();
   }, [tokenList]);
@@ -412,7 +401,7 @@ export function Swap() {
 
   const isUnSupportChain = useMemo(() => !ChainId[chainId || 1], [chainId]);
   const isNotCurrentChain = useMemo(
-    () => !!fromToken?.chainId && fromToken?.chainId !== chainId,
+    () => chainId && !!fromToken?.chainId && fromToken?.chainId !== chainId,
     [chainId, fromToken?.chainId],
   );
 
@@ -750,7 +739,7 @@ export function Swap() {
           margin: 20,
         }}
       >
-        <Trans>Swap</Trans>
+        {isBridge ? <Trans>Bridge</Trans> : <Trans>Swap</Trans>}
         <Tooltip
           open={showSwitchSlippageTooltip}
           title={

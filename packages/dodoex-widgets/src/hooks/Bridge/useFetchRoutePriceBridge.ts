@@ -13,6 +13,9 @@ import { TokenInfo } from '../Token';
 import BigNumber from 'bignumber.js';
 
 export interface BridgeRouteI {
+  /** update */
+  key: string;
+  /** only one */
   id: string;
   fromToken: TokenInfo;
   toToken: TokenInfo;
@@ -283,7 +286,8 @@ export function useFetchRoutePriceBridge({
                   });
                   if (newIncludedSteps.length > 0) {
                     const newBridgeRoute: BridgeRouteI = {
-                      id: `${product}-${toAmount}-${feeUSD}-${index}`,
+                      key: `${product}-${toAmount}-${feeUSD}-${index}`,
+                      id: product,
                       fromChainId,
                       toChainId,
                       fromToken,

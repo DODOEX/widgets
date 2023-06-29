@@ -34,7 +34,12 @@ export default function SwitchChainDialog({
   useEffect(() => {
     const computed = async () => {
       if (open) {
-        if (chainId && chainId !== currentChainId && switchChain) {
+        if (
+          currentChainId &&
+          chainId &&
+          chainId !== currentChainId &&
+          switchChain
+        ) {
           if (autoSwitch) {
             await switchChain();
             onClose();

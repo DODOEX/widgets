@@ -16,8 +16,9 @@ export default function useGetBalance() {
   );
   const getBalance = useCallback(
     (token: TokenInfo) => {
-      if (!account) return null;
+      if (!account || !token) return null;
       if (
+        EtherToken &&
         token.symbol === EtherToken.symbol &&
         isSameAddress(token.address, EtherToken.address)
       )

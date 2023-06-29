@@ -59,7 +59,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useEffect(() => {
     dispatch(setAutoConnectLoading(true));
     const connectWallet = async () => {
-      const defaultChainId = props.defaultChainId || 1;
+      const defaultChainId = props.defaultChainId;
       try {
         if (connector?.connectEagerly) {
           await connector.connectEagerly(defaultChainId);

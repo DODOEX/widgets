@@ -54,7 +54,7 @@ export default function SelectBridgeDialog({
         {bridgeRouteList?.map((r, i) => {
           return (
             <RouteCard
-              key={r.id}
+              key={r.key}
               fromChainId={r.fromChainId}
               toChainId={r.toChainId}
               fromToken={r.fromToken}
