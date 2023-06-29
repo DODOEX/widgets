@@ -1,8 +1,6 @@
 import { getIntegerNumber } from './formatter';
 import { t } from '@lingui/macro';
 
-type LinguiT = any;
-
 function getSecondUnit(seconds: number, short?: boolean) {
   let unit = t`s`;
   if (!short) {
