@@ -92,17 +92,19 @@ export default function RouteCard({
         borderRadius: 16,
         py: 16,
         px: 12,
-        borderWidth: 1,
-        borderStyle: 'solid',
-        backgroundColor: 'background.tag',
-        borderColor: selected
-          ? theme.palette.primary.main
-          : theme.palette.background.default,
+        backgroundColor: theme.palette.background.tag,
         cursor: 'pointer',
         '&:hover': {
           backgroundColor: 'hover.default',
         },
         outline: 0,
+        ...(selected
+          ? {
+              borderWidth: 1,
+              borderStyle: 'solid',
+              borderColor: theme.palette.primary.main,
+            }
+          : {}),
       }}
       onClick={setSelected}
     >

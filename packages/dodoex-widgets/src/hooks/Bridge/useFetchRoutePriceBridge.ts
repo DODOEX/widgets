@@ -61,6 +61,28 @@ export interface BridgeRouteI {
   };
 }
 
+interface FetchRouteData {
+  routes: Array<{
+    toAmount: string;
+    feeUSD: string;
+    executionDuration: number;
+    product: string;
+    step: {
+      type: string;
+      tool: string;
+      approvalAddress: string;
+      includedSteps: any;
+      toolDetails: {
+        key: string;
+        logoURI: string;
+        name: string;
+      };
+    };
+    encodeParams: any;
+    productParams?: any;
+  }>;
+}
+
 export interface BridgeTokenI {
   id: number;
   symbol: string;
@@ -112,13 +134,11 @@ export interface FetchRoutePrice {
   fromToken: TokenInfo | null;
   toToken: TokenInfo | null;
   fromAmount: string;
-  toAmount: string;
 }
 export function useFetchRoutePriceBridge({
   toToken,
   fromToken,
   fromAmount,
-  toAmount,
 }: FetchRoutePrice) {
   const { account, provider } = useWeb3React();
   const slippage = useSelector(getSlippage) || DEFAULT_BRIDGE_SLIPPAGE;
@@ -185,10 +205,10 @@ export function useFetchRoutePriceBridge({
         `${BridgeRoutePriceAPI}?apikey=${'f056714b87a8ea6432'}`,
         { data },
       );
-      const routeInfo = resRoutePrice.data.data;
+      const routeInfo = resRoutePrice.data.data as FetchRouteData;
       const newBridgeRouteList: BridgeRouteI[] = [];
       if (routeInfo?.routes?.length) {
-        routeInfo.routes.forEach((route: any, index: number) => {
+        routeInfo.routes.forEach((route, index: number) => {
           if (route) {
             const {
               toAmount,
@@ -322,22 +342,13 @@ export function useFetchRoutePriceBridge({
       setStatus(RoutePriceStatus.Failed);
       console.error(error);
     }
-  }, [
-    account,
-    toToken,
-    slippage,
-    fromToken,
-    provider,
-    fromAmount,
-    toAmount,
-    apikey,
-  ]);
+  }, [account, toToken, slippage, fromToken, provider, fromAmount, apikey]);
 
   usePriceTimer({ refetch });
 
   const bridgeRouteListRes = useMemo(() => {
     return fromAmount ? bridgeRouteList : [];
-  }, [status, toAmount, fromAmount, bridgeRouteList]);
+  }, [status, fromAmount, bridgeRouteList]);
 
   return {
     status,

@@ -38,9 +38,12 @@ export default function BridgeRouteShortCard({
         px: 16,
         py: 8,
         width: '100%',
-        backgroundColor: 'background.paperContrast',
+        backgroundColor: 'background.tag',
         borderRadius: 12,
         cursor: 'pointer',
+        '&:hover': {
+          backgroundColor: 'hover.default',
+        },
       }}
       onClick={onClick}
     >

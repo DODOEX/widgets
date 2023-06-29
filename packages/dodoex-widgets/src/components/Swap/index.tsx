@@ -170,7 +170,6 @@ export function Swap() {
       toToken,
       fromToken,
       fromAmount: fromAmt,
-      toAmount: toAmt,
     });
   const [switchBridgeRouteShow, setSwitchBridgeRouteShow] = useState(false);
   const [selectedRouteIdOrigin, setSelectRouteId] = useState('');

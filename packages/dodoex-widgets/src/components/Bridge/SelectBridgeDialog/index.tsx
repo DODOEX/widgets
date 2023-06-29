@@ -28,11 +28,6 @@ export default function SelectBridgeDialog({
     return getBalance(fromToken);
   }, [bridgeRouteList, getBalance]);
 
-  const selectRoute = useMemo(
-    () => bridgeRouteList.find((route) => route.id === selectedRouteId),
-    [bridgeRouteList, selectedRouteId],
-  );
-
   return (
     <Dialog open={open} onClose={onClose} title={<Trans>Select Bridge</Trans>}>
       <Box
@@ -70,7 +65,10 @@ export default function SelectBridgeDialog({
               toolDetails={r.step.toolDetails}
               spenderContractAddress={r.spenderContractAddress}
               selected={selectedRouteId === r.id}
-              setSelected={() => setSelectRouteId(r.id)}
+              setSelected={() => {
+                setSelectRouteId(r.id);
+                onClose();
+              }}
               isBestPrice={i === 0}
               product={r.product}
               executionDuration={r.executionDuration}

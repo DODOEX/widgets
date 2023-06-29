@@ -148,7 +148,7 @@ const buttonStyles = (
         ...result,
         backgroundColor: danger ? 'error.main' : theme.palette.background.tag,
         border: 'none',
-        color: danger ? 'error.contrastText' : 'text.main',
+        color: danger ? 'error.contrastText' : 'text.primary',
         '&[disabled]': {
           backgroundColor: 'border.disabled',
           color: 'text.disabled',

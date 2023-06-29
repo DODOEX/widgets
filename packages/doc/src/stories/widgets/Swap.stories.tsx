@@ -123,7 +123,7 @@ Primary.args = {
         paperContrast: '#F6F6F6',
         backdrop: 'rgba(0, 0, 0, 0.9)',
         input: '#F0F0F0',
-        tag: 'rgba(26, 26, 27, 0.1)',
+        tag: 'rgba(26, 26, 27, 0.04)',
       },
       text: {
         primary: '#1A1A1B',
@@ -133,12 +133,12 @@ Primary.args = {
         link: '#1A1A1B',
       },
       border: {
-        main: 'rgba(69, 72, 81, 0.1)',
+        main: 'rgba(26, 26, 27, 0.1)',
         light: 'rgba(26, 26, 27, 0.3)',
         disabled: 'rgba(26, 26, 27, 0.1)',
       },
       hover: {
-        default: 'rgba(26, 26, 27, 0.04)',
+        default: 'rgba(26, 26, 27, 0.1)',
       },
     },
   },
