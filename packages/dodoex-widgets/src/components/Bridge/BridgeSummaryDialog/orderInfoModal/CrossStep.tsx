@@ -124,7 +124,8 @@ export function CrossStep({
             component={fromChain?.logo}
             sx={{
               marginLeft: 4,
-              width: '18px',
+              width: 18,
+              height: 18,
             }}
           />
           <span
@@ -154,7 +155,8 @@ export function CrossStep({
             component={toChain?.logo}
             sx={{
               marginLeft: 4,
-              width: '18px',
+              width: 18,
+              height: 18,
             }}
           />
         </Box>

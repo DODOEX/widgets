@@ -30,9 +30,11 @@ export function useSelectChainList() {
     }
   }, [chainId]);
 
+  const selectChainIdShow = useMemo(() => selectChainId ?? 1, [selectChainId]);
+
   return {
     chainList,
-    selectChainId,
+    selectChainId: selectChainIdShow,
     setSelectChainId,
   };
 }

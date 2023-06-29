@@ -56,10 +56,7 @@ import {
   swapReviewBtn,
 } from '../../constants/testId';
 import useInflights from '../../hooks/Submission/useInflights';
-import {
-  getAutoConnectLoading,
-  getGlobalProps,
-} from '../../store/selectors/globals';
+import { getGlobalProps } from '../../store/selectors/globals';
 import { setGlobalProps } from '../../store/actions/globals';
 import { AppThunkDispatch } from '../../store/actions';
 import { useFetchRoutePriceBridge } from '../../hooks/Bridge/useFetchRoutePriceBridge';
@@ -183,6 +180,11 @@ export function Swap() {
     () => bridgeRouteList.find((route) => route.id === selectedRouteId),
     [bridgeRouteList, selectedRouteId],
   );
+  useEffect(() => {
+    if (!selectedRoute && selectedRouteIdOrigin) {
+      setSelectRouteId('');
+    }
+  }, [selectedRoute]);
   const {
     sendRouteLoading,
     sendRouteError,
@@ -297,6 +299,7 @@ export function Swap() {
     updateToAmt('');
     setFromToken(toToken);
     setToToken(fromToken);
+    setSelectRouteId('');
   }, [
     setFromToken,
     toToken,
@@ -304,6 +307,7 @@ export function Swap() {
     fromToken,
     updateFromAmt,
     updateToAmt,
+    setSelectRouteId,
   ]);
 
   const handleMaxClick = useCallback(
@@ -801,6 +805,7 @@ export function Swap() {
               updateFromAmt('');
               updateToAmt('');
               setFromToken(token);
+              setSelectRouteId('');
             }}
             readOnly={isReverseRouting}
             showChainLogo
@@ -835,6 +840,7 @@ export function Swap() {
               updateFromAmt('');
               updateToAmt('');
               setToToken(token);
+              setSelectRouteId('');
             }}
             readOnly={isBridge || !isReverseRouting}
             showChainLogo

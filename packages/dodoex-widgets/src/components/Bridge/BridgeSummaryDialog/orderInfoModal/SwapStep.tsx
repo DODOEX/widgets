@@ -60,7 +60,8 @@ export function SwapStep({
           src={toolDetails.logoURI}
           alt={toolDetails.name}
           sx={{
-            width: '20px',
+            width: 20,
+            height: 20,
             marginLeft: -10.5,
             pt: 1,
             backgroundColor: theme.palette.background.paper,
@@ -137,7 +138,8 @@ export function SwapStep({
               component={chain?.logo}
               sx={{
                 marginLeft: 4,
-                width: '18px',
+                width: 18,
+                height: 18,
               }}
             />
             <Box
@@ -184,7 +186,8 @@ export function SwapStep({
             component={chain?.logo}
             sx={{
               marginLeft: 4,
-              width: '18px',
+              width: 18,
+              height: 18,
             }}
           />
           <Box

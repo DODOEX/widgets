@@ -51,7 +51,8 @@ export function RouteSteps({
           <Box
             component={fromChain?.logo}
             sx={{
-              width: '20px',
+              width: 20,
+              height: 20,
               marginLeft: -10.5,
               pt: 1,
               backgroundColor: theme.palette.background.paper,
@@ -122,7 +123,8 @@ export function RouteSteps({
           <Box
             component={toChain?.logo}
             sx={{
-              width: '20px',
+              width: 20,
+              height: 20,
               marginLeft: -10.5,
               pt: 1,
               backgroundColor: theme.palette.background.paper,

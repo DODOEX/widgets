@@ -308,6 +308,7 @@ export default function BridgeSummaryDetail({
       >
         <Accordion>
           <AccordionItem
+            initialEntered
             sx={{
               '& button.active svg': {
                 transform: 'rotate(0)',
