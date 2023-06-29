@@ -19,7 +19,7 @@ export default function ConnectWallet() {
   return (
     <>
       <Button
-        size={Button.Size.big}
+        size={Button.Size.middle}
         fullWidth
         onClick={() => {
           connector.deactivate

@@ -36,6 +36,8 @@ export interface TooltipProps {
   componentsProps?: PopperUnstyledProps['componentsProps'];
   onlyHover?: boolean;
   open?: boolean;
+  enterDelay?: number;
+  leaveDelay?: number;
 }
 
 const tooltipClasses = {
@@ -79,12 +81,17 @@ export default function Tooltip({
   popperOptions,
   children,
   onlyHover,
+  /** This prop won't impact the enter click delay  */
+  enterDelay = 100,
+  /** This prop won't impact the enter click delay  */
+  leaveDelay = 0,
   ...attrs
 }: TooltipProps) {
   const theme = useTheme();
   const { isMobile } = useDevices();
   const enterTooltip = useRef(false);
   const enterTrigger = useRef(false);
+  const enterTimer = useRef<NodeJS.Timeout>();
   const leaveTimer = useRef<NodeJS.Timeout>();
 
   const [childrenRef, setChildrenRef] = useState<HTMLDivElement>();
@@ -97,17 +104,19 @@ export default function Tooltip({
     if (clickEmit) return;
     enterTooltip.current = true;
     clearTimeout(leaveTimer.current);
+    clearTimeout(enterTimer.current);
   };
 
   const handleOutTooltip: MouseEventHandler<HTMLDivElement> = () => {
     if (clickEmit) return;
     enterTooltip.current = false;
     clearTimeout(leaveTimer.current);
+    clearTimeout(enterTimer.current);
     leaveTimer.current = setTimeout(() => {
       if (!enterTrigger.current && !enterTooltip.current) {
         setOpen(false);
       }
-    }, 200);
+    }, leaveDelay);
   };
 
   const childrenProps: any = {
@@ -118,16 +127,20 @@ export default function Tooltip({
     const onMouseEnter = () => {
       enterTrigger.current = true;
       clearTimeout(leaveTimer.current);
-      setOpen(true);
+      clearTimeout(enterTimer.current);
+      enterTimer.current = setTimeout(() => {
+        setOpen(true);
+      }, enterDelay);
     };
     const onMouseLeave = () => {
       enterTrigger.current = false;
       clearTimeout(leaveTimer.current);
+      clearTimeout(enterTimer.current);
       leaveTimer.current = setTimeout(() => {
         if (!enterTrigger.current && !enterTooltip.current) {
           setOpen(false);
         }
-      }, 200);
+      }, leaveDelay);
     };
     childrenProps.onMouseOut = onMouseEnter;
     childrenProps.onMouseEnter = onMouseEnter;
@@ -142,6 +155,7 @@ export default function Tooltip({
     return () => {
       setOpen(false);
       clearTimeout(leaveTimer.current);
+      clearTimeout(enterTimer.current);
     };
   }, []);
 

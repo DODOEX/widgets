@@ -23,6 +23,7 @@ export default function SelectChainItem({
           ...(active
             ? {
                 backgroundColor: 'secondary.main',
+                color: 'secondary.contrastText',
               }
             : {
                 border: '1px solid',

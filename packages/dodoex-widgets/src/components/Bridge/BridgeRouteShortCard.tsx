@@ -38,7 +38,7 @@ export default function BridgeRouteShortCard({
         px: 16,
         py: 8,
         width: '100%',
-        backgroundColor: 'background.tag',
+        backgroundColor: 'background.paperContrast',
         borderRadius: 12,
         cursor: 'pointer',
       }}
@@ -118,10 +118,11 @@ export default function BridgeRouteShortCard({
                 <Box
                   component={fromChain.logo}
                   sx={{
+                    position: 'relative',
+                    left: -6,
                     width: 10,
                     height: 10,
-                    marginLeft: -6,
-                    zIndex: 1,
+                    flexShrink: 0,
                   }}
                 />
               ) : (
@@ -165,8 +166,9 @@ export default function BridgeRouteShortCard({
                   sx={{
                     width: 10,
                     height: 10,
-                    marginLeft: -6,
-                    zIndex: 1,
+                    position: 'relative',
+                    left: -6,
+                    flexShrink: 0,
                   }}
                 />
               ) : (

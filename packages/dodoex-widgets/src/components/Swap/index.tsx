@@ -533,7 +533,8 @@ export function Swap() {
       return displayingToAmt;
     }
     if (isBridge) {
-      return selectedRoute?.toTokenAmount?.gt(0)
+      return selectedRoute?.toTokenAmount?.gt(0) &&
+        bridgeRouteStatus !== RoutePriceStatus.Loading
         ? formatTokenAmountNumber({
             input: selectedRoute.toTokenAmount,
             decimals: toToken?.decimals,
@@ -554,6 +555,7 @@ export function Swap() {
     isReverseRouting,
     selectedRoute,
     isBridge,
+    bridgeRouteStatus,
   ]);
 
   const swapButton = useMemo(() => {
@@ -707,6 +709,7 @@ export function Swap() {
             height: 16,
             mr: 6,
           }}
+          chainId={fromToken.chainId}
         />
         {`${formatTokenAmountNumber({
           input: isReverseRouting ? resAmount : fromAmt,
@@ -727,6 +730,7 @@ export function Swap() {
             height: 16,
             mr: 6,
           }}
+          chainId={toToken.chainId}
         />
         {`${formatTokenAmountNumber({
           input: isReverseRouting ? toAmt : resAmount,
@@ -750,7 +754,13 @@ export function Swap() {
         <Trans>Swap</Trans>
         <Tooltip
           open={showSwitchSlippageTooltip}
-          title={<Trans>The setting has been switched to bridge mode</Trans>}
+          title={
+            isBridge ? (
+              <Trans>The setting has been switched to bridge mode</Trans>
+            ) : (
+              <Trans>The setting has been switched to swap mode</Trans>
+            )
+          }
           placement="bottom-end"
         >
           <Box component={BaseButton}>
@@ -805,7 +815,7 @@ export function Swap() {
               setFromToken(token);
             }}
             readOnly={isReverseRouting}
-            showChainLogo={isBridge}
+            showChainLogo
           />
 
           {/* Switch Icon */}
@@ -839,7 +849,7 @@ export function Swap() {
               setToToken(token);
             }}
             readOnly={isBridge || !isReverseRouting}
-            showChainLogo={isBridge}
+            showChainLogo
           />
 
           {/* Price Disp or Warnings  */}

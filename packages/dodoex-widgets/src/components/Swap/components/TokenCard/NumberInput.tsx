@@ -48,6 +48,7 @@ export function NumberInput({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            flexShrink: 0,
           }}
           onClick={() => {
             onChange && onChange('');
@@ -57,7 +58,7 @@ export function NumberInput({
             component={Error}
             sx={{
               width: 12,
-              color: 'text.primary',
+              color: 'text.secondary',
             }}
           />
         </Box>

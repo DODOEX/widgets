@@ -48,11 +48,19 @@ export default function TokenPicker({
   const ref = useRef<HTMLDivElement>(null);
   const [fixedSizeHeight, setFixedSizeHeight] = useState(0);
 
+  const prevVisible = useRef(visible);
+  useEffect(() => {
+    if (!prevVisible.current && visible && value?.chainId !== selectChainId) {
+      setSelectChainId(value?.chainId);
+    }
+    prevVisible.current = visible;
+  }, [value, visible]);
+
   useEffect(() => {
     if (visible) {
       if (ref.current) {
-        // 34 is spacing
-        setFixedSizeHeight(ref.current.offsetHeight - 34);
+        // 16 is spacing
+        setFixedSizeHeight(ref.current.offsetHeight - 16);
       }
     }
   }, [ref, visible]);
@@ -123,7 +131,6 @@ export default function TokenPicker({
       </Box>
       <Box
         sx={{
-          mt: 16,
           pb: 16,
           flex: 1,
           minHeight: 64,
@@ -133,7 +140,7 @@ export default function TokenPicker({
         <List
           key={popularTokenList.length}
           height={fixedSizeHeight}
-          itemCount={showTokenList.length + (popularTokenList?.length ? 1 : 0)}
+          itemCount={showTokenList.length}
           itemSize={52}
           width={'100%'}
           className="token-list"

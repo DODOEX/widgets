@@ -54,8 +54,8 @@ export function TokenWithChain({
             sx={{
               width: 12,
               height: 12,
-              marginLeft: -6,
-              zIndex: 1,
+              position: 'relative',
+              left: -6,
             }}
           />
         ) : (

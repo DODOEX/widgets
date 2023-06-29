@@ -3,7 +3,7 @@ import { TokenLogoCollapse } from './TokenLogoCollapse';
 import { BalanceText } from './BalanceText';
 import { NumberInput } from './NumberInput';
 import { TokenPickerDialog } from './TokenPickerDialog';
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { TokenInfo } from '../../../../hooks/Token';
 import TokenPicker, { TokenPickerProps } from '../../../TokenPicker';
 import useGetBalance from '../../../../hooks/Token/useGetBalance';
@@ -51,6 +51,12 @@ export function TokenCard({
   const getBalance = useGetBalance();
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
   const balance = token ? getBalance(token) : null;
+
+  useEffect(() => {
+    if (token && onlyCurrentChain) {
+      setOpenSwitchChainDialog(true);
+    }
+  }, [token, onlyCurrentChain]);
 
   return (
     <Box
@@ -124,9 +130,6 @@ export function TokenCard({
           // change token list order after closing the dialog
           setTimeout(() => {
             onTokenChange(token, isOccupied);
-            if (onlyCurrentChain) {
-              setOpenSwitchChainDialog(true);
-            }
           }, transitionTime);
         }}
       />

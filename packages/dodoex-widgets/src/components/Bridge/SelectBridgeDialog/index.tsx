@@ -41,11 +41,11 @@ export default function SelectBridgeDialog({
           display: 'flex',
           flexDirection: 'column',
           gap: 12,
-          pt: 20,
+          py: 20,
           px: 16,
           flex: 1,
           overflowY: 'auto',
-          overflowx: 'hidden',
+          overflowX: 'hidden',
           '&::before': {
             content: '""',
             position: 'absolute',
