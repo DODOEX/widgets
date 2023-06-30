@@ -133,19 +133,11 @@ export function Swap() {
     });
   }, [isBridge, fromToken?.chainId, getBalance]);
 
-  const { getApprovalState, submitApprove, getPendingRest, getMaxBalance } =
-    useGetTokenStatus({
-      account,
-      chainId,
-    });
-  const pendingReset = useMemo(
-    () => getPendingRest(isReverseRouting ? toToken : fromToken),
-    [fromToken?.address, toToken?.address, getPendingRest, isReverseRouting],
-  );
   const { marginAmount } = useMarginAmount({
     token: isReverseRouting ? toToken : fromToken,
     fiatPrice: isReverseRouting ? toFiatPrice : fromFiatPrice,
   });
+
   const {
     resAmount,
     priceImpact,
@@ -196,6 +188,17 @@ export function Swap() {
   const [bridgeSummaryShow, setBridgeSummaryShow] = useState(false);
 
   const showSwitchSlippageTooltip = useSwitchBridgeOrSwapSlippage(isBridge);
+
+  const { getApprovalState, submitApprove, getPendingRest, getMaxBalance } =
+    useGetTokenStatus({
+      account,
+      chainId,
+      contractAddress: selectedRoute?.spenderContractAddress,
+    });
+  const pendingReset = useMemo(
+    () => getPendingRest(isReverseRouting ? toToken : fromToken),
+    [fromToken?.address, toToken?.address, getPendingRest, isReverseRouting],
+  );
 
   const updateFromAmt = useCallback(
     (v: string | number) => {
@@ -743,7 +746,7 @@ export function Swap() {
           margin: 20,
         }}
       >
-        {isBridge ? <Trans>Bridge</Trans> : <Trans>Swap</Trans>}
+        <Trans>Swap</Trans>
         <Tooltip
           open={showSwitchSlippageTooltip}
           title={
