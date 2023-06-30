@@ -598,10 +598,10 @@ export function Swap() {
       );
 
     if (
-      (isBridge
-        ? bridgeRouteStatus === RoutePriceStatus.Loading
-        : resPriceStatus === RoutePriceStatus.Loading) ||
-      approvalState === ApprovalState.Loading
+      isBridge
+        ? bridgeRouteStatus === RoutePriceStatus.Loading ||
+          approvalState === ApprovalState.Loading
+        : resPriceStatus === RoutePriceStatus.Loading
     )
       return (
         <Button fullWidth disabled data-testid={swapAlertFetchPriceBtn}>

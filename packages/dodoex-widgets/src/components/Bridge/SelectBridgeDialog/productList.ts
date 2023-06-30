@@ -3,10 +3,10 @@ import bungeeLogoUrl from '../../../assets/bridge/bridge-bungee.svg';
 import hyphenLogoUrl from '../../../assets/bridge/bridge-hyphen.svg';
 import lifiLogoUrl from '../../../assets/bridge/bridge-lifi.svg';
 import naboxLogoUrl from '../../../assets/bridge/bridge-nabox.svg';
-import swftLogoUrl from '../../../assets/bridge/bridge-swft.png';
+import swftLogoUrl from '../../../assets/bridge/bridge-swft.svg';
 import cBridgeLogoUrl from '../../../assets/bridge/cbridge.svg';
 import connextLogoUrl from '../../../assets/bridge/connext.svg';
-import squidLogoUrl from '../../../assets/bridge/squid.png';
+import squidLogoUrl from '../../../assets/bridge/squid.svg';
 import stargateLogoUrl from '../../../assets/bridge/stargate.svg';
 import synapseLogoUrl from '../../../assets/bridge/synapse.svg';
 
