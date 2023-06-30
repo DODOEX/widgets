@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { BridgeCreateRouteAPI } from '../../constants/api';
+import { toWei } from '../../utils';
 import { TokenInfo } from '../Token';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
 
@@ -49,7 +50,7 @@ export async function createBridgeOrder({
   const { toAmount } = sourceRoute;
   const createParams = {
     fromChainId,
-    fromAmount,
+    fromAmount: toWei(fromAmount, fromToken.decimals).toString(),
     fromTokenAddress: fromToken.address,
     toChainId,
     toAmount,

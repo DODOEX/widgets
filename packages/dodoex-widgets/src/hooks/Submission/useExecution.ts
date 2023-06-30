@@ -53,7 +53,10 @@ export default function useExecution({
       submittedBack?: () => void,
       mixpanelProps?: Record<string, any>,
       submittedConfirmBack?: () => void,
-      successBack?: (tx: string) => void,
+      successBack?: (
+        tx: string,
+        callback?: ExecutionProps['onTxSuccess'],
+      ) => void,
     ) => {
       setTransactionTx('');
       setErrorMessage('');
@@ -195,7 +198,7 @@ export default function useExecution({
           }
 
           if (successBack) {
-            successBack(tx);
+            successBack(tx, onTxSuccess);
           }
           if (onTxSuccess) {
             onTxSuccess(tx, reportInfo);

@@ -15,7 +15,7 @@ export const getCGTokenListAPI = (chainId: ChainId) => {
   return cgAPIMap[chainId] || defaultCGAPI;
 };
 
-const BridgeUrlPrefix = 'https://api.devus.dregon.cc/cross-chain/widget';
+const BridgeUrlPrefix = 'https://api.dodoex.io/cross-chain/widget';
 export const BridgeRoutePriceAPI = `${BridgeUrlPrefix}/routes`;
 export const BridgeEncodeAPI = `${BridgeUrlPrefix}/transaction/encode`;
 export const BridgeCreateRouteAPI = `${BridgeUrlPrefix}/order/create`;

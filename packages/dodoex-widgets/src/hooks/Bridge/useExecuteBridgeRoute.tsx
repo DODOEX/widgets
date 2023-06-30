@@ -4,12 +4,14 @@ import { t } from '@lingui/macro';
 import { DoubleRight } from '@dodoex/icons';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
 import { formatTokenAmountNumber } from '../../utils/formatter';
-import { useSubmission } from '../Submission';
+import { ExecutionProps, useSubmission } from '../Submission';
 import { createBridgeOrder } from './createBridgeOrder';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
 import { OpCode } from '../Submission/spec';
 import { Box } from '@dodoex/components';
 import TokenLogo from '../../components/TokenLogo';
+import { useSelector } from 'react-redux';
+import { getGlobalProps } from '../../store/selectors/globals';
 
 export default function useExecuteBridgeRoute({
   route,
@@ -20,6 +22,7 @@ export default function useExecuteBridgeRoute({
 }) {
   const { chainId, account } = useWeb3React();
   const submission = useSubmission();
+  const { apikey } = useSelector(getGlobalProps);
 
   const execute = useCallback(() => {
     if (!bridgeOrderTxRequest || !route) {
@@ -83,12 +86,20 @@ export default function useExecuteBridgeRoute({
         </Box>
       );
 
-      const successBack = (tx: string) => {
-        createBridgeOrder({
-          apikey: 'f056714b87a8ea6432',
+      const successBack = async (
+        tx: string,
+        onTxSuccess?: ExecutionProps['onTxSuccess'],
+      ) => {
+        const orderId = await createBridgeOrder({
+          apikey,
           tx,
           route,
         });
+        if (onTxSuccess) {
+          onTxSuccess(tx, {
+            orderId,
+          });
+        }
       };
 
       const params = {
@@ -127,7 +138,7 @@ export default function useExecuteBridgeRoute({
     } catch (error) {
       console.error(error);
     }
-  }, [account, chainId, route, bridgeOrderTxRequest]);
+  }, [account, chainId, route, bridgeOrderTxRequest, apikey]);
 
   return execute;
 }

@@ -9,6 +9,8 @@ import { BridgeRouteI } from './useFetchRoutePriceBridge';
 import { useWeb3React } from '@web3-react/core';
 import { getEstimateGas } from '../contract/wallet';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
+import { useSelector } from 'react-redux';
+import { getGlobalProps } from '../../store/selectors/globals';
 
 export function useSendRoute() {
   const { provider } = useWeb3React();
@@ -16,6 +18,7 @@ export function useSendRoute() {
     useState<BridgeTXRequest | undefined>();
   const [sendRouteLoading, setSendRouteLoading] = useState(false);
   const [sendRouteError, setSendRouteError] = useState('');
+  const { apikey } = useSelector(getGlobalProps);
   const handleClickSend = useCallback(
     async ({
       selectedRoute,
@@ -46,10 +49,9 @@ export function useSendRoute() {
           product,
           encodeParams,
         };
-        const result = await axios.post(
-          `${BridgeEncodeAPI}?apikey=${'f056714b87a8ea6432'}`,
-          { data },
-        );
+        const result = await axios.post(`${BridgeEncodeAPI}?apikey=${apikey}`, {
+          data,
+        });
         const encodeResultData = result.data.data;
 
         const { data: txData, to, value, from, chainId } = encodeResultData;
@@ -118,6 +120,7 @@ export function useSendRoute() {
   );
 
   return {
+    apikey,
     sendRouteLoading,
     sendRouteError,
     setSendRouteError,
