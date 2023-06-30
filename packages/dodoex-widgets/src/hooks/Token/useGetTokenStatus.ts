@@ -2,7 +2,7 @@ import contractConfig from '../contract/contractConfig';
 import { basicTokenMap, ChainId } from '../../constants/chains';
 import { t } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBalanceLoadings } from '../../store/selectors/token';
 import { setTokenAllowances } from '../../store/actions/token';
@@ -17,6 +17,7 @@ import { OpCode } from '../Submission/spec';
 import useInflights from '../Submission/useInflights';
 import { useSubmission } from '../Submission';
 import { getDefaultChainId } from '../../store/selectors/wallet';
+import { useFetchTokenAllowance } from './useFetchTokenAllowance';
 
 export const useGetTokenStatus = ({
   account,
@@ -38,6 +39,14 @@ export const useGetTokenStatus = ({
   const { DODO_APPROVE: dodoApproveAddress } = currentContractConfig || {};
   const contract = contractAddress ?? dodoApproveAddress ?? null;
   const getAllowance = useGetAllowance(contract);
+  const [fetchAllowanceToken, setFetchAllowanceToken] =
+    useState<TokenInfo | undefined>();
+  const { allowance: otherContractAllowance } = useFetchTokenAllowance({
+    chainId,
+    account,
+    token: fetchAllowanceToken,
+    proxyContractAddress: contract,
+  });
   const getBalance = useGetBalance();
   const { runningRequests } = useInflights();
   const balanceLoadings = useSelector(getBalanceLoadings);
@@ -61,7 +70,7 @@ export const useGetTokenStatus = ({
           k.spec.token.address === token?.address,
       );
       const balance = overrideBalance ?? (token ? getBalance(token) : null);
-      const allowance = token ? getAllowance(token) : null;
+      let allowance = token ? getAllowance(token) : null;
 
       const parsed = new BigNumber(value ?? 0);
       if (!account) return ApprovalState.Unchecked;
@@ -72,6 +81,22 @@ export const useGetTokenStatus = ({
       const isBasicToken = token.address === basicTokenAddress;
       if (isBasicToken) return ApprovalState.Sufficient;
       if (isApproving) return ApprovalState.Approving;
+      if (
+        fetchAllowanceToken?.address === token.address &&
+        otherContractAllowance
+      ) {
+        allowance = otherContractAllowance;
+      }
+      if (!allowance) {
+        if (
+          contract !== dodoApproveAddress &&
+          (!fetchAllowanceToken ||
+            fetchAllowanceToken.address !== token.address)
+        ) {
+          setFetchAllowanceToken(token);
+        }
+        return ApprovalState.Loading;
+      }
       if (allowance && parsed.minus(offset ?? 0).gt(allowance))
         return ApprovalState.Insufficient;
       return ApprovalState.Sufficient;
@@ -86,6 +111,8 @@ export const useGetTokenStatus = ({
       balanceLoadings,
       runningRequests,
       basicTokenAddress,
+      fetchAllowanceToken,
+      otherContractAllowance?.toString(),
     ],
   );
 

@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { getLatestBlockNumber } from '../../store/selectors/wallet';
-import { useFetchTokens } from '../contract';
+import { useFetchETHBalance, useFetchTokens } from '../contract';
 import { TokenInfo, TokenList } from './type';
 
 export default function useTokenListFetchBalance({
@@ -54,6 +54,8 @@ export default function useTokenListFetchBalance({
     chainId,
     skip: visible === false && !defaultLoadBalance,
   });
+
+  useFetchETHBalance(chainId);
 
   useFetchTokens({
     addresses: selectTokenAddress,

@@ -192,7 +192,7 @@ export function Swap() {
   const { getApprovalState, submitApprove, getPendingRest, getMaxBalance } =
     useGetTokenStatus({
       account,
-      chainId,
+      chainId: fromToken?.chainId ?? chainId,
       contractAddress: selectedRoute?.spenderContractAddress,
     });
   const pendingReset = useMemo(
@@ -598,9 +598,10 @@ export function Swap() {
       );
 
     if (
-      isBridge
+      (isBridge
         ? bridgeRouteStatus === RoutePriceStatus.Loading
-        : resPriceStatus === RoutePriceStatus.Loading
+        : resPriceStatus === RoutePriceStatus.Loading) ||
+      approvalState === ApprovalState.Loading
     )
       return (
         <Button fullWidth disabled data-testid={swapAlertFetchPriceBtn}>
