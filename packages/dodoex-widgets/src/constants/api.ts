@@ -18,4 +18,4 @@ export const getCGTokenListAPI = (chainId: ChainId) => {
 const BridgeUrlPrefix = 'https://api.devus.dregon.cc/cross-chain/widget';
 export const BridgeRoutePriceAPI = `${BridgeUrlPrefix}/routes`;
 export const BridgeEncodeAPI = `${BridgeUrlPrefix}/transaction/encode`;
-export const BridgeCreateRouteAPI = `${BridgeUrlPrefix}/widget/order/create`;
+export const BridgeCreateRouteAPI = `${BridgeUrlPrefix}/order/create`;

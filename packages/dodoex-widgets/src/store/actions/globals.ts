@@ -18,12 +18,3 @@ export const setAutoConnectLoading = (loading: boolean): AppThunkAction => {
     });
   };
 };
-
-export const setShowCoingecko = (showCoingecko: boolean): AppThunkAction => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'SET_SHOW_COINGECKO',
-      payload: showCoingecko,
-    });
-  };
-};

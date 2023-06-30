@@ -38,11 +38,6 @@ export default (state: State = initialState, action: AnyAction): State => {
         ...state,
         autoConnectLoading: action.payload,
       };
-    case 'SET_SHOW_COINGECKO':
-      return {
-        ...state,
-        showCoingecko: action.payload,
-      };
     default:
       return state;
   }

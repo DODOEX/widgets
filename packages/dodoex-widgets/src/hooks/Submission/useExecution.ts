@@ -42,7 +42,7 @@ export default function useExecution({
   const [showingDone, setShowingDone] = useState(false);
   const [submittedConfirmBack, setSubmittedConfirmBack] =
     useState<() => void>();
-  const { updateBlockNumber } = useFetchBlockNumber();  
+  const { updateBlockNumber } = useFetchBlockNumber();
 
   const handler = useCallback(
     async (
@@ -147,9 +147,11 @@ export default function useExecution({
         subtitle,
         ...mixpanelProps,
       };
-      dispatch(setGlobalProps({
-        contractStatus: ContractStatus.Pending,
-      }));
+      dispatch(
+        setGlobalProps({
+          contractStatus: ContractStatus.Pending,
+        }),
+      );
       if (onTxSubmit) {
         onTxSubmit(tx, reportInfo);
       }
@@ -177,16 +179,19 @@ export default function useExecution({
         const receipt = await transaction.wait(1);
         setShowingDone(true);
         if (receipt.status === WatchResult.Success) {
-
           if (reportInfo.opcode === 'TX') {
-            dispatch(setGlobalProps({
-              contractStatus: ContractStatus.TxSuccess,
-            }));
+            dispatch(
+              setGlobalProps({
+                contractStatus: ContractStatus.TxSuccess,
+              }),
+            );
           }
           if (reportInfo.opcode === 'APPROVAL') {
-            dispatch(setGlobalProps({
-              contractStatus: ContractStatus.ApproveSuccess,
-            }));
+            dispatch(
+              setGlobalProps({
+                contractStatus: ContractStatus.ApproveSuccess,
+              }),
+            );
           }
 
           if (successBack) {

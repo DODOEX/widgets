@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { getLatestBlockNumber } from '../../store/selectors/wallet';

@@ -78,7 +78,7 @@ export default (state: State = initialState, action: AnyAction): State => {
         },
       };
     case 'SET_ACCOUNT_ALLOWANCES':
-      const accountBalances = state.accountBalances;
+      const accountBalances = { ...state.accountBalances };
       Object.keys(accountBalances).map((key) => {
         accountBalances[key].tokenAllowances = action.payload;
       });

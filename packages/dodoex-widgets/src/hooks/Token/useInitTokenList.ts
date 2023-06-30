@@ -11,8 +11,6 @@ import {
 import { TokenList, TokenListType } from './type';
 import { useCurrentChainId } from '../ConnectWallet';
 import defaultTokens from '../../constants/tokenList';
-import { setShowCoingecko } from '../../store/actions/globals';
-import { useGetCGTokenList } from './useGetCGTokenList';
 
 export interface InitTokenListProps {
   tokenList?: TokenList | TokenListType;
@@ -25,29 +23,13 @@ export default function useInitTokenList({
   const dispatch = useDispatch<AppThunkDispatch>();
   const { account } = useWeb3React();
   const chainId = useCurrentChainId();
-  // cache token list
-  const { refetch } = useGetCGTokenList({
-    chainId,
-    skip: true,
-  });
 
   useEffect(() => {
     const computed = async () => {
       let allTokenList = [];
       if (isArray(tokenList)) {
         allTokenList = tokenList;
-      } else if (tokenList === TokenListType.Coingecko) {
-        refetch();
-        dispatch(setShowCoingecko(true));
-        allTokenList = [...(popularTokenList ?? [])];
-      } else if (tokenList === TokenListType.All) {
-        refetch();
-        dispatch(setShowCoingecko(true));
-        allTokenList = unionBy(popularTokenList, defaultTokens, (token) =>
-          token.address.toLowerCase(),
-        );
       } else {
-        dispatch(setShowCoingecko(false));
         allTokenList = unionBy(popularTokenList, defaultTokens, (token) =>
           token.address.toLowerCase(),
         );

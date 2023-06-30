@@ -111,7 +111,7 @@ export default function useExecuteBridgeRoute({
           ...bridgeOrderTxRequest,
         },
         subtitle,
-        true,
+        false,
         undefined,
         {
           ...bridgeOrderTxRequest,
