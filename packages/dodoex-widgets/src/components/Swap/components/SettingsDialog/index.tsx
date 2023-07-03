@@ -8,6 +8,7 @@ import {
   DEFAULT_SWAP_DDL,
   MAX_SWAP_SLIPPAGE,
   DEFAULT_SWAP_SLIPPAGE,
+  DEFAULT_BRIDGE_SLIPPAGE,
 } from '../../../../constants/swap';
 import { TokenInfo } from '../../../../hooks/Token';
 import { useSelector } from 'react-redux';
@@ -19,8 +20,13 @@ import { setSlippage, setTxDdl } from '../../../../store/actions/settings';
 export interface SettingsDialogProps {
   open: boolean;
   onClose: () => void;
+  isBridge: boolean;
 }
-export function SettingsDialog({ open, onClose }: SettingsDialogProps) {
+export function SettingsDialog({
+  open,
+  onClose,
+  isBridge,
+}: SettingsDialogProps) {
   const theme = useTheme();
   const dispatch = useDispatch<AppThunkDispatch>();
   const slippage = useSelector(getSlippage);
@@ -29,6 +35,9 @@ export function SettingsDialog({ open, onClose }: SettingsDialogProps) {
     () => Number(slippage) >= MAX_SWAP_SLIPPAGE,
     [slippage],
   );
+  const defaultSlippage = isBridge
+    ? DEFAULT_BRIDGE_SLIPPAGE
+    : DEFAULT_SWAP_SLIPPAGE;
   return (
     <Dialog open={open} onClose={onClose} title={<Trans>Settings</Trans>}>
       <Box
@@ -56,7 +65,7 @@ export function SettingsDialog({ open, onClose }: SettingsDialogProps) {
               fullWidth
               maxVal={100}
               value={slippage as string}
-              placeholder={DEFAULT_SWAP_SLIPPAGE.toString()}
+              placeholder={defaultSlippage.toString()}
               onInputChange={(v: string | null) => {
                 dispatch(setSlippage(v));
               }}
@@ -77,31 +86,35 @@ export function SettingsDialog({ open, onClose }: SettingsDialogProps) {
           </Box>
         </Box>
 
-        <Box
-          sx={{ py: 20, borderTop: `1px solid ${theme.palette.border.main}` }}
-        >
-          <Box sx={{ mb: 16, display: 'flex', alignItems: 'center' }}>
-            <Trans>Transaction Deadline</Trans>
-            <QuestionTooltip
-              title={
-                <Trans>
-                  If your transaction time exceeds the deadline, your
-                  transaction will be rescinded.
-                </Trans>
-              }
-              ml={7}
+        {isBridge ? (
+          ''
+        ) : (
+          <Box
+            sx={{ py: 20, borderTop: `1px solid ${theme.palette.border.main}` }}
+          >
+            <Box sx={{ mb: 16, display: 'flex', alignItems: 'center' }}>
+              <Trans>Transaction Deadline</Trans>
+              <QuestionTooltip
+                title={
+                  <Trans>
+                    If your transaction time exceeds the deadline, your
+                    transaction will be rescinded.
+                  </Trans>
+                }
+                ml={7}
+              />
+            </Box>
+            <NumberInput
+              value={ddl}
+              fullWidth
+              height={36}
+              placeholder={t`${DEFAULT_SWAP_DDL} minutes`}
+              onInputChange={(val: string | null) => {
+                dispatch(setTxDdl(val ? Math.max(Number(val), 1) : ''));
+              }}
             />
           </Box>
-          <NumberInput
-            value={ddl}
-            fullWidth
-            height={36}
-            placeholder={t`${DEFAULT_SWAP_DDL} minutes`}
-            onInputChange={(val: string | null) => {
-              dispatch(setTxDdl(val ? Math.max(Number(val), 1) : ''));
-            }}
-          />
-        </Box>
+        )}
       </Box>
     </Dialog>
   );

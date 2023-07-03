@@ -4,12 +4,21 @@ import { renderHook } from '@testing-library/react-hooks';
 import BigNumber from 'bignumber.js';
 import axios from 'axios';
 
+const tokenEther = tokenList[0];
+const tokenUSDT = tokenList[5];
+const tokenUSDTChainBSC = {
+  ...tokenUSDT,
+  chainId: 56,
+};
+
 jest.mock('axios');
 jest.mock('../../store/selectors/wallet', () => ({
   getDefaultChainId: () => 1,
 }));
 jest.mock('../../store/selectors/token', () => ({
-  getEthBalance: () => new BigNumber(12),
+  getEthBalance: () => ({
+    1: new BigNumber(12),
+  }),
   getBalanceLoadings: () => ({
     '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee': false,
     '0xdac17f958d2ee523a2206206994597c13d831ec7': false,
@@ -18,7 +27,7 @@ jest.mock('../../store/selectors/token', () => ({
     '0xdac17f958d2ee523a2206206994597c13d831ec7': {
       tokenBalances: new BigNumber(123),
       tokenAllowances: new BigNumber(456),
-    }
+    },
   }),
 }));
 jest.mock('react-redux', () => ({
@@ -38,24 +47,22 @@ jest.mock('@web3-react/core', () => ({
 }));
 
 describe('useFetchRoutePrice: request success', () => {
-  const tokenEther = tokenList[0];
-  const tokenUSDT = tokenList[5];
   const res = {
     data: {
       data: {
-        data: "",
-        msgError: "",
+        data: '',
+        msgError: '',
         priceImpact: 0.0005,
         resAmount: 1.23,
         baseFeeAmount: 0.0015, // support in share profit version
-        additionalFeeAmount: 0.0015, // support in share profit version  
+        additionalFeeAmount: 0.0015, // support in share profit version
         resPricePerFromToken: 1288.37,
         resPricePerToToken: 0.00077,
-        routeData: "",
-        targetApproveAddr: "",
+        routeData: '',
+        targetApproveAddr: '',
         targetDecimals: 18,
-        to: "0xa2398842F37465f89540430bDC00219fA9E4D28a",
-        useSource: "dodoV1AndV2AndUni",
+        to: '0xa2398842F37465f89540430bDC00219fA9E4D28a',
+        useSource: 'dodoV1AndV2AndUni',
       },
     },
   };
@@ -66,6 +73,7 @@ describe('useFetchRoutePrice: request success', () => {
       fromToken: tokenUSDT,
       fromAmount: '1.1',
       marginAmount: '0',
+      toAmount: '',
     }),
   );
 
@@ -77,7 +85,8 @@ describe('useFetchRoutePrice: request success', () => {
       baseFeeAmount,
       additionalFeeAmount,
       resPricePerToToken,
-      resPricePerFromToken, } = result.current;
+      resPricePerFromToken,
+    } = result.current;
     expect(status).toBe(RoutePriceStatus.Success);
     expect(resAmount).toBe(1.23);
     expect(priceImpact).toBe(0.0005);
@@ -88,9 +97,34 @@ describe('useFetchRoutePrice: request success', () => {
   });
 });
 
+describe('useFetchRoutePrice: skip request', () => {
+  const errorMessage = 'Network Error';
+  const res = {
+    data: {
+      data: {},
+    },
+  };
+  // (axios.get as any).mockImplementationOnce(() =>
+  //   Promise.reject(errorMessage),
+  // );
+  (axios.get as any).mockImplementationOnce(() => Promise.resolve(res));
+  const { result } = renderHook(() =>
+    useFetchRoutePrice({
+      toToken: tokenEther,
+      fromToken: tokenUSDTChainBSC,
+      fromAmount: '1.1',
+      marginAmount: '0',
+      toAmount: '',
+    }),
+  );
+
+  it('Returns params', () => {
+    const { status } = result.current;
+    expect(status).toBe(RoutePriceStatus.Initial);
+  });
+});
+
 describe('useFetchRoutePrice: request failed', () => {
-  const tokenEther = tokenList[0];
-  const tokenUSDT = tokenList[5];
   const errorMessage = 'Network Error';
   const res = {
     data: {
@@ -107,6 +141,7 @@ describe('useFetchRoutePrice: request failed', () => {
       fromToken: tokenUSDT,
       fromAmount: '1.1',
       marginAmount: '0',
+      toAmount: '',
     }),
   );
 

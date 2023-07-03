@@ -1,7 +1,6 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -257,6 +256,12 @@ Object.defineProperty(exports, "FeeDividendPercentage", {
     return _FeeDividendPercentage.default;
   }
 });
+Object.defineProperty(exports, "GasFee", {
+  enumerable: true,
+  get: function get() {
+    return _GasFee.default;
+  }
+});
 Object.defineProperty(exports, "Hot", {
   enumerable: true,
   get: function get() {
@@ -467,6 +472,12 @@ Object.defineProperty(exports, "ThemeModeLight", {
     return _ThemeModeLight.default;
   }
 });
+Object.defineProperty(exports, "Time", {
+  enumerable: true,
+  get: function get() {
+    return _Time.default;
+  }
+});
 Object.defineProperty(exports, "TokenPair", {
   enumerable: true,
   get: function get() {
@@ -509,171 +520,89 @@ Object.defineProperty(exports, "Warn", {
     return _Warn.default;
   }
 });
-
 var _ArrowBack = _interopRequireDefault(require("./ArrowBack"));
-
 var _ArrowRight = _interopRequireDefault(require("./ArrowRight"));
-
 var _ArrowSubmit = _interopRequireDefault(require("./ArrowSubmit"));
-
 var _ArrowTopRight = _interopRequireDefault(require("./ArrowTopRight"));
-
 var _ArrowTopRightBorder = _interopRequireDefault(require("./ArrowTopRightBorder"));
-
 var _ArrowTopRightBorderButton = _interopRequireDefault(require("./ArrowTopRightBorderButton"));
-
 var _Article = _interopRequireDefault(require("./Article"));
-
 var _AttentionFilled = _interopRequireDefault(require("./AttentionFilled"));
-
 var _BridgeDark = _interopRequireDefault(require("./BridgeDark"));
-
 var _BridgeLight = _interopRequireDefault(require("./BridgeLight"));
-
 var _CareersAtDodo = _interopRequireDefault(require("./CareersAtDodo"));
-
 var _CaretUp = _interopRequireDefault(require("./CaretUp"));
-
 var _Clear = _interopRequireDefault(require("./Clear"));
-
 var _Copy = _interopRequireDefault(require("./Copy"));
-
 var _DailyMount = _interopRequireDefault(require("./DailyMount"));
-
 var _Date = _interopRequireDefault(require("./Date"));
-
 var _Delete = _interopRequireDefault(require("./Delete"));
-
 var _DetailBorder = _interopRequireDefault(require("./DetailBorder"));
-
 var _Disconnect = _interopRequireDefault(require("./Disconnect"));
-
 var _Document = _interopRequireDefault(require("./Document"));
-
 var _Dodo = _interopRequireDefault(require("./Dodo"));
-
 var _DodoToken = _interopRequireDefault(require("./DodoToken"));
-
 var _Dollar = _interopRequireDefault(require("./Dollar"));
-
 var _DollarBorder = _interopRequireDefault(require("./DollarBorder"));
-
 var _DollarFilled = _interopRequireDefault(require("./DollarFilled"));
-
 var _Done = _interopRequireDefault(require("./Done"));
-
 var _DoneBorder = _interopRequireDefault(require("./DoneBorder"));
-
 var _DoneFilled = _interopRequireDefault(require("./DoneFilled"));
-
 var _DoubleArrow = _interopRequireDefault(require("./DoubleArrow"));
-
 var _DoubleArrowBorder = _interopRequireDefault(require("./DoubleArrowBorder"));
-
 var _DoubleRight = _interopRequireDefault(require("./DoubleRight"));
-
 var _Edit = _interopRequireDefault(require("./Edit"));
-
 var _Endpoint = _interopRequireDefault(require("./Endpoint"));
-
 var _Error = _interopRequireDefault(require("./Error"));
-
 var _ErrorBorder = _interopRequireDefault(require("./ErrorBorder"));
-
 var _ErrorFilled = _interopRequireDefault(require("./ErrorFilled"));
-
 var _ErrorWarn = _interopRequireDefault(require("./ErrorWarn"));
-
 var _ExpertMode = _interopRequireDefault(require("./ExpertMode"));
-
 var _FailedList = _interopRequireDefault(require("./FailedList"));
-
 var _Fee = _interopRequireDefault(require("./Fee"));
-
 var _FeeDividend = _interopRequireDefault(require("./FeeDividend"));
-
 var _FeeDividendPercentage = _interopRequireDefault(require("./FeeDividendPercentage"));
-
+var _GasFee = _interopRequireDefault(require("./GasFee"));
 var _Hot = _interopRequireDefault(require("./Hot"));
-
 var _HotFilled = _interopRequireDefault(require("./HotFilled"));
-
 var _Image = _interopRequireDefault(require("./Image"));
-
 var _InvalidFilled = _interopRequireDefault(require("./InvalidFilled"));
-
 var _Language = _interopRequireDefault(require("./Language"));
-
 var _LastingDays = _interopRequireDefault(require("./LastingDays"));
-
 var _Link = _interopRequireDefault(require("./Link"));
-
 var _Loading = _interopRequireDefault(require("./Loading"));
-
 var _Lock = _interopRequireDefault(require("./Lock"));
-
 var _Message = _interopRequireDefault(require("./Message"));
-
 var _Minus = _interopRequireDefault(require("./Minus"));
-
 var _MoonPay = _interopRequireDefault(require("./MoonPay"));
-
 var _More = _interopRequireDefault(require("./More"));
-
 var _NoFound = _interopRequireDefault(require("./NoFound"));
-
 var _NoResult = _interopRequireDefault(require("./NoResult"));
-
 var _NoToken = _interopRequireDefault(require("./NoToken"));
-
 var _Notice = _interopRequireDefault(require("./Notice"));
-
 var _PlayCircleFilled = _interopRequireDefault(require("./PlayCircleFilled"));
-
 var _Plus = _interopRequireDefault(require("./Plus"));
-
 var _PriceComparison = _interopRequireDefault(require("./PriceComparison"));
-
 var _PriceRoute = _interopRequireDefault(require("./PriceRoute"));
-
 var _Profile = _interopRequireDefault(require("./Profile"));
-
 var _Protect = _interopRequireDefault(require("./Protect"));
-
 var _QuestionBorder = _interopRequireDefault(require("./QuestionBorder"));
-
 var _Refresh = _interopRequireDefault(require("./Refresh"));
-
 var _Route = _interopRequireDefault(require("./Route"));
-
 var _Search = _interopRequireDefault(require("./Search"));
-
 var _Setting = _interopRequireDefault(require("./Setting"));
-
 var _Share = _interopRequireDefault(require("./Share"));
-
 var _Slippage = _interopRequireDefault(require("./Slippage"));
-
 var _Star = _interopRequireDefault(require("./Star"));
-
 var _StarFilled = _interopRequireDefault(require("./StarFilled"));
-
 var _Switch = _interopRequireDefault(require("./Switch"));
-
 var _ThemeModeDark = _interopRequireDefault(require("./ThemeModeDark"));
-
 var _ThemeModeLight = _interopRequireDefault(require("./ThemeModeLight"));
-
+var _Time = _interopRequireDefault(require("./Time"));
 var _TokenPair = _interopRequireDefault(require("./TokenPair"));
-
 var _TokenSingle = _interopRequireDefault(require("./TokenSingle"));
-
 var _TotalLiquidity = _interopRequireDefault(require("./TotalLiquidity"));
-
 var _Traders = _interopRequireDefault(require("./Traders"));
-
 var _VDODO = _interopRequireDefault(require("./VDODO"));
-
 var _Volume = _interopRequireDefault(require("./Volume"));
-
 var _Warn = _interopRequireDefault(require("./Warn"));

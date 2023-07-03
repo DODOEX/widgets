@@ -19,15 +19,19 @@ export const getAccountBalances = (state?: RootState) => {
   return (state ?? store.getState()).token.accountBalances;
 };
 
-export const getEthBalance = (state?: RootState): BigNumber => {
-  return (state ?? store.getState()).token.ethBalance || new BigNumber(NaN);
+export const getEthBalance = (state?: RootState) => {
+  return (state ?? store.getState()).token.ethBalance;
 };
 
-export const getDefaultFromToken = (state?: RootState): DefaultTokenInfo | undefined => {
+export const getDefaultFromToken = (
+  state?: RootState,
+): DefaultTokenInfo | undefined => {
   return (state ?? store.getState()).token.defaultFromToken;
 };
 
-export const getDefaultToToken = (state?: RootState): DefaultTokenInfo | undefined => {
+export const getDefaultToToken = (
+  state?: RootState,
+): DefaultTokenInfo | undefined => {
   return (state ?? store.getState()).token.defaultToToken;
 };
 

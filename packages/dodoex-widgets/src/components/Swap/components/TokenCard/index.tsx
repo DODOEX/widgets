@@ -3,11 +3,12 @@ import { TokenLogoCollapse } from './TokenLogoCollapse';
 import { BalanceText } from './BalanceText';
 import { NumberInput } from './NumberInput';
 import { TokenPickerDialog } from './TokenPickerDialog';
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { TokenInfo } from '../../../../hooks/Token';
 import TokenPicker, { TokenPickerProps } from '../../../TokenPicker';
 import useGetBalance from '../../../../hooks/Token/useGetBalance';
 import { transitionTime } from '../Dialog';
+import SwitchChainDialog from '../../../SwitchChainDialog';
 
 export interface TokenCardProps {
   amt: string;
@@ -23,6 +24,9 @@ export interface TokenCardProps {
   onTokenClick?: () => void;
   onTokenChange: TokenPickerProps['onChange'];
   side?: TokenPickerProps['side'];
+  showChainLogo?: boolean;
+  onlyCurrentChain?: boolean;
+  defaultLoadBalance?: boolean;
 }
 export function TokenCard({
   sx,
@@ -38,11 +42,21 @@ export function TokenCard({
   onInputChange,
   onTokenChange,
   side,
+  showChainLogo,
+  onlyCurrentChain,
+  defaultLoadBalance,
 }: TokenCardProps) {
+  const [openSwitchChainDialog, setOpenSwitchChainDialog] = useState(false);
   const theme = useTheme();
   const getBalance = useGetBalance();
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
   const balance = token ? getBalance(token) : null;
+
+  useEffect(() => {
+    if (token && onlyCurrentChain) {
+      setOpenSwitchChainDialog(true);
+    }
+  }, [token, onlyCurrentChain]);
 
   return (
     <Box
@@ -68,6 +82,7 @@ export function TokenCard({
       >
         <TokenLogoCollapse
           token={token}
+          showChainLogo={showChainLogo}
           onClick={() => setTokenPickerVisible(true)}
         />
 
@@ -105,6 +120,7 @@ export function TokenCard({
         open={tokenPickerVisible}
         side={side}
         occupiedAddrs={occupiedAddrs}
+        defaultLoadBalance={defaultLoadBalance}
         onClose={() => {
           setTokenPickerVisible(false);
           onTokenClick && onTokenClick();
@@ -112,8 +128,16 @@ export function TokenCard({
         onTokenChange={(token: TokenInfo, isOccupied: boolean) => {
           setTokenPickerVisible(false);
           // change token list order after closing the dialog
-          setTimeout(() => onTokenChange(token, isOccupied), transitionTime);
+          setTimeout(() => {
+            onTokenChange(token, isOccupied);
+          }, transitionTime);
         }}
+      />
+      {/* switch chain */}
+      <SwitchChainDialog
+        chainId={token?.chainId}
+        open={openSwitchChainDialog}
+        onClose={() => setOpenSwitchChainDialog(false)}
       />
     </Box>
   );

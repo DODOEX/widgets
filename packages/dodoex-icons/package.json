@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/icons",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "DODO icons distributed as SVG React components.",
   "main": "build/index.js",
   "source": "src/index.js",
@@ -15,7 +15,7 @@
     "typescript": "ts-node scripts/create-typings.ts",
     "src:icons": "cross-env UV_THREADPOOL_SIZE=64 ts-node scripts/builder.ts --output-dir src --svg-dir assets && yarn build:lib:clean",
     "prerelease": "yarn run build",
-    "release": "np --any-branch --no-cleanup --no-tests"
+    "release": "np --any-branch --no-cleanup --no-tests --no-release-draft"
   },
   "author": "",
   "publishConfig": {

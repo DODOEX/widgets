@@ -4,12 +4,13 @@ import { ApprovalState } from './type';
 import { renderHook } from '@testing-library/react-hooks';
 import BigNumber from 'bignumber.js';
 
-
 jest.mock('../../store/selectors/wallet', () => ({
   getDefaultChainId: () => 1,
 }));
 jest.mock('../../store/selectors/token', () => ({
-  getEthBalance: () => new BigNumber(12),
+  getEthBalance: () => ({
+    1: new BigNumber(12),
+  }),
   getBalanceLoadings: () => ({
     '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee': false,
     '0xdac17f958d2ee523a2206206994597c13d831ec7': false,
@@ -18,7 +19,7 @@ jest.mock('../../store/selectors/token', () => ({
     '0xdac17f958d2ee523a2206206994597c13d831ec7': {
       tokenBalances: new BigNumber(123),
       tokenAllowances: new BigNumber(456),
-    }
+    },
   }),
 }));
 jest.mock('react-redux', () => ({
@@ -60,7 +61,6 @@ describe('useGetTokenStatus', () => {
     expect(getPendingRest(tokenEther)).toBeFalsy();
     expect(getPendingRest(tokenUSDT)).toBeTruthy();
   });
-
 
   it('getMaxBalance', () => {
     const { getMaxBalance } = result.current;

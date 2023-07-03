@@ -4,10 +4,12 @@ import { AddressZero } from '@ethersproject/constants';
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers';
 import { useCallback, useMemo, useState } from 'react';
 import multiABI from './abis/multicallABI';
-import { ChainId } from '../../constants/chains';
+import { ChainId, rpcServerMap } from '../../constants/chains';
 import contractConfig from './contractConfig';
 import { BatchThunk, runAll } from './batch';
 import { isAddress } from '../../utils';
+import { useSelector } from 'react-redux';
+import { getGlobalProps } from '../../store/selectors/globals';
 
 // account is not optional
 function getSigner(provider: JsonRpcProvider, account: string): JsonRpcSigner {
@@ -39,21 +41,31 @@ export function getContract(
   );
 }
 
-export default function useMultiContract() {
+export default function useMultiContract(chainIdProps?: number) {
   const { provider, account, chainId } = useWeb3React();
   const [loading, setLoading] = useState(false);
   const currentContractConfig = useMemo(
-    () => contractConfig[chainId as ChainId],
-    [chainId],
+    () => contractConfig[(chainIdProps ?? chainId) as ChainId],
+    [chainId, chainIdProps],
   );
+  const jsonRpcUrlMapProps = useSelector(getGlobalProps).jsonRpcUrlMap;
 
   const getContractRes = useCallback(
     (contractAddress: string, ABI: any) => {
+      if (chainIdProps && chainIdProps !== chainId) {
+        const jsonRpcUrlMap = {
+          ...rpcServerMap,
+          ...jsonRpcUrlMapProps,
+        };
+        const rpcUrls = jsonRpcUrlMap[chainIdProps as ChainId];
+        const otherChainProvider = new JsonRpcProvider(rpcUrls?.[0]);
+        return new Contract(contractAddress, ABI, otherChainProvider);
+      }
       if (!provider) return undefined;
 
       return getContract(contractAddress, ABI, provider, account);
     },
-    [provider, account],
+    [provider, account, chainIdProps, jsonRpcUrlMapProps],
   );
 
   const call = useCallback(

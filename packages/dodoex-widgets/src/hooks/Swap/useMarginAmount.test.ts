@@ -3,12 +3,13 @@ import tokenList from '../../constants/tokenList';
 import { renderHook } from '@testing-library/react-hooks';
 import BigNumber from 'bignumber.js';
 
-
 jest.mock('../../store/selectors/wallet', () => ({
   getDefaultChainId: () => 1,
 }));
 jest.mock('../../store/selectors/token', () => ({
-  getEthBalance: () => new BigNumber(12),
+  getEthBalance: () => ({
+    1: new BigNumber(12),
+  }),
   getBalanceLoadings: () => ({
     '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee': false,
     '0xdac17f958d2ee523a2206206994597c13d831ec7': false,
@@ -17,7 +18,7 @@ jest.mock('../../store/selectors/token', () => ({
     '0xdac17f958d2ee523a2206206994597c13d831ec7': {
       tokenBalances: new BigNumber(123),
       tokenAllowances: new BigNumber(456),
-    }
+    },
   }),
 }));
 jest.mock('react-redux', () => ({
@@ -37,13 +38,12 @@ jest.mock('@web3-react/core', () => ({
 }));
 
 describe('useMarginAmount', () => {
-
   it('tokenEther', () => {
     const tokenEther = tokenList[0];
     const { result } = renderHook(() =>
       useMarginAmount({
         token: tokenEther,
-        fiatPrice: '1.2'
+        fiatPrice: '1.2',
       }),
     );
     const { marginAmount } = result.current;
@@ -55,7 +55,7 @@ describe('useMarginAmount', () => {
     const { result } = renderHook(() =>
       useMarginAmount({
         token: tokenUSDT,
-        fiatPrice: '1.53'
+        fiatPrice: '1.53',
       }),
     );
     const { marginAmount } = result.current;

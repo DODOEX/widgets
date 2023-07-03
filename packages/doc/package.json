@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/components": "^2.0.0",
+    "@dodoex/components": "^2.0.1",
     "@dodoex/widgets": "^2.3.4",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",

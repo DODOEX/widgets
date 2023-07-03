@@ -16,21 +16,18 @@ const HoverOpacity = forwardRef(
     },
     ref: any,
   ) => {
-    const { isMobile } = useDevices();
     let defaultColor = weak ? 'text.primary' : 'text.secondary';
     let hoverColor = weak ? 'text.secondary' : 'text.primary';
     if (color) {
       defaultColor = color;
       hoverColor = color;
     }
-    const hoverCss = isMobile
-      ? {}
-      : {
-          '&:hover': {
-            color: hoverColor,
-            opacity: color && weak ? 0.5 : 1,
-          },
-        };
+    const hoverCss = {
+      '&:hover': {
+        color: hoverColor,
+        opacity: color && weak ? 0.5 : 1,
+      },
+    };
     return (
       <Box
         ref={ref}

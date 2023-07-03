@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Identicon from 'identicon.js';
 import { Box, BoxProps } from '@dodoex/components';
 import { TokenInfo, useFindTokenByAddress } from '../hooks/Token';
+import { chainListMap } from '../constants/chainList';
+import { ChainId } from '../constants/chains';
 
 export interface TokenLogoProps {
   address?: string;
@@ -13,6 +15,7 @@ export interface TokenLogoProps {
   zIndex?: number;
   cross?: boolean;
   sx?: BoxProps['sx'];
+  chainId?: number;
 }
 
 function toDataURL(url: URL | string, callback: (v?: any) => void) {
@@ -50,6 +53,7 @@ export default function TokenLogo({
   address: addressProps,
   token: tokenProps,
   sx,
+  chainId,
 }: TokenLogoProps): React.ReactElement {
   const [loaded, setLoaded] = useState(false);
   const [crossLogoUrl, setCrossLogoUrl] = useState('');
@@ -117,6 +121,9 @@ export default function TokenLogo({
         height,
         marginRight,
         zIndex,
+        border: 'solid 1px',
+        borderColor: 'border.main',
+        borderRadius: '50%',
         ...(sx || {}),
       }}
       style={{
@@ -172,6 +179,32 @@ export default function TokenLogo({
           height: '100%',
         }}
       />
+      {chainId && chainListMap[chainId as ChainId] ? (
+        <Box
+          sx={{
+            position: 'absolute',
+            right: 0,
+            bottom: -1,
+            width: 12,
+            height: 12,
+            transform: 'translateX(50%)',
+            border: 'solid 1px',
+            borderColor: 'border.main',
+            borderRadius: '50%',
+          }}
+        >
+          <Box
+            component={chainListMap[chainId as ChainId].logo}
+            sx={{
+              display: 'block',
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        </Box>
+      ) : (
+        ''
+      )}
     </Box>
   );
 }

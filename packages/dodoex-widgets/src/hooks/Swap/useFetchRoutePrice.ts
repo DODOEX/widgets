@@ -1,15 +1,15 @@
 import axios from 'axios';
-import BigNumber from 'bignumber.js';
 import { useWeb3React } from '@web3-react/core';
-import { BigNumber as EthersBigNumber, parseFixed } from '@ethersproject/bignumber';
+import {
+  BigNumber as EthersBigNumber,
+  parseFixed,
+} from '@ethersproject/bignumber';
 import React, { useCallback, useMemo, useState } from 'react';
 import { getEstimateGas } from '../contract/wallet';
 import { RoutePriceAPI } from '../../constants/api';
-import { ChainId } from '../../constants/chains';
-import { getSwapTxValue } from '../../utils';
 import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
-import { DEFAULT_SWAP_SLIPPAGE, DEFAULT_SWAP_DDL } from "../../constants/swap";
+import { DEFAULT_SWAP_SLIPPAGE, DEFAULT_SWAP_DDL } from '../../constants/swap';
 import { getSlippage, getTxDdl } from '../../store/selectors/settings';
 import { EmptyAddress } from '../../constants/address';
 import { usePriceTimer } from './usePriceTimer';
@@ -39,23 +39,27 @@ export function useFetchRoutePrice({
 }: FetchRoutePrice) {
   const { account, chainId: walletChainId, provider } = useWeb3React();
   const defaultChainId = useSelector(getDefaultChainId);
-  const chainId = useMemo(() => walletChainId || defaultChainId, [walletChainId, defaultChainId])
+  const chainId = useMemo(
+    () => walletChainId || defaultChainId,
+    [walletChainId, defaultChainId],
+  );
   const slippage = useSelector(getSlippage) || DEFAULT_SWAP_SLIPPAGE;
   const ddl = useSelector(getTxDdl) || DEFAULT_SWAP_DDL;
-  const { feeRate, rebateTo, apikey, isReverseRouting } = useSelector(getGlobalProps);
-  const apiDdl = useMemo(
-    () => Math.floor(Date.now() / 1000) + ddl * 60,
-    [ddl],
-  );
+  const { feeRate, rebateTo, apikey, isReverseRouting } =
+    useSelector(getGlobalProps);
+  const apiDdl = useMemo(() => Math.floor(Date.now() / 1000) + ddl * 60, [ddl]);
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,
   );
   const [resAmount, setResAmount] = useState<number | null>(null);
   const [resValue, setResValue] = useState<string>('');
   const [baseFeeAmount, setBaseFeeAmount] = useState<number | null>(null);
-  const [additionalFeeAmount, setAdditionalFeeAmount] = useState<number | null>(null);
+  const [additionalFeeAmount, setAdditionalFeeAmount] =
+    useState<number | null>(null);
   const [priceImpact, setPriceImpact] = useState<number | null>(null);
-  const [resCostGas, setResCostGas] = useState<EthersBigNumber>(EthersBigNumber.from(0));
+  const [resCostGas, setResCostGas] = useState<EthersBigNumber>(
+    EthersBigNumber.from(0),
+  );
   const [resPricePerFromToken, setResPricePerFromToken] =
     useState<number | null>(null);
   const [resPricePerToToken, setResPricePerToToken] =
@@ -67,7 +71,15 @@ export function useFetchRoutePrice({
   const [duration, setDuration] = useState<number>(0);
 
   const refetch = useCallback(async () => {
-    if (!chainId || !fromToken || !toToken) return;
+    if (
+      !chainId ||
+      !fromToken ||
+      !toToken ||
+      fromToken.chainId !== toToken.chainId
+    ) {
+      setStatus(RoutePriceStatus.Initial);
+      return;
+    }
     if (!isReverseRouting && !fromAmount) return;
     if (isReverseRouting && !toAmount) return;
     setStatus(RoutePriceStatus.Loading);
@@ -102,10 +114,7 @@ export function useFetchRoutePrice({
     }
 
     try {
-      const resRoutePrice = await axios.get(
-        RoutePriceAPI,
-        { params },
-      )
+      const resRoutePrice = await axios.get(RoutePriceAPI, { params });
       const routeInfo = resRoutePrice.data.data;
       if (routeInfo?.resAmount) {
         setStatus(RoutePriceStatus.Success);
@@ -123,21 +132,23 @@ export function useFetchRoutePrice({
         setDuration(routeInfo.duration);
       } else {
         setStatus(RoutePriceStatus.Failed);
-      };
+      }
 
       if (!account || !provider) return;
 
-      const gasLimit = await getEstimateGas({
-        from: account,
-        to: routeInfo.to,
-        value: routeInfo.value,
-        data: routeInfo.data,
-      }, provider);
+      const gasLimit = await getEstimateGas(
+        {
+          from: account,
+          to: routeInfo.to,
+          value: routeInfo.value,
+          data: routeInfo.data,
+        },
+        provider,
+      );
 
       if (gasLimit) {
         setResCostGas(gasLimit);
       }
-
     } catch (error) {
       setStatus(RoutePriceStatus.Failed);
       console.error(error);
@@ -162,7 +173,9 @@ export function useFetchRoutePrice({
 
   const resAmt = useMemo(() => {
     const tokenAmount = isReverseRouting ? toAmount : fromAmount;
-    return status !== RoutePriceStatus.Loading && tokenAmount ? resAmount : null;
+    return status !== RoutePriceStatus.Loading && tokenAmount
+      ? resAmount
+      : null;
   }, [status, isReverseRouting, toAmount, fromAmount, resAmount]);
 
   const execute = useExecuteSwap();
@@ -181,7 +194,19 @@ export function useFetchRoutePrice({
         subtitle,
       });
     },
-    [to, ddl, data, duration, useSource, fromToken, fromAmount, resCostGas, resAmount, resValue, isReverseRouting],
+    [
+      to,
+      ddl,
+      data,
+      duration,
+      useSource,
+      fromToken,
+      fromAmount,
+      resCostGas,
+      resAmount,
+      resValue,
+      isReverseRouting,
+    ],
   );
 
   return {

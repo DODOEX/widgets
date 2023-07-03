@@ -16,12 +16,30 @@ export default function useGetBalance() {
   );
   const getBalance = useCallback(
     (token: TokenInfo) => {
-      if (!account) return null;
+      if (!account || !token) return null;
       if (
+        EtherToken &&
         token.symbol === EtherToken.symbol &&
         isSameAddress(token.address, EtherToken.address)
-      )
-        return !ethBalance || ethBalance?.isNaN() ? null : ethBalance;
+      ) {
+        const currentChainIdEthBalance = ethBalance[chainId ?? 1];
+        return !currentChainIdEthBalance || currentChainIdEthBalance?.isNaN()
+          ? null
+          : currentChainIdEthBalance;
+      }
+
+      // cross-chain basic token
+      if (
+        EtherToken &&
+        token.chainId &&
+        token.chainId !== chainId &&
+        isSameAddress(token.address, EtherToken.address)
+      ) {
+        const currentChainIdEthBalance = ethBalance[token.chainId];
+        return !currentChainIdEthBalance || currentChainIdEthBalance?.isNaN()
+          ? null
+          : currentChainIdEthBalance;
+      }
       const balance =
         accountBalances[token.address.toLocaleLowerCase()]?.tokenBalances;
       return !balance || balance?.isNaN() ? null : balance;

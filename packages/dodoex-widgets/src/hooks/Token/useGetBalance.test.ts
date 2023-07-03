@@ -4,12 +4,14 @@ import { renderHook } from '@testing-library/react-hooks';
 import BigNumber from 'bignumber.js';
 
 jest.mock('../../store/selectors/token', () => ({
-  getEthBalance: () => new BigNumber(123),
+  getEthBalance: () => ({
+    1: new BigNumber(123),
+  }),
   getAccountBalances: () => ({
     '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48': {
       tokenBalances: new BigNumber(456),
       tokenAllowances: 0,
-    }
+    },
   }),
 }));
 jest.mock('react-redux', () => ({
@@ -28,9 +30,7 @@ jest.mock('@web3-react/core', () => ({
   }),
 }));
 describe('useGetBalance', () => {
-  const { result } = renderHook(() =>
-    useGetBalance(),
-  );
+  const { result } = renderHook(() => useGetBalance());
 
   it('getBalance: EtherToken', () => {
     const token = tokenList[0];

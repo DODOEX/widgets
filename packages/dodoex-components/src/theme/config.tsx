@@ -110,7 +110,7 @@ export const darkPalette: PaletteOptions = {
     paperContrast: '#41454F',
     backdrop: alpha('#000', 0.9),
     input: '#252831',
-    tag: alpha('#FFF', 0.1),
+    tag: alpha('#FFF', 0.04),
   },
   text: {
     primary: '#FFF',
@@ -120,12 +120,12 @@ export const darkPalette: PaletteOptions = {
     link: '#FFE804',
   },
   border: {
-    main: '#454851',
+    main: alpha('#FFF', 0.1),
     light: alpha('#FFF', 0.3),
     disabled: alpha('#FFF', 0.1),
   },
   hover: {
-    default: alpha('#FFF', 0.04),
+    default: alpha('#FFF', 0.1),
   },
 };
 
@@ -160,7 +160,7 @@ export const lightPalette: PaletteOptions = {
     paperContrast: '#F6F6F6',
     backdrop: alpha('#000', 0.9),
     input: '#F0F0F0',
-    tag: alpha('#1A1A1B', 0.1),
+    tag: alpha('#1A1A1B', 0.04),
   },
   text: {
     primary: '#1A1A1B',
@@ -170,12 +170,12 @@ export const lightPalette: PaletteOptions = {
     link: '#1A1A1B',
   },
   border: {
-    main: alpha('#454851', 0.1),
+    main: alpha('#1A1A1B', 0.1),
     light: alpha('#1A1A1B', 0.3),
     disabled: alpha('#1A1A1B', 0.1),
   },
   hover: {
-    default: alpha('#1A1A1B', 0.04),
+    default: alpha('#1A1A1B', 0.1),
   },
 };
 

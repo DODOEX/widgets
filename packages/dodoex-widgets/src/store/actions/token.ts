@@ -50,11 +50,16 @@ export const setDefaultToToken = (token: TokenInfo): AppThunkAction => {
   };
 };
 
-export const setEthBalance = (balance: BigNumber): AppThunkAction => {
+export const setEthBalance = (
+  chainId: number,
+  balance: BigNumber,
+): AppThunkAction => {
   return async (dispatch) => {
     dispatch({
       type: 'SET_ETH_BALANCE',
-      payload: balance,
+      payload: {
+        [chainId]: balance,
+      },
     });
   };
 };
@@ -69,9 +74,7 @@ export const setTokenBalances = (
     });
   };
 };
-export const setTokenAllowances = (
-  allowance: BigNumber,
-): AppThunkAction => {
+export const setTokenAllowances = (allowance: BigNumber): AppThunkAction => {
   return async (dispatch) => {
     dispatch({
       type: 'SET_ACCOUNT_ALLOWANCES',

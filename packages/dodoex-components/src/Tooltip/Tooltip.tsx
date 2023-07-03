@@ -1,8 +1,7 @@
-import {
-  ClickAwayListener,
-  PopperUnstyled,
-  PopperUnstyledProps,
-} from '@mui/base';
+import ClickAwayListener from '@mui/base/ClickAwayListener';
+import PopperUnstyled, {
+  PopperProps as PopperUnstyledProps,
+} from '@mui/base/Popper';
 import { styled } from '@mui/system';
 import { Box, BoxProps } from '../Box';
 import { merge } from 'lodash';
@@ -11,6 +10,7 @@ import {
   JSXElementConstructor,
   MouseEventHandler,
   ReactElement,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -34,6 +34,10 @@ export interface TooltipProps {
   transition?: PopperUnstyledProps['transition'];
   // @ts-ignore: Unreachable code error
   componentsProps?: PopperUnstyledProps['componentsProps'];
+  onlyHover?: boolean;
+  open?: boolean;
+  enterDelay?: number;
+  leaveDelay?: number;
 }
 
 const tooltipClasses = {
@@ -44,7 +48,7 @@ const StyledTooltipRoot = styled('div')(
   ({ theme }) => `
   z-index: ${(theme.zIndex as ZIndex)?.tooltip};
   &[data-popper-placement*="bottom"] .${tooltipClasses.arrow} {
-    bottom: 0;
+    top: 0;
     margin-top: -${arrowHeight}px;
     &::before {
       transform-origin: 0 100%;
@@ -76,57 +80,67 @@ export default function Tooltip({
   maxWidth = 'auto',
   popperOptions,
   children,
+  onlyHover,
+  /** This prop won't impact the enter click delay  */
+  enterDelay = 100,
+  /** This prop won't impact the enter click delay  */
+  leaveDelay = 0,
   ...attrs
 }: TooltipProps) {
   const theme = useTheme();
   const { isMobile } = useDevices();
   const enterTooltip = useRef(false);
   const enterTrigger = useRef(false);
+  const enterTimer = useRef<NodeJS.Timeout>();
   const leaveTimer = useRef<NodeJS.Timeout>();
 
   const [childrenRef, setChildrenRef] = useState<HTMLDivElement>();
   const [arrowRef, setArrowRef] = useState<HTMLDivElement>();
 
   const [open, setOpen] = useState(false);
+  const clickEmit = isMobile && !onlyHover;
 
   const handleOverTooltip: MouseEventHandler<HTMLDivElement> = () => {
-    if (isMobile) return;
+    if (clickEmit) return;
     enterTooltip.current = true;
     clearTimeout(leaveTimer.current);
+    clearTimeout(enterTimer.current);
   };
 
   const handleOutTooltip: MouseEventHandler<HTMLDivElement> = () => {
-    if (isMobile) return;
+    if (clickEmit) return;
     enterTooltip.current = false;
     clearTimeout(leaveTimer.current);
+    clearTimeout(enterTimer.current);
     leaveTimer.current = setTimeout(() => {
       if (!enterTrigger.current && !enterTooltip.current) {
         setOpen(false);
       }
-    }, 200);
+    }, leaveDelay);
   };
 
   const childrenProps: any = {
     ref: setChildrenRef,
-    style: {
-      ['pointer-events']: 'all',
-    },
   };
 
-  if (!isMobile) {
+  if (!clickEmit) {
     const onMouseEnter = () => {
       enterTrigger.current = true;
       clearTimeout(leaveTimer.current);
-      setOpen(true);
+      clearTimeout(enterTimer.current);
+      enterTimer.current = setTimeout(() => {
+        setOpen(true);
+      }, enterDelay);
     };
     const onMouseLeave = () => {
       enterTrigger.current = false;
       clearTimeout(leaveTimer.current);
+      clearTimeout(enterTimer.current);
       leaveTimer.current = setTimeout(() => {
         if (!enterTrigger.current && !enterTooltip.current) {
           setOpen(false);
         }
-      }, 200);
+      }, leaveDelay);
     };
     childrenProps.onMouseOut = onMouseEnter;
     childrenProps.onMouseEnter = onMouseEnter;
@@ -141,6 +155,7 @@ export default function Tooltip({
     return () => {
       setOpen(false);
       clearTimeout(leaveTimer.current);
+      clearTimeout(enterTimer.current);
     };
   }, []);
 
@@ -149,12 +164,8 @@ export default function Tooltip({
       <PopperUnstyled
         open={open}
         anchorEl={childrenRef}
-        // @ts-ignore: Unreachable code error
-        components={{
-          Root: StyledTooltipRoot,
-        }}
-        style={{
-          zIndex: `${(theme.zIndex as ZIndex)?.tooltip}`,
+        slots={{
+          root: StyledTooltipRoot,
         }}
         popperOptions={merge(
           {
@@ -196,6 +207,7 @@ export default function Tooltip({
             borderColor: 'border.main',
             borderWidth: 1,
             borderStyle: 'solid',
+            whiteSpace: 'pre-wrap',
             ...sx,
           }}
           onMouseEnter={handleOverTooltip}
@@ -233,7 +245,7 @@ export default function Tooltip({
       </PopperUnstyled>
       <ClickAwayListener
         onClickAway={() => {
-          if (isMobile) {
+          if (clickEmit) {
             setOpen(false);
           }
         }}

@@ -16,3 +16,8 @@ export { HoverOpacity } from './Hover';
 export { RotatingIcon } from './Loading';
 export { Tooltip, QuestionTooltip } from './Tooltip';
 export type { QuestionTooltipProps } from './Tooltip';
+export { WidgetModal } from './Modal';
+export type { ModalProps } from './Modal';
+export { Checkbox } from './Checkbox';
+export { Accordion, AccordionItem } from './Accordion';
+export type { AccordionProps, AccordionItemProps } from './Accordion';

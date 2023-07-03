@@ -17,7 +17,7 @@ export type SlippageWithToken = {
 export type State = {
   tokenList: TokenList;
   popularTokenList: TokenList;
-  ethBalance?: BigNumber;
+  ethBalance: { [key: number]: BigNumber };
   accountBalances: AccountBalances;
   balanceLoadings: { [key in string]: boolean };
   slippageWithTokens: SlippageWithToken[];
@@ -28,7 +28,7 @@ export type State = {
 export const initialState: State = {
   tokenList: [] as TokenList,
   popularTokenList: [] as TokenList,
-  ethBalance: undefined,
+  ethBalance: {},
   accountBalances: {} as AccountBalances,
   balanceLoadings: {} as { [key in string]: boolean },
   slippageWithTokens: [],
@@ -54,7 +54,10 @@ export default (state: State = initialState, action: AnyAction): State => {
     case 'SET_ETH_BALANCE':
       return {
         ...state,
-        ethBalance: action.payload,
+        ethBalance: {
+          ...state.ethBalance,
+          ...action.payload,
+        },
       };
     case 'SET_DEFAULT_FROM_TOKEN':
       return {
@@ -75,11 +78,10 @@ export default (state: State = initialState, action: AnyAction): State => {
         },
       };
     case 'SET_ACCOUNT_ALLOWANCES':
-      const accountBalances = state.accountBalances;
-      Object.keys(accountBalances)
-        .map((key) => {
-          accountBalances[key].tokenAllowances = action.payload
-        });
+      const accountBalances = { ...state.accountBalances };
+      Object.keys(accountBalances).map((key) => {
+        accountBalances[key].tokenAllowances = action.payload;
+      });
       return {
         ...state,
         accountBalances,

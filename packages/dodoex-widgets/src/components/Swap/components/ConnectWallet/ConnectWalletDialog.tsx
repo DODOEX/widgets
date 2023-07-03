@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro';
 import { useSelector } from 'react-redux';
 import { WalletMap } from '../../../../constants/wallet';
 import { connectToWallet } from '../../../../hooks/ConnectWallet';
-import { getDefaultChainId } from '../../../../store/selectors/wallet';
+import { getGlobalProps } from '../../../../store/selectors/globals';
 import Dialog from '../Dialog';
 
 export default function ConnectWalletDialog({
@@ -13,7 +13,7 @@ export default function ConnectWalletDialog({
   open: boolean;
   onClose: () => void;
 }) {
-  const chainId = useSelector(getDefaultChainId);
+  const chainId = useSelector(getGlobalProps).defaultChainId;
   return (
     <Dialog
       title={<Trans>Connect to your wallet</Trans>}

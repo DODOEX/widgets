@@ -1,11 +1,16 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "baseUrl": ".",
     "declarationDir": "./types",
     "jsx": "preserve",
     "target": "es2016"
   },
   "exclude": ["node_modules", "types", "src/locales"],
-  "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.tsx", "e2e/*.ts", "e2e/*.tsx"]
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "e2e/*.ts",
+    "e2e/*.tsx"
+  ]
 }

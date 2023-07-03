@@ -1,4 +1,5 @@
 import { Step as StepSpec } from './spec';
+import { ExecutionProps } from './useExecution';
 
 export enum State {
   Running,
@@ -54,7 +55,10 @@ export type ExecutionCtx = {
     submittedBack?: () => void,
     mixpanelProps?: Record<string, any>,
     submittedConfirmBack?: () => void,
-    successBack?: (tx: string) => void,
+    successBack?: (
+      tx: string,
+      callback?: ExecutionProps['onTxSuccess'],
+    ) => void,
   ) => Promise<ExecutionResult>;
 
   /**

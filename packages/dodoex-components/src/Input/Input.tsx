@@ -1,6 +1,5 @@
-import InputUnstyled, { inputUnstyledClasses } from '@mui/base/InputUnstyled';
-import inputBaseClasses from '@mui/base/InputUnstyled/inputUnstyledClasses';
-import { MuiStyledOptions, useTheme } from '@mui/system';
+import InputUnstyled, { inputClasses } from '@mui/base/Input';
+import { MuiStyledOptions, styled, useTheme } from '@mui/system';
 import { merge } from 'lodash';
 import { forwardRef, useCallback, useEffect } from 'react';
 import { Box, BoxProps } from '../Box';
@@ -51,7 +50,7 @@ function InputBaseRoot({
           borderColor: error ? 'error.main' : 'border.main',
           borderRadius: 8,
           backgroundColor: 'background.input',
-          [`&.${inputBaseClasses.disabled}`]: {
+          [`&.${inputClasses.disabled}`]: {
             color: 'text.disabled',
             cursor: 'default',
           },
@@ -69,7 +68,7 @@ function InputBaseRoot({
           },
           ...(!error
             ? {
-                [`&.${inputUnstyledClasses.focused}`]: {
+                [`&.${inputClasses.focused}`]: {
                   borderColor: 'text.secondary',
                 },
               }
@@ -82,67 +81,49 @@ function InputBaseRoot({
   );
 }
 
-function InputBaseComponent({
-  sx,
-  ...attrs
-}: {
-  sx?: BoxProps['sx'];
-  [key: string]: any;
-}) {
-  const theme = useTheme();
-  const placeholder = {
-    color: 'text.placeholder',
-    fontSize: '14px',
-    fontWeight: 500,
-    opacity: 1,
-  };
-
-  return (
-    <Box
-      component="input"
-      sx={merge(
-        {
-          font: 'inherit',
-          fontSize: '16px',
-          fontWeight: 600,
-          lineHeight: '19px',
-          px: 16,
-          py: 14,
-          '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-            // @ts-ignore
-            '-webkit-appearance': 'none',
-          },
-          height: '100%',
-          width: '100%',
-          border: 'none',
-          color: 'text.primary',
-          backgroundColor: 'transparent',
-          '&::-webkit-input-placeholder': placeholder,
-          '&::-moz-placeholder': placeholder, // Firefox 19+
-          '&:-ms-input-placeholder': placeholder, // IE11
-          '&::-ms-input-placeholder': placeholder, // Edge
-          '&:focus': {
-            outline: 0,
-          },
-          // Reset Firefox invalid required input style
-          '&:invalid': {
-            boxShadow: 'none',
-          },
-          '&::-webkit-search-decoration': {
-            // Remove the padding when type=search.
-            WebkitAppearance: 'none',
-          },
-          [`&.${inputBaseClasses.disabled}`]: {
-            opacity: 1, // Reset iOS opacity
-            WebkitTextFillColor: theme.palette.text.disabled, // Fix opacity Safari bug
-          },
-        },
-        sx,
-      )}
-      {...attrs}
-    />
-  );
-}
+const StyledInput = styled(Box)(({ theme }) => {
+  const placeholder = `{
+    color: ${theme.palette.text.placeholder};
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 1;
+  }`;
+  return `
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    padding: ${theme.spacing(14, 16)};
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+    }
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+    height: 100%;
+    width: 100%;
+    border: none;
+    color: ${theme.palette.text.primary};
+    background-color: transparent;
+    &::-webkit-input-placeholder ${placeholder};
+    &::-moz-placeholder ${placeholder};
+    &:-ms-input-placeholder ${placeholder};
+    &::-ms-input-placeholder ${placeholder};
+    &:focus {
+      outline: 0;
+    }
+    &:invalid {
+      box-shadow: none;
+    }
+    &::-webkit-search-decoration {
+      -webkit-appearance: none;
+    }
+    &.${inputClasses.disabled} {
+      opacity: 1;
+      -webkit-text-fill-color: ${theme.palette.text.disabled};
+    }
+    `;
+});
 
 export default forwardRef(function Input(
   {
@@ -150,12 +131,12 @@ export default forwardRef(function Input(
     error,
     errorMsg,
     sx,
-    inputSx,
     suffix,
     prefix,
     height,
     suffixGap = 16,
     dataTestId,
+    inputSx,
     ...attrs
   }: InputProps,
   ref: React.ForwardedRef<HTMLInputElement>,
@@ -174,19 +155,22 @@ export default forwardRef(function Input(
     ),
     [fullWidth, height, suffixGap, error, dataTestId, JSON.stringify(sx)],
   );
-  const InputBaseComponentMemo = useCallback(
-    (props: any) => <InputBaseComponent sx={inputSx} {...props} />,
-    [JSON.stringify(inputSx), error],
-  );
   return (
     <>
       <InputUnstyled
-        components={{
-          Root: InputBaseRootMemo,
-          Input: InputBaseComponentMemo,
+        slots={{
+          root: InputBaseRootMemo,
+          input: StyledInput,
         }}
         startAdornment={prefix}
         endAdornment={suffix}
+        slotProps={{
+          input: {
+            // @ts-ignore
+            component: 'input',
+            sx: inputSx,
+          },
+        }}
         {...attrs}
         ref={ref}
       />
