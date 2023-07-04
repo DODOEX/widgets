@@ -48,6 +48,8 @@ export interface WidgetProps
   defaultFromToken?: DefaultTokenInfo;
   defaultToToken?: DefaultTokenInfo;
   locale?: SupportedLang;
+
+  onProviderChanged?: (provider?: any) => void;
 }
 
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
@@ -73,21 +75,30 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     connectWallet();
   }, [connector]);
   useEffect(() => {
-    const _provider = provider?.provider;
-    if (_provider && (_provider as any).once) {
-      (_provider as any).on('chainChanged', async () => {
-        dispatch(setAutoConnectLoading(true));
-        try {
-          if (connector?.connectEagerly) {
-            await connector.connectEagerly();
-          } else {
-            await connector.activate();
-          }
-        } finally {
-          dispatch(setAutoConnectLoading(false));
-        }
-      });
+    if (props.onProviderChanged) {
+      props.onProviderChanged(provider);
     }
+    const _provider = provider?.provider as any;
+    const handleChainChanged = async () => {
+      dispatch(setAutoConnectLoading(true));
+      try {
+        if (connector?.connectEagerly) {
+          await connector.connectEagerly();
+        } else {
+          await connector.activate();
+        }
+      } finally {
+        dispatch(setAutoConnectLoading(false));
+      }
+    };
+    if (_provider?.on) {
+      _provider.on('chainChanged', handleChainChanged);
+    }
+    return () => {
+      if (_provider?.removeListener) {
+        _provider.removeListener('chainChanged', handleChainChanged);
+      }
+    };
   }, [provider]);
 
   // Init props to redux!
