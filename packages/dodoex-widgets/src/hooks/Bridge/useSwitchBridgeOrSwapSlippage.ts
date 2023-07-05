@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  DEFAULT_BRIDGE_SLIPPAGE,
-  DEFAULT_SWAP_SLIPPAGE,
-} from '../../constants/swap';
+import { getLastSlippage } from '../../constants/localstorage';
 import { AppThunkDispatch } from '../../store/actions';
 import { setSlippage } from '../../store/actions/settings';
 
@@ -16,14 +13,13 @@ export function useSwitchBridgeOrSwapSlippage(isBridge: boolean | undefined) {
     if (isBridge === undefined) {
       return;
     }
+    const cacheSlippage = getLastSlippage(isBridge);
     if (!firstLoaded.current) {
+      dispatch(setSlippage(cacheSlippage ? cacheSlippage.toString() : null));
       firstLoaded.current = true;
       return;
     }
-    const defaultSlippage = isBridge
-      ? DEFAULT_BRIDGE_SLIPPAGE
-      : DEFAULT_SWAP_SLIPPAGE;
-    dispatch(setSlippage(defaultSlippage.toString()));
+    dispatch(setSlippage(cacheSlippage ? cacheSlippage.toString() : null));
     setShowSwitchSlippage(true);
     const time = setTimeout(() => {
       setShowSwitchSlippage(false);

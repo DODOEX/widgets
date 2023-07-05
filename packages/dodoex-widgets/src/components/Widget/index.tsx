@@ -48,6 +48,8 @@ export interface WidgetProps
   defaultFromToken?: DefaultTokenInfo;
   defaultToToken?: DefaultTokenInfo;
   locale?: SupportedLang;
+  swapSlippage?: number; // Unit: %
+  bridgeSlippage?: number; // Unit: %
 
   onProviderChanged?: (provider?: any) => void;
 }

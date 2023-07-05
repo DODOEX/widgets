@@ -9,13 +9,14 @@ import { getEstimateGas } from '../contract/wallet';
 import { RoutePriceAPI } from '../../constants/api';
 import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
-import { DEFAULT_SWAP_SLIPPAGE, DEFAULT_SWAP_DDL } from '../../constants/swap';
+import { DEFAULT_SWAP_DDL } from '../../constants/swap';
 import { getSlippage, getTxDdl } from '../../store/selectors/settings';
 import { EmptyAddress } from '../../constants/address';
 import { usePriceTimer } from './usePriceTimer';
 import { getDefaultChainId } from '../../store/selectors/wallet';
 import useExecuteSwap from './useExecuteSwap';
 import { TokenInfo } from '../Token';
+import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 
 export enum RoutePriceStatus {
   Initial = 'Initial',
@@ -43,7 +44,8 @@ export function useFetchRoutePrice({
     () => walletChainId || defaultChainId,
     [walletChainId, defaultChainId],
   );
-  const slippage = useSelector(getSlippage) || DEFAULT_SWAP_SLIPPAGE;
+  const defaultSlippage = useDefaultSlippage(false);
+  const slippage = useSelector(getSlippage) || defaultSlippage;
   const ddl = useSelector(getTxDdl) || DEFAULT_SWAP_DDL;
   const { feeRate, rebateTo, apikey, isReverseRouting } =
     useSelector(getGlobalProps);

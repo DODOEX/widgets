@@ -5,12 +5,12 @@ import { useCallback, useMemo, useState } from 'react';
 import { BridgeRoutePriceAPI } from '../../constants/api';
 import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
-import { DEFAULT_BRIDGE_SLIPPAGE } from '../../constants/swap';
 import { getSlippage } from '../../store/selectors/settings';
 import { EmptyAddress } from '../../constants/address';
 import { usePriceTimer } from '../Swap/usePriceTimer';
 import { TokenInfo } from '../Token';
 import BigNumber from 'bignumber.js';
+import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 
 export interface BridgeRouteI {
   /** update */
@@ -144,7 +144,8 @@ export function useFetchRoutePriceBridge({
   fromAmount,
 }: FetchRoutePrice) {
   const { account, provider } = useWeb3React();
-  const slippage = useSelector(getSlippage) || DEFAULT_BRIDGE_SLIPPAGE;
+  const defaultSlippage = useDefaultSlippage(true);
+  const slippage = useSelector(getSlippage) || defaultSlippage;
   const { apikey } = useSelector(getGlobalProps);
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,
@@ -173,7 +174,7 @@ export function useFetchRoutePriceBridge({
     const toTokenAddress = toToken.address;
     const fromAddress = account || EmptyAddress;
     const toAddress = account || EmptyAddress;
-    const slippageNum = Number(slippage);
+    const slippageNum = Number(slippage) / 100;
 
     const data: any = {
       fromAddress,

@@ -37,3 +37,25 @@ export function setLastToken(
     token ? JSON.stringify(token) : '',
   );
 }
+
+const SLIPPAGE_SWAP = 'DODO_WIDGET_SLIPPAGE_SWAP';
+const SLIPPAGE_BRIDGE = 'DODO_WIDGET_SLIPPAGE_BRIDGE';
+export function getLastSlippage(isBridge: boolean) {
+  const storage = localStorage.getItem(
+    isBridge ? SLIPPAGE_BRIDGE : SLIPPAGE_SWAP,
+  );
+  return storage ? Number(storage) : null;
+}
+export function setLastSlippage(
+  isBridge: boolean,
+  slippage: number | string | null,
+) {
+  if (slippage === null) {
+    localStorage.removeItem(isBridge ? SLIPPAGE_BRIDGE : SLIPPAGE_SWAP);
+  } else {
+    localStorage.setItem(
+      isBridge ? SLIPPAGE_BRIDGE : SLIPPAGE_SWAP,
+      String(slippage),
+    );
+  }
+}
