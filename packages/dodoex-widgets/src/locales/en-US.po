@@ -150,8 +150,8 @@ msgstr "Estimated Time"
 msgid "Estimated service provider fees"
 msgstr "Estimated service provider fees"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:201
-#: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:150
+#: src/components/Bridge/BridgeRouteShortCard.tsx:199
+#: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:148
 msgid "Estimated transaction time"
 msgstr "Estimated transaction time"
 
@@ -159,8 +159,8 @@ msgstr "Estimated transaction time"
 msgid "Fee"
 msgstr "Fee"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:240
-#: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:189
+#: src/components/Bridge/BridgeRouteShortCard.tsx:238
+#: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:187
 msgid "Fee includes: Bridge fees + Swap fees. Gas fee not included."
 msgstr "Fee includes: Bridge fees + Swap fees. Gas fee not included."
 

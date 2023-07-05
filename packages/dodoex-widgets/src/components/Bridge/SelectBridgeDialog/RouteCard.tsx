@@ -116,9 +116,7 @@ export default function RouteCard({
         }}
       >
         <Box
-          component="img"
-          src={productDetail?.logoURI}
-          alt={productDetail?.name}
+          component={productDetail?.logoURI}
           sx={{
             width: 16,
             height: 16,
