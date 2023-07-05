@@ -39,11 +39,6 @@ import {
 import { formatReadableNumber } from '../../utils/formatter';
 import { useWeb3React } from '@web3-react/core';
 import { getDefaultChainId } from '../../store/selectors/wallet';
-import {
-  getDefaultToToken,
-  getDefaultFromToken,
-  getTokenList,
-} from '../../store/selectors/token';
 import { AppUrl } from '../../constants/api';
 import { ChainId, basicTokenMap } from '../../constants/chains';
 import { PRICE_IMPACT_THRESHOLD } from '../../constants/swap';
@@ -66,6 +61,8 @@ import { useSendRoute } from '../../hooks/Bridge/useSendRoute';
 import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
 import ErrorMessageDialog from '../ErrorMessageDialog';
 import { useSwitchBridgeOrSwapSlippage } from '../../hooks/Bridge/useSwitchBridgeOrSwapSlippage';
+import { useInitDefaultToken } from '../../hooks/Swap/useInitDefaultToken';
+import { setLastToken } from '../../constants/localstorage';
 
 export function Swap() {
   const theme = useTheme();
@@ -74,8 +71,6 @@ export function Swap() {
   const dispatch = useDispatch<AppThunkDispatch>();
   const { isReverseRouting } = useSelector(getGlobalProps);
   const defaultChainId = useSelector(getDefaultChainId);
-  const defaultToToken = useSelector(getDefaultToToken);
-  const defaultFromToken = useSelector(getDefaultFromToken);
   const { isETH } = useMemo(() => isETHChain(chainId), [chainId]);
   const basicTokenAddress = useMemo(
     () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
@@ -101,15 +96,14 @@ export function Swap() {
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState<boolean>(false);
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] =
     useState<boolean>(false);
-  const isBridge = useMemo(
-    () =>
-      !!(
-        fromToken?.chainId &&
-        toToken?.chainId &&
-        fromToken.chainId !== toToken.chainId
-      ),
-    [fromToken, toToken],
-  );
+  const isBridge = useMemo(() => {
+    if (!fromToken || !toToken) return undefined;
+    return !!(
+      fromToken?.chainId &&
+      toToken?.chainId &&
+      fromToken.chainId !== toToken.chainId
+    );
+  }, [fromToken, toToken]);
   const { toFiatPrice, fromFiatPrice } = useFetchFiatPrice({
     chainId,
     toToken,
@@ -217,91 +211,23 @@ export function Swap() {
     },
     [setDisplayingToAmt, debouncedSetToAmt],
   );
-  const tokenList = useSelector(getTokenList);
-  const initDefaultToken = () => {
-    let usedToken = null as TokenInfo | null;
-    if (
-      !fromToken &&
-      (!defaultFromToken || defaultFromToken.chainId !== chainId)
-    ) {
-      tokenList.some((token) => {
-        if (
-          token.chainId === chainId &&
-          (!token.side || token.side === 'from')
-        ) {
-          usedToken = token;
-          setFromToken(token);
-          return true;
-        }
-        return false;
-      });
-    }
-    if (!toToken && (!defaultToToken || defaultToToken.chainId !== chainId)) {
-      tokenList.some((token) => {
-        if (
-          token.chainId === chainId &&
-          (!usedToken || usedToken.address !== token.address) &&
-          (!token.side || token.side === 'to')
-        ) {
-          setToToken(token);
-          return true;
-        }
-        return false;
-      });
-    }
-  };
-  const prevChainId = useRef(chainId);
 
-  useEffect(() => {
-    if (prevChainId.current === undefined && chainId) {
-      prevChainId.current = chainId;
-      if (chainId) {
-        setToToken(null);
-        setFromToken(null);
-        if (isReverseRouting) {
-          updateToAmt('');
-        } else {
-          updateFromAmt('');
-        }
-      }
-      if (defaultFromToken && defaultFromToken.chainId === chainId) {
-        setFromToken(defaultFromToken);
-        if (defaultFromToken.amount) {
-          dispatch(
-            setGlobalProps({
-              isReverseRouting: false,
-            }),
-          );
-          updateFromAmt(defaultFromToken.amount);
-        }
-      }
-      if (defaultToToken && defaultToToken.chainId === chainId) {
-        setToToken(defaultToToken);
-        if (
-          defaultToToken.amount &&
-          defaultFromToken &&
-          !defaultFromToken.amount
-        ) {
-          dispatch(
-            setGlobalProps({
-              isReverseRouting: true,
-            }),
-          );
-          updateToAmt(defaultToToken.amount);
-        }
-      }
-      initDefaultToken();
-    }
-  }, [defaultToToken, defaultFromToken, chainId, updateFromAmt, updateToAmt]);
-  useEffect(() => {
-    initDefaultToken();
-  }, [tokenList]);
+  useInitDefaultToken({
+    fromToken,
+    toToken,
+    setFromToken,
+    setToToken,
+    updateFromAmt,
+    updateToAmt,
+  });
 
   const switchTokens = useCallback(() => {
     updateFromAmt('');
     updateToAmt('');
     setFromToken(toToken);
     setToToken(fromToken);
+    setLastToken('from', toToken);
+    setLastToken('to', fromToken);
     setSelectRouteId('');
   }, [
     setFromToken,
@@ -341,7 +267,7 @@ export function Swap() {
   }, [fromFiatPrice, fromAmt, isReverseRouting, resAmount]);
 
   const displayToFiatPrice = useMemo(() => {
-    if (!toFiatPrice) return null;
+    if (!toFiatPrice || isBridge === undefined) return null;
     if (isBridge) {
       return selectedRoute?.toTokenAmount?.gt(0)
         ? selectedRoute.toTokenAmount.multipliedBy(toFiatPrice)
@@ -810,6 +736,7 @@ export function Swap() {
               updateToAmt('');
               setFromToken(token);
               setSelectRouteId('');
+              setLastToken('from', token);
             }}
             readOnly={isReverseRouting}
             showChainLogo
@@ -845,6 +772,7 @@ export function Swap() {
               updateToAmt('');
               setToToken(token);
               setSelectRouteId('');
+              setLastToken('to', token);
             }}
             readOnly={isBridge || !isReverseRouting}
             showChainLogo

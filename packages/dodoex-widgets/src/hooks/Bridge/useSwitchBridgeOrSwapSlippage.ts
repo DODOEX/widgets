@@ -7,12 +7,15 @@ import {
 import { AppThunkDispatch } from '../../store/actions';
 import { setSlippage } from '../../store/actions/settings';
 
-export function useSwitchBridgeOrSwapSlippage(isBridge: boolean) {
+export function useSwitchBridgeOrSwapSlippage(isBridge: boolean | undefined) {
   const firstLoaded = useRef(false);
   const [showSwitchSlippage, setShowSwitchSlippage] = useState(false);
   const dispatch = useDispatch<AppThunkDispatch>();
 
   useEffect(() => {
+    if (isBridge === undefined) {
+      return;
+    }
     if (!firstLoaded.current) {
       firstLoaded.current = true;
       return;

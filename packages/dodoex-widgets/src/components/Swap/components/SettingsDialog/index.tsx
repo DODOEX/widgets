@@ -20,7 +20,7 @@ import { setSlippage, setTxDdl } from '../../../../store/actions/settings';
 export interface SettingsDialogProps {
   open: boolean;
   onClose: () => void;
-  isBridge: boolean;
+  isBridge: boolean | undefined;
 }
 export function SettingsDialog({
   open,
