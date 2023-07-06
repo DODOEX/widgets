@@ -3,9 +3,16 @@ import { ChainId } from '../../constants/chains';
 import type { DefaultTokenInfo } from '../../hooks/Token';
 import { store } from '..';
 import { RootState } from '../reducers';
+import { unionBy } from 'lodash';
 
 export const getTokenList = (state?: RootState) => {
   return (state ?? store.getState()).token.tokenList;
+};
+export const getAllTokenList = (state?: RootState) => {
+  const { tokenList, popularTokenList } = (state ?? store.getState()).token;
+  return unionBy(popularTokenList, tokenList, (token) =>
+    token.address.toLowerCase(),
+  );
 };
 export const getPopularTokenList = (chainId: ChainId, state?: RootState) => {
   return (state ?? store.getState()).token.popularTokenList.filter(
