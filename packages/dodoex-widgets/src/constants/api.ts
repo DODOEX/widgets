@@ -1,7 +1,17 @@
 import { ChainId } from './chains';
 
-export const RoutePriceAPI = `https://api.dodoex.io/route-service/v2/widget/getdodoroute`;
-export const FiatPriceAPI = `https://api.dodoex.io/frontend-price-api`;
+export enum APIServiceKey {
+  routePrice = 'routePrice',
+  fiatPrice = 'fiatPrice',
+  bridgeRoutePrice = 'bridgeRoutePrice',
+  bridgeEncode = 'bridgeEncode',
+  bridgeCreateRoute = 'bridgeCreateRoute',
+}
+
+export type APIServices = {
+  [key in APIServiceKey]: string;
+};
+
 export const AppUrl = `https://app.dodoex.io`;
 
 export const getCGTokenListAPI = (chainId: ChainId) => {
@@ -16,6 +26,30 @@ export const getCGTokenListAPI = (chainId: ChainId) => {
 };
 
 const BridgeUrlPrefix = 'https://api.dodoex.io/cross-chain/widget';
+
+export const RoutePriceAPI = `https://api.dodoex.io/route-service/v2/widget/getdodoroute`;
+export const FiatPriceAPI = `https://api.dodoex.io/frontend-price-api`;
 export const BridgeRoutePriceAPI = `${BridgeUrlPrefix}/routes`;
 export const BridgeEncodeAPI = `${BridgeUrlPrefix}/transaction/encode`;
 export const BridgeCreateRouteAPI = `${BridgeUrlPrefix}/order/create`;
+
+export function getAPIService(
+  key: APIServiceKey,
+  serviceProps: Partial<APIServices> = {},
+) {
+  switch (key) {
+    case APIServiceKey.routePrice:
+      return serviceProps.routePrice ?? RoutePriceAPI;
+    case APIServiceKey.fiatPrice:
+      return serviceProps.fiatPrice ?? FiatPriceAPI;
+    case APIServiceKey.bridgeRoutePrice:
+      return serviceProps.bridgeRoutePrice ?? BridgeRoutePriceAPI;
+    case APIServiceKey.bridgeEncode:
+      return serviceProps.bridgeEncode ?? BridgeEncodeAPI;
+    case APIServiceKey.bridgeCreateRoute:
+      return serviceProps.bridgeCreateRoute ?? BridgeCreateRouteAPI;
+
+    default:
+      throw new Error(`Invalid key = ${key}`);
+  }
+}

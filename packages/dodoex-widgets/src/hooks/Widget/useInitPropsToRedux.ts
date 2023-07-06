@@ -23,6 +23,7 @@ export function useInitPropsToRedux({
   jsonRpcUrlMap,
   swapSlippage,
   bridgeSlippage,
+  apiServices,
 }: WidgetProps) {
   const dispatch = useDispatch<AppThunkDispatch>();
 
@@ -103,6 +104,16 @@ export function useInitPropsToRedux({
       );
     }
   }, [bridgeSlippage]);
+
+  useEffect(() => {
+    if (apiServices) {
+      dispatch(
+        setGlobalProps({
+          apiServices,
+        }),
+      );
+    }
+  }, [apiServices]);
 
   useEffect(() => {
     if (defaultFromToken) {

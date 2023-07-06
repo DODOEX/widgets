@@ -206,7 +206,7 @@ export function useFetchRoutePriceBridge({
     try {
       const startTime = Date.now();
       const resRoutePrice = await axios.post(
-        `${BridgeRoutePriceAPI}?apikey=${apikey}`,
+        `${BridgeRoutePriceAPI}${apikey ? `?apikey=${apikey}` : ''}`,
         { data },
       );
       const routeInfo = resRoutePrice.data.data as FetchRouteData;

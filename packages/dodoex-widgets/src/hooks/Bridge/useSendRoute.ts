@@ -49,9 +49,12 @@ export function useSendRoute() {
           product,
           encodeParams,
         };
-        const result = await axios.post(`${BridgeEncodeAPI}?apikey=${apikey}`, {
-          data,
-        });
+        const result = await axios.post(
+          `${BridgeEncodeAPI}${apikey ? `?apikey=${apikey}` : ''}`,
+          {
+            data,
+          },
+        );
         const encodeResultData = result.data.data;
 
         const { data: txData, to, value, from, chainId } = encodeResultData;

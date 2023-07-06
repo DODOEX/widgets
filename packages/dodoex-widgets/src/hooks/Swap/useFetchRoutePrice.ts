@@ -6,7 +6,6 @@ import {
 } from '@ethersproject/bignumber';
 import React, { useCallback, useMemo, useState } from 'react';
 import { getEstimateGas } from '../contract/wallet';
-import { RoutePriceAPI } from '../../constants/api';
 import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
 import { DEFAULT_SWAP_DDL } from '../../constants/swap';
@@ -17,6 +16,8 @@ import { getDefaultChainId } from '../../store/selectors/wallet';
 import useExecuteSwap from './useExecuteSwap';
 import { TokenInfo } from '../Token';
 import { useDefaultSlippage } from '../setting/useDefaultSlippage';
+import { useGetAPIService } from '../setting/useGetAPIService';
+import { APIServiceKey } from '../../constants/api';
 
 export enum RoutePriceStatus {
   Initial = 'Initial',
@@ -71,6 +72,7 @@ export function useFetchRoutePrice({
   const [data, setData] = useState<string>('');
   const [useSource, setUseSource] = useState<string>('');
   const [duration, setDuration] = useState<number>(0);
+  const routePriceAPI = useGetAPIService(APIServiceKey.routePrice);
 
   const refetch = useCallback(async () => {
     if (
@@ -116,7 +118,7 @@ export function useFetchRoutePrice({
     }
 
     try {
-      const resRoutePrice = await axios.get(RoutePriceAPI, { params });
+      const resRoutePrice = await axios.get(routePriceAPI, { params });
       const routeInfo = resRoutePrice.data.data;
       if (routeInfo?.resAmount) {
         setStatus(RoutePriceStatus.Success);
@@ -169,6 +171,7 @@ export function useFetchRoutePrice({
     toAmount,
     apikey,
     isReverseRouting,
+    routePriceAPI,
   ]);
 
   usePriceTimer({ refetch });

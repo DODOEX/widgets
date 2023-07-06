@@ -29,7 +29,7 @@ export async function createBridgeOrder({
   tx,
   route,
 }: {
-  apikey: string;
+  apikey?: string;
   tx: string;
   route: BridgeRouteI;
 }) {
@@ -66,9 +66,12 @@ export async function createBridgeOrder({
       productParams,
     },
   } as BridgeOrderCreateParams;
-  const result = await axios.post(`${BridgeCreateRouteAPI}?apikey=${apikey}`, {
-    data: createParams,
-  });
+  const result = await axios.post(
+    `${BridgeCreateRouteAPI}${apikey ? `?apikey=${apikey}` : ''}`,
+    {
+      data: createParams,
+    },
+  );
   const data = result.data.data;
 
   return data?.id;

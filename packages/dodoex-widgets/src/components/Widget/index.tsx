@@ -31,13 +31,14 @@ import { useInitPropsToRedux } from '../../hooks/Swap';
 import { DefaultTokenInfo } from '../../hooks/Token/type';
 import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
+import { APIServices } from '../../constants/api';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
   extends Web3ConnectorsProps,
     InitTokenListProps,
     ExecutionProps {
-  apikey: string;
+  apikey?: string;
   theme?: ThemeOptions;
   colorMode?: PaletteMode;
   defaultChainId?: ChainId;
@@ -50,6 +51,7 @@ export interface WidgetProps
   locale?: SupportedLang;
   swapSlippage?: number; // Unit: %
   bridgeSlippage?: number; // Unit: %
+  apiServices?: Partial<APIServices>;
 
   onProviderChanged?: (provider?: any) => void;
 }
@@ -139,6 +141,10 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
     () => props.defaultChainId || 1,
     [props.defaultChainId],
   );
+
+  if (!props.apikey && !props.apiServices) {
+    throw new Error('apikey and apiServices must have a.');
+  }
 
   const connectors = useWeb3Connectors({
     provider: props.provider,
