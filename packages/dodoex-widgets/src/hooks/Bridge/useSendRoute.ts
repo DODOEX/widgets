@@ -2,7 +2,6 @@ import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import { useCallback, useState } from 'react';
 import { t } from '@lingui/macro';
-import { BridgeEncodeAPI } from '../../constants/api';
 import { basicTokenMap, ChainId } from '../../constants/chains';
 import { byWei, formatTokenAmountNumber } from '../../utils';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
@@ -11,6 +10,8 @@ import { getEstimateGas } from '../contract/wallet';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
 import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
+import { useGetAPIService } from '../setting/useGetAPIService';
+import { APIServiceKey } from '../../constants/api';
 
 export function useSendRoute() {
   const { provider } = useWeb3React();
@@ -19,6 +20,7 @@ export function useSendRoute() {
   const [sendRouteLoading, setSendRouteLoading] = useState(false);
   const [sendRouteError, setSendRouteError] = useState('');
   const { apikey } = useSelector(getGlobalProps);
+  const bridgeEncodeAPI = useGetAPIService(APIServiceKey.bridgeEncode);
   const handleClickSend = useCallback(
     async ({
       selectedRoute,
@@ -50,7 +52,7 @@ export function useSendRoute() {
           encodeParams,
         };
         const result = await axios.post(
-          `${BridgeEncodeAPI}${apikey ? `?apikey=${apikey}` : ''}`,
+          `${bridgeEncodeAPI}${apikey ? `?apikey=${apikey}` : ''}`,
           {
             data,
           },
@@ -119,7 +121,7 @@ export function useSendRoute() {
 
       setSendRouteLoading(false);
     },
-    [setBridgeOrderTxRequest, setSendRouteLoading, provider],
+    [setBridgeOrderTxRequest, setSendRouteLoading, provider, bridgeEncodeAPI],
   );
 
   return {

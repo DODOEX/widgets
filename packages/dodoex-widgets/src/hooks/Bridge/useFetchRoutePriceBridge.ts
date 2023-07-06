@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useWeb3React } from '@web3-react/core';
 import { parseFixed } from '@ethersproject/bignumber';
 import { useCallback, useMemo, useState } from 'react';
-import { BridgeRoutePriceAPI } from '../../constants/api';
 import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
 import { getSlippage } from '../../store/selectors/settings';
@@ -11,6 +10,8 @@ import { usePriceTimer } from '../Swap/usePriceTimer';
 import { TokenInfo } from '../Token';
 import BigNumber from 'bignumber.js';
 import { useDefaultSlippage } from '../setting/useDefaultSlippage';
+import { useGetAPIService } from '../setting/useGetAPIService';
+import { APIServiceKey } from '../../constants/api';
 
 export interface BridgeRouteI {
   /** update */
@@ -153,6 +154,7 @@ export function useFetchRoutePriceBridge({
   const [bridgeRouteList, setBridgeRouteList] = useState<Array<BridgeRouteI>>(
     [],
   );
+  const bridgeRoutePriceAPI = useGetAPIService(APIServiceKey.bridgeRoutePrice);
 
   const refetch = useCallback(async () => {
     const fromChainId = fromToken?.chainId;
@@ -206,7 +208,7 @@ export function useFetchRoutePriceBridge({
     try {
       const startTime = Date.now();
       const resRoutePrice = await axios.post(
-        `${BridgeRoutePriceAPI}${apikey ? `?apikey=${apikey}` : ''}`,
+        `${bridgeRoutePriceAPI}${apikey ? `?apikey=${apikey}` : ''}`,
         { data },
       );
       const routeInfo = resRoutePrice.data.data as FetchRouteData;
@@ -347,7 +349,16 @@ export function useFetchRoutePriceBridge({
       setStatus(RoutePriceStatus.Failed);
       console.error(error);
     }
-  }, [account, toToken, slippage, fromToken, provider, fromAmount, apikey]);
+  }, [
+    account,
+    toToken,
+    slippage,
+    fromToken,
+    provider,
+    fromAmount,
+    apikey,
+    bridgeRoutePriceAPI,
+  ]);
 
   usePriceTimer({ refetch });
 

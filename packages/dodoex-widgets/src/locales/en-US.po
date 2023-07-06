@@ -59,7 +59,7 @@ msgstr "Basic Fee"
 msgid "Best offer"
 msgstr "Best offer"
 
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:119
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:125
 msgid "Bridge"
 msgstr "Bridge"
 
@@ -205,7 +205,7 @@ msgstr "If your transaction time exceeds the deadline, your transaction will be 
 msgid "Insufficient balance"
 msgstr "Insufficient balance"
 
-#: src/hooks/Bridge/useSendRoute.ts:81
+#: src/hooks/Bridge/useSendRoute.ts:83
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 

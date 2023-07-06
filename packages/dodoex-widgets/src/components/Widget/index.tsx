@@ -143,7 +143,7 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
   );
 
   if (!props.apikey && !props.apiServices) {
-    throw new Error('apikey and apiServices must have a.');
+    console.error('apikey and apiServices must have a.');
   }
 
   const connectors = useWeb3Connectors({
