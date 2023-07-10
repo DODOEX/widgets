@@ -10,8 +10,10 @@ export const getTokenList = (state?: RootState) => {
 };
 export const getAllTokenList = (state?: RootState) => {
   const { tokenList, popularTokenList } = (state ?? store.getState()).token;
-  return unionBy(popularTokenList, tokenList, (token) =>
-    token.address.toLowerCase(),
+  return unionBy(
+    popularTokenList,
+    tokenList,
+    (token) => token.address.toLowerCase() + token.chainId + token.side,
   );
 };
 export const getPopularTokenList = (chainId: ChainId, state?: RootState) => {
