@@ -2,15 +2,16 @@ import axios from 'axios';
 import { useWeb3React } from '@web3-react/core';
 import { parseFixed } from '@ethersproject/bignumber';
 import { useCallback, useMemo, useState } from 'react';
-import { BridgeRoutePriceAPI } from '../../constants/api';
 import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
-import { DEFAULT_BRIDGE_SLIPPAGE } from '../../constants/swap';
 import { getSlippage } from '../../store/selectors/settings';
 import { EmptyAddress } from '../../constants/address';
 import { usePriceTimer } from '../Swap/usePriceTimer';
 import { TokenInfo } from '../Token';
 import BigNumber from 'bignumber.js';
+import { useDefaultSlippage } from '../setting/useDefaultSlippage';
+import { useGetAPIService } from '../setting/useGetAPIService';
+import { APIServiceKey } from '../../constants/api';
 
 export interface BridgeRouteI {
   /** update */
@@ -144,7 +145,8 @@ export function useFetchRoutePriceBridge({
   fromAmount,
 }: FetchRoutePrice) {
   const { account, provider } = useWeb3React();
-  const slippage = useSelector(getSlippage) || DEFAULT_BRIDGE_SLIPPAGE;
+  const defaultSlippage = useDefaultSlippage(true);
+  const slippage = useSelector(getSlippage) || defaultSlippage;
   const { apikey } = useSelector(getGlobalProps);
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,
@@ -152,6 +154,7 @@ export function useFetchRoutePriceBridge({
   const [bridgeRouteList, setBridgeRouteList] = useState<Array<BridgeRouteI>>(
     [],
   );
+  const bridgeRoutePriceAPI = useGetAPIService(APIServiceKey.bridgeRoutePrice);
 
   const refetch = useCallback(async () => {
     const fromChainId = fromToken?.chainId;
@@ -173,7 +176,7 @@ export function useFetchRoutePriceBridge({
     const toTokenAddress = toToken.address;
     const fromAddress = account || EmptyAddress;
     const toAddress = account || EmptyAddress;
-    const slippageNum = Number(slippage);
+    const slippageNum = Number(slippage) / 100;
 
     const data: any = {
       fromAddress,
@@ -205,7 +208,7 @@ export function useFetchRoutePriceBridge({
     try {
       const startTime = Date.now();
       const resRoutePrice = await axios.post(
-        `${BridgeRoutePriceAPI}?apikey=${apikey}`,
+        `${bridgeRoutePriceAPI}${apikey ? `?apikey=${apikey}` : ''}`,
         { data },
       );
       const routeInfo = resRoutePrice.data.data as FetchRouteData;
@@ -346,7 +349,16 @@ export function useFetchRoutePriceBridge({
       setStatus(RoutePriceStatus.Failed);
       console.error(error);
     }
-  }, [account, toToken, slippage, fromToken, provider, fromAmount, apikey]);
+  }, [
+    account,
+    toToken,
+    slippage,
+    fromToken,
+    provider,
+    fromAmount,
+    apikey,
+    bridgeRoutePriceAPI,
+  ]);
 
   usePriceTimer({ refetch });
 

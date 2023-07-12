@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { BridgeCreateRouteAPI } from '../../constants/api';
 import { toWei } from '../../utils';
 import { TokenInfo } from '../Token';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
@@ -28,10 +27,12 @@ export async function createBridgeOrder({
   apikey,
   tx,
   route,
+  bridgeCreateRouteAPI,
 }: {
-  apikey: string;
+  apikey?: string;
   tx: string;
   route: BridgeRouteI;
+  bridgeCreateRouteAPI: string;
 }) {
   const {
     fromChainId,
@@ -66,9 +67,12 @@ export async function createBridgeOrder({
       productParams,
     },
   } as BridgeOrderCreateParams;
-  const result = await axios.post(`${BridgeCreateRouteAPI}?apikey=${apikey}`, {
-    data: createParams,
-  });
+  const result = await axios.post(
+    `${bridgeCreateRouteAPI}${apikey ? `?apikey=${apikey}` : ''}`,
+    {
+      data: createParams,
+    },
+  );
   const data = result.data.data;
 
   return data?.id;

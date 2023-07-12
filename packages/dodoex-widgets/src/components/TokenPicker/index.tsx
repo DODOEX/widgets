@@ -32,7 +32,8 @@ export default function TokenPicker({
   side,
   defaultLoadBalance,
 }: TokenPickerProps) {
-  const { chainList, selectChainId, setSelectChainId } = useSelectChainList();
+  const { chainList, selectChainId, setSelectChainId } =
+    useSelectChainList(side);
   const { showTokenList, filter, setFilter, onSelectToken, popularTokenList } =
     useTokenList({
       value,
@@ -138,7 +139,6 @@ export default function TokenPicker({
         ref={ref}
       >
         <List
-          key={popularTokenList.length}
           height={fixedSizeHeight}
           itemCount={showTokenList.length}
           itemSize={52}

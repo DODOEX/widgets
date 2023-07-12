@@ -30,8 +30,10 @@ export default function useInitTokenList({
       if (isArray(tokenList)) {
         allTokenList = tokenList;
       } else {
-        allTokenList = unionBy(popularTokenList, defaultTokens, (token) =>
-          token.address.toLowerCase(),
+        allTokenList = unionBy(
+          popularTokenList,
+          defaultTokens,
+          (token) => token.address.toLowerCase() + token.chainId + token.side,
         );
       }
       dispatch(setTokenList(allTokenList));

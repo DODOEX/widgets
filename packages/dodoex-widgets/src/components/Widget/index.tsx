@@ -31,13 +31,14 @@ import { useInitPropsToRedux } from '../../hooks/Swap';
 import { DefaultTokenInfo } from '../../hooks/Token/type';
 import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
+import { APIServices } from '../../constants/api';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
   extends Web3ConnectorsProps,
     InitTokenListProps,
     ExecutionProps {
-  apikey: string;
+  apikey?: string;
   theme?: ThemeOptions;
   colorMode?: PaletteMode;
   defaultChainId?: ChainId;
@@ -48,6 +49,11 @@ export interface WidgetProps
   defaultFromToken?: DefaultTokenInfo;
   defaultToToken?: DefaultTokenInfo;
   locale?: SupportedLang;
+  swapSlippage?: number; // Unit: %
+  bridgeSlippage?: number; // Unit: %
+  apiServices?: Partial<APIServices>;
+
+  onProviderChanged?: (provider?: any) => void;
 }
 
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
@@ -73,21 +79,30 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     connectWallet();
   }, [connector]);
   useEffect(() => {
-    const _provider = provider?.provider;
-    if (_provider && (_provider as any).once) {
-      (_provider as any).on('chainChanged', async () => {
-        dispatch(setAutoConnectLoading(true));
-        try {
-          if (connector?.connectEagerly) {
-            await connector.connectEagerly();
-          } else {
-            await connector.activate();
-          }
-        } finally {
-          dispatch(setAutoConnectLoading(false));
-        }
-      });
+    if (props.onProviderChanged) {
+      props.onProviderChanged(provider);
     }
+    const _provider = provider?.provider as any;
+    const handleChainChanged = async () => {
+      dispatch(setAutoConnectLoading(true));
+      try {
+        if (connector?.connectEagerly) {
+          await connector.connectEagerly();
+        } else {
+          await connector.activate();
+        }
+      } finally {
+        dispatch(setAutoConnectLoading(false));
+      }
+    };
+    if (_provider?.on) {
+      _provider.on('chainChanged', handleChainChanged);
+    }
+    return () => {
+      if (_provider?.removeListener) {
+        _provider.removeListener('chainChanged', handleChainChanged);
+      }
+    };
   }, [provider]);
 
   // Init props to redux!
@@ -126,6 +141,10 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
     () => props.defaultChainId || 1,
     [props.defaultChainId],
   );
+
+  if (!props.apikey && !props.apiServices) {
+    console.error('apikey and apiServices must have a.');
+  }
 
   const connectors = useWeb3Connectors({
     provider: props.provider,

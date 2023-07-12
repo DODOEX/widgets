@@ -3,6 +3,7 @@ import { isEqual } from 'lodash';
 import { chainListMap } from '../../constants/chainList';
 import { useSelectChainList } from './useSelectChainList';
 import { useWeb3React } from '@web3-react/core';
+import tokenList from '../../constants/tokenList';
 
 const allChainList = Object.values(chainListMap);
 
@@ -10,6 +11,20 @@ jest.mock('@web3-react/core', () => ({
   useWeb3React: jest.fn(() => ({
     chainId: 1,
   })),
+}));
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: (fn: () => any) => {
+    if (typeof fn === 'function') {
+      return fn();
+    }
+    return [];
+  },
+}));
+
+jest.mock('../../store/selectors/token', () => ({
+  getAllTokenList: jest.fn(() => tokenList),
 }));
 
 describe('useSelectChainList:default', () => {

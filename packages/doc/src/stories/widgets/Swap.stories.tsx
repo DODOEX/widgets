@@ -84,6 +84,18 @@ export default {
         type: 'text',
       },
     },
+    onProviderChanged: {
+      action: 'providerChanged',
+    },
+    onTxFail: {
+      action: 'txFail',
+    },
+    onTxSubmit: {
+      action: 'txSubmit',
+    },
+    onTxSuccess: {
+      action: 'txSuccess',
+    },
   },
 } as ComponentMeta<typeof SwapWidget>;
 

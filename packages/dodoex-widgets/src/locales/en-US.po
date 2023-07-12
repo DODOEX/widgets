@@ -25,12 +25,12 @@ msgstr "Additional Fee"
 msgid "Additional routing fees set by the Widget user"
 msgstr "Additional routing fees set by the Widget user"
 
-#: src/components/Swap/index.tsx:590
+#: src/components/Swap/index.tsx:516
 #: src/hooks/Token/useGetTokenStatus.ts:138
 msgid "Approve"
 msgstr "Approve"
 
-#: src/components/Swap/index.tsx:590
+#: src/components/Swap/index.tsx:516
 msgid "Approving"
 msgstr "Approving"
 
@@ -39,7 +39,7 @@ msgid "Are you sure swapping to another chain?"
 msgstr "Are you sure swapping to another chain?"
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:280
-#: src/components/Swap/components/SettingsDialog/index.tsx:55
+#: src/components/Swap/components/SettingsDialog/index.tsx:53
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
@@ -59,7 +59,7 @@ msgstr "Basic Fee"
 msgid "Best offer"
 msgstr "Best offer"
 
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:119
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:125
 msgid "Bridge"
 msgstr "Bridge"
 
@@ -104,7 +104,7 @@ msgstr "Connect to your wallet"
 msgid "Connect to your {0} Wallet"
 msgstr "Connect to your {0} Wallet"
 
-#: src/components/Swap/index.tsx:382
+#: src/components/Swap/index.tsx:308
 msgid "Current price impact"
 msgstr "Current price impact"
 
@@ -130,15 +130,15 @@ msgid "Dismiss"
 msgstr "Dismiss"
 
 #: src/components/Swap/components/ReviewDialog.tsx:289
-#: src/components/Swap/index.tsx:374
+#: src/components/Swap/index.tsx:300
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
 
-#: src/components/Swap/index.tsx:596
+#: src/components/Swap/index.tsx:522
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
-#: src/components/TokenPicker/index.tsx:100
+#: src/components/TokenPicker/index.tsx:101
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
@@ -150,8 +150,8 @@ msgstr "Estimated Time"
 msgid "Estimated service provider fees"
 msgstr "Estimated service provider fees"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:201
-#: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:150
+#: src/components/Bridge/BridgeRouteShortCard.tsx:199
+#: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:148
 msgid "Estimated transaction time"
 msgstr "Estimated transaction time"
 
@@ -159,17 +159,17 @@ msgstr "Estimated transaction time"
 msgid "Fee"
 msgstr "Fee"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:240
-#: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:189
+#: src/components/Bridge/BridgeRouteShortCard.tsx:238
+#: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:187
 msgid "Fee includes: Bridge fees + Swap fees. Gas fee not included."
 msgstr "Fee includes: Bridge fees + Swap fees. Gas fee not included."
 
-#: src/components/Swap/index.tsx:608
+#: src/components/Swap/index.tsx:534
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:455
+#: src/components/Swap/index.tsx:381
 msgid "Fetching best price..."
 msgstr "Fetching best price..."
 
@@ -197,15 +197,15 @@ msgstr "Hour"
 msgid "Hours"
 msgstr "Hours"
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:99
+#: src/components/Swap/components/SettingsDialog/index.tsx:98
 msgid "If your transaction time exceeds the deadline, your transaction will be rescinded."
 msgstr "If your transaction time exceeds the deadline, your transaction will be rescinded."
 
-#: src/components/Swap/index.tsx:637
+#: src/components/Swap/index.tsx:563
 msgid "Insufficient balance"
 msgstr "Insufficient balance"
 
-#: src/hooks/Bridge/useSendRoute.ts:78
+#: src/hooks/Bridge/useSendRoute.ts:83
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 
@@ -217,7 +217,7 @@ msgstr "Insufficient funds - Please retry after depositing more {EtherTokenSymbo
 msgid "Max"
 msgstr "Max"
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:83
+#: src/components/Swap/components/SettingsDialog/index.tsx:82
 msgid "Maximum slippage do not exceed 50%"
 msgstr "Maximum slippage do not exceed 50%"
 
@@ -246,7 +246,7 @@ msgstr "No ForceStop access"
 msgid "On"
 msgstr "On"
 
-#: src/components/Swap/index.tsx:895
+#: src/components/Swap/index.tsx:823
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -263,7 +263,7 @@ msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:623
+#: src/components/Swap/index.tsx:549
 msgid "Quote not available"
 msgstr "Quote not available"
 
@@ -275,11 +275,11 @@ msgstr "RPC node data exception"
 msgid "Reset"
 msgstr "Reset"
 
-#: src/components/Swap/index.tsx:655
+#: src/components/Swap/index.tsx:581
 msgid "Review Bridge"
 msgstr "Review Bridge"
 
-#: src/components/Swap/index.tsx:665
+#: src/components/Swap/index.tsx:591
 msgid "Review Swap"
 msgstr "Review Swap"
 
@@ -307,7 +307,7 @@ msgstr "Seconds"
 msgid "Select Bridge"
 msgstr "Select Bridge"
 
-#: src/components/Swap/index.tsx:580
+#: src/components/Swap/index.tsx:506
 msgid "Select Tokens"
 msgstr "Select Tokens"
 
@@ -323,7 +323,7 @@ msgstr "Send to:"
 msgid "Service update, please wait and try again"
 msgstr "Service update, please wait and try again"
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:42
+#: src/components/Swap/components/SettingsDialog/index.tsx:40
 msgid "Settings"
 msgstr "Settings"
 
@@ -332,7 +332,7 @@ msgstr "Settings"
 msgid "Slippage"
 msgstr "Slippage"
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:52
+#: src/components/Swap/components/SettingsDialog/index.tsx:50
 msgid "Slippage Tolerance"
 msgstr "Slippage Tolerance"
 
@@ -345,7 +345,7 @@ msgstr "Something went wrong."
 msgid "Source"
 msgstr "Source"
 
-#: src/components/Swap/index.tsx:750
+#: src/components/Swap/index.tsx:676
 #: src/hooks/Swap/useExecuteSwap.ts:56
 msgid "Swap"
 msgstr "Swap"
@@ -358,15 +358,15 @@ msgstr "Swap Detail"
 msgid "Swap summary"
 msgstr "Swap summary"
 
-#: src/components/Swap/index.tsx:434
+#: src/components/Swap/index.tsx:360
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "The current network is inconsistent with the wallet - please switch in wallet"
 
-#: src/components/Swap/index.tsx:755
+#: src/components/Swap/index.tsx:681
 msgid "The setting has been switched to bridge mode"
 msgstr "The setting has been switched to bridge mode"
 
-#: src/components/Swap/index.tsx:757
+#: src/components/Swap/index.tsx:683
 msgid "The setting has been switched to swap mode"
 msgstr "The setting has been switched to swap mode"
 
@@ -382,11 +382,11 @@ msgstr "This token is on"
 msgid "To"
 msgstr "To"
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:96
+#: src/components/Swap/components/SettingsDialog/index.tsx:95
 msgid "Transaction Deadline"
 msgstr "Transaction Deadline"
 
-#: src/components/Swap/index.tsx:573
+#: src/components/Swap/index.tsx:499
 msgid "Transaction Pending"
 msgstr "Transaction Pending"
 
@@ -411,7 +411,7 @@ msgstr "Unable to SETTLE during the cooling-off period"
 msgid "Unapproved"
 msgstr "Unapproved"
 
-#: src/components/Swap/index.tsx:471
+#: src/components/Swap/index.tsx:397
 msgid "Unsupported network - switch to trade"
 msgstr "Unsupported network - switch to trade"
 
@@ -446,6 +446,6 @@ msgstr "{0} confirmed"
 msgid "{0} pending"
 msgstr "{0} pending"
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:111
+#: src/components/Swap/components/SettingsDialog/index.tsx:110
 msgid "{DEFAULT_SWAP_DDL} minutes"
 msgstr "{DEFAULT_SWAP_DDL} minutes"

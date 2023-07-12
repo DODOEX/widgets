@@ -1,14 +1,12 @@
 import { t, Trans } from '@lingui/macro';
-import { useEffect, useState, useMemo } from 'react';
-import Dialog, { DialogProps } from '../Dialog';
+import { useState, useMemo } from 'react';
+import Dialog from '../Dialog';
 import { QuestionTooltip } from '../../../Tooltip';
-import { Box, Input, useTheme } from '@dodoex/components';
+import { Box, useTheme } from '@dodoex/components';
 import { NumberInput } from './NumberInput';
 import {
   DEFAULT_SWAP_DDL,
   MAX_SWAP_SLIPPAGE,
-  DEFAULT_SWAP_SLIPPAGE,
-  DEFAULT_BRIDGE_SLIPPAGE,
 } from '../../../../constants/swap';
 import { TokenInfo } from '../../../../hooks/Token';
 import { useSelector } from 'react-redux';
@@ -16,11 +14,13 @@ import { getSlippage, getTxDdl } from '../../../../store/selectors/settings';
 import { useDispatch } from 'react-redux';
 import { AppThunkDispatch } from '../../../../store/actions';
 import { setSlippage, setTxDdl } from '../../../../store/actions/settings';
+import { setLastSlippage } from '../../../../constants/localstorage';
+import { useDefaultSlippage } from '../../../../hooks/setting/useDefaultSlippage';
 
 export interface SettingsDialogProps {
   open: boolean;
   onClose: () => void;
-  isBridge: boolean;
+  isBridge: boolean | undefined;
 }
 export function SettingsDialog({
   open,
@@ -35,9 +35,7 @@ export function SettingsDialog({
     () => Number(slippage) >= MAX_SWAP_SLIPPAGE,
     [slippage],
   );
-  const defaultSlippage = isBridge
-    ? DEFAULT_BRIDGE_SLIPPAGE
-    : DEFAULT_SWAP_SLIPPAGE;
+  const defaultSlippage = useDefaultSlippage(isBridge);
   return (
     <Dialog open={open} onClose={onClose} title={<Trans>Settings</Trans>}>
       <Box
@@ -64,9 +62,10 @@ export function SettingsDialog({
             <NumberInput
               fullWidth
               maxVal={100}
-              value={slippage as string}
+              value={slippage ?? ''}
               placeholder={defaultSlippage.toString()}
               onInputChange={(v: string | null) => {
+                setLastSlippage(!!isBridge, v);
                 dispatch(setSlippage(v));
               }}
               suffix={<Box sx={{ color: 'text.disabled' }}>%</Box>}

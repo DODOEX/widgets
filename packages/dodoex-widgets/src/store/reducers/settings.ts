@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { DEFAULT_SWAP_SLIPPAGE, DEFAULT_SWAP_DDL } from '../../constants/swap';
+import { DEFAULT_SWAP_DDL } from '../../constants/swap';
 import { PaletteMode } from '@dodoex/components';
 
 export type ColorMode = PaletteMode | 'system';
@@ -14,7 +14,7 @@ export type State = {
 
 export const initialState: State = {
   colorMode: 'dark',
-  slippage: DEFAULT_SWAP_SLIPPAGE.toString(),
+  slippage: null,
   ddl: DEFAULT_SWAP_DDL,
 };
 
