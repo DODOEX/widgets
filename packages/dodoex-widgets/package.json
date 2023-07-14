@@ -14,8 +14,9 @@
   ],
   "scripts": {
     "prepare": "yarn compile:i18n",
-    "extract:i18": "lingui extract --locale en-US",
-    "compile:i18n": "yarn extract:i18 && lingui compile",
+    "extract:i18n": "lingui extract --locale en-US",
+    "compile:i18n": "yarn extract:i18n && lingui compile",
+    "sync:i18n": "lingui extract --overwrite && lingui compile",
     "watch": "yarn run rollup -c --watch",
     "build": "yarn compile:i18n && rollup --config",
     "release": "semantic-release",

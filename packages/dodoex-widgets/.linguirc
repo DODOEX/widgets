@@ -13,5 +13,9 @@
       ]
     }
   ],
-  "format": "po"
+  "format": "po",
+  "service": {
+    "name": "TranslationIO",
+    "apiKey": "9696f3ce41f64e95925ecdba7c8a29cf"
+  }
 }

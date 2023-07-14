@@ -13,10 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/SwitchChainDialog/index.tsx:87
-msgid "."
-msgstr "."
-
 #: src/components/Swap/components/ReviewDialog.tsx:261
 msgid "Additional Fee"
 msgstr "Additional Fee"
@@ -34,7 +30,7 @@ msgstr "Approve"
 msgid "Approving"
 msgstr "Approving"
 
-#: src/components/SwitchChainDialog/index.tsx:89
+#: src/components/SwitchChainDialog/index.tsx:88
 msgid "Are you sure swapping to another chain?"
 msgstr "Are you sure swapping to another chain?"
 
@@ -43,7 +39,7 @@ msgstr "Are you sure swapping to another chain?"
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
-#: src/components/SwitchChainDialog/index.tsx:112
+#: src/components/SwitchChainDialog/index.tsx:111
 msgid "Auto switch network"
 msgstr "Auto switch network"
 
@@ -67,7 +63,7 @@ msgstr "Bridge"
 msgid "Bridge Summary"
 msgstr "Bridge Summary"
 
-#: src/components/SwitchChainDialog/index.tsx:123
+#: src/components/SwitchChainDialog/index.tsx:122
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -75,7 +71,7 @@ msgstr "Cancel"
 msgid "Close"
 msgstr "Close"
 
-#: src/components/SwitchChainDialog/index.tsx:134
+#: src/components/SwitchChainDialog/index.tsx:133
 msgid "Confirm"
 msgstr "Confirm"
 
@@ -291,10 +287,6 @@ msgstr "SELECT TOKEN"
 msgid "SafeERC20: low-level call failed. Please contact the DODO team."
 msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
 
-#: src/hooks/Submission/getExecutionErrorMsg.ts:20
-#~ msgid "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
-#~ msgstr "SafeERC20: low-level call failed. Please log a Zendesk support ticket or contact the DODO team."
-
 #: src/utils/time.ts:7
 msgid "Second"
 msgstr "Second"
@@ -418,10 +410,6 @@ msgstr "Unsupported network - switch to trade"
 #: src/hooks/Submission/getExecutionErrorMsg.ts:24
 msgid "User denied transaction signature."
 msgstr "User denied transaction signature."
-
-#: src/components/WithExecutionDialog/index.tsx:195
-#~ msgid "View on Etherscan"
-#~ msgstr "View on Etherscan"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:57
 msgid "Wallet incompatibility"

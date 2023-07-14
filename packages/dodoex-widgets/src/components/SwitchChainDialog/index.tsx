@@ -83,8 +83,7 @@ export default function SwitchChainDialog({
           }}
         >
           <Trans>This token is on</Trans>
-          &nbsp;{network}
-          <Trans>.</Trans>
+          &nbsp;{network}.
           <br />
           <Trans>Are you sure swapping to another chain?</Trans>
         </Box>
