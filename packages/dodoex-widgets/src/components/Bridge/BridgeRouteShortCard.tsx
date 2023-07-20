@@ -236,7 +236,7 @@ export default function BridgeRouteShortCard({
           placement="top"
           title={
             <Trans>
-              Fee includes: Bridge fees + Swap fees. Gas fee not included.
+              Fee includes: Cross Chain fees + Swap fees. Gas fee not included.
             </Trans>
           }
         >

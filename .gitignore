@@ -29,3 +29,6 @@ notes.txt
 #hardhat
 cache
 .npmrc
+
+#lingui
+.linguirc.local

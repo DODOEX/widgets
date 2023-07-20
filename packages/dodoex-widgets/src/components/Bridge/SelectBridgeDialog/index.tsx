@@ -29,7 +29,11 @@ export default function SelectBridgeDialog({
   }, [bridgeRouteList, getBalance]);
 
   return (
-    <Dialog open={open} onClose={onClose} title={<Trans>Select Bridge</Trans>}>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      title={<Trans>Select Cross Chain</Trans>}
+    >
       <Box
         sx={{
           position: 'relative',

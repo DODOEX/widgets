@@ -578,7 +578,7 @@ export function Swap() {
           data-testid={swapReviewBtn}
           isLoading={sendRouteLoading}
         >
-          <Trans>Review Bridge</Trans>
+          <Trans>Review Cross Chain</Trans>
         </Button>
       );
     }
@@ -678,7 +678,7 @@ export function Swap() {
           open={showSwitchSlippageTooltip}
           title={
             isBridge ? (
-              <Trans>The setting has been switched to bridge mode</Trans>
+              <Trans>The setting has been switched to cross chain mode</Trans>
             ) : (
               <Trans>The setting has been switched to swap mode</Trans>
             )

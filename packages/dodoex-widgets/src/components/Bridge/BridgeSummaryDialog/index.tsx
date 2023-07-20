@@ -58,7 +58,7 @@ export default function BridgeSummaryDialog({
 
   return (
     <Dialog
-      title={<Trans>Bridge Summary</Trans>}
+      title={<Trans>Cross Chain Summary</Trans>}
       open={open}
       onClose={() => {
         dispatch(
@@ -152,7 +152,7 @@ export default function BridgeSummaryDialog({
             {contractStatus == ContractStatus.Pending ? (
               <Trans>Confirming</Trans>
             ) : (
-              <Trans>Confirm Bridge</Trans>
+              <Trans>Confirm Cross Chain</Trans>
             )}
           </Button>
         </Box>
