@@ -122,7 +122,7 @@ export default function useExecuteBridgeRoute({
         roundedRouteCostTime,
       };
       return submission.execute(
-        t`Bridge`,
+        t`Cross Chain`,
         {
           opcode: OpCode.TX,
           ...bridgeOrderTxRequest,

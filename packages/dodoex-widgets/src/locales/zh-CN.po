@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2023-07-20 11:56+0800\n"
+"POT-Creation-Date: 2023-07-20 12:07+0800\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -49,14 +49,6 @@ msgstr "基础手续费"
 msgid "Best offer"
 msgstr "最优价格"
 
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:125
-msgid "Bridge"
-msgstr "跨链桥"
-
-#: src/components/Bridge/BridgeSummaryDialog/index.tsx:61
-msgid "Bridge Summary"
-msgstr "跨链桥概览"
-
 #: src/components/SwitchChainDialog/index.tsx:122
 msgid "Cancel"
 msgstr "取消"
@@ -70,7 +62,7 @@ msgid "Confirm"
 msgstr "确认"
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:155
-msgid "Confirm Bridge"
+msgid "Confirm Cross Chain"
 msgstr "确认跨链交易"
 
 #: src/components/Swap/components/ReviewDialog.tsx:401
@@ -93,6 +85,14 @@ msgstr "链接钱包"
 #: src/components/Swap/components/ConnectWallet/ConnectWalletDialog.tsx:75
 msgid "Connect to your {0} Wallet"
 msgstr "链接你的第{0}个钱包"
+
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:125
+msgid "Cross Chain"
+msgstr "跨链桥"
+
+#: src/components/Bridge/BridgeSummaryDialog/index.tsx:61
+msgid "Cross Chain Summary"
+msgstr "跨链桥概览"
 
 #: src/components/Swap/index.tsx:308
 msgid "Current price impact"
@@ -151,7 +151,7 @@ msgstr "手续费"
 
 #: src/components/Bridge/BridgeRouteShortCard.tsx:238
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:187
-msgid "Fee includes: Bridge fees + Swap fees. Gas fee not included."
+msgid "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 
 #: src/components/Swap/index.tsx:534
@@ -266,7 +266,7 @@ msgid "Reset"
 msgstr "重置"
 
 #: src/components/Swap/index.tsx:581
-msgid "Review Bridge"
+msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
 #: src/components/Swap/index.tsx:591
@@ -289,8 +289,8 @@ msgstr "秒"
 msgid "Seconds"
 msgstr "秒"
 
-#: src/components/Bridge/SelectBridgeDialog/index.tsx:32
-msgid "Select Bridge"
+#: src/components/Bridge/SelectBridgeDialog/index.tsx:35
+msgid "Select Cross Chain"
 msgstr "选择跨链桥"
 
 #: src/components/Swap/index.tsx:506
@@ -349,7 +349,7 @@ msgid "The current network is inconsistent with the wallet - please switch in wa
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
 #: src/components/Swap/index.tsx:681
-msgid "The setting has been switched to bridge mode"
+msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
 #: src/components/Swap/index.tsx:683

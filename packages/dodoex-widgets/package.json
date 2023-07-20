@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "prepare": "yarn compile:i18n",
-    "extract:i18n": "lingui extract --locale en-US",
+    "extract:i18n": "lingui extract --clean",
     "compile:i18n": "yarn extract:i18n && lingui compile",
     "sync:i18n": "export $(cat .env | xargs) && env lingui extract --overwrite && lingui compile",
     "watch": "yarn run rollup -c --watch",

@@ -55,14 +55,6 @@ msgstr "Basic Fee"
 msgid "Best offer"
 msgstr "Best offer"
 
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:125
-msgid "Bridge"
-msgstr "Bridge"
-
-#: src/components/Bridge/BridgeSummaryDialog/index.tsx:61
-msgid "Bridge Summary"
-msgstr "Bridge Summary"
-
 #: src/components/SwitchChainDialog/index.tsx:122
 msgid "Cancel"
 msgstr "Cancel"
@@ -76,8 +68,8 @@ msgid "Confirm"
 msgstr "Confirm"
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:155
-msgid "Confirm Bridge"
-msgstr "Confirm Bridge"
+msgid "Confirm Cross Chain"
+msgstr "Confirm Cross Chain"
 
 #: src/components/Swap/components/ReviewDialog.tsx:401
 msgid "Confirm swap"
@@ -99,6 +91,14 @@ msgstr "Connect to your wallet"
 #: src/components/Swap/components/ConnectWallet/ConnectWalletDialog.tsx:75
 msgid "Connect to your {0} Wallet"
 msgstr "Connect to your {0} Wallet"
+
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:125
+msgid "Cross Chain"
+msgstr "Cross Chain"
+
+#: src/components/Bridge/BridgeSummaryDialog/index.tsx:61
+msgid "Cross Chain Summary"
+msgstr "Cross Chain Summary"
 
 #: src/components/Swap/index.tsx:308
 msgid "Current price impact"
@@ -157,8 +157,8 @@ msgstr "Fee"
 
 #: src/components/Bridge/BridgeRouteShortCard.tsx:238
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:187
-msgid "Fee includes: Bridge fees + Swap fees. Gas fee not included."
-msgstr "Fee includes: Bridge fees + Swap fees. Gas fee not included."
+msgid "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
+msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 
 #: src/components/Swap/index.tsx:534
 msgid "Fetching Price..."
@@ -272,8 +272,8 @@ msgid "Reset"
 msgstr "Reset"
 
 #: src/components/Swap/index.tsx:581
-msgid "Review Bridge"
-msgstr "Review Bridge"
+msgid "Review Cross Chain"
+msgstr "Review Cross Chain"
 
 #: src/components/Swap/index.tsx:591
 msgid "Review Swap"
@@ -295,9 +295,9 @@ msgstr "Second"
 msgid "Seconds"
 msgstr "Seconds"
 
-#: src/components/Bridge/SelectBridgeDialog/index.tsx:32
-msgid "Select Bridge"
-msgstr "Select Bridge"
+#: src/components/Bridge/SelectBridgeDialog/index.tsx:35
+msgid "Select Cross Chain"
+msgstr "Select Cross Chain"
 
 #: src/components/Swap/index.tsx:506
 msgid "Select Tokens"
@@ -355,8 +355,8 @@ msgid "The current network is inconsistent with the wallet - please switch in wa
 msgstr "The current network is inconsistent with the wallet - please switch in wallet"
 
 #: src/components/Swap/index.tsx:681
-msgid "The setting has been switched to bridge mode"
-msgstr "The setting has been switched to bridge mode"
+msgid "The setting has been switched to cross chain mode"
+msgstr "The setting has been switched to cross chain mode"
 
 #: src/components/Swap/index.tsx:683
 msgid "The setting has been switched to swap mode"
