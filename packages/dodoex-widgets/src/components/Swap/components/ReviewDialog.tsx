@@ -17,6 +17,7 @@ import useInflights from '../../../hooks/Submission/useInflights';
 import { PRICE_IMPACT_THRESHOLD } from '../../../constants/swap';
 import { QuestionTooltip } from '../../Tooltip';
 import { getSlippage } from '../../../store/selectors/settings';
+import { useDefaultSlippage } from '../../../hooks/setting/useDefaultSlippage';
 
 export interface ReviewDialogProps {
   open: boolean;
@@ -53,7 +54,8 @@ export function ReviewDialog({
   additionalFeeAmount,
 }: ReviewDialogProps) {
   const theme = useTheme();
-  const slippage = useSelector(getSlippage);
+  const defaultSlippage = useDefaultSlippage(false);
+  const slippage = useSelector(getSlippage) ?? defaultSlippage;
   const dispatch = useDispatch<AppThunkDispatch>();
   const { contractStatus } = useSelector(getGlobalProps);
   const isPriceWaningShown = useMemo(
