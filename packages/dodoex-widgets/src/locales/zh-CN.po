@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2023-07-20 12:07+0800\n"
+"POT-Creation-Date: 2023-07-20 16:54+0800\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: zh-CN\n"
 
-#: src/components/Swap/components/ReviewDialog.tsx:261
+#: src/components/Swap/components/ReviewDialog.tsx:263
 msgid "Additional Fee"
 msgstr "额外手续费"
 
-#: src/components/Swap/components/ReviewDialog.tsx:264
+#: src/components/Swap/components/ReviewDialog.tsx:266
 msgid "Additional routing fees set by the Widget user"
 msgstr "由 Widget 设置的额外路由费用"
 
@@ -41,7 +41,7 @@ msgstr "自动切换网络"
 msgid "Balance:"
 msgstr "余额:"
 
-#: src/components/Swap/components/ReviewDialog.tsx:240
+#: src/components/Swap/components/ReviewDialog.tsx:242
 msgid "Basic Fee"
 msgstr "基础手续费"
 
@@ -65,26 +65,26 @@ msgstr "确认"
 msgid "Confirm Cross Chain"
 msgstr "确认跨链交易"
 
-#: src/components/Swap/components/ReviewDialog.tsx:401
+#: src/components/Swap/components/ReviewDialog.tsx:403
 msgid "Confirm swap"
 msgstr "确认交易"
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:153
-#: src/components/Swap/components/ReviewDialog.tsx:399
+#: src/components/Swap/components/ReviewDialog.tsx:401
 msgid "Confirming"
 msgstr "确认中"
 
 #: src/components/Swap/components/ConnectWallet/index.tsx:32
 msgid "Connect to a wallet"
-msgstr "链接钱包"
+msgstr "连接钱包"
 
 #: src/components/Swap/components/ConnectWallet/ConnectWalletDialog.tsx:19
 msgid "Connect to your wallet"
-msgstr "链接钱包"
+msgstr "连接钱包"
 
 #: src/components/Swap/components/ConnectWallet/ConnectWalletDialog.tsx:75
 msgid "Connect to your {0} Wallet"
-msgstr "链接你的第{0}个钱包"
+msgstr "连接你的第{0}个钱包"
 
 #: src/hooks/Bridge/useExecuteBridgeRoute.tsx:125
 msgid "Cross Chain"
@@ -119,7 +119,7 @@ msgstr "详情"
 msgid "Dismiss"
 msgstr "忽略"
 
-#: src/components/Swap/components/ReviewDialog.tsx:289
+#: src/components/Swap/components/ReviewDialog.tsx:291
 #: src/components/Swap/index.tsx:300
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
@@ -136,7 +136,7 @@ msgstr "输入代币符号或地址"
 msgid "Estimated Time"
 msgstr "预计时间"
 
-#: src/components/Swap/components/ReviewDialog.tsx:242
+#: src/components/Swap/components/ReviewDialog.tsx:244
 msgid "Estimated service provider fees"
 msgstr "预计服务供应商费用"
 
@@ -175,7 +175,7 @@ msgstr "ForceStop 异常"
 msgid "Gas price is too low, please adjust in your wallet and try again"
 msgstr "Gas 价格过低, 请调整后重试"
 
-#: src/components/Swap/components/ReviewDialog.tsx:312
+#: src/components/Swap/components/ReviewDialog.tsx:314
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
@@ -240,7 +240,7 @@ msgstr "在"
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
-#: src/components/Swap/components/ReviewDialog.tsx:286
+#: src/components/Swap/components/ReviewDialog.tsx:288
 msgid "Price Impact"
 msgstr "价格冲击"
 
@@ -248,7 +248,7 @@ msgstr "价格冲击"
 msgid "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
 msgstr "价格冲击超过了你设置的滑点, 请提高滑点后重试"
 
-#: src/components/Swap/components/ReviewDialog.tsx:373
+#: src/components/Swap/components/ReviewDialog.tsx:375
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 
@@ -314,7 +314,7 @@ msgid "Settings"
 msgstr "设置"
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:276
-#: src/components/Swap/components/ReviewDialog.tsx:309
+#: src/components/Swap/components/ReviewDialog.tsx:311
 msgid "Slippage"
 msgstr "滑点"
 
@@ -334,13 +334,13 @@ msgstr "源"
 #: src/components/Swap/index.tsx:676
 #: src/hooks/Swap/useExecuteSwap.ts:56
 msgid "Swap"
-msgstr "Swap"
+msgstr "交易"
 
-#: src/components/Swap/components/ReviewDialog.tsx:213
+#: src/components/Swap/components/ReviewDialog.tsx:215
 msgid "Swap Detail"
 msgstr "交易详情"
 
-#: src/components/Swap/components/ReviewDialog.tsx:92
+#: src/components/Swap/components/ReviewDialog.tsx:94
 msgid "Swap summary"
 msgstr "交易预览"
 
@@ -387,7 +387,7 @@ msgstr "交易被拒绝."
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:205
 #: src/components/WithExecutionDialog/index.tsx:201
 msgid "Tx"
-msgstr "交易哈西："
+msgstr "交易哈希："
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:51
 msgid "Unable to SETTLE during the cooling-off period"
