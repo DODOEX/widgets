@@ -16,7 +16,7 @@
     "prepare": "yarn compile:i18n",
     "extract:i18n": "lingui extract --locale en-US",
     "compile:i18n": "yarn extract:i18n && lingui compile",
-    "sync:i18n": "lingui extract --overwrite --config=linguiirc.local && lingui compile",
+    "sync:i18n": "export $(cat .env | xargs) && env lingui extract --overwrite && lingui compile",
     "watch": "yarn run rollup -c --watch",
     "build": "yarn compile:i18n && rollup --config",
     "release": "semantic-release",
