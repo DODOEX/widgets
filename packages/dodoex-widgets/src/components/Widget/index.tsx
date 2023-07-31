@@ -52,6 +52,7 @@ export interface WidgetProps
   swapSlippage?: number; // Unit: %
   bridgeSlippage?: number; // Unit: %
   apiServices?: Partial<APIServices>;
+  crossChain?: boolean;
 
   onProviderChanged?: (provider?: any) => void;
 }

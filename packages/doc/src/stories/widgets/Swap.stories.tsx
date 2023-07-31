@@ -204,4 +204,5 @@ Primary.args = {
     },
   ],
   tokenList: 'all',
+  crossChain: true,
 };

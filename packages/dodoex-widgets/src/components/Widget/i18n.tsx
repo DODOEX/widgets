@@ -24,6 +24,7 @@ interface LangProviderProps {
 }
 
 export async function loadI18(locale: SupportedLang = defaultLang) {
+  // @ts-ignore
   i18n.loadLocaleData(locale, { plurals: () => plurals[locale] });
   try {
     const catalog = await import(`../../locales/${locale}.js`);

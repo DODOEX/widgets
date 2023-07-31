@@ -20,6 +20,14 @@ export interface ExecutionProps {
   onTxFail?: (error: Error, data: any) => void;
   onTxSubmit?: (tx: string, data: any) => void;
   onTxSuccess?: (tx: string, data: any) => void;
+  executionStatus?: {
+    showing?: Showing | null;
+    showingDone?: boolean;
+    transactionTx?: string;
+    errorMessage?: string;
+    setErrorMessage?: (msg?: string | null) => void;
+    closeShowing?: () => void;
+  };
 }
 
 export default function useExecution({

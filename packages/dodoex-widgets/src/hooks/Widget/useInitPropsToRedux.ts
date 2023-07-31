@@ -24,6 +24,7 @@ export function useInitPropsToRedux({
   swapSlippage,
   bridgeSlippage,
   apiServices,
+  crossChain,
 }: WidgetProps) {
   const dispatch = useDispatch<AppThunkDispatch>();
 
@@ -136,4 +137,14 @@ export function useInitPropsToRedux({
       );
     }
   }, [jsonRpcUrlMap]);
+
+  useEffect(() => {
+    if (crossChain) {
+      dispatch(
+        setGlobalProps({
+          crossChain,
+        }),
+      );
+    }
+  }, [crossChain]);
 }
