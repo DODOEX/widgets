@@ -8,7 +8,6 @@ export const maxSlippageWarning = 5;
 export const useSlippageLimit = (isBridge: boolean | undefined) => {
   const defaultSlippage = useDefaultSlippage(isBridge);
   const slippage = useSelector(getSlippage) || defaultSlippage;
-  console.log('jie', slippage);
   return useMemo(() => {
     return Number(slippage) > maxSlippageWarning;
   }, [slippage]);
