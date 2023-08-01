@@ -355,7 +355,10 @@ export function Swap() {
     if (
       !isSlippageExceedLimit ||
       !new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0) ||
-      insufficientBalance
+      insufficientBalance ||
+      (!isBridge
+        ? bridgeRouteStatus !== RoutePriceStatus.Success
+        : resPriceStatus !== RoutePriceStatus.Success)
     ) {
       return null;
     }
@@ -380,7 +383,15 @@ export function Swap() {
         {t`The current slippage protection coefficient set exceeds ${maxSlippageWarning}%, which may result in losses.`}
       </Box>
     );
-  }, [isSlippageExceedLimit, isReverseRouting, fromAmt, toAmt]);
+  }, [
+    isSlippageExceedLimit,
+    isReverseRouting,
+    fromAmt,
+    toAmt,
+    isBridge,
+    bridgeRouteStatus,
+    resPriceStatus,
+  ]);
 
   const priceInfo = useMemo(() => {
     if (isNotCurrentChain) {
