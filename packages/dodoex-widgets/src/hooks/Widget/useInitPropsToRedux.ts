@@ -139,7 +139,7 @@ export function useInitPropsToRedux({
   }, [jsonRpcUrlMap]);
 
   useEffect(() => {
-    if (crossChain) {
+    if (crossChain !== undefined) {
       dispatch(
         setGlobalProps({
           crossChain,
