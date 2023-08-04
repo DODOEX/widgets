@@ -33,7 +33,7 @@ export default function BridgeSummaryDetail({
   route: BridgeRouteI;
 }) {
   const theme = useTheme();
-  const fromChain = chainListMap[route.fromChainId as ChainId];
+  const fromChain = chainListMap.get(route.fromChainId as ChainId);
   // const [isEditFromAddress, setIsEditFromAddress] = useState(false);
   // const [fromAddress, setFromAddress] = useState(route.fromAddress);
   const fromAddressScanUrl = useMemo(() => {

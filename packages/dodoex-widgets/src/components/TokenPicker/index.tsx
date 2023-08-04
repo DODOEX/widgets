@@ -64,7 +64,7 @@ export default function TokenPicker({
         setFixedSizeHeight(ref.current.offsetHeight - 16);
       }
     }
-  }, [ref, visible]);
+  }, [ref, visible, selectChainId]);
 
   const TokenItemFixedSizeMemo = useCallback(
     ({ index, style }: { index: number; style: CSSProperties }) => {
@@ -90,6 +90,7 @@ export default function TokenPicker({
         flexDirection: 'column',
         px: 20,
         flex: 1,
+        overflow: 'hidden',
       }}
     >
       <SearchInput

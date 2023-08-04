@@ -17,9 +17,13 @@ export enum ChainId {
   AVALANCHE = 43114,
 
   CONFLUX = 1030,
+
+  BASE = 8453,
 }
 
-export const rpcServerMap = {
+export const rpcServerMap: {
+  [key in ChainId]: Array<string>;
+} = {
   [ChainId.MAINNET]: [
     'https://rpc.ankr.com/eth',
     'https://eth-mainnet.public.blastapi.io',
@@ -81,6 +85,10 @@ export const rpcServerMap = {
     'https://evm.confluxrpc.com',
     'https://conflux-espace-public.unifra.io',
   ],
+  [ChainId.BASE]: [
+    'https://mainnet.base.org',
+    'https://base-mainnet.public.blastapi.io',
+  ],
 };
 
 const DEFAULT_BASIC_TOKEN = {
@@ -91,7 +99,11 @@ const DEFAULT_BASIC_TOKEN = {
   showDecimals: 4,
   wrappedTokenSymbol: 'WETH',
 };
-export const basicTokenMap = {
+export const basicTokenMap: {
+  [key in ChainId]: typeof DEFAULT_BASIC_TOKEN & {
+    wrappedTokenAddress: string;
+  };
+} = {
   [ChainId.MAINNET]: {
     ...DEFAULT_BASIC_TOKEN,
     wrappedTokenAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
@@ -153,9 +165,16 @@ export const basicTokenMap = {
     wrappedTokenSymbol: 'WAVAX',
     wrappedTokenAddress: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
   },
+  [ChainId.BASE]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenSymbol: 'WETH',
+    wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
+  },
 };
 
-export const platformIdMap = {
+export const platformIdMap: {
+  [key in ChainId]: string;
+} = {
   [ChainId.MAINNET]: 'ethereum',
   [ChainId.GOERLI]: 'goerli',
   [ChainId.OPTIMISM]: 'optimism',
@@ -166,9 +185,12 @@ export const platformIdMap = {
   [ChainId.ARBITRUM_ONE]: 'arbitrum',
   [ChainId.AURORA]: 'aurora',
   [ChainId.AVALANCHE]: 'avalanche', // Needs confirm
+  [ChainId.BASE]: 'base',
 };
 
-export const scanUrlDomainMap = {
+export const scanUrlDomainMap: {
+  [key in ChainId]: string;
+} = {
   [ChainId.MAINNET]: 'etherscan.io',
   [ChainId.GOERLI]: 'goerli.etherscan.io',
   [ChainId.OPTIMISM]: 'optimistic.etherscan.io',
@@ -179,4 +201,5 @@ export const scanUrlDomainMap = {
   [ChainId.ARBITRUM_ONE]: 'arbiscan.io',
   [ChainId.AURORA]: 'aurorascan.dev',
   [ChainId.AVALANCHE]: 'snowtrace.io',
+  [ChainId.BASE]: 'basescan.org',
 };

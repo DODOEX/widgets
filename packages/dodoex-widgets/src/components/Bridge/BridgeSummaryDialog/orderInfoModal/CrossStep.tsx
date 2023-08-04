@@ -38,8 +38,8 @@ export function CrossStep({
 
   const [fromChain, toChain] = useMemo(() => {
     return [
-      chainListMap[fromChainId as ChainId],
-      chainListMap[toChainId as ChainId],
+      chainListMap.get(fromChainId as ChainId),
+      chainListMap.get(toChainId as ChainId),
     ];
   }, [fromChainId, toChainId]);
 

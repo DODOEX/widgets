@@ -1,6 +1,12 @@
 import { ChainId } from '../../constants/chains';
 
-export default {
+const contractMap: {
+  [key in ChainId]: {
+    MULTI_CALL: string;
+    DODO_APPROVE: string;
+    ERC20_HELPER: string;
+  };
+} = {
   [ChainId.MAINNET]: {
     MULTI_CALL: '0xeefba1e63905ef1d7acba5a8513c70307c1ce441',
     DODO_APPROVE: '0xCB859eA579b28e02B87A1FDE08d087ab9dbE5149',
@@ -51,4 +57,11 @@ export default {
     DODO_APPROVE: '0x5BaF16d57620Cb361F622232F3cb4090e35F3da2',
     ERC20_HELPER: '0x24549FC74B3076A962624A26370ed556c467F74C',
   },
+  [ChainId.BASE]: {
+    MULTI_CALL: '0xf5Ec1a19e1570bDf0A3AaA6585274f27027270b1',
+    DODO_APPROVE: '0x89872650fA1A391f58B4E144222bB02e44db7e3B',
+    ERC20_HELPER: '0xB5c7BA1EAde74800cD6cf5F56b1c4562De373780',
+  },
 };
+
+export default contractMap;

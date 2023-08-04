@@ -50,7 +50,7 @@ export async function registerNetworkWithMetamask({
     }
     const addChainParameters = {
       chainId: chainIdStr,
-      chainName: chainListMap[chainId]?.name,
+      chainName: chainListMap.get(chainId)?.name,
       rpcUrls: [
         ...rpcServerMap[chainId],
         ...(store.getState().globals.jsonRpcUrlMap?.[chainId] ?? []),
