@@ -134,7 +134,7 @@ msgstr "Due to the market condition, market price and estimated price may have a
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
-#: src/components/TokenPicker/index.tsx:101
+#: src/components/TokenPicker/index.tsx:102
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 

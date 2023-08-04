@@ -23,8 +23,8 @@ export function RouteSteps({
 
   const [fromChain, toChain] = useMemo(() => {
     return [
-      chainListMap[fromChainId as ChainId],
-      chainListMap[toChainId as ChainId],
+      chainListMap.get(fromChainId as ChainId),
+      chainListMap.get(toChainId as ChainId),
     ];
   }, [fromChainId, toChainId]);
 
@@ -64,7 +64,7 @@ export function RouteSteps({
               typography: 'body1',
             }}
           >
-            {fromChain.name}
+            {fromChain?.name}
           </Box>
         </Box>
       </Box>
@@ -136,7 +136,7 @@ export function RouteSteps({
               typography: 'body1',
             }}
           >
-            {toChain.name}
+            {toChain?.name}
           </Box>
         </Box>
       </Box>

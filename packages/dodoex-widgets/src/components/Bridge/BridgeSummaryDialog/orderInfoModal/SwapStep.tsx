@@ -33,7 +33,7 @@ export function SwapStep({
   const theme = useTheme();
 
   const chain = useMemo(() => {
-    return chainListMap[chainId as ChainId];
+    return chainListMap.get(chainId as ChainId);
   }, [chainId]);
 
   return (
@@ -148,7 +148,7 @@ export function SwapStep({
                 ml: 4,
               }}
             >
-              {chain.name}
+              {chain?.name}
             </Box>
           </Box>
         </Box>
@@ -197,7 +197,7 @@ export function SwapStep({
               mr: 8,
             }}
           >
-            {chain.name}
+            {chain?.name}
           </Box>
         </Box>
 

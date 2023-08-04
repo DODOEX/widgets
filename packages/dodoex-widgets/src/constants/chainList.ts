@@ -8,64 +8,102 @@ import { ReactComponent as AvalancheLogo } from '../assets/logo/networks/avalanc
 import { ReactComponent as AuroraLogo } from '../assets/logo/networks/aurora.svg';
 import { ReactComponent as OKChainLogo } from '../assets/logo/networks/okchain.svg';
 import { ReactComponent as CFXLogo } from '../assets/logo/networks/cfx.svg';
+import { ReactComponent as BaseLogo } from '../assets/logo/networks/base.svg';
 
-export const chainListMap: {
-  [key in ChainId]: {
-    chainId: ChainId;
-    logo: typeof ETHereumLogo;
-    name: string;
-    mainnet?: ChainId;
-  };
-} = {
-  [ChainId.MAINNET]: {
-    chainId: ChainId.MAINNET,
-    logo: ETHereumLogo,
-    name: 'Ethereum',
-  },
-  [ChainId.GOERLI]: {
-    chainId: ChainId.GOERLI,
-    logo: ETHereumLogo,
-    name: 'Goerli',
-    mainnet: ChainId.MAINNET,
-  },
-  [ChainId.ARBITRUM_ONE]: {
-    chainId: ChainId.ARBITRUM_ONE,
-    logo: ArbitrumLogo,
-    name: 'Arbitrum',
-  },
-  [ChainId.POLYGON]: {
-    chainId: ChainId.POLYGON,
-    logo: PolygonLogo,
-    name: 'Polygon',
-  },
-  [ChainId.BSC]: {
-    chainId: ChainId.BSC,
-    logo: BSCLogo,
-    name: 'BNBChain',
-  },
-  [ChainId.OPTIMISM]: {
-    chainId: ChainId.OPTIMISM,
-    logo: OptimismLogo,
-    name: 'Optimism',
-  },
-  [ChainId.AVALANCHE]: {
-    chainId: ChainId.AVALANCHE,
-    logo: AvalancheLogo,
-    name: 'Avalanche',
-  },
-  [ChainId.AURORA]: {
-    chainId: ChainId.AURORA,
-    logo: AuroraLogo,
-    name: 'Aurora',
-  },
-  [ChainId.OKCHAIN]: {
-    chainId: ChainId.OKCHAIN,
-    logo: OKChainLogo,
-    name: 'OKTC',
-  },
-  [ChainId.CONFLUX]: {
-    chainId: ChainId.CONFLUX,
-    logo: CFXLogo,
-    name: 'Conflux eSpace',
-  },
-};
+export interface ChainListItem {
+  chainId: ChainId;
+  logo: typeof ETHereumLogo;
+  name: string;
+  mainnet?: ChainId;
+}
+export const chainListMap: Map<ChainId, ChainListItem> = new Map([
+  [
+    ChainId.MAINNET,
+    {
+      chainId: ChainId.MAINNET,
+      logo: ETHereumLogo,
+      name: 'Ethereum',
+    },
+  ],
+  [
+    ChainId.GOERLI,
+    {
+      chainId: ChainId.GOERLI,
+      logo: ETHereumLogo,
+      name: 'Goerli',
+      mainnet: ChainId.MAINNET,
+    },
+  ],
+  [
+    ChainId.ARBITRUM_ONE,
+    {
+      chainId: ChainId.ARBITRUM_ONE,
+      logo: ArbitrumLogo,
+      name: 'Arbitrum',
+    },
+  ],
+  [
+    ChainId.POLYGON,
+    {
+      chainId: ChainId.POLYGON,
+      logo: PolygonLogo,
+      name: 'Polygon',
+    },
+  ],
+  [
+    ChainId.BSC,
+    {
+      chainId: ChainId.BSC,
+      logo: BSCLogo,
+      name: 'BNBChain',
+    },
+  ],
+  [
+    ChainId.OPTIMISM,
+    {
+      chainId: ChainId.OPTIMISM,
+      logo: OptimismLogo,
+      name: 'Optimism',
+    },
+  ],
+  [
+    ChainId.AVALANCHE,
+    {
+      chainId: ChainId.AVALANCHE,
+      logo: AvalancheLogo,
+      name: 'Avalanche',
+    },
+  ],
+  [
+    ChainId.AURORA,
+    {
+      chainId: ChainId.AURORA,
+      logo: AuroraLogo,
+      name: 'Aurora',
+    },
+  ],
+  [
+    ChainId.OKCHAIN,
+    {
+      chainId: ChainId.OKCHAIN,
+      logo: OKChainLogo,
+      name: 'OKTC',
+    },
+  ],
+  [
+    ChainId.CONFLUX,
+    {
+      chainId: ChainId.CONFLUX,
+      logo: CFXLogo,
+      name: 'Conflux eSpace',
+    },
+  ],
+  [
+    ChainId.BASE,
+    {
+      chainId: ChainId.BASE,
+      logo: BaseLogo,
+      name: 'Base',
+    },
+  ],
+]);

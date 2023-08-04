@@ -5,7 +5,7 @@ import { useSelectChainList } from './useSelectChainList';
 import { useWeb3React } from '@web3-react/core';
 import tokenList from '../../constants/tokenList';
 
-const allChainList = Object.values(chainListMap);
+const allChainList = Array.from(chainListMap.values());
 
 jest.mock('@web3-react/core', () => ({
   useWeb3React: jest.fn(() => ({

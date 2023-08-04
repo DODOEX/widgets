@@ -134,7 +134,7 @@ msgstr "由于市场情况不同，市场价格与估算价格可能略有差异
 msgid "Enter an amount"
 msgstr "输入代币数量"
 
-#: src/components/TokenPicker/index.tsx:101
+#: src/components/TokenPicker/index.tsx:102
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
@@ -256,7 +256,7 @@ msgstr "价格冲击超过了你设置的滑点, 请提高滑点后重试"
 
 #: src/components/Swap/components/ReviewDialog.tsx:375
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
-msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
+msgstr ""
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
 #: src/components/Swap/index.tsx:549

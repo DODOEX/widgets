@@ -30,8 +30,8 @@ export default function BridgeRouteShortCard({
     toChainId,
   } = route;
   const productDetail = productList.find((i) => i.id === product);
-  const fromChain = chainListMap[fromChainId as ChainId];
-  const toChain = chainListMap[toChainId as ChainId];
+  const fromChain = chainListMap.get(fromChainId as ChainId);
+  const toChain = chainListMap.get(toChainId as ChainId);
   return (
     <Box
       sx={{
