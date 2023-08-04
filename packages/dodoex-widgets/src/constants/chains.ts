@@ -91,9 +91,11 @@ export const rpcServerMap: {
   ],
 };
 
+export const etherTokenAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
+
 const DEFAULT_BASIC_TOKEN = {
   symbol: 'ETH',
-  address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+  address: etherTokenAddress,
   name: 'Ether',
   decimals: 18,
   showDecimals: 4,
