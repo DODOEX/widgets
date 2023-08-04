@@ -148,7 +148,7 @@ export function SwapStep({
                 ml: 4,
               }}
             >
-              {chain.name}
+              {chain?.name}
             </Box>
           </Box>
         </Box>
@@ -197,7 +197,7 @@ export function SwapStep({
               mr: 8,
             }}
           >
-            {chain.name}
+            {chain?.name}
           </Box>
         </Box>
 

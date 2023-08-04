@@ -85,7 +85,7 @@ export function TokenWithChain({
           alignSelf: 'center',
         }}
       >
-        <Trans>on</Trans>&nbsp;{chain.name}
+        <Trans>on</Trans>&nbsp;{chain?.name}
       </Box>
     </Box>
   );

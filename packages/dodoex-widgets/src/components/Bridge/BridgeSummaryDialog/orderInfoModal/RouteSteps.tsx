@@ -64,7 +64,7 @@ export function RouteSteps({
               typography: 'body1',
             }}
           >
-            {fromChain.name}
+            {fromChain?.name}
           </Box>
         </Box>
       </Box>
@@ -136,7 +136,7 @@ export function RouteSteps({
               typography: 'body1',
             }}
           >
-            {toChain.name}
+            {toChain?.name}
           </Box>
         </Box>
       </Box>
