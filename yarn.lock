@@ -1303,7 +1303,7 @@
 
 "@dodoex/widgets@^2.4.2", "@dodoex/widgets@file:/home/junjie/code/dodo/widgets/packages/dodoex-widgets":
   "resolved" "file:packages/dodoex-widgets"
-  "version" "2.4.3"
+  "version" "2.4.5"
   dependencies:
     "@babel/runtime" "^7.17.0"
     "@dodoex/components" "^2.0.1"
@@ -13840,7 +13840,17 @@
   dependencies:
     "yallist" "^4.0.0"
 
-"lru-cache@^7.4.4", "lru-cache@^7.5.1", "lru-cache@^7.7.1":
+"lru-cache@^7.4.4":
+  "integrity" "sha512-EIRtP1GrSJny0dqb50QXRUNBxHJhcpxHC++M5tD7RYbvLLn5KVWKsbyswSSqDuU15UFi3bgTQIY8nhDMeF6aDQ=="
+  "resolved" "https://registry.npmjs.org/lru-cache/-/lru-cache-7.14.0.tgz"
+  "version" "7.14.0"
+
+"lru-cache@^7.5.1":
+  "integrity" "sha512-EIRtP1GrSJny0dqb50QXRUNBxHJhcpxHC++M5tD7RYbvLLn5KVWKsbyswSSqDuU15UFi3bgTQIY8nhDMeF6aDQ=="
+  "resolved" "https://registry.npmjs.org/lru-cache/-/lru-cache-7.14.0.tgz"
+  "version" "7.14.0"
+
+"lru-cache@^7.7.1":
   "integrity" "sha512-EIRtP1GrSJny0dqb50QXRUNBxHJhcpxHC++M5tD7RYbvLLn5KVWKsbyswSSqDuU15UFi3bgTQIY8nhDMeF6aDQ=="
   "resolved" "https://registry.npmjs.org/lru-cache/-/lru-cache-7.14.0.tgz"
   "version" "7.14.0"
