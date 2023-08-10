@@ -590,6 +590,33 @@ export default [
       'https://cmp.dodoex.io/bcyoORJ04NyP1HhYUZ9RrTZ-MEOFeNnMcrr__JZ6Ruw/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vV1lHaU9IVFVnVWs4Q3Z3WmNyN0hWX2w4SlNrQjRVQUh1UXpzaWd4U3Nmay9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6VTVPREk0T1Y4eU1ESXlNRFF5TWpBeU1qTTBNelk0TlM1d2JtYy5wbmc.webp',
   },
   {
+    decimals: 18,
+    logoUrl:
+      'https://cmp.dodoex.io/Gbch2fMVm-itKQ-wYdO0BE9s_LVK-8fr2eoJxyjM_pY/rs:fit:160:160:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vOXZDZEdXMV9BQnM2VTA3RzNIcDd1VnRURnppdWJvQlJObVJyVEZLaXhEcy9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6RTVORFV4TXpoZk1qQXlNekEzTURNd056RTRNalkyT0RjdWFuQm4uanBn.webp',
+    name: 'Wrapped Conflux',
+    address: '0x14b2D3bC65e74DAE1030EAFd8ac30c533c976A9b',
+    symbol: 'WCFX',
+    chainId: 1030,
+  },
+  {
+    decimals: 18,
+    logoUrl:
+      'https://cmp.dodoex.io/74nSnlgHYl303M6PsFI2ItXIpPdEaN5W62bJk0xrm6g/rs:fit:160:160:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vRUw0TjJvclJYb2pibEZwa2pTZy1mVlZuVDhhMWZ6amloek43eGlSZFdmWS9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6ZzNNRGN4TXpOZk1qQXlNekEzTURNd056TTJNVGM0TXpndWNHNW4ucG5n.webp',
+    name: 'BNB',
+    address: '0x94bd7A37d2cE24cC597E158fACaa8d601083ffeC',
+    symbol: 'BNB',
+    chainId: 1030,
+  },
+  {
+    decimals: 18,
+    logoUrl:
+      'https://cmp.dodoex.io/Tzga6cVcC2NZzIAvdf812Bcl5zSn5mNomHQRJhkjaiI/rs:fit:160:160:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vVG5iZnNQSUVGWmFEeGkxSm9GUUd3blZSUUtrREkza3h2ekhuUnllTmUwYy9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6STNNVEkwTTE4eU1ESXpNRGN3TXpBM01qa3lOVEl6TVM1d2JtYy5wbmc.webp',
+    name: 'Ethereum Token',
+    address: '0xa47f43DE2f9623aCb395CA4905746496D2014d57',
+    symbol: 'ETH',
+    chainId: 1030,
+  },
+  {
     chainId: 1030,
     address: '0xfe97e85d13abd9c1c33384e796f10b73905637ce',
     name: 'Tether USD',
@@ -597,5 +624,50 @@ export default [
     symbol: 'USDT',
     logoURI:
       'https://cmp.dodoex.io/n_bg2q8GR4MlobGgr4RYo4r2gS6om7hmtGABi6qoulQ/rs:fit:96:96:0/g:no/aHR0cHM6Ly9jbXAuZG9kb2V4LmlvL2lnTHA5WW1zMnY4em9jOEVEcHRBOWRFTi0xZHZ0V2RkRGVMWjZaVjh1OGMvcnM6Zml0OjE2MDoxNjA6MC9nOm5vL2FIUjBjSE02THk5cGJXRm5aUzF3Y205NGVTNWtiMlJ2WlhndWFXOHZhQzFxVkRnMVZWVTRUalpUT1dsVlZuSkpMVnBCU0hjd1dXaDBTSFJPUjNoNWJUZHVZa2QyVUZobmR5OWhTRkl3WTBoTk5reDVPWHBrUnpsNVdWZGtiRXh0WkhaaU1tUnpXbGRHZDJGWVRYVlpNamwwVERKU2RscEhPSFJpVjFacllWZEZkR016VW1oYU1teDFXbms1TVdOSGVIWlpWMUptWVZjeGJsaDZhekpPYWtVMVRsWTRlVTFFU1hwTlJHTjNUWHBCTTAxcVdYZFBSR2N5VDFNMWQySnRZeTV3Ym1jLndlYnA.webp',
+  },
+  {
+    chainId: 1030,
+    address: '0x1F545487c62e5ACfEa45dcAdd9c627361d1616D8',
+    name: 'Wrapped BTC',
+    decimals: 18,
+    symbol: 'WBTC',
+    logoUrl:
+      'https://cmp.dodoex.io/1e_VT8Ppoj0-PDkhFC58pxdegwGCdWBOa5JTPU-Ol2U/rs:fit:160:160:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vVU92VExkR1I4SzNHWnhISnA0aEVSN09teVdjdWdsNDBlU1hEbmJKWlJ2RS9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6a3hNVGd3TWpaZk1qQXlNekEzTURNd056TXhOVEUzT1RVdWNHNW4ucG5n.webp',
+  },
+  {
+    decimals: 18,
+    logoUrl:
+      'https://cmp.dodoex.io/Wr2Rsy3ec2m0qdAHY95E-niUfibhSvMC9j6I9a2jW0w/rs:fit:160:160:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vWWNqMXJhUEVTYTYxeVpfeDdNNktWOGdabmxpVjdELTRCaWRpcVNYRExCZy9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6TXlOVGs1TWpGZk1qQXlNekE0TURRd05ETTJNamM0TXpJdWFuQm4uanBn.webp',
+    name: 'Bald',
+    address: '0x27D2DECb4bFC9C76F0309b8E88dec3a601Fe25a8',
+    symbol: 'BALD',
+    chainId: 8453,
+  },
+  {
+    decimals: 18,
+    logoUrl:
+      'https://cmp.dodoex.io/20ZPKcy3KFBFeRhzXhM17Jn_ECPETHKMulANNxeUovo/rs:fit:160:160:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vZHV4b2JTNm03dzQyUWdfd09rZDBqV1JCWm5TNW5GQjRHM1A5Yk5wWDc3MC9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6SXhNVFk1TnpkZk1qQXlNekE0TURRd05ESTNNVEkyTmprdWMzWm4uc3Zn.webp',
+    name: 'Wrapped Ether',
+    address: '0x4200000000000000000000000000000000000006',
+    symbol: 'WETH',
+    chainId: 8453,
+  },
+  {
+    decimals: 6,
+    logoUrl:
+      'https://cmp.dodoex.io/XZ0_CC_Hy6CLGuNpjsfkgdGp67czyMKPcq8HcsabhyQ/rs:fit:160:160:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vbm93dE5BTjlkNEYzeDQwVEtlWFVwRTJtTEo4OEd1ZWo1RHplUFVLeWRQUS9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6WXdOemM0TkRaZk1qQXlNekE0TURRd05ETTRORGszTnprdWMzWm4uc3Zn.webp',
+    name: 'Axelar Wrapped USDC',
+    address: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
+    symbol: 'axlUSDC',
+    chainId: 8453,
+  },
+  {
+    decimals: 18,
+    logoUrl:
+      'https://maticnetwork.github.io/polygon-token-assets/assets/eth.svg',
+    name: 'Ethereum',
+    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+    symbol: 'ETH',
+    chainId: 8453,
   },
 ];

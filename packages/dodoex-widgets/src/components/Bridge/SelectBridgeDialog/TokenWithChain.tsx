@@ -23,7 +23,7 @@ export function TokenWithChain({
   const theme = useTheme();
 
   const chain = useMemo(() => {
-    return chainListMap[chainId as ChainId];
+    return chainListMap.get(chainId as ChainId);
   }, [chainId]);
 
   return (
@@ -85,7 +85,7 @@ export function TokenWithChain({
           alignSelf: 'center',
         }}
       >
-        <Trans>on</Trans>&nbsp;{chain.name}
+        <Trans>on</Trans>&nbsp;{chain?.name}
       </Box>
     </Box>
   );

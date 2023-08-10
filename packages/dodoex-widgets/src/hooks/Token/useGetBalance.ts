@@ -1,7 +1,11 @@
 import { useWeb3React } from '@web3-react/core';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { basicTokenMap, ChainId } from '../../constants/chains';
+import {
+  basicTokenMap,
+  ChainId,
+  etherTokenAddress,
+} from '../../constants/chains';
 import { getAccountBalances, getEthBalance } from '../../store/selectors/token';
 import { TokenInfo } from './type';
 import { isSameAddress } from '../../utils';
@@ -10,32 +14,13 @@ export default function useGetBalance() {
   const { account, chainId } = useWeb3React();
   const accountBalances = useSelector(getAccountBalances);
   const ethBalance = useSelector(getEthBalance);
-  const EtherToken = useMemo(
-    () => basicTokenMap[(chainId || 1) as ChainId],
-    [chainId],
-  );
   const getBalance = useCallback(
     (token: TokenInfo) => {
       if (!account || !token) return null;
-      if (
-        EtherToken &&
-        token.symbol === EtherToken.symbol &&
-        isSameAddress(token.address, EtherToken.address)
-      ) {
-        const currentChainIdEthBalance = ethBalance[chainId ?? 1];
-        return !currentChainIdEthBalance || currentChainIdEthBalance?.isNaN()
-          ? null
-          : currentChainIdEthBalance;
-      }
-
       // cross-chain basic token
-      if (
-        EtherToken &&
-        token.chainId &&
-        token.chainId !== chainId &&
-        isSameAddress(token.address, EtherToken.address)
-      ) {
-        const currentChainIdEthBalance = ethBalance[token.chainId];
+      if (isSameAddress(token.address, etherTokenAddress)) {
+        const currentChainIdEthBalance =
+          ethBalance[token.chainId ?? chainId ?? 1];
         return !currentChainIdEthBalance || currentChainIdEthBalance?.isNaN()
           ? null
           : currentChainIdEthBalance;

@@ -4,7 +4,7 @@ import {
   BigNumber as EthersBigNumber,
   parseFixed,
 } from '@ethersproject/bignumber';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { getEstimateGas } from '../contract/wallet';
 import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
@@ -73,6 +73,21 @@ export function useFetchRoutePrice({
   const [useSource, setUseSource] = useState<string>('');
   const [duration, setDuration] = useState<number>(0);
   const routePriceAPI = useGetAPIService(APIServiceKey.routePrice);
+
+  useEffect(() => {
+    setResAmount(null);
+    setPriceImpact(null);
+    setResPricePerFromToken(null);
+    setResPricePerToToken(null);
+    setBaseFeeAmount(null);
+    setAdditionalFeeAmount(null);
+
+    setTo('');
+    setData('');
+    setResValue('');
+    setUseSource('');
+    setDuration(0);
+  }, [fromToken, toToken]);
 
   const refetch = useCallback(async () => {
     if (

@@ -60,7 +60,7 @@ export default function SwitchChainDialog({
       computed();
     }
   }, [open, currentChainId, autoConnectLoading]);
-  const network = chainId ? chainListMap[chainId]?.name ?? '' : '';
+  const network = chainId ? chainListMap.get(chainId)?.name ?? '' : '';
   return (
     <WidgetModal
       open={openTarget}

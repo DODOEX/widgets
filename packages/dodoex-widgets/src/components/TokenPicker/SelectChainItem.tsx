@@ -1,13 +1,13 @@
 import { Box, Tooltip } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
-import { chainListMap } from '../../constants/chainList';
+import { ChainListItem } from '../../constants/chainList';
 
 export default function SelectChainItem({
   chain,
   active,
   onClick,
 }: {
-  chain: typeof chainListMap[keyof typeof chainListMap];
+  chain: ChainListItem;
   active: boolean;
   onClick?: () => void;
 }) {

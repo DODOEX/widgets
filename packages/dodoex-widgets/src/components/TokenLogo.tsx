@@ -179,7 +179,7 @@ export default function TokenLogo({
           height: '100%',
         }}
       />
-      {chainId && chainListMap[chainId as ChainId] ? (
+      {chainId && chainListMap.has(chainId as ChainId) ? (
         <Box
           sx={{
             position: 'absolute',
@@ -194,7 +194,7 @@ export default function TokenLogo({
           }}
         >
           <Box
-            component={chainListMap[chainId as ChainId].logo}
+            component={chainListMap.get(chainId as ChainId)?.logo}
             sx={{
               display: 'block',
               width: '100%',

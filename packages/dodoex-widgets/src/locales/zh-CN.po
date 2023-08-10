@@ -67,7 +67,7 @@ msgstr "分钟"
 msgid "Hour"
 msgstr "小时"
 
-#: src/components/TokenPicker/index.tsx:101
+#: src/components/TokenPicker/index.tsx:102
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
@@ -158,16 +158,16 @@ msgstr "天"
 
 #: src/utils/time.ts:27
 msgid "Days"
-msgstr "天"
+msgstr "天<<<<<<< HEAD"
 
 #: src/components/Swap/components/ReviewDialog.tsx:263
 msgid "Additional Fee"
-msgstr "额外手续费"
+msgstr "额外手续费======="
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
 #: src/components/Swap/index.tsx:436
 msgid "Fetching best price..."
-msgstr "获取最优价格中..."
+msgstr "获取最优价格中...<<<<<<< HEAD"
 
 #: src/components/Swap/index.tsx:648
 msgid "Review Swap"

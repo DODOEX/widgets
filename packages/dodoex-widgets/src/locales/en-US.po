@@ -67,7 +67,7 @@ msgstr "Minute"
 msgid "Hour"
 msgstr "Hour"
 
-#: src/components/TokenPicker/index.tsx:101
+#: src/components/TokenPicker/index.tsx:102
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
@@ -158,11 +158,11 @@ msgstr "Day"
 
 #: src/utils/time.ts:27
 msgid "Days"
-msgstr "Days"
+msgstr "Days<<<<<<< HEAD"
 
 #: src/components/Swap/components/ReviewDialog.tsx:263
 msgid "Additional Fee"
-msgstr "Additional Fee"
+msgstr "Additional Fee======="
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
 #: src/components/Swap/index.tsx:436

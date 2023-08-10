@@ -1,7 +1,7 @@
 import { useWeb3React } from '@web3-react/core';
 import { useEffect, useMemo, useState } from 'react';
 import { ChainId } from '../../constants/chains';
-import { chainListMap } from '../../constants/chainList';
+import { ChainListItem, chainListMap } from '../../constants/chainList';
 import { useSelector } from 'react-redux';
 import { getAllTokenList } from '../../store/selectors/token';
 import { getGlobalProps } from '../../store/selectors/globals';
@@ -21,9 +21,9 @@ export function useSelectChainList(side?: 'from' | 'to') {
   }, [allTokenList, side]);
   const chainList = useMemo(() => {
     if (!crossChain) return [];
-    const chainListObject: Partial<typeof chainListMap> = {};
+    const currentChainListMap = new Map<ChainId, ChainListItem>();
     let replaceChainId: ChainId | undefined;
-    Object.entries(chainListMap).forEach(([key, chain]) => {
+    chainListMap.forEach((chain, key) => {
       if (hasTokenChainIds.has(chain.chainId)) {
         if (chain.mainnet) {
           if (chainId !== chain.chainId) {
@@ -31,13 +31,13 @@ export function useSelectChainList(side?: 'from' | 'to') {
           }
           replaceChainId = chain.mainnet;
         }
-        chainListObject[key as unknown as ChainId] = { ...chain };
+        currentChainListMap.set(key as unknown as ChainId, { ...chain });
       }
     });
     if (replaceChainId !== undefined) {
-      delete chainListObject[replaceChainId];
+      currentChainListMap.delete(replaceChainId);
     }
-    return Object.values(chainListObject);
+    return Array.from(currentChainListMap.values());
   }, [chainId, allTokenList, crossChain]);
 
   const defaultChainId = useMemo(
