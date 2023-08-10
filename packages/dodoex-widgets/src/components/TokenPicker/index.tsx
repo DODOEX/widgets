@@ -100,37 +100,43 @@ export default function TokenPicker({
         onChange={(evt: any) => setFilter(evt.target.value)}
         clearValue={() => setFilter('')}
         placeholder={t`Enter the token symbol or address`}
-      />
-      <Box
         sx={{
-          position: 'relative',
-          display: 'flex',
-          gap: 8,
-          flexWrap: 'wrap',
-          pt: 16,
-          pb: 32,
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            bottom: 16,
-            left: 0,
-            right: 0,
-            height: '1px',
-            backgroundColor: 'border.main',
-          },
+          mb: 16,
         }}
-      >
-        {chainList.map((chain) => (
-          <SelectChainItem
-            key={chain.chainId}
-            chain={chain}
-            active={chain.chainId === selectChainId}
-            onClick={() => {
-              setSelectChainId(chain.chainId);
-            }}
-          />
-        ))}
-      </Box>
+      />
+      {chainList.length ? (
+        <Box
+          sx={{
+            position: 'relative',
+            display: 'flex',
+            gap: 8,
+            flexWrap: 'wrap',
+            pb: 32,
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              bottom: 16,
+              left: 0,
+              right: 0,
+              height: '1px',
+              backgroundColor: 'border.main',
+            },
+          }}
+        >
+          {chainList.map((chain) => (
+            <SelectChainItem
+              key={chain.chainId}
+              chain={chain}
+              active={chain.chainId === selectChainId}
+              onClick={() => {
+                setSelectChainId(chain.chainId);
+              }}
+            />
+          ))}
+        </Box>
+      ) : (
+        ''
+      )}
       <Box
         sx={{
           pb: 16,

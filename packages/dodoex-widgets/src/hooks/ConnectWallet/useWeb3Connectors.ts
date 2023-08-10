@@ -25,7 +25,7 @@ export function useWeb3Connectors({
   jsonRpcUrlMap: jsonRpcUrlMapProps,
   defaultChainId,
 }: Web3ConnectorsProps) {
-  const onError = console.error;
+  const onError = useMemo(() => console.error, []);
   const integratorConnection = useMemo(
     () => getConnectionFromProvider(onError, provider),
     [onError, provider],
@@ -42,7 +42,7 @@ export function useWeb3Connectors({
       ...rpcServerMap,
       ...jsonRpcUrlMapProps,
     };
-  }, [jsonRpcUrlMapProps]);
+  }, [JSON.stringify(jsonRpcUrlMapProps)]);
   const walletConnectConnectionPopup = useMemo(
     () =>
       getConnectionFromWalletConnect(
@@ -54,13 +54,15 @@ export function useWeb3Connectors({
     [jsonRpcUrlMap, defaultChainId, onError],
   );
 
-  if (integratorConnection) {
-    connectorCacheMap[WalletType.INTEGRATOR] = integratorConnection;
-  }
-  connectorCacheMap[WalletType.METAMASK] = metaMaskConnection;
-  connectorCacheMap[WalletType.WALLET_CONNECT] = walletConnectConnectionPopup;
+  return useMemo(() => {
+    if (integratorConnection) {
+      connectorCacheMap[WalletType.INTEGRATOR] = integratorConnection;
+    }
+    connectorCacheMap[WalletType.METAMASK] = metaMaskConnection;
+    connectorCacheMap[WalletType.WALLET_CONNECT] = walletConnectConnectionPopup;
 
-  return Object.values(connectorCacheMap);
+    return Object.values(connectorCacheMap);
+  }, [integratorConnection, metaMaskConnection, walletConnectConnectionPopup]);
 }
 
 export function connectToWallet(

@@ -8,6 +8,7 @@ import {
 import { Trans } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import { ChangeEvent, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { chainListMap } from '../../constants/chainList';
 import { ChainId } from '../../constants/chains';
 import {
@@ -15,6 +16,7 @@ import {
   setAuthSwitchCache,
 } from '../../constants/localstorage';
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
+import { getGlobalProps } from '../../store/selectors/globals';
 import { WIDGET_CLASS_NAME } from '../Widget';
 
 export default function SwitchChainDialog({
@@ -31,6 +33,7 @@ export default function SwitchChainDialog({
   const { chainId: currentChainId } = useWeb3React();
   const [autoSwitch, setAutoSwitch] = useState(getAuthSwitchCache());
   const switchChain = useSwitchChain(chainId);
+  const autoConnectLoading = useSelector(getGlobalProps).autoConnectLoading;
   useEffect(() => {
     const computed = async () => {
       if (open) {
@@ -53,14 +56,17 @@ export default function SwitchChainDialog({
         setOpenTarget(false);
       }
     };
-    computed();
-  }, [open]);
+    if (!autoConnectLoading) {
+      computed();
+    }
+  }, [open, currentChainId, autoConnectLoading]);
   const network = chainId ? chainListMap.get(chainId)?.name ?? '' : '';
   return (
     <WidgetModal
       open={openTarget}
       onClose={onClose}
       container={document.querySelector(`.${WIDGET_CLASS_NAME}`)}
+      disableEnforceFocus
     >
       <Box
         sx={{

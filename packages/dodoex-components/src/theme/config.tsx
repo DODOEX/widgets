@@ -120,7 +120,7 @@ export const darkPalette: PaletteOptions = {
     link: '#FFE804',
   },
   border: {
-    main: alpha('#FFF', 0.1),
+    main: '#454851',
     light: alpha('#FFF', 0.3),
     disabled: alpha('#FFF', 0.1),
   },
@@ -170,7 +170,7 @@ export const lightPalette: PaletteOptions = {
     link: '#1A1A1B',
   },
   border: {
-    main: alpha('#1A1A1B', 0.1),
+    main: alpha('#454851', 0.1),
     light: alpha('#1A1A1B', 0.3),
     disabled: alpha('#1A1A1B', 0.1),
   },

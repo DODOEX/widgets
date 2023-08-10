@@ -214,10 +214,12 @@ function TransactionTime({
 
 export default function WithExecutionDialog({
   children,
+  executionStatus,
   ...props
 }: {
   children: React.ReactNode;
 } & ExecutionProps) {
+  const execution = useExecution(props);
   const {
     ctxVal,
     showing,
@@ -225,7 +227,10 @@ export default function WithExecutionDialog({
     showingDone,
     errorMessage,
     transactionTx,
-  } = useExecution(props);
+  } = {
+    ...execution,
+    ...executionStatus,
+  };
   const dispatch = useDispatch<AppThunkDispatch>();
 
   return (

@@ -19,7 +19,7 @@ import {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Setting, Dodo, Warn, DoubleRight } from '@dodoex/icons';
-import { Trans } from '@lingui/macro';
+import { Trans, t } from '@lingui/macro';
 import { TokenCard } from './components/TokenCard';
 import { QuestionTooltip } from '../Tooltip';
 import { SwitchBox } from './components/SwitchBox';
@@ -63,6 +63,10 @@ import ErrorMessageDialog from '../ErrorMessageDialog';
 import { useSwitchBridgeOrSwapSlippage } from '../../hooks/Bridge/useSwitchBridgeOrSwapSlippage';
 import { useInitDefaultToken } from '../../hooks/Swap/useInitDefaultToken';
 import { setLastToken } from '../../constants/localstorage';
+import {
+  maxSlippageWarning,
+  useSlippageLimit,
+} from '../../hooks/Swap/useSlippageLimit';
 
 export function Swap() {
   const theme = useTheme();
@@ -110,10 +114,6 @@ export function Swap() {
     fromToken,
   });
   const getBalance = useGetBalance();
-  const fromTokenBalance = useMemo(
-    () => (fromToken ? getBalance(fromToken) : null),
-    [fromToken, getBalance],
-  );
   const fromEtherTokenBalance = useMemo(() => {
     const fromChainId = fromToken?.chainId;
     if (!isBridge || !fromChainId) return null;
@@ -254,6 +254,8 @@ export function Swap() {
     ],
   );
 
+  const isSlippageExceedLimit = useSlippageLimit(isBridge);
+
   const displayPriceImpact = useMemo(
     () => (Number(priceImpact) * 100).toFixed(2),
     [priceImpact],
@@ -338,6 +340,59 @@ export function Swap() {
     [chainId, fromToken?.chainId],
   );
 
+  const insufficientBalance = useMemo(() => {
+    const token = isReverseRouting ? toToken : fromToken;
+    const isBasicToken = basicTokenAddress === token?.address;
+    const keepChanges = isETH ? 0.1 : 0.02;
+    const balance = new BigNumber(token ? getBalance(token) || 0 : 0);
+    return (
+      balance.lt(isReverseRouting ? resAmount ?? 0 : fromAmt) ||
+      (isBasicToken && balance.lte(keepChanges))
+    );
+  }, [isReverseRouting, fromToken, toToken, fromAmt, resAmount, getBalance]);
+
+  const slippageExceedLimit = useMemo(() => {
+    if (
+      !isSlippageExceedLimit ||
+      !new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0) ||
+      insufficientBalance ||
+      (!isBridge
+        ? bridgeRouteStatus !== RoutePriceStatus.Success
+        : resPriceStatus !== RoutePriceStatus.Success)
+    ) {
+      return null;
+    }
+    return (
+      <Box
+        sx={{
+          textAlign: 'center',
+          mb: 8,
+        }}
+      >
+        <Box
+          component={Warn}
+          sx={{
+            position: 'relative',
+            top: 2,
+            mr: 6,
+            width: 16,
+            height: 16,
+            color: 'warning.main',
+          }}
+        />
+        {t`The current slippage protection coefficient set exceeds ${maxSlippageWarning}%, which may result in losses.`}
+      </Box>
+    );
+  }, [
+    isSlippageExceedLimit,
+    isReverseRouting,
+    fromAmt,
+    toAmt,
+    isBridge,
+    bridgeRouteStatus,
+    resPriceStatus,
+  ]);
+
   const priceInfo = useMemo(() => {
     if (isNotCurrentChain) {
       return (
@@ -410,13 +465,21 @@ export function Swap() {
         /* Bridge select route */
       }
       return (
-        <BridgeRouteShortCard
-          route={selectedRoute}
-          onClick={() => setSwitchBridgeRouteShow(true)}
-        />
+        <>
+          {slippageExceedLimit}
+          <BridgeRouteShortCard
+            route={selectedRoute}
+            onClick={() => setSwitchBridgeRouteShow(true)}
+          />
+        </>
       );
     }
-    return tokenPairPrice;
+    return (
+      <>
+        {slippageExceedLimit}
+        {tokenPairPrice}
+      </>
+    );
   }, [
     resPriceStatus,
     tokenPairPrice,
@@ -429,6 +492,7 @@ export function Swap() {
     bridgeRouteList,
     selectedRoute,
     isNotCurrentChain,
+    slippageExceedLimit,
   ]);
 
   const fromFinalAmt = useMemo(() => {
@@ -488,10 +552,6 @@ export function Swap() {
     const needApprove =
       approvalState === ApprovalState.Insufficient && !pendingReset;
 
-    const keepChanges = isETH ? 0.1 : 0.02;
-    const isBasicToken = basicTokenAddress === fromToken?.address;
-    const balance = new BigNumber(fromTokenBalance || 0);
-
     if (!account) return <ConnectWallet />;
     if (isInflight) {
       return (
@@ -549,10 +609,7 @@ export function Swap() {
           <Trans>Quote not available</Trans>
         </Button>
       );
-    if (
-      balance.lt(isReverseRouting ? resAmount ?? 0 : fromAmt) ||
-      (isBasicToken && balance.lte(keepChanges))
-    )
+    if (insufficientBalance)
       // balance need to greater than reserved gas!
       return (
         <Button
@@ -592,7 +649,6 @@ export function Swap() {
       </Button>
     );
   }, [
-    isETH,
     account,
     toAmt,
     fromAmt,
@@ -604,7 +660,6 @@ export function Swap() {
     pendingReset,
     submitApprove,
     resPriceStatus,
-    fromTokenBalance,
     getApprovalState,
     basicTokenAddress,
     isReverseRouting,
@@ -613,6 +668,7 @@ export function Swap() {
     bridgeRouteList,
     sendRouteLoading,
     fromEtherTokenBalance,
+    insufficientBalance,
   ]);
 
   const subtitle = useMemo(() => {

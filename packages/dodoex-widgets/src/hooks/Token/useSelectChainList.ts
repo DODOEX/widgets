@@ -4,10 +4,12 @@ import { ChainId } from '../../constants/chains';
 import { ChainListItem, chainListMap } from '../../constants/chainList';
 import { useSelector } from 'react-redux';
 import { getAllTokenList } from '../../store/selectors/token';
+import { getGlobalProps } from '../../store/selectors/globals';
 
 export function useSelectChainList(side?: 'from' | 'to') {
   const { chainId } = useWeb3React();
   const allTokenList = useSelector(getAllTokenList);
+  const crossChain = useSelector(getGlobalProps).crossChain;
   const hasTokenChainIds = useMemo(() => {
     const result = new Set<ChainId>();
     allTokenList.forEach((token) => {
@@ -18,6 +20,7 @@ export function useSelectChainList(side?: 'from' | 'to') {
     return result;
   }, [allTokenList, side]);
   const chainList = useMemo(() => {
+    if (!crossChain) return [];
     const currentChainListMap = new Map<ChainId, ChainListItem>();
     let replaceChainId: ChainId | undefined;
     chainListMap.forEach((chain, key) => {
@@ -35,7 +38,7 @@ export function useSelectChainList(side?: 'from' | 'to') {
       currentChainListMap.delete(replaceChainId);
     }
     return Array.from(currentChainListMap.values());
-  }, [chainId, allTokenList]);
+  }, [chainId, allTokenList, crossChain]);
 
   const defaultChainId = useMemo(
     () =>

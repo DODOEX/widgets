@@ -1,22 +1,7 @@
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
-import {
-  supportedLang,
-  SupportedLang,
-  defaultLang,
-} from '../../constants/locales';
+import { SupportedLang, defaultLang } from '../../constants/locales';
 import { ReactNode, useEffect } from 'react';
-import { en, zh } from 'make-plural/plurals';
-import { PluralCategory } from 'make-plural/plurals';
-
-type LocalePlural = {
-  [key in SupportedLang]: (n: number | string, ord?: boolean) => PluralCategory;
-};
-const plurals: LocalePlural = {
-  'en-US': en,
-  'zh-CN': zh,
-  pseudo: en,
-};
 
 interface LangProviderProps {
   locale?: SupportedLang;
@@ -24,7 +9,6 @@ interface LangProviderProps {
 }
 
 export async function loadI18(locale: SupportedLang = defaultLang) {
-  i18n.loadLocaleData(locale, { plurals: () => plurals[locale] });
   try {
     const catalog = await import(`../../locales/${locale}.js`);
     i18n.load(locale, catalog.messages || catalog.default.messages);

@@ -27,6 +27,12 @@ jest.mock('../../store/selectors/token', () => ({
   getAllTokenList: jest.fn(() => tokenList),
 }));
 
+jest.mock('../../store/selectors/globals', () => ({
+  getGlobalProps: jest.fn(() => ({
+    crossChain: true,
+  })),
+}));
+
 describe('useSelectChainList:default', () => {
   it('default', () => {
     const { result } = renderHook(() => useSelectChainList());
