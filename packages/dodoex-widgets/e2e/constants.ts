@@ -6,7 +6,7 @@ export const tokenListMap = {
     decimals: 18,
     symbol: 'ETH',
     logoURI:
-      'https://cmp.dodoex.io/prKmKP8yDTuPMHTCZ_DcxG8BqsuHNO8w5KDmJWmPodg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vOUVaWU1ER2ZVN3g2N3ZBZThqWkUxZzA0RExUaFhaV0JIb09wZFhpeXhHRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNNeVgyTnZhVzV0WVhKclpYUmpZWEJmWTI5dFgzTjBZWFJwWTE5cGJXZGZZMjlwYm5OZk5qUjROalJmTVRBeU4xOHhNekkyTjJGbE5EY3dMbkJ1WncucG5n.webp',
+      'https://images.dodoex.io/prKmKP8yDTuPMHTCZ_DcxG8BqsuHNO8w5KDmJWmPodg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vOUVaWU1ER2ZVN3g2N3ZBZThqWkUxZzA0RExUaFhaV0JIb09wZFhpeXhHRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNNeVgyTnZhVzV0WVhKclpYUmpZWEJmWTI5dFgzTjBZWFJwWTE5cGJXZGZZMjlwYm5OZk5qUjROalJmTVRBeU4xOHhNekkyTjJGbE5EY3dMbkJ1WncucG5n.webp',
   },
   DODO: {
     chainId: 1,
@@ -15,7 +15,7 @@ export const tokenListMap = {
     decimals: 18,
     symbol: 'DODO',
     logoURI:
-      'https://cmp.dodoex.io/PGIGjN4ix9pInoESO_mCmajbMpygApWZyGKaE6vyJFk/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8veFJDQ0hnQXBuaENRTFZNUXAwdTdwd0pSQzIxRHJ4cFY0b2Z0bndaYnRmMC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMFJQUkU5Zk5UaGxZelEyTlRFelpTOUVUMFJQWHpVNFpXTTBOalV4TTJVdWMzWm4uc3Zn.webp',
+      'https://images.dodoex.io/PGIGjN4ix9pInoESO_mCmajbMpygApWZyGKaE6vyJFk/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8veFJDQ0hnQXBuaENRTFZNUXAwdTdwd0pSQzIxRHJ4cFY0b2Z0bndaYnRmMC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMFJQUkU5Zk5UaGxZelEyTlRFelpTOUVUMFJQWHpVNFpXTTBOalV4TTJVdWMzWm4uc3Zn.webp',
   },
   USDC: {
     chainId: 1,
@@ -24,7 +24,7 @@ export const tokenListMap = {
     decimals: 6,
     symbol: 'USDC',
     logoURI:
-      'https://cmp.dodoex.io/sQ5dF3FkjjQUsmfqFFE5cKq-cthh4u0wUooBE5Epf-k/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTDlEVElLa2dONG5mRkNTSF9GMUdXU3JiZkJDa2JZRTkwbmFDS0dIWnRsby9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMM1Z6WkdOZlpXVTFNbUV4WldReVlpOTFjMlJqWDJWbE5USmhNV1ZrTW1JdWNHNW4ucG5n.webp',
+      'https://images.dodoex.io/sQ5dF3FkjjQUsmfqFFE5cKq-cthh4u0wUooBE5Epf-k/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTDlEVElLa2dONG5mRkNTSF9GMUdXU3JiZkJDa2JZRTkwbmFDS0dIWnRsby9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMM1Z6WkdOZlpXVTFNbUV4WldReVlpOTFjMlJqWDJWbE5USmhNV1ZrTW1JdWNHNW4ucG5n.webp',
   },
 };
 
@@ -53,10 +53,11 @@ export const routeRes = {
 };
 
 export const tokenListRes = {
-  keywords: ["defi"],
-  logoURI: "https://www.coingecko.com/assets/thumbnail-007177f3eca19695592f0b8b0eabbdae282b54154e1be912285c9034ea6cbaf2.png",
-  name: "CoinGecko",
-  timestamp: "2023-03-09T02:03:29.216+00:00",
+  keywords: ['defi'],
+  logoURI:
+    'https://www.coingecko.com/assets/thumbnail-007177f3eca19695592f0b8b0eabbdae282b54154e1be912285c9034ea6cbaf2.png',
+  name: 'CoinGecko',
+  timestamp: '2023-03-09T02:03:29.216+00:00',
   tokens: [],
   message: 'OK',
 };
