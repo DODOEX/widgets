@@ -158,16 +158,16 @@ msgstr "天"
 
 #: src/utils/time.ts:27
 msgid "Days"
-msgstr "天<<<<<<< HEAD"
+msgstr "天"
 
 #: src/components/Swap/components/ReviewDialog.tsx:263
 msgid "Additional Fee"
-msgstr "额外手续费======="
+msgstr "额外手续费"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
 #: src/components/Swap/index.tsx:436
 msgid "Fetching best price..."
-msgstr "获取最优价格中...<<<<<<< HEAD"
+msgstr "获取最优价格中..."
 
 #: src/components/Swap/index.tsx:648
 msgid "Review Swap"

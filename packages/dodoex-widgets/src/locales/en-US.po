@@ -158,11 +158,11 @@ msgstr "Day"
 
 #: src/utils/time.ts:27
 msgid "Days"
-msgstr "Days<<<<<<< HEAD"
+msgstr "Days"
 
 #: src/components/Swap/components/ReviewDialog.tsx:263
 msgid "Additional Fee"
-msgstr "Additional Fee======="
+msgstr "Additional Fee"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
 #: src/components/Swap/index.tsx:436

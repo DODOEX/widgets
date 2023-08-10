@@ -356,7 +356,7 @@ export function Swap() {
       !isSlippageExceedLimit ||
       !new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0) ||
       insufficientBalance ||
-      (!isBridge
+      (isBridge
         ? bridgeRouteStatus !== RoutePriceStatus.Success
         : resPriceStatus !== RoutePriceStatus.Success)
     ) {
