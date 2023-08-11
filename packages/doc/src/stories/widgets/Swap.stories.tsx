@@ -96,6 +96,11 @@ export default {
     onTxSuccess: {
       action: 'txSuccess',
     },
+    noPowerBy: {
+      control: {
+        type: 'boolean',
+      },
+    },
   },
 } as ComponentMeta<typeof SwapWidget>;
 

@@ -25,6 +25,7 @@ export function useInitPropsToRedux({
   bridgeSlippage,
   apiServices,
   crossChain,
+  noPowerBy,
 }: WidgetProps) {
   const dispatch = useDispatch<AppThunkDispatch>();
 
@@ -147,4 +148,14 @@ export function useInitPropsToRedux({
       );
     }
   }, [crossChain]);
+
+  useEffect(() => {
+    if (noPowerBy !== undefined) {
+      dispatch(
+        setGlobalProps({
+          noPowerBy,
+        }),
+      );
+    }
+  }, [noPowerBy]);
 }

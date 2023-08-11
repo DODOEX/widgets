@@ -9,14 +9,7 @@ import {
   Tooltip,
 } from '@dodoex/components';
 import { formatTokenAmountNumber, isETHChain } from '../../utils';
-import {
-  useMemo,
-  useState,
-  useEffect,
-  useCallback,
-  PropsWithChildren,
-  useRef,
-} from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Setting, Dodo, Warn, DoubleRight } from '@dodoex/icons';
 import { Trans, t } from '@lingui/macro';
@@ -73,7 +66,7 @@ export function Swap() {
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { isReverseRouting } = useSelector(getGlobalProps);
+  const { isReverseRouting, noPowerBy } = useSelector(getGlobalProps);
   const defaultChainId = useSelector(getDefaultChainId);
   const { isETH } = useMemo(() => isETHChain(chainId), [chainId]);
   const basicTokenAddress = useMemo(
@@ -853,31 +846,35 @@ export function Swap() {
         {swapButton}
 
         {/*Footer*/}
-        <Box
-          sx={{
-            mt: 13,
-            display: 'flex',
-            typography: 'h6',
-            cursor: 'pointer',
-            justifyContent: 'center',
-            alignItems: 'center',
-            color: theme.palette.text.disabled,
-          }}
-          onClick={() => window.open(AppUrl)}
-        >
+        {noPowerBy ? (
+          ''
+        ) : (
           <Box
             sx={{
-              width: 24,
-              typography: 'body2',
-              transform: 'translate(1px, 2px)',
-              '& path': {
-                fill: theme.palette.text.disabled,
-              },
+              mt: 13,
+              display: 'flex',
+              typography: 'h6',
+              cursor: 'pointer',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: theme.palette.text.disabled,
             }}
-            component={Dodo}
-          />
-          <Trans>Powered by DODO protocol</Trans>
-        </Box>
+            onClick={() => window.open(AppUrl)}
+          >
+            <Box
+              sx={{
+                width: 24,
+                typography: 'body2',
+                transform: 'translate(1px, 2px)',
+                '& path': {
+                  fill: theme.palette.text.disabled,
+                },
+              }}
+              component={Dodo}
+            />
+            <Trans>Powered by DODO protocol</Trans>
+          </Box>
+        )}
       </Box>
 
       {/* Dialogs */}
