@@ -74,7 +74,11 @@ export default function TokenPicker({
         <TokenItem
           key={token.address + token.chainId}
           token={token}
-          disabled={!!value && value.address === token.address}
+          disabled={
+            !!value &&
+            value.address === token.address &&
+            value.chainId === token.chainId
+          }
           style={style}
           onClick={() => onSelectToken(token)}
         />
