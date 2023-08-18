@@ -11,12 +11,14 @@ export function TokenPickerDialog({
   value,
   onClose,
   occupiedAddrs,
+  occupiedChainId,
   onTokenChange,
   side,
   defaultLoadBalance,
 }: {
   open: boolean;
   occupiedAddrs?: string[];
+  occupiedChainId?: TokenPickerProps['occupiedChainId'];
   onClose: DialogProps['onClose'];
   value?: TokenPickerProps['value'];
   onTokenChange: TokenPickerProps['onChange'];
@@ -37,6 +39,7 @@ export function TokenPickerDialog({
         visible={open}
         onChange={onTokenChange}
         occupiedAddrs={occupiedAddrs}
+        occupiedChainId={occupiedChainId}
         side={side}
         defaultLoadBalance={defaultLoadBalance}
       />

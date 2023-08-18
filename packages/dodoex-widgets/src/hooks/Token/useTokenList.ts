@@ -10,6 +10,7 @@ import { RootState } from '../../store/reducers';
 import { getPopularTokenList } from '../../store/selectors/token';
 import { unionBy } from 'lodash';
 import useTokenListFetchBalance from './useTokenListFetchBalance';
+import { ChainId } from '../../constants/chains';
 
 enum MatchLevel {
   fully = 1,
@@ -79,6 +80,7 @@ export default function useTokenList({
   value,
   onChange,
   occupiedAddrs,
+  occupiedChainId,
   hiddenAddrs,
   showAddrs,
   side,
@@ -91,6 +93,8 @@ export default function useTokenList({
 
   /** token pair usage */
   occupiedAddrs?: string[];
+  /** token pair usage */
+  occupiedChainId?: ChainId;
   /** hide props */
   hiddenAddrs?: string[];
   /** only show props */
@@ -257,10 +261,14 @@ export default function useTokenList({
       const address = token.address.toLowerCase();
       onChange(
         token,
-        !!occupiedAddrs?.some((e) => e.toLowerCase() === address),
+        !!occupiedAddrs?.some(
+          (e) =>
+            e.toLowerCase() === address &&
+            (!occupiedChainId || token.chainId === occupiedChainId),
+        ),
       );
     },
-    [onChange, occupiedAddrs],
+    [onChange, occupiedAddrs, occupiedChainId],
   );
 
   const showTokenList = useMemo(() => {

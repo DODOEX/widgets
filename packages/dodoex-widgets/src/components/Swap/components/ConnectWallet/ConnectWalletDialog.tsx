@@ -1,5 +1,6 @@
 import { Box } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { useSelector } from 'react-redux';
 import { WalletMap } from '../../../../constants/wallet';
 import { connectToWallet } from '../../../../hooks/ConnectWallet';
@@ -14,6 +15,7 @@ export default function ConnectWalletDialog({
   onClose: () => void;
 }) {
   const chainId = useSelector(getGlobalProps).defaultChainId;
+  useLingui();
   return (
     <Dialog
       title={<Trans>Connect to your wallet</Trans>}

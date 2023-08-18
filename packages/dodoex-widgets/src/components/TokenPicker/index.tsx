@@ -7,12 +7,15 @@ import TokenItem from './TokenItem';
 import { t } from '@lingui/macro';
 import SelectChainItem from './SelectChainItem';
 import { useSelectChainList } from '../../hooks/Token/useSelectChainList';
+import { ChainId } from '../../constants/chains';
 
 export interface TokenPickerProps {
   value?: TokenInfo | null;
   onChange: (token: TokenInfo, isOccupied: boolean) => void;
   /** token pair usage */
   occupiedAddrs?: string[];
+  /** token pair usage */
+  occupiedChainId?: ChainId;
   /** hide props */
   hiddenAddrs?: string[];
   /** only show props */
@@ -26,6 +29,7 @@ export default function TokenPicker({
   value,
   onChange,
   occupiedAddrs,
+  occupiedChainId,
   hiddenAddrs,
   showAddrs,
   visible,
@@ -39,6 +43,7 @@ export default function TokenPicker({
       value,
       onChange,
       occupiedAddrs,
+      occupiedChainId,
       hiddenAddrs,
       showAddrs,
       side,

@@ -771,6 +771,7 @@ export function Swap() {
             }}
             showMaxBtn={!isReverseRouting && !displayingFromAmt}
             occupiedAddrs={[toToken?.address ?? '']}
+            occupiedChainId={toToken?.chainId}
             fiatPriceTxt={
               displayFromFiatPrice
                 ? `$${formatReadableNumber({
@@ -807,6 +808,7 @@ export function Swap() {
               dispatch(setGlobalProps({ isReverseRouting: true }));
             }}
             occupiedAddrs={[fromToken?.address ?? '']}
+            occupiedChainId={fromToken?.chainId}
             fiatPriceTxt={
               displayToFiatPrice
                 ? `$${formatReadableNumber({
