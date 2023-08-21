@@ -24,6 +24,7 @@ jest.mock('@lingui/core', () => ({
 }));
 jest.mock('@lingui/react', () => ({
   I18nProvider: ({ children }: { children: any }) => children,
+  useLingui: jest.fn(),
 }));
 jest.mock('@lingui/macro', () => ({
   t: (str: string) => str,

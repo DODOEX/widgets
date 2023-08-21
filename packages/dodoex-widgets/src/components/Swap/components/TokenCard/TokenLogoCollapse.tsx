@@ -1,5 +1,5 @@
 import { Box, useTheme, BaseButton } from '@dodoex/components';
-import TokenPicker, { TokenPickerProps } from '../../../TokenPicker';
+import { TokenPickerProps } from '../../../TokenPicker';
 import { Trans } from '@lingui/macro';
 import { CaretUp } from '@dodoex/icons';
 import TokenLogo from '../../../TokenLogo';

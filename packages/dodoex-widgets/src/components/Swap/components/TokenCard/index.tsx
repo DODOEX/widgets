@@ -5,7 +5,7 @@ import { NumberInput } from './NumberInput';
 import { TokenPickerDialog } from './TokenPickerDialog';
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { TokenInfo } from '../../../../hooks/Token';
-import TokenPicker, { TokenPickerProps } from '../../../TokenPicker';
+import { TokenPickerProps } from '../../../TokenPicker';
 import useGetBalance from '../../../../hooks/Token/useGetBalance';
 import { transitionTime } from '../Dialog';
 import SwitchChainDialog from '../../../SwitchChainDialog';
@@ -17,6 +17,7 @@ export interface TokenCardProps {
   readOnly?: boolean;
   showMaxBtn?: boolean;
   occupiedAddrs?: string[];
+  occupiedChainId?: TokenPickerProps['occupiedChainId'];
   onMaxClick?: (max: string) => void;
   token?: TokenPickerProps['value'];
   onInputChange?: (v: string) => void;
@@ -37,6 +38,7 @@ export function TokenCard({
   onMaxClick,
   fiatPriceTxt,
   occupiedAddrs,
+  occupiedChainId,
   onInputFocus,
   onTokenClick,
   onInputChange,
@@ -120,6 +122,7 @@ export function TokenCard({
         open={tokenPickerVisible}
         side={side}
         occupiedAddrs={occupiedAddrs}
+        occupiedChainId={occupiedChainId}
         defaultLoadBalance={defaultLoadBalance}
         onClose={() => {
           setTokenPickerVisible(false);

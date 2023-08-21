@@ -109,9 +109,7 @@ export function useFetchRoutePrice({
       slippage,
       source: 'dodoV2AndMixWasm',
       toTokenAddress: toToken.address,
-      toTokenDecimals: toToken.decimals,
       fromTokenAddress: fromToken.address,
-      fromTokenDecimals: fromToken.decimals,
       userAddr: account || EmptyAddress,
     };
 
