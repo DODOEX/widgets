@@ -19,6 +19,8 @@ export enum ChainId {
   CONFLUX = 1030,
 
   BASE = 8453,
+
+  LINEA = 59144,
 }
 
 export const rpcServerMap: {
@@ -89,6 +91,7 @@ export const rpcServerMap: {
     'https://mainnet.base.org',
     'https://base-mainnet.public.blastapi.io',
   ],
+  [ChainId.LINEA]: ['https://linea-mainnet.infura.io/v3'],
 };
 
 export const etherTokenAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -172,6 +175,11 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WETH',
     wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
   },
+  [ChainId.LINEA]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenSymbol: 'WETH',
+    wrappedTokenAddress: '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f',
+  },
 };
 
 export const platformIdMap: {
@@ -188,6 +196,7 @@ export const platformIdMap: {
   [ChainId.AURORA]: 'aurora',
   [ChainId.AVALANCHE]: 'avalanche', // Needs confirm
   [ChainId.BASE]: 'base',
+  [ChainId.LINEA]: 'linea',
 };
 
 export const scanUrlDomainMap: {
@@ -204,4 +213,5 @@ export const scanUrlDomainMap: {
   [ChainId.AURORA]: 'aurorascan.dev',
   [ChainId.AVALANCHE]: 'snowtrace.io',
   [ChainId.BASE]: 'basescan.org',
+  [ChainId.LINEA]: 'lineascan.build',
 };

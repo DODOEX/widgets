@@ -9,6 +9,7 @@ import { ReactComponent as AuroraLogo } from '../assets/logo/networks/aurora.svg
 import { ReactComponent as OKChainLogo } from '../assets/logo/networks/okchain.svg';
 import { ReactComponent as CFXLogo } from '../assets/logo/networks/cfx.svg';
 import { ReactComponent as BaseLogo } from '../assets/logo/networks/base.svg';
+import { ReactComponent as LINEALogo } from '../assets/logo/networks/linea.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -104,6 +105,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.BASE,
       logo: BaseLogo,
       name: 'Base',
+    },
+  ],
+  [
+    ChainId.LINEA,
+    {
+      chainId: ChainId.LINEA,
+      logo: LINEALogo,
+      name: 'Linea',
     },
   ],
 ]);
