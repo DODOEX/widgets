@@ -679,4 +679,22 @@ export default [
     symbol: 'USDbC',
     chainId: 8453,
   },
+  {
+    decimals: 18,
+    logoURI:
+      'https://maticnetwork.github.io/polygon-token-assets/assets/eth.svg',
+    name: 'Ether',
+    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+    symbol: 'ETH',
+    chainId: 59144,
+  },
+  {
+    decimals: 18,
+    logoURI:
+      'https://maticnetwork.github.io/polygon-token-assets/assets/eth.svg',
+    name: 'Ether',
+    address: '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f',
+    symbol: 'WETH',
+    chainId: 59144,
+  },
 ];
