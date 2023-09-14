@@ -1,4 +1,5 @@
 # JS App Example
+
 <p align="center">
   <a>
     <img src="https://i.postimg.cc/W4q937Db/Logo.png" alt="DODO" />
@@ -10,6 +11,7 @@
 <p>
 
 To demonstrate how to use the [@dodoex/widgets](https://github.com/DODOEX/widgets) package in js projects.
+
 ## dodoex-widgets
 
 To start the demo:
@@ -31,6 +33,7 @@ html: add container element with `dodo-swap-widget` id in your html.
 ```html
 <div id="dodo-swap-widget"></div>
 ```
+
 ---
 
 js: init dodo widget in your js.
@@ -47,6 +50,7 @@ function initDodoWidget() {
 
 initDodoWidget();
 ```
+
 ---
 
 Supported [API](https://docs.dodoex.io/english/developers/swap-widget/api) from the `SwapWidget`:
@@ -71,6 +75,10 @@ Supported [API](https://docs.dodoex.io/english/developers/swap-widget/api) from 
 - `rebateTo`: Profit sharing address
 - `defaultFromToken`: Default Origin Token
 - `defaultToToken`: Default Destination Token
+- `crossChain`: Enable cross-chain
+- `swapSlippage`: Default swap slippage
+- `bridgeSlippage`: Default cross-chain slippage
+- `apiServices`: Custom api service
 
 For all available props (including theming), please refer to the up-to-date [documentation](https://docs.dodoex.io/english/developers/swap-widget).
 
@@ -90,4 +98,3 @@ For all available props (including theming), please refer to the up-to-date [doc
 
 - [GitHub](https://github.com/DODOEX/widgets)
   View the Swap Widget's source.
-
