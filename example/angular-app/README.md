@@ -50,6 +50,10 @@ Supported [API](https://docs.dodoex.io/english/developers/swap-widget/api) from 
 - `rebateTo`: Profit sharing address
 - `defaultFromToken`: Default Origin Token
 - `defaultToToken`: Default Destination Token
+- `crossChain`: Enable cross-chain
+- `swapSlippage`: Default swap slippage
+- `bridgeSlippage`: Default cross-chain slippage
+- `apiServices`: Custom api service
 
 For all available props (including theming), please refer to the up-to-date [documentation](https://docs.dodoex.io/english/developers/swap-widget).
 
@@ -72,7 +76,7 @@ For all available props (including theming), please refer to the up-to-date [doc
   Hop into #widgets for help.
 
 - [GitHub](https://github.com/DODOEX/widgets)
-  View the Swap Widget's source.  
+  View the Swap Widget's source.
 
 ## Further help
 

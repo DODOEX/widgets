@@ -5,6 +5,7 @@ function App() {
   return (
     <div className="App">
       <SwapWidget
+        crossChain
         apikey="ef9apopzq9qrgntjubojbxe7hy4z5eez" // for default test
         defaultChainId={4}
         colorMode="dark"
