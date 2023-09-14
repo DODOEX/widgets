@@ -42,8 +42,8 @@ export function useFetchRoutePrice({
   const { account, chainId: walletChainId, provider } = useWeb3React();
   const defaultChainId = useSelector(getDefaultChainId);
   const chainId = useMemo(
-    () => walletChainId || defaultChainId,
-    [walletChainId, defaultChainId],
+    () => fromToken?.chainId || walletChainId || defaultChainId,
+    [walletChainId, fromToken, defaultChainId],
   );
   const defaultSlippage = useDefaultSlippage(false);
   const slippage = useSelector(getSlippage) || defaultSlippage;

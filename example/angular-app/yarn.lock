@@ -1209,10 +1209,10 @@
   dependencies:
     "@babel/runtime" "^7.17.2"
 
-"@dodoex/widgets@^2.3.4":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@dodoex/widgets/-/widgets-2.5.0.tgz#d9e41aeefe74695dfc728b02489b5b8da9f5bf1b"
-  integrity sha512-JdJd2MJFevucfn8PDYgIrgZ7npaKvigW9dxReSyx/sfRretBi+ys9LwHmtOd0Mhsgn9NtdOmNhevAtpaijHNYQ==
+"@dodoex/widgets@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@dodoex/widgets/-/widgets-2.5.1.tgz#7b2e9bab82bb45dc2c9f8a60ece8d734bbe08ffa"
+  integrity sha512-0QUiThwu0sejSWZOLnGIHscRcUT4HXC3ktwCPFLIMH09eckXViq0TYz1UGX5wtjwkAAKTpybt7ytwhdR+aeYIQ==
   dependencies:
     "@babel/runtime" "^7.17.0"
     "@dodoex/components" "^2.0.1"
