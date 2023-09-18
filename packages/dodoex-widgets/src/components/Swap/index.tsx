@@ -60,6 +60,7 @@ import {
   maxSlippageWarning,
   useSlippageLimit,
 } from '../../hooks/Swap/useSlippageLimit';
+import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch';
 
 export function Swap() {
   const theme = useTheme();
@@ -343,6 +344,11 @@ export function Swap() {
       (isBasicToken && balance.lte(keepChanges))
     );
   }, [isReverseRouting, fromToken, toToken, fromAmt, resAmount, getBalance]);
+
+  const disabledSwitch = useDisabledTokenSwitch({
+    fromToken,
+    toToken,
+  });
 
   const slippageExceedLimit = useMemo(() => {
     if (
@@ -793,7 +799,7 @@ export function Swap() {
           />
 
           {/* Switch Icon */}
-          <SwitchBox onClick={switchTokens} />
+          <SwitchBox onClick={switchTokens} disabled={disabledSwitch} />
 
           {/* Second Token Card  */}
           <TokenCard
