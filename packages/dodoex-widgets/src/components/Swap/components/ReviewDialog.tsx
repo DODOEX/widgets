@@ -54,7 +54,7 @@ export function ReviewDialog({
   additionalFeeAmount,
 }: ReviewDialogProps) {
   const theme = useTheme();
-  const defaultSlippage = useDefaultSlippage(false);
+  const { defaultSlippage } = useDefaultSlippage(false);
   const slippage = useSelector(getSlippage) ?? defaultSlippage;
   const dispatch = useDispatch<AppThunkDispatch>();
   const { contractStatus } = useSelector(getGlobalProps);
