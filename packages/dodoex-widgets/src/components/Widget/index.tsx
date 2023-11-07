@@ -32,6 +32,7 @@ import { DefaultTokenInfo } from '../../hooks/Token/type';
 import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
 import { APIServices } from '../../constants/api';
+import { getAutoConnectLoading } from '../../store/selectors/globals';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
@@ -64,21 +65,24 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useFetchBlockNumber();
   const { provider, connector } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
+  const autoConnectLoading = useSelector(getAutoConnectLoading);
   useEffect(() => {
-    dispatch(setAutoConnectLoading(true));
-    const connectWallet = async () => {
-      const defaultChainId = props.defaultChainId;
-      try {
-        if (connector?.connectEagerly) {
-          await connector.connectEagerly(defaultChainId);
-        } else {
-          await connector.activate(defaultChainId);
+    if (autoConnectLoading === undefined) {
+      dispatch(setAutoConnectLoading(true));
+      const connectWallet = async () => {
+        const defaultChainId = props.defaultChainId;
+        try {
+          if (connector?.connectEagerly) {
+            await connector.connectEagerly(defaultChainId);
+          } else {
+            await connector.activate(defaultChainId);
+          }
+        } finally {
+          dispatch(setAutoConnectLoading(false));
         }
-      } finally {
-        dispatch(setAutoConnectLoading(false));
-      }
-    };
-    connectWallet();
+      };
+      connectWallet();
+    }
   }, [connector]);
   useEffect(() => {
     if (props.onProviderChanged) {
