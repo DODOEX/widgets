@@ -8,7 +8,7 @@
     "start:prod": "yarn run build && node express.js"
   },
   "dependencies": {
-    "@dodoex/widgets": "^2.5.1"
+    "@dodoex/widgets": "^2.5.3"
   },
   "devDependencies": {
     "express": "^4.18.1",
