@@ -33,12 +33,14 @@ import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
 import { APIServices } from '../../constants/api';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
+import { SwapProps } from '../Swap';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
   extends Web3ConnectorsProps,
     InitTokenListProps,
-    ExecutionProps {
+    ExecutionProps,
+    SwapProps {
   apikey?: string;
   theme?: ThemeOptions;
   colorMode?: PaletteMode;

@@ -35,7 +35,7 @@ export function SettingsDialog({
     () => Number(slippage) >= MAX_SWAP_SLIPPAGE,
     [slippage],
   );
-  const defaultSlippage = useDefaultSlippage(isBridge);
+  const { defaultSlippage } = useDefaultSlippage(isBridge);
   return (
     <Dialog open={open} onClose={onClose} title={<Trans>Settings</Trans>}>
       <Box

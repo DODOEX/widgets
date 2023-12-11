@@ -18,3 +18,24 @@ export const setAutoConnectLoading = (loading: boolean): AppThunkAction => {
     });
   };
 };
+
+export const setAutoSlippage = (autoSlippage: {
+  loading: boolean;
+  value: number | null;
+}): AppThunkAction => {
+  return async (dispatch) => {
+    dispatch({
+      type: 'SET_AUTO_SLIPPAGE',
+      payload: autoSlippage,
+    });
+  };
+};
+
+export const setAutoSlippageLoading = (loading: boolean): AppThunkAction => {
+  return async (dispatch) => {
+    dispatch({
+      type: 'SET_AUTO_SLIPPAGE_LOADING',
+      payload: loading,
+    });
+  };
+};

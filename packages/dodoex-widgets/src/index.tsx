@@ -3,11 +3,12 @@ import { createRoot } from 'react-dom/client';
 import { Widget, WidgetProps } from './components/Widget';
 
 export type SwapWidgetProps = WidgetProps;
+export type { TokenInfo } from './hooks/Token/type';
 
 export function SwapWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>
-      <Swap />
+      <Swap getAutoSlippage={props.getAutoSlippage} />
     </Widget>
   );
 }
@@ -18,7 +19,7 @@ export function InitSwapWidget(props: SwapWidgetProps) {
   const root = createRoot(rootEl!);
   root.render(
     <Widget {...props}>
-      <Swap />
+      <Swap getAutoSlippage={props.getAutoSlippage} />
     </Widget>,
   );
 }

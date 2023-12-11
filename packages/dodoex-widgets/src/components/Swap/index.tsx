@@ -61,8 +61,17 @@ import {
   useSlippageLimit,
 } from '../../hooks/Swap/useSlippageLimit';
 import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch';
+import {
+  GetAutoSlippage,
+  useSetAutoSlippage,
+} from '../../hooks/setting/useSetAutoSlippage';
 
-export function Swap() {
+export interface SwapProps {
+  /** Higher priority setting slippage */
+  getAutoSlippage?: GetAutoSlippage;
+}
+
+export function Swap({ getAutoSlippage }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
@@ -126,6 +135,11 @@ export function Swap() {
     fiatPrice: isReverseRouting ? toFiatPrice : fromFiatPrice,
   });
 
+  useSetAutoSlippage({
+    fromToken,
+    toToken,
+    getAutoSlippage,
+  });
   const {
     resAmount,
     priceImpact,
