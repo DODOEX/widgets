@@ -9,6 +9,7 @@ import {
   Web3Connection,
 } from './web3';
 import { WalletType } from '../../constants/wallet';
+import type { WalletConnect as WalletConnectV2 } from '@web3-react/walletconnect-v2';
 
 export interface Web3ConnectorsProps {
   provider?: Eip1193Provider | JsonRpcProvider;
@@ -65,7 +66,7 @@ export function useWeb3Connectors({
   }, [integratorConnection, metaMaskConnection, walletConnectConnectionPopup]);
 }
 
-export function connectToWallet(
+export async function connectToWallet(
   type: WalletType,
   chainId: number | undefined,
   onError: (error: Error) => void,
@@ -75,7 +76,32 @@ export function connectToWallet(
     throw new Error(`Unknown wallet type: ${type}`);
   }
   const [connector] = connection;
-  connector.activate(chainId)?.catch((e) => {
+  try {
+    // fix wallet connect failed
+    if (connector.connectEagerly) {
+      await connector.connectEagerly(chainId);
+    }
+    // When walletConnect is connected but does not support the chain, disconnect and reconnect.
+    if (
+      type === WalletType.WALLET_CONNECT &&
+      (connector as WalletConnectV2).provider?.chainId &&
+      // @ts-ignore
+      !(connector as WalletConnectV2).chains?.includes(
+        (connector as WalletConnectV2).provider?.chainId,
+      ) &&
+      connector.deactivate
+    ) {
+      // @ts-ignore
+      if (connector.provider?.disconnect) {
+        // @ts-ignore
+        await connector.provider?.disconnect();
+      }
+      await connector.deactivate();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  await connector.activate(chainId)?.catch((e) => {
     // cancel switch chain
     if (e.code === 4001) {
       if (connector.connectEagerly) {

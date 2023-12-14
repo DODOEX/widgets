@@ -65,6 +65,7 @@ import {
   GetAutoSlippage,
   useSetAutoSlippage,
 } from '../../hooks/setting/useSetAutoSlippage';
+import { setFromTokenChainId } from '../../store/actions/wallet';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -98,7 +99,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
     [],
   );
 
-  const [fromToken, setFromToken] = useState<TokenInfo | null>(null);
+  const [fromToken, setFromTokenOrigin] = useState<TokenInfo | null>(null);
   const [toToken, setToToken] = useState<TokenInfo | null>(null);
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState<boolean>(false);
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] =
@@ -219,6 +220,31 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
     },
     [setDisplayingToAmt, debouncedSetToAmt],
   );
+
+  const setFromToken: (value: React.SetStateAction<TokenInfo | null>) => void =
+    useCallback(
+      (value) => {
+        // sync redux
+        if (typeof value === 'function') {
+          return setFromTokenOrigin((prev) => {
+            const newValue = value(prev);
+            dispatch(
+              setFromTokenChainId(
+                (newValue?.chainId ?? undefined) as ChainId | undefined,
+              ),
+            );
+            return newValue;
+          });
+        }
+        dispatch(
+          setFromTokenChainId(
+            (value?.chainId ?? undefined) as ChainId | undefined,
+          ),
+        );
+        return setFromTokenOrigin(value);
+      },
+      [dispatch, setFromTokenChainId],
+    );
 
   useInitDefaultToken({
     fromToken,
@@ -565,7 +591,8 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
     const needApprove =
       approvalState === ApprovalState.Insufficient && !pendingReset;
 
-    if (!account) return <ConnectWallet />;
+    if (!account || (fromToken?.chainId && chainId !== fromToken.chainId))
+      return <ConnectWallet />;
     if (isInflight) {
       return (
         <Button fullWidth isLoading disabled>

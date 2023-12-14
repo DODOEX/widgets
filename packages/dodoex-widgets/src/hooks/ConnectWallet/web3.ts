@@ -55,10 +55,18 @@ export function getConnectionFromWalletConnect(
         new WalletConnectV2({
           actions,
           options: {
-            rpcMap: jsonRpcUrlMap,
+            rpcMap: defaultChainId
+              ? {
+                  [defaultChainId as number]:
+                    jsonRpcUrlMap[defaultChainId as number],
+                }
+              : jsonRpcUrlMap,
             projectId: '59e050d1f27ed617e65bb9637c9498d6',
             chains: defaultChainId ? [defaultChainId] : [],
             showQrModal: useDefault,
+            qrModalOptions: {
+              desktopWallets: [],
+            },
           },
           onError,
           defaultChainId,
