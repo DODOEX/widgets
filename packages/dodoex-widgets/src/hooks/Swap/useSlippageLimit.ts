@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 export const maxSlippageWarning = 5;
 
 export const useSlippageLimit = (isBridge: boolean | undefined) => {
-  const defaultSlippage = useDefaultSlippage(isBridge);
+  const { defaultSlippage } = useDefaultSlippage(isBridge);
   const slippage = useSelector(getSlippage) || defaultSlippage;
   return useMemo(() => {
     return Number(slippage) > maxSlippageWarning;

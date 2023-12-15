@@ -13,6 +13,11 @@ export interface State extends SwapWidgetProps {
   contractStatus?: ContractStatus;
   autoConnectLoading?: boolean; // default: undefined
   showCoingecko?: boolean;
+  /** source: props.getAutoSlippage */
+  autoSlippage?: {
+    loading: boolean;
+    value: number | null;
+  };
 }
 
 export const initialState: State = {
@@ -24,6 +29,7 @@ export const initialState: State = {
   isReverseRouting: false,
   contractStatus: ContractStatus.Initial,
   autoConnectLoading: undefined,
+  autoSlippage: undefined,
 };
 
 export default (state: State = initialState, action: AnyAction): State => {
@@ -37,6 +43,19 @@ export default (state: State = initialState, action: AnyAction): State => {
       return {
         ...state,
         autoConnectLoading: action.payload,
+      };
+    case 'SET_AUTO_SLIPPAGE':
+      return {
+        ...state,
+        autoSlippage: action.payload,
+      };
+    case 'SET_AUTO_SLIPPAGE_LOADING':
+      return {
+        ...state,
+        autoSlippage: {
+          loading: action.payload,
+          value: state.autoSlippage?.value ?? null,
+        },
       };
     default:
       return state;

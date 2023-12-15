@@ -33,12 +33,15 @@ import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
 import { APIServices } from '../../constants/api';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
+import { SwapProps } from '../Swap';
+import { getFromTokenChainId } from '../../store/selectors/wallet';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
   extends Web3ConnectorsProps,
     InitTokenListProps,
-    ExecutionProps {
+    ExecutionProps,
+    SwapProps {
   apikey?: string;
   theme?: ThemeOptions;
   colorMode?: PaletteMode;
@@ -137,21 +140,12 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   );
 }
 
-export function Widget(props: PropsWithChildren<WidgetProps>) {
-  const theme = createTheme({
-    mode: props.colorMode,
-    theme: props.theme,
-    lang: props.locale || defaultLang,
-  });
+function Web3Provider(props: PropsWithChildren<WidgetProps>) {
+  const fromTokenChainId = useSelector(getFromTokenChainId);
   const defaultChainId = useMemo(
-    () => props.defaultChainId || 1,
-    [props.defaultChainId],
+    () => fromTokenChainId ?? props.defaultChainId ?? 1,
+    [props.defaultChainId, fromTokenChainId],
   );
-
-  if (!props.apikey && !props.apiServices) {
-    console.error('apikey and apiServices must have a.');
-  }
-
   const connectors = useWeb3Connectors({
     provider: props.provider,
     jsonRpcUrlMap: props.jsonRpcUrlMap,
@@ -159,20 +153,32 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
   });
   const key = `${connectors.length}+${
     props.jsonRpcUrlMap ? Object.entries(props.jsonRpcUrlMap) : ''
-  }+${props.defaultChainId}+${defaultChainId}`;
+  }+${defaultChainId}`;
+
+  return (
+    <Web3ReactProvider connectors={connectors} key={key} lookupENS={false}>
+      <InitStatus {...props} />
+    </Web3ReactProvider>
+  );
+}
+
+export function Widget(props: PropsWithChildren<WidgetProps>) {
+  const theme = createTheme({
+    mode: props.colorMode,
+    theme: props.theme,
+    lang: props.locale || defaultLang,
+  });
+
+  if (!props.apikey && !props.apiServices) {
+    console.error('apikey and apiServices must have a.');
+  }
 
   return (
     <ReduxProvider store={store}>
       <LangProvider locale={props.locale}>
         <ThemeProvider theme={theme}>
-          <Web3ReactProvider
-            connectors={connectors}
-            key={key}
-            lookupENS={false}
-          >
-            <CssBaseline container={`.${WIDGET_CLASS_NAME}`} />
-            <InitStatus {...props} />
-          </Web3ReactProvider>
+          <CssBaseline container={`.${WIDGET_CLASS_NAME}`} />
+          <Web3Provider {...props} />
         </ThemeProvider>
       </LangProvider>
     </ReduxProvider>

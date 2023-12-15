@@ -7,7 +7,6 @@ import {
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { getEstimateGas } from '../contract/wallet';
 import { useSelector } from 'react-redux';
-import { getGlobalProps } from '../../store/selectors/globals';
 import { DEFAULT_SWAP_DDL } from '../../constants/swap';
 import { getSlippage, getTxDdl } from '../../store/selectors/settings';
 import { EmptyAddress } from '../../constants/address';
@@ -18,6 +17,7 @@ import { TokenInfo } from '../Token';
 import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
+import { getGlobalProps } from '../../store/selectors/globals';
 
 export enum RoutePriceStatus {
   Initial = 'Initial',
@@ -45,7 +45,8 @@ export function useFetchRoutePrice({
     () => fromToken?.chainId || walletChainId || defaultChainId,
     [walletChainId, fromToken, defaultChainId],
   );
-  const defaultSlippage = useDefaultSlippage(false);
+  const { defaultSlippage, loading: slippageLoading } =
+    useDefaultSlippage(false);
   const slippage = useSelector(getSlippage) || defaultSlippage;
   const ddl = useSelector(getTxDdl) || DEFAULT_SWAP_DDL;
   const { feeRate, rebateTo, apikey, isReverseRouting } =
@@ -102,6 +103,8 @@ export function useFetchRoutePrice({
     if (!isReverseRouting && !fromAmount) return;
     if (isReverseRouting && !toAmount) return;
     setStatus(RoutePriceStatus.Loading);
+    // waiting for set auto slippage
+    if (slippageLoading) return;
     const params: any = {
       chainId,
       deadLine: apiDdl,
@@ -185,6 +188,7 @@ export function useFetchRoutePrice({
     apikey,
     isReverseRouting,
     routePriceAPI,
+    slippageLoading,
   ]);
 
   usePriceTimer({ refetch });

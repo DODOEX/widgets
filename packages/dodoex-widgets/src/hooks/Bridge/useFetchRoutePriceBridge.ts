@@ -145,7 +145,8 @@ export function useFetchRoutePriceBridge({
   fromAmount,
 }: FetchRoutePrice) {
   const { account, provider } = useWeb3React();
-  const defaultSlippage = useDefaultSlippage(true);
+  const { defaultSlippage, loading: slippageLoading } =
+    useDefaultSlippage(true);
   const slippage = useSelector(getSlippage) || defaultSlippage;
   const { apikey } = useSelector(getGlobalProps);
   const [status, setStatus] = useState<RoutePriceStatus>(
@@ -171,6 +172,7 @@ export function useFetchRoutePriceBridge({
       return;
     }
     setStatus(RoutePriceStatus.Loading);
+    if (slippageLoading) return;
 
     const fromTokenAddress = fromToken.address;
     const toTokenAddress = toToken.address;
@@ -358,6 +360,7 @@ export function useFetchRoutePriceBridge({
     fromAmount,
     apikey,
     bridgeRoutePriceAPI,
+    slippageLoading,
   ]);
 
   usePriceTimer({ refetch });

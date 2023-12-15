@@ -1,10 +1,16 @@
-import { Box } from '@dodoex/components';
-import { Trans } from '@lingui/macro';
+import { Box, RotatingIcon } from '@dodoex/components';
+import { t, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
+import { useWeb3React } from '@web3-react/core';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { WalletMap } from '../../../../constants/wallet';
+import { WalletMap, WalletType } from '../../../../constants/wallet';
 import { connectToWallet } from '../../../../hooks/ConnectWallet';
-import { getGlobalProps } from '../../../../store/selectors/globals';
+import { useSwitchChain } from '../../../../hooks/ConnectWallet/useSwitchChain';
+import {
+  getDefaultChainId,
+  getFromTokenChainId,
+} from '../../../../store/selectors/wallet';
 import Dialog from '../Dialog';
 
 export default function ConnectWalletDialog({
@@ -14,8 +20,20 @@ export default function ConnectWalletDialog({
   open: boolean;
   onClose: () => void;
 }) {
-  const chainId = useSelector(getGlobalProps).defaultChainId;
   useLingui();
+  const defaultChainId = useSelector(getDefaultChainId);
+  const fromTokenChainId = useSelector(getFromTokenChainId);
+  const chainId = useMemo(
+    () => fromTokenChainId ?? defaultChainId,
+    [fromTokenChainId, defaultChainId],
+  );
+  const [connectingType, setConnectingType] =
+    useState<keyof typeof WalletMap | null>(null);
+  const connectingWallet = connectingType
+    ? WalletMap[connectingType]
+    : undefined;
+  const switchChain = useSwitchChain(chainId);
+  const webReact = useWeb3React();
   return (
     <Dialog
       title={<Trans>Connect to your wallet</Trans>}
@@ -28,32 +46,23 @@ export default function ConnectWalletDialog({
           pb: 20,
           border: '1px solid transparent',
           borderTopColor: 'border.main',
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
-        {Object.values(WalletMap).map((wallet) => (
+        {connectingWallet ? (
           <Box
-            key={wallet.type}
             sx={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'center',
               flexDirection: 'column',
-              mt: 20,
-              p: 20,
-              backgroundColor: 'background.tag',
-              borderRadius: 12,
-              cursor: 'pointer',
-              '&:hover': {
-                backgroundColor: 'hover.default',
-              },
-            }}
-            onClick={() => {
-              connectToWallet(wallet.type, chainId, (error) => {
-                console.error(error);
-              });
+              flex: 1,
             }}
           >
             <Box
-              component={wallet.icon}
+              component={connectingWallet.icon}
               sx={{
                 width: 32,
                 height: 32,
@@ -65,19 +74,89 @@ export default function ConnectWalletDialog({
                 typography: 'caption',
               }}
             >
-              {wallet.name}
+              {t`Opening ${connectingWallet.name}...`}
             </Box>
             <Box
               sx={{
-                mt: 4,
+                mt: 8,
                 typography: 'body2',
                 color: 'text.secondary',
               }}
             >
-              <Trans>Connect to your {wallet.name} Wallet</Trans>
+              <RotatingIcon />
             </Box>
           </Box>
-        ))}
+        ) : (
+          <>
+            {Object.values(WalletMap).map((wallet) => (
+              <Box
+                key={wallet.type}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  mt: 20,
+                  p: 20,
+                  backgroundColor: 'background.tag',
+                  borderRadius: 12,
+                  cursor: 'pointer',
+                  '&:hover': {
+                    backgroundColor: 'hover.default',
+                  },
+                }}
+                onClick={async () => {
+                  try {
+                    setConnectingType(wallet.type as keyof typeof WalletMap);
+                    // When the wallet is already connected, switch chains
+                    if (webReact.chainId && webReact.chainId !== chainId) {
+                      if (
+                        wallet.type === WalletType.METAMASK &&
+                        webReact.provider?.provider?.isMetaMask &&
+                        switchChain
+                      ) {
+                        await switchChain();
+                        setConnectingType(null);
+                        return;
+                      }
+                    }
+                    await connectToWallet(wallet.type, chainId, (error) => {
+                      console.error(error);
+                      setConnectingType(null);
+                    });
+                  } catch (error) {
+                    console.error(error);
+                  }
+                  setConnectingType(null);
+                }}
+              >
+                <Box
+                  component={wallet.icon}
+                  sx={{
+                    width: 32,
+                    height: 32,
+                  }}
+                />
+                <Box
+                  sx={{
+                    mt: 8,
+                    typography: 'caption',
+                  }}
+                >
+                  {wallet.name}
+                </Box>
+                <Box
+                  sx={{
+                    mt: 4,
+                    typography: 'body2',
+                    color: 'text.secondary',
+                  }}
+                >
+                  <Trans>Connect to your {wallet.name} Wallet</Trans>
+                </Box>
+              </Box>
+            ))}
+          </>
+        )}
       </Box>
     </Dialog>
   );

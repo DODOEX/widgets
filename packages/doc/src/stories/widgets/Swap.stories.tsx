@@ -1,5 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { SwapWidget } from '@dodoex/widgets';
+import { TokenInfo } from '@dodoex/widgets/dist/src/hooks/Token/type';
 
 export enum ChainId {
   MAINNET = 1,
@@ -210,4 +211,20 @@ Primary.args = {
   ],
   tokenList: 'all',
   crossChain: true,
+  getAutoSlippage: ({
+    fromToken,
+    toToken,
+  }: {
+    fromToken: TokenInfo | null;
+    toToken: TokenInfo | null;
+  }) => {
+    if (!fromToken || !toToken || fromToken.chainId !== toToken.chainId) {
+      return undefined;
+    }
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(0.9);
+      }, 1000);
+    });
+  },
 };

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ThemeOptions, useThemeProps, GlobalStyles } from '@mui/system';
+import { Interpolation } from '@emotion/react';
 
 export const html = (theme: ThemeOptions, enableColorScheme: boolean) => ({
   WebkitFontSmoothing: 'antialiased', // Antialiasing.
@@ -27,7 +28,12 @@ export const body = (theme: ThemeOptions) => ({
   },
 });
 
-export const styles = (theme: ThemeOptions, enableColorScheme = false, container?: string) => {
+export const styles = (
+  theme: ThemeOptions,
+  enableColorScheme = false,
+  container?: string,
+  stylesProps?: Interpolation<{}>,
+) => {
   let defaultStyles: any = {
     html: html(theme, enableColorScheme),
     '*, *::before, *::after': {
@@ -68,7 +74,9 @@ export const styles = (theme: ThemeOptions, enableColorScheme = false, container
         [container]: newThemeOverrides,
       };
     }
-    defaultStyles = [defaultStyles, themeOverrides];
+    defaultStyles = [defaultStyles, themeOverrides, stylesProps];
+  } else {
+    defaultStyles = [defaultStyles, stylesProps];
   }
 
   return defaultStyles;
@@ -81,12 +89,18 @@ function CssBaseline(inProps: {
   children?: React.ReactNode;
   enableColorScheme?: boolean;
   container?: string;
+  styles?: Interpolation<{}>;
 }) {
-  const props = useThemeProps({ props: inProps, name: 'DODOCssBaseline' });
+  const { styles: stylesProps, ...themeProps } = inProps;
+  const props = useThemeProps({ props: themeProps, name: 'DODOCssBaseline' });
   const { children, enableColorScheme = false, container } = props;
   return (
     <>
-      <GlobalStyles styles={(theme) => styles(theme, enableColorScheme, container)} />
+      <GlobalStyles
+        styles={(theme) =>
+          styles(theme, enableColorScheme, container, stylesProps)
+        }
+      />
       {children}
     </>
   );

@@ -10,6 +10,17 @@ export const setDefaultChainId = (chainId: ChainId): AppThunkAction => {
   };
 };
 
+export const setFromTokenChainId = (
+  chainId: ChainId | undefined,
+): AppThunkAction => {
+  return async (dispatch) => {
+    dispatch({
+      type: 'SET_FROM_TOKEN_CHAIN_ID',
+      payload: chainId,
+    });
+  };
+};
+
 export const setBlockNumber = (blockNumber: number): AppThunkAction => {
   return async (dispatch) => {
     dispatch({

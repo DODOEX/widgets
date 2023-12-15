@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "2.5.4",
+  "version": "2.5.6",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/src/index.d.ts",
@@ -32,7 +32,7 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/src/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/cjs/index.cjs"
     }

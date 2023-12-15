@@ -98,7 +98,6 @@ export function NumberInput({
             fontSize: 24,
             border: 'none',
             outline: 'none',
-            height: 24,
             padding: 0,
             color: 'text.primary',
             '&::placeholder': {

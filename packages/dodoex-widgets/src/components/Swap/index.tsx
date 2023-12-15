@@ -61,8 +61,18 @@ import {
   useSlippageLimit,
 } from '../../hooks/Swap/useSlippageLimit';
 import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch';
+import {
+  GetAutoSlippage,
+  useSetAutoSlippage,
+} from '../../hooks/setting/useSetAutoSlippage';
+import { setFromTokenChainId } from '../../store/actions/wallet';
 
-export function Swap() {
+export interface SwapProps {
+  /** Higher priority setting slippage */
+  getAutoSlippage?: GetAutoSlippage;
+}
+
+export function Swap({ getAutoSlippage }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
@@ -89,7 +99,7 @@ export function Swap() {
     [],
   );
 
-  const [fromToken, setFromToken] = useState<TokenInfo | null>(null);
+  const [fromToken, setFromTokenOrigin] = useState<TokenInfo | null>(null);
   const [toToken, setToToken] = useState<TokenInfo | null>(null);
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState<boolean>(false);
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] =
@@ -126,6 +136,11 @@ export function Swap() {
     fiatPrice: isReverseRouting ? toFiatPrice : fromFiatPrice,
   });
 
+  useSetAutoSlippage({
+    fromToken,
+    toToken,
+    getAutoSlippage,
+  });
   const {
     resAmount,
     priceImpact,
@@ -205,6 +220,31 @@ export function Swap() {
     },
     [setDisplayingToAmt, debouncedSetToAmt],
   );
+
+  const setFromToken: (value: React.SetStateAction<TokenInfo | null>) => void =
+    useCallback(
+      (value) => {
+        // sync redux
+        if (typeof value === 'function') {
+          return setFromTokenOrigin((prev) => {
+            const newValue = value(prev);
+            dispatch(
+              setFromTokenChainId(
+                (newValue?.chainId ?? undefined) as ChainId | undefined,
+              ),
+            );
+            return newValue;
+          });
+        }
+        dispatch(
+          setFromTokenChainId(
+            (value?.chainId ?? undefined) as ChainId | undefined,
+          ),
+        );
+        return setFromTokenOrigin(value);
+      },
+      [dispatch, setFromTokenChainId],
+    );
 
   useInitDefaultToken({
     fromToken,
@@ -551,7 +591,8 @@ export function Swap() {
     const needApprove =
       approvalState === ApprovalState.Insufficient && !pendingReset;
 
-    if (!account) return <ConnectWallet />;
+    if (!account || (fromToken?.chainId && chainId !== fromToken.chainId))
+      return <ConnectWallet />;
     if (isInflight) {
       return (
         <Button fullWidth isLoading disabled>
