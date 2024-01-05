@@ -697,4 +697,58 @@ export default [
     symbol: 'WETH',
     chainId: 59144,
   },
+  {
+    decimals: 18,
+    logoURI:
+      'https://maticnetwork.github.io/polygon-token-assets/assets/eth.svg',
+    name: 'Ether',
+    address: '0x5300000000000000000000000000000000000004',
+    symbol: 'WETH',
+    chainId: 534352,
+  },
+  {
+    decimals: 6,
+    logoURI:
+      'https://images.dodoex.io/XbtxsPIscM6p5ClHbLO0JumFHA9U23eON8-MDh-Plkg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vaG1nM3hRa1BUTUtkcUNFVnd0LXU4S2lwTW5od1JCdGhLYWxENW9vSWlTZy9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6UXlNRFEyTkRaZk1qQXlNakEwTWpJd01UQTFNekF4TmpVdWNHNW4ucG5n.webp',
+    name: 'USD Coin',
+    address: '0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4',
+    symbol: 'USDC',
+    chainId: 534352,
+  },
+  {
+    decimals: 18,
+    logoURI:
+      'https://maticnetwork.github.io/polygon-token-assets/assets/eth.svg',
+    name: 'Ether',
+    address: '0x0Dc808adcE2099A9F62AA87D9670745AbA741746',
+    symbol: 'WETH',
+    chainId: 169,
+  },
+  {
+    decimals: 6,
+    logoURI:
+      'https://images.dodoex.io/XbtxsPIscM6p5ClHbLO0JumFHA9U23eON8-MDh-Plkg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vaG1nM3hRa1BUTUtkcUNFVnd0LXU4S2lwTW5od1JCdGhLYWxENW9vSWlTZy9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6UXlNRFEyTkRaZk1qQXlNakEwTWpJd01UQTFNekF4TmpVdWNHNW4ucG5n.webp',
+    name: 'USD Coin',
+    address: '0xb73603c5d87fa094b7314c74ace2e64d165016fb',
+    symbol: 'USDC',
+    chainId: 169,
+  },
+  {
+    decimals: 6,
+    logoURI:
+      'https://images.dodoex.io/MGklrG5AImwUllGWDPMAHY0qLfdJQn4bj3iPFWSeohA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vUEM3a3JPb252bWl4U3VRaFEwY29pVy1sczFYN25WS1lLNVluekQ2R2lxRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkZSZlpUaGlOekZpTldZeU9TOVZVMFJVWDJVNFlqY3hZalZtTWprdWNHNW4ucG5n.webp',
+    name: 'Tether USD',
+    address: '0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE',
+    symbol: 'USDT',
+    chainId: 5000,
+  },
+  {
+    decimals: 6,
+    logoURI:
+      'https://images.dodoex.io/XbtxsPIscM6p5ClHbLO0JumFHA9U23eON8-MDh-Plkg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vaG1nM3hRa1BUTUtkcUNFVnd0LXU4S2lwTW5od1JCdGhLYWxENW9vSWlTZy9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6UXlNRFEyTkRaZk1qQXlNakEwTWpJd01UQTFNekF4TmpVdWNHNW4ucG5n.webp',
+    name: 'USD Coin',
+    address: '0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9',
+    symbol: 'USDC',
+    chainId: 5000,
+  },
 ];
