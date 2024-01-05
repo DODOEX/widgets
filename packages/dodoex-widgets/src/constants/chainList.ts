@@ -10,6 +10,9 @@ import { ReactComponent as OKChainLogo } from '../assets/logo/networks/okchain.s
 import { ReactComponent as CFXLogo } from '../assets/logo/networks/cfx.svg';
 import { ReactComponent as BaseLogo } from '../assets/logo/networks/base.svg';
 import { ReactComponent as LINEALogo } from '../assets/logo/networks/linea.svg';
+import { ReactComponent as ScrollLogo } from '../assets/logo/networks/scroll.svg';
+import { ReactComponent as MantaLogo } from '../assets/logo/networks/manta.svg';
+import { ReactComponent as MantleLogo } from '../assets/logo/networks/mantle.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -113,6 +116,30 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.LINEA,
       logo: LINEALogo,
       name: 'Linea',
+    },
+  ],
+  [
+    ChainId.SCROLL,
+    {
+      chainId: ChainId.SCROLL,
+      logo: ScrollLogo,
+      name: 'Scroll',
+    },
+  ],
+  [
+    ChainId.MANTA,
+    {
+      chainId: ChainId.MANTA,
+      logo: MantaLogo,
+      name: 'Manta',
+    },
+  ],
+  [
+    ChainId.MANTLE,
+    {
+      chainId: ChainId.MANTLE,
+      logo: MantleLogo,
+      name: 'Mantle',
     },
   ],
 ]);

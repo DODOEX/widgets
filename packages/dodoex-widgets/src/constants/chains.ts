@@ -21,6 +21,12 @@ export enum ChainId {
   BASE = 8453,
 
   LINEA = 59144,
+
+  SCROLL = 534352,
+
+  MANTA = 169,
+
+  MANTLE = 5000,
 }
 
 export const rpcServerMap: {
@@ -66,6 +72,9 @@ export const rpcServerMap: {
   [ChainId.CONFLUX]: ['https://evm.confluxrpc.com'],
   [ChainId.BASE]: ['https://mainnet.base.org'],
   [ChainId.LINEA]: ['https://linea-mainnet.infura.io/v3'],
+  [ChainId.SCROLL]: ['https://rpc.scroll.io'],
+  [ChainId.MANTA]: ['https://pacific-rpc.manta.network/http'],
+  [ChainId.MANTLE]: ['https://rpc.mantle.xyz'],
 };
 
 export const etherTokenAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -154,6 +163,21 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WETH',
     wrappedTokenAddress: '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f',
   },
+  [ChainId.SCROLL]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenSymbol: 'WETH',
+    wrappedTokenAddress: '0x5300000000000000000000000000000000000004',
+  },
+  [ChainId.MANTA]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenSymbol: 'WETH',
+    wrappedTokenAddress: '0x0Dc808adcE2099A9F62AA87D9670745AbA741746',
+  },
+  [ChainId.MANTLE]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenSymbol: 'WMNT',
+    wrappedTokenAddress: '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8',
+  },
 };
 
 export const platformIdMap: {
@@ -171,6 +195,9 @@ export const platformIdMap: {
   [ChainId.AVALANCHE]: 'avalanche', // Needs confirm
   [ChainId.BASE]: 'base',
   [ChainId.LINEA]: 'linea',
+  [ChainId.SCROLL]: 'scr',
+  [ChainId.MANTA]: 'manta',
+  [ChainId.MANTLE]: 'mantle',
 };
 
 export const scanUrlDomainMap: {
@@ -188,4 +215,7 @@ export const scanUrlDomainMap: {
   [ChainId.AVALANCHE]: 'snowtrace.io',
   [ChainId.BASE]: 'basescan.org',
   [ChainId.LINEA]: 'lineascan.build',
+  [ChainId.SCROLL]: 'scrollscan.com',
+  [ChainId.MANTA]: 'pacific-explorer.manta.network',
+  [ChainId.MANTLE]: 'explorer.mantle.xyz',
 };
