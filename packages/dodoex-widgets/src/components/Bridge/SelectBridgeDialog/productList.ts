@@ -9,6 +9,7 @@ import { ReactComponent as connextLogoUrl } from '../../../assets/bridge/connext
 import { ReactComponent as squidLogoUrl } from '../../../assets/bridge/squid.svg';
 import { ReactComponent as stargateLogoUrl } from '../../../assets/bridge/stargate.svg';
 import { ReactComponent as synapseLogoUrl } from '../../../assets/bridge/synapse.svg';
+import { ReactComponent as okxLogoUrl } from '../../../assets/bridge/okx.svg';
 
 export const productList = [
   {
@@ -65,5 +66,24 @@ export const productList = [
     id: 'across',
     logoURI: acrossLogoUrl,
     name: 'Across',
+  },
+  {
+    id: 'layerswap',
+    logoURI: {
+      src: 'https://images.dodoex.io/Z1R7cj2eSdYi4plsJ1aW8ON7ulxfB7okAh_qc3vksf4/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy91cGxvYWRfaW1nXzUxNDMzNDFfMjAyMzExMTUxNDEyNDc1NTIucG5n.webp',
+    },
+    name: 'Layerswap',
+  },
+  {
+    id: 'okx',
+    logoURI: okxLogoUrl,
+    name: 'okx',
+  },
+  {
+    id: 'symbiosis',
+    logoURI: {
+      src: 'https://images.dodoex.io/b3DYMc9SAyHXws57HLlz8v7tqTOdu-1DBnuswDJIHOY/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy91cGxvYWRfaW1nXzYxNTQ2OTJfMjAyMzEyMjcwODEyMjM3ODkuc3Zn.webp',
+    },
+    name: 'symbiosis',
   },
 ];

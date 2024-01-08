@@ -204,6 +204,10 @@ export function useFetchRoutePriceBridge({
         'connext',
         'squid',
         'across',
+        'layerswap',
+        'okx',
+        'symbiosis',
+        // Sync with src/components/Bridge/SelectBridgeDialog/productList.ts
       ],
     };
 
