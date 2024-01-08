@@ -9,6 +9,9 @@ import { ReactComponent as connextLogoUrl } from '../../../assets/bridge/connext
 import { ReactComponent as squidLogoUrl } from '../../../assets/bridge/squid.svg';
 import { ReactComponent as stargateLogoUrl } from '../../../assets/bridge/stargate.svg';
 import { ReactComponent as synapseLogoUrl } from '../../../assets/bridge/synapse.svg';
+import { ReactComponent as layerSwapLogoUrl } from '../../../assets/bridge/layer-swap.svg';
+import { ReactComponent as okxLogoUrl } from '../../../assets/bridge/okx.svg';
+import { ReactComponent as symbiosisLogoUrl } from '../../../assets/bridge/symbiosis.svg';
 
 export const productList = [
   {
@@ -65,5 +68,20 @@ export const productList = [
     id: 'across',
     logoURI: acrossLogoUrl,
     name: 'Across',
+  },
+  {
+    id: 'layerswap',
+    logoURI: layerSwapLogoUrl,
+    name: 'Layerswap',
+  },
+  {
+    id: 'okx',
+    logoURI: okxLogoUrl,
+    name: 'okx',
+  },
+  {
+    id: 'symbiosis',
+    logoURI: symbiosisLogoUrl,
+    name: 'symbiosis',
   },
 ];

@@ -734,6 +734,15 @@ export default [
     chainId: 169,
   },
   {
+    decimals: 18,
+    logoURI:
+      'https://maticnetwork.github.io/polygon-token-assets/assets/eth.svg',
+    name: 'Ether',
+    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+    symbol: 'ETH',
+    chainId: 169,
+  },
+  {
     decimals: 6,
     logoURI:
       'https://images.dodoex.io/MGklrG5AImwUllGWDPMAHY0qLfdJQn4bj3iPFWSeohA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vUEM3a3JPb252bWl4U3VRaFEwY29pVy1sczFYN25WS1lLNVluekQ2R2lxRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkZSZlpUaGlOekZpTldZeU9TOVZVMFJVWDJVNFlqY3hZalZtTWprdWNHNW4ucG5n.webp',
