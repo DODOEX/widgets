@@ -1,12 +1,12 @@
 import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useState } from 'react';
-import { JsonRpcProvider } from '@ethersproject/providers';
 import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
 import { ChainId, rpcServerMap } from '../../constants/chains';
 import { fetchTokenAllowance } from '../contract';
 import { getLatestBlockNumber } from '../../store/selectors/wallet';
 import { TokenInfo } from './type';
+import { getStaticJsonRpcProvider } from '../contract/provider';
 
 export function useFetchTokenAllowance({
   chainId,
@@ -33,7 +33,7 @@ export function useFetchTokenAllowance({
       ...jsonRpcUrlMapProps,
     };
     const rpcUrls = jsonRpcUrlMap[chainId as ChainId];
-    const provider = new JsonRpcProvider(rpcUrls?.[0]);
+    const provider = getStaticJsonRpcProvider(rpcUrls?.[0], chainId);
     try {
       const res = await fetchTokenAllowance({
         account,

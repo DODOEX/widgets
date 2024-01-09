@@ -1,6 +1,5 @@
 import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
-import { JsonRpcProvider } from '@ethersproject/providers';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLatestBlockNumber } from '../../store/selectors/wallet';
@@ -8,6 +7,7 @@ import { AppThunkDispatch } from '../../store/actions';
 import { setEthBalance } from '../../store/actions/token';
 import { getGlobalProps } from '../../store/selectors/globals';
 import { ChainId, rpcServerMap } from '../../constants/chains';
+import { getStaticJsonRpcProvider } from './provider';
 
 export default function useFetchETHBalance(chainId?: number) {
   const { provider, account, chainId: connectChainId } = useWeb3React();
@@ -31,7 +31,7 @@ export default function useFetchETHBalance(chainId?: number) {
           ...jsonRpcUrlMapProps,
         };
         const rpcUrls = jsonRpcUrlMap[chainId as ChainId];
-        const provider = new JsonRpcProvider(rpcUrls?.[0]);
+        const provider = getStaticJsonRpcProvider(rpcUrls?.[0], chainId);
         const balance = await provider.getBalance(account);
         if (balance) {
           dispatch(
