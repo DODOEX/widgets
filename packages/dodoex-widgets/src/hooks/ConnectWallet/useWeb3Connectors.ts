@@ -1,7 +1,7 @@
 import { Provider as Eip1193Provider } from '@web3-react/types';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { ChainId, rpcServerMap } from '../../constants/chains';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import {
   getConnectionFromMetaMask,
   getConnectionFromProvider,
@@ -55,7 +55,7 @@ export function useWeb3Connectors({
     [jsonRpcUrlMap, defaultChainId, onError],
   );
 
-  return useMemo(() => {
+  const connectors = useMemo(() => {
     if (integratorConnection) {
       connectorCacheMap[WalletType.INTEGRATOR] = integratorConnection;
     }
@@ -64,6 +64,23 @@ export function useWeb3Connectors({
 
     return Object.values(connectorCacheMap);
   }, [integratorConnection, metaMaskConnection, walletConnectConnectionPopup]);
+
+  useEffect(() => {
+    // Sync provider status
+    if (provider && integratorConnection) {
+      connectToWallet(WalletType.INTEGRATOR, undefined, (error) => {
+        console.error(error);
+      });
+    }
+  }, [provider]);
+
+  const changedCount = useRef(0);
+  changedCount.current += 1;
+
+  return {
+    connectors,
+    key: changedCount.current,
+  };
 }
 
 export async function connectToWallet(

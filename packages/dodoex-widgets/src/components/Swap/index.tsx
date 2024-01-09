@@ -20,7 +20,7 @@ import { ReviewDialog } from './components/ReviewDialog';
 import { SettingsDialog } from './components/SettingsDialog';
 import { RoutePriceStatus } from '../../hooks/Swap';
 import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
-import ConnectWallet from './components/ConnectWallet';
+import ConnectWallet, { ConnectWalletProps } from './components/ConnectWallet';
 import useGetBalance from '../../hooks/Token/useGetBalance';
 import { useGetTokenStatus } from '../../hooks/Token/useGetTokenStatus';
 import { TokenInfo, ApprovalState } from '../../hooks/Token/type';
@@ -70,9 +70,13 @@ import { setFromTokenChainId } from '../../store/actions/wallet';
 export interface SwapProps {
   /** Higher priority setting slippage */
   getAutoSlippage?: GetAutoSlippage;
+  onConnectWalletClick?: ConnectWalletProps['onConnectWalletClick'];
 }
 
-export function Swap({ getAutoSlippage }: SwapProps = {}) {
+export function Swap({
+  getAutoSlippage,
+  onConnectWalletClick,
+}: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
@@ -370,7 +374,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
 
   const isUnSupportChain = useMemo(() => !ChainId[chainId || 1], [chainId]);
   const isNotCurrentChain = useMemo(
-    () => chainId && !!fromToken?.chainId && fromToken?.chainId !== chainId,
+    () => !!chainId && !!fromToken?.chainId && fromToken?.chainId !== chainId,
     [chainId, fromToken?.chainId],
   );
 
@@ -610,7 +614,12 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
       approvalState === ApprovalState.Insufficient && !pendingReset;
 
     if (!account || (fromToken?.chainId && chainId !== fromToken.chainId))
-      return <ConnectWallet />;
+      return (
+        <ConnectWallet
+          needSwitchChain={fromToken?.chainId}
+          onConnectWalletClick={onConnectWalletClick}
+        />
+      );
     if (isInflight) {
       return (
         <Button fullWidth isLoading disabled>

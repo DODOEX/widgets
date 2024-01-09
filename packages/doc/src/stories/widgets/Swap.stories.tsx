@@ -97,6 +97,9 @@ export default {
     onTxSuccess: {
       action: 'txSuccess',
     },
+    onConnectWalletClick: {
+      action: 'connectWalletClick',
+    },
     noPowerBy: {
       control: {
         type: 'boolean',

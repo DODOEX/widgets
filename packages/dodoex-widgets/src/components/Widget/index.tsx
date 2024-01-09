@@ -146,14 +146,11 @@ function Web3Provider(props: PropsWithChildren<WidgetProps>) {
     () => fromTokenChainId ?? props.defaultChainId ?? 1,
     [props.defaultChainId, fromTokenChainId],
   );
-  const connectors = useWeb3Connectors({
+  const { connectors, key } = useWeb3Connectors({
     provider: props.provider,
     jsonRpcUrlMap: props.jsonRpcUrlMap,
     defaultChainId,
   });
-  const key = `${connectors.length}+${
-    props.jsonRpcUrlMap ? Object.entries(props.jsonRpcUrlMap) : ''
-  }+${defaultChainId}`;
 
   return (
     <Web3ReactProvider connectors={connectors} key={key} lookupENS={false}>

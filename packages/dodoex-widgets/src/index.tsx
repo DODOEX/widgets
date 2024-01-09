@@ -8,7 +8,10 @@ export type { TokenInfo } from './hooks/Token/type';
 export function SwapWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>
-      <Swap getAutoSlippage={props.getAutoSlippage} />
+      <Swap
+        getAutoSlippage={props.getAutoSlippage}
+        onConnectWalletClick={props.onConnectWalletClick}
+      />
     </Widget>
   );
 }
@@ -19,7 +22,10 @@ export function InitSwapWidget(props: SwapWidgetProps) {
   const root = createRoot(rootEl!);
   root.render(
     <Widget {...props}>
-      <Swap getAutoSlippage={props.getAutoSlippage} />
+      <Swap
+        getAutoSlippage={props.getAutoSlippage}
+        onConnectWalletClick={props.onConnectWalletClick}
+      />
     </Widget>,
   );
 }

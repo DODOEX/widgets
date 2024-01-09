@@ -28,7 +28,9 @@ export function getConnectionFromProvider(
   if (!provider) return;
   if (JsonRpcProvider.isProvider(provider)) {
     return toWeb3Connection(
-      initializeConnector((actions) => new JsonRpcConnector(actions, provider)),
+      initializeConnector(
+        (actions) => new JsonRpcConnector(actions, provider, onError),
+      ),
     );
   } else if (JsonRpcProvider.isProvider((provider as any).provider)) {
     throw new Error(
