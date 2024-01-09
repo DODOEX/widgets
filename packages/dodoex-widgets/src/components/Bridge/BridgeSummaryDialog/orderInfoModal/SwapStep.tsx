@@ -49,10 +49,7 @@ export function SwapStep({
         sx={{
           display: 'flex',
           alignItems: 'flex-start',
-          flexWrap: {
-            mobile: 'wrap',
-            tablet: 'nowrap',
-          },
+          flexWrap: 'wrap',
         }}
       >
         <Box

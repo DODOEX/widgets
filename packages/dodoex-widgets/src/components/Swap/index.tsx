@@ -513,6 +513,24 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
         </>
       );
     }
+
+    if (
+      isBridge &&
+      ((bridgeRouteStatus === RoutePriceStatus.Success &&
+        !bridgeRouteList.length) ||
+        bridgeRouteStatus === RoutePriceStatus.Failed)
+    ) {
+      return (
+        <>
+          <Box
+            component={Warn}
+            sx={{ width: 15, mr: 5, color: 'warning.main' }}
+          />
+          <Trans>Quote not available</Trans>
+        </>
+      );
+    }
+
     return (
       <>
         {slippageExceedLimit}

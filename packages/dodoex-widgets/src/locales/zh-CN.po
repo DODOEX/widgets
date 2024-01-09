@@ -29,7 +29,7 @@ msgstr "当前滑点保护系数设置超过{maxSlippageWarning}%，可能会造
 msgid "Opening {0}..."
 msgstr "连接 {0}..."
 
-#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:138
+#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:135
 msgid "To"
 msgstr "至"
 
@@ -84,7 +84,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 msgid "Confirm"
 msgstr "确认"
 
-#: src/components/Swap/index.tsx:924
+#: src/components/Swap/index.tsx:942
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -129,7 +129,7 @@ msgstr "余额不足 - 请在钱包充值{EtherTokenSymbol}后重试"
 msgid "Are you sure swapping to another chain?"
 msgstr "是否确认切换到另一个链？"
 
-#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:185
+#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:182
 msgid "Destination"
 msgstr "目标"
 
@@ -141,12 +141,12 @@ msgstr "未授权"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
-#: src/components/Swap/index.tsx:599
+#: src/components/Swap/index.tsx:617
 msgid "Transaction Pending"
 msgstr "交易进行中"
 
-#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:135
-#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:183
+#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:132
+#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:180
 #: src/components/Bridge/SelectBridgeDialog/TokenWithChain.tsx:88
 #: src/components/TokenPicker/SelectChainItem.tsx:51
 msgid "on"
@@ -173,7 +173,7 @@ msgstr "额外手续费"
 msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
-#: src/components/Swap/index.tsx:688
+#: src/components/Swap/index.tsx:706
 msgid "Review Swap"
 msgstr "预览交易"
 
@@ -186,20 +186,21 @@ msgstr "选择跨链桥"
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
-#: src/components/Swap/index.tsx:606
+#: src/components/Swap/index.tsx:624
 msgid "Select Tokens"
 msgstr "选择代币"
 
-#: src/components/Swap/index.tsx:779
+#: src/components/Swap/index.tsx:797
 msgid "The setting has been switched to swap mode"
 msgstr "设置已切换至闪兑模式"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:649
+#: src/components/Swap/index.tsx:529
+#: src/components/Swap/index.tsx:667
 msgid "Quote not available"
 msgstr "没有报价"
 
-#: src/components/Swap/index.tsx:634
+#: src/components/Swap/index.tsx:652
 msgid "Fetching Price..."
 msgstr "获取价格中..."
 
@@ -241,12 +242,12 @@ msgstr "预计时间"
 msgid "Swap summary"
 msgstr "交易预览"
 
-#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:205
+#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:202
 #: src/components/WithExecutionDialog/index.tsx:201
 msgid "Tx"
 msgstr "交易哈希："
 
-#: src/components/Swap/index.tsx:678
+#: src/components/Swap/index.tsx:696
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
@@ -272,7 +273,7 @@ msgstr "设置"
 
 #: src/components/Swap/components/ConnectWallet/ConnectWalletDialog.tsx:154
 msgid "Connect to your {0} Wallet"
-msgstr "连接你的第{0}个钱包"
+msgstr "连接你的{0}钱包"
 
 #: src/utils/time.ts:7
 msgid "Seconds"
@@ -286,16 +287,16 @@ msgstr "交易详情"
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
-#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:112
+#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:109
 msgid "For"
 msgstr "对于"
 
-#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:121
-#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:152
+#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:118
+#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:149
 msgid "On"
 msgstr "在"
 
-#: src/components/Swap/index.tsx:616
+#: src/components/Swap/index.tsx:634
 #: src/hooks/Token/useGetTokenStatus.ts:138
 msgid "Approve"
 msgstr "代币授权"
@@ -324,7 +325,7 @@ msgstr "自动切换网络"
 msgid "Min"
 msgstr "分钟"
 
-#: src/hooks/contract/wallet.ts:87
+#: src/hooks/contract/wallet.ts:85
 msgid "Transaction rejected."
 msgstr "交易被拒绝."
 
@@ -349,11 +350,11 @@ msgstr "预计交易时长"
 msgid "Connect to your wallet"
 msgstr "连接钱包"
 
-#: src/components/Swap/index.tsx:622
+#: src/components/Swap/index.tsx:640
 msgid "Enter an amount"
 msgstr "输入代币数量"
 
-#: src/components/Swap/index.tsx:616
+#: src/components/Swap/index.tsx:634
 msgid "Approving"
 msgstr "授权中"
 
@@ -382,7 +383,7 @@ msgstr "发送至："
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "在冷静期无法进行清算"
 
-#: src/components/Swap/index.tsx:777
+#: src/components/Swap/index.tsx:795
 msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
@@ -414,12 +415,12 @@ msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
 msgid "Unsupported network - switch to trade"
 msgstr "未支持网络 - 请切换后进行交易"
 
-#: src/components/Swap/index.tsx:772
+#: src/components/Swap/index.tsx:790
 #: src/hooks/Swap/useExecuteSwap.ts:56
 msgid "Swap"
 msgstr "交易"
 
-#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:177
+#: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:174
 msgid "Source"
 msgstr "源"
 
@@ -443,6 +444,6 @@ msgstr "关闭"
 msgid "Transaction Deadline"
 msgstr "交易截止时间"
 
-#: src/components/Swap/index.tsx:660
+#: src/components/Swap/index.tsx:678
 msgid "Insufficient balance"
 msgstr "余额不足"
