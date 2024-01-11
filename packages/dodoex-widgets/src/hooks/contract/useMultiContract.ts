@@ -10,6 +10,7 @@ import { BatchThunk, runAll } from './batch';
 import { isAddress } from '../../utils';
 import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
+import { getStaticJsonRpcProvider } from './provider';
 
 // account is not optional
 function getSigner(provider: JsonRpcProvider, account: string): JsonRpcSigner {
@@ -58,7 +59,10 @@ export default function useMultiContract(chainIdProps?: number) {
           ...jsonRpcUrlMapProps,
         };
         const rpcUrls = jsonRpcUrlMap[chainIdProps as ChainId];
-        const otherChainProvider = new JsonRpcProvider(rpcUrls?.[0]);
+        const otherChainProvider = getStaticJsonRpcProvider(
+          rpcUrls?.[0],
+          chainIdProps,
+        );
         return new Contract(contractAddress, ABI, otherChainProvider);
       }
       if (!provider) return undefined;

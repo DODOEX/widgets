@@ -71,7 +71,7 @@ export const rpcServerMap: {
   ],
   [ChainId.CONFLUX]: ['https://evm.confluxrpc.com'],
   [ChainId.BASE]: ['https://mainnet.base.org'],
-  [ChainId.LINEA]: ['https://linea-mainnet.infura.io/v3'],
+  [ChainId.LINEA]: ['https://rpc.linea.build'],
   [ChainId.SCROLL]: ['https://rpc.scroll.io'],
   [ChainId.MANTA]: ['https://pacific-rpc.manta.network/http'],
   [ChainId.MANTLE]: ['https://rpc.mantle.xyz'],

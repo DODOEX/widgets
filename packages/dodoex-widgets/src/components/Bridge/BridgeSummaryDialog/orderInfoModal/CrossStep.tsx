@@ -56,10 +56,7 @@ export function CrossStep({
         sx={{
           display: 'flex',
           alignItems: 'flex-start',
-          flexWrap: {
-            mobile: 'wrap',
-            tablet: 'nowrap',
-          },
+          flexWrap: 'wrap',
         }}
       >
         <Box

@@ -7,7 +7,7 @@
     "build": "build-storybook"
   },
   "peerDependencies": {
-    "@dodoex/widgets": "^2.6.2"
+    "@dodoex/widgets": "^2.6.3"
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
@@ -15,6 +15,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@storybook/addon-docs": "^6.5.7",
+    "@web3modal/ethers5": "^3.5.5",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",

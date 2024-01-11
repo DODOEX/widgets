@@ -35,20 +35,18 @@ export const getEstimateGas = async (
     const res = await provider.estimateGas(estimateTarget);
     return res.add(50000);
   } catch (error) {
-    provider
-      .call(estimateTarget)
-      .then((result) => {
-        if (process.env.NODE_ENV !== 'test') {
-          throw new Error(
-            'Unexpected issue with estimating the gas. Please try again.',
-          );
-        }
-      })
-      .catch((error) => {
-        if (process.env.NODE_ENV !== 'test') {
-          throw error;
-        }
-      });
+    try {
+      await provider.call(estimateTarget);
+      if (process.env.NODE_ENV !== 'test') {
+        throw new Error(
+          'Unexpected issue with estimating the gas. Please try again.',
+        );
+      }
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'test') {
+        throw error;
+      }
+    }
   }
   return null;
 };
