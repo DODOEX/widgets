@@ -7,7 +7,7 @@
     "build": "build-storybook"
   },
   "peerDependencies": {
-    "@dodoex/widgets": "^2.6.2"
+    "@dodoex/widgets": "^2.6.3"
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
