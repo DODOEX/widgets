@@ -581,7 +581,8 @@ export function Swap({
       isBridge &&
       ((bridgeRouteStatus === RoutePriceStatus.Success &&
         !bridgeRouteList.length) ||
-        bridgeRouteStatus === RoutePriceStatus.Failed)
+        bridgeRouteStatus === RoutePriceStatus.Failed) &&
+      displayingFromAmt
     ) {
       return (
         <>

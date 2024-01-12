@@ -68,6 +68,7 @@ export function useFetchRoutePrice({
     useDefaultSlippage(false);
   const slippage = useSelector(getSlippage) || defaultSlippage;
   const ddl = useSelector(getTxDdl) || DEFAULT_SWAP_DDL;
+  const lastId = useRef(0);
   const { feeRate, rebateTo, apikey, isReverseRouting } =
     useSelector(getGlobalProps);
   const apiDdl = useMemo(() => Math.floor(Date.now() / 1000) + ddl * 60, [ddl]);
@@ -90,13 +91,15 @@ export function useFetchRoutePrice({
       !chainId ||
       !fromToken ||
       !toToken ||
-      fromToken.chainId !== toToken.chainId
+      fromToken.chainId !== toToken.chainId ||
+      (!isReverseRouting && !fromAmount) ||
+      (isReverseRouting && !toAmount)
     ) {
       setStatus(RoutePriceStatus.Initial);
       return;
     }
-    if (!isReverseRouting && !fromAmount) return;
-    if (isReverseRouting && !toAmount) return;
+    lastId.current = lastId.current + 1;
+    const currentId = lastId.current;
     setStatus(RoutePriceStatus.Loading);
     // waiting for set auto slippage
     if (slippageLoading) return;
@@ -131,6 +134,8 @@ export function useFetchRoutePrice({
 
     try {
       const resRoutePrice = await axios.get(routePriceAPI, { params });
+      // only update last id
+      if (currentId < lastId.current) return;
       const routeInfo = resRoutePrice.data.data as IRouteResponse;
       if (routeInfo?.resAmount) {
         setStatus(RoutePriceStatus.Success);
