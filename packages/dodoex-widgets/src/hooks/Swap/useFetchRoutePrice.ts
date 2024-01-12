@@ -142,9 +142,11 @@ export function useFetchRoutePrice({
         setRawBrief(routeInfo);
       } else {
         setStatus(RoutePriceStatus.Failed);
+        setRawBrief(null);
       }
     } catch (error) {
       setStatus(RoutePriceStatus.Failed);
+      setRawBrief(null);
       console.error(error);
     }
   }, [
