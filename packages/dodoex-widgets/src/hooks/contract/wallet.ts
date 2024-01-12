@@ -35,6 +35,7 @@ export const getEstimateGas = async (
     const res = await provider.estimateGas(estimateTarget);
     return res.add(50000);
   } catch (error) {
+    console.error(error);
     try {
       await provider.call(estimateTarget);
       if (process.env.NODE_ENV !== 'test') {

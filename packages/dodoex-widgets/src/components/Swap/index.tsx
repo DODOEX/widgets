@@ -121,7 +121,20 @@ export function Swap({
     toToken,
     fromToken,
   });
+
+  const { marginAmount } = useMarginAmount({
+    token: isReverseRouting ? toToken : fromToken,
+    fiatPrice: isReverseRouting ? toFiatPrice : fromFiatPrice,
+  });
+
+  useSetAutoSlippage({
+    fromToken,
+    toToken,
+    getAutoSlippage,
+  });
+
   const getBalance = useGetBalance();
+
   const fromEtherTokenBalance = useMemo(() => {
     const fromChainId = fromToken?.chainId;
     if (!isBridge || !fromChainId) return null;
@@ -135,32 +148,17 @@ export function Swap({
     });
   }, [isBridge, fromToken?.chainId, getBalance]);
 
-  const { marginAmount } = useMarginAmount({
-    token: isReverseRouting ? toToken : fromToken,
-    fiatPrice: isReverseRouting ? toFiatPrice : fromFiatPrice,
-  });
+  const insufficientBalance = useMemo(() => {
+    const token = isReverseRouting ? toToken : fromToken;
+    const isBasicToken = basicTokenAddress === token?.address;
+    const keepChanges = isETH ? 0.1 : 0.02;
+    const balance = new BigNumber(token ? getBalance(token) || 0 : 0);
+    return (
+      balance.lt(isReverseRouting ? toAmt ?? 0 : fromAmt) ||
+      (isBasicToken && balance.lte(keepChanges))
+    );
+  }, [isReverseRouting, fromToken, toToken, fromAmt, toAmt, getBalance]);
 
-  useSetAutoSlippage({
-    fromToken,
-    toToken,
-    getAutoSlippage,
-  });
-  const {
-    resAmount,
-    priceImpact,
-    executeSwap,
-    baseFeeAmount,
-    additionalFeeAmount,
-    resPricePerToToken,
-    resPricePerFromToken,
-    status: resPriceStatus,
-  } = useFetchRoutePrice({
-    toToken,
-    fromToken,
-    marginAmount,
-    fromAmount: fromAmt,
-    toAmount: toAmt,
-  });
   const { bridgeRouteList, status: bridgeRouteStatus } =
     useFetchRoutePriceBridge({
       toToken,
@@ -184,6 +182,87 @@ export function Swap({
       setSelectRouteId('');
     }
   }, [selectedRoute]);
+  const { getApprovalState, submitApprove, getPendingRest, getMaxBalance } =
+    useGetTokenStatus({
+      account,
+      chainId: fromToken?.chainId ?? chainId,
+      contractAddress: selectedRoute?.spenderContractAddress,
+    });
+  const pendingReset = useMemo(
+    () => getPendingRest(isReverseRouting ? toToken : fromToken),
+    [fromToken?.address, toToken?.address, getPendingRest, isReverseRouting],
+  );
+  const [isApproving, isGetApproveLoading, needApprove] = useMemo(() => {
+    const approvalState = getApprovalState(
+      fromToken,
+      isReverseRouting ? toAmt || 0 : fromAmt,
+    );
+    return [
+      approvalState === ApprovalState.Approving,
+      approvalState === ApprovalState.Loading,
+      approvalState === ApprovalState.Insufficient && !pendingReset,
+    ];
+  }, [
+    getApprovalState,
+    fromToken,
+    isReverseRouting,
+    toAmt,
+    fromAmt,
+    pendingReset,
+  ]);
+
+  const estimateGas = useMemo(() => {
+    if (
+      !account ||
+      insufficientBalance ||
+      isApproving ||
+      isGetApproveLoading ||
+      needApprove
+    ) {
+      return false;
+    }
+    return true;
+  }, [
+    account,
+    insufficientBalance,
+    isApproving,
+    isGetApproveLoading,
+    needApprove,
+  ]);
+
+  const {
+    status: resPriceStatus,
+    rawBrief,
+    executeSwap,
+    reset: resetSwapRoute,
+  } = useFetchRoutePrice({
+    toToken,
+    fromToken,
+    marginAmount,
+    fromAmount: fromAmt,
+    toAmount: toAmt,
+    estimateGas,
+  });
+  const {
+    resAmount,
+    priceImpact,
+    baseFeeAmount,
+    additionalFeeAmount,
+    resPricePerToToken,
+    resPricePerFromToken,
+  } = useMemo(() => {
+    if (!rawBrief)
+      return {
+        resAmount: null,
+        priceImpact: null,
+        baseFeeAmount: null,
+        additionalFeeAmount: null,
+        resPricePerToToken: null,
+        resPricePerFromToken: null,
+      };
+    return rawBrief;
+  }, [rawBrief]);
+
   const {
     sendRouteLoading,
     sendRouteError,
@@ -196,24 +275,14 @@ export function Swap({
 
   const showSwitchSlippageTooltip = useSwitchBridgeOrSwapSlippage(isBridge);
 
-  const { getApprovalState, submitApprove, getPendingRest, getMaxBalance } =
-    useGetTokenStatus({
-      account,
-      chainId: fromToken?.chainId ?? chainId,
-      contractAddress: selectedRoute?.spenderContractAddress,
-    });
-  const pendingReset = useMemo(
-    () => getPendingRest(isReverseRouting ? toToken : fromToken),
-    [fromToken?.address, toToken?.address, getPendingRest, isReverseRouting],
-  );
-
   const updateFromAmt = useCallback(
     (v: string | number) => {
       const val = v.toString();
       setDisplayingFromAmt(val);
       debouncedSetFromAmt(val);
+      resetSwapRoute();
     },
-    [setDisplayingFromAmt, debouncedSetFromAmt],
+    [setDisplayingFromAmt, debouncedSetFromAmt, resetSwapRoute],
   );
 
   const updateToAmt = useCallback(
@@ -221,8 +290,9 @@ export function Swap({
       const val = v.toString();
       setDisplayingToAmt(val);
       debouncedSetToAmt(val);
+      resetSwapRoute();
     },
-    [setDisplayingToAmt, debouncedSetToAmt],
+    [setDisplayingToAmt, debouncedSetToAmt, resetSwapRoute],
   );
 
   const setFromToken: (value: React.SetStateAction<TokenInfo | null>) => void =
@@ -378,17 +448,6 @@ export function Swap({
     [chainId, fromToken?.chainId],
   );
 
-  const insufficientBalance = useMemo(() => {
-    const token = isReverseRouting ? toToken : fromToken;
-    const isBasicToken = basicTokenAddress === token?.address;
-    const keepChanges = isETH ? 0.1 : 0.02;
-    const balance = new BigNumber(token ? getBalance(token) || 0 : 0);
-    return (
-      balance.lt(isReverseRouting ? resAmount ?? 0 : fromAmt) ||
-      (isBasicToken && balance.lte(keepChanges))
-    );
-  }, [isReverseRouting, fromToken, toToken, fromAmt, resAmount, getBalance]);
-
   const disabledSwitch = useDisabledTokenSwitch({
     fromToken,
     toToken,
@@ -522,7 +581,8 @@ export function Swap({
       isBridge &&
       ((bridgeRouteStatus === RoutePriceStatus.Success &&
         !bridgeRouteList.length) ||
-        bridgeRouteStatus === RoutePriceStatus.Failed)
+        bridgeRouteStatus === RoutePriceStatus.Failed) &&
+      displayingFromAmt
     ) {
       return (
         <>
@@ -605,14 +665,6 @@ export function Swap({
   ]);
 
   const swapButton = useMemo(() => {
-    const approvalState = getApprovalState(
-      fromToken,
-      isReverseRouting ? resAmount || 0 : fromAmt,
-    );
-    const isApproving = approvalState === ApprovalState.Approving;
-    const needApprove =
-      approvalState === ApprovalState.Insufficient && !pendingReset;
-
     if (!account || (fromToken?.chainId && chainId !== fromToken.chainId))
       return (
         <ConnectWallet
@@ -652,8 +704,7 @@ export function Swap({
 
     if (
       isBridge
-        ? bridgeRouteStatus === RoutePriceStatus.Loading ||
-          approvalState === ApprovalState.Loading
+        ? bridgeRouteStatus === RoutePriceStatus.Loading || isGetApproveLoading
         : resPriceStatus === RoutePriceStatus.Loading
     )
       return (
@@ -724,10 +775,8 @@ export function Swap({
     fromToken,
     isInflight,
     executeSwap,
-    pendingReset,
     submitApprove,
     resPriceStatus,
-    getApprovalState,
     basicTokenAddress,
     isReverseRouting,
     isBridge,
@@ -736,6 +785,9 @@ export function Swap({
     sendRouteLoading,
     fromEtherTokenBalance,
     insufficientBalance,
+    isApproving,
+    isGetApproveLoading,
+    needApprove,
   ]);
 
   const subtitle = useMemo(() => {
