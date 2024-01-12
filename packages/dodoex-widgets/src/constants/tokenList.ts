@@ -760,4 +760,13 @@ export default [
     symbol: 'USDC',
     chainId: 5000,
   },
+  {
+    decimals: 6,
+    logoURI:
+      'https://images.dodoex.io/6ypVFA1gU6F8P4bORhZG73AMNG5-WzefI5DN5x_zsQA/rs:fit:72:72:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy91cGxvYWRfaW1nXzIxMjMwNDRfMjAyNDAxMDYxNTAwNDA0ODUuanBn.webp',
+    name: 'USD Coin',
+    address: '0xe960245377d131e2fb9dd485f536be9bff87b1b6',
+    symbol: 'IBIT',
+    chainId: 56,
+  },
 ];

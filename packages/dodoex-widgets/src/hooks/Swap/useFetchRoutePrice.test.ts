@@ -78,15 +78,15 @@ describe('useFetchRoutePrice: request success', () => {
   );
 
   it('Returns params', () => {
+    const { status, rawBrief } = result.current;
     const {
-      status,
       resAmount,
       priceImpact,
       baseFeeAmount,
       additionalFeeAmount,
       resPricePerToToken,
       resPricePerFromToken,
-    } = result.current;
+    } = rawBrief || {};
     expect(status).toBe(RoutePriceStatus.Success);
     expect(resAmount).toBe(1.23);
     expect(priceImpact).toBe(0.0005);
