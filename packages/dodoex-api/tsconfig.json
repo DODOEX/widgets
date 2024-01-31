@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "declarationDir": "./types",
+    "jsx": "preserve",
+    "target": "es2016"
+  },
+  "exclude": ["node_modules", "types"],
+  "include": ["src/**/*.ts"]
+}
