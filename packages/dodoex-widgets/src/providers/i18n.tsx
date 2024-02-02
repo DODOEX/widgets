@@ -1,6 +1,6 @@
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
-import { SupportedLang, defaultLang } from '../../constants/locales';
+import { SupportedLang, defaultLang } from '../constants/locales';
 import { ReactNode, useEffect } from 'react';
 
 interface LangProviderProps {

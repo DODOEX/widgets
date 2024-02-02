@@ -1,4 +1,4 @@
-import ModalUnstyled from '@mui/base/Modal';
+import { Modal as ModalUnstyled } from '@mui/base/Modal';
 import { styled } from '@mui/system';
 import type { ModalProps } from '@mui/base/Modal';
 import { forwardRef } from 'react';

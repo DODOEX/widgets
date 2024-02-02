@@ -21,3 +21,4 @@ export type { ModalProps } from './Modal';
 export { Checkbox } from './Checkbox';
 export { Accordion, AccordionItem } from './Accordion';
 export type { AccordionProps, AccordionItemProps } from './Accordion';
+export { Tabs, TabsList, Tab, TabPanel } from './Tabs';

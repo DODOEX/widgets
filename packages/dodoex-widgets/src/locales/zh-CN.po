@@ -204,6 +204,10 @@ msgstr "设置已切换至闪兑模式"
 msgid "Quote not available"
 msgstr "没有报价"
 
+#: src/widgets/PoolWidget/index.tsx:22
+msgid "Add Liquidity"
+msgstr ""
+
 #: src/components/Swap/index.tsx:712
 msgid "Fetching Price..."
 msgstr "获取价格中..."
@@ -291,6 +295,10 @@ msgstr "交易详情"
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
+#: src/widgets/PoolWidget/index.tsx:25
+msgid "My Liquidity"
+msgstr ""
+
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:109
 msgid "For"
 msgstr "对于"
@@ -333,6 +341,10 @@ msgstr "分钟"
 msgid "Transaction rejected."
 msgstr "交易被拒绝."
 
+#: src/widgets/PoolWidget/index.tsx:27
+msgid "My Pools"
+msgstr ""
+
 #: src/hooks/Submission/getExecutionErrorMsg.ts:65
 msgid "Service update, please wait and try again"
 msgstr "服务升级中, 请等待或重试"
@@ -371,6 +383,10 @@ msgstr "发生异常错误."
 msgid "Second"
 msgstr "秒"
 
+#: src/components/SelectChain.tsx:212
+msgid "Select Network"
+msgstr ""
+
 #: src/components/Swap/components/ReviewDialog.tsx:403
 msgid "Confirm swap"
 msgstr "确认交易"
@@ -382,6 +398,15 @@ msgstr "滑点"
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:117
 msgid "Send to:"
 msgstr "发送至："
+
+#: src/widgets/PoolWidget/index.tsx:65
+msgid "Create Pool"
+msgstr ""
+
+#: src/components/SelectChain.tsx:118
+#: src/components/SelectChain.tsx:157
+msgid "All chains"
+msgstr ""
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:51
 msgid "Unable to SETTLE during the cooling-off period"

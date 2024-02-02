@@ -11,7 +11,7 @@ import {
   useSelector,
 } from 'react-redux';
 import { PropsWithChildren, useEffect, useMemo } from 'react';
-import { LangProvider } from './i18n';
+import { LangProvider } from '../../providers/i18n';
 import { store } from '../../store';
 import { PaletteMode, ThemeOptions } from '@dodoex/components';
 import { defaultLang, SupportedLang } from '../../constants/locales';

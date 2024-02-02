@@ -204,6 +204,10 @@ msgstr "The setting has been switched to swap mode"
 msgid "Quote not available"
 msgstr "Quote not available"
 
+#: src/widgets/PoolWidget/index.tsx:22
+msgid "Add Liquidity"
+msgstr "Add Liquidity"
+
 #: src/components/Swap/index.tsx:712
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
@@ -291,6 +295,10 @@ msgstr "Swap Detail"
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
+#: src/widgets/PoolWidget/index.tsx:25
+msgid "My Liquidity"
+msgstr "My Liquidity"
+
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:109
 msgid "For"
 msgstr "For"
@@ -333,6 +341,10 @@ msgstr "Min"
 msgid "Transaction rejected."
 msgstr "Transaction rejected."
 
+#: src/widgets/PoolWidget/index.tsx:27
+msgid "My Pools"
+msgstr "My Pools"
+
 #: src/hooks/Submission/getExecutionErrorMsg.ts:65
 msgid "Service update, please wait and try again"
 msgstr "Service update, please wait and try again"
@@ -371,6 +383,10 @@ msgstr "Something went wrong."
 msgid "Second"
 msgstr "Second"
 
+#: src/components/SelectChain.tsx:212
+msgid "Select Network"
+msgstr "Select Network"
+
 #: src/components/Swap/components/ReviewDialog.tsx:403
 msgid "Confirm swap"
 msgstr "Confirm swap"
@@ -382,6 +398,15 @@ msgstr "Slippage Tolerance"
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:117
 msgid "Send to:"
 msgstr "Send to:"
+
+#: src/widgets/PoolWidget/index.tsx:65
+msgid "Create Pool"
+msgstr "Create Pool"
+
+#: src/components/SelectChain.tsx:118
+#: src/components/SelectChain.tsx:157
+msgid "All chains"
+msgstr "All chains"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:51
 msgid "Unable to SETTLE during the cooling-off period"

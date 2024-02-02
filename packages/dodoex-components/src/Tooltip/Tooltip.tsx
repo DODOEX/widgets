@@ -1,5 +1,6 @@
-import ClickAwayListener from '@mui/base/ClickAwayListener';
-import PopperUnstyled, {
+import { ClickAwayListener } from '@mui/base/ClickAwayListener';
+import {
+  Popper as PopperUnstyled,
   PopperProps as PopperUnstyledProps,
 } from '@mui/base/Popper';
 import { styled } from '@mui/system';

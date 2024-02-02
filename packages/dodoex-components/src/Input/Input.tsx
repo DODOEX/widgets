@@ -1,4 +1,4 @@
-import InputUnstyled, { inputClasses } from '@mui/base/Input';
+import { Input as InputBase, inputClasses } from '@mui/base/Input';
 import { MuiStyledOptions, styled, useTheme } from '@mui/system';
 import { merge } from 'lodash';
 import { forwardRef, useCallback, useEffect } from 'react';
@@ -157,7 +157,7 @@ export default forwardRef(function Input(
   );
   return (
     <>
-      <InputUnstyled
+      <InputBase
         slots={{
           root: InputBaseRootMemo,
           input: StyledInput,

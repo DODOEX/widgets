@@ -1,6 +1,9 @@
 import { Swap } from './components/Swap';
 import { createRoot } from 'react-dom/client';
 import { Widget, WidgetProps } from './components/Widget';
+import { Pool } from './widgets/PoolWidget';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './providers/queryClient';
 
 export type SwapWidgetProps = WidgetProps;
 export type { TokenInfo } from './hooks/Token/type';
@@ -12,6 +15,16 @@ export function SwapWidget(props: SwapWidgetProps) {
         getAutoSlippage={props.getAutoSlippage}
         onConnectWalletClick={props.onConnectWalletClick}
       />
+    </Widget>
+  );
+}
+
+export function PoolWidget(props: SwapWidgetProps) {
+  return (
+    <Widget {...props}>
+      <QueryClientProvider client={queryClient}>
+        <Pool />
+      </QueryClientProvider>
     </Widget>
   );
 }

@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import Button from '@mui/base/Button';
+import { Button } from '@mui/base/Button';
 
 // const BaseButtonStyle = styled(ButtonUnstyled)``;
 const BaseButton = styled(Button)`
