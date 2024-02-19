@@ -15,7 +15,7 @@ const baseConfig = {
   input: pkg.source,
   plugins: [
     replace({
-      '../../locales/${locale}.js': './locales/${locale}.js',
+      '../locales/${locale}.js': './locales/${locale}.js',
       delimiters: ['', ''],
     }),
     url(),

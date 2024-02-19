@@ -10,7 +10,7 @@ interface LangProviderProps {
 
 export async function loadI18(locale: SupportedLang = defaultLang) {
   try {
-    const catalog = await import(`../../locales/${locale}.js`);
+    const catalog = await import(`../locales/${locale}.js`);
     i18n.load(locale, catalog.messages || catalog.default.messages);
   } catch {}
   i18n.activate(locale);

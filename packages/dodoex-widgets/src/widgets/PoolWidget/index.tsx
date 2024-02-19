@@ -6,6 +6,9 @@ import React from 'react';
 import { Plus as PlusIcon } from '@dodoex/icons';
 import SelectChain from '../../components/SelectChain';
 import { ChainId } from '../../constants/chains';
+import AddLiquidityList from './list/AddLiquidity';
+import { useFilterChainIds } from './list/hooks/useFilterChainIds';
+import { useWeb3React } from '@web3-react/core';
 
 export enum PoolTab {
   addLiquidity = 'add-liquidity',
@@ -15,7 +18,9 @@ export enum PoolTab {
 
 export function Pool() {
   const theme = useTheme();
+  const scrollParentRef = React.useRef<HTMLDivElement>();
   const { i18n } = useLingui();
+  const { account } = useWeb3React();
   const [poolTab, setPoolTab] = React.useState(PoolTab.addLiquidity);
   const tabs = React.useMemo(
     () => [
@@ -28,12 +33,18 @@ export function Pool() {
     ],
     [i18n._],
   );
-  const [chainId, setChainId] = React.useState<ChainId | undefined>(undefined);
+  const [activeChainId, setActiveChainId] =
+    React.useState<ChainId | undefined>(undefined);
+  const filterChainIds = useFilterChainIds({
+    activeChainId,
+  });
   return (
     <Box
       sx={{
         padding: 20,
+        overflowY: 'auto',
       }}
+      ref={scrollParentRef}
     >
       <Tabs
         value={poolTab}
@@ -66,12 +77,18 @@ export function Pool() {
         </Button>
         <Box
           sx={{
-            mt: 16,
+            my: 16,
           }}
         >
-          <SelectChain chainId={chainId} setChainId={setChainId} />
+          <SelectChain chainId={activeChainId} setChainId={setActiveChainId} />
         </Box>
-        <TabPanel value={PoolTab.addLiquidity}>Tab 1</TabPanel>
+        <TabPanel value={PoolTab.addLiquidity}>
+          <AddLiquidityList
+            account={account}
+            filterChainIds={filterChainIds}
+            scrollParentRef={scrollParentRef}
+          />
+        </TabPanel>
         <TabPanel value={PoolTab.myLiquidity}>Tab 2</TabPanel>
         <TabPanel value={PoolTab.myCreated}>Tab 3</TabPanel>
       </Tabs>

@@ -143,3 +143,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     },
   ],
 ]);
+
+export const isTestNet = (chainId: ChainId) => {
+  return !!chainListMap.get(chainId)?.mainnet;
+};

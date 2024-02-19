@@ -7,8 +7,8 @@
     "build": "build-storybook"
   },
   "peerDependencies": {
-    "@dodoex/widgets": "^2.6.4",
-    "@dodoex/api": ">=0.0.1"
+    "@dodoex/api": ">=0.0.1",
+    "@dodoex/widgets": "^2.6.4"
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
@@ -21,7 +21,6 @@
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
-    "react-i18next": "^11.17.0",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",

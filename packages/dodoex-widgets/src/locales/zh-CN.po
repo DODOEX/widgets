@@ -141,6 +141,10 @@ msgstr "未授权"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:339
+msgid "TVL"
+msgstr ""
+
 #: src/components/Swap/index.tsx:678
 msgid "Transaction Pending"
 msgstr "交易进行中"
@@ -204,7 +208,7 @@ msgstr "设置已切换至闪兑模式"
 msgid "Quote not available"
 msgstr "没有报价"
 
-#: src/widgets/PoolWidget/index.tsx:22
+#: src/widgets/PoolWidget/index.tsx:26
 msgid "Add Liquidity"
 msgstr ""
 
@@ -219,6 +223,10 @@ msgstr "重置"
 #: src/components/Bridge/SelectBridgeDialog/RouteTagList.tsx:68
 msgid "Best offer"
 msgstr "最优价格"
+
+#: src/widgets/PoolWidget/list/components/PoolApyTooltip.tsx:132
+msgid "LP Fee"
+msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:153
 #: src/components/Swap/components/ReviewDialog.tsx:401
@@ -259,6 +267,10 @@ msgstr "交易哈希："
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:270
+msgid "Mining"
+msgstr ""
+
 #: src/components/Swap/components/ReviewDialog.tsx:288
 msgid "Price Impact"
 msgstr "价格冲击"
@@ -295,7 +307,7 @@ msgstr "交易详情"
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
-#: src/widgets/PoolWidget/index.tsx:25
+#: src/widgets/PoolWidget/index.tsx:29
 msgid "My Liquidity"
 msgstr ""
 
@@ -341,7 +353,7 @@ msgstr "分钟"
 msgid "Transaction rejected."
 msgstr "交易被拒绝."
 
-#: src/widgets/PoolWidget/index.tsx:27
+#: src/widgets/PoolWidget/index.tsx:31
 msgid "My Pools"
 msgstr ""
 
@@ -399,8 +411,16 @@ msgstr "滑点"
 msgid "Send to:"
 msgstr "发送至："
 
-#: src/widgets/PoolWidget/index.tsx:65
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:381
+msgid "Add"
+msgstr ""
+
+#: src/widgets/PoolWidget/index.tsx:74
 msgid "Create Pool"
+msgstr ""
+
+#: src/widgets/PoolWidget/list/components/PoolApyTooltip.tsx:152
+msgid "MT Fee"
 msgstr ""
 
 #: src/components/SelectChain.tsx:118
@@ -427,6 +447,10 @@ msgstr "如果你的交易被确认的时间超过这个时间，你的交易将
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:83
 msgid "Detail"
 msgstr "详情"
+
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:301
+msgid "APY"
+msgstr ""
 
 #: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:44
 msgid "SELECT TOKEN"

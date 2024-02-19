@@ -16,6 +16,7 @@ export interface TokenLogoProps {
   cross?: boolean;
   sx?: BoxProps['sx'];
   chainId?: number;
+  noShowChain?: boolean;
 }
 
 function toDataURL(url: URL | string, callback: (v?: any) => void) {
@@ -54,6 +55,7 @@ export default function TokenLogo({
   token: tokenProps,
   sx,
   chainId,
+  noShowChain,
 }: TokenLogoProps): React.ReactElement {
   const [loaded, setLoaded] = useState(false);
   const [crossLogoUrl, setCrossLogoUrl] = useState('');
@@ -179,7 +181,7 @@ export default function TokenLogo({
           height: '100%',
         }}
       />
-      {chainId && chainListMap.has(chainId as ChainId) ? (
+      {!noShowChain && chainId && chainListMap.has(chainId as ChainId) ? (
         <Box
           sx={{
             position: 'absolute',

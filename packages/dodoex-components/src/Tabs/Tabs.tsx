@@ -1,5 +1,4 @@
 import { Tabs as BaseTabs, TabsProps } from '@mui/base/Tabs';
-import { styled } from '@mui/system';
 import React from 'react';
 
 export const Tabs = React.forwardRef<HTMLDivElement>(function TabsList(
@@ -23,4 +22,4 @@ export const Tabs = React.forwardRef<HTMLDivElement>(function TabsList(
       }}
     />
   );
-});
+}) as typeof BaseTabs;

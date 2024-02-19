@@ -206,3 +206,60 @@ export const getDecimalLimit = (decimals: number | undefined | null) =>
 export function getIntegerNumber(v: number) {
   return Number(v.toString().split('.')[0]);
 }
+
+const kilo = 1000;
+const million = 1000000;
+const billion = 1000000000;
+function getNegative(num: number) {
+  return new BigNumber(num).negated();
+}
+
+/**
+ * format to short number, like: -0.12 -> 0, 0.0000123->0.000012, 123.234 -> 123.23, 1234.12 -> 1.23K, 1000000.123->1.00M
+ * @param n
+ */
+export function formatShortNumber(n?: BigNumber, showDecimals = 4): string {
+  if (!n || n.isNaN()) {
+    return '-';
+  }
+  if (n.eq(0)) {
+    return '0';
+  }
+  if (n.lte(0.000001) && n.gte(-0.000001)) {
+    return n.toExponential(2);
+  }
+  if (n.lt(1) && n.gt(-1)) {
+    return formatReadableNumber({ input: n, showDecimals });
+  }
+  if (n.lt(kilo) && n.gt(getNegative(kilo))) {
+    return formatReadableNumber({ input: n, showDecimals });
+  }
+  if (n.lt(million) && n.gt(getNegative(million))) {
+    return `${formatReadableNumber({ input: n.div(kilo), showDecimals: 2 })}K`;
+  }
+  return `${formatReadableNumber({
+    input: n.div(million),
+    showDecimals: 2,
+  })}M`;
+}
+
+export function formatExponentialNotation(n?: BigNumber) {
+  if (!n || n.isNaN()) {
+    return '-';
+  }
+  if (n.isZero()) {
+    return '0';
+  }
+  if (n.lte(billion) && n.gt(getNegative(billion))) {
+    return formatShortNumber(n);
+  }
+
+  const n1 = n.toExponential(2);
+  if (n1.includes('e+')) {
+    const [a1, b1] = n1.split('e+');
+    if (a1 && b1) {
+      return `${a1}x10^${b1}`;
+    }
+  }
+  return n1;
+}
