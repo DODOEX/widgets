@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import TokenLogo from '../../../../components/TokenLogo';
 import { TokenLogoPair } from '../../../../components/TokenLogoPair';
 import { TokenInfo } from '../../../../hooks/Token';
-import { formatReadableNumber } from '../../../../utils';
+import { formatApy } from '../../../../utils';
 
 export default function PoolApyTooltip({
   chainId,
@@ -31,6 +31,7 @@ export default function PoolApyTooltip({
   hasMining: boolean;
   sx?: BoxProps['sx'];
 }) {
+  if (!baseToken) return null;
   const hoverData: Array<{
     token?: TokenInfo;
     transactionApy?: string | null;
@@ -102,21 +103,21 @@ export default function PoolApyTooltip({
                   ) : (
                     <>
                       <TokenLogoPair
-                        tokens={[baseToken, quoteToken]}
+                        tokens={[baseToken, quoteToken as TokenInfo]}
                         width={14}
                         mr={4}
                         chainId={chainId}
                       />
-                      {baseToken.symbol}/{quoteToken.symbol}
+                      {baseToken.symbol}/{quoteToken?.symbol}
                     </>
                   )}
                 </Box>
                 <Box>
-                  {formatReadableNumber({
-                    input: new BigNumber(item.transactionApy ?? 0).plus(
+                  {formatApy(
+                    new BigNumber(item.transactionApy ?? 0).plus(
                       item.miningApy ?? 0,
                     ),
-                  })}
+                  )}
                 </Box>
               </Box>
               <Box
@@ -133,9 +134,7 @@ export default function PoolApyTooltip({
                 </span>
                 <span>
                   {item.transactionApy
-                    ? formatReadableNumber({
-                        input: new BigNumber(item.transactionApy),
-                      })
+                    ? formatApy(new BigNumber(item.transactionApy))
                     : '-'}
                 </span>
               </Box>
@@ -153,9 +152,7 @@ export default function PoolApyTooltip({
                   </span>
                   <span>
                     {item.miningApy
-                      ? formatReadableNumber({
-                          input: new BigNumber(item.miningApy),
-                        })
+                      ? formatApy(new BigNumber(item.miningApy))
                       : '-'}
                   </span>
                 </Box>

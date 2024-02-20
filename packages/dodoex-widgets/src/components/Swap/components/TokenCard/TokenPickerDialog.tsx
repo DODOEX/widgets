@@ -8,6 +8,7 @@ import { DialogProps } from '../Dialog';
 
 export function TokenPickerDialog({
   open,
+  title,
   value,
   onClose,
   occupiedAddrs,
@@ -15,8 +16,12 @@ export function TokenPickerDialog({
   onTokenChange,
   side,
   defaultLoadBalance,
+  multiple,
+  searchPlaceholder,
+  searchOtherAddress,
 }: {
   open: boolean;
+  title?: React.ReactNode | string;
   occupiedAddrs?: string[];
   occupiedChainId?: TokenPickerProps['occupiedChainId'];
   onClose: DialogProps['onClose'];
@@ -24,6 +29,9 @@ export function TokenPickerDialog({
   onTokenChange: TokenPickerProps['onChange'];
   side?: TokenPickerProps['side'];
   defaultLoadBalance?: boolean;
+  multiple?: TokenPickerProps['multiple'];
+  searchPlaceholder?: TokenPickerProps['searchPlaceholder'];
+  searchOtherAddress?: TokenPickerProps['searchOtherAddress'];
 }) {
   const { height } = useSelector(getGlobalProps);
   return (
@@ -31,7 +39,7 @@ export function TokenPickerDialog({
       height={height}
       open={open}
       onClose={onClose}
-      title={<Trans>Select a token</Trans>}
+      title={title ?? <Trans>Select a token</Trans>}
       testId={tokenPickerWrapper}
     >
       <TokenPicker
@@ -42,6 +50,9 @@ export function TokenPickerDialog({
         occupiedChainId={occupiedChainId}
         side={side}
         defaultLoadBalance={defaultLoadBalance}
+        multiple={multiple}
+        searchPlaceholder={searchPlaceholder}
+        searchOtherAddress={searchOtherAddress}
       />
     </Dialog>
   );

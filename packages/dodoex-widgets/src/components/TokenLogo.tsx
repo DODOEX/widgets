@@ -17,6 +17,7 @@ export interface TokenLogoProps {
   sx?: BoxProps['sx'];
   chainId?: number;
   noShowChain?: boolean;
+  noBorder?: boolean;
 }
 
 function toDataURL(url: URL | string, callback: (v?: any) => void) {
@@ -56,6 +57,7 @@ export default function TokenLogo({
   sx,
   chainId,
   noShowChain,
+  noBorder,
 }: TokenLogoProps): React.ReactElement {
   const [loaded, setLoaded] = useState(false);
   const [crossLogoUrl, setCrossLogoUrl] = useState('');
@@ -123,9 +125,13 @@ export default function TokenLogo({
         height,
         marginRight,
         zIndex,
-        border: 'solid 1px',
-        borderColor: 'border.main',
         borderRadius: '50%',
+        ...(noBorder
+          ? {}
+          : {
+              border: 'solid 1px',
+              borderColor: 'border.main',
+            }),
         ...(sx || {}),
       }}
       style={{

@@ -11,6 +11,7 @@ export function formatReadableNumber({
   showIntegerOnly = false,
   showDecimalsOnly = false,
   noGroupSeparator = false,
+  roundingMode = BigNumber.ROUND_DOWN,
 }: {
   input: BigNumber | number | string;
   showDecimals?: number;
@@ -18,12 +19,13 @@ export function formatReadableNumber({
   showDecimalsOnly?: boolean;
   showPrecisionDecimals?: number;
   noGroupSeparator?: boolean;
+  roundingMode?: BigNumber.RoundingMode;
 }): string {
   const source = new BigNumber(input);
   if (source.isNaN()) {
     return '-';
   }
-  let amount = source.dp(showDecimals, BigNumber.ROUND_DOWN);
+  let amount = source.dp(showDecimals, roundingMode);
   if (amount.eq(0) && (source.gt(0) || source.lt(0))) {
     amount = source.sd(
       showPrecisionDecimals ?? showDecimals,
@@ -263,3 +265,34 @@ export function formatExponentialNotation(n?: BigNumber) {
   }
   return n1;
 }
+
+/**
+ * format to percentage number
+ * @param param0 input number
+ */
+export function formatPercentageNumber({
+  input,
+  showDecimals = 2,
+  /** The percentage is rounded by default. */
+  roundingMode = BigNumber.ROUND_HALF_UP,
+}: {
+  input?: BigNumber | string | number | null;
+  showDecimals?: number;
+  roundingMode?: BigNumber.RoundingMode;
+}): string {
+  if (input === null || input === undefined) {
+    return '-';
+  }
+  return `${formatReadableNumber({
+    input: new BigNumber(input || 0).multipliedBy(100),
+    showDecimals,
+    roundingMode,
+  })}%`;
+}
+
+export const formatApy = (amount: BigNumber, showDecimals = 2): string => {
+  return formatPercentageNumber({
+    input: amount,
+    showDecimals,
+  });
+};

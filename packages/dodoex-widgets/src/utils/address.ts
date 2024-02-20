@@ -23,9 +23,9 @@ export const isSameAddress = (
   return trimAddress2.endsWith(trimAddress1);
 };
 
-export function isAddress(value: any): string | false {
+export function isAddress(value: any): boolean {
   try {
-    return getAddress(value);
+    return !!getAddress(value);
   } catch {
     return false;
   }

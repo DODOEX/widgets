@@ -11,10 +11,12 @@ export type { TokenInfo } from './hooks/Token/type';
 export function SwapWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>
-      <Swap
-        getAutoSlippage={props.getAutoSlippage}
-        onConnectWalletClick={props.onConnectWalletClick}
-      />
+      <QueryClientProvider client={queryClient}>
+        <Swap
+          getAutoSlippage={props.getAutoSlippage}
+          onConnectWalletClick={props.onConnectWalletClick}
+        />
+      </QueryClientProvider>
     </Widget>
   );
 }

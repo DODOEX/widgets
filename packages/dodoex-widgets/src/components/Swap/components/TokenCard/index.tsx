@@ -3,7 +3,7 @@ import { TokenLogoCollapse } from './TokenLogoCollapse';
 import { BalanceText } from './BalanceText';
 import { NumberInput } from './NumberInput';
 import { TokenPickerDialog } from './TokenPickerDialog';
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { TokenInfo } from '../../../../hooks/Token';
 import { TokenPickerProps } from '../../../TokenPicker';
 import useGetBalance from '../../../../hooks/Token/useGetBalance';
@@ -19,11 +19,11 @@ export interface TokenCardProps {
   occupiedAddrs?: string[];
   occupiedChainId?: TokenPickerProps['occupiedChainId'];
   onMaxClick?: (max: string) => void;
-  token?: TokenPickerProps['value'];
+  token?: TokenInfo | null;
   onInputChange?: (v: string) => void;
   onInputFocus?: () => void;
   onTokenClick?: () => void;
-  onTokenChange: TokenPickerProps['onChange'];
+  onTokenChange: (token: TokenInfo, isOccupied: boolean) => void;
   side?: TokenPickerProps['side'];
   showChainLogo?: boolean;
   onlyCurrentChain?: boolean;
@@ -128,11 +128,13 @@ export function TokenCard({
           setTokenPickerVisible(false);
           onTokenClick && onTokenClick();
         }}
-        onTokenChange={(token: TokenInfo, isOccupied: boolean) => {
+        onTokenChange={(token, isOccupied) => {
           setTokenPickerVisible(false);
           // change token list order after closing the dialog
           setTimeout(() => {
-            onTokenChange(token, isOccupied);
+            if (!Array.isArray(token)) {
+              onTokenChange(token, isOccupied);
+            }
           }, transitionTime);
         }}
       />

@@ -51,6 +51,10 @@ msgstr "忽略"
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
 
+#: src/widgets/PoolWidget/list/components/TokenAndPoolFilter.tsx:59
+msgid "Search by token or pool address"
+msgstr ""
+
 #: src/components/WithExecutionDialog/index.tsx:109
 msgid "{0} confirmed"
 msgstr "{0} 已确认"
@@ -71,7 +75,7 @@ msgstr "分钟"
 msgid "Hour"
 msgstr "小时"
 
-#: src/components/TokenPicker/index.tsx:111
+#: src/components/TokenPicker/index.tsx:150
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
@@ -99,6 +103,10 @@ msgstr "预计服务供应商费用"
 #: src/components/Swap/components/ReviewDialog.tsx:242
 msgid "Basic Fee"
 msgstr "基础手续费"
+
+#: src/widgets/PoolWidget/list/components/TokenAndPoolFilter.tsx:51
+msgid "Search"
+msgstr ""
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:16
 msgid "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
@@ -141,7 +149,8 @@ msgstr "未授权"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:339
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:336
+#: src/widgets/PoolWidget/list/components/LoadingCard.tsx:77
 msgid "TVL"
 msgstr ""
 
@@ -208,7 +217,7 @@ msgstr "设置已切换至闪兑模式"
 msgid "Quote not available"
 msgstr "没有报价"
 
-#: src/widgets/PoolWidget/index.tsx:26
+#: src/widgets/PoolWidget/list/hooks/usePoolListTabs.ts:17
 msgid "Add Liquidity"
 msgstr ""
 
@@ -224,7 +233,7 @@ msgstr "重置"
 msgid "Best offer"
 msgstr "最优价格"
 
-#: src/widgets/PoolWidget/list/components/PoolApyTooltip.tsx:132
+#: src/widgets/PoolWidget/list/components/PoolApyTooltip.tsx:133
 msgid "LP Fee"
 msgstr ""
 
@@ -267,7 +276,7 @@ msgstr "交易哈希："
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:270
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:267
 msgid "Mining"
 msgstr ""
 
@@ -275,7 +284,7 @@ msgstr ""
 msgid "Price Impact"
 msgstr "价格冲击"
 
-#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:34
+#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:42
 msgid "Select a token"
 msgstr "选择代币"
 
@@ -307,7 +316,7 @@ msgstr "交易详情"
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
-#: src/widgets/PoolWidget/index.tsx:29
+#: src/widgets/PoolWidget/list/hooks/usePoolListTabs.ts:20
 msgid "My Liquidity"
 msgstr ""
 
@@ -353,7 +362,7 @@ msgstr "分钟"
 msgid "Transaction rejected."
 msgstr "交易被拒绝."
 
-#: src/widgets/PoolWidget/index.tsx:31
+#: src/widgets/PoolWidget/list/hooks/usePoolListTabs.ts:22
 msgid "My Pools"
 msgstr ""
 
@@ -411,15 +420,19 @@ msgstr "滑点"
 msgid "Send to:"
 msgstr "发送至："
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:381
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:378
 msgid "Add"
 msgstr ""
 
-#: src/widgets/PoolWidget/index.tsx:74
+#: src/widgets/PoolWidget/list/components/TokenAndPoolFilter.tsx:58
+msgid "Select a liquidity pool"
+msgstr ""
+
+#: src/widgets/PoolWidget/index.tsx:60
 msgid "Create Pool"
 msgstr ""
 
-#: src/widgets/PoolWidget/list/components/PoolApyTooltip.tsx:152
+#: src/widgets/PoolWidget/list/components/PoolApyTooltip.tsx:151
 msgid "MT Fee"
 msgstr ""
 
@@ -448,11 +461,13 @@ msgstr "如果你的交易被确认的时间超过这个时间，你的交易将
 msgid "Detail"
 msgstr "详情"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:301
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:298
+#: src/widgets/PoolWidget/list/components/LoadingCard.tsx:57
+#: src/widgets/PoolWidget/list/components/TokenListPoolItem.tsx:102
 msgid "APY"
 msgstr ""
 
-#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:44
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:45
 msgid "SELECT TOKEN"
 msgstr "选择代币"
 

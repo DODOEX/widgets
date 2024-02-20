@@ -14,7 +14,7 @@ export default function useTokenListFetchBalance({
   defaultLoadBalance,
 }: {
   chainId: number;
-  value?: TokenInfo | null;
+  value?: TokenInfo | null | Array<TokenInfo>;
   tokenList: TokenList;
   popularTokenList?: TokenList;
   visible?: boolean;
@@ -40,14 +40,16 @@ export default function useTokenListFetchBalance({
     return Array.from(addressSet);
   }, [tokenList, popularTokenList, chainId, autoConnectLoading]);
 
-  const selectTokenAddress = useMemo(
-    () => (value ? [value.address] : []),
-    [value],
-  );
-  const selectChainId = useMemo(
-    () => value?.chainId ?? chainId,
-    [value?.chainId, chainId],
-  );
+  const selectTokenAddress = useMemo(() => {
+    if (!value) return [];
+    if (Array.isArray(value)) return value.map((item) => item.address);
+    return [value.address];
+  }, [value]);
+  const selectChainId = useMemo(() => {
+    if (!value) return chainId;
+    if (Array.isArray(value)) return value[0]?.chainId ?? chainId;
+    return value.chainId;
+  }, [value, chainId]);
 
   useFetchTokens({
     addresses: checkTokenAddresses,

@@ -87,9 +87,10 @@ export default function useTokenList({
   chainId: chainIdProps,
   visible,
   defaultLoadBalance,
+  multiple,
 }: {
-  value?: TokenInfo | null;
-  onChange: (token: TokenInfo, isOccupied: boolean) => void;
+  value?: TokenInfo | null | Array<TokenInfo>;
+  onChange: (token: TokenInfo | Array<TokenInfo>, isOccupied: boolean) => void;
 
   /** token pair usage */
   occupiedAddrs?: string[];
@@ -105,6 +106,7 @@ export default function useTokenList({
   /** Token Picker visible */
   visible?: boolean;
   defaultLoadBalance?: boolean;
+  multiple?: boolean;
 }) {
   const [filter, setFilter] = useState('');
   const preloadedOrigin = useSelector(getTokenList);
@@ -197,11 +199,27 @@ export default function useTokenList({
           const a = aItem.token;
           const b = bItem.token;
           if (value) {
-            if (a.address === value.address) {
-              return -1;
-            }
-            if (b.address === value.address) {
-              return 1;
+            if (Array.isArray(value)) {
+              const valueAddresses = value.map(
+                (valueItem) => valueItem.address,
+              );
+              const aValueIndexOf = valueAddresses.indexOf(a.address);
+              const bValueIndexOf = valueAddresses.indexOf(b.address);
+              const hasAValue = aValueIndexOf !== -1;
+              const hasBValue = bValueIndexOf !== -1;
+              if (hasAValue || hasBValue) {
+                return (hasAValue && aValueIndexOf < bValueIndexOf) ||
+                  !hasBValue
+                  ? -1
+                  : 1;
+              }
+            } else {
+              if (a.address === value.address) {
+                return -1;
+              }
+              if (b.address === value.address) {
+                return 1;
+              }
             }
           }
 
@@ -259,14 +277,24 @@ export default function useTokenList({
   const onSelectToken = useCallback(
     (token: TokenInfo) => {
       const address = token.address.toLowerCase();
-      onChange(
-        token,
-        !!occupiedAddrs?.some(
-          (e) =>
-            e.toLowerCase() === address &&
-            (!occupiedChainId || token.chainId === occupiedChainId),
-        ),
-      );
+      const isOccupied =
+        (!occupiedChainId || token.chainId === occupiedChainId) &&
+        !!occupiedAddrs?.some((e) => e.toLowerCase() === address);
+
+      if (Array.isArray(value) || (multiple && !value)) {
+        const newValue = [...(value as Array<TokenInfo>)];
+        const findIndex = newValue.findIndex(
+          (item) => item.address.toLocaleLowerCase() === address,
+        );
+        if (findIndex !== -1) {
+          newValue.splice(findIndex, 1);
+        } else {
+          newValue.push(token);
+        }
+        onChange(newValue, isOccupied);
+      } else {
+        onChange(token, isOccupied);
+      }
     },
     [onChange, occupiedAddrs, occupiedChainId],
   );

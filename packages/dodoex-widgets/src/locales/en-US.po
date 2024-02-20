@@ -51,6 +51,10 @@ msgstr "Dismiss"
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
 
+#: src/widgets/PoolWidget/list/components/TokenAndPoolFilter.tsx:59
+msgid "Search by token or pool address"
+msgstr "Search by token or pool address"
+
 #: src/components/WithExecutionDialog/index.tsx:109
 msgid "{0} confirmed"
 msgstr "{0} confirmed"
@@ -71,7 +75,7 @@ msgstr "Minute"
 msgid "Hour"
 msgstr "Hour"
 
-#: src/components/TokenPicker/index.tsx:111
+#: src/components/TokenPicker/index.tsx:150
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
@@ -99,6 +103,10 @@ msgstr "Estimated service provider fees"
 #: src/components/Swap/components/ReviewDialog.tsx:242
 msgid "Basic Fee"
 msgstr "Basic Fee"
+
+#: src/widgets/PoolWidget/list/components/TokenAndPoolFilter.tsx:51
+msgid "Search"
+msgstr "Search"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:16
 msgid "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
@@ -141,7 +149,8 @@ msgstr "Unapproved"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:339
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:336
+#: src/widgets/PoolWidget/list/components/LoadingCard.tsx:77
 msgid "TVL"
 msgstr "TVL"
 
@@ -208,7 +217,7 @@ msgstr "The setting has been switched to swap mode"
 msgid "Quote not available"
 msgstr "Quote not available"
 
-#: src/widgets/PoolWidget/index.tsx:26
+#: src/widgets/PoolWidget/list/hooks/usePoolListTabs.ts:17
 msgid "Add Liquidity"
 msgstr "Add Liquidity"
 
@@ -224,7 +233,7 @@ msgstr "Reset"
 msgid "Best offer"
 msgstr "Best offer"
 
-#: src/widgets/PoolWidget/list/components/PoolApyTooltip.tsx:132
+#: src/widgets/PoolWidget/list/components/PoolApyTooltip.tsx:133
 msgid "LP Fee"
 msgstr "LP Fee"
 
@@ -267,7 +276,7 @@ msgstr "Tx"
 msgid "Review Cross Chain"
 msgstr "Review Cross Chain"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:270
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:267
 msgid "Mining"
 msgstr "Mining"
 
@@ -275,7 +284,7 @@ msgstr "Mining"
 msgid "Price Impact"
 msgstr "Price Impact"
 
-#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:34
+#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:42
 msgid "Select a token"
 msgstr "Select a token"
 
@@ -307,7 +316,7 @@ msgstr "Swap Detail"
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
-#: src/widgets/PoolWidget/index.tsx:29
+#: src/widgets/PoolWidget/list/hooks/usePoolListTabs.ts:20
 msgid "My Liquidity"
 msgstr "My Liquidity"
 
@@ -353,7 +362,7 @@ msgstr "Min"
 msgid "Transaction rejected."
 msgstr "Transaction rejected."
 
-#: src/widgets/PoolWidget/index.tsx:31
+#: src/widgets/PoolWidget/list/hooks/usePoolListTabs.ts:22
 msgid "My Pools"
 msgstr "My Pools"
 
@@ -411,15 +420,19 @@ msgstr "Slippage Tolerance"
 msgid "Send to:"
 msgstr "Send to:"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:381
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:378
 msgid "Add"
 msgstr "Add"
 
-#: src/widgets/PoolWidget/index.tsx:74
+#: src/widgets/PoolWidget/list/components/TokenAndPoolFilter.tsx:58
+msgid "Select a liquidity pool"
+msgstr "Select a liquidity pool"
+
+#: src/widgets/PoolWidget/index.tsx:60
 msgid "Create Pool"
 msgstr "Create Pool"
 
-#: src/widgets/PoolWidget/list/components/PoolApyTooltip.tsx:152
+#: src/widgets/PoolWidget/list/components/PoolApyTooltip.tsx:151
 msgid "MT Fee"
 msgstr "MT Fee"
 
@@ -448,11 +461,13 @@ msgstr "If your transaction time exceeds the deadline, your transaction will be 
 msgid "Detail"
 msgstr "Detail"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:301
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:298
+#: src/widgets/PoolWidget/list/components/LoadingCard.tsx:57
+#: src/widgets/PoolWidget/list/components/TokenListPoolItem.tsx:102
 msgid "APY"
 msgstr "APY"
 
-#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:44
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:45
 msgid "SELECT TOKEN"
 msgstr "SELECT TOKEN"
 

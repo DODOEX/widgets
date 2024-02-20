@@ -1,8 +1,14 @@
-import { PoolApi } from '@dodoex/api';
+import { PoolApi, ExcludeNone } from '@dodoex/api';
 import { ChainId } from '../../constants/chains';
 import { TokenInfo } from '../../hooks/Token';
 
 export const poolApi = new PoolApi();
+
+export type FetchLiquidityListLqList = ExcludeNone<
+  ReturnType<
+    Exclude<typeof PoolApi.fetchLiquidityList['__apiType'], undefined>
+  >['liquidity_list']
+>['lqList'];
 
 export function convertLiquidityTokenToTokenInfo(
   token:
@@ -26,4 +32,8 @@ export function convertLiquidityTokenToTokenInfo(
     symbol: token.symbol,
     logoURI: token.logoImg ?? '',
   } as TokenInfo;
+}
+
+export function hasQuoteApy(type: string): boolean {
+  return !(type === 'DVM' || type === 'DSP');
 }

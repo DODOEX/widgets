@@ -1,43 +1,27 @@
 import { Box, Button, useTheme } from '@dodoex/components';
 import { Tabs, TabsList, Tab, TabPanel } from '@dodoex/components';
-import { t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import React from 'react';
 import { Plus as PlusIcon } from '@dodoex/icons';
 import SelectChain from '../../components/SelectChain';
-import { ChainId } from '../../constants/chains';
 import AddLiquidityList from './list/AddLiquidity';
-import { useFilterChainIds } from './list/hooks/useFilterChainIds';
 import { useWeb3React } from '@web3-react/core';
-
-export enum PoolTab {
-  addLiquidity = 'add-liquidity',
-  myLiquidity = 'my-liquidity',
-  myCreated = 'my-created',
-}
+import { usePoolListTabs, PoolTab } from './list/hooks/usePoolListTabs';
+import { usePoolListFilterChainId } from './list/hooks/usePoolListFilterChainId';
+import { usePoolListFilterTokenAndPool } from './list/hooks/usePoolListFilterTokenAndPool';
+import TokenAndPoolFilter from './list/components/TokenAndPoolFilter';
+import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
 
 export function Pool() {
   const theme = useTheme();
   const scrollParentRef = React.useRef<HTMLDivElement>();
-  const { i18n } = useLingui();
   const { account } = useWeb3React();
-  const [poolTab, setPoolTab] = React.useState(PoolTab.addLiquidity);
-  const tabs = React.useMemo(
-    () => [
-      { key: PoolTab.addLiquidity, value: t`Add Liquidity` },
-      {
-        key: PoolTab.myLiquidity,
-        value: t`My Liquidity`,
-      },
-      { key: PoolTab.myCreated, value: t`My Pools` },
-    ],
-    [i18n._],
-  );
-  const [activeChainId, setActiveChainId] =
-    React.useState<ChainId | undefined>(undefined);
-  const filterChainIds = useFilterChainIds({
-    activeChainId,
+  const { poolTab, tabs, handleChangePoolTab } = usePoolListTabs({
+    account,
   });
+  const { activeChainId, filterChainIds, handleChangeActiveChainId } =
+    usePoolListFilterChainId();
+
   return (
     <Box
       sx={{
@@ -49,7 +33,7 @@ export function Pool() {
       <Tabs
         value={poolTab}
         onChange={(_, value) => {
-          setPoolTab(value as PoolTab);
+          handleChangePoolTab(value as PoolTab);
         }}
       >
         <Box
@@ -75,18 +59,13 @@ export function Pool() {
           />
           <Trans>Create Pool</Trans>
         </Button>
-        <Box
-          sx={{
-            my: 16,
-          }}
-        >
-          <SelectChain chainId={activeChainId} setChainId={setActiveChainId} />
-        </Box>
         <TabPanel value={PoolTab.addLiquidity}>
           <AddLiquidityList
             account={account}
             filterChainIds={filterChainIds}
             scrollParentRef={scrollParentRef}
+            activeChainId={activeChainId}
+            handleChangeActiveChainId={handleChangeActiveChainId}
           />
         </TabPanel>
         <TabPanel value={PoolTab.myLiquidity}>Tab 2</TabPanel>

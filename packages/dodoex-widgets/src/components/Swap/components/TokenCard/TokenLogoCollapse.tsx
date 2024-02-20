@@ -4,13 +4,14 @@ import { Trans } from '@lingui/macro';
 import { CaretUp } from '@dodoex/icons';
 import TokenLogo from '../../../TokenLogo';
 import { swapSelectTokenBtn } from '../../../../constants/testId';
+import { TokenInfo } from '../../../../hooks/Token';
 
 export function TokenLogoCollapse({
   token,
   onClick,
   showChainLogo,
 }: {
-  token?: TokenPickerProps['value'];
+  token?: TokenInfo | null;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   showChainLogo?: boolean;
 }) {

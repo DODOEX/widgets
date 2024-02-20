@@ -1,6 +1,5 @@
-import { useTheme, Box, BoxProps } from '@dodoex/components';
-import { useSelector } from 'react-redux';
-import { getGlobalProps } from '../../store/selectors/globals';
+import { Box, BoxProps } from '@dodoex/components';
+import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
 
 export function DataCardGroup({
   children,
@@ -14,25 +13,19 @@ export function DataCardGroup({
   /** Large screen quantity per row */
   repeatBaseForLargeScreen?: number;
 }) {
-  const theme = useTheme();
-  const globalProps = useSelector(getGlobalProps);
+  const { isMobile, minDevice, maxDevice } = useWidgetDevice();
   let defaultSx: BoxProps['sx'] = {};
-  const width = globalProps.width || 375;
-  const breakpoints = theme.breakpoints.values;
-  if (width < breakpoints.tablet) {
+  if (isMobile) {
     defaultSx = {
-      '& > div': {
-        mb: gap ?? 16,
-      },
+      display: 'grid',
+      gap,
+      gridTemplateColumns: `repeat(${1}, 1fr)`,
     };
   } else {
-    let gridTemplateColumnsCount = 1;
-    if (width < 1418) {
-      gridTemplateColumnsCount = 2;
-    }
+    let gridTemplateColumnsCount = 2;
     const largeScreenList = [1418, 1761, 2104];
     largeScreenList.some((largeScreen, index) => {
-      if (width < largeScreen) {
+      if (minDevice(largeScreen)) {
         gridTemplateColumnsCount = repeatBaseForLargeScreen + index;
         return true;
       }

@@ -229,8 +229,12 @@ export default function SelectChain({
                 position: 'relative',
                 px: 20,
                 '&:active': {
-                  backgroundColor: 'custom.background.listHover',
+                  backgroundColor: 'hover.default',
                 },
+                '&:hover': {
+                  backgroundColor: 'hover.default',
+                },
+                cursor: 'pointer',
               }}
             >
               {item.value}

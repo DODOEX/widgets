@@ -70,6 +70,8 @@ export function TokenLogoPair({
                 url={token.logoURI}
                 cross={cross}
                 noShowChain
+                noBorder
+                marginRight={0}
               />
             ) : (
               <Box component="img" height={width} src={token} />

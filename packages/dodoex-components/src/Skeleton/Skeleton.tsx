@@ -1,25 +1,11 @@
 // source for https://github.com/mui/material-ui/blob/master/packages/mui-material/src/Skeleton/Skeleton.js
 import * as React from 'react';
-import { keyframes, alpha, useTheme } from '@mui/system';
+import { alpha, useTheme } from '@mui/system';
 import { Box, BoxProps } from '../Box';
-
-const pulseKeyframe = keyframes`
-  0% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.4;
-  }
-
-  100% {
-    opacity: 1;
-  }
-`;
 
 const Skeleton = React.forwardRef(function Skeleton(
   props: BoxProps & {
-    component: BoxProps['component'];
+    component?: BoxProps['component'];
     variant?: 'circular' | 'rounded';
     width?: number | string;
     height?: number | string;
@@ -51,7 +37,20 @@ const Skeleton = React.forwardRef(function Skeleton(
           theme.palette.mode === 'light' ? 0.11 : 0.13,
         ),
         borderRadius,
-        animation: '${pulseKeyframe} 2s ease-in-out 0.5s infinite',
+        animation: 'pulseKeyframe 2s ease-in-out 0.5s infinite',
+        '@keyframes pulseKeyframe': {
+          '0%': {
+            opacity: 1,
+          },
+
+          '50%': {
+            opacity: 0.4,
+          },
+
+          '100%': {
+            opacity: 1,
+          },
+        },
         ...sx,
       }}
     />

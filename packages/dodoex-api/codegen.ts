@@ -1,7 +1,6 @@
 import { CodegenConfig } from '@graphql-codegen/cli';
 
 // Config: https://the-guild.dev/graphql/codegen/docs/config-reference/codegen-config
-console.log('jie', process.env.SCHEMA_URL);
 const config: CodegenConfig = {
   schema: process.env.SCHEMA_URL,
   documents: ['src/**/*.{ts,tsx}', '!src/gql/**/*'],
