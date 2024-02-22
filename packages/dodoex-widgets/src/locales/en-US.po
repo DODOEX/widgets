@@ -112,6 +112,10 @@ msgstr "Search"
 msgid "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
 msgstr "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
 
+#: src/components/List/EmptyList.tsx:30
+msgid "No results found"
+msgstr "No results found"
+
 #: src/utils/time.ts:5
 msgid "s"
 msgstr "s"
@@ -149,7 +153,7 @@ msgstr "Unapproved"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:336
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:398
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:77
 msgid "TVL"
 msgstr "TVL"
@@ -276,7 +280,7 @@ msgstr "Tx"
 msgid "Review Cross Chain"
 msgstr "Review Cross Chain"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:267
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:329
 msgid "Mining"
 msgstr "Mining"
 
@@ -307,6 +311,10 @@ msgstr "Connect to your {0} Wallet"
 #: src/utils/time.ts:7
 msgid "Seconds"
 msgstr "Seconds"
+
+#: src/components/List/FailedList.tsx:42
+msgid "Something went wrong…<0>Refresh again</0>"
+msgstr "Something went wrong…<0>Refresh again</0>"
 
 #: src/components/Swap/components/ReviewDialog.tsx:215
 msgid "Swap Detail"
@@ -420,7 +428,7 @@ msgstr "Slippage Tolerance"
 msgid "Send to:"
 msgstr "Send to:"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:378
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:440
 msgid "Add"
 msgstr "Add"
 
@@ -428,7 +436,7 @@ msgstr "Add"
 msgid "Select a liquidity pool"
 msgstr "Select a liquidity pool"
 
-#: src/widgets/PoolWidget/index.tsx:60
+#: src/widgets/PoolWidget/index.tsx:56
 msgid "Create Pool"
 msgstr "Create Pool"
 
@@ -449,6 +457,7 @@ msgstr "Unable to SETTLE during the cooling-off period"
 msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
+#: src/components/NeedConnectButton.tsx:23
 #: src/components/Swap/components/ConnectWallet/index.tsx:55
 msgid "Connect to a wallet"
 msgstr "Connect to a wallet"
@@ -461,7 +470,7 @@ msgstr "If your transaction time exceeds the deadline, your transaction will be 
 msgid "Detail"
 msgstr "Detail"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:298
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:360
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:57
 #: src/widgets/PoolWidget/list/components/TokenListPoolItem.tsx:102
 msgid "APY"

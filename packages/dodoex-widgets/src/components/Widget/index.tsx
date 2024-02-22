@@ -35,12 +35,18 @@ import { APIServices } from '../../constants/api';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { SwapProps } from '../Swap';
 import { getFromTokenChainId } from '../../store/selectors/wallet';
+import {
+  GlobalConfigContext,
+  GlobalFunctionConfig,
+} from '../../providers/GlobalConfigContext';
+import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
   extends Web3ConnectorsProps,
     InitTokenListProps,
     ExecutionProps,
+    GlobalFunctionConfig,
     SwapProps {
   apikey?: string;
   theme?: ThemeOptions;
@@ -135,6 +141,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
       }}
       className={WIDGET_CLASS_NAME}
     >
+      <OpenConnectWalletInfo />
       <WithExecutionDialog {...props}>{props.children}</WithExecutionDialog>
     </Box>
   );
@@ -174,8 +181,14 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
     <ReduxProvider store={store}>
       <LangProvider locale={props.locale}>
         <ThemeProvider theme={theme}>
-          <CssBaseline container={`.${WIDGET_CLASS_NAME}`} />
-          <Web3Provider {...props} />
+          <GlobalConfigContext.Provider
+            value={{
+              onConnectWalletClick: props.onConnectWalletClick,
+            }}
+          >
+            <CssBaseline container={`.${WIDGET_CLASS_NAME}`} />
+            <Web3Provider {...props} />
+          </GlobalConfigContext.Provider>
         </ThemeProvider>
       </LangProvider>
     </ReduxProvider>

@@ -4,13 +4,13 @@ import { useLingui } from '@lingui/react';
 import { useWeb3React } from '@web3-react/core';
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { WalletMap, WalletType } from '../../../../constants/wallet';
-import { connectToWallet } from '../../../../hooks/ConnectWallet';
-import { useSwitchChain } from '../../../../hooks/ConnectWallet/useSwitchChain';
+import { WalletMap, WalletType } from '../../constants/wallet';
+import { connectToWallet } from '../../hooks/ConnectWallet';
+import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
 import {
   getDefaultChainId,
   getFromTokenChainId,
-} from '../../../../store/selectors/wallet';
+} from '../../store/selectors/wallet';
 import Dialog from '../Dialog';
 
 export default function ConnectWalletDialog({

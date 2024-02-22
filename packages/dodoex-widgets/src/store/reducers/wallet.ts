@@ -5,11 +5,18 @@ export type State = {
   chainId: ChainId;
   fromTokenChainId?: ChainId;
   latestBlockNumber: number;
+  openConnectWalletInfo:
+    | boolean
+    | {
+        /** Wallet is connected, chainID needs to be switched */
+        chainId?: ChainId;
+      };
 };
 
 export const initialState: State = {
   chainId: ChainId.MAINNET,
   latestBlockNumber: 0,
+  openConnectWalletInfo: false,
 };
 
 export default (state: State = initialState, action: AnyAction): State => {
@@ -28,6 +35,11 @@ export default (state: State = initialState, action: AnyAction): State => {
       return {
         ...state,
         latestBlockNumber: action.payload,
+      };
+    case 'SET_OPEN_CONNECT_WALLET_INFO':
+      return {
+        ...state,
+        openConnectWalletInfo: action.payload,
       };
     default:
       return state;

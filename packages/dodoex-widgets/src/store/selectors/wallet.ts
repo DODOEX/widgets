@@ -12,3 +12,7 @@ export const getFromTokenChainId = (state?: RootState) => {
 export const getLatestBlockNumber = (state?: RootState) => {
   return (state ?? store.getState()).wallet.latestBlockNumber;
 };
+
+export const getOpenConnectWalletInfo = (state?: RootState) => {
+  return (state ?? store.getState()).wallet.openConnectWalletInfo;
+};

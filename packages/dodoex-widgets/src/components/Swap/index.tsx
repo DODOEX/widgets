@@ -70,13 +70,9 @@ import { setFromTokenChainId } from '../../store/actions/wallet';
 export interface SwapProps {
   /** Higher priority setting slippage */
   getAutoSlippage?: GetAutoSlippage;
-  onConnectWalletClick?: ConnectWalletProps['onConnectWalletClick'];
 }
 
-export function Swap({
-  getAutoSlippage,
-  onConnectWalletClick,
-}: SwapProps = {}) {
+export function Swap({ getAutoSlippage }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
@@ -666,12 +662,7 @@ export function Swap({
 
   const swapButton = useMemo(() => {
     if (!account || (fromToken?.chainId && chainId !== fromToken.chainId))
-      return (
-        <ConnectWallet
-          needSwitchChain={fromToken?.chainId}
-          onConnectWalletClick={onConnectWalletClick}
-        />
-      );
+      return <ConnectWallet needSwitchChain={fromToken?.chainId} />;
     if (isInflight) {
       return (
         <Button fullWidth isLoading disabled>

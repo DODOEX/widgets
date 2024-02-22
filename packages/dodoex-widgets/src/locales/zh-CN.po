@@ -112,6 +112,10 @@ msgstr ""
 msgid "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
 msgstr "价格冲击超过了你设置的滑点, 请提高滑点后重试"
 
+#: src/components/List/EmptyList.tsx:30
+msgid "No results found"
+msgstr ""
+
 #: src/utils/time.ts:5
 msgid "s"
 msgstr "秒"
@@ -149,7 +153,7 @@ msgstr "未授权"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:336
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:398
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:77
 msgid "TVL"
 msgstr ""
@@ -276,7 +280,7 @@ msgstr "交易哈希："
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:267
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:329
 msgid "Mining"
 msgstr ""
 
@@ -307,6 +311,10 @@ msgstr "连接你的{0}钱包"
 #: src/utils/time.ts:7
 msgid "Seconds"
 msgstr "秒"
+
+#: src/components/List/FailedList.tsx:42
+msgid "Something went wrong…<0>Refresh again</0>"
+msgstr ""
 
 #: src/components/Swap/components/ReviewDialog.tsx:215
 msgid "Swap Detail"
@@ -420,7 +428,7 @@ msgstr "滑点"
 msgid "Send to:"
 msgstr "发送至："
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:378
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:440
 msgid "Add"
 msgstr ""
 
@@ -428,7 +436,7 @@ msgstr ""
 msgid "Select a liquidity pool"
 msgstr ""
 
-#: src/widgets/PoolWidget/index.tsx:60
+#: src/widgets/PoolWidget/index.tsx:56
 msgid "Create Pool"
 msgstr ""
 
@@ -449,6 +457,7 @@ msgstr "在冷静期无法进行清算"
 msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
+#: src/components/NeedConnectButton.tsx:23
 #: src/components/Swap/components/ConnectWallet/index.tsx:55
 msgid "Connect to a wallet"
 msgstr "连接钱包"
@@ -461,7 +470,7 @@ msgstr "如果你的交易被确认的时间超过这个时间，你的交易将
 msgid "Detail"
 msgstr "详情"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:298
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:360
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:57
 #: src/widgets/PoolWidget/list/components/TokenListPoolItem.tsx:102
 msgid "APY"
