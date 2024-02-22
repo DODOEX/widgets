@@ -22,12 +22,24 @@ export function usePoolListFilterTokenAndPool() {
     setFilterTokens([]);
   };
 
+  const handleDeleteToken = (token: TokenInfo) => {
+    setFilterTokens((prev) => {
+      const newFilterTokens = [...prev];
+      const index = newFilterTokens.indexOf(token);
+      if (index !== -1) {
+        newFilterTokens.splice(index, 1);
+      }
+      return newFilterTokens;
+    });
+  };
+
   return {
     filterTokens,
     filterASymbol,
     filterBSymbol,
     filterAddressLqList,
 
+    handleDeleteToken,
     handleChangeFilterTokens,
     handleChangeFilterAddress,
   };

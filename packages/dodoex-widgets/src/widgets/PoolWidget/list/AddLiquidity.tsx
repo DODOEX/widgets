@@ -23,6 +23,11 @@ import { usePoolListFilterTokenAndPool } from './hooks/usePoolListFilterTokenAnd
 import SelectChain from '../../../components/SelectChain';
 import TokenAndPoolFilter from './components/TokenAndPoolFilter';
 import TokenListPoolItem from './components/TokenListPoolItem';
+import { EmptyList } from '../../../components/List/EmptyList';
+import { FailedList } from '../../../components/List/FailedList';
+import FilterAddressTags from './components/FilterAddressTags';
+import FilterTokenTags from './components/FilterTokenTags';
+import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 
 export default function AddLiquidityList({
   scrollParentRef,
@@ -48,6 +53,7 @@ export default function AddLiquidityList({
     filterBSymbol,
     filterAddressLqList,
 
+    handleDeleteToken,
     handleChangeFilterTokens,
     handleChangeFilterAddress,
   } = usePoolListFilterTokenAndPool();
@@ -86,7 +92,8 @@ export default function AddLiquidityList({
   });
 
   let lqList = [] as FetchLiquidityListLqList;
-  if (filterAddressLqList?.length) {
+  const hasFilterAddress = !!filterAddressLqList?.length;
+  if (hasFilterAddress) {
     lqList = [...filterAddressLqList];
   } else {
     fetchResult.data?.pages.forEach((page) => {
@@ -98,60 +105,100 @@ export default function AddLiquidityList({
 
   const goDetailPage = () => {};
 
+  const filterSmallDeviceWidth = 475;
+
   return (
     <>
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
           my: 16,
-          ...(minDevice(475)
+          display: 'flex',
+          gap: 8,
+          ...(minDevice(filterSmallDeviceWidth)
             ? {}
             : {
-                '& > button': {
-                  flex: 1,
-                },
+                flexDirection: 'column',
               }),
         }}
       >
-        <SelectChain
-          chainId={activeChainId}
-          setChainId={handleChangeActiveChainId}
-        />
-        <TokenAndPoolFilter
-          value={filterTokens}
-          onChange={handleChangeFilterTokens}
-          searchAddress={async (address, onClose) => {
-            const query = poolApi.getInfiniteQuery(PoolApi.fetchLiquidityList, {
-              where: {
-                ...defaultQueryFilter,
-                filterState: {
-                  address,
-                  ...defaultQueryFilter.filterState,
-                },
-              },
-            });
-            const result = await queryClient.fetchQuery(query);
-            const lqList = result.liquidity_list?.lqList;
-            if (lqList?.length) {
-              return (
-                <TokenListPoolItem
-                  list={lqList}
-                  onClick={() => {
-                    handleChangeFilterAddress(lqList);
-                    onClose();
-                  }}
-                />
-              );
-            }
-            return null;
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            ...(minDevice(filterSmallDeviceWidth)
+              ? {}
+              : {
+                  '& > button': {
+                    flex: 1,
+                  },
+                }),
           }}
-        />
+        >
+          <SelectChain
+            chainId={activeChainId}
+            setChainId={handleChangeActiveChainId}
+          />
+          <TokenAndPoolFilter
+            value={filterTokens}
+            onChange={handleChangeFilterTokens}
+            searchAddress={async (address, onClose) => {
+              const query = poolApi.getInfiniteQuery(
+                PoolApi.fetchLiquidityList,
+                {
+                  where: {
+                    ...defaultQueryFilter,
+                    filterState: {
+                      address,
+                      ...defaultQueryFilter.filterState,
+                    },
+                  },
+                },
+              );
+              const result = await queryClient.fetchQuery(query);
+              const lqList = result.liquidity_list?.lqList;
+              if (lqList?.length) {
+                return (
+                  <TokenListPoolItem
+                    list={lqList}
+                    onClick={() => {
+                      handleChangeFilterAddress(lqList);
+                      onClose();
+                    }}
+                  />
+                );
+              }
+              return null;
+            }}
+          />
+        </Box>
+
+        {/* filter tag */}
+        {(hasFilterAddress || !!filterTokens.length) && (
+          <Box
+            sx={{
+              my: 0,
+            }}
+          >
+            {hasFilterAddress ? (
+              <FilterAddressTags
+                lqList={filterAddressLqList}
+                onDeleteTag={() => handleChangeFilterAddress([])}
+              />
+            ) : (
+              ''
+            )}
+            <FilterTokenTags
+              tags={filterTokens}
+              onDeleteTag={handleDeleteToken}
+            />
+          </Box>
+        )}
       </Box>
+
       {/* list */}
       <InfiniteScroll
-        hasMore={fetchResult.hasNextPage && !filterAddressLqList?.length}
+        hasMore={fetchResult.hasNextPage && !hasFilterAddress}
         threshold={300}
         loadMore={debounce(() => {
           if (fetchResult.hasNextPage && !fetchResult.isFetching) {
@@ -170,6 +217,22 @@ export default function AddLiquidityList({
       >
         <DataCardGroup>
           {fetchResult.isLoading ? <LoadingCard /> : ''}
+          {!fetchResult.isLoading && !lqList?.length && (
+            <EmptyList
+              sx={{
+                mt: 40,
+              }}
+              hasSearch={!!(activeChainId || filterASymbol || filterBSymbol)}
+            />
+          )}
+          {!!fetchResult.error && (
+            <FailedList
+              refresh={fetchResult.refetch}
+              sx={{
+                mt: 40,
+              }}
+            />
+          )}
           <>
             {lqList?.map((lq) => {
               if (!lq?.pair) return null;
@@ -338,7 +401,7 @@ export default function AddLiquidityList({
                     </Box>
                   </Box>
                   {/* operate */}
-                  <Button
+                  <NeedConnectButton
                     fullWidth
                     size={Button.Size.small}
                     sx={{
@@ -376,7 +439,7 @@ export default function AddLiquidityList({
                     }}
                   >
                     <Trans>Add</Trans>
-                  </Button>
+                  </NeedConnectButton>
                 </Box>
               );
             })}
