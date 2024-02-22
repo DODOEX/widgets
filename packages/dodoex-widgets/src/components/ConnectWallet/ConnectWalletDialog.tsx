@@ -123,6 +123,7 @@ export default function ConnectWalletDialog({
                       console.error(error);
                       setConnectingType(null);
                     });
+                    onClose();
                   } catch (error) {
                     console.error(error);
                   }
