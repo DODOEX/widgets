@@ -23,7 +23,7 @@ export interface TokenCardProps {
   onInputChange?: (v: string) => void;
   onInputFocus?: () => void;
   onTokenClick?: () => void;
-  onTokenChange: (token: TokenInfo, isOccupied: boolean) => void;
+  onTokenChange?: (token: TokenInfo, isOccupied: boolean) => void;
   side?: TokenPickerProps['side'];
   showChainLogo?: boolean;
   onlyCurrentChain?: boolean;
@@ -86,6 +86,7 @@ export function TokenCard({
           token={token}
           showChainLogo={showChainLogo}
           onClick={() => setTokenPickerVisible(true)}
+          readonly={!onTokenChange}
         />
 
         <BalanceText
@@ -132,7 +133,7 @@ export function TokenCard({
           setTokenPickerVisible(false);
           // change token list order after closing the dialog
           setTimeout(() => {
-            if (!Array.isArray(token)) {
+            if (!Array.isArray(token) && onTokenChange) {
               onTokenChange(token, isOccupied);
             }
           }, transitionTime);

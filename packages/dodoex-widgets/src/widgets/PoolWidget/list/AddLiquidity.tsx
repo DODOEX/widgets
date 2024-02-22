@@ -28,6 +28,7 @@ import { FailedList } from '../../../components/List/FailedList';
 import FilterAddressTags from './components/FilterAddressTags';
 import FilterTokenTags from './components/FilterTokenTags';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
+import PoolOperate from '../PoolOperate';
 
 export default function AddLiquidityList({
   scrollParentRef,
@@ -102,6 +103,7 @@ export default function AddLiquidityList({
       });
     });
   }
+  const [addPool, setAddPool] = React.useState<any>();
 
   const goDetailPage = () => {};
 
@@ -409,33 +411,7 @@ export default function AddLiquidityList({
                     }}
                     onClick={(evt) => {
                       evt.stopPropagation();
-                      // useSwitchNetworkStore.getState().openSwitchNetworkConfirm({
-                      //   chainId: item.chainId,
-                      //   title: 'pool.switch-network.title.add',
-                      //   autoSwitchKey: AccountStatusType.AutoSwitchNetworkPool,
-                      //   successCallback: () => {
-                      //     usePoolOperateStore.getState().addPool(
-                      //       {
-                      //         address: item.pairId,
-                      //         ...item,
-                      //         baseToken: convertLiquidityToken(item.baseToken),
-                      //         quoteToken: convertLiquidityToken(item.quoteToken),
-                      //         baseReserve: item.baseReserve,
-                      //         quoteReserve: item.quoteReserve,
-                      //         poolType: item.type,
-                      //         baseLpToken: item.baseLpToken ?? undefined,
-                      //         quoteLpToken: item.quoteLpToken ?? undefined,
-                      //         i: item.i,
-                      //         miningAddress: item.miningAddress,
-                      //         creator: item.creator,
-                      //       },
-                      //       {
-                      //         chainId: item.chainId,
-                      //         client,
-                      //       },
-                      //     );
-                      //   },
-                      // });
+                      setAddPool(lq);
                     }}
                   >
                     <Trans>Add</Trans>
@@ -446,6 +422,7 @@ export default function AddLiquidityList({
           </>
         </DataCardGroup>
       </InfiniteScroll>
+      <PoolOperate open={!!addPool} onClose={() => setAddPool(undefined)} />
     </>
   );
 }

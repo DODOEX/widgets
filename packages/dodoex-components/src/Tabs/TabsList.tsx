@@ -1,23 +1,20 @@
 import { TabsList as BaseTabsList, TabsListProps } from '@mui/base/TabsList';
-import { styled } from '@mui/system';
+import { useTheme } from '@mui/system';
+import { Box, BoxProps } from '../Box';
 import React from 'react';
 import AnyTouch from 'any-touch';
 
-const TabListStyle = styled(BaseTabsList)`
-  display: flex;
-  align-items: center;
-  overflow-x: auto;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-export const TabsList = React.forwardRef<HTMLDivElement>(function TabsList(
-  props: TabsListProps,
+export const TabsList = React.forwardRef(function TabsList(
+  {
+    sx,
+    ...props
+  }: TabsListProps & {
+    sx?: BoxProps['sx'];
+  },
   ref,
 ) {
   const tabListRef = React.useRef<HTMLDivElement>();
+  const theme = useTheme();
   React.useEffect(() => {
     if (
       tabListRef.current &&
@@ -40,7 +37,8 @@ export const TabsList = React.forwardRef<HTMLDivElement>(function TabsList(
     }
   }, []);
   return (
-    <TabListStyle
+    <Box
+      component={BaseTabsList}
       {...props}
       ref={(node: HTMLDivElement) => {
         tabListRef.current = node;
@@ -49,6 +47,17 @@ export const TabsList = React.forwardRef<HTMLDivElement>(function TabsList(
         } else if (ref) {
           ref.current = node;
         }
+      }}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        overflowX: 'auto',
+        borderBottom: `1px solid ${theme.palette.border.main}`,
+
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+        ...sx,
       }}
     />
   );

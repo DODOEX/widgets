@@ -10,6 +10,9 @@ export type FetchLiquidityListLqList = ExcludeNone<
   >['liquidity_list']
 >['lqList'];
 
+/** Actually more than that, but the api has filtering */
+export type LqPoolType = 'DPP' | 'DVM' | 'DSP' | 'CLASSICAL';
+
 export function convertLiquidityTokenToTokenInfo(
   token:
     | {
@@ -35,5 +38,28 @@ export function convertLiquidityTokenToTokenInfo(
 }
 
 export function hasQuoteApy(type: string): boolean {
-  return !(type === 'DVM' || type === 'DSP');
+  return ['CLASSICAL', 'DPP'].includes(type);
+}
+
+export function canOperatePool(
+  account: string | undefined,
+  {
+    owner,
+    creator,
+    type,
+  }: {
+    owner?: string | null;
+    creator?: string | null;
+    type?: LqPoolType;
+  },
+): boolean {
+  const actuallyOwner = owner ?? creator;
+  return (
+    type !== 'DPP' ||
+    !!(
+      account &&
+      actuallyOwner &&
+      actuallyOwner.toLocaleLowerCase() === account.toLocaleLowerCase()
+    )
+  );
 }

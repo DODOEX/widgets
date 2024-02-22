@@ -1,9 +1,9 @@
 import { Tabs as BaseTabs, TabsProps } from '@mui/base/Tabs';
 import React from 'react';
 
-export const Tabs = React.forwardRef<HTMLDivElement>(function TabsList(
+export const Tabs = React.forwardRef(function TabsList(
   { onChange, ...props }: TabsProps,
-  ref,
+  ref: React.ForwardedRef<HTMLDivElement>,
 ) {
   return (
     <BaseTabs

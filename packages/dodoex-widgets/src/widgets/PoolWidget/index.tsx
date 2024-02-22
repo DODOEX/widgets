@@ -32,11 +32,8 @@ export function Pool() {
           handleChangePoolTab(value as PoolTab);
         }}
       >
-        <Box
-          component={TabsList}
+        <TabsList
           sx={{
-            borderBottom: `1px solid ${theme.palette.border.main}`,
-            pb: 16,
             mb: 16,
           }}
         >
@@ -45,7 +42,7 @@ export function Pool() {
               {value}
             </Tab>
           ))}
-        </Box>
+        </TabsList>
         <Button variant={Button.Variant.outlined} fullWidth>
           <Box
             component={PlusIcon}
