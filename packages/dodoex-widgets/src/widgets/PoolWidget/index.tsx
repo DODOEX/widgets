@@ -3,14 +3,10 @@ import { Tabs, TabsList, Tab, TabPanel } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import React from 'react';
 import { Plus as PlusIcon } from '@dodoex/icons';
-import SelectChain from '../../components/SelectChain';
 import AddLiquidityList from './list/AddLiquidity';
 import { useWeb3React } from '@web3-react/core';
 import { usePoolListTabs, PoolTab } from './list/hooks/usePoolListTabs';
 import { usePoolListFilterChainId } from './list/hooks/usePoolListFilterChainId';
-import { usePoolListFilterTokenAndPool } from './list/hooks/usePoolListFilterTokenAndPool';
-import TokenAndPoolFilter from './list/components/TokenAndPoolFilter';
-import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
 
 export function Pool() {
   const theme = useTheme();

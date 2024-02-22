@@ -1,7 +1,6 @@
 import { merge } from 'lodash';
 import { forwardRef } from 'react';
 import { Box, BoxProps } from '../Box';
-import { useDevices } from '../hooks';
 
 const HoverOpacity = forwardRef(
   (

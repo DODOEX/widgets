@@ -43,7 +43,8 @@
     "@mui/system": "5.8.4",
     "@szhsin/react-accordion": "^1.2.1",
     "any-touch": "^2.2.0",
-    "clsx": "^1.2.1"
+    "clsx": "^1.2.1",
+    "lottie-web": "^5.12.2"
   },
   "peerDependencies": {
     "@emotion/react": "^11.10.0",
