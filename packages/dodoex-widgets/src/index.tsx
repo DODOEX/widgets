@@ -12,10 +12,7 @@ export function SwapWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>
       <QueryClientProvider client={queryClient}>
-        <Swap
-          getAutoSlippage={props.getAutoSlippage}
-          onConnectWalletClick={props.onConnectWalletClick}
-        />
+        <Swap getAutoSlippage={props.getAutoSlippage} />
       </QueryClientProvider>
     </Widget>
   );
@@ -37,10 +34,7 @@ export function InitSwapWidget(props: SwapWidgetProps) {
   const root = createRoot(rootEl!);
   root.render(
     <Widget {...props}>
-      <Swap
-        getAutoSlippage={props.getAutoSlippage}
-        onConnectWalletClick={props.onConnectWalletClick}
-      />
+      <Swap getAutoSlippage={props.getAutoSlippage} />
     </Widget>,
   );
 }
