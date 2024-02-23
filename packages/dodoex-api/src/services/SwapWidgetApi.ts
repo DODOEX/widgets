@@ -2,7 +2,7 @@ import RestApiRequest, {
   RestApiRequestConfig,
 } from '../helper/RestApiRequests';
 import { strToColorStr } from '../utils/color';
-import type { SwapWidgetProps } from '@dodoex/widgets';
+import { ThemeOptions } from '@dodoex/components';
 
 interface WidgetConfigBasis {
   crossChainSupport: boolean;
@@ -67,6 +67,21 @@ export interface ConfigTokenList {
   basis?: WidgetConfigBasis;
   style?: WidgetConfigColor;
 }
+interface TokenInfo {
+  readonly chainId: number;
+  readonly address: string;
+  readonly name: string;
+  readonly decimals: number;
+  readonly symbol: string;
+  readonly logoURI?: string;
+  readonly tags?: string[];
+  readonly extensions?: any;
+  readonly side?: 'from' | 'to';
+}
+type TokenList = TokenInfo[];
+enum TokenListType {
+  All = 'all',
+}
 
 export class SwapWidgetApi extends RestApiRequest {
   constructor(configProps?: RestApiRequestConfig) {
@@ -80,7 +95,7 @@ export class SwapWidgetApi extends RestApiRequest {
 
   convertConfigToSwapWidgetProps(configTokenList: ConfigTokenList) {
     /** set token list */
-    const tokenList: SwapWidgetProps['tokenList'] = [];
+    const tokenList: TokenList | TokenListType = [];
     let isAllChainFrom = true;
     let isAllChainTo = true;
     configTokenList.chains.forEach((item) => {
@@ -142,7 +157,7 @@ export class SwapWidgetApi extends RestApiRequest {
     );
 
     /** set theme */
-    let theme: SwapWidgetProps['theme'] | undefined;
+    let theme: ThemeOptions | undefined;
     if (configTokenList?.style && Object.keys(configTokenList.style).length) {
       const fontSizeModify = configTokenList?.basis?.fontSizeModify;
       theme = {
@@ -245,7 +260,7 @@ export class SwapWidgetApi extends RestApiRequest {
       crossChain,
       jsonRpcUrlMap,
       noPowerBy,
-    } as SwapWidgetProps;
+    };
   }
 
   async getConfigSwapWidgetProps(projectId: string, apikey: string) {
