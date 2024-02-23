@@ -1,6 +1,7 @@
 import { PoolApi, ExcludeNone } from '@dodoex/api';
 import { ChainId } from '../../constants/chains';
 import { TokenInfo } from '../../hooks/Token';
+import { PoolOperateProps } from './PoolOperate';
 
 export const poolApi = new PoolApi();
 
@@ -62,4 +63,17 @@ export function canOperatePool(
       actuallyOwner.toLocaleLowerCase() === account.toLocaleLowerCase()
     )
   );
+}
+
+export function convertFetchLiquidityToOperateData(
+  lqData: ExcludeNone<FetchLiquidityListLqList>[0],
+): PoolOperateProps['pool'] {
+  const pair = lqData?.pair;
+  if (!pair) return undefined;
+  return {
+    address: pair.id,
+    chainId: pair.chainId,
+    baseToken: convertLiquidityTokenToTokenInfo(pair.baseToken, pair.chainId),
+    quoteToken: convertLiquidityTokenToTokenInfo(pair.quoteToken, pair.chainId),
+  };
 }

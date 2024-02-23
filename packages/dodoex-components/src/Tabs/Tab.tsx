@@ -59,7 +59,7 @@ export const Tab = React.forwardRef(function TabsList(
     ...props
   }: TabProps & {
     sx?: BoxProps['sx'];
-    variant: 'default' | 'secondary';
+    variant?: 'default' | 'secondary';
   },
   ref,
 ) {

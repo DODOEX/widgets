@@ -1,3 +1,5 @@
+import { ChainId, scanUrlDomainMap } from '../constants/chains';
+
 export const isETHChain = (
   chainId?: number,
 ): {

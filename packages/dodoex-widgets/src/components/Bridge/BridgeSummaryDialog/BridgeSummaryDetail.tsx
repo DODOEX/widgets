@@ -37,7 +37,7 @@ export default function BridgeSummaryDetail({
   // const [isEditFromAddress, setIsEditFromAddress] = useState(false);
   // const [fromAddress, setFromAddress] = useState(route.fromAddress);
   const fromAddressScanUrl = useMemo(() => {
-    return getEtherscanPage(`address/${route.fromAddress}`, route.fromChainId);
+    return getEtherscanPage(route.fromChainId, route.fromAddress, 'address');
   }, [route.fromAddress, route.fromChainId]);
   return (
     <Box>

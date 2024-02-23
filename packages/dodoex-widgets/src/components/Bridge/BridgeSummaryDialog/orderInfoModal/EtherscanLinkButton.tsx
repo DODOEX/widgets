@@ -15,7 +15,7 @@ export function EtherscanLinkButton({
   return (
     <Box
       component="a"
-      href={getEtherscanPage(`tx/${address}`, chainId)}
+      href={getEtherscanPage(chainId, address, 'tx')}
       target="_blank"
       rel="noopener noreferrer"
       sx={{

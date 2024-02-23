@@ -3,6 +3,7 @@ import { PoolApi } from '@dodoex/api';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
 import {
+  convertFetchLiquidityToOperateData,
   convertLiquidityTokenToTokenInfo,
   FetchLiquidityListLqList,
   hasQuoteApy,
@@ -103,7 +104,58 @@ export default function AddLiquidityList({
       });
     });
   }
-  const [addPool, setAddPool] = React.useState<any>();
+  const [addPool, setAddPool] = React.useState<any>(
+    convertFetchLiquidityToOperateData({
+      id: '0xc9f93163c99695c6526b799ebca2207fdf7d61ad',
+      isPrivatePool: null,
+      isMyLiquidity: null,
+      pair: {
+        id: '0xc9f93163c99695c6526b799ebca2207fdf7d61ad',
+        chainId: 1,
+        type: 'CLASSICAL',
+        baseReserve: '6223352.84278',
+        quoteReserve: '1698689.198812',
+        lastTradePrice: '0.9996493338113731760351689297828013',
+        lpFeeRate: '0',
+        i: '0',
+        creator: '0x95c4f5b83aa70810d4f142d58e5f7242bd891cb0',
+        baseLpToken: {
+          id: '0x50b11247bf14ee5116c855cde9963fa376fcec86',
+          decimals: '6',
+        },
+        quoteLpToken: {
+          id: '0x05a54b466f01510e92c02d3a180bae83a64baab8',
+          decimals: '6',
+        },
+        baseToken: {
+          id: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+          symbol: 'USDT',
+          name: 'Tether USD',
+          decimals: '6',
+          usdPrice: '0.9998246361586016449575791900876106',
+          logoImg:
+            'https://storage.googleapis.com/dodo-media-staging/1/0xdac17f958d2ee523a2206206994597c13d831ec7',
+        },
+        quoteToken: {
+          id: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+          symbol: 'USDC',
+          name: 'USD//C',
+          decimals: '6',
+          usdPrice: '1.00017536384139835504242080991239',
+          logoImg:
+            'https://storage.googleapis.com/dodo-media-staging/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+        },
+        tvl: '7916647.273600018612',
+        apy: {
+          miningBaseApy: '0.128321',
+          miningQuoteApy: '0.105205',
+          transactionBaseApy: '0',
+          transactionQuoteApy: '0',
+        },
+        miningAddress: ['0xaed7384f03844af886b830862ff0a7afce0a632c'],
+      },
+    }),
+  );
 
   const goDetailPage = () => {};
 
@@ -422,7 +474,7 @@ export default function AddLiquidityList({
           </>
         </DataCardGroup>
       </InfiniteScroll>
-      <PoolOperate open={!!addPool} onClose={() => setAddPool(undefined)} />
+      <PoolOperate pool={addPool} onClose={() => setAddPool(undefined)} />
     </>
   );
 }

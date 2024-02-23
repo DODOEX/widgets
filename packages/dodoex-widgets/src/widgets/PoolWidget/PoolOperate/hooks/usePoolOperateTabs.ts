@@ -13,10 +13,10 @@ export function usePoolOperateTabs() {
   const tabs = React.useMemo(
     () => [
       { key: OperateTab.Liquidity, value: t`Liquidity` },
-      {
-        key: OperateTab.Mining,
-        value: t`Mining`,
-      },
+      // {
+      //   key: OperateTab.Mining,
+      //   value: t`Mining`,
+      // },
     ],
     [i18n._],
   );

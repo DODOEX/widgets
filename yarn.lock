@@ -23291,6 +23291,13 @@ zustand@^4.3.5:
   dependencies:
     use-sync-external-store "1.2.0"
 
+zustand@^4.5.1:
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-4.5.1.tgz#2088956ee454759fb8b866ca335a2373e76736c5"
+  integrity sha512-XlauQmH64xXSC1qGYNv00ODaQ3B+tNPoy22jv2diYiP4eoDKr9LA+Bh5Bc3gplTrFdb6JVI+N4kc1DZ/tbtfPg==
+  dependencies:
+    use-sync-external-store "1.2.0"
+
 zwitch@^1.0.0:
   version "1.0.5"
   resolved "https://registry.npmjs.org/zwitch/-/zwitch-1.0.5.tgz"

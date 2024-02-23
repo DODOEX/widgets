@@ -59,9 +59,9 @@ export function truncatePoolAddress(address: string): string {
 }
 
 export function getEtherscanPage(
-  path: string | undefined,
   chainId: ChainId,
-): string {
-  const domain = scanUrlDomainMap[chainId || 1];
-  return `https://${domain}${path ? `/${path}` : ''}`;
+  id?: string | null,
+  prefix = 'address',
+) {
+  return `https://${scanUrlDomainMap[chainId]}${id ? `/${prefix}/${id}` : ''}`;
 }

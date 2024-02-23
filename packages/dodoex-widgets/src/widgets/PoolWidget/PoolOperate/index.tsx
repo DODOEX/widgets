@@ -1,19 +1,25 @@
-import { Box, Tab, Tabs, TabsList } from '@dodoex/components';
+import { Box, Tab, TabPanel, Tabs, TabsList } from '@dodoex/components';
 import Dialog from '../../../components/Dialog';
 import { TokenCard } from '../../../components/Swap/components/TokenCard';
 import { OperateTab, usePoolOperateTabs } from './hooks/usePoolOperateTabs';
 import { Error } from '@dodoex/icons';
+import { TokenInfo } from '../../../hooks/Token';
+import LiquidityInfo from './LiquidityInfo';
 
-export default function PoolOperate({
-  open,
-  onClose,
-}: {
-  open: boolean;
+export interface PoolOperateProps {
   onClose: () => void;
-}) {
+  pool?: {
+    address?: string;
+    chainId: number;
+    baseToken?: TokenInfo;
+    quoteToken?: TokenInfo;
+  };
+}
+
+export default function PoolOperate({ onClose, pool }: PoolOperateProps) {
   const { operateTab, tabs, handleChangeTab } = usePoolOperateTabs();
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={!!pool} onClose={onClose}>
       <Box
         sx={{
           px: 20,
@@ -49,6 +55,9 @@ export default function PoolOperate({
               }}
             />
           </TabsList>
+          <TabPanel value={OperateTab.Liquidity}>
+            <LiquidityInfo pool={pool} />
+          </TabPanel>
         </Tabs>
         <TokenCard amt="" />
       </Box>

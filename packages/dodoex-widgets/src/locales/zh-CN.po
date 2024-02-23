@@ -21,11 +21,11 @@ msgstr "交易时长:"
 msgid "Cross Chain"
 msgstr "跨链桥"
 
-#: src/components/Swap/index.tsx:485
+#: src/components/Swap/index.tsx:481
 msgid "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 msgstr "当前滑点保护系数设置超过{maxSlippageWarning}%，可能会造成损失。"
 
-#: src/components/Swap/components/ConnectWallet/ConnectWalletDialog.tsx:77
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:77
 msgid "Opening {0}..."
 msgstr "连接 {0}..."
 
@@ -47,7 +47,7 @@ msgid "Dismiss"
 msgstr "忽略"
 
 #: src/components/Swap/components/ReviewDialog.tsx:291
-#: src/components/Swap/index.tsx:410
+#: src/components/Swap/index.tsx:406
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
 
@@ -59,11 +59,11 @@ msgstr ""
 msgid "{0} confirmed"
 msgstr "{0} 已确认"
 
-#: src/components/Swap/index.tsx:517
+#: src/components/Swap/index.tsx:513
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
-#: src/components/Swap/index.tsx:418
+#: src/components/Swap/index.tsx:414
 msgid "Current price impact"
 msgstr "当前价格冲击"
 
@@ -71,9 +71,17 @@ msgstr "当前价格冲击"
 msgid "Minute"
 msgstr "分钟"
 
+#: src/components/CopyTooltipToast.tsx:22
+msgid "Copied"
+msgstr ""
+
 #: src/utils/time.ts:23
 msgid "Hour"
 msgstr "小时"
+
+#: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
+msgid "Liquidity"
+msgstr ""
 
 #: src/components/TokenPicker/index.tsx:150
 msgid "Enter the token symbol or address"
@@ -88,7 +96,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 msgid "Confirm"
 msgstr "确认"
 
-#: src/components/Swap/index.tsx:1003
+#: src/components/Swap/index.tsx:994
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -153,12 +161,12 @@ msgstr "未授权"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:398
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:453
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:77
 msgid "TVL"
 msgstr ""
 
-#: src/components/Swap/index.tsx:678
+#: src/components/Swap/index.tsx:669
 msgid "Transaction Pending"
 msgstr "交易进行中"
 
@@ -181,7 +189,7 @@ msgstr "天"
 msgid "Days"
 msgstr "天"
 
-#: src/components/Swap/components/ConnectWallet/index.tsx:53
+#: src/components/ConnectWallet/NeedConnectButton.tsx:56
 msgid "Connecting..."
 msgstr "连接中..."
 
@@ -190,11 +198,11 @@ msgid "Additional Fee"
 msgstr "额外手续费"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:538
+#: src/components/Swap/index.tsx:534
 msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
-#: src/components/Swap/index.tsx:766
+#: src/components/Swap/index.tsx:757
 msgid "Review Swap"
 msgstr "预览交易"
 
@@ -207,17 +215,17 @@ msgstr "选择跨链桥"
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
-#: src/components/Swap/index.tsx:685
+#: src/components/Swap/index.tsx:676
 msgid "Select Tokens"
 msgstr "选择代币"
 
-#: src/components/Swap/index.tsx:858
+#: src/components/Swap/index.tsx:849
 msgid "The setting has been switched to swap mode"
 msgstr "设置已切换至闪兑模式"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:593
-#: src/components/Swap/index.tsx:727
+#: src/components/Swap/index.tsx:589
+#: src/components/Swap/index.tsx:718
 msgid "Quote not available"
 msgstr "没有报价"
 
@@ -225,7 +233,7 @@ msgstr "没有报价"
 msgid "Add Liquidity"
 msgstr ""
 
-#: src/components/Swap/index.tsx:712
+#: src/components/Swap/index.tsx:703
 msgid "Fetching Price..."
 msgstr "获取价格中..."
 
@@ -276,11 +284,11 @@ msgstr "交易预览"
 msgid "Tx"
 msgstr "交易哈希："
 
-#: src/components/Swap/index.tsx:756
+#: src/components/Swap/index.tsx:747
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:329
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:384
 msgid "Mining"
 msgstr ""
 
@@ -304,7 +312,11 @@ msgstr "钱包不兼容"
 msgid "Settings"
 msgstr "设置"
 
-#: src/components/Swap/components/ConnectWallet/ConnectWalletDialog.tsx:154
+#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:108
+msgid "Details"
+msgstr ""
+
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:155
 msgid "Connect to your {0} Wallet"
 msgstr "连接你的{0}钱包"
 
@@ -325,6 +337,7 @@ msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
 #: src/widgets/PoolWidget/list/hooks/usePoolListTabs.ts:20
+#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:138
 msgid "My Liquidity"
 msgstr ""
 
@@ -337,7 +350,7 @@ msgstr "对于"
 msgid "On"
 msgstr "在"
 
-#: src/components/Swap/index.tsx:695
+#: src/components/Swap/index.tsx:686
 #: src/hooks/Token/useGetTokenStatus.ts:138
 msgid "Approve"
 msgstr "代币授权"
@@ -391,15 +404,15 @@ msgstr "RPC节点异常"
 msgid "Estimated transaction time"
 msgstr "预计交易时长"
 
-#: src/components/Swap/components/ConnectWallet/ConnectWalletDialog.tsx:39
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:39
 msgid "Connect to your wallet"
 msgstr "连接钱包"
 
-#: src/components/Swap/index.tsx:701
+#: src/components/Swap/index.tsx:692
 msgid "Enter an amount"
 msgstr "输入代币数量"
 
-#: src/components/Swap/index.tsx:695
+#: src/components/Swap/index.tsx:686
 msgid "Approving"
 msgstr "授权中"
 
@@ -428,7 +441,7 @@ msgstr "滑点"
 msgid "Send to:"
 msgstr "发送至："
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:440
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:469
 msgid "Add"
 msgstr ""
 
@@ -436,7 +449,7 @@ msgstr ""
 msgid "Select a liquidity pool"
 msgstr ""
 
-#: src/widgets/PoolWidget/index.tsx:56
+#: src/widgets/PoolWidget/index.tsx:53
 msgid "Create Pool"
 msgstr ""
 
@@ -453,12 +466,11 @@ msgstr ""
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "在冷静期无法进行清算"
 
-#: src/components/Swap/index.tsx:856
+#: src/components/Swap/index.tsx:847
 msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
-#: src/components/NeedConnectButton.tsx:23
-#: src/components/Swap/components/ConnectWallet/index.tsx:55
+#: src/components/ConnectWallet/NeedConnectButton.tsx:58
 msgid "Connect to a wallet"
 msgstr "连接钱包"
 
@@ -470,13 +482,13 @@ msgstr "如果你的交易被确认的时间超过这个时间，你的交易将
 msgid "Detail"
 msgstr "详情"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:360
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:415
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:57
 #: src/widgets/PoolWidget/list/components/TokenListPoolItem.tsx:102
 msgid "APY"
 msgstr ""
 
-#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:45
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:48
 msgid "SELECT TOKEN"
 msgstr "选择代币"
 
@@ -488,11 +500,11 @@ msgstr "跨链桥概览"
 msgid "SafeERC20: low-level call failed. Please contact the DODO team."
 msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
 
-#: src/components/Swap/index.tsx:554
+#: src/components/Swap/index.tsx:550
 msgid "Unsupported network - switch to trade"
 msgstr "未支持网络 - 请切换后进行交易"
 
-#: src/components/Swap/index.tsx:851
+#: src/components/Swap/index.tsx:842
 #: src/hooks/Swap/useExecuteSwap.ts:56
 msgid "Swap"
 msgstr "交易"
@@ -521,6 +533,6 @@ msgstr "关闭"
 msgid "Transaction Deadline"
 msgstr "交易截止时间"
 
-#: src/components/Swap/index.tsx:738
+#: src/components/Swap/index.tsx:729
 msgid "Insufficient balance"
 msgstr "余额不足"

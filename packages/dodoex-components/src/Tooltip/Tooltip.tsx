@@ -11,7 +11,6 @@ import {
   JSXElementConstructor,
   MouseEventHandler,
   ReactElement,
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -35,13 +34,18 @@ export interface TooltipProps {
   transition?: PopperUnstyledProps['transition'];
   // @ts-ignore: Unreachable code error
   componentsProps?: PopperUnstyledProps['componentsProps'];
+  PopperProps?: Partial<PopperUnstyledProps>;
   onlyHover?: boolean;
+  onlyClick?: boolean;
   open?: boolean;
+  onOpen?: () => void;
+  onClose?: () => void;
   enterDelay?: number;
   leaveDelay?: number;
+  arrow?: boolean;
 }
 
-const tooltipClasses = {
+export const tooltipClasses = {
   arrow: 'DODOTooltip-arrow',
 };
 
@@ -82,10 +86,16 @@ export default function Tooltip({
   popperOptions,
   children,
   onlyHover,
+  onlyClick,
   /** This prop won't impact the enter click delay  */
   enterDelay = 100,
   /** This prop won't impact the enter click delay  */
   leaveDelay = 0,
+  arrow = true,
+  PopperProps,
+  open: openProps,
+  onOpen,
+  onClose,
   ...attrs
 }: TooltipProps) {
   const theme = useTheme();
@@ -99,7 +109,25 @@ export default function Tooltip({
   const [arrowRef, setArrowRef] = useState<HTMLDivElement>();
 
   const [open, setOpen] = useState(false);
-  const clickEmit = isMobile && !onlyHover;
+  const clickEmit = onlyClick || (isMobile && !onlyHover);
+
+  const handleChangeOpen = (value: boolean) => {
+    if (value) {
+      if (openProps === undefined) {
+        setOpen(true);
+      }
+      if (onOpen) {
+        onOpen();
+      }
+    } else {
+      if (openProps === undefined) {
+        setOpen(false);
+      }
+      if (onClose) {
+        onClose();
+      }
+    }
+  };
 
   const handleOverTooltip: MouseEventHandler<HTMLDivElement> = () => {
     if (clickEmit) return;
@@ -115,7 +143,7 @@ export default function Tooltip({
     clearTimeout(enterTimer.current);
     leaveTimer.current = setTimeout(() => {
       if (!enterTrigger.current && !enterTooltip.current) {
-        setOpen(false);
+        handleChangeOpen(false);
       }
     }, leaveDelay);
   };
@@ -130,7 +158,7 @@ export default function Tooltip({
       clearTimeout(leaveTimer.current);
       clearTimeout(enterTimer.current);
       enterTimer.current = setTimeout(() => {
-        setOpen(true);
+        handleChangeOpen(true);
       }, enterDelay);
     };
     const onMouseLeave = () => {
@@ -139,7 +167,7 @@ export default function Tooltip({
       clearTimeout(enterTimer.current);
       leaveTimer.current = setTimeout(() => {
         if (!enterTrigger.current && !enterTooltip.current) {
-          setOpen(false);
+          handleChangeOpen(false);
         }
       }, leaveDelay);
     };
@@ -148,13 +176,13 @@ export default function Tooltip({
     childrenProps.onMouseLeave = onMouseLeave;
   } else {
     childrenProps.onClick = () => {
-      setOpen(true);
+      handleChangeOpen(true);
     };
   }
 
   useEffect(() => {
     return () => {
-      setOpen(false);
+      handleChangeOpen(false);
       clearTimeout(leaveTimer.current);
       clearTimeout(enterTimer.current);
     };
@@ -163,7 +191,7 @@ export default function Tooltip({
   return (
     <>
       <PopperUnstyled
-        open={open}
+        open={openProps ?? open}
         anchorEl={childrenRef}
         slots={{
           root: StyledTooltipRoot,
@@ -183,18 +211,23 @@ export default function Tooltip({
                   padding: 20,
                 },
               },
-              {
-                name: 'arrow',
-                options: {
-                  element: arrowRef,
-                  padding: 4,
-                },
-              },
+              ...(arrow
+                ? [
+                    {
+                      name: 'arrow',
+                      options: {
+                        element: arrowRef,
+                        padding: 4,
+                      },
+                    },
+                  ]
+                : []),
             ],
           },
           popperOptions,
         )}
         {...attrs}
+        {...PopperProps}
       >
         <Box
           sx={{
@@ -217,37 +250,39 @@ export default function Tooltip({
         >
           {title}
         </Box>
-        <Box
-          ref={setArrowRef}
-          className={tooltipClasses.arrow}
-          sx={{
-            overflow: 'hidden',
-            position: 'absolute',
-            width: 16,
-            height: arrowHeight + 1,
-            boxSizing: 'border-box',
-            color: 'background.paperContrast',
-            bottom: 0,
-            marginBottom: -arrowHeight,
-            '&::before': {
-              transformOrigin: '100% 0',
-              content: '""',
-              margin: 'auto',
-              display: 'block',
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'currentColor',
-              transform: 'rotate(45deg)',
-              border: 'solid 1px',
-              borderColor: 'border.main',
-            },
-          }}
-        />
+        {arrow && (
+          <Box
+            ref={setArrowRef}
+            className={tooltipClasses.arrow}
+            sx={{
+              overflow: 'hidden',
+              position: 'absolute',
+              width: 16,
+              height: arrowHeight + 1,
+              boxSizing: 'border-box',
+              color: 'background.paperContrast',
+              bottom: 0,
+              marginBottom: -arrowHeight,
+              '&::before': {
+                transformOrigin: '100% 0',
+                content: '""',
+                margin: 'auto',
+                display: 'block',
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'currentColor',
+                transform: 'rotate(45deg)',
+                border: 'solid 1px',
+                borderColor: 'border.main',
+              },
+            }}
+          />
+        )}
       </PopperUnstyled>
       <ClickAwayListener
         onClickAway={() => {
           if (clickEmit) {
-            setOpen(false);
+            handleChangeOpen(false);
           }
         }}
       >

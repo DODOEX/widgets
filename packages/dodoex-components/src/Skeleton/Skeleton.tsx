@@ -3,15 +3,13 @@ import * as React from 'react';
 import { alpha, useTheme } from '@mui/system';
 import { Box, BoxProps } from '../Box';
 
-const Skeleton = React.forwardRef(function Skeleton(
-  props: BoxProps & {
-    component?: BoxProps['component'];
-    variant?: 'circular' | 'rounded';
-    width?: number | string;
-    height?: number | string;
-  },
-  ref,
-) {
+export interface SkeletonProps extends BoxProps {
+  variant?: 'circular' | 'rounded';
+  width?: number | string;
+  height?: number | string;
+}
+
+const Skeleton = React.forwardRef(function Skeleton(props: SkeletonProps, ref) {
   const {
     sx,
     variant: variantProps,
