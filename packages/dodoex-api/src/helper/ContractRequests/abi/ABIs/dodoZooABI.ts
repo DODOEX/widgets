@@ -1,0 +1,105 @@
+export default [
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: false, internalType: 'address', name: 'newBorn', type: 'address' },
+      { indexed: false, internalType: 'address', name: 'baseToken', type: 'address' },
+      { indexed: false, internalType: 'address', name: 'quoteToken', type: 'address' },
+    ],
+    name: 'DODOBirth',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'previousOwner', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'newOwner', type: 'address' },
+    ],
+    name: 'OwnershipTransferPrepared',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'previousOwner', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'newOwner', type: 'address' },
+    ],
+    name: 'OwnershipTransferred',
+    type: 'event',
+  },
+  {
+    inputs: [],
+    name: '_NEW_OWNER_',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view' as const,
+    type: 'function' as const,
+  },
+  {
+    inputs: [],
+    name: '_OWNER_',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view' as const,
+    type: 'function' as const,
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'supervisor', type: 'address' },
+      { internalType: 'address', name: 'maintainer', type: 'address' },
+      { internalType: 'address', name: 'baseToken', type: 'address' },
+      { internalType: 'address', name: 'quoteToken', type: 'address' },
+      { internalType: 'address', name: 'oracle', type: 'address' },
+      { internalType: 'uint256', name: 'lpFeeRate', type: 'uint256' },
+      { internalType: 'uint256', name: 'mtFeeRate', type: 'uint256' },
+      { internalType: 'uint256', name: 'k', type: 'uint256' },
+      { internalType: 'uint256', name: 'gasPriceLimit', type: 'uint256' },
+    ],
+    name: 'breedDODO',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'nonpayable' as const,
+    type: 'function' as const,
+  },
+  {
+    inputs: [],
+    name: 'claimOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable' as const,
+    type: 'function' as const,
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'baseToken', type: 'address' },
+      { internalType: 'address', name: 'quoteToken', type: 'address' },
+    ],
+    name: 'getDODO',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view' as const,
+    type: 'function' as const,
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'baseToken', type: 'address' },
+      { internalType: 'address', name: 'quoteToken', type: 'address' },
+    ],
+    name: 'isDODORegistered',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'view' as const,
+    type: 'function' as const,
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'baseToken', type: 'address' },
+      { internalType: 'address', name: 'quoteToken', type: 'address' },
+    ],
+    name: 'removeDODO',
+    outputs: [],
+    stateMutability: 'nonpayable' as const,
+    type: 'function' as const,
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable' as const,
+    type: 'function' as const,
+  },
+];

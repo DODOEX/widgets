@@ -51,7 +51,7 @@
     ]
   },
   "peerDependencies": {
-    "@dodoex/widgets": "^2.6.4"
+    "lodash": ">=4"
   },
   "dependencies": {
     "cross-fetch": "^4.0.0",
@@ -74,6 +74,9 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/react-hooks": "^8.0.1",
+    "@ethersproject/providers": ">=5",
+    "@ethersproject/contracts": ">=5",
+    "@ethersproject/abi": ">=5",
     "@types/jest": "^29.0.3",
     "babel-plugin-macros": "^3.1.0",
     "babel-runtime": "^6.26.0",
