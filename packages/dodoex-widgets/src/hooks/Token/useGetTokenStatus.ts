@@ -157,10 +157,10 @@ export const useGetTokenStatus = ({
       const balance = getBalance(token);
       if (!balance) return defaultVal.toString();
       let val = balance;
-      const keepChanges = isETH ? 0.1 : 0.02;
-      const isBasicToken = basicTokenAddress === token?.address;
-      if (isBasicToken)
-        val = balance.gt(keepChanges) ? balance.minus(keepChanges) : defaultVal;
+      // const keepChanges = isETH ? 0.1 : 0.02;
+      // const isBasicToken = basicTokenAddress === token?.address;
+      // if (isBasicToken)
+      //   val = balance.gt(keepChanges) ? balance.minus(keepChanges) : defaultVal;
 
       return val.toString();
     },
