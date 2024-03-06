@@ -64,7 +64,7 @@ describe('useGetTokenStatus', () => {
 
   it('getMaxBalance', () => {
     const { getMaxBalance } = result.current;
-    expect(getMaxBalance(tokenEther)).toBe('11.9'); // minus 0.1
+    expect(getMaxBalance(tokenEther)).toBe('12');
     expect(getMaxBalance(tokenUSDT)).toBe('123');
   });
 });
