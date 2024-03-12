@@ -1,4 +1,5 @@
-import { ChainId } from './chains';
+import { ContractRequests, GraphQLRequests } from '@dodoex/api';
+import { ChainId, getRpcSingleUrlMap } from './chains';
 
 export enum APIServiceKey {
   routePrice = 'routePrice',
@@ -53,3 +54,8 @@ export function getAPIService(
       throw new Error(`Invalid key = ${key}`);
   }
 }
+
+export const contractRequests = new ContractRequests({
+  rpc: getRpcSingleUrlMap(),
+});
+export const graphQLRequests = new GraphQLRequests();

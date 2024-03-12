@@ -26,12 +26,12 @@ import useInitTokenList, {
 import WithExecutionDialog from '../WithExecutionDialog';
 import { useFetchBlockNumber, useFetchETHBalance } from '../../hooks/contract';
 import { ExecutionProps } from '../../hooks/Submission';
-import { ChainId } from '../../constants/chains';
+import { ChainId, getRpcSingleUrlMap } from '../../constants/chains';
 import { useInitPropsToRedux } from '../../hooks/Swap';
 import { DefaultTokenInfo } from '../../hooks/Token/type';
 import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
-import { APIServices } from '../../constants/api';
+import { APIServices, contractRequests } from '../../constants/api';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { SwapProps } from '../Swap';
 import { getFromTokenChainId } from '../../store/selectors/wallet';
@@ -175,6 +175,10 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
 
   if (!props.apikey && !props.apiServices) {
     console.error('apikey and apiServices must have a.');
+  }
+
+  if (props.jsonRpcUrlMap) {
+    contractRequests.setRpc(getRpcSingleUrlMap(props.jsonRpcUrlMap));
   }
 
   return (

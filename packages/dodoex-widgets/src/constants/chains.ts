@@ -76,6 +76,24 @@ export const rpcServerMap: {
   [ChainId.MANTA]: ['https://pacific-rpc.manta.network/http'],
   [ChainId.MANTLE]: ['https://rpc.mantle.xyz'],
 };
+export const getRpcSingleUrlMap = (newRpcServerMap?: {
+  [chainId: number]: string[];
+}) => {
+  const result = {} as {
+    [key in ChainId]?: string;
+  };
+  Object.entries(rpcServerMap).forEach(([key, urls]) => {
+    const chainId = Number(key) as ChainId;
+    const urlsResult = newRpcServerMap?.[chainId] || urls;
+    const [url] = urlsResult;
+    if (url) {
+      result[chainId] = url;
+    }
+  });
+  return result as {
+    [key in ChainId]: string;
+  };
+};
 
 export const etherTokenAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 

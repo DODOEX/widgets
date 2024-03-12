@@ -161,7 +161,7 @@ msgstr "Unapproved"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:453
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:454
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:77
 msgid "TVL"
 msgstr "TVL"
@@ -288,7 +288,7 @@ msgstr "Tx"
 msgid "Review Cross Chain"
 msgstr "Review Cross Chain"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:384
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:385
 msgid "Mining"
 msgstr "Mining"
 
@@ -441,7 +441,7 @@ msgstr "Slippage Tolerance"
 msgid "Send to:"
 msgstr "Send to:"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:469
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:470
 msgid "Add"
 msgstr "Add"
 
@@ -482,7 +482,7 @@ msgstr "If your transaction time exceeds the deadline, your transaction will be 
 msgid "Detail"
 msgstr "Detail"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:415
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:416
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:57
 #: src/widgets/PoolWidget/list/components/TokenListPoolItem.tsx:102
 msgid "APY"

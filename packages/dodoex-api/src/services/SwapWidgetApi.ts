@@ -1,6 +1,4 @@
-import RestApiRequest, {
-  RestApiRequestConfig,
-} from '../helper/RestApiRequests';
+import RestApiRequest from '../helper/RestApiRequests';
 import { strToColorStr } from '../utils/color';
 import { ThemeOptions } from '@dodoex/components';
 
@@ -83,14 +81,21 @@ enum TokenListType {
   All = 'all',
 }
 
-export class SwapWidgetApi extends RestApiRequest {
-  constructor(configProps?: RestApiRequestConfig) {
-    super(configProps);
+export interface SwapWidgetApiProps {
+  restApiRequest?: RestApiRequest;
+}
+export class SwapWidgetApi {
+  restApiRequest: RestApiRequest;
+  constructor(configProps?: SwapWidgetApiProps) {
+    this.restApiRequest = configProps?.restApiRequest || new RestApiRequest();
   }
 
   getWidgetTokenListConfig(projectId: string, apikey: string) {
     const path = `/config-center/user/tokenlist/v2`;
-    return this.getJson<ConfigTokenList>(path, { project: projectId, apikey });
+    return this.restApiRequest.getJson<ConfigTokenList>(path, {
+      project: projectId,
+      apikey,
+    });
   }
 
   convertConfigToSwapWidgetProps(configTokenList: ConfigTokenList) {

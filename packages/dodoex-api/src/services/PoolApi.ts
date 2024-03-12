@@ -1,11 +1,24 @@
 import { graphql } from '../gql';
-import GraphQLRequests, {
-  GraphQLRequestsConfig,
-} from '../helper/GraphQLRequests';
+import ContractRequests, {
+  ContractRequestsConfig,
+} from '../helper/ContractRequests';
 
-export class PoolApi extends GraphQLRequests {
-  constructor(config?: GraphQLRequestsConfig) {
-    super(config);
+export interface PoolApiProps {
+  contractRequests?: ContractRequests;
+  contractRequestsConfig?: ContractRequestsConfig;
+}
+export class PoolApi {
+  contractRequests?: ContractRequests;
+  constructor(config?: PoolApiProps) {
+    if (config?.contractRequests || config?.contractRequestsConfig) {
+      this.contractRequests =
+        config.contractRequests ||
+        new ContractRequests(
+          config.contractRequestsConfig as ContractRequestsConfig,
+        );
+    } else {
+      console.warn('PoolApi does not initialize the contractRequests');
+    }
   }
 
   static fetchLiquidityList = graphql(`

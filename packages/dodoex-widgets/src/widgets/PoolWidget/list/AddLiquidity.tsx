@@ -7,7 +7,6 @@ import {
   convertLiquidityTokenToTokenInfo,
   FetchLiquidityListLqList,
   hasQuoteApy,
-  poolApi,
 } from '../utils';
 import { ChainId } from '../../../constants/chains';
 import React from 'react';
@@ -30,6 +29,7 @@ import FilterAddressTags from './components/FilterAddressTags';
 import FilterTokenTags from './components/FilterTokenTags';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import PoolOperate from '../PoolOperate';
+import { graphQLRequests } from '../../../constants/api';
 
 export default function AddLiquidityList({
   scrollParentRef,
@@ -68,7 +68,7 @@ export default function AddLiquidityList({
     },
   };
 
-  const query = poolApi.getInfiniteQuery(PoolApi.fetchLiquidityList, {
+  const query = graphQLRequests.getInfiniteQuery(PoolApi.fetchLiquidityList, {
     where: {
       ...defaultQueryFilter,
       filterState: {
@@ -197,7 +197,7 @@ export default function AddLiquidityList({
             value={filterTokens}
             onChange={handleChangeFilterTokens}
             searchAddress={async (address, onClose) => {
-              const query = poolApi.getInfiniteQuery(
+              const query = graphQLRequests.getInfiniteQuery(
                 PoolApi.fetchLiquidityList,
                 {
                   where: {

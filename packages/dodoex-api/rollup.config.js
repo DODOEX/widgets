@@ -5,6 +5,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import url from 'rollup-plugin-url';
 import { terser } from 'rollup-plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import dynamicImportVariables from 'rollup-plugin-dynamic-import-variables';
 import pkg from './package.json';
 
 const extensions = ['.js', '.ts', '.jsx', '.tsx'];
@@ -26,6 +27,7 @@ const config = {
     commonjs({
       sourceMap: false,
     }),
+    dynamicImportVariables(),
     babel({
       extensions,
       babelHelpers: 'bundled',

@@ -161,7 +161,7 @@ msgstr "未授权"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:453
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:454
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:77
 msgid "TVL"
 msgstr ""
@@ -288,7 +288,7 @@ msgstr "交易哈希："
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:384
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:385
 msgid "Mining"
 msgstr ""
 
@@ -441,7 +441,7 @@ msgstr "滑点"
 msgid "Send to:"
 msgstr "发送至："
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:469
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:470
 msgid "Add"
 msgstr ""
 
@@ -482,7 +482,7 @@ msgstr "如果你的交易被确认的时间超过这个时间，你的交易将
 msgid "Detail"
 msgstr "详情"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:415
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:416
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:57
 #: src/widgets/PoolWidget/list/components/TokenListPoolItem.tsx:102
 msgid "APY"

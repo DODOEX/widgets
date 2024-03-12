@@ -38,6 +38,6 @@ export async function getABI(abiName: ABIName) {
       ];
 
     default:
-      return (await import(`./ABIs/${abiName}`)).default;
+      return (await import(`./ABIs/${abiName}.ts`)).default;
   }
 }
