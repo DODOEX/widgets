@@ -8,7 +8,11 @@ import { BatchThunk, runAll } from './batch';
 import contractConfig, { ChainId } from './contractConfig';
 import { ABIName } from './abi/abiName';
 import { getABI } from './abi';
+import type { Query } from './type';
 import { Interface } from '@ethersproject/abi';
+import { BatchProvider } from './batchProvider';
+
+export type { Query } from './type';
 
 type ContractInterface = Exclude<ContractInterfaceSource, Interface>;
 
@@ -19,22 +23,18 @@ export interface ContractRequestsConfig {
   getProvider?: (chainId: number) => JsonRpcProvider | StaticJsonRpcProvider;
 }
 
-export interface Query<T = any> {
-  abiName: ABIName;
-  contractAddress: string;
-  method: string;
-  params: readonly any[];
-  callback?: (res: T) => any;
-}
-
 export default class ContractRequests {
   private rpc?: ContractRequestsConfig['rpc'];
   private getConfigProvider?: ContractRequestsConfig['getProvider'];
   private staticJsonRpcProviderMap: Map<number, StaticJsonRpcProvider>;
+  private batchStaticJsonRpcProviderMap: Map<number, BatchProvider>;
+  private batchContractMap: Map<number, Map<string, Contract>>;
   constructor(config?: ContractRequestsConfig) {
     this.rpc = config?.rpc;
     this.getConfigProvider = config?.getProvider;
     this.staticJsonRpcProviderMap = new Map();
+    this.batchStaticJsonRpcProviderMap = new Map();
+    this.batchContractMap = new Map();
   }
 
   setRpc(rpc: ContractRequestsConfig['rpc']) {
@@ -43,6 +43,13 @@ export default class ContractRequests {
 
   setGetConfigProvider(getProvider: ContractRequestsConfig['getProvider']) {
     this.getConfigProvider = getProvider;
+    // update cache
+    this.batchContractMap = new Map();
+    for (const key in this.batchStaticJsonRpcProviderMap) {
+      const chainId = Number(key);
+      const provider = getProvider ? getProvider(chainId) : null;
+      this.batchStaticJsonRpcProviderMap.get(chainId)?.setProvider(provider);
+    }
   }
 
   getProvider(chainId: number) {
@@ -65,6 +72,26 @@ export default class ContractRequests {
     return result;
   }
 
+  getBatchProvider(chainId: number) {
+    const configProvider = this.getConfigProvider?.(chainId);
+    const rpcUrl = this.rpc?.[chainId];
+    if (!rpcUrl) {
+      if (configProvider) {
+        return configProvider;
+      }
+      throw new Error(`ChainId ${chainId} not found`);
+    }
+    if (this.staticJsonRpcProviderMap.has(chainId)) {
+      return this.staticJsonRpcProviderMap.get(
+        chainId,
+      ) as StaticJsonRpcProvider;
+    }
+    const result = new BatchProvider(rpcUrl, chainId);
+    result.setProvider(configProvider || null);
+    this.staticJsonRpcProviderMap.set(chainId, result);
+    return result;
+  }
+
   getContract(
     chainId: number,
     contractAddress: string,
@@ -74,25 +101,42 @@ export default class ContractRequests {
     return new Contract(contractAddress, contractInterface, provider);
   }
 
+  getBatchContract(
+    chainId: number,
+    contractAddress: string,
+    contractInterface: ContractInterface,
+  ) {
+    const chainIdCache = this.batchContractMap.get(chainId);
+    if (!chainIdCache) {
+      this.batchContractMap.set(chainId, new Map());
+    } else {
+      if (chainIdCache.has(contractAddress)) {
+        return chainIdCache.get(contractAddress) as Contract;
+      }
+    }
+    const provider = this.getBatchProvider(chainId);
+    const contract = new Contract(contractAddress, contractInterface, provider);
+    this.batchContractMap.get(chainId)?.set(contractAddress, contract);
+    return contract;
+  }
+
+  async getBatchContractByAbiName(
+    chainId: number,
+    contractAddress: string,
+    abiName: ABIName,
+  ) {
+    const contractInterface = await this.getContractInterface(abiName);
+    return this.getBatchContract(chainId, contractAddress, contractInterface);
+  }
+
   getContractInterface(abiName: ABIName) {
     return getABI(abiName);
   }
 
-  async singleContractCall<T>(chainId: ChainId, query: Query<T>) {
-    const contractInterface = await this.getContractInterface(query.abiName);
-    const contract = this.getContract(
-      chainId,
-      query.contractAddress,
-      contractInterface,
-    );
-    const result = await contract.callStatic[query.method](...query.params);
-    return result as T;
-  }
-
-  async multiContractCall<T = any>(
-    chainId: ChainId,
-    queryList: Array<Query<T>>,
-  ) {
+  /**
+   * Use multiCall contract request
+   */
+  async callMultiQuery<T = any>(chainId: ChainId, queryList: Array<Query<T>>) {
     const currentContractConfig = contractConfig[chainId as ChainId];
     const { MULTI_CALL } = currentContractConfig;
     const multiContractInterface = await this.getContractInterface(
@@ -137,8 +181,9 @@ export default class ContractRequests {
           if (callback) {
             callback(detail);
           }
-          resultObject[i] = detail;
-          return detail;
+          const callbackResult = callback ? callback(detail) : undefined;
+          resultObject[i] = callbackResult || detail;
+          return resultObject[i];
         },
       });
     }
@@ -146,11 +191,32 @@ export default class ContractRequests {
     return r as T;
   }
 
-  async contractCall<T>(chainId: ChainId, queryList: Array<Query<T>>) {
-    if (queryList.length === 1) {
-      const result = await this.singleContractCall(chainId, queryList[0]);
-      return [result];
-    }
-    return this.multiContractCall(chainId, queryList);
+  async callQuery<T = any>(chainId: ChainId, query: Query<T>) {
+    const contractInterface = await this.getContractInterface(query.abiName);
+    const contract = this.getContract(
+      chainId,
+      query.contractAddress,
+      contractInterface,
+    );
+    const result = await contract.callStatic[query.method](...query.params);
+    const callbackResult = query.callback ? query.callback(result) : undefined;
+    if (callbackResult) return callbackResult as T;
+    return result as T;
+  }
+
+  /**
+   * Multiple requests within a short period of time will be packaged for batch processing.
+   */
+  async batchCallQuery<T = any>(chainId: ChainId, query: Query<T>) {
+    const contractInterface = await this.getContractInterface(query.abiName);
+    const contract = this.getBatchContract(
+      chainId,
+      query.contractAddress,
+      contractInterface,
+    );
+    const result = await contract.callStatic[query.method](...query.params);
+    const callbackResult = query.callback ? query.callback(result) : undefined;
+    if (callbackResult) return callbackResult as T;
+    return result as T;
   }
 }

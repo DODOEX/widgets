@@ -1,3 +1,4 @@
+import { PoolApi, PoolType } from '@dodoex/api';
 import {
   Box,
   useTheme,
@@ -6,37 +7,46 @@ import {
   HoverOpacity,
   BaseButton,
   RotatingIcon,
+  Skeleton,
 } from '@dodoex/components';
 import { ArrowRight, DetailBorder, Link } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
+import { PoolOperateProps } from '.';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
 import TokenLogo from '../../../components/TokenLogo';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { contractRequests } from '../../../constants/api';
 import { ChainId } from '../../../constants/chains';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { TokenInfo } from '../../../hooks/Token';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
-import { formatReadableNumber } from '../../../utils';
+import { formatReadableNumber, getEtherscanPage } from '../../../utils';
+import { poolApi } from '../utils';
 
 export interface LiquidityInfoProps {
   loading?: boolean;
   hidePoolInfo?: boolean;
-  pool?: {
-    chainId?: number;
-    address?: string;
-    baseToken?: TokenInfo;
-    quoteToken?: TokenInfo;
-  };
-  myPoolInfoLoading?: boolean;
+  pool: Exclude<PoolOperateProps['pool'], undefined>;
 }
+
 export default function LiquidityInfo({
   loading,
   hidePoolInfo,
   pool,
-  myPoolInfoLoading,
 }: LiquidityInfoProps) {
   const theme = useTheme();
-  if (!pool?.baseToken || !pool.quoteToken) return null;
+  const { chainId, account } = useWalletInfo();
+  const totalBaseLpQuery = useQuery(
+    poolApi.getTotalBaseLpQuery(
+      chainId,
+      pool.address,
+      pool.type,
+      pool.baseToken.decimals,
+    ),
+  );
   return (
     <Box
       sx={{

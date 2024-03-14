@@ -1,12 +1,11 @@
 import { alpha, Box, Button, useTheme } from '@dodoex/components';
-import { PoolApi } from '@dodoex/api';
+import { PoolApi, PoolType } from '@dodoex/api';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
 import {
   convertFetchLiquidityToOperateData,
   convertLiquidityTokenToTokenInfo,
   FetchLiquidityListLqList,
-  hasQuoteApy,
 } from '../utils';
 import { ChainId } from '../../../constants/chains';
 import React from 'react';
@@ -68,16 +67,19 @@ export default function AddLiquidityList({
     },
   };
 
-  const query = graphQLRequests.getInfiniteQuery(PoolApi.fetchLiquidityList, {
-    where: {
-      ...defaultQueryFilter,
-      filterState: {
-        filterASymbol,
-        filterBSymbol,
-        ...defaultQueryFilter.filterState,
+  const query = graphQLRequests.getInfiniteQuery(
+    PoolApi.graphql.fetchLiquidityList,
+    {
+      where: {
+        ...defaultQueryFilter,
+        filterState: {
+          filterASymbol,
+          filterBSymbol,
+          ...defaultQueryFilter.filterState,
+        },
       },
     },
-  });
+  );
   const fetchResult = useInfiniteQuery({
     ...query,
     initialPageParam: 1,
@@ -198,7 +200,7 @@ export default function AddLiquidityList({
             onChange={handleChangeFilterTokens}
             searchAddress={async (address, onClose) => {
               const query = graphQLRequests.getInfiniteQuery(
-                PoolApi.fetchLiquidityList,
+                PoolApi.graphql.fetchLiquidityList,
                 {
                   where: {
                     ...defaultQueryFilter,
@@ -307,7 +309,8 @@ export default function AddLiquidityList({
                   )
                 : undefined;
               const quoteApy =
-                hasQuoteApy(item.type) && item.apy
+                PoolApi.utils.getHasQuoteSupply(item.type as PoolType) &&
+                item.apy
                   ? formatApy(
                       new BigNumber(item.apy.transactionQuoteApy).plus(
                         item.apy.miningQuoteApy ?? 0,
@@ -474,7 +477,11 @@ export default function AddLiquidityList({
           </>
         </DataCardGroup>
       </InfiniteScroll>
-      <PoolOperate pool={addPool} onClose={() => setAddPool(undefined)} />
+      <PoolOperate
+        pool={addPool}
+        account={account}
+        onClose={() => setAddPool(undefined)}
+      />
     </>
   );
 }

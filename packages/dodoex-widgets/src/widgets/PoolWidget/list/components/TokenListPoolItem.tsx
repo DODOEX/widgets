@@ -1,4 +1,4 @@
-import { PoolApi } from '@dodoex/api';
+import { PoolType, PoolApi } from '@dodoex/api';
 import { Box } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
@@ -7,7 +7,6 @@ import { formatApy } from '../../../../utils';
 import {
   convertLiquidityTokenToTokenInfo,
   FetchLiquidityListLqList,
-  hasQuoteApy,
 } from '../../utils';
 
 export default function TokenListPoolItem({
@@ -38,7 +37,7 @@ export default function TokenListPoolItem({
             )
           : undefined;
         const quoteApy =
-          hasQuoteApy(item.type) && item.apy
+          PoolApi.utils.getHasQuoteSupply(item.type as PoolType) && item.apy
             ? formatApy(
                 new BigNumber(item.apy.transactionQuoteApy).plus(
                   item.apy.miningQuoteApy ?? 0,

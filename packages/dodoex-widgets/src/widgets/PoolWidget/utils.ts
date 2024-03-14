@@ -1,18 +1,18 @@
-import { PoolApi, ExcludeNone } from '@dodoex/api';
+import { PoolApi, ExcludeNone, PoolType } from '@dodoex/api';
+import { contractRequests } from '../../constants/api';
 import { ChainId } from '../../constants/chains';
 import { TokenInfo } from '../../hooks/Token';
 import { PoolOperateProps } from './PoolOperate';
 
-export const poolApi = new PoolApi();
+export const poolApi = new PoolApi({
+  contractRequests,
+});
 
 export type FetchLiquidityListLqList = ExcludeNone<
   ReturnType<
-    Exclude<typeof PoolApi.fetchLiquidityList['__apiType'], undefined>
+    Exclude<typeof PoolApi.graphql.fetchLiquidityList['__apiType'], undefined>
   >['liquidity_list']
 >['lqList'];
-
-/** Actually more than that, but the api has filtering */
-export type LqPoolType = 'DPP' | 'DVM' | 'DSP' | 'CLASSICAL';
 
 export function convertLiquidityTokenToTokenInfo(
   token:
@@ -38,10 +38,6 @@ export function convertLiquidityTokenToTokenInfo(
   } as TokenInfo;
 }
 
-export function hasQuoteApy(type: string): boolean {
-  return ['CLASSICAL', 'DPP'].includes(type);
-}
-
 export function canOperatePool(
   account: string | undefined,
   {
@@ -51,7 +47,7 @@ export function canOperatePool(
   }: {
     owner?: string | null;
     creator?: string | null;
-    type?: LqPoolType;
+    type?: PoolType;
   },
 ): boolean {
   const actuallyOwner = owner ?? creator;
@@ -73,7 +69,14 @@ export function convertFetchLiquidityToOperateData(
   return {
     address: pair.id,
     chainId: pair.chainId,
-    baseToken: convertLiquidityTokenToTokenInfo(pair.baseToken, pair.chainId),
-    quoteToken: convertLiquidityTokenToTokenInfo(pair.quoteToken, pair.chainId),
+    baseToken: convertLiquidityTokenToTokenInfo(
+      pair.baseToken,
+      pair.chainId,
+    ) as TokenInfo,
+    quoteToken: convertLiquidityTokenToTokenInfo(
+      pair.quoteToken,
+      pair.chainId,
+    ) as TokenInfo,
+    type: pair.type as PoolType,
   };
 }

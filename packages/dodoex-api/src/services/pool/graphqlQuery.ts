@@ -1,27 +1,7 @@
-import { graphql } from '../gql';
-import ContractRequests, {
-  ContractRequestsConfig,
-} from '../helper/ContractRequests';
+import { graphql } from '../../gql';
 
-export interface PoolApiProps {
-  contractRequests?: ContractRequests;
-  contractRequestsConfig?: ContractRequestsConfig;
-}
-export class PoolApi {
-  contractRequests?: ContractRequests;
-  constructor(config?: PoolApiProps) {
-    if (config?.contractRequests || config?.contractRequestsConfig) {
-      this.contractRequests =
-        config.contractRequests ||
-        new ContractRequests(
-          config.contractRequestsConfig as ContractRequestsConfig,
-        );
-    } else {
-      console.warn('PoolApi does not initialize the contractRequests');
-    }
-  }
-
-  static fetchLiquidityList = graphql(`
+export const poolGraphqlQuery = {
+  fetchLiquidityList: graphql(`
     query FetchLiquidityList($where: Liquiditylist_filter) {
       liquidity_list(where: $where) {
         currentPage
@@ -77,5 +57,5 @@ export class PoolApi {
         }
       }
     }
-  `);
-}
+  `),
+};

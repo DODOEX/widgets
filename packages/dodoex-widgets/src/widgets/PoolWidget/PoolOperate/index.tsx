@@ -5,15 +5,20 @@ import { OperateTab, usePoolOperateTabs } from './hooks/usePoolOperateTabs';
 import { Error } from '@dodoex/icons';
 import { TokenInfo } from '../../../hooks/Token';
 import LiquidityInfo from './LiquidityInfo';
+import { PoolType } from '@dodoex/api';
 
 export interface PoolOperateProps {
   onClose: () => void;
-  pool?: {
-    address?: string;
-    chainId: number;
-    baseToken?: TokenInfo;
-    quoteToken?: TokenInfo;
-  };
+  account: string | undefined;
+  pool:
+    | {
+        address: string;
+        chainId: number;
+        baseToken: TokenInfo;
+        quoteToken: TokenInfo;
+        type: PoolType;
+      }
+    | undefined;
 }
 
 export default function PoolOperate({ onClose, pool }: PoolOperateProps) {
@@ -56,7 +61,7 @@ export default function PoolOperate({ onClose, pool }: PoolOperateProps) {
             />
           </TabsList>
           <TabPanel value={OperateTab.Liquidity}>
-            <LiquidityInfo pool={pool} />
+            {!!pool && <LiquidityInfo pool={pool} />}
           </TabPanel>
         </Tabs>
         <TokenCard amt="" />
