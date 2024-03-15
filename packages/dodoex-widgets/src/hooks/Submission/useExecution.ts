@@ -2,16 +2,23 @@ import { t } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import type { TransactionResponse } from '@ethersproject/abstract-provider';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { basicTokenMap, ChainId } from '../../constants/chains';
+import { useCallback, useMemo, useState } from 'react';
 import { useFetchBlockNumber } from '../contract';
 import { approve, getEstimateGas, sendTransaction } from '../contract/wallet';
 import getExecutionErrorMsg from './getExecutionErrorMsg';
 import { OpCode, Step as StepSpec } from './spec';
-import { ExecutionResult, State, Request, WatchResult, Showing } from './types';
+import {
+  ExecutionResult,
+  State,
+  Request,
+  WatchResult,
+  Showing,
+  ExecutionCtx,
+  TextUpdater,
+} from './types';
 import { BIG_ALLOWANCE } from '../../constants/token';
 import { useCurrentChainId } from '../ConnectWallet';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setGlobalProps } from '../../store/actions/globals';
 import { ContractStatus } from '../../store/reducers/globals';
 import { AppThunkDispatch } from '../../store/actions';
@@ -56,16 +63,17 @@ export default function useExecution({
     async (
       brief: string,
       spec: StepSpec,
-      subtitle?: string | React.ReactNode | null,
-      early = false,
-      submittedBack?: () => void,
-      mixpanelProps?: Record<string, any>,
-      submittedConfirmBack?: () => void,
-      successBack?: (
-        tx: string,
-        callback?: ExecutionProps['onTxSuccess'],
-      ) => void,
+      options?: Parameters<ExecutionCtx['execute']>[2],
     ) => {
+      const {
+        subtitle,
+        early,
+        submittedBack,
+        mixpanelProps,
+        submittedConfirmBack,
+        successBack,
+        metadata,
+      } = options ?? {};
       setTransactionTx('');
       setErrorMessage('');
       if (!account || !provider)
@@ -175,6 +183,7 @@ export default function useExecution({
         spec,
         tx,
         subtitle,
+        metadata,
       };
 
       setRequests((res) => res.set(tx as string, [request, State.Running]));
@@ -212,26 +221,73 @@ export default function useExecution({
             onTxSuccess(tx, reportInfo);
           }
           await updateBlockNumber(); // update blockNumber once after tx
-          setRequests((res) => res.set(tx as string, [request, State.Success]));
+          setRequests((res) =>
+            res.set(tx as string, [
+              {
+                ...request,
+                doneTime: Math.ceil(Date.now() / 1000),
+              },
+              State.Success,
+            ]),
+          );
           return ExecutionResult.Success;
         }
       }
       await updateBlockNumber(); // update blockNumber once after tx
       setShowingDone(true);
-      setRequests((res) => res.set(tx as string, [request, State.Failed]));
+      setRequests((res) =>
+        res.set(tx as string, [
+          {
+            ...request,
+            doneTime: Math.ceil(Date.now() / 1000),
+          },
+          State.Failed,
+        ]),
+      );
       return ExecutionResult.Failed;
     },
     [account, chainId, setWaitingSubmit, provider, updateBlockNumber],
+  );
+
+  /**
+   * update requests text
+   */
+  const updateText = useCallback(
+    (upd: TextUpdater) => {
+      setRequests((requests) => {
+        const newRequests = new Map<string, [Request, State]>();
+        requests.forEach((value, key) => {
+          const [request, state] = value;
+          const updated = upd(request);
+          if (updated) {
+            newRequests.set(key, [
+              {
+                ...request,
+                brief: updated.brief,
+                subtitle: updated.subtitle,
+                metadata: updated.metadata,
+              },
+              state,
+            ]);
+          } else {
+            newRequests.set(key, value);
+          }
+        });
+        return newRequests;
+      });
+    },
+    [account, chainId, requests],
   );
 
   const ctxVal = useMemo(
     () => ({
       execute: handler,
       requests,
+      updateText,
       setShowing,
       waitingSubmit,
     }),
-    [handler, requests, setShowing],
+    [handler, requests, updateText, waitingSubmit, setShowing],
   );
 
   const closeShowing = useCallback(() => {

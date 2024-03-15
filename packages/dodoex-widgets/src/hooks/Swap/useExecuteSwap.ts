@@ -24,7 +24,7 @@ export default function useExecuteSwap() {
       subtitle,
       value,
     }: {
-        value: string;
+      value: string;
       to: string;
       data: string;
       useSource?: string;
@@ -58,7 +58,9 @@ export default function useExecuteSwap() {
           opcode: OpCode.TX,
           ...params,
         },
-        subtitle,
+        {
+          subtitle,
+        },
       );
     },
     [account, chainId],
