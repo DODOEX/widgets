@@ -51,10 +51,10 @@
     ]
   },
   "peerDependencies": {
-    "lodash": ">=4"
+    "lodash": ">=4",
+    "bignumber.js": ">=9"
   },
   "dependencies": {
-    "bignumber.js": "^9.1.2",
     "cross-fetch": "^4.0.0",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",

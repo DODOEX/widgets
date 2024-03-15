@@ -16,6 +16,14 @@ export interface PoolOperateProps {
         chainId: number;
         baseToken: TokenInfo;
         quoteToken: TokenInfo;
+        baseLpToken?: {
+          id: string;
+          decimals: number;
+        };
+        quoteLpToken?: {
+          id: string;
+          decimals: number;
+        };
         type: PoolType;
       }
     | undefined;

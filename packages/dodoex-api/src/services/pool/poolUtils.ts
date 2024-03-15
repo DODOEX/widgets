@@ -6,6 +6,6 @@ export const poolUtils = {
   },
 
   getHasQuoteSupply(type: PoolType): boolean {
-    return ['CLASSICAL', 'V3CLASSICAL'].includes(type);
+    return ['CLASSICAL', 'V3CLASSICAL', 'DPP'].includes(type);
   },
 };

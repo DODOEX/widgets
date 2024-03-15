@@ -72,6 +72,7 @@ export enum ABIName {
   dodoMineV3Proxy = 'dodoMineV3Proxy',
   dodoMineV3ProxyOld = 'dodoMineV3ProxyOld',
   LockedTokenVaultABI = 'LockedTokenVaultABI',
+  DODOV1PmmHelperABI = 'DODOV1PmmHelperABI',
 
   D3MM_READ_ABI = 'D3MM_READ_ABI',
 }

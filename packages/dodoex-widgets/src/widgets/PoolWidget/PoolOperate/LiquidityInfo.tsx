@@ -20,16 +20,204 @@ import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { contractRequests } from '../../../constants/api';
 import { ChainId } from '../../../constants/chains';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { useBalanceUpdateLoading } from '../../../hooks/Submission/useBalanceUpdateLoading';
 import { TokenInfo } from '../../../hooks/Token';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
 import { formatReadableNumber, getEtherscanPage } from '../../../utils';
+import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
 import { poolApi } from '../utils';
 
 export interface LiquidityInfoProps {
   loading?: boolean;
   hidePoolInfo?: boolean;
-  pool: Exclude<PoolOperateProps['pool'], undefined>;
+  pool: PoolOperateProps['pool'];
+}
+
+function LiquidityBalanceItem({
+  chainId,
+  address,
+  token,
+  quoteToken,
+  lpBalance,
+  lpBalanceLoading,
+  balanceNeedUpdateLoading,
+  tokenBalanceList,
+}: {
+  chainId: number;
+  address?: string;
+  token?: TokenInfo;
+  quoteToken?: TokenInfo;
+  lpBalance?: BigNumber | null;
+  lpBalanceLoading?: boolean;
+  balanceNeedUpdateLoading?: boolean;
+  /**
+   * The balance converted from lp to token
+   */
+  tokenBalanceList?: Array<{
+    token: TokenInfo;
+    balance: BigNumber | null | undefined;
+    loading: boolean;
+  }>;
+}) {
+  const symbol = quoteToken
+    ? `${token?.symbol}/${quoteToken.symbol}`
+    : token?.symbol ?? '';
+
+  return (
+    <Box
+      key={address}
+      sx={{
+        display: 'flex',
+      }}
+    >
+      {token ? (
+        <Box
+          sx={{
+            position: 'relative',
+            top: 2,
+          }}
+        >
+          {quoteToken ? (
+            <TokenLogoPair tokens={[token, quoteToken]} width={18} mr={4} />
+          ) : (
+            <TokenLogo
+              address={token.address}
+              width={18}
+              height={18}
+              chainId={chainId}
+              url={token.logoURI}
+              marginRight={4}
+            />
+          )}
+        </Box>
+      ) : (
+        <Skeleton
+          width={32}
+          height={32}
+          sx={{
+            mr: 4,
+          }}
+        />
+      )}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          wordBreak: 'break-all',
+        }}
+      >
+        <LoadingSkeleton
+          loading={lpBalanceLoading}
+          loadingProps={{
+            width: 30,
+          }}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            mr: 2,
+          }}
+        >
+          {balanceNeedUpdateLoading ? (
+            <RotatingIcon />
+          ) : (
+            formatReadableNumber({
+              input: lpBalance || '-',
+            })
+          )}
+        </LoadingSkeleton>
+        {`${symbol} LP`}
+        {!!tokenBalanceList?.length && (
+          <Tooltip
+            title={
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 8,
+                }}
+              >
+                {tokenBalanceList.map((son) => (
+                  <Box
+                    key={son.token.address}
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      typography: 'body2',
+                      fontWeight: 600,
+                      color: 'text.primary',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <TokenLogo
+                        address={son.token.address}
+                        width={14}
+                        height={14}
+                        url={son.token.logoURI}
+                        marginRight={4}
+                      />
+                      {son.token.symbol}
+                    </Box>
+                    <LoadingSkeleton loading={son.loading}>
+                      {son.balance &&
+                      !son.balance.isZero() &&
+                      !son.balance.isNaN()
+                        ? '~'
+                        : ''}
+                      {son.balance
+                        ? formatReadableNumber({
+                            input: son.balance,
+                          })
+                        : ''}
+                    </LoadingSkeleton>
+                  </Box>
+                ))}
+              </Box>
+            }
+            sx={{
+              padding: 20,
+              width: 256,
+            }}
+          >
+            <HoverOpacity
+              component={DetailBorder}
+              sx={{
+                ml: 4,
+                width: 16,
+                height: 16,
+              }}
+            />
+          </Tooltip>
+        )}
+        <Box
+          component="a"
+          target="_blank"
+          rel="noopener noreferrer"
+          href={getEtherscanPage(chainId, address, 'address')}
+          sx={{
+            display: 'inline-block',
+            height: 16,
+          }}
+        >
+          <HoverOpacity
+            component={Link}
+            sx={{
+              ml: 4,
+              width: 16,
+              height: 16,
+            }}
+          />
+        </Box>
+      </Box>
+    </Box>
+  );
 }
 
 export default function LiquidityInfo({
@@ -39,14 +227,42 @@ export default function LiquidityInfo({
 }: LiquidityInfoProps) {
   const theme = useTheme();
   const { chainId, account } = useWalletInfo();
-  const totalBaseLpQuery = useQuery(
-    poolApi.getTotalBaseLpQuery(
-      chainId,
-      pool.address,
-      pool.type,
-      pool.baseToken.decimals,
-    ),
-  );
+  const balanceInfo = usePoolBalanceInfo({
+    chainId,
+    account,
+    pool,
+  });
+
+  const hasQuoteSupply = pool
+    ? PoolApi.utils.getHasQuoteSupply(pool.type)
+    : false;
+
+  const { isTokenLoading } = useBalanceUpdateLoading();
+
+  let isBaseLpTokenNeedLoading = false;
+  let isQuoteLpTokenNeedLoading = false;
+  if (pool) {
+    if (balanceInfo.userBaseLpBalance) {
+      if (pool.baseLpToken) {
+        isBaseLpTokenNeedLoading = isTokenLoading(
+          pool.baseLpToken.id,
+          balanceInfo.userBaseLpBalance,
+        );
+      } else {
+        // TODO: DPP
+        // isBaseLpTokenNeedLoading = isTokenLoading(pool.baseToken.address, balanceInfo)
+      }
+    }
+    if (balanceInfo.userQuoteLpBalance && pool.quoteLpToken) {
+      isQuoteLpTokenNeedLoading = isTokenLoading(
+        pool.quoteLpToken.id,
+        balanceInfo.userQuoteLpBalance,
+      );
+    }
+  }
+
+  console.log('jie', balanceInfo?.userBaseLpToTokenBalance?.toString());
+
   return (
     <Box
       sx={{
@@ -158,129 +374,74 @@ export default function LiquidityInfo({
               width: 100,
             }}
           >
-            {/* {liquidityLpList.map((item) => (
-              <Box
-                key={item.address}
-                sx={{
-                  display: 'flex',
-                }}
-              >
-                {pool ? (
-                  <Box
-                    sx={{
-                      position: 'relative',
-                      top: 2,
-                    }}
-                  >
-                    {item.icon}
-                  </Box>
-                ) : (
-                  <Skeleton
-                    variant="circular"
-                    width={32}
-                    height={32}
-                    sx={{
-                      mr: 4,
-                    }}
-                  />
-                )}
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    flexWrap: 'wrap',
-                    wordBreak: 'break-all',
-                  }}
-                >
-                  {item.label}
-                  <Tooltip
-                    title={
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: 8,
-                        }}
-                      >
-                        {item.tokenBalanceList.map((son) => (
-                          <Box
-                            key={son.token.address}
-                            sx={{
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              typography: 'body2',
-                              fontWeight: 600,
-                              color: 'text.primary',
-                            }}
-                          >
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                              }}
-                            >
-                              <TokenLogo
-                                address={son.token.address}
-                                width={14}
-                                height={14}
-                                url={son.token.logoURI}
-                                marginRight={4}
-                              />
-                              {son.token.symbol}
-                            </Box>
-                            <LoadingSkeleton loading={myPoolInfoLoading}>
-                              {son.balance &&
-                              !son.balance.isZero() &&
-                              !son.balance.isNaN()
-                                ? '~'
-                                : ''}
-                              {formatReadableNumber({
-                                input: son.balance,
-                              })}
-                            </LoadingSkeleton>
-                          </Box>
-                        ))}
-                      </Box>
-                    }
-                    tooltipSx={{
-                      '& .MuiTooltip-tooltip': {
-                        padding: 20,
-                        width: 256,
-                      },
-                    }}
-                  >
-                    <HoverOpacity
-                      component={DetailBorder}
-                      sx={{
-                        ml: 4,
-                        width: 16,
-                        height: 16,
-                      }}
-                    />
-                  </Tooltip>
-                  <Box
-                    component="a"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={getEtherscanPage(chainId, item.address, 'address')}
-                    sx={{
-                      display: 'inline-block',
-                      height: 16,
-                    }}
-                  >
-                    <HoverOpacity
-                      component={Link}
-                      sx={{
-                        ml: 4,
-                        width: 16,
-                        height: 16,
-                      }}
-                    />
-                  </Box>
-                </Box>
-              </Box>
-            ))} */}
+            {hasQuoteSupply ? (
+              <>
+                <LiquidityBalanceItem
+                  chainId={chainId}
+                  address={pool?.address}
+                  token={pool?.baseToken}
+                  lpBalance={balanceInfo?.userBaseLpBalance}
+                  lpBalanceLoading={balanceInfo.userLpBalanceLoading}
+                  balanceNeedUpdateLoading={isBaseLpTokenNeedLoading}
+                  tokenBalanceList={
+                    pool
+                      ? [
+                          {
+                            token: pool.baseToken,
+                            balance: balanceInfo?.userBaseLpToTokenBalance,
+                            loading: balanceInfo.userLpToTokenBalanceLoading,
+                          },
+                        ]
+                      : undefined
+                  }
+                />
+                <LiquidityBalanceItem
+                  chainId={chainId}
+                  address={pool?.address}
+                  token={pool?.quoteToken}
+                  lpBalance={balanceInfo?.userQuoteLpBalance}
+                  lpBalanceLoading={balanceInfo.userLpBalanceLoading}
+                  balanceNeedUpdateLoading={isQuoteLpTokenNeedLoading}
+                  tokenBalanceList={
+                    pool
+                      ? [
+                          {
+                            token: pool.quoteToken,
+                            balance: balanceInfo?.userQuoteLpToTokenBalance,
+                            loading: balanceInfo.userLpToTokenBalanceLoading,
+                          },
+                        ]
+                      : undefined
+                  }
+                />
+              </>
+            ) : (
+              <LiquidityBalanceItem
+                chainId={chainId}
+                address={pool?.address}
+                token={pool?.quoteToken}
+                quoteToken={pool?.quoteToken}
+                lpBalance={balanceInfo?.userBaseLpBalance}
+                lpBalanceLoading={balanceInfo.userLpBalanceLoading}
+                balanceNeedUpdateLoading={isBaseLpTokenNeedLoading}
+                tokenBalanceList={
+                  pool
+                    ? [
+                        {
+                          token: pool.baseToken,
+                          balance: balanceInfo?.userBaseLpToTokenBalance,
+                          loading: balanceInfo.userLpToTokenBalanceLoading,
+                        },
+                        {
+                          token: pool.quoteToken,
+                          balance: balanceInfo?.userQuoteLpToTokenBalance,
+                          loading: balanceInfo.userLpToTokenBalanceLoading,
+                        },
+                      ]
+                    : undefined
+                }
+              />
+            )}
           </LoadingSkeleton>
         </Box>
       </Box>

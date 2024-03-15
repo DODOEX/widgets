@@ -17,7 +17,7 @@ msgstr ""
 msgid "Transaction Time:"
 msgstr "交易时长:"
 
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:125
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:127
 msgid "Cross Chain"
 msgstr "跨链桥"
 
@@ -312,7 +312,7 @@ msgstr "钱包不兼容"
 msgid "Settings"
 msgstr "设置"
 
-#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:118
+#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:334
 msgid "Details"
 msgstr ""
 
@@ -337,7 +337,7 @@ msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
 #: src/widgets/PoolWidget/list/hooks/usePoolListTabs.ts:20
-#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:148
+#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:364
 msgid "My Liquidity"
 msgstr ""
 
