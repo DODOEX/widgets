@@ -3,7 +3,7 @@ import { debounce } from 'lodash';
 import {
   Box,
   Button,
-  BaseButton,
+  ButtonBase,
   useTheme,
   RotatingIcon,
   Tooltip,
@@ -851,7 +851,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
           }
           placement="bottom-end"
         >
-          <Box component={BaseButton}>
+          <Box component={ButtonBase}>
             <Box
               component={Setting}
               onClick={() => setIsSettingsDialogOpen(true)}

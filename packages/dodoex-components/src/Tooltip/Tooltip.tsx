@@ -43,6 +43,7 @@ export interface TooltipProps {
   enterDelay?: number;
   leaveDelay?: number;
   arrow?: boolean;
+  disabled?: boolean;
 }
 
 export const tooltipClasses = {
@@ -96,6 +97,8 @@ export default function Tooltip({
   open: openProps,
   onOpen,
   onClose,
+  disabled,
+  placement = 'top',
   ...attrs
 }: TooltipProps) {
   const theme = useTheme();
@@ -130,14 +133,14 @@ export default function Tooltip({
   };
 
   const handleOverTooltip: MouseEventHandler<HTMLDivElement> = () => {
-    if (clickEmit) return;
+    if (disabled || clickEmit) return;
     enterTooltip.current = true;
     clearTimeout(leaveTimer.current);
     clearTimeout(enterTimer.current);
   };
 
   const handleOutTooltip: MouseEventHandler<HTMLDivElement> = () => {
-    if (clickEmit) return;
+    if (disabled || clickEmit) return;
     enterTooltip.current = false;
     clearTimeout(leaveTimer.current);
     clearTimeout(enterTimer.current);
@@ -152,32 +155,34 @@ export default function Tooltip({
     ref: setChildrenRef,
   };
 
-  if (!clickEmit) {
-    const onMouseEnter = () => {
-      enterTrigger.current = true;
-      clearTimeout(leaveTimer.current);
-      clearTimeout(enterTimer.current);
-      enterTimer.current = setTimeout(() => {
+  if (!disabled) {
+    if (!clickEmit) {
+      const onMouseEnter = () => {
+        enterTrigger.current = true;
+        clearTimeout(leaveTimer.current);
+        clearTimeout(enterTimer.current);
+        enterTimer.current = setTimeout(() => {
+          handleChangeOpen(true);
+        }, enterDelay);
+      };
+      const onMouseLeave = () => {
+        enterTrigger.current = false;
+        clearTimeout(leaveTimer.current);
+        clearTimeout(enterTimer.current);
+        leaveTimer.current = setTimeout(() => {
+          if (!enterTrigger.current && !enterTooltip.current) {
+            handleChangeOpen(false);
+          }
+        }, leaveDelay);
+      };
+      childrenProps.onMouseOut = onMouseEnter;
+      childrenProps.onMouseEnter = onMouseEnter;
+      childrenProps.onMouseLeave = onMouseLeave;
+    } else {
+      childrenProps.onClick = () => {
         handleChangeOpen(true);
-      }, enterDelay);
-    };
-    const onMouseLeave = () => {
-      enterTrigger.current = false;
-      clearTimeout(leaveTimer.current);
-      clearTimeout(enterTimer.current);
-      leaveTimer.current = setTimeout(() => {
-        if (!enterTrigger.current && !enterTooltip.current) {
-          handleChangeOpen(false);
-        }
-      }, leaveDelay);
-    };
-    childrenProps.onMouseOut = onMouseEnter;
-    childrenProps.onMouseEnter = onMouseEnter;
-    childrenProps.onMouseLeave = onMouseLeave;
-  } else {
-    childrenProps.onClick = () => {
-      handleChangeOpen(true);
-    };
+      };
+    }
   }
 
   useEffect(() => {
@@ -226,6 +231,7 @@ export default function Tooltip({
           },
           popperOptions,
         )}
+        placement={placement}
         {...attrs}
         {...PopperProps}
       >

@@ -102,35 +102,26 @@ export function usePoolBalanceInfo({
   const { address, type, baseToken, quoteToken } = pool ?? {};
   const baseDecimals = baseToken?.decimals;
   const quoteDecimals = quoteToken?.decimals;
-  const baseLpDecimals = baseToken?.decimals;
-  const quoteLpDecimals = quoteToken?.decimals;
 
   const totalBaseLpQuery = useQuery(
-    poolApi.getTotalBaseLpQuery(chainId, address, type, baseLpDecimals),
+    poolApi.getTotalBaseLpQuery(chainId, address, type, baseDecimals),
   );
   const totalQuoteLpQuery = useQuery(
-    poolApi.getTotalBaseLpQuery(chainId, address, type, quoteLpDecimals),
+    poolApi.getTotalBaseLpQuery(chainId, address, type, quoteDecimals),
   );
   const userBaseLpQuery = useQuery(
-    poolApi.getUserBaseLpQuery(chainId, address, type, baseLpDecimals, account),
+    poolApi.getUserBaseLpQuery(chainId, address, type, baseDecimals, account),
   );
   const userQuoteLpQuery = useQuery(
-    poolApi.getUserQuoteLpQuery(
-      chainId,
-      address,
-      type,
-      quoteLpDecimals,
-      account,
-    ),
+    poolApi.getUserQuoteLpQuery(chainId, address, type, quoteDecimals, account),
   );
   const reserveQuery = useQuery(
     poolApi.getReserveLpQuery(
       chainId,
       address,
       type,
-      baseLpDecimals,
-      quoteLpDecimals,
-      account,
+      baseDecimals,
+      quoteDecimals,
     ),
   );
 
@@ -141,7 +132,6 @@ export function usePoolBalanceInfo({
       type,
       baseDecimals,
       quoteDecimals,
-      account,
     ),
   );
 
@@ -151,37 +141,47 @@ export function usePoolBalanceInfo({
   const classicalBaseTarget = classicalTargetQuery.data?.baseTarget;
   const classicalQuoteTarget = classicalTargetQuery.data?.quoteTarget;
 
-  const userBaseLpBalance = getLpBalance(
-    userBaseLpQuery.data,
-    totalBaseLpBalance,
-    baseLpDecimals,
-    type,
-  );
-  const userQuoteLpBalance = getLpBalance(
-    userQuoteLpQuery.data,
-    totalQuoteLpBalance,
-    quoteLpDecimals,
-    type,
-  );
+  const isPrivate = type === 'DPP';
 
-  const userBaseLpToTokenBalance = getLpToTokenBalance(
-    userBaseLpBalance,
-    totalBaseLpBalance,
-    baseReserve,
-    classicalBaseTarget,
-    address,
-    type,
-    baseDecimals,
-  );
-  const userQuoteLpToTokenBalance = getLpToTokenBalance(
-    userQuoteLpBalance,
-    totalQuoteLpBalance,
-    quoteReserve,
-    classicalQuoteTarget,
-    address,
-    type,
-    baseDecimals,
-  );
+  const userBaseLpBalance = isPrivate
+    ? baseReserve
+    : getLpBalance(
+        userBaseLpQuery.data,
+        totalBaseLpBalance,
+        baseDecimals,
+        type,
+      );
+  const userQuoteLpBalance = isPrivate
+    ? quoteReserve
+    : getLpBalance(
+        userQuoteLpQuery.data,
+        totalQuoteLpBalance,
+        quoteDecimals,
+        type,
+      );
+
+  const userBaseLpToTokenBalance = isPrivate
+    ? baseReserve
+    : getLpToTokenBalance(
+        userBaseLpBalance,
+        totalBaseLpBalance,
+        baseReserve,
+        classicalBaseTarget,
+        address,
+        type,
+        baseDecimals,
+      );
+  const userQuoteLpToTokenBalance = isPrivate
+    ? quoteReserve
+    : getLpToTokenBalance(
+        userQuoteLpBalance,
+        totalQuoteLpBalance,
+        quoteReserve,
+        classicalQuoteTarget,
+        address,
+        type,
+        baseDecimals,
+      );
 
   const userLpBalanceLoading =
     userBaseLpQuery.isLoading || userQuoteLpQuery.isLoading;

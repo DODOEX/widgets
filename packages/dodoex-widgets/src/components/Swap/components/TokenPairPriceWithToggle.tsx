@@ -1,4 +1,4 @@
-import { Box, RotatingIcon, BaseButton } from '@dodoex/components';
+import { Box, RotatingIcon, ButtonBase } from '@dodoex/components';
 import { Switch } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
 import { useState, useEffect, useCallback } from 'react';
@@ -70,7 +70,7 @@ export function TokenPairPriceWithToggle({
                 showDecimals: 4,
               })} ${rightSymbol}`}</Box>
               <Box
-                component={BaseButton}
+                component={ButtonBase}
                 sx={{
                   width: 18,
                   height: 18,

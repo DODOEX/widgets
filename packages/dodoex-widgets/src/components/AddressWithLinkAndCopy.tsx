@@ -5,7 +5,7 @@ import {
   HoverAddBackground,
   HoverAddUnderLine,
   useTheme,
-  BaseButton,
+  ButtonBase,
 } from '@dodoex/components';
 import { ArrowRight, ArrowTopRightBorder } from '@dodoex/icons';
 import { useWeb3React } from '@web3-react/core';

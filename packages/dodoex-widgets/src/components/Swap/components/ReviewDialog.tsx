@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState, useMemo } from 'react';
 import Dialog, { DialogProps } from './Dialog';
-import { Box, Button, BaseButton, useTheme } from '@dodoex/components';
+import { Box, Button, ButtonBase, useTheme } from '@dodoex/components';
 import { TokenInfo } from '../../../hooks/Token';
 import { formatTokenAmountNumber } from '../../../utils/formatter';
 import { formatReadableNumber } from '../../../utils/formatter';
@@ -214,7 +214,7 @@ export function ReviewDialog({
               <Box sx={{ width: 16, mr: 7 }} component={DetailBorder} />
               <Trans>Swap Detail</Trans>
             </Box>
-            <Box component={BaseButton}>
+            <Box component={ButtonBase}>
               <Box
                 onClick={() => setIsDetailsOpen(!isDetailsOpen)}
                 sx={{

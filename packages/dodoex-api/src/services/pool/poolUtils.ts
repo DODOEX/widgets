@@ -8,4 +8,16 @@ export const poolUtils = {
   getHasQuoteSupply(type: PoolType): boolean {
     return ['CLASSICAL', 'V3CLASSICAL', 'DPP'].includes(type);
   },
+
+  canOperateLiquidity(
+    type?: PoolType,
+    owner?: string,
+    creator?: string,
+    account?: string,
+  ): boolean {
+    const actuallyOwner = owner ?? creator;
+    if (!type || !actuallyOwner || !account) return false;
+    if (type !== 'DPP') return true;
+    return actuallyOwner.toLocaleLowerCase() === account.toLocaleLowerCase();
+  },
 };

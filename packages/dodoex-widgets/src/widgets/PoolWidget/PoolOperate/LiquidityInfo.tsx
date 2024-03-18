@@ -1,23 +1,20 @@
-import { PoolApi, PoolType } from '@dodoex/api';
+import { PoolApi } from '@dodoex/api';
 import {
   Box,
   useTheme,
   LoadingSkeleton,
   Tooltip,
   HoverOpacity,
-  BaseButton,
+  ButtonBase,
   RotatingIcon,
   Skeleton,
 } from '@dodoex/components';
-import { ArrowRight, DetailBorder, Link } from '@dodoex/icons';
+import { ArrowRight, DetailBorder, ArrowTopRightBorder } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
-import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
-import { PoolOperateProps } from '.';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
 import TokenLogo from '../../../components/TokenLogo';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
-import { contractRequests } from '../../../constants/api';
 import { ChainId } from '../../../constants/chains';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useBalanceUpdateLoading } from '../../../hooks/Submission/useBalanceUpdateLoading';
@@ -26,12 +23,12 @@ import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
 import { formatReadableNumber, getEtherscanPage } from '../../../utils';
 import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
-import { poolApi } from '../utils';
+import { OperatePool } from './types';
 
 export interface LiquidityInfoProps {
   loading?: boolean;
   hidePoolInfo?: boolean;
-  pool: PoolOperateProps['pool'];
+  pool: OperatePool;
 }
 
 function LiquidityBalanceItem({
@@ -88,6 +85,7 @@ function LiquidityBalanceItem({
               chainId={chainId}
               url={token.logoURI}
               marginRight={4}
+              noShowChain
             />
           )}
         </Box>
@@ -162,6 +160,7 @@ function LiquidityBalanceItem({
                         height={14}
                         url={son.token.logoURI}
                         marginRight={4}
+                        noShowChain
                       />
                       {son.token.symbol}
                     </Box>
@@ -207,11 +206,13 @@ function LiquidityBalanceItem({
           }}
         >
           <HoverOpacity
-            component={Link}
+            component={ArrowTopRightBorder}
             sx={{
               ml: 4,
-              width: 16,
-              height: 16,
+              width: 14,
+              height: 14,
+              position: 'relative',
+              top: -2,
             }}
           />
         </Box>
@@ -242,16 +243,11 @@ export default function LiquidityInfo({
   let isBaseLpTokenNeedLoading = false;
   let isQuoteLpTokenNeedLoading = false;
   if (pool) {
-    if (balanceInfo.userBaseLpBalance) {
-      if (pool.baseLpToken) {
-        isBaseLpTokenNeedLoading = isTokenLoading(
-          pool.baseLpToken.id,
-          balanceInfo.userBaseLpBalance,
-        );
-      } else {
-        // TODO: DPP
-        // isBaseLpTokenNeedLoading = isTokenLoading(pool.baseToken.address, balanceInfo)
-      }
+    if (balanceInfo.userBaseLpBalance && pool.baseLpToken) {
+      isBaseLpTokenNeedLoading = isTokenLoading(
+        pool.baseLpToken.id,
+        balanceInfo.userBaseLpBalance,
+      );
     }
     if (balanceInfo.userQuoteLpBalance && pool.quoteLpToken) {
       isQuoteLpTokenNeedLoading = isTokenLoading(
@@ -260,8 +256,6 @@ export default function LiquidityInfo({
       );
     }
   }
-
-  console.log('jie', balanceInfo?.userBaseLpToTokenBalance?.toString());
 
   return (
     <Box
@@ -314,7 +308,7 @@ export default function LiquidityInfo({
           </Box>
           {pool?.address ? (
             <Box
-              component={BaseButton}
+              component={ButtonBase}
               sx={{
                 typography: 'body2',
                 display: 'flex',

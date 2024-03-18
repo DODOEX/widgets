@@ -2,7 +2,7 @@ import { styled } from '@mui/system';
 import { Button } from '@mui/base/Button';
 
 // const BaseButtonStyle = styled(ButtonUnstyled)``;
-const BaseButton = styled(Button)`
+const ButtonBase = styled(Button)`
   margin: 0;
   border: none;
   padding: 0;
@@ -17,4 +17,4 @@ const BaseButton = styled(Button)`
   }
 `;
 
-export default BaseButton;
+export default ButtonBase;

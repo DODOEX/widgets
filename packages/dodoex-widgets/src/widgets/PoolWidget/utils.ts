@@ -2,7 +2,7 @@ import { PoolApi, ExcludeNone, PoolType } from '@dodoex/api';
 import { contractRequests } from '../../constants/api';
 import { ChainId } from '../../constants/chains';
 import { TokenInfo } from '../../hooks/Token';
-import { PoolOperateProps } from './PoolOperate';
+import { OperatePool } from './PoolOperate/types';
 
 export const poolApi = new PoolApi({
   contractRequests,
@@ -63,7 +63,7 @@ export function canOperatePool(
 
 export function convertFetchLiquidityToOperateData(
   lqData: ExcludeNone<FetchLiquidityListLqList>[0],
-): PoolOperateProps['pool'] {
+): OperatePool {
   const pair = lqData?.pair;
   if (!pair) return undefined;
   return {
@@ -78,5 +78,6 @@ export function convertFetchLiquidityToOperateData(
       pair.chainId,
     ) as TokenInfo,
     type: pair.type as PoolType,
+    creator: pair.creator,
   };
 }

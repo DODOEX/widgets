@@ -29,6 +29,22 @@ export interface TokenCardProps {
   onlyCurrentChain?: boolean;
   defaultLoadBalance?: boolean;
 }
+
+export function CardPlus() {
+  return (
+    <Box
+      sx={{
+        height: 30,
+        textAlign: 'center',
+        fontSize: 32,
+        lineHeight: '30px',
+      }}
+    >
+      +
+    </Box>
+  );
+}
+
 export function TokenCard({
   sx,
   amt,
@@ -91,7 +107,7 @@ export function TokenCard({
 
         <BalanceText
           balance={balance}
-          onClick={onMaxClick}
+          onClick={onMaxClick ?? onInputChange}
           showMaxBtn={showMaxBtn}
           address={token?.address}
           decimals={token?.decimals}

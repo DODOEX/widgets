@@ -1,57 +1,49 @@
 import { Box, Tab, TabPanel, Tabs, TabsList } from '@dodoex/components';
 import Dialog from '../../../components/Dialog';
-import { TokenCard } from '../../../components/Swap/components/TokenCard';
-import { OperateTab, usePoolOperateTabs } from './hooks/usePoolOperateTabs';
+import {
+  PoolOrMiningTab,
+  usePoolOrMiningTabs,
+} from './hooks/usePoolOrMiningTabs';
 import { Error } from '@dodoex/icons';
-import { TokenInfo } from '../../../hooks/Token';
-import LiquidityInfo from './LiquidityInfo';
-import { PoolType } from '@dodoex/api';
+import PoolOperateInner, { PoolOperateInnerProps } from './PoolOperateInner';
 
 export interface PoolOperateProps {
   onClose: () => void;
   account: string | undefined;
-  pool:
-    | {
-        address: string;
-        chainId: number;
-        baseToken: TokenInfo;
-        quoteToken: TokenInfo;
-        baseLpToken?: {
-          id: string;
-          decimals: number;
-        };
-        quoteLpToken?: {
-          id: string;
-          decimals: number;
-        };
-        type: PoolType;
-      }
-    | undefined;
+  pool: PoolOperateInnerProps['pool'];
 }
 
 export default function PoolOperate({ onClose, pool }: PoolOperateProps) {
-  const { operateTab, tabs, handleChangeTab } = usePoolOperateTabs();
+  const { poolOrMiningTab, poolOrMiningTabs, handleChangeTab } =
+    usePoolOrMiningTabs();
   return (
     <Dialog open={!!pool} onClose={onClose}>
       <Box
         sx={{
-          px: 20,
+          pb: 20,
+          overflow: 'hidden',
         }}
       >
         <Tabs
-          value={operateTab}
+          value={poolOrMiningTab}
           onChange={(_, value) => {
-            handleChangeTab(value as OperateTab);
+            handleChangeTab(value as PoolOrMiningTab);
+          }}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            height: '100%',
           }}
         >
           <TabsList
             sx={{
-              mb: 16,
+              mx: 20,
               justifyContent: 'space-between',
             }}
           >
             <Box>
-              {tabs.map(({ key, value }) => (
+              {poolOrMiningTabs.map(({ key, value }) => (
                 <Tab key={key} value={key} variant="secondary">
                   {value}
                 </Tab>
@@ -68,11 +60,16 @@ export default function PoolOperate({ onClose, pool }: PoolOperateProps) {
               }}
             />
           </TabsList>
-          <TabPanel value={OperateTab.Liquidity}>
-            {!!pool && <LiquidityInfo pool={pool} />}
+          <TabPanel
+            value={PoolOrMiningTab.Liquidity}
+            sx={{
+              flex: 1,
+              overflowY: 'auto',
+            }}
+          >
+            <PoolOperateInner pool={pool} />
           </TabPanel>
         </Tabs>
-        <TokenCard amt="" />
       </Box>
     </Dialog>
   );

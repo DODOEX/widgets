@@ -14,6 +14,7 @@ interface TypeBackground {
   default: string;
   paper: string;
   paperContrast: string;
+  paperDarkContrast: string;
   backdrop: string;
   input: string;
   tag: string;
@@ -83,6 +84,7 @@ export const darkPalette: PaletteOptions = {
   mode: 'dark',
   primary: {
     main: '#FFE804',
+    contrastText: '#1A1A1B',
   },
   secondary: {
     main: '#FFE804',
@@ -108,6 +110,7 @@ export const darkPalette: PaletteOptions = {
     default: '#252831',
     paper: '#33363F',
     paperContrast: '#41454F',
+    paperDarkContrast: alpha('#FFF', 0.1),
     backdrop: alpha('#000', 0.9),
     input: '#252831',
     tag: alpha('#FFF', 0.04),
@@ -133,6 +136,7 @@ export const lightPalette: PaletteOptions = {
   mode: 'light',
   primary: {
     main: '#1A1A1B',
+    contrastText: '#fff',
   },
   secondary: {
     main: '#FFE804',
@@ -158,6 +162,7 @@ export const lightPalette: PaletteOptions = {
     default: '#F9F6E8',
     paper: '#FFFFFF',
     paperContrast: '#F6F6F6',
+    paperDarkContrast: alpha('#1A1A1B', 0.1),
     backdrop: alpha('#000', 0.9),
     input: '#F0F0F0',
     tag: alpha('#1A1A1B', 0.04),

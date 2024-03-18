@@ -1,4 +1,4 @@
-import { TooltipToast, Box, BoxProps, BaseButton } from '@dodoex/components';
+import { TooltipToast, Box, BoxProps, ButtonBase } from '@dodoex/components';
 import copy from 'copy-to-clipboard';
 import { Copy } from '@dodoex/icons';
 import { t } from '@lingui/macro';
@@ -21,7 +21,7 @@ export function CopyTooltipToast({
   return (
     <TooltipToast title={t`Copied`} open={open} onClose={() => setOpen(false)}>
       <Box
-        component={BaseButton}
+        component={ButtonBase}
         onClick={(evt: any) => {
           evt.stopPropagation();
           if (copyText) {

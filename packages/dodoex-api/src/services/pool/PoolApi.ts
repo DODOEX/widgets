@@ -13,7 +13,7 @@ import contractMap, {
 } from '../../helper/ContractRequests/contractConfig';
 import { PMMHelper } from './pmm/pmmHelper';
 import { PMMState } from './pmm/PMMState';
-import { convertPmmParams } from './pmm/convertPmmParams';
+import { convertPmmParams, PmmData } from './pmm/convertPmmParams';
 
 export interface PoolApiProps {
   contractRequests?: ContractRequests;
@@ -243,27 +243,15 @@ export class PoolApi {
     type: PoolType | undefined,
     baseDecimals: number | undefined,
     quoteDecimals: number | undefined,
-    account: string | undefined,
   ) {
     if (type === 'CLASSICAL') {
-      const query = this.getPMMStateQuery(
+      return this.getPMMStateQuery(
         chainId,
         poolAddress,
         type,
         baseDecimals,
         quoteDecimals,
       );
-      return {
-        ...query,
-        queryFn: async () => {
-          const pmmStateResult = await query.queryFn();
-          if (!pmmStateResult) return pmmStateResult;
-          return {
-            baseReserve: pmmStateResult.pmmParamsBG.b,
-            quoteReserve: pmmStateResult.pmmParamsBG.q,
-          };
-        },
-      };
     }
     return {
       queryKey: ['pool', 'getReserveLp', ...arguments],
@@ -295,7 +283,7 @@ export class PoolApi {
           poolAddress,
           type,
           typeMethodObject,
-          params: [account],
+          params: [],
         });
         if (!query) return null;
         const result = await this.contractRequests.batchCallQuery(
@@ -319,7 +307,6 @@ export class PoolApi {
     type: PoolType | undefined,
     baseDecimals: number | undefined,
     quoteDecimals: number | undefined,
-    account: string | undefined,
   ) {
     return {
       queryKey: ['pool', 'getClassicalTargetQuery', ...arguments],
@@ -340,10 +327,10 @@ export class PoolApi {
         )
           return null;
         const result = await this.contractRequests.batchCallQuery(chainId, {
-          abiName: poolTypeAbiNameObject[type],
+          abiName: ABIName.classicalPoolABI,
           contractAddress: poolAddress,
           method: 'getExpectedTarget',
-          params: [account],
+          params: [],
         });
         return {
           baseTarget: byWei(result.baseTarget, baseDecimals),
@@ -620,7 +607,7 @@ export class PoolApi {
           quoteDecimals === undefined
         )
           return null;
-        let queryResult = '';
+        let queryResult: PmmData[] = [];
         if (type === 'CLASSICAL') {
           const { ROUTE_V1_DATA_FETCH } = contractMap[chainId as ChainId];
           queryResult = await this.contractRequests.batchCallQuery(chainId, {
@@ -639,10 +626,12 @@ export class PoolApi {
         } else {
           throw new Error(`type: ${type} not supported`);
         }
+        if (!Array.isArray(queryResult) || !queryResult.length) {
+          return null;
+        }
 
         const pmmParamsBG = convertPmmParams(
-          queryResult,
-          type,
+          queryResult[0],
           baseDecimals,
           quoteDecimals,
         );
@@ -678,6 +667,8 @@ export class PoolApi {
         return {
           midPrice,
           pmmParamsBG,
+          baseReserve: pmmParamsBG.b,
+          quoteReserve: pmmParamsBG.q,
         };
       },
     };

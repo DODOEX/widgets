@@ -21,9 +21,7 @@ const HoverAddBackground = forwardRef(
               hoverColor || alpha(theme.palette.text.primary, 0.04),
             // Compatible with navLink color
             '.nav-link-class:not(.active)': {
-              color: isLight
-                ? alpha(theme.palette.common.black, 0.9)
-                : theme.palette.common.white,
+              color: isLight ? alpha('#000', 0.9) : theme.palette.common.white,
             },
           },
         };

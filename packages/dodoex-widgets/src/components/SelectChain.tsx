@@ -1,4 +1,4 @@
-import { BaseButton, Box, BoxProps, useTheme } from '@dodoex/components';
+import { ButtonBase, Box, BoxProps, useTheme } from '@dodoex/components';
 import { CaretUp } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import React from 'react';
@@ -182,7 +182,7 @@ export default function SelectChain({
   return (
     <>
       <Box
-        component={BaseButton}
+        component={ButtonBase}
         onClick={() => setIsDialogVisible(true)}
         sx={{
           display: 'flex',

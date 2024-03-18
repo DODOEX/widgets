@@ -8,6 +8,11 @@ export enum State {
   Warning,
 }
 
+export enum MetadataFlag {
+  addLiquidity = 'addLiquidity',
+  removeLiquidity = 'removeLiquidity',
+}
+
 export type Metadata = Record<string, any>;
 
 export type Request = {

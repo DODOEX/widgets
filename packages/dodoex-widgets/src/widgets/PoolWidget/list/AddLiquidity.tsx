@@ -133,7 +133,7 @@ export default function AddLiquidityList({
           id: '0xdac17f958d2ee523a2206206994597c13d831ec7',
           symbol: 'USDT',
           name: 'Tether USD',
-          decimals: '6',
+          decimals: 6,
           usdPrice: '0.9998246361586016449575791900876106',
           logoImg:
             'https://storage.googleapis.com/dodo-media-staging/1/0xdac17f958d2ee523a2206206994597c13d831ec7',
@@ -142,7 +142,7 @@ export default function AddLiquidityList({
           id: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
           symbol: 'USDC',
           name: 'USD//C',
-          decimals: '6',
+          decimals: 6,
           usdPrice: '1.00017536384139835504242080991239',
           logoImg:
             'https://storage.googleapis.com/dodo-media-staging/1/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',

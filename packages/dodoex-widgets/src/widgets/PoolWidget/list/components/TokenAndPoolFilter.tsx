@@ -1,4 +1,4 @@
-import { BaseButton, Box, BoxProps } from '@dodoex/components';
+import { ButtonBase, Box, BoxProps } from '@dodoex/components';
 import React from 'react';
 import { TokenInfo } from '../../../../hooks/Token';
 import { Search } from '@dodoex/icons';
@@ -23,7 +23,7 @@ export default function TokenAndPoolFilter({
   return (
     <>
       <Box
-        component={BaseButton}
+        component={ButtonBase}
         sx={{
           typography: 'body2',
           display: 'flex',

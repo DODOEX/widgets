@@ -1,5 +1,5 @@
 import { formatTokenAmountNumber } from '../../../../utils/formatter';
-import { Box, useTheme, BaseButton } from '@dodoex/components';
+import { Box, useTheme, ButtonBase } from '@dodoex/components';
 import BigNumber from 'bignumber.js';
 import { Trans } from '@lingui/macro';
 
@@ -34,7 +34,7 @@ export function BalanceText({
         : '-'}
       {showMaxBtn && balance && balance.gt(0) && (
         <Box
-          component={BaseButton}
+          component={ButtonBase}
           sx={{
             ml: 6,
             color: balance?.gt(0)

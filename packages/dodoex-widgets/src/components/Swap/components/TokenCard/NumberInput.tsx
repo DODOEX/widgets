@@ -1,4 +1,4 @@
-import { Box, Input, BoxProps, useTheme, BaseButton } from '@dodoex/components';
+import { Box, Input, BoxProps, useTheme, ButtonBase } from '@dodoex/components';
 import { useMemo, useRef } from 'react';
 import { Error, Clear } from '@dodoex/icons';
 import {
@@ -38,7 +38,7 @@ export function NumberInput({
     if (withClear && value && onChange) {
       return (
         <Box
-          component={BaseButton}
+          component={ButtonBase}
           sx={{
             ml: 5,
             width: 18,

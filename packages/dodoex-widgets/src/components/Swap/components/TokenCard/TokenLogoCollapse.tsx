@@ -1,4 +1,4 @@
-import { Box, useTheme, BaseButton } from '@dodoex/components';
+import { Box, useTheme, ButtonBase } from '@dodoex/components';
 import { TokenPickerProps } from '../../../TokenPicker';
 import { Trans } from '@lingui/macro';
 import { CaretUp } from '@dodoex/icons';
@@ -20,7 +20,7 @@ export function TokenLogoCollapse({
   const theme = useTheme();
   return (
     <Box
-      component={BaseButton}
+      component={ButtonBase}
       sx={{
         display: 'flex',
         alignItems: 'center',

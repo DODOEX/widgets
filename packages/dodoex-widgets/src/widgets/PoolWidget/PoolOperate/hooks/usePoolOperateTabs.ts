@@ -3,20 +3,17 @@ import { useLingui } from '@lingui/react';
 import React from 'react';
 
 export enum OperateTab {
-  Liquidity = 1,
-  Mining,
+  Add = 1,
+  Remove,
 }
 
 export function usePoolOperateTabs() {
   const { i18n } = useLingui();
-  const [operateTab, setOperateTab] = React.useState(OperateTab.Liquidity);
-  const tabs = React.useMemo(
+  const [operateTab, setOperateTab] = React.useState(OperateTab.Add);
+  const operateTabs = React.useMemo(
     () => [
-      { key: OperateTab.Liquidity, value: t`Liquidity` },
-      // {
-      //   key: OperateTab.Mining,
-      //   value: t`Mining`,
-      // },
+      { key: OperateTab.Add, value: t`Add` },
+      { key: OperateTab.Remove, value: t`Remove` },
     ],
     [i18n._],
   );
@@ -27,7 +24,7 @@ export function usePoolOperateTabs() {
 
   return {
     operateTab,
-    tabs,
+    operateTabs,
     handleChangeTab,
   };
 }
