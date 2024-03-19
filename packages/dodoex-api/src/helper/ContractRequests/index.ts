@@ -5,14 +5,16 @@ import {
   ContractInterface as ContractInterfaceSource,
 } from '@ethersproject/contracts';
 import { BatchThunk, runAll } from './batch';
-import contractConfig, { ChainId } from './contractConfig';
+import { contractConfig, ChainId } from '../../chainConfig';
 import { ABIName } from './abi/abiName';
 import { getABI } from './abi';
 import type { Query } from './type';
 import { Interface } from '@ethersproject/abi';
 import { BatchProvider } from './batchProvider';
+import BigNumber from 'bignumber.js';
 
 export type { Query } from './type';
+export { ABIName } from './abi/abiName';
 
 type ContractInterface = Exclude<ContractInterfaceSource, Interface>;
 
@@ -29,6 +31,8 @@ export default class ContractRequests {
   private staticJsonRpcProviderMap: Map<number, StaticJsonRpcProvider>;
   private batchStaticJsonRpcProviderMap: Map<number, BatchProvider>;
   private batchContractMap: Map<number, Map<string, Contract>>;
+  /** Used to maintain different batches of requests */
+  private subContractRequestsList: Array<ContractRequests> = [];
   constructor(config?: ContractRequestsConfig) {
     this.rpc = config?.rpc;
     this.getConfigProvider = config?.getProvider;
@@ -39,10 +43,16 @@ export default class ContractRequests {
 
   setRpc(rpc: ContractRequestsConfig['rpc']) {
     this.rpc = rpc;
+    this.subContractRequestsList.forEach((son) => {
+      son.setRpc(rpc);
+    });
   }
 
   setGetConfigProvider(getProvider: ContractRequestsConfig['getProvider']) {
     this.getConfigProvider = getProvider;
+    this.subContractRequestsList.forEach((son) => {
+      son.setGetConfigProvider(getProvider);
+    });
     // update cache
     this.batchContractMap = new Map();
     for (const key in this.batchStaticJsonRpcProviderMap) {
@@ -89,6 +99,20 @@ export default class ContractRequests {
     const result = new BatchProvider(rpcUrl, chainId);
     result.setProvider(configProvider || null);
     this.staticJsonRpcProviderMap.set(chainId, result);
+    return result;
+  }
+
+  /**
+   * Create ContractRequests of the same configuration.
+   * Updating the configuration of the current ContractRequests will also update the created ContractRequests.
+   * Mainly used for different batches of requests
+   */
+  createContractRequests() {
+    const result = new ContractRequests({
+      rpc: this.rpc,
+      getProvider: this.getConfigProvider,
+    });
+    this.subContractRequestsList.push(result);
     return result;
   }
 
@@ -218,5 +242,11 @@ export default class ContractRequests {
     const callbackResult = query.callback ? query.callback(result) : undefined;
     if (callbackResult) return callbackResult as T;
     return result as T;
+  }
+
+  async getETHBalance(chainId: ChainId, account: string) {
+    const provider = this.getProvider(chainId);
+    const balance = await provider.getBalance(account);
+    return new BigNumber(balance.toString()).div(1e18);
   }
 }

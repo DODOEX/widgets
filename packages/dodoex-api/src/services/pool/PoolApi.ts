@@ -8,9 +8,7 @@ import { poolUtils } from './poolUtils';
 import { poolGraphqlQuery } from './graphqlQuery';
 import { PoolType } from './type';
 import BigNumber from 'bignumber.js';
-import contractMap, {
-  ChainId,
-} from '../../helper/ContractRequests/contractConfig';
+import { contractConfig, ChainId } from '../../chainConfig';
 import { PMMHelper } from './pmm/pmmHelper';
 import { PMMState } from './pmm/PMMState';
 import { convertPmmParams, PmmData } from './pmm/convertPmmParams';
@@ -609,7 +607,7 @@ export class PoolApi {
           return null;
         let queryResult: PmmData[] = [];
         if (type === 'CLASSICAL') {
-          const { ROUTE_V1_DATA_FETCH } = contractMap[chainId as ChainId];
+          const { ROUTE_V1_DATA_FETCH } = contractConfig[chainId as ChainId];
           queryResult = await this.contractRequests.batchCallQuery(chainId, {
             abiName: ABIName.DODOV1PmmHelperABI,
             contractAddress: ROUTE_V1_DATA_FETCH,

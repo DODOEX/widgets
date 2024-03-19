@@ -58,4 +58,5 @@ export function getAPIService(
 export const contractRequests = new ContractRequests({
   rpc: getRpcSingleUrlMap(),
 });
+export const tokenContractRequests = contractRequests.createContractRequests();
 export const graphQLRequests = new GraphQLRequests();

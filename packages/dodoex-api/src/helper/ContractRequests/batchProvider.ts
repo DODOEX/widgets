@@ -3,7 +3,7 @@ import { fetchJson } from '@ethersproject/web';
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 import { encodeFunctionData } from './encode';
 import { ABIName } from './abi/abiName';
-import contractMap, { ChainId } from './contractConfig';
+import { ChainId, contractConfig } from '../../chainConfig';
 import { defaultAbiCoder } from '@ethersproject/abi';
 
 type Params = [
@@ -29,7 +29,7 @@ async function generateMultiCallDataByParams(
     'aggregate',
     [calls],
   );
-  const multiCallAddress = contractMap[chainId as ChainId].MULTI_CALL;
+  const multiCallAddress = contractConfig[chainId as ChainId].MULTI_CALL;
   return [
     {
       to: multiCallAddress,
