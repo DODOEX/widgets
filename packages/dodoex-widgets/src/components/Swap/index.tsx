@@ -146,13 +146,8 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
 
   const insufficientBalance = useMemo(() => {
     const token = isReverseRouting ? toToken : fromToken;
-    const isBasicToken = basicTokenAddress === token?.address;
-    const keepChanges = isETH ? 0.1 : 0.02;
     const balance = new BigNumber(token ? getBalance(token) || 0 : 0);
-    return (
-      balance.lt(isReverseRouting ? toAmt ?? 0 : fromAmt) ||
-      (isBasicToken && balance.lte(keepChanges))
-    );
+    return balance.lt(isReverseRouting ? toAmt ?? 0 : fromAmt);
   }, [isReverseRouting, fromToken, toToken, fromAmt, toAmt, getBalance]);
 
   const { bridgeRouteList, status: bridgeRouteStatus } =
