@@ -54,20 +54,27 @@ export default function TokenPicker({
 }: TokenPickerProps) {
   const { chainList, selectChainId, setSelectChainId } =
     useSelectChainList(side);
-  const { showTokenList, filter, setFilter, onSelectToken, popularTokenList } =
-    useTokenList({
-      value,
-      onChange,
-      occupiedAddrs,
-      occupiedChainId,
-      hiddenAddrs,
-      showAddrs,
-      side,
-      chainId: selectChainId,
-      visible,
-      defaultLoadBalance,
-      multiple,
-    });
+  const {
+    showTokenList,
+    filter,
+    setFilter,
+    onSelectToken,
+    popularTokenList,
+    tokenInfoMap,
+  } = useTokenList({
+    value,
+    onChange,
+    occupiedAddrs,
+    occupiedChainId,
+    hiddenAddrs,
+    showAddrs,
+    side,
+    chainId: selectChainId,
+    visible,
+    defaultLoadBalance,
+    multiple,
+  });
+
   const ref = useRef<HTMLDivElement>(null);
   const [fixedSizeHeight, setFixedSizeHeight] = useState(0);
 
@@ -125,6 +132,9 @@ export default function TokenPicker({
           disabled={disabled}
           style={style}
           onClick={() => onSelectToken(token)}
+          balance={
+            tokenInfoMap.get(`${token.chainId}-${token.address}`)?.balance
+          }
         />
       );
     },

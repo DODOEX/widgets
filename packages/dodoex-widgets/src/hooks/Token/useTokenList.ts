@@ -2,13 +2,11 @@ import BigNumber from 'bignumber.js';
 import { useCallback, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getTokenList } from '../../store/selectors/token';
-import useGetBalance from './useGetBalance';
 import { TokenInfo, TokenList } from './type';
 import { useCurrentChainId } from '../ConnectWallet';
 import defaultTokens from '../../constants/tokenList';
 import { RootState } from '../../store/reducers';
 import { getPopularTokenList } from '../../store/selectors/token';
-import { unionBy } from 'lodash';
 import useTokenListFetchBalance from './useTokenListFetchBalance';
 import { ChainId } from '../../constants/chains';
 
@@ -115,7 +113,6 @@ export default function useTokenList({
     () => chainIdProps ?? currentChainId,
     [chainIdProps, currentChainId],
   );
-  const getBalance = useGetBalance();
   const preloaded = useMemo(() => {
     const preloadedResult = preloadedOrigin.filter(
       (token) => token.chainId === chainId,
@@ -166,7 +163,55 @@ export default function useTokenList({
     [popularTokenListOrigin, getNeedShowList],
   );
 
-  const sortTokenList = useCallback(
+  const onSelectToken = useCallback(
+    (token: TokenInfo) => {
+      const address = token.address.toLowerCase();
+      const isOccupied =
+        (!occupiedChainId || token.chainId === occupiedChainId) &&
+        !!occupiedAddrs?.some((e) => e.toLowerCase() === address);
+
+      if (Array.isArray(value) || (multiple && !value)) {
+        const newValue = [...(value as Array<TokenInfo>)];
+        const findIndex = newValue.findIndex(
+          (item) => item.address.toLocaleLowerCase() === address,
+        );
+        if (findIndex !== -1) {
+          newValue.splice(findIndex, 1);
+        } else {
+          newValue.push(token);
+        }
+        onChange(newValue, isOccupied);
+      } else {
+        onChange(token, isOccupied);
+      }
+    },
+    [onChange, occupiedAddrs, occupiedChainId],
+  );
+
+  const showTokenList = useMemo(() => {
+    const needShowList = getNeedShowList(preloaded);
+    const preloadedTokenAddressSet = new Set<string>();
+    needShowList.forEach((token) => {
+      preloadedTokenAddressSet.add(token.address);
+    });
+    popularTokenList.forEach((token) => {
+      if (!preloadedTokenAddressSet.has(token.address)) {
+        needShowList.push(token);
+      }
+    });
+    return needShowList || ([] as TokenList);
+  }, [preloaded, getNeedShowList, popularTokenList]);
+
+  const tokenInfoMap = useTokenListFetchBalance({
+    chainId,
+    tokenList: showTokenList,
+    popularTokenList,
+    value,
+    visible,
+    defaultLoadBalance,
+  });
+
+  const getSortTokenList = useCallback(
     (target: TokenList) => {
       if (target === null) return null;
       const result: {
@@ -230,8 +275,12 @@ export default function useTokenList({
             return 1;
           }
 
-          const balA = (getBalance && getBalance(a)) || new BigNumber(0);
-          const balB = (getBalance && getBalance(b)) || new BigNumber(0);
+          const balA =
+            tokenInfoMap.get(`${a.chainId}-${a.address}`)?.balance ||
+            new BigNumber(0);
+          const balB =
+            tokenInfoMap.get(`${b.chainId}-${b.address}`)?.balance ||
+            new BigNumber(0);
 
           const popularAddresses = popularTokenList.map((item) => item.address);
           if (popularAddresses?.includes(a.address)) {
@@ -266,7 +315,7 @@ export default function useTokenList({
     },
     [
       filter,
-      getBalance,
+      tokenInfoMap,
       occupiedAddrs,
       value,
       popularTokenList,
@@ -274,62 +323,20 @@ export default function useTokenList({
     ],
   );
 
-  const onSelectToken = useCallback(
-    (token: TokenInfo) => {
-      const address = token.address.toLowerCase();
-      const isOccupied =
-        (!occupiedChainId || token.chainId === occupiedChainId) &&
-        !!occupiedAddrs?.some((e) => e.toLowerCase() === address);
-
-      if (Array.isArray(value) || (multiple && !value)) {
-        const newValue = [...(value as Array<TokenInfo>)];
-        const findIndex = newValue.findIndex(
-          (item) => item.address.toLocaleLowerCase() === address,
-        );
-        if (findIndex !== -1) {
-          newValue.splice(findIndex, 1);
-        } else {
-          newValue.push(token);
-        }
-        onChange(newValue, isOccupied);
-      } else {
-        onChange(token, isOccupied);
-      }
-    },
-    [onChange, occupiedAddrs, occupiedChainId],
+  const sortTokenList = useMemo(
+    () => getSortTokenList(showTokenList) || ([] as TokenList),
+    [getSortTokenList],
   );
-
-  const showTokenList = useMemo(() => {
-    const needShowList = getNeedShowList(preloaded);
-    const preloadedTokenAddressSet = new Set<string>();
-    needShowList.forEach((token) => {
-      preloadedTokenAddressSet.add(token.address);
-    });
-    popularTokenList.forEach((token) => {
-      if (!preloadedTokenAddressSet.has(token.address)) {
-        needShowList.push(token);
-      }
-    });
-    return sortTokenList(needShowList) || ([] as TokenList);
-  }, [preloaded, getNeedShowList, sortTokenList, popularTokenList]);
-
-  useTokenListFetchBalance({
-    chainId,
-    tokenList: showTokenList,
-    popularTokenList,
-    value,
-    visible,
-    defaultLoadBalance,
-  });
 
   return {
     filter,
     setFilter,
 
-    showTokenList,
+    showTokenList: sortTokenList,
 
     onSelectToken,
 
     popularTokenList,
+    tokenInfoMap,
   };
 }

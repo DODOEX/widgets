@@ -168,21 +168,6 @@ describe('connect and trade', () => {
     });
   });
 
-  it('need fetch price', async () => {
-    expect(screen.queryByTestId(swapAlertFetchPriceBtn)).toBeVisible();
-    const $selectTokens = screen.queryAllByTestId(swapSelectTokenBtn);
-    await waitFor(
-      () => {
-        expect(
-          $selectTokens[0].nextElementSibling?.textContent?.indexOf('-'),
-        ).toBe(-1);
-      },
-      {
-        timeout: TIMEOUT,
-      },
-    );
-  });
-
   it('alert when the balance is insufficient', async () => {
     await waitFor(
       () => {

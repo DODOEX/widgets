@@ -20,10 +20,8 @@ import { ReviewDialog } from './components/ReviewDialog';
 import { SettingsDialog } from './components/SettingsDialog';
 import { RoutePriceStatus } from '../../hooks/Swap';
 import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
-import ConnectWallet, { ConnectWalletProps } from './components/ConnectWallet';
-import useGetBalance from '../../hooks/Token/useGetBalance';
-import { useGetTokenStatus } from '../../hooks/Token/useGetTokenStatus';
-import { TokenInfo, ApprovalState } from '../../hooks/Token/type';
+import ConnectWallet from './components/ConnectWallet';
+import { TokenInfo } from '../../hooks/Token/type';
 import {
   useMarginAmount,
   useFetchFiatPrice,
@@ -66,6 +64,8 @@ import {
   useSetAutoSlippage,
 } from '../../hooks/setting/useSetAutoSlippage';
 import { setFromTokenChainId } from '../../store/actions/wallet';
+import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
+import { useFetchETHBalance } from '../../hooks/contract';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -129,26 +129,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
     getAutoSlippage,
   });
 
-  const getBalance = useGetBalance();
-
-  const fromEtherTokenBalance = useMemo(() => {
-    const fromChainId = fromToken?.chainId;
-    if (!isBridge || !fromChainId) return null;
-    const etherToken = basicTokenMap[fromChainId as ChainId];
-    if (!etherToken) {
-      return null;
-    }
-    return getBalance({
-      ...etherToken,
-      chainId: fromChainId,
-    });
-  }, [isBridge, fromToken?.chainId, getBalance]);
-
-  const insufficientBalance = useMemo(() => {
-    const token = isReverseRouting ? toToken : fromToken;
-    const balance = new BigNumber(token ? getBalance(token) || 0 : 0);
-    return balance.lt(isReverseRouting ? toAmt ?? 0 : fromAmt);
-  }, [isReverseRouting, fromToken, toToken, fromAmt, toAmt, getBalance]);
+  const fromEtherTokenQuery = useFetchETHBalance(fromToken?.chainId);
 
   const { bridgeRouteList, status: bridgeRouteStatus } =
     useFetchRoutePriceBridge({
@@ -173,34 +154,21 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
       setSelectRouteId('');
     }
   }, [selectedRoute]);
-  const { getApprovalState, submitApprove, getPendingRest, getMaxBalance } =
-    useGetTokenStatus({
-      account,
-      chainId: fromToken?.chainId ?? chainId,
-      contractAddress: selectedRoute?.spenderContractAddress,
-    });
-  const pendingReset = useMemo(
-    () => getPendingRest(isReverseRouting ? toToken : fromToken),
-    [fromToken?.address, toToken?.address, getPendingRest, isReverseRouting],
-  );
-  const [isApproving, isGetApproveLoading, needApprove] = useMemo(() => {
-    const approvalState = getApprovalState(
-      fromToken,
-      isReverseRouting ? toAmt || 0 : fromAmt,
-    );
-    return [
-      approvalState === ApprovalState.Approving,
-      approvalState === ApprovalState.Loading,
-      approvalState === ApprovalState.Insufficient && !pendingReset,
-    ];
-  }, [
-    getApprovalState,
-    fromToken,
-    isReverseRouting,
-    toAmt,
-    fromAmt,
-    pendingReset,
-  ]);
+
+  const {
+    isApproving,
+    isGetApproveLoading,
+    needApprove,
+    insufficientBalance,
+    submitApprove,
+    getMaxBalance,
+  } = useTokenStatus(fromToken, {
+    amount: fromAmt,
+    contractAddress: selectedRoute?.spenderContractAddress,
+  });
+  const handleMaxClick = useCallback(() => {
+    updateFromAmt(getMaxBalance());
+  }, [getMaxBalance]);
 
   const estimateGas = useMemo(() => {
     if (
@@ -338,20 +306,54 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
     setSelectRouteId,
   ]);
 
-  const handleMaxClick = useCallback(
-    (max: string) =>
-      isReverseRouting
-        ? updateToAmt(getMaxBalance(toToken))
-        : updateFromAmt(getMaxBalance(fromToken)),
+  const onFromTokenChange = useCallback(
+    (token: TokenInfo, isOccupied: boolean) => {
+      if (isOccupied) return switchTokens();
+      updateFromAmt('');
+      updateToAmt('');
+      setFromToken(token);
+      setSelectRouteId('');
+      setLastToken('from', token);
+    },
     [
+      switchTokens,
       updateFromAmt,
       updateToAmt,
-      getMaxBalance,
-      fromToken,
-      toToken,
-      isReverseRouting,
+      setFromToken,
+      setSelectRouteId,
+      setLastToken,
     ],
   );
+  const onToTokenChange = useCallback(
+    (token: TokenInfo, isOccupied: boolean) => {
+      if (isOccupied) return switchTokens();
+      updateFromAmt('');
+      updateToAmt('');
+      setToToken(token);
+      setSelectRouteId('');
+      setLastToken('to', token);
+    },
+    [
+      switchTokens,
+      updateFromAmt,
+      updateToAmt,
+      setFromToken,
+      setSelectRouteId,
+      setLastToken,
+    ],
+  );
+  const onFromTokenInputFocus = useCallback(() => {
+    if (isReverseRouting) {
+      updateFromAmt('');
+    }
+    dispatch(setGlobalProps({ isReverseRouting: false }));
+  }, [isReverseRouting, updateFromAmt, dispatch]);
+  const onToTokenInputFocus = useCallback(() => {
+    if (!isReverseRouting) {
+      updateToAmt('');
+    }
+    dispatch(setGlobalProps({ isReverseRouting: true }));
+  }, [isReverseRouting, updateToAmt, dispatch]);
 
   const isSlippageExceedLimit = useSlippageLimit(isBridge);
 
@@ -676,7 +678,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
         <Button
           fullWidth
           disabled={isApproving}
-          onClick={() => submitApprove(fromToken)}
+          onClick={() => submitApprove()}
         >
           {isApproving ? <Trans>Approving</Trans> : <Trans>Approve</Trans>}
         </Button>
@@ -732,7 +734,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
           onClick={() =>
             handleSendBridgeRoute({
               selectedRoute,
-              fromEtherTokenBalance,
+              fromEtherTokenBalance: fromEtherTokenQuery.data?.balance ?? null,
               goNext: () => setBridgeSummaryShow(true),
             })
           }
@@ -769,7 +771,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
     bridgeRouteStatus,
     bridgeRouteList,
     sendRouteLoading,
-    fromEtherTokenBalance,
+    fromEtherTokenQuery.data?.balance,
     insufficientBalance,
     isApproving,
     isGetApproveLoading,
@@ -875,12 +877,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
             onlyCurrentChain
             onMaxClick={handleMaxClick}
             onInputChange={updateFromAmt}
-            onInputFocus={() => {
-              if (isReverseRouting) {
-                updateFromAmt('');
-              }
-              dispatch(setGlobalProps({ isReverseRouting: false }));
-            }}
+            onInputFocus={onFromTokenInputFocus}
             showMaxBtn={!isReverseRouting && !displayingFromAmt}
             occupiedAddrs={[toToken?.address ?? '']}
             occupiedChainId={toToken?.chainId}
@@ -892,14 +889,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
                   })}`
                 : '-'
             }
-            onTokenChange={(token: TokenInfo, isOccupied: boolean) => {
-              if (isOccupied) return switchTokens();
-              updateFromAmt('');
-              updateToAmt('');
-              setFromToken(token);
-              setSelectRouteId('');
-              setLastToken('from', token);
-            }}
+            onTokenChange={onFromTokenChange}
             readOnly={isReverseRouting}
             showChainLogo
           />
@@ -913,12 +903,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
             side="to"
             amt={toFinalAmt}
             onInputChange={updateToAmt}
-            onInputFocus={() => {
-              if (!isReverseRouting) {
-                updateToAmt('');
-              }
-              dispatch(setGlobalProps({ isReverseRouting: true }));
-            }}
+            onInputFocus={onToTokenInputFocus}
             occupiedAddrs={[fromToken?.address ?? '']}
             occupiedChainId={fromToken?.chainId}
             fiatPriceTxt={
@@ -929,14 +914,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
                   })}(${displayPriceImpact}%)`
                 : '-'
             }
-            onTokenChange={(token: TokenInfo, isOccupied: boolean) => {
-              if (isOccupied) return switchTokens();
-              updateFromAmt('');
-              updateToAmt('');
-              setToToken(token);
-              setSelectRouteId('');
-              setLastToken('to', token);
-            }}
+            onTokenChange={onToTokenChange}
             readOnly={isBridge || !isReverseRouting}
             showChainLogo
           />

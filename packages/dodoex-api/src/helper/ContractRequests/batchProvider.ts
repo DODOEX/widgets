@@ -159,7 +159,9 @@ export class BatchProvider extends StaticJsonRpcProvider {
             ['uint256', 'bytes[]'],
             response.result,
           );
-          this._lastBlockNumber = blkNum.toNumber();
+          const blockNumber = blkNum.toNumber();
+          this._setFastBlockNumber(blockNumber);
+          this.emit('blockNumberChanged', blockNumber);
           if (batch.length !== decodeList.length) {
             inflightRequest.reject('Unexpected length mismatch');
             return;

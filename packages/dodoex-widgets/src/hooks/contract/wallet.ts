@@ -4,8 +4,7 @@ import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber';
 import BigNumber from 'bignumber.js';
 import isZero from '../../utils/address';
 import { t } from '@lingui/macro';
-import erc20ABI from './abis/erc20ABI';
-import { getContract } from './useMultiContract';
+import { TokenApi } from '@dodoex/api';
 
 export type Deferrable<T> = {
   [K in keyof T]: T[K] | Promise<T[K]>;
@@ -96,18 +95,13 @@ export const approve = async (
   contractAddress: string,
   allowance: BigNumber,
   provider: JsonRpcProvider,
-  account?: string,
 ) => {
-  const contract = getContract(tokenAddress, erc20ABI, provider, account);
-  const data = contract.interface.encodeFunctionData('approve', [
-    contractAddress,
-    allowance.toFixed(),
-  ]);
+  const data = await TokenApi.encode.approveABI(contractAddress, allowance);
   const params = {
     from: accountAddress,
     to: tokenAddress,
     data,
-    value: `0x${new BigNumber('0').toString(16)}`,
+    value: '0x0',
     gasLimit: undefined as EthersBigNumber | undefined,
   };
 

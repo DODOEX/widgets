@@ -6,9 +6,12 @@ import { TokenPickerDialog } from './TokenPickerDialog';
 import { useState, useEffect } from 'react';
 import { TokenInfo } from '../../../../hooks/Token';
 import { TokenPickerProps } from '../../../TokenPicker';
-import useGetBalance from '../../../../hooks/Token/useGetBalance';
 import { transitionTime } from '../Dialog';
 import SwitchChainDialog from '../../../SwitchChainDialog';
+import { useQuery } from '@tanstack/react-query';
+import { tokenApi } from '../../../../constants/api';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
+import BigNumber from 'bignumber.js';
 
 export interface TokenCardProps {
   amt: string;
@@ -28,6 +31,7 @@ export interface TokenCardProps {
   showChainLogo?: boolean;
   onlyCurrentChain?: boolean;
   defaultLoadBalance?: boolean;
+  overrideBalance?: BigNumber;
 }
 
 export function CardPlus() {
@@ -63,12 +67,16 @@ export function TokenCard({
   showChainLogo,
   onlyCurrentChain,
   defaultLoadBalance,
+  overrideBalance,
 }: TokenCardProps) {
+  const { account } = useWalletInfo();
   const [openSwitchChainDialog, setOpenSwitchChainDialog] = useState(false);
   const theme = useTheme();
-  const getBalance = useGetBalance();
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
-  const balance = token ? getBalance(token) : null;
+  const tokenQuery = useQuery(
+    tokenApi.getFetchTokenQuery(token?.chainId, token?.address, account),
+  );
+  const balance = overrideBalance ?? tokenQuery.data?.balance ?? null;
 
   useEffect(() => {
     if (token && onlyCurrentChain) {

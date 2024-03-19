@@ -24,7 +24,7 @@ import useInitTokenList, {
   InitTokenListProps,
 } from '../../hooks/Token/useInitTokenList';
 import WithExecutionDialog from '../WithExecutionDialog';
-import { useFetchBlockNumber, useFetchETHBalance } from '../../hooks/contract';
+import { useFetchBlockNumber } from '../../hooks/contract';
 import { ExecutionProps } from '../../hooks/Submission';
 import { ChainId, getRpcSingleUrlMap } from '../../constants/chains';
 import { useInitPropsToRedux } from '../../hooks/Swap';
@@ -70,7 +70,6 @@ export interface WidgetProps
 
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useInitTokenList(props);
-  useFetchETHBalance();
   useFetchBlockNumber();
   const { provider, connector } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();

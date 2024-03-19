@@ -244,6 +244,13 @@ export default class ContractRequests {
     return result as T;
   }
 
+  async getBlockNumber(chainId: ChainId) {
+    const provider = this.getBatchProvider(chainId);
+    const blockNumber = await provider.getBlockNumber();
+    provider.emit('blockNumberChanged', blockNumber);
+    return blockNumber;
+  }
+
   async getETHBalance(chainId: ChainId, account: string) {
     const provider = this.getProvider(chainId);
     const balance = await provider.getBalance(account);

@@ -94,7 +94,6 @@ export default function useExecution({
             spec.contract,
             spec.amt || BIG_ALLOWANCE,
             provider,
-            account,
           );
           tx = transaction.hash;
           setTransactionTx(tx);

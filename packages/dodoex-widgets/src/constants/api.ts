@@ -1,4 +1,4 @@
-import { ContractRequests, GraphQLRequests } from '@dodoex/api';
+import { ContractRequests, GraphQLRequests, TokenApi } from '@dodoex/api';
 import { ChainId, getRpcSingleUrlMap } from './chains';
 
 export enum APIServiceKey {
@@ -59,4 +59,7 @@ export const contractRequests = new ContractRequests({
   rpc: getRpcSingleUrlMap(),
 });
 export const tokenContractRequests = contractRequests.createContractRequests();
+export const tokenApi = new TokenApi({
+  contractRequests: tokenContractRequests,
+});
 export const graphQLRequests = new GraphQLRequests();

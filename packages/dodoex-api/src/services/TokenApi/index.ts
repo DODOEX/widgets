@@ -6,6 +6,7 @@ import BigNumber from 'bignumber.js';
 import { contractConfig, ChainId, basicTokenMap } from '../../chainConfig';
 import { getTokenBlackList } from './tokenBlackList';
 import { isSameAddress } from './utils';
+import { encodeFunctionData } from '../../helper/ContractRequests/encode';
 
 const BIG_ALLOWANCE = new BigNumber(2).pow(256).minus(1);
 
@@ -34,8 +35,17 @@ export class TokenApi {
     }
   }
 
-  utils = {
+  static utils = {
     isSameAddress,
+  };
+
+  static encode = {
+    approveABI(contractAddress: string, allowance: BigNumber) {
+      return encodeFunctionData(ABIName.erc20ABI, 'approve', [
+        contractAddress,
+        allowance.toFixed(),
+      ]);
+    },
   };
 
   getFetchTokenQuery(
@@ -44,6 +54,13 @@ export class TokenApi {
     account: string | undefined,
     spender?: string,
   ) {
+    let proxyContractAddress = spender;
+    let erc20HelperAddress = '';
+    if (!proxyContractAddress && chainId !== undefined) {
+      const config = contractConfig[chainId as ChainId];
+      proxyContractAddress = config.DODO_APPROVE;
+      erc20HelperAddress = config.ERC20_HELPER;
+    }
     return {
       // Unify the upper and lower case formats of queryKey into one to facilitate the use of cache
       queryKey: [
@@ -52,17 +69,18 @@ export class TokenApi {
         chainId ?? '',
         address?.toLocaleLowerCase(),
         account?.toLocaleLowerCase(),
-        spender?.toLocaleLowerCase(),
+        proxyContractAddress?.toLocaleLowerCase(),
       ],
       enabled: !!chainId && !!address && !!account,
       queryFn: async () => {
-        if (!chainId || !address || !account) return null;
+        if (!chainId || !address || !account || !proxyContractAddress)
+          return null;
         const blackList = await getTokenBlackList(chainId);
         if (blackList.includes(address)) {
           return null;
         }
         const EtherToken = basicTokenMap[chainId as ChainId];
-        if (this.utils.isSameAddress(address, EtherToken.address)) {
+        if (TokenApi.utils.isSameAddress(address, EtherToken.address)) {
           const balance = await this.contractRequests.getETHBalance(
             chainId,
             account,
@@ -81,12 +99,9 @@ export class TokenApi {
           };
         }
 
-        const { ERC20_HELPER, DODO_APPROVE } =
-          contractConfig[chainId as ChainId];
-        const proxyContractAddress = spender || DODO_APPROVE;
         const detail = await this.contractRequests.batchCallQuery(chainId, {
           abiName: ABIName.erc20Helper,
-          contractAddress: ERC20_HELPER,
+          contractAddress: erc20HelperAddress,
           method: 'isERC20',
           params: [address, account, proxyContractAddress],
         });
@@ -94,8 +109,10 @@ export class TokenApi {
         if (isOk && name) {
           const decimals = parseInt(detail.decimals, 10);
           const divisor = new BigNumber(10).pow(decimals as number);
-          const allowance = new BigNumber(detail.allownance).div(divisor);
-          const balance = new BigNumber(detail.balance).div(divisor);
+          const allowance = new BigNumber(detail.allownance.toString()).div(
+            divisor,
+          );
+          const balance = new BigNumber(detail.balance.toString()).div(divisor);
           return {
             address,
             decimals,

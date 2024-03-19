@@ -1,8 +1,11 @@
 import tokenList from '../../constants/tokenList';
 import useTokenList, { getFuzzySearchTokenSort } from './useTokenList';
 import { renderHook } from '@testing-library/react-hooks';
+import useTokenListFetchBalance from './useTokenListFetchBalance';
 
 jest.mock('./useTokenListFetchBalance');
+
+(useTokenListFetchBalance as jest.Mock).mockReturnValue(new Map());
 
 const USDT = {
   chainId: 1,

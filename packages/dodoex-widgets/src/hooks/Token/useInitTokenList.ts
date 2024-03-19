@@ -3,11 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { unionBy, isArray } from 'lodash';
 import { AppThunkDispatch } from '../../store/actions';
-import {
-  setPopularTokenList,
-  setTokenBalances,
-  setTokenList,
-} from '../../store/actions/token';
+import { setPopularTokenList, setTokenList } from '../../store/actions/token';
 import { TokenList, TokenListType } from './type';
 import { useCurrentChainId } from '../ConnectWallet';
 import defaultTokens from '../../constants/tokenList';
@@ -40,10 +36,6 @@ export default function useInitTokenList({
     };
     computed();
   }, [tokenList, dispatch, popularTokenList]);
-
-  useEffect(() => {
-    dispatch(setTokenBalances({}));
-  }, [account, chainId]);
 
   useEffect(() => {
     dispatch(setPopularTokenList(popularTokenList ?? []));
