@@ -19,9 +19,9 @@ msgstr "Transaction Time:"
 
 #: src/hooks/Bridge/useExecuteBridgeRoute.tsx:127
 msgid "Cross Chain"
-msgstr "Cross Chain<<<<<<< HEAD"
+msgstr "Cross Chain"
 
-#: src/components/Swap/index.tsx:478
+#: src/components/Swap/index.tsx:477
 msgid "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 msgstr "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 
@@ -42,6 +42,7 @@ msgid "Balance:"
 msgstr "Balance:"
 
 #: src/widgets/PoolWidget/PoolOperate/Footer.tsx:111
+#: src/widgets/PoolWidget/PoolOperate/OperateBtn.tsx:78
 msgid "Loading info..."
 msgstr "Loading info..."
 
@@ -59,7 +60,7 @@ msgid "Withdrawal fees may apply when remove {hasFeeTokenSymbol}."
 msgstr "Withdrawal fees may apply when remove {hasFeeTokenSymbol}."
 
 #: src/components/Swap/components/ReviewDialog.tsx:291
-#: src/components/Swap/index.tsx:403
+#: src/components/Swap/index.tsx:402
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
 
@@ -69,13 +70,13 @@ msgstr "Search by token or pool address"
 
 #: src/components/WithExecutionDialog/index.tsx:109
 msgid "{0} confirmed"
-msgstr "{0} confirmed<<<<<<< HEAD"
+msgstr "{0} confirmed"
 
-#: src/components/Swap/index.tsx:510
+#: src/components/Swap/index.tsx:509
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "The current network is inconsistent with the wallet - please switch in wallet"
 
-#: src/components/Swap/index.tsx:411
+#: src/components/Swap/index.tsx:410
 msgid "Current price impact"
 msgstr "Current price impact"
 
@@ -104,11 +105,12 @@ msgstr "Enter the token symbol or address"
 msgid "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 
+#: src/components/Confirm.tsx:104
 #: src/components/SwitchChainDialog/index.tsx:139
 msgid "Confirm"
-msgstr "Confirm<<<<<<< HEAD"
+msgstr "Confirm"
 
-#: src/components/Swap/index.tsx:967
+#: src/components/Swap/index.tsx:966
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -157,6 +159,10 @@ msgstr "Slippage"
 msgid "Insufficient funds - Please retry after depositing more {EtherTokenSymbol} into your wallet"
 msgstr "Insufficient funds - Please retry after depositing more {EtherTokenSymbol} into your wallet"
 
+#: src/components/Confirm.tsx:64
+msgid "Done"
+msgstr "Done"
+
 #: src/components/SwitchChainDialog/index.tsx:94
 msgid "Are you sure swapping to another chain?"
 msgstr "Are you sure swapping to another chain?"
@@ -171,14 +177,14 @@ msgstr "Unapproved"
 
 #: src/hooks/Bridge/useSendRoute.ts:83
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
-msgstr "Insufficient cross-chain fees, need at least {0} {1}<<<<<<< HEAD"
+msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:456
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:455
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:77
 msgid "TVL"
 msgstr "TVL"
 
-#: src/components/Swap/index.tsx:666
+#: src/components/Swap/index.tsx:665
 msgid "Transaction Pending"
 msgstr "Transaction Pending"
 
@@ -213,12 +219,16 @@ msgstr "Connecting..."
 msgid "Additional Fee"
 msgstr "Additional Fee"
 
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:170
+msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
+msgstr "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
+
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:531
+#: src/components/Swap/index.tsx:530
 msgid "Fetching best price..."
 msgstr "Fetching best price..."
 
-#: src/components/Swap/index.tsx:754
+#: src/components/Swap/index.tsx:753
 msgid "Review Swap"
 msgstr "Review Swap"
 
@@ -229,23 +239,23 @@ msgstr "Select Cross Chain"
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:280
 #: src/components/Swap/components/SettingsDialog/index.tsx:53
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
-msgstr "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote.<<<<<<< HEAD"
+msgstr "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
 #: src/widgets/PoolWidget/PoolOperate/Ratio.tsx:200
 msgid "Any Ratio"
 msgstr "Any Ratio"
 
-#: src/components/Swap/index.tsx:673
+#: src/components/Swap/index.tsx:672
 msgid "Select Tokens"
 msgstr "Select Tokens"
 
-#: src/components/Swap/index.tsx:846
+#: src/components/Swap/index.tsx:845
 msgid "The setting has been switched to swap mode"
 msgstr "The setting has been switched to swap mode"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:586
-#: src/components/Swap/index.tsx:715
+#: src/components/Swap/index.tsx:585
+#: src/components/Swap/index.tsx:714
 msgid "Quote not available"
 msgstr "Quote not available"
 
@@ -253,11 +263,11 @@ msgstr "Quote not available"
 msgid "Add Liquidity"
 msgstr "Add Liquidity"
 
-#: src/components/Swap/index.tsx:700
+#: src/components/Swap/index.tsx:699
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
-#: src/hooks/Token/useTokenStatus.ts:121
+#: src/hooks/Token/useTokenStatus.ts:120
 msgid "Reset"
 msgstr "Reset"
 
@@ -306,13 +316,13 @@ msgstr "Auto"
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:202
 #: src/components/WithExecutionDialog/index.tsx:201
 msgid "Tx"
-msgstr "Tx<<<<<<< HEAD"
+msgstr "Tx"
 
-#: src/components/Swap/index.tsx:744
+#: src/components/Swap/index.tsx:743
 msgid "Review Cross Chain"
 msgstr "Review Cross Chain"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:387
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:386
 msgid "Mining"
 msgstr "Mining"
 
@@ -336,11 +346,12 @@ msgstr "Wallet incompatibility"
 msgid "Settings"
 msgstr "Settings"
 
-#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:328
+#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:326
 msgid "Details"
 msgstr "Details"
 
 #: src/widgets/PoolWidget/PoolOperate/Footer.tsx:104
+#: src/widgets/PoolWidget/PoolOperate/OperateBtn.tsx:71
 msgid "Pending"
 msgstr "Pending"
 
@@ -365,7 +376,7 @@ msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
 #: src/widgets/PoolWidget/list/hooks/usePoolListTabs.ts:20
-#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:358
+#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:356
 msgid "My Liquidity"
 msgstr "My Liquidity"
 
@@ -373,6 +384,7 @@ msgstr "My Liquidity"
 msgid "For"
 msgstr "For"
 
+#: src/widgets/PoolWidget/PoolOperate/ComparePrice.tsx:55
 #: src/widgets/PoolWidget/PoolOperate/Footer.tsx:195
 msgid "{lqAndDodoCompareText} Price Difference"
 msgstr "{lqAndDodoCompareText} Price Difference"
@@ -380,10 +392,10 @@ msgstr "{lqAndDodoCompareText} Price Difference"
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:118
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:149
 msgid "On"
-msgstr "On<<<<<<< HEAD"
+msgstr "On"
 
-#: src/components/Swap/index.tsx:683
-#: src/hooks/Token/useTokenStatus.ts:121
+#: src/components/Swap/index.tsx:682
+#: src/hooks/Token/useTokenStatus.ts:120
 msgid "Approve"
 msgstr "Approve"
 
@@ -391,6 +403,7 @@ msgstr "Approve"
 msgid "Additional routing fees set by the Widget user"
 msgstr "Additional routing fees set by the Widget user"
 
+#: src/widgets/PoolWidget/PoolOperate/ComparePrice.tsx:64
 #: src/widgets/PoolWidget/PoolOperate/Footer.tsx:204
 msgid "Current liquidity pool token price"
 msgstr "Current liquidity pool token price"
@@ -403,6 +416,11 @@ msgstr "Maximum slippage do not exceed 50%"
 msgid "Minutes"
 msgstr "Minutes"
 
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:165
+msgid "Confirm submission"
+msgstr "Confirm submission"
+
+#: src/components/Confirm.tsx:86
 #: src/components/SwitchChainDialog/index.tsx:128
 msgid "Cancel"
 msgstr "Cancel"
@@ -442,9 +460,9 @@ msgstr "Estimated transaction time"
 
 #: src/components/ConnectWallet/ConnectWalletDialog.tsx:39
 msgid "Connect to your wallet"
-msgstr "Connect to your wallet<<<<<<< HEAD"
+msgstr "Connect to your wallet"
 
-#: src/components/Swap/index.tsx:689
+#: src/components/Swap/index.tsx:688
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
@@ -452,7 +470,7 @@ msgstr "Enter an amount"
 msgid "See Details"
 msgstr "See Details"
 
-#: src/components/Swap/index.tsx:683
+#: src/components/Swap/index.tsx:682
 msgid "Approving"
 msgstr "Approving"
 
@@ -486,7 +504,8 @@ msgstr "Slippage Tolerance"
 msgid "Send to:"
 msgstr "Send to:"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:472
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:471
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:91
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
 msgid "Add"
 msgstr "Add"
@@ -510,9 +529,9 @@ msgstr "All chains"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:51
 msgid "Unable to SETTLE during the cooling-off period"
-msgstr "Unable to SETTLE during the cooling-off period<<<<<<< HEAD"
+msgstr "Unable to SETTLE during the cooling-off period"
 
-#: src/components/Swap/index.tsx:844
+#: src/components/Swap/index.tsx:843
 msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
@@ -528,7 +547,7 @@ msgstr "If your transaction time exceeds the deadline, your transaction will be 
 msgid "Detail"
 msgstr "Detail"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:418
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:417
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:57
 #: src/widgets/PoolWidget/list/components/TokenListPoolItem.tsx:101
 msgid "APY"
@@ -548,20 +567,25 @@ msgstr "Cross Chain Summary"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:20
 msgid "SafeERC20: low-level call failed. Please contact the DODO team."
-msgstr "SafeERC20: low-level call failed. Please contact the DODO team.<<<<<<< HEAD"
+msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
 
+#: src/widgets/PoolWidget/PoolOperate/ComparePrice.tsx:67
 #: src/widgets/PoolWidget/PoolOperate/Footer.tsx:207
 msgid "differs from the price quoted by DODO by {lqAndDodoCompareText}"
 msgstr "differs from the price quoted by DODO by {lqAndDodoCompareText}"
 
-#: src/components/Swap/index.tsx:547
+#: src/components/Swap/index.tsx:546
 msgid "Unsupported network - switch to trade"
 msgstr "Unsupported network - switch to trade"
 
-#: src/components/Swap/index.tsx:839
+#: src/components/Swap/index.tsx:838
 #: src/hooks/Swap/useExecuteSwap.ts:56
 msgid "Swap"
 msgstr "Swap"
+
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:173
+msgid "There is risk of being arbitraged if adding this liquidity."
+msgstr "There is risk of being arbitraged if adding this liquidity."
 
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:174
 msgid "Source"
@@ -585,8 +609,9 @@ msgstr "Close"
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:95
 msgid "Transaction Deadline"
-msgstr "Transaction Deadline<<<<<<< HEAD"
+msgstr "Transaction Deadline"
 
-#: src/components/Swap/index.tsx:726
+#: src/components/Swap/index.tsx:725
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:91
 msgid "Insufficient balance"
 msgstr "Insufficient balance"

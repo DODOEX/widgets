@@ -37,7 +37,7 @@ export default function TokenListPoolItem({
             )
           : undefined;
         const quoteApy =
-          PoolApi.utils.getHasQuoteSupply(item.type as PoolType) && item.apy
+          PoolApi.utils.singleSideLp(item.type as PoolType) && item.apy
             ? formatApy(
                 new BigNumber(item.apy.transactionQuoteApy).plus(
                   item.apy.miningQuoteApy ?? 0,

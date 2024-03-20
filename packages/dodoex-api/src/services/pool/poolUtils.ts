@@ -5,7 +5,7 @@ export const poolUtils = {
     return ['DSP', 'LPTOKEN', 'V3CLASSICAL'].includes(type);
   },
 
-  getHasQuoteSupply(type: PoolType): boolean {
+  singleSideLp(type: PoolType): boolean {
     return ['CLASSICAL', 'V3CLASSICAL', 'DPP'].includes(type);
   },
 

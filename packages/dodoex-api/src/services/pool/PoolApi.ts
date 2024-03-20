@@ -1,3 +1,4 @@
+import { parseFixed } from '@ethersproject/bignumber';
 import ContractRequests, {
   ContractRequestsConfig,
   Query,
@@ -12,6 +13,7 @@ import { contractConfig, ChainId } from '../../chainConfig';
 import { PMMHelper } from './pmm/pmmHelper';
 import { PMMState } from './pmm/PMMState';
 import { convertPmmParams, PmmData } from './pmm/convertPmmParams';
+import { encodeFunctionData } from '../../helper/ContractRequests/encode';
 
 export interface PoolApiProps {
   contractRequests?: ContractRequests;
@@ -74,21 +76,637 @@ export class PoolApi {
 
   static utils = poolUtils;
 
+  static encode = {
+    /**
+     * @notice Create DSP pool
+     * @param baseToken     {"decimals","address"}
+     * @param quoteToken    {"decimals","address"}
+     * @param baseInAmount  The initial amount of liquidity base provided (considering decimals)
+     * @param quoteInAmount The initial amount of liquidity quote provided (considering decimals)
+     * @param lpFeeRate     Example: 0.0001 is passed in 1
+     * @param i             Decimals are not considered
+     * @param k             Scope: 0 => 1
+     * @param deadline      Deadline timestamp in seconds
+     */
+    async createDSPPoolABI(
+      chainId: number,
+      baseToken: { decimals: number; address: string },
+      quoteToken: { decimals: number; address: string },
+      baseInAmount: string,
+      quoteInAmount: string,
+      lpFeeRate: number,
+      i: string,
+      k: number,
+      deadline: number,
+      isOpenTWAP = false,
+    ) {
+      const { DODO_DSP_PROXY } = contractConfig[chainId as ChainId];
+      const data = await encodeFunctionData(
+        ABIName.dodoDspProxy,
+        'createDODOStablePair',
+        [
+          baseToken.address,
+          quoteToken.address,
+          baseInAmount,
+          quoteInAmount,
+          new BigNumber(lpFeeRate)
+            .div(10000)
+            .multipliedBy(10 ** 18)
+            .toString(),
+          parseFixed(
+            new BigNumber(i).toString(),
+            18 - baseToken.decimals + quoteToken.decimals,
+          ).toString(),
+          parseFixed(new BigNumber(k).toString(), 18).toString(),
+          isOpenTWAP,
+          deadline,
+        ],
+      );
+
+      return {
+        to: DODO_DSP_PROXY,
+        data,
+      };
+    },
+
+    /**
+     * @notice Create DVM pool
+     * @param baseToken     {"decimals","address"}
+     * @param quoteToken    {"decimals","address"}
+     * @param baseInAmount  The initial amount of liquidity base provided (considering decimals)
+     * @param quoteInAmount The initial amount of liquidity quote provided (considering decimals)
+     * @param lpFeeRate     Example: 0.0001 is passed in 1
+     * @param i             Decimals are not considered
+     * @param k             Scope: 0 => 1
+     * @param deadline      Deadline timestamp in seconds
+     */
+    async createDVMPoolABI(
+      chainId: number,
+      baseToken: { decimals: number; address: string },
+      quoteToken: { decimals: number; address: string },
+      baseInAmount: string,
+      quoteInAmount: string,
+      lpFeeRate: number,
+      i: string,
+      k: number,
+      deadline: number,
+      isOpenTWAP = false,
+    ) {
+      const { DODO_PROXY } = contractConfig[chainId as ChainId];
+      const data = await encodeFunctionData(
+        ABIName.dodoProxyV2,
+        'createDODOVendingMachine',
+        [
+          baseToken.address,
+          quoteToken.address,
+          baseInAmount,
+          quoteInAmount,
+          new BigNumber(lpFeeRate)
+            .div(10000)
+            .multipliedBy(10 ** 18)
+            .toString(),
+          parseFixed(
+            new BigNumber(i).toString(),
+            18 - baseToken.decimals + quoteToken.decimals,
+          ).toString(),
+          parseFixed(new BigNumber(k).toString(), 18).toString(),
+          isOpenTWAP,
+          deadline,
+        ],
+      );
+
+      return {
+        to: DODO_PROXY,
+        data,
+      };
+    },
+
+    /**
+     * @notice Create DPP pool
+     * @param baseToken     {"decimals","address"}
+     * @param quoteToken    {"decimals","address"}
+     * @param baseInAmount  The initial amount of liquidity base provided (considering decimals)
+     * @param quoteInAmount The initial amount of liquidity quote provided (considering decimals)
+     * @param lpFeeRate     Example: 0.0001 is passed in 1
+     * @param i             Decimals are not considered
+     * @param k             Scope: 0 => 1
+     * @param deadline      Deadline timestamp in seconds
+     */
+    async createDPPPoolABI(
+      chainId: number,
+      baseToken: { decimals: number; address: string },
+      quoteToken: { decimals: number; address: string },
+      baseInAmount: string,
+      quoteInAmount: string,
+      lpFeeRate: number,
+      i: string,
+      k: number,
+      deadline: number,
+      isOpenTWAP = false,
+    ) {
+      const { DODO_DPP_PROXY } = contractConfig[chainId as ChainId];
+      const data = await encodeFunctionData(
+        ABIName.dodoDppProxy,
+        'createDODOPrivatePool',
+        [
+          baseToken.address,
+          quoteToken.address,
+          baseInAmount,
+          quoteInAmount,
+          new BigNumber(lpFeeRate)
+            .div(10000)
+            .multipliedBy(10 ** 18)
+            .toString(),
+          parseFixed(
+            new BigNumber(i).toString(),
+            18 - baseToken.decimals + quoteToken.decimals,
+          ).toString(),
+          parseFixed(new BigNumber(k).toString(), 18).toString(),
+          isOpenTWAP,
+          deadline,
+        ],
+      );
+
+      return {
+        to: DODO_DPP_PROXY,
+        data,
+      };
+    },
+
+    /**
+     * @notice Remove liquidity from the DPP pool and directly call DPPAdmin for vehicle deflation tokens (no ETH automatic conversion to WETH function).
+     * @param _OWNER_         _OWNER_: getDPPOwnerProxyAddress
+     * @param newLpFeeRate    Example: 0.0001 is passed in 1
+     * @param newI            Decimals are not considered
+     * @param newK            Scope: 0 => 1
+     * @param baseOutAmount   Number of base extracted (considering decimals)
+     * @param quoteOutAmount  Number of quote extracted (considering decimals)
+     * @param minBaseReserve  Protection mechanism (minimum baseReserve, consider decimals)
+     * @param minQuoteReserve Protection mechanism (minimum quoteReserve, consider decimals)
+     * @param baseDecimals    baseToken decimals
+     * @param quoteDecimals   quoteToken decimals
+     */
+    async removeDPPPoolABI(
+      _OWNER_: string,
+      newLpFeeRate: number,
+      newI: number,
+      newK: number,
+      baseOutAmount: string,
+      quoteOutAmount: string,
+      minBaseReserve: string,
+      minQuoteReserve: string,
+      baseDecimals: number,
+      quoteDecimals: number,
+    ) {
+      const _newLpFeeRate = new BigNumber(newLpFeeRate)
+        .div(10000)
+        .multipliedBy(10 ** 18)
+        .toString();
+      const _newI = parseFixed(
+        new BigNumber(newI).toString(),
+        18 - baseDecimals + quoteDecimals,
+      ).toString();
+      const _newK = parseFixed(new BigNumber(newK).toString(), 18).toString();
+      const data = await encodeFunctionData(ABIName.dodoDPPAdmin, 'reset', [
+        '0x0000000000000000000000000000000000000000',
+        _newLpFeeRate,
+        _newI,
+        _newK,
+        baseOutAmount,
+        quoteOutAmount,
+        minBaseReserve,
+        minQuoteReserve,
+      ]);
+      return {
+        to: _OWNER_,
+        data,
+      };
+    },
+
+    /**
+     * @notice Reset DPP pool
+     * @param dppAddress      DPP pool address
+     * @param newLpFeeRate    Example: 0.0001 is passed in 1
+     * @param newI           （Decimals are not considered
+     * @param newK            Scope: 0 => 1
+     * @param baseInAmount    The initial amount of liquidity base provided (considering decimals)
+     * @param quoteInAmount   The initial amount of liquidity quote provided (considering decimals)
+     * @param baseOutAmount   Number of base extracted (considering decimals)
+     * @param quoteOutAmount  Number of quote extracted (considering decimals)
+     * @param minBaseReserve  Protection mechanism (minimum baseReserve, consider decimals)
+     * @param minQuoteReserve Protection mechanism (minimum quoteReserve, consider decimals)
+     * @param flag            0 - ERC20, 1 - baseInETH, 2 - quoteInETH, 3 - baseOutETH, 4 - quoteOutETH
+     * @param baseDecimals    baseToken  decimals
+     * @param quoteDecimals   quoteToken decimals
+     * @param deadline        Deadline timestamp in seconds
+     */
+    async resetDPPPoolABI(
+      chainId: number,
+      dppAddress: string,
+      newLpFeeRate: number,
+      newI: number,
+      newK: number,
+      baseInAmount: string,
+      quoteInAmount: string,
+      baseOutAmount: string,
+      quoteOutAmount: string,
+      minBaseReserve: string,
+      minQuoteReserve: string,
+      flag: number,
+      baseDecimals: number,
+      quoteDecimals: number,
+      deadline: number,
+    ) {
+      const { DODO_DPP_PROXY } = contractConfig[chainId as ChainId];
+      const _newLpFeeRate = new BigNumber(newLpFeeRate)
+        .div(10000)
+        .multipliedBy(10 ** 18)
+        .toString();
+      const _newI = parseFixed(
+        new BigNumber(newI).toString(),
+        18 - baseDecimals + quoteDecimals,
+      ).toString();
+      const _newK = parseFixed(new BigNumber(newK).toString(), 18).toString();
+      const data = await encodeFunctionData(
+        ABIName.dodoDppProxy,
+        'resetDODOPrivatePool',
+        [
+          dppAddress,
+          [_newLpFeeRate, _newI, _newK],
+          [baseInAmount, quoteInAmount, baseOutAmount, quoteOutAmount],
+          flag,
+          minBaseReserve,
+          minQuoteReserve,
+          deadline,
+        ],
+      );
+      return {
+        to: DODO_DPP_PROXY,
+        data,
+      };
+    },
+
+    /**
+     * @notice add liquidity to DSP pool
+     * @param poolAddress     pool address
+     * @param baseInAmount    The initial amount of liquidity base provided (considering decimals)
+     * @param quoteInAmount   The initial amount of liquidity quote provided (considering decimals)
+     * @param baseMinAmount  Minimum number of base to add (considering decimals) (slippage protection)
+     * @param quoteMinAmount Minimum number of quote to add (considering decimals) (slippage protection)
+     * @param flag            0 - ERC20, 1 - baseInETH, 2 - quoteInETH, 3 - baseOutETH, 4 - quoteOutETH
+     * @param deadline        Deadline timestamp in seconds
+     */
+    async addDSPLiquidityABI(
+      chainId: number,
+      dspAddress: string,
+      baseInAmount: string,
+      quoteInAmount: string,
+      baseMinAmount: string,
+      quoteMinAmount: string,
+      flag: number,
+      deadline: number,
+    ) {
+      if (!baseMinAmount || baseMinAmount === '0') {
+        throw new Error('Invalid baseMinAmount');
+      }
+      const { DODO_DSP_PROXY } = contractConfig[chainId as ChainId];
+      const data = await encodeFunctionData(
+        ABIName.dodoDspProxy,
+        'addDSPLiquidity',
+        [
+          dspAddress,
+          baseInAmount,
+          quoteInAmount,
+          baseMinAmount,
+          quoteMinAmount,
+          flag,
+          deadline,
+        ],
+      );
+      return {
+        to: DODO_DSP_PROXY,
+        data,
+      };
+    },
+
+    /**
+     * @notice add liquidity to DVM pool
+     * @param poolAddress     pool address
+     * @param baseInAmount    The initial amount of liquidity base provided (considering decimals)
+     * @param quoteInAmount   The initial amount of liquidity quote provided (considering decimals)
+     * @param baseMinAmount  Minimum number of base to add (considering decimals) (slippage protection)
+     * @param quoteMinAmount Minimum number of quote to add (considering decimals) (slippage protection)
+     * @param flag            0 - ERC20, 1 - baseInETH, 2 - quoteInETH, 3 - baseOutETH, 4 - quoteOutETH
+     * @param deadline        Deadline timestamp in seconds
+     */
+    async addDVMLiquidityABI(
+      chainId: number,
+      dvmAddress: string,
+      baseInAmount: string,
+      quoteInAmount: string,
+      baseMinAmount: string,
+      quoteMinAmount: string,
+      flag: number,
+      deadline: number,
+    ) {
+      if (!baseMinAmount || baseMinAmount === '0') {
+        throw new Error('Invalid baseMinAmount');
+      }
+      const { DODO_PROXY } = contractConfig[chainId as ChainId];
+      const data = await encodeFunctionData(
+        ABIName.dodoProxyV2,
+        'addDVMLiquidity',
+        [
+          dvmAddress,
+          baseInAmount,
+          quoteInAmount,
+          baseMinAmount,
+          quoteMinAmount,
+          flag,
+          deadline,
+        ],
+      );
+      return {
+        to: DODO_PROXY,
+        data,
+      };
+    },
+
+    /**
+     * @notice Remove liquidity from DSP pool
+     * @param poolAddress     pool address
+     * @param assetTo         Remove the fund sending address (if the received funds have ETH, this value can be empty)
+     * @param sharesAmount    Number of Shares destroyed (considering Decimals)
+     * @param baseMinAmount   Minimum number of base to add (considering decimals) (slippage protection)
+     * @param quoteMinAmount  Minimum number of quote to add (considering decimals) (slippage protection)
+     * @param isUnWrap        Whether to convert to ETH
+     * @param deadline        Deadline timestamp in seconds
+     */
+    async removeDSPLiquidityABI(
+      chainId: number,
+      dspAddress: string,
+      assetTo: string,
+      sharesAmount: string,
+      baseMinAmount: string,
+      quoteMinAmount: string,
+      isUnWrap: boolean,
+      deadline: number,
+    ) {
+      if (!(chainId == 28 || chainId == 69)) {
+        const { CALLEE_HELPER } = contractConfig[chainId as ChainId];
+        if (isUnWrap) assetTo = CALLEE_HELPER;
+      }
+      if (!baseMinAmount || baseMinAmount === '0') {
+        throw new Error('Invalid baseMinAmount');
+      }
+      const data = await encodeFunctionData(ABIName.dodoDSP, 'sellShares', [
+        sharesAmount,
+        assetTo,
+        baseMinAmount,
+        quoteMinAmount,
+        isUnWrap ? '0x00' : '0x',
+        deadline,
+      ]);
+      return {
+        to: dspAddress,
+        data,
+      };
+    },
+
+    /**
+     * @notice Remove liquidity from DVM pool
+     * @param poolAddress     pool address
+     * @param assetTo         Remove the fund sending address (if the received funds have ETH, this value can be empty)
+     * @param sharesAmount    Number of Shares destroyed (considering Decimals)
+     * @param baseMinAmount   Minimum number of base to add (considering decimals) (slippage protection)
+     * @param quoteMinAmount  Minimum number of quote to add (considering decimals) (slippage protection)
+     * @param isUnWrap        Whether to convert to ETH
+     * @param deadline        Deadline timestamp in seconds
+     */
+    async removeDVMLiquidityABI(
+      chainId: number,
+      dvmAddress: string,
+      assetTo: string,
+      sharesAmount: string,
+      baseMinAmount: string,
+      quoteMinAmount: string,
+      isUnWrap: boolean,
+      deadline: number,
+    ) {
+      if (!(chainId == 28 || chainId == 69)) {
+        const { CALLEE_HELPER } = contractConfig[chainId as ChainId];
+        if (isUnWrap) assetTo = CALLEE_HELPER;
+      }
+      if (!baseMinAmount || baseMinAmount === '0') {
+        throw new Error('Invalid baseMinAmount');
+      }
+      const data = await encodeFunctionData(ABIName.dodoDVM, 'sellShares', [
+        sharesAmount,
+        assetTo,
+        baseMinAmount,
+        quoteMinAmount,
+        isUnWrap ? '0x00' : '0x',
+        deadline,
+      ]);
+      return {
+        to: dvmAddress,
+        data,
+      };
+    },
+
+    /**
+     * @notice add liquidity to Classical pool
+     * @param poolAddress     pool address
+     * @param baseInAmount    The initial amount of liquidity base provided (considering decimals)
+     * @param quoteInAmount   The initial amount of liquidity quote provided (considering decimals)
+     * @param baseLpMinAmount  Get the minimum number of baseShares (considering decimals) (slippage protection)
+     * @param quoteLpMinAmount Get the minimum number of quoteShares (considering decimals) (slippage protection)
+     * @param flag            0 - ERC20, 1 - baseInETH, 2 - quoteInETH, 3 - baseOutETH, 4 - quoteOutETH
+     * @param deadline        Deadline timestamp in seconds
+     */
+    async addClassicalLiquidityABI(
+      chainId: number,
+      poolAddress: string,
+      baseInAmount: string,
+      quoteInAmount: string,
+      baseLpMinAmount: string,
+      quoteLpMinAmount: string,
+      flag: number,
+      deadline: number,
+    ) {
+      const { DODO_PROXY } = contractConfig[chainId as ChainId];
+      const data = await encodeFunctionData(
+        ABIName.dodoProxyV2,
+        'addLiquidityToV1',
+        [
+          poolAddress,
+          baseInAmount,
+          quoteInAmount,
+          baseLpMinAmount,
+          quoteLpMinAmount,
+          flag,
+          deadline,
+        ],
+      );
+      return {
+        to: DODO_PROXY,
+        data,
+      };
+    },
+
+    /**
+     * @notice Remove base liquidity to Classical pool
+     * @param poolAddress     pool address
+     * @param baseOutAmount   The number of bases you wish to remove (considering decimals)
+     * @param baseOutMinAmount   Minimum number of base to remove (considering decimals) (slippage protection)
+     */
+    async removeClassicalBaseABI(
+      chainId: number,
+      poolAddress: string,
+      baseOutAmount: string,
+      baseOutMinAmount: string,
+    ) {
+      const { DODO_V1_PAIR_PROXY } = contractConfig[chainId as ChainId];
+      let data = '';
+      let to = '';
+      if (DODO_V1_PAIR_PROXY) {
+        to = DODO_V1_PAIR_PROXY;
+        data = await encodeFunctionData(
+          ABIName.dodoV1PairProxy,
+          'withdrawBase',
+          [poolAddress, baseOutAmount, baseOutMinAmount],
+        );
+      } else {
+        to = poolAddress;
+        data = await encodeFunctionData(ABIName.dodoPair, 'withdrawBase', [
+          baseOutAmount,
+        ]);
+      }
+      return {
+        to,
+        data,
+      };
+    },
+
+    /**
+     * @notice Remove all base liquidity to Classical pool
+     * @param poolAddress     pool address
+     * @param baseOutMinAmount   Minimum number of base to remove (considering decimals) (slippage protection)
+     */
+    async removeMaxClassicalBaseABI(
+      chainId: number,
+      poolAddress: string,
+      baseOutMinAmount: string,
+    ) {
+      const { DODO_V1_PAIR_PROXY } = contractConfig[chainId as ChainId];
+      let data = '';
+      let to = '';
+      if (DODO_V1_PAIR_PROXY) {
+        to = DODO_V1_PAIR_PROXY;
+        data = await encodeFunctionData(
+          ABIName.dodoV1PairProxy,
+          'withdrawAllBase',
+          [poolAddress, baseOutMinAmount],
+        );
+      } else {
+        to = poolAddress;
+        data = await encodeFunctionData(
+          ABIName.dodoPair,
+          'withdrawAllBase',
+          [],
+        );
+      }
+      return {
+        to,
+        data,
+      };
+    },
+
+    /**
+     * @notice Remove quote liquidity to Classical pool
+     * @param poolAddress     pool address
+     * @param quoteOutAmount   The number of bases you wish to remove (considering decimals)
+     * @param quoteOutMinAmount   Minimum number of quote to remove (considering decimals) (slippage protection)
+     */
+    async removeClassicalQuoteABI(
+      chainId: number,
+      poolAddress: string,
+      quoteOutAmount: string,
+      quoteOutMinAmount: string,
+    ) {
+      const { DODO_V1_PAIR_PROXY } = contractConfig[chainId as ChainId];
+      let data = '';
+      let to = '';
+      if (DODO_V1_PAIR_PROXY) {
+        to = DODO_V1_PAIR_PROXY;
+        data = await encodeFunctionData(
+          ABIName.dodoV1PairProxy,
+          'withdrawQuote',
+          [poolAddress, quoteOutAmount, quoteOutMinAmount],
+        );
+      } else {
+        to = poolAddress;
+        data = await encodeFunctionData(ABIName.dodoPair, 'withdrawQuote', [
+          quoteOutAmount,
+        ]);
+      }
+      return {
+        to,
+        data,
+      };
+    },
+
+    /**
+     * @notice Remove all quote liquidity to Classical pool
+     * @param poolAddress     pool address
+     * @param baseOutMinAmount   Minimum number of quote to remove (considering decimals) (slippage protection)
+     */
+    async removeMaxClassicalQuoteABI(
+      chainId: number,
+      poolAddress: string,
+      quoteOutMinAmount: string,
+    ) {
+      const { DODO_V1_PAIR_PROXY } = contractConfig[chainId as ChainId];
+      let data = '';
+      let to = '';
+      if (DODO_V1_PAIR_PROXY) {
+        to = DODO_V1_PAIR_PROXY;
+        data = await encodeFunctionData(
+          ABIName.dodoV1PairProxy,
+          'withdrawAllQuote',
+          [poolAddress, quoteOutMinAmount],
+        );
+      } else {
+        to = poolAddress;
+        data = await encodeFunctionData(
+          ABIName.dodoPair,
+          'withdrawAllQuote',
+          [],
+        );
+      }
+      return {
+        to,
+        data,
+      };
+    },
+  };
+
   /**
    * Get existing lp balance
    * The CLASSICAL,V3CLASSICAL pool will only return base, other pools will return all
    */
   getTotalBaseLpQuery(
-    chainId: number,
+    chainId: number | undefined,
     poolAddress: string | undefined,
     type: PoolType | undefined,
     decimals: number | undefined,
   ) {
     return {
       queryKey: ['pool', 'getTotalBaseLpQuery', ...arguments],
-      enabled: !!poolAddress && !!type && decimals !== undefined,
+      enabled: !!chainId && !!poolAddress && !!type && decimals !== undefined,
       queryFn: async () => {
-        if (!poolAddress || !type || decimals === undefined) return null;
+        if (!chainId || !poolAddress || !type || decimals === undefined)
+          return null;
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'totalSupply',
           DSP: 'totalSupply',
@@ -117,16 +735,17 @@ export class PoolApi {
    * Only CLASSICAL,V3CLASSICAL pool exists
    */
   getTotalQuoteLpQuery(
-    chainId: number,
+    chainId: number | undefined,
     poolAddress: string | undefined,
     type: PoolType | undefined,
     decimals: number | undefined,
   ) {
     return {
       queryKey: ['pool', 'getTotalQuoteLp', ...arguments],
-      enabled: !!poolAddress && !!type && decimals !== undefined,
+      enabled: !!chainId && !!poolAddress && !!type && decimals !== undefined,
       queryFn: async () => {
-        if (!poolAddress || !type || decimals === undefined) return null;
+        if (!chainId || !poolAddress || !type || decimals === undefined)
+          return null;
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: null,
           DSP: null,
@@ -155,7 +774,7 @@ export class PoolApi {
    * The CLASSICAL,V3CLASSICAL pool will only return base, other pools will return all
    */
   getUserBaseLpQuery(
-    chainId: number,
+    chainId: number | undefined,
     poolAddress: string | undefined,
     type: PoolType | undefined,
     decimals: number | undefined,
@@ -163,9 +782,22 @@ export class PoolApi {
   ) {
     return {
       queryKey: ['pool', 'getUserBaseLp', ...arguments],
-      enabled: !!poolAddress && !!type && decimals !== undefined && !!account,
+      enabled:
+        !!chainId &&
+        !!poolAddress &&
+        !!type &&
+        decimals !== undefined &&
+        !!account,
       queryFn: async () => {
-        if (!(!!poolAddress && !!type && decimals !== undefined && !!account))
+        if (
+          !(
+            !!chainId &&
+            !!poolAddress &&
+            !!type &&
+            decimals !== undefined &&
+            !!account
+          )
+        )
           return null;
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'balanceOf',
@@ -196,7 +828,7 @@ export class PoolApi {
    * Only CLASSICAL,V3CLASSICAL pool exists
    */
   getUserQuoteLpQuery(
-    chainId: number,
+    chainId: number | undefined,
     poolAddress: string | undefined,
     type: PoolType | undefined,
     decimals: number | undefined,
@@ -204,9 +836,22 @@ export class PoolApi {
   ) {
     return {
       queryKey: ['pool', 'getUserQuoteLp', ...arguments],
-      enabled: !!poolAddress && !!type && decimals !== undefined && !!account,
+      enabled:
+        !!chainId &&
+        !!poolAddress &&
+        !!type &&
+        decimals !== undefined &&
+        !!account,
       queryFn: async () => {
-        if (!(!!poolAddress && !!type && decimals !== undefined && !!account))
+        if (
+          !(
+            !!chainId &&
+            !!poolAddress &&
+            !!type &&
+            decimals !== undefined &&
+            !!account
+          )
+        )
           return null;
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: null,
@@ -236,7 +881,7 @@ export class PoolApi {
    * Get the total deposited lp balance
    */
   getReserveLpQuery(
-    chainId: number,
+    chainId: number | undefined,
     poolAddress: string | undefined,
     type: PoolType | undefined,
     baseDecimals: number | undefined,
@@ -254,6 +899,7 @@ export class PoolApi {
     return {
       queryKey: ['pool', 'getReserveLp', ...arguments],
       enabled:
+        !!chainId &&
         !!poolAddress &&
         !!type &&
         baseDecimals !== undefined &&
@@ -261,6 +907,7 @@ export class PoolApi {
       queryFn: async () => {
         if (
           !(
+            !!chainId &&
             !!poolAddress &&
             !!type &&
             baseDecimals !== undefined &&
@@ -300,7 +947,7 @@ export class PoolApi {
    * Get Classical equilibrium target
    */
   getClassicalTargetQuery(
-    chainId: number,
+    chainId: number | undefined,
     poolAddress: string | undefined,
     type: PoolType | undefined,
     baseDecimals: number | undefined,
@@ -309,6 +956,7 @@ export class PoolApi {
     return {
       queryKey: ['pool', 'getClassicalTargetQuery', ...arguments],
       enabled:
+        !!chainId &&
         !!poolAddress &&
         !!type &&
         baseDecimals !== undefined &&
@@ -316,6 +964,7 @@ export class PoolApi {
       queryFn: async () => {
         if (
           !(
+            !!chainId &&
             !!poolAddress &&
             !!type &&
             baseDecimals !== undefined &&
@@ -339,7 +988,7 @@ export class PoolApi {
   }
 
   getTotalBaseMiningLpQuery(
-    chainId: number,
+    chainId: number | undefined,
     baseMiningContractAddress: string | undefined,
     type: PoolType | undefined,
     baseLpTokenAddress: string | undefined,
@@ -349,6 +998,7 @@ export class PoolApi {
     return {
       queryKey: ['pool', 'getTotalBaseMiningLp', ...arguments],
       enabled:
+        !!chainId &&
         !!baseMiningContractAddress &&
         !!type &&
         decimals !== undefined &&
@@ -356,6 +1006,7 @@ export class PoolApi {
       queryFn: async () => {
         if (
           !(
+            !!chainId &&
             !!baseMiningContractAddress &&
             !!type &&
             decimals !== undefined &&
@@ -402,7 +1053,7 @@ export class PoolApi {
   }
 
   getTotalQuoteMiningLpQuery(
-    chainId: number,
+    chainId: number | undefined,
     quoteMiningContractAddress: string | undefined,
     type: PoolType | undefined,
     quoteLpTokenAddress: string | undefined,
@@ -412,12 +1063,18 @@ export class PoolApi {
     return {
       queryKey: ['pool', 'getTotalQuoteMiningLp', ...arguments],
       enabled:
+        !!chainId &&
         !!quoteMiningContractAddress &&
         !!type &&
         decimals !== undefined &&
         (isV3Mining || !!quoteLpTokenAddress),
       queryFn: async () => {
-        if (!quoteMiningContractAddress || !type || decimals === undefined)
+        if (
+          !chainId ||
+          !quoteMiningContractAddress ||
+          !type ||
+          decimals === undefined
+        )
           return null;
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: null,
@@ -458,7 +1115,7 @@ export class PoolApi {
   }
 
   getUserBaseMiningLpQuery(
-    chainId: number,
+    chainId: number | undefined,
     baseMiningContractAddress: string | undefined,
     type: PoolType | undefined,
     baseLpTokenAddress: string | undefined,
@@ -469,6 +1126,7 @@ export class PoolApi {
     return {
       queryKey: ['pool', 'getUserBaseMiningLp', ...arguments],
       enabled:
+        !!chainId &&
         !!account &&
         !!baseMiningContractAddress &&
         !!type &&
@@ -476,6 +1134,7 @@ export class PoolApi {
         (isV3Mining || !!baseLpTokenAddress),
       queryFn: async () => {
         if (
+          !chainId ||
           !account ||
           !baseMiningContractAddress ||
           !type ||
@@ -521,7 +1180,7 @@ export class PoolApi {
   }
 
   getUserQuoteMiningLpQuery(
-    chainId: number,
+    chainId: number | undefined,
     quoteMiningContractAddress: string | undefined,
     type: PoolType | undefined,
     quoteLpTokenAddress: string | undefined,
@@ -532,6 +1191,7 @@ export class PoolApi {
     return {
       queryKey: ['pool', 'getUserQuoteMiningLp', ...arguments],
       enabled:
+        !!chainId &&
         !!account &&
         !!quoteMiningContractAddress &&
         !!type &&
@@ -539,6 +1199,7 @@ export class PoolApi {
         (isV3Mining || !!quoteLpTokenAddress),
       queryFn: async () => {
         if (
+          !chainId ||
           !account ||
           !quoteMiningContractAddress ||
           !type ||
@@ -584,7 +1245,7 @@ export class PoolApi {
   }
 
   getPMMStateQuery(
-    chainId: number,
+    chainId: number | undefined,
     poolAddress: string | undefined,
     type: PoolType | undefined,
     baseDecimals: number | undefined,
@@ -593,12 +1254,14 @@ export class PoolApi {
     return {
       queryKey: ['pool', 'getPMMStateQuery', ...arguments],
       enabled:
+        !!chainId &&
         !!poolAddress &&
         !!type &&
         baseDecimals !== undefined &&
         quoteDecimals !== undefined,
       queryFn: async () => {
         if (
+          !chainId ||
           !poolAddress ||
           !type ||
           baseDecimals === undefined ||
@@ -668,6 +1331,25 @@ export class PoolApi {
           baseReserve: pmmParamsBG.b,
           quoteReserve: pmmParamsBG.q,
         };
+      },
+    };
+  }
+
+  getDPPOwnerProxyAddress(
+    chainId: number | undefined,
+    poolAddress: string | undefined,
+  ) {
+    return {
+      queryKey: [...arguments],
+      enabled: !!chainId && !!poolAddress,
+      queryFn: () => {
+        if (!chainId || !poolAddress) return null;
+        return this.contractRequests.batchCallQuery(chainId, {
+          abiName: ABIName.IdodoV2,
+          contractAddress: poolAddress,
+          method: '_OWNER_',
+          params: [],
+        });
       },
     };
   }

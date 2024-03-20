@@ -114,12 +114,17 @@ export function useTokenStatus(
     }, [tokenQuery.data, tokenQuery.isLoading, getApprovalState, token]);
 
   const submission = useSubmission();
+
+  const approveTitle = React.useMemo(() => {
+    if (!token) return '';
+    const prefix = needReset ? t`Reset` : t`Approve`;
+    return `${prefix} ${getTokenSymbolDisplay(token)}`;
+  }, [token, needReset, i18n._]);
+
   const submitApprove = React.useCallback(async () => {
     if (!proxyContractAddress || !account || !token) return;
-    const tokenDisp = getTokenSymbolDisplay(token);
     const amt = needReset ? new BigNumber(0) : undefined;
-    const prefix = needReset ? t`Reset` : t`Approve`;
-    const result = await submission.execute(`${prefix} ${tokenDisp}`, {
+    const result = await submission.execute(approveTitle, {
       opcode: OpCode.Approval,
       token,
       contract: proxyContractAddress,
@@ -134,7 +139,7 @@ export function useTokenStatus(
     submission,
     token,
     needReset,
-    i18n._,
+    approveTitle,
   ]);
 
   const getMaxBalance = React.useCallback(() => {
@@ -164,6 +169,7 @@ export function useTokenStatus(
     needReset,
     insufficientBalance,
     loading: tokenQuery.isLoading,
+    approveTitle,
     submitApprove,
     getMaxBalance,
   };

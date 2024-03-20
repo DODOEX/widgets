@@ -196,7 +196,7 @@ export default function Ratio({
             overflow: 'hidden',
           }}
         >
-          {pool && PoolApi.utils.getHasQuoteSupply(pool.type) ? (
+          {pool && PoolApi.utils.singleSideLp(pool.type) ? (
             <Trans>Any Ratio</Trans>
           ) : (
             <>

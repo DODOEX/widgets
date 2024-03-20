@@ -34,6 +34,9 @@ export default function QuestionTooltip({
       container={container}
       maxWidth={maxWidth}
       onlyHover
+      sx={{
+        maxWidth: 240,
+      }}
     >
       <HoverOpacity
         component={QuestionBorder}

@@ -22,6 +22,7 @@ export default function PoolOperate({ onClose, pool }: PoolOperateProps) {
         sx={{
           pb: 20,
           overflow: 'hidden',
+          flex: 1,
         }}
       >
         <Tabs

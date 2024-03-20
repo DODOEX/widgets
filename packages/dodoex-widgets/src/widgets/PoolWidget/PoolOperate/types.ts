@@ -18,5 +18,6 @@ export type OperatePool =
       type: PoolType;
       owner?: string;
       creator: string;
+      lpFeeRate: string;
     }
   | undefined;

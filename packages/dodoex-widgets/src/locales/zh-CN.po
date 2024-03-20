@@ -19,9 +19,9 @@ msgstr "交易时长:"
 
 #: src/hooks/Bridge/useExecuteBridgeRoute.tsx:127
 msgid "Cross Chain"
-msgstr "跨链桥<<<<<<< HEAD"
+msgstr "跨链桥"
 
-#: src/components/Swap/index.tsx:478
+#: src/components/Swap/index.tsx:477
 msgid "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 msgstr "当前滑点保护系数设置超过{maxSlippageWarning}%，可能会造成损失。"
 
@@ -42,6 +42,7 @@ msgid "Balance:"
 msgstr "余额:"
 
 #: src/widgets/PoolWidget/PoolOperate/Footer.tsx:111
+#: src/widgets/PoolWidget/PoolOperate/OperateBtn.tsx:78
 msgid "Loading info..."
 msgstr ""
 
@@ -59,7 +60,7 @@ msgid "Withdrawal fees may apply when remove {hasFeeTokenSymbol}."
 msgstr ""
 
 #: src/components/Swap/components/ReviewDialog.tsx:291
-#: src/components/Swap/index.tsx:403
+#: src/components/Swap/index.tsx:402
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
 
@@ -69,13 +70,13 @@ msgstr ""
 
 #: src/components/WithExecutionDialog/index.tsx:109
 msgid "{0} confirmed"
-msgstr "{0} 已确认<<<<<<< HEAD"
+msgstr "{0} 已确认"
 
-#: src/components/Swap/index.tsx:510
+#: src/components/Swap/index.tsx:509
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
-#: src/components/Swap/index.tsx:411
+#: src/components/Swap/index.tsx:410
 msgid "Current price impact"
 msgstr "当前价格冲击"
 
@@ -104,11 +105,12 @@ msgstr "输入代币符号或地址"
 msgid "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 
+#: src/components/Confirm.tsx:104
 #: src/components/SwitchChainDialog/index.tsx:139
 msgid "Confirm"
-msgstr "确认<<<<<<< HEAD"
+msgstr "确认"
 
-#: src/components/Swap/index.tsx:967
+#: src/components/Swap/index.tsx:966
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -157,6 +159,10 @@ msgstr "滑点"
 msgid "Insufficient funds - Please retry after depositing more {EtherTokenSymbol} into your wallet"
 msgstr "余额不足 - 请在钱包充值{EtherTokenSymbol}后重试"
 
+#: src/components/Confirm.tsx:64
+msgid "Done"
+msgstr ""
+
 #: src/components/SwitchChainDialog/index.tsx:94
 msgid "Are you sure swapping to another chain?"
 msgstr "是否确认切换到另一个链？"
@@ -171,14 +177,14 @@ msgstr "未授权"
 
 #: src/hooks/Bridge/useSendRoute.ts:83
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
-msgstr "跨链费用不足，至少需要 {0} {1} <<<<<<< HEAD"
+msgstr "跨链费用不足，至少需要 {0} {1} "
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:456
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:455
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:77
 msgid "TVL"
 msgstr ""
 
-#: src/components/Swap/index.tsx:666
+#: src/components/Swap/index.tsx:665
 msgid "Transaction Pending"
 msgstr "交易进行中"
 
@@ -213,12 +219,16 @@ msgstr "连接中..."
 msgid "Additional Fee"
 msgstr "额外手续费"
 
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:170
+msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
+msgstr ""
+
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:531
+#: src/components/Swap/index.tsx:530
 msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
-#: src/components/Swap/index.tsx:754
+#: src/components/Swap/index.tsx:753
 msgid "Review Swap"
 msgstr "预览交易"
 
@@ -229,23 +239,23 @@ msgstr "选择跨链桥"
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:280
 #: src/components/Swap/components/SettingsDialog/index.tsx:53
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
-msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。<<<<<<< HEAD"
+msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
 #: src/widgets/PoolWidget/PoolOperate/Ratio.tsx:200
 msgid "Any Ratio"
 msgstr ""
 
-#: src/components/Swap/index.tsx:673
+#: src/components/Swap/index.tsx:672
 msgid "Select Tokens"
 msgstr "选择代币"
 
-#: src/components/Swap/index.tsx:846
+#: src/components/Swap/index.tsx:845
 msgid "The setting has been switched to swap mode"
 msgstr "设置已切换至闪兑模式"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:586
-#: src/components/Swap/index.tsx:715
+#: src/components/Swap/index.tsx:585
+#: src/components/Swap/index.tsx:714
 msgid "Quote not available"
 msgstr "没有报价"
 
@@ -253,11 +263,11 @@ msgstr "没有报价"
 msgid "Add Liquidity"
 msgstr ""
 
-#: src/components/Swap/index.tsx:700
+#: src/components/Swap/index.tsx:699
 msgid "Fetching Price..."
 msgstr "获取价格中..."
 
-#: src/hooks/Token/useTokenStatus.ts:121
+#: src/hooks/Token/useTokenStatus.ts:120
 msgid "Reset"
 msgstr "重置"
 
@@ -306,13 +316,13 @@ msgstr ""
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:202
 #: src/components/WithExecutionDialog/index.tsx:201
 msgid "Tx"
-msgstr "交易哈希：<<<<<<< HEAD"
+msgstr "交易哈希："
 
-#: src/components/Swap/index.tsx:744
+#: src/components/Swap/index.tsx:743
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:387
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:386
 msgid "Mining"
 msgstr ""
 
@@ -336,11 +346,12 @@ msgstr "钱包不兼容"
 msgid "Settings"
 msgstr "设置"
 
-#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:328
+#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:326
 msgid "Details"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/Footer.tsx:104
+#: src/widgets/PoolWidget/PoolOperate/OperateBtn.tsx:71
 msgid "Pending"
 msgstr ""
 
@@ -365,7 +376,7 @@ msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
 #: src/widgets/PoolWidget/list/hooks/usePoolListTabs.ts:20
-#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:358
+#: src/widgets/PoolWidget/PoolOperate/LiquidityInfo.tsx:356
 msgid "My Liquidity"
 msgstr ""
 
@@ -373,6 +384,7 @@ msgstr ""
 msgid "For"
 msgstr "对于"
 
+#: src/widgets/PoolWidget/PoolOperate/ComparePrice.tsx:55
 #: src/widgets/PoolWidget/PoolOperate/Footer.tsx:195
 msgid "{lqAndDodoCompareText} Price Difference"
 msgstr ""
@@ -380,10 +392,10 @@ msgstr ""
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:118
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:149
 msgid "On"
-msgstr "在<<<<<<< HEAD"
+msgstr "在"
 
-#: src/components/Swap/index.tsx:683
-#: src/hooks/Token/useTokenStatus.ts:121
+#: src/components/Swap/index.tsx:682
+#: src/hooks/Token/useTokenStatus.ts:120
 msgid "Approve"
 msgstr "代币授权"
 
@@ -391,6 +403,7 @@ msgstr "代币授权"
 msgid "Additional routing fees set by the Widget user"
 msgstr "由 Widget 设置的额外路由费用"
 
+#: src/widgets/PoolWidget/PoolOperate/ComparePrice.tsx:64
 #: src/widgets/PoolWidget/PoolOperate/Footer.tsx:204
 msgid "Current liquidity pool token price"
 msgstr ""
@@ -403,6 +416,11 @@ msgstr "最大滑点不能超过50%"
 msgid "Minutes"
 msgstr "分钟"
 
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:165
+msgid "Confirm submission"
+msgstr ""
+
+#: src/components/Confirm.tsx:86
 #: src/components/SwitchChainDialog/index.tsx:128
 msgid "Cancel"
 msgstr "取消"
@@ -442,9 +460,9 @@ msgstr "预计交易时长"
 
 #: src/components/ConnectWallet/ConnectWalletDialog.tsx:39
 msgid "Connect to your wallet"
-msgstr "连接钱包<<<<<<< HEAD"
+msgstr "连接钱包"
 
-#: src/components/Swap/index.tsx:689
+#: src/components/Swap/index.tsx:688
 msgid "Enter an amount"
 msgstr "输入代币数量"
 
@@ -452,7 +470,7 @@ msgstr "输入代币数量"
 msgid "See Details"
 msgstr ""
 
-#: src/components/Swap/index.tsx:683
+#: src/components/Swap/index.tsx:682
 msgid "Approving"
 msgstr "授权中"
 
@@ -486,7 +504,8 @@ msgstr "滑点"
 msgid "Send to:"
 msgstr "发送至："
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:472
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:471
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:91
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
 msgid "Add"
 msgstr ""
@@ -510,9 +529,9 @@ msgstr ""
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:51
 msgid "Unable to SETTLE during the cooling-off period"
-msgstr "在冷静期无法进行清算<<<<<<< HEAD"
+msgstr "在冷静期无法进行清算"
 
-#: src/components/Swap/index.tsx:844
+#: src/components/Swap/index.tsx:843
 msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
@@ -528,7 +547,7 @@ msgstr "如果你的交易被确认的时间超过这个时间，你的交易将
 msgid "Detail"
 msgstr "详情"
 
-#: src/widgets/PoolWidget/list/AddLiquidity.tsx:418
+#: src/widgets/PoolWidget/list/AddLiquidity.tsx:417
 #: src/widgets/PoolWidget/list/components/LoadingCard.tsx:57
 #: src/widgets/PoolWidget/list/components/TokenListPoolItem.tsx:101
 msgid "APY"
@@ -548,20 +567,25 @@ msgstr "跨链桥概览"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:20
 msgid "SafeERC20: low-level call failed. Please contact the DODO team."
-msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。<<<<<<< HEAD"
+msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
 
+#: src/widgets/PoolWidget/PoolOperate/ComparePrice.tsx:67
 #: src/widgets/PoolWidget/PoolOperate/Footer.tsx:207
 msgid "differs from the price quoted by DODO by {lqAndDodoCompareText}"
 msgstr ""
 
-#: src/components/Swap/index.tsx:547
+#: src/components/Swap/index.tsx:546
 msgid "Unsupported network - switch to trade"
 msgstr "未支持网络 - 请切换后进行交易"
 
-#: src/components/Swap/index.tsx:839
+#: src/components/Swap/index.tsx:838
 #: src/hooks/Swap/useExecuteSwap.ts:56
 msgid "Swap"
 msgstr "交易"
+
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:173
+msgid "There is risk of being arbitraged if adding this liquidity."
+msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:174
 msgid "Source"
@@ -585,8 +609,9 @@ msgstr "关闭"
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:95
 msgid "Transaction Deadline"
-msgstr "交易截止时间<<<<<<< HEAD"
+msgstr "交易截止时间"
 
-#: src/components/Swap/index.tsx:726
+#: src/components/Swap/index.tsx:725
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:91
 msgid "Insufficient balance"
 msgstr "余额不足"

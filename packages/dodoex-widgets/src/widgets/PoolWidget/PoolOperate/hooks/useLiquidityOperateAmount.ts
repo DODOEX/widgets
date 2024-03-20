@@ -65,7 +65,7 @@ export function useLiquidityOperateAmount({
     };
 
   const needBindAmountChange =
-    !isSinglePool && !PoolApi.utils.getHasQuoteSupply(pool.type);
+    !isSinglePool && !PoolApi.utils.singleSideLp(pool.type);
   const baseDecimals = pool.baseToken.decimals;
   const quoteDecimals = pool.quoteToken.decimals;
 

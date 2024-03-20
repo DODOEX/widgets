@@ -1,7 +1,7 @@
 import { TokenInfo } from '../hooks/Token';
 import { basicTokenMap, ChainId } from '../constants/chains';
 import BigNumber from 'bignumber.js';
-import { toWei } from './formatter';
+import { formatReadableNumber, toWei } from './formatter';
 
 export const getTokenSymbolDisplay = (baseToken: TokenInfo): string => {
   let originSymbol = baseToken.symbol;
@@ -30,3 +30,46 @@ export const getSwapTxValue = ({
     orderValue = toWei(tokenAmount, 18);
   return `0x${orderValue.toString(16)}`;
 };
+
+export function getTokenPairCompareText({
+  fromToken,
+  toToken,
+  fromFiatPrice,
+  toFiatPrice,
+  reverse,
+  showDecimals = 1,
+}: {
+  fromToken: TokenInfo | undefined;
+  toToken: TokenInfo | undefined;
+  fromFiatPrice: BigNumber | undefined;
+  toFiatPrice: BigNumber | undefined;
+  reverse?: boolean;
+  showDecimals?: number;
+}) {
+  const result = {
+    comparePrice: null as BigNumber | null,
+    comparePriceText: '',
+    loading: true,
+  };
+  if (!fromToken || !toToken || !fromFiatPrice || !toFiatPrice) return result;
+  if (reverse) {
+    result.loading = false;
+    result.comparePrice = fromFiatPrice.div(toFiatPrice);
+    result.comparePriceText = `1 ${getTokenSymbolDisplay(
+      fromToken,
+    )} = ${formatReadableNumber({
+      input: result.comparePrice,
+      showDecimals,
+    })} ${getTokenSymbolDisplay(toToken)}`;
+  } else {
+    result.loading = false;
+    result.comparePrice = toFiatPrice.div(fromFiatPrice);
+    result.comparePriceText = `1 ${getTokenSymbolDisplay(
+      toToken,
+    )} = ${formatReadableNumber({
+      input: result.comparePrice,
+      showDecimals,
+    })} ${getTokenSymbolDisplay(fromToken)}`;
+  }
+  return result;
+}

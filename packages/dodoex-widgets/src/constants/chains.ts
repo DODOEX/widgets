@@ -10,7 +10,7 @@ export const rpcServerMap: {
     'https://eth-rpc.gateway.pokt.network',
     'https://main-rpc.linkpool.io',
   ],
-  [ChainId.GOERLI]: ['https://goerli.optimism.io/'],
+  [ChainId.GOERLI]: ['https://gateway.tenderly.co/public/goerli'],
   [ChainId.BSC]: [
     'https://bsc-dataseed1.binance.org',
     'https://bsc-dataseed2.binance.org',

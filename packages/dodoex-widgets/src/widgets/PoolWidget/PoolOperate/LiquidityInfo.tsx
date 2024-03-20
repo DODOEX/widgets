@@ -16,7 +16,6 @@ import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCo
 import TokenLogo from '../../../components/TokenLogo';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { ChainId } from '../../../constants/chains';
-import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useBalanceUpdateLoading } from '../../../hooks/Submission/useBalanceUpdateLoading';
 import { TokenInfo } from '../../../hooks/Token';
 import { useRouterStore } from '../../../router';
@@ -29,6 +28,7 @@ export interface LiquidityInfoProps {
   loading?: boolean;
   hidePoolInfo?: boolean;
   pool: OperatePool;
+  balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
 }
 
 function LiquidityBalanceItem({
@@ -41,7 +41,7 @@ function LiquidityBalanceItem({
   balanceNeedUpdateLoading,
   tokenBalanceList,
 }: {
-  chainId: number;
+  chainId: number | undefined;
   address?: string;
   token?: TokenInfo;
   quoteToken?: TokenInfo;
@@ -199,7 +199,7 @@ function LiquidityBalanceItem({
           component="a"
           target="_blank"
           rel="noopener noreferrer"
-          href={getEtherscanPage(chainId, address, 'address')}
+          href={chainId ? getEtherscanPage(chainId, address, 'address') : ''}
           sx={{
             display: 'inline-block',
             height: 16,
@@ -225,18 +225,11 @@ export default function LiquidityInfo({
   loading,
   hidePoolInfo,
   pool,
+  balanceInfo,
 }: LiquidityInfoProps) {
   const theme = useTheme();
-  const { chainId, account } = useWalletInfo();
-  const balanceInfo = usePoolBalanceInfo({
-    chainId,
-    account,
-    pool,
-  });
 
-  const hasQuoteSupply = pool
-    ? PoolApi.utils.getHasQuoteSupply(pool.type)
-    : false;
+  const hasQuoteSupply = pool ? PoolApi.utils.singleSideLp(pool.type) : false;
 
   const { isTokenLoading } = useBalanceUpdateLoading();
 
@@ -371,7 +364,7 @@ export default function LiquidityInfo({
             {hasQuoteSupply ? (
               <>
                 <LiquidityBalanceItem
-                  chainId={chainId}
+                  chainId={pool?.chainId}
                   address={pool?.address}
                   token={pool?.baseToken}
                   lpBalance={balanceInfo?.userBaseLpBalance}
@@ -390,7 +383,7 @@ export default function LiquidityInfo({
                   }
                 />
                 <LiquidityBalanceItem
-                  chainId={chainId}
+                  chainId={pool?.chainId}
                   address={pool?.address}
                   token={pool?.quoteToken}
                   lpBalance={balanceInfo?.userQuoteLpBalance}
@@ -411,7 +404,7 @@ export default function LiquidityInfo({
               </>
             ) : (
               <LiquidityBalanceItem
-                chainId={chainId}
+                chainId={pool?.chainId}
                 address={pool?.address}
                 token={pool?.quoteToken}
                 quoteToken={pool?.quoteToken}

@@ -113,7 +113,6 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
     );
   }, [fromToken, toToken]);
   const { toFiatPrice, fromFiatPrice } = useFetchFiatPrice({
-    chainId,
     toToken,
     fromToken,
   });

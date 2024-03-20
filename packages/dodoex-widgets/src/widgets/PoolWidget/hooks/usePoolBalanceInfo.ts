@@ -1,7 +1,6 @@
 import { PoolType } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import { BigNumber } from 'bignumber.js';
-import { ChainId } from '../../../constants/chains';
 import { TokenInfo } from '../../../hooks/Token';
 import { poolApi } from '../utils';
 
@@ -85,11 +84,9 @@ function getLpToTokenBalance(
 }
 
 export function usePoolBalanceInfo({
-  chainId,
   account,
   pool,
 }: {
-  chainId: ChainId;
   account?: string;
   pool?: {
     address: string;
@@ -99,7 +96,7 @@ export function usePoolBalanceInfo({
     type: PoolType;
   };
 }) {
-  const { address, type, baseToken, quoteToken } = pool ?? {};
+  const { chainId, address, type, baseToken, quoteToken } = pool ?? {};
   const baseDecimals = baseToken?.decimals;
   const quoteDecimals = quoteToken?.decimals;
 
@@ -200,6 +197,20 @@ export function usePoolBalanceInfo({
     classicalTargetQuery.refetch();
   };
 
+  const userLpToTokenBalanceLoading =
+    userLpBalanceLoading ||
+    totalBaseLpQuery.isLoading ||
+    totalQuoteLpQuery.isLoading ||
+    reserveQuery.isLoading ||
+    classicalTargetQuery.isLoading;
+
+  const userLpToTokenBalanceError =
+    userLpBalanceError ||
+    totalBaseLpQuery.isError ||
+    totalQuoteLpQuery.isError ||
+    reserveQuery.isError ||
+    classicalTargetQuery.isError;
+
   return {
     /** existing base lp balance */
     totalBaseLpBalance,
@@ -224,21 +235,15 @@ export function usePoolBalanceInfo({
 
     // loading
     userLpBalanceLoading,
-    userLpToTokenBalanceLoading:
-      userLpBalanceLoading ||
-      totalBaseLpQuery.isLoading ||
-      totalQuoteLpQuery.isLoading ||
-      reserveQuery.isLoading ||
-      classicalTargetQuery.isLoading,
+    userLpToTokenBalanceLoading,
 
     userLpBalanceError,
-    userLpToTokenBalanceError:
-      userLpBalanceError ||
-      totalBaseLpQuery.isError ||
-      totalQuoteLpQuery.isError ||
-      reserveQuery.isError ||
-      classicalTargetQuery.isError,
+    userLpToTokenBalanceError,
 
     userLpToTokenBalanceRefetch,
+
+    error: userLpToTokenBalanceError,
+    loading: userLpToTokenBalanceLoading,
+    refetch: userLpToTokenBalanceRefetch,
   };
 }

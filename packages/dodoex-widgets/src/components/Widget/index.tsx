@@ -71,7 +71,7 @@ export interface WidgetProps
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useInitTokenList(props);
   useFetchBlockNumber();
-  const { provider, connector } = useWeb3React();
+  const { provider, connector, chainId } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
   const autoConnectLoading = useSelector(getAutoConnectLoading);
   useEffect(() => {
@@ -93,6 +93,12 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     }
   }, [connector]);
   useEffect(() => {
+    contractRequests.setGetConfigProvider((getProviderChainId) => {
+      if (chainId === getProviderChainId) {
+        return provider ?? null;
+      }
+      return null;
+    });
     if (props.onProviderChanged) {
       props.onProviderChanged(provider);
     }

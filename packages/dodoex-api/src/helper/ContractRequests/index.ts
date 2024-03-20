@@ -22,7 +22,9 @@ export interface ContractRequestsConfig {
   rpc?: {
     [chainId: number]: string;
   };
-  getProvider?: (chainId: number) => JsonRpcProvider | StaticJsonRpcProvider;
+  getProvider?: (
+    chainId: number,
+  ) => JsonRpcProvider | StaticJsonRpcProvider | null;
 }
 
 export default class ContractRequests {

@@ -38,29 +38,6 @@ export function convertLiquidityTokenToTokenInfo(
   } as TokenInfo;
 }
 
-export function canOperatePool(
-  account: string | undefined,
-  {
-    owner,
-    creator,
-    type,
-  }: {
-    owner?: string | null;
-    creator?: string | null;
-    type?: PoolType;
-  },
-): boolean {
-  const actuallyOwner = owner ?? creator;
-  return (
-    type !== 'DPP' ||
-    !!(
-      account &&
-      actuallyOwner &&
-      actuallyOwner.toLocaleLowerCase() === account.toLocaleLowerCase()
-    )
-  );
-}
-
 export function convertFetchLiquidityToOperateData(
   lqData: ExcludeNone<FetchLiquidityListLqList>[0],
 ): OperatePool {
@@ -79,5 +56,6 @@ export function convertFetchLiquidityToOperateData(
     ) as TokenInfo,
     type: pair.type as PoolType,
     creator: pair.creator,
+    lpFeeRate: pair.lpFeeRate,
   };
 }
