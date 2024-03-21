@@ -22,7 +22,14 @@ export type { ModalProps } from './Modal';
 export { Checkbox } from './Checkbox';
 export { Accordion, AccordionItem } from './Accordion';
 export type { AccordionProps, AccordionItemProps } from './Accordion';
-export { Tabs, TabsList, Tab, TabPanel } from './Tabs';
+export {
+  Tabs,
+  TabsList,
+  Tab,
+  TabPanel,
+  TabsGroup,
+  TabsButtonGroup,
+} from './Tabs';
 export { Skeleton } from './Skeleton';
 export type { SkeletonProps } from './Skeleton';
 export { EmptyDataIcon, FailedIcon, useBodyMovin } from './Lottie';

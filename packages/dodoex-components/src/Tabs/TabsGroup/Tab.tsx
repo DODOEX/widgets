@@ -1,15 +1,19 @@
 import { alpha, styled } from '@mui/system';
-import { Tab as BaseTab, tabClasses, TabProps } from '@mui/base/Tab';
+import {
+  Tab as BaseTab,
+  tabClasses,
+  TabProps as BaseTabProps,
+} from '@mui/base/Tab';
 import { buttonClasses } from '@mui/base';
 import React from 'react';
-import { Box, BoxProps } from '../Box';
+import { Box, BoxProps } from '../../Box';
 
 const TabStyle = styled(BaseTab)`
   min-height: 38px;
-  padding: 8px 16px;
-  margin-bottom: 16px;
+  padding: 20px 16px;
+  margin: 0;
   border-radius: 8px;
-  color: ${({ theme }) => theme.palette.text.primary};
+  color: ${({ theme }) => theme.palette.text.secondary};
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -21,21 +25,11 @@ const TabStyle = styled(BaseTab)`
     opacity: 0.5;
   }
 
-  &.${tabClasses.selected} {
-    background-color: ${({ theme }) =>
-      alpha(theme.palette.secondary.main, 0.2)};
-    color: ${({ theme }) => theme.palette.secondary.contrastText};
-  }
-
   &.${buttonClasses.disabled} {
     opacity: 0.5;
     cursor: not-allowed;
   }
-`;
-const TabSecondaryStyle = styled(TabStyle)`
-  padding: 20px 16px;
-  margin: 0;
-  color: ${({ theme }) => theme.palette.text.secondary};
+
   &.${tabClasses.selected} {
     position: relative;
     background-color: transparent;
@@ -52,21 +46,47 @@ const TabSecondaryStyle = styled(TabStyle)`
   }
 `;
 
+const TabRoundedStyle = styled(BaseTab)`
+  min-height: 38px;
+  padding: 8px 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  color: ${({ theme }) => theme.palette.text.primary};
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+
+  &:not(.${tabClasses.selected}):hover {
+    opacity: 0.5;
+  }
+
+  &.${buttonClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.${tabClasses.selected} {
+    background-color: ${({ theme }) =>
+      alpha(theme.palette.secondary.main, 0.2)};
+    color: ${({ theme }) => theme.palette.secondary.contrastText};
+  }
+`;
+
+export interface TabProps extends BaseTabProps {
+  sx?: BoxProps['sx'];
+  variant?: 'default' | 'rounded';
+}
 export const Tab = React.forwardRef(function TabsList(
-  {
-    sx,
-    variant: variantProps,
-    ...props
-  }: TabProps & {
-    sx?: BoxProps['sx'];
-    variant?: 'default' | 'secondary';
-  },
+  { sx, variant: variantProps, ...props }: TabProps,
   ref,
 ) {
   const variant = variantProps ?? 'default';
   const variantComponentObject = {
     default: TabStyle,
-    secondary: TabSecondaryStyle,
+    rounded: TabRoundedStyle,
   };
   return (
     <Box

@@ -29,6 +29,8 @@ import FilterTokenTags from './components/FilterTokenTags';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import PoolOperate from '../PoolOperate';
 import { graphQLRequests } from '../../../constants/api';
+import { useRouterStore } from '../../../router';
+import { PageType } from '../../../router/types';
 
 export default function AddLiquidityList({
   scrollParentRef,
@@ -159,8 +161,6 @@ export default function AddLiquidityList({
   //     },
   //   }),
   // );
-
-  const goDetailPage = () => {};
 
   const filterSmallDeviceWidth = 475;
 
@@ -329,7 +329,13 @@ export default function AddLiquidityList({
                     borderRadius: 16,
                   }}
                   onClick={() => {
-                    // goDetailPage(item);
+                    useRouterStore.getState().push({
+                      type: PageType.PoolDetail,
+                      params: {
+                        chainId: item.chainId as ChainId,
+                        address: item.id as string,
+                      },
+                    });
                   }}
                 >
                   {/* title */}

@@ -229,7 +229,7 @@ export default function LiquidityInfo({
 }: LiquidityInfoProps) {
   const theme = useTheme();
 
-  const hasQuoteSupply = pool ? PoolApi.utils.singleSideLp(pool.type) : false;
+  const singleSideLp = pool ? PoolApi.utils.singleSideLp(pool.type) : false;
 
   const { isTokenLoading } = useBalanceUpdateLoading();
 
@@ -361,7 +361,7 @@ export default function LiquidityInfo({
               width: 100,
             }}
           >
-            {hasQuoteSupply ? (
+            {singleSideLp ? (
               <>
                 <LiquidityBalanceItem
                   chainId={pool?.chainId}
@@ -408,7 +408,7 @@ export default function LiquidityInfo({
                 address={pool?.address}
                 token={pool?.quoteToken}
                 quoteToken={pool?.quoteToken}
-                lpBalance={balanceInfo?.userBaseLpBalance}
+                lpBalance={balanceInfo.userBaseLpBalance}
                 lpBalanceLoading={balanceInfo.userLpBalanceLoading}
                 balanceNeedUpdateLoading={isBaseLpTokenNeedLoading}
                 tokenBalanceList={
@@ -416,12 +416,14 @@ export default function LiquidityInfo({
                     ? [
                         {
                           token: pool.baseToken,
-                          balance: balanceInfo?.userBaseLpToTokenBalance,
+                          balance: balanceInfo.userBaseLpToTokenBalance,
                           loading: balanceInfo.userLpToTokenBalanceLoading,
                         },
                         {
                           token: pool.quoteToken,
-                          balance: balanceInfo?.userQuoteLpToTokenBalance,
+                          balance:
+                            balanceInfo.userQuoteLpToTokenBalance ||
+                            new BigNumber(0),
                           loading: balanceInfo.userLpToTokenBalanceLoading,
                         },
                       ]

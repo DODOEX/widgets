@@ -166,7 +166,7 @@ export default function SlippageSetting({
         sx={{
           width: 'max-content',
           alignItems: 'right',
-          margin: theme.spacing(8, 0, 0, 'auto'),
+          margin: theme.spacing(0, 0, 0, 'auto'),
           p: theme.spacing(4, 12),
           borderRadius: 20,
           backgroundColor: 'background.paperDarkContrast',

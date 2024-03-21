@@ -1,4 +1,11 @@
-import { Tabs, TabsList, Box, Tab, TabPanel } from '@dodoex/components';
+import {
+  Tabs,
+  TabsList,
+  Box,
+  Tab,
+  TabPanel,
+  TabsButtonGroup,
+} from '@dodoex/components';
 import { useQuery } from '@tanstack/react-query';
 import { useWeb3React } from '@web3-react/core';
 import { FailedList } from '../../../components/List/FailedList';
@@ -55,21 +62,14 @@ export default function PoolOperateInner({ pool }: PoolOperateInnerProps) {
           handleChangeTab(value as OperateTab);
         }}
       >
-        <TabsList
-          sx={{
+        <TabsButtonGroup
+          tabs={operateTabs}
+          variant="inPaper"
+          tabsListSx={{
             mt: 16,
             mx: 20,
-            justifyContent: 'space-between',
           }}
-        >
-          <Box>
-            {operateTabs.map(({ key, value }) => (
-              <Tab key={key} value={key} variant="secondary">
-                {value}
-              </Tab>
-            ))}
-          </Box>
-        </TabsList>
+        />
         <TabPanel value={OperateTab.Add}>
           <AddPoolOperate pool={pool} balanceInfo={balanceInfo} />
         </TabPanel>

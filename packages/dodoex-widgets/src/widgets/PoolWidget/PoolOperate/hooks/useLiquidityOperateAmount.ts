@@ -2,7 +2,6 @@ import { PoolApi, PoolType } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import React from 'react';
-import { usePrevious } from '../../../../hooks/usePrevious';
 import { fixedInputStringToFormattedNumber } from '../../../../utils/formatter';
 import { poolApi } from '../../utils';
 import { OperatePool } from '../types';
@@ -53,7 +52,7 @@ export function useLiquidityOperateAmount({
     }
   }
 
-  const prevAddPortion = usePrevious(addPortion);
+  const prevAddPortion = React.useRef(addPortion);
 
   if (!pool || !pmm)
     return {
@@ -102,8 +101,9 @@ export function useLiquidityOperateAmount({
   // After the data on the chain changes, change quoteAmount
   if (
     needBindAmountChange &&
-    (!prevAddPortion || !addPortion.isEqualTo(prevAddPortion))
+    (!prevAddPortion.current || !addPortion.isEqualTo(prevAddPortion.current))
   ) {
+    prevAddPortion.current = addPortion;
     changeQuoteByBaseAmount(baseAmount);
   }
 

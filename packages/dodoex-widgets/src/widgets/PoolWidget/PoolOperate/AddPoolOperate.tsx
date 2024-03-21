@@ -142,7 +142,12 @@ export function AddPoolOperate({
             readOnly={balanceInfo.loading || !canOperate || isSinglePool}
           />
         )}
-        <LoadingSkeleton loading={balanceInfo.loading || amountLoading}>
+        <LoadingSkeleton
+          loading={balanceInfo.loading || amountLoading}
+          sx={{
+            mt: 8,
+          }}
+        >
           <SlippageSetting
             value={slipper}
             onChange={setSlipper}

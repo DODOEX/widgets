@@ -1,5 +1,5 @@
 import { Box, Button, useTheme } from '@dodoex/components';
-import { Tabs, TabsList, Tab, TabPanel } from '@dodoex/components';
+import { Tabs, TabsGroup, TabPanel } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import React from 'react';
 import { Plus as PlusIcon } from '@dodoex/icons';
@@ -32,17 +32,13 @@ export function Pool() {
           handleChangePoolTab(value as PoolTab);
         }}
       >
-        <TabsList
-          sx={{
+        <TabsGroup
+          tabs={tabs}
+          variant="rounded"
+          tabsListSx={{
             mb: 16,
           }}
-        >
-          {tabs.map(({ key, value }) => (
-            <Tab key={key} value={key}>
-              {value}
-            </Tab>
-          ))}
-        </TabsList>
+        />
         <Button variant={Button.Variant.outlined} fullWidth>
           <Box
             component={PlusIcon}

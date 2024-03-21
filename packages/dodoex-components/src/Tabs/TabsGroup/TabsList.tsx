@@ -1,6 +1,6 @@
 import { TabsList as BaseTabsList, TabsListProps } from '@mui/base/TabsList';
 import { useTheme } from '@mui/system';
-import { Box, BoxProps } from '../Box';
+import { Box, BoxProps } from '../../Box';
 import React from 'react';
 import AnyTouch from 'any-touch';
 

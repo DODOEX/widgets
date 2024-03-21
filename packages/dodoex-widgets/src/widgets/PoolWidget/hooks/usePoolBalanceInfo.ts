@@ -168,6 +168,7 @@ export function usePoolBalanceInfo({
         type,
         baseDecimals,
       );
+
   const userQuoteLpToTokenBalance = isPrivate
     ? quoteReserve
     : getLpToTokenBalance(
@@ -177,7 +178,7 @@ export function usePoolBalanceInfo({
         classicalQuoteTarget,
         address,
         type,
-        baseDecimals,
+        quoteDecimals,
       );
 
   const userLpBalanceLoading =

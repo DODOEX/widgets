@@ -1,4 +1,4 @@
-import { Box, Tab, TabPanel, Tabs, TabsList } from '@dodoex/components';
+import { Box, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
 import Dialog from '../../../components/Dialog';
 import {
   PoolOrMiningTab,
@@ -37,30 +37,24 @@ export default function PoolOperate({ onClose, pool }: PoolOperateProps) {
             height: '100%',
           }}
         >
-          <TabsList
-            sx={{
+          <TabsGroup
+            tabs={poolOrMiningTabs}
+            tabsListSx={{
               mx: 20,
-              justifyContent: 'space-between',
             }}
-          >
-            <Box>
-              {poolOrMiningTabs.map(({ key, value }) => (
-                <Tab key={key} value={key} variant="secondary">
-                  {value}
-                </Tab>
-              ))}
-            </Box>
-            <Box
-              component={Error}
-              sx={{
-                color: 'text.secondary',
-                cursor: 'pointer',
-              }}
-              onClick={() => {
-                onClose && onClose();
-              }}
-            />
-          </TabsList>
+            rightSlot={
+              <Box
+                component={Error}
+                sx={{
+                  color: 'text.secondary',
+                  cursor: 'pointer',
+                }}
+                onClick={() => {
+                  onClose && onClose();
+                }}
+              />
+            }
+          />
           <TabPanel
             value={PoolOrMiningTab.Liquidity}
             sx={{

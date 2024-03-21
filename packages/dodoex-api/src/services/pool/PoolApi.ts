@@ -1268,15 +1268,19 @@ export class PoolApi {
           quoteDecimals === undefined
         )
           return null;
-        let queryResult: PmmData[] = [];
+        let queryResult: PmmData | null = null;
         if (type === 'CLASSICAL') {
           const { ROUTE_V1_DATA_FETCH } = contractConfig[chainId as ChainId];
-          queryResult = await this.contractRequests.batchCallQuery(chainId, {
-            abiName: ABIName.DODOV1PmmHelperABI,
-            contractAddress: ROUTE_V1_DATA_FETCH,
-            method: 'getPairDetail',
-            params: [poolAddress],
-          });
+          const pmmHelperResult = await this.contractRequests.batchCallQuery(
+            chainId,
+            {
+              abiName: ABIName.DODOV1PmmHelperABI,
+              contractAddress: ROUTE_V1_DATA_FETCH,
+              method: 'getPairDetail',
+              params: [poolAddress],
+            },
+          );
+          queryResult = pmmHelperResult?.res?.[0];
         } else if (['DVM', 'DPP', 'LPTOKEN', 'DSP'].includes(type)) {
           queryResult = await this.contractRequests.batchCallQuery(chainId, {
             abiName: ABIName.dvmPoolABI,
@@ -1288,11 +1292,11 @@ export class PoolApi {
           throw new Error(`type: ${type} not supported`);
         }
         if (!Array.isArray(queryResult) || !queryResult.length) {
-          return null;
+          throw new Error(`queryResult is not valid.`);
         }
 
         const pmmParamsBG = convertPmmParams(
-          queryResult[0],
+          queryResult,
           baseDecimals,
           quoteDecimals,
         );
