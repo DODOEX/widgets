@@ -12,6 +12,7 @@ import type { Query } from './type';
 import { Interface } from '@ethersproject/abi';
 import { BatchProvider } from './batchProvider';
 import BigNumber from 'bignumber.js';
+import { decodeFunctionResult, encodeFunctionData } from './encode';
 
 export type { Query } from './type';
 export { ABIName } from './abi/abiName';
@@ -246,12 +247,6 @@ export default class ContractRequests {
    * Multiple requests within a short period of time will be packaged for batch processing.
    */
   async batchCallQuery<T = any>(chainId: ChainId, query: Query<T>) {
-    const contractInterface = await this.getContractInterface(query.abiName);
-    const contract = this.getBatchContract(
-      chainId,
-      query.contractAddress,
-      contractInterface,
-    );
     if (this.debugQuery) {
       console.log({
         action: 'batchCallQuery.request',
@@ -259,7 +254,21 @@ export default class ContractRequests {
         query,
       });
     }
-    const result = await contract.callStatic[query.method](...query.params);
+    const provider = await this.getProvider(chainId);
+    const data = await encodeFunctionData(
+      query.abiName,
+      query.method,
+      query.params,
+    );
+    const callData = await provider.call({
+      to: query.contractAddress,
+      data,
+    });
+    const result = (await decodeFunctionResult(
+      query.abiName,
+      query.method,
+      callData,
+    )) as T;
     const callbackResult = query.callback ? query.callback(result) : undefined;
     if (this.debugQuery) {
       console.log({

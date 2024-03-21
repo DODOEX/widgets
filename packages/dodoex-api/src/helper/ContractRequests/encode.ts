@@ -13,7 +13,7 @@ export const encodeFunctionData = async (
   return face.encodeFunctionData(functionFragment, values);
 };
 
-const decodeFunctionResult = async (
+export const decodeFunctionResult = async (
   abiName: ABIName,
   functionFragment: string,
   data: BytesLike,
