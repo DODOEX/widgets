@@ -103,11 +103,6 @@ export class BatchProvider extends StaticJsonRpcProvider {
       this._pendingBatch = null;
       this._pendingBatchAggregator = null;
 
-      this.emit('debug', {
-        action: 'requestBatch',
-        request: deepCopy(batch.map((inflight) => inflight.request)),
-        provider: this,
-      });
       let chainId: number | undefined;
       const network = await this.detectNetwork();
       if (typeof network !== 'object') {
@@ -130,19 +125,19 @@ export class BatchProvider extends StaticJsonRpcProvider {
         jsonrpc: '2.0',
       };
 
+      this.emit('debug', {
+        action: 'requestBatch',
+        request: deepCopy(batch.map((inflight) => inflight.request)),
+        provider: this,
+        id: request.id,
+      });
+
       const batchCallSuccessProcess = (response: {
         id: number;
         jsonrpc: string;
         result?: string;
         error?: any;
       }) => {
-        this.emit('debug', {
-          action: 'response',
-          request: request,
-          response: response,
-          provider: this,
-        });
-
         if (response.error || !response.result) {
           batch.forEach((inflightRequest) => {
             try {
@@ -153,6 +148,13 @@ export class BatchProvider extends StaticJsonRpcProvider {
             } catch (error) {
               inflightRequest.reject(response.error);
             }
+          });
+          this.emit('debug', {
+            action: 'responseBatch.error',
+            request: request,
+            response: response,
+            provider: this,
+            id: request.id,
           });
         } else {
           const [blkNum, decodeList] = defaultAbiCoder.decode(
@@ -170,15 +172,24 @@ export class BatchProvider extends StaticJsonRpcProvider {
             const payload = decodeList[index];
             inflightRequest.resolve(payload);
           });
+          this.emit('debug', {
+            action: 'responseBatch',
+            request: request,
+            response: response,
+            provider: this,
+            decodeList,
+            id: request.id,
+          });
         }
       };
 
       const batchCallFailedProcess = (error: any) => {
         this.emit('debug', {
-          action: 'response',
+          action: 'responseBatch.error',
           error: error,
           request: request,
           provider: this,
+          id: request.id,
         });
 
         batch.forEach((inflightRequest) => {

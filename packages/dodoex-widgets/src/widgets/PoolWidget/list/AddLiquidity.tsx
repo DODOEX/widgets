@@ -266,6 +266,7 @@ export default function AddLiquidityList({
         getScrollParent={() => scrollParentRef.current || null}
         loader={
           <LoadingCard
+            key="loader"
             sx={{
               mt: 20,
             }}
@@ -319,7 +320,7 @@ export default function AddLiquidityList({
                   : undefined;
               return (
                 <Box
-                  key={item.id}
+                  key={item.id + item.chainId}
                   sx={{
                     px: 20,
                     pt: 20,

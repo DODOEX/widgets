@@ -11,7 +11,7 @@ export const Primary = (props: any) => {
 };
 
 Primary.args = {
-  apiKey: 'ee53d6b75b12aceed4',
+  apikey: 'ee53d6b75b12aceed4',
   width: 375,
   height: 494,
 };

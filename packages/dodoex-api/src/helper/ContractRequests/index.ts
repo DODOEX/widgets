@@ -19,6 +19,8 @@ export { ABIName } from './abi/abiName';
 type ContractInterface = Exclude<ContractInterfaceSource, Interface>;
 
 export interface ContractRequestsConfig {
+  debugQuery?: boolean;
+  debugProvider?: boolean;
   rpc?: {
     [chainId: number]: string;
   };
@@ -28,6 +30,8 @@ export interface ContractRequestsConfig {
 }
 
 export default class ContractRequests {
+  private debugQuery?: boolean;
+  private debugProvider?: boolean;
   private rpc?: ContractRequestsConfig['rpc'];
   private getConfigProvider?: ContractRequestsConfig['getProvider'];
   private staticJsonRpcProviderMap: Map<number, StaticJsonRpcProvider>;
@@ -36,6 +40,8 @@ export default class ContractRequests {
   /** Used to maintain different batches of requests */
   private subContractRequestsList: Array<ContractRequests> = [];
   constructor(config?: ContractRequestsConfig) {
+    this.debugQuery = config?.debugQuery;
+    this.debugProvider = config?.debugProvider;
     this.rpc = config?.rpc;
     this.getConfigProvider = config?.getProvider;
     this.staticJsonRpcProviderMap = new Map();
@@ -80,6 +86,9 @@ export default class ContractRequests {
       ) as StaticJsonRpcProvider;
     }
     const result = new StaticJsonRpcProvider(rpcUrl, chainId);
+    if (this.debugProvider) {
+      result.on('debug', console.log);
+    }
     this.staticJsonRpcProviderMap.set(chainId, result);
     return result;
   }
@@ -100,6 +109,9 @@ export default class ContractRequests {
     }
     const result = new BatchProvider(rpcUrl, chainId);
     result.setProvider(configProvider || null);
+    if (this.debugProvider) {
+      result.on('debug', console.log);
+    }
     this.staticJsonRpcProviderMap.set(chainId, result);
     return result;
   }
@@ -240,8 +252,23 @@ export default class ContractRequests {
       query.contractAddress,
       contractInterface,
     );
+    if (this.debugQuery) {
+      console.log({
+        action: 'batchCallQuery.request',
+        chainId,
+        query,
+      });
+    }
     const result = await contract.callStatic[query.method](...query.params);
     const callbackResult = query.callback ? query.callback(result) : undefined;
+    if (this.debugQuery) {
+      console.log({
+        action: 'batchCallQuery.response',
+        chainId,
+        query,
+        response: callbackResult,
+      });
+    }
     if (callbackResult) return callbackResult as T;
     return result as T;
   }

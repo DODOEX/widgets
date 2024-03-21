@@ -32,7 +32,7 @@ export function convertLiquidityTokenToTokenInfo(
     chainId: chainId,
     address: token.id,
     name: token.name,
-    decimals: token.decimals,
+    decimals: Number(token.decimals),
     symbol: token.symbol,
     logoURI: token.logoImg ?? '',
   } as TokenInfo;
