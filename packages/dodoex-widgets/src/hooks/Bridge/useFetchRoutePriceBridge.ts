@@ -62,6 +62,7 @@ export interface BridgeRouteI {
       approvalAddress: string;
       includedSteps: any;
     };
+    fee: any;
   };
 }
 
@@ -71,6 +72,7 @@ interface FetchRouteData {
     feeUSD: string;
     executionDuration: number;
     product: string;
+    fee: any;
     step: {
       type: string;
       tool: string;
@@ -228,6 +230,7 @@ export function useFetchRoutePriceBridge({
               executionDuration,
               product,
               step,
+              fee,
               encodeParams,
               productParams,
             } = route;
@@ -333,6 +336,7 @@ export function useFetchRoutePriceBridge({
                           approvalAddress,
                           includedSteps,
                         },
+                        fee,
                       },
                     };
                     newBridgeRouteList.push(newBridgeRoute);

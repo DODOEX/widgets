@@ -100,6 +100,7 @@ export default function useExecuteBridgeRoute({
           tx,
           route,
           bridgeCreateRouteAPI,
+          encodeId: bridgeOrderTxRequest.encodeId,
         });
         if (onTxSuccess) {
           onTxSuccess(tx, {

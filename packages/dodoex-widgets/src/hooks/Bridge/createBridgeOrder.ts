@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { toWei } from '../../utils';
-import { TokenInfo } from '../Token';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
 
 export interface BridgeOrderCreateParams {
@@ -20,6 +19,8 @@ export interface BridgeOrderCreateParams {
     lifiBridge: BridgeRouteI['sourceRoute']['step']['tool'];
     route: BridgeRouteI['sourceRoute'];
     productParams: BridgeRouteI['productParams'];
+    encodeId: string;
+    source: string;
   };
 }
 
@@ -28,11 +29,13 @@ export async function createBridgeOrder({
   tx,
   route,
   bridgeCreateRouteAPI,
+  encodeId,
 }: {
   apikey?: string;
   tx: string;
   route: BridgeRouteI;
   bridgeCreateRouteAPI: string;
+  encodeId: string;
 }) {
   const {
     fromChainId,
@@ -65,6 +68,8 @@ export async function createBridgeOrder({
       lifiBridge: step.tool,
       route: sourceRoute,
       productParams,
+      encodeId,
+      source: 'widget',
     },
   } as BridgeOrderCreateParams;
   const result = await axios.post(
