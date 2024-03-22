@@ -126,7 +126,7 @@ export const getModifyDPPPoolParams = async ({
     const quoteIsEtherToken = quoteToken.symbol === EtherToken?.symbol;
     if (differ.baseAmount.isRemove && differ.quoteAmount.isRemove) {
       const _OWNER_ = await poolApi
-        .getDPPOwnerProxyAddress(chainId, srcPool.address)
+        .getDPPOwnerProxyAddressQuery(chainId, srcPool.address)
         .queryFn();
       const removeParams: Parameters<typeof PoolApi.encode.removeDPPPoolABI> = [
         _OWNER_,

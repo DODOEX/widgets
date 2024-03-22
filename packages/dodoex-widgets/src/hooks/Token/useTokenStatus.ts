@@ -30,11 +30,13 @@ export function useTokenStatus(
     contractAddress,
     offset,
     overrideBalance,
+    skip,
   }: {
     amount?: string | number | BigNumber;
     contractAddress?: string;
     offset?: BigNumber;
     overrideBalance?: BigNumber | null;
+    skip?: boolean;
   } = {},
 ) {
   const { account } = useWalletInfo();
@@ -47,7 +49,8 @@ export function useTokenStatus(
   }, [token, contractAddress]) as [number | undefined, string | undefined];
   const tokenQuery = useQuery(
     tokenApi.getFetchTokenQuery(
-      chainId,
+      // skip the query
+      skip ? undefined : chainId,
       token?.address,
       account,
       proxyContractAddress,

@@ -269,6 +269,9 @@ export const getDesignTokens = (
     components: {
       MuiCssBaseline: {
         styleOverrides: {
+          '': {
+            borderColor: palette.border?.main,
+          },
           '::-webkit-scrollbar': {
             width: 6,
             backgroundColor: 'transparent',

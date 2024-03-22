@@ -31,7 +31,7 @@ export default function TokenAndPoolFilter({
           justifyContent: 'flex-start',
           px: 12,
           height: 32,
-          backgroundColor: 'hover.default',
+          backgroundColor: 'background.tag',
           color: 'text.secondary',
           borderRadius: 8,
           fontWeight: 600,

@@ -1,11 +1,4 @@
-import {
-  Tabs,
-  TabsList,
-  Box,
-  Tab,
-  TabPanel,
-  TabsButtonGroup,
-} from '@dodoex/components';
+import { Tabs, TabPanel, TabsButtonGroup } from '@dodoex/components';
 import { useQuery } from '@tanstack/react-query';
 import { useWeb3React } from '@web3-react/core';
 import { FailedList } from '../../../components/List/FailedList';
@@ -13,8 +6,9 @@ import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
 import { poolApi } from '../utils';
 import { AddPoolOperate } from './AddPoolOperate';
 import { OperateTab, usePoolOperateTabs } from './hooks/usePoolOperateTabs';
-import LiquidityInfo from './LiquidityInfo';
+import LiquidityInfo from './components/LiquidityInfo';
 import { OperatePool } from './types';
+import { RemovePoolOperate } from './RemovePoolOperate';
 
 export interface PoolOperateInnerProps {
   pool: OperatePool;
@@ -72,6 +66,9 @@ export default function PoolOperateInner({ pool }: PoolOperateInnerProps) {
         />
         <TabPanel value={OperateTab.Add}>
           <AddPoolOperate pool={pool} balanceInfo={balanceInfo} />
+        </TabPanel>
+        <TabPanel value={OperateTab.Remove}>
+          <RemovePoolOperate pool={pool} balanceInfo={balanceInfo} />
         </TabPanel>
       </Tabs>
     </>

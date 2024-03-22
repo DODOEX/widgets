@@ -31,7 +31,8 @@ export interface TokenCardProps {
   showChainLogo?: boolean;
   onlyCurrentChain?: boolean;
   defaultLoadBalance?: boolean;
-  overrideBalance?: BigNumber;
+  overrideBalance?: BigNumber | null;
+  overrideBalanceLoading?: boolean;
 }
 
 export function CardPlus() {
@@ -68,6 +69,7 @@ export function TokenCard({
   onlyCurrentChain,
   defaultLoadBalance,
   overrideBalance,
+  overrideBalanceLoading,
 }: TokenCardProps) {
   const { account } = useWalletInfo();
   const [openSwitchChainDialog, setOpenSwitchChainDialog] = useState(false);
@@ -115,10 +117,11 @@ export function TokenCard({
 
         <BalanceText
           balance={balance}
-          onClick={onMaxClick ?? onInputChange}
+          onClick={readOnly ? undefined : onMaxClick ?? onInputChange}
           showMaxBtn={showMaxBtn}
           address={token?.address}
           decimals={token?.decimals}
+          loading={overrideBalanceLoading ?? tokenQuery.isLoading}
         />
       </Box>
 

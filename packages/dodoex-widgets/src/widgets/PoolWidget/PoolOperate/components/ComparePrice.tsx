@@ -4,11 +4,8 @@ import { t } from '@lingui/macro';
 import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import React from 'react';
-import { TokenInfo } from '../../../hooks/Token';
-import {
-  formatReadableNumber,
-  formatShortNumber,
-} from '../../../utils/formatter';
+import { TokenInfo } from '../../../../hooks/Token';
+import { formatReadableNumber } from '../../../../utils/formatter';
 
 export default function ComparePrice({
   lqAndDodoCompareText,

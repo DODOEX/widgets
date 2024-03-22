@@ -40,11 +40,9 @@ const config = {
     babel({
       extensions,
       babelHelpers: 'bundled',
-    })
+    }),
   ],
-  external: [
-    ...Object.keys(pkg.peerDependencies || {})
-  ],
+  external: [...Object.keys(pkg.peerDependencies || {}), '@floating-ui/dom'],
 };
 
 export default [
@@ -66,5 +64,5 @@ export default [
       },
     ],
     ...config,
-  }
+  },
 ];

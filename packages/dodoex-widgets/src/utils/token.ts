@@ -73,3 +73,8 @@ export function getTokenPairCompareText({
   }
   return result;
 }
+
+export function getShowDecimals(decimals: string | number) {
+  const decimalsNumber = Number(decimals);
+  return decimalsNumber > 6 ? 6 : 4;
+}

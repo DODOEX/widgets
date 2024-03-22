@@ -11,9 +11,9 @@ import { Setting } from '@dodoex/icons';
 import {
   AUTO_LIQUIDITY_SLIPPAGE_PROTECTION,
   AUTO_SWAP_SLIPPAGE_PROTECTION,
-} from '../../../constants/pool';
+} from '../../../../constants/pool';
 import { Trans } from '@lingui/macro';
-import { AutoButton } from '../../../components/AutoButton';
+import { AutoButton } from '../../../../components/AutoButton';
 
 interface Props {
   value: number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION;

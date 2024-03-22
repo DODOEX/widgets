@@ -7,11 +7,11 @@ import {
   TokenCard,
 } from '../../../components/Swap/components/TokenCard';
 import { useLiquidityOperateAmount } from './hooks/useLiquidityOperateAmount';
-import Ratio from './Ratio';
-import SlippageSetting, { useSlipper } from './SlippageSetting';
-import ComparePrice from './ComparePrice';
+import Ratio from './components/Ratio';
+import SlippageSetting, { useSlipper } from './components/SlippageSetting';
+import ComparePrice from './components/ComparePrice';
 import { OperatePool } from './types';
-import OperateBtn from './OperateBtn';
+import OperateBtn from './components/OperateBtn';
 import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
 import { t } from '@lingui/macro';
 import { useComparePrice } from './hooks/useComparePrice';
@@ -42,6 +42,7 @@ export function AddPoolOperate({
     addPortion,
     midPrice,
     amountLoading,
+    amountCheckedDisabled,
 
     reset,
   } = useLiquidityOperateAmount({
@@ -50,6 +51,11 @@ export function AddPoolOperate({
   const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
     address: pool?.address,
   });
+
+  React.useEffect(() => {
+    reset();
+    resetSlipper();
+  }, [pool]);
 
   const canOperate = PoolApi.utils.canOperateLiquidity(
     pool?.type,
@@ -71,21 +77,14 @@ export function AddPoolOperate({
 
   const isOverBalance =
     baseTokenStatus.insufficientBalance || quoteTokenStatus.insufficientBalance;
-  const isSingleSideLp = !!pool && PoolApi.utils.singleSideLp(pool.type);
-  const isSinglePool =
-    pool?.type === 'DVM' &&
-    (!balanceInfo.quoteReserve || balanceInfo.quoteReserve.isZero());
-  let disabled =
-    !pool || !isOverBalance || !midPrice || !balanceInfo.quoteReserve;
-  if (!disabled) {
-    if (isSingleSideLp) {
-      disabled = !baseAmount && !quoteAmount;
-    } else if (isSinglePool) {
-      disabled = !baseAmount;
-    } else {
-      disabled = !baseAmount || !quoteAmount;
-    }
-  }
+  const { isSinglePool } = balanceInfo;
+  const disabled =
+    !pool ||
+    isOverBalance ||
+    !midPrice ||
+    !balanceInfo.loading ||
+    !balanceInfo.error ||
+    amountCheckedDisabled;
 
   const submitBtnText = isOverBalance ? t`Insufficient balance` : t`Add`;
 

@@ -235,7 +235,7 @@ export class PoolApi {
 
     /**
      * @notice Remove liquidity from the DPP pool and directly call DPPAdmin for vehicle deflation tokens (no ETH automatic conversion to WETH function).
-     * @param _OWNER_         _OWNER_: getDPPOwnerProxyAddress
+     * @param _OWNER_         _OWNER_: getDPPOwnerProxyAddressQuery
      * @param newLpFeeRate    Example: 0.0001 is passed in 1
      * @param newI            Decimals are not considered
      * @param newK            Scope: 0 => 1
@@ -1339,7 +1339,7 @@ export class PoolApi {
     };
   }
 
-  getDPPOwnerProxyAddress(
+  getDPPOwnerProxyAddressQuery(
     chainId: number | undefined,
     poolAddress: string | undefined,
   ) {
@@ -1354,6 +1354,29 @@ export class PoolApi {
           method: '_OWNER_',
           params: [],
         });
+      },
+    };
+  }
+
+  getWithdrawBasePenaltyQuery(
+    chainId: number | undefined,
+    poolAddress: string | undefined,
+    baseOutAmount: string | undefined,
+    decimals: number | undefined,
+  ) {
+    return {
+      queryKey: [...arguments],
+      enabled: !!chainId && !!poolAddress && !!baseOutAmount && !!decimals,
+      queryFn: async () => {
+        if (!chainId || !poolAddress || !baseOutAmount || !decimals)
+          return null;
+        const result = await this.contractRequests.batchCallQuery(chainId, {
+          abiName: ABIName.dodoPair,
+          contractAddress: poolAddress,
+          method: 'getWithdrawBasePenalty',
+          params: [baseOutAmount],
+        });
+        return byWei(result, decimals);
       },
     };
   }

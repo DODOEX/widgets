@@ -12,8 +12,8 @@ export function useLiquidityOperateAmount({
   maxQuoteAmount,
 }: {
   pool: OperatePool;
-  maxBaseAmount?: BigNumber;
-  maxQuoteAmount?: BigNumber;
+  maxBaseAmount?: BigNumber | null;
+  maxQuoteAmount?: BigNumber | null;
 }) {
   const [baseAmount, setBaseAmount] = React.useState('');
   const [quoteAmount, setQuoteAmount] = React.useState('');
@@ -129,6 +129,16 @@ export function useLiquidityOperateAmount({
     }
   };
 
+  const isSingleSideLp = !!pool && PoolApi.utils.singleSideLp(pool.type);
+  let amountCheckedDisabled = false;
+  if (isSingleSideLp) {
+    amountCheckedDisabled = !baseAmount && !quoteAmount;
+  } else if (isSinglePool) {
+    amountCheckedDisabled = !baseAmount;
+  } else {
+    amountCheckedDisabled = !baseAmount || !quoteAmount;
+  }
+
   return {
     baseAmount,
     quoteAmount,
@@ -140,6 +150,8 @@ export function useLiquidityOperateAmount({
     amountLoading: pmmStateQuery.isLoading,
     amountError: pmmStateQuery.isError,
     amountRefetch: pmmStateQuery.refetch,
+    amountCheckedDisabled,
+
     midPrice: pmmStateQuery.data?.midPrice,
   };
 }

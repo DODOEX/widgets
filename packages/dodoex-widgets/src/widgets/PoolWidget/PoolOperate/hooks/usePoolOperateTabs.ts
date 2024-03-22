@@ -9,7 +9,7 @@ export enum OperateTab {
 
 export function usePoolOperateTabs() {
   const { i18n } = useLingui();
-  const [operateTab, setOperateTab] = React.useState(OperateTab.Add);
+  const [operateTab, setOperateTab] = React.useState(OperateTab.Remove);
   const operateTabs = React.useMemo(
     () => [
       { key: OperateTab.Add, value: t`Add` },

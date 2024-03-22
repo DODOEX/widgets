@@ -8,11 +8,11 @@ import {
 } from '@dodoex/components';
 import { useState } from 'react';
 import BigNumber from 'bignumber.js';
-import { OperatePool } from './types';
+import { OperatePool } from '../types';
 import {
   formatPercentageNumber,
   formatReadableNumber,
-} from '../../../utils/formatter';
+} from '../../../../utils/formatter';
 import { Trans } from '@lingui/macro';
 import { Switch } from '@dodoex/icons';
 import { PoolApi } from '@dodoex/api';

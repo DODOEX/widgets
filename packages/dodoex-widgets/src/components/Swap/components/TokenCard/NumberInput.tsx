@@ -17,6 +17,7 @@ export function NumberInput({
   withClear,
   onFocus,
   placeholder,
+  readonlyShowSuffix,
 }: {
   readOnly?: boolean;
   sx?: BoxProps['sx'];
@@ -27,6 +28,7 @@ export function NumberInput({
   suffix?: React.ReactNode | string;
   withClear?: boolean;
   placeholder?: string;
+  readonlyShowSuffix?: boolean;
 }) {
   const theme = useTheme();
 
@@ -107,7 +109,7 @@ export function NumberInput({
           },
         }}
       />
-      {!readOnly && value && endAdornment}
+      {(!readOnly || readonlyShowSuffix) && value && endAdornment}
     </Box>
   );
 }

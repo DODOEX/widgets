@@ -1,8 +1,8 @@
 import { Button, Box } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
-import { useInflights } from '../../../hooks/Submission';
-import { MetadataFlag } from '../../../hooks/Submission/types';
-import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
+import { useInflights } from '../../../../hooks/Submission';
+import { MetadataFlag } from '../../../../hooks/Submission/types';
+import { useTokenStatus } from '../../../../hooks/Token/useTokenStatus';
 
 function RestOrApproveBtn({
   status,

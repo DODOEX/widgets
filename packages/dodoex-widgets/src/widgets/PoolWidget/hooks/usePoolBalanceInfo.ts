@@ -157,6 +157,10 @@ export function usePoolBalanceInfo({
         type,
       );
 
+  const baseLpToTokenProportion =
+    totalBaseLpBalance && baseReserve
+      ? computeLpProportion(totalBaseLpBalance, baseReserve)
+      : undefined;
   const userBaseLpToTokenBalance = isPrivate
     ? baseReserve
     : getLpToTokenBalance(
@@ -169,6 +173,10 @@ export function usePoolBalanceInfo({
         baseDecimals,
       );
 
+  const quoteLpToTokenProportion =
+    totalQuoteLpBalance && quoteReserve
+      ? computeLpProportion(totalQuoteLpBalance, quoteReserve)
+      : undefined;
   const userQuoteLpToTokenBalance = isPrivate
     ? quoteReserve
     : getLpToTokenBalance(
@@ -212,6 +220,9 @@ export function usePoolBalanceInfo({
     reserveQuery.isError ||
     classicalTargetQuery.isError;
 
+  const isSinglePool =
+    pool?.type === 'DVM' && (!quoteReserve || quoteReserve.isZero());
+
   return {
     /** existing base lp balance */
     totalBaseLpBalance,
@@ -233,6 +244,11 @@ export function usePoolBalanceInfo({
     userBaseLpToTokenBalance,
     /** The number of quote that can be obtained when a user withdraws from the pool */
     userQuoteLpToTokenBalance,
+
+    baseLpToTokenProportion,
+    quoteLpToTokenProportion,
+
+    isSinglePool,
 
     // loading
     userLpBalanceLoading,
