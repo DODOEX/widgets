@@ -12,10 +12,17 @@ import { RemovePoolOperate } from './RemovePoolOperate';
 
 export interface PoolOperateInnerProps {
   pool: OperatePool;
+  operate?: OperateTab;
+  errorRefetch?: () => void;
 }
 
-export default function PoolOperateInner({ pool }: PoolOperateInnerProps) {
-  const { operateTab, operateTabs, handleChangeTab } = usePoolOperateTabs();
+export default function PoolOperateInner({
+  pool,
+  operate,
+  errorRefetch,
+}: PoolOperateInnerProps) {
+  const { operateTab, operateTabs, handleChangeTab } =
+    usePoolOperateTabs(operate);
   const { account } = useWeb3React();
   const balanceInfo = usePoolBalanceInfo({
     account,
@@ -30,7 +37,7 @@ export default function PoolOperateInner({ pool }: PoolOperateInnerProps) {
       pool?.quoteToken?.decimals,
     ),
   );
-  if (balanceInfo.error || pmmStateQuery.error) {
+  if (balanceInfo.error || pmmStateQuery.error || errorRefetch) {
     return (
       <FailedList
         refresh={() => {
@@ -39,6 +46,9 @@ export default function PoolOperateInner({ pool }: PoolOperateInnerProps) {
           }
           if (pmmStateQuery.error) {
             pmmStateQuery.refetch();
+          }
+          if (errorRefetch) {
+            errorRefetch();
           }
         }}
         sx={{

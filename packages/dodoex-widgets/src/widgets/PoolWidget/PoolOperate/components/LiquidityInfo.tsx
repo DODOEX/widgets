@@ -222,12 +222,13 @@ function LiquidityBalanceItem({
 }
 
 export default function LiquidityInfo({
-  loading,
+  loading: loadingProps,
   hidePoolInfo,
   pool,
   balanceInfo,
 }: LiquidityInfoProps) {
   const theme = useTheme();
+  const loading = loadingProps || !pool;
 
   const singleSideLp = pool ? PoolApi.utils.singleSideLp(pool.type) : false;
 
@@ -277,6 +278,7 @@ export default function LiquidityInfo({
               loading={loading}
               loadingSx={{
                 width: 100,
+                mb: 4,
               }}
               sx={{
                 typography: 'body2',

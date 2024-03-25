@@ -241,6 +241,7 @@ export function RemovePoolOperate({
         >
           {mode === RemoveMode.percentage ? (
             <SliderPercentageCard
+              disabled={balanceInfo.loading || !canOperate}
               value={sliderPercentage}
               onChange={handleChangeSliderPercentage}
             />

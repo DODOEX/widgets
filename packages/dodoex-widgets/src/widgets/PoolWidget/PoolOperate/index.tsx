@@ -6,18 +6,50 @@ import {
 } from './hooks/usePoolOrMiningTabs';
 import { Error } from '@dodoex/icons';
 import PoolOperateInner, { PoolOperateInnerProps } from './PoolOperateInner';
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { graphQLRequests } from '../../../constants/api';
+import { PoolApi } from '@dodoex/api';
+import { convertFetchPoolToOperateData } from '../utils';
 
 export interface PoolOperateProps {
   onClose: () => void;
   account: string | undefined;
-  pool: PoolOperateInnerProps['pool'];
+  pool?: PoolOperateInnerProps['pool'];
+  address?: string;
+  operate?: PoolOperateInnerProps['operate'];
+  chainId?: number;
 }
 
-export default function PoolOperate({ onClose, pool }: PoolOperateProps) {
+export default function PoolOperate({
+  onClose,
+  pool: poolProps,
+  address,
+  operate,
+  chainId,
+}: PoolOperateProps) {
   const { poolOrMiningTab, poolOrMiningTabs, handleChangeTab } =
     usePoolOrMiningTabs();
+
+  const fetchResult = useQuery({
+    ...graphQLRequests.getQuery(PoolApi.graphql.fetchPoolList, {
+      where: {
+        id: address?.toLocaleLowerCase() ?? '',
+        chain: 'gor',
+      },
+    }),
+    enabled: !!address && !!chainId,
+  });
+  const fetchPool = fetchResult.data?.pairs?.[0];
+  const convertFetchPool =
+    fetchPool && chainId
+      ? convertFetchPoolToOperateData(fetchPool, chainId)
+      : undefined;
+  const pool = address && chainId ? convertFetchPool : poolProps;
+
+  const poolErrorRefetch = fetchResult.error ? fetchResult.refetch : undefined;
   return (
-    <Dialog open={!!pool} onClose={onClose}>
+    <Dialog open={!!pool || !!address} onClose={onClose}>
       <Box
         sx={{
           pb: 20,
@@ -62,7 +94,11 @@ export default function PoolOperate({ onClose, pool }: PoolOperateProps) {
               overflowY: 'auto',
             }}
           >
-            <PoolOperateInner pool={pool} />
+            <PoolOperateInner
+              pool={pool}
+              operate={operate}
+              errorRefetch={poolErrorRefetch}
+            />
           </TabPanel>
         </Tabs>
       </Box>

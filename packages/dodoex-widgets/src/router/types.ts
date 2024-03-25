@@ -5,6 +5,7 @@ export enum PageType {
   Pool = 'pool',
   PoolDetail = 'poolDetail',
   CreatePool = 'createPool',
+  ModifyPool = 'modifyPool',
 }
 
 interface PageTypeParams {
@@ -14,6 +15,10 @@ interface PageTypeParams {
       }
     | undefined;
   [PageType.PoolDetail]: {
+    address: string;
+    chainId: ChainId;
+  };
+  [PageType.ModifyPool]: {
     address: string;
     chainId: ChainId;
   };

@@ -23,7 +23,9 @@ const config = {
     }),
     url(),
     json(),
-    typescript(),
+    typescript({
+      clean: true,
+    }),
     commonjs({
       sourceMap: false,
     }),

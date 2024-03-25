@@ -81,13 +81,17 @@ export default function Ratio({
         >
           <Trans>Current Price</Trans>
         </Box>
-        <Box
+        <LoadingSkeleton
           sx={{
             display: 'flex',
             alignItems: 'center',
             fontWeight: 600,
             ml: 8,
             overflow: 'hidden',
+          }}
+          loading={!pool}
+          loadingProps={{
+            width: 50,
           }}
         >
           <Tooltip
@@ -151,7 +155,7 @@ export default function Ratio({
               }}
             />
           </Box>
-        </Box>
+        </LoadingSkeleton>
       </Box>
       <Box
         sx={{

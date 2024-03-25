@@ -25,10 +25,12 @@ const marks = [
 ];
 
 export function SliderPercentageCard({
+  disabled,
   value,
   onChange,
   sx,
 }: {
+  disabled?: boolean;
   value: number;
   onChange: (val: number) => void;
   sx?: BoxProps['sx'];
@@ -70,6 +72,7 @@ export function SliderPercentageCard({
         <Slider
           marks={marks}
           step={1}
+          disabled={disabled}
           value={value}
           onChange={(evt, newVal) => onChange(newVal as number)}
         />

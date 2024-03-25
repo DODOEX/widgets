@@ -7,6 +7,8 @@ import AddLiquidityList from './list/AddLiquidity';
 import { useWeb3React } from '@web3-react/core';
 import { usePoolListTabs, PoolTab } from './list/hooks/usePoolListTabs';
 import { usePoolListFilterChainId } from './list/hooks/usePoolListFilterChainId';
+import MyLiquidity from './list/MyLiquidity';
+import MyCreated from './list/MyCreated';
 
 export function Pool() {
   const theme = useTheme();
@@ -57,8 +59,22 @@ export function Pool() {
             handleChangeActiveChainId={handleChangeActiveChainId}
           />
         </TabPanel>
-        <TabPanel value={PoolTab.myLiquidity}>Tab 2</TabPanel>
-        <TabPanel value={PoolTab.myCreated}>Tab 3</TabPanel>
+        <TabPanel value={PoolTab.myLiquidity}>
+          <MyLiquidity
+            account={account}
+            filterChainIds={filterChainIds}
+            activeChainId={activeChainId}
+            handleChangeActiveChainId={handleChangeActiveChainId}
+          />
+        </TabPanel>
+        <TabPanel value={PoolTab.myCreated}>
+          <MyCreated
+            account={account}
+            filterChainIds={filterChainIds}
+            activeChainId={activeChainId}
+            handleChangeActiveChainId={handleChangeActiveChainId}
+          />
+        </TabPanel>
       </Tabs>
     </Box>
   );

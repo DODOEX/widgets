@@ -14,6 +14,12 @@ export type FetchLiquidityListLqList = ExcludeNone<
   >['liquidity_list']
 >['lqList'];
 
+export type FetchPoolList = ExcludeNone<
+  ReturnType<
+    Exclude<typeof PoolApi.graphql.fetchPoolList['__apiType'], undefined>
+  >['pairs']
+>;
+
 export function convertLiquidityTokenToTokenInfo(
   token:
     | {
@@ -21,7 +27,6 @@ export function convertLiquidityTokenToTokenInfo(
         symbol: string;
         name: string;
         decimals: number;
-        usdPrice: number;
         logoImg?: string | null;
       }
     | undefined,
@@ -57,5 +62,26 @@ export function convertFetchLiquidityToOperateData(
     type: pair.type as PoolType,
     creator: pair.creator,
     lpFeeRate: pair.lpFeeRate,
+  };
+}
+export function convertFetchPoolToOperateData(
+  pool: FetchPoolList[0],
+  chainId: number,
+): OperatePool {
+  if (!pool) return undefined;
+  return {
+    address: pool.id,
+    chainId: chainId,
+    baseToken: convertLiquidityTokenToTokenInfo(
+      pool.baseToken,
+      chainId,
+    ) as TokenInfo,
+    quoteToken: convertLiquidityTokenToTokenInfo(
+      pool.quoteToken,
+      chainId,
+    ) as TokenInfo,
+    type: pool.type as PoolType,
+    creator: pool.creator,
+    lpFeeRate: pool.lpFeeRate,
   };
 }

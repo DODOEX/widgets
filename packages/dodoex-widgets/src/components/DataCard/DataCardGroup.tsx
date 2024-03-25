@@ -13,13 +13,13 @@ export function DataCardGroup({
   /** Large screen quantity per row */
   repeatBaseForLargeScreen?: number;
 }) {
-  const { isMobile, minDevice, maxDevice } = useWidgetDevice();
+  const { isMobile, minDevice } = useWidgetDevice();
   let defaultSx: BoxProps['sx'] = {};
   if (isMobile) {
     defaultSx = {
-      display: 'grid',
+      display: 'flex',
+      flexDirection: 'column',
       gap,
-      gridTemplateColumns: `repeat(${1}, 1fr)`,
     };
   } else {
     let gridTemplateColumnsCount = 2;
