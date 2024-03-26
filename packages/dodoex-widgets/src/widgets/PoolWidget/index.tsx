@@ -1,6 +1,6 @@
 import { useRouterStore } from '../../router';
 import { PageType } from '../../router/types';
-import PoolList from './list';
+import PoolList from './PoolList';
 import PoolCreate from './PoolCreate';
 
 export function Pool() {

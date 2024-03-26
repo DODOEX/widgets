@@ -1,5 +1,5 @@
 import { ChainId } from '../constants/chains';
-import { PoolTab } from '../widgets/PoolWidget/list/hooks/usePoolListTabs';
+import { PoolTab } from '../widgets/PoolWidget/PoolList/hooks/usePoolListTabs';
 
 export enum PageType {
   Pool = 'pool',

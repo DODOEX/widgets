@@ -16,7 +16,7 @@ import {
 import { useTokenStatus } from '../../../../hooks/Token/useTokenStatus';
 import { useRouterStore } from '../../../../router';
 import { PageType } from '../../../../router/types';
-import { PoolTab } from '../../list/hooks/usePoolListTabs';
+import { PoolTab } from '../../PoolList/hooks/usePoolListTabs';
 import ConfirmInfoDialog from '../components/ConfirmInfoDialog';
 import { useCreatePoolSubmit } from '../hooks/contract/useCreatePoolSubmit';
 import { Actions, StateProps, Types } from '../reducer';
