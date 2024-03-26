@@ -66,6 +66,7 @@ export interface WidgetProps
   noPowerBy?: boolean;
 
   onProviderChanged?: (provider?: any) => void;
+  gotoBuyToken?: GlobalFunctionConfig['gotoBuyToken'];
 }
 
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
@@ -193,6 +194,7 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
           <GlobalConfigContext.Provider
             value={{
               onConnectWalletClick: props.onConnectWalletClick,
+              gotoBuyToken: props.gotoBuyToken,
             }}
           >
             <CssBaseline container={`.${WIDGET_CLASS_NAME}`} />

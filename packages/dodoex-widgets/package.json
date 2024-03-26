@@ -78,9 +78,12 @@
     "axios": "^0.27.2",
     "bignumber.js": "^9.0.2",
     "identicon.js": "^2.3.3",
+    "konva": "^9.3.6",
     "lodash": "^4.17.21",
     "make-plural": "^7.0.0",
+    "react-icons": "^5.0.1",
     "react-infinite-scroller": "^1.2.6",
+    "react-konva": "^18.2.10",
     "react-window": "^1.8.8",
     "semantic-release": "^19.0.2",
     "zustand": "^4.5.1"

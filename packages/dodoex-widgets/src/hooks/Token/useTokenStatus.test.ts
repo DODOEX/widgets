@@ -29,6 +29,7 @@ const defaultReturnResult = {
   approveTitle: 'Approve MOCK',
   submitApprove: expect.any(Function),
   getMaxBalance: expect.any(Function),
+  needShowTokenStatusButton: false,
 };
 
 describe('useTokenStatus', () => {
@@ -97,6 +98,7 @@ describe('useTokenStatus', () => {
     expect(result.current).toEqual({
       ...defaultReturnResult,
       needApprove: true,
+      needShowTokenStatusButton: true,
     });
   });
 
@@ -121,6 +123,7 @@ describe('useTokenStatus', () => {
     expect(result.current).toEqual({
       ...defaultReturnResult,
       needReset: true,
+      needShowTokenStatusButton: true,
       approveTitle: 'Reset USDT',
     });
   });

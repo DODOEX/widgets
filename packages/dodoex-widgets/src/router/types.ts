@@ -22,10 +22,15 @@ interface PageTypeParams {
     address: string;
     chainId: ChainId;
   };
-  [PageType.CreatePool]: undefined;
+  [PageType.CreatePool]:
+    | {
+        fromAddress?: string;
+        toAddress?: string;
+      }
+    | undefined;
 }
 
 export interface Page<T extends PageType = PageType> {
   type: T;
-  params: PageTypeParams[T];
+  params?: PageTypeParams[T];
 }

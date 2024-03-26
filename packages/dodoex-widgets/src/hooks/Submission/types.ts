@@ -11,6 +11,9 @@ export enum State {
 export enum MetadataFlag {
   addLiquidity = 'addLiquidity',
   removeLiquidity = 'removeLiquidity',
+  createDPPPool = 'createDPPPool',
+  createDSPPool = 'createDSPPool',
+  createDVMPool = 'createDVMPool',
 }
 
 export type Metadata = Record<string, any>;

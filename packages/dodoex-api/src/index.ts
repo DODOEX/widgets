@@ -14,7 +14,15 @@ export {
 export type { Query } from './helper/ContractRequests';
 
 export { SwapWidgetApi } from './services/SwapWidgetApi';
-export { PoolApi } from './services/pool';
+export {
+  PoolApi,
+  PMMModel,
+  PMMHelper,
+  PMMState,
+  getPmmModel,
+  solveQuadraticFunctionForTarget,
+} from './services/pool';
+export type { PmmModelParams } from './services/pool';
 export type { PoolType } from './services/pool';
 export { TokenApi } from './services/TokenApi';
 

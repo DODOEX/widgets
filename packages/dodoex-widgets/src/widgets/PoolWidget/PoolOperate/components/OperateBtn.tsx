@@ -1,24 +1,9 @@
 import { Button, Box } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
+import TokenStatusButton from '../../../../components/TokenStatusButton';
 import { useInflights } from '../../../../hooks/Submission';
 import { MetadataFlag } from '../../../../hooks/Submission/types';
 import { useTokenStatus } from '../../../../hooks/Token/useTokenStatus';
-
-function RestOrApproveBtn({
-  status,
-}: {
-  status: ReturnType<typeof useTokenStatus>;
-}) {
-  return (
-    <Button
-      fullWidth
-      isLoading={status.isApproving}
-      onClick={status.submitApprove}
-    >
-      {status.approveTitle}
-    </Button>
-  );
-}
 
 export default function OperateBtn({
   baseTokenStatus,
@@ -37,11 +22,11 @@ export default function OperateBtn({
       request.metadata?.[MetadataFlag.removeLiquidity],
   );
   const buttons: JSX.Element[] = [];
-  if (baseTokenStatus.needReset || baseTokenStatus.needReset) {
-    buttons.push(<RestOrApproveBtn status={baseTokenStatus} />);
+  if (baseTokenStatus.needShowTokenStatusButton) {
+    buttons.push(<TokenStatusButton status={baseTokenStatus} />);
   }
-  if (quoteTokenStatus.needReset || quoteTokenStatus.needReset) {
-    buttons.push(<RestOrApproveBtn status={quoteTokenStatus} />);
+  if (quoteTokenStatus.needShowTokenStatusButton) {
+    buttons.push(<TokenStatusButton status={quoteTokenStatus} />);
   }
 
   const len = buttons.length;

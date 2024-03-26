@@ -42,3 +42,10 @@ declare module '*.svg' {
   const src: string;
   export default src;
 }
+
+// Reducer types
+type ActionMap<M extends { [index: string]: any }> = {
+  [Key in keyof M]: M[Key] extends undefined
+    ? { type: Key }
+    : { type: Key; payload: M[Key] };
+};

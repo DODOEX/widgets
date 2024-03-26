@@ -10,16 +10,19 @@ import { setOpenConnectWalletInfo } from '../../store/actions/wallet';
 
 export default function NeedConnectButton({
   chainId,
+  includeButton,
   ...props
 }: ButtonProps & {
   /** chainId that needs to be connected */
   chainId?: ChainId;
+  includeButton?: boolean;
 }) {
   const { account, chainId: currentChainId, connector } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
   const { onConnectWalletClick } = useGlobalConfig();
   const [loading, setLoading] = React.useState(false);
   if (account && !loading) {
+    if (includeButton) return <>{props.children ?? null}</>;
     return <Button {...props} />;
   }
   return (

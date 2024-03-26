@@ -170,6 +170,7 @@ export function useTokenStatus(
     isGetApproveLoading,
     needApprove,
     needReset,
+    needShowTokenStatusButton: needApprove || needReset || isApproving,
     insufficientBalance,
     loading: tokenQuery.isLoading,
     approveTitle,
