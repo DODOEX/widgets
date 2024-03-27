@@ -209,6 +209,8 @@ export function useFetchRoutePriceBridge({
         'layerswap',
         'okx',
         'symbiosis',
+        'scroll',
+        'manta',
         // Sync with src/components/Bridge/SelectBridgeDialog/productList.ts
       ],
     };
