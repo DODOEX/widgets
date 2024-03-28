@@ -198,7 +198,20 @@ export class BatchProvider extends StaticJsonRpcProvider {
       };
 
       if (this._provider) {
-        return this._provider.send(request.method, request.params);
+        try {
+          const result = await this._provider.send(
+            request.method,
+            request.params,
+          );
+          batchCallSuccessProcess({
+            id: request.id,
+            jsonrpc: request.jsonrpc,
+            result: result,
+          });
+        } catch (error) {
+          batchCallFailedProcess(error);
+        }
+        return;
       }
 
       return fetchJson(this.connection, JSON.stringify(request)).then(

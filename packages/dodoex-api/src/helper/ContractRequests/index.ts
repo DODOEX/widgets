@@ -126,6 +126,8 @@ export default class ContractRequests {
     const result = new ContractRequests({
       rpc: this.rpc,
       getProvider: this.getConfigProvider,
+      debugQuery: this.debugQuery,
+      debugProvider: this.debugProvider,
     });
     this.subContractRequestsList.push(result);
     return result;
@@ -254,7 +256,7 @@ export default class ContractRequests {
         query,
       });
     }
-    const provider = await this.getProvider(chainId);
+    const provider = await this.getBatchProvider(chainId);
     const data = await encodeFunctionData(
       query.abiName,
       query.method,
