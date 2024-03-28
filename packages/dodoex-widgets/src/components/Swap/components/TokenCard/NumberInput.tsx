@@ -1,5 +1,5 @@
 import { Box, Input, BoxProps, useTheme, ButtonBase } from '@dodoex/components';
-import { useMemo, useRef } from 'react';
+import { forwardRef, useMemo, ForwardedRef } from 'react';
 import { Error, Clear } from '@dodoex/icons';
 import {
   formatReadableNumber,
@@ -7,29 +7,36 @@ import {
 } from '../../../../utils/formatter';
 import { numberInputWrapper } from '../../../../constants/testId';
 
-export function NumberInput({
-  readOnly,
-  sx,
-  value,
-  decimals,
-  onChange,
-  suffix,
-  withClear,
-  onFocus,
-  placeholder,
-  readonlyShowSuffix,
-}: {
-  readOnly?: boolean;
-  sx?: BoxProps['sx'];
-  value?: string;
-  decimals?: number;
-  onFocus?: () => void;
-  onChange?: (v: string) => void;
-  suffix?: React.ReactNode | string;
-  withClear?: boolean;
-  placeholder?: string;
-  readonlyShowSuffix?: boolean;
-}) {
+export const NumberInput = forwardRef(function NumberInput(
+  {
+    readOnly,
+    sx,
+    value,
+    decimals,
+    onChange,
+    suffix,
+    suffixGap = 0,
+    withClear,
+    onFocus,
+    placeholder,
+    readonlyShowSuffix,
+    typography,
+  }: {
+    readOnly?: boolean;
+    sx?: BoxProps['sx'];
+    value?: string;
+    decimals?: number;
+    onFocus?: () => void;
+    onChange?: (v: string) => void;
+    suffix?: React.ReactNode | string;
+    suffixGap?: number;
+    withClear?: boolean;
+    placeholder?: string;
+    readonlyShowSuffix?: boolean;
+    typography?: string;
+  },
+  ref: ForwardedRef<HTMLInputElement>,
+) {
   const theme = useTheme();
 
   const endAdornment = useMemo(() => {
@@ -69,47 +76,41 @@ export function NumberInput({
   }, [onChange, suffix, theme.palette.text.primary, value, withClear]);
 
   return (
-    <Box
-      sx={{
-        mt: 12,
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        ...sx,
+    <Input
+      fullWidth
+      value={value}
+      readOnly={readOnly}
+      placeholder={placeholder || '0.00'}
+      onFocus={onFocus}
+      onChange={(evt: any) => {
+        const inputVal = evt.target.value;
+        const input =
+          inputVal.length === 0
+            ? ''
+            : fixedInputStringToFormattedNumber(inputVal, decimals as number);
+        onChange && onChange(input as string);
       }}
       data-testid={numberInputWrapper}
-    >
-      <Input
-        fullWidth
-        value={value}
-        readOnly={readOnly}
-        placeholder={placeholder || '0.00'}
-        onFocus={onFocus}
-        onChange={(evt: any) => {
-          const inputVal = evt.target.value;
-          const input =
-            inputVal.length === 0
-              ? ''
-              : fixedInputStringToFormattedNumber(inputVal, decimals as number);
-          onChange && onChange(input as string);
-        }}
-        sx={{
-          width: 'inherit',
+      suffix={(!readOnly || readonlyShowSuffix) && endAdornment}
+      suffixGap={suffixGap}
+      ref={ref}
+      sx={{
+        border: 'none',
+        '& input': {
+          fontSize: 24,
+          typography,
           border: 'none',
-          '& .MuiInput-input': {
+          outline: 'none',
+          padding: 0,
+          color: 'text.primary',
+          '&::placeholder': {
             fontSize: 24,
-            border: 'none',
-            outline: 'none',
-            padding: 0,
-            color: 'text.primary',
-            '&::placeholder': {
-              fontSize: 24,
-              color: 'text.disabled',
-            },
+            typography,
+            color: 'text.disabled',
           },
-        }}
-      />
-      {(!readOnly || readonlyShowSuffix) && value && endAdornment}
-    </Box>
+        },
+        ...sx,
+      }}
+    />
   );
-}
+});

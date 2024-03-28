@@ -35,13 +35,66 @@ const TabStyle = styled(BaseTab)`
   }
 `;
 
-const TabInPaperStyle = styled(TabStyle)`
+const TabInPaperStyle = styled(BaseTab)`
   flex: 1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: ${({ theme }) => theme.palette.text.secondary};
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+
+  &:not(.${tabClasses.selected}):hover {
+    color: ${({ theme }) => theme.palette.text.primary};
+  }
+
+  &.${buttonClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.${tabClasses.selected} {
+    position: relative;
+    background-color: ${({ theme }) => theme.palette.secondary.main};
+    color: ${({ theme }) => theme.palette.secondary.contrastText};
+  }
+`;
+
+const TabTagStyle = styled(BaseTab)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  height: 30px;
+  background-color: transparent;
+  color: ${({ theme }) => theme.palette.text.primary};
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+
+  &:not(.${tabClasses.selected}):hover {
+    background-color: ${({ theme }) => theme.palette.background.tag};
+  }
+
+  &.${buttonClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.${tabClasses.selected} {
+    position: relative;
+    background-color: ${({ theme }) => theme.palette.background.tag};
+  }
 `;
 
 export interface TabProps extends BaseTabProps {
   sx?: BoxProps['sx'];
-  variant?: 'default' | 'inPaper';
+  variant?: 'default' | 'inPaper' | 'tag';
 }
 export const Tab = React.forwardRef(function TabsList(
   { sx, variant: variantProps, ...props }: TabProps,
@@ -51,6 +104,7 @@ export const Tab = React.forwardRef(function TabsList(
   const variantComponentObject = {
     default: TabStyle,
     inPaper: TabInPaperStyle,
+    tag: TabTagStyle,
   };
   return (
     <Box

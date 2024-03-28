@@ -49,7 +49,7 @@ export default function VersionSelect({
                 }
                 sx={{
                   mt: 28,
-                  width: 295,
+                  width: '100%',
                   height: 88.1,
                 }}
               />

@@ -19,6 +19,7 @@ export function TokenPickerDialog({
   multiple,
   searchPlaceholder,
   searchOtherAddress,
+  chainId,
 }: {
   open: boolean;
   title?: React.ReactNode | string;
@@ -32,6 +33,7 @@ export function TokenPickerDialog({
   multiple?: TokenPickerProps['multiple'];
   searchPlaceholder?: TokenPickerProps['searchPlaceholder'];
   searchOtherAddress?: TokenPickerProps['searchOtherAddress'];
+  chainId?: TokenPickerProps['chainId'];
 }) {
   const { height } = useSelector(getGlobalProps);
   return (
@@ -53,6 +55,7 @@ export function TokenPickerDialog({
         multiple={multiple}
         searchPlaceholder={searchPlaceholder}
         searchOtherAddress={searchOtherAddress}
+        chainId={chainId}
       />
     </Dialog>
   );

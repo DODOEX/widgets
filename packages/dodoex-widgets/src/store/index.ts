@@ -12,15 +12,8 @@ const preloadedState = {
   token: initialTokenState,
 };
 const reducer = createRootReducer();
+/** @ts-ignore */
 export const store = configureStore({
   reducer,
-  middleware: (getDefaultMiddleware: any) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: ['SET_ACCOUNT_BALANCES', 'SET_ETH_BALANCE'],
-        // Ignore these paths in the state
-        ignoredPaths: ['token.accountBalances', 'token.ethBalance'],
-      },
-    }),
   preloadedState,
 });

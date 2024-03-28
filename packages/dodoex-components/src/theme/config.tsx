@@ -193,7 +193,7 @@ export const getDesignTokens = (
   const normalFontWeight = lang ? getNormalFontWeight(lang) : 400;
   let palette = isLight ? lightPalette : darkPalette;
   if (themeProps?.palette?.mode === mode) {
-    palette = themeProps.palette;
+    palette = merge(palette, themeProps.palette);
   }
   const defaultTheme = {
     spacing: 1,
@@ -270,7 +270,7 @@ export const getDesignTokens = (
       MuiCssBaseline: {
         styleOverrides: {
           '': {
-            borderColor: palette.border?.main,
+            border: `0 solid ${palette.border?.main}`,
           },
           '::-webkit-scrollbar': {
             width: 6,

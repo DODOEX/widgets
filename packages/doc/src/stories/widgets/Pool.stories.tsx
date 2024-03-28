@@ -1,4 +1,5 @@
-import { PoolWidget } from '@dodoex/widgets';
+import { SwapWidgetApi } from '@dodoex/api';
+import { PoolWidget, SwapWidgetProps } from '@dodoex/widgets';
 import React from 'react';
 
 export default {
@@ -7,11 +8,24 @@ export default {
 };
 
 export const Primary = (props: any) => {
-  return <PoolWidget {...props} />;
+  const [config, setConfig] = React.useState<SwapWidgetProps>({});
+  const { projectId, apiKey, ...other } = props;
+  React.useEffect(() => {
+    if (projectId && apiKey) {
+      const dodoService = new SwapWidgetApi();
+      dodoService
+        .getConfigSwapWidgetProps(projectId, apiKey)
+        .then(({ swapWidgetProps }) => {
+          setConfig(swapWidgetProps);
+        });
+    }
+  }, [projectId, apiKey]);
+  return <PoolWidget {...config} {...other} apikey={apiKey} />;
 };
 
 Primary.args = {
-  apikey: 'ee53d6b75b12aceed4',
+  projectId: 'project2',
+  apiKey: 'ee53d6b75b12aceed4',
   width: 375,
   height: 494,
 };

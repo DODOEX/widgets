@@ -27,7 +27,7 @@ export default function RadioButton({
     <Box
       sx={{
         p: 20,
-        backgroundColor: theme.palette.hover.default,
+        backgroundColor: theme.palette.background.tag,
         borderWidth: 1,
         borderColor: selected ? theme.palette.primary.main : 'transparent',
         borderStyle: 'solid',

@@ -141,6 +141,7 @@ export default function useTokenList({
 
   const getNeedShowList = useCallback(
     (tokens: TokenList) => {
+      const includeKeySet = new Set<string>();
       return tokens.filter((e: TokenInfo) => {
         if (e.chainId !== chainId) return false;
         let isShow = true;
@@ -149,8 +150,14 @@ export default function useTokenList({
         } else {
           isShow = !hiddenSet.has(e.address.toLowerCase());
         }
-        if (isShow && side) {
-          isShow = !e.side || e.side === side;
+        if (isShow) {
+          if (side) {
+            isShow = !e.side || e.side === side;
+          } else {
+            const key = `${e.chainId}-${e.address}`;
+            isShow = !includeKeySet.has(key);
+            includeKeySet.add(key);
+          }
         }
         return isShow;
       });

@@ -32,6 +32,7 @@ interface StyleProps {
   variant?: Variant;
   danger?: boolean;
   size?: Size;
+  backgroundColor?: string;
 }
 
 // @ts-ignore
@@ -44,7 +45,7 @@ export interface Props extends StyleProps, React.HTMLProps<HTMLButtonElement> {
 }
 
 const buttonStyles = (
-  { fullWidth, variant, sx, danger, size }: StyleProps,
+  { fullWidth, variant, sx, danger, size, backgroundColor }: StyleProps,
   theme: Theme,
 ) => {
   let result: SystemCssProperties<Theme> | CSSSelectorObject<Theme> = {
@@ -59,7 +60,7 @@ const buttonStyles = (
     position: 'relative',
     boxSizing: 'border-box',
     WebkitTapHighlightColor: 'transparent',
-    backgroundColor: 'transparent', // Reset default value
+    backgroundColor: backgroundColor ?? 'transparent', // Reset default value
     // We disable the focus ring for mouse, touch and keyboard users.
     outline: 0,
     border: 0,
@@ -146,7 +147,9 @@ const buttonStyles = (
     case Variant.second:
       result = {
         ...result,
-        backgroundColor: danger ? 'error.main' : theme.palette.background.tag,
+        backgroundColor: danger
+          ? 'error.main'
+          : backgroundColor ?? theme.palette.background.tag,
         border: 'none',
         color: danger ? 'error.contrastText' : 'text.primary',
         '&[disabled]': {
@@ -168,7 +171,9 @@ const buttonStyles = (
         height: 'auto',
         borderRadius: 4,
         typography: 'body2',
-        backgroundColor: danger ? 'error.main' : 'background.tag',
+        backgroundColor: danger
+          ? 'error.main'
+          : backgroundColor ?? 'background.tag',
         border: 'none',
         color: danger ? 'error.contrastText' : 'primary.main',
         '&[disabled]': {
@@ -185,7 +190,9 @@ const buttonStyles = (
     default:
       result = {
         ...result,
-        backgroundColor: danger ? 'error.main' : 'secondary.main',
+        backgroundColor: danger
+          ? 'error.main'
+          : backgroundColor ?? 'secondary.main',
         [hoverLabel]: {
           background: `linear-gradient(0deg, rgba(26, 26, 27, 0.1), rgba(26, 26, 27, 0.1)), ${
             danger
@@ -218,13 +225,17 @@ export const Button = ({
   sx,
   danger,
   size,
+  backgroundColor,
   ref,
   ...props
 }: Props) => {
   const theme = useTheme();
   const attrs = {
     disabled,
-    sx: buttonStyles({ fullWidth, variant, sx, danger, size }, theme),
+    sx: buttonStyles(
+      { fullWidth, variant, sx, danger, size, backgroundColor },
+      theme,
+    ),
     onClick,
     component,
     to,

@@ -41,6 +41,7 @@ export default function PoolList() {
           variant="rounded"
           tabsListSx={{
             mb: 16,
+            justifyContent: 'space-between',
           }}
         />
         <Button

@@ -4,6 +4,7 @@ import React from 'react';
 import GoBack from '../../../components/GoBack';
 import {
   CardPlus,
+  CardPlusConnected,
   TokenCard,
 } from '../../../components/Swap/components/TokenCard';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
@@ -51,13 +52,19 @@ export default function PoolCreate() {
     slippageCoefficient: DEFAULT_SLIPPAGE_COEFFICIENT,
     isSlippageCoefficientCustomized: false,
   });
-  if (defaultBaseToken && !state.baseToken) {
+  if (
+    defaultBaseToken &&
+    (!state.baseToken || state.baseToken.chainId !== chainId)
+  ) {
     dispatch({
       type: Types.UpdateBaseToken,
       payload: defaultBaseToken,
     });
   }
-  if (defaultQuoteToken && !state.quoteToken) {
+  if (
+    defaultQuoteToken &&
+    (!state.quoteToken || state.quoteToken.chainId !== chainId)
+  ) {
     dispatch({
       type: Types.UpdateQuoteToken,
       payload: defaultQuoteToken,
@@ -75,13 +82,18 @@ export default function PoolCreate() {
   return (
     <Box
       sx={{
-        padding: 0,
-        height: '100%',
         position: 'relative',
-        [theme.breakpoints.up('tablet')]: {
-          padding: theme.spacing(28, 20, 40, 40),
-          height: 'auto',
-        },
+        height: '100%',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        ...(!isMobile
+          ? {
+              padding: theme.spacing(28, 20, 40, 40),
+              backgroundColor: 'background.default',
+            }
+          : {
+              padding: 0,
+            }),
       }}
     >
       <Box
@@ -89,9 +101,11 @@ export default function PoolCreate() {
           display: 'flex',
           alignItems: 'flex-start',
           height: '100%',
-          [theme.breakpoints.up('tablet')]: {
-            height: 'auto',
-          },
+          ...(!isMobile
+            ? {
+                height: 'auto',
+              }
+            : {}),
         }}
       >
         {isMobile ? null : (
@@ -174,16 +188,18 @@ export default function PoolCreate() {
             borderRadius: 0,
             backgroundColor: 'background.paper',
             minHeight: '100%',
-            [theme.breakpoints.up('tablet')]: {
-              pb: 20,
-              borderRadius: 16,
-              flexGrow: 0,
-              minHeight: 'auto',
-              height: '100%',
-              position: 'sticky',
-              top: '28px',
-              overflowY: 'hidden',
-            },
+            ...(!isMobile
+              ? {
+                  pb: 20,
+                  borderRadius: 16,
+                  flexGrow: 0,
+                  minHeight: 'auto',
+                  height: '100%',
+                  position: 'sticky',
+                  top: '28px',
+                  overflowY: 'hidden',
+                }
+              : {}),
           }}
         >
           <StepTitle currentStep={state.currentStep} />
@@ -206,78 +222,82 @@ export default function PoolCreate() {
                 baseAmount={state.baseAmount}
                 quoteAmount={state.quoteAmount}
               />
-              <TokenCard
-                amt={
-                  isSingleTokenVersion ? state.quoteAmount : state.baseAmount
-                }
-                onInputChange={(payload) => {
-                  dispatch({
-                    type: isSingleTokenVersion
-                      ? Types.UpdateQuoteAmount
-                      : Types.UpdateBaseAmount,
-                    payload,
-                  });
-                }}
-                readOnly={isSingleTokenVersion}
-                token={leftToken}
-                occupiedAddrs={rightToken ? [rightToken.address] : undefined}
-                occupiedChainId={chainId}
-                onTokenChange={(payload, occupied) => {
-                  if (occupied) {
-                    dispatch({
-                      type: Types.SwitchTokens,
-                    });
-                    return;
-                  }
-                  dispatch({
-                    type: isSingleTokenVersion
-                      ? Types.UpdateQuoteToken
-                      : Types.UpdateBaseToken,
-                    payload,
-                  });
-                }}
+              <Box
                 sx={{
-                  ml: -8,
+                  px: 20,
                 }}
-              />
-              <CardPlus />
-              <TokenCard
-                amt={
-                  isSingleTokenVersion ? state.baseAmount : state.quoteAmount
-                }
-                onInputChange={(payload) => {
-                  dispatch({
-                    type: isSingleTokenVersion
-                      ? Types.UpdateBaseAmount
-                      : Types.UpdateQuoteAmount,
-                    payload,
-                  });
-                }}
-                readOnly={state.isFixedRatio && !!state.fixedRatioPrice}
-                // inputReadonlyTooltip={
-                //   t('pool.create.disabled-token-amount') as string
-                // }
-                token={rightToken}
-                occupiedAddrs={leftToken ? [leftToken.address] : undefined}
-                occupiedChainId={chainId}
-                onTokenChange={(payload, occupied) => {
-                  if (occupied) {
-                    dispatch({
-                      type: Types.SwitchTokens,
-                    });
-                    return;
+              >
+                <TokenCard
+                  showMaxBtn
+                  showPercentage
+                  amt={
+                    isSingleTokenVersion ? state.quoteAmount : state.baseAmount
                   }
-                  dispatch({
-                    type: isSingleTokenVersion
-                      ? Types.UpdateBaseToken
-                      : Types.UpdateQuoteToken,
-                    payload,
-                  });
-                }}
-                sx={{
-                  ml: -8,
-                }}
-              />
+                  onInputChange={(payload) => {
+                    dispatch({
+                      type: isSingleTokenVersion
+                        ? Types.UpdateQuoteAmount
+                        : Types.UpdateBaseAmount,
+                      payload,
+                    });
+                  }}
+                  readOnly={isSingleTokenVersion}
+                  token={leftToken}
+                  occupiedAddrs={rightToken ? [rightToken.address] : undefined}
+                  occupiedChainId={chainId}
+                  chainId={chainId}
+                  onTokenChange={(payload, occupied) => {
+                    if (occupied) {
+                      dispatch({
+                        type: Types.SwitchTokens,
+                      });
+                      return;
+                    }
+                    dispatch({
+                      type: isSingleTokenVersion
+                        ? Types.UpdateQuoteToken
+                        : Types.UpdateBaseToken,
+                      payload,
+                    });
+                  }}
+                />
+                <CardPlusConnected />
+                <TokenCard
+                  showMaxBtn
+                  showPercentage
+                  amt={
+                    isSingleTokenVersion ? state.baseAmount : state.quoteAmount
+                  }
+                  onInputChange={(payload) => {
+                    dispatch({
+                      type: isSingleTokenVersion
+                        ? Types.UpdateBaseAmount
+                        : Types.UpdateQuoteAmount,
+                      payload,
+                    });
+                  }}
+                  readOnly={state.isFixedRatio && !!state.fixedRatioPrice}
+                  inputReadonlyTooltip={t`The token amount is calculated by initial price.`}
+                  token={rightToken}
+                  occupiedAddrs={leftToken ? [leftToken.address] : undefined}
+                  occupiedChainId={chainId}
+                  chainId={chainId}
+                  onTokenChange={(payload, occupied) => {
+                    if (occupied) {
+                      dispatch({
+                        type: Types.SwitchTokens,
+                      });
+                      return;
+                    }
+                    dispatch({
+                      type: isSingleTokenVersion
+                        ? Types.UpdateBaseToken
+                        : Types.UpdateQuoteToken,
+                      payload,
+                    });
+                  }}
+                />
+              </Box>
               <InitPriceSetting
                 selectedVersion={state.selectedVersion}
                 isFixedRatio={state.isFixedRatio}
@@ -306,10 +326,12 @@ export default function PoolCreate() {
 
           <Box
             sx={{
-              pb: 160,
-              [theme.breakpoints.up('tablet')]: {
-                pb: 28,
-              },
+              pb: 72,
+              ...(!isMobile
+                ? {
+                    pb: 28,
+                  }
+                : {}),
             }}
           />
           <BottomButtonGroup state={state} dispatch={dispatch} />

@@ -21,7 +21,12 @@ export default function NeedConnectButton({
   const dispatch = useDispatch<AppThunkDispatch>();
   const { onConnectWalletClick } = useGlobalConfig();
   const [loading, setLoading] = React.useState(false);
-  if (account && !loading) {
+  if (
+    account &&
+    !loading &&
+    currentChainId !== undefined &&
+    (!chainId || chainId === currentChainId)
+  ) {
     if (includeButton) return <>{props.children ?? null}</>;
     return <Button {...props} />;
   }

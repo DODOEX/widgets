@@ -119,93 +119,104 @@ export function SlippageCoefficientSetting({
       >
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 12,
-            py: 28,
+            flex: 1,
+            overflowY: 'auto',
           }}
         >
-          {slippageCoefficientList.map((item) => {
-            const selected = isCustomized ? false : customValue === item.value;
-            return (
-              <RadioButton
-                key={item.value}
-                title={item.title}
-                description={item.description}
-                onClick={() => {
-                  dispatch({
-                    type: Types.UpdateIsSlippageCoefficientCustomized,
-                    payload: false,
-                  });
-                  setCustomValue(item.value);
-                }}
-                selected={selected}
-                subTitle={
-                  item.tag ? (
-                    <RadioButtonTag
-                      color={item.tagColor}
-                      backgroundColor={item.tagBackgroundColor}
-                      tagKey={item.tag}
-                    />
-                  ) : undefined
-                }
-                sx={{
-                  backgroundColor: theme.palette.background.paper,
-                  borderColor: selected
-                    ? theme.palette.primary.main
-                    : theme.palette.border.main,
-                }}
-                titleSx={{
-                  typography: 'body1',
-                }}
-              />
-            );
-          })}
-
           <Box
             sx={{
-              mt: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 12,
+              p: theme.spacing(8, 28, 28),
             }}
           >
-            <SelectAndInput
-              errorMsg={errorMsg}
-              isCustomized={isCustomized}
-              onClick={() => {
-                if (!isCustomized) {
-                  setCustomValue('');
-                }
-                dispatch({
-                  type: Types.UpdateIsSlippageCoefficientCustomized,
-                  payload: true,
-                });
+            {slippageCoefficientList.map((item) => {
+              const selected = isCustomized
+                ? false
+                : customValue === item.value;
+              return (
+                <RadioButton
+                  key={item.value}
+                  title={item.title}
+                  description={item.description}
+                  onClick={() => {
+                    dispatch({
+                      type: Types.UpdateIsSlippageCoefficientCustomized,
+                      payload: false,
+                    });
+                    setCustomValue(item.value);
+                  }}
+                  selected={selected}
+                  subTitle={
+                    item.tag ? (
+                      <RadioButtonTag
+                        color={item.tagColor}
+                        backgroundColor={item.tagBackgroundColor}
+                        tagKey={item.tag}
+                      />
+                    ) : undefined
+                  }
+                  sx={{
+                    backgroundColor: theme.palette.background.paper,
+                    borderColor: selected
+                      ? theme.palette.primary.main
+                      : theme.palette.border.main,
+                  }}
+                  titleSx={{
+                    typography: 'body1',
+                  }}
+                />
+              );
+            })}
+
+            <Box
+              sx={{
+                mt: 8,
               }}
-              value={customValue}
-              onChange={(value) => {
-                setCustomValue(value);
-              }}
-            />
+            >
+              <SelectAndInput
+                errorMsg={errorMsg}
+                isCustomized={isCustomized}
+                onClick={() => {
+                  if (!isCustomized) {
+                    setCustomValue('');
+                  }
+                  dispatch({
+                    type: Types.UpdateIsSlippageCoefficientCustomized,
+                    payload: true,
+                  });
+                }}
+                value={customValue}
+                onChange={(value) => {
+                  setCustomValue(value);
+                }}
+              />
+            </Box>
           </Box>
-        </Box>
-        <Box
-          sx={{
-            px: 20,
-            py: 16,
-            backgroundColor: 'background.paperContrast',
-          }}
-        >
-          <Button
-            fullWidth
-            disabled={confirmButtonDisabled}
-            onClick={() => {
-              dispatch({
-                type: Types.UpdateSlippageCoefficient,
-                payload: customValue,
-              });
-              setShowSlippageCoefficientDialog(false);
+          <Box
+            sx={{
+              position: 'sticky',
+              bottom: 0,
+              px: 20,
+              py: 16,
+              backgroundColor: 'background.paperContrast',
             }}
           >
-            <Trans>Confirm</Trans>
-          </Button>
+            <Button
+              fullWidth
+              disabled={confirmButtonDisabled}
+              onClick={() => {
+                dispatch({
+                  type: Types.UpdateSlippageCoefficient,
+                  payload: customValue,
+                });
+                setShowSlippageCoefficientDialog(false);
+              }}
+            >
+              <Trans>Confirm</Trans>
+            </Button>
+          </Box>
         </Box>
       </Dialog>
     </>

@@ -73,6 +73,7 @@ export default function PoolOperate({
             tabs={poolOrMiningTabs}
             tabsListSx={{
               mx: 20,
+              justifyContent: 'space-between',
             }}
             rightSlot={
               <Box

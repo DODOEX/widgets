@@ -56,9 +56,11 @@ export class TokenApi {
   ) {
     let proxyContractAddress = spender;
     let erc20HelperAddress = '';
-    if (!proxyContractAddress && chainId !== undefined) {
+    if (chainId !== undefined) {
       const config = contractConfig[chainId as ChainId];
-      proxyContractAddress = config.DODO_APPROVE;
+      if (!proxyContractAddress) {
+        proxyContractAddress = config.DODO_APPROVE;
+      }
       erc20HelperAddress = config.ERC20_HELPER;
     }
     return {

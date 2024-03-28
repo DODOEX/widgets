@@ -250,6 +250,7 @@ export function RemovePoolOperate({
               amt={isBase ? baseAmount : quoteAmount}
               token={checkToken}
               showMaxBtn
+              showPercentage
               onInputChange={
                 isBase ? handleChangeBaseAmount : handleChangeQuoteAmount
               }
@@ -263,6 +264,7 @@ export function RemovePoolOperate({
                 amt={baseAmount}
                 token={pool?.baseToken}
                 showMaxBtn
+                showPercentage
                 onInputChange={handleChangeBaseAmount}
                 readOnly={balanceInfo.loading || !canOperate}
                 overrideBalance={baseOverride}
@@ -276,6 +278,7 @@ export function RemovePoolOperate({
                   amt={quoteAmount}
                   token={pool?.quoteToken}
                   showMaxBtn
+                  showPercentage
                   onInputChange={handleChangeQuoteAmount}
                   readOnly={balanceInfo.loading || !canOperate || isSinglePool}
                   overrideBalance={quoteOverride}

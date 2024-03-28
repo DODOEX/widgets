@@ -51,10 +51,7 @@ export function SelectAndInput({
           suffix={<RadioButtonIcon selected={isCustomized} />}
           placeholder={`${t`Custom`} %`}
           sx={{
-            mt: 0,
-            display: 'flex',
-            alignItems: 'center',
-            width: '100%',
+            backgroundColor: 'transparent',
             '& input': {
               typography: 'body1',
               height: 36,

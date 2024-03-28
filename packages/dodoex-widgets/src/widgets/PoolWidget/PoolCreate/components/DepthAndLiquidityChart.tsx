@@ -78,7 +78,7 @@ export default function DepthAndLiquidityChart({
     <Box
       ref={chartParentRef}
       sx={{
-        mt: 14,
+        mt: 2,
         '& input': {
           backgroundColor: 'background.input',
           borderStyle: 'solid',
@@ -102,8 +102,8 @@ export default function DepthAndLiquidityChart({
       >
         <TabsButtonGroup
           tabs={tabs}
+          variant="tag"
           tabsListSx={{
-            mt: 22,
             ml: 'auto',
           }}
         />
@@ -114,10 +114,12 @@ export default function DepthAndLiquidityChart({
             mt: 8,
             mb: 14,
             color: 'text.secondary',
-            [theme.breakpoints.down('tablet')]: {
-              transform: 'scale(0.66667)',
-              transformOrigin: 'top left',
-            },
+            ...(isMobile
+              ? {
+                  transform: 'scale(0.66667)',
+                  transformOrigin: 'top left',
+                }
+              : {}),
           }}
         >
           <Trans>Amounts</Trans>
@@ -183,10 +185,12 @@ export default function DepthAndLiquidityChart({
           typography: 'h6',
           mt: 6,
           color: 'text.secondary',
-          [theme.breakpoints.down('tablet')]: {
-            transform: 'scale(0.66667)',
-            transformOrigin: 'top left',
-          },
+          ...(isMobile
+            ? {
+                transform: 'scale(0.66667)',
+                transformOrigin: 'top left',
+              }
+            : {}),
         }}
       >
         <Trans>Swap Rate</Trans>

@@ -1,5 +1,7 @@
 import { Box } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
+import { createPortal } from 'react-dom';
+import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
 
 export const transitionTime = 300;
 export interface DialogProps {
@@ -13,7 +15,7 @@ export interface DialogProps {
   height?: number | string;
   testId?: string;
 }
-export default function Dialog({
+function DialogBase({
   open,
   onClose,
   afterClose,
@@ -79,4 +81,12 @@ export default function Dialog({
       {children}
     </Box>
   );
+}
+
+export default function Dialog(props: DialogProps) {
+  const { widgetRef } = useGlobalConfig();
+  if (widgetRef?.current) {
+    return createPortal(<DialogBase {...props} />, widgetRef.current);
+  }
+  return <DialogBase {...props} />;
 }

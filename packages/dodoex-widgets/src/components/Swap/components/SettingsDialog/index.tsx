@@ -70,6 +70,9 @@ export function SettingsDialog({
               }}
               suffix={<Box sx={{ color: 'text.disabled' }}>%</Box>}
               height={36}
+              sx={{
+                mt: 12,
+              }}
             />
             {isSlippageGTMax && (
               <Box
@@ -110,6 +113,9 @@ export function SettingsDialog({
               placeholder={t`${DEFAULT_SWAP_DDL} minutes`}
               onInputChange={(val: string | null) => {
                 dispatch(setTxDdl(val ? Math.max(Number(val), 1) : ''));
+              }}
+              sx={{
+                mt: 12,
               }}
             />
           </Box>

@@ -19,6 +19,7 @@ import { isAddress } from '../../utils';
 import { TokenSearchLoadingSkelton } from './TokenSearchLoadingSkelton';
 
 export interface TokenPickerProps {
+  chainId?: ChainId;
   value?: TokenInfo | null | Array<TokenInfo>;
   onChange: (token: TokenInfo | Array<TokenInfo>, isOccupied: boolean) => void;
   /** token pair usage */
@@ -39,6 +40,7 @@ export interface TokenPickerProps {
 }
 
 export default function TokenPicker({
+  chainId,
   value,
   onChange,
   occupiedAddrs,
@@ -69,7 +71,7 @@ export default function TokenPicker({
     hiddenAddrs,
     showAddrs,
     side,
-    chainId: selectChainId,
+    chainId: chainId ?? selectChainId,
     visible,
     defaultLoadBalance,
     multiple,
@@ -162,7 +164,7 @@ export default function TokenPicker({
           mb: 16,
         }}
       />
-      {chainList.length ? (
+      {chainId === undefined && chainList.length ? (
         <Box
           sx={{
             position: 'relative',

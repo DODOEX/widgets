@@ -10,6 +10,7 @@ import {
 import { getFeeRateList } from './hooks/useFeeRateList';
 import { getDefaultSlippageCoefficientList } from './hooks/useSlippageCoefficientList';
 import { TokenInfo } from '../../../hooks/Token';
+import { PMMModel } from '@dodoex/api';
 
 export interface StateProps {
   currentStep: 0 | 1 | 2;
@@ -44,6 +45,8 @@ export interface StateProps {
   feeRate: string | '0.01' | '0.3' | '1';
   isFeeRateCustomized: boolean;
 }
+
+type Pool = any;
 
 export enum Types {
   SetCurrentStep = 1,

@@ -1,5 +1,6 @@
 import { alpha, Box, QuestionTooltip, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
+import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { StateProps } from '../reducer';
 
 export function StepTitle({
@@ -8,6 +9,7 @@ export function StepTitle({
   currentStep: StateProps['currentStep'];
 }) {
   const theme = useTheme();
+  const { isMobile } = useWidgetDevice();
   let titleLabel = '';
   let titleQuestion = '';
   let descriptionLabel = '';
@@ -30,16 +32,18 @@ export function StepTitle({
     <Box
       sx={{
         position: 'sticky',
-        top: 60,
+        top: 0,
         py: 20,
         px: 20,
         backgroundColor: theme.palette.background.paper,
         zIndex: 1,
-        [theme.breakpoints.up('tablet')]: {
-          position: 'static',
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16,
-        },
+        ...(!isMobile
+          ? {
+              position: 'static',
+              borderTopLeftRadius: 16,
+              borderTopRightRadius: 16,
+            }
+          : {}),
       }}
     >
       <Box

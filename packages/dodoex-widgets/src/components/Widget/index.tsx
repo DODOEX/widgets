@@ -10,7 +10,7 @@ import {
   useDispatch,
   useSelector,
 } from 'react-redux';
-import { PropsWithChildren, useEffect, useMemo } from 'react';
+import { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
 import { LangProvider } from '../../providers/i18n';
 import { store } from '../../store';
 import { PaletteMode, ThemeOptions } from '@dodoex/components';
@@ -131,25 +131,36 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   const height = props.height || 494;
   useInitPropsToRedux({ ...props, width, height });
 
+  const widgetRef = useRef<HTMLDivElement>(null);
+
   return (
-    <Box
-      sx={{
-        width,
-        height,
-        overflow: 'hidden',
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        minWidth: 335,
-        minHeight: 494,
-        borderRadius: 16,
-        backgroundColor: 'background.paper',
+    <GlobalConfigContext.Provider
+      value={{
+        widgetRef,
+        onConnectWalletClick: props.onConnectWalletClick,
+        gotoBuyToken: props.gotoBuyToken,
       }}
-      className={WIDGET_CLASS_NAME}
     >
-      <OpenConnectWalletInfo />
-      <WithExecutionDialog {...props}>{props.children}</WithExecutionDialog>
-    </Box>
+      <Box
+        sx={{
+          width,
+          height,
+          overflow: 'hidden',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          minWidth: 335,
+          minHeight: 494,
+          borderRadius: 16,
+          backgroundColor: 'background.paper',
+        }}
+        className={WIDGET_CLASS_NAME}
+        ref={widgetRef}
+      >
+        <OpenConnectWalletInfo />
+        <WithExecutionDialog {...props}>{props.children}</WithExecutionDialog>
+      </Box>
+    </GlobalConfigContext.Provider>
   );
 }
 
@@ -191,15 +202,8 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
     <ReduxProvider store={store}>
       <LangProvider locale={props.locale}>
         <ThemeProvider theme={theme}>
-          <GlobalConfigContext.Provider
-            value={{
-              onConnectWalletClick: props.onConnectWalletClick,
-              gotoBuyToken: props.gotoBuyToken,
-            }}
-          >
-            <CssBaseline container={`.${WIDGET_CLASS_NAME}`} />
-            <Web3Provider {...props} />
-          </GlobalConfigContext.Provider>
+          <CssBaseline container={`.${WIDGET_CLASS_NAME}`} />
+          <Web3Provider {...props} />
         </ThemeProvider>
       </LangProvider>
     </ReduxProvider>

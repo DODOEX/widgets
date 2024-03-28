@@ -119,6 +119,8 @@ export function DepthChartWrapper({
       >
         <Box
           sx={{
+            px: 28,
+            pb: 20,
             maxHeight: `calc(80vh - 134px)`,
             overflowY: 'auto',
             overflowX: 'hidden',

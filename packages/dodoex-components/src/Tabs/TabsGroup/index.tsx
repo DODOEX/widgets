@@ -20,12 +20,7 @@ export function TabsGroup<T extends string | number = string | number>({
   rightSlot?: React.ReactNode;
 }) {
   return (
-    <TabsList
-      sx={{
-        justifyContent: 'space-between',
-        ...tabsListSx,
-      }}
-    >
+    <TabsList sx={tabsListSx}>
       {rightSlot ? (
         <>
           <Box

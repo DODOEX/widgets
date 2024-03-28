@@ -66,6 +66,18 @@ export default function TooltipToast({
     onClose?.();
   };
 
+  React.useEffect(() => {
+    let time: NodeJS.Timeout;
+    if (open) {
+      time = setTimeout(() => {
+        handleClose();
+      }, duration);
+    }
+    return () => {
+      clearTimeout(time);
+    };
+  }, [open]);
+
   return (
     <>
       <Tooltip

@@ -75,71 +75,82 @@ export default function ConfirmInfoDialog({
     >
       <Box
         sx={{
-          pt: 40,
-          pb: 22,
+          flex: 1,
+          px: 20,
+          pb: 20,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
         }}
       >
-        <Item label={t`Version`} value={title} />
-        <Item
-          label={t`Initial Tokens`}
-          value={
-            <>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-end',
-                }}
-              >
-                <TokenLogo
-                  address={state.baseToken?.address}
-                  chainId={chainId}
-                  marginRight={8}
-                  width={18}
-                  height={18}
-                />
-                {state.baseAmount || '-'}&nbsp;
-                {state.baseToken?.symbol}
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-end',
-                  mt: 4,
-                }}
-              >
-                <TokenLogo
-                  address={state.quoteToken?.address}
-                  chainId={chainId}
-                  marginRight={8}
-                  width={18}
-                  height={18}
-                />
-                {state.quoteAmount || '-'}&nbsp;
-                {state.quoteToken?.symbol}
-              </Box>
-            </>
-          }
-        />
-        <Item label={t`Fee Rate`} value={`${state.feeRate}%`} />
-        <Item
-          label={initPriceLabel}
-          value={
-            state.baseToken && state.quoteToken
-              ? `1 ${state.baseToken.symbol} = ${computeInitPriceText({
-                  midPrice,
-                  quoteToken: state.quoteToken,
-                  selectedVersion: state.selectedVersion,
-                  initPrice: state.initPrice,
-                })} ${state.quoteToken.symbol}`
-              : ''
-          }
-        />
-        <Item
-          label={t`Slippage Coefficient`}
-          value={state.slippageCoefficient}
-        />
+        <Box
+          sx={{
+            pt: 40,
+            px: 8,
+          }}
+        >
+          <Item label={t`Version`} value={title} />
+          <Item
+            label={t`Initial Tokens`}
+            value={
+              <>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                  }}
+                >
+                  <TokenLogo
+                    address={state.baseToken?.address}
+                    chainId={chainId}
+                    marginRight={8}
+                    width={18}
+                    height={18}
+                  />
+                  {state.baseAmount || '-'}&nbsp;
+                  {state.baseToken?.symbol}
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    mt: 4,
+                  }}
+                >
+                  <TokenLogo
+                    address={state.quoteToken?.address}
+                    chainId={chainId}
+                    marginRight={8}
+                    width={18}
+                    height={18}
+                  />
+                  {state.quoteAmount || '-'}&nbsp;
+                  {state.quoteToken?.symbol}
+                </Box>
+              </>
+            }
+          />
+          <Item label={t`Fee Rate`} value={`${state.feeRate}%`} />
+          <Item
+            label={initPriceLabel}
+            value={
+              state.baseToken && state.quoteToken
+                ? `1 ${state.baseToken.symbol} = ${computeInitPriceText({
+                    midPrice,
+                    quoteToken: state.quoteToken,
+                    selectedVersion: state.selectedVersion,
+                    initPrice: state.initPrice,
+                  })} ${state.quoteToken.symbol}`
+                : ''
+            }
+          />
+          <Item
+            label={t`Slippage Coefficient`}
+            value={state.slippageCoefficient}
+          />
+        </Box>
         <Button
           fullWidth
           sx={{

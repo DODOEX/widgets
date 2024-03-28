@@ -13,7 +13,7 @@ export interface FetchFiatPriceProps {
   toToken: TokenInfo | null;
 }
 export function useFetchFiatPrice({ fromToken, toToken }: FetchFiatPriceProps) {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const { apikey } = useSelector(getGlobalProps);
   const [fromFiatPrice, setFromFiatPrice] = useState<string>('');
   const [toFiatPrice, setToFiatPrice] = useState<string>('');

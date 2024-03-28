@@ -37,7 +37,23 @@ export const TabsList = React.forwardRef(function TabsList(
       });
     }
   }, []);
-  const isInPaper = variant === 'inPaper';
+  let backgroundColor = 'background.paper';
+  let borderRadius = 8;
+  let padding = 0;
+  let borderWidth = 0;
+  let width: number | string | undefined = undefined;
+  switch (variant) {
+    case 'inPaper':
+      backgroundColor = 'background.paperContrast';
+      borderRadius = 12;
+      padding = 4;
+      break;
+    case 'tag':
+      width = 'max-content';
+      backgroundColor = 'transparent';
+      borderWidth = 1;
+      break;
+  }
   return (
     <Box
       component={BaseTabsList}
@@ -53,19 +69,12 @@ export const TabsList = React.forwardRef(function TabsList(
       sx={{
         display: 'flex',
         alignItems: 'center',
+        width,
         overflowX: 'auto',
-        backgroundColor: isInPaper
-          ? 'background.paperContrast'
-          : 'background.paper',
-        ...(isInPaper
-          ? {
-              p: 4,
-              borderRadius: 12,
-            }
-          : {
-              borderRadius: 8,
-            }),
-
+        backgroundColor,
+        padding,
+        borderRadius,
+        borderWidth,
         '&::-webkit-scrollbar': {
           display: 'none',
         },

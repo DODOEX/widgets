@@ -60,7 +60,7 @@ export interface ConfigTokenList {
   }>;
   rebateAddress: string | null;
   rebateRatio: number | null;
-  swapSlippage: number | null;
+  swapSlippage: number | null | undefined;
   crossChainSlippage: number | null;
   basis?: WidgetConfigBasis;
   style?: WidgetConfigColor;
@@ -188,7 +188,6 @@ export class SwapWidgetApi {
             main: strToColorStr(configTokenList.style.success),
           },
           background: {
-            default: strToColorStr(configTokenList.style.background1),
             paper: strToColorStr(configTokenList.style.background1),
             paperContrast: strToColorStr(configTokenList.style.background2),
             backdrop: strToColorStr(configTokenList.style.mask),

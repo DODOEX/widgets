@@ -142,6 +142,7 @@ Primary.args = {
         default: '#F9F6E8',
         paper: '#FFFFFF',
         paperContrast: '#F6F6F6',
+        paperDarkContrast: 'rgba(26, 26, 27, 0.1)',
         backdrop: 'rgba(0, 0, 0, 0.9)',
         input: '#F0F0F0',
         tag: 'rgba(26, 26, 27, 0.04)',

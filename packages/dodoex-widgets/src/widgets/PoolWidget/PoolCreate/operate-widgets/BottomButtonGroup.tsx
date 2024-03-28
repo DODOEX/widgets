@@ -123,7 +123,7 @@ function OperateBtn({
     if (
       !initPrice ||
       initPriceBN.isNaN() ||
-      initPriceBN.lt(`1e-${decimalsLimit}`) ||
+      // initPriceBN.lt(`1e-${decimalsLimit}`) ||
       initPriceBN.gt(MAX_INIT_PRICE)
     ) {
       return disabledButton;
@@ -241,18 +241,20 @@ export function BottomButtonGroup({
     <>
       <Box
         sx={{
-          position: 'fixed',
+          position: 'sticky',
           left: 0,
           right: 0,
           bottom: 0,
           backgroundColor: theme.palette.background.paperContrast,
           px: 20,
           py: 20,
-          [theme.breakpoints.up('tablet')]: {
-            position: 'static',
-            backgroundColor: 'transparent',
-            py: 0,
-          },
+          ...(!isMobile
+            ? {
+                position: 'static',
+                backgroundColor: 'transparent',
+                py: 0,
+              }
+            : {}),
           display: 'flex',
           alignItems: 'center',
           gap: 8,

@@ -1,4 +1,5 @@
 import { Box, useTheme } from '@dodoex/components';
+import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { SectionStatusT } from '../types';
 
 export function SectionTitle({
@@ -11,6 +12,7 @@ export function SectionTitle({
   status: SectionStatusT;
 }) {
   const theme = useTheme();
+  const { isMobile } = useWidgetDevice();
 
   return (
     <>
@@ -21,11 +23,13 @@ export function SectionTitle({
           borderTopColor: 'divider',
           borderTopStyle: 'solid',
           borderTopWidth: 1,
-          [theme.breakpoints.down('tablet')]: {
-            mt: 12,
-            mb: 12,
-            display: index === 1 ? 'none' : 'block',
-          },
+          ...(isMobile
+            ? {
+                mt: 12,
+                mb: 12,
+                display: index === 1 ? 'none' : 'block',
+              }
+            : {}),
         }}
       />
 
