@@ -92,12 +92,12 @@ type Payload = {
 export type Actions = ActionMap<Payload>[keyof ActionMap<Payload>];
 
 function getQuoteByMidPriceStandard(state: StateProps, midPrice: BigNumber) {
-  // 这里主要是为了调用 getQuoteByMidPrice 方法，不传过多参数
+  // The main purpose here is to call the getQuoteByMidPrice method without passing too many parameters.
   const model = new PMMModel();
   model.B = new BigNumber(state.baseAmount);
   model.i = new BigNumber(state.initPrice);
   model.k = new BigNumber(state.slippageCoefficient);
-  // 标准池的 k 不会是 0,这里 R 用 1
+  // k of the standard pool will not be 0, here R uses 1
   model.RStatus = 1;
   return model.getQuoteByMidPrice(midPrice);
 }

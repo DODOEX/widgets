@@ -20,7 +20,7 @@ msgstr ""
 
 #: src/components/WithExecutionDialog/index.tsx:186
 msgid "Transaction Time:"
-msgstr "交易时长:<<<<<<< HEAD"
+msgstr "交易时长:"
 
 #: src/hooks/Bridge/useExecuteBridgeRoute.tsx:128
 msgid "Cross Chain"
@@ -106,7 +106,7 @@ msgstr ""
 
 #: src/components/WithExecutionDialog/index.tsx:109
 msgid "{0} confirmed"
-msgstr "{0} 已确认<<<<<<< HEAD"
+msgstr "{0} 已确认"
 
 #: src/components/Swap/index.tsx:513
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
@@ -117,7 +117,7 @@ msgid "Since this pool uses the PMM algorithm, which is different from the norma
 msgstr ""
 
 #: src/components/chart/i18n.ts:19
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:280
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:285
 msgid "The token amount is calculated by initial price."
 msgstr ""
 
@@ -156,7 +156,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:161
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:217
 msgid "Confirm"
-msgstr "确认<<<<<<< HEAD"
+msgstr "确认"
 
 #: src/components/Swap/index.tsx:971
 msgid "Powered by DODO protocol"
@@ -170,7 +170,7 @@ msgstr ""
 msgid "This token is on"
 msgstr "该代币在"
 
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:213
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:216
 msgid "Pool Creation"
 msgstr ""
 
@@ -262,7 +262,7 @@ msgstr "目标"
 
 #: src/components/Bridge/SelectBridgeDialog/RouteTagList.tsx:52
 msgid "Unapproved"
-msgstr "未授权<<<<<<< HEAD"
+msgstr "未授权"
 
 #: src/components/chart/i18n.ts:17
 msgid "Users buy {0} amount:"
@@ -365,7 +365,7 @@ msgstr "选择跨链桥"
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:280
 #: src/components/Swap/components/SettingsDialog/index.tsx:53
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
-msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。<<<<<<< HEAD"
+msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
 #: src/widgets/PoolWidget/PoolOperate/components/Ratio.tsx:204
 msgid "Any Ratio"
@@ -420,7 +420,7 @@ msgstr "重置"
 
 #: src/components/Bridge/SelectBridgeDialog/RouteTagList.tsx:68
 msgid "Best offer"
-msgstr "最优价格<<<<<<< HEAD"
+msgstr "最优价格"
 
 #: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:133
 msgid "LP Fee"
@@ -431,7 +431,7 @@ msgstr ""
 msgid "Confirming"
 msgstr "确认中"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:72
+#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:71
 msgid "The initial price needs to be greater than {min} and less than 100,000,000"
 msgstr ""
 
@@ -479,7 +479,7 @@ msgstr ""
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:202
 #: src/components/WithExecutionDialog/index.tsx:201
 msgid "Tx"
-msgstr "交易哈希：<<<<<<< HEAD"
+msgstr "交易哈希："
 
 #: src/widgets/PoolWidget/hooks/usePoolTypeTag.ts:26
 msgid "Single"
@@ -566,7 +566,7 @@ msgstr "No ForceStop access"
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:135
 #: src/widgets/PoolWidget/PoolCreate/components/FeeRateCard.tsx:57
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:25
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:172
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:173
 msgid "Fee Rate"
 msgstr ""
 
@@ -591,7 +591,7 @@ msgstr ""
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:118
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:149
 msgid "On"
-msgstr "在<<<<<<< HEAD"
+msgstr "在"
 
 #: src/components/Swap/index.tsx:686
 #: src/hooks/Token/useTokenStatus.ts:123
@@ -612,10 +612,6 @@ msgstr "最大滑点不能超过50%"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:41
 msgid "For those who are looking to sell tokens and only need ask-side liquidity."
-msgstr ""
-
-#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:69
-msgid "he min Price needs to be greater than {min} and less than 100,000,000"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:41
@@ -647,7 +643,7 @@ msgstr ""
 
 #: src/components/Confirm.tsx:96
 #: src/components/SwitchChainDialog/index.tsx:128
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:271
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:274
 msgid "Cancel"
 msgstr "取消"
 
@@ -706,27 +702,27 @@ msgstr "预计交易时长"
 
 #: src/components/ConnectWallet/ConnectWalletDialog.tsx:39
 msgid "Connect to your wallet"
-msgstr "连接钱包<<<<<<< HEAD"
+msgstr "连接钱包"
 
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:299
 msgid "Total Fee Revenue"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:63
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:66
 msgid "Next"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:161
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:179
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:182
 msgid "Create"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:18
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:133
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:134
 msgid "Select Pool Version"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:286
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:289
 msgid "Back"
 msgstr ""
 
@@ -743,7 +739,7 @@ msgstr "授权中"
 msgid "Current Price"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:74
+#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:73
 msgid "The mid price needs to be greater than {min} and less than 100,000,000"
 msgstr ""
 
@@ -774,7 +770,7 @@ msgid "Slippage Tolerance"
 msgstr "滑点"
 
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:22
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:144
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:145
 msgid "Parameter Settings"
 msgstr ""
 
@@ -811,7 +807,7 @@ msgstr ""
 msgid "Create Pool"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:129
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:130
 msgid "Pool Setup"
 msgstr ""
 
@@ -839,7 +835,7 @@ msgstr ""
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:51
 msgid "Unable to SETTLE during the cooling-off period"
-msgstr "在冷静期无法进行清算<<<<<<< HEAD"
+msgstr "在冷静期无法进行清算"
 
 #: src/components/Swap/index.tsx:848
 msgid "The setting has been switched to cross chain mode"
@@ -870,7 +866,7 @@ msgstr ""
 
 #: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:48
 msgid "SELECT TOKEN"
-msgstr "选择代币<<<<<<< HEAD"
+msgstr "选择代币"
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:150
 #: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:135
@@ -896,7 +892,7 @@ msgstr "跨链桥概览"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:20
 msgid "SafeERC20: low-level call failed. Please contact the DODO team."
-msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。<<<<<<< HEAD"
+msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:74
 msgid "Pool Creation Confirmation"
@@ -967,7 +963,7 @@ msgstr ""
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:98
 msgid "Transaction Deadline"
-msgstr "交易截止时间<<<<<<< HEAD"
+msgstr "交易截止时间"
 
 #: src/components/Swap/index.tsx:729
 #: src/components/TokenStatusButton.tsx:18

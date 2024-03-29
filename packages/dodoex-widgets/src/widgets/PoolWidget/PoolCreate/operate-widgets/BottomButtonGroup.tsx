@@ -56,6 +56,9 @@ function OperateBtn({
   const baseTokenStatus = useTokenStatus(baseToken, {
     amount: baseAmount,
   });
+  const quoteTokenStatus = useTokenStatus(quoteToken, {
+    amount: quoteAmount,
+  });
   const buttonProps = {
     variant: Button.Variant.contained,
   };
@@ -106,30 +109,30 @@ function OperateBtn({
         return disabledButton;
       }
       if (
-        baseTokenStatus.needShowTokenStatusButton ||
-        baseTokenStatus.insufficientBalance
+        quoteTokenStatus.needShowTokenStatusButton ||
+        quoteTokenStatus.insufficientBalance
       ) {
         return (
           <TokenStatusButton
-            status={baseTokenStatus}
+            status={quoteTokenStatus}
             buttonProps={buttonProps}
           />
         );
       }
     }
 
-    const initPriceBN = new BigNumber(initPrice);
-    const decimalsLimit = Math.min(quoteToken.decimals, 16);
-    if (
-      !initPrice ||
-      initPriceBN.isNaN() ||
-      // initPriceBN.lt(`1e-${decimalsLimit}`) ||
-      initPriceBN.gt(MAX_INIT_PRICE)
-    ) {
-      return disabledButton;
-    }
-
     if (state.selectedVersion !== Version.standard) {
+      const initPriceBN = new BigNumber(initPrice);
+      const decimalsLimit = Math.min(quoteToken.decimals, 16);
+      if (
+        !initPrice ||
+        initPriceBN.isNaN() ||
+        initPriceBN.lt(`1e-${decimalsLimit}`) ||
+        initPriceBN.gt(MAX_INIT_PRICE)
+      ) {
+        return disabledButton;
+      }
+
       const slippageCoefficientBN = new BigNumber(slippageCoefficient);
       if (
         !slippageCoefficient ||

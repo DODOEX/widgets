@@ -20,7 +20,7 @@ msgstr "The smaller the slippage coefficient, the lower the slippage for traders
 
 #: src/components/WithExecutionDialog/index.tsx:186
 msgid "Transaction Time:"
-msgstr "Transaction Time:<<<<<<< HEAD"
+msgstr "Transaction Time:"
 
 #: src/hooks/Bridge/useExecuteBridgeRoute.tsx:128
 msgid "Cross Chain"
@@ -106,7 +106,7 @@ msgstr "Private Pool"
 
 #: src/components/WithExecutionDialog/index.tsx:109
 msgid "{0} confirmed"
-msgstr "{0} confirmed<<<<<<< HEAD"
+msgstr "{0} confirmed"
 
 #: src/components/Swap/index.tsx:513
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
@@ -117,7 +117,7 @@ msgid "Since this pool uses the PMM algorithm, which is different from the norma
 msgstr "Since this pool uses the PMM algorithm, which is different from the normal AMM pool mechanism, the initial price calculation is also different from AMM."
 
 #: src/components/chart/i18n.ts:19
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:280
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:285
 msgid "The token amount is calculated by initial price."
 msgstr "The token amount is calculated by initial price."
 
@@ -156,7 +156,7 @@ msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:161
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:217
 msgid "Confirm"
-msgstr "Confirm<<<<<<< HEAD"
+msgstr "Confirm"
 
 #: src/components/Swap/index.tsx:971
 msgid "Powered by DODO protocol"
@@ -170,7 +170,7 @@ msgstr "Initial Tokens"
 msgid "This token is on"
 msgstr "This token is on"
 
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:213
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:216
 msgid "Pool Creation"
 msgstr "Pool Creation"
 
@@ -262,7 +262,7 @@ msgstr "Destination"
 
 #: src/components/Bridge/SelectBridgeDialog/RouteTagList.tsx:52
 msgid "Unapproved"
-msgstr "Unapproved<<<<<<< HEAD"
+msgstr "Unapproved"
 
 #: src/components/chart/i18n.ts:17
 msgid "Users buy {0} amount:"
@@ -365,7 +365,7 @@ msgstr "Select Cross Chain"
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:280
 #: src/components/Swap/components/SettingsDialog/index.tsx:53
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
-msgstr "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote.<<<<<<< HEAD"
+msgstr "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
 #: src/widgets/PoolWidget/PoolOperate/components/Ratio.tsx:204
 msgid "Any Ratio"
@@ -420,7 +420,7 @@ msgstr "Reset"
 
 #: src/components/Bridge/SelectBridgeDialog/RouteTagList.tsx:68
 msgid "Best offer"
-msgstr "Best offer<<<<<<< HEAD"
+msgstr "Best offer"
 
 #: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:133
 msgid "LP Fee"
@@ -431,7 +431,7 @@ msgstr "LP Fee"
 msgid "Confirming"
 msgstr "Confirming"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:72
+#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:71
 msgid "The initial price needs to be greater than {min} and less than 100,000,000"
 msgstr "The initial price needs to be greater than {min} and less than 100,000,000"
 
@@ -479,7 +479,7 @@ msgstr "Suitable for synthetic assets. The liquidity is super concentrated at so
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:202
 #: src/components/WithExecutionDialog/index.tsx:201
 msgid "Tx"
-msgstr "Tx<<<<<<< HEAD"
+msgstr "Tx"
 
 #: src/widgets/PoolWidget/hooks/usePoolTypeTag.ts:26
 msgid "Single"
@@ -566,7 +566,7 @@ msgstr "No ForceStop access"
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:135
 #: src/widgets/PoolWidget/PoolCreate/components/FeeRateCard.tsx:57
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:25
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:172
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:173
 msgid "Fee Rate"
 msgstr "Fee Rate"
 
@@ -591,7 +591,7 @@ msgstr "The area of the chart indicates the buy/sell volume of {0} that can be c
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:118
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:149
 msgid "On"
-msgstr "On<<<<<<< HEAD"
+msgstr "On"
 
 #: src/components/Swap/index.tsx:686
 #: src/hooks/Token/useTokenStatus.ts:123
@@ -613,10 +613,6 @@ msgstr "Maximum slippage do not exceed 50%"
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:41
 msgid "For those who are looking to sell tokens and only need ask-side liquidity."
 msgstr "For those who are looking to sell tokens and only need ask-side liquidity."
-
-#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:69
-msgid "he min Price needs to be greater than {min} and less than 100,000,000"
-msgstr "he min Price needs to be greater than {min} and less than 100,000,000"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:41
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:60
@@ -647,7 +643,7 @@ msgstr "Initial Price"
 
 #: src/components/Confirm.tsx:96
 #: src/components/SwitchChainDialog/index.tsx:128
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:271
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:274
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -706,27 +702,27 @@ msgstr "Estimated transaction time"
 
 #: src/components/ConnectWallet/ConnectWalletDialog.tsx:39
 msgid "Connect to your wallet"
-msgstr "Connect to your wallet<<<<<<< HEAD"
+msgstr "Connect to your wallet"
 
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:299
 msgid "Total Fee Revenue"
 msgstr "Total Fee Revenue"
 
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:63
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:66
 msgid "Next"
 msgstr "Next"
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:161
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:179
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:182
 msgid "Create"
 msgstr "Create"
 
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:18
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:133
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:134
 msgid "Select Pool Version"
 msgstr "Select Pool Version"
 
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:286
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:289
 msgid "Back"
 msgstr "Back"
 
@@ -743,7 +739,7 @@ msgstr "Approving"
 msgid "Current Price"
 msgstr "Current Price"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:74
+#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:73
 msgid "The mid price needs to be greater than {min} and less than 100,000,000"
 msgstr "The mid price needs to be greater than {min} and less than 100,000,000"
 
@@ -774,7 +770,7 @@ msgid "Slippage Tolerance"
 msgstr "Slippage Tolerance"
 
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:22
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:144
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:145
 msgid "Parameter Settings"
 msgstr "Parameter Settings"
 
@@ -811,7 +807,7 @@ msgstr "Select a liquidity pool"
 msgid "Create Pool"
 msgstr "Create Pool"
 
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:129
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:130
 msgid "Pool Setup"
 msgstr "Pool Setup"
 
@@ -839,7 +835,7 @@ msgstr "Current:"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:51
 msgid "Unable to SETTLE during the cooling-off period"
-msgstr "Unable to SETTLE during the cooling-off period<<<<<<< HEAD"
+msgstr "Unable to SETTLE during the cooling-off period"
 
 #: src/components/Swap/index.tsx:848
 msgid "The setting has been switched to cross chain mode"
@@ -870,7 +866,7 @@ msgstr "APY"
 
 #: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:48
 msgid "SELECT TOKEN"
-msgstr "SELECT TOKEN<<<<<<< HEAD"
+msgstr "SELECT TOKEN"
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:150
 #: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:135
@@ -896,7 +892,7 @@ msgstr "Cross Chain Summary"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:20
 msgid "SafeERC20: low-level call failed. Please contact the DODO team."
-msgstr "SafeERC20: low-level call failed. Please contact the DODO team.<<<<<<< HEAD"
+msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:74
 msgid "Pool Creation Confirmation"
@@ -967,7 +963,7 @@ msgstr "Fees will be the same as in most other pools."
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:98
 msgid "Transaction Deadline"
-msgstr "Transaction Deadline<<<<<<< HEAD"
+msgstr "Transaction Deadline"
 
 #: src/components/Swap/index.tsx:729
 #: src/components/TokenStatusButton.tsx:18

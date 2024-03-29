@@ -75,6 +75,7 @@ export default function PoolCreate() {
   const { versionMap } = useVersionList();
   const versionItem = versionMap[state.selectedVersion];
   const isSingleTokenVersion = state.selectedVersion === Version.singleToken;
+  const isStandardVersion = state.selectedVersion === Version.standard;
 
   const leftToken = isSingleTokenVersion ? state.quoteToken : state.baseToken;
   const rightToken = isSingleTokenVersion ? state.baseToken : state.quoteToken;
@@ -276,7 +277,11 @@ export default function PoolCreate() {
                       payload,
                     });
                   }}
-                  readOnly={state.isFixedRatio && !!state.fixedRatioPrice}
+                  readOnly={
+                    isStandardVersion &&
+                    state.isFixedRatio &&
+                    !!state.fixedRatioPrice
+                  }
                   inputReadonlyTooltip={t`The token amount is calculated by initial price.`}
                   token={rightToken}
                   occupiedAddrs={leftToken ? [leftToken.address] : undefined}

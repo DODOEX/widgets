@@ -60,13 +60,12 @@ export function validInitPrice(
   const decimalsLimit = Math.min(quoteTokenDecimals, 16);
   const minPrice = Number(`1e-${decimalsLimit}`);
   if (
+    selectedVersion !== Version.standard &&
     !initPriceBN.isNaN() &&
     (initPriceBN.lt(minPrice) || initPriceBN.gt(MAX_INIT_PRICE))
   ) {
     const min = minPrice.toFixed(decimalsLimit);
     switch (selectedVersion) {
-      case Version.standard:
-        return t`he min Price needs to be greater than ${min} and less than 100,000,000`;
       case Version.pegged:
       case Version.singleToken:
         return t`The initial price needs to be greater than ${min} and less than 100,000,000`;

@@ -59,12 +59,7 @@ export const useCreatePoolSubmit = ({
         ? feeRateNumber.times(100).toNumber()
         : feeRateNumber.times(80).toNumber(), // The actual handling fee is 80% of the input value
       // i = min price
-      isPrivate && isStandard
-        ? new BigNumber(quoteAmount)
-            .div(baseAmount)
-            .dp(quoteDecimals, BigNumber.ROUND_DOWN)
-            .toString()
-        : new BigNumber(initPrice).toString(),
+      new BigNumber(initPrice).toString(),
       Number(slippageCoefficient || (isDsp ? '0.1' : '1')),
       // Transaction Deadline
       Math.ceil(Date.now() / 1000) + 60 * 60,
