@@ -12,6 +12,8 @@ import { ReactComponent as synapseLogoUrl } from '../../../assets/bridge/synapse
 import { ReactComponent as layerSwapLogoUrl } from '../../../assets/bridge/layer-swap.svg';
 import { ReactComponent as okxLogoUrl } from '../../../assets/bridge/okx.svg';
 import { ReactComponent as symbiosisLogoUrl } from '../../../assets/bridge/symbiosis.svg';
+import { ReactComponent as scrollLogoUrl } from '../../../assets/logo/networks/scroll.svg';
+import { ReactComponent as mantaLogoUrl } from '../../../assets/logo/networks/manta.svg';
 
 export const productList = [
   {
@@ -83,5 +85,15 @@ export const productList = [
     id: 'symbiosis',
     logoURI: symbiosisLogoUrl,
     name: 'symbiosis',
+  },
+  {
+    id: 'scroll',
+    logoURI: scrollLogoUrl,
+    name: 'Scroll',
+  },
+  {
+    id: 'manta',
+    logoURI: mantaLogoUrl,
+    name: 'Manta',
   },
 ];

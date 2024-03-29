@@ -20,6 +20,7 @@ export interface BridgeTXRequest {
   value: string;
   from: string;
   chainId: number;
+  encodeId: string;
 }
 
 export default function BridgeSummaryDialog({

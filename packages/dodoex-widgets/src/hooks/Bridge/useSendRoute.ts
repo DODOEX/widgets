@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
+import { EmptyAddress } from '../../constants/address';
 
 export function useSendRoute() {
   const { provider } = useWeb3React();
@@ -38,6 +39,9 @@ export function useSendRoute() {
       if (!encodeParams) {
         return;
       }
+      if (encodeParams.fromAddress === EmptyAddress) {
+        throw new Error('fromAddress is not valid.');
+      }
       setSendRouteError('');
       setSendRouteLoading(true);
       // 1. encode params
@@ -59,7 +63,14 @@ export function useSendRoute() {
         );
         const encodeResultData = result.data.data;
 
-        const { data: txData, to, value, from, chainId } = encodeResultData;
+        const {
+          data: txData,
+          to,
+          value,
+          from,
+          chainId,
+          encodeId,
+        } = encodeResultData;
         if (!txData || !to || !value || !from || !chainId) {
           throw new Error('cross_chain_swap_transactionEncode is null');
         }
@@ -111,6 +122,7 @@ export function useSendRoute() {
           value,
           from,
           chainId,
+          encodeId,
         });
         goNext();
       } catch (error) {

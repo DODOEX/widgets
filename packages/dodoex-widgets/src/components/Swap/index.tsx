@@ -169,8 +169,12 @@ export function Swap({
     return selectedRouteIdOrigin;
   }, [selectedRouteIdOrigin, bridgeRouteList]);
   const selectedRoute = useMemo(
-    () => bridgeRouteList.find((route) => route.id === selectedRouteId),
-    [bridgeRouteList, selectedRouteId],
+    () =>
+      bridgeRouteList.find(
+        (route) =>
+          route.id === selectedRouteId && route.fromAddress === account,
+      ),
+    [bridgeRouteList, selectedRouteId, account],
   );
   useEffect(() => {
     if (!selectedRoute && selectedRouteIdOrigin) {
@@ -746,6 +750,7 @@ export function Swap({
             })
           }
           data-testid={swapReviewBtn}
+          disabled={!selectedRoute}
           isLoading={sendRouteLoading}
         >
           <Trans>Review Cross Chain</Trans>
