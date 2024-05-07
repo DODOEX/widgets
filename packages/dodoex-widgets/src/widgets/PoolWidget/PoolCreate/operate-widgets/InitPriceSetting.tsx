@@ -29,6 +29,7 @@ import { formatTokenAmountNumber } from '../../../../utils/formatter';
 import { NumberInput } from '../../../../components/Swap/components/TokenCard/NumberInput';
 
 export function InitPriceSetting({
+  isEdit,
   selectedVersion,
   isFixedRatio,
   leftTokenAddress,
@@ -37,6 +38,7 @@ export function InitPriceSetting({
   fixedRatioPrice,
   dispatch,
 }: {
+  isEdit?: boolean;
   selectedVersion: StateProps['selectedVersion'];
   isFixedRatio: StateProps['isFixedRatio'];
   leftTokenAddress: StateProps['leftTokenAddress'];
@@ -91,7 +93,7 @@ export function InitPriceSetting({
 
   // The initial legal currency price query is successful, and fixedRatioPrice is initialized using this price.
   useLayoutEffect(() => {
-    if (selectedVersion !== Version.singleToken) {
+    if (!isEdit && selectedVersion !== Version.singleToken) {
       dispatch({
         type: Types.InitFixedRatioPrice,
         payload: {
@@ -106,7 +108,13 @@ export function InitPriceSetting({
         },
       });
     }
-  }, [baseTokenFiatPrice, dispatch, quoteTokenFiatPrice, selectedVersion]);
+  }, [
+    isEdit,
+    baseTokenFiatPrice,
+    dispatch,
+    quoteTokenFiatPrice,
+    selectedVersion,
+  ]);
 
   const errorMsg = useMemo(() => {
     if (!quoteToken) return '';

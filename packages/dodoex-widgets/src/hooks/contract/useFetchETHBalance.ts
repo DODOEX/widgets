@@ -11,7 +11,7 @@ export default function useFetchETHBalance(chainId?: number) {
   const EtherToken = basicTokenMap[(chainId ?? currentChainId) as ChainId];
   const query = tokenApi.getFetchTokenQuery(
     chainId,
-    EtherToken.address,
+    EtherToken?.address,
     account,
   );
   return useQuery({

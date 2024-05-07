@@ -110,35 +110,20 @@ function formatBN(input: BigNumber | undefined, decimals: number | undefined) {
 }
 
 function initEditParameters(state: StateProps, poolDetail: Pool): StateProps {
-  const { baseToken, quoteToken, baseReserve, quoteReserve, feeRate, i, k } =
-    poolDetail;
-
-  const feeRateBN = new BigNumber(feeRate);
+  const { baseToken, quoteToken } = poolDetail;
 
   if (!baseToken || !quoteToken) return state;
 
-  const feeRateNew = feeRateBN.isNaN()
-    ? DEFAULT_FEE_RATE
-    : feeRateBN.times(100).toString();
-  const feeRateList = getFeeRateList();
-  const isFeeRateCustomized =
-    feeRateList.findIndex((item) => item.value === feeRateNew) === -1;
-  const slippageCoefficientNew = String(k);
-  const isSlippageCoefficientCustomized = !getDefaultSlippageCoefficientList({
-    selectedVersion: state.selectedVersion,
-  }).includes(slippageCoefficientNew);
   return {
     ...state,
     baseToken,
     quoteToken,
-    baseAmount: baseReserve.toString(),
-    quoteAmount: quoteReserve.toString(),
-    feeRate: feeRateNew,
-    isFeeRateCustomized,
-    isSlippageCoefficientCustomized,
-    initPrice: String(i),
     leftTokenAddress: baseToken?.address,
-    slippageCoefficient: slippageCoefficientNew,
+    slippageCoefficient: '',
+    initPrice: '',
+    fixedRatioPrice: '',
+    feeRate: '',
+    isFixedRatio: false,
   };
 }
 

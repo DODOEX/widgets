@@ -1,5 +1,6 @@
 import { PoolType } from '@dodoex/api';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { SLIPPAGE_PROTECTION } from '../../../../constants/pool';
 import { useSubmission } from '../../../../hooks/Submission';
@@ -33,9 +34,9 @@ export function useModifyDppPool({
     type: PoolType;
     baseToken: TokenInfo;
     quoteToken: TokenInfo;
-    lpFeeRate: string;
   };
 }) {
+  const { account } = useWeb3React();
   const submission = useSubmission();
   const pmmStateQuery = useQuery(
     poolApi.getPMMStateQuery(
@@ -46,24 +47,34 @@ export function useModifyDppPool({
       pool?.quoteToken?.decimals,
     ),
   );
+  const feeRateQuery = useQuery(
+    poolApi.getLPFeeRateQuery(pool?.chainId, pool?.address, pool?.type),
+  );
   const modifyDPPMutation = useMutation({
     mutationFn: async ({
       baseAmount,
       quoteAmount,
       isRemove = false,
+      feeRate,
+      initPrice,
+      slippageCoefficient,
       txTitle,
       submittedBack,
     }: {
       baseAmount: string;
       quoteAmount: string;
       isRemove?: boolean;
+      feeRate?: string;
+      initPrice?: string;
+      slippageCoefficient?: string;
       txTitle: string;
       submittedBack?: () => void;
     }) => {
       if (!pool) {
         throw new Error('pool is undefined');
       }
-      if (pool.lpFeeRate === undefined) {
+      const lpFeeRate = feeRateQuery.data;
+      if (!lpFeeRate) {
         throw new Error('lpFeeRate is undefined');
       }
       if (!pmmStateQuery.data) {
@@ -73,6 +84,8 @@ export function useModifyDppPool({
       const i = pmmParamsBG.i.toNumber();
       const k = pmmParamsBG.k.toNumber();
       const params = await getModifyDPPPoolParams({
+        account,
+        chainId: pool?.chainId,
         SLIPPAGE_PROTECTION,
         srcPool: {
           ...pool,
@@ -80,7 +93,7 @@ export function useModifyDppPool({
           quoteReserve,
           i: i,
           k: k,
-          feeRate: pool.lpFeeRate ?? '',
+          feeRate: lpFeeRate.times(100).toString(),
         },
         baseToken: pool?.baseToken,
         quoteToken: pool?.quoteToken,
@@ -94,9 +107,9 @@ export function useModifyDppPool({
           quoteReserve ? new BigNumber(quoteReserve) : undefined,
           isRemove,
         ),
-        feeRate: new BigNumber(pool?.lpFeeRate || 0).times(100).toString(),
-        initPrice: String(i),
-        slippageCoefficient: String(k),
+        feeRate: feeRate ?? lpFeeRate.times(100).toString(),
+        initPrice: initPrice ?? String(i),
+        slippageCoefficient: slippageCoefficient ?? String(k),
       });
       if (!params) {
         throw new Error(`modify pool failed: ${pool.address}`);

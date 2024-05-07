@@ -11,6 +11,7 @@ import MyLiquidity from './MyLiquidity';
 import MyCreated from './MyCreated';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
+import WidgetContainer from '../../../components/WidgetContainer';
 
 export default function PoolList() {
   const theme = useTheme();
@@ -23,10 +24,9 @@ export default function PoolList() {
     usePoolListFilterChainId();
 
   return (
-    <Box
+    <WidgetContainer
       sx={{
         padding: 20,
-        overflowY: 'auto',
       }}
       ref={scrollParentRef}
     >
@@ -87,6 +87,6 @@ export default function PoolList() {
           />
         </TabPanel>
       </Tabs>
-    </Box>
+    </WidgetContainer>
   );
 }

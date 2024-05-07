@@ -100,6 +100,7 @@ export function useTokenStatus(
     token,
     overrideBalance,
     amount,
+    proxyContractAddress,
   ]);
 
   const { isApproving, isGetApproveLoading, needApprove, needReset } =

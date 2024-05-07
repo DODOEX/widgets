@@ -59,3 +59,12 @@ export function setLastSlippage(
     );
   }
 }
+
+// The data stored in the corresponding Key means that it has been confirmed. After confirmation, the risk prompt will no longer be displayed.
+const RiskWarningOnceKeyPrefix = 'risk-warning-once-';
+export const RiskOncePageLocalStorage: Record<string, string> = {
+  PoolEditPage: `${RiskWarningOnceKeyPrefix}pool-edit`,
+};
+export function getIsPoolEditRiskWarningOpen() {
+  return !window.localStorage.getItem(RiskOncePageLocalStorage.PoolEditPage);
+}

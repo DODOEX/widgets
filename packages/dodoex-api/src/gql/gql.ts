@@ -20,6 +20,8 @@ const documents = {
     types.FetchMyLiquidityListDocument,
   '\n    query FetchDashboardPairList($where: Dashboardtype_list_filter) {\n      dashboard_pairs_list(where: $where) {\n        list {\n          chainId\n          pairAddress\n          poolType\n          baseReserve\n          quoteReserve\n          totalFee\n          baseAddress\n          quoteAddress\n          baseSymbol\n          quoteSymbol\n          tvl\n          baseTvl\n          quoteTvl\n          baseTvlRate\n          quoteTvlRate\n        }\n      }\n    }\n  ':
     types.FetchDashboardPairListDocument,
+  '\n    query FetchPool(\n      $id: ID!\n      $where: Pair_filter\n      $liquidityWhere: Liquiditylist_filter\n    ) {\n      pair(id: $id, where: $where) {\n        id\n        type\n        creator\n        owner\n        traderCount\n        volumeBaseToken\n        volumeQuoteToken\n        volumeUSD\n        feeBase\n        feeQuote\n        mtFeeRate\n        lpFeeRate\n        i\n        k\n        baseReserve\n        quoteReserve\n        createdAtTimestamp\n        lastTradePrice\n        baseToken {\n          id\n          symbol\n          name\n          decimals\n        }\n        quoteToken {\n          id\n          symbol\n          name\n          decimals\n          usdPrice\n        }\n        baseLpToken {\n          id\n          symbol\n          name\n        }\n        quoteLpToken {\n          id\n          symbol\n          name\n        }\n      }\n      liquidity_list(where: $liquidityWhere) {\n        lqList {\n          pair {\n            apy {\n              miningBaseApy\n              miningQuoteApy\n              transactionBaseApy\n              transactionQuoteApy\n            }\n            miningAddress\n          }\n        }\n      }\n    }\n  ':
+    types.FetchPoolDocument,
 };
 
 /**
@@ -46,6 +48,12 @@ export function graphql(
 export function graphql(
   source: '\n    query FetchDashboardPairList($where: Dashboardtype_list_filter) {\n      dashboard_pairs_list(where: $where) {\n        list {\n          chainId\n          pairAddress\n          poolType\n          baseReserve\n          quoteReserve\n          totalFee\n          baseAddress\n          quoteAddress\n          baseSymbol\n          quoteSymbol\n          tvl\n          baseTvl\n          quoteTvl\n          baseTvlRate\n          quoteTvlRate\n        }\n      }\n    }\n  ',
 ): typeof import('./graphql').FetchDashboardPairListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query FetchPool(\n      $id: ID!\n      $where: Pair_filter\n      $liquidityWhere: Liquiditylist_filter\n    ) {\n      pair(id: $id, where: $where) {\n        id\n        type\n        creator\n        owner\n        traderCount\n        volumeBaseToken\n        volumeQuoteToken\n        volumeUSD\n        feeBase\n        feeQuote\n        mtFeeRate\n        lpFeeRate\n        i\n        k\n        baseReserve\n        quoteReserve\n        createdAtTimestamp\n        lastTradePrice\n        baseToken {\n          id\n          symbol\n          name\n          decimals\n        }\n        quoteToken {\n          id\n          symbol\n          name\n          decimals\n          usdPrice\n        }\n        baseLpToken {\n          id\n          symbol\n          name\n        }\n        quoteLpToken {\n          id\n          symbol\n          name\n        }\n      }\n      liquidity_list(where: $liquidityWhere) {\n        lqList {\n          pair {\n            apy {\n              miningBaseApy\n              miningQuoteApy\n              transactionBaseApy\n              transactionQuoteApy\n            }\n            miningAddress\n          }\n        }\n      }\n    }\n  ',
+): typeof import('./graphql').FetchPoolDocument;
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

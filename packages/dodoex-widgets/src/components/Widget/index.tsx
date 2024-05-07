@@ -2,7 +2,7 @@ import {
   ThemeProvider,
   createTheme,
   CssBaseline,
-  Theme,
+  WIDGET_MODAL_CLASS,
   Box,
 } from '@dodoex/components';
 import {
@@ -202,7 +202,9 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
     <ReduxProvider store={store}>
       <LangProvider locale={props.locale}>
         <ThemeProvider theme={theme}>
-          <CssBaseline container={`.${WIDGET_CLASS_NAME}`} />
+          <CssBaseline
+            container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}`}
+          />
           <Web3Provider {...props} />
         </ThemeProvider>
       </LangProvider>

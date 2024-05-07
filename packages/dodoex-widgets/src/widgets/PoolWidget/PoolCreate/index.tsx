@@ -3,10 +3,10 @@ import { t, Trans } from '@lingui/macro';
 import React from 'react';
 import GoBack from '../../../components/GoBack';
 import {
-  CardPlus,
   CardPlusConnected,
   TokenCard,
 } from '../../../components/Swap/components/TokenCard';
+import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { DepthChartWrapper } from './components/DepthChartWrapper';
@@ -81,22 +81,7 @@ export default function PoolCreate() {
   const rightToken = isSingleTokenVersion ? state.baseToken : state.quoteToken;
 
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        height: '100%',
-        overflowY: 'auto',
-        overflowX: 'hidden',
-        ...(!isMobile
-          ? {
-              padding: theme.spacing(28, 20, 40, 40),
-              backgroundColor: 'background.default',
-            }
-          : {
-              padding: 0,
-            }),
-      }}
-    >
+    <WidgetContainer>
       <Box
         sx={{
           display: 'flex',
@@ -342,6 +327,6 @@ export default function PoolCreate() {
           <BottomButtonGroup state={state} dispatch={dispatch} />
         </Box>
       </Box>
-    </Box>
+    </WidgetContainer>
   );
 }

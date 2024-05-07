@@ -1,51 +1,40 @@
-import { Button, Box, useTheme, QuestionTooltip } from '@dodoex/components';
+import { Box, Button, QuestionTooltip, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
-import { Dispatch, useMemo, useState } from 'react';
+import React from 'react';
 import Dialog from '../../../../components/WidgetDialog';
-import RadioButton from '../components/RadioButton';
-import { RadioButtonTag } from '../components/RadioButtonTag';
-import { SelectAndInput } from '../components/SelectAndInput';
-import { useSlippageCoefficientList } from '../hooks/useSlippageCoefficientList';
-import { validSlippageCoefficient } from '../hooks/useValidation';
-import { Actions, StateProps, Types } from '../reducer';
-import { Version } from '../types';
+import RadioButton from '../../PoolCreate/components/RadioButton';
+import { RadioButtonTag } from '../../PoolCreate/components/RadioButtonTag';
+import { SelectAndInput } from '../../PoolCreate/components/SelectAndInput';
+import { useFeeRateList } from '../../PoolCreate/hooks/useFeeRateList';
+import { validFeeRate } from '../../PoolCreate/hooks/useValidation';
+import { Actions, StateProps, Types } from '../../PoolCreate/reducer';
 
-export function SlippageCoefficientSetting({
+export function FeeRateSetting({
   dispatch,
-  slippageCoefficient,
-  selectedVersion,
+  feeRate,
   isCustomized,
 }: {
-  dispatch: Dispatch<Actions>;
-  slippageCoefficient: StateProps['slippageCoefficient'];
-  selectedVersion: StateProps['selectedVersion'];
-  isCustomized: StateProps['isSlippageCoefficientCustomized'];
+  dispatch: React.Dispatch<Actions>;
+  feeRate: StateProps['feeRate'];
+  isCustomized: StateProps['isFeeRateCustomized'];
 }) {
   const theme = useTheme();
 
-  const [showSlippageCoefficientDialog, setShowSlippageCoefficientDialog] =
-    useState(false);
-  const [customValue, setCustomValue] = useState(slippageCoefficient);
+  const [feeRateSelectModalVisible, setFeeRateSelectModalVisible] =
+    React.useState(false);
+  const [customValue, setCustomValue] = React.useState(feeRate);
 
-  const slippageCoefficientList = useSlippageCoefficientList({
-    selectedVersion,
-  });
+  const feeRateList = useFeeRateList();
 
-  const [prevSlippageCoefficient, setPrevSlippageCoefficient] =
-    useState(slippageCoefficient);
-  if (prevSlippageCoefficient !== slippageCoefficient) {
-    setPrevSlippageCoefficient(slippageCoefficient);
-    setCustomValue(slippageCoefficient);
+  if (!customValue && feeRate) {
+    setCustomValue(feeRate);
   }
 
-  const errorMsg = useMemo(() => {
-    const msg = validSlippageCoefficient(customValue, selectedVersion);
-    return msg ?? '';
-  }, [selectedVersion, customValue]);
-
-  const errorInput = useMemo(
-    () => !!(customValue && customValue !== '0' && !Number(customValue)),
-    [customValue],
+  const errorMsg = validFeeRate(customValue);
+  const errorInput = !!(
+    customValue &&
+    customValue !== '0' &&
+    !Number(customValue)
   );
 
   const confirmButtonDisabled =
@@ -69,14 +58,11 @@ export function SlippageCoefficientSetting({
             alignItems: 'center',
           }}
         >
-          <Trans>Slippage Coefficient</Trans>
+          <Trans>Fee Rate</Trans>
           <QuestionTooltip
-            title={t`The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth.`}
+            title={t`Pools with lower transaction fees will attract more traders.`}
             ml={8}
-            sx={{
-              width: 16,
-              height: 16,
-            }}
+            size={16}
           />
         </Box>
         <Box
@@ -86,32 +72,28 @@ export function SlippageCoefficientSetting({
             ml: 12,
           }}
         >
-          {slippageCoefficient}
-          {selectedVersion !== Version.standard ? (
-            <Button
-              variant={Button.Variant.tag}
-              sx={{
-                ml: 12,
-                fontSize: 12,
-              }}
-              onClick={() => setShowSlippageCoefficientDialog(true)}
-            >
-              {t`Edit`}
-            </Button>
-          ) : (
-            ''
-          )}
+          {feeRate}%
+          <Button
+            variant={Button.Variant.tag}
+            sx={{
+              ml: 12,
+              fontSize: 12,
+            }}
+            onClick={() => setFeeRateSelectModalVisible(true)}
+          >
+            <Trans>Edit</Trans>
+          </Button>
         </Box>
       </Box>
 
       <Dialog
-        open={showSlippageCoefficientDialog}
-        onClose={() => setShowSlippageCoefficientDialog(false)}
+        open={feeRateSelectModalVisible}
+        onClose={() => setFeeRateSelectModalVisible(false)}
         title={
           <Box>
-            <Trans>Slippage Coefficient</Trans>
+            <Trans>Fee Rate</Trans>
             <QuestionTooltip
-              title={t`The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth.`}
+              title={t`Pools with lower transaction fees will attract more traders.`}
               ml={8}
             />
           </Box>
@@ -131,7 +113,7 @@ export function SlippageCoefficientSetting({
               p: theme.spacing(8, 28, 28),
             }}
           >
-            {slippageCoefficientList.map((item) => {
+            {feeRateList.map((item) => {
               const selected = isCustomized
                 ? false
                 : customValue === item.value;
@@ -142,7 +124,7 @@ export function SlippageCoefficientSetting({
                   description={item.description}
                   onClick={() => {
                     dispatch({
-                      type: Types.UpdateIsSlippageCoefficientCustomized,
+                      type: Types.UpdateIsFeeRateCustomized,
                       payload: false,
                     });
                     setCustomValue(item.value);
@@ -163,9 +145,6 @@ export function SlippageCoefficientSetting({
                       ? theme.palette.primary.main
                       : theme.palette.border.main,
                   }}
-                  titleSx={{
-                    typography: 'body1',
-                  }}
                 />
               );
             })}
@@ -183,7 +162,7 @@ export function SlippageCoefficientSetting({
                     setCustomValue('');
                   }
                   dispatch({
-                    type: Types.UpdateIsSlippageCoefficientCustomized,
+                    type: Types.UpdateIsFeeRateCustomized,
                     payload: true,
                   });
                 }}
@@ -194,6 +173,7 @@ export function SlippageCoefficientSetting({
               />
             </Box>
           </Box>
+
           <Box
             sx={{
               position: 'sticky',
@@ -208,10 +188,10 @@ export function SlippageCoefficientSetting({
               disabled={confirmButtonDisabled}
               onClick={() => {
                 dispatch({
-                  type: Types.UpdateSlippageCoefficient,
+                  type: Types.UpdateFeeRate,
                   payload: customValue,
                 });
-                setShowSlippageCoefficientDialog(false);
+                setFeeRateSelectModalVisible(false);
               }}
             >
               <Trans>Confirm</Trans>

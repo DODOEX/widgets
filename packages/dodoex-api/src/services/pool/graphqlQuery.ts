@@ -164,4 +164,68 @@ export const poolGraphqlQuery = {
       }
     }
   `),
+  fetchPool: graphql(`
+    query FetchPool(
+      $id: ID!
+      $where: Pair_filter
+      $liquidityWhere: Liquiditylist_filter
+    ) {
+      pair(id: $id, where: $where) {
+        id
+        type
+        creator
+        owner
+        traderCount
+        volumeBaseToken
+        volumeQuoteToken
+        volumeUSD
+        feeBase
+        feeQuote
+        mtFeeRate
+        lpFeeRate
+        i
+        k
+        baseReserve
+        quoteReserve
+        createdAtTimestamp
+        lastTradePrice
+        baseToken {
+          id
+          symbol
+          name
+          decimals
+        }
+        quoteToken {
+          id
+          symbol
+          name
+          decimals
+          usdPrice
+        }
+        baseLpToken {
+          id
+          symbol
+          name
+        }
+        quoteLpToken {
+          id
+          symbol
+          name
+        }
+      }
+      liquidity_list(where: $liquidityWhere) {
+        lqList {
+          pair {
+            apy {
+              miningBaseApy
+              miningQuoteApy
+              transactionBaseApy
+              transactionQuoteApy
+            }
+            miningAddress
+          }
+        }
+      }
+    }
+  `),
 };

@@ -37,6 +37,11 @@ export type Scalars = {
   Int8: { input: any; output: any };
   JSON: { input: any; output: any };
   LiquidityBytes: { input: any; output: any };
+  /**
+   * A string representation of microseconds UNIX timestamp (16 digits)
+   *
+   */
+  Timestamp: { input: any; output: any };
 };
 
 export type Account = {
@@ -571,7 +576,10 @@ export type AnnouncementAnnouncementList = {
 
 export type AnnouncementMetadata = {
   background?: Maybe<Scalars['String']['output']>;
+  buttonType?: Maybe<Scalars['String']['output']>;
   icon?: Maybe<Scalars['String']['output']>;
+  landingPageDisplay?: Maybe<Scalars['Boolean']['output']>;
+  theme?: Maybe<Scalars['String']['output']>;
 };
 
 export type Approval = Event & {
@@ -5771,6 +5779,147 @@ export type Dodo_Two_Anniversary_H5_Qa_ActivitysaveData = {
   address?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** 邀请状态 */
+export type DodochainInviteStatus =
+  /** 已被邀请 */
+  | 'Invited'
+  /** 已经质押后不能添加邀请者 */
+  | 'Staked'
+  /** 未被邀请 */
+  | 'Uninvited';
+
+export type DodochainInviteStatusResult = {
+  acceptedAt?: Maybe<Scalars['String']['output']>;
+  inviterAddress?: Maybe<Scalars['String']['output']>;
+  inviterCode?: Maybe<Scalars['String']['output']>;
+  status: DodochainInviteStatus;
+};
+
+export type DodochainInviteeResult = {
+  acceptedAt: Scalars['String']['output'];
+  number: Scalars['Int']['output'];
+  user: Scalars['String']['output'];
+};
+
+export type DodochainInviteesPaginationResult = {
+  count: Scalars['Int']['output'];
+  list: Array<Maybe<DodochainInviteeResult>>;
+  page: Scalars['Int']['output'];
+  size: Scalars['Int']['output'];
+};
+
+export type DodochainOverview = {
+  tvl: Scalars['BigDecimal']['output'];
+  tvlDetails: Array<Maybe<DodochainTvlDetail>>;
+};
+
+export type DodochainPaginationInput = {
+  page?: InputMaybe<Scalars['Int']['input']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type DodochainToken = {
+  decimals: Scalars['Int']['output'];
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  symbol: Scalars['String']['output'];
+  totalSupply: Scalars['BigDecimal']['output'];
+};
+
+export type DodochainTvlDetail = {
+  chainId: Scalars['Int']['output'];
+  token: DodochainToken;
+  tvl: Scalars['BigDecimal']['output'];
+};
+
+export type DodochainUserAcceptInvitationInput = {
+  /** referrer user invite code */
+  inviteCode: Scalars['String']['input'];
+  /** sign message */
+  message: Scalars['String']['input'];
+  /** wallet signature */
+  signature: Scalars['String']['input'];
+  /** sign timestamp */
+  timestamp: Scalars['String']['input'];
+  /** user address */
+  user: Scalars['String']['input'];
+};
+
+export type DodochainUserInput = {
+  user: Scalars['String']['input'];
+};
+
+export type DodochainUserPaginationInput = {
+  page?: InputMaybe<Scalars['Int']['input']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
+  user: Scalars['String']['input'];
+};
+
+export type DodochainUserPointsDetailPaginationResult = {
+  count: Scalars['Int']['output'];
+  list: Array<Maybe<DodochainUserPointsDetailResult>>;
+  page: Scalars['Int']['output'];
+  size: Scalars['Int']['output'];
+};
+
+export type DodochainUserPointsDetailResult = {
+  points: Scalars['BigDecimal']['output'];
+  /** 积分来源类型：质押积分、邀请积分、活动积分 */
+  sourceType: Scalars['String']['output'];
+  timestamp: Scalars['String']['output'];
+};
+
+export type DodochainUserPointsResult = {
+  /** 邀请用户得到的积分 */
+  invitePoints: Scalars['BigDecimal']['output'];
+  /** 积分排行榜的位置 */
+  leaderboardPosition: Scalars['Int']['output'];
+  /** 质押挖矿得到的积分 */
+  stakedPoints: Scalars['BigDecimal']['output'];
+  totalPoints: Scalars['BigDecimal']['output'];
+  /** 积分更新时间 */
+  updatedAt: Scalars['BigInt']['output'];
+};
+
+export type DodochainUserStakedHistoryPaginationResult = {
+  count: Scalars['Int']['output'];
+  list: Array<Maybe<DodochainUserStakedHistoryResult>>;
+  page: Scalars['Int']['output'];
+  size: Scalars['Int']['output'];
+};
+
+export type DodochainUserStakedHistoryResult = {
+  amount: Scalars['BigDecimal']['output'];
+  chainId: Scalars['Int']['output'];
+  hash: Scalars['String']['output'];
+  timestamp: Scalars['String']['output'];
+  token: DodochainToken;
+  user: Scalars['String']['output'];
+};
+
+export type DodochainUserStakedPaginationResult = {
+  count: Scalars['Int']['output'];
+  list: Array<Maybe<DodochainUserStakedResult>>;
+  page: Scalars['Int']['output'];
+  size: Scalars['Int']['output'];
+  stakedTotalUsd: Scalars['BigDecimal']['output'];
+};
+
+export type DodochainUserStakedResult = {
+  amount: Scalars['BigDecimal']['output'];
+  chainId: Scalars['Int']['output'];
+  token: DodochainToken;
+  updatedAt: Scalars['BigInt']['output'];
+  user: Scalars['String']['output'];
+};
+
+export type DodochainuserStakedInput = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type DonateHistory = {
   /** block */
   blockNumber: Scalars['BigInt']['output'];
@@ -6015,6 +6164,17 @@ export type Erc20Logo = {
   url?: Maybe<Scalars['String']['output']>;
 };
 
+export type Erc20RelationList = {
+  address?: Maybe<Scalars['String']['output']>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  decimals?: Maybe<Scalars['Int']['output']>;
+  logoImg?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  position?: Maybe<Scalars['Int']['output']>;
+  slippage?: Maybe<Scalars['String']['output']>;
+  symbol?: Maybe<Scalars['String']['output']>;
+};
+
 export type Erc20TokenList = {
   chain?: Maybe<Erc20Chain>;
   name?: Maybe<Scalars['String']['output']>;
@@ -6101,6 +6261,16 @@ export type Erc20listV2Filter = {
   page?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Erc20relationListFilter = {
+  attributeLabelKey?: InputMaybe<Scalars['String']['input']>;
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  funcLabelKey?: InputMaybe<Scalars['String']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Event = {
@@ -7493,6 +7663,7 @@ export type Limit_And_RfqLimitOrderFeeInfo = {
   feeValue?: Maybe<Scalars['String']['output']>;
   percentFeeAmount?: Maybe<Scalars['String']['output']>;
   percentFeeValue?: Maybe<Scalars['String']['output']>;
+  priceImpactFactor?: Maybe<Scalars['Float']['output']>;
 };
 
 export type Limit_And_RfqLimitOrderInfo = {
@@ -11300,7 +11471,7 @@ export type PairToken = {
   chainId: Scalars['Int']['output'];
   cmc?: Maybe<Scalars['String']['output']>;
   coingecko?: Maybe<Scalars['String']['output']>;
-  decimals: Scalars['Int']['output'];
+  decimals: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   /** token logo img */
   logoImg?: Maybe<Scalars['String']['output']>;
@@ -13551,6 +13722,24 @@ export type Query = {
     Array<Maybe<Dodo_Two_Anniversary_ActivityDodoTwoAnniversaryActivityList>>
   >;
   dodo_two_anniversary_h5_qa_activity_save?: Maybe<Dodo_Two_Anniversary_H5_Qa_ActivitySaveDodoTwoAnniversaryH5QaActivity>;
+  /** 接受邀请 */
+  dodochain_acceptInvite: Scalars['Boolean']['output'];
+  /** 获取邀请码 */
+  dodochain_getInviteCode: Scalars['String']['output'];
+  /** 查看被邀请状态 */
+  dodochain_getInviteStatus: DodochainInviteStatusResult;
+  /** 获取被邀请者的列表 */
+  dodochain_getInviteesList: DodochainInviteesPaginationResult;
+  /** 汇总数据概览 */
+  dodochain_getOverviewJourneyOne: DodochainOverview;
+  /** 获取积分详情 阶段一 */
+  dodochain_getUserPointsDetailJourneyOne: DodochainUserPointsDetailPaginationResult;
+  /** 获取用户积分 阶段一 按日更新 */
+  dodochain_getUserPointsJourneyOne: DodochainUserPointsResult;
+  /** 质押挖矿历史 */
+  dodochain_getUserStakedHistoryListJourneyOne: DodochainUserStakedHistoryPaginationResult;
+  /** 质押挖矿列表 */
+  dodochain_getUserStakedListJourneyOne: DodochainUserStakedPaginationResult;
   donateHistories: Array<DonateHistory>;
   donateHistory?: Maybe<DonateHistory>;
   /** 活动相关信息 */
@@ -13565,6 +13754,7 @@ export type Query = {
   erc20_extend_erc20ExtendV2?: Maybe<Erc20_ExtendErc20ExtendV2>;
   erc20_list?: Maybe<Array<Maybe<Erc20Erc20List>>>;
   erc20_listV2?: Maybe<Array<Maybe<Erc20Erc20V2List>>>;
+  erc20_relationList?: Maybe<Array<Maybe<Erc20RelationList>>>;
   erc20_swapCrossChainList?: Maybe<Array<Maybe<Erc20Erc20V2List>>>;
   event?: Maybe<Event>;
   events: Array<Event>;
@@ -13755,6 +13945,7 @@ export type Query = {
   tokenTrader?: Maybe<TokenTrader>;
   tokenTraders: Array<TokenTrader>;
   token_info_balances?: Maybe<Token_InfoTokenBalanceList>;
+  token_info_balancesV2?: Maybe<Token_InfoTokenBalanceList>;
   tokens: Array<Token>;
   /** get caution for the tokens */
   tokens_getCautions: Array<TokensCautionTokenResult>;
@@ -13810,6 +14001,7 @@ export type Query = {
   vaults: Array<Vault>;
   /** get service charges for vdodo */
   vdodo_getServiceCharges: VdodoVdodoServiceChargesResult;
+  vdodo_getStats: VdodoStatsResult;
   withdrawFundHistories: Array<WithdrawFundHistory>;
   withdrawFundHistory?: Maybe<WithdrawFundHistory>;
   withdrawReserve?: Maybe<WithdrawReserve>;
@@ -14560,6 +14752,38 @@ export type QueryDodo_Two_Anniversary_H5_Qa_Activity_SaveArgs = {
   data?: InputMaybe<Dodo_Two_Anniversary_H5_Qa_ActivitysaveData>;
 };
 
+export type QueryDodochain_AcceptInviteArgs = {
+  where: DodochainUserAcceptInvitationInput;
+};
+
+export type QueryDodochain_GetInviteCodeArgs = {
+  where: DodochainUserInput;
+};
+
+export type QueryDodochain_GetInviteStatusArgs = {
+  where: DodochainUserInput;
+};
+
+export type QueryDodochain_GetInviteesListArgs = {
+  where: DodochainUserPaginationInput;
+};
+
+export type QueryDodochain_GetUserPointsDetailJourneyOneArgs = {
+  where: DodochainUserInput;
+};
+
+export type QueryDodochain_GetUserPointsJourneyOneArgs = {
+  where?: InputMaybe<DodochainUserInput>;
+};
+
+export type QueryDodochain_GetUserStakedHistoryListJourneyOneArgs = {
+  where?: InputMaybe<DodochainuserStakedInput>;
+};
+
+export type QueryDodochain_GetUserStakedListJourneyOneArgs = {
+  where?: InputMaybe<DodochainuserStakedInput>;
+};
+
 export type QueryDonateHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -14605,6 +14829,10 @@ export type QueryErc20_ListArgs = {
 
 export type QueryErc20_ListV2Args = {
   where?: InputMaybe<Erc20listV2Filter>;
+};
+
+export type QueryErc20_RelationListArgs = {
+  where?: InputMaybe<Erc20relationListFilter>;
 };
 
 export type QueryErc20_SwapCrossChainListArgs = {
@@ -15566,6 +15794,10 @@ export type QueryToken_Info_BalancesArgs = {
   data?: InputMaybe<Token_InfoTokenBalanceListData>;
 };
 
+export type QueryToken_Info_BalancesV2Args = {
+  data?: InputMaybe<Token_InfoTokenBalanceListDataV2>;
+};
+
 export type QueryTokensArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -15907,6 +16139,10 @@ export type QueryVaultsArgs = {
 };
 
 export type QueryVdodo_GetServiceChargesArgs = {
+  where?: InputMaybe<VdodoChainsInput>;
+};
+
+export type QueryVdodo_GetStatsArgs = {
   where?: InputMaybe<VdodoChainsInput>;
 };
 
@@ -17853,6 +18089,9 @@ export type Swap = {
   pair?: Maybe<Pair>;
   payFromAmount: Scalars['BigInt']['output'];
   pool: Pool;
+  poolTotalAssetsUSD: Scalars['BigDecimal']['output'];
+  /** poolTvl */
+  poolTotalAssetsValue: Scalars['BigInt']['output'];
   /** quote volume */
   quoteVolume: Scalars['BigDecimal']['output'];
   receiveToAmount: Scalars['BigInt']['output'];
@@ -18098,6 +18337,22 @@ export type Swap_Filter = {
   payFromAmount_not?: InputMaybe<Scalars['BigInt']['input']>;
   payFromAmount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   pool?: InputMaybe<Scalars['String']['input']>;
+  poolTotalAssetsUSD?: InputMaybe<Scalars['BigDecimal']['input']>;
+  poolTotalAssetsUSD_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
+  poolTotalAssetsUSD_gte?: InputMaybe<Scalars['BigDecimal']['input']>;
+  poolTotalAssetsUSD_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  poolTotalAssetsUSD_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
+  poolTotalAssetsUSD_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
+  poolTotalAssetsUSD_not?: InputMaybe<Scalars['BigDecimal']['input']>;
+  poolTotalAssetsUSD_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  poolTotalAssetsValue?: InputMaybe<Scalars['BigInt']['input']>;
+  poolTotalAssetsValue_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  poolTotalAssetsValue_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  poolTotalAssetsValue_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  poolTotalAssetsValue_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  poolTotalAssetsValue_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  poolTotalAssetsValue_not?: InputMaybe<Scalars['BigInt']['input']>;
+  poolTotalAssetsValue_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   pool_?: InputMaybe<Pool_Filter>;
   pool_contains?: InputMaybe<Scalars['String']['input']>;
   pool_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -18266,6 +18521,8 @@ export type Swap_OrderBy =
   | 'pair'
   | 'payFromAmount'
   | 'pool'
+  | 'poolTotalAssetsUSD'
+  | 'poolTotalAssetsValue'
   | 'quoteVolume'
   | 'receiveToAmount'
   | 'sellOrNot'
@@ -18316,7 +18573,7 @@ export type Token = {
   /** token name */
   name: Scalars['String']['output'];
   /** lpToken originToken */
-  originToken?: Maybe<Scalars['Bytes']['output']>;
+  originToken: Scalars['Bytes']['output'];
   owner: Owner;
   /** price update time */
   priceUpdateTimestamp: Scalars['BigInt']['output'];
@@ -18348,6 +18605,8 @@ export type Token = {
   updatedAt?: Maybe<Scalars['BigInt']['output']>;
   /** usd price(only stable coin and classical pool has usd price) */
   usdPrice: Scalars['BigDecimal']['output'];
+  /** belong vault address */
+  vault: Scalars['Bytes']['output'];
   /** traded volume of USD */
   volumeUSD: Scalars['BigDecimal']['output'];
   /** traded volume of USD for bridge */
@@ -19213,6 +19472,12 @@ export type Token_Filter = {
   usdPrice_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   usdPrice_not?: InputMaybe<Scalars['BigDecimal']['input']>;
   usdPrice_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  vault?: InputMaybe<Scalars['Bytes']['input']>;
+  vault_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  vault_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  vault_not?: InputMaybe<Scalars['Bytes']['input']>;
+  vault_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  vault_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
   volumeUSD?: InputMaybe<Scalars['BigDecimal']['input']>;
   volumeUSDBridge?: InputMaybe<Scalars['BigDecimal']['input']>;
   volumeUSDBridge_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -19239,6 +19504,12 @@ export type Token_InfoTokenBalanceListData = {
   chainId?: InputMaybe<Scalars['Int']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
   tokenAddresss?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  userAddress?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Token_InfoTokenBalanceListDataV2 = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
   userAddress?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -19285,6 +19556,7 @@ export type Token_OrderBy =
   | 'untrackedVolume'
   | 'updatedAt'
   | 'usdPrice'
+  | 'vault'
   | 'volumeUSD'
   | 'volumeUSDBridge';
 
@@ -20030,7 +20302,7 @@ export type User = {
   txCount: Scalars['BigInt']['output'];
   /** updatedAt */
   updatedAt?: Maybe<Scalars['BigInt']['output']>;
-  /** liquidity Positions */
+  /** userFundings */
   userFundings?: Maybe<Array<UserFunding>>;
 };
 
@@ -20175,9 +20447,14 @@ export type UserDayData_OrderBy =
   | 'updatedAt';
 
 export type UserFunding = {
+  /** tokenAmount */
   amount: Scalars['BigInt']['output'];
   /**  Block number of this event  */
   blockNumber: Scalars['BigInt']['output'];
+  /** D3Vault getExchangeRate */
+  exchangeRate?: Maybe<Scalars['BigInt']['output']>;
+  /** Transfer from */
+  from?: Maybe<Scalars['Bytes']['output']>;
   /**  Transaction hash of the transaction that emitted this event  */
   hash: Scalars['String']['output'];
   /**  { Transaction hash }-{ Log index }  */
@@ -20185,13 +20462,18 @@ export type UserFunding = {
   /**  Event log index. For transactions that don't emit event, create arbitrary index starting from 0  */
   logIndex: Scalars['Int']['output'];
   lpToken?: Maybe<Token>;
-  /** total dTokenAmount */
+  /** dTokenAmount */
   lpTokenAmount: Scalars['BigInt']['output'];
+  /**  accumulate lptoken Balance */
+  lpTokenBalance: Scalars['BigInt']['output'];
   /** UserWithdraw msgSender */
   msgSender?: Maybe<Scalars['Bytes']['output']>;
   /**  Timestamp of this event  */
   timestamp: Scalars['BigInt']['output'];
+  to?: Maybe<Scalars['Bytes']['output']>;
   token: Token;
+  /**  accumulate token Balance */
+  tokenBalance: Scalars['BigInt']['output'];
   /** updatedAt */
   updatedAt: Scalars['BigInt']['output'];
   user: User;
@@ -20200,7 +20482,11 @@ export type UserFunding = {
   vault: Vault;
 };
 
-export type UserFundingType = 'Deposit' | 'Withdraw';
+export type UserFundingType =
+  | 'Deposit'
+  | 'TransferIn'
+  | 'TransferOut'
+  | 'Withdraw';
 
 export type UserFunding_Filter = {
   /** Filter for the block changed event. */
@@ -20221,6 +20507,20 @@ export type UserFunding_Filter = {
   blockNumber_lte?: InputMaybe<Scalars['BigInt']['input']>;
   blockNumber_not?: InputMaybe<Scalars['BigInt']['input']>;
   blockNumber_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  exchangeRate?: InputMaybe<Scalars['BigInt']['input']>;
+  exchangeRate_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  exchangeRate_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  exchangeRate_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  exchangeRate_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  exchangeRate_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  exchangeRate_not?: InputMaybe<Scalars['BigInt']['input']>;
+  exchangeRate_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  from?: InputMaybe<Scalars['Bytes']['input']>;
+  from_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  from_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  from_not?: InputMaybe<Scalars['Bytes']['input']>;
+  from_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  from_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
   hash?: InputMaybe<Scalars['String']['input']>;
   hash_contains?: InputMaybe<Scalars['String']['input']>;
   hash_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -20266,6 +20566,14 @@ export type UserFunding_Filter = {
   lpTokenAmount_lte?: InputMaybe<Scalars['BigInt']['input']>;
   lpTokenAmount_not?: InputMaybe<Scalars['BigInt']['input']>;
   lpTokenAmount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  lpTokenBalance?: InputMaybe<Scalars['BigInt']['input']>;
+  lpTokenBalance_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  lpTokenBalance_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  lpTokenBalance_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  lpTokenBalance_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  lpTokenBalance_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  lpTokenBalance_not?: InputMaybe<Scalars['BigInt']['input']>;
+  lpTokenBalance_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   lpToken_?: InputMaybe<Token_Filter>;
   lpToken_contains?: InputMaybe<Scalars['String']['input']>;
   lpToken_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -20300,7 +20608,21 @@ export type UserFunding_Filter = {
   timestamp_lte?: InputMaybe<Scalars['BigInt']['input']>;
   timestamp_not?: InputMaybe<Scalars['BigInt']['input']>;
   timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  to?: InputMaybe<Scalars['Bytes']['input']>;
+  to_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  to_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  to_not?: InputMaybe<Scalars['Bytes']['input']>;
+  to_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  to_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
   token?: InputMaybe<Scalars['String']['input']>;
+  tokenBalance?: InputMaybe<Scalars['BigInt']['input']>;
+  tokenBalance_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  tokenBalance_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  tokenBalance_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  tokenBalance_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  tokenBalance_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  tokenBalance_not?: InputMaybe<Scalars['BigInt']['input']>;
+  tokenBalance_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   token_?: InputMaybe<Token_Filter>;
   token_contains?: InputMaybe<Scalars['String']['input']>;
   token_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -20380,14 +20702,19 @@ export type UserFunding_Filter = {
 export type UserFunding_OrderBy =
   | 'amount'
   | 'blockNumber'
+  | 'exchangeRate'
+  | 'from'
   | 'hash'
   | 'id'
   | 'logIndex'
   | 'lpToken'
   | 'lpTokenAmount'
+  | 'lpTokenBalance'
   | 'msgSender'
   | 'timestamp'
+  | 'to'
   | 'token'
+  | 'tokenBalance'
   | 'updatedAt'
   | 'user'
   | 'userFundingType'
@@ -21034,6 +21361,8 @@ export type User_SwapSwapOrderList = {
   fromTokenSymbol?: Maybe<Scalars['String']['output']>;
   hash?: Maybe<Scalars['String']['output']>;
   key?: Maybe<Scalars['String']['output']>;
+  maxAmount?: Maybe<Scalars['String']['output']>;
+  minAmount?: Maybe<Scalars['String']['output']>;
   nonce?: Maybe<Scalars['Int']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   toAmount?: Maybe<Scalars['String']['output']>;
@@ -21417,6 +21746,8 @@ export type VaultAssetInfo = {
   totalReserves: Scalars['BigInt']['output'];
   /** updatedAt */
   updatedAt: Scalars['BigInt']['output'];
+  /** D3Vault getUtilizationRatio */
+  utilizationRatio?: Maybe<Scalars['BigInt']['output']>;
   /** belong vault */
   vault: Vault;
   withdrawnReserves: Scalars['BigInt']['output'];
@@ -21425,8 +21756,11 @@ export type VaultAssetInfo = {
 export type VaultAssetInfoDayData = {
   accruedInterest: Scalars['BigInt']['output'];
   accruedInterestUSD: Scalars['BigDecimal']['output'];
+  balance: Scalars['BigInt']['output'];
   /** uinx timestamp(start of day) */
   date: Scalars['Int']['output'];
+  /** D3Vault getExchangeRate */
+  exchangeRate?: Maybe<Scalars['BigInt']['output']>;
   /**  vault id-token id- day id */
   id: Scalars['ID']['output'];
   poolBorrowAmount: Scalars['BigInt']['output'];
@@ -21437,6 +21771,8 @@ export type VaultAssetInfoDayData = {
   updatedAt: Scalars['BigInt']['output'];
   userDepositAmount: Scalars['BigInt']['output'];
   userWithdrawAmount: Scalars['BigInt']['output'];
+  /** D3Vault getUtilizationRatio */
+  utilizationRatio?: Maybe<Scalars['BigInt']['output']>;
   /** belong vault */
   vault: Vault;
   /** belong VaultAssetInfo */
@@ -21462,6 +21798,14 @@ export type VaultAssetInfoDayData_Filter = {
   accruedInterest_lte?: InputMaybe<Scalars['BigInt']['input']>;
   accruedInterest_not?: InputMaybe<Scalars['BigInt']['input']>;
   accruedInterest_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  balance?: InputMaybe<Scalars['BigInt']['input']>;
+  balance_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  balance_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  balance_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  balance_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  balance_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  balance_not?: InputMaybe<Scalars['BigInt']['input']>;
+  balance_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   date?: InputMaybe<Scalars['Int']['input']>;
   date_gt?: InputMaybe<Scalars['Int']['input']>;
   date_gte?: InputMaybe<Scalars['Int']['input']>;
@@ -21470,6 +21814,14 @@ export type VaultAssetInfoDayData_Filter = {
   date_lte?: InputMaybe<Scalars['Int']['input']>;
   date_not?: InputMaybe<Scalars['Int']['input']>;
   date_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  exchangeRate?: InputMaybe<Scalars['BigInt']['input']>;
+  exchangeRate_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  exchangeRate_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  exchangeRate_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  exchangeRate_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  exchangeRate_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  exchangeRate_not?: InputMaybe<Scalars['BigInt']['input']>;
+  exchangeRate_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   id?: InputMaybe<Scalars['ID']['input']>;
   id_gt?: InputMaybe<Scalars['ID']['input']>;
   id_gte?: InputMaybe<Scalars['ID']['input']>;
@@ -21536,6 +21888,14 @@ export type VaultAssetInfoDayData_Filter = {
   userWithdrawAmount_lte?: InputMaybe<Scalars['BigInt']['input']>;
   userWithdrawAmount_not?: InputMaybe<Scalars['BigInt']['input']>;
   userWithdrawAmount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  utilizationRatio?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  utilizationRatio_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_not?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   vault?: InputMaybe<Scalars['String']['input']>;
   vaultAssetInfo?: InputMaybe<Scalars['String']['input']>;
   vaultAssetInfo_?: InputMaybe<VaultAssetInfo_Filter>;
@@ -21585,7 +21945,9 @@ export type VaultAssetInfoDayData_Filter = {
 export type VaultAssetInfoDayData_OrderBy =
   | 'accruedInterest'
   | 'accruedInterestUSD'
+  | 'balance'
   | 'date'
+  | 'exchangeRate'
   | 'id'
   | 'poolBorrowAmount'
   | 'poolRepayAmount'
@@ -21594,6 +21956,7 @@ export type VaultAssetInfoDayData_OrderBy =
   | 'updatedAt'
   | 'userDepositAmount'
   | 'userWithdrawAmount'
+  | 'utilizationRatio'
   | 'vault'
   | 'vaultAssetInfo';
 
@@ -21630,6 +21993,8 @@ export type VaultAssetInfoHistory = {
   totalReserves: Scalars['BigInt']['output'];
   /** updatedAt */
   updatedAt: Scalars['BigInt']['output'];
+  /** D3Vault getUtilizationRatio */
+  utilizationRatio?: Maybe<Scalars['BigInt']['output']>;
   /** belong vault */
   vault: Vault;
   withdrawnReserves: Scalars['BigInt']['output'];
@@ -21874,6 +22239,14 @@ export type VaultAssetInfoHistory_Filter = {
   updatedAt_lte?: InputMaybe<Scalars['BigInt']['input']>;
   updatedAt_not?: InputMaybe<Scalars['BigInt']['input']>;
   updatedAt_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  utilizationRatio?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  utilizationRatio_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_not?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   vault?: InputMaybe<Scalars['String']['input']>;
   vault_?: InputMaybe<Vault_Filter>;
   vault_contains?: InputMaybe<Scalars['String']['input']>;
@@ -21929,6 +22302,7 @@ export type VaultAssetInfoHistory_OrderBy =
   | 'totalBorrows'
   | 'totalReserves'
   | 'updatedAt'
+  | 'utilizationRatio'
   | 'vault'
   | 'withdrawnReserves';
 
@@ -22123,6 +22497,14 @@ export type VaultAssetInfo_Filter = {
   updatedAt_lte?: InputMaybe<Scalars['BigInt']['input']>;
   updatedAt_not?: InputMaybe<Scalars['BigInt']['input']>;
   updatedAt_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  utilizationRatio?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  utilizationRatio_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_not?: InputMaybe<Scalars['BigInt']['input']>;
+  utilizationRatio_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   vault?: InputMaybe<Scalars['String']['input']>;
   vault_?: InputMaybe<Vault_Filter>;
   vault_contains?: InputMaybe<Scalars['String']['input']>;
@@ -22175,6 +22557,7 @@ export type VaultAssetInfo_OrderBy =
   | 'totalInterestUSD'
   | 'totalReserves'
   | 'updatedAt'
+  | 'utilizationRatio'
   | 'vault'
   | 'withdrawnReserves';
 
@@ -22567,6 +22950,13 @@ export type Vault_OrderBy =
 
 export type VdodoChainsInput = {
   chains: Array<Scalars['Int']['input']>;
+};
+
+export type VdodoStatsResult = {
+  /** 最近24小时平台手续费收入 */
+  mtNear24hFees: Scalars['String']['output'];
+  /** 平台总手续费收入 */
+  mtTotalFees: Scalars['String']['output'];
 };
 
 /** DIP-3 提议重新分配交易手续费，将此前 100% 交易手续费给 LP，更改为 80% 手续费给 LP，剩余 20% 手续费将用于两部分，一部分用于回购DODO并分发给vDODO持有者（分红），另一部分建立社区金库。 */
@@ -23259,6 +23649,58 @@ export type FetchDashboardPairListQuery = {
   } | null;
 };
 
+export type FetchPoolQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+  where?: InputMaybe<Pair_Filter>;
+  liquidityWhere?: InputMaybe<Liquiditylist_Filter>;
+}>;
+
+export type FetchPoolQuery = {
+  pair?: {
+    id: string;
+    type: string;
+    creator: any;
+    owner?: any | null;
+    traderCount: any;
+    volumeBaseToken: any;
+    volumeQuoteToken: any;
+    volumeUSD: any;
+    feeBase: any;
+    feeQuote: any;
+    mtFeeRate: any;
+    lpFeeRate: any;
+    i?: any | null;
+    k?: any | null;
+    baseReserve: any;
+    quoteReserve: any;
+    createdAtTimestamp: any;
+    lastTradePrice: any;
+    baseToken: { id: string; symbol: string; name: string; decimals: any };
+    quoteToken: {
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: any;
+      usdPrice: any;
+    };
+    baseLpToken?: { id: string; symbol: string; name: string } | null;
+    quoteLpToken?: { id: string; symbol: string; name: string } | null;
+  } | null;
+  liquidity_list?: {
+    lqList?: Array<{
+      pair?: {
+        miningAddress?: Array<string | null> | null;
+        apy?: {
+          miningBaseApy?: any | null;
+          miningQuoteApy?: any | null;
+          transactionBaseApy?: any | null;
+          transactionQuoteApy?: any | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+};
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -23439,4 +23881,67 @@ export const FetchDashboardPairListDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   FetchDashboardPairListQuery,
   FetchDashboardPairListQueryVariables
+>;
+export const FetchPoolDocument = new TypedDocumentString(`
+    query FetchPool($id: ID!, $where: Pair_filter, $liquidityWhere: Liquiditylist_filter) {
+  pair(id: $id, where: $where) {
+    id
+    type
+    creator
+    owner
+    traderCount
+    volumeBaseToken
+    volumeQuoteToken
+    volumeUSD
+    feeBase
+    feeQuote
+    mtFeeRate
+    lpFeeRate
+    i
+    k
+    baseReserve
+    quoteReserve
+    createdAtTimestamp
+    lastTradePrice
+    baseToken {
+      id
+      symbol
+      name
+      decimals
+    }
+    quoteToken {
+      id
+      symbol
+      name
+      decimals
+      usdPrice
+    }
+    baseLpToken {
+      id
+      symbol
+      name
+    }
+    quoteLpToken {
+      id
+      symbol
+      name
+    }
+  }
+  liquidity_list(where: $liquidityWhere) {
+    lqList {
+      pair {
+        apy {
+          miningBaseApy
+          miningQuoteApy
+          transactionBaseApy
+          transactionQuoteApy
+        }
+        miningAddress
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchPoolQuery,
+  FetchPoolQueryVariables
 >;

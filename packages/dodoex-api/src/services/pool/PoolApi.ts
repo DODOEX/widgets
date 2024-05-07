@@ -1244,6 +1244,30 @@ export class PoolApi {
     };
   }
 
+  getLPFeeRateQuery(
+    chainId: number | undefined,
+    poolAddress: string | undefined,
+    type: PoolType | undefined,
+  ) {
+    return {
+      queryKey: ['pool', 'getLpFeeRateQuery', ...arguments],
+      enabled: !!chainId && !!poolAddress && !!type,
+      queryFn: async () => {
+        if (!chainId || !poolAddress || !type) {
+          return null;
+        }
+        const result = await this.contractRequests.batchCallQuery(chainId, {
+          abiName: ABIName.dvmPoolABI,
+          contractAddress: poolAddress,
+          method: '_LP_FEE_RATE_',
+          params: [],
+        });
+        const feeRate = new BigNumber(result.toString()).div(10 ** 18);
+        return feeRate;
+      },
+    };
+  }
+
   getPMMStateQuery(
     chainId: number | undefined,
     poolAddress: string | undefined,

@@ -202,7 +202,7 @@ export function TokenCard({
       </Box>
 
       {readOnly && inputReadonlyTooltip ? (
-        <TooltipToast title={inputReadonlyTooltip}>
+        <TooltipToast title={inputReadonlyTooltip} arrow={false}>
           <Box>
             <NumberInput
               value={amt}

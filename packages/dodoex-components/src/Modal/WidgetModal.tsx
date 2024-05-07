@@ -40,6 +40,14 @@ const StyledBackdrop = styled(Backdrop)`
   -webkit-tap-highlight-color: transparent;
 `;
 
-export default function WidgetModal(props: ModalProps) {
-  return <StyledModal slots={{ backdrop: StyledBackdrop }} {...props} />;
+export const WIDGET_MODAL_CLASS = 'dodo-widget-modal';
+
+export default function WidgetModal({ slots, ...props }: ModalProps) {
+  return (
+    <StyledModal
+      className={WIDGET_MODAL_CLASS}
+      slots={{ backdrop: StyledBackdrop, ...slots }}
+      {...props}
+    />
+  );
 }

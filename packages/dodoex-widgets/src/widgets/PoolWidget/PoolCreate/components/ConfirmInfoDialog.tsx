@@ -1,7 +1,7 @@
 import { Button, Box } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import Dialog from '../../../../components/Dialog';
 import TokenLogo from '../../../../components/TokenLogo';
+import WidgetDialog from '../../../../components/WidgetDialog';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { useCreatePmm } from '../hooks/useCreatePmm';
 import { useVersionList } from '../hooks/useVersionList';
@@ -49,12 +49,14 @@ export default function ConfirmInfoDialog({
   state,
   onConfirm,
   isModify,
+  loading,
 }: {
   on: boolean;
   onClose: () => void;
   state: StateProps;
   onConfirm: () => void;
   isModify?: boolean;
+  loading?: boolean;
 }) {
   const { chainId } = useWalletInfo();
   const { versionMap } = useVersionList();
@@ -68,7 +70,7 @@ export default function ConfirmInfoDialog({
     slippageCoefficient: state.slippageCoefficient,
   });
   return (
-    <Dialog
+    <WidgetDialog
       open={on}
       onClose={onClose}
       title={isModify ? t`Modify Confirmation` : t`Pool Creation Confirmation`}
@@ -153,6 +155,7 @@ export default function ConfirmInfoDialog({
         </Box>
         <Button
           fullWidth
+          isLoading={loading}
           sx={{
             mt: 30,
           }}
@@ -161,6 +164,6 @@ export default function ConfirmInfoDialog({
           {isModify ? t`Confirm` : t`Create`}
         </Button>
       </Box>
-    </Dialog>
+    </WidgetDialog>
   );
 }

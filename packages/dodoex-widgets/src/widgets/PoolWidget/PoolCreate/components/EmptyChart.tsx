@@ -11,6 +11,10 @@ export default function EmptyChart({
   return (
     <EmptyList
       sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
         height: height || 261,
       }}
       emptyText={text || t`Enter parameters to view the yield curve`}
