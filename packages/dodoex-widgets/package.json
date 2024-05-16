@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "2.6.6",
+  "version": "2.6.7",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/src/index.d.ts",
@@ -22,6 +22,7 @@
     "prerelease": "yarn run build",
     "release": "semantic-release",
     "release:local": "np --any-branch --no-cleanup --no-tests",
+    "release.npm-publish": "npm publish --access public",
     "test": "jest src",
     "test:e2e": "jest e2e"
   },
