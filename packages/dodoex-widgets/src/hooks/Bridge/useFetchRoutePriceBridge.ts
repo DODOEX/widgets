@@ -211,6 +211,7 @@ export function useFetchRoutePriceBridge({
         'symbiosis',
         'scroll',
         'manta',
+        'orbiter',
         // Sync with src/components/Bridge/SelectBridgeDialog/productList.ts
       ],
     };
