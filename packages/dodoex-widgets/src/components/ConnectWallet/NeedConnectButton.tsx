@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { useGlobalConfig } from '../../providers/GlobalConfigContext';
 import { AppThunkDispatch } from '../../store/actions';
 import { setOpenConnectWalletInfo } from '../../store/actions/wallet';

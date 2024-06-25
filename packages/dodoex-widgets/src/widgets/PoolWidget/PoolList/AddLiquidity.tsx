@@ -1,4 +1,4 @@
-import { alpha, Box, Button, useTheme } from '@dodoex/components';
+import { alpha, Box, Button, useTheme, Tooltip } from '@dodoex/components';
 import { PoolApi, PoolType } from '@dodoex/api';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -7,12 +7,16 @@ import {
   convertLiquidityTokenToTokenInfo,
   FetchLiquidityListLqList,
 } from '../utils';
-import { ChainId } from '../../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import React from 'react';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
-import { Trans } from '@lingui/macro';
+import { Trans, t } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
-import { formatApy, formatExponentialNotation } from '../../../utils';
+import {
+  formatApy,
+  formatExponentialNotation,
+  formatReadableNumber,
+} from '../../../utils';
 import PoolApyTooltip from './components/PoolApyTooltip';
 import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
 import { debounce } from 'lodash';
@@ -27,18 +31,433 @@ import { FailedList } from '../../../components/List/FailedList';
 import FilterAddressTags from './components/FilterAddressTags';
 import FilterTokenTags from './components/FilterTokenTags';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
-import PoolOperate from '../PoolOperate';
+import { PoolOperateProps } from '../PoolOperate';
 import { graphQLRequests } from '../../../constants/api';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
-import { OperatePool } from '../PoolOperate/types';
+import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
+import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
+import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
+import LiquidityTable from './components/LiquidityTable';
+
+function CardList({
+  lqList,
+  setOperatePool,
+}: {
+  lqList: FetchLiquidityListLqList;
+  setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+}) {
+  const theme = useTheme();
+  return (
+    <>
+      {lqList?.map((lq) => {
+        if (!lq?.pair) return null;
+        const item = lq.pair;
+        const baseToken = convertLiquidityTokenToTokenInfo(
+          item.baseToken,
+          item.chainId,
+        );
+        const quoteToken = convertLiquidityTokenToTokenInfo(
+          item.quoteToken,
+          item.chainId,
+        );
+        const baseApy = item.apy
+          ? formatApy(
+              new BigNumber(item.apy?.transactionBaseApy).plus(
+                item.apy?.miningBaseApy ?? 0,
+              ),
+            )
+          : undefined;
+        const quoteApy =
+          PoolApi.utils.singleSideLp(item.type as PoolType) && item.apy
+            ? formatApy(
+                new BigNumber(item.apy.transactionQuoteApy).plus(
+                  item.apy.miningQuoteApy ?? 0,
+                ),
+              )
+            : undefined;
+        return (
+          <Box
+            key={item.id + item.chainId}
+            sx={{
+              px: 20,
+              pt: 20,
+              pb: 12,
+              backgroundColor: 'background.paperContrast',
+              borderRadius: 16,
+            }}
+            onClick={() => {
+              useRouterStore.getState().push({
+                type: PageType.PoolDetail,
+                params: {
+                  chainId: item.chainId as ChainId,
+                  address: item.id as string,
+                },
+              });
+            }}
+          >
+            {/* title */}
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                {baseToken && quoteToken ? (
+                  <TokenLogoPair
+                    tokens={[baseToken, quoteToken]}
+                    width={24}
+                    mr={8}
+                    chainId={item.chainId}
+                    showChainLogo
+                  />
+                ) : (
+                  ''
+                )}
+                <Box
+                  sx={{
+                    typography: 'body2',
+                    fontWeight: 600,
+                  }}
+                >
+                  {`${baseToken?.symbol}/${quoteToken?.symbol}`}
+                </Box>
+              </Box>
+              {item.miningAddress ? (
+                <Box
+                  sx={{
+                    p: 8,
+                    typography: 'h6',
+                    fontWeight: 'bold',
+                    background: `linear-gradient(180deg, ${alpha(
+                      theme.palette.secondary.main,
+                      0.3,
+                    )} 0%, ${alpha(theme.palette.purple.main, 0.3)} 100%)`,
+                    borderRadius: 8,
+                    color: 'purple.main',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  ✨ <Trans>Mining</Trans>
+                </Box>
+              ) : (
+                ''
+              )}
+            </Box>
+            {/* info */}
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                mt: 44,
+              }}
+            >
+              <Box>
+                <Box
+                  sx={{
+                    typography: 'h5',
+                  }}
+                >
+                  {baseApy}
+                  {quoteApy ? `/${quoteApy}` : ''}
+                </Box>
+                <Box
+                  sx={{
+                    typography: 'h6',
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'text.secondary',
+                  }}
+                >
+                  <Trans>APY</Trans>
+                  <PoolApyTooltip
+                    chainId={item.chainId}
+                    apy={item.apy}
+                    baseToken={baseToken}
+                    quoteToken={quoteToken}
+                    hasQuote={!!quoteApy}
+                    hasMining={!!item.miningAddress}
+                    sx={{
+                      width: 14,
+                      height: 14,
+                    }}
+                  />
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: 'inline-block',
+                  mx: 20,
+                  height: 24,
+                  width: '1px',
+                  backgroundColor: 'custom.border.default',
+                }}
+              />
+              <Box>
+                <Box
+                  sx={{
+                    typography: 'h5',
+                  }}
+                >
+                  ${formatExponentialNotation(new BigNumber(item.tvl))}
+                </Box>
+                <Box
+                  sx={{
+                    typography: 'h6',
+                    color: 'text.secondary',
+                  }}
+                >
+                  <Trans>TVL</Trans>
+                </Box>
+              </Box>
+            </Box>
+            {/* operate */}
+            <NeedConnectButton
+              fullWidth
+              size={Button.Size.small}
+              sx={{
+                mt: 20,
+              }}
+              onClick={(evt) => {
+                evt.stopPropagation();
+                setOperatePool({
+                  pool: convertFetchLiquidityToOperateData(lq),
+                });
+              }}
+            >
+              <Trans>Add</Trans>
+            </NeedConnectButton>
+          </Box>
+        );
+      })}
+    </>
+  );
+}
+
+function TableList({
+  lqList,
+  operatePool,
+  setOperatePool,
+}: {
+  lqList: FetchLiquidityListLqList;
+  operatePool: Partial<PoolOperateProps> | null;
+  setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+}) {
+  return (
+    <LiquidityTable>
+      <Box component="thead">
+        <Box component="tr">
+          <Box component="th">
+            <Trans>Pair</Trans>
+          </Box>
+          <Box component="th">
+            <Trans>TVL</Trans>
+          </Box>
+          <Box component="th">
+            <Trans>APY</Trans>
+          </Box>
+          <Box component="th"></Box>
+        </Box>
+      </Box>
+      <Box component="tbody">
+        {lqList?.map((lq) => {
+          if (!lq?.pair) return null;
+          const item = lq.pair;
+          const baseToken = convertLiquidityTokenToTokenInfo(
+            item.baseToken,
+            item.chainId,
+          );
+          const quoteToken = convertLiquidityTokenToTokenInfo(
+            item.quoteToken,
+            item.chainId,
+          );
+          const baseApy = item.apy
+            ? formatApy(
+                new BigNumber(item.apy?.transactionBaseApy).plus(
+                  item.apy?.miningBaseApy ?? 0,
+                ),
+              )
+            : undefined;
+          const quoteApy =
+            PoolApi.utils.singleSideLp(item.type as PoolType) && item.apy
+              ? formatApy(
+                  new BigNumber(item.apy.transactionQuoteApy).plus(
+                    item.apy.miningQuoteApy ?? 0,
+                  ),
+                )
+              : undefined;
+
+          let operateBtnText = '';
+          if (
+            operatePool?.pool?.address === item.id ||
+            operatePool?.address === item.id
+          ) {
+            switch (operatePool.operate) {
+              case OperateTab.Remove:
+                operateBtnText = t`Removing`;
+                break;
+              default:
+                operateBtnText = t`Adding`;
+                break;
+            }
+          }
+
+          return (
+            <Box component="tr" key={item.id + item.chainId}>
+              <Box component="td">
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  {baseToken && quoteToken ? (
+                    <TokenLogoPair
+                      tokens={[baseToken, quoteToken]}
+                      width={24}
+                      mr={10}
+                      chainId={item.chainId}
+                      showChainLogo
+                    />
+                  ) : (
+                    ''
+                  )}
+                  <Box>
+                    <Box
+                      sx={{
+                        typography: 'body2',
+                        fontWeight: 600,
+                      }}
+                    >
+                      {`${baseToken?.symbol}/${quoteToken?.symbol}`}
+                    </Box>
+                    <AddressWithLinkAndCopy
+                      address={item.id}
+                      truncate
+                      showCopy
+                      iconDarkHover
+                      iconSize={14}
+                      iconSpace={4}
+                      sx={{
+                        typography: 'h6',
+                        color: 'text.secondary',
+                      }}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+              <Box component="td">
+                <Box
+                  sx={{
+                    typography: 'body2',
+                  }}
+                  title={
+                    item.tvl
+                      ? `$${formatReadableNumber({
+                          input: item.tvl,
+                        })}`
+                      : undefined
+                  }
+                >
+                  ${formatExponentialNotation(new BigNumber(item.tvl))}
+                </Box>
+              </Box>
+              <Box component="td">
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  {item.miningAddress ? (
+                    <Tooltip title={t`Mining`}>
+                      <Box
+                        component="span"
+                        sx={{
+                          typography: 'body2',
+                          color: 'success.main',
+                        }}
+                      >
+                        ✨{' '}
+                      </Box>
+                    </Tooltip>
+                  ) : (
+                    ''
+                  )}
+                  <PoolApyTooltip
+                    chainId={item.chainId}
+                    apy={item.apy}
+                    baseToken={baseToken}
+                    quoteToken={quoteToken}
+                    hasQuote={!!quoteApy}
+                    hasMining={!!item.miningAddress}
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        typography: 'body2',
+                        fontWeight: 600,
+                        display: 'flex',
+                        alignItems: 'center',
+                        width: 'max-content',
+                        color: 'success.main',
+                        cursor: 'auto',
+                      }}
+                    >
+                      {baseApy}
+                      {quoteApy ? `/${quoteApy}` : ''}
+                    </Box>
+                  </PoolApyTooltip>
+                </Box>
+              </Box>
+              <Box component="td">
+                <Box
+                  sx={{
+                    textAlign: 'right',
+                  }}
+                >
+                  {operateBtnText ? (
+                    <AddingOrRemovingBtn
+                      text={operateBtnText}
+                      onClick={() => setOperatePool(null)}
+                    />
+                  ) : (
+                    <Button
+                      size={Button.Size.small}
+                      onClick={() => {
+                        setOperatePool({
+                          pool: convertFetchLiquidityToOperateData(lq),
+                        });
+                      }}
+                    >
+                      {t`Add`}
+                    </Button>
+                  )}
+                </Box>
+              </Box>
+            </Box>
+          );
+        })}
+      </Box>
+    </LiquidityTable>
+  );
+}
 
 export default function AddLiquidityList({
   scrollParentRef,
-  account,
   filterChainIds,
   activeChainId,
   handleChangeActiveChainId,
+  operatePool,
+  setOperatePool,
 }: {
   scrollParentRef: React.MutableRefObject<HTMLDivElement | undefined>;
   account?: string;
@@ -46,9 +465,11 @@ export default function AddLiquidityList({
 
   activeChainId: ChainId | undefined;
   handleChangeActiveChainId: (chainId: number | undefined) => void;
+  operatePool: Partial<PoolOperateProps> | null;
+  setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
 }) {
   const theme = useTheme();
-  const { minDevice } = useWidgetDevice();
+  const { minDevice, isMobile } = useWidgetDevice();
   const queryClient = useQueryClient();
 
   const {
@@ -64,6 +485,7 @@ export default function AddLiquidityList({
 
   const defaultQueryFilter = {
     chainIds: filterChainIds,
+    pageSize: 4,
     filterState: {
       viewOnlyOwn: false,
       filterTypes: ['CLASSICAL', 'DVM', 'DSP'],
@@ -109,21 +531,28 @@ export default function AddLiquidityList({
       });
     });
   }
-  const [addPool, setAddPool] = React.useState<OperatePool>();
 
   const filterSmallDeviceWidth = 475;
+
+  const hasMore = fetchResult.hasNextPage && !hasFilterAddress && false;
 
   return (
     <>
       <Box
         sx={{
-          my: 16,
+          py: 16,
           display: 'flex',
           gap: 8,
           ...(minDevice(filterSmallDeviceWidth)
             ? {}
             : {
                 flexDirection: 'column',
+              }),
+          ...(isMobile
+            ? {}
+            : {
+                px: 20,
+                borderBottomWidth: 1,
               }),
         }}
       >
@@ -203,241 +632,54 @@ export default function AddLiquidityList({
       </Box>
 
       {/* list */}
-      <InfiniteScroll
-        hasMore={fetchResult.hasNextPage && !hasFilterAddress}
-        threshold={300}
-        loadMore={debounce(() => {
-          if (fetchResult.hasNextPage && !fetchResult.isFetching) {
-            fetchResult.fetchNextPage();
+      {isMobile ? (
+        <InfiniteScroll
+          hasMore={hasMore}
+          threshold={300}
+          loadMore={debounce(() => {
+            if (fetchResult.hasNextPage && !fetchResult.isFetching) {
+              fetchResult.fetchNextPage();
+            }
+          }, 500)}
+          useWindow={false}
+          getScrollParent={() => scrollParentRef.current || null}
+          loader={
+            <LoadingCard
+              key="loader"
+              sx={{
+                mt: 20,
+              }}
+            />
           }
-        }, 500)}
-        useWindow={false}
-        getScrollParent={() => scrollParentRef.current || null}
-        loader={
-          <LoadingCard
-            key="loader"
-            sx={{
-              mt: 20,
-            }}
-          />
-        }
-      >
-        <DataCardGroup>
-          {fetchResult.isLoading ? <LoadingCard /> : ''}
-          {!fetchResult.isLoading && !lqList?.length && !!fetchResult.error && (
-            <EmptyList
-              sx={{
-                mt: 40,
-              }}
-              hasSearch={!!(activeChainId || filterASymbol || filterBSymbol)}
-            />
-          )}
-          {!!fetchResult.error && (
-            <FailedList
-              refresh={fetchResult.refetch}
-              sx={{
-                mt: 40,
-              }}
-            />
-          )}
-          <>
-            {lqList?.map((lq) => {
-              if (!lq?.pair) return null;
-              const item = lq.pair;
-              const baseToken = convertLiquidityTokenToTokenInfo(
-                item.baseToken,
-                item.chainId,
-              );
-              const quoteToken = convertLiquidityTokenToTokenInfo(
-                item.quoteToken,
-                item.chainId,
-              );
-              const baseApy = item.apy
-                ? formatApy(
-                    new BigNumber(item.apy?.transactionBaseApy).plus(
-                      item.apy?.miningBaseApy ?? 0,
-                    ),
-                  )
-                : undefined;
-              const quoteApy =
-                PoolApi.utils.singleSideLp(item.type as PoolType) && item.apy
-                  ? formatApy(
-                      new BigNumber(item.apy.transactionQuoteApy).plus(
-                        item.apy.miningQuoteApy ?? 0,
-                      ),
-                    )
-                  : undefined;
-              return (
-                <Box
-                  key={item.id + item.chainId}
-                  sx={{
-                    px: 20,
-                    pt: 20,
-                    pb: 12,
-                    backgroundColor: 'background.paperContrast',
-                    borderRadius: 16,
-                  }}
-                  onClick={() => {
-                    useRouterStore.getState().push({
-                      type: PageType.PoolDetail,
-                      params: {
-                        chainId: item.chainId as ChainId,
-                        address: item.id as string,
-                      },
-                    });
-                  }}
-                >
-                  {/* title */}
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      flexWrap: 'wrap',
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                      }}
-                    >
-                      {baseToken && quoteToken ? (
-                        <TokenLogoPair
-                          tokens={[baseToken, quoteToken]}
-                          width={24}
-                          mr={8}
-                          chainId={item.chainId}
-                          showChainLogo
-                        />
-                      ) : (
-                        ''
-                      )}
-                      <Box
-                        sx={{
-                          typography: 'body2',
-                          fontWeight: 600,
-                        }}
-                      >
-                        {`${baseToken?.symbol}/${quoteToken?.symbol}`}
-                      </Box>
-                    </Box>
-                    {item.miningAddress ? (
-                      <Box
-                        sx={{
-                          p: 8,
-                          typography: 'h6',
-                          fontWeight: 'bold',
-                          background: `linear-gradient(180deg, ${alpha(
-                            theme.palette.secondary.main,
-                            0.3,
-                          )} 0%, ${alpha(
-                            theme.palette.purple.main,
-                            0.3,
-                          )} 100%)`,
-                          borderRadius: 8,
-                          color: 'purple.main',
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        ✨ <Trans>Mining</Trans>
-                      </Box>
-                    ) : (
-                      ''
-                    )}
-                  </Box>
-                  {/* info */}
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      mt: 44,
-                    }}
-                  >
-                    <Box>
-                      <Box
-                        sx={{
-                          typography: 'h5',
-                        }}
-                      >
-                        {baseApy}
-                        {quoteApy ? `/${quoteApy}` : ''}
-                      </Box>
-                      <Box
-                        sx={{
-                          typography: 'h6',
-                          display: 'flex',
-                          alignItems: 'center',
-                          color: 'text.secondary',
-                        }}
-                      >
-                        <Trans>APY</Trans>
-                        <PoolApyTooltip
-                          chainId={item.chainId}
-                          apy={item.apy}
-                          baseToken={baseToken}
-                          quoteToken={quoteToken}
-                          hasQuote={!!quoteApy}
-                          hasMining={!!item.miningAddress}
-                          sx={{
-                            width: 14,
-                            height: 14,
-                          }}
-                        />
-                      </Box>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'inline-block',
-                        mx: 20,
-                        height: 24,
-                        width: '1px',
-                        backgroundColor: 'custom.border.default',
-                      }}
-                    />
-                    <Box>
-                      <Box
-                        sx={{
-                          typography: 'h5',
-                        }}
-                      >
-                        ${formatExponentialNotation(new BigNumber(item.tvl))}
-                      </Box>
-                      <Box
-                        sx={{
-                          typography: 'h6',
-                          color: 'text.secondary',
-                        }}
-                      >
-                        <Trans>TVL</Trans>
-                      </Box>
-                    </Box>
-                  </Box>
-                  {/* operate */}
-                  <NeedConnectButton
-                    fullWidth
-                    size={Button.Size.small}
-                    sx={{
-                      mt: 20,
-                    }}
-                    onClick={(evt) => {
-                      evt.stopPropagation();
-                      setAddPool(convertFetchLiquidityToOperateData(lq));
-                    }}
-                  >
-                    <Trans>Add</Trans>
-                  </NeedConnectButton>
-                </Box>
-              );
-            })}
-          </>
-        </DataCardGroup>
-      </InfiniteScroll>
-      <PoolOperate
-        pool={addPool}
-        account={account}
-        onClose={() => setAddPool(undefined)}
-      />
+        >
+          <DataCardGroup>
+            {fetchResult.isLoading ? <LoadingCard /> : ''}
+            {!fetchResult.isLoading && !lqList?.length && !!fetchResult.error && (
+              <EmptyList
+                sx={{
+                  mt: 40,
+                }}
+                hasSearch={!!(activeChainId || filterASymbol || filterBSymbol)}
+              />
+            )}
+            {!!fetchResult.error && (
+              <FailedList
+                refresh={fetchResult.refetch}
+                sx={{
+                  mt: 40,
+                }}
+              />
+            )}
+            <CardList lqList={lqList} setOperatePool={setOperatePool} />
+          </DataCardGroup>
+        </InfiniteScroll>
+      ) : (
+        <TableList
+          lqList={lqList}
+          operatePool={operatePool}
+          setOperatePool={setOperatePool}
+        />
+      )}
     </>
   );
 }

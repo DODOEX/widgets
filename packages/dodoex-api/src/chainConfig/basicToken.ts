@@ -23,6 +23,10 @@ export const basicTokenMap: {
     ...DEFAULT_BASIC_TOKEN,
     wrappedTokenAddress: '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
   },
+  [ChainId.SEPOLIA]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x7B07164ecFaF0F0D85DFC062Bc205a4674c75Aa0',
+  },
   [ChainId.OPTIMISM]: {
     ...DEFAULT_BASIC_TOKEN,
     wrappedTokenAddress: '0x4200000000000000000000000000000000000006',

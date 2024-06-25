@@ -179,7 +179,10 @@ export default function Tooltip({
       childrenProps.onMouseEnter = onMouseEnter;
       childrenProps.onMouseLeave = onMouseLeave;
     } else {
-      childrenProps.onClick = () => {
+      childrenProps.onClick = (evt: any) => {
+        if (typeof children === 'object' && children.props.onClick) {
+          children.props.onClick(evt);
+        }
         handleChangeOpen(true);
       };
     }

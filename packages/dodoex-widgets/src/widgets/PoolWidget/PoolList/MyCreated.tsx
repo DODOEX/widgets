@@ -8,7 +8,7 @@ import {
 } from '@dodoex/components';
 import { PoolApi, PoolType } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
-import { ChainId } from '../../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import React from 'react';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { Trans } from '@lingui/macro';
@@ -21,7 +21,7 @@ import SelectChain from '../../../components/SelectChain';
 import { EmptyList } from '../../../components/List/EmptyList';
 import { FailedList } from '../../../components/List/FailedList';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
-import PoolOperate, { PoolOperateProps } from '../PoolOperate';
+import { PoolOperateProps } from '../PoolOperate';
 import { graphQLRequests } from '../../../constants/api';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
@@ -34,15 +34,19 @@ export default function MyCreated({
   filterChainIds,
   activeChainId,
   handleChangeActiveChainId,
+  operatePool,
+  setOperatePool,
 }: {
   account?: string;
   filterChainIds?: ChainId[];
 
   activeChainId: ChainId | undefined;
   handleChangeActiveChainId: (chainId: number | undefined) => void;
+  operatePool: Partial<PoolOperateProps> | null;
+  setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
 }) {
   const theme = useTheme();
-  const { minDevice } = useWidgetDevice();
+  const { minDevice, isMobile } = useWidgetDevice();
 
   const defaultQueryFilter = {
     limit: 1000,
@@ -66,12 +70,6 @@ export default function MyCreated({
           filterChainIds.includes(item?.chainId ?? 0),
         )
       : fetchResult.data?.dashboard_pairs_list?.list) ?? [];
-  const [operatePool, setOperatePool] =
-    React.useState<{
-      address: PoolOperateProps['address'];
-      operate: PoolOperateProps['operate'];
-      chainId: PoolOperateProps['chainId'];
-    } | null>(null);
 
   const filterSmallDeviceWidth = 475;
 
@@ -79,13 +77,19 @@ export default function MyCreated({
     <>
       <Box
         sx={{
-          my: 16,
+          py: 16,
           display: 'flex',
           gap: 8,
           ...(minDevice(filterSmallDeviceWidth)
             ? {}
             : {
                 flexDirection: 'column',
+              }),
+          ...(isMobile
+            ? {}
+            : {
+                px: 20,
+                borderBottomWidth: 1,
               }),
         }}
       >
@@ -345,13 +349,6 @@ export default function MyCreated({
           })}
         </>
       </DataCardGroup>
-      <PoolOperate
-        account={account}
-        address={operatePool?.address}
-        operate={operatePool?.operate}
-        chainId={operatePool?.chainId}
-        onClose={() => setOperatePool(null)}
-      />
     </>
   );
 }

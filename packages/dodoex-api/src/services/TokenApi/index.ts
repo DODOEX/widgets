@@ -1,5 +1,6 @@
 import ContractRequests, {
   ContractRequestsConfig,
+  CONTRACT_QUERY_KEY,
 } from '../../helper/ContractRequests';
 import { ABIName } from '../../helper/ContractRequests';
 import BigNumber from 'bignumber.js';
@@ -66,6 +67,7 @@ export class TokenApi {
     return {
       // Unify the upper and lower case formats of queryKey into one to facilitate the use of cache
       queryKey: [
+        CONTRACT_QUERY_KEY,
         'token',
         'getFetchTokenQuery',
         chainId ?? '',

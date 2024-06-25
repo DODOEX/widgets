@@ -1,6 +1,6 @@
 import { PoolApi, ExcludeNone, PoolType } from '@dodoex/api';
 import { contractRequests } from '../../constants/api';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { TokenInfo } from '../../hooks/Token';
 import { OperatePool } from './PoolOperate/types';
 
@@ -11,6 +11,12 @@ export const poolApi = new PoolApi({
 export type FetchLiquidityListLqList = ExcludeNone<
   ReturnType<
     Exclude<typeof PoolApi.graphql.fetchLiquidityList['__apiType'], undefined>
+  >['liquidity_list']
+>['lqList'];
+
+export type FetchMyLiquidityListLqList = ExcludeNone<
+  ReturnType<
+    Exclude<typeof PoolApi.graphql.fetchMyLiquidityList['__apiType'], undefined>
   >['liquidity_list']
 >['lqList'];
 
@@ -61,7 +67,6 @@ export function convertFetchLiquidityToOperateData(
     ) as TokenInfo,
     type: pair.type as PoolType,
     creator: pair.creator,
-    lpFeeRate: pair.lpFeeRate,
   };
 }
 export function convertFetchPoolToOperateData(
@@ -82,6 +87,5 @@ export function convertFetchPoolToOperateData(
     ) as TokenInfo,
     type: pool.type as PoolType,
     creator: pool.creator,
-    lpFeeRate: pool.lpFeeRate,
   };
 }

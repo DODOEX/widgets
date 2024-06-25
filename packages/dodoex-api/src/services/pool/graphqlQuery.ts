@@ -228,4 +228,147 @@ export const poolGraphqlQuery = {
       }
     }
   `),
+  fetchPoolDayData: graphql(`
+    query FetchPoolDayData($where: Dashboardday_filter) {
+      dashboard_pairs_day_data(where: $where) {
+        timestamp
+        date
+        volume
+        fee
+        tvl
+        addresses
+        txes
+      }
+    }
+  `),
+  fetchPoolDashboard: graphql(`
+    query FetchPoolDashboard($where: Dashboardpair_detail_filter) {
+      dashboard_pairs_detail(where: $where) {
+        fee
+        volume
+        totalFee
+        totalVolume
+        tvl
+        turnover
+        liquidity
+        baseReserve
+        quoteReserve
+        baseVolume
+        quoteVolume
+        basePrice
+        quotePrice
+        price
+        baseFee
+        quoteFee
+        pair
+        poolType
+        baseVolumeCumulative
+        quoteVolumeCumulative
+        baseAddress
+        baseSymbol
+        quoteAddress
+        quoteSymbol
+        network
+        pairAddress
+        txes
+        txesNear24h
+        txUsers
+        txUserNear24h
+      }
+    }
+  `),
+  fetchPoolSwapList: graphql(`
+    query FetchPoolSwapList(
+      $first: Int
+      $skip: Int
+      $where: Swap_filter
+      $orderBy: Swap_orderBy
+      $orderDirection: OrderDirection
+    ) {
+      swaps(
+        first: $first
+        skip: $skip
+        where: $where
+        orderBy: $orderBy
+        orderDirection: $orderDirection
+      ) {
+        id
+        timestamp
+        from
+        baseVolume
+        quoteVolume
+        feeBase
+        feeQuote
+        fromToken {
+          id
+          symbol
+          name
+          decimals
+        }
+        toToken {
+          id
+          symbol
+          name
+          decimals
+        }
+        amountIn
+        amountOut
+      }
+    }
+  `),
+  fetchLiquidityPositions: graphql(`
+    query FetchLiquidityPositions(
+      $id: ID!
+      $first: Int
+      $skip: Int
+      $where: LiquidityPosition_filter
+      $miningWhere: LiquidityPosition_filter
+      $orderBy: LiquidityPosition_orderBy
+      $orderDirection: OrderDirection
+    ) {
+      balance: liquidityPositions(
+        first: $first
+        skip: $skip
+        where: $where
+        orderBy: $orderBy
+        orderDirection: $orderDirection
+      ) {
+        id
+        liquidityTokenBalance
+      }
+      mining: liquidityPositions(
+        first: $first
+        skip: $skip
+        where: $miningWhere
+        orderBy: $orderBy
+        orderDirection: $orderDirection
+      ) {
+        id
+        liquidityTokenInMining
+      }
+      pair(id: $id) {
+        lastTradePrice
+        baseLpToken {
+          id
+          decimals
+        }
+        quoteLpToken {
+          id
+          decimals
+        }
+        baseToken {
+          id
+          symbol
+          name
+          decimals
+        }
+        quoteToken {
+          id
+          symbol
+          name
+          decimals
+        }
+      }
+    }
+  `),
 };

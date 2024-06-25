@@ -8,6 +8,8 @@ export interface DialogProps {
   open: boolean;
   onClose?: () => void;
   afterClose?: () => void;
+  // Do not render on widget root node
+  scope?: boolean;
   title?: string | React.ReactNode;
   rightSlot?: React.ReactNode;
   canBack?: boolean;
@@ -32,7 +34,7 @@ function DialogBase({
         position: 'absolute',
         top: open ? 0 : '100%',
         transition: `top ${transitionTime}ms`,
-        zIndex: 1,
+        zIndex: 20,
         left: 0,
         right: 0,
         bottom: 0,
@@ -83,9 +85,9 @@ function DialogBase({
   );
 }
 
-export default function Dialog(props: DialogProps) {
+export default function Dialog({ scope, ...props }: DialogProps) {
   const { widgetRef } = useGlobalConfig();
-  if (widgetRef?.current) {
+  if (widgetRef?.current && !scope) {
     return createPortal(<DialogBase {...props} />, widgetRef.current);
   }
   return <DialogBase {...props} />;

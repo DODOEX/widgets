@@ -14,6 +14,7 @@ export interface FetchFiatPriceProps {
 }
 export function useFetchFiatPrice({ fromToken, toToken }: FetchFiatPriceProps) {
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
   const { apikey } = useSelector(getGlobalProps);
   const [fromFiatPrice, setFromFiatPrice] = useState<string>('');
   const [toFiatPrice, setToFiatPrice] = useState<string>('');
@@ -22,6 +23,7 @@ export function useFetchFiatPrice({ fromToken, toToken }: FetchFiatPriceProps) {
   const refetch = useCallback(() => {
     if (!fromToken || !toToken) return;
     setLoading(true);
+    setError(null);
     const tokens = [fromToken, toToken];
 
     axios
@@ -56,6 +58,7 @@ export function useFetchFiatPrice({ fromToken, toToken }: FetchFiatPriceProps) {
         }
       })
       .catch((error) => {
+        setError(error);
         setLoading(false);
         console.error(error);
       });
@@ -65,7 +68,9 @@ export function useFetchFiatPrice({ fromToken, toToken }: FetchFiatPriceProps) {
 
   return {
     loading,
+    isLoading: loading,
     refetch,
+    error,
     toFiatPrice,
     fromFiatPrice,
   };

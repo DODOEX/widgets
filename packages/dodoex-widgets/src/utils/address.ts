@@ -1,5 +1,6 @@
 import { getAddress } from '@ethersproject/address';
-import { ChainId, scanUrlDomainMap } from '../constants/chains';
+import { ChainId } from '@dodoex/api';
+import { scanUrlDomainMap } from '../constants/chains';
 
 export const isSameAddress = (
   tokenAddress1: string,

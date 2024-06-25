@@ -9,6 +9,9 @@ jest.mock('@tanstack/react-query', () => ({
     data: undefined,
     isLoading: true,
   })),
+  useQueryClient: jest.fn(() => ({
+    refetchQueries: jest.fn(),
+  })),
 }));
 
 const useQueryMock = useQuery as unknown as jest.Mock;
@@ -61,6 +64,7 @@ describe('useTokenStatus', () => {
       ...defaultReturnResult,
       isGetApproveLoading: true,
       insufficientBalance: true,
+      needShowTokenStatusButton: true,
       loading: true,
     });
   });
@@ -80,6 +84,7 @@ describe('useTokenStatus', () => {
     expect(result.current).toEqual({
       ...defaultReturnResult,
       insufficientBalance: true,
+      needShowTokenStatusButton: true,
     });
   });
 

@@ -52,7 +52,6 @@ function TokenItem({
         >
           {token ? (
             <Radio
-              value={value}
               checked={value === selectedValue}
               onChange={() => onChange(value as CheckTokenType)}
               sx={{

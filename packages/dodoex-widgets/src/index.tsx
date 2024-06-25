@@ -2,18 +2,22 @@ import { Swap } from './components/Swap';
 import { createRoot } from 'react-dom/client';
 import { Widget, WidgetProps } from './components/Widget';
 import { Pool } from './widgets/PoolWidget';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient } from './providers/queryClient';
 
+export { Widget } from './components/Widget';
 export type SwapWidgetProps = WidgetProps;
 export type { TokenInfo } from './hooks/Token/type';
+export { Swap } from './components/Swap';
+export { Pool } from './widgets/PoolWidget';
+export {
+  default as PoolOperateDialog,
+  PoolOperate,
+} from './widgets/PoolWidget/PoolOperate';
+export type { PoolOperateProps } from './widgets/PoolWidget/PoolOperate';
 
 export function SwapWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>
-      <QueryClientProvider client={queryClient}>
-        <Swap getAutoSlippage={props.getAutoSlippage} />
-      </QueryClientProvider>
+      <Swap getAutoSlippage={props.getAutoSlippage} />
     </Widget>
   );
 }
@@ -21,9 +25,7 @@ export function SwapWidget(props: SwapWidgetProps) {
 export function PoolWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>
-      <QueryClientProvider client={queryClient}>
-        <Pool />
-      </QueryClientProvider>
+      <Pool />
     </Widget>
   );
 }

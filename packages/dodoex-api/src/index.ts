@@ -10,6 +10,7 @@ export { default as GraphQLRequests } from './helper/GraphQLRequests';
 export {
   default as ContractRequests,
   ABIName,
+  CONTRACT_QUERY_KEY,
 } from './helper/ContractRequests';
 export type { Query } from './helper/ContractRequests';
 
@@ -24,6 +25,9 @@ export {
 } from './services/pool';
 export type { PmmModelParams } from './services/pool';
 export type { PoolType } from './services/pool';
+
+export { MiningApi, MiningStatusE } from './services/mining';
+
 export { TokenApi } from './services/TokenApi';
 
 export type ExcludeNone<T> = Exclude<Exclude<T, undefined>, null>;

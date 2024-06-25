@@ -1,6 +1,6 @@
 import { useWeb3React } from '@web3-react/core';
 import { useEffect, useMemo, useState } from 'react';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { ChainListItem, chainListMap } from '../../constants/chainList';
 import { useSelector } from 'react-redux';
 import { getAllTokenList } from '../../store/selectors/token';

@@ -14,6 +14,8 @@ import { BatchProvider } from './batchProvider';
 import BigNumber from 'bignumber.js';
 import { decodeFunctionResult, encodeFunctionData } from './encode';
 
+export const CONTRACT_QUERY_KEY = 'contract-query';
+
 export type { Query } from './type';
 export { ABIName } from './abi/abiName';
 

@@ -2,7 +2,7 @@ import { Box, Tooltip, useTheme } from '@dodoex/components';
 import { GasFee as FeeIcon, Time as TimeIcon, ArrowRight } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
 import { chainListMap } from '../../constants/chainList';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { BridgeRouteI } from '../../hooks/Bridge';
 import { formatTokenAmountNumber } from '../../utils/formatter';
 import { formatReadableTimeDuration } from '../../utils/time';

@@ -31,7 +31,8 @@ import { formatReadableNumber } from '../../utils/formatter';
 import { useWeb3React } from '@web3-react/core';
 import { getDefaultChainId } from '../../store/selectors/wallet';
 import { AppUrl } from '../../constants/api';
-import { ChainId, basicTokenMap } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
+import { basicTokenMap } from '../../constants/chains';
 import { PRICE_IMPACT_THRESHOLD } from '../../constants/swap';
 import TokenLogo from '../TokenLogo';
 import {

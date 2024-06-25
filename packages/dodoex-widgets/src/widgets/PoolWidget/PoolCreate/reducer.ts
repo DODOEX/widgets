@@ -7,7 +7,6 @@ import {
   DEFAULT_SLIPPAGE_COEFFICIENT,
   DEFAULT_SLIPPAGE_COEFFICIENT_PEGGED,
 } from './utils';
-import { getFeeRateList } from './hooks/useFeeRateList';
 import { getDefaultSlippageCoefficientList } from './hooks/useSlippageCoefficientList';
 import { TokenInfo } from '../../../hooks/Token';
 import { PMMModel } from '@dodoex/api';
@@ -472,9 +471,11 @@ export function reducer(state: StateProps, action: Actions): StateProps {
       };
     }
     case Types.InitEditParameters: {
+      // @ts-ignore
       return initEditParameters(state, action.payload);
     }
     default:
+      // @ts-ignore
       throw Error('Unknown action: ' + action.type);
   }
 }

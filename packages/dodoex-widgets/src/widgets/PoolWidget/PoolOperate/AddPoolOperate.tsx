@@ -82,8 +82,8 @@ export function AddPoolOperate({
     !pool ||
     isOverBalance ||
     !midPrice ||
-    !balanceInfo.loading ||
-    !balanceInfo.error ||
+    !!balanceInfo.loading ||
+    !!balanceInfo.error ||
     amountCheckedDisabled;
 
   const submitBtnText = isOverBalance ? t`Insufficient balance` : t`Add`;

@@ -1,7 +1,7 @@
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { isTestNet } from '../../../../constants/chainList';
-import { ChainId } from '../../../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { POOLS_LIST_FILTER_CHAIN } from '../../../../constants/sessionStorage';
 
 export function usePoolListFilterChainId() {

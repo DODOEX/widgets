@@ -1,19 +1,9 @@
 import { Box, BoxProps, useTheme } from '@dodoex/components';
 import { chainListMap } from '../constants/chainList';
-import { ChainId } from '../constants/chains';
+import { ChainId } from '@dodoex/api';
 import TokenLogo from './TokenLogo';
 
-export function TokenLogoPair({
-  tokens,
-  width = 24,
-  height = 24,
-  gap = -4,
-  cross,
-  mr,
-  chainId,
-  showChainLogo,
-  sx,
-}: {
+export interface TokenLogoPairProps {
   tokens: Array<
     | {
         address?: string;
@@ -29,7 +19,18 @@ export function TokenLogoPair({
   chainId?: number;
   showChainLogo?: boolean;
   sx?: BoxProps['sx'];
-}) {
+}
+export function TokenLogoPair({
+  tokens,
+  width = 24,
+  height = 24,
+  gap = -4,
+  cross,
+  mr,
+  chainId,
+  showChainLogo,
+  sx,
+}: TokenLogoPairProps) {
   const theme = useTheme();
 
   if (!tokens || tokens.length <= 0) {
@@ -41,7 +42,7 @@ export function TokenLogoPair({
   return (
     <Box
       sx={{
-        display: 'flex',
+        display: 'inline-flex',
         alignItems: 'center',
         mr,
         position: 'relative',

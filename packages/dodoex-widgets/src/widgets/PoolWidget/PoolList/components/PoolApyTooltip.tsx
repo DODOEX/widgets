@@ -1,6 +1,8 @@
-import { Box, BoxProps, QuestionTooltip } from '@dodoex/components';
+import { Box, BoxProps, Tooltip, HoverOpacity } from '@dodoex/components';
+import { QuestionBorder } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
+import React from 'react';
 import TokenLogo from '../../../../components/TokenLogo';
 import { TokenLogoPair } from '../../../../components/TokenLogoPair';
 import { TokenInfo } from '../../../../hooks/Token';
@@ -14,6 +16,7 @@ export default function PoolApyTooltip({
   hasQuote,
   hasMining,
   sx,
+  children,
 }: {
   chainId: number;
   baseToken: TokenInfo | undefined;
@@ -30,6 +33,7 @@ export default function PoolApyTooltip({
   hasQuote: boolean;
   hasMining: boolean;
   sx?: BoxProps['sx'];
+  children?: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
 }) {
   if (!baseToken) return null;
   const hoverData: Array<{
@@ -56,8 +60,19 @@ export default function PoolApyTooltip({
         },
       ];
   return (
-    <QuestionTooltip
-      sx={sx}
+    <Tooltip
+      children={
+        children ?? (
+          <HoverOpacity
+            component={QuestionBorder}
+            sx={{
+              width: 15,
+              height: 15,
+              ...sx,
+            }}
+          />
+        )
+      }
       title={
         <Box
           sx={{

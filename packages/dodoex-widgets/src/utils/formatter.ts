@@ -296,3 +296,15 @@ export const formatApy = (amount: BigNumber, showDecimals = 2): string => {
     showDecimals,
   });
 };
+
+export function formatUnknownTokenSymbol(
+  token?: {
+    symbol: string;
+    name: string;
+  } | null,
+) {
+  if (!token) {
+    return '';
+  }
+  return token.symbol === 'unknown' ? token.name : token.symbol;
+}

@@ -13,6 +13,15 @@ export const encodeFunctionData = async (
   return face.encodeFunctionData(functionFragment, values);
 };
 
+export const encodeFunctionDataByFragments = (
+  fragments: ConstructorParameters<typeof Interface>[0],
+  functionFragment: string,
+  values: ReadonlyArray<any>,
+): string => {
+  const face = new Interface(fragments);
+  return face.encodeFunctionData(functionFragment, values);
+};
+
 export const decodeFunctionResult = async (
   abiName: ABIName,
   functionFragment: string,

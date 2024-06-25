@@ -1,4 +1,4 @@
-import { ChainId } from '../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { PoolTab } from '../widgets/PoolWidget/PoolList/hooks/usePoolListTabs';
 
 export enum PageType {
@@ -6,6 +6,7 @@ export enum PageType {
   PoolDetail = 'poolDetail',
   CreatePool = 'createPool',
   ModifyPool = 'modifyPool',
+  MiningDetail = 'miningDetail',
 }
 
 interface PageTypeParams {
@@ -28,6 +29,10 @@ interface PageTypeParams {
         toAddress?: string;
       }
     | undefined;
+  [PageType.MiningDetail]: {
+    address: string;
+    chainId: ChainId;
+  };
 }
 
 export interface Page<T extends PageType = PageType> {

@@ -2886,6 +2886,7 @@ export type Cross_Chain_SwapStep = {
   activityData?: Maybe<Scalars['JSON']['output']>;
   approvalAddress?: Maybe<Scalars['String']['output']>;
   includedSteps?: Maybe<Array<Maybe<Cross_Chain_SwapIncludedStep>>>;
+  isNeedApproval?: Maybe<Scalars['Boolean']['output']>;
   tool?: Maybe<Scalars['String']['output']>;
   toolDetails?: Maybe<Cross_Chain_SwapToolDetail>;
   type?: Maybe<Scalars['String']['output']>;
@@ -4762,6 +4763,7 @@ export type DashboardPairGroup = {
   baseAddress?: Maybe<Scalars['String']['output']>;
   /** base token fee(base token num) */
   baseFee?: Maybe<Scalars['String']['output']>;
+  baseMtFee?: Maybe<Scalars['String']['output']>;
   /** base token price now */
   basePrice?: Maybe<Scalars['String']['output']>;
   /** base token Reserve */
@@ -4809,6 +4811,7 @@ export type DashboardPairGroup = {
   quoteAddress?: Maybe<Scalars['String']['output']>;
   /** quoteFee token fee(quoteFee token num) */
   quoteFee?: Maybe<Scalars['String']['output']>;
+  quoteMtFee?: Maybe<Scalars['String']['output']>;
   /** quote token price now */
   quotePrice?: Maybe<Scalars['String']['output']>;
   /** quote token Reserve */
@@ -5779,6 +5782,11 @@ export type Dodo_Two_Anniversary_H5_Qa_ActivitysaveData = {
   address?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type DodochainEarnedToken = {
+  amount: Scalars['BigDecimal']['output'];
+  token: DodochainToken;
+};
+
 /** 邀请状态 */
 export type DodochainInviteStatus =
   /** 已被邀请 */
@@ -5808,6 +5816,18 @@ export type DodochainInviteesPaginationResult = {
   size: Scalars['Int']['output'];
 };
 
+export type DodochainMinePool = {
+  id: Scalars['String']['output'];
+  minePoolType: Scalars['String']['output'];
+};
+
+export type DodochainOrder = {
+  /**  tvl, totalTwigs, totalTokenBonus */
+  orderBy?: InputMaybe<Scalars['String']['input']>;
+  /** desc asc' */
+  orderDirection?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type DodochainOverview = {
   tvl: Scalars['BigDecimal']['output'];
   tvlDetails: Array<Maybe<DodochainTvlDetail>>;
@@ -5816,6 +5836,26 @@ export type DodochainOverview = {
 export type DodochainPaginationInput = {
   page?: InputMaybe<Scalars['Int']['input']>;
   size?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type DodochainStakeDashboardDataAsset = {
+  amount: Scalars['BigDecimal']['output'];
+  chainId?: Maybe<Scalars['Int']['output']>;
+  info?: Maybe<Scalars['String']['output']>;
+  token?: Maybe<DodochainToken>;
+  tvl: Scalars['BigDecimal']['output'];
+  /** Eigenlayer AVS 区分是Restaked Assets还是Liquid Staking Tokens(lst) */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+export type DodochainStakeDashboardDataResult = {
+  assets: Array<Maybe<DodochainStakeDashboardDataAsset>>;
+  /** Eigenlayer AVS Liquid Staking Tokens 所有token数量 */
+  liquidStakingTokensTotalAmount?: Maybe<Scalars['BigDecimal']['output']>;
+  name: Scalars['String']['output'];
+  totalTvl: Scalars['BigDecimal']['output'];
+  /** 数据更新时间 */
+  updatedAt: Scalars['BigInt']['output'];
 };
 
 export type DodochainToken = {
@@ -5830,6 +5870,37 @@ export type DodochainTvlDetail = {
   chainId: Scalars['Int']['output'];
   token: DodochainToken;
   tvl: Scalars['BigDecimal']['output'];
+};
+
+export type DodochainTwigsMineOverview = {
+  /** BTC 质押资产TVL */
+  btcTvl: Scalars['BigDecimal']['output'];
+  totalTokenBonus: Array<Maybe<DodochainEarnedToken>>;
+  /** 总共分配的Twigs */
+  totalTwigs: Scalars['BigDecimal']['output'];
+};
+
+export type DodochainTwigsMinePaginationResult = {
+  count: Scalars['Int']['output'];
+  list: Array<Maybe<DodochainTwigsMineResult>>;
+  orderBy?: Maybe<Scalars['String']['output']>;
+  orderDirection?: Maybe<Scalars['String']['output']>;
+  page: Scalars['Int']['output'];
+  size: Scalars['Int']['output'];
+};
+
+export type DodochainTwigsMineResult = {
+  baseToken: DodochainToken;
+  chainId: Scalars['Int']['output'];
+  isEnd: Scalars['Boolean']['output'];
+  isStarted: Scalars['Boolean']['output'];
+  lpToken: DodochainToken;
+  minePool: DodochainMinePool;
+  quoteToken: DodochainToken;
+  totalTokenBonus: Array<Maybe<DodochainEarnedToken>>;
+  totalTwigs: Scalars['BigDecimal']['output'];
+  tvl: Scalars['BigDecimal']['output'];
+  updatedAt: Scalars['BigInt']['output'];
 };
 
 export type DodochainUserAcceptInvitationInput = {
@@ -5894,6 +5965,7 @@ export type DodochainUserStakedHistoryResult = {
   hash: Scalars['String']['output'];
   timestamp: Scalars['String']['output'];
   token: DodochainToken;
+  updatedAt: Scalars['BigInt']['output'];
   user: Scalars['String']['output'];
 };
 
@@ -5913,11 +5985,54 @@ export type DodochainUserStakedResult = {
   user: Scalars['String']['output'];
 };
 
+export type DodochainUserTwigsMinePaginationResult = {
+  count: Scalars['Int']['output'];
+  earnedTotalTokenList: Array<Maybe<DodochainEarnedToken>>;
+  earnedTotalTwigs: Scalars['BigDecimal']['output'];
+  joined: Scalars['Int']['output'];
+  list: Array<Maybe<DodochainUserTwigsMineResult>>;
+  page: Scalars['Int']['output'];
+  size: Scalars['Int']['output'];
+  stakedTotalUsd: Scalars['BigDecimal']['output'];
+};
+
+export type DodochainUserTwigsMineResult = {
+  baseToken: DodochainToken;
+  baseTokenBalance: Scalars['BigDecimal']['output'];
+  chainId: Scalars['Int']['output'];
+  earnedTokenList: Array<Maybe<DodochainEarnedToken>>;
+  earnedTwigs: Scalars['BigDecimal']['output'];
+  isEnd: Scalars['Boolean']['output'];
+  isStarted: Scalars['Boolean']['output'];
+  lpToken: DodochainToken;
+  minePool: DodochainMinePool;
+  quoteToken: DodochainToken;
+  quoteTokenBalance: Scalars['BigDecimal']['output'];
+  stakedUsd: Scalars['BigDecimal']['output'];
+  totalTwigs: Scalars['BigDecimal']['output'];
+  tvl: Scalars['BigDecimal']['output'];
+  updatedAt: Scalars['BigInt']['output'];
+};
+
+export type DodochaintwigsMineInput = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<DodochainOrder>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type DodochainuserStakedInput = {
   chainId?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   size?: InputMaybe<Scalars['Int']['input']>;
   user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DodochainuserTwigsMineInput = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
+  user: Scalars['String']['input'];
 };
 
 export type DonateHistory = {
@@ -7734,75 +7849,12 @@ export type Limit_And_RfqPaginateLimitOrderListV2 = {
   totalPage?: Maybe<Scalars['Int']['output']>;
 };
 
-export type Limit_And_RfqPaginateRfqOrderList = {
-  currentPage?: Maybe<Scalars['Int']['output']>;
-  limit?: Maybe<Scalars['Int']['output']>;
-  list?: Maybe<Array<Maybe<Limit_And_RfqRfqOrderInfo>>>;
-  total?: Maybe<Scalars['Int']['output']>;
-  totalPage?: Maybe<Scalars['Int']['output']>;
-};
-
 export type Limit_And_RfqPrivateOrderInfo = {
   createdAt?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   network?: Maybe<Scalars['String']['output']>;
   progress?: Maybe<Scalars['String']['output']>;
   txid?: Maybe<Scalars['String']['output']>;
-};
-
-export type Limit_And_RfqRfqInquiryDirectResult = {
-  /** offer expire timestamp */
-  expiration?: Maybe<Scalars['Int']['output']>;
-  /** rfq offer id */
-  id?: Maybe<Scalars['String']['output']>;
-  maker?: Maybe<Scalars['String']['output']>;
-  makerAmount?: Maybe<Scalars['String']['output']>;
-  makerTokenFeeAmount?: Maybe<Scalars['String']['output']>;
-  /** maker unique id */
-  slot?: Maybe<Scalars['String']['output']>;
-  takerFillAmount?: Maybe<Scalars['String']['output']>;
-};
-
-export type Limit_And_RfqRfqInquiryResult = {
-  /** offer expire timestamp */
-  expiration?: Maybe<Scalars['Int']['output']>;
-  /** rfq offer id */
-  id?: Maybe<Scalars['Int']['output']>;
-  maker?: Maybe<Scalars['String']['output']>;
-  makerAmount?: Maybe<Scalars['String']['output']>;
-  makerTokenFeeAmount?: Maybe<Scalars['String']['output']>;
-  /** maker unique id */
-  slot?: Maybe<Scalars['String']['output']>;
-  takerFillAmount?: Maybe<Scalars['String']['output']>;
-};
-
-export type Limit_And_RfqRfqOrderInfo = {
-  createdAt?: Maybe<Scalars['String']['output']>;
-  expiration?: Maybe<Scalars['String']['output']>;
-  failureReason?: Maybe<Scalars['String']['output']>;
-  hash?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['String']['output']>;
-  inquiryExpiration?: Maybe<Scalars['String']['output']>;
-  lastPackTime?: Maybe<Scalars['String']['output']>;
-  maker?: Maybe<Scalars['String']['output']>;
-  makerAmount?: Maybe<Scalars['String']['output']>;
-  makerSignature?: Maybe<Scalars['String']['output']>;
-  makerToken?: Maybe<Scalars['String']['output']>;
-  makerTokenDecimal?: Maybe<Scalars['Int']['output']>;
-  makerTokenFeeAmount?: Maybe<Scalars['String']['output']>;
-  makerTokenSymbol?: Maybe<Scalars['String']['output']>;
-  network?: Maybe<Scalars['String']['output']>;
-  progress?: Maybe<Scalars['String']['output']>;
-  reBuildTimes?: Maybe<Scalars['Int']['output']>;
-  slot?: Maybe<Scalars['String']['output']>;
-  taker?: Maybe<Scalars['String']['output']>;
-  takerAmount?: Maybe<Scalars['String']['output']>;
-  takerFillAmount?: Maybe<Scalars['String']['output']>;
-  takerSignature?: Maybe<Scalars['String']['output']>;
-  takerToken?: Maybe<Scalars['String']['output']>;
-  takerTokenDecimal?: Maybe<Scalars['Int']['output']>;
-  takerTokenSymbol?: Maybe<Scalars['String']['output']>;
-  updatedAt?: Maybe<Scalars['String']['output']>;
 };
 
 export type Limit_And_RfqcreateLimitOrderInfo = {
@@ -7821,6 +7873,7 @@ export type Limit_And_RfqcreatePrivateOrderInfo = {
   network?: InputMaybe<Scalars['String']['input']>;
   timeout?: InputMaybe<Scalars['Int']['input']>;
   transaction?: InputMaybe<Scalars['String']['input']>;
+  useSource?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Limit_And_RfqgetPendingLimitOrderParam = {
@@ -7841,39 +7894,6 @@ export type Limit_And_RfqlimitOrderAmountLimitParam = {
 };
 
 export type Limit_And_RfqlimitOrderQueryEnum = 'ALL' | 'FRESH' | 'NOT_FRESH';
-
-export type Limit_And_RfqrfqTradeAmountLimitInfo = {
-  max?: Maybe<Scalars['Float']['output']>;
-  min?: Maybe<Scalars['Float']['output']>;
-};
-
-export type Limit_And_RfqtakerConfirmRfqOffer = {
-  /** rfq offer id */
-  orderId?: InputMaybe<Scalars['String']['input']>;
-  /** taker signature */
-  signature?: InputMaybe<Scalars['String']['input']>;
-  taker?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type Limit_And_RfqtakerGetOrderList = {
-  address?: InputMaybe<Scalars['String']['input']>;
-  network?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type Limit_And_RfqtakerGetOrderListWithPage = {
-  address?: InputMaybe<Scalars['String']['input']>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  network?: InputMaybe<Scalars['String']['input']>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type Limit_And_RfqtakerQueryRfqOffer = {
-  makerToken?: InputMaybe<Scalars['String']['input']>;
-  /** chain name */
-  network?: InputMaybe<Scalars['String']['input']>;
-  takerAmount?: InputMaybe<Scalars['String']['input']>;
-  takerToken?: InputMaybe<Scalars['String']['input']>;
-};
 
 export type Limit_And_RfquserCancelLimitOrder = {
   address?: InputMaybe<Scalars['String']['input']>;
@@ -7920,11 +7940,6 @@ export type Limit_And_RfquserQueryLimitOrderListWithPage = {
   network?: InputMaybe<Scalars['String']['input']>;
   orderType?: InputMaybe<Limit_And_RfqlimitOrderQueryEnum>;
   page?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type Limit_And_RfquserRqFeeLimitQuery = {
-  network?: InputMaybe<Scalars['String']['input']>;
-  token?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Liquidator = {
@@ -13732,6 +13747,14 @@ export type Query = {
   dodochain_getInviteesList: DodochainInviteesPaginationResult;
   /** 汇总数据概览 */
   dodochain_getOverviewJourneyOne: DodochainOverview;
+  /** 获取twigs挖矿数据概览 */
+  dodochain_getOverviewTwigsMine: DodochainTwigsMineOverview;
+  /** 获取stake dashboard数据 */
+  dodochain_getStakeDashboardDatas: Array<
+    Maybe<DodochainStakeDashboardDataResult>
+  >;
+  /** 获取twigs挖矿列表 */
+  dodochain_getTwigsMineList: DodochainTwigsMinePaginationResult;
   /** 获取积分详情 阶段一 */
   dodochain_getUserPointsDetailJourneyOne: DodochainUserPointsDetailPaginationResult;
   /** 获取用户积分 阶段一 按日更新 */
@@ -13740,6 +13763,8 @@ export type Query = {
   dodochain_getUserStakedHistoryListJourneyOne: DodochainUserStakedHistoryPaginationResult;
   /** 质押挖矿列表 */
   dodochain_getUserStakedListJourneyOne: DodochainUserStakedPaginationResult;
+  /** 获取用户参与的twigs挖矿列表 */
+  dodochain_getUserTwigsMineList: DodochainUserTwigsMinePaginationResult;
   donateHistories: Array<DonateHistory>;
   donateHistory?: Maybe<DonateHistory>;
   /** 活动相关信息 */
@@ -13785,24 +13810,11 @@ export type Query = {
   limit_and_rfq_limitOrderCancel?: Maybe<Limit_And_RfqCancelLimitOrderResponse>;
   limit_and_rfq_limitOrderCreate?: Maybe<Limit_And_RfqLimitOrder>;
   limit_and_rfq_limitOrderCreateV2?: Maybe<Limit_And_RfqLimitOrderV2>;
+  /** data url:post(https://host:port/api/v1/order/graphql/rfqTakerInquiry).data */
   limit_and_rfq_limitOrderFee?: Maybe<Limit_And_RfqLimitOrderFeeInfo>;
   limit_and_rfq_limitOrderList?: Maybe<Array<Maybe<Limit_And_RfqLimitOrder>>>;
   limit_and_rfq_limitOrderListWithPage?: Maybe<Limit_And_RfqPaginateLimitOrderList>;
   limit_and_rfq_limitOrderListWithPageV2?: Maybe<Limit_And_RfqPaginateLimitOrderListV2>;
-  limit_and_rfq_rfqFeeLimit?: Maybe<Scalars['Float']['output']>;
-  limit_and_rfq_rfqSupportTokenList?: Maybe<
-    Array<Maybe<Scalars['String']['output']>>
-  >;
-  limit_and_rfq_rfqTakerConfirm?: Maybe<Limit_And_RfqRfqOrderInfo>;
-  limit_and_rfq_rfqTakerConfirmDirect?: Maybe<Limit_And_RfqRfqOrderInfo>;
-  /** data url:post(https://host:port/api/v1/order/graphql/rfqTakerInquiry).data */
-  limit_and_rfq_rfqTakerInquiry?: Maybe<Limit_And_RfqRfqInquiryResult>;
-  limit_and_rfq_rfqTakerInquiryDirect?: Maybe<Limit_And_RfqRfqInquiryDirectResult>;
-  limit_and_rfq_rfqTakerOrderList?: Maybe<
-    Array<Maybe<Limit_And_RfqRfqOrderInfo>>
-  >;
-  limit_and_rfq_rfqTakerOrderListWithPage?: Maybe<Limit_And_RfqPaginateRfqOrderList>;
-  limit_and_rfq_rfqTradeAmountLimit?: Maybe<Limit_And_RfqrfqTradeAmountLimitInfo>;
   liquidator?: Maybe<Liquidator>;
   liquidators: Array<Liquidator>;
   liquidityHistories: Array<LiquidityHistory>;
@@ -13924,6 +13936,9 @@ export type Query = {
   >;
   rewardDetail?: Maybe<RewardDetail>;
   rewardDetails: Array<RewardDetail>;
+  rfq_order_confirm?: Maybe<Rfq_OrderRfqConfimrOrderResult>;
+  rfq_order_inquiry?: Maybe<Rfq_OrderRfqInquiryResult>;
+  rfq_order_tokenPairs?: Maybe<Array<Maybe<Rfq_OrderRfqTokenPairsInfo>>>;
   router?: Maybe<Router>;
   routers: Array<Router>;
   setPoolInfo?: Maybe<SetPoolInfo>;
@@ -14768,6 +14783,10 @@ export type QueryDodochain_GetInviteesListArgs = {
   where: DodochainUserPaginationInput;
 };
 
+export type QueryDodochain_GetTwigsMineListArgs = {
+  where?: InputMaybe<DodochaintwigsMineInput>;
+};
+
 export type QueryDodochain_GetUserPointsDetailJourneyOneArgs = {
   where: DodochainUserInput;
 };
@@ -14782,6 +14801,10 @@ export type QueryDodochain_GetUserStakedHistoryListJourneyOneArgs = {
 
 export type QueryDodochain_GetUserStakedListJourneyOneArgs = {
   where?: InputMaybe<DodochainuserStakedInput>;
+};
+
+export type QueryDodochain_GetUserTwigsMineListArgs = {
+  where?: InputMaybe<DodochainuserTwigsMineInput>;
 };
 
 export type QueryDonateHistoriesArgs = {
@@ -15010,38 +15033,6 @@ export type QueryLimit_And_Rfq_LimitOrderListWithPageArgs = {
 
 export type QueryLimit_And_Rfq_LimitOrderListWithPageV2Args = {
   where?: InputMaybe<Limit_And_RfquserQueryLimitOrderListWithPage>;
-};
-
-export type QueryLimit_And_Rfq_RfqFeeLimitArgs = {
-  where?: InputMaybe<Limit_And_RfquserRqFeeLimitQuery>;
-};
-
-export type QueryLimit_And_Rfq_RfqTakerConfirmArgs = {
-  where?: InputMaybe<Limit_And_RfqtakerConfirmRfqOffer>;
-};
-
-export type QueryLimit_And_Rfq_RfqTakerConfirmDirectArgs = {
-  where?: InputMaybe<Limit_And_RfqtakerConfirmRfqOffer>;
-};
-
-export type QueryLimit_And_Rfq_RfqTakerInquiryArgs = {
-  where?: InputMaybe<Limit_And_RfqtakerQueryRfqOffer>;
-};
-
-export type QueryLimit_And_Rfq_RfqTakerInquiryDirectArgs = {
-  where?: InputMaybe<Limit_And_RfqtakerQueryRfqOffer>;
-};
-
-export type QueryLimit_And_Rfq_RfqTakerOrderListArgs = {
-  where?: InputMaybe<Limit_And_RfqtakerGetOrderList>;
-};
-
-export type QueryLimit_And_Rfq_RfqTakerOrderListWithPageArgs = {
-  where?: InputMaybe<Limit_And_RfqtakerGetOrderListWithPage>;
-};
-
-export type QueryLimit_And_Rfq_RfqTradeAmountLimitArgs = {
-  where?: InputMaybe<Limit_And_RfquserRqFeeLimitQuery>;
 };
 
 export type QueryLiquidatorArgs = {
@@ -15640,6 +15631,18 @@ export type QueryRewardDetailsArgs = {
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RewardDetail_Filter>;
+};
+
+export type QueryRfq_Order_ConfirmArgs = {
+  where?: InputMaybe<Rfq_OrderRfqConfimrOrder>;
+};
+
+export type QueryRfq_Order_InquiryArgs = {
+  where?: InputMaybe<Rfq_OrderRfqInquiry>;
+};
+
+export type QueryRfq_Order_TokenPairsArgs = {
+  where?: InputMaybe<Rfq_OrderRfqTokenPairs>;
 };
 
 export type QueryRouterArgs = {
@@ -16609,6 +16612,83 @@ export type RewardDetail_OrderBy =
   | 'startBlock'
   | 'token'
   | 'updatedAt';
+
+export type Rfq_OrderRfqConfimrOrder = {
+  inquiryId?: InputMaybe<Scalars['String']['input']>;
+  taker?: InputMaybe<Scalars['String']['input']>;
+  takerSignature?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Rfq_OrderRfqConfimrOrderResult = {
+  callContract?: Maybe<Scalars['String']['output']>;
+  calldata?: Maybe<Scalars['String']['output']>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  data?: Maybe<Scalars['String']['output']>;
+  expiration?: Maybe<Scalars['String']['output']>;
+  hash?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  inquiryId?: Maybe<Scalars['String']['output']>;
+  maker?: Maybe<Scalars['String']['output']>;
+  makerAmount?: Maybe<Scalars['String']['output']>;
+  makerToken?: Maybe<Scalars['String']['output']>;
+  marketer?: Maybe<Scalars['String']['output']>;
+  safeTxHash?: Maybe<Scalars['String']['output']>;
+  slot?: Maybe<Scalars['String']['output']>;
+  taker?: Maybe<Scalars['String']['output']>;
+  takerAmount?: Maybe<Scalars['String']['output']>;
+  takerSignature?: Maybe<Scalars['String']['output']>;
+  takerToken?: Maybe<Scalars['String']['output']>;
+  to?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type Rfq_OrderRfqInquiry = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  makerToken?: InputMaybe<Scalars['String']['input']>;
+  taker?: InputMaybe<Scalars['String']['input']>;
+  takerAmount?: InputMaybe<Scalars['String']['input']>;
+  takerToken?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Rfq_OrderRfqInquiryResult = {
+  expiration?: Maybe<Scalars['Int']['output']>;
+  inquiryId?: Maybe<Scalars['String']['output']>;
+  maker?: Maybe<Scalars['String']['output']>;
+  makerAmount?: Maybe<Scalars['String']['output']>;
+  marketer?: Maybe<Scalars['String']['output']>;
+  offers?: Maybe<Array<Maybe<Rfq_OrderRfqOffer>>>;
+  slot?: Maybe<Scalars['String']['output']>;
+};
+
+export type Rfq_OrderRfqOffer = {
+  data?: Maybe<Scalars['String']['output']>;
+  expiration?: Maybe<Scalars['Int']['output']>;
+  maker?: Maybe<Scalars['String']['output']>;
+  makerAmount?: Maybe<Scalars['String']['output']>;
+  marketer?: Maybe<Scalars['String']['output']>;
+  to?: Maybe<Scalars['String']['output']>;
+};
+
+export type Rfq_OrderRfqTokenPairs = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Rfq_OrderRfqTokenPairsInfo = {
+  chainId?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  fromToken?: Maybe<Scalars['String']['output']>;
+  fromTokenDecimal?: Maybe<Scalars['Int']['output']>;
+  fromTokenSymbol?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  maxAmount?: Maybe<Scalars['String']['output']>;
+  minAmount?: Maybe<Scalars['String']['output']>;
+  toToken?: Maybe<Scalars['String']['output']>;
+  toTokenDecimal?: Maybe<Scalars['Int']['output']>;
+  toTokenSymbol?: Maybe<Scalars['String']['output']>;
+  totalAmount?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
 
 export type Router = {
   /** addTimestamp */
@@ -23503,6 +23583,87 @@ export type VDodo_OrderBy =
   | 'totalStakingPower'
   | 'totalUsers';
 
+export type FetchMiningListQueryVariables = Exact<{
+  where?: InputMaybe<Miningmining_List_Filter>;
+}>;
+
+export type FetchMiningListQuery = {
+  mining_list?: {
+    totalCount?: number | null;
+    chains?: Array<string | null> | null;
+    list?: Array<{
+      chainId: number;
+      type?: string | null;
+      version?: string | null;
+      address?: string | null;
+      baseApy?: string | null;
+      endBlock?: string | null;
+      miningContractAddress?: string | null;
+      miningTotalDollar?: string | null;
+      baseLpTokenMining?: string | null;
+      quoteLpTokenMining?: string | null;
+      quoteApy?: string | null;
+      startBlock?: string | null;
+      title?: string | null;
+      platform?: string | null;
+      startTime?: string | null;
+      endTime?: string | null;
+      baseLpToken?: {
+        decimals?: number | null;
+        symbol?: string | null;
+        address?: string | null;
+      } | null;
+      baseToken?: {
+        decimals?: number | null;
+        price?: string | null;
+        symbol?: string | null;
+        logoImg?: string | null;
+        address?: string | null;
+      } | null;
+      quoteLpToken?: {
+        decimals?: number | null;
+        symbol?: string | null;
+        address?: string | null;
+      } | null;
+      quoteToken?: {
+        decimals?: number | null;
+        price?: string | null;
+        symbol?: string | null;
+        logoImg?: string | null;
+        address?: string | null;
+      } | null;
+      rewardTokenInfos?: Array<{
+        apy?: string | null;
+        decimals?: number | null;
+        price?: string | null;
+        logoImg?: string | null;
+        rewardNumIndex?: number | null;
+        rewardPerBlock?: string | null;
+        startBlock?: string | null;
+        endBlock?: string | null;
+        startTime?: string | null;
+        endTime?: string | null;
+        symbol?: string | null;
+        address?: string | null;
+      } | null> | null;
+      rewardQuoteTokenInfos?: Array<{
+        apy?: string | null;
+        decimals?: number | null;
+        price?: string | null;
+        logoImg?: string | null;
+        rewardNumIndex?: number | null;
+        rewardPerBlock?: string | null;
+        startBlock?: string | null;
+        endBlock?: string | null;
+        startTime?: string | null;
+        endTime?: string | null;
+        symbol?: string | null;
+        address?: string | null;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+};
+
 export type FetchPoolListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<Pair_Filter>;
@@ -23701,6 +23862,107 @@ export type FetchPoolQuery = {
   } | null;
 };
 
+export type FetchPoolDayDataQueryVariables = Exact<{
+  where?: InputMaybe<Dashboardday_Filter>;
+}>;
+
+export type FetchPoolDayDataQuery = {
+  dashboard_pairs_day_data?: Array<{
+    timestamp?: number | null;
+    date?: string | null;
+    volume?: string | null;
+    fee?: string | null;
+    tvl?: string | null;
+    addresses?: string | null;
+    txes?: string | null;
+  } | null> | null;
+};
+
+export type FetchPoolDashboardQueryVariables = Exact<{
+  where?: InputMaybe<Dashboardpair_Detail_Filter>;
+}>;
+
+export type FetchPoolDashboardQuery = {
+  dashboard_pairs_detail?: {
+    fee?: string | null;
+    volume?: string | null;
+    totalFee?: string | null;
+    totalVolume?: string | null;
+    tvl?: string | null;
+    turnover?: string | null;
+    liquidity?: string | null;
+    baseReserve?: string | null;
+    quoteReserve?: string | null;
+    baseVolume?: string | null;
+    quoteVolume?: string | null;
+    basePrice?: string | null;
+    quotePrice?: string | null;
+    price?: string | null;
+    baseFee?: string | null;
+    quoteFee?: string | null;
+    pair?: string | null;
+    poolType?: string | null;
+    baseVolumeCumulative?: string | null;
+    quoteVolumeCumulative?: string | null;
+    baseAddress?: string | null;
+    baseSymbol?: string | null;
+    quoteAddress?: string | null;
+    quoteSymbol?: string | null;
+    network?: string | null;
+    pairAddress?: string | null;
+    txes?: number | null;
+    txesNear24h?: number | null;
+    txUsers?: number | null;
+    txUserNear24h?: number | null;
+  } | null;
+};
+
+export type FetchPoolSwapListQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<Swap_Filter>;
+  orderBy?: InputMaybe<Swap_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+}>;
+
+export type FetchPoolSwapListQuery = {
+  swaps: Array<{
+    id: string;
+    timestamp: any;
+    from: any;
+    baseVolume: any;
+    quoteVolume: any;
+    feeBase: any;
+    feeQuote: any;
+    amountIn: any;
+    amountOut: any;
+    fromToken: { id: string; symbol: string; name: string; decimals: any };
+    toToken: { id: string; symbol: string; name: string; decimals: any };
+  }>;
+};
+
+export type FetchLiquidityPositionsQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<LiquidityPosition_Filter>;
+  miningWhere?: InputMaybe<LiquidityPosition_Filter>;
+  orderBy?: InputMaybe<LiquidityPosition_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+}>;
+
+export type FetchLiquidityPositionsQuery = {
+  balance: Array<{ id: string; liquidityTokenBalance: any }>;
+  mining: Array<{ id: string; liquidityTokenInMining: any }>;
+  pair?: {
+    lastTradePrice: any;
+    baseLpToken?: { id: string; decimals: any } | null;
+    quoteLpToken?: { id: string; decimals: any } | null;
+    baseToken: { id: string; symbol: string; name: string; decimals: any };
+    quoteToken: { id: string; symbol: string; name: string; decimals: any };
+  } | null;
+};
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -23716,6 +23978,87 @@ export class TypedDocumentString<TResult, TVariables>
   }
 }
 
+export const FetchMiningListDocument = new TypedDocumentString(`
+    query FetchMiningList($where: Miningmining_list_filter) {
+  mining_list(where: $where) {
+    list {
+      chainId
+      type
+      version
+      address
+      baseApy
+      baseLpToken {
+        decimals
+        address: id
+        symbol
+      }
+      baseToken {
+        decimals
+        address: id
+        price
+        symbol
+        logoImg
+      }
+      endBlock
+      miningContractAddress
+      miningTotalDollar
+      baseLpTokenMining
+      quoteLpTokenMining
+      quoteApy
+      quoteLpToken {
+        decimals
+        address: id
+        symbol
+      }
+      quoteToken {
+        decimals
+        address: id
+        price
+        symbol
+        logoImg
+      }
+      rewardTokenInfos {
+        apy
+        decimals
+        address: id
+        price
+        logoImg
+        rewardNumIndex
+        rewardPerBlock
+        startBlock
+        endBlock
+        startTime
+        endTime
+        symbol
+      }
+      rewardQuoteTokenInfos {
+        apy
+        decimals
+        address: id
+        price
+        logoImg
+        rewardNumIndex
+        rewardPerBlock
+        startBlock
+        endBlock
+        startTime
+        endTime
+        symbol
+      }
+      startBlock
+      title
+      platform
+      startTime
+      endTime
+    }
+    totalCount
+    chains
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchMiningListQuery,
+  FetchMiningListQueryVariables
+>;
 export const FetchPoolListDocument = new TypedDocumentString(`
     query FetchPoolList($first: Int, $where: Pair_filter, $orderBy: Pair_orderBy) {
   pairs(first: $first, where: $where, orderBy: $orderBy, orderDirection: desc) {
@@ -23944,4 +24287,145 @@ export const FetchPoolDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   FetchPoolQuery,
   FetchPoolQueryVariables
+>;
+export const FetchPoolDayDataDocument = new TypedDocumentString(`
+    query FetchPoolDayData($where: Dashboardday_filter) {
+  dashboard_pairs_day_data(where: $where) {
+    timestamp
+    date
+    volume
+    fee
+    tvl
+    addresses
+    txes
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchPoolDayDataQuery,
+  FetchPoolDayDataQueryVariables
+>;
+export const FetchPoolDashboardDocument = new TypedDocumentString(`
+    query FetchPoolDashboard($where: Dashboardpair_detail_filter) {
+  dashboard_pairs_detail(where: $where) {
+    fee
+    volume
+    totalFee
+    totalVolume
+    tvl
+    turnover
+    liquidity
+    baseReserve
+    quoteReserve
+    baseVolume
+    quoteVolume
+    basePrice
+    quotePrice
+    price
+    baseFee
+    quoteFee
+    pair
+    poolType
+    baseVolumeCumulative
+    quoteVolumeCumulative
+    baseAddress
+    baseSymbol
+    quoteAddress
+    quoteSymbol
+    network
+    pairAddress
+    txes
+    txesNear24h
+    txUsers
+    txUserNear24h
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchPoolDashboardQuery,
+  FetchPoolDashboardQueryVariables
+>;
+export const FetchPoolSwapListDocument = new TypedDocumentString(`
+    query FetchPoolSwapList($first: Int, $skip: Int, $where: Swap_filter, $orderBy: Swap_orderBy, $orderDirection: OrderDirection) {
+  swaps(
+    first: $first
+    skip: $skip
+    where: $where
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+  ) {
+    id
+    timestamp
+    from
+    baseVolume
+    quoteVolume
+    feeBase
+    feeQuote
+    fromToken {
+      id
+      symbol
+      name
+      decimals
+    }
+    toToken {
+      id
+      symbol
+      name
+      decimals
+    }
+    amountIn
+    amountOut
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchPoolSwapListQuery,
+  FetchPoolSwapListQueryVariables
+>;
+export const FetchLiquidityPositionsDocument = new TypedDocumentString(`
+    query FetchLiquidityPositions($id: ID!, $first: Int, $skip: Int, $where: LiquidityPosition_filter, $miningWhere: LiquidityPosition_filter, $orderBy: LiquidityPosition_orderBy, $orderDirection: OrderDirection) {
+  balance: liquidityPositions(
+    first: $first
+    skip: $skip
+    where: $where
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+  ) {
+    id
+    liquidityTokenBalance
+  }
+  mining: liquidityPositions(
+    first: $first
+    skip: $skip
+    where: $miningWhere
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+  ) {
+    id
+    liquidityTokenInMining
+  }
+  pair(id: $id) {
+    lastTradePrice
+    baseLpToken {
+      id
+      decimals
+    }
+    quoteLpToken {
+      id
+      decimals
+    }
+    baseToken {
+      id
+      symbol
+      name
+      decimals
+    }
+    quoteToken {
+      id
+      symbol
+      name
+      decimals
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchLiquidityPositionsQuery,
+  FetchLiquidityPositionsQueryVariables
 >;

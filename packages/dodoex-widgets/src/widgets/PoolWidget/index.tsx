@@ -3,6 +3,7 @@ import { PageType } from '../../router/types';
 import PoolList from './PoolList';
 import PoolCreate from './PoolCreate';
 import PoolModify from './PoolModify';
+import PoolDetail from './PoolDetail';
 
 export function Pool() {
   const pageType = useRouterStore((state) => state.page?.type);
@@ -13,6 +14,8 @@ export function Pool() {
       return <PoolCreate />;
     case PageType.ModifyPool:
       return <PoolModify />;
+    case PageType.PoolDetail:
+      return <PoolDetail />;
     default:
       return <PoolList />;
   }

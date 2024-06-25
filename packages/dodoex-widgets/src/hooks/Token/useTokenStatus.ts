@@ -1,7 +1,12 @@
-import { basicTokenMap, ChainId, contractConfig } from '@dodoex/api';
+import {
+  basicTokenMap,
+  ChainId,
+  contractConfig,
+  CONTRACT_QUERY_KEY,
+} from '@dodoex/api';
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 import { tokenApi } from '../../constants/api';
@@ -18,7 +23,7 @@ function getPendingRest(
 ) {
   const isUSDT =
     token?.symbol === 'USDT' ||
-    token?.address.toLowerCase() ===
+    token?.address?.toLowerCase() ===
       '0x6426e6017968377529487E0ef0aA4E7759724e05'.toLowerCase();
   return isUSDT && allowance && allowance.gt(0);
 }
@@ -47,6 +52,8 @@ export function useTokenStatus(
       contractAddress ?? contractConfig[token.chainId as ChainId].DODO_APPROVE,
     ];
   }, [token, contractAddress]) as [number | undefined, string | undefined];
+
+  const queryClient = useQueryClient();
   const tokenQuery = useQuery(
     tokenApi.getFetchTokenQuery(
       // skip the query
@@ -136,6 +143,9 @@ export function useTokenStatus(
     });
 
     if (result !== ExecutionResult.Success) return;
+    queryClient.refetchQueries({
+      queryKey: [CONTRACT_QUERY_KEY, 'token'],
+    });
   }, [
     proxyContractAddress,
     account,
@@ -144,6 +154,7 @@ export function useTokenStatus(
     token,
     needReset,
     approveTitle,
+    queryClient,
   ]);
 
   const getMaxBalance = React.useCallback(() => {
@@ -171,7 +182,8 @@ export function useTokenStatus(
     isGetApproveLoading,
     needApprove,
     needReset,
-    needShowTokenStatusButton: needApprove || needReset || isApproving,
+    needShowTokenStatusButton:
+      needApprove || needReset || isApproving || insufficientBalance,
     insufficientBalance,
     loading: tokenQuery.isLoading,
     approveTitle,

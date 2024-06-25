@@ -1,6 +1,5 @@
-import { t } from '@lingui/macro';
+import { CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { useWeb3React } from '@web3-react/core';
-import BigNumber from 'bignumber.js';
 import type { TransactionResponse } from '@ethersproject/abstract-provider';
 import { useCallback, useMemo, useState } from 'react';
 import { useFetchBlockNumber } from '../contract';
@@ -22,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { setGlobalProps } from '../../store/actions/globals';
 import { ContractStatus } from '../../store/reducers/globals';
 import { AppThunkDispatch } from '../../store/actions';
+import { useQueryClient } from '@tanstack/react-query';
 
 export interface ExecutionProps {
   onTxFail?: (error: Error, data: any) => void;
@@ -43,6 +43,7 @@ export default function useExecution({
   onTxSuccess,
 }: ExecutionProps = {}) {
   const { account, provider } = useWeb3React();
+  const queryClient = useQueryClient();
   const chainId = useCurrentChainId();
   const [waitingSubmit, setWaitingSubmit] = useState(false);
   const [requests, setRequests] = useState<Map<string, [Request, State]>>(
@@ -163,6 +164,7 @@ export default function useExecution({
         ...params,
         tx,
         subtitle,
+        metadata,
         ...mixpanelProps,
       };
       dispatch(
@@ -218,6 +220,9 @@ export default function useExecution({
           }
           if (onTxSuccess) {
             onTxSuccess(tx, reportInfo);
+            queryClient.refetchQueries({
+              queryKey: [CONTRACT_QUERY_KEY],
+            });
           }
           await updateBlockNumber(); // update blockNumber once after tx
           setRequests((res) =>
@@ -245,7 +250,14 @@ export default function useExecution({
       );
       return ExecutionResult.Failed;
     },
-    [account, chainId, setWaitingSubmit, provider, updateBlockNumber],
+    [
+      account,
+      chainId,
+      setWaitingSubmit,
+      provider,
+      updateBlockNumber,
+      queryClient,
+    ],
   );
 
   /**

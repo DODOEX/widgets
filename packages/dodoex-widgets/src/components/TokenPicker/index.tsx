@@ -13,7 +13,7 @@ import TokenItem from './TokenItem';
 import { t } from '@lingui/macro';
 import SelectChainItem from './SelectChainItem';
 import { useSelectChainList } from '../../hooks/Token/useSelectChainList';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import { isAddress } from '../../utils';
 import { TokenSearchLoadingSkelton } from './TokenSearchLoadingSkelton';

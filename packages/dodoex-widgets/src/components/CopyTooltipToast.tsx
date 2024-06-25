@@ -21,8 +21,12 @@ export function CopyTooltipToast({
   return (
     <TooltipToast title={t`Copied`} open={open} onClose={() => setOpen(false)}>
       <Box
-        component={ButtonBase}
+        {...componentProps}
+        component={componentProps?.component ?? ButtonBase}
         onClick={(evt: any) => {
+          if (componentProps?.onClick) {
+            return componentProps.onClick(evt);
+          }
           evt.stopPropagation();
           if (copyText) {
             copy(copyText);
@@ -32,7 +36,10 @@ export function CopyTooltipToast({
             onClick();
           }
         }}
-        {...componentProps}
+        sx={{
+          cursor: 'pointer',
+          ...componentProps?.sx,
+        }}
       >
         <Box
           component={Copy}

@@ -9,7 +9,7 @@ import {
 } from '@dodoex/components';
 import { ArrowRight, ArrowTopRightBorder } from '@dodoex/icons';
 import { useWeb3React } from '@web3-react/core';
-import { ChainId } from '../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { getEtherscanPage, truncatePoolAddress } from '../utils';
 import { CopyTooltipToast } from './CopyTooltipToast';
 
@@ -164,17 +164,22 @@ export function AddressWithLinkAndCopy({
       />
 
       <IconHoverBox
-        component={ArrowTopRightBorder}
         sx={{
           ml: getIconSpace(isMedium),
-          width: iconSize || (isMedium ? 16 : 14),
-          height: iconSize || (isMedium ? 16 : 14),
           cursor: 'pointer',
         }}
         onClick={(evt) => {
           handleOpenResult(evt, 'icon');
         }}
-      />
+      >
+        <Box
+          component={ArrowTopRightBorder}
+          sx={{
+            width: iconSize || (isMedium ? 16 : 14),
+            height: iconSize || (isMedium ? 16 : 14),
+          }}
+        />
+      </IconHoverBox>
 
       {showCopy ? (
         <CopyTooltipToast

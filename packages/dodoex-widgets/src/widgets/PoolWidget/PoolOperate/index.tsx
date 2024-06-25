@@ -1,4 +1,4 @@
-import { Box, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
+import { Box, BoxProps, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
 import Dialog from '../../../components/Dialog';
 import {
   PoolOrMiningTab,
@@ -9,33 +9,42 @@ import PoolOperateInner, { PoolOperateInnerProps } from './PoolOperateInner';
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { graphQLRequests } from '../../../constants/api';
-import { PoolApi } from '@dodoex/api';
+import { ChainId, PoolApi } from '@dodoex/api';
 import { convertFetchPoolToOperateData } from '../utils';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { ThegraphKeyMap } from '../../../constants/chains';
+import LpTokenMiningOperate from '../../MiningWidget/LpTokenMiningOperate';
+import { useWeb3React } from '@web3-react/core';
+import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
+import { t } from '@lingui/macro';
 
 export interface PoolOperateProps {
-  onClose: () => void;
+  onClose?: () => void;
   account: string | undefined;
   pool?: PoolOperateInnerProps['pool'];
   address?: string;
   operate?: PoolOperateInnerProps['operate'];
   chainId?: number;
+  hasMining?: boolean;
+  sx?: BoxProps['sx'];
 }
 
-export default function PoolOperate({
+export function PoolOperate({
   onClose,
   pool: poolProps,
   address,
   operate,
   chainId,
+  hasMining = true,
 }: PoolOperateProps) {
-  const { poolOrMiningTab, poolOrMiningTabs, handleChangeTab } =
-    usePoolOrMiningTabs();
+  const { account } = useWeb3React();
+  const chain = chainId ? ThegraphKeyMap[chainId as ChainId] : '';
 
   const fetchResult = useQuery({
     ...graphQLRequests.getQuery(PoolApi.graphql.fetchPoolList, {
       where: {
         id: address?.toLocaleLowerCase() ?? '',
-        chain: 'gor',
+        chain,
       },
     }),
     enabled: !!address && !!chainId,
@@ -48,34 +57,70 @@ export default function PoolOperate({
   const pool = address && chainId ? convertFetchPool : poolProps;
 
   const poolErrorRefetch = fetchResult.error ? fetchResult.refetch : undefined;
+
+  const { poolOrMiningTab, poolOrMiningTabs, handleChangeTab } =
+    usePoolOrMiningTabs({
+      hasMining,
+    });
+
+  const balanceInfo = usePoolBalanceInfo({
+    account,
+    pool,
+  });
+  const hasLp =
+    !!balanceInfo.userBaseLpBalance?.gt(0) ||
+    !!balanceInfo.userQuoteLpBalance?.gt(0);
+
+  const poolChainId = chainId ?? pool?.chainId;
+  const poolAddress = address ?? pool?.address;
+
   return (
-    <Dialog open={!!pool || !!address} onClose={onClose}>
-      <Box
+    <Box
+      sx={{
+        pb: 20,
+        overflow: 'hidden',
+        flex: 1,
+      }}
+    >
+      <Tabs
+        value={poolOrMiningTab}
+        onChange={(_, value) => {
+          handleChangeTab(value as PoolOrMiningTab);
+        }}
         sx={{
-          pb: 20,
+          display: 'flex',
+          flexDirection: 'column',
           overflow: 'hidden',
-          flex: 1,
+          height: '100%',
         }}
       >
-        <Tabs
-          value={poolOrMiningTab}
-          onChange={(_, value) => {
-            handleChangeTab(value as PoolOrMiningTab);
+        <TabsGroup
+          tabs={poolOrMiningTabs}
+          tabsListSx={{
+            mx: 20,
+            justifyContent: 'space-between',
+            ...(hasMining && hasLp
+              ? {
+                  '& button:last-child': {
+                    position: 'relative',
+                    '&::before': {
+                      content: `"${t`LP Tokens`}"`,
+                      position: 'absolute',
+                      right: 24,
+                      px: 8,
+                      py: 2,
+                      borderRadius: 12,
+                      transform: 'scale(0.66667) translateX(100%)',
+                      transformOrigin: 'right top',
+                      backgroundColor: 'purple.main',
+                      color: 'primary.contrastText',
+                    },
+                  },
+                }
+              : {}),
           }}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            height: '100%',
-          }}
-        >
-          <TabsGroup
-            tabs={poolOrMiningTabs}
-            tabsListSx={{
-              mx: 20,
-              justifyContent: 'space-between',
-            }}
-            rightSlot={
+          rightSlot={
+            onClose ? (
               <Box
                 component={Error}
                 sx={{
@@ -83,26 +128,61 @@ export default function PoolOperate({
                   cursor: 'pointer',
                 }}
                 onClick={() => {
-                  onClose && onClose();
+                  onClose();
                 }}
               />
-            }
+            ) : undefined
+          }
+        />
+        <TabPanel
+          value={PoolOrMiningTab.Liquidity}
+          sx={{
+            flex: 1,
+            overflowY: 'auto',
+          }}
+        >
+          <PoolOperateInner
+            pool={pool}
+            operate={operate}
+            errorRefetch={poolErrorRefetch}
           />
-          <TabPanel
-            value={PoolOrMiningTab.Liquidity}
-            sx={{
-              flex: 1,
-              overflowY: 'auto',
-            }}
-          >
-            <PoolOperateInner
-              pool={pool}
-              operate={operate}
-              errorRefetch={poolErrorRefetch}
+        </TabPanel>
+        <TabPanel
+          value={PoolOrMiningTab.Mining}
+          sx={{
+            flex: 1,
+            overflowY: 'auto',
+          }}
+        >
+          {poolChainId && poolAddress ? (
+            <LpTokenMiningOperate
+              chainId={poolChainId}
+              account={account}
+              poolAddress={poolAddress}
+              balanceInfo={balanceInfo}
+              goLpLink={() => {
+                handleChangeTab(PoolOrMiningTab.Liquidity);
+              }}
             />
-          </TabPanel>
-        </Tabs>
-      </Box>
+          ) : (
+            ''
+          )}
+        </TabPanel>
+      </Tabs>
+    </Box>
+  );
+}
+
+export default function PoolOperateDialog({ sx, ...props }: PoolOperateProps) {
+  const { isMobile } = useWidgetDevice();
+
+  return (
+    <Dialog
+      open={!!props.pool || !!props.address}
+      onClose={props.onClose}
+      scope={!isMobile}
+    >
+      <PoolOperate {...props} />
     </Dialog>
   );
 }

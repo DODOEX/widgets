@@ -44,9 +44,12 @@ export interface TokenCardProps {
   defaultLoadBalance?: boolean;
   overrideBalance?: BigNumber | null;
   overrideBalanceLoading?: boolean;
+  balanceText?: React.ReactNode;
   showPercentage?: boolean;
   inputReadonlyTooltip?: React.ReactNode;
+  inputTypography?: string;
   chainId?: ChainId;
+  hideToken?: boolean;
 }
 
 export function CardPlus() {
@@ -116,9 +119,12 @@ export function TokenCard({
   defaultLoadBalance,
   overrideBalance,
   overrideBalanceLoading,
+  balanceText,
   showPercentage,
   inputReadonlyTooltip,
+  inputTypography,
   chainId,
+  hideToken,
 }: TokenCardProps) {
   const { account } = useWalletInfo();
   const [openSwitchChainDialog, setOpenSwitchChainDialog] = useState(false);
@@ -170,15 +176,20 @@ export function TokenCard({
           justifyContent: 'space-between',
         }}
       >
-        <TokenLogoCollapse
-          token={token}
-          showChainLogo={showChainLogo}
-          onClick={() => setTokenPickerVisible(true)}
-          readonly={!onTokenChange}
-        />
+        {hideToken ? (
+          <Box />
+        ) : (
+          <TokenLogoCollapse
+            token={token}
+            showChainLogo={showChainLogo}
+            onClick={() => setTokenPickerVisible(true)}
+            readonly={!onTokenChange}
+          />
+        )}
 
         <BalanceText
           balance={balance}
+          balanceText={balanceText}
           onClick={
             readOnly || (!onMaxClick && !onInputChange)
               ? undefined
@@ -248,6 +259,7 @@ export function TokenCard({
               </Button>
             ) : undefined
           }
+          typography={inputTypography}
           sx={{
             mt: 12,
           }}

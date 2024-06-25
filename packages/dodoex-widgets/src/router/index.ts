@@ -11,13 +11,13 @@ interface RouterState {
 
 export const useRouterStore = create<RouterState>((set, get) => ({
   // page: {
-  //   type: PageType.ModifyPool,
+  //   type: PageType.PoolDetail,
   //   params: {
-  //     address: '0x4379ab0d36d2e088b40c3d95da654c3418e37ce0',
-  //     chainId: 137,
+  //     address: '0xc9f93163c99695c6526b799ebca2207fdf7d61ad',
+  //     chainId: 1,
   //   },
   // },
-  page: undefined,
+  // page: undefined,
   historyList: [],
   push: (page: Page) => {
     set((oldState) => {

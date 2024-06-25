@@ -141,8 +141,7 @@ export default function Ratio({
               backgroundColor: 'background.paperDarkContrast',
               borderRadius: '50%',
               '&:hover': {
-                backgroundColor: (theme) =>
-                  alpha(theme.palette.text.primary, 0.04),
+                backgroundColor: alpha(theme.palette.text.primary, 0.04),
               },
             }}
             onClick={() => setReserve((prev) => !prev)}

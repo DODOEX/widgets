@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/components",
-  "version": "2.0.1",
+  "version": "3.0.0-beta.0",
   "description": "UI component library",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
@@ -55,16 +55,17 @@
     "react-dom": ">=17.0.1"
   },
   "devDependencies": {
-    "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^14.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-replace": "^5.0.7",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-url": "^8.0.2",
     "@svgr/rollup": "^6.2.1",
     "np": "^7.6.1",
-    "rollup": "^2.75.5",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-typescript2": "^0.32.0",
-    "rollup-plugin-url": "^3.0.1",
+    "rollup": "^4.18.0",
+    "rollup-plugin-typescript2": "^0.36.0",
     "tslib": "^2.4.0",
     "typescript": "^4.7.3"
   }

@@ -14,6 +14,9 @@ export enum MetadataFlag {
   createDPPPool = 'createDPPPool',
   createDSPPool = 'createDSPPool',
   createDVMPool = 'createDVMPool',
+  stakeMining = 'stakeMining',
+  unstakeMining = 'unstakeMining',
+  claimMining = 'claimMining',
 }
 
 export type Metadata = Record<string, any>;

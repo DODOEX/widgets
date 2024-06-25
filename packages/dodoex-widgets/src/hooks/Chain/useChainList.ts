@@ -1,6 +1,6 @@
 import { useWeb3React } from '@web3-react/core';
 import { useMemo } from 'react';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { ChainListItem, chainListMap } from '../../constants/chainList';
 
 export function useChainList() {

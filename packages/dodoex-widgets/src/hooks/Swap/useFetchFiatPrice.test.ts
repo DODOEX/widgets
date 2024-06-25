@@ -1,6 +1,5 @@
 import { useFetchFiatPrice } from './useFetchFiatPrice';
 import tokenList from '../../constants/tokenList';
-import { ChainId } from '../../constants/chains';
 import { renderHook } from '@testing-library/react-hooks';
 import BigNumber from 'bignumber.js';
 import axios from 'axios';
@@ -45,7 +44,6 @@ describe('useFetchFiatPrice', () => {
   axios.post = jest.fn().mockResolvedValue(res);
   const { result } = renderHook(() =>
     useFetchFiatPrice({
-      chainId: ChainId.MAINNET,
       fromToken: tokenEther,
       toToken: tokenUSDT,
     }),

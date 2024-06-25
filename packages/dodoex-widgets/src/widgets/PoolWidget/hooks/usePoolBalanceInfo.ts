@@ -55,7 +55,7 @@ function computeLpProportion(
   if (lpTokenTotalSupply.lte(0)) return new BigNumber(0);
   return reserve.div(lpTokenTotalSupply);
 }
-function getLpToTokenBalance(
+export function getLpToTokenBalance(
   userLpBalance: Balance,
   totalLpBalance: Balance,
   reserve: Balance,

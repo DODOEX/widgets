@@ -1,5 +1,5 @@
 import { TokenInfo } from '../hooks/Token';
-import { ChainId } from './chains';
+import { ChainId } from '@dodoex/api';
 
 const AUTO_SWITCH_NETWORK = 'DODO_WIDGET_AUTO_SWITCH_NETWORK';
 export function getAuthSwitchCache() {

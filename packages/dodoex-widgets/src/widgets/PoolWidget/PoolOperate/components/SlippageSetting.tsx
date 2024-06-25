@@ -178,7 +178,7 @@ export default function SlippageSetting({
             width: 18,
             height: 18,
             '& path:last-child': {
-              fill: (theme) => theme.palette.text.primary,
+              fill: theme.palette.text.primary,
             },
           }}
         />

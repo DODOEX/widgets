@@ -1,6 +1,7 @@
 import { parseFixed } from '@ethersproject/bignumber';
 import ContractRequests, {
   ContractRequestsConfig,
+  CONTRACT_QUERY_KEY,
   Query,
 } from '../../helper/ContractRequests';
 import { ABIName } from '../../helper/ContractRequests/abi/abiName';
@@ -702,7 +703,12 @@ export class PoolApi {
     decimals: number | undefined,
   ) {
     return {
-      queryKey: ['pool', 'getTotalBaseLpQuery', ...arguments],
+      queryKey: [
+        CONTRACT_QUERY_KEY,
+        'pool',
+        'getTotalBaseLpQuery',
+        ...arguments,
+      ],
       enabled: !!chainId && !!poolAddress && !!type && decimals !== undefined,
       queryFn: async () => {
         if (!chainId || !poolAddress || !type || decimals === undefined)
@@ -741,7 +747,7 @@ export class PoolApi {
     decimals: number | undefined,
   ) {
     return {
-      queryKey: ['pool', 'getTotalQuoteLp', ...arguments],
+      queryKey: [CONTRACT_QUERY_KEY, 'pool', 'getTotalQuoteLp', ...arguments],
       enabled: !!chainId && !!poolAddress && !!type && decimals !== undefined,
       queryFn: async () => {
         if (!chainId || !poolAddress || !type || decimals === undefined)
@@ -781,7 +787,7 @@ export class PoolApi {
     account: string | undefined,
   ) {
     return {
-      queryKey: ['pool', 'getUserBaseLp', ...arguments],
+      queryKey: [CONTRACT_QUERY_KEY, 'pool', 'getUserBaseLp', ...arguments],
       enabled:
         !!chainId &&
         !!poolAddress &&
@@ -835,7 +841,7 @@ export class PoolApi {
     account: string | undefined,
   ) {
     return {
-      queryKey: ['pool', 'getUserQuoteLp', ...arguments],
+      queryKey: [CONTRACT_QUERY_KEY, 'pool', 'getUserQuoteLp', ...arguments],
       enabled:
         !!chainId &&
         !!poolAddress &&
@@ -897,7 +903,7 @@ export class PoolApi {
       );
     }
     return {
-      queryKey: ['pool', 'getReserveLp', ...arguments],
+      queryKey: [CONTRACT_QUERY_KEY, 'pool', 'getReserveLp', ...arguments],
       enabled:
         !!chainId &&
         !!poolAddress &&
@@ -954,7 +960,12 @@ export class PoolApi {
     quoteDecimals: number | undefined,
   ) {
     return {
-      queryKey: ['pool', 'getClassicalTargetQuery', ...arguments],
+      queryKey: [
+        CONTRACT_QUERY_KEY,
+        'pool',
+        'getClassicalTargetQuery',
+        ...arguments,
+      ],
       enabled:
         !!chainId &&
         !!poolAddress &&
@@ -996,7 +1007,12 @@ export class PoolApi {
   ) {
     const isV3Mining = !!type && PoolApi.utils.getIsV3Mining(type);
     return {
-      queryKey: ['pool', 'getTotalBaseMiningLp', ...arguments],
+      queryKey: [
+        CONTRACT_QUERY_KEY,
+        'pool',
+        'getTotalBaseMiningLp',
+        ...arguments,
+      ],
       enabled:
         !!chainId &&
         !!baseMiningContractAddress &&
@@ -1061,7 +1077,12 @@ export class PoolApi {
   ) {
     const isV3Mining = !!type && PoolApi.utils.getIsV3Mining(type);
     return {
-      queryKey: ['pool', 'getTotalQuoteMiningLp', ...arguments],
+      queryKey: [
+        CONTRACT_QUERY_KEY,
+        'pool',
+        'getTotalQuoteMiningLp',
+        ...arguments,
+      ],
       enabled:
         !!chainId &&
         !!quoteMiningContractAddress &&
@@ -1124,7 +1145,12 @@ export class PoolApi {
   ) {
     const isV3Mining = !!type && PoolApi.utils.getIsV3Mining(type);
     return {
-      queryKey: ['pool', 'getUserBaseMiningLp', ...arguments],
+      queryKey: [
+        CONTRACT_QUERY_KEY,
+        'pool',
+        'getUserBaseMiningLp',
+        ...arguments,
+      ],
       enabled:
         !!chainId &&
         !!account &&
@@ -1189,7 +1215,12 @@ export class PoolApi {
   ) {
     const isV3Mining = !!type && PoolApi.utils.getIsV3Mining(type);
     return {
-      queryKey: ['pool', 'getUserQuoteMiningLp', ...arguments],
+      queryKey: [
+        CONTRACT_QUERY_KEY,
+        'pool',
+        'getUserQuoteMiningLp',
+        ...arguments,
+      ],
       enabled:
         !!chainId &&
         !!account &&
@@ -1250,7 +1281,7 @@ export class PoolApi {
     type: PoolType | undefined,
   ) {
     return {
-      queryKey: ['pool', 'getLpFeeRateQuery', ...arguments],
+      queryKey: [CONTRACT_QUERY_KEY, 'pool', 'getLpFeeRateQuery', ...arguments],
       enabled: !!chainId && !!poolAddress && !!type,
       queryFn: async () => {
         if (!chainId || !poolAddress || !type) {
@@ -1268,6 +1299,64 @@ export class PoolApi {
     };
   }
 
+  getFeeRateQuery(
+    chainId: number | undefined,
+    poolAddress: string | undefined,
+    type: PoolType | undefined,
+    account: string | undefined,
+  ) {
+    return {
+      queryKey: [CONTRACT_QUERY_KEY, 'pool', 'getFeeRateQuery', ...arguments],
+      enabled: !!chainId && !!poolAddress && !!type,
+      queryFn: async () => {
+        if (!chainId || !poolAddress || !type) {
+          return null;
+        }
+        let lpFeeRate = new BigNumber(0);
+        let mtFeeRate = new BigNumber(0);
+        if (type === 'CLASSICAL') {
+          const { ROUTE_V1_DATA_FETCH } = contractConfig[chainId as ChainId];
+          const pmmHelperResult = await this.contractRequests.batchCallQuery(
+            chainId,
+            {
+              abiName: ABIName.DODOV1PmmHelperABI,
+              contractAddress: ROUTE_V1_DATA_FETCH,
+              method: 'getPairDetail',
+              params: [poolAddress],
+            },
+          );
+          const queryResult = pmmHelperResult?.res?.[0];
+          lpFeeRate = new BigNumber(queryResult.lpFeeRate.toString()).div(
+            10 ** 18,
+          );
+          mtFeeRate = new BigNumber(queryResult.mtFeeRate.toString()).div(
+            10 ** 18,
+          );
+        } else {
+          const queryResult = await this.contractRequests.batchCallQuery(
+            chainId,
+            {
+              abiName: ABIName.dvmPoolABI,
+              contractAddress: poolAddress,
+              method: 'getUserFeeRate',
+              params: [account ?? poolAddress],
+            },
+          );
+          lpFeeRate = new BigNumber(queryResult.lpFeeRate.toString()).div(
+            10 ** 18,
+          );
+          mtFeeRate = new BigNumber(queryResult.mtFeeRate.toString()).div(
+            10 ** 18,
+          );
+        }
+        return {
+          lpFeeRate,
+          mtFeeRate,
+        };
+      },
+    };
+  }
+
   getPMMStateQuery(
     chainId: number | undefined,
     poolAddress: string | undefined,
@@ -1276,7 +1365,7 @@ export class PoolApi {
     quoteDecimals: number | undefined,
   ) {
     return {
-      queryKey: ['pool', 'getPMMStateQuery', ...arguments],
+      queryKey: [CONTRACT_QUERY_KEY, 'pool', 'getPMMStateQuery', ...arguments],
       enabled:
         !!chainId &&
         !!poolAddress &&

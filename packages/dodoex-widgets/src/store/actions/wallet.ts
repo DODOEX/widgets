@@ -1,5 +1,5 @@
 import { AppThunkAction } from '.';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { State } from '../reducers/wallet';
 
 export const setDefaultChainId = (chainId: ChainId): AppThunkAction => {

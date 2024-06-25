@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 
 export type State = {
   chainId: ChainId;

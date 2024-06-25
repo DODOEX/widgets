@@ -1,7 +1,7 @@
 import { Box, useTheme } from '@dodoex/components';
 import { CSSProperties, useMemo } from 'react';
 import { chainListMap } from '../../../../constants/chainList';
-import { ChainId } from '../../../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { BridgeRouteI } from '../../../../hooks/Bridge';
 import { CrossStep } from './CrossStep';
 import { SwapStep } from './SwapStep';

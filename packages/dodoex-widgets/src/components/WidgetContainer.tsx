@@ -8,6 +8,7 @@ export default function WidgetContainer({ sx, ...props }: BoxProps) {
     <Box
       sx={{
         overflowY: 'auto',
+        backgroundColor: 'background.default',
         ...(isMobile
           ? {
               padding: 0,
@@ -18,7 +19,6 @@ export default function WidgetContainer({ sx, ...props }: BoxProps) {
           : {
               padding: theme.spacing(28, 20, 40, 40),
               height: 'auto',
-              backgroundColor: 'background.default',
             }),
         ...sx,
       }}

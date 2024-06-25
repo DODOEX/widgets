@@ -2,6 +2,7 @@ import { formatTokenAmountNumber } from '../../../../utils/formatter';
 import { Box, useTheme, ButtonBase, RotatingIcon } from '@dodoex/components';
 import BigNumber from 'bignumber.js';
 import { Trans } from '@lingui/macro';
+import React from 'react';
 
 export function BalanceText({
   onClick,
@@ -10,6 +11,7 @@ export function BalanceText({
   address,
   showMaxBtn,
   loading,
+  balanceText,
 }: {
   onClick?: (max: string) => void;
   balance: BigNumber | null;
@@ -17,6 +19,7 @@ export function BalanceText({
   address?: string;
   showMaxBtn?: boolean;
   loading?: boolean;
+  balanceText?: React.ReactNode;
 }) {
   const { palette } = useTheme();
   return (
@@ -28,7 +31,7 @@ export function BalanceText({
         color: palette.text.secondary,
       }}
     >
-      <Trans>Balance:</Trans>&nbsp;
+      {balanceText ?? <Trans>Balance:</Trans>}&nbsp;
       {loading ? (
         <RotatingIcon />
       ) : (
@@ -36,7 +39,7 @@ export function BalanceText({
           {address
             ? formatTokenAmountNumber({
                 input: balance,
-                decimals: Math.min(decimals || 4, 4),
+                decimals,
               })
             : '-'}
           {showMaxBtn && balance && balance.gt(0) && onClick && (

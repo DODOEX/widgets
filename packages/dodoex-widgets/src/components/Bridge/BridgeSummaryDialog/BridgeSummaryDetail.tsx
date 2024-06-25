@@ -16,7 +16,7 @@ import {
 import { Trans } from '@lingui/macro';
 import { useMemo, useState } from 'react';
 import { chainListMap } from '../../../constants/chainList';
-import { ChainId } from '../../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { BridgeRouteI } from '../../../hooks/Bridge/useFetchRoutePriceBridge';
 import {
   formatReadableNumber,

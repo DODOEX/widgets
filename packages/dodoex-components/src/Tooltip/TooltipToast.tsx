@@ -114,6 +114,7 @@ export default function TooltipToast({
           },
           tooltipSx,
         )}
+        {...attrs}
       >
         {children}
       </Tooltip>

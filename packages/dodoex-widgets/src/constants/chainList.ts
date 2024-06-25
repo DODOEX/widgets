@@ -1,4 +1,4 @@
-import { ChainId } from './chains';
+import { ChainId } from '@dodoex/api';
 import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg';
 import { ReactComponent as ArbitrumLogo } from '../assets/logo/networks/arbitrum.svg';
 import { ReactComponent as PolygonLogo } from '../assets/logo/networks/polygon.svg';
@@ -36,6 +36,15 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       logo: ETHereumLogo,
       name: 'Goerli',
       mainnet: ChainId.MAINNET,
+    },
+  ],
+  [
+    ChainId.SEPOLIA,
+    {
+      chainId: ChainId.SEPOLIA,
+      logo: ETHereumLogo,
+      name: 'Sepolia',
+      mainnet: ChainId.SEPOLIA,
     },
   ],
   [

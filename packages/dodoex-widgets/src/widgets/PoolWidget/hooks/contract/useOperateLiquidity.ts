@@ -46,7 +46,6 @@ export const useOperateLiquidity = (pool?: {
   quoteLpToken?: {
     id: string;
   };
-  lpFeeRate: string;
 }) => {
   const { account, chainId } = useWalletInfo();
   const submission = useSubmission();

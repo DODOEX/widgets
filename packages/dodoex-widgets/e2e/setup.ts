@@ -1,4 +1,5 @@
 const error = console.error;
+
 global.console = {
   ...console,
   error: (message: string, ...options: any[]) => {
@@ -48,3 +49,5 @@ jest.mock('react-redux', () => ({
     return [];
   },
 }));
+
+export {};

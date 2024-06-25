@@ -2,13 +2,13 @@ import { babel } from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import typescript from 'rollup-plugin-typescript2';
-import { terser } from 'rollup-plugin-terser';
-import { default as multi } from 'rollup-plugin-multi-input';
-import url from 'rollup-plugin-url';
+import terser from '@rollup/plugin-terser';
+import multi from '@rollup/plugin-multi-entry';
+import url from '@rollup/plugin-url';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import svgr from '@svgr/rollup';
-import pkg from './package.json';
+import pkg from './package.json' assert { type: 'json' };
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const baseConfig = {

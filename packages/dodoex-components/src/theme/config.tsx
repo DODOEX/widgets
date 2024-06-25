@@ -235,6 +235,11 @@ export const getDesignTokens = (
         fontWeight: 600,
         lineHeight: '38px',
       },
+      h4: {
+        fontSize: 24,
+        lineHeight: '33px',
+        fontWeight: 600,
+      },
       caption: {
         fontSize: 20,
         fontWeight: 600,
@@ -274,6 +279,7 @@ export const getDesignTokens = (
           },
           '::-webkit-scrollbar': {
             width: 6,
+            height: 8,
             backgroundColor: 'transparent',
           },
           '::-webkit-scrollbar-thumb': {

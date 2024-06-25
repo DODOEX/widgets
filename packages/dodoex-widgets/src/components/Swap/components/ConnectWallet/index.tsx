@@ -1,5 +1,5 @@
 import { Button } from '@dodoex/components';
-import { ChainId } from '../../../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { connectWalletBtn } from '../../../../constants/testId';
 import NeedConnectButton from '../../../ConnectWallet/NeedConnectButton';
 

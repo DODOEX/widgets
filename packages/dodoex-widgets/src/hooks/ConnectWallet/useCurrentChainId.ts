@@ -1,7 +1,7 @@
 import { useWeb3React } from '@web3-react/core';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { getDefaultChainId } from '../../store/selectors/wallet';
 
 export function useCurrentChainId() {

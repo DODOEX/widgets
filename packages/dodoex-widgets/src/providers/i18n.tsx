@@ -2,11 +2,19 @@ import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
 import { SupportedLang, defaultLang } from '../constants/locales';
 import { ReactNode, useEffect } from 'react';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import duration from 'dayjs/plugin/duration';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 interface LangProviderProps {
   locale?: SupportedLang;
   children: ReactNode;
 }
+
+dayjs.extend(utc);
+dayjs.extend(duration);
+dayjs.extend(LocalizedFormat);
 
 export async function loadI18(locale: SupportedLang = defaultLang) {
   try {

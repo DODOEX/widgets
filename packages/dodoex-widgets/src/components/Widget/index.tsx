@@ -26,7 +26,8 @@ import useInitTokenList, {
 import WithExecutionDialog from '../WithExecutionDialog';
 import { useFetchBlockNumber } from '../../hooks/contract';
 import { ExecutionProps } from '../../hooks/Submission';
-import { ChainId, getRpcSingleUrlMap } from '../../constants/chains';
+import { getRpcSingleUrlMap } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { useInitPropsToRedux } from '../../hooks/Swap';
 import { DefaultTokenInfo } from '../../hooks/Token/type';
 import { AppThunkDispatch } from '../../store/actions';
@@ -40,6 +41,8 @@ import {
   GlobalFunctionConfig,
 } from '../../providers/GlobalConfigContext';
 import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
+import { queryClient } from '../../providers/queryClient';
+import { QueryClientProvider } from '@tanstack/react-query';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
@@ -59,11 +62,14 @@ export interface WidgetProps
   defaultFromToken?: DefaultTokenInfo;
   defaultToToken?: DefaultTokenInfo;
   locale?: SupportedLang;
-  swapSlippage?: number; // Unit: %
-  bridgeSlippage?: number; // Unit: %
+  swapSlippage?: number | null; // Unit: %
+  bridgeSlippage?: number | null; // Unit: %
   apiServices?: Partial<APIServices>;
   crossChain?: boolean;
   noPowerBy?: boolean;
+
+  /** When the winding status changes, no pop-up window will be displayed. */
+  noSubmissionDialog?: boolean;
 
   onProviderChanged?: (provider?: any) => void;
   gotoBuyToken?: GlobalFunctionConfig['gotoBuyToken'];
@@ -205,7 +211,9 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
           <CssBaseline
             container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}`}
           />
-          <Web3Provider {...props} />
+          <QueryClientProvider client={queryClient}>
+            <Web3Provider {...props} />
+          </QueryClientProvider>
         </ThemeProvider>
       </LangProvider>
     </ReduxProvider>

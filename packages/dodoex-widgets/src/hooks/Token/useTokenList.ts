@@ -8,7 +8,7 @@ import defaultTokens from '../../constants/tokenList';
 import { RootState } from '../../store/reducers';
 import { getPopularTokenList } from '../../store/selectors/token';
 import useTokenListFetchBalance from './useTokenListFetchBalance';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 
 enum MatchLevel {
   fully = 1,

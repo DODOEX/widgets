@@ -26,6 +26,7 @@ export function useInitPropsToRedux({
   apiServices,
   crossChain,
   noPowerBy,
+  noSubmissionDialog,
 }: WidgetProps) {
   const dispatch = useDispatch<AppThunkDispatch>();
 
@@ -158,4 +159,14 @@ export function useInitPropsToRedux({
       );
     }
   }, [noPowerBy]);
+
+  useEffect(() => {
+    if (noSubmissionDialog !== undefined) {
+      dispatch(
+        setGlobalProps({
+          noSubmissionDialog,
+        }),
+      );
+    }
+  }, [noSubmissionDialog]);
 }

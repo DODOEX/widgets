@@ -10,7 +10,7 @@ import { useWeb3React } from '@web3-react/core';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { chainListMap } from '../../constants/chainList';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import {
   getAuthSwitchCache,
   setAuthSwitchCache,

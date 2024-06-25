@@ -1,5 +1,6 @@
 import { TokenInfo } from '../hooks/Token';
-import { basicTokenMap, ChainId } from '../constants/chains';
+import { ChainId } from '@dodoex/api';
+import { basicTokenMap } from '../constants/chains';
 import BigNumber from 'bignumber.js';
 import { formatReadableNumber, toWei } from './formatter';
 
@@ -77,4 +78,29 @@ export function getTokenPairCompareText({
 export function getShowDecimals(decimals: string | number) {
   const decimalsNumber = Number(decimals);
   return decimalsNumber > 6 ? 6 : 4;
+}
+
+export function convertFetchTokenToTokenInfo(
+  token:
+    | {
+        id?: string | null;
+        address?: string | null;
+        symbol?: string | null;
+        name?: string | null;
+        decimals?: number | null;
+        logoImg?: string | null | undefined;
+      }
+    | undefined
+    | null,
+  chainId: ChainId | number,
+) {
+  if (!token) return token;
+  return {
+    chainId: chainId,
+    address: token.address || token.id,
+    name: token.name ?? token.symbol,
+    decimals: Number(token.decimals),
+    symbol: token.symbol,
+    logoURI: token.logoImg ?? '',
+  } as TokenInfo;
 }

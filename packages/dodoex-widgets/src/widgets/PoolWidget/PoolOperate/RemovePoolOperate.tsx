@@ -154,8 +154,8 @@ export function RemovePoolOperate({
     !pool ||
     isOverBalance ||
     !midPrice ||
-    !balanceInfo.loading ||
-    !balanceInfo.error ||
+    !!balanceInfo.loading ||
+    !!balanceInfo.error ||
     amountCheckedDisabled ||
     !!withdrawInfo.error ||
     withdrawInfo.loading ||

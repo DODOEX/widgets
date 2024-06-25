@@ -3,10 +3,10 @@ import { useMemo } from 'react';
 import { chainListMap } from '../../constants/chainList';
 import {
   basicTokenMap,
-  ChainId,
   rpcServerMap,
   scanUrlDomainMap,
 } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { store } from '../../store';
 
 interface AddChainParameter {

@@ -8,5 +8,5 @@
     "target": "es2016"
   },
   "exclude": ["types", "src/locales"],
-  "include": ["e2e/*.tsx", "src/**/*.d.ts"]
+  "include": ["e2e/*.tsx", "e2e/*.ts", "src/**/*.d.ts"]
 }

@@ -1,5 +1,10 @@
-import { ContractRequests, GraphQLRequests, TokenApi } from '@dodoex/api';
-import { ChainId, getRpcSingleUrlMap } from './chains';
+import {
+  ContractRequests,
+  GraphQLRequests,
+  TokenApi,
+  ChainId,
+} from '@dodoex/api';
+import { getRpcSingleUrlMap } from './chains';
 
 export enum APIServiceKey {
   routePrice = 'routePrice',

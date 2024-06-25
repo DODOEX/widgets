@@ -1,5 +1,5 @@
 import { getPlatformId } from './chains';
-import { ChainId } from '../constants/chains'
+import { ChainId } from '@dodoex/api';
 
 describe('getPlatformId', () => {
   it('returns platformId base on normal chainId', () => {

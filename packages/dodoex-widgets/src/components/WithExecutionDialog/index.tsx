@@ -1,4 +1,4 @@
-import { Box, Button, HoverOpacity } from '@dodoex/components';
+import { Box, Button, HoverOpacity, useTheme } from '@dodoex/components';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ExecutionContext,
@@ -15,7 +15,9 @@ import { t, Trans } from '@lingui/macro';
 import { ArrowTopRightBorder, DoneBorder, ErrorWarn } from '@dodoex/icons';
 import { Showing } from '../../hooks/Submission/types';
 import { useWeb3React } from '@web3-react/core';
-import { ChainId, scanUrlDomainMap } from '../../constants/chains';
+import { scanUrlDomainMap } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
+import { getGlobalProps } from '../../store/selectors/globals';
 
 const strokeWidth = 6;
 
@@ -26,6 +28,7 @@ function ExecuteIcon({
   showingDone: boolean;
   errorMessage?: string | null;
 }) {
+  const theme = useTheme();
   if (errorMessage) {
     return (
       <Box
@@ -55,8 +58,7 @@ function ExecuteIcon({
     <Box
       sx={{
         mx: 'auto',
-        border: (theme) =>
-          `${strokeWidth}px solid ${theme.palette?.background.input}`,
+        border: `${strokeWidth}px solid ${theme.palette?.background.input}`,
         borderRadius: '50%',
         width: '64px',
         height: '64px',
@@ -233,10 +235,12 @@ export default function WithExecutionDialog({
   };
   const dispatch = useDispatch<AppThunkDispatch>();
 
+  const { noSubmissionDialog } = useSelector(getGlobalProps);
+
   return (
     <ExecutionContext.Provider value={ctxVal}>
       {children}
-      <Dialog open={!!showing} onClose={closeShowing}>
+      <Dialog open={!!showing && !noSubmissionDialog} onClose={closeShowing}>
         <Box
           sx={{
             display: 'flex',

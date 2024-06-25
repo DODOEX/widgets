@@ -15,7 +15,7 @@ import BigNumber from 'bignumber.js';
 import { AddressWithLinkAndCopy } from '../../../../components/AddressWithLinkAndCopy';
 import TokenLogo from '../../../../components/TokenLogo';
 import { TokenLogoPair } from '../../../../components/TokenLogoPair';
-import { ChainId } from '../../../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { useBalanceUpdateLoading } from '../../../../hooks/Submission/useBalanceUpdateLoading';
 import { TokenInfo } from '../../../../hooks/Token';
 import { useRouterStore } from '../../../../router';

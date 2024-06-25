@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import type { DefaultTokenInfo } from '../../hooks/Token';
 import { store } from '..';
 import { RootState } from '../reducers';

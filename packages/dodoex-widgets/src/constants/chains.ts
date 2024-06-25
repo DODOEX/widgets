@@ -1,5 +1,5 @@
 import { ChainId } from '@dodoex/api';
-export { ChainId, etherTokenAddress, basicTokenMap } from '@dodoex/api';
+export { etherTokenAddress, basicTokenMap } from '@dodoex/api';
 
 export const rpcServerMap: {
   [key in ChainId]: Array<string>;
@@ -47,6 +47,7 @@ export const rpcServerMap: {
   [ChainId.SCROLL]: ['https://rpc.scroll.io'],
   [ChainId.MANTA]: ['https://pacific-rpc.manta.network/http'],
   [ChainId.MANTLE]: ['https://rpc.mantle.xyz'],
+  [ChainId.SEPOLIA]: ['https://ethereum-sepolia-rpc.publicnode.com'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -85,6 +86,7 @@ export const platformIdMap: {
   [ChainId.SCROLL]: 'scr',
   [ChainId.MANTA]: 'manta',
   [ChainId.MANTLE]: 'mantle',
+  [ChainId.SEPOLIA]: 'sepolia',
 };
 
 export const scanUrlDomainMap: {
@@ -105,4 +107,26 @@ export const scanUrlDomainMap: {
   [ChainId.SCROLL]: 'scrollscan.com',
   [ChainId.MANTA]: 'pacific-explorer.manta.network',
   [ChainId.MANTLE]: 'explorer.mantle.xyz',
+  [ChainId.SEPOLIA]: 'sepolia.etherscan.io',
+};
+
+export const ThegraphKeyMap: {
+  [key in ChainId]: string;
+} = {
+  [ChainId.BSC]: 'bsc',
+  [ChainId.MAINNET]: 'ethereum-mainnet',
+  [ChainId.POLYGON]: 'polygon',
+  [ChainId.ARBITRUM_ONE]: 'arbitrum',
+  [ChainId.OKCHAIN]: 'okchain',
+  [ChainId.OPTIMISM]: 'optimism',
+  [ChainId.AURORA]: 'aurora',
+  [ChainId.AVALANCHE]: 'avalanche',
+  [ChainId.GOERLI]: 'gor',
+  [ChainId.CONFLUX]: 'cfx',
+  [ChainId.BASE]: 'base',
+  [ChainId.LINEA]: 'linea',
+  [ChainId.SCROLL]: 'scr',
+  [ChainId.MANTA]: 'manta',
+  [ChainId.MANTLE]: 'mantle',
+  [ChainId.SEPOLIA]: 'sepolia',
 };

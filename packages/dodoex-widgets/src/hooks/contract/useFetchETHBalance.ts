@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { getLatestBlockNumber } from '../../store/selectors/wallet';
-import { basicTokenMap, ChainId } from '../../constants/chains';
+import { basicTokenMap } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import { tokenApi } from '../../constants/api';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
