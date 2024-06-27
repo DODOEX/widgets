@@ -10,12 +10,15 @@ export default function ClaimButton({
 }: {
   miningItem: FetchMiningListItem;
 }) {
-  const stakeMutation = useClaimMiningSubmit({
+  const rewardQuery = useRewardListAmount({
     miningItem,
   });
 
-  const rewardQuery = useRewardListAmount({
+  const stakeMutation = useClaimMiningSubmit({
     miningItem,
+    successBack: () => {
+      rewardQuery.refetch();
+    },
   });
 
   return (

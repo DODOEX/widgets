@@ -1,7 +1,6 @@
 import { MiningApi } from '@dodoex/api';
 import { t } from '@lingui/macro';
 import { useMutation } from '@tanstack/react-query';
-import BigNumber from 'bignumber.js';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useSubmission } from '../../../hooks/Submission';
 import { OpCode } from '../../../hooks/Submission/spec';
@@ -10,8 +9,10 @@ import { FetchMiningListItem } from '../types';
 
 export const useClaimMiningSubmit = ({
   miningItem,
+  successBack,
 }: {
   miningItem: FetchMiningListItem;
+  successBack?: () => void;
 }) => {
   const { account } = useWalletInfo();
   const submission = useSubmission();
@@ -51,6 +52,7 @@ export const useClaimMiningSubmit = ({
           metadata: {
             [MetadataFlag.claimMining]: '1',
           },
+          successBack,
         },
       );
       return result;

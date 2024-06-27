@@ -119,6 +119,9 @@ export function useRewardListAmount({
         error: results.some((result) => result.isError),
         totalReward,
         totalRewardUSD,
+        refetch: () => {
+          results.forEach((result) => result.refetch());
+        },
       };
     },
   });

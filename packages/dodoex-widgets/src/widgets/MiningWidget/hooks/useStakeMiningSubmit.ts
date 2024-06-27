@@ -14,11 +14,13 @@ export const useStakeMiningSubmit = ({
   miningItem,
   amount,
   submittedBack,
+  successBack,
   logBalance,
 }: {
   miningItem: FetchMiningListItem;
   amount: string;
   submittedBack?: () => void;
+  successBack?: () => void;
   logBalance?: BalanceData;
 }) => {
   const { chainId, account } = useWalletInfo();
@@ -87,6 +89,7 @@ export const useStakeMiningSubmit = ({
             logBalance,
           },
           submittedBack,
+          successBack,
         },
       );
       return result;

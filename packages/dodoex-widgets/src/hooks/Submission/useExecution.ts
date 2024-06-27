@@ -215,13 +215,13 @@ export default function useExecution({
             );
           }
 
+          await updateBlockNumber(); // update blockNumber once after tx
           if (successBack) {
             successBack(tx, onTxSuccess);
           }
           if (onTxSuccess) {
             onTxSuccess(tx, reportInfo);
           }
-          await updateBlockNumber(); // update blockNumber once after tx
           queryClient.invalidateQueries({
             queryKey: [CONTRACT_QUERY_KEY],
           });

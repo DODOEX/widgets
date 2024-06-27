@@ -14,18 +14,21 @@ export default function UnstakeButton({
   miningItem,
   overrideBalance,
   submittedBack,
+  successBack,
   logBalance,
 }: {
   amount: string;
   miningItem: FetchMiningListItem;
   overrideBalance: BigNumber | undefined | null;
   submittedBack?: () => void;
+  successBack?: () => void;
   logBalance?: BalanceData;
 }) {
   const stakeMutation = useUnstakeMiningSubmit({
     miningItem,
     amount,
     submittedBack,
+    successBack,
     logBalance,
   });
 

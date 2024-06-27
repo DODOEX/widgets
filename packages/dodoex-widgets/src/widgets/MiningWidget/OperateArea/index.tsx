@@ -179,6 +179,12 @@ export default function OperateArea({
         }
       : {};
 
+  const successBack = () => {
+    balanceInfo.refetch();
+    pmmStateQuery.refetch();
+    lpTokenAccountBalanceQuery.refetch();
+  };
+
   return (
     <>
       <Box
@@ -296,6 +302,7 @@ export default function OperateArea({
                 amount={currentStakeTokenAmount}
                 goLpLink={goLpLink}
                 submittedBack={() => setCurrentStakeTokenAmount('')}
+                successBack={successBack}
                 logBalance={logBalance}
               />
             </OperateButtonWrapper>
@@ -335,6 +342,7 @@ export default function OperateArea({
                 overrideBalance={lpTokenAccountBalanceQuery.data}
                 amount={currentUnstakeTokenAmount}
                 submittedBack={() => setCurrentUnstakeTokenAmount('')}
+                successBack={successBack}
                 logBalance={logBalance}
               />
             </OperateButtonWrapper>

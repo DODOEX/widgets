@@ -84,7 +84,7 @@ msgstr "Switch to {0}"
 msgid "Dismiss"
 msgstr "Dismiss"
 
-#: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:71
+#: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:74
 msgid "Unstaking"
 msgstr "Unstaking"
 
@@ -445,9 +445,9 @@ msgstr "Pegged"
 msgid "Equilibrium target"
 msgstr "Equilibrium target"
 
-#: src/widgets/MiningWidget/hooks/useStakeMiningSubmit.ts:79
+#: src/widgets/MiningWidget/hooks/useStakeMiningSubmit.ts:81
 #: src/widgets/MiningWidget/OperateArea/index.tsx:74
-#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:83
+#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:86
 msgid "Stake"
 msgstr "Stake"
 
@@ -494,11 +494,11 @@ msgstr "Any Ratio"
 msgid "Select Tokens"
 msgstr "Select Tokens"
 
-#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:81
+#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:84
 msgid "Staking"
 msgstr "Staking"
 
-#: src/widgets/MiningWidget/OperateArea/ClaimButton.tsx:38
+#: src/widgets/MiningWidget/OperateArea/ClaimButton.tsx:41
 msgid "Claiming"
 msgstr "Claiming"
 
@@ -545,9 +545,9 @@ msgstr "Learn More"
 msgid "Add Liquidity"
 msgstr "Add Liquidity"
 
-#: src/widgets/MiningWidget/hooks/useUnstakeMiningSubmit.ts:61
+#: src/widgets/MiningWidget/hooks/useUnstakeMiningSubmit.ts:63
 #: src/widgets/MiningWidget/OperateArea/index.tsx:75
-#: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:73
+#: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:76
 msgid "Unstake"
 msgstr "Unstake"
 
@@ -623,8 +623,8 @@ msgstr "Auto"
 msgid "Suitable for synthetic assets. The liquidity is super concentrated at some price like Curve Finance."
 msgstr "Suitable for synthetic assets. The liquidity is super concentrated at some price like Curve Finance."
 
-#: src/widgets/MiningWidget/OperateArea/index.tsx:271
-#: src/widgets/MiningWidget/OperateArea/index.tsx:308
+#: src/widgets/MiningWidget/OperateArea/index.tsx:277
+#: src/widgets/MiningWidget/OperateArea/index.tsx:315
 msgid "LP Balance:"
 msgstr "LP Balance:"
 
@@ -864,11 +864,11 @@ msgid "Auto switch network"
 msgstr "Auto switch network"
 
 #: src/widgets/MiningWidget/OperateArea/GetLpLink.tsx:24
-#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:58
+#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:61
 msgid "Get {tokenSymbol}"
 msgstr "Get {tokenSymbol}"
 
-#: src/widgets/MiningWidget/OperateArea/ClaimButton.tsx:40
+#: src/widgets/MiningWidget/OperateArea/ClaimButton.tsx:43
 msgid "One-Click Claim"
 msgstr "One-Click Claim"
 
@@ -958,7 +958,7 @@ msgstr "Token Amount"
 msgid "Select Pool Version"
 msgstr "Select Pool Version"
 
-#: src/widgets/MiningWidget/hooks/useClaimMiningSubmit.ts:45
+#: src/widgets/MiningWidget/hooks/useClaimMiningSubmit.ts:46
 #: src/widgets/MiningWidget/OperateArea/index.tsx:76
 msgid "Claim"
 msgstr "Claim"

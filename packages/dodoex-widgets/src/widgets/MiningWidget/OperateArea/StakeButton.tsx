@@ -15,6 +15,7 @@ export function StakeButton({
   miningItem,
   balanceInfo,
   submittedBack,
+  successBack,
   logBalance,
 }: {
   amount: string;
@@ -22,12 +23,14 @@ export function StakeButton({
   balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
   goLpLink?: () => Promise<void> | void;
   submittedBack?: () => void;
+  successBack?: () => void;
   logBalance?: BalanceData;
 }) {
   const stakeMutation = useStakeMiningSubmit({
     miningItem,
     amount,
     submittedBack,
+    successBack,
     logBalance,
   });
 
