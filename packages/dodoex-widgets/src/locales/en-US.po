@@ -75,7 +75,7 @@ msgstr "Loading info..."
 msgid "* Please note that the Fee Rate cannot be modified after the pool is created"
 msgstr "* Please note that the Fee Rate cannot be modified after the pool is created"
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:83
+#: src/components/ConnectWallet/NeedConnectButton.tsx:81
 msgid "Switch to {0}"
 msgstr "Switch to {0}"
 
@@ -428,7 +428,7 @@ msgstr "Price Impact: {0}"
 msgid "Deposit ratio is determined by the current assets ratio in the pool. The ratio does not represent the exchange price"
 msgstr "Deposit ratio is determined by the current assets ratio in the pool. The ratio does not represent the exchange price"
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:81
+#: src/components/ConnectWallet/NeedConnectButton.tsx:79
 msgid "Connecting..."
 msgstr "Connecting..."
 
@@ -446,7 +446,7 @@ msgid "Equilibrium target"
 msgstr "Equilibrium target"
 
 #: src/widgets/MiningWidget/hooks/useStakeMiningSubmit.ts:74
-#: src/widgets/MiningWidget/OperateArea/index.tsx:72
+#: src/widgets/MiningWidget/OperateArea/index.tsx:73
 #: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:76
 msgid "Stake"
 msgstr "Stake"
@@ -546,7 +546,7 @@ msgid "Add Liquidity"
 msgstr "Add Liquidity"
 
 #: src/widgets/MiningWidget/hooks/useUnstakeMiningSubmit.ts:56
-#: src/widgets/MiningWidget/OperateArea/index.tsx:73
+#: src/widgets/MiningWidget/OperateArea/index.tsx:74
 #: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:66
 msgid "Unstake"
 msgstr "Unstake"
@@ -623,8 +623,8 @@ msgstr "Auto"
 msgid "Suitable for synthetic assets. The liquidity is super concentrated at some price like Curve Finance."
 msgstr "Suitable for synthetic assets. The liquidity is super concentrated at some price like Curve Finance."
 
-#: src/widgets/MiningWidget/OperateArea/index.tsx:261
-#: src/widgets/MiningWidget/OperateArea/index.tsx:298
+#: src/widgets/MiningWidget/OperateArea/index.tsx:262
+#: src/widgets/MiningWidget/OperateArea/index.tsx:295
 msgid "LP Balance:"
 msgstr "LP Balance:"
 
@@ -959,7 +959,7 @@ msgid "Select Pool Version"
 msgstr "Select Pool Version"
 
 #: src/widgets/MiningWidget/hooks/useClaimMiningSubmit.ts:45
-#: src/widgets/MiningWidget/OperateArea/index.tsx:74
+#: src/widgets/MiningWidget/OperateArea/index.tsx:75
 msgid "Claim"
 msgstr "Claim"
 
@@ -1022,7 +1022,7 @@ msgid "Confirm swap"
 msgstr "Confirm swap"
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:50
-#: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:59
+#: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:93
 msgid "Slippage Tolerance"
 msgstr "Slippage Tolerance"
 
@@ -1123,7 +1123,7 @@ msgstr "The setting has been switched to cross chain mode"
 msgid "Buy"
 msgstr "Buy"
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:85
+#: src/components/ConnectWallet/NeedConnectButton.tsx:83
 msgid "Connect to a wallet"
 msgstr "Connect to a wallet"
 

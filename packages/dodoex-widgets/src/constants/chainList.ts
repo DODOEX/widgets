@@ -44,7 +44,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.SEPOLIA,
       logo: ETHereumLogo,
       name: 'Sepolia',
-      mainnet: ChainId.SEPOLIA,
+      mainnet: ChainId.MAINNET,
     },
   ],
   [

@@ -75,7 +75,7 @@ msgstr ""
 msgid "* Please note that the Fee Rate cannot be modified after the pool is created"
 msgstr ""
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:83
+#: src/components/ConnectWallet/NeedConnectButton.tsx:81
 msgid "Switch to {0}"
 msgstr ""
 
@@ -428,7 +428,7 @@ msgstr ""
 msgid "Deposit ratio is determined by the current assets ratio in the pool. The ratio does not represent the exchange price"
 msgstr ""
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:81
+#: src/components/ConnectWallet/NeedConnectButton.tsx:79
 msgid "Connecting..."
 msgstr "连接中..."
 
@@ -446,7 +446,7 @@ msgid "Equilibrium target"
 msgstr ""
 
 #: src/widgets/MiningWidget/hooks/useStakeMiningSubmit.ts:74
-#: src/widgets/MiningWidget/OperateArea/index.tsx:72
+#: src/widgets/MiningWidget/OperateArea/index.tsx:73
 #: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:76
 msgid "Stake"
 msgstr ""
@@ -546,7 +546,7 @@ msgid "Add Liquidity"
 msgstr ""
 
 #: src/widgets/MiningWidget/hooks/useUnstakeMiningSubmit.ts:56
-#: src/widgets/MiningWidget/OperateArea/index.tsx:73
+#: src/widgets/MiningWidget/OperateArea/index.tsx:74
 #: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:66
 msgid "Unstake"
 msgstr ""
@@ -623,8 +623,8 @@ msgstr ""
 msgid "Suitable for synthetic assets. The liquidity is super concentrated at some price like Curve Finance."
 msgstr ""
 
-#: src/widgets/MiningWidget/OperateArea/index.tsx:261
-#: src/widgets/MiningWidget/OperateArea/index.tsx:298
+#: src/widgets/MiningWidget/OperateArea/index.tsx:262
+#: src/widgets/MiningWidget/OperateArea/index.tsx:295
 msgid "LP Balance:"
 msgstr ""
 
@@ -959,7 +959,7 @@ msgid "Select Pool Version"
 msgstr ""
 
 #: src/widgets/MiningWidget/hooks/useClaimMiningSubmit.ts:45
-#: src/widgets/MiningWidget/OperateArea/index.tsx:74
+#: src/widgets/MiningWidget/OperateArea/index.tsx:75
 msgid "Claim"
 msgstr ""
 
@@ -1022,7 +1022,7 @@ msgid "Confirm swap"
 msgstr "确认交易"
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:50
-#: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:59
+#: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:93
 msgid "Slippage Tolerance"
 msgstr "滑点"
 
@@ -1123,7 +1123,7 @@ msgstr "设置已切换到跨链桥交易模式"
 msgid "Buy"
 msgstr ""
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:85
+#: src/components/ConnectWallet/NeedConnectButton.tsx:83
 msgid "Connect to a wallet"
 msgstr "连接钱包"
 

@@ -3,12 +3,12 @@ import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import typescript from 'rollup-plugin-typescript2';
 import terser from '@rollup/plugin-terser';
-import multi from '@rollup/plugin-multi-entry';
 import url from '@rollup/plugin-url';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import svgr from '@svgr/rollup';
 import pkg from './package.json' assert { type: 'json' };
+import globby from 'globby';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const baseConfig = {
@@ -46,9 +46,23 @@ const baseConfig = {
   ],
 };
 
+const localesConfig = globby.sync('src/locales/*.js').map((inputFile) => ({
+  input: inputFile,
+  output: [
+    {
+      dir: 'dist/locales',
+      format: 'esm',
+      sourcemap: false,
+    },
+    {
+      dir: 'dist/cjs/locales',
+      sourcemap: false,
+    },
+  ],
+}));
+
 export default [
   {
-    input: pkg.source,
     output: [
       {
         dir: 'dist',
@@ -66,19 +80,5 @@ export default [
     ],
     ...baseConfig,
   },
-  {
-    input: 'src/locales/*.js',
-    output: [
-      {
-        dir: 'dist',
-        format: 'esm',
-        sourcemap: false,
-      },
-      {
-        dir: 'dist/cjs',
-        sourcemap: false,
-      },
-    ],
-    plugins: [commonjs(), multi()],
-  },
+  ...localesConfig,
 ];
