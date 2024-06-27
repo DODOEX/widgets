@@ -14,6 +14,7 @@ import { ReactComponent as okxLogoUrl } from '../../../assets/bridge/okx.svg';
 import { ReactComponent as symbiosisLogoUrl } from '../../../assets/bridge/symbiosis.svg';
 import { ReactComponent as scrollLogoUrl } from '../../../assets/logo/networks/scroll.svg';
 import { ReactComponent as mantaLogoUrl } from '../../../assets/logo/networks/manta.svg';
+import { ReactComponent as orbiterLogoUrl } from '../../../assets/bridge/orbiter.svg';
 
 export const productList = [
   {
@@ -95,5 +96,10 @@ export const productList = [
     id: 'manta',
     logoURI: mantaLogoUrl,
     name: 'Manta',
+  },
+  {
+    id: 'orbiter',
+    logoURI: orbiterLogoUrl,
+    name: 'Orbiter',
   },
 ];
