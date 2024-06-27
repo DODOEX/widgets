@@ -7,21 +7,28 @@ import { usePoolBalanceInfo } from '../../PoolWidget/hooks/usePoolBalanceInfo';
 import { convertFetchTokenToTokenInfo } from '../../../utils';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import { useStakeMiningSubmit } from '../hooks/useStakeMiningSubmit';
+import { BalanceData } from '../../../hooks/Submission/useBalanceUpdateLoading';
 
 export function StakeButton({
   goLpLink,
   amount,
   miningItem,
   balanceInfo,
+  submittedBack,
+  logBalance,
 }: {
   amount: string;
   miningItem: FetchMiningListItem;
   balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
   goLpLink?: () => Promise<void> | void;
+  submittedBack?: () => void;
+  logBalance?: BalanceData;
 }) {
   const stakeMutation = useStakeMiningSubmit({
     miningItem,
     amount,
+    submittedBack,
+    logBalance,
   });
 
   const tokenSymbol = miningItem
@@ -65,7 +72,7 @@ export function StakeButton({
         <Button
           fullWidth
           isLoading={stakeMutation.isPending}
-          disabled={!amount}
+          disabled={!Number(amount)}
           onClick={() => {
             stakeMutation.mutate();
           }}

@@ -23,6 +23,10 @@ import { PercentageSelectButtonGroup } from './PercentageSelectButtonGroup';
 import { Trans } from '@lingui/macro';
 import { useGlobalConfig } from '../../../../providers/GlobalConfigContext';
 import { ChainId } from '@dodoex/api';
+import {
+  BalanceData,
+  useBalanceUpdateLoading,
+} from '../../../../hooks/Submission/useBalanceUpdateLoading';
 
 export interface TokenCardProps {
   amt: string;
@@ -30,6 +34,7 @@ export interface TokenCardProps {
   sx?: BoxProps['sx'];
   readOnly?: boolean;
   showMaxBtn?: boolean;
+  canClickBalance?: boolean;
   occupiedAddrs?: string[];
   occupiedChainId?: TokenPickerProps['occupiedChainId'];
   onMaxClick?: (max: string) => void;
@@ -50,6 +55,7 @@ export interface TokenCardProps {
   inputTypography?: string;
   chainId?: ChainId;
   hideToken?: boolean;
+  checkLogBalance?: BalanceData;
 }
 
 export function CardPlus() {
@@ -105,6 +111,7 @@ export function TokenCard({
   token,
   readOnly,
   showMaxBtn,
+  canClickBalance,
   onMaxClick,
   fiatPriceTxt,
   occupiedAddrs,
@@ -125,6 +132,7 @@ export function TokenCard({
   inputTypography,
   chainId,
   hideToken,
+  checkLogBalance,
 }: TokenCardProps) {
   const { account } = useWalletInfo();
   const [openSwitchChainDialog, setOpenSwitchChainDialog] = useState(false);
@@ -134,6 +142,17 @@ export function TokenCard({
     tokenApi.getFetchTokenQuery(token?.chainId, token?.address, account),
   );
   const balance = overrideBalance ?? tokenQuery.data?.balance ?? null;
+  const { isTokenLoading } = useBalanceUpdateLoading();
+  let balanceLoading = overrideBalanceLoading ?? tokenQuery.isLoading;
+  if (!balanceLoading && balance) {
+    if (checkLogBalance) {
+      balanceLoading = Object.entries(checkLogBalance).some(([key, value]) => {
+        return isTokenLoading(key, value);
+      });
+    } else if (token) {
+      balanceLoading = isTokenLoading(token.address, balance);
+    }
+  }
 
   const [percentage, setPercentage] = useState(0);
   const percentageSetValue = useRef('');
@@ -206,9 +225,10 @@ export function TokenCard({
                 }
           }
           showMaxBtn={showMaxBtn}
+          canClickBalance={canClickBalance}
           address={token?.address}
           decimals={token?.decimals}
-          loading={overrideBalanceLoading ?? tokenQuery.isLoading}
+          loading={balanceLoading}
         />
       </Box>
 

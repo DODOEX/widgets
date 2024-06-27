@@ -329,7 +329,7 @@ export default function PoolModify() {
                 }}
               >
                 <TokenCard
-                  showMaxBtn
+                  canClickBalance
                   showPercentage
                   amt={state.baseAmount}
                   onInputChange={(payload) => {
@@ -348,7 +348,7 @@ export default function PoolModify() {
                 />
                 <CardPlusConnected />
                 <TokenCard
-                  showMaxBtn
+                  canClickBalance
                   showPercentage
                   amt={state.quoteAmount}
                   onInputChange={(payload) => {

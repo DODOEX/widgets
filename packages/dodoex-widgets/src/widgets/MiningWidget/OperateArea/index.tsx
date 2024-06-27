@@ -26,6 +26,7 @@ import { RewardListCard } from './RewardListCard';
 import ClaimButton from './ClaimButton';
 import { poolApi } from '../../PoolWidget/utils';
 import { OperateButtonWrapper } from './Widgets';
+import { BalanceData } from '../../../hooks/Submission/useBalanceUpdateLoading';
 
 export default function OperateArea({
   chainId,
@@ -170,6 +171,14 @@ export default function OperateArea({
     }
   }
 
+  const logBalance: BalanceData =
+    miningItem?.baseLpToken?.address && balanceInfo.userBaseLpBalance
+      ? {
+          [miningItem?.baseLpToken?.address]:
+            balanceInfo.userBaseLpBalance.toString(),
+        }
+      : {};
+
   return (
     <>
       <Box
@@ -265,11 +274,13 @@ export default function OperateArea({
                 }
                 overrideBalanceLoading={balanceInfo.loading}
                 amt={currentStakeTokenAmount}
+                canClickBalance
                 onInputChange={(value) => {
                   setCurrentStakeTokenAmount(value);
                 }}
                 readOnly={isEnded || loading}
                 token={baseToken}
+                checkLogBalance={logBalance}
                 occupiedChainId={chainId}
                 chainId={chainId}
                 sx={{
@@ -284,6 +295,8 @@ export default function OperateArea({
                 balanceInfo={balanceInfo}
                 amount={currentStakeTokenAmount}
                 goLpLink={goLpLink}
+                submittedBack={() => setCurrentStakeTokenAmount('')}
+                logBalance={logBalance}
               />
             </OperateButtonWrapper>
           </TabPanel>
@@ -305,8 +318,10 @@ export default function OperateArea({
               onInputChange={(value) => {
                 setCurrentUnstakeTokenAmount(value);
               }}
+              canClickBalance
               readOnly={isEnded || loading}
               token={baseToken}
+              checkLogBalance={logBalance}
               occupiedChainId={chainId}
               chainId={chainId}
               sx={{
@@ -319,6 +334,8 @@ export default function OperateArea({
                 miningItem={miningItem}
                 overrideBalance={lpTokenAccountBalanceQuery.data}
                 amount={currentUnstakeTokenAmount}
+                submittedBack={() => setCurrentUnstakeTokenAmount('')}
+                logBalance={logBalance}
               />
             </OperateButtonWrapper>
           </TabPanel>

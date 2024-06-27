@@ -153,6 +153,11 @@ export function PoolOperate({
             pool={pool}
             operate={operate}
             errorRefetch={poolErrorRefetch}
+            submittedBack={() => {
+              if (hasMining) {
+                handleChangeTab(PoolOrMiningTab.Mining);
+              }
+            }}
           />
         </TabPanel>
         <TabPanel

@@ -6,14 +6,19 @@ import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useSubmission } from '../../../hooks/Submission';
 import { OpCode } from '../../../hooks/Submission/spec';
 import { MetadataFlag } from '../../../hooks/Submission/types';
+import { BalanceData } from '../../../hooks/Submission/useBalanceUpdateLoading';
 import { FetchMiningListItem } from '../types';
 
 export const useUnstakeMiningSubmit = ({
   miningItem,
   amount,
+  submittedBack,
+  logBalance,
 }: {
   miningItem: FetchMiningListItem;
   amount: string;
+  submittedBack?: () => void;
+  logBalance?: BalanceData;
 }) => {
   const { account } = useWalletInfo();
   const submission = useSubmission();
@@ -61,7 +66,9 @@ export const useUnstakeMiningSubmit = ({
         {
           metadata: {
             [MetadataFlag.unstakeMining]: '1',
+            logBalance,
           },
+          submittedBack,
         },
       );
       return result;

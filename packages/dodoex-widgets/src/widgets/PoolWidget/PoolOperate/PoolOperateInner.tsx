@@ -14,12 +14,14 @@ export interface PoolOperateInnerProps {
   pool: OperatePool;
   operate?: OperateTab;
   errorRefetch?: () => void;
+  submittedBack?: () => void;
 }
 
 export default function PoolOperateInner({
   pool,
   operate,
   errorRefetch,
+  submittedBack,
 }: PoolOperateInnerProps) {
   const { operateTab, operateTabs, handleChangeTab } =
     usePoolOperateTabs(operate);
@@ -75,10 +77,18 @@ export default function PoolOperateInner({
           }}
         />
         <TabPanel value={OperateTab.Add}>
-          <AddPoolOperate pool={pool} balanceInfo={balanceInfo} />
+          <AddPoolOperate
+            pool={pool}
+            balanceInfo={balanceInfo}
+            submittedBack={submittedBack}
+          />
         </TabPanel>
         <TabPanel value={OperateTab.Remove}>
-          <RemovePoolOperate pool={pool} balanceInfo={balanceInfo} />
+          <RemovePoolOperate
+            pool={pool}
+            balanceInfo={balanceInfo}
+            submittedBack={submittedBack}
+          />
         </TabPanel>
       </Tabs>
     </>

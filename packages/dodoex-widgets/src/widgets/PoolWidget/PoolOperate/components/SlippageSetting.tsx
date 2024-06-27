@@ -1,10 +1,10 @@
 import {
+  Box,
   Input,
   HoverAddBackground,
   useTheme,
   Tooltip,
 } from '@dodoex/components';
-import { alpha, Box } from '@mui/system';
 import BigNumber from 'bignumber.js';
 import { ChangeEvent, useMemo, useState } from 'react';
 import { Setting } from '@dodoex/icons';
@@ -73,8 +73,7 @@ export default function SlippageSetting({
         <Box
           sx={{
             backgroundColor: theme.palette.background.paper,
-            px: 20,
-            py: 12,
+            padding: theme.spacing(12, 20),
             borderRadius: 8,
             width: 318,
             maxWidth: '90vw',
@@ -103,7 +102,7 @@ export default function SlippageSetting({
             sx={{
               display: 'flex',
               alignItems: 'center',
-              mt: 16,
+              margin: theme.spacing(16, 0, 0, 0),
             }}
           >
             <AutoButton

@@ -35,13 +35,13 @@ export function useTokenStatus(
     contractAddress,
     offset,
     overrideBalance,
-    skip,
+    skipQuery,
   }: {
     amount?: string | number | BigNumber;
     contractAddress?: string;
     offset?: BigNumber;
     overrideBalance?: BigNumber | null;
-    skip?: boolean;
+    skipQuery?: boolean;
   } = {},
 ) {
   const { account } = useWalletInfo();
@@ -57,7 +57,7 @@ export function useTokenStatus(
   const tokenQuery = useQuery(
     tokenApi.getFetchTokenQuery(
       // skip the query
-      skip ? undefined : chainId,
+      skipQuery ? undefined : chainId,
       token?.address,
       account,
       proxyContractAddress,
@@ -160,7 +160,7 @@ export function useTokenStatus(
   const getMaxBalance = React.useCallback(() => {
     const defaultVal = new BigNumber(0);
     if (!token) return defaultVal.toString(); // Use toString instead of toNumber to avoid missing decimals!
-    const balance = tokenQuery.data?.balance;
+    const balance = overrideBalance ?? tokenQuery.data?.balance;
     if (!balance) return defaultVal.toString();
     let val = balance;
     // const keepChanges = isETH ? 0.1 : 0.02;
@@ -169,13 +169,14 @@ export function useTokenStatus(
     //   val = balance.gt(keepChanges) ? balance.minus(keepChanges) : defaultVal;
 
     return val.toString();
-  }, [chainId, tokenQuery.data?.balance, token]);
+  }, [chainId, tokenQuery.data?.balance, overrideBalance, token]);
 
   const insufficientBalance = React.useMemo(() => {
     if (!amount) return false;
-    const balance = tokenQuery.data?.balance ?? new BigNumber(0);
+    const balance =
+      overrideBalance ?? tokenQuery.data?.balance ?? new BigNumber(0);
     return balance.lt(amount);
-  }, [tokenQuery.data?.balance, amount]);
+  }, [tokenQuery.data?.balance, overrideBalance, amount]);
 
   return {
     isApproving,

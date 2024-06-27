@@ -7,19 +7,26 @@ import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
 import { convertFetchTokenToTokenInfo } from '../../../utils';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import { useUnstakeMiningSubmit } from '../hooks/useUnstakeMiningSubmit';
+import { BalanceData } from '../../../hooks/Submission/useBalanceUpdateLoading';
 
 export default function UnstakeButton({
   amount,
   miningItem,
   overrideBalance,
+  submittedBack,
+  logBalance,
 }: {
   amount: string;
   miningItem: FetchMiningListItem;
   overrideBalance: BigNumber | undefined | null;
+  submittedBack?: () => void;
+  logBalance?: BalanceData;
 }) {
   const stakeMutation = useUnstakeMiningSubmit({
     miningItem,
     amount,
+    submittedBack,
+    logBalance,
   });
 
   const tokenSymbol = miningItem
@@ -39,7 +46,7 @@ export default function UnstakeButton({
     {
       overrideBalance,
       amount,
-      skip: true,
+      skipQuery: true,
     },
   );
 
@@ -55,7 +62,7 @@ export default function UnstakeButton({
         <Button
           fullWidth
           isLoading={stakeMutation.isPending}
-          disabled={!amount}
+          disabled={!Number(amount)}
           onClick={() => {
             stakeMutation.mutate();
           }}

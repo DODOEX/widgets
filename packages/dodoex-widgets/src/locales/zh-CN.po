@@ -63,7 +63,7 @@ msgstr ""
 msgid "Traders sold ‪{0}‬ {1}, price in the pool increased to {2}"
 msgstr ""
 
-#: src/components/Swap/components/TokenCard/BalanceText.tsx:34
+#: src/components/Swap/components/TokenCard/BalanceText.tsx:51
 msgid "Balance:"
 msgstr "余额:"
 
@@ -84,7 +84,7 @@ msgstr ""
 msgid "Dismiss"
 msgstr "忽略"
 
-#: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:64
+#: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:71
 msgid "Unstaking"
 msgstr ""
 
@@ -291,7 +291,7 @@ msgstr "此众筹池已被其他地址结算"
 msgid "Liquidity Supplied"
 msgstr ""
 
-#: src/components/Swap/components/TokenCard/BalanceText.tsx:59
+#: src/components/Swap/components/TokenCard/BalanceText.tsx:76
 msgid "Max"
 msgstr "全部"
 
@@ -445,9 +445,9 @@ msgstr ""
 msgid "Equilibrium target"
 msgstr ""
 
-#: src/widgets/MiningWidget/hooks/useStakeMiningSubmit.ts:74
-#: src/widgets/MiningWidget/OperateArea/index.tsx:73
-#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:76
+#: src/widgets/MiningWidget/hooks/useStakeMiningSubmit.ts:79
+#: src/widgets/MiningWidget/OperateArea/index.tsx:74
+#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:83
 msgid "Stake"
 msgstr ""
 
@@ -494,7 +494,7 @@ msgstr ""
 msgid "Select Tokens"
 msgstr "选择代币"
 
-#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:74
+#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:81
 msgid "Staking"
 msgstr ""
 
@@ -545,9 +545,9 @@ msgstr ""
 msgid "Add Liquidity"
 msgstr ""
 
-#: src/widgets/MiningWidget/hooks/useUnstakeMiningSubmit.ts:56
-#: src/widgets/MiningWidget/OperateArea/index.tsx:74
-#: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:66
+#: src/widgets/MiningWidget/hooks/useUnstakeMiningSubmit.ts:61
+#: src/widgets/MiningWidget/OperateArea/index.tsx:75
+#: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:73
 msgid "Unstake"
 msgstr ""
 
@@ -623,8 +623,8 @@ msgstr ""
 msgid "Suitable for synthetic assets. The liquidity is super concentrated at some price like Curve Finance."
 msgstr ""
 
-#: src/widgets/MiningWidget/OperateArea/index.tsx:262
-#: src/widgets/MiningWidget/OperateArea/index.tsx:295
+#: src/widgets/MiningWidget/OperateArea/index.tsx:271
+#: src/widgets/MiningWidget/OperateArea/index.tsx:308
 msgid "LP Balance:"
 msgstr ""
 
@@ -864,7 +864,7 @@ msgid "Auto switch network"
 msgstr "自动切换网络"
 
 #: src/widgets/MiningWidget/OperateArea/GetLpLink.tsx:24
-#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:51
+#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:58
 msgid "Get {tokenSymbol}"
 msgstr ""
 
@@ -959,7 +959,7 @@ msgid "Select Pool Version"
 msgstr ""
 
 #: src/widgets/MiningWidget/hooks/useClaimMiningSubmit.ts:45
-#: src/widgets/MiningWidget/OperateArea/index.tsx:75
+#: src/widgets/MiningWidget/OperateArea/index.tsx:76
 msgid "Claim"
 msgstr ""
 
@@ -1022,7 +1022,7 @@ msgid "Confirm swap"
 msgstr "确认交易"
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:50
-#: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:93
+#: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:92
 msgid "Slippage Tolerance"
 msgstr "滑点"
 
@@ -1119,7 +1119,7 @@ msgstr "在冷静期无法进行清算"
 msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
-#: src/components/Swap/components/TokenCard/index.tsx:258
+#: src/components/Swap/components/TokenCard/index.tsx:278
 msgid "Buy"
 msgstr ""
 

@@ -6,15 +6,20 @@ import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useSubmission } from '../../../hooks/Submission';
 import { OpCode } from '../../../hooks/Submission/spec';
 import { MetadataFlag } from '../../../hooks/Submission/types';
+import { BalanceData } from '../../../hooks/Submission/useBalanceUpdateLoading';
 import { getEthersValue } from '../../../utils/bytes';
 import { FetchMiningListItem } from '../types';
 
 export const useStakeMiningSubmit = ({
   miningItem,
   amount,
+  submittedBack,
+  logBalance,
 }: {
   miningItem: FetchMiningListItem;
   amount: string;
+  submittedBack?: () => void;
+  logBalance?: BalanceData;
 }) => {
   const { chainId, account } = useWalletInfo();
   const submission = useSubmission();
@@ -79,7 +84,9 @@ export const useStakeMiningSubmit = ({
         {
           metadata: {
             [MetadataFlag.stakeMining]: '1',
+            logBalance,
           },
+          submittedBack,
         },
       );
       return result;

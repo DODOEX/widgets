@@ -67,6 +67,12 @@ export function convertFetchLiquidityToOperateData(
     ) as TokenInfo,
     type: pair.type as PoolType,
     creator: pair.creator,
+    baseLpToken: {
+      id: pair.baseLpToken?.id as string,
+    },
+    quoteLpToken: {
+      id: pair.quoteLpToken?.id as string,
+    },
   };
 }
 export function convertFetchPoolToOperateData(
@@ -87,5 +93,11 @@ export function convertFetchPoolToOperateData(
     ) as TokenInfo,
     type: pool.type as PoolType,
     creator: pool.creator,
+    baseLpToken: {
+      id: pool.baseLpToken?.id as string,
+    },
+    quoteLpToken: {
+      id: pool.quoteLpToken?.id as string,
+    },
   };
 }

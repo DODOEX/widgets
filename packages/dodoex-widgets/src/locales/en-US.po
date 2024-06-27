@@ -63,7 +63,7 @@ msgstr "Removing"
 msgid "Traders sold ‪{0}‬ {1}, price in the pool increased to {2}"
 msgstr "Traders sold ‪{0}‬ {1}, price in the pool increased to {2}"
 
-#: src/components/Swap/components/TokenCard/BalanceText.tsx:34
+#: src/components/Swap/components/TokenCard/BalanceText.tsx:51
 msgid "Balance:"
 msgstr "Balance:"
 
@@ -84,7 +84,7 @@ msgstr "Switch to {0}"
 msgid "Dismiss"
 msgstr "Dismiss"
 
-#: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:64
+#: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:71
 msgid "Unstaking"
 msgstr "Unstaking"
 
@@ -291,7 +291,7 @@ msgstr "This CP has been settled by other addrs"
 msgid "Liquidity Supplied"
 msgstr "Liquidity Supplied"
 
-#: src/components/Swap/components/TokenCard/BalanceText.tsx:59
+#: src/components/Swap/components/TokenCard/BalanceText.tsx:76
 msgid "Max"
 msgstr "Max"
 
@@ -445,9 +445,9 @@ msgstr "Pegged"
 msgid "Equilibrium target"
 msgstr "Equilibrium target"
 
-#: src/widgets/MiningWidget/hooks/useStakeMiningSubmit.ts:74
-#: src/widgets/MiningWidget/OperateArea/index.tsx:73
-#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:76
+#: src/widgets/MiningWidget/hooks/useStakeMiningSubmit.ts:79
+#: src/widgets/MiningWidget/OperateArea/index.tsx:74
+#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:83
 msgid "Stake"
 msgstr "Stake"
 
@@ -494,7 +494,7 @@ msgstr "Any Ratio"
 msgid "Select Tokens"
 msgstr "Select Tokens"
 
-#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:74
+#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:81
 msgid "Staking"
 msgstr "Staking"
 
@@ -545,9 +545,9 @@ msgstr "Learn More"
 msgid "Add Liquidity"
 msgstr "Add Liquidity"
 
-#: src/widgets/MiningWidget/hooks/useUnstakeMiningSubmit.ts:56
-#: src/widgets/MiningWidget/OperateArea/index.tsx:74
-#: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:66
+#: src/widgets/MiningWidget/hooks/useUnstakeMiningSubmit.ts:61
+#: src/widgets/MiningWidget/OperateArea/index.tsx:75
+#: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:73
 msgid "Unstake"
 msgstr "Unstake"
 
@@ -623,8 +623,8 @@ msgstr "Auto"
 msgid "Suitable for synthetic assets. The liquidity is super concentrated at some price like Curve Finance."
 msgstr "Suitable for synthetic assets. The liquidity is super concentrated at some price like Curve Finance."
 
-#: src/widgets/MiningWidget/OperateArea/index.tsx:262
-#: src/widgets/MiningWidget/OperateArea/index.tsx:295
+#: src/widgets/MiningWidget/OperateArea/index.tsx:271
+#: src/widgets/MiningWidget/OperateArea/index.tsx:308
 msgid "LP Balance:"
 msgstr "LP Balance:"
 
@@ -864,7 +864,7 @@ msgid "Auto switch network"
 msgstr "Auto switch network"
 
 #: src/widgets/MiningWidget/OperateArea/GetLpLink.tsx:24
-#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:51
+#: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:58
 msgid "Get {tokenSymbol}"
 msgstr "Get {tokenSymbol}"
 
@@ -959,7 +959,7 @@ msgid "Select Pool Version"
 msgstr "Select Pool Version"
 
 #: src/widgets/MiningWidget/hooks/useClaimMiningSubmit.ts:45
-#: src/widgets/MiningWidget/OperateArea/index.tsx:75
+#: src/widgets/MiningWidget/OperateArea/index.tsx:76
 msgid "Claim"
 msgstr "Claim"
 
@@ -1022,7 +1022,7 @@ msgid "Confirm swap"
 msgstr "Confirm swap"
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:50
-#: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:93
+#: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:92
 msgid "Slippage Tolerance"
 msgstr "Slippage Tolerance"
 
@@ -1119,7 +1119,7 @@ msgstr "Unable to SETTLE during the cooling-off period"
 msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
-#: src/components/Swap/components/TokenCard/index.tsx:258
+#: src/components/Swap/components/TokenCard/index.tsx:278
 msgid "Buy"
 msgstr "Buy"
 

@@ -249,7 +249,7 @@ export function RemovePoolOperate({
             <TokenCard
               amt={isBase ? baseAmount : quoteAmount}
               token={checkToken}
-              showMaxBtn
+              canClickBalance
               showPercentage
               onInputChange={
                 isBase ? handleChangeBaseAmount : handleChangeQuoteAmount
@@ -263,7 +263,7 @@ export function RemovePoolOperate({
               <TokenCard
                 amt={baseAmount}
                 token={pool?.baseToken}
-                showMaxBtn
+                canClickBalance
                 showPercentage
                 onInputChange={handleChangeBaseAmount}
                 readOnly={balanceInfo.loading || !canOperate}
@@ -277,7 +277,7 @@ export function RemovePoolOperate({
                 <TokenCard
                   amt={quoteAmount}
                   token={pool?.quoteToken}
-                  showMaxBtn
+                  canClickBalance
                   showPercentage
                   onInputChange={handleChangeQuoteAmount}
                   readOnly={balanceInfo.loading || !canOperate || isSinglePool}

@@ -124,7 +124,7 @@ export function AddPoolOperate({
           <TokenCard
             amt={baseAmount}
             token={pool?.baseToken}
-            showMaxBtn
+            canClickBalance
             showPercentage
             onInputChange={handleChangeBaseAmount}
             readOnly={balanceInfo.loading || !canOperate}
@@ -137,7 +137,7 @@ export function AddPoolOperate({
           <TokenCard
             amt={quoteAmount}
             token={pool?.quoteToken}
-            showMaxBtn
+            canClickBalance
             showPercentage
             onInputChange={handleChangeQuoteAmount}
             readOnly={balanceInfo.loading || !canOperate || isSinglePool}

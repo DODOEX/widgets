@@ -3,7 +3,7 @@ import React from 'react';
 import { useSubmission } from '.';
 import { State } from './types';
 
-type BalanceData = {
+export type BalanceData = {
   [address: string]: string;
 };
 
@@ -20,6 +20,25 @@ export const useBalanceUpdateLoading = () => {
     let result = {} as BalanceData;
     requests?.forEach(([request, state]) => {
       if (
+        (state === State.Running || state === State.Success) &&
+        request.metadata?.logBalance &&
+        (!request.doneTime ||
+          Math.ceil(Date.now() / 1000) - request.doneTime < 300)
+      ) {
+        const logBalance = request.metadata?.logBalance as BalanceData;
+        result = {
+          ...result,
+          ...logBalance,
+        };
+      }
+    });
+    return result;
+  }, [requests && Array.from(requests)]);
+
+  const balanceDataDone = React.useMemo(() => {
+    let result = {} as BalanceData;
+    requests?.forEach(([request, state]) => {
+      if (
         state === State.Success &&
         request.metadata?.logBalance &&
         request.doneTime &&
@@ -33,11 +52,15 @@ export const useBalanceUpdateLoading = () => {
       }
     });
     return result;
-  }, [requests]);
+  }, [requests && Array.from(requests)]);
 
-  const isTokenLoading = React.useCallback(
-    (address: string, balance: BigNumber | number | string) => {
-      const oldBalance = balanceData[address];
+  const isTokenLoadingOrigin = React.useCallback(
+    (
+      queryBalanceData: BalanceData,
+      address: string,
+      balance: BigNumber | number | string,
+    ) => {
+      const oldBalance = queryBalanceData[address];
       if (!oldBalance) return false;
       const newBalance = BigNumber.isBigNumber(balance)
         ? balance
@@ -62,12 +85,28 @@ export const useBalanceUpdateLoading = () => {
       });
       return false;
     },
-    [balanceData, updateText],
+    [updateText],
+  );
+
+  const isTokenLoading = React.useCallback(
+    (address: string, balance: BigNumber | number | string) => {
+      return isTokenLoadingOrigin(balanceData, address, balance);
+    },
+    [balanceData, isTokenLoadingOrigin],
+  );
+
+  const isTokenLoadingDone = React.useCallback(
+    (address: string, balance: BigNumber | number | string) => {
+      return isTokenLoadingOrigin(balanceDataDone, address, balance);
+    },
+    [balanceDataDone, isTokenLoadingOrigin],
   );
 
   return {
     balanceData,
+    balanceDataDone,
 
     isTokenLoading,
+    isTokenLoadingDone,
   };
 };

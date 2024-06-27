@@ -214,7 +214,7 @@ export default function PoolCreate() {
                 }}
               >
                 <TokenCard
-                  showMaxBtn
+                  canClickBalance
                   showPercentage
                   amt={
                     isSingleTokenVersion ? state.quoteAmount : state.baseAmount
@@ -249,7 +249,7 @@ export default function PoolCreate() {
                 />
                 <CardPlusConnected />
                 <TokenCard
-                  showMaxBtn
+                  canClickBalance
                   showPercentage
                   amt={
                     isSingleTokenVersion ? state.baseAmount : state.quoteAmount

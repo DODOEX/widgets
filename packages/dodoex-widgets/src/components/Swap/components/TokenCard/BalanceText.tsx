@@ -10,6 +10,7 @@ export function BalanceText({
   decimals,
   address,
   showMaxBtn,
+  canClickBalance: canClickBalanceProps,
   loading,
   balanceText,
 }: {
@@ -18,10 +19,13 @@ export function BalanceText({
   decimals?: number;
   address?: string;
   showMaxBtn?: boolean;
+  canClickBalance?: boolean;
   loading?: boolean;
   balanceText?: React.ReactNode;
 }) {
   const { palette } = useTheme();
+  const canClickBalance = canClickBalanceProps && balance?.gt(0) && onClick;
+
   return (
     <Box
       sx={{
@@ -29,7 +33,20 @@ export function BalanceText({
         typography: 'body2',
         alignItems: 'center',
         color: palette.text.secondary,
+        ...(canClickBalance
+          ? {
+              '&:hover': {
+                color: palette.text.primary,
+                cursor: 'pointer',
+              },
+            }
+          : {}),
       }}
+      onClick={
+        canClickBalance
+          ? () => onClick(balance ? balance.toString() : '')
+          : undefined
+      }
     >
       {balanceText ?? <Trans>Balance:</Trans>}&nbsp;
       {loading ? (
