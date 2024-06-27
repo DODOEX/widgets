@@ -1,5 +1,8 @@
 import { create } from 'zustand';
-import { Page, PageType } from './types';
+import { Page } from './types';
+
+export { PageType } from './types';
+export type { Page } from './types';
 
 interface RouterState {
   page?: Page;
@@ -10,14 +13,7 @@ interface RouterState {
 }
 
 export const useRouterStore = create<RouterState>((set, get) => ({
-  // page: {
-  //   type: PageType.PoolDetail,
-  //   params: {
-  //     address: '0xc9f93163c99695c6526b799ebca2207fdf7d61ad',
-  //     chainId: 1,
-  //   },
-  // },
-  // page: undefined,
+  page: undefined,
   historyList: [],
   push: (page: Page) => {
     set((oldState) => {

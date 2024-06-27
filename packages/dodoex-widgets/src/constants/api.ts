@@ -70,4 +70,6 @@ export const tokenApi = new TokenApi({
   contractRequests: tokenContractRequests,
 });
 
-export const graphQLRequests = new GraphQLRequests();
+export const graphQLRequests = new GraphQLRequests({
+  url: 'https://api.gcp.dxd.ink/frontend-graphql',
+});

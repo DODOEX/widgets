@@ -83,7 +83,7 @@ const StyledTooltipRoot = styled('div')(
 export default function Tooltip({
   title,
   sx,
-  maxWidth = 'auto',
+  maxWidth = 'none',
   popperOptions,
   children,
   onlyHover,

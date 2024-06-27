@@ -45,6 +45,8 @@ function NextButton({
         variant={Button.Variant.contained}
         fullWidth
         includeButton
+        showSwitchText
+        autoSwitch
       />
     );
   }

@@ -12,7 +12,7 @@ export {
   ABIName,
   CONTRACT_QUERY_KEY,
 } from './helper/ContractRequests';
-export type { Query } from './helper/ContractRequests';
+export type { Query, ContractRequestsConfig } from './helper/ContractRequests';
 
 export { SwapWidgetApi } from './services/SwapWidgetApi';
 export {

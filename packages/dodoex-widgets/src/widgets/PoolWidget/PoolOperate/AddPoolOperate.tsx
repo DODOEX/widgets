@@ -184,6 +184,7 @@ export function AddPoolOperate({
         )}
         {pool ? (
           <OperateBtn
+            chainId={pool.chainId}
             baseTokenStatus={baseTokenStatus}
             quoteTokenStatus={quoteTokenStatus}
           >

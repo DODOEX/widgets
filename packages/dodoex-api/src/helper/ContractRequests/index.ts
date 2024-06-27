@@ -279,7 +279,7 @@ export default class ContractRequests {
         action: 'batchCallQuery.response',
         chainId,
         query,
-        response: callbackResult,
+        response: result,
       });
     }
     if (callbackResult) return callbackResult as T;

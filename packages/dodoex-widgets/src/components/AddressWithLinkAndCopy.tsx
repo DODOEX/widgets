@@ -165,6 +165,7 @@ export function AddressWithLinkAndCopy({
 
       <IconHoverBox
         sx={{
+          display: 'inline-flex',
           ml: getIconSpace(isMedium),
           cursor: 'pointer',
         }}

@@ -1,21 +1,38 @@
 import { Button, Box } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
+import { useWeb3React } from '@web3-react/core';
+import NeedConnectButton from '../../../../components/ConnectWallet/NeedConnectButton';
 import TokenStatusButton from '../../../../components/TokenStatusButton';
 import { useInflights } from '../../../../hooks/Submission';
 import { MetadataFlag } from '../../../../hooks/Submission/types';
 import { useTokenStatus } from '../../../../hooks/Token/useTokenStatus';
 
 export default function OperateBtn({
+  chainId,
   baseTokenStatus,
   quoteTokenStatus,
   children,
 }: React.PropsWithChildren<{
+  chainId: number;
   baseTokenStatus: ReturnType<typeof useTokenStatus>;
   quoteTokenStatus: ReturnType<typeof useTokenStatus>;
 }>) {
   const updateBalanceLoading = false;
 
   const { runningRequests } = useInflights();
+  const { account, chainId: currentChainId } = useWeb3React();
+
+  if (!account || chainId !== currentChainId) {
+    return (
+      <NeedConnectButton
+        chainId={chainId}
+        showSwitchText
+        autoSwitch
+        fullWidth
+      />
+    );
+  }
+
   const isPending = runningRequests.some(
     (request) =>
       request.metadata?.[MetadataFlag.addLiquidity] ||

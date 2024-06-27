@@ -220,11 +220,11 @@ export default function useExecution({
           }
           if (onTxSuccess) {
             onTxSuccess(tx, reportInfo);
-            queryClient.refetchQueries({
-              queryKey: [CONTRACT_QUERY_KEY],
-            });
           }
           await updateBlockNumber(); // update blockNumber once after tx
+          queryClient.invalidateQueries({
+            queryKey: [CONTRACT_QUERY_KEY],
+          });
           setRequests((res) =>
             res.set(tx as string, [
               {

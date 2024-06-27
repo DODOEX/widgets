@@ -276,6 +276,7 @@ export const getDesignTokens = (
         styleOverrides: {
           '': {
             border: `0 solid ${palette.border?.main}`,
+            fontFamily: 'inherit',
           },
           '::-webkit-scrollbar': {
             width: 6,

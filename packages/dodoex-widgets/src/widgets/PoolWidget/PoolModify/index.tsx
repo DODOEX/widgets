@@ -40,7 +40,7 @@ import { BottomButtonGroup } from './operate-widgets/BottomButtonGroup';
 import { FeeRateSetting } from './operate-widgets/FeeRateSetting';
 import { SectionTitle } from './SectionTitle';
 
-export default function gDolModify() {
+export default function PoolModify() {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
   const { chainId } = useWalletInfo();

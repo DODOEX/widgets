@@ -44,7 +44,13 @@ export default function UnstakeButton({
   );
 
   return (
-    <NeedConnectButton includeButton fullWidth chainId={miningItem?.chainId}>
+    <NeedConnectButton
+      includeButton
+      fullWidth
+      showSwitchText
+      autoSwitch
+      chainId={miningItem?.chainId}
+    >
       <TokenStatusButton status={tokenStatus}>
         <Button
           fullWidth

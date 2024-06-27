@@ -15,110 +15,6 @@ import {
 import { Trans } from '@lingui/macro';
 import { AutoButton } from '../../../../components/AutoButton';
 
-interface Props {
-  value: number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION;
-  onChange: (val: number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION) => void;
-}
-
-function Slipper({ value, onChange }: Props) {
-  const isAuto = value === AUTO_SWAP_SLIPPAGE_PROTECTION;
-  const [tempValue, setTempValue] = useState(
-    isAuto ? '' : new BigNumber(value).times(100).toNumber(),
-  );
-
-  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    const { value: val } = evt.target;
-    setTempValue(val);
-    onChange(
-      val
-        ? new BigNumber(val).div(100).toNumber()
-        : AUTO_SWAP_SLIPPAGE_PROTECTION,
-    );
-  };
-  return (
-    <Box
-      sx={{
-        backgroundColor: 'background.paper',
-        px: 20,
-        py: 12,
-        borderRadius: 8,
-        width: 318,
-        maxWidth: '90vw',
-        boxSizing: 'border-box',
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          typography: 'body2',
-        }}
-      >
-        <span>
-          <Trans>Slippage Tolerance</Trans>
-        </span>
-        <span>
-          {isAuto
-            ? AUTO_LIQUIDITY_SLIPPAGE_PROTECTION
-            : value && new BigNumber(value).times(100).toNumber()}
-          %
-        </span>
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          mt: 16,
-        }}
-      >
-        <AutoButton
-          sx={{
-            borderRadius: 8,
-            whiteSpace: 'nowrap',
-          }}
-          onClick={() => {
-            setTempValue('');
-            onChange(AUTO_SWAP_SLIPPAGE_PROTECTION);
-          }}
-          active={isAuto}
-        />
-        <Input
-          placeholder={String(AUTO_LIQUIDITY_SLIPPAGE_PROTECTION)}
-          value={tempValue}
-          onChange={handleChange}
-          onBlur={() => {
-            if (
-              (!isAuto && new BigNumber(value).gt(0.1)) ||
-              new BigNumber(value).lte(0)
-            ) {
-              setTempValue(10);
-              onChange(0.1);
-            }
-          }}
-          suffix={
-            <Box
-              sx={{
-                mr: 16,
-              }}
-            >
-              %
-            </Box>
-          }
-          sx={{
-            ml: 8,
-            '& input': {
-              px: 16,
-              py: 0,
-              height: '39px',
-            },
-          }}
-        />
-      </Box>
-    </Box>
-  );
-}
-
 export const useSlipper = ({ address }: { address?: string }) => {
   const [slipper, setSlipper] = useState<
     number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION
@@ -146,16 +42,115 @@ export const useSlipper = ({ address }: { address?: string }) => {
 
 export default function SlippageSetting({
   disabled,
-  ...attrs
-}: Props & {
+  value,
+  onChange,
+}: {
   disabled?: boolean;
+  value: number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION;
+  onChange: (val: number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION) => void;
 }) {
   const theme = useTheme();
+  const isAuto = value === AUTO_SWAP_SLIPPAGE_PROTECTION;
+  const [tempValue, setTempValue] = useState(
+    isAuto ? '' : new BigNumber(value).times(100).toNumber(),
+  );
+
+  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { value: val } = evt.target;
+    setTempValue(val);
+    onChange(
+      val
+        ? new BigNumber(val).div(100).toNumber()
+        : AUTO_SWAP_SLIPPAGE_PROTECTION,
+    );
+  };
+
   return (
     <Tooltip
       disabled={disabled}
       onlyClick
-      title={<Slipper {...attrs} />}
+      title={
+        <Box
+          sx={{
+            backgroundColor: theme.palette.background.paper,
+            px: 20,
+            py: 12,
+            borderRadius: 8,
+            width: 318,
+            maxWidth: '90vw',
+            boxSizing: 'border-box',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              typography: 'body2',
+            }}
+          >
+            <span>
+              <Trans>Slippage Tolerance</Trans>
+            </span>
+            <span>
+              {isAuto
+                ? AUTO_LIQUIDITY_SLIPPAGE_PROTECTION
+                : value && new BigNumber(value).times(100).toNumber()}
+              %
+            </span>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              mt: 16,
+            }}
+          >
+            <AutoButton
+              sx={{
+                borderRadius: 8,
+                whiteSpace: 'nowrap',
+              }}
+              onClick={() => {
+                setTempValue('');
+                onChange(AUTO_SWAP_SLIPPAGE_PROTECTION);
+              }}
+              active={isAuto}
+            />
+            <Input
+              placeholder={String(AUTO_LIQUIDITY_SLIPPAGE_PROTECTION)}
+              value={tempValue}
+              onChange={handleChange}
+              onBlur={() => {
+                if (
+                  (!isAuto && new BigNumber(value).gt(0.1)) ||
+                  new BigNumber(value).lte(0)
+                ) {
+                  setTempValue(10);
+                  onChange(0.1);
+                }
+              }}
+              suffix={
+                <Box
+                  sx={{
+                    mr: 16,
+                  }}
+                >
+                  %
+                </Box>
+              }
+              sx={{
+                ml: 8,
+                '& input': {
+                  px: 16,
+                  py: 0,
+                  height: '39px',
+                },
+              }}
+            />
+          </Box>
+        </Box>
+      }
       sx={{
         p: 0,
       }}

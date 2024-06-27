@@ -393,6 +393,7 @@ export function RemovePoolOperate({
         )}
         {pool ? (
           <OperateBtn
+            chainId={pool.chainId}
             baseTokenStatus={baseTokenStatus}
             quoteTokenStatus={quoteTokenStatus}
           >

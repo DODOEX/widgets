@@ -5,20 +5,16 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { OperateType } from '../types';
 import { useStatusAndStartBlockNumber } from '../hooks/useStatusAndStartBlockNumber';
-import { usePoolBalanceInfo } from '../../PoolWidget/hooks/usePoolBalanceInfo';
-import BigNumber from 'bignumber.js';
 
 export default function LpTokenMiningOperate({
   chainId,
   account,
   poolAddress,
-  balanceInfo,
   goLpLink,
 }: {
   chainId: number;
   account: string | undefined;
   poolAddress: string;
-  balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
   goLpLink?: () => void;
 }) {
   const query = graphQLRequests.getQuery(MiningApi.graphql.fetchMiningList, {
@@ -53,7 +49,7 @@ export default function LpTokenMiningOperate({
       miningItem={miningItem}
       status={status}
       goLpLink={goLpLink}
-      balanceInfo={balanceInfo}
+      poolAddress={poolAddress}
     />
   );
 }

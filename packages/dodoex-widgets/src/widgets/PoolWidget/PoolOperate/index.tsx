@@ -1,4 +1,11 @@
-import { Box, BoxProps, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
+import {
+  alpha,
+  Box,
+  BoxProps,
+  TabPanel,
+  Tabs,
+  TabsGroup,
+} from '@dodoex/components';
 import Dialog from '../../../components/Dialog';
 import {
   PoolOrMiningTab,
@@ -106,14 +113,15 @@ export function PoolOperate({
                     '&::before': {
                       content: `"${t`LP Tokens`}"`,
                       position: 'absolute',
-                      right: 24,
+                      top: 16,
+                      right: 20,
                       px: 8,
                       py: 2,
                       borderRadius: 12,
                       transform: 'scale(0.66667) translateX(100%)',
                       transformOrigin: 'right top',
-                      backgroundColor: 'purple.main',
-                      color: 'primary.contrastText',
+                      backgroundColor: alpha('#DABB1B', 0.2),
+                      color: '#DABB1B',
                     },
                   },
                 }
@@ -159,7 +167,6 @@ export function PoolOperate({
               chainId={poolChainId}
               account={account}
               poolAddress={poolAddress}
-              balanceInfo={balanceInfo}
               goLpLink={() => {
                 handleChangeTab(PoolOrMiningTab.Liquidity);
               }}

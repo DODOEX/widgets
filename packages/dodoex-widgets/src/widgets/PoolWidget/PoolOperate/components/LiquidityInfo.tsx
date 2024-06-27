@@ -202,7 +202,7 @@ function LiquidityBalanceItem({
           href={chainId ? getEtherscanPage(chainId, address, 'address') : ''}
           sx={{
             display: 'inline-block',
-            height: 16,
+            height: 14,
           }}
         >
           <HoverOpacity
@@ -408,7 +408,7 @@ export default function LiquidityInfo({
               <LiquidityBalanceItem
                 chainId={pool?.chainId}
                 address={pool?.address}
-                token={pool?.quoteToken}
+                token={pool?.baseToken}
                 quoteToken={pool?.quoteToken}
                 lpBalance={balanceInfo.userBaseLpBalance}
                 lpBalanceLoading={balanceInfo.userLpBalanceLoading}
@@ -418,7 +418,9 @@ export default function LiquidityInfo({
                     ? [
                         {
                           token: pool.baseToken,
-                          balance: balanceInfo.userBaseLpToTokenBalance,
+                          balance:
+                            balanceInfo.userBaseLpToTokenBalance ||
+                            new BigNumber(0),
                           loading: balanceInfo.userLpToTokenBalanceLoading,
                         },
                         {

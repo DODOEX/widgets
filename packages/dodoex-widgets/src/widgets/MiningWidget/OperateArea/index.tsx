@@ -16,7 +16,7 @@ import { StakeButton } from './StakeButton';
 import GetLpLink from './GetLpLink';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { TokenCard } from '../../../components/Swap/components/TokenCard';
-import { MiningStatusE } from '@dodoex/api';
+import { MiningStatusE, PoolType } from '@dodoex/api';
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { miningApi } from '../helper';
@@ -24,26 +24,28 @@ import BigNumber from 'bignumber.js';
 import UnstakeButton from './UnstakeButton';
 import { RewardListCard } from './RewardListCard';
 import ClaimButton from './ClaimButton';
+import { poolApi } from '../../PoolWidget/utils';
+import { OperateButtonWrapper } from './Widgets';
 
 export default function OperateArea({
   chainId,
+  poolAddress,
   status,
   loading,
   operateType,
   setOperateType,
   miningItem,
   associatedMineSectionVisible,
-  balanceInfo,
   goLpLink,
 }: {
   chainId: number;
+  poolAddress: string;
   status: MiningStatusE;
   loading?: boolean;
   operateType: OperateType;
   setOperateType: React.Dispatch<React.SetStateAction<OperateType>>;
   miningItem: FetchMiningListItem;
   associatedMineSectionVisible?: boolean;
-  balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
   goLpLink?: () => void;
 }) {
   const theme = useTheme();
@@ -77,6 +79,37 @@ export default function OperateArea({
   const hasNotLp = false;
   const hasLpForNewUser = false;
 
+  // TODO: Currently only these two types are supported
+  const pool =
+    miningItem &&
+    baseToken &&
+    quoteToken &&
+    ['classical', 'lptoken'].includes(miningItem.type ?? '')
+      ? {
+          chainId,
+          address: poolAddress,
+          /** Because only these two types are currently supported, they are written to death here. To support other types later, you need to modify this */
+          type: (miningItem.type === 'lptoken'
+            ? 'DSP'
+            : 'CLASSICAL') as PoolType,
+          baseToken: baseToken,
+          quoteToken: quoteToken,
+        }
+      : undefined;
+  const balanceInfo = usePoolBalanceInfo({
+    account,
+    pool,
+  });
+  const pmmStateQuery = useQuery(
+    poolApi.getPMMStateQuery(
+      pool?.chainId as number,
+      pool?.address,
+      pool?.type,
+      pool?.baseToken?.decimals,
+      pool?.quoteToken?.decimals,
+    ),
+  );
+
   const lpTokenAccountBalanceQuery = useQuery(
     miningApi.getLpStakedBalance(
       miningItem?.chainId,
@@ -84,7 +117,7 @@ export default function OperateArea({
       account,
       miningItem?.baseLpToken?.address ?? '',
       miningItem?.baseToken?.decimals as number | undefined,
-      '3',
+      miningItem?.version as '2' | '3' | undefined,
     ),
   );
 
@@ -99,16 +132,42 @@ export default function OperateArea({
   const isEnded = status === MiningStatusE.ended;
 
   // TODO: only support lptoken
-  const stakedTokenUSDLoading = lpTokenAccountBalanceQuery.isLoading;
+  const stakedTokenUSDLoading =
+    lpTokenAccountBalanceQuery.isLoading || pmmStateQuery.isLoading;
   let stakedTokenUSD: BigNumber | undefined = undefined;
   if (
     lpTokenAccountBalanceQuery.data &&
     balanceInfo.baseLpToTokenProportion &&
-    miningItem?.baseToken?.price
+    balanceInfo.quoteLpToTokenProportion &&
+    !pmmStateQuery.isLoading
   ) {
-    stakedTokenUSD = lpTokenAccountBalanceQuery.data
-      .times(balanceInfo.baseLpToTokenProportion)
-      .times(miningItem?.baseToken?.price);
+    const baseFiatPrice = miningItem?.baseToken?.price;
+    const quoteFiatPrice = miningItem?.quoteToken?.price;
+    const midPrice = pmmStateQuery.data?.midPrice;
+    const baseTokenAmount = lpTokenAccountBalanceQuery.data.times(
+      balanceInfo.baseLpToTokenProportion,
+    );
+    const quoteTokenAmount = lpTokenAccountBalanceQuery.data.times(
+      balanceInfo.quoteLpToTokenProportion,
+    );
+
+    if (midPrice) {
+      if (quoteFiatPrice) {
+        stakedTokenUSD = baseTokenAmount
+          .times(midPrice)
+          .plus(quoteTokenAmount)
+          .times(quoteFiatPrice);
+      } else if (baseFiatPrice) {
+        stakedTokenUSD = quoteTokenAmount
+          .times(midPrice)
+          .plus(baseTokenAmount)
+          .times(baseFiatPrice);
+      }
+    } else if (baseFiatPrice && quoteFiatPrice) {
+      stakedTokenUSD = baseTokenAmount
+        .times(baseFiatPrice)
+        .plus(quoteTokenAmount.times(quoteFiatPrice));
+    }
   }
 
   return (
@@ -219,18 +278,14 @@ export default function OperateArea({
                 }}
               />
             )}
-            <Box
-              sx={{
-                mt: 20,
-              }}
-            >
+            <OperateButtonWrapper>
               <StakeButton
                 miningItem={miningItem}
                 balanceInfo={balanceInfo}
                 amount={currentStakeTokenAmount}
                 goLpLink={goLpLink}
               />
-            </Box>
+            </OperateButtonWrapper>
           </TabPanel>
           <TabPanel value="unstake">
             <TokenCard
@@ -259,17 +314,13 @@ export default function OperateArea({
                 borderWidth: 1,
               }}
             />
-            <Box
-              sx={{
-                mt: 20,
-              }}
-            >
+            <OperateButtonWrapper>
               <UnstakeButton
                 miningItem={miningItem}
                 overrideBalance={lpTokenAccountBalanceQuery.data}
                 amount={currentUnstakeTokenAmount}
               />
-            </Box>
+            </OperateButtonWrapper>
           </TabPanel>
           <TabPanel value="claim">
             <RewardListCard
@@ -279,13 +330,9 @@ export default function OperateArea({
                 mt: 20,
               }}
             />
-            <Box
-              sx={{
-                mt: 20,
-              }}
-            >
+            <OperateButtonWrapper>
               <ClaimButton miningItem={miningItem} />
-            </Box>
+            </OperateButtonWrapper>
           </TabPanel>
         </Tabs>
       </Box>

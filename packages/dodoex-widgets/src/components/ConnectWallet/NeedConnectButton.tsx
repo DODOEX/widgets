@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from '@dodoex/components';
-import { Trans } from '@lingui/macro';
+import { Trans, t } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -7,20 +7,31 @@ import { ChainId } from '@dodoex/api';
 import { useGlobalConfig } from '../../providers/GlobalConfigContext';
 import { AppThunkDispatch } from '../../store/actions';
 import { setOpenConnectWalletInfo } from '../../store/actions/wallet';
+import { chainListMap } from '../../constants/chainList';
+import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
 
 export default function NeedConnectButton({
   chainId,
   includeButton,
+  showSwitchText,
+  autoSwitch,
   ...props
 }: ButtonProps & {
   /** chainId that needs to be connected */
   chainId?: ChainId;
   includeButton?: boolean;
+  showSwitchText?: boolean;
+  autoSwitch?: boolean;
 }) {
   const { account, chainId: currentChainId, connector } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
   const { onConnectWalletClick } = useGlobalConfig();
   const [loading, setLoading] = React.useState(false);
+  const switchChain = useSwitchChain(chainId);
+  const needSwitchNetwork =
+    currentChainId !== undefined &&
+    chainId !== undefined &&
+    currentChainId !== chainId;
   if (
     account &&
     !loading &&
@@ -38,7 +49,11 @@ export default function NeedConnectButton({
         onClick={async () => {
           if (onConnectWalletClick) {
             // switch chain
-            if (currentChainId && chainId && chainId !== currentChainId) {
+            if (needSwitchNetwork) {
+              if (autoSwitch && switchChain) {
+                await switchChain();
+                return;
+              }
               dispatch(
                 setOpenConnectWalletInfo({
                   chainId,
@@ -62,6 +77,8 @@ export default function NeedConnectButton({
       >
         {loading ? (
           <Trans>Connecting...</Trans>
+        ) : showSwitchText && needSwitchNetwork && chainId ? (
+          t`Switch to ${chainListMap.get(chainId)?.name ?? 'unknown'}`
         ) : (
           <Trans>Connect to a wallet</Trans>
         )}
