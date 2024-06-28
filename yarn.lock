@@ -2040,17 +2040,19 @@
   resolved "https://registry.npmjs.org/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
-"@dodoex/components@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@dodoex/components/-/components-2.0.1.tgz#6e3f41775bf0d416b92b5d40a2a96e2b11b8d994"
-  integrity sha512-CZ8ZFcFkctDFdw88gSzBt0XgAsIruy7CV3CCtJ3QZ8zuUJ7zmwUX4nK7eAKeQCwbN9H0bR9Wx3RVrfMjdLN0+g==
+"@dodoex/components@>3.0.0":
+  version "3.0.0-beta.0"
   dependencies:
     "@babel/runtime" "^7.17.0"
-    "@dodoex/icons" "^2.0.0"
-    "@mui/base" "^5.0.0-beta.5"
+    "@dodoex/icons" "^2.0.1"
+    "@emotion/react" "^11.10.0"
+    "@emotion/styled" "^11.10.0"
+    "@mui/base" "5.0.0-beta.40"
     "@mui/system" "5.8.4"
     "@szhsin/react-accordion" "^1.2.1"
+    any-touch "^2.2.0"
     clsx "^1.2.1"
+    lottie-web "^5.12.2"
 
 "@emotion/babel-plugin@^11.10.5":
   version "11.10.5"
@@ -4479,7 +4481,7 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@mui/base@5.0.0-beta.40", "@mui/base@^5.0.0-beta.5":
+"@mui/base@5.0.0-beta.40":
   version "5.0.0-beta.40"
   resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-beta.40.tgz#1f8a782f1fbf3f84a961e954c8176b187de3dae2"
   integrity sha512-I/lGHztkCzvwlXpjD2+SNmvNQvB4227xBXhISPjEaJUXGImOQ9f3D2Yj/T3KasSI/h0MLWy74X0J6clhPmsRbQ==
@@ -5393,6 +5395,14 @@
   dependencies:
     "@rollup/pluginutils" "^5.1.0"
 
+"@rollup/plugin-multi-entry@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-multi-entry/-/plugin-multi-entry-6.0.1.tgz#0f969706ea705dc76c4566ee1318251247832549"
+  integrity sha512-AXm6toPyTSfbYZWghQGbom1Uh7dHXlrGa+HoiYNhQtDUE3Q7LqoUYdVQx9E1579QWS1uOiu+cZRSE4okO7ySgw==
+  dependencies:
+    "@rollup/plugin-virtual" "^3.0.0"
+    matched "^5.0.1"
+
 "@rollup/plugin-node-resolve@^15.2.3":
   version "15.2.3"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-15.2.3.tgz#e5e0b059bd85ca57489492f295ce88c2d4b0daf9"
@@ -5430,6 +5440,11 @@
     "@rollup/pluginutils" "^5.0.1"
     make-dir "^3.1.0"
     mime "^3.0.0"
+
+"@rollup/plugin-virtual@^3.0.0":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-virtual/-/plugin-virtual-3.0.2.tgz#17e17eeecb4c9fa1c0a6e72c9e5f66382fddbb82"
+  integrity sha512-10monEYsBp3scM4/ND4LNH5Rxvh3e/cVeL3jWTgZ2SrQ+BmUoQcopVQvnaMcOnykb1VkxUFuDAN+0FnpTFRy2A==
 
 "@rollup/pluginutils@^3.0.9":
   version "3.1.0"
@@ -17155,6 +17170,14 @@ marked@^4.0.10:
   version "4.2.12"
   resolved "https://registry.npmjs.org/marked/-/marked-4.2.12.tgz"
   integrity sha512-yr8hSKa3Fv4D3jdZmtMMPghgVt6TWbk86WQaWhDloQjRSQhMMYCAro7jP7VDJrjjdV8pxVxMssXS8B8Y5DZ5aw==
+
+matched@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/matched/-/matched-5.0.1.tgz#620606d9dac6b7f4e955354b82e02ef4e3a62dc3"
+  integrity sha512-E1fhSTPRyhAlNaNvGXAgZQlq1hL0bgYMTk/6bktVlIhzUnX/SZs7296ACdVeNJE8xFNGSuvd9IpI7vSnmcqLvw==
+  dependencies:
+    glob "^7.1.6"
+    picomatch "^2.2.1"
 
 mcl-wasm@^0.7.1:
   version "0.7.9"

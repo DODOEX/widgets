@@ -17,6 +17,9 @@ export const basicTheme = (theme: ThemeOptions) => ({
   color: theme.palette?.text.primary,
   fontFamily: (theme.typography as any)?.fontFamily,
   ...((theme.typography as any)?.body1 || {}),
+  button: {
+    fontFamily: 'inherit',
+  },
 });
 
 export const body = (theme: ThemeOptions) => ({

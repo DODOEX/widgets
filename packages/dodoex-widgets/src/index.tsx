@@ -4,6 +4,8 @@ import { Widget, WidgetProps } from './components/Widget';
 export { useRouterStore, PageType } from './router';
 export type { Page } from './router';
 
+export { WIDGET_CLASS_NAME } from './components/Widget';
+
 import { Pool } from './widgets/PoolWidget';
 export { Widget } from './components/Widget';
 export type SwapWidgetProps = WidgetProps;
