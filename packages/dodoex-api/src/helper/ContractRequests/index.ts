@@ -66,11 +66,8 @@ export default class ContractRequests {
     });
     // update cache
     this.batchContractMap = new Map();
-    for (const key in this.batchStaticJsonRpcProviderMap) {
-      const chainId = Number(key);
-      const provider = getProvider ? getProvider(chainId) : null;
-      this.batchStaticJsonRpcProviderMap.get(chainId)?.setProvider(provider);
-    }
+    this.staticJsonRpcProviderMap = new Map();
+    this.batchStaticJsonRpcProviderMap = new Map();
   }
 
   getProvider(chainId: number) {
@@ -99,23 +96,18 @@ export default class ContractRequests {
   getBatchProvider(chainId: number) {
     const configProvider = this.getConfigProvider?.(chainId);
     const rpcUrl = this.rpc?.[chainId];
-    if (!rpcUrl) {
-      if (configProvider) {
-        return configProvider;
-      }
+    if (!rpcUrl && !configProvider) {
       throw new Error(`ChainId ${chainId} not found`);
     }
-    if (this.staticJsonRpcProviderMap.has(chainId)) {
-      return this.staticJsonRpcProviderMap.get(
-        chainId,
-      ) as StaticJsonRpcProvider;
+    if (this.batchStaticJsonRpcProviderMap.has(chainId)) {
+      return this.batchStaticJsonRpcProviderMap.get(chainId) as BatchProvider;
     }
     const result = new BatchProvider(rpcUrl, chainId);
     result.setProvider(configProvider || null);
     if (this.debugProvider) {
       result.on('debug', console.log);
     }
-    this.staticJsonRpcProviderMap.set(chainId, result);
+    this.batchStaticJsonRpcProviderMap.set(chainId, result);
     return result;
   }
 

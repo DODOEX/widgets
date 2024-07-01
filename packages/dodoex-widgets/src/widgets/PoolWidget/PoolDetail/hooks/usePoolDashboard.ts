@@ -1,7 +1,7 @@
 import { ChainId, PoolApi } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
-import { graphQLRequests } from '../../../../constants/api';
 import { ThegraphKeyMap } from '../../../../constants/chains';
+import { useGlobalConfig } from '../../../../providers/GlobalConfigContext';
 
 export function usePoolDashboard({
   address,
@@ -10,6 +10,7 @@ export function usePoolDashboard({
   address: string | undefined;
   chainId: ChainId | undefined;
 }) {
+  const { graphQLRequests } = useGlobalConfig();
   const chain = chainId ? ThegraphKeyMap[chainId] : '';
   const query = graphQLRequests.getQuery(PoolApi.graphql.fetchPoolDashboard, {
     where: {

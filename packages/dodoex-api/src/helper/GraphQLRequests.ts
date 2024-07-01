@@ -12,7 +12,6 @@ export interface GraphQLRequestsConfig {
 
 const defaultConfig = {
   url: 'https://api.dodoex.io/frontend-graphql',
-  // url: 'https://api.gcp.dxd.ink/frontend-graphql',
 };
 
 export default class GraphQLRequests {

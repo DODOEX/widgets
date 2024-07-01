@@ -1,9 +1,4 @@
-import {
-  ContractRequests,
-  GraphQLRequests,
-  TokenApi,
-  ChainId,
-} from '@dodoex/api';
+import { ContractRequests, TokenApi, ChainId } from '@dodoex/api';
 import { getRpcSingleUrlMap } from './chains';
 
 export enum APIServiceKey {
@@ -68,8 +63,4 @@ export const contractRequests = new ContractRequests({
 export const tokenContractRequests = contractRequests.createContractRequests();
 export const tokenApi = new TokenApi({
   contractRequests: tokenContractRequests,
-});
-
-export const graphQLRequests = new GraphQLRequests({
-  url: 'https://api.gcp.dxd.ink/frontend-graphql',
 });

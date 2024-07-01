@@ -366,7 +366,7 @@ msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:218
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:262
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:77
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:272
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:273
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:251
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:389
 msgid "TVL"
@@ -670,7 +670,7 @@ msgstr "Doc"
 msgid "Standard"
 msgstr "Standard"
 
-#: src/widgets/PoolWidget/PoolOperate/index.tsx:114
+#: src/widgets/PoolWidget/PoolOperate/index.tsx:115
 msgid "LP Tokens"
 msgstr "LP Tokens"
 
@@ -935,7 +935,7 @@ msgstr "Estimated transaction time"
 msgid "Connect to your wallet"
 msgstr "Connect to your wallet"
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:303
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:304
 msgid "Total Fee Revenue"
 msgstr "Total Fee Revenue"
 
@@ -1042,7 +1042,7 @@ msgstr "My Staked"
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:236
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:441
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:344
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:345
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:360
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:683
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:89
@@ -1166,7 +1166,7 @@ msgstr "Slippage Coefficient"
 msgid "Initial Price Alert"
 msgstr "Initial Price Alert"
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:329
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:330
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:346
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:672
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16

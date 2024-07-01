@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { ChainId, PoolApi, PoolType } from '@dodoex/api';
-import { graphQLRequests } from '../../../../constants/api';
 import BigNumber from 'bignumber.js';
 import { poolApi } from '../../utils';
 import { TokenInfo } from '../../../../hooks/Token';
@@ -11,6 +10,7 @@ import {
 } from '../../../../utils';
 import { useFetchFiatPrice } from '../../../../hooks/Swap';
 import { ThegraphKeyMap } from '../../../../constants/chains';
+import { useGlobalConfig } from '../../../../providers/GlobalConfigContext';
 
 type TmpUser = {
   id: string;
@@ -123,6 +123,7 @@ export function useLiquidityProviders({
     toToken: quoteToken ?? null,
   });
 
+  const { graphQLRequests } = useGlobalConfig();
   const fetchPositionsQuery = useQuery({
     ...graphQLRequests.getQuery(PoolApi.graphql.fetchLiquidityPositions, {
       id,

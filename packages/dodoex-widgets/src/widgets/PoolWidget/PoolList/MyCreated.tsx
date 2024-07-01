@@ -22,12 +22,12 @@ import { EmptyList } from '../../../components/List/EmptyList';
 import { FailedList } from '../../../components/List/FailedList';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import { PoolOperateProps } from '../PoolOperate';
-import { graphQLRequests } from '../../../constants/api';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
 import { Edit } from '@dodoex/icons';
 import { getPoolTypeTag } from '../hooks/usePoolTypeTag';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
+import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
 
 export default function MyCreated({
   account,
@@ -54,6 +54,7 @@ export default function MyCreated({
     owner: account,
   };
 
+  const { graphQLRequests } = useGlobalConfig();
   const query = graphQLRequests.getQuery(
     PoolApi.graphql.fetchDashboardPairList,
     {

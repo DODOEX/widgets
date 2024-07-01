@@ -11,6 +11,7 @@ import {
   useSelector,
 } from 'react-redux';
 import { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
+import { ContractRequests } from '@dodoex/api';
 import { LangProvider } from '../../providers/i18n';
 import { store } from '../../store';
 import { PaletteMode, ThemeOptions } from '@dodoex/components';
@@ -39,6 +40,7 @@ import { getFromTokenChainId } from '../../store/selectors/wallet';
 import {
   GlobalConfigContext,
   GlobalFunctionConfig,
+  graphQLRequests,
 } from '../../providers/GlobalConfigContext';
 import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
 import { queryClient } from '../../providers/queryClient';
@@ -73,6 +75,10 @@ export interface WidgetProps
 
   onProviderChanged?: (provider?: any) => void;
   gotoBuyToken?: GlobalFunctionConfig['gotoBuyToken'];
+  getStaticJsonRpcProviderByChainId?: Exclude<
+    ConstructorParameters<typeof ContractRequests>[0],
+    undefined
+  >['getProvider'];
 }
 
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
@@ -99,13 +105,24 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
       connectWallet();
     }
   }, [connector]);
+
   useEffect(() => {
     contractRequests.setGetConfigProvider((getProviderChainId) => {
-      if (chainId === getProviderChainId) {
-        return provider ?? null;
+      const connectedProvider =
+        chainId === getProviderChainId ? provider : null;
+      if (connectedProvider) return connectedProvider;
+      if (props.getStaticJsonRpcProviderByChainId) {
+        const propsGetProvider =
+          props.getStaticJsonRpcProviderByChainId(getProviderChainId);
+        if (propsGetProvider) {
+          return propsGetProvider;
+        }
       }
       return null;
     });
+  }, [provider, props.getStaticJsonRpcProviderByChainId]);
+
+  useEffect(() => {
     if (props.onProviderChanged) {
       props.onProviderChanged(provider);
     }
@@ -145,6 +162,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
         widgetRef,
         onConnectWalletClick: props.onConnectWalletClick,
         gotoBuyToken: props.gotoBuyToken,
+        graphQLRequests: props.graphQLRequests ?? graphQLRequests,
       }}
     >
       <Box

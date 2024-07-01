@@ -1,11 +1,11 @@
 import { ChainId, PoolApi, PoolType } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
-import { graphQLRequests } from '../../../constants/api';
 import { TokenInfo } from '../../../hooks/Token';
 import { formatApy } from '../../../utils';
 import { convertLiquidityTokenToTokenInfo } from '../utils';
 import { ThegraphKeyMap } from '../../../constants/chains';
+import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
 
 export function usePoolDetail({
   id,
@@ -15,6 +15,7 @@ export function usePoolDetail({
   chainId: ChainId | undefined;
 }) {
   const chain = chainId ? ThegraphKeyMap[chainId] : '';
+  const { graphQLRequests } = useGlobalConfig();
   const query = graphQLRequests.getQuery(PoolApi.graphql.fetchPool, {
     id: id || '',
     where: {

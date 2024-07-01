@@ -32,13 +32,13 @@ import FilterAddressTags from './components/FilterAddressTags';
 import FilterTokenTags from './components/FilterTokenTags';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import { PoolOperateProps } from '../PoolOperate';
-import { graphQLRequests } from '../../../constants/api';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import LiquidityTable from './components/LiquidityTable';
+import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
 
 function CardList({
   lqList,
@@ -491,6 +491,8 @@ export default function AddLiquidityList({
       filterTypes: ['CLASSICAL', 'DVM', 'DSP'],
     },
   };
+
+  const { graphQLRequests } = useGlobalConfig();
 
   const query = graphQLRequests.getInfiniteQuery(
     PoolApi.graphql.fetchLiquidityList,

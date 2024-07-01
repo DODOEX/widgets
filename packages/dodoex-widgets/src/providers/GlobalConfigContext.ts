@@ -1,3 +1,4 @@
+import { GraphQLRequests } from '@dodoex/api';
 import { createContext, useContext } from 'react';
 import { TokenInfo } from '../hooks/Token';
 
@@ -14,13 +15,21 @@ export interface GlobalFunctionConfig {
     url?: string;
     chainId?: number;
   }) => string;
+  graphQLRequests?: GraphQLRequests;
 }
 
+export const graphQLRequests = new GraphQLRequests();
+
 // Passing widget config
-export const GlobalConfigContext = createContext<GlobalFunctionConfig>({
+export const GlobalConfigContext = createContext<
+  Omit<GlobalFunctionConfig, 'graphQLRequests'> & {
+    graphQLRequests: GraphQLRequests;
+  }
+>({
   onConnectWalletClick: undefined,
   gotoBuyToken: undefined,
   getTokenLogoUrl: undefined,
+  graphQLRequests,
 });
 
 export const useGlobalConfig = () => {
