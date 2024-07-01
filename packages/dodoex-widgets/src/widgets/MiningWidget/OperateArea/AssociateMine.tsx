@@ -15,6 +15,7 @@ import { useRewardListAmount } from '../hooks/useRewardListAmount';
 type Tokens = Array<
   TokenInfo & {
     symbolEle?: string;
+    amount?: string;
   }
 >;
 
@@ -74,13 +75,23 @@ function Item({
         <Tooltip
           placement="top"
           title={
-            <Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 8,
+                width: 190,
+                color: 'text.primary',
+                fontWeight: 600,
+              }}
+            >
               {tokenList.map((token) => (
                 <TokenItem
                   key={token.address + token.chainId}
                   chainId={token.chainId}
                   address={token.address}
                   showName={token.symbolEle ?? token.symbol}
+                  rightContent={token.amount}
                   size={20}
                   offset={6}
                 />
@@ -115,7 +126,6 @@ export function AssociatedMine({
   miningTitle,
   associatedMineSectionShort,
   stakedTokenList,
-  rewardTokenList,
   isEnded,
 }: {
   chainId: number;
@@ -127,7 +137,6 @@ export function AssociatedMine({
   stakedTokenUSD: BigNumber | undefined;
   stakedTokenUSDLoading?: boolean;
   stakedTokenList: Tokens;
-  rewardTokenList: Tokens;
   isEnded?: boolean;
 }) {
   const theme = useTheme();
@@ -294,7 +303,19 @@ export function AssociatedMine({
         <Item
           value={rewardQuery.totalRewardUSD}
           label={t`Rewards`}
-          tokenList={rewardTokenList}
+          tokenList={
+            rewardQuery.data?.map((rewardToken) => {
+              return {
+                chainId,
+                ...rewardToken,
+                name: rewardToken.symbol,
+                amount: formatTokenAmountNumber({
+                  input: rewardToken.amount,
+                  decimals: rewardToken.decimals,
+                }),
+              };
+            }) ?? []
+          }
           loading={rewardQuery.pending || loading}
         />
       </Box>

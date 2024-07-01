@@ -104,7 +104,7 @@ export function usePoolBalanceInfo({
     poolApi.getTotalBaseLpQuery(chainId, address, type, baseDecimals),
   );
   const totalQuoteLpQuery = useQuery(
-    poolApi.getTotalBaseLpQuery(chainId, address, type, quoteDecimals),
+    poolApi.getTotalQuoteLpQuery(chainId, address, type, quoteDecimals),
   );
   const userBaseLpQuery = useQuery(
     poolApi.getUserBaseLpQuery(chainId, address, type, baseDecimals, account),
@@ -173,21 +173,35 @@ export function usePoolBalanceInfo({
         baseDecimals,
       );
 
-  const quoteLpToTokenProportion =
-    totalQuoteLpBalance && quoteReserve
-      ? computeLpProportion(totalQuoteLpBalance, quoteReserve)
-      : undefined;
-  const userQuoteLpToTokenBalance = isPrivate
-    ? quoteReserve
-    : getLpToTokenBalance(
-        userQuoteLpBalance,
-        totalQuoteLpBalance,
-        quoteReserve,
-        classicalQuoteTarget,
-        address,
-        type,
-        quoteDecimals,
-      );
+  let quoteLpToTokenProportion: BigNumber | undefined;
+  let userQuoteLpToTokenBalance: BigNumber | undefined | null;
+
+  if (quoteReserve) {
+    let quoteSupply = totalQuoteLpQuery.data;
+    if (
+      !quoteSupply &&
+      !totalQuoteLpQuery.isLoading &&
+      !totalQuoteLpQuery.error &&
+      totalBaseLpBalance
+    ) {
+      // There is only one supply and there is no quoteSupply
+      quoteSupply = totalBaseLpBalance;
+    }
+    if (quoteSupply) {
+      quoteLpToTokenProportion = computeLpProportion(quoteSupply, quoteReserve);
+    }
+    userQuoteLpToTokenBalance = isPrivate
+      ? quoteReserve
+      : getLpToTokenBalance(
+          userQuoteLpBalance,
+          quoteSupply,
+          quoteReserve,
+          classicalQuoteTarget,
+          address,
+          type,
+          quoteDecimals,
+        );
+  }
 
   const userLpBalanceLoading =
     userBaseLpQuery.isLoading || userQuoteLpQuery.isLoading;

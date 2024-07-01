@@ -54,8 +54,8 @@ msgstr "至"
 msgid "{0} pending"
 msgstr "{0} 等待中"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:305
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:469
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:325
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:470
 msgid "Removing"
 msgstr ""
 
@@ -88,8 +88,8 @@ msgstr "忽略"
 msgid "Unstaking"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:308
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:472
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:328
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:473
 msgid "Adding"
 msgstr ""
 
@@ -97,7 +97,7 @@ msgstr ""
 msgid "Deposit Ratio"
 msgstr ""
 
-#: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:214
+#: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:223
 msgid "Ended"
 msgstr ""
 
@@ -119,7 +119,7 @@ msgstr ""
 msgid "Remove Liquidity"
 msgstr ""
 
-#: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:296
+#: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:305
 #: src/widgets/MiningWidget/OperateArea/RewardListCard.tsx:42
 msgid "Rewards"
 msgstr ""
@@ -184,7 +184,7 @@ msgid "Hour"
 msgstr "小时"
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:74
-#: src/widgets/PoolWidget/PoolList/index.tsx:179
+#: src/widgets/PoolWidget/PoolList/index.tsx:181
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:17
 msgid "Liquidity"
 msgstr ""
@@ -270,8 +270,8 @@ msgstr "价格冲击超过了你设置的滑点, 请提高滑点后重试"
 msgid "No results found"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:259
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:386
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:279
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:387
 msgid "Pair"
 msgstr ""
 
@@ -279,7 +279,7 @@ msgstr ""
 msgid "s"
 msgstr "秒"
 
-#: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:167
+#: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:168
 msgid "Add liquidity to obtain LP tokens for mining"
 msgstr ""
 
@@ -363,12 +363,12 @@ msgstr ""
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:218
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:262
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:228
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:282
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:77
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:273
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:251
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:389
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:252
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:390
 msgid "TVL"
 msgstr ""
 
@@ -446,7 +446,7 @@ msgid "Equilibrium target"
 msgstr ""
 
 #: src/widgets/MiningWidget/hooks/useStakeMiningSubmit.ts:81
-#: src/widgets/MiningWidget/OperateArea/index.tsx:74
+#: src/widgets/MiningWidget/OperateArea/index.tsx:73
 #: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:86
 msgid "Stake"
 msgstr ""
@@ -546,7 +546,7 @@ msgid "Add Liquidity"
 msgstr ""
 
 #: src/widgets/MiningWidget/hooks/useUnstakeMiningSubmit.ts:63
-#: src/widgets/MiningWidget/OperateArea/index.tsx:75
+#: src/widgets/MiningWidget/OperateArea/index.tsx:74
 #: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:76
 msgid "Unstake"
 msgstr ""
@@ -559,7 +559,7 @@ msgstr ""
 msgid "Fetching Price..."
 msgstr "获取价格中..."
 
-#: src/hooks/Token/useTokenStatus.ts:131
+#: src/hooks/Token/useTokenStatus.ts:133
 msgid "Reset"
 msgstr "重置"
 
@@ -607,7 +607,7 @@ msgid "Estimated Time"
 msgstr "预计时间"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:19
-#: src/widgets/PoolWidget/PoolList/index.tsx:180
+#: src/widgets/PoolWidget/PoolList/index.tsx:182
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr ""
 
@@ -623,8 +623,8 @@ msgstr ""
 msgid "Suitable for synthetic assets. The liquidity is super concentrated at some price like Curve Finance."
 msgstr ""
 
-#: src/widgets/MiningWidget/OperateArea/index.tsx:277
-#: src/widgets/MiningWidget/OperateArea/index.tsx:315
+#: src/widgets/MiningWidget/OperateArea/index.tsx:294
+#: src/widgets/MiningWidget/OperateArea/index.tsx:332
 msgid "LP Balance:"
 msgstr ""
 
@@ -641,10 +641,10 @@ msgstr ""
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:149
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:381
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:182
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:603
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:159
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:401
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:183
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:604
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:20
 msgid "Mining"
 msgstr ""
@@ -698,8 +698,8 @@ msgstr ""
 msgid "Trader"
 msgstr ""
 
-#: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:250
-#: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:323
+#: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:259
+#: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:329
 msgid "Details"
 msgstr ""
 
@@ -752,9 +752,9 @@ msgid "You are making changes to the liquidity of a private pool. This is a high
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:22
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:322
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:392
-#: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:353
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:323
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:393
+#: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:359
 msgid "My Liquidity"
 msgstr ""
 
@@ -780,7 +780,7 @@ msgid "On"
 msgstr "在"
 
 #: src/components/Swap/index.tsx:687
-#: src/hooks/Token/useTokenStatus.ts:131
+#: src/hooks/Token/useTokenStatus.ts:133
 msgid "Approve"
 msgstr "代币授权"
 
@@ -885,7 +885,7 @@ msgid "Version"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:99
-#: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:114
+#: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:115
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:84
 msgid "Edit"
 msgstr ""
@@ -959,7 +959,7 @@ msgid "Select Pool Version"
 msgstr ""
 
 #: src/widgets/MiningWidget/hooks/useClaimMiningSubmit.ts:46
-#: src/widgets/MiningWidget/OperateArea/index.tsx:76
+#: src/widgets/MiningWidget/OperateArea/index.tsx:75
 msgid "Claim"
 msgstr ""
 
@@ -1036,15 +1036,15 @@ msgstr ""
 msgid "Send to:"
 msgstr "发送至："
 
-#: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:281
+#: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:290
 msgid "My Staked"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:236
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:441
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:246
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:461
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:345
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:360
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:683
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:361
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:684
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:89
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
 msgid "Add"
@@ -1072,7 +1072,7 @@ msgstr ""
 msgid "Select a liquidity pool"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/index.tsx:130
+#: src/widgets/PoolWidget/PoolList/index.tsx:132
 msgid "Create Pool"
 msgstr ""
 
@@ -1135,17 +1135,17 @@ msgstr "如果你的交易被确认的时间超过这个时间，你的交易将
 msgid "Detail"
 msgstr "详情"
 
-#: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:193
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:180
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:265
+#: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:194
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:190
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:285
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:57
-#: src/widgets/PoolWidget/PoolList/components/TokenListPoolItem.tsx:101
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:213
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:395
+#: src/widgets/PoolWidget/PoolList/components/TokenListPoolItem.tsx:102
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:214
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:396
 msgid "APY"
 msgstr ""
 
-#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:48
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:49
 msgid "SELECT TOKEN"
 msgstr "选择代币"
 
@@ -1155,7 +1155,7 @@ msgid "Total Liquidity"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:152
-#: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:135
+#: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:139
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:72
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:112
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:592
@@ -1167,8 +1167,8 @@ msgid "Initial Price Alert"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:330
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:346
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:672
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:347
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:673
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:164
 msgid "Remove"
@@ -1238,6 +1238,7 @@ msgstr "ForceStop 异常"
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/LiquidityProvidersTable.tsx:240
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:332
+#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:103
 msgid "Load more"
 msgstr ""
 

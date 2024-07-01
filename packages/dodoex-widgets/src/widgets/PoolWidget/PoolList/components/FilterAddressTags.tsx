@@ -42,7 +42,12 @@ export default function FilterAddressTags({
         ...sx,
       }}
     >
-      <TokenLogoPair tokens={[baseToken, quoteToken]} width={20} mr={8} />
+      <TokenLogoPair
+        tokens={[baseToken, quoteToken]}
+        chainId={baseToken.chainId}
+        width={20}
+        mr={8}
+      />
       {baseToken.symbol}+{quoteToken.symbol}
       <Box
         component={Error}

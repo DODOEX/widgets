@@ -8,7 +8,10 @@ import {
 import { AssociatedMine } from './AssociateMine';
 import { FetchMiningListItem, OperateType } from '../types';
 import { TokenInfo } from '../../../hooks/Token';
-import { convertFetchTokenToTokenInfo } from '../../../utils';
+import {
+  convertFetchTokenToTokenInfo,
+  formatTokenAmountNumber,
+} from '../../../utils';
 import { t } from '@lingui/macro';
 import { usePoolBalanceInfo } from '../../PoolWidget/hooks/usePoolBalanceInfo';
 import { useWeb3React } from '@web3-react/core';
@@ -60,10 +63,6 @@ export default function OperateArea({
     miningItem?.quoteToken,
     chainId,
   );
-  const rewardTokenList =
-    (miningItem?.rewardTokenInfos?.map?.((rewardToken) =>
-      convertFetchTokenToTokenInfo(rewardToken, chainId),
-    ) as TokenInfo[] | undefined) ?? [];
 
   const [currentStakeTokenAmount, setCurrentStakeTokenAmount] =
     React.useState('');
@@ -122,20 +121,12 @@ export default function OperateArea({
     ),
   );
 
-  const stakedTokenList =
-    baseToken && quoteToken ? [baseToken, quoteToken] : [];
-
-  const tokenSymbol =
-    baseToken && quoteToken
-      ? `${baseToken.symbol}-${quoteToken.symbol} LP`
-      : '- LP';
-
-  const isEnded = status === MiningStatusE.ended;
-
   // TODO: only support lptoken
   const stakedTokenUSDLoading =
     lpTokenAccountBalanceQuery.isLoading || pmmStateQuery.isLoading;
   let stakedTokenUSD: BigNumber | undefined = undefined;
+  let baseTokenAmount: BigNumber | undefined = undefined;
+  let quoteTokenAmount: BigNumber | undefined = undefined;
   if (
     lpTokenAccountBalanceQuery.data &&
     balanceInfo.baseLpToTokenProportion &&
@@ -145,10 +136,10 @@ export default function OperateArea({
     const baseFiatPrice = miningItem?.baseToken?.price;
     const quoteFiatPrice = miningItem?.quoteToken?.price;
     const midPrice = pmmStateQuery.data?.midPrice;
-    const baseTokenAmount = lpTokenAccountBalanceQuery.data.times(
+    baseTokenAmount = lpTokenAccountBalanceQuery.data.times(
       balanceInfo.baseLpToTokenProportion,
     );
-    const quoteTokenAmount = lpTokenAccountBalanceQuery.data.times(
+    quoteTokenAmount = lpTokenAccountBalanceQuery.data.times(
       balanceInfo.quoteLpToTokenProportion,
     );
 
@@ -170,6 +161,33 @@ export default function OperateArea({
         .plus(quoteTokenAmount.times(quoteFiatPrice));
     }
   }
+
+  const stakedTokenList =
+    baseToken && quoteToken
+      ? [
+          {
+            ...baseToken,
+            amount: formatTokenAmountNumber({
+              input: baseTokenAmount,
+              decimals: baseToken.decimals,
+            }),
+          },
+          {
+            ...quoteToken,
+            amount: formatTokenAmountNumber({
+              input: quoteTokenAmount,
+              decimals: quoteToken.decimals,
+            }),
+          },
+        ]
+      : [];
+
+  const tokenSymbol =
+    baseToken && quoteToken
+      ? `${baseToken.symbol}-${quoteToken.symbol} LP`
+      : '- LP';
+
+  const isEnded = status === MiningStatusE.ended;
 
   const logBalance: BalanceData =
     miningItem?.baseLpToken?.address && balanceInfo.userBaseLpBalance
@@ -209,7 +227,6 @@ export default function OperateArea({
             stakedTokenUSDLoading={stakedTokenUSDLoading}
             miningTitle={miningItem?.title ?? ''}
             stakedTokenList={stakedTokenList}
-            rewardTokenList={rewardTokenList}
           />
         )}
 

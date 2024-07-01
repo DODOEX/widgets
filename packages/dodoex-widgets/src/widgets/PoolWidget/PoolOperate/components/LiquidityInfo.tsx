@@ -76,7 +76,12 @@ function LiquidityBalanceItem({
           }}
         >
           {quoteToken ? (
-            <TokenLogoPair tokens={[token, quoteToken]} width={18} mr={4} />
+            <TokenLogoPair
+              tokens={[token, quoteToken]}
+              chainId={chainId}
+              width={18}
+              mr={4}
+            />
           ) : (
             <TokenLogo
               address={token.address}
@@ -156,6 +161,7 @@ function LiquidityBalanceItem({
                     >
                       <TokenLogo
                         address={son.token.address}
+                        chainId={son.token.chainId}
                         width={14}
                         height={14}
                         url={son.token.logoURI}

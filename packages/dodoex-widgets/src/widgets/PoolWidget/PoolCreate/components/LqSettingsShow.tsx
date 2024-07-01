@@ -108,7 +108,11 @@ export function LqSettingsShow({
         <Card title={t`Token Pair`} isWaiting={isWaiting}>
           {baseToken && quoteToken ? (
             <>
-              <TokenLogoPair width={24} tokens={[baseToken, quoteToken]} />
+              <TokenLogoPair
+                width={24}
+                tokens={[baseToken, quoteToken]}
+                chainId={baseToken.chainId}
+              />
               {baseToken.symbol}-{quoteToken.symbol}
             </>
           ) : (

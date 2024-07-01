@@ -53,7 +53,7 @@ export function getTokenPairCompareText({
     loading: true,
   };
   if (!fromToken || !toToken || !fromFiatPrice || !toFiatPrice) return result;
-  if (reverse) {
+  if (!reverse) {
     result.loading = false;
     result.comparePrice = fromFiatPrice.div(toFiatPrice);
     result.comparePriceText = `1 ${getTokenSymbolDisplay(

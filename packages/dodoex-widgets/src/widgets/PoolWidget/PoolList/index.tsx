@@ -53,6 +53,7 @@ export default function PoolList() {
               display: 'flex',
               gap: 12,
               flex: 1,
+              overflow: 'hidden',
             }),
       }}
       ref={scrollParentRef}
@@ -73,6 +74,7 @@ export default function PoolList() {
                 flex: 1,
                 overflow: 'hidden',
                 height: 'max-content',
+                maxHeight: '100%',
               }
         }
       >

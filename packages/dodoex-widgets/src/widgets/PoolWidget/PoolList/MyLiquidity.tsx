@@ -38,6 +38,7 @@ import TokenLogo from '../../../components/TokenLogo';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import LiquidityTable from './components/LiquidityTable';
 import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
+import SkeletonTable from './components/SkeletonTable';
 
 function CardList({
   account,
@@ -861,7 +862,7 @@ export default function MyLiquidity({
       {isMobile ? (
         <DataCardGroup>
           {fetchResult.isLoading ? <LoadingCard /> : ''}
-          {!fetchResult.isLoading && !lqList?.length && !!fetchResult.error && (
+          {!fetchResult.isLoading && !lqList?.length && !fetchResult.error && (
             <EmptyList
               sx={{
                 mt: 40,
@@ -884,12 +885,31 @@ export default function MyLiquidity({
           />
         </DataCardGroup>
       ) : (
-        <TableList
-          account={account}
-          lqList={lqList}
-          operatePool={operatePool}
-          setOperatePool={setOperatePool}
-        />
+        <>
+          <TableList
+            account={account}
+            lqList={lqList}
+            operatePool={operatePool}
+            setOperatePool={setOperatePool}
+          />
+          {fetchResult.isLoading && !lqList?.length && <SkeletonTable />}
+          {!fetchResult.isLoading && !lqList?.length && !fetchResult.error && (
+            <EmptyList
+              sx={{
+                my: 40,
+              }}
+              hasSearch={!!(activeChainId || filterASymbol || filterBSymbol)}
+            />
+          )}
+          {!!fetchResult.error && (
+            <FailedList
+              refresh={fetchResult.refetch}
+              sx={{
+                my: 40,
+              }}
+            />
+          )}
+        </>
       )}
     </>
   );

@@ -1,4 +1,12 @@
-import { alpha, Box, Button, useTheme, Tooltip } from '@dodoex/components';
+import {
+  alpha,
+  Box,
+  Button,
+  useTheme,
+  Tooltip,
+  ButtonBase,
+  RotatingIcon,
+} from '@dodoex/components';
 import { PoolApi, PoolType } from '@dodoex/api';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -8,6 +16,7 @@ import {
   FetchLiquidityListLqList,
 } from '../utils';
 import { ChainId } from '@dodoex/api';
+import { ArrowRight } from '@dodoex/icons';
 import React from 'react';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { Trans, t } from '@lingui/macro';
@@ -39,6 +48,7 @@ import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import LiquidityTable from './components/LiquidityTable';
 import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
+import SkeletonTable from './components/SkeletonTable';
 
 function CardList({
   lqList,
@@ -246,13 +256,23 @@ function TableList({
   lqList,
   operatePool,
   setOperatePool,
+  hasMore,
+  loadMore,
+  loadMoreLoading,
 }: {
   lqList: FetchLiquidityListLqList;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  hasMore?: boolean;
+  loadMore?: () => void;
+  loadMoreLoading?: boolean;
 }) {
   return (
-    <LiquidityTable>
+    <LiquidityTable
+      hasMore={hasMore}
+      loadMore={loadMore}
+      loadMoreLoading={loadMoreLoading}
+    >
       <Box component="thead">
         <Box component="tr">
           <Box component="th">
@@ -485,7 +505,7 @@ export default function AddLiquidityList({
 
   const defaultQueryFilter = {
     chainIds: filterChainIds,
-    pageSize: 4,
+    pageSize: isMobile ? 4 : 8,
     filterState: {
       viewOnlyOwn: false,
       filterTypes: ['CLASSICAL', 'DVM', 'DSP'],
@@ -536,7 +556,7 @@ export default function AddLiquidityList({
 
   const filterSmallDeviceWidth = 475;
 
-  const hasMore = fetchResult.hasNextPage && !hasFilterAddress && false;
+  const hasMore = fetchResult.hasNextPage && !hasFilterAddress;
 
   return (
     <>
@@ -656,7 +676,7 @@ export default function AddLiquidityList({
         >
           <DataCardGroup>
             {fetchResult.isLoading ? <LoadingCard /> : ''}
-            {!fetchResult.isLoading && !lqList?.length && !!fetchResult.error && (
+            {!fetchResult.isLoading && !lqList?.length && !fetchResult.error && (
               <EmptyList
                 sx={{
                   mt: 40,
@@ -676,11 +696,37 @@ export default function AddLiquidityList({
           </DataCardGroup>
         </InfiniteScroll>
       ) : (
-        <TableList
-          lqList={lqList}
-          operatePool={operatePool}
-          setOperatePool={setOperatePool}
-        />
+        <>
+          <TableList
+            lqList={lqList}
+            operatePool={operatePool}
+            setOperatePool={setOperatePool}
+            hasMore={hasMore}
+            loadMoreLoading={fetchResult.isFetchingNextPage}
+            loadMore={() => {
+              if (fetchResult.hasNextPage && !fetchResult.isFetching) {
+                fetchResult.fetchNextPage();
+              }
+            }}
+          />
+          {fetchResult.isLoading && !lqList?.length && <SkeletonTable />}
+          {!fetchResult.isLoading && !lqList?.length && !fetchResult.error && (
+            <EmptyList
+              sx={{
+                my: 40,
+              }}
+              hasSearch={!!(activeChainId || filterASymbol || filterBSymbol)}
+            />
+          )}
+          {!!fetchResult.error && (
+            <FailedList
+              refresh={fetchResult.refetch}
+              sx={{
+                my: 40,
+              }}
+            />
+          )}
+        </>
       )}
     </>
   );

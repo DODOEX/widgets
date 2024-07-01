@@ -70,6 +70,7 @@ export default function TokenListPoolItem({
             >
               <TokenLogoPair
                 tokens={[baseToken, quoteToken]}
+                chainId={item.chainId}
                 width={24}
                 mr={10}
               />

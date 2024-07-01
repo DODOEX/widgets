@@ -12,6 +12,7 @@ import React from 'react';
 import { tokenApi } from '../../constants/api';
 import { getTokenSymbolDisplay } from '../../utils/token';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
+import useFetchBlockNumber from '../contract/useFetchBlockNumber';
 import { useInflights, useSubmission } from '../Submission';
 import { OpCode } from '../Submission/spec';
 import { ExecutionResult } from '../Submission/types';
@@ -64,6 +65,7 @@ export function useTokenStatus(
     ),
   );
   const { runningRequests } = useInflights();
+  const { updateBlockNumber } = useFetchBlockNumber();
   const { i18n } = useLingui();
   const basicTokenAddress = React.useMemo(
     () => (chainId ? basicTokenMap[chainId as ChainId]?.address : null),
@@ -143,8 +145,15 @@ export function useTokenStatus(
     });
 
     if (result !== ExecutionResult.Success) return;
-    queryClient.refetchQueries({
-      queryKey: [CONTRACT_QUERY_KEY, 'token'],
+    await updateBlockNumber();
+    queryClient.invalidateQueries({
+      queryKey: tokenApi.getFetchTokenQuery(
+        chainId,
+        token?.address,
+        account,
+        proxyContractAddress,
+      ).queryKey,
+      refetchType: 'all',
     });
   }, [
     proxyContractAddress,
@@ -155,6 +164,7 @@ export function useTokenStatus(
     needReset,
     approveTitle,
     queryClient,
+    updateBlockNumber,
   ]);
 
   const getMaxBalance = React.useCallback(() => {

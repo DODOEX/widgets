@@ -162,6 +162,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
         widgetRef,
         onConnectWalletClick: props.onConnectWalletClick,
         gotoBuyToken: props.gotoBuyToken,
+        getTokenLogoUrl: props.getTokenLogoUrl,
         graphQLRequests: props.graphQLRequests ?? graphQLRequests,
       }}
     >

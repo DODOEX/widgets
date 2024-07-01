@@ -1,6 +1,26 @@
-import { Box, BoxProps, useTheme, alpha } from '@dodoex/components';
+import {
+  Box,
+  BoxProps,
+  useTheme,
+  alpha,
+  ButtonBase,
+  RotatingIcon,
+} from '@dodoex/components';
+import { ArrowRight } from '@dodoex/icons';
+import { Trans } from '@lingui/macro';
 
-export default function LiquidityTable({ sx, children, ...props }: BoxProps) {
+export default function LiquidityTable({
+  sx,
+  children,
+  hasMore,
+  loadMore,
+  loadMoreLoading,
+  ...props
+}: BoxProps & {
+  hasMore?: boolean;
+  loadMore?: () => void;
+  loadMoreLoading?: boolean;
+}) {
   const theme = useTheme();
   return (
     <Box
@@ -57,6 +77,40 @@ export default function LiquidityTable({ sx, children, ...props }: BoxProps) {
       >
         {children}
       </Box>
+      {hasMore && (
+        <ButtonBase
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 64,
+            width: '100%',
+            borderStyle: 'solid',
+            borderColor: 'border.main',
+            borderWidth: theme.spacing(1, 0, 0, 0),
+            typography: 'body2',
+            color: 'text.secondary',
+            '&:hover': {
+              color: 'text.primary',
+            },
+          }}
+          onClick={loadMore}
+        >
+          {loadMoreLoading ? (
+            <RotatingIcon />
+          ) : (
+            <>
+              <Trans>Load more</Trans>
+              <Box
+                component={ArrowRight}
+                sx={{
+                  transform: 'rotate(90deg)',
+                }}
+              />
+            </>
+          )}
+        </ButtonBase>
+      )}
     </Box>
   );
 }

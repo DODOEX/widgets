@@ -82,6 +82,7 @@ function TokenItem({
               pool && (
                 <TokenLogoPair
                   tokens={[pool.baseToken, pool.quoteToken]}
+                  chainId={pool.baseToken?.chainId || chainId}
                   width={24}
                   height={24}
                 />

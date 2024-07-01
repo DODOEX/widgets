@@ -58,6 +58,7 @@ export default function TitleInfo({
         {poolDetail?.baseToken ? (
           <TokenLogoPair
             tokens={[poolDetail.baseToken, poolDetail.quoteToken]}
+            chainId={poolDetail.chainId}
             width={36}
             mr={8}
           />

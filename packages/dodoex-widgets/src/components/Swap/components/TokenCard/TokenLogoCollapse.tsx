@@ -40,7 +40,8 @@ export function TokenLogoCollapse({
             url={token?.logoURI}
             address={token?.address ?? ''}
             marginRight={6}
-            chainId={showChainLogo ? token?.chainId : undefined}
+            chainId={token?.chainId}
+            noShowChain={!showChainLogo}
           />
           <Box>{token?.symbol ?? '-'}</Box>
         </>

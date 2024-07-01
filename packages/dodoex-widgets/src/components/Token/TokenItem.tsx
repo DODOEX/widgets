@@ -31,6 +31,7 @@ export default function TokenItem({
         width={size}
         height={size}
         noShowChain
+        marginRight={0}
       />
       {showName}
     </Box>
@@ -44,6 +45,7 @@ export default function TokenItem({
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
       }}
     >
       {LogoAndSymbol}
