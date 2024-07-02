@@ -270,10 +270,14 @@ export function ReviewDialog({
                   ml={5}
                 />
               </Box>
-              <Box>{`${formatTokenAmountNumber({
-                input: additionalFeeAmount as number,
-                decimals: toToken?.decimals,
-              })} ${toToken?.symbol}`}</Box>
+              <Box>
+                {!additionalFeeAmount
+                  ? '0'
+                  : `${formatTokenAmountNumber({
+                      input: additionalFeeAmount as number,
+                      decimals: toToken?.decimals,
+                    })} ${toToken?.symbol}`}
+              </Box>
             </Box>
 
             <Box
@@ -319,7 +323,7 @@ export function ReviewDialog({
                   ml={5}
                 />
               </Box>
-              <Box>{slippage}</Box>
+              <Box>{slippage}%</Box>
             </Box>
           </Box>
         </Box>
