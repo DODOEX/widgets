@@ -20,6 +20,15 @@ export type FetchMyLiquidityListLqList = ExcludeNone<
   >['liquidity_list']
 >['lqList'];
 
+export type FetchMyCreateListLqList = ExcludeNone<
+  ReturnType<
+    Exclude<
+      typeof PoolApi.graphql.fetchDashboardPairList['__apiType'],
+      undefined
+    >
+  >['dashboard_pairs_list']
+>['list'];
+
 export type FetchPoolList = ExcludeNone<
   ReturnType<
     Exclude<typeof PoolApi.graphql.fetchPoolList['__apiType'], undefined>

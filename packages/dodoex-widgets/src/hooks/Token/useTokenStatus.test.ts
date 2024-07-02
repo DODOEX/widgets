@@ -22,6 +22,13 @@ jest.mock('@web3-react/core', () => ({
   }),
 }));
 
+jest.mock('../contract/useFetchBlockNumber', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    updateBlockNumber: jest.fn(),
+  })),
+}));
+
 const defaultReturnResult = {
   isApproving: false,
   isGetApproveLoading: false,
