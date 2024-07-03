@@ -2,7 +2,13 @@ import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState, useMemo } from 'react';
 import Dialog, { DialogProps } from './Dialog';
-import { Box, Button, BaseButton, useTheme } from '@dodoex/components';
+import {
+  Box,
+  Button,
+  BaseButton,
+  useTheme,
+  LoadingSkeleton,
+} from '@dodoex/components';
 import { TokenInfo } from '../../../hooks/Token';
 import { formatTokenAmountNumber } from '../../../utils/formatter';
 import { formatReadableNumber } from '../../../utils/formatter';
@@ -35,6 +41,7 @@ export interface ReviewDialogProps {
   curToFiatPrice: BigNumber | null;
   curFromFiatPrice: BigNumber | null;
   pricePerFromToken: number | null;
+  loading: boolean;
 }
 export function ReviewDialog({
   open,
@@ -52,6 +59,7 @@ export function ReviewDialog({
   curFromFiatPrice,
   pricePerFromToken,
   additionalFeeAmount,
+  loading,
 }: ReviewDialogProps) {
   const theme = useTheme();
   const { defaultSlippage } = useDefaultSlippage(false);
@@ -159,12 +167,21 @@ export function ReviewDialog({
                   url={toToken?.logoURI}
                   address={toToken?.address ?? ''}
                 />
-                <Box>{`${formatTokenAmountNumber({
+                <LoadingSkeleton
+                  loading={loading}
+                  loadingProps={{
+                    width: 30,
+                  }}
+                >{`${formatTokenAmountNumber({
                   input: toAmount as number,
                   decimals: toToken?.decimals,
-                })} ${toToken?.symbol}`}</Box>
+                })} ${toToken?.symbol}`}</LoadingSkeleton>
               </Box>
-              <Box
+              <LoadingSkeleton
+                loading={loading}
+                loadingProps={{
+                  width: 30,
+                }}
                 sx={{
                   typography: 'h6',
                   mt: 4,
@@ -177,17 +194,33 @@ export function ReviewDialog({
                       showDecimals: 1,
                     })}(${priceImpact}%)`
                   : '-'}
-              </Box>
+              </LoadingSkeleton>
             </Box>
           </Box>
-          <Box sx={{ mt: 12, typography: 'h6' }}>{`1 ${
-            fromToken?.symbol
-          }  = ${formatTokenAmountNumber({
-            input: new BigNumber(toAmount as number).dividedBy(
-              new BigNumber(fromAmount as number),
-            ),
-            decimals: toToken?.decimals,
-          })} ${toToken?.symbol}`}</Box>
+          <Box
+            sx={{
+              mt: 12,
+              display: 'flex',
+              alignItems: 'center',
+              typography: 'h6',
+            }}
+          >
+            {`1 ${fromToken?.symbol}  = `}
+            <LoadingSkeleton
+              loading={loading}
+              loadingProps={{
+                width: 30,
+              }}
+            >
+              {formatTokenAmountNumber({
+                input: new BigNumber(toAmount as number).dividedBy(
+                  new BigNumber(fromAmount as number),
+                ),
+                decimals: toToken?.decimals,
+              })}
+            </LoadingSkeleton>{' '}
+            {`${toToken?.symbol}`}
+          </Box>
         </Box>
 
         <Box
@@ -245,10 +278,19 @@ export function ReviewDialog({
                   ml={5}
                 />
               </Box>
-              <Box>{`${formatTokenAmountNumber({
-                input: baseFeeAmount as number,
-                decimals: toToken?.decimals,
-              })} ${toToken?.symbol}`}</Box>
+              <LoadingSkeleton
+                loading={loading}
+                loadingProps={{
+                  width: 30,
+                }}
+              >
+                {!baseFeeAmount
+                  ? '0'
+                  : `${formatTokenAmountNumber({
+                      input: baseFeeAmount as number,
+                      decimals: toToken?.decimals,
+                    })} ${toToken?.symbol}`}
+              </LoadingSkeleton>
             </Box>
 
             <Box
@@ -270,14 +312,19 @@ export function ReviewDialog({
                   ml={5}
                 />
               </Box>
-              <Box>
+              <LoadingSkeleton
+                loading={loading}
+                loadingProps={{
+                  width: 30,
+                }}
+              >
                 {!additionalFeeAmount
                   ? '0'
                   : `${formatTokenAmountNumber({
                       input: additionalFeeAmount as number,
                       decimals: toToken?.decimals,
                     })} ${toToken?.symbol}`}
-              </Box>
+              </LoadingSkeleton>
             </Box>
 
             <Box

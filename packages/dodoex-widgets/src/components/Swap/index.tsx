@@ -1021,6 +1021,7 @@ export function Swap({
         curFromFiatPrice={displayFromFiatPrice}
         pricePerFromToken={resPricePerFromToken}
         onClose={() => setIsReviewDialogOpen(false)}
+        loading={resPriceStatus === RoutePriceStatus.Loading}
       />
       <SettingsDialog
         open={isSettingsDialogOpen}
