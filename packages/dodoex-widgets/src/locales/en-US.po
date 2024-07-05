@@ -46,7 +46,7 @@ msgstr "Balance:"
 msgid "Dismiss"
 msgstr "Dismiss"
 
-#: src/components/Swap/components/ReviewDialog.tsx:295
+#: src/components/Swap/components/ReviewDialog.tsx:342
 #: src/components/Swap/index.tsx:408
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
@@ -92,11 +92,11 @@ msgstr "Powered by DODO protocol"
 msgid "This token is on"
 msgstr "This token is on"
 
-#: src/components/Swap/components/ReviewDialog.tsx:244
+#: src/components/Swap/components/ReviewDialog.tsx:277
 msgid "Estimated service provider fees"
 msgstr "Estimated service provider fees"
 
-#: src/components/Swap/components/ReviewDialog.tsx:242
+#: src/components/Swap/components/ReviewDialog.tsx:275
 msgid "Basic Fee"
 msgstr "Basic Fee"
 
@@ -117,7 +117,7 @@ msgid "Max"
 msgstr "Max"
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:276
-#: src/components/Swap/components/ReviewDialog.tsx:315
+#: src/components/Swap/components/ReviewDialog.tsx:362
 msgid "Slippage"
 msgstr "Slippage"
 
@@ -152,7 +152,7 @@ msgstr "Transaction Pending"
 msgid "on"
 msgstr "on"
 
-#: src/components/Swap/components/ReviewDialog.tsx:318
+#: src/components/Swap/components/ReviewDialog.tsx:365
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
@@ -168,7 +168,7 @@ msgstr "Days"
 msgid "Connecting..."
 msgstr "Connecting..."
 
-#: src/components/Swap/components/ReviewDialog.tsx:263
+#: src/components/Swap/components/ReviewDialog.tsx:305
 msgid "Additional Fee"
 msgstr "Additional Fee"
 
@@ -217,7 +217,7 @@ msgid "Best offer"
 msgstr "Best offer"
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:154
-#: src/components/Swap/components/ReviewDialog.tsx:405
+#: src/components/Swap/components/ReviewDialog.tsx:452
 msgid "Confirming"
 msgstr "Confirming"
 
@@ -234,7 +234,7 @@ msgid "Confirm Cross Chain"
 msgstr "Confirm Cross Chain"
 
 #. js-lingui-explicit-id
-#: src/components/Swap/components/ReviewDialog.tsx:379
+#: src/components/Swap/components/ReviewDialog.tsx:426
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 
@@ -242,7 +242,7 @@ msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgid "Estimated Time"
 msgstr "Estimated Time"
 
-#: src/components/Swap/components/ReviewDialog.tsx:94
+#: src/components/Swap/components/ReviewDialog.tsx:102
 msgid "Swap summary"
 msgstr "Swap summary"
 
@@ -255,7 +255,7 @@ msgstr "Tx"
 msgid "Review Cross Chain"
 msgstr "Review Cross Chain"
 
-#: src/components/Swap/components/ReviewDialog.tsx:292
+#: src/components/Swap/components/ReviewDialog.tsx:339
 msgid "Price Impact"
 msgstr "Price Impact"
 
@@ -283,7 +283,7 @@ msgstr "Connect to your {0} Wallet"
 msgid "Seconds"
 msgstr "Seconds"
 
-#: src/components/Swap/components/ReviewDialog.tsx:215
+#: src/components/Swap/components/ReviewDialog.tsx:248
 msgid "Swap Detail"
 msgstr "Swap Detail"
 
@@ -305,7 +305,7 @@ msgstr "On"
 msgid "Approve"
 msgstr "Approve"
 
-#: src/components/Swap/components/ReviewDialog.tsx:266
+#: src/components/Swap/components/ReviewDialog.tsx:308
 msgid "Additional routing fees set by the Widget user"
 msgstr "Additional routing fees set by the Widget user"
 
@@ -371,7 +371,7 @@ msgstr "Something went wrong."
 msgid "Second"
 msgstr "Second"
 
-#: src/components/Swap/components/ReviewDialog.tsx:407
+#: src/components/Swap/components/ReviewDialog.tsx:454
 msgid "Confirm swap"
 msgstr "Confirm swap"
 
