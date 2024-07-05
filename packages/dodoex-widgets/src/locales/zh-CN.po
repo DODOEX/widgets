@@ -46,7 +46,7 @@ msgstr "余额:"
 msgid "Dismiss"
 msgstr "忽略"
 
-#: src/components/Swap/components/ReviewDialog.tsx:295
+#: src/components/Swap/components/ReviewDialog.tsx:342
 #: src/components/Swap/index.tsx:408
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
@@ -92,11 +92,11 @@ msgstr "Powered by DODO protocol"
 msgid "This token is on"
 msgstr "该代币在"
 
-#: src/components/Swap/components/ReviewDialog.tsx:244
+#: src/components/Swap/components/ReviewDialog.tsx:277
 msgid "Estimated service provider fees"
 msgstr "预计服务供应商费用"
 
-#: src/components/Swap/components/ReviewDialog.tsx:242
+#: src/components/Swap/components/ReviewDialog.tsx:275
 msgid "Basic Fee"
 msgstr "基础手续费"
 
@@ -117,7 +117,7 @@ msgid "Max"
 msgstr "全部"
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:276
-#: src/components/Swap/components/ReviewDialog.tsx:315
+#: src/components/Swap/components/ReviewDialog.tsx:362
 msgid "Slippage"
 msgstr "滑点"
 
@@ -152,7 +152,7 @@ msgstr "交易进行中"
 msgid "on"
 msgstr "在"
 
-#: src/components/Swap/components/ReviewDialog.tsx:318
+#: src/components/Swap/components/ReviewDialog.tsx:365
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
@@ -168,7 +168,7 @@ msgstr "天"
 msgid "Connecting..."
 msgstr "连接中..."
 
-#: src/components/Swap/components/ReviewDialog.tsx:263
+#: src/components/Swap/components/ReviewDialog.tsx:305
 msgid "Additional Fee"
 msgstr "额外手续费"
 
@@ -217,7 +217,7 @@ msgid "Best offer"
 msgstr "最优价格"
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:154
-#: src/components/Swap/components/ReviewDialog.tsx:405
+#: src/components/Swap/components/ReviewDialog.tsx:452
 msgid "Confirming"
 msgstr "确认中"
 
@@ -234,7 +234,7 @@ msgid "Confirm Cross Chain"
 msgstr "确认跨链交易"
 
 #. js-lingui-explicit-id
-#: src/components/Swap/components/ReviewDialog.tsx:379
+#: src/components/Swap/components/ReviewDialog.tsx:426
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 
@@ -242,7 +242,7 @@ msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 msgid "Estimated Time"
 msgstr "预计时间"
 
-#: src/components/Swap/components/ReviewDialog.tsx:94
+#: src/components/Swap/components/ReviewDialog.tsx:102
 msgid "Swap summary"
 msgstr "交易预览"
 
@@ -255,7 +255,7 @@ msgstr "交易哈希："
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
-#: src/components/Swap/components/ReviewDialog.tsx:292
+#: src/components/Swap/components/ReviewDialog.tsx:339
 msgid "Price Impact"
 msgstr "价格冲击"
 
@@ -283,7 +283,7 @@ msgstr "连接你的{0}钱包"
 msgid "Seconds"
 msgstr "秒"
 
-#: src/components/Swap/components/ReviewDialog.tsx:215
+#: src/components/Swap/components/ReviewDialog.tsx:248
 msgid "Swap Detail"
 msgstr "交易详情"
 
@@ -305,7 +305,7 @@ msgstr "在"
 msgid "Approve"
 msgstr "代币授权"
 
-#: src/components/Swap/components/ReviewDialog.tsx:266
+#: src/components/Swap/components/ReviewDialog.tsx:308
 msgid "Additional routing fees set by the Widget user"
 msgstr "由 Widget 设置的额外路由费用"
 
@@ -371,7 +371,7 @@ msgstr "发生异常错误."
 msgid "Second"
 msgstr "秒"
 
-#: src/components/Swap/components/ReviewDialog.tsx:407
+#: src/components/Swap/components/ReviewDialog.tsx:454
 msgid "Confirm swap"
 msgstr "确认交易"
 
