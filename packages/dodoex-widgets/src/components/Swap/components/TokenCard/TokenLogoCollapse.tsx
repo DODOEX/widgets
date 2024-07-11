@@ -24,6 +24,9 @@ export function TokenLogoCollapse({
         color: theme.palette.text.primary,
         typography: 'h5',
         fontWeight: 600,
+        '&:focus': {
+          opacity: 0.5,
+        },
       }}
       onClick={(e: any) => {
         onClick && onClick(e);

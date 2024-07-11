@@ -35,7 +35,7 @@ export function SwitchBox({
           ...(disabled || !onClick
             ? {}
             : {
-                '&:hover': {
+                '&:hover, &:focus': {
                   color: 'text.primary',
                 },
               }),

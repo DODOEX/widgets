@@ -29,7 +29,7 @@ export default function Dialog({
       sx={{
         position: 'absolute',
         top: open ? 0 : '100%',
-        transition: `top ${transitionTime}ms`,
+        transition: `all ${transitionTime}ms`,
         zIndex: 1,
         left: 0,
         right: 0,
@@ -39,6 +39,7 @@ export default function Dialog({
         backgroundColor: 'background.paper',
         borderRadius: 16,
         height,
+        visibility: open ? 'visible' : 'hidden',
       }}
       data-testid={testId}
       data-active={open ? '1' : '0'}
