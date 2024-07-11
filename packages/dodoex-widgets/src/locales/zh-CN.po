@@ -403,7 +403,7 @@ msgstr "如果你的交易被确认的时间超过这个时间，你的交易将
 msgid "Detail"
 msgstr "详情"
 
-#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:44
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:47
 msgid "SELECT TOKEN"
 msgstr "选择代币"
 

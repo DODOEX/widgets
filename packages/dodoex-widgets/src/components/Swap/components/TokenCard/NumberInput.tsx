@@ -50,8 +50,9 @@ export function NumberInput({
             alignItems: 'center',
             flexShrink: 0,
             color: 'text.secondary',
-            '&:focus': {
-              color: 'text.primary',
+            '&:focus-visible': {
+              border: 'solid 1px',
+              borderColor: 'text.primary',
             },
           }}
           onClick={() => {

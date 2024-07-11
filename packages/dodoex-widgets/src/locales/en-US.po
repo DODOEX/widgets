@@ -403,7 +403,7 @@ msgstr "If your transaction time exceeds the deadline, your transaction will be 
 msgid "Detail"
 msgstr "Detail"
 
-#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:44
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:47
 msgid "SELECT TOKEN"
 msgstr "SELECT TOKEN"
 

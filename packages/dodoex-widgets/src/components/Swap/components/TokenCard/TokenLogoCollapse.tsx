@@ -24,7 +24,7 @@ export function TokenLogoCollapse({
         color: theme.palette.text.primary,
         typography: 'h5',
         fontWeight: 600,
-        '&:focus': {
+        '&:focus-visible': {
           opacity: 0.5,
         },
       }}
