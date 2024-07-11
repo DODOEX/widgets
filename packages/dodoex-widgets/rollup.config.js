@@ -20,6 +20,7 @@ const baseConfig = {
     }),
     url(),
     svgr({
+      svgo: true,
       svgoConfig: {
         plugins: [
           {

@@ -39,7 +39,6 @@ export default function Dialog({
         backgroundColor: 'background.paper',
         borderRadius: 16,
         height,
-        visibility: open ? 'visible' : 'hidden',
       }}
       data-testid={testId}
       data-active={open ? '1' : '0'}
@@ -77,7 +76,8 @@ export default function Dialog({
       ) : (
         ''
       )}
-      {children}
+      {/* When not turned on, the element is not rendered. This prevents the tab from focusing on the hidden dialog. It also prevents the svg from pointing to a hidden element with the same id. */}
+      {open ? children : ''}
     </Box>
   );
 }

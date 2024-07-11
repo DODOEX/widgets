@@ -54,12 +54,10 @@ export default function TokenPicker({
   const ref = useRef<HTMLDivElement>(null);
   const [fixedSizeHeight, setFixedSizeHeight] = useState(0);
 
-  const prevVisible = useRef(visible);
   useEffect(() => {
-    if (!prevVisible.current && visible && value?.chainId !== selectChainId) {
-      setSelectChainId(value?.chainId);
+    if (visible && value?.chainId && value?.chainId !== selectChainId) {
+      setSelectChainId(value.chainId);
     }
-    prevVisible.current = visible;
   }, [value, visible]);
 
   useEffect(() => {
