@@ -9,6 +9,7 @@ import { TokenPickerProps } from '../../../TokenPicker';
 import useGetBalance from '../../../../hooks/Token/useGetBalance';
 import { transitionTime } from '../Dialog';
 import SwitchChainDialog from '../../../SwitchChainDialog';
+import { useFetchTokens } from '../../../../hooks/contract';
 
 export interface TokenCardProps {
   amt: string;
@@ -53,6 +54,10 @@ export function TokenCard({
   const getBalance = useGetBalance();
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
   const balance = token ? getBalance(token) : null;
+  useFetchTokens({
+    addresses: token ? [token.address] : [],
+    chainId: token?.chainId,
+  });
 
   useEffect(() => {
     if (token && onlyCurrentChain) {

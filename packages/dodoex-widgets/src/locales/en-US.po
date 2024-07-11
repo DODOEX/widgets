@@ -71,7 +71,7 @@ msgstr "Minute"
 msgid "Hour"
 msgstr "Hour"
 
-#: src/components/TokenPicker/index.tsx:111
+#: src/components/TokenPicker/index.tsx:109
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 

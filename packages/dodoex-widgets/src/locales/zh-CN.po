@@ -71,7 +71,7 @@ msgstr "分钟"
 msgid "Hour"
 msgstr "小时"
 
-#: src/components/TokenPicker/index.tsx:111
+#: src/components/TokenPicker/index.tsx:109
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
