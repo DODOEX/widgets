@@ -8,7 +8,7 @@ import {
   RotatingIcon,
   Tooltip,
 } from '@dodoex/components';
-import { formatTokenAmountNumber, isETHChain } from '../../utils';
+import { formatTokenAmountNumber } from '../../utils';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Setting, Dodo, Warn, DoubleRight } from '@dodoex/icons';
@@ -80,7 +80,6 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
   const dispatch = useDispatch<AppThunkDispatch>();
   const { isReverseRouting, noPowerBy } = useSelector(getGlobalProps);
   const defaultChainId = useSelector(getDefaultChainId);
-  const { isETH } = useMemo(() => isETHChain(chainId), [chainId]);
   const basicTokenAddress = useMemo(
     () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
     [chainId],
@@ -991,6 +990,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
         curFromFiatPrice={displayFromFiatPrice}
         pricePerFromToken={resPricePerFromToken}
         onClose={() => setIsReviewDialogOpen(false)}
+        loading={resPriceStatus === RoutePriceStatus.Loading}
       />
       <SettingsDialog
         open={isSettingsDialogOpen}

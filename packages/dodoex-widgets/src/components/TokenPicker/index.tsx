@@ -80,9 +80,8 @@ export default function TokenPicker({
   const ref = useRef<HTMLDivElement>(null);
   const [fixedSizeHeight, setFixedSizeHeight] = useState(0);
 
-  const prevVisible = useRef(visible);
   useEffect(() => {
-    if (!prevVisible.current && visible && value) {
+    if (visible && value) {
       if (Array.isArray(value)) {
         const [firstValue] = value;
         if (firstValue && firstValue.chainId !== selectChainId) {
@@ -92,7 +91,6 @@ export default function TokenPicker({
         setSelectChainId(value.chainId);
       }
     }
-    prevVisible.current = visible;
   }, [value, visible]);
 
   useEffect(() => {

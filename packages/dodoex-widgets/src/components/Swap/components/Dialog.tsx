@@ -33,7 +33,7 @@ function DialogBase({
       sx={{
         position: 'absolute',
         top: open ? 0 : '100%',
-        transition: `top ${transitionTime}ms`,
+        transition: `all ${transitionTime}ms`,
         zIndex: 20,
         left: 0,
         right: 0,
@@ -80,7 +80,8 @@ function DialogBase({
       ) : (
         ''
       )}
-      {children}
+      {/* When not turned on, the element is not rendered. This prevents the tab from focusing on the hidden dialog. It also prevents the svg from pointing to a hidden element with the same id. */}
+      {open ? children : ''}
     </Box>
   );
 }

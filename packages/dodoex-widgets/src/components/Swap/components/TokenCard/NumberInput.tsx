@@ -58,6 +58,11 @@ export const NumberInput = forwardRef(function NumberInput(
             justifyContent: 'center',
             alignItems: 'center',
             flexShrink: 0,
+            color: 'text.secondary',
+            '&:focus-visible': {
+              border: 'solid 1px',
+              borderColor: 'text.primary',
+            },
           }}
           onClick={() => {
             onChange && onChange('');
@@ -67,7 +72,6 @@ export const NumberInput = forwardRef(function NumberInput(
             component={Error}
             sx={{
               width: 12,
-              color: 'text.secondary',
             }}
           />
         </Box>

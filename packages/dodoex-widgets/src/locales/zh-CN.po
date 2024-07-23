@@ -24,13 +24,13 @@ msgstr "交易时长:"
 
 #: src/hooks/Bridge/useExecuteBridgeRoute.tsx:128
 msgid "Cross Chain"
-msgstr "跨链桥"
+msgstr "跨链桥<<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/PoolCreate/components/FeeRateCard.tsx:39
 msgid "99% Default"
 msgstr ""
 
-#: src/components/Swap/index.tsx:482
+#: src/components/Swap/index.tsx:481
 msgid "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 msgstr "当前滑点保护系数设置超过{maxSlippageWarning}%，可能会造成损失。"
 
@@ -55,6 +55,7 @@ msgid "{0} pending"
 msgstr "{0} 等待中"
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:325
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:335
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:470
 msgid "Removing"
 msgstr ""
@@ -82,13 +83,14 @@ msgstr ""
 #: src/components/ErrorMessageDialog.tsx:63
 #: src/components/WithExecutionDialog/index.tsx:314
 msgid "Dismiss"
-msgstr "忽略"
+msgstr "忽略<<<<<<< HEAD"
 
 #: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:74
 msgid "Unstaking"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:328
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:338
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:473
 msgid "Adding"
 msgstr ""
@@ -124,8 +126,8 @@ msgstr ""
 msgid "Rewards"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:291
-#: src/components/Swap/index.tsx:407
+#: src/components/Swap/components/ReviewDialog.tsx:342
+#: src/components/Swap/index.tsx:406
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
 
@@ -144,13 +146,13 @@ msgstr ""
 
 #: src/components/WithExecutionDialog/index.tsx:111
 msgid "{0} confirmed"
-msgstr "{0} 已确认"
+msgstr "{0} 已确认<<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:530
 msgid "Creation Time"
 msgstr ""
 
-#: src/components/Swap/index.tsx:514
+#: src/components/Swap/index.tsx:513
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
@@ -163,7 +165,7 @@ msgstr ""
 msgid "The token amount is calculated by initial price."
 msgstr ""
 
-#: src/components/Swap/index.tsx:415
+#: src/components/Swap/index.tsx:414
 msgid "Current price impact"
 msgstr "当前价格冲击"
 
@@ -181,7 +183,7 @@ msgstr ""
 
 #: src/utils/time.ts:23
 msgid "Hour"
-msgstr "小时"
+msgstr "小时<<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:74
 #: src/widgets/PoolWidget/PoolList/index.tsx:181
@@ -189,7 +191,7 @@ msgstr "小时"
 msgid "Liquidity"
 msgstr ""
 
-#: src/components/TokenPicker/index.tsx:162
+#: src/components/TokenPicker/index.tsx:160
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
@@ -211,9 +213,9 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:76
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:197
 msgid "Confirm"
-msgstr "确认"
+msgstr "确认<<<<<<< HEAD"
 
-#: src/components/Swap/index.tsx:972
+#: src/components/Swap/index.tsx:971
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -227,7 +229,7 @@ msgstr ""
 
 #: src/components/SwitchChainDialog/index.tsx:91
 msgid "This token is on"
-msgstr "该代币在"
+msgstr "该代币在<<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:216
 msgid "Pool Creation"
@@ -237,11 +239,11 @@ msgstr ""
 msgid "Custom"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:244
+#: src/components/Swap/components/ReviewDialog.tsx:277
 msgid "Estimated service provider fees"
 msgstr "预计服务供应商费用"
 
-#: src/components/Swap/components/ReviewDialog.tsx:242
+#: src/components/Swap/components/ReviewDialog.tsx:275
 msgid "Basic Fee"
 msgstr "基础手续费"
 
@@ -271,6 +273,7 @@ msgid "No results found"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:279
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:294
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:387
 msgid "Pair"
 msgstr ""
@@ -300,7 +303,7 @@ msgid "Go back"
 msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:276
-#: src/components/Swap/components/ReviewDialog.tsx:311
+#: src/components/Swap/components/ReviewDialog.tsx:362
 msgid "Slippage"
 msgstr "滑点"
 
@@ -361,12 +364,13 @@ msgstr ""
 
 #: src/hooks/Bridge/useSendRoute.ts:95
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
-msgstr "跨链费用不足，至少需要 {0} {1} "
+msgstr "跨链费用不足，至少需要 {0} {1} <<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:228
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:282
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:77
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:273
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:196
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:297
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:252
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:390
 msgid "TVL"
@@ -377,7 +381,7 @@ msgstr ""
 msgid "Emulator"
 msgstr ""
 
-#: src/components/Swap/index.tsx:670
+#: src/components/Swap/index.tsx:669
 msgid "Transaction Pending"
 msgstr "交易进行中"
 
@@ -386,13 +390,13 @@ msgstr "交易进行中"
 #: src/components/Bridge/SelectBridgeDialog/TokenWithChain.tsx:88
 #: src/components/TokenPicker/SelectChainItem.tsx:51
 msgid "on"
-msgstr "在"
+msgstr "在<<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:42
 msgid "Suitable for stablecoins with price fluctuations within 2%"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:314
+#: src/components/Swap/components/ReviewDialog.tsx:365
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
@@ -432,7 +436,7 @@ msgstr ""
 msgid "Connecting..."
 msgstr "连接中..."
 
-#: src/components/Swap/components/ReviewDialog.tsx:263
+#: src/components/Swap/components/ReviewDialog.tsx:305
 msgid "Additional Fee"
 msgstr "额外手续费"
 
@@ -457,7 +461,7 @@ msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the q
 msgstr ""
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:535
+#: src/components/Swap/index.tsx:534
 msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
@@ -469,7 +473,7 @@ msgstr ""
 msgid "Related CrowdPooling"
 msgstr ""
 
-#: src/components/Swap/index.tsx:759
+#: src/components/Swap/index.tsx:758
 msgid "Review Swap"
 msgstr "预览交易"
 
@@ -480,7 +484,7 @@ msgstr "选择跨链桥"
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:280
 #: src/components/Swap/components/SettingsDialog/index.tsx:53
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
-msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
+msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。<<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:230
 msgid "Set pool parameters"
@@ -490,7 +494,7 @@ msgstr ""
 msgid "Any Ratio"
 msgstr ""
 
-#: src/components/Swap/index.tsx:677
+#: src/components/Swap/index.tsx:676
 msgid "Select Tokens"
 msgstr "选择代币"
 
@@ -526,13 +530,13 @@ msgstr ""
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr ""
 
-#: src/components/Swap/index.tsx:851
+#: src/components/Swap/index.tsx:850
 msgid "The setting has been switched to swap mode"
 msgstr "设置已切换至闪兑模式"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:590
-#: src/components/Swap/index.tsx:719
+#: src/components/Swap/index.tsx:589
+#: src/components/Swap/index.tsx:718
 msgid "Quote not available"
 msgstr "没有报价"
 
@@ -555,7 +559,7 @@ msgstr ""
 msgid "Set the fee to the same as most other pools"
 msgstr ""
 
-#: src/components/Swap/index.tsx:704
+#: src/components/Swap/index.tsx:703
 msgid "Fetching Price..."
 msgstr "获取价格中..."
 
@@ -572,7 +576,7 @@ msgid "LP Fee"
 msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:154
-#: src/components/Swap/components/ReviewDialog.tsx:401
+#: src/components/Swap/components/ReviewDialog.tsx:452
 msgid "Confirming"
 msgstr "确认中"
 
@@ -598,20 +602,20 @@ msgid "Confirm Cross Chain"
 msgstr "确认跨链交易"
 
 #. js-lingui-explicit-id
-#: src/components/Swap/components/ReviewDialog.tsx:375
+#: src/components/Swap/components/ReviewDialog.tsx:426
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:340
 msgid "Estimated Time"
-msgstr "预计时间"
+msgstr "预计时间<<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:19
 #: src/widgets/PoolWidget/PoolList/index.tsx:182
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:94
+#: src/components/Swap/components/ReviewDialog.tsx:102
 msgid "Swap summary"
 msgstr "交易预览"
 
@@ -631,13 +635,13 @@ msgstr ""
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:202
 #: src/components/WithExecutionDialog/index.tsx:203
 msgid "Tx"
-msgstr "交易哈希："
+msgstr "交易哈希：<<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/hooks/usePoolTypeTag.ts:26
 msgid "Single"
 msgstr ""
 
-#: src/components/Swap/index.tsx:749
+#: src/components/Swap/index.tsx:748
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
@@ -649,7 +653,7 @@ msgstr "预览跨链交易"
 msgid "Mining"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:288
+#: src/components/Swap/components/ReviewDialog.tsx:339
 msgid "Price Impact"
 msgstr "价格冲击"
 
@@ -717,7 +721,7 @@ msgstr "连接你的{0}钱包"
 
 #: src/utils/time.ts:7
 msgid "Seconds"
-msgstr "秒"
+msgstr "秒<<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:61
 msgid "Suitable for most situations."
@@ -727,7 +731,7 @@ msgstr ""
 msgid "Something went wrong…<0>Refresh again</0>"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:215
+#: src/components/Swap/components/ReviewDialog.tsx:248
 msgid "Swap Detail"
 msgstr "交易详情"
 
@@ -777,9 +781,9 @@ msgstr ""
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:118
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:149
 msgid "On"
-msgstr "在"
+msgstr "在<<<<<<< HEAD"
 
-#: src/components/Swap/index.tsx:687
+#: src/components/Swap/index.tsx:686
 #: src/hooks/Token/useTokenStatus.ts:133
 msgid "Approve"
 msgstr "代币授权"
@@ -788,7 +792,7 @@ msgstr "代币授权"
 msgid "Share"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:266
+#: src/components/Swap/components/ReviewDialog.tsx:308
 msgid "Additional routing fees set by the Widget user"
 msgstr "由 Widget 设置的额外路由费用"
 
@@ -886,6 +890,7 @@ msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:99
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:115
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:443
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:84
 msgid "Edit"
 msgstr ""
@@ -893,6 +898,10 @@ msgstr ""
 #: src/utils/time.ts:17
 msgid "Min"
 msgstr "分钟"
+
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:650
+msgid "Hide TVL=0 pools"
+msgstr ""
 
 #: src/hooks/contract/wallet.ts:85
 msgid "Transaction rejected."
@@ -933,9 +942,10 @@ msgstr "预计交易时长"
 
 #: src/components/ConnectWallet/ConnectWalletDialog.tsx:39
 msgid "Connect to your wallet"
-msgstr "连接钱包"
+msgstr "连接钱包<<<<<<< HEAD"
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:304
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:225
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:300
 msgid "Total Fee Revenue"
 msgstr ""
 
@@ -967,7 +977,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: src/components/Swap/index.tsx:693
+#: src/components/Swap/index.tsx:692
 msgid "Enter an amount"
 msgstr "输入代币数量"
 
@@ -975,7 +985,7 @@ msgstr "输入代币数量"
 msgid "Ratio"
 msgstr ""
 
-#: src/components/Swap/index.tsx:687
+#: src/components/Swap/index.tsx:686
 #: src/components/TokenStatusButton.tsx:31
 msgid "Approving"
 msgstr "授权中"
@@ -1003,7 +1013,7 @@ msgstr "发生异常错误."
 
 #: src/utils/time.ts:7
 msgid "Second"
-msgstr "秒"
+msgstr "秒<<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:401
 msgid "Total Swap Volume"
@@ -1017,7 +1027,7 @@ msgstr ""
 msgid "Select Network"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:403
+#: src/components/Swap/components/ReviewDialog.tsx:454
 msgid "Confirm swap"
 msgstr "确认交易"
 
@@ -1042,7 +1052,8 @@ msgstr ""
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:246
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:461
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:345
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:266
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:547
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:361
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:684
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:89
@@ -1113,13 +1124,13 @@ msgstr ""
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:52
 msgid "Unable to SETTLE during the cooling-off period"
-msgstr "在冷静期无法进行清算"
+msgstr "在冷静期无法进行清算<<<<<<< HEAD"
 
-#: src/components/Swap/index.tsx:849
+#: src/components/Swap/index.tsx:848
 msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
-#: src/components/Swap/components/TokenCard/index.tsx:278
+#: src/components/Swap/components/TokenCard/index.tsx:283
 msgid "Buy"
 msgstr ""
 
@@ -1133,7 +1144,7 @@ msgstr "如果你的交易被确认的时间超过这个时间，你的交易将
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:83
 msgid "Detail"
-msgstr "详情"
+msgstr "详情<<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:194
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:190
@@ -1145,7 +1156,7 @@ msgstr "详情"
 msgid "APY"
 msgstr ""
 
-#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:49
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:52
 msgid "SELECT TOKEN"
 msgstr "选择代币"
 
@@ -1166,7 +1177,8 @@ msgstr ""
 msgid "Initial Price Alert"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:330
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:251
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:535
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:347
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:673
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16
@@ -1180,7 +1192,7 @@ msgstr "跨链桥概览"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:21
 msgid "SafeERC20: low-level call failed. Please contact the DODO team."
-msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
+msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。<<<<<<< HEAD"
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:76
 msgid "Pool Creation Confirmation"
@@ -1198,7 +1210,7 @@ msgstr ""
 msgid "Real Time"
 msgstr ""
 
-#: src/components/Swap/index.tsx:551
+#: src/components/Swap/index.tsx:550
 msgid "Unsupported network - switch to trade"
 msgstr "未支持网络 - 请切换后进行交易"
 
@@ -1210,7 +1222,7 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: src/components/Swap/index.tsx:844
+#: src/components/Swap/index.tsx:843
 #: src/hooks/Swap/useExecuteSwap.ts:57
 msgid "Swap"
 msgstr "交易"
@@ -1238,7 +1250,7 @@ msgstr "ForceStop 异常"
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/LiquidityProvidersTable.tsx:240
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:332
-#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:103
+#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:100
 msgid "Load more"
 msgstr ""
 
@@ -1265,9 +1277,9 @@ msgstr ""
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:98
 msgid "Transaction Deadline"
-msgstr "交易截止时间"
+msgstr "交易截止时间<<<<<<< HEAD"
 
-#: src/components/Swap/index.tsx:730
+#: src/components/Swap/index.tsx:729
 #: src/components/TokenStatusButton.tsx:18
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:89
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:164

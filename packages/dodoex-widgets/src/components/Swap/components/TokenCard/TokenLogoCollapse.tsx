@@ -27,6 +27,9 @@ export function TokenLogoCollapse({
         color: theme.palette.text.primary,
         typography: 'h5',
         fontWeight: 600,
+        '&:focus-visible': {
+          opacity: 0.5,
+        },
       }}
       onClick={(e: any) => {
         if (readonly) return;

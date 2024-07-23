@@ -27,6 +27,7 @@ import {
   BalanceData,
   useBalanceUpdateLoading,
 } from '../../../../hooks/Submission/useBalanceUpdateLoading';
+import { useFetchTokens } from '../../../../hooks/contract';
 
 export interface TokenCardProps {
   amt: string;
@@ -153,6 +154,10 @@ export function TokenCard({
       balanceLoading = isTokenLoading(token.address, balance);
     }
   }
+  useFetchTokens({
+    addresses: token ? [token.address] : [],
+    chainId: token?.chainId,
+  });
 
   const [percentage, setPercentage] = useState(0);
   const percentageSetValue = useRef('');

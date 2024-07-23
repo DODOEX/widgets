@@ -105,7 +105,7 @@ const buttonStyles = (
     result.display = 'flex';
     result.width = '100%';
   }
-  const hoverLabel = '&:not([disabled]):hover';
+  const hoverLabel = '&:not([disabled]):hover, &:focus-visible';
   switch (variant) {
     case Variant.outlined:
       result = {

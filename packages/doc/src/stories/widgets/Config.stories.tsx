@@ -14,7 +14,9 @@ export const Primary = ({
   projectId: string;
   apiKey: string;
 }) => {
-  const [config, setConfig] = React.useState<SwapWidgetProps>({});
+  const [config, setConfig] = React.useState<SwapWidgetProps>({
+    tokenList: [],
+  });
   React.useEffect(() => {
     if (projectId && apiKey) {
       const dodoService = new SwapWidgetApi();

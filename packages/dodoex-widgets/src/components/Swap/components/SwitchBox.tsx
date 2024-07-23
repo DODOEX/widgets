@@ -9,6 +9,7 @@ export function SwitchBox({
   disabled?: boolean;
 }) {
   const theme = useTheme();
+  const size = 36;
   return (
     <Box
       sx={{
@@ -19,8 +20,8 @@ export function SwitchBox({
       <Box
         component={ButtonBase}
         sx={{
-          width: 36,
-          height: 36,
+          width: size,
+          height: size,
           borderRadius: '50%',
           backgroundColor: theme.palette.background.input,
           border: `4px solid ${theme.palette.background.paper}`,
@@ -38,6 +39,21 @@ export function SwitchBox({
                 '&:hover': {
                   color: 'text.primary',
                 },
+                '&:focus-visible': {
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    display: 'block',
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    borderRadius: '50%',
+                    width: size - 8,
+                    height: size - 8,
+                    border: 'solid 1px',
+                    borderColor: 'text.primary',
+                  },
+                },
               }),
         }}
         disabled={disabled}
@@ -52,6 +68,7 @@ export function SwitchBox({
           component={ArrowBack}
           sx={{
             width: 18,
+            height: 18,
           }}
         />
       </Box>

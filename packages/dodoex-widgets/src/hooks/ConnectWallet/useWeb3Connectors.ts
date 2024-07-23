@@ -56,12 +56,14 @@ export function useWeb3Connectors({
     [jsonRpcUrlMap, defaultChainId, onError],
   );
 
+  const changedCount = useRef(0);
   const connectors = useMemo(() => {
     if (integratorConnection) {
       connectorCacheMap[WalletType.INTEGRATOR] = integratorConnection;
     }
     connectorCacheMap[WalletType.METAMASK] = metaMaskConnection;
     connectorCacheMap[WalletType.WALLET_CONNECT] = walletConnectConnectionPopup;
+    changedCount.current += 1;
 
     return Object.values(connectorCacheMap);
   }, [integratorConnection, metaMaskConnection, walletConnectConnectionPopup]);
@@ -74,9 +76,6 @@ export function useWeb3Connectors({
       });
     }
   }, [provider]);
-
-  const changedCount = useRef(0);
-  changedCount.current += 1;
 
   return {
     connectors,
