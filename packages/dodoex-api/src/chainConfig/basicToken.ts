@@ -105,4 +105,11 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WMNT',
     wrappedTokenAddress: '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8',
   },
+  [ChainId.DODO_CHAIN_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'dodo',
+    name: 'Wrapped Berd',
+    wrappedTokenSymbol: 'WBERD',
+    wrappedTokenAddress: '0x3a64Ec3606FF7310E8fAd6FcC008e39705fB496d',
+  },
 };

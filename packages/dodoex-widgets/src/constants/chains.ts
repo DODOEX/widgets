@@ -48,6 +48,7 @@ export const rpcServerMap: {
   [ChainId.MANTA]: ['https://pacific-rpc.manta.network/http'],
   [ChainId.MANTLE]: ['https://rpc.mantle.xyz'],
   [ChainId.SEPOLIA]: ['https://ethereum-sepolia-rpc.publicnode.com'],
+  [ChainId.DODO_CHAIN_TESTNET]: ['https://dodochain-testnet.alt.technology'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -87,6 +88,7 @@ export const platformIdMap: {
   [ChainId.MANTA]: 'manta',
   [ChainId.MANTLE]: 'mantle',
   [ChainId.SEPOLIA]: 'sepolia',
+  [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
 };
 
 export const scanUrlDomainMap: {
@@ -108,6 +110,7 @@ export const scanUrlDomainMap: {
   [ChainId.MANTA]: 'pacific-explorer.manta.network',
   [ChainId.MANTLE]: 'explorer.mantle.xyz',
   [ChainId.SEPOLIA]: 'sepolia.etherscan.io',
+  [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet-explorer.alt.technology',
 };
 
 export const ThegraphKeyMap: {
@@ -129,4 +132,5 @@ export const ThegraphKeyMap: {
   [ChainId.MANTA]: 'manta',
   [ChainId.MANTLE]: 'mantle',
   [ChainId.SEPOLIA]: 'sepolia',
+  [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
 };

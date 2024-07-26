@@ -2040,20 +2040,6 @@
   resolved "https://registry.npmjs.org/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
-"@dodoex/components@>3.0.0":
-  version "3.0.0-beta.0"
-  dependencies:
-    "@babel/runtime" "^7.17.0"
-    "@dodoex/icons" "^2.0.1"
-    "@emotion/react" "^11.10.0"
-    "@emotion/styled" "^11.10.0"
-    "@mui/base" "5.0.0-beta.40"
-    "@mui/system" "5.8.4"
-    "@szhsin/react-accordion" "^1.2.1"
-    any-touch "^2.2.0"
-    clsx "^1.2.1"
-    lottie-web "^5.12.2"
-
 "@emotion/babel-plugin@^11.10.5":
   version "11.10.5"
   resolved "https://registry.npmjs.org/@emotion/babel-plugin/-/babel-plugin-11.10.5.tgz"
