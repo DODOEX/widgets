@@ -212,6 +212,7 @@ export function useFetchRoutePriceBridge({
         'scroll',
         'manta',
         'orbiter',
+        'dodo',
         // Sync with src/components/Bridge/SelectBridgeDialog/productList.ts
       ],
     };

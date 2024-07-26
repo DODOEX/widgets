@@ -3,6 +3,7 @@ export enum ChainId {
   GOERLI = 5,
 
   BSC = 56,
+  SEPOLIA = 11155111,
 
   POLYGON = 137,
 
@@ -27,6 +28,8 @@ export enum ChainId {
   MANTA = 169,
 
   MANTLE = 5000,
+
+  DODO_CHAIN_TESTNET = 53457,
 }
 
 export const rpcServerMap: {
@@ -75,6 +78,8 @@ export const rpcServerMap: {
   [ChainId.SCROLL]: ['https://rpc.scroll.io'],
   [ChainId.MANTA]: ['https://pacific-rpc.manta.network/http'],
   [ChainId.MANTLE]: ['https://rpc.mantle.xyz'],
+  [ChainId.SEPOLIA]: ['https://ethereum-sepolia-rpc.publicnode.com'],
+  [ChainId.DODO_CHAIN_TESTNET]: ['https://dodochain-testnet.alt.technology'],
 };
 
 export const etherTokenAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -178,6 +183,18 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WMNT',
     wrappedTokenAddress: '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8',
   },
+  [ChainId.SEPOLIA]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenSymbol: 'WETH',
+    wrappedTokenAddress: '0x7B07164ecFaF0F0D85DFC062Bc205a4674c75Aa0',
+  },
+  [ChainId.DODO_CHAIN_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'dodo',
+    name: 'Wrapped Berd',
+    wrappedTokenSymbol: 'WBERD',
+    wrappedTokenAddress: '0x3a64Ec3606FF7310E8fAd6FcC008e39705fB496d',
+  },
 };
 
 export const platformIdMap: {
@@ -198,6 +215,8 @@ export const platformIdMap: {
   [ChainId.SCROLL]: 'scr',
   [ChainId.MANTA]: 'manta',
   [ChainId.MANTLE]: 'mantle',
+  [ChainId.SEPOLIA]: 'sepolia',
+  [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
 };
 
 export const scanUrlDomainMap: {
@@ -218,4 +237,6 @@ export const scanUrlDomainMap: {
   [ChainId.SCROLL]: 'scrollscan.com',
   [ChainId.MANTA]: 'pacific-explorer.manta.network',
   [ChainId.MANTLE]: 'explorer.mantle.xyz',
+  [ChainId.SEPOLIA]: 'sepolia.etherscan.io',
+  [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet-explorer.alt.technology',
 };
