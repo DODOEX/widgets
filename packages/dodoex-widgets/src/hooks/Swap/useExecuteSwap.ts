@@ -9,6 +9,7 @@ import { getSwapTxValue } from '../../utils';
 import { MIN_GAS_LIMIT } from '../../constants/swap';
 import { useSubmission } from '../Submission';
 import { OpCode } from '../Submission/spec';
+import { MetadataFlag } from '../Submission/types';
 
 export default function useExecuteSwap() {
   const { chainId, account } = useWeb3React();
@@ -61,6 +62,9 @@ export default function useExecuteSwap() {
         },
         {
           subtitle,
+          metadata: {
+            [MetadataFlag.swap]: true,
+          },
         },
       );
     },

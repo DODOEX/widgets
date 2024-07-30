@@ -9,6 +9,8 @@ export enum State {
 }
 
 export enum MetadataFlag {
+  swap = 'swap',
+  crossChain = 'crossChain',
   addLiquidity = 'addLiquidity',
   removeLiquidity = 'removeLiquidity',
   createDPPPool = 'createDPPPool',

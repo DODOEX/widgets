@@ -24,7 +24,7 @@ msgstr "交易时长:"
 
 #: src/hooks/Bridge/useExecuteBridgeRoute.tsx:128
 msgid "Cross Chain"
-msgstr "跨链桥<<<<<<< HEAD"
+msgstr "跨链桥"
 
 #: src/widgets/PoolWidget/PoolCreate/components/FeeRateCard.tsx:39
 msgid "99% Default"
@@ -83,7 +83,7 @@ msgstr ""
 #: src/components/ErrorMessageDialog.tsx:63
 #: src/components/WithExecutionDialog/index.tsx:314
 msgid "Dismiss"
-msgstr "忽略<<<<<<< HEAD"
+msgstr "忽略"
 
 #: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:74
 msgid "Unstaking"
@@ -146,7 +146,7 @@ msgstr ""
 
 #: src/components/WithExecutionDialog/index.tsx:111
 msgid "{0} confirmed"
-msgstr "{0} 已确认<<<<<<< HEAD"
+msgstr "{0} 已确认"
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:530
 msgid "Creation Time"
@@ -183,7 +183,7 @@ msgstr ""
 
 #: src/utils/time.ts:23
 msgid "Hour"
-msgstr "小时<<<<<<< HEAD"
+msgstr "小时"
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:74
 #: src/widgets/PoolWidget/PoolList/index.tsx:181
@@ -213,7 +213,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:76
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:197
 msgid "Confirm"
-msgstr "确认<<<<<<< HEAD"
+msgstr "确认"
 
 #: src/components/Swap/index.tsx:971
 msgid "Powered by DODO protocol"
@@ -229,7 +229,7 @@ msgstr ""
 
 #: src/components/SwitchChainDialog/index.tsx:91
 msgid "This token is on"
-msgstr "该代币在<<<<<<< HEAD"
+msgstr "该代币在"
 
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:216
 msgid "Pool Creation"
@@ -364,7 +364,7 @@ msgstr ""
 
 #: src/hooks/Bridge/useSendRoute.ts:95
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
-msgstr "跨链费用不足，至少需要 {0} {1} <<<<<<< HEAD"
+msgstr "跨链费用不足，至少需要 {0} {1} "
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:228
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:282
@@ -390,7 +390,7 @@ msgstr "交易进行中"
 #: src/components/Bridge/SelectBridgeDialog/TokenWithChain.tsx:88
 #: src/components/TokenPicker/SelectChainItem.tsx:51
 msgid "on"
-msgstr "在<<<<<<< HEAD"
+msgstr "在"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:42
 msgid "Suitable for stablecoins with price fluctuations within 2%"
@@ -484,7 +484,7 @@ msgstr "选择跨链桥"
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:280
 #: src/components/Swap/components/SettingsDialog/index.tsx:53
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
-msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。<<<<<<< HEAD"
+msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:230
 msgid "Set pool parameters"
@@ -608,7 +608,7 @@ msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:340
 msgid "Estimated Time"
-msgstr "预计时间<<<<<<< HEAD"
+msgstr "预计时间"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:19
 #: src/widgets/PoolWidget/PoolList/index.tsx:182
@@ -635,7 +635,7 @@ msgstr ""
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:202
 #: src/components/WithExecutionDialog/index.tsx:203
 msgid "Tx"
-msgstr "交易哈希：<<<<<<< HEAD"
+msgstr "交易哈希："
 
 #: src/widgets/PoolWidget/hooks/usePoolTypeTag.ts:26
 msgid "Single"
@@ -721,7 +721,7 @@ msgstr "连接你的{0}钱包"
 
 #: src/utils/time.ts:7
 msgid "Seconds"
-msgstr "秒<<<<<<< HEAD"
+msgstr "秒"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:61
 msgid "Suitable for most situations."
@@ -781,7 +781,7 @@ msgstr ""
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:118
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:149
 msgid "On"
-msgstr "在<<<<<<< HEAD"
+msgstr "在"
 
 #: src/components/Swap/index.tsx:686
 #: src/hooks/Token/useTokenStatus.ts:133
@@ -942,7 +942,7 @@ msgstr "预计交易时长"
 
 #: src/components/ConnectWallet/ConnectWalletDialog.tsx:39
 msgid "Connect to your wallet"
-msgstr "连接钱包<<<<<<< HEAD"
+msgstr "连接钱包"
 
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:225
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:300
@@ -1013,7 +1013,7 @@ msgstr "发生异常错误."
 
 #: src/utils/time.ts:7
 msgid "Second"
-msgstr "秒<<<<<<< HEAD"
+msgstr "秒"
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:401
 msgid "Total Swap Volume"
@@ -1124,7 +1124,7 @@ msgstr ""
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:52
 msgid "Unable to SETTLE during the cooling-off period"
-msgstr "在冷静期无法进行清算<<<<<<< HEAD"
+msgstr "在冷静期无法进行清算"
 
 #: src/components/Swap/index.tsx:848
 msgid "The setting has been switched to cross chain mode"
@@ -1144,7 +1144,7 @@ msgstr "如果你的交易被确认的时间超过这个时间，你的交易将
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:83
 msgid "Detail"
-msgstr "详情<<<<<<< HEAD"
+msgstr "详情"
 
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:194
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:190
@@ -1192,7 +1192,7 @@ msgstr "跨链桥概览"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:21
 msgid "SafeERC20: low-level call failed. Please contact the DODO team."
-msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。<<<<<<< HEAD"
+msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:76
 msgid "Pool Creation Confirmation"
@@ -1223,7 +1223,7 @@ msgid "Paid"
 msgstr ""
 
 #: src/components/Swap/index.tsx:843
-#: src/hooks/Swap/useExecuteSwap.ts:57
+#: src/hooks/Swap/useExecuteSwap.ts:58
 msgid "Swap"
 msgstr "交易"
 
@@ -1277,7 +1277,7 @@ msgstr ""
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:98
 msgid "Transaction Deadline"
-msgstr "交易截止时间<<<<<<< HEAD"
+msgstr "交易截止时间"
 
 #: src/components/Swap/index.tsx:729
 #: src/components/TokenStatusButton.tsx:18

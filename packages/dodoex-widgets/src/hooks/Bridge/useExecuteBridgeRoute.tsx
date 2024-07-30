@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
-import { Metadata } from '../Submission/types';
+import { Metadata, MetadataFlag } from '../Submission/types';
 
 export default function useExecuteBridgeRoute({
   route,
@@ -132,7 +132,10 @@ export default function useExecuteBridgeRoute({
           },
           {
             subtitle,
-            metadata,
+            metadata: {
+              [MetadataFlag.crossChain]: true,
+              ...metadata,
+            },
             mixpanelProps: {
               ...bridgeOrderTxRequest,
               fromToken,
