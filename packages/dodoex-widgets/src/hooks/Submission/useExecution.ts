@@ -27,6 +27,7 @@ export interface ExecutionProps {
   onTxFail?: (error: Error, data: any) => void;
   onTxSubmit?: (tx: string, data: any) => void;
   onTxSuccess?: (tx: string, data: any) => void;
+  onTxReverted?: (tx: string, data: any) => void;
   executionStatus?: {
     showing?: Showing | null;
     showingDone?: boolean;
@@ -41,6 +42,7 @@ export default function useExecution({
   onTxFail,
   onTxSubmit,
   onTxSuccess,
+  onTxReverted,
 }: ExecutionProps = {}) {
   const { account, provider } = useWeb3React();
   const queryClient = useQueryClient();
@@ -198,6 +200,7 @@ export default function useExecution({
 
       if (transaction?.wait) {
         const receipt = await transaction.wait(1);
+        reportInfo.receipt = receipt;
         setShowingDone(true);
         if (receipt.status === WatchResult.Success) {
           if (reportInfo.opcode === 'TX') {
@@ -236,6 +239,9 @@ export default function useExecution({
           );
           return ExecutionResult.Success;
         }
+      }
+      if (onTxReverted) {
+        onTxReverted(tx, reportInfo);
       }
       await updateBlockNumber(); // update blockNumber once after tx
       setShowingDone(true);
