@@ -97,6 +97,9 @@ export default {
     onTxSuccess: {
       action: 'txSuccess',
     },
+    onTxReverted: {
+      action: 'txReverted',
+    },
     onConnectWalletClick: {
       action: 'connectWalletClick',
     },
