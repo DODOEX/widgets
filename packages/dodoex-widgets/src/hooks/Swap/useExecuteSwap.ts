@@ -25,6 +25,7 @@ export default function useExecuteSwap() {
       gasLimit,
       subtitle,
       value,
+      mixpanelProps,
     }: {
       value: string;
       to: string;
@@ -34,6 +35,7 @@ export default function useExecuteSwap() {
       ddl: number;
       gasLimit?: EthersBigNumber;
       subtitle: React.ReactNode;
+      mixpanelProps?: Record<string, any>;
     }) => {
       const ddlSecRel = ddl * 60;
       const txValue = value;
@@ -65,6 +67,7 @@ export default function useExecuteSwap() {
           metadata: {
             [MetadataFlag.swap]: true,
           },
+          mixpanelProps,
         },
       );
     },

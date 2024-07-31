@@ -184,6 +184,7 @@ export function useFetchRoutePrice({
       const { resAmount, to, data, useSource, duration, value } =
         rawBriefResult;
       const finalFromAmount = isReverseRouting ? resAmount : fromAmount;
+      const finalToAmount = isReverseRouting ? fromAmount : resAmount;
       if (!fromToken || !finalFromAmount) return;
       execute({
         to,
@@ -193,9 +194,37 @@ export function useFetchRoutePrice({
         ddl,
         value,
         subtitle,
+        mixpanelProps: {
+          from: account,
+          fromTokenAddress: fromToken.address,
+          toTokenAddress: toToken?.address,
+          fromAmount: parseFixed(
+            String(finalFromAmount || 1),
+            fromToken.decimals,
+          ).toString(),
+          resAmount: finalToAmount,
+          resPricePerFromToken: isReverseRouting
+            ? rawBriefResult.resPricePerToToken
+            : rawBriefResult.resPricePerFromToken,
+          resPricePerToToken: isReverseRouting
+            ? rawBriefResult.resPricePerFromToken
+            : rawBriefResult.resPricePerToToken,
+          fromTokenSymbol: fromToken.symbol,
+          toTokenSymbol: toToken?.symbol,
+          fromTokenDecimals: fromToken.decimals,
+          toTokenDecimals: toToken?.decimals,
+        },
       });
     },
-    [ddl, fromToken, fromAmount, isReverseRouting, rawBriefResult],
+    [
+      ddl,
+      account,
+      fromToken,
+      fromAmount,
+      toToken,
+      isReverseRouting,
+      rawBriefResult,
+    ],
   );
 
   return {

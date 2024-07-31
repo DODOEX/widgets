@@ -1223,7 +1223,7 @@ msgid "Paid"
 msgstr "Paid"
 
 #: src/components/Swap/index.tsx:843
-#: src/hooks/Swap/useExecuteSwap.ts:58
+#: src/hooks/Swap/useExecuteSwap.ts:60
 msgid "Swap"
 msgstr "Swap"
 

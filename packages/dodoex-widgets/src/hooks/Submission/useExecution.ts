@@ -86,6 +86,7 @@ export default function useExecution({
       setSubmittedConfirmBack(() => submittedConfirmBack);
       let tx: string | undefined;
       let params: any;
+      let nonce: number | undefined;
       let transaction: TransactionResponse | undefined;
       setWaitingSubmit(false);
       try {
@@ -100,6 +101,11 @@ export default function useExecution({
           );
           tx = transaction.hash;
           setTransactionTx(tx);
+          try {
+            nonce = await provider.getTransactionCount(account);
+          } catch (e) {
+            console.error(e);
+          }
         } else if (spec.opcode === OpCode.TX) {
           // Sanity check
           if (spec.to === '') throw new Error('Submission: malformed to');
@@ -107,8 +113,11 @@ export default function useExecution({
             throw new Error('Submission: malformed data');
           if (spec.data.indexOf('0x') === 0 && spec.data.length <= 2)
             throw new Error('Submission: malformed data');
-          // private swap need
-          // nonce = await web3.eth.getTransactionCount(account);
+          try {
+            nonce = await provider.getTransactionCount(account);
+          } catch (e) {
+            console.error(e);
+          }
           params = {
             value: spec.value,
             data: spec.data,
@@ -167,6 +176,7 @@ export default function useExecution({
         tx,
         subtitle,
         metadata,
+        nonce,
         ...mixpanelProps,
       };
       dispatch(

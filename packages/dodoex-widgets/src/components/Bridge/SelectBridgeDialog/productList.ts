@@ -106,6 +106,6 @@ export const productList = [
   {
     id: 'dodo',
     logoURI: DODOLogoUrl,
-    name: 'DODO',
+    name: 'Omni-Trade',
   },
 ];
