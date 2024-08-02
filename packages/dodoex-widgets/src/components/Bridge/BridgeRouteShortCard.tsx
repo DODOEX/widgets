@@ -1,5 +1,10 @@
-import { Box, Tooltip, useTheme } from '@dodoex/components';
-import { GasFee as FeeIcon, Time as TimeIcon, ArrowRight } from '@dodoex/icons';
+import { Box, HoverOpacity, Tooltip, useTheme } from '@dodoex/components';
+import {
+  GasFee as FeeIcon,
+  Time as TimeIcon,
+  ArrowRight,
+  Switch,
+} from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
 import { chainListMap } from '../../constants/chainList';
 import { ChainId } from '../../constants/chains';
@@ -8,6 +13,8 @@ import { formatTokenAmountNumber } from '../../utils/formatter';
 import { formatReadableTimeDuration } from '../../utils/time';
 import TokenLogo from '../TokenLogo';
 import { productList } from './SelectBridgeDialog/productList';
+import React from 'react';
+import BigNumber from 'bignumber.js';
 
 export default function BridgeRouteShortCard({
   route,
@@ -32,6 +39,13 @@ export default function BridgeRouteShortCard({
   const productDetail = productList.find((i) => i.id === product);
   const fromChain = chainListMap.get(fromChainId as ChainId);
   const toChain = chainListMap.get(toChainId as ChainId);
+
+  const [isReverse, setIsReverse] = React.useState(false);
+  const baseToken = isReverse ? toToken : fromToken;
+  const quoteToken = isReverse ? fromToken : toToken;
+  const baseChainId = isReverse ? toChainId : fromChainId;
+  const quoteChainId = isReverse ? fromChainId : toChainId;
+
   return (
     <Box
       sx={{
@@ -92,90 +106,54 @@ export default function BridgeRouteShortCard({
               alignItems: 'center',
               typography: 'body2',
               fontWeight: 600,
+              gap: 4,
             }}
           >
-            {formatTokenAmountNumber({
-              input: fromAmount,
-              decimals: fromToken?.decimals,
-            })}
-            <Box
+            <span>1 {baseToken.symbol}</span>
+            <TokenLogo
+              address={baseToken?.address ?? ''}
+              marginRight={0}
+              width={20}
+              height={20}
+              url={baseToken?.logoURI}
+              chainId={baseChainId}
               sx={{
-                ml: 4,
-                display: 'flex',
-                alignItems: 'flex-end',
-                alignSelf: 'center',
-                width: 18,
-                height: 18,
+                flexShrink: 0,
               }}
-            >
-              <TokenLogo
-                address={fromToken?.address ?? ''}
-                marginRight={0}
-                width={18}
-                height={18}
-                url={fromToken?.logoURI}
-              />
-              {fromChain ? (
-                <Box
-                  component={fromChain.logo}
-                  sx={{
-                    position: 'relative',
-                    left: -6,
-                    width: 10,
-                    height: 10,
-                    flexShrink: 0,
-                  }}
-                />
-              ) : (
-                ''
-              )}
-            </Box>
-          </Box>
-          &nbsp;=&nbsp;
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              typography: 'body2',
-              fontWeight: 600,
-            }}
-          >
-            {formatTokenAmountNumber({
-              input: toTokenAmount,
-              decimals: toToken?.decimals,
-            })}
-            <Box
+            />
+            <span>=</span>
+            <span>
+              {formatTokenAmountNumber({
+                input: isReverse
+                  ? new BigNumber(fromAmount).div(toTokenAmount)
+                  : toTokenAmount.div(fromAmount),
+                decimals: quoteToken?.decimals,
+              })}{' '}
+              {quoteToken.symbol}
+            </span>
+            <TokenLogo
+              address={quoteToken?.address ?? ''}
+              marginRight={0}
+              width={20}
+              height={20}
+              url={quoteToken?.logoURI}
+              chainId={quoteChainId}
               sx={{
-                ml: 4,
-                display: 'flex',
-                alignItems: 'flex-end',
-                alignSelf: 'center',
-                width: 18,
-                height: 18,
+                flexShrink: 0,
               }}
-            >
-              <TokenLogo
-                address={toToken?.address ?? ''}
-                marginRight={0}
-                width={18}
-                height={18}
-                url={toToken?.logoURI}
-              />
-              {toChain ? (
-                <Box
-                  component={toChain.logo}
-                  sx={{
-                    width: 10,
-                    height: 10,
-                    position: 'relative',
-                    left: -6,
-                    flexShrink: 0,
-                  }}
-                />
-              ) : (
-                ''
-              )}
-            </Box>
+            />
+            <HoverOpacity
+              component={Switch}
+              sx={{
+                color: 'text.secondary',
+                position: 'relative',
+                left: -2,
+              }}
+              onClick={(evt) => {
+                evt.stopPropagation();
+                setIsReverse((prev) => !prev);
+              }}
+            />
           </Box>
         </Box>
         <Box

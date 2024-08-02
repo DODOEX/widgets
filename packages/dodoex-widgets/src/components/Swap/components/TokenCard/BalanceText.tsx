@@ -20,9 +20,10 @@ export function BalanceText({
   return (
     <Box
       sx={{
-        display: 'flex',
         typography: 'body2',
         color: palette.text.secondary,
+        wordBreak: 'break-word',
+        textAlign: 'right',
       }}
     >
       <Trans>Balance:</Trans>&nbsp;
@@ -41,6 +42,7 @@ export function BalanceText({
               ? palette.primary.main
               : palette.text.disabled,
             cursor: address && onClick ? 'pointer' : 'unset',
+            typography: 'body2',
           }}
           onClick={() => onClick && onClick(balance ? balance.toString() : '')}
         >

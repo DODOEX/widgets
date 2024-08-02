@@ -37,7 +37,7 @@ msgstr "至"
 msgid "{0} pending"
 msgstr "{0} 等待中"
 
-#: src/components/Swap/components/TokenCard/BalanceText.tsx:28
+#: src/components/Swap/components/TokenCard/BalanceText.tsx:29
 msgid "Balance:"
 msgstr "余额:"
 
@@ -75,7 +75,7 @@ msgstr "小时"
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:238
+#: src/components/Bridge/BridgeRouteShortCard.tsx:244
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:187
 msgid "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
@@ -84,7 +84,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 msgid "Confirm"
 msgstr "确认"
 
-#: src/components/Swap/index.tsx:1002
+#: src/components/Swap/index.tsx:1004
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -112,7 +112,7 @@ msgstr "秒"
 msgid "This CP has been settled by other addrs"
 msgstr "此众筹池已被其他地址结算"
 
-#: src/components/Swap/components/TokenCard/BalanceText.tsx:47
+#: src/components/Swap/components/TokenCard/BalanceText.tsx:49
 msgid "Max"
 msgstr "全部"
 
@@ -345,7 +345,7 @@ msgstr "Gas 价格过低, 请调整后重试"
 msgid "RPC node data exception"
 msgstr "RPC节点异常"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:199
+#: src/components/Bridge/BridgeRouteShortCard.tsx:205
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:148
 msgid "Estimated transaction time"
 msgstr "预计交易时长"
@@ -403,7 +403,7 @@ msgstr "如果你的交易被确认的时间超过这个时间，你的交易将
 msgid "Detail"
 msgstr "详情"
 
-#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:47
+#: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:60
 msgid "SELECT TOKEN"
 msgstr "选择代币"
 

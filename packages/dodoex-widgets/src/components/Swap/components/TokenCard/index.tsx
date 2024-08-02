@@ -3,12 +3,11 @@ import { TokenLogoCollapse } from './TokenLogoCollapse';
 import { BalanceText } from './BalanceText';
 import { NumberInput } from './NumberInput';
 import { TokenPickerDialog } from './TokenPickerDialog';
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { TokenInfo } from '../../../../hooks/Token';
 import { TokenPickerProps } from '../../../TokenPicker';
 import useGetBalance from '../../../../hooks/Token/useGetBalance';
 import { transitionTime } from '../Dialog';
-import SwitchChainDialog from '../../../SwitchChainDialog';
 import { useFetchTokens } from '../../../../hooks/contract';
 
 export interface TokenCardProps {
@@ -27,7 +26,7 @@ export interface TokenCardProps {
   onTokenChange: TokenPickerProps['onChange'];
   side?: TokenPickerProps['side'];
   showChainLogo?: boolean;
-  onlyCurrentChain?: boolean;
+  showChainName?: boolean;
   defaultLoadBalance?: boolean;
 }
 export function TokenCard({
@@ -46,10 +45,9 @@ export function TokenCard({
   onTokenChange,
   side,
   showChainLogo,
-  onlyCurrentChain,
+  showChainName,
   defaultLoadBalance,
 }: TokenCardProps) {
-  const [openSwitchChainDialog, setOpenSwitchChainDialog] = useState(false);
   const theme = useTheme();
   const getBalance = useGetBalance();
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
@@ -59,18 +57,12 @@ export function TokenCard({
     chainId: token?.chainId,
   });
 
-  useEffect(() => {
-    if (token && onlyCurrentChain) {
-      setOpenSwitchChainDialog(true);
-    }
-  }, [token, onlyCurrentChain]);
-
   return (
     <Box
       sx={{
         width: '100%',
         minHeight: 133,
-        padding: 20,
+        padding: theme.spacing(20, 20, 24),
         borderRadius: 12,
         overflow: 'hidden',
         display: 'flex',
@@ -85,11 +77,13 @@ export function TokenCard({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          gap: 4,
         }}
       >
         <TokenLogoCollapse
           token={token}
           showChainLogo={showChainLogo}
+          showChainName={showChainName}
           onClick={() => setTokenPickerVisible(true)}
         />
 
@@ -113,8 +107,7 @@ export function TokenCard({
       {/* Current Price */}
       <Box
         sx={{
-          mt: 4,
-          typography: 'body2',
+          typography: 'h6',
           color: theme.palette.text.secondary,
         }}
       >
@@ -140,12 +133,6 @@ export function TokenCard({
             onTokenChange(token, isOccupied);
           }, transitionTime);
         }}
-      />
-      {/* switch chain */}
-      <SwitchChainDialog
-        chainId={token?.chainId}
-        open={openSwitchChainDialog}
-        onClose={() => setOpenSwitchChainDialog(false)}
       />
     </Box>
   );

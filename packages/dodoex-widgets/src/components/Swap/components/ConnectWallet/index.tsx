@@ -5,7 +5,8 @@ import { useWeb3React } from '@web3-react/core';
 import { Trans } from '@lingui/macro';
 import { useState } from 'react';
 import { connectWalletBtn } from '../../../../constants/testId';
-import SwitchChainDialog from '../../../SwitchChainDialog';
+import { useSwitchChain } from '../../../../hooks/ConnectWallet/useSwitchChain';
+import { chainListMap } from '../../../../constants/chainList';
 
 export interface ConnectWalletProps {
   needSwitchChain?: ChainId;
@@ -20,20 +21,23 @@ export default function ConnectWallet({
   const { connector, chainId } = useWeb3React();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [openSwitchChainDialog, setOpenSwitchChainDialog] = useState(false);
+  const switchChain = useSwitchChain(needSwitchChain);
+  const showSwitchChain =
+    !!chainId && !!needSwitchChain && chainId !== needSwitchChain;
   return (
     <>
       <Button
         size={Button.Size.middle}
         fullWidth
         onClick={async () => {
+          // switch chain
+          if (showSwitchChain) {
+            setLoading(true);
+            const res = await switchChain?.();
+            setLoading(false);
+            return res;
+          }
           if (onConnectWalletClick) {
-            // switch chain
-            if (chainId && needSwitchChain && chainId !== needSwitchChain) {
-              setOpenSwitchChainDialog(true);
-              return;
-            }
-
             setLoading(true);
             const isConnected = await onConnectWalletClick();
             setLoading(false);
@@ -51,17 +55,15 @@ export default function ConnectWallet({
       >
         {loading ? (
           <Trans>Connecting...</Trans>
+        ) : showSwitchChain ? (
+          <Trans>
+            Switch to {chainListMap.get(needSwitchChain)?.name ?? 'unknown'}
+          </Trans>
         ) : (
           <Trans>Connect to a wallet</Trans>
         )}
       </Button>
       <ConnectWalletDialog open={open} onClose={() => setOpen(false)} />
-      {/* switch chain */}
-      <SwitchChainDialog
-        chainId={needSwitchChain}
-        open={openSwitchChainDialog}
-        onClose={() => setOpenSwitchChainDialog(false)}
-      />
     </>
   );
 }
