@@ -31,9 +31,9 @@ export default function ConnectWallet({
         fullWidth
         onClick={async () => {
           // switch chain
-          if (showSwitchChain) {
+          if (showSwitchChain && switchChain) {
             setLoading(true);
-            const res = await switchChain?.();
+            const res = await switchChain();
             setLoading(false);
             return res;
           }
