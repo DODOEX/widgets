@@ -194,6 +194,7 @@ export default function PoolOperateDialog({ sx, ...props }: PoolOperateProps) {
       open={!!props.pool || !!props.address}
       onClose={props.onClose}
       scope={!isMobile}
+      id="pool-operate"
     >
       <PoolOperate {...props} />
     </Dialog>

@@ -1,23 +1,10 @@
 import { Box, Button } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import React from 'react';
+import { useGlobalConfig } from '../providers/GlobalConfigContext';
 import Dialog from './Dialog';
 
-export default function Confirm({
-  open,
-  onClose,
-  title,
-  children,
-  singleBtn,
-  danger,
-  singleBtnText,
-  cancelText,
-  confirmText,
-  disabledConfirm,
-  confirmLoading,
-  isManualClose,
-  onConfirm,
-}: React.PropsWithChildren<{
+export type ConfirmProps = React.PropsWithChildren<{
   open: boolean;
   onClose: () => void;
   title?: React.ReactNode;
@@ -30,7 +17,30 @@ export default function Confirm({
   confirmLoading?: boolean;
   isManualClose?: boolean;
   onConfirm?: () => void;
-}>) {
+}>;
+export default function Confirm(props: ConfirmProps) {
+  const { ConfirmComponent } = useGlobalConfig();
+
+  if (ConfirmComponent) {
+    return <ConfirmComponent {...props} />;
+  }
+
+  const {
+    open,
+    onClose,
+    title,
+    children,
+    singleBtn,
+    danger,
+    singleBtnText,
+    cancelText,
+    confirmText,
+    disabledConfirm,
+    confirmLoading,
+    isManualClose,
+    onConfirm,
+  } = props;
+
   return (
     <Dialog open={open} onClose={onClose} title={title}>
       <Box

@@ -6,6 +6,17 @@ import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
 export const transitionTime = 300;
 export interface DialogProps {
   open: boolean;
+  id?:
+    | 'connect-wallet'
+    | 'submission'
+    | 'error-message'
+    | 'select-chain'
+    | 'select-token'
+    | 'swap-summary'
+    | 'swap-settings'
+    | 'cross-chain-summary'
+    | 'select-cross-chain'
+    | 'pool-operate';
   onClose?: () => void;
   afterClose?: () => void;
   // Do not render on widget root node
@@ -87,7 +98,11 @@ function DialogBase({
 }
 
 export default function Dialog({ scope, ...props }: DialogProps) {
-  const { widgetRef } = useGlobalConfig();
+  const { widgetRef, DialogComponent } = useGlobalConfig();
+
+  if (DialogComponent) {
+    return <DialogComponent scope={scope} {...props} />;
+  }
   if (widgetRef?.current && !scope) {
     return createPortal(<DialogBase {...props} />, widgetRef.current);
   }

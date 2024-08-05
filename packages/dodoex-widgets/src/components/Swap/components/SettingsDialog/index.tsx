@@ -37,7 +37,12 @@ export function SettingsDialog({
   );
   const { defaultSlippage } = useDefaultSlippage(isBridge);
   return (
-    <Dialog open={open} onClose={onClose} title={<Trans>Settings</Trans>}>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      id="swap-settings"
+      title={<Trans>Settings</Trans>}
+    >
       <Box
         sx={{
           mx: 20,

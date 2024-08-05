@@ -164,6 +164,8 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
         gotoBuyToken: props.gotoBuyToken,
         getTokenLogoUrl: props.getTokenLogoUrl,
         graphQLRequests: props.graphQLRequests ?? graphQLRequests,
+        DialogComponent: props.DialogComponent,
+        ConfirmComponent: props.ConfirmComponent,
       }}
     >
       <Box

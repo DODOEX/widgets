@@ -1,5 +1,7 @@
 import { GraphQLRequests } from '@dodoex/api';
-import { createContext, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
+import { ConfirmProps } from '../components/Confirm';
+import { DialogProps } from '../components/Swap/components/Dialog';
 import { TokenInfo } from '../hooks/Token';
 
 export interface GlobalFunctionConfig {
@@ -16,6 +18,8 @@ export interface GlobalFunctionConfig {
     chainId?: number;
   }) => string;
   graphQLRequests?: GraphQLRequests;
+  ConfirmComponent?: React.FunctionComponent<ConfirmProps>;
+  DialogComponent?: React.FunctionComponent<DialogProps>;
 }
 
 export const graphQLRequests = new GraphQLRequests();
@@ -30,6 +34,7 @@ export const GlobalConfigContext = createContext<
   gotoBuyToken: undefined,
   getTokenLogoUrl: undefined,
   graphQLRequests,
+  DialogComponent: undefined,
 });
 
 export const useGlobalConfig = () => {

@@ -42,6 +42,7 @@ export function TokenPickerDialog({
       open={open}
       onClose={onClose}
       title={title ?? <Trans>Select a token</Trans>}
+      id="select-token"
       testId={tokenPickerWrapper}
     >
       <TokenPicker

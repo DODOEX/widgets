@@ -61,6 +61,7 @@ export default function BridgeSummaryDialog({
     <Dialog
       title={<Trans>Cross Chain Summary</Trans>}
       open={open}
+      id="cross-chain-summary"
       onClose={() => {
         dispatch(
           setGlobalProps({

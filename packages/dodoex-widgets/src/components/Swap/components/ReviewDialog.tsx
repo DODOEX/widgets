@@ -99,6 +99,7 @@ export function ReviewDialog({
         );
         onClose();
       }}
+      id="swap-summary"
       title={<Trans>Swap summary</Trans>}
     >
       <Box

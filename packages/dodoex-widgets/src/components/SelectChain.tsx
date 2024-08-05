@@ -211,6 +211,7 @@ export default function SelectChain({
         open={isDialogVisible}
         title={<Trans>Select Network</Trans>}
         onClose={() => setIsDialogVisible(false)}
+        id="select-chain"
       >
         <Box sx={{ mb: 20 }}>
           {options.map((item) => (

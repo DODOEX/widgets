@@ -41,7 +41,7 @@ const baseConfig = {
   ],
   external: [
     ...Object.keys(pkg.dependencies || {}).filter(
-      (key) => !['@dodoex/components'].includes(key),
+      (key) => !['@dodoex/components', '@dodoex/icons'].includes(key),
     ),
     ...Object.keys(pkg.peerDependencies || {}),
   ],

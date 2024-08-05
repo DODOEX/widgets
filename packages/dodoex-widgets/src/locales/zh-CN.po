@@ -34,7 +34,7 @@ msgstr ""
 msgid "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 msgstr "当前滑点保护系数设置超过{maxSlippageWarning}%，可能会造成损失。"
 
-#: src/components/ConnectWallet/ConnectWalletDialog.tsx:77
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:78
 msgid "Opening {0}..."
 msgstr "连接 {0}..."
 
@@ -81,7 +81,7 @@ msgid "Switch to {0}"
 msgstr ""
 
 #: src/components/ErrorMessageDialog.tsx:63
-#: src/components/WithExecutionDialog/index.tsx:314
+#: src/components/WithExecutionDialog/index.tsx:318
 msgid "Dismiss"
 msgstr "忽略"
 
@@ -126,7 +126,7 @@ msgstr ""
 msgid "Rewards"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:342
+#: src/components/Swap/components/ReviewDialog.tsx:343
 #: src/components/Swap/index.tsx:432
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
@@ -204,7 +204,7 @@ msgstr ""
 msgid "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 
-#: src/components/Confirm.tsx:114
+#: src/components/Confirm.tsx:124
 #: src/components/RiskDialog.tsx:122
 #: src/components/SwitchChainDialog/index.tsx:139
 #: src/components/WidgetConfirm.tsx:130
@@ -239,11 +239,11 @@ msgstr ""
 msgid "Custom"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:277
+#: src/components/Swap/components/ReviewDialog.tsx:278
 msgid "Estimated service provider fees"
 msgstr "预计服务供应商费用"
 
-#: src/components/Swap/components/ReviewDialog.tsx:275
+#: src/components/Swap/components/ReviewDialog.tsx:276
 msgid "Basic Fee"
 msgstr "基础手续费"
 
@@ -303,7 +303,7 @@ msgid "Go back"
 msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:276
-#: src/components/Swap/components/ReviewDialog.tsx:362
+#: src/components/Swap/components/ReviewDialog.tsx:363
 msgid "Slippage"
 msgstr "滑点"
 
@@ -316,7 +316,7 @@ msgstr ""
 msgid "Insufficient funds - Please retry after depositing more {EtherTokenSymbol} into your wallet"
 msgstr "余额不足 - 请在钱包充值{EtherTokenSymbol}后重试"
 
-#: src/components/Confirm.tsx:74
+#: src/components/Confirm.tsx:84
 #: src/components/WidgetConfirm.tsx:90
 msgid "Done"
 msgstr ""
@@ -396,7 +396,7 @@ msgstr "在"
 msgid "Suitable for stablecoins with price fluctuations within 2%"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:365
+#: src/components/Swap/components/ReviewDialog.tsx:366
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
@@ -436,7 +436,7 @@ msgstr ""
 msgid "Connecting..."
 msgstr "连接中..."
 
-#: src/components/Swap/components/ReviewDialog.tsx:305
+#: src/components/Swap/components/ReviewDialog.tsx:306
 msgid "Additional Fee"
 msgstr "额外手续费"
 
@@ -477,12 +477,12 @@ msgstr ""
 msgid "Review Swap"
 msgstr "预览交易"
 
-#: src/components/Bridge/SelectBridgeDialog/index.tsx:27
+#: src/components/Bridge/SelectBridgeDialog/index.tsx:28
 msgid "Select Cross Chain"
 msgstr "选择跨链桥"
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:280
-#: src/components/Swap/components/SettingsDialog/index.tsx:53
+#: src/components/Swap/components/SettingsDialog/index.tsx:58
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
@@ -575,8 +575,8 @@ msgstr "最优价格"
 msgid "LP Fee"
 msgstr ""
 
-#: src/components/Bridge/BridgeSummaryDialog/index.tsx:154
-#: src/components/Swap/components/ReviewDialog.tsx:452
+#: src/components/Bridge/BridgeSummaryDialog/index.tsx:155
+#: src/components/Swap/components/ReviewDialog.tsx:453
 msgid "Confirming"
 msgstr "确认中"
 
@@ -584,7 +584,7 @@ msgstr "确认中"
 msgid "The initial price needs to be greater than {min} and less than 100,000,000"
 msgstr ""
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:113
+#: src/components/Swap/components/SettingsDialog/index.tsx:118
 msgid "{DEFAULT_SWAP_DDL} minutes"
 msgstr "{DEFAULT_SWAP_DDL} 分钟"
 
@@ -597,12 +597,12 @@ msgstr ""
 msgid "Fee"
 msgstr "手续费"
 
-#: src/components/Bridge/BridgeSummaryDialog/index.tsx:156
+#: src/components/Bridge/BridgeSummaryDialog/index.tsx:157
 msgid "Confirm Cross Chain"
 msgstr "确认跨链交易"
 
 #. js-lingui-explicit-id
-#: src/components/Swap/components/ReviewDialog.tsx:426
+#: src/components/Swap/components/ReviewDialog.tsx:427
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 
@@ -615,7 +615,7 @@ msgstr "预计时间"
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:102
+#: src/components/Swap/components/ReviewDialog.tsx:103
 msgid "Swap summary"
 msgstr "交易预览"
 
@@ -653,7 +653,7 @@ msgstr "预览跨链交易"
 msgid "Mining"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:339
+#: src/components/Swap/components/ReviewDialog.tsx:340
 msgid "Price Impact"
 msgstr "价格冲击"
 
@@ -690,7 +690,7 @@ msgstr "钱包不兼容"
 msgid "Bought {0} {1}, price in the pool decreased to {2}"
 msgstr ""
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:40
+#: src/components/Swap/components/SettingsDialog/index.tsx:44
 msgid "Settings"
 msgstr "设置"
 
@@ -715,7 +715,7 @@ msgstr ""
 msgid "vDODO Rewards"
 msgstr ""
 
-#: src/components/ConnectWallet/ConnectWalletDialog.tsx:155
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:156
 msgid "Connect to your {0} Wallet"
 msgstr "连接你的{0}钱包"
 
@@ -731,7 +731,7 @@ msgstr ""
 msgid "Something went wrong…<0>Refresh again</0>"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:248
+#: src/components/Swap/components/ReviewDialog.tsx:249
 msgid "Swap Detail"
 msgstr "交易详情"
 
@@ -792,7 +792,7 @@ msgstr "代币授权"
 msgid "Share"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:308
+#: src/components/Swap/components/ReviewDialog.tsx:309
 msgid "Additional routing fees set by the Widget user"
 msgstr "由 Widget 设置的额外路由费用"
 
@@ -800,7 +800,7 @@ msgstr "由 Widget 设置的额外路由费用"
 msgid "Current liquidity pool token price"
 msgstr ""
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:85
+#: src/components/Swap/components/SettingsDialog/index.tsx:90
 msgid "Maximum slippage do not exceed 50%"
 msgstr "最大滑点不能超过50%"
 
@@ -855,7 +855,7 @@ msgstr ""
 msgid "Guide Price"
 msgstr ""
 
-#: src/components/Confirm.tsx:96
+#: src/components/Confirm.tsx:106
 #: src/components/SwitchChainDialog/index.tsx:128
 #: src/components/WidgetConfirm.tsx:112
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:274
@@ -1007,7 +1007,7 @@ msgid "The mid price needs to be greater than {min} and less than 100,000,000"
 msgstr ""
 
 #: src/components/ErrorMessageDialog.tsx:39
-#: src/components/WithExecutionDialog/index.tsx:275
+#: src/components/WithExecutionDialog/index.tsx:279
 msgid "Something went wrong."
 msgstr "发生异常错误."
 
@@ -1027,11 +1027,11 @@ msgstr ""
 msgid "Select Network"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:454
+#: src/components/Swap/components/ReviewDialog.tsx:455
 msgid "Confirm swap"
 msgstr "确认交易"
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:50
+#: src/components/Swap/components/SettingsDialog/index.tsx:55
 #: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:92
 msgid "Slippage Tolerance"
 msgstr "滑点"
@@ -1138,7 +1138,7 @@ msgstr ""
 msgid "Connect to a wallet"
 msgstr "连接钱包"
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:101
+#: src/components/Swap/components/SettingsDialog/index.tsx:106
 msgid "If your transaction time exceeds the deadline, your transaction will be rescinded."
 msgstr "如果你的交易被确认的时间超过这个时间，你的交易将被退回。 "
 
@@ -1267,7 +1267,7 @@ msgstr "小时"
 msgid "High"
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:314
+#: src/components/WithExecutionDialog/index.tsx:318
 msgid "Close"
 msgstr "关闭"
 
@@ -1275,7 +1275,7 @@ msgstr "关闭"
 msgid "Fees will be the same as in most other pools."
 msgstr ""
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:98
+#: src/components/Swap/components/SettingsDialog/index.tsx:103
 msgid "Transaction Deadline"
 msgstr "交易截止时间"
 

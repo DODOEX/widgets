@@ -24,6 +24,7 @@ export default function SelectBridgeDialog({
     <Dialog
       open={open}
       onClose={onClose}
+      id="select-cross-chain"
       title={<Trans>Select Cross Chain</Trans>}
     >
       <Box

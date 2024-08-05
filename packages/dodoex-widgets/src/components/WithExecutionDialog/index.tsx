@@ -240,7 +240,11 @@ export default function WithExecutionDialog({
   return (
     <ExecutionContext.Provider value={ctxVal}>
       {children}
-      <Dialog open={!!showing && !noSubmissionDialog} onClose={closeShowing}>
+      <Dialog
+        open={!!showing && !noSubmissionDialog}
+        onClose={closeShowing}
+        id="submission"
+      >
         <Box
           sx={{
             display: 'flex',

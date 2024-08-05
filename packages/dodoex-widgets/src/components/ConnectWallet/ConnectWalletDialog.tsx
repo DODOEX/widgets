@@ -37,6 +37,7 @@ export default function ConnectWalletDialog({
   return (
     <Dialog
       title={<Trans>Connect to your wallet</Trans>}
+      id="connect-wallet"
       open={open}
       onClose={onClose}
     >

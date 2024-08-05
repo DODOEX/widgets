@@ -11,7 +11,7 @@ export default function ErrorMessageDialog({
   onClose: () => void;
 }) {
   return (
-    <Dialog open={!!message} onClose={onClose}>
+    <Dialog open={!!message} onClose={onClose} id="error-message">
       <>
         <Box
           sx={{
