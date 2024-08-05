@@ -84,77 +84,96 @@ export default function BridgeRouteShortCard({
           />
           <Box
             sx={{
-              marginLeft: 4,
+              mx: 4,
               typography: 'body2',
               fontWeight: 600,
             }}
           >
             {productDetail?.name}
           </Box>
-          <Box
-            sx={{
-              display: 'block',
-              mx: 8,
-              width: '1px',
-              height: 12,
-              backgroundColor: theme.palette.border.main,
-            }}
-          />
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              typography: 'body2',
-              fontWeight: 600,
-              gap: 4,
-            }}
+
+          <Tooltip
+            onlyHover
+            placement="top"
+            title={<Trans>Estimated transaction time</Trans>}
           >
-            <span>1 {baseToken.symbol}</span>
-            <TokenLogo
-              address={baseToken?.address ?? ''}
-              marginRight={0}
-              width={20}
-              height={20}
-              url={baseToken?.logoURI}
-              chainId={baseChainId}
+            <Box
               sx={{
-                flexShrink: 0,
+                display: 'flex',
+                alignItems: 'center',
+                px: 8,
+                py: 4,
+                border: `solid 1px ${theme.palette.border.main}`,
+                borderRadius: 4,
+                typography: 'h6',
               }}
-            />
-            <span>=</span>
-            <span>
-              {formatTokenAmountNumber({
-                input: isReverse
-                  ? new BigNumber(fromAmount).div(toTokenAmount)
-                  : toTokenAmount.div(fromAmount),
-                decimals: quoteToken?.decimals,
-              })}{' '}
-              {quoteToken.symbol}
-            </span>
-            <TokenLogo
-              address={quoteToken?.address ?? ''}
-              marginRight={0}
-              width={20}
-              height={20}
-              url={quoteToken?.logoURI}
-              chainId={quoteChainId}
+            >
+              <TimeIcon
+                style={{
+                  color: theme.palette.text.secondary,
+                  width: 14,
+                  height: 14,
+                }}
+              />
+              <Box
+                sx={{
+                  ml: 4,
+                  lineHeight: 1,
+                }}
+              >
+                {executionDuration !== null
+                  ? formatReadableTimeDuration({
+                      start: Date.now(),
+                      end: Date.now() + executionDuration * 1000,
+                    })
+                  : '-'}
+              </Box>
+            </Box>
+          </Tooltip>
+          <Tooltip
+            onlyHover
+            placement="top"
+            title={
+              <Trans>
+                Fee includes: Cross Chain fees + Swap fees. Gas fee not
+                included.
+              </Trans>
+            }
+          >
+            <Box
               sx={{
-                flexShrink: 0,
+                ml: 8,
+                display: 'flex',
+                alignItems: 'center',
+                px: 8,
+                py: 4,
+                border: `solid 1px ${theme.palette.border.main}`,
+                borderRadius: 4,
+                typography: 'h6',
               }}
-            />
-            <HoverOpacity
-              component={Switch}
-              sx={{
-                color: 'text.secondary',
-                position: 'relative',
-                left: -2,
-              }}
-              onClick={(evt) => {
-                evt.stopPropagation();
-                setIsReverse((prev) => !prev);
-              }}
-            />
-          </Box>
+            >
+              <FeeIcon
+                style={{
+                  color: theme.palette.text.secondary,
+                  width: 14,
+                  height: 14,
+                }}
+              />
+              <Box
+                sx={{
+                  ml: 4,
+                  lineHeight: 1,
+                }}
+              >
+                {feeUSD !== null
+                  ? `$${formatTokenAmountNumber({
+                      input: feeUSD,
+                      decimals: 6,
+                    })}`
+                  : '-'}
+              </Box>
+            </Box>
+          </Tooltip>
         </Box>
         <Box
           component={ArrowRight}
@@ -164,94 +183,62 @@ export default function BridgeRouteShortCard({
           }}
         />
       </Box>
+
       <Box
         sx={{
+          mt: 8,
           display: 'flex',
           alignItems: 'center',
-          mt: 8,
+          typography: 'body2',
+          fontWeight: 600,
+          gap: 4,
         }}
       >
-        <Tooltip
-          onlyHover
-          placement="top"
-          title={<Trans>Estimated transaction time</Trans>}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              px: 8,
-              py: 4,
-              border: `solid 1px ${theme.palette.border.main}`,
-              borderRadius: 4,
-              typography: 'h6',
-            }}
-          >
-            <TimeIcon
-              style={{
-                color: theme.palette.text.secondary,
-                width: 14,
-                height: 14,
-              }}
-            />
-            <Box
-              sx={{
-                ml: 4,
-                lineHeight: 1,
-              }}
-            >
-              {executionDuration !== null
-                ? formatReadableTimeDuration({
-                    start: Date.now(),
-                    end: Date.now() + executionDuration * 1000,
-                  })
-                : '-'}
-            </Box>
-          </Box>
-        </Tooltip>
-        <Tooltip
-          onlyHover
-          placement="top"
-          title={
-            <Trans>
-              Fee includes: Cross Chain fees + Swap fees. Gas fee not included.
-            </Trans>
-          }
-        >
-          <Box
-            sx={{
-              ml: 8,
-              display: 'flex',
-              alignItems: 'center',
-              px: 8,
-              py: 4,
-              border: `solid 1px ${theme.palette.border.main}`,
-              borderRadius: 4,
-              typography: 'h6',
-            }}
-          >
-            <FeeIcon
-              style={{
-                color: theme.palette.text.secondary,
-                width: 14,
-                height: 14,
-              }}
-            />
-            <Box
-              sx={{
-                ml: 4,
-                lineHeight: 1,
-              }}
-            >
-              {feeUSD !== null
-                ? `$${formatTokenAmountNumber({
-                    input: feeUSD,
-                    decimals: 6,
-                  })}`
-                : '-'}
-            </Box>
-          </Box>
-        </Tooltip>
+        <span>1 {baseToken.symbol}</span>
+        <TokenLogo
+          address={baseToken?.address ?? ''}
+          marginRight={0}
+          width={20}
+          height={20}
+          url={baseToken?.logoURI}
+          chainId={baseChainId}
+          sx={{
+            flexShrink: 0,
+          }}
+        />
+        <span>=</span>
+        <span>
+          {formatTokenAmountNumber({
+            input: isReverse
+              ? new BigNumber(fromAmount).div(toTokenAmount)
+              : toTokenAmount.div(fromAmount),
+            decimals: quoteToken?.decimals,
+          })}{' '}
+          {quoteToken.symbol}
+        </span>
+        <TokenLogo
+          address={quoteToken?.address ?? ''}
+          marginRight={0}
+          width={20}
+          height={20}
+          url={quoteToken?.logoURI}
+          chainId={quoteChainId}
+          sx={{
+            flexShrink: 0,
+          }}
+        />
+        <HoverOpacity
+          component={Switch}
+          sx={{
+            color: 'text.secondary',
+            position: 'relative',
+            left: -2,
+          }}
+          onClick={(evt) => {
+            evt.stopPropagation();
+            setIsReverse((prev) => !prev);
+          }}
+        />
       </Box>
     </Box>
   );
