@@ -71,11 +71,15 @@ export interface SwapProps {
   /** Higher priority setting slippage */
   getAutoSlippage?: GetAutoSlippage;
   onConnectWalletClick?: ConnectWalletProps['onConnectWalletClick'];
+  onPayTokenChange?: (token: TokenInfo) => void;
+  onReceiveTokenChange?: (token: TokenInfo) => void;
 }
 
 export function Swap({
   getAutoSlippage,
   onConnectWalletClick,
+  onPayTokenChange,
+  onReceiveTokenChange,
 }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
@@ -103,7 +107,7 @@ export function Swap({
   );
 
   const [fromToken, setFromTokenOrigin] = useState<TokenInfo | null>(null);
-  const [toToken, setToToken] = useState<TokenInfo | null>(null);
+  const [toToken, setToTokenOrigin] = useState<TokenInfo | null>(null);
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState<boolean>(false);
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] =
     useState<boolean>(false);
@@ -296,26 +300,40 @@ export function Swap({
   const setFromToken: (value: React.SetStateAction<TokenInfo | null>) => void =
     useCallback(
       (value) => {
-        // sync redux
-        if (typeof value === 'function') {
-          return setFromTokenOrigin((prev) => {
-            const newValue = value(prev);
+        return setFromTokenOrigin((prev) => {
+          const newValue = typeof value === 'function' ? value(prev) : value;
+          // sync redux
+          if (!chainId) {
+            // The chainId is only modified when the wallet is not connected, and the chain is specified when the wallet is connected.
             dispatch(
               setFromTokenChainId(
                 (newValue?.chainId ?? undefined) as ChainId | undefined,
               ),
             );
-            return newValue;
-          });
-        }
-        dispatch(
-          setFromTokenChainId(
-            (value?.chainId ?? undefined) as ChainId | undefined,
-          ),
-        );
-        return setFromTokenOrigin(value);
+          }
+          // callback
+          if (onPayTokenChange && newValue && newValue !== prev) {
+            onPayTokenChange(newValue);
+          }
+
+          return newValue;
+        });
       },
-      [dispatch, setFromTokenChainId],
+      [dispatch, setFromTokenChainId, onPayTokenChange, chainId],
+    );
+
+  const setToToken: (value: React.SetStateAction<TokenInfo | null>) => void =
+    useCallback(
+      (value) => {
+        return setToTokenOrigin((prev) => {
+          const newValue = typeof value === 'function' ? value(prev) : value;
+          if (onReceiveTokenChange && newValue && newValue !== prev) {
+            onReceiveTokenChange(newValue);
+          }
+          return newValue;
+        });
+      },
+      [onReceiveTokenChange],
     );
 
   useInitDefaultToken({

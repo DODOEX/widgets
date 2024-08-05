@@ -85,7 +85,7 @@ export function useInitDefaultToken({
   const defaultToToken = useSelector(getDefaultToToken);
   const global = useSelector(getGlobalProps);
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { chainId } = useWeb3React();
+  const { chainId, isActivating } = useWeb3React();
 
   const initToken = () => {
     let findFromToken: TokenInfo | null = null;
@@ -140,7 +140,13 @@ export function useInitDefaultToken({
   };
 
   useEffect(() => {
-    initToken();
+    // Avoid continuous triggering
+    const time = setTimeout(() => {
+      if (!isActivating) {
+        initToken();
+      }
+    }, 10);
+    return () => clearTimeout(time);
   }, [
     tokenList,
     defaultFromToken,
@@ -148,5 +154,6 @@ export function useInitDefaultToken({
     global.crossChain,
     global.autoConnectLoading,
     chainId,
+    isActivating,
   ]);
 }

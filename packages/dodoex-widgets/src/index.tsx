@@ -11,6 +11,8 @@ export function SwapWidget(props: SwapWidgetProps) {
       <Swap
         getAutoSlippage={props.getAutoSlippage}
         onConnectWalletClick={props.onConnectWalletClick}
+        onPayTokenChange={props.onPayTokenChange}
+        onReceiveTokenChange={props.onReceiveTokenChange}
       />
     </Widget>
   );
@@ -25,6 +27,8 @@ export function InitSwapWidget(props: SwapWidgetProps) {
       <Swap
         getAutoSlippage={props.getAutoSlippage}
         onConnectWalletClick={props.onConnectWalletClick}
+        onPayTokenChange={props.onPayTokenChange}
+        onReceiveTokenChange={props.onReceiveTokenChange}
       />
     </Widget>,
   );
