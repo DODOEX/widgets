@@ -24,7 +24,11 @@ export { usePoolBalanceInfo } from './widgets/PoolWidget/hooks/usePoolBalanceInf
 export function SwapWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>
-      <Swap getAutoSlippage={props.getAutoSlippage} />
+      <Swap
+        getAutoSlippage={props.getAutoSlippage}
+        onPayTokenChange={props.onPayTokenChange}
+        onReceiveTokenChange={props.onReceiveTokenChange}
+      />
     </Widget>
   );
 }
@@ -43,7 +47,11 @@ export function InitSwapWidget(props: SwapWidgetProps) {
   const root = createRoot(rootEl!);
   root.render(
     <Widget {...props}>
-      <Swap getAutoSlippage={props.getAutoSlippage} />
+      <Swap
+        getAutoSlippage={props.getAutoSlippage}
+        onPayTokenChange={props.onPayTokenChange}
+        onReceiveTokenChange={props.onReceiveTokenChange}
+      />
     </Widget>,
   );
 }
