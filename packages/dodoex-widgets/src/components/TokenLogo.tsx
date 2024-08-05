@@ -19,6 +19,8 @@ export interface TokenLogoProps {
   chainId?: number;
   noShowChain?: boolean;
   noBorder?: boolean;
+  chainSize?: number;
+  logoOffset?: number;
 }
 
 function toDataURL(url: URL | string, callback: (v?: any) => void) {
@@ -59,6 +61,8 @@ export default function TokenLogo({
   chainId,
   noShowChain,
   noBorder,
+  chainSize = 12,
+  logoOffset: logoOffsetProps,
 }: TokenLogoProps): React.ReactElement {
   const [loaded, setLoaded] = useState(false);
   const [crossLogoUrl, setCrossLogoUrl] = useState('');
@@ -90,6 +94,11 @@ export default function TokenLogo({
     }
     return result;
   }, [url, token, getTokenLogoUrl, address, chainId, width, height]);
+
+  let logoOffset = logoOffsetProps;
+  if (!logoOffset) {
+    logoOffset = chainSize / 2 < 8 ? chainSize / 2 : chainSize - 8;
+  }
 
   useEffect(() => {
     setError(false);
@@ -127,18 +136,18 @@ export default function TokenLogo({
     }
   }, [address, width]);
 
-  return (
+  const chain = chainId ? chainListMap.get(chainId as ChainId) : null;
+  const showChain = !noShowChain && !!chain;
+
+  const logo = (
     <Box
       sx={{
         position: 'relative',
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        minWidth: width,
         width,
         height,
-        marginRight,
-        zIndex,
         borderRadius: '50%',
         ...(noBorder
           ? {}
@@ -146,11 +155,13 @@ export default function TokenLogo({
               border: 'solid 1px',
               borderColor: 'border.main',
             }),
-        ...(sx || {}),
-      }}
-      style={{
-        width,
-        height,
+        ...(showChain
+          ? {}
+          : {
+              marginRight,
+              zIndex,
+              ...sx,
+            }),
       }}
     >
       {!loaded && (
@@ -201,33 +212,48 @@ export default function TokenLogo({
           height: '100%',
         }}
       />
-      {!noShowChain && chainId && chainListMap.has(chainId as ChainId) ? (
+    </Box>
+  );
+
+  if (!showChain) return logo;
+
+  return (
+    <Box
+      sx={{
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: width + logoOffset,
+        height,
+        marginRight,
+        zIndex,
+        ...(sx || {}),
+      }}
+    >
+      {logo}
+      <Box
+        sx={{
+          position: 'absolute',
+          right: 0,
+          bottom: -1,
+          width: chainSize,
+          height: chainSize,
+          border: 'solid 1px',
+          borderColor: 'border.main',
+          borderRadius: '50%',
+          overflow: 'hidden',
+        }}
+      >
         <Box
+          component={chain.logo}
           sx={{
-            position: 'absolute',
-            right: 0,
-            bottom: -1,
-            width: 12,
-            height: 12,
-            transform: 'translateX(50%)',
-            border: 'solid 1px',
-            borderColor: 'border.main',
-            borderRadius: '50%',
-            overflow: 'hidden',
+            display: 'block',
+            width: '100%',
+            height: '100%',
           }}
-        >
-          <Box
-            component={chainListMap.get(chainId as ChainId)?.logo}
-            sx={{
-              display: 'block',
-              width: '100%',
-              height: '100%',
-            }}
-          />
-        </Box>
-      ) : (
-        ''
-      )}
+        />
+      </Box>
     </Box>
   );
 }

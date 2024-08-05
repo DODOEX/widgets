@@ -13,15 +13,11 @@ import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
 export default function NeedConnectButton({
   chainId,
   includeButton,
-  showSwitchText,
-  autoSwitch,
   ...props
 }: ButtonProps & {
   /** chainId that needs to be connected */
   chainId?: ChainId;
   includeButton?: boolean;
-  showSwitchText?: boolean;
-  autoSwitch?: boolean;
 }) {
   const { account, chainId: currentChainId, connector } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
@@ -47,21 +43,23 @@ export default function NeedConnectButton({
         {...props}
         isLoading={loading}
         onClick={async () => {
-          if (onConnectWalletClick) {
-            // switch chain
-            if (needSwitchNetwork) {
-              if (autoSwitch && switchChain) {
-                await switchChain();
-                return;
-              }
-              dispatch(
-                setOpenConnectWalletInfo({
-                  chainId,
-                }),
-              );
+          // switch chain
+          if (needSwitchNetwork) {
+            if (switchChain) {
+              setLoading(true);
+              await switchChain();
+              setLoading(false);
               return;
             }
+            dispatch(
+              setOpenConnectWalletInfo({
+                chainId,
+              }),
+            );
+            return;
+          }
 
+          if (onConnectWalletClick) {
             setLoading(true);
             const isConnected = await onConnectWalletClick();
             setLoading(false);
@@ -77,7 +75,7 @@ export default function NeedConnectButton({
       >
         {loading ? (
           <Trans>Connecting...</Trans>
-        ) : showSwitchText && needSwitchNetwork && chainId ? (
+        ) : needSwitchNetwork && chainId ? (
           t`Switch to ${chainListMap.get(chainId)?.name ?? 'unknown'}`
         ) : (
           <Trans>Connect to a wallet</Trans>

@@ -295,8 +295,6 @@ export function BottomButtonGroup({
           variant={Button.Variant.contained}
           fullWidth
           includeButton
-          showSwitchText
-          autoSwitch
         >
           <OperateBtn
             state={state}

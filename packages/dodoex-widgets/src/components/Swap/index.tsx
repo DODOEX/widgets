@@ -11,7 +11,13 @@ import {
 import { formatTokenAmountNumber } from '../../utils';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Setting, Dodo, Warn, DoubleRight } from '@dodoex/icons';
+import {
+  Setting,
+  SettingCrossChain,
+  Dodo,
+  Warn,
+  DoubleRight,
+} from '@dodoex/icons';
 import { Trans, t } from '@lingui/macro';
 import { TokenCard } from './components/TokenCard';
 import { QuestionTooltip } from '../Tooltip';
@@ -854,7 +860,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
         >
           <Box component={ButtonBase}>
             <Box
-              component={Setting}
+              component={isBridge ? SettingCrossChain : Setting}
               onClick={() => setIsSettingsDialogOpen(true)}
               sx={{
                 width: 19,
@@ -868,7 +874,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
       </Box>
 
       {/* Scroll Container */}
-      <Box sx={{ flex: 1, padding: '0 20px 20px', overflowY: 'auto' }}>
+      <Box sx={{ flex: 1, padding: '0 16px 12px', overflowY: 'auto' }}>
         {/* Swap Module */}
         <Box>
           {/* First Token Card  */}
@@ -878,7 +884,6 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
             side="from"
             amt={fromFinalAmt}
             defaultLoadBalance
-            onlyCurrentChain
             onMaxClick={handleMaxClick}
             onInputChange={updateFromAmt}
             onInputFocus={onFromTokenInputFocus}
@@ -896,6 +901,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
             onTokenChange={onFromTokenChange}
             readOnly={isReverseRouting}
             showChainLogo
+            showChainName
           />
 
           {/* Switch Icon */}
@@ -921,6 +927,7 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
             onTokenChange={onToTokenChange}
             readOnly={isBridge || !isReverseRouting}
             showChainLogo
+            showChainName
           />
 
           {/* Price Disp or Warnings  */}
@@ -959,8 +966,8 @@ export function Swap({ getAutoSlippage }: SwapProps = {}) {
           >
             <Box
               sx={{
-                width: 24,
-                typography: 'body2',
+                width: 18,
+                height: 18,
                 transform: 'translate(1px, 2px)',
                 '& path': {
                   fill: theme.palette.text.disabled,

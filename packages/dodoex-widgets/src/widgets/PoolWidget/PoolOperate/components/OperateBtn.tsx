@@ -23,14 +23,7 @@ export default function OperateBtn({
   const { account, chainId: currentChainId } = useWeb3React();
 
   if (!account || chainId !== currentChainId) {
-    return (
-      <NeedConnectButton
-        chainId={chainId}
-        showSwitchText
-        autoSwitch
-        fullWidth
-      />
-    );
+    return <NeedConnectButton chainId={chainId} fullWidth />;
   }
 
   const isPending = runningRequests.some(

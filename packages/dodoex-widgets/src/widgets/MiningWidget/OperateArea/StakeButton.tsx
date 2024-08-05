@@ -64,13 +64,7 @@ export function StakeButton({
   }
 
   return (
-    <NeedConnectButton
-      includeButton
-      fullWidth
-      showSwitchText
-      autoSwitch
-      chainId={miningItem?.chainId}
-    >
+    <NeedConnectButton includeButton fullWidth chainId={miningItem?.chainId}>
       <TokenStatusButton status={tokenStatus}>
         <Button
           fullWidth

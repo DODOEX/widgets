@@ -29,10 +29,11 @@ export function BalanceText({
   return (
     <Box
       sx={{
-        display: 'flex',
         typography: 'body2',
         alignItems: 'center',
         color: palette.text.secondary,
+        wordBreak: 'break-word',
+        textAlign: 'right',
         ...(canClickBalance
           ? {
               '&:hover': {
@@ -56,7 +57,7 @@ export function BalanceText({
           {address
             ? formatTokenAmountNumber({
                 input: balance,
-                decimals,
+                decimals: Math.min(decimals || 4, 4),
               })
             : '-'}
           {showMaxBtn && balance && balance.gt(0) && onClick && (
@@ -68,6 +69,7 @@ export function BalanceText({
                   ? palette.primary.main
                   : palette.text.disabled,
                 cursor: address ? 'pointer' : 'unset',
+                typography: 'body2',
               }}
               onClick={() =>
                 onClick && onClick(balance ? balance.toString() : '')

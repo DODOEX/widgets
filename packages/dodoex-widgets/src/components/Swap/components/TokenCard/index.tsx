@@ -14,7 +14,6 @@ import { useState, useEffect, useRef } from 'react';
 import { TokenInfo } from '../../../../hooks/Token';
 import { TokenPickerProps } from '../../../TokenPicker';
 import { transitionTime } from '../Dialog';
-import SwitchChainDialog from '../../../SwitchChainDialog';
 import { useQuery } from '@tanstack/react-query';
 import { tokenApi } from '../../../../constants/api';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
@@ -46,7 +45,7 @@ export interface TokenCardProps {
   onTokenChange?: (token: TokenInfo, isOccupied: boolean) => void;
   side?: TokenPickerProps['side'];
   showChainLogo?: boolean;
-  onlyCurrentChain?: boolean;
+  showChainName?: boolean;
   defaultLoadBalance?: boolean;
   overrideBalance?: BigNumber | null;
   overrideBalanceLoading?: boolean;
@@ -123,7 +122,7 @@ export function TokenCard({
   onTokenChange,
   side,
   showChainLogo,
-  onlyCurrentChain,
+  showChainName,
   defaultLoadBalance,
   overrideBalance,
   overrideBalanceLoading,
@@ -136,7 +135,6 @@ export function TokenCard({
   checkLogBalance,
 }: TokenCardProps) {
   const { account } = useWalletInfo();
-  const [openSwitchChainDialog, setOpenSwitchChainDialog] = useState(false);
   const theme = useTheme();
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
   const tokenQuery = useQuery(
@@ -169,12 +167,6 @@ export function TokenCard({
     }
   }, [amt]);
 
-  useEffect(() => {
-    if (token && onlyCurrentChain) {
-      setOpenSwitchChainDialog(true);
-    }
-  }, [token, onlyCurrentChain]);
-
   const { gotoBuyToken } = useGlobalConfig();
   let showBuyTokenBtn = gotoBuyToken && balance && amt && balance.lt(amt);
 
@@ -183,7 +175,7 @@ export function TokenCard({
       sx={{
         width: '100%',
         minHeight: 133,
-        padding: 20,
+        padding: theme.spacing(20, 20, 24),
         borderRadius: 12,
         overflow: 'hidden',
         display: 'flex',
@@ -198,6 +190,7 @@ export function TokenCard({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          gap: 4,
         }}
       >
         {hideToken ? (
@@ -206,6 +199,7 @@ export function TokenCard({
           <TokenLogoCollapse
             token={token}
             showChainLogo={showChainLogo}
+            showChainName={showChainName}
             onClick={() => setTokenPickerVisible(true)}
             readonly={!onTokenChange}
           />
@@ -332,8 +326,7 @@ export function TokenCard({
       {fiatPriceTxt !== undefined ? (
         <Box
           sx={{
-            mt: 4,
-            typography: 'body2',
+            typography: 'h6',
             color: theme.palette.text.secondary,
           }}
         >
@@ -365,12 +358,6 @@ export function TokenCard({
             }
           }, transitionTime);
         }}
-      />
-      {/* switch chain */}
-      <SwitchChainDialog
-        chainId={token?.chainId}
-        open={openSwitchChainDialog}
-        onClose={() => setOpenSwitchChainDialog(false)}
       />
     </Box>
   );

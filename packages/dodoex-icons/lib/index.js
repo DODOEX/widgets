@@ -436,6 +436,12 @@ Object.defineProperty(exports, "Setting", {
     return _Setting.default;
   }
 });
+Object.defineProperty(exports, "SettingCrossChain", {
+  enumerable: true,
+  get: function () {
+    return _SettingCrossChain.default;
+  }
+});
 Object.defineProperty(exports, "Share", {
   enumerable: true,
   get: function () {
@@ -598,6 +604,7 @@ var _Refresh = _interopRequireDefault(require("./Refresh"));
 var _Route = _interopRequireDefault(require("./Route"));
 var _Search = _interopRequireDefault(require("./Search"));
 var _Setting = _interopRequireDefault(require("./Setting"));
+var _SettingCrossChain = _interopRequireDefault(require("./SettingCrossChain"));
 var _Share = _interopRequireDefault(require("./Share"));
 var _Slippage = _interopRequireDefault(require("./Slippage"));
 var _Star = _interopRequireDefault(require("./Star"));

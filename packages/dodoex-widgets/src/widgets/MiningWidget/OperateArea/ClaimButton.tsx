@@ -22,13 +22,7 @@ export default function ClaimButton({
   });
 
   return (
-    <NeedConnectButton
-      includeButton
-      fullWidth
-      showSwitchText
-      autoSwitch
-      chainId={miningItem?.chainId}
-    >
+    <NeedConnectButton includeButton fullWidth chainId={miningItem?.chainId}>
       <Button
         fullWidth
         isLoading={stakeMutation.isPending}
