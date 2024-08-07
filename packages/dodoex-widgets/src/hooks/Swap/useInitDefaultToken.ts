@@ -1,4 +1,3 @@
-import { useWeb3React } from '@web3-react/core';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLastToken } from '../../constants/localstorage';
@@ -11,6 +10,7 @@ import {
   getTokenList,
 } from '../../store/selectors/token';
 import { getDefaultChainId } from '../../store/selectors/wallet';
+import { useWalletState } from '../ConnectWallet/useWalletState';
 import { DefaultTokenInfo, TokenInfo, TokenList } from '../Token';
 
 function getDefaultToken({
@@ -85,7 +85,7 @@ export function useInitDefaultToken({
   const defaultToToken = useSelector(getDefaultToToken);
   const global = useSelector(getGlobalProps);
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { chainId } = useWeb3React();
+  const { chainId } = useWalletState();
 
   const initToken = () => {
     let findFromToken: TokenInfo | null = null;

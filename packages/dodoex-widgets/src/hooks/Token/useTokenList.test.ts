@@ -92,8 +92,8 @@ jest.mock('react-redux', () => ({
     return [];
   },
 }));
-jest.mock('@web3-react/core', () => ({
-  useWeb3React: () => ({
+jest.mock('../ConnectWallet/useWalletState', () => ({
+  useWalletState: () => ({
     chainId: 1,
   }),
 }));

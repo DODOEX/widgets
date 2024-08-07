@@ -2,13 +2,13 @@ import { renderHook } from '@testing-library/react-hooks';
 import { isEqual } from 'lodash';
 import { chainListMap } from '../../constants/chainList';
 import { useSelectChainList } from './useSelectChainList';
-import { useWeb3React } from '@web3-react/core';
+import { useWalletState } from '../ConnectWallet/useWalletState';
 import tokenList from '../../constants/tokenList';
 
 const allChainList = Array.from(chainListMap.values());
 
-jest.mock('@web3-react/core', () => ({
-  useWeb3React: jest.fn(() => ({
+jest.mock('../ConnectWallet/useWalletState', () => ({
+  useWalletState: jest.fn(() => ({
     chainId: 1,
   })),
 }));
@@ -51,7 +51,7 @@ describe('useSelectChainList:default', () => {
   it('test net', () => {
     const testChainId = 5;
     (
-      useWeb3React as unknown as jest.Mock<
+      useWalletState as unknown as jest.Mock<
         {
           chainId: number;
         },

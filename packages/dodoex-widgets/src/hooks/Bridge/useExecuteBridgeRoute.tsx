@@ -1,4 +1,3 @@
-import { useWeb3React } from '@web3-react/core';
 import { useCallback } from 'react';
 import { t } from '@lingui/macro';
 import { DoubleRight } from '@dodoex/icons';
@@ -14,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
+import { useWalletState } from '../ConnectWallet/useWalletState';
 
 export default function useExecuteBridgeRoute({
   route,
@@ -22,7 +22,7 @@ export default function useExecuteBridgeRoute({
   route?: BridgeRouteI;
   bridgeOrderTxRequest?: BridgeTXRequest;
 }) {
-  const { chainId, account } = useWeb3React();
+  const { chainId, account } = useWalletState();
   const submission = useSubmission();
   const { apikey } = useSelector(getGlobalProps);
   const bridgeCreateRouteAPI = useGetAPIService(

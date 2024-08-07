@@ -1,6 +1,5 @@
 import { alpha, Box, Tooltip, useTheme } from '@dodoex/components';
 import { Trans, t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
 import { BridgeRouteI } from '../../../hooks/Bridge/useFetchRoutePriceBridge';
@@ -14,6 +13,7 @@ import { formatTokenAmountNumber } from '../../../utils/formatter';
 import { TokenWithChain } from './TokenWithChain';
 import { DirectionLine } from './DirectionLine';
 import { BridgeLogo } from './BridgeLogo';
+import { useWalletState } from '../../../hooks/ConnectWallet/useWalletState';
 
 export default function RouteCard({
   fromToken,
@@ -50,7 +50,7 @@ export default function RouteCard({
   isBestPrice?: boolean;
 }) {
   const theme = useTheme();
-  const { account } = useWeb3React();
+  const { account } = useWalletState();
   const productDetail = productList.find((i) => i.id === product);
   const { getApprovalState } = useGetTokenStatus({
     account,

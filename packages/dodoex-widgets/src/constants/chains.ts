@@ -27,6 +27,8 @@ export enum ChainId {
   MANTA = 169,
 
   MANTLE = 5000,
+
+  TON = -239,
 }
 
 export const rpcServerMap: {
@@ -75,6 +77,8 @@ export const rpcServerMap: {
   [ChainId.SCROLL]: ['https://rpc.scroll.io'],
   [ChainId.MANTA]: ['https://pacific-rpc.manta.network/http'],
   [ChainId.MANTLE]: ['https://rpc.mantle.xyz'],
+
+  [ChainId.TON]: [],
 };
 
 export const etherTokenAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -218,4 +222,6 @@ export const scanUrlDomainMap: {
   [ChainId.SCROLL]: 'scrollscan.com',
   [ChainId.MANTA]: 'pacific-explorer.manta.network',
   [ChainId.MANTLE]: 'explorer.mantle.xyz',
+
+  [ChainId.TON]: 'tonviewer.com',
 };

@@ -760,4 +760,13 @@ export default [
     symbol: 'USDC',
     chainId: 5000,
   },
+  {
+    decimals: 6,
+    logoURI:
+      'https://images.dodoex.io/MGklrG5AImwUllGWDPMAHY0qLfdJQn4bj3iPFWSeohA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vUEM3a3JPb252bWl4U3VRaFEwY29pVy1sczFYN25WS1lLNVluekQ2R2lxRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkZSZlpUaGlOekZpTldZeU9TOVZVMFJVWDJVNFlqY3hZalZtTWprdWNHNW4ucG5n.webp',
+    name: 'USD Coin',
+    address: 'EQA0yD48ZfZvEYDZ9ctr6XfysSJ9TxRTN2abZiX9yYHw2YIC',
+    symbol: 'USDT',
+    chainId: -239,
+  },
 ];

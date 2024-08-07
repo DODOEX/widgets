@@ -1,4 +1,3 @@
-import { useWeb3React } from '@web3-react/core';
 import { Contract } from '@ethersproject/contracts';
 import { AddressZero } from '@ethersproject/constants';
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers';
@@ -11,6 +10,7 @@ import { isAddress } from '../../utils';
 import { useSelector } from 'react-redux';
 import { getGlobalProps } from '../../store/selectors/globals';
 import { getStaticJsonRpcProvider } from './provider';
+import { useWalletState } from '../ConnectWallet/useWalletState';
 
 // account is not optional
 function getSigner(provider: JsonRpcProvider, account: string): JsonRpcSigner {
@@ -43,7 +43,7 @@ export function getContract(
 }
 
 export default function useMultiContract(chainIdProps?: number) {
-  const { provider, account, chainId } = useWeb3React();
+  const { provider, account, chainId } = useWalletState();
   const [loading, setLoading] = useState(false);
   const currentContractConfig = useMemo(
     () => contractConfig[(chainIdProps ?? chainId) as ChainId],
@@ -76,6 +76,7 @@ export default function useMultiContract(chainIdProps?: number) {
     <T>(thunk: BatchThunk<T>) => {
       if (!currentContractConfig) return;
       const { MULTI_CALL } = currentContractConfig;
+      if (!MULTI_CALL) return;
       const multiContract = getContractRes(MULTI_CALL, multiABI);
       const computed = async () => {
         if (!multiContract) return;

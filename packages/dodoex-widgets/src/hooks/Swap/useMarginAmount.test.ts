@@ -31,11 +31,6 @@ jest.mock('react-redux', () => ({
     return [];
   },
 }));
-jest.mock('@web3-react/core', () => ({
-  useWeb3React: () => ({
-    account: '0x2Ba1633338dDD2Ab37fbc95ea615BA98f0445380',
-  }),
-}));
 
 describe('useMarginAmount', () => {
   it('tokenEther', () => {

@@ -66,9 +66,12 @@
     "@lingui/core": "^4.3.0",
     "@lingui/macro": "^4.3.0",
     "@lingui/react": "^4.3.0",
+    "@orbs-network/ton-access": "^2.3.3",
     "@reduxjs/toolkit": "^1.6.1",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
+    "@tonconnect/ui": "^2.0.6",
+    "@twa-dev/sdk": "^7.8.0",
     "@web3-react/core": "8.2.0",
     "@web3-react/eip1193": "8.2.0",
     "@web3-react/metamask": "8.2.1",
@@ -80,7 +83,11 @@
     "lodash": "^4.17.21",
     "make-plural": "^7.0.0",
     "react-window": "^1.8.8",
-    "semantic-release": "^19.0.2"
+    "semantic-release": "^19.0.2",
+    "ton": "^13.9.0",
+    "ton-core": "^0.53.0",
+    "ton-crypto": "^3.2.0",
+    "zustand": "^4.5.4"
   },
   "peerDependencies": {
     "@babel/runtime": ">=7.17.0",

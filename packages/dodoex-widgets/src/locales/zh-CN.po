@@ -164,7 +164,7 @@ msgstr "天"
 msgid "Days"
 msgstr "天"
 
-#: src/components/Swap/components/ConnectWallet/index.tsx:53
+#: src/components/Swap/components/ConnectWallet/index.tsx:51
 msgid "Connecting..."
 msgstr "连接中..."
 
@@ -391,7 +391,7 @@ msgstr "在冷静期无法进行清算"
 msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
-#: src/components/Swap/components/ConnectWallet/index.tsx:55
+#: src/components/Swap/components/ConnectWallet/index.tsx:53
 msgid "Connect to a wallet"
 msgstr "连接钱包"
 

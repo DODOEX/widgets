@@ -1,11 +1,11 @@
 import { Button } from '@dodoex/components';
 import ConnectWalletDialog from './ConnectWalletDialog';
 import { ChainId } from '../../../../constants/chains';
-import { useWeb3React } from '@web3-react/core';
 import { Trans } from '@lingui/macro';
 import { useState } from 'react';
 import { connectWalletBtn } from '../../../../constants/testId';
 import SwitchChainDialog from '../../../SwitchChainDialog';
+import { useWalletState } from '../../../../hooks/ConnectWallet/useWalletState';
 
 export interface ConnectWalletProps {
   needSwitchChain?: ChainId;
@@ -17,7 +17,7 @@ export default function ConnectWallet({
   needSwitchChain,
   onConnectWalletClick,
 }: ConnectWalletProps) {
-  const { connector, chainId } = useWeb3React();
+  const { connect, isTon, chainId } = useWalletState();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openSwitchChainDialog, setOpenSwitchChainDialog] = useState(false);
@@ -41,10 +41,14 @@ export default function ConnectWallet({
               return;
             }
           }
-          connector.deactivate
-            ? connector.deactivate()
-            : connector.resetState();
-          setOpen(true);
+          if (!isTon) {
+            connect();
+            setOpen(true);
+          } else {
+            setLoading(true);
+            await connect();
+            setLoading(false);
+          }
         }}
         data-testid={connectWalletBtn}
         isLoading={loading}

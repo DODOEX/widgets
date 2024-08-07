@@ -1,4 +1,3 @@
-import { useWeb3React } from '@web3-react/core';
 import { useMemo } from 'react';
 import { chainListMap } from '../../constants/chainList';
 import {
@@ -8,6 +7,7 @@ import {
   scanUrlDomainMap,
 } from '../../constants/chains';
 import { store } from '../../store';
+import { useWalletState } from './useWalletState';
 
 interface AddChainParameter {
   chainId: string; // A 0x-prefixed hexadecimal string
@@ -89,7 +89,7 @@ export async function registerNetworkWithMetamask({
 }
 
 export function useSwitchChain(chainId?: ChainId) {
-  const { provider } = useWeb3React();
+  const { provider } = useWalletState();
 
   const switchChain = useMemo(() => {
     if (!chainId || !provider?.provider?.isMetaMask) {

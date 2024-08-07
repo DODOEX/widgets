@@ -1,12 +1,12 @@
 import { Box, RotatingIcon } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { useWeb3React } from '@web3-react/core';
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { WalletMap, WalletType } from '../../../../constants/wallet';
 import { connectToWallet } from '../../../../hooks/ConnectWallet';
 import { useSwitchChain } from '../../../../hooks/ConnectWallet/useSwitchChain';
+import { useWalletState } from '../../../../hooks/ConnectWallet/useWalletState';
 import {
   getDefaultChainId,
   getFromTokenChainId,
@@ -33,7 +33,7 @@ export default function ConnectWalletDialog({
     ? WalletMap[connectingType]
     : undefined;
   const switchChain = useSwitchChain(chainId);
-  const webReact = useWeb3React();
+  const webReact = useWalletState();
   return (
     <Dialog
       title={<Trans>Connect to your wallet</Trans>}
@@ -111,7 +111,7 @@ export default function ConnectWalletDialog({
                     if (webReact.chainId && webReact.chainId !== chainId) {
                       if (
                         wallet.type === WalletType.METAMASK &&
-                        webReact.provider?.provider?.isMetaMask &&
+                        webReact.isMetamask &&
                         switchChain
                       ) {
                         await switchChain();

@@ -1,4 +1,3 @@
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Interface } from '@ethersproject/abi';
@@ -13,6 +12,7 @@ import {
 } from '../../store/actions/token';
 import { AppThunkDispatch } from '../../store/actions';
 import { isETHAddress } from '../../utils';
+import { useWalletState } from '../ConnectWallet/useWalletState';
 
 type TokenResult = {
   address: string;
@@ -37,7 +37,7 @@ export default function useFetchTokens({
   chainId?: number;
   skip?: boolean;
 }) {
-  const { account } = useWeb3React();
+  const { account, isTon } = useWalletState();
   const dispatch = useDispatch<AppThunkDispatch>();
   const addresses = useMemo(() => {
     return [
@@ -50,7 +50,8 @@ export default function useFetchTokens({
   const [data, setData] = useState<TokenResult[]>();
 
   const thunk = useMemo(() => {
-    if (!account || !addresses.length || !contractConfig) return undefined;
+    if (isTon || !account || !addresses.length || !contractConfig)
+      return undefined;
     const { DODO_APPROVE: proxyAddress, ERC20_HELPER: erc20HelperAddress } =
       contractConfig;
     const contract = getContract(erc20HelperAddress, erc20Helper);

@@ -1,4 +1,3 @@
-import { useWeb3React } from '@web3-react/core';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -9,9 +8,10 @@ import {
 import { getAccountBalances, getEthBalance } from '../../store/selectors/token';
 import { TokenInfo } from './type';
 import { isSameAddress } from '../../utils';
+import { useWalletState } from '../ConnectWallet/useWalletState';
 
 export default function useGetBalance() {
-  const { account, chainId } = useWeb3React();
+  const { account, chainId } = useWalletState();
   const accountBalances = useSelector(getAccountBalances);
   const ethBalance = useSelector(getEthBalance);
   const getBalance = useCallback(

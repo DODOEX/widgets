@@ -13,6 +13,7 @@ import { ReactComponent as LINEALogo } from '../assets/logo/networks/linea.svg';
 import { ReactComponent as ScrollLogo } from '../assets/logo/networks/scroll.svg';
 import { ReactComponent as MantaLogo } from '../assets/logo/networks/manta.svg';
 import { ReactComponent as MantleLogo } from '../assets/logo/networks/mantle.svg';
+import { ReactComponent as TonLogo } from '../assets/logo/networks/ton.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -140,6 +141,15 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.MANTLE,
       logo: MantleLogo,
       name: 'Mantle',
+    },
+  ],
+
+  [
+    ChainId.TON,
+    {
+      chainId: ChainId.TON,
+      logo: TonLogo,
+      name: 'Ton',
     },
   ],
 ]);

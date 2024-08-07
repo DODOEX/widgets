@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useWeb3React } from '@web3-react/core';
 import { parseFixed } from '@ethersproject/bignumber';
 import { useCallback, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -12,6 +11,7 @@ import BigNumber from 'bignumber.js';
 import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
+import { useWalletState } from '../ConnectWallet/useWalletState';
 
 export interface BridgeRouteI {
   /** update */
@@ -146,7 +146,7 @@ export function useFetchRoutePriceBridge({
   fromToken,
   fromAmount,
 }: FetchRoutePrice) {
-  const { account, provider } = useWeb3React();
+  const { account, provider } = useWalletState();
   const { defaultSlippage, loading: slippageLoading } =
     useDefaultSlippage(true);
   const slippage = useSelector(getSlippage) || defaultSlippage;

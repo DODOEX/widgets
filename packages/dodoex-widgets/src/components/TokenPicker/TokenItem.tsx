@@ -8,7 +8,7 @@ import { TokenInfo } from './../../hooks/Token';
 import { Loading } from '@dodoex/icons';
 import { tokenPickerItem } from '../../constants/testId';
 import { useTheme } from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
+import { useWalletState } from '../../hooks/ConnectWallet/useWalletState';
 
 export default function TokenItem({
   token,
@@ -23,7 +23,7 @@ export default function TokenItem({
 }) {
   const theme = useTheme();
   const getBalance = useGetBalance();
-  const { account } = useWeb3React();
+  const { account } = useWalletState();
   const balanceBigNumber = getBalance(token);
   const balance = balanceBigNumber
     ? formatReadableNumber({

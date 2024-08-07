@@ -9,6 +9,7 @@ import {
   setDefaultToToken,
 } from '../../store/actions/token';
 import { WidgetProps } from '../../components/Widget/';
+import useTonConnectStore from '../ConnectWallet/TonConnect';
 
 export function useInitPropsToRedux({
   width,
@@ -26,6 +27,7 @@ export function useInitPropsToRedux({
   apiServices,
   crossChain,
   noPowerBy,
+  tonConnect,
 }: WidgetProps) {
   const dispatch = useDispatch<AppThunkDispatch>();
 
@@ -158,4 +160,10 @@ export function useInitPropsToRedux({
       );
     }
   }, [noPowerBy]);
+
+  useEffect(() => {
+    if (tonConnect !== undefined) {
+      useTonConnectStore.setState({ enabled: !!tonConnect });
+    }
+  }, [tonConnect]);
 }

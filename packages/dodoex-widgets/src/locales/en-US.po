@@ -164,7 +164,7 @@ msgstr "Day"
 msgid "Days"
 msgstr "Days"
 
-#: src/components/Swap/components/ConnectWallet/index.tsx:53
+#: src/components/Swap/components/ConnectWallet/index.tsx:51
 msgid "Connecting..."
 msgstr "Connecting..."
 
@@ -391,7 +391,7 @@ msgstr "Unable to SETTLE during the cooling-off period"
 msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
-#: src/components/Swap/components/ConnectWallet/index.tsx:55
+#: src/components/Swap/components/ConnectWallet/index.tsx:53
 msgid "Connect to a wallet"
 msgstr "Connect to a wallet"
 

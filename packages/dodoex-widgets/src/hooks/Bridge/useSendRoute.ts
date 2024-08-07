@@ -5,7 +5,6 @@ import { t } from '@lingui/macro';
 import { basicTokenMap, ChainId } from '../../constants/chains';
 import { byWei, formatTokenAmountNumber } from '../../utils';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
-import { useWeb3React } from '@web3-react/core';
 import { getEstimateGas } from '../contract/wallet';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
 import { useSelector } from 'react-redux';
@@ -13,9 +12,10 @@ import { getGlobalProps } from '../../store/selectors/globals';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
 import { EmptyAddress } from '../../constants/address';
+import { useWalletState } from '../ConnectWallet/useWalletState';
 
 export function useSendRoute() {
-  const { provider } = useWeb3React();
+  const { provider, account } = useWalletState();
   const [bridgeOrderTxRequest, setBridgeOrderTxRequest] =
     useState<BridgeTXRequest | undefined>();
   const [sendRouteLoading, setSendRouteLoading] = useState(false);
@@ -32,7 +32,7 @@ export function useSendRoute() {
       fromEtherTokenBalance: BigNumber | null;
       goNext: () => void;
     }) => {
-      if (!selectedRoute || !provider || !fromEtherTokenBalance) {
+      if (!selectedRoute || !account || !fromEtherTokenBalance) {
         return;
       }
       const { encodeParams } = selectedRoute;
@@ -103,17 +103,19 @@ export function useSendRoute() {
         }
 
         // gaslimit(number)
-        const gasLimit = await getEstimateGas(
-          {
-            from,
-            to,
-            value,
-            data: txData,
-          },
-          provider,
-        );
-        if (!gasLimit) {
-          throw new Error('failed to estimate gas');
+        if (provider) {
+          const gasLimit = await getEstimateGas(
+            {
+              from,
+              to,
+              value,
+              data: txData,
+            },
+            provider,
+          );
+          if (!gasLimit) {
+            throw new Error('failed to estimate gas');
+          }
         }
 
         setBridgeOrderTxRequest({
@@ -133,7 +135,13 @@ export function useSendRoute() {
 
       setSendRouteLoading(false);
     },
-    [setBridgeOrderTxRequest, setSendRouteLoading, provider, bridgeEncodeAPI],
+    [
+      setBridgeOrderTxRequest,
+      setSendRouteLoading,
+      account,
+      provider,
+      bridgeEncodeAPI,
+    ],
   );
 
   return {

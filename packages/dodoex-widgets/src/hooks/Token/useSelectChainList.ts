@@ -1,13 +1,13 @@
-import { useWeb3React } from '@web3-react/core';
 import { useEffect, useMemo, useState } from 'react';
 import { ChainId } from '../../constants/chains';
 import { ChainListItem, chainListMap } from '../../constants/chainList';
 import { useSelector } from 'react-redux';
 import { getAllTokenList } from '../../store/selectors/token';
 import { getGlobalProps } from '../../store/selectors/globals';
+import { useWalletState } from '../ConnectWallet/useWalletState';
 
 export function useSelectChainList(side?: 'from' | 'to') {
-  const { chainId } = useWeb3React();
+  const { chainId } = useWalletState();
   const allTokenList = useSelector(getAllTokenList);
   const crossChain = useSelector(getGlobalProps).crossChain;
   const hasTokenChainIds = useMemo(() => {

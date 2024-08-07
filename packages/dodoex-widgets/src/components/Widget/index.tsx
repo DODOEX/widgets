@@ -15,7 +15,7 @@ import { LangProvider } from './i18n';
 import { store } from '../../store';
 import { PaletteMode, ThemeOptions } from '@dodoex/components';
 import { defaultLang, SupportedLang } from '../../constants/locales';
-import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
+import { Web3ReactProvider } from '@web3-react/core';
 import {
   useWeb3Connectors,
   Web3ConnectorsProps,
@@ -35,6 +35,8 @@ import { APIServices } from '../../constants/api';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { SwapProps } from '../Swap';
 import { getFromTokenChainId } from '../../store/selectors/wallet';
+import { useWalletState } from '../../hooks/ConnectWallet/useWalletState';
+import WebApp from '@twa-dev/sdk';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
@@ -58,6 +60,7 @@ export interface WidgetProps
   apiServices?: Partial<APIServices>;
   crossChain?: boolean;
   noPowerBy?: boolean;
+  tonConnect?: boolean;
 
   onProviderChanged?: (provider?: any) => void;
 }
@@ -66,7 +69,9 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useInitTokenList(props);
   useFetchETHBalance();
   useFetchBlockNumber();
-  const { provider, connector } = useWeb3React();
+  const { provider, autoConnect } = useWalletState({
+    isTon: !!props.tonConnect,
+  });
   const dispatch = useDispatch<AppThunkDispatch>();
   const autoConnectLoading = useSelector(getAutoConnectLoading);
   useEffect(() => {
@@ -75,18 +80,14 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
       const connectWallet = async () => {
         const defaultChainId = props.defaultChainId;
         try {
-          if (connector?.connectEagerly) {
-            await connector.connectEagerly(defaultChainId);
-          } else {
-            await connector.activate(defaultChainId);
-          }
+          await autoConnect(defaultChainId);
         } finally {
           dispatch(setAutoConnectLoading(false));
         }
       };
       connectWallet();
     }
-  }, [connector]);
+  }, [autoConnect]);
   useEffect(() => {
     if (props.onProviderChanged) {
       props.onProviderChanged(provider);
@@ -95,11 +96,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     const handleChainChanged = async () => {
       dispatch(setAutoConnectLoading(true));
       try {
-        if (connector?.connectEagerly) {
-          await connector.connectEagerly();
-        } else {
-          await connector.activate();
-        }
+        await autoConnect();
       } finally {
         dispatch(setAutoConnectLoading(false));
       }
@@ -113,6 +110,12 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
       }
     };
   }, [provider]);
+
+  useEffect(() => {
+    if (props.tonConnect) {
+      WebApp.ready();
+    }
+  }, [props.tonConnect]);
 
   // Init props to redux!
   const width = props.width || 375;

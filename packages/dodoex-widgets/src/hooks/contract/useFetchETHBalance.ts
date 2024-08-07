@@ -1,4 +1,3 @@
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,9 +7,10 @@ import { setEthBalance } from '../../store/actions/token';
 import { getGlobalProps } from '../../store/selectors/globals';
 import { ChainId, rpcServerMap } from '../../constants/chains';
 import { getStaticJsonRpcProvider } from './provider';
+import { useWalletState } from '../ConnectWallet/useWalletState';
 
 export default function useFetchETHBalance(chainId?: number) {
-  const { provider, account, chainId: connectChainId } = useWeb3React();
+  const { provider, account, chainId: connectChainId } = useWalletState();
   const dispatch = useDispatch<AppThunkDispatch>();
   const blockNumber = useSelector(getLatestBlockNumber);
   const jsonRpcUrlMapProps = useSelector(getGlobalProps).jsonRpcUrlMap;

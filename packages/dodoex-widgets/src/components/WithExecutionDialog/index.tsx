@@ -14,8 +14,8 @@ import { ReactComponent as LoadingIcon } from '../../assets/approveBorderRight.s
 import { t, Trans } from '@lingui/macro';
 import { ArrowTopRightBorder, DoneBorder, ErrorWarn } from '@dodoex/icons';
 import { Showing } from '../../hooks/Submission/types';
-import { useWeb3React } from '@web3-react/core';
 import { ChainId, scanUrlDomainMap } from '../../constants/chains';
+import { useWalletState } from '../../hooks/ConnectWallet/useWalletState';
 
 const strokeWidth = 6;
 
@@ -135,7 +135,7 @@ function TransactionTime({
   tx: string;
 }) {
   const [time, setTime] = useState(0);
-  const { chainId } = useWeb3React();
+  const { chainId } = useWalletState();
 
   const scanUrl = useMemo(() => {
     const domain = scanUrlDomainMap[(chainId as ChainId) || 1];

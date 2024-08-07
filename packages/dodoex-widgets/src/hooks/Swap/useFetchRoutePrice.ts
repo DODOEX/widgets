@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useWeb3React } from '@web3-react/core';
 import { parseFixed } from '@ethersproject/bignumber';
 import React, {
   useCallback,
@@ -20,6 +19,7 @@ import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
 import { getGlobalProps } from '../../store/selectors/globals';
+import { useWalletState } from '../ConnectWallet/useWalletState';
 
 export enum RoutePriceStatus {
   Initial = 'Initial',
@@ -58,7 +58,7 @@ export function useFetchRoutePrice({
   marginAmount,
   estimateGas,
 }: FetchRoutePrice) {
-  const { account, chainId: walletChainId, provider } = useWeb3React();
+  const { account, chainId: walletChainId, provider } = useWalletState();
   const defaultChainId = useSelector(getDefaultChainId);
   const chainId = useMemo(
     () => fromToken?.chainId || walletChainId || defaultChainId,

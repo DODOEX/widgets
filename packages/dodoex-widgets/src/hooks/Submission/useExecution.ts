@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import type { TransactionResponse } from '@ethersproject/abstract-provider';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -15,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setGlobalProps } from '../../store/actions/globals';
 import { ContractStatus } from '../../store/reducers/globals';
 import { AppThunkDispatch } from '../../store/actions';
+import { useWalletState } from '../ConnectWallet/useWalletState';
 
 export interface ExecutionProps {
   onTxFail?: (error: Error, data: any) => void;
@@ -35,7 +35,7 @@ export default function useExecution({
   onTxSubmit,
   onTxSuccess,
 }: ExecutionProps = {}) {
-  const { account, provider } = useWeb3React();
+  const { account, provider } = useWalletState();
   const chainId = useCurrentChainId();
   const [waitingSubmit, setWaitingSubmit] = useState(false);
   const [requests, setRequests] = useState<Map<string, [Request, State]>>(

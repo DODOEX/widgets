@@ -30,7 +30,6 @@ import {
   useFetchRoutePrice,
 } from '../../hooks/Swap';
 import { formatReadableNumber } from '../../utils/formatter';
-import { useWeb3React } from '@web3-react/core';
 import { getDefaultChainId } from '../../store/selectors/wallet';
 import { AppUrl } from '../../constants/api';
 import { ChainId, basicTokenMap } from '../../constants/chains';
@@ -66,6 +65,7 @@ import {
   useSetAutoSlippage,
 } from '../../hooks/setting/useSetAutoSlippage';
 import { setFromTokenChainId } from '../../store/actions/wallet';
+import { useWalletState } from '../../hooks/ConnectWallet/useWalletState';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -79,7 +79,7 @@ export function Swap({
 }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
-  const { chainId, account } = useWeb3React();
+  const { chainId, account } = useWalletState();
   const dispatch = useDispatch<AppThunkDispatch>();
   const { isReverseRouting, noPowerBy } = useSelector(getGlobalProps);
   const defaultChainId = useSelector(getDefaultChainId);
