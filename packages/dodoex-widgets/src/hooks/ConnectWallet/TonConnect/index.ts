@@ -8,8 +8,14 @@ import {
   RemoveTonConnectPrefix,
 } from '@tonconnect/ui';
 import { getHttpEndpoint, getHttpV4Endpoint } from '@orbs-network/ton-access';
-import { TonClient, TonClient4, Address } from 'ton';
+import { TonClient, TonClient4, Address, beginCell } from 'ton';
 import BigNumber from 'bignumber.js';
+
+/**
+ * https://ton-community.github.io/ton/modules.html
+ * https://ton-org.github.io/ton-core/modules.html
+ * https://toncenter.com/api/v2/
+ */
 
 interface TonConnectState {
   enabled: boolean;
@@ -24,13 +30,23 @@ interface TonConnectState {
   initialize: () => void;
   connect: () => Promise<void>;
   getBlockNumber: () => Promise<number>;
-  getTokenBalance: (address: string) => Promise<BigNumber>;
+  getJettonWallet: (jettonMasterAddress: string) => Promise<string>;
+  getBalance: (account: string) => Promise<BigNumber>;
+  getTokenBalance: (
+    jettonMasterAddress: string,
+    decimals: number,
+  ) => Promise<BigNumber>;
 }
 
 const useTonConnectStore = create<TonConnectState>((set, get) => ({
   enabled: false,
 
   initialize: async () => {
+    const endpoint = await getHttpEndpoint();
+    const client = new TonClient({ endpoint });
+    const endpointV4 = await getHttpV4Endpoint();
+    const clientV4 = new TonClient4({ endpoint: endpointV4 });
+
     class CustomEventDispatcher implements EventDispatcher<SdkActionEvent> {
       public async dispatchEvent(
         eventName: string,
@@ -48,7 +64,11 @@ const useTonConnectStore = create<TonConnectState>((set, get) => ({
               set({
                 connected: {
                   chainId: Number(eventDetails.custom_data.chain_id),
-                  account: eventDetails.wallet_address,
+                  account: Address.parseRaw(
+                    eventDetails.wallet_address,
+                  ).toString({
+                    bounceable: false,
+                  }),
                 },
               });
             }
@@ -89,18 +109,12 @@ const useTonConnectStore = create<TonConnectState>((set, get) => ({
     const tonConnectUI = new TonConnectUI({
       connector,
     });
-    const endpoint = await getHttpEndpoint();
-    const client = new TonClient({ endpoint });
-    const endpointV4 = await getHttpV4Endpoint();
-    const clientV4 = new TonClient4({ endpoint: endpointV4 });
 
     set({
       tonConnectUI,
       client,
       clientV4,
     });
-    get().getTokenBalance('EQCD39VS5jcptHL8vMjEXrzGaRcCVYto7HUn4bpAOg8xqB2N');
-    get().getBlockNumber();
   },
 
   connect: async () => {
@@ -134,7 +148,45 @@ const useTonConnectStore = create<TonConnectState>((set, get) => ({
     return latestBlockNumber;
   },
 
-  getTokenBalance: async (addressOrigin) => {
+  getJettonWallet: async (jettonMasterAddress) => {
+    const { initialize } = get();
+    if (!get().client) {
+      await initialize();
+    }
+    const { client, tonConnectUI, connected } = get();
+    if (!client || !tonConnectUI) {
+      throw new Error('tonConnect not initialized');
+    }
+    if (!connected) {
+      throw new Error('account not found');
+    }
+    const owner = Address.parseFriendly(connected.account).address;
+    const data = await client.runMethod(
+      Address.parseFriendly(jettonMasterAddress).address,
+      'get_wallet_address',
+      [{ type: 'slice', cell: beginCell().storeAddress(owner).endCell() }],
+    );
+    return data.stack.readAddress().toString();
+  },
+
+  getBalance: async (account) => {
+    const { initialize } = get();
+    if (!get().client) {
+      await initialize();
+    }
+    const { client } = get();
+    if (!client) {
+      throw new Error('tonConnect not initialized');
+    }
+    const address = Address.parseFriendly(account).address;
+    const balance = await client.getBalance(address);
+    const result = new BigNumber(balance.toString()).div(10 ** 9);
+    return result;
+  },
+
+  getTokenBalance: async (jettonMasterAddress, decimals) => {
+    const { getJettonWallet } = get();
+    const jettonWalletAddress = await getJettonWallet(jettonMasterAddress);
     const { initialize } = get();
     if (!get().client) {
       await initialize();
@@ -143,9 +195,14 @@ const useTonConnectStore = create<TonConnectState>((set, get) => ({
     if (!client) {
       throw new Error('client not initialized');
     }
-    const address = Address.parseFriendly(addressOrigin).address;
-    const balance = await client.getBalance(address);
-    return new BigNumber(balance.toString());
+    const data = await client.runMethod(
+      Address.parseFriendly(jettonWalletAddress).address,
+      'get_wallet_data',
+    );
+    const balance = new BigNumber(data.stack.readBigNumber().toString()).div(
+      10 ** decimals,
+    );
+    return balance;
   },
 }));
 

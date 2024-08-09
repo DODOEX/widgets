@@ -82,6 +82,12 @@ const contractMap: {
     DODO_APPROVE: '0xa71415675F68f29259ddD63215E5518d2735bf0a',
     ERC20_HELPER: '0xB5c7BA1EAde74800cD6cf5F56b1c4562De373780',
   },
+
+  [ChainId.TON]: {
+    MULTI_CALL: '',
+    DODO_APPROVE: '',
+    ERC20_HELPER: '',
+  },
 };
 
 export default contractMap;

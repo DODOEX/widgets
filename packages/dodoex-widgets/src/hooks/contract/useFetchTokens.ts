@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Interface } from '@ethersproject/abi';
 import { useDispatch } from 'react-redux';
 import { TokenList } from '../Token';
@@ -13,6 +13,10 @@ import {
 import { AppThunkDispatch } from '../../store/actions';
 import { isETHAddress } from '../../utils';
 import { useWalletState } from '../ConnectWallet/useWalletState';
+import { ChainId } from '../../constants/chains';
+import useTonConnectStore from '../ConnectWallet/TonConnect';
+import { BIG_ALLOWANCE } from '../../constants/token';
+import { useWeb3React } from '@web3-react/core';
 
 type TokenResult = {
   address: string;
@@ -26,32 +30,38 @@ type TokenResult = {
 const maxMultiCallAddrLen = 30;
 export default function useFetchTokens({
   tokenList,
-  addresses: addressesProps,
   blockNumber,
   chainId,
   skip,
 }: {
   tokenList?: TokenList;
-  addresses?: string[];
   blockNumber?: number;
   chainId?: number;
   skip?: boolean;
 }) {
-  const { account, isTon } = useWalletState();
+  const { account } = useWeb3React();
+  const tonConnect = useTonConnectStore();
   const dispatch = useDispatch<AppThunkDispatch>();
-  const addresses = useMemo(() => {
-    return [
-      ...(tokenList?.map((token) => token.address) || []),
-      ...(addressesProps || []),
-    ].map((address) => address.toLocaleLowerCase());
-  }, [tokenList, JSON.stringify(addressesProps)]);
+  const [addresses, tonTokenList] = useMemo(() => {
+    const evmList = [] as TokenList;
+    const tonList = [] as TokenList;
+    tokenList?.forEach(async (token) => {
+      if (token.chainId === ChainId.TON) {
+        if (!isETHAddress(token.address)) {
+          tonList.push(token);
+        }
+      } else {
+        evmList.push(token);
+      }
+    });
+    return [evmList.map((token) => token.address.toLocaleLowerCase()), tonList];
+  }, [tokenList]);
 
   const { getContract, contractConfig, call } = useMultiContract(chainId);
   const [data, setData] = useState<TokenResult[]>();
 
   const thunk = useMemo(() => {
-    if (isTon || !account || !addresses.length || !contractConfig)
-      return undefined;
+    if (!account || !addresses.length || !contractConfig) return undefined;
     const { DODO_APPROVE: proxyAddress, ERC20_HELPER: erc20HelperAddress } =
       contractConfig;
     const contract = getContract(erc20HelperAddress, erc20Helper);
@@ -101,6 +111,7 @@ export default function useFetchTokens({
     return res;
   }, [account, getContract, JSON.stringify(addresses)]);
 
+  // query addresses
   useEffect(() => {
     const computed = async () => {
       if (!thunk || skip) return;
@@ -129,6 +140,51 @@ export default function useFetchTokens({
     };
     computed();
   }, [thunk, blockNumber, skip]);
+
+  // query ton addresses
+  useEffect(() => {
+    const computed = async () => {
+      if (skip) return;
+      let balanceLoadings = {} as { [key in string]: boolean };
+
+      const { getTokenBalance } = useTonConnectStore.getState();
+      const accountBalances = {} as AccountBalances;
+      const result: TokenResult[] = [];
+      const promiseList = tonTokenList?.map(async (token) => {
+        const lowAddress = token.address.toLocaleLowerCase();
+        balanceLoadings[lowAddress] = true;
+        const balance = await getTokenBalance(token.address, token.decimals);
+        result.push({
+          address: lowAddress,
+          decimals: token.decimals,
+          symbol: token.symbol,
+          name: token.name,
+          balance,
+          allowance: BIG_ALLOWANCE,
+        } as TokenResult);
+        accountBalances[lowAddress] = {
+          tokenBalances: balance,
+          tokenAllowances: BIG_ALLOWANCE,
+        };
+        return Promise.resolve(true);
+      });
+      if (promiseList) {
+        dispatch(setBalanceLoadings(balanceLoadings));
+        await Promise.all(promiseList);
+        dispatch(setTokenBalances(accountBalances));
+        setData(result);
+      }
+    };
+
+    if (tonTokenList.length && !!tonConnect.connected?.account) {
+      computed();
+    }
+  }, [
+    JSON.stringify(tonTokenList),
+    blockNumber,
+    skip,
+    tonConnect.connected?.account,
+  ]);
 
   return {
     data,

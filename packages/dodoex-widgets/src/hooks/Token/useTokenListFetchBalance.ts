@@ -22,44 +22,38 @@ export default function useTokenListFetchBalance({
 }) {
   const autoConnectLoading = useSelector(getAutoConnectLoading);
   const blockNumber = useSelector(getLatestBlockNumber);
-  const checkTokenAddresses = useMemo(() => {
+  const checkTokenList = useMemo(() => {
     if (autoConnectLoading === undefined || autoConnectLoading) {
       return [];
     }
     const addressSet = new Set<string>();
+    const result = [] as TokenList;
     tokenList.forEach((token) => {
       if (token.chainId === chainId) {
         addressSet.add(token.address);
+        result.push(token);
       }
     });
     popularTokenList?.forEach((token) => {
-      if (token.chainId === chainId) {
+      if (token.chainId === chainId && !addressSet.has(token.address)) {
         addressSet.add(token.address);
+        result.push(token);
       }
     });
-    return Array.from(addressSet);
+    return result;
   }, [tokenList, popularTokenList, chainId, autoConnectLoading]);
 
-  const selectTokenAddress = useMemo(
-    () => (value ? [value.address] : []),
-    [value],
-  );
-  const selectChainId = useMemo(
-    () => value?.chainId ?? chainId,
-    [value?.chainId, chainId],
-  );
+  const selectTokenAddress = useMemo(() => (value ? [value] : []), [value]);
 
   useFetchTokens({
-    addresses: checkTokenAddresses,
-    chainId,
+    tokenList: checkTokenList,
     skip: visible === false && !defaultLoadBalance,
   });
 
   useFetchETHBalance(chainId);
 
   useFetchTokens({
-    addresses: selectTokenAddress,
-    chainId: selectChainId,
+    tokenList: selectTokenAddress,
     blockNumber,
   });
 }

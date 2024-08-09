@@ -39,14 +39,16 @@ export default function RouteCard({
   fromAmount?: BridgeRouteI['fromAmount'];
   fromTokenBalance: BigNumber | null;
   toTokenAmount?: BigNumber | null;
-  toolDetails: BridgeRouteI['step']['toolDetails'];
+  toolDetails:
+    | undefined
+    | Exclude<BridgeRouteI['step'], undefined>['toolDetails'];
   product: BridgeRouteI['product'];
   executionDuration: BridgeRouteI['executionDuration'];
   feeUSD: BridgeRouteI['feeUSD'];
 
   selected: boolean;
   setSelected: () => void;
-  spenderContractAddress: string;
+  spenderContractAddress: string | undefined;
   isBestPrice?: boolean;
 }) {
   const theme = useTheme();

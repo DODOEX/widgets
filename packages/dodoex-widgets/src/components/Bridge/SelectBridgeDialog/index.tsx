@@ -66,7 +66,7 @@ export default function SelectBridgeDialog({
               fromAmount={r.fromAmount}
               fromTokenBalance={fromTokenBalance}
               toTokenAmount={r.toTokenAmount}
-              toolDetails={r.step.toolDetails}
+              toolDetails={r.step?.toolDetails}
               spenderContractAddress={r.spenderContractAddress}
               selected={selectedRouteId === r.id}
               setSelected={() => {

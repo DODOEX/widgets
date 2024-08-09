@@ -16,7 +16,7 @@ export interface BridgeOrderCreateParams {
   product: string | null;
   extend: {
     // from route.step.tool
-    lifiBridge: BridgeRouteI['sourceRoute']['step']['tool'];
+    lifiBridge: Exclude<BridgeRouteI['sourceRoute'], undefined>['step']['tool'];
     route: BridgeRouteI['sourceRoute'];
     productParams: BridgeRouteI['productParams'];
     encodeId: string;
@@ -51,6 +51,9 @@ export async function createBridgeOrder({
     sourceRoute,
     productParams,
   } = route;
+  if (!sourceRoute) {
+    throw new Error('sourceRoute is required');
+  }
   const { toAmount } = sourceRoute;
   const createParams = {
     fromChainId,

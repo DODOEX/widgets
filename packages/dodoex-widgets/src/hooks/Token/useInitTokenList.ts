@@ -11,6 +11,7 @@ import { TokenList, TokenListType } from './type';
 import { useCurrentChainId } from '../ConnectWallet';
 import defaultTokens from '../../constants/tokenList';
 import { useWalletState } from '../ConnectWallet/useWalletState';
+import { ChainId } from '../../constants/chains';
 
 export interface InitTokenListProps {
   tokenList?: TokenList | TokenListType;
@@ -19,7 +20,10 @@ export interface InitTokenListProps {
 export default function useInitTokenList({
   tokenList,
   popularTokenList,
-}: InitTokenListProps) {
+  isTon,
+}: InitTokenListProps & {
+  isTon: boolean;
+}) {
   const dispatch = useDispatch<AppThunkDispatch>();
   const { account } = useWalletState();
   const chainId = useCurrentChainId();
@@ -36,16 +40,31 @@ export default function useInitTokenList({
           (token) => token.address.toLowerCase() + token.chainId + token.side,
         );
       }
+      if (isTon) {
+        allTokenList = allTokenList.filter(
+          (token) => token.chainId === ChainId.TON || token.canBridgeToTon,
+        );
+      }
       dispatch(setTokenList(allTokenList));
     };
     computed();
-  }, [tokenList, dispatch, popularTokenList]);
+  }, [tokenList, dispatch, popularTokenList, isTon]);
 
   useEffect(() => {
     dispatch(setTokenBalances({}));
   }, [account, chainId]);
 
   useEffect(() => {
-    dispatch(setPopularTokenList(popularTokenList ?? []));
-  }, [popularTokenList, dispatch]);
+    if (isTon) {
+      dispatch(
+        setPopularTokenList(
+          popularTokenList?.filter(
+            (item) => item.chainId === ChainId.TON || item.canBridgeToTon,
+          ) ?? [],
+        ),
+      );
+    } else {
+      dispatch(setPopularTokenList(popularTokenList ?? []));
+    }
+  }, [popularTokenList, dispatch, isTon]);
 }

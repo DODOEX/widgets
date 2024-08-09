@@ -95,17 +95,19 @@ export default function useExecuteBridgeRoute({
         tx: string,
         onTxSuccess?: ExecutionProps['onTxSuccess'],
       ) => {
-        const orderId = await createBridgeOrder({
-          apikey,
-          tx,
-          route,
-          bridgeCreateRouteAPI,
-          encodeId: bridgeOrderTxRequest.encodeId,
-        });
-        if (onTxSuccess) {
-          onTxSuccess(tx, {
-            orderId,
+        if (bridgeOrderTxRequest.encodeId) {
+          const orderId = await createBridgeOrder({
+            apikey,
+            tx,
+            route,
+            bridgeCreateRouteAPI,
+            encodeId: bridgeOrderTxRequest.encodeId,
           });
+          if (onTxSuccess) {
+            onTxSuccess(tx, {
+              orderId,
+            });
+          }
         }
       };
 

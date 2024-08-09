@@ -10,21 +10,18 @@ import { getStaticJsonRpcProvider } from './provider';
 import { useWalletState } from '../ConnectWallet/useWalletState';
 
 export default function useFetchETHBalance(chainId?: number) {
-  const { provider, account, chainId: connectChainId } = useWalletState();
+  const { getBalance, account, chainId: connectChainId } = useWalletState();
   const dispatch = useDispatch<AppThunkDispatch>();
   const blockNumber = useSelector(getLatestBlockNumber);
   const jsonRpcUrlMapProps = useSelector(getGlobalProps).jsonRpcUrlMap;
   useEffect(() => {
     const computed = async () => {
-      if (!provider || !account) return;
+      if (!getBalance || !account) return;
       if (!chainId || chainId === connectChainId) {
-        const balance = await provider.getBalance(account);
-        dispatch(
-          setEthBalance(
-            connectChainId ?? 1,
-            new BigNumber(balance.toString()).div(1e18),
-          ),
-        );
+        const balance = await getBalance(account);
+        if (balance) {
+          dispatch(setEthBalance(connectChainId ?? 1, balance));
+        }
       } else {
         const jsonRpcUrlMap = {
           ...rpcServerMap,
@@ -41,5 +38,5 @@ export default function useFetchETHBalance(chainId?: number) {
       }
     };
     computed();
-  }, [provider, account, dispatch, blockNumber, chainId]);
+  }, [getBalance, account, dispatch, blockNumber, chainId]);
 }

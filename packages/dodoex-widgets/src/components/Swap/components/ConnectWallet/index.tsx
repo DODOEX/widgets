@@ -6,18 +6,21 @@ import { useState } from 'react';
 import { connectWalletBtn } from '../../../../constants/testId';
 import SwitchChainDialog from '../../../SwitchChainDialog';
 import { useWalletState } from '../../../../hooks/ConnectWallet/useWalletState';
+import useTonConnectStore from '../../../../hooks/ConnectWallet/TonConnect';
 
 export interface ConnectWalletProps {
   needSwitchChain?: ChainId;
   /** If true is returned, the default wallet connection logic will not be executed */
   onConnectWalletClick?: () => boolean | Promise<boolean>;
+  needConnectTwoWallet?: boolean;
 }
 
 export default function ConnectWallet({
   needSwitchChain,
   onConnectWalletClick,
+  needConnectTwoWallet,
 }: ConnectWalletProps) {
-  const { connect, isTon, chainId } = useWalletState();
+  const { chainId } = useWalletState();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openSwitchChainDialog, setOpenSwitchChainDialog] = useState(false);
@@ -29,7 +32,12 @@ export default function ConnectWallet({
         onClick={async () => {
           if (onConnectWalletClick) {
             // switch chain
-            if (chainId && needSwitchChain && chainId !== needSwitchChain) {
+            if (
+              !needConnectTwoWallet &&
+              chainId &&
+              needSwitchChain &&
+              chainId !== needSwitchChain
+            ) {
               setOpenSwitchChainDialog(true);
               return;
             }
@@ -41,12 +49,11 @@ export default function ConnectWallet({
               return;
             }
           }
-          if (!isTon) {
-            connect();
+          if (needSwitchChain !== ChainId.TON) {
             setOpen(true);
           } else {
             setLoading(true);
-            await connect();
+            await useTonConnectStore.getState().connect();
             setLoading(false);
           }
         }}
@@ -55,6 +62,11 @@ export default function ConnectWallet({
       >
         {loading ? (
           <Trans>Connecting...</Trans>
+        ) : needConnectTwoWallet ? (
+          <Trans>
+            Connect to a {needSwitchChain === ChainId.TON ? 'Ton' : 'EVM'}{' '}
+            wallet
+          </Trans>
         ) : (
           <Trans>Connect to a wallet</Trans>
         )}

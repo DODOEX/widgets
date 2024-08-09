@@ -256,44 +256,46 @@ export default function BridgeSummaryDetail({
               ) : (
                 ''
               )}
-              <Box
-                sx={{
-                  mt: 8,
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
+              {!!route.slippage && (
                 <Box
                   sx={{
+                    mt: 8,
                     display: 'flex',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
-                    typography: 'body2',
-                    color: 'text.secondary',
-                    flexShrink: 0,
                   }}
                 >
-                  <Trans>Slippage</Trans>
-                  <QuestionTooltip
-                    onlyHover
-                    title={
-                      <Trans>
-                        Attention: High slippage tolerance will increase the
-                        success rate of transaction, but might not get the best
-                        quote.
-                      </Trans>
-                    }
-                    ml={6}
-                  />
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      typography: 'body2',
+                      color: 'text.secondary',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <Trans>Slippage</Trans>
+                    <QuestionTooltip
+                      onlyHover
+                      title={
+                        <Trans>
+                          Attention: High slippage tolerance will increase the
+                          success rate of transaction, but might not get the
+                          best quote.
+                        </Trans>
+                      }
+                      ml={6}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      typography: 'body2',
+                    }}
+                  >
+                    {route.slippage * 100}%
+                  </Box>
                 </Box>
-                <Box
-                  sx={{
-                    typography: 'body2',
-                  }}
-                >
-                  {route.slippage * 100}%
-                </Box>
-              </Box>
+              )}
             </Box>
           </AccordionItem>
         </Accordion>

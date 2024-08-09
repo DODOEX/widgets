@@ -20,7 +20,7 @@ export interface BridgeTXRequest {
   value: string;
   from: string;
   chainId: number;
-  encodeId: string;
+  encodeId?: string;
 }
 
 export default function BridgeSummaryDialog({
@@ -96,28 +96,30 @@ export default function BridgeSummaryDialog({
                 amount={route.fromAmount}
               />
 
-              <DirectionLine>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    px: 3,
-                    py: 3,
-                    backgroundColor: theme.palette.background.paperContrast,
-                    border: `1px solid ${theme.palette.border.main}`,
-                    borderRadius: '50%',
-                    alignItems: 'center',
-                    width: 24,
-                    height: 24,
-                    overflow: 'hidden',
-                  }}
-                >
-                  <BridgeLogo
-                    size="medium"
-                    toolDetails={route.step.toolDetails}
-                    nameMarginLeft={8}
-                  />
-                </Box>
-              </DirectionLine>
+              {!!route.step && (
+                <DirectionLine>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      px: 3,
+                      py: 3,
+                      backgroundColor: theme.palette.background.paperContrast,
+                      border: `1px solid ${theme.palette.border.main}`,
+                      borderRadius: '50%',
+                      alignItems: 'center',
+                      width: 24,
+                      height: 24,
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <BridgeLogo
+                      size="medium"
+                      toolDetails={route.step.toolDetails}
+                      nameMarginLeft={8}
+                    />
+                  </Box>
+                </DirectionLine>
+              )}
 
               <TokenWithChain
                 token={route.toToken}

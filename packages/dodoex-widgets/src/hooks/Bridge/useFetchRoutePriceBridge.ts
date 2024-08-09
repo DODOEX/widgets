@@ -12,6 +12,12 @@ import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
 import { useWalletState } from '../ConnectWallet/useWalletState';
+import { ChainId } from '../../constants/chains';
+import { useOrbiterRouters } from '../contract/orbiter/useOrbiterRouters';
+import { useWeb3React } from '@web3-react/core';
+import useTonConnectStore from '../ConnectWallet/TonConnect';
+import { useOrbiterContractMap } from '../contract/orbiter/useOrbiterContractMap';
+import { encodeOrbiterBridge } from '../contract/orbiter/encodeOrbiterBridge';
 
 export interface BridgeRouteI {
   /** update */
@@ -30,12 +36,12 @@ export interface BridgeRouteI {
   toAddress: string;
   /** from parameter  */
   product: string | null;
-  slippage: number;
+  slippage?: number;
   /** in seconds */
   roundedRouteCostTime: number;
 
   /** approve contract address */
-  spenderContractAddress: string;
+  spenderContractAddress?: string;
 
   /** USD */
   feeUSD: string | null;
@@ -45,9 +51,17 @@ export interface BridgeRouteI {
   /** one-click */
   step: BridgeStep;
 
-  encodeParams: any;
+  encodeParams?: any;
+  encodeResultData?: {
+    data: string;
+    to: string;
+    value: string;
+    from: string;
+    chainId: number;
+    encodeId?: string;
+  };
   productParams: any;
-  sourceRoute: {
+  sourceRoute?: {
     toAmount: string;
     feeUSD: string | null;
     executionDuration: number | null;
@@ -64,6 +78,8 @@ export interface BridgeRouteI {
     };
     fee: any;
   };
+  minAmt?: string;
+  maxAmt?: string;
 }
 
 interface FetchRouteData {
@@ -118,7 +134,7 @@ export interface BridgeStep {
   toolDetails: BridgeStepTool;
   type: string | null;
   // transactionRequest: BridgeTXRequest;
-  includedSteps: Array<{
+  includedSteps?: Array<{
     id: string;
     /**
      *  bridge or swap
@@ -140,17 +156,21 @@ export interface FetchRoutePrice {
   fromToken: TokenInfo | null;
   toToken: TokenInfo | null;
   fromAmount: string;
+  fromFiatPrice: string;
 }
 export function useFetchRoutePriceBridge({
   toToken,
   fromToken,
   fromAmount,
+  fromFiatPrice,
 }: FetchRoutePrice) {
   const { account, provider } = useWalletState();
   const { defaultSlippage, loading: slippageLoading } =
     useDefaultSlippage(true);
   const slippage = useSelector(getSlippage) || defaultSlippage;
   const { apikey } = useSelector(getGlobalProps);
+  const web3React = useWeb3React();
+  const tonConnect = useTonConnectStore();
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,
   );
@@ -159,9 +179,25 @@ export function useFetchRoutePriceBridge({
   );
   const bridgeRoutePriceAPI = useGetAPIService(APIServiceKey.bridgeRoutePrice);
 
+  const needOrbiterQuery = useMemo(
+    () =>
+      (fromToken?.chainId === ChainId.TON ||
+        toToken?.chainId === ChainId.TON) &&
+      fromToken?.chainId !== toToken?.chainId,
+    [fromToken, toToken],
+  );
+
+  const orbiterQuery = useOrbiterRouters({
+    skip: !needOrbiterQuery,
+  });
+  const orbiterContractMapQuery = useOrbiterContractMap({
+    skip: !needOrbiterQuery,
+  });
+
   const refetch = useCallback(async () => {
     const fromChainId = fromToken?.chainId;
     const toChainId = toToken?.chainId;
+    if (needOrbiterQuery) return;
     if (
       !fromChainId ||
       !toChainId ||
@@ -173,6 +209,7 @@ export function useFetchRoutePriceBridge({
       setStatus(RoutePriceStatus.Initial);
       return;
     }
+
     setStatus(RoutePriceStatus.Loading);
     if (slippageLoading) return;
 
@@ -372,16 +409,125 @@ export function useFetchRoutePriceBridge({
     apikey,
     bridgeRoutePriceAPI,
     slippageLoading,
+    needOrbiterQuery,
   ]);
 
   usePriceTimer({ refetch });
 
+  const [orbiterStatus, orbiterRouter] = useMemo<
+    [RoutePriceStatus, BridgeRouteI | null]
+  >(() => {
+    let fromAddress = web3React.account;
+    let toAddress = tonConnect.connected?.account;
+    if (fromToken?.chainId === ChainId.TON) {
+      fromAddress = tonConnect.connected?.account;
+      toAddress = web3React.account;
+    }
+    if (
+      !needOrbiterQuery ||
+      !orbiterQuery.data ||
+      !fromToken ||
+      !toToken ||
+      !fromAmount ||
+      !fromAddress ||
+      !toAddress
+    )
+      return [RoutePriceStatus.Initial, null];
+
+    if (orbiterQuery.isLoading || orbiterContractMapQuery.isLoading) {
+      return [RoutePriceStatus.Loading, null];
+    }
+
+    const contractAddress =
+      orbiterContractMapQuery.data?.bridgeContractMap?.get(fromToken.chainId);
+
+    if (
+      orbiterQuery.error ||
+      orbiterContractMapQuery.error ||
+      !contractAddress
+    ) {
+      return [RoutePriceStatus.Failed, null];
+    }
+
+    const route = orbiterQuery.data.find(
+      (item) =>
+        item.fromTokenAddress.toLocaleLowerCase() ===
+          fromToken.address.toLocaleLowerCase() &&
+        item.toTokenAddress.toLocaleLowerCase() ===
+          toToken.address.toLocaleLowerCase(),
+    );
+    if (!route) return [RoutePriceStatus.Success, null];
+    const fromAmountBg = new BigNumber(fromAmount);
+    const transferAmount = fromAmountBg.minus(route.withholdingFee || 0);
+    const tradeFee = transferAmount.times(route.tradeFee || 0);
+    const fee = tradeFee.plus(route.withholdingFee || 0);
+    const receive = transferAmount.minus(tradeFee);
+    const logoURI =
+      'https://storage.googleapis.com/dodo-media-staging/upload_img_679714_20240809095516856.svg';
+    const name = route.product.charAt(0).toUpperCase() + route.product.slice(1);
+
+    const encodeResultData = encodeOrbiterBridge({
+      route,
+      fromAddress,
+      toAddress,
+      fromAmount: fromAmountBg,
+      fromToken,
+      contractAddress,
+    });
+
+    const spentTime = Number(route.spentTime);
+    return [
+      RoutePriceStatus.Success,
+      {
+        ...route,
+        fromAddress,
+        toAddress,
+        fromAmount,
+        toTokenAmount: receive,
+        fromToken,
+        toToken,
+        feeUSD: fromFiatPrice ? fee.times(fromFiatPrice).toString() : '-',
+        roundedRouteCostTime: spentTime,
+        executionDuration: spentTime,
+        encodeResultData,
+        productParams: null,
+        spenderContractAddress: contractAddress,
+        step: {
+          type: 'cross',
+          tool: route.product,
+          approvalAddress: contractAddress,
+          toolDetails: {
+            key: route.product,
+            logoURI,
+            name,
+          },
+        },
+      } as BridgeRouteI,
+    ];
+  }, [
+    needOrbiterQuery,
+    orbiterQuery,
+    toToken,
+    fromToken,
+    fromAmount,
+    fromFiatPrice,
+    web3React.account,
+    tonConnect.connected?.account,
+    orbiterContractMapQuery,
+  ]);
+
   const bridgeRouteListRes = useMemo(() => {
-    return fromAmount ? bridgeRouteList : [];
-  }, [status, fromAmount, bridgeRouteList]);
+    if (!fromAmount) return [];
+    return orbiterRouter ? [orbiterRouter] : bridgeRouteList;
+  }, [status, fromAmount, bridgeRouteList, orbiterRouter]);
+
+  const statusRes = useMemo(
+    () => (needOrbiterQuery ? orbiterStatus : status),
+    [status, orbiterStatus, needOrbiterQuery],
+  );
 
   return {
-    status,
+    status: statusRes,
     refetch,
     bridgeRouteList: bridgeRouteListRes,
   };

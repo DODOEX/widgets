@@ -36,10 +36,7 @@ export function useSendRoute() {
         return;
       }
       const { encodeParams } = selectedRoute;
-      if (!encodeParams) {
-        return;
-      }
-      if (encodeParams.fromAddress === EmptyAddress) {
+      if (encodeParams && encodeParams.fromAddress === EmptyAddress) {
         throw new Error('fromAddress is not valid.');
       }
       setSendRouteError('');
@@ -55,13 +52,19 @@ export function useSendRoute() {
           product,
           encodeParams,
         };
-        const result = await axios.post(
-          `${bridgeEncodeAPI}${apikey ? `?apikey=${apikey}` : ''}`,
-          {
-            data,
-          },
-        );
-        const encodeResultData = result.data.data;
+        let { encodeResultData } = selectedRoute;
+        if (encodeParams) {
+          const result = await axios.post(
+            `${bridgeEncodeAPI}${apikey ? `?apikey=${apikey}` : ''}`,
+            {
+              data,
+            },
+          );
+          encodeResultData = result.data.data;
+        }
+        if (!encodeResultData) {
+          throw new Error('encodeResultData is null');
+        }
 
         const {
           data: txData,

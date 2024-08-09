@@ -16,6 +16,7 @@ export default [
     symbol: 'USDC',
     logoURI:
       'https://images.dodoex.io/sQ5dF3FkjjQUsmfqFFE5cKq-cthh4u0wUooBE5Epf-k/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTDlEVElLa2dONG5mRkNTSF9GMUdXU3JiZkJDa2JZRTkwbmFDS0dIWnRsby9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMM1Z6WkdOZlpXVTFNbUV4WldReVlpOTFjMlJqWDJWbE5USmhNV1ZrTW1JdWNHNW4ucG5n.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 1,
@@ -52,6 +53,7 @@ export default [
     symbol: 'USDT',
     logoURI:
       'https://images.dodoex.io/MGklrG5AImwUllGWDPMAHY0qLfdJQn4bj3iPFWSeohA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vUEM3a3JPb252bWl4U3VRaFEwY29pVy1sczFYN25WS1lLNVluekQ2R2lxRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkZSZlpUaGlOekZpTldZeU9TOVZVMFJVWDJVNFlqY3hZalZtTWprdWNHNW4ucG5n.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 1,
@@ -120,6 +122,7 @@ export default [
     symbol: 'USDT',
     logoURI:
       'https://images.dodoex.io/QOl7CvP_WSmTUOMthbxQsNKjDj0s5kSjup69dW_-UeA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTjdQU3RXV2ZGaGNTVzM1QlE2TEJIaF9keVROUEJqa1RLTXRwTll5cEhSWS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDJOa2JsOXRaV1JwWVY5a2IyUnZaWGhmYVc5ZmRYTmtkRjh4TlRZME1XWmpaRFF3WDNWelpIUmZNVFUyTkRGbVkyUTBNRjlqWmpJMVpUYzVZVE5qTG5OMlp3LnN2Zw.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 56,
@@ -174,6 +177,7 @@ export default [
     symbol: 'USDC',
     logoURI:
       'https://images.dodoex.io/sQ5dF3FkjjQUsmfqFFE5cKq-cthh4u0wUooBE5Epf-k/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTDlEVElLa2dONG5mRkNTSF9GMUdXU3JiZkJDa2JZRTkwbmFDS0dIWnRsby9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMM1Z6WkdOZlpXVTFNbUV4WldReVlpOTFjMlJqWDJWbE5USmhNV1ZrTW1JdWNHNW4ucG5n.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 56,
@@ -228,6 +232,7 @@ export default [
     symbol: 'USDC',
     logoURI:
       'https://images.dodoex.io/er3iAGv39hCC7F8AydW_AteD3hnZj9HI2XcAaruHeqA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vVE9WUWtzN3JQWU5OZWdmNTRuNC1Za1NGTFYyLXVGZmlJRFVYem85aVMzOC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNKaGQxOW5hWFJvZFdKMWMyVnlZMjl1ZEdWdWRGOWpiMjFmZEhKMWMzUjNZV3hzWlhSZllYTnpaWFJ6WDIxaGMzUmxjbDlpYkc5amEyTm9ZV2x1YzE5bGRHaGxjbVYxYlY5aGMzTmxkSE5mTUhoZlFUQmlPRFk1T1RGak5qSXhPR0l6Tm1NeFpERTVYMFEwWVRKbE9WOUZZakJqWDBVek5qQTJaVjlDTkRoZmJHOW5iMTlpTmpGbE5EVmtNbVF6TG5CdVp3LnBuZw.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 137,
@@ -237,6 +242,7 @@ export default [
     symbol: 'USDT',
     logoURI:
       'https://images.dodoex.io/WeK6L9_RjWUfAsnMuOAdyXIZVE3JK_H3lZU5vk2m7Tg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTFJ0aEt6X2VrSXdmTEh6NnAycW5rSkRFeUk1RXZrODlXQ0J2VW43MUJLNC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNKaGQxOW5hWFJvZFdKMWMyVnlZMjl1ZEdWdWRGOWpiMjFmZEhKMWMzUjNZV3hzWlhSZllYTnpaWFJ6WDIxaGMzUmxjbDlpYkc5amEyTm9ZV2x1YzE5bGRHaGxjbVYxYlY5aGMzTmxkSE5mTUhoa1gwRkRYekUzWDBZNU5UaGZSREpsWlRVeU0yRXlNakEyTWpBMk9UazBOVGszWDBNeE0xOUVPRE14WldNM1gyeHZaMjlmWXpCbU9XVTFaamxoTmk1d2JtYy5wbmc.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 137,
@@ -300,6 +306,7 @@ export default [
     symbol: 'USDC',
     logoURI:
       'https://images.dodoex.io/EaCi6KUTS-dinU-wGdG2IcundJ0fJfsOw97FRI2vaB8/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vdEVMaUx0Y1FaTVlBb3hkeExLdnRrZ2ltdVB5dmZRdUQ5U1BxU1c1bDZsMC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkVOZmFXTnZibDh5WlRFeU5tSTRaRFV5TDFWVFJFTmZhV052Ymw4eVpURXlObUk0WkRVeUxuQnVady5wbmc.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 42161,
@@ -309,6 +316,7 @@ export default [
     symbol: 'USDT',
     logoURI:
       'https://images.dodoex.io/MGklrG5AImwUllGWDPMAHY0qLfdJQn4bj3iPFWSeohA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vUEM3a3JPb252bWl4U3VRaFEwY29pVy1sczFYN25WS1lLNVluekQ2R2lxRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkZSZlpUaGlOekZpTldZeU9TOVZVMFJVWDJVNFlqY3hZalZtTWprdWNHNW4ucG5n.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 42161,
@@ -336,6 +344,7 @@ export default [
     symbol: 'USDT',
     logoURI:
       'https://images.dodoex.io/MGklrG5AImwUllGWDPMAHY0qLfdJQn4bj3iPFWSeohA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vUEM3a3JPb252bWl4U3VRaFEwY29pVy1sczFYN25WS1lLNVluekQ2R2lxRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkZSZlpUaGlOekZpTldZeU9TOVZVMFJVWDJVNFlqY3hZalZtTWprdWNHNW4ucG5n.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 66,
@@ -390,6 +399,7 @@ export default [
     symbol: 'USDC',
     logoURI:
       'https://images.dodoex.io/bXLFjIP5_obFZS9jvWA1bZc2b2Vsw4-tqcvj10aPUpU/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vcXhZT0hTcDYzemNTaDVHRVV1SFlya3JGS2s1MW9zLVUycG42bjNXV2pYay9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkVOZk1UTTFZak13TkRkaVpDOVZVMFJEWHpFek5XSXpNRFEzWW1RdWNHNW4ucG5n.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 66,
@@ -462,6 +472,7 @@ export default [
     symbol: 'USDC',
     logoURI:
       'https://images.dodoex.io/EaCi6KUTS-dinU-wGdG2IcundJ0fJfsOw97FRI2vaB8/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vdEVMaUx0Y1FaTVlBb3hkeExLdnRrZ2ltdVB5dmZRdUQ5U1BxU1c1bDZsMC9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkVOZmFXTnZibDh5WlRFeU5tSTRaRFV5TDFWVFJFTmZhV052Ymw4eVpURXlObUk0WkRVeUxuQnVady5wbmc.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 1313161554,
@@ -525,6 +536,7 @@ export default [
     symbol: 'USDC.e',
     logoURI:
       'https://images.dodoex.io/bXLFjIP5_obFZS9jvWA1bZc2b2Vsw4-tqcvj10aPUpU/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vcXhZT0hTcDYzemNTaDVHRVV1SFlya3JGS2s1MW9zLVUycG42bjNXV2pYay9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkVOZk1UTTFZak13TkRkaVpDOVZVMFJEWHpFek5XSXpNRFEzWW1RdWNHNW4ucG5n.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 43114,
@@ -534,6 +546,7 @@ export default [
     symbol: 'USDT.e ',
     logoURI:
       'https://images.dodoex.io/MGklrG5AImwUllGWDPMAHY0qLfdJQn4bj3iPFWSeohA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vUEM3a3JPb252bWl4U3VRaFEwY29pVy1sczFYN25WS1lLNVluekQ2R2lxRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkZSZlpUaGlOekZpTldZeU9TOVZVMFJVWDJVNFlqY3hZalZtTWprdWNHNW4ucG5n.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 43114,
@@ -579,6 +592,7 @@ export default [
     symbol: 'USDC',
     logoURI:
       'https://images.dodoex.io/XbtxsPIscM6p5ClHbLO0JumFHA9U23eON8-MDh-Plkg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vaG1nM3hRa1BUTUtkcUNFVnd0LXU4S2lwTW5od1JCdGhLYWxENW9vSWlTZy9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6UXlNRFEyTkRaZk1qQXlNakEwTWpJd01UQTFNekF4TmpVdWNHNW4ucG5n.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 10,
@@ -624,6 +638,7 @@ export default [
     symbol: 'USDT',
     logoURI:
       'https://images.dodoex.io/n_bg2q8GR4MlobGgr4RYo4r2gS6om7hmtGABi6qoulQ/rs:fit:96:96:0/g:no/aHR0cHM6Ly9jbXAuZG9kb2V4LmlvL2lnTHA5WW1zMnY4em9jOEVEcHRBOWRFTi0xZHZ0V2RkRGVMWjZaVjh1OGMvcnM6Zml0OjE2MDoxNjA6MC9nOm5vL2FIUjBjSE02THk5cGJXRm5aUzF3Y205NGVTNWtiMlJ2WlhndWFXOHZhQzFxVkRnMVZWVTRUalpUT1dsVlZuSkpMVnBCU0hjd1dXaDBTSFJPUjNoNWJUZHVZa2QyVUZobmR5OWhTRkl3WTBoTk5reDVPWHBrUnpsNVdWZGtiRXh0WkhaaU1tUnpXbGRHZDJGWVRYVlpNamwwVERKU2RscEhPSFJpVjFacllWZEZkR016VW1oYU1teDFXbms1TVdOSGVIWlpWMUptWVZjeGJsaDZhekpPYWtVMVRsWTRlVTFFU1hwTlJHTjNUWHBCTTAxcVdYZFBSR2N5VDFNMWQySnRZeTV3Ym1jLndlYnA.webp',
+    canBridgeToTon: true,
   },
   {
     chainId: 1030,
@@ -633,6 +648,7 @@ export default [
     symbol: 'WBTC',
     logoURI:
       'https://images.dodoex.io/1e_VT8Ppoj0-PDkhFC58pxdegwGCdWBOa5JTPU-Ol2U/rs:fit:160:160:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vVU92VExkR1I4SzNHWnhISnA0aEVSN09teVdjdWdsNDBlU1hEbmJKWlJ2RS9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6a3hNVGd3TWpaZk1qQXlNekEzTURNd056TXhOVEUzT1RVdWNHNW4ucG5n.webp',
+    canBridgeToTon: true,
   },
   {
     decimals: 18,
@@ -714,6 +730,7 @@ export default [
     address: '0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4',
     symbol: 'USDC',
     chainId: 534352,
+    canBridgeToTon: true,
   },
   {
     decimals: 18,
@@ -732,6 +749,7 @@ export default [
     address: '0xb73603c5d87fa094b7314c74ace2e64d165016fb',
     symbol: 'USDC',
     chainId: 169,
+    canBridgeToTon: true,
   },
   {
     decimals: 18,
@@ -750,6 +768,7 @@ export default [
     address: '0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE',
     symbol: 'USDT',
     chainId: 5000,
+    canBridgeToTon: true,
   },
   {
     decimals: 6,
@@ -759,14 +778,32 @@ export default [
     address: '0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9',
     symbol: 'USDC',
     chainId: 5000,
+    canBridgeToTon: true,
+  },
+  {
+    decimals: 6,
+    logoURI: 'https://tether.to/images/logoCircle.png',
+    name: 'Tether USD',
+    address: 'EQBynBO23ywHy_CgarY9NK9FTz0yDsG82PtcbSTQgGoXwiuA',
+    symbol: 'USDT',
+    chainId: -239,
   },
   {
     decimals: 6,
     logoURI:
-      'https://images.dodoex.io/MGklrG5AImwUllGWDPMAHY0qLfdJQn4bj3iPFWSeohA/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vUEM3a3JPb252bWl4U3VRaFEwY29pVy1sczFYN25WS1lLNVluekQ2R2lxRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMVZUUkZSZlpUaGlOekZpTldZeU9TOVZVMFJVWDJVNFlqY3hZalZtTWprdWNHNW4ucG5n.webp',
+      'https://images.dodoex.io/XbtxsPIscM6p5ClHbLO0JumFHA9U23eON8-MDh-Plkg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vaG1nM3hRa1BUTUtkcUNFVnd0LXU4S2lwTW5od1JCdGhLYWxENW9vSWlTZy9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6UXlNRFEyTkRaZk1qQXlNakEwTWpJd01UQTFNekF4TmpVdWNHNW4ucG5n.webp',
     name: 'USD Coin',
-    address: 'EQA0yD48ZfZvEYDZ9ctr6XfysSJ9TxRTN2abZiX9yYHw2YIC',
-    symbol: 'USDT',
+    address: 'EQB-MPwrd1G6WKNkLz_VnV6WqBDd142KMQv-g1O-8QUA3728',
+    symbol: 'USDC',
     chainId: -239,
   },
+  // {
+  //   decimals: 9,
+  //   logoURI:
+  //     'https://cdn.bitkeep.vip/u_b_47c9d090-ed39-11ec-8deb-21bec22c3cc7.png',
+  //   name: 'Ton',
+  //   address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+  //   symbol: 'Ton',
+  //   chainId: -239,
+  // },
 ];

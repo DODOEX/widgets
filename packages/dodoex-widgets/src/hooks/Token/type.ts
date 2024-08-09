@@ -8,6 +8,7 @@ export interface TokenInfo {
   readonly tags?: string[];
   readonly extensions?: any;
   readonly side?: 'from' | 'to';
+  readonly canBridgeToTon?: boolean;
 }
 export interface DefaultTokenInfo extends TokenInfo {
   amount?: number;

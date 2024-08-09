@@ -182,6 +182,15 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WMNT',
     wrappedTokenAddress: '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8',
   },
+
+  [ChainId.TON]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'TON',
+    name: 'TON',
+    decimals: 9,
+    wrappedTokenSymbol: 'TON',
+    wrappedTokenAddress: '',
+  },
 };
 
 export const platformIdMap: {
@@ -202,6 +211,8 @@ export const platformIdMap: {
   [ChainId.SCROLL]: 'scr',
   [ChainId.MANTA]: 'manta',
   [ChainId.MANTLE]: 'mantle',
+
+  [ChainId.TON]: '',
 };
 
 export const scanUrlDomainMap: {

@@ -66,6 +66,8 @@ import {
 } from '../../hooks/setting/useSetAutoSlippage';
 import { setFromTokenChainId } from '../../store/actions/wallet';
 import { useWalletState } from '../../hooks/ConnectWallet/useWalletState';
+import { useWeb3React } from '@web3-react/core';
+import useTonConnectStore from '../../hooks/ConnectWallet/TonConnect';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -87,6 +89,9 @@ export function Swap({
     () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
     [chainId],
   );
+
+  const web3React = useWeb3React();
+  const tonConnect = useTonConnectStore();
 
   const [displayingFromAmt, setDisplayingFromAmt] = useState<string>('');
   const [displayingToAmt, setDisplayingToAmt] = useState<string>('');
@@ -158,6 +163,7 @@ export function Swap({
       toToken,
       fromToken,
       fromAmount: fromAmt,
+      fromFiatPrice,
     });
   const [switchBridgeRouteShow, setSwitchBridgeRouteShow] = useState(false);
   const [selectedRouteIdOrigin, setSelectRouteId] = useState('');
@@ -663,11 +669,24 @@ export function Swap({
   ]);
 
   const swapButton = useMemo(() => {
-    if (!account || (fromToken?.chainId && chainId !== fromToken.chainId))
+    const needConnectTwoWallet =
+      fromToken?.chainId === ChainId.TON || toToken?.chainId === ChainId.TON;
+
+    if (
+      !account ||
+      (fromToken?.chainId && chainId !== fromToken.chainId) ||
+      (needConnectTwoWallet && !tonConnect.connected) ||
+      !web3React.account
+    )
       return (
         <ConnectWallet
-          needSwitchChain={fromToken?.chainId}
+          needSwitchChain={
+            needConnectTwoWallet && fromToken?.chainId === chainId
+              ? toToken?.chainId
+              : fromToken?.chainId
+          }
           onConnectWalletClick={onConnectWalletClick}
+          needConnectTwoWallet={needConnectTwoWallet}
         />
       );
     if (isInflight) {
@@ -738,6 +757,14 @@ export function Swap({
       );
 
     if (isBridge) {
+      const isOverMinAmt =
+        !!selectedRoute?.minAmt &&
+        !!fromAmt &&
+        Number(fromAmt) < Number(selectedRoute.minAmt);
+      const isOverMaxAmt =
+        !!selectedRoute?.maxAmt &&
+        !!fromAmt &&
+        Number(fromAmt) > Number(selectedRoute.maxAmt);
       return (
         <Button
           fullWidth
@@ -749,10 +776,16 @@ export function Swap({
             })
           }
           data-testid={swapReviewBtn}
-          disabled={!selectedRoute}
+          disabled={!selectedRoute || isOverMinAmt || isOverMaxAmt}
           isLoading={sendRouteLoading}
         >
-          <Trans>Review Cross Chain</Trans>
+          {isOverMinAmt ? (
+            <Trans>cannot be lower than {selectedRoute?.minAmt}</Trans>
+          ) : isOverMaxAmt ? (
+            <Trans>cannot be greater than {selectedRoute?.minAmt}</Trans>
+          ) : (
+            <Trans>Review Cross Chain</Trans>
+          )}
         </Button>
       );
     }
@@ -787,6 +820,9 @@ export function Swap({
     isApproving,
     isGetApproveLoading,
     needApprove,
+    tonConnect,
+    web3React,
+    selectedRoute,
   ]);
 
   const subtitle = useMemo(() => {

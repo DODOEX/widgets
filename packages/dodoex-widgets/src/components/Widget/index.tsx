@@ -37,7 +37,10 @@ import { SwapProps } from '../Swap';
 import { getFromTokenChainId } from '../../store/selectors/wallet';
 import { useWalletState } from '../../hooks/ConnectWallet/useWalletState';
 import WebApp from '@twa-dev/sdk';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
+
+export const queryClient = new QueryClient();
 
 export interface WidgetProps
   extends Web3ConnectorsProps,
@@ -66,7 +69,10 @@ export interface WidgetProps
 }
 
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
-  useInitTokenList(props);
+  useInitTokenList({
+    ...props,
+    isTon: !!props.tonConnect,
+  });
   useFetchETHBalance();
   useFetchBlockNumber();
   const { provider, autoConnect } = useWalletState({
@@ -178,7 +184,9 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
       <LangProvider locale={props.locale}>
         <ThemeProvider theme={theme}>
           <CssBaseline container={`.${WIDGET_CLASS_NAME}`} />
-          <Web3Provider {...props} />
+          <QueryClientProvider client={queryClient}>
+            <Web3Provider {...props} />
+          </QueryClientProvider>
         </ThemeProvider>
       </LangProvider>
     </ReduxProvider>

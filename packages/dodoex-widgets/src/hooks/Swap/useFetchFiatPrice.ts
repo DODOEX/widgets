@@ -27,8 +27,15 @@ export function useFetchFiatPrice({
 
   const refetch = useCallback(() => {
     if (!chainId || !fromToken || !toToken) return;
+    const tokens = [] as TokenInfo[];
+    if (fromToken.chainId !== ChainId.TON) {
+      tokens.push(fromToken);
+    }
+    if (toToken.chainId !== ChainId.TON) {
+      tokens.push(toToken);
+    }
+    if (!tokens.length) return;
     setLoading(true);
-    const tokens = [fromToken, toToken];
 
     axios
       .post(
@@ -53,11 +60,11 @@ export function useFetchFiatPrice({
           setFromFiatPrice(
             fiatPriceInfo.find(
               (info: any) => info.address === fromToken.address,
-            ).price,
+            )?.price,
           );
           setToFiatPrice(
             fiatPriceInfo.find((info: any) => info.address === toToken.address)
-              .price,
+              ?.price,
           );
         }
       })

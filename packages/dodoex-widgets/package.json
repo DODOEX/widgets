@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "2.6.11",
+  "version": "2.6.12-beta.3",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/src/index.d.ts",
@@ -70,6 +70,7 @@
     "@reduxjs/toolkit": "^1.6.1",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
+    "@tanstack/react-query": "^5.51.23",
     "@tonconnect/ui": "^2.0.6",
     "@twa-dev/sdk": "^7.8.0",
     "@web3-react/core": "8.2.0",

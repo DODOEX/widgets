@@ -69,7 +69,7 @@ export function RouteSteps({
         </Box>
       </Box>
 
-      {includedSteps.map((innerStep, index) => {
+      {includedSteps?.map((innerStep, index) => {
         const { toolDetails, type, estimate } = innerStep;
         if (type === 'swap') {
           return (
