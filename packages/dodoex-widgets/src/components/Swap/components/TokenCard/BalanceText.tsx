@@ -51,7 +51,12 @@ export function BalanceText({
     >
       {balanceText ?? <Trans>Balance:</Trans>}&nbsp;
       {loading ? (
-        <RotatingIcon />
+        <RotatingIcon
+          sx={{
+            position: 'relative',
+            top: 6,
+          }}
+        />
       ) : (
         <>
           {address

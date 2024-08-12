@@ -294,7 +294,7 @@ msgstr "This CP has been settled by other addrs"
 msgid "Liquidity Supplied"
 msgstr "Liquidity Supplied"
 
-#: src/components/Swap/components/TokenCard/BalanceText.tsx:78
+#: src/components/Swap/components/TokenCard/BalanceText.tsx:83
 msgid "Max"
 msgstr "Max"
 

@@ -294,7 +294,7 @@ msgstr "此众筹池已被其他地址结算"
 msgid "Liquidity Supplied"
 msgstr ""
 
-#: src/components/Swap/components/TokenCard/BalanceText.tsx:78
+#: src/components/Swap/components/TokenCard/BalanceText.tsx:83
 msgid "Max"
 msgstr "全部"
 
