@@ -201,7 +201,6 @@ export default function TokenLogo({
         position: 'relative',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
         width: width + logoOffset,
         height,
         marginRight,
