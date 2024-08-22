@@ -190,17 +190,25 @@ export function usePoolBalanceInfo({
     if (quoteSupply) {
       quoteLpToTokenProportion = computeLpProportion(quoteSupply, quoteReserve);
     }
-    userQuoteLpToTokenBalance = isPrivate
-      ? quoteReserve
-      : getLpToTokenBalance(
-          userQuoteLpBalance,
-          quoteSupply,
-          quoteReserve,
-          classicalQuoteTarget,
-          address,
-          type,
-          quoteDecimals,
-        );
+    if (isPrivate) {
+      userQuoteLpToTokenBalance = quoteReserve;
+    } else if (
+      !userQuoteLpQuery.isLoading &&
+      !userQuoteLpQuery.error &&
+      !userQuoteLpBalance
+    ) {
+      userQuoteLpToTokenBalance = new BigNumber(0);
+    } else {
+      userQuoteLpToTokenBalance = getLpToTokenBalance(
+        userQuoteLpBalance,
+        quoteSupply,
+        quoteReserve,
+        classicalQuoteTarget,
+        address,
+        type,
+        quoteDecimals,
+      );
+    }
   }
 
   const userLpBalanceLoading =
