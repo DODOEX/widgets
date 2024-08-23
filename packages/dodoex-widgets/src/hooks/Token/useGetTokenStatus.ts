@@ -24,11 +24,13 @@ export const useGetTokenStatus = ({
   chainId,
   offset,
   contractAddress,
+  skip,
 }: {
   account?: string;
   chainId: number | undefined;
   offset?: BigNumber;
   contractAddress?: string;
+  skip?: boolean;
 }) => {
   const defaultChainId = useSelector(getDefaultChainId);
   const currentContractConfig = useMemo(
@@ -64,6 +66,7 @@ export const useGetTokenStatus = ({
       if (!token) {
         return ApprovalState.Loading;
       }
+      if (skip) return ApprovalState.Sufficient;
       const isApproving = !!runningRequests?.find(
         (k) =>
           k.spec.opcode === OpCode.Approval &&
@@ -113,6 +116,7 @@ export const useGetTokenStatus = ({
       basicTokenAddress,
       fetchAllowanceToken,
       otherContractAllowance?.toString(),
+      skip,
     ],
   );
 

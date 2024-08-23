@@ -42,7 +42,9 @@ export function useFetchFiatPrice({
         // TODO: set timeout value!!
         fiatPriceAPI,
         {
-          networks: tokens.map(() => getPlatformId(chainId)),
+          networks: tokens.map((token) =>
+            getPlatformId(token.chainId ?? chainId),
+          ),
           addresses: tokens.map((token) => token.address),
           symbols: tokens.map((token) => token.symbol),
           isCache: true,

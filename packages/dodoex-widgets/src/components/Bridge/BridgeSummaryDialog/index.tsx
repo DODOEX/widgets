@@ -143,13 +143,20 @@ export default function BridgeSummaryDialog({
             fullWidth
             isLoading={contractStatus == ContractStatus.Pending}
             disabled={!route}
-            onClick={() => {
-              handleExecuteRoute();
+            onClick={async () => {
               dispatch(
                 setGlobalProps({
                   contractStatus: ContractStatus.Pending,
                 }),
               );
+              if (route?.sendData) {
+                route?.sendData();
+              } else {
+                await handleExecuteRoute();
+                setGlobalProps({
+                  contractStatus: ContractStatus.TxSuccess,
+                });
+              }
             }}
           >
             {contractStatus == ContractStatus.Pending ? (

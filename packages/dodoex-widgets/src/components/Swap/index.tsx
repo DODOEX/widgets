@@ -191,6 +191,7 @@ export function Swap({
       account,
       chainId: fromToken?.chainId ?? chainId,
       contractAddress: selectedRoute?.spenderContractAddress,
+      skip: !selectedRoute?.spenderContractAddress,
     });
   const pendingReset = useMemo(
     () => getPendingRest(isReverseRouting ? toToken : fromToken),

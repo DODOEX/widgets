@@ -18,6 +18,7 @@ import { useWeb3React } from '@web3-react/core';
 import useTonConnectStore from '../ConnectWallet/TonConnect';
 import { useOrbiterContractMap } from '../contract/orbiter/useOrbiterContractMap';
 import { encodeOrbiterBridge } from '../contract/orbiter/encodeOrbiterBridge';
+import { useLayerswapRouters } from '../contract/layerswap/useLayerswapRouters';
 
 export interface BridgeRouteI {
   /** update */
@@ -60,6 +61,8 @@ export interface BridgeRouteI {
     chainId: number;
     encodeId?: string;
   };
+  sendData?: () => Promise<any>;
+
   productParams: any;
   sourceRoute?: {
     toAmount: string;
@@ -181,8 +184,13 @@ export function useFetchRoutePriceBridge({
 
   const needOrbiterQuery = useMemo(
     () =>
-      (fromToken?.chainId === ChainId.TON ||
-        toToken?.chainId === ChainId.TON) &&
+      toToken?.chainId === ChainId.TON &&
+      fromToken?.chainId !== toToken?.chainId,
+    [fromToken, toToken],
+  );
+  const needLayerSwap = useMemo(
+    () =>
+      fromToken?.chainId === ChainId.TON &&
       fromToken?.chainId !== toToken?.chainId,
     [fromToken, toToken],
   );
@@ -194,10 +202,22 @@ export function useFetchRoutePriceBridge({
     skip: !needOrbiterQuery,
   });
 
+  const layerSwapRouter = useLayerswapRouters({
+    skip: !needLayerSwap,
+    data: {
+      toToken,
+      fromToken,
+      fromAmount,
+      evmAccount: web3React.account,
+      tonAccount: tonConnect.connected?.account,
+      slippage: Number(slippage),
+    },
+  });
+
   const refetch = useCallback(async () => {
     const fromChainId = fromToken?.chainId;
     const toChainId = toToken?.chainId;
-    if (needOrbiterQuery) return;
+    if (needOrbiterQuery || needLayerSwap) return;
     if (
       !fromChainId ||
       !toChainId ||
@@ -518,13 +538,15 @@ export function useFetchRoutePriceBridge({
 
   const bridgeRouteListRes = useMemo(() => {
     if (!fromAmount) return [];
+    if (layerSwapRouter.router) return [layerSwapRouter.router];
     return orbiterRouter ? [orbiterRouter] : bridgeRouteList;
-  }, [status, fromAmount, bridgeRouteList, orbiterRouter]);
+  }, [status, fromAmount, bridgeRouteList, orbiterRouter, layerSwapRouter]);
 
-  const statusRes = useMemo(
-    () => (needOrbiterQuery ? orbiterStatus : status),
-    [status, orbiterStatus, needOrbiterQuery],
-  );
+  const statusRes = useMemo(() => {
+    if (needLayerSwap) return layerSwapRouter.status;
+    if (needOrbiterQuery) return orbiterStatus;
+    return status;
+  }, [status, orbiterStatus, needOrbiterQuery, needLayerSwap, layerSwapRouter]);
 
   return {
     status: statusRes,

@@ -596,6 +596,16 @@ export default [
   },
   {
     chainId: 10,
+    address: '0x94b008aA00579c1307B0EF2c499aD98a8ce58e58',
+    name: 'USDT',
+    decimals: 6,
+    symbol: 'USDT',
+    logoURI:
+      'https://images.dodoex.io/iD2HcQfBC7tC1Eb0ERs67UIyUo0G-S77OaYuzCArFC0/rs:fit:32:32:0/g:no/aHR0cHM6Ly90b2tlbi1pbWcuZG9kb2V4LmlvLzEwLzB4OTRiMDA4YWEwMDU3OWMxMzA3YjBlZjJjNDk5YWQ5OGE4Y2U1OGU1OA.webp',
+    canBridgeToTon: true,
+  },
+  {
+    chainId: 10,
     address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
     name: 'ETH',
     decimals: 18,
@@ -785,6 +795,14 @@ export default [
     logoURI: 'https://tether.to/images/logoCircle.png',
     name: 'Tether USD',
     address: 'EQBynBO23ywHy_CgarY9NK9FTz0yDsG82PtcbSTQgGoXwiuA',
+    symbol: 'jUSDT',
+    chainId: -239,
+  },
+  {
+    decimals: 6,
+    logoURI: 'https://tether.to/images/logoCircle.png',
+    name: 'Tether USD',
+    address: 'EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs',
     symbol: 'USDT',
     chainId: -239,
   },
@@ -794,7 +812,7 @@ export default [
       'https://images.dodoex.io/XbtxsPIscM6p5ClHbLO0JumFHA9U23eON8-MDh-Plkg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vaG1nM3hRa1BUTUtkcUNFVnd0LXU4S2lwTW5od1JCdGhLYWxENW9vSWlTZy9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6UXlNRFEyTkRaZk1qQXlNakEwTWpJd01UQTFNekF4TmpVdWNHNW4ucG5n.webp',
     name: 'USD Coin',
     address: 'EQB-MPwrd1G6WKNkLz_VnV6WqBDd142KMQv-g1O-8QUA3728',
-    symbol: 'USDC',
+    symbol: 'jUSDC',
     chainId: -239,
   },
   // {

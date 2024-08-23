@@ -10,7 +10,12 @@ import { getStaticJsonRpcProvider } from './provider';
 import { useWalletState } from '../ConnectWallet/useWalletState';
 
 export default function useFetchETHBalance(chainId?: number) {
-  const { getBalance, account, chainId: connectChainId } = useWalletState();
+  const {
+    getBalance,
+    account,
+    chainId: connectChainId,
+    evmAccount,
+  } = useWalletState();
   const dispatch = useDispatch<AppThunkDispatch>();
   const blockNumber = useSelector(getLatestBlockNumber);
   const jsonRpcUrlMapProps = useSelector(getGlobalProps).jsonRpcUrlMap;
@@ -22,14 +27,14 @@ export default function useFetchETHBalance(chainId?: number) {
         if (balance) {
           dispatch(setEthBalance(connectChainId ?? 1, balance));
         }
-      } else {
+      } else if (chainId !== ChainId.TON && evmAccount) {
         const jsonRpcUrlMap = {
           ...rpcServerMap,
           ...jsonRpcUrlMapProps,
         };
         const rpcUrls = jsonRpcUrlMap[chainId as ChainId];
         const provider = getStaticJsonRpcProvider(rpcUrls?.[0], chainId);
-        const balance = await provider.getBalance(account);
+        const balance = await provider.getBalance(evmAccount);
         if (balance) {
           dispatch(
             setEthBalance(chainId, new BigNumber(balance.toString()).div(1e18)),
@@ -38,5 +43,5 @@ export default function useFetchETHBalance(chainId?: number) {
       }
     };
     computed();
-  }, [getBalance, account, dispatch, blockNumber, chainId]);
+  }, [getBalance, account, dispatch, blockNumber, chainId, evmAccount]);
 }

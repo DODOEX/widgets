@@ -52,7 +52,7 @@ export function useSendRoute() {
           product,
           encodeParams,
         };
-        let { encodeResultData } = selectedRoute;
+        let { encodeResultData, sendData } = selectedRoute;
         if (encodeParams) {
           const result = await axios.post(
             `${bridgeEncodeAPI}${apikey ? `?apikey=${apikey}` : ''}`,
@@ -63,6 +63,11 @@ export function useSendRoute() {
           encodeResultData = result.data.data;
         }
         if (!encodeResultData) {
+          if (sendData) {
+            setSendRouteLoading(false);
+            goNext();
+            return;
+          }
           throw new Error('encodeResultData is null');
         }
 

@@ -195,13 +195,21 @@ const useTonConnectStore = create<TonConnectState>((set, get) => ({
     if (!client) {
       throw new Error('client not initialized');
     }
-    const data = await client.runMethod(
-      Address.parseFriendly(jettonWalletAddress).address,
-      'get_wallet_data',
-    );
-    const balance = new BigNumber(data.stack.readBigNumber().toString()).div(
-      10 ** decimals,
-    );
+    let balance = new BigNumber(0);
+    try {
+      const data = await client.runMethod(
+        Address.parseFriendly(jettonWalletAddress).address,
+        'get_wallet_data',
+      );
+      balance = new BigNumber(data.stack.readBigNumber().toString()).div(
+        10 ** decimals,
+      );
+    } catch (error) {
+      const addressBalance = await get().getBalance(jettonWalletAddress);
+      if (!addressBalance.isEqualTo(0)) {
+        throw error;
+      }
+    }
     return balance;
   },
 }));

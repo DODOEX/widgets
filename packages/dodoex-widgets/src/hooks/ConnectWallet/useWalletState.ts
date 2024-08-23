@@ -41,6 +41,8 @@ export function useWalletState({
         isTon: true,
         chainId: tonConnect.connected?.chainId,
         account: tonConnect.connected?.account,
+        tonAccount: tonConnect.connected?.account,
+        evmAccount: web3React.account,
         isMetamask: false,
         autoConnect,
         connect: tonConnect.connect,
@@ -55,6 +57,8 @@ export function useWalletState({
       isTon: false,
       chainId: web3React.chainId,
       account: web3React.account,
+      tonAccount: tonConnect.connected?.account,
+      evmAccount: web3React.account,
       isMetamask: web3React.provider?.provider?.isMetaMask,
       autoConnect,
       connect: () => {

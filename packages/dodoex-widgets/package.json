@@ -88,6 +88,7 @@
     "ton": "^13.9.0",
     "ton-core": "^0.53.0",
     "ton-crypto": "^3.2.0",
+    "tonweb": "^0.0.66",
     "zustand": "^4.5.4"
   },
   "peerDependencies": {
