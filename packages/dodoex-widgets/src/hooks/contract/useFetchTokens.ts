@@ -171,6 +171,11 @@ export default function useFetchTokens({
       if (promiseList) {
         dispatch(setBalanceLoadings(balanceLoadings));
         await Promise.all(promiseList);
+        tonTokenList.forEach((token) => {
+          const lowAddress = token.address.toLocaleLowerCase();
+          balanceLoadings[lowAddress] = false;
+        });
+        dispatch(setBalanceLoadings(balanceLoadings));
         dispatch(setTokenBalances(accountBalances));
         setData(result);
       }

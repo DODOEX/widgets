@@ -139,7 +139,11 @@ function TransactionTime({
 
   const scanUrl = useMemo(() => {
     const domain = scanUrlDomainMap[(chainId as ChainId) || 1];
-    return `https://${domain}/tx/${tx}`;
+    let prefix = 'tx';
+    if (chainId === ChainId.TON) {
+      prefix = 'transaction';
+    }
+    return `https://${domain}/${prefix}/${tx}`;
   }, [tx, chainId]);
 
   const timeText = useMemo(() => {

@@ -224,14 +224,156 @@ export default function useExecution({
     [account, chainId, setWaitingSubmit, provider, updateBlockNumber],
   );
 
+  const handlerCustom = useCallback(
+    async ({
+      brief,
+      subtitle,
+      early,
+      mixpanelProps,
+      submittedBack,
+      submittedConfirmBack,
+      successBack,
+      handler,
+    }: {
+      brief: string;
+      subtitle?: string | React.ReactNode | null;
+      early?: boolean;
+      mixpanelProps?: Record<string, any>;
+      submittedBack?: () => void;
+      submittedConfirmBack?: () => void;
+      successBack?: (
+        tx: string,
+        callback?: ExecutionProps['onTxSuccess'],
+      ) => void;
+      handler: (params: {
+        onSubmit?: (tx: string, reportInfo?: Record<string, any>) => void;
+        onSuccess?: (
+          tx: string,
+          reportInfo?: Record<string, any>,
+        ) => Promise<void>;
+        onError?: (e: any) => void;
+      }) => Promise<any>;
+    }) => {
+      setSubmittedConfirmBack(() => submittedConfirmBack);
+      setTransactionTx('');
+      setErrorMessage('');
+      setWaitingSubmit(false);
+      const reportInfo = {
+        brief,
+        subtitle,
+        ...mixpanelProps,
+      };
+
+      return new Promise<ExecutionResult>(async (resolve) => {
+        const spec = {
+          opcode: OpCode.TX,
+          value: '',
+          to: '',
+          data: '',
+        } as StepSpec;
+
+        const onSubmit = (
+          tx: string,
+          reportInfoProps?: Record<string, any>,
+        ) => {
+          setTransactionTx(tx);
+          setShowing({ spec, brief, subtitle });
+          setShowingDone(false);
+          setWaitingSubmit(false);
+          dispatch(
+            setGlobalProps({
+              contractStatus: ContractStatus.Pending,
+            }),
+          );
+          if (onTxSubmit) {
+            onTxSubmit(tx, {
+              tx,
+              ...reportInfo,
+              ...reportInfoProps,
+            });
+          }
+          if (submittedBack) {
+            submittedBack();
+          }
+          if (early) {
+            resolve(ExecutionResult.Submitted);
+            return;
+          }
+        };
+
+        const onSuccess = async (
+          tx: string,
+          reportInfoProps?: Record<string, any>,
+        ) => {
+          setTransactionTx(tx);
+          dispatch(
+            setGlobalProps({
+              contractStatus: ContractStatus.TxSuccess,
+            }),
+          );
+          if (successBack) {
+            successBack(tx, onTxSuccess);
+          }
+          if (onTxSuccess) {
+            onTxSuccess(tx, {
+              tx,
+              ...reportInfo,
+              ...reportInfoProps,
+            });
+          }
+          await updateBlockNumber(); // update blockNumber once after tx
+          setShowingDone(true);
+        };
+
+        const onError = (e: any) => {
+          setWaitingSubmit(false);
+          setShowing({
+            spec,
+            brief,
+            subtitle,
+          });
+          console.error(e);
+          if (e.message) {
+            dispatch(
+              setGlobalProps({
+                contractStatus: ContractStatus.Failed,
+              }),
+            );
+            const options = { error: e.message, brief };
+            if (mixpanelProps) Object.assign(options, mixpanelProps);
+            if (onTxFail) {
+              onTxFail(e, mixpanelProps);
+            }
+
+            setErrorMessage(getExecutionErrorMsg(chainId, e.message));
+          }
+          resolve(ExecutionResult.Failed);
+        };
+        try {
+          setWaitingSubmit(true);
+          await handler({
+            onSubmit,
+            onSuccess,
+            onError,
+          });
+        } catch (e: any) {
+          onError(e);
+          return;
+        }
+      });
+    },
+    [chainId, setWaitingSubmit, updateBlockNumber],
+  );
+
   const ctxVal = useMemo(
     () => ({
       execute: handler,
+      executeCustom: handlerCustom,
       requests,
       setShowing,
       waitingSubmit,
     }),
-    [handler, requests, setShowing],
+    [handler, handlerCustom, requests, setShowing],
   );
 
   const closeShowing = useCallback(() => {

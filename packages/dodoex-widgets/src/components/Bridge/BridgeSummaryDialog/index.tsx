@@ -45,6 +45,7 @@ export default function BridgeSummaryDialog({
   const handleExecuteRoute = useExecuteBridgeRoute({
     route,
     bridgeOrderTxRequest,
+    sendData: route?.sendData,
   });
 
   useEffect(() => {
@@ -144,19 +145,12 @@ export default function BridgeSummaryDialog({
             isLoading={contractStatus == ContractStatus.Pending}
             disabled={!route}
             onClick={async () => {
+              handleExecuteRoute();
               dispatch(
                 setGlobalProps({
                   contractStatus: ContractStatus.Pending,
                 }),
               );
-              if (route?.sendData) {
-                route?.sendData();
-              } else {
-                await handleExecuteRoute();
-                setGlobalProps({
-                  contractStatus: ContractStatus.TxSuccess,
-                });
-              }
             }}
           >
             {contractStatus == ContractStatus.Pending ? (

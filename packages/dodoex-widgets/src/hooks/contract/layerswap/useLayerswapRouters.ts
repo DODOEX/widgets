@@ -133,7 +133,7 @@ export function useLayerswapRouters({
             name,
           },
         },
-        sendData: () =>
+        sendData: (params) =>
           submitTonWalletWithdraw({
             fromAddress,
             toAddress,
@@ -142,6 +142,7 @@ export function useLayerswapRouters({
             fromNetworkName,
             toNetworkName: toNetwork.name,
             fromAmount,
+            params,
           }),
       } as BridgeRouteI;
     },
@@ -163,11 +164,17 @@ export function useLayerswapRouters({
       ...quoteQuery.data,
       minAmt: limitQuery.data?.min_amount,
       maxAmt: limitQuery.data?.max_amount,
-    };
+    } as BridgeRouteI;
   }, [limitQuery.data, quoteQuery.data]);
 
   return {
     status,
     router,
+    limit: limitQuery.data
+      ? {
+          minAmt: limitQuery.data?.min_amount,
+          maxAmt: limitQuery.data?.max_amount,
+        }
+      : null,
   };
 }

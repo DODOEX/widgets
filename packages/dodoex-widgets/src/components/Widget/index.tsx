@@ -34,7 +34,10 @@ import { setAutoConnectLoading } from '../../store/actions/globals';
 import { APIServices } from '../../constants/api';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { SwapProps } from '../Swap';
-import { getFromTokenChainId } from '../../store/selectors/wallet';
+import {
+  getFromTokenChainId,
+  getToTokenChainId,
+} from '../../store/selectors/wallet';
 import { useWalletState } from '../../hooks/ConnectWallet/useWalletState';
 import WebApp from '@twa-dev/sdk';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -151,10 +154,15 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
 
 function Web3Provider(props: PropsWithChildren<WidgetProps>) {
   const fromTokenChainId = useSelector(getFromTokenChainId);
-  const defaultChainId = useMemo(
-    () => fromTokenChainId ?? props.defaultChainId ?? 1,
-    [props.defaultChainId, fromTokenChainId],
-  );
+  const toTokenChainId = useSelector(getToTokenChainId);
+  const defaultChainId = useMemo(() => {
+    if (fromTokenChainId) {
+      if (fromTokenChainId !== ChainId.TON) return fromTokenChainId;
+      if (toTokenChainId && toTokenChainId !== ChainId.TON)
+        return toTokenChainId;
+    }
+    return props.defaultChainId ?? 1;
+  }, [props.defaultChainId, fromTokenChainId]);
   const { connectors, key } = useWeb3Connectors({
     provider: props.provider,
     jsonRpcUrlMap: props.jsonRpcUrlMap,

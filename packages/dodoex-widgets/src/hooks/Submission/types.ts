@@ -61,6 +61,35 @@ export type ExecutionCtx = {
     ) => void,
   ) => Promise<ExecutionResult>;
 
+  executeCustom: ({
+    brief,
+    subtitle,
+    early,
+    mixpanelProps,
+    submittedBack,
+    submittedConfirmBack,
+    successBack,
+    handler,
+  }: {
+    brief: string;
+    subtitle?: string | React.ReactNode | null;
+    early?: boolean | undefined;
+    mixpanelProps?: Record<string, any> | undefined;
+    submittedBack?: (() => void) | undefined;
+    submittedConfirmBack?: (() => void) | undefined;
+    successBack?:
+      | ((tx: string, callback?: ExecutionProps['onTxSuccess']) => void)
+      | undefined;
+    handler: (params: {
+      onSubmit?: (tx: string, reportInfo?: Record<string, any>) => void;
+      onSuccess?: (
+        tx: string,
+        reportInfo?: Record<string, any>,
+      ) => Promise<void>;
+      onError?: (e: any) => void;
+    }) => Promise<any>;
+  }) => Promise<ExecutionResult>;
+
   /**
    * order
    */

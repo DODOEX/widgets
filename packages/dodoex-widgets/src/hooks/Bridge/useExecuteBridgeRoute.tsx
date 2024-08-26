@@ -14,13 +14,16 @@ import { getGlobalProps } from '../../store/selectors/globals';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
 import { useWalletState } from '../ConnectWallet/useWalletState';
+import { ExecutionCtx } from '../Submission/types';
 
 export default function useExecuteBridgeRoute({
   route,
   bridgeOrderTxRequest,
+  sendData,
 }: {
   route?: BridgeRouteI;
   bridgeOrderTxRequest?: BridgeTXRequest;
+  sendData?: Parameters<ExecutionCtx['executeCustom']>['0']['handler'];
 }) {
   const { chainId, account } = useWalletState();
   const submission = useSubmission();
@@ -30,7 +33,7 @@ export default function useExecuteBridgeRoute({
   );
 
   const execute = useCallback(() => {
-    if (!bridgeOrderTxRequest || !route) {
+    if ((!route?.sendData && !bridgeOrderTxRequest) || !route) {
       return;
     }
     try {
@@ -91,6 +94,36 @@ export default function useExecuteBridgeRoute({
         </Box>
       );
 
+      const params = {
+        fromChainId,
+        toChainId,
+        fromTokenAddress: fromToken.address,
+        toTokenAddress: toToken.address,
+        fromTokenSymbol: fromToken.symbol,
+        toTokenSymbol: toToken.symbol,
+        fromTokenAmount: fromAmount,
+        toTokenAmount: toTokenAmount.toString(),
+        slippage,
+        sendAccount: toAddress,
+        roundedRouteCostTime,
+      };
+
+      if (sendData) {
+        return submission.executeCustom({
+          brief: t`Cross Chain`,
+          subtitle,
+          mixpanelProps: {
+            fromToken,
+            toToken,
+            pay,
+            receive,
+            ...params,
+          },
+          handler: sendData,
+        });
+      }
+
+      if (!bridgeOrderTxRequest) return;
       const successBack = async (
         tx: string,
         onTxSuccess?: ExecutionProps['onTxSuccess'],
@@ -109,20 +142,6 @@ export default function useExecuteBridgeRoute({
             });
           }
         }
-      };
-
-      const params = {
-        fromChainId,
-        toChainId,
-        fromTokenAddress: fromToken.address,
-        toTokenAddress: toToken.address,
-        fromTokenSymbol: fromToken.symbol,
-        toTokenSymbol: toToken.symbol,
-        fromTokenAmount: fromAmount,
-        toTokenAmount: toTokenAmount.toString(),
-        slippage,
-        sendAccount: toAddress,
-        roundedRouteCostTime,
       };
       return submission.execute(
         t`Cross Chain`,
@@ -154,6 +173,7 @@ export default function useExecuteBridgeRoute({
     bridgeOrderTxRequest,
     apikey,
     bridgeCreateRouteAPI,
+    sendData,
   ]);
 
   return execute;

@@ -71,7 +71,11 @@ export default function ConnectWallet({
           <Trans>Connect to a wallet</Trans>
         )}
       </Button>
-      <ConnectWalletDialog open={open} onClose={() => setOpen(false)} />
+      <ConnectWalletDialog
+        open={open}
+        onClose={() => setOpen(false)}
+        chainId={needSwitchChain}
+      />
       {/* switch chain */}
       <SwitchChainDialog
         chainId={needSwitchChain}

@@ -4,6 +4,7 @@ import { ChainId } from '../../constants/chains';
 export type State = {
   chainId: ChainId;
   fromTokenChainId?: ChainId;
+  toTokenChainId?: ChainId;
   latestBlockNumber: number;
 };
 
@@ -23,6 +24,11 @@ export default (state: State = initialState, action: AnyAction): State => {
       return {
         ...state,
         fromTokenChainId: action.payload,
+      };
+    case 'SET_TO_TOKEN_CHAIN_ID':
+      return {
+        ...state,
+        toTokenChainId: action.payload,
       };
     case 'SET_BLOCK_NUMBER':
       return {

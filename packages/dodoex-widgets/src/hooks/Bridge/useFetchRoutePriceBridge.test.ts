@@ -49,6 +49,16 @@ jest.mock('../ConnectWallet/useWalletState', () => ({
   }),
 }));
 
+jest.mock('@web3-react/core', () => ({
+  useWeb3React: () => ({
+    account: '0x2Ba1633338dDD2Ab37fbc95ea615BA98f0445380',
+  }),
+}));
+
+jest.mock('@tanstack/react-query', () => ({
+  useQuery: jest.fn,
+}));
+
 describe('useFetchRoutePriceBridge: request success', () => {
   const res = {
     data: {
@@ -124,6 +134,7 @@ describe('useFetchRoutePriceBridge: request success', () => {
       toToken: tokenEther,
       fromToken: tokenUSDTChainBSC,
       fromAmount: '1.1',
+      fromFiatPrice: '1',
     }),
   );
 
@@ -149,6 +160,7 @@ describe('useFetchRoutePriceBridge: skip request', () => {
       toToken: tokenEther,
       fromToken: tokenUSDT,
       fromAmount: '1.1',
+      fromFiatPrice: '1',
     }),
   );
 
@@ -175,6 +187,7 @@ describe('useFetchRoutePrice: request failed', () => {
       toToken: tokenEther,
       fromToken: tokenUSDTChainBSC,
       fromAmount: '1.1',
+      fromFiatPrice: '1',
     }),
   );
 

@@ -34,12 +34,7 @@ export enum ChainId {
 export const rpcServerMap: {
   [key in ChainId]: Array<string>;
 } = {
-  [ChainId.MAINNET]: [
-    'https://rpc.ankr.com/eth',
-    'https://eth-mainnet.public.blastapi.io',
-    'https://eth-rpc.gateway.pokt.network',
-    'https://main-rpc.linkpool.io',
-  ],
+  [ChainId.MAINNET]: ['https://rpc.ankr.com/eth'],
   [ChainId.GOERLI]: ['https://goerli.optimism.io/'],
   [ChainId.BSC]: [
     'https://bsc-dataseed1.binance.org',
@@ -48,9 +43,7 @@ export const rpcServerMap: {
   ],
   [ChainId.POLYGON]: [
     'https://polygon-rpc.com',
-    'https://rpc-mainnet.maticvigil.com',
     'https://rpc-mainnet.matic.quiknode.pro',
-    'https://poly-rpc.gateway.pokt.network',
     'https://rpc.ankr.com/polygon',
   ],
   [ChainId.ARBITRUM_ONE]: [
@@ -58,18 +51,11 @@ export const rpcServerMap: {
     'https://rpc.ankr.com/arbitrum',
   ],
   [ChainId.AURORA]: ['https://mainnet.aurora.dev/'],
-  [ChainId.OKCHAIN]: [
-    'https://exchainrpc.okex.org',
-    'https://okc-mainnet.gateway.pokt.network/v1/lb/6275309bea1b320039c893ff',
-  ],
-  [ChainId.OPTIMISM]: [
-    'https://mainnet.optimism.io',
-    'https://optimism-mainnet.public.blastapi.io',
-  ],
+  [ChainId.OKCHAIN]: ['https://exchainrpc.okex.org'],
+  [ChainId.OPTIMISM]: ['https://optimism-mainnet.public.blastapi.io'],
   [ChainId.AVALANCHE]: [
     'https://api.avax.network/ext/bc/C/rpc',
     'https://rpc.ankr.com/avalanche',
-    'https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc',
   ],
   [ChainId.CONFLUX]: ['https://evm.confluxrpc.com'],
   [ChainId.BASE]: ['https://mainnet.base.org'],

@@ -19,6 +19,7 @@ import useTonConnectStore from '../ConnectWallet/TonConnect';
 import { useOrbiterContractMap } from '../contract/orbiter/useOrbiterContractMap';
 import { encodeOrbiterBridge } from '../contract/orbiter/encodeOrbiterBridge';
 import { useLayerswapRouters } from '../contract/layerswap/useLayerswapRouters';
+import { ExecutionCtx } from '../Submission/types';
 
 export interface BridgeRouteI {
   /** update */
@@ -61,7 +62,7 @@ export interface BridgeRouteI {
     chainId: number;
     encodeId?: string;
   };
-  sendData?: () => Promise<any>;
+  sendData?: Parameters<ExecutionCtx['executeCustom']>['0']['handler'];
 
   productParams: any;
   sourceRoute?: {
@@ -548,9 +549,26 @@ export function useFetchRoutePriceBridge({
     return status;
   }, [status, orbiterStatus, needOrbiterQuery, needLayerSwap, layerSwapRouter]);
 
+  const limit = useMemo<null | {
+    minAmt?: number;
+    maxAmt?: number;
+  }>(() => {
+    if (layerSwapRouter.limit) {
+      return layerSwapRouter.limit;
+    }
+    if (orbiterRouter?.minAmt || orbiterRouter?.maxAmt)
+      return {
+        minAmt: orbiterRouter.minAmt ? Number(orbiterRouter.minAmt) : undefined,
+        maxAmt: orbiterRouter.maxAmt ? Number(orbiterRouter.maxAmt) : undefined,
+      };
+
+    return null;
+  }, [status, fromAmount, bridgeRouteList, orbiterRouter, layerSwapRouter]);
+
   return {
     status: statusRes,
     refetch,
     bridgeRouteList: bridgeRouteListRes,
+    limit,
   };
 }

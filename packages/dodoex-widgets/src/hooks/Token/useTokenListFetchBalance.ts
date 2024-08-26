@@ -43,10 +43,14 @@ export default function useTokenListFetchBalance({
     return result;
   }, [tokenList, popularTokenList, chainId, autoConnectLoading]);
 
-  const selectTokenAddress = useMemo(() => (value ? [value] : []), [value]);
+  const [selectTokenAddress, selectTokenChainId] = useMemo(
+    () => (value ? [[value], value.chainId] : []),
+    [value],
+  );
 
   useFetchTokens({
     tokenList: checkTokenList,
+    chainId,
     skip: visible === false && !defaultLoadBalance,
   });
 
@@ -54,6 +58,7 @@ export default function useTokenListFetchBalance({
 
   useFetchTokens({
     tokenList: selectTokenAddress,
+    chainId: selectTokenChainId,
     blockNumber,
   });
 }

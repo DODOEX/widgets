@@ -64,7 +64,10 @@ import {
   GetAutoSlippage,
   useSetAutoSlippage,
 } from '../../hooks/setting/useSetAutoSlippage';
-import { setFromTokenChainId } from '../../store/actions/wallet';
+import {
+  setFromTokenChainId,
+  setToTokenChainId,
+} from '../../store/actions/wallet';
 import { useWalletState } from '../../hooks/ConnectWallet/useWalletState';
 import { useWeb3React } from '@web3-react/core';
 import useTonConnectStore from '../../hooks/ConnectWallet/TonConnect';
@@ -108,7 +111,7 @@ export function Swap({
   );
 
   const [fromToken, setFromTokenOrigin] = useState<TokenInfo | null>(null);
-  const [toToken, setToToken] = useState<TokenInfo | null>(null);
+  const [toToken, setToTokenOrigin] = useState<TokenInfo | null>(null);
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState<boolean>(false);
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] =
     useState<boolean>(false);
@@ -158,13 +161,16 @@ export function Swap({
     return balance.lt(isReverseRouting ? toAmt ?? 0 : fromAmt);
   }, [isReverseRouting, fromToken, toToken, fromAmt, toAmt, getBalance]);
 
-  const { bridgeRouteList, status: bridgeRouteStatus } =
-    useFetchRoutePriceBridge({
-      toToken,
-      fromToken,
-      fromAmount: fromAmt,
-      fromFiatPrice,
-    });
+  const {
+    bridgeRouteList,
+    status: bridgeRouteStatus,
+    limit: bridgeLimit,
+  } = useFetchRoutePriceBridge({
+    toToken,
+    fromToken,
+    fromAmount: fromAmt,
+    fromFiatPrice,
+  });
   const [switchBridgeRouteShow, setSwitchBridgeRouteShow] = useState(false);
   const [selectedRouteIdOrigin, setSelectRouteId] = useState('');
   const selectedRouteId = useMemo(() => {
@@ -321,6 +327,30 @@ export function Swap({
           ),
         );
         return setFromTokenOrigin(value);
+      },
+      [dispatch, setFromTokenChainId],
+    );
+  const setToToken: (value: React.SetStateAction<TokenInfo | null>) => void =
+    useCallback(
+      (value) => {
+        // sync redux
+        if (typeof value === 'function') {
+          return setToTokenOrigin((prev) => {
+            const newValue = value(prev);
+            dispatch(
+              setToTokenChainId(
+                (newValue?.chainId ?? undefined) as ChainId | undefined,
+              ),
+            );
+            return newValue;
+          });
+        }
+        dispatch(
+          setToTokenChainId(
+            (value?.chainId ?? undefined) as ChainId | undefined,
+          ),
+        );
+        return setToTokenOrigin(value);
       },
       [dispatch, setFromTokenChainId],
     );
@@ -682,9 +712,7 @@ export function Swap({
       return (
         <ConnectWallet
           needSwitchChain={
-            needConnectTwoWallet && fromToken?.chainId === chainId
-              ? toToken?.chainId
-              : fromToken?.chainId
+            needConnectTwoWallet ? toToken?.chainId : fromToken?.chainId
           }
           onConnectWalletClick={onConnectWalletClick}
           needConnectTwoWallet={needConnectTwoWallet}
@@ -720,6 +748,39 @@ export function Swap({
         </Button>
       );
 
+    if (insufficientBalance)
+      // balance need to greater than reserved gas!
+      return (
+        <Button
+          fullWidth
+          disabled
+          data-testid={swapAlertInsufficientBalanceBtn}
+        >
+          <Trans>Insufficient balance</Trans>
+        </Button>
+      );
+
+    if (isBridge) {
+      const minAmt = bridgeLimit?.minAmt ?? selectedRoute?.minAmt;
+      const maxAmt = bridgeLimit?.maxAmt ?? selectedRoute?.maxAmt;
+      const isOverMinAmt =
+        !!minAmt && !!fromAmt && Number(fromAmt) < Number(minAmt);
+      const isOverMaxAmt =
+        !!maxAmt && !!fromAmt && Number(fromAmt) > Number(maxAmt);
+
+      if (isOverMinAmt || isOverMaxAmt) {
+        return (
+          <Button fullWidth disabled>
+            {isOverMinAmt ? (
+              <Trans>cannot be lower than {minAmt}</Trans>
+            ) : (
+              <Trans>cannot be greater than {maxAmt}</Trans>
+            )}
+          </Button>
+        );
+      }
+    }
+
     if (
       isBridge
         ? bridgeRouteStatus === RoutePriceStatus.Loading || isGetApproveLoading
@@ -745,27 +806,8 @@ export function Swap({
           <Trans>Quote not available</Trans>
         </Button>
       );
-    if (insufficientBalance)
-      // balance need to greater than reserved gas!
-      return (
-        <Button
-          fullWidth
-          disabled
-          data-testid={swapAlertInsufficientBalanceBtn}
-        >
-          <Trans>Insufficient balance</Trans>
-        </Button>
-      );
 
     if (isBridge) {
-      const isOverMinAmt =
-        !!selectedRoute?.minAmt &&
-        !!fromAmt &&
-        Number(fromAmt) < Number(selectedRoute.minAmt);
-      const isOverMaxAmt =
-        !!selectedRoute?.maxAmt &&
-        !!fromAmt &&
-        Number(fromAmt) > Number(selectedRoute.maxAmt);
       return (
         <Button
           fullWidth
@@ -777,16 +819,10 @@ export function Swap({
             })
           }
           data-testid={swapReviewBtn}
-          disabled={!selectedRoute || isOverMinAmt || isOverMaxAmt}
+          disabled={!selectedRoute}
           isLoading={sendRouteLoading}
         >
-          {isOverMinAmt ? (
-            <Trans>cannot be lower than {selectedRoute?.minAmt}</Trans>
-          ) : isOverMaxAmt ? (
-            <Trans>cannot be greater than {selectedRoute?.minAmt}</Trans>
-          ) : (
-            <Trans>Review Cross Chain</Trans>
-          )}
+          <Trans>Review Cross Chain</Trans>
         </Button>
       );
     }

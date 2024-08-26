@@ -16,16 +16,18 @@ import Dialog from '../Dialog';
 export default function ConnectWalletDialog({
   open,
   onClose,
+  chainId: chainIdProps,
 }: {
   open: boolean;
   onClose: () => void;
+  chainId?: number;
 }) {
   useLingui();
   const defaultChainId = useSelector(getDefaultChainId);
   const fromTokenChainId = useSelector(getFromTokenChainId);
   const chainId = useMemo(
-    () => fromTokenChainId ?? defaultChainId,
-    [fromTokenChainId, defaultChainId],
+    () => chainIdProps ?? fromTokenChainId ?? defaultChainId,
+    [chainIdProps, fromTokenChainId, defaultChainId],
   );
   const [connectingType, setConnectingType] =
     useState<keyof typeof WalletMap | null>(null);

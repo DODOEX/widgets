@@ -54,9 +54,13 @@ export function TokenCard({
   const getBalance = useGetBalance();
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
   const balance = token ? getBalance(token) : null;
-  const checkTokenList = useMemo(() => (token ? [token] : []), [token]);
+  const [checkTokenList, checkTokenChainId] = useMemo(
+    () => (token ? [[token], token.chainId] : []),
+    [token],
+  );
   useFetchTokens({
     tokenList: checkTokenList,
+    chainId: checkTokenChainId,
   });
 
   useEffect(() => {

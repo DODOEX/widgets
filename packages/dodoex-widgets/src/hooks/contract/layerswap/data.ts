@@ -1,6 +1,9 @@
 import { Address, beginCell, JettonMaster, toNano } from 'ton';
 import useTonConnectStore from '../../ConnectWallet/TonConnect';
-import { waitForTransaction } from '../../ConnectWallet/TonConnect/contract';
+import {
+  getHashByBoc,
+  waitForTransaction,
+} from '../../ConnectWallet/TonConnect/contract';
 import { TokenInfo } from '../../Token';
 import {
   LAYERSWAP_API_KEY,
@@ -164,6 +167,7 @@ export async function submitTonWalletWithdraw({
   toNetworkName,
   fromAmount,
   slippage,
+  params,
 }: {
   fromAddress: string | undefined;
   toAddress: string | undefined;
@@ -173,6 +177,11 @@ export async function submitTonWalletWithdraw({
   toNetworkName: string | undefined | null;
   fromAmount: string;
   slippage?: number;
+  params: {
+    onSubmit?: (tx: string, reportInfo?: Record<string, any>) => void;
+    onSuccess?: (tx: string, reportInfo?: Record<string, any>) => Promise<void>;
+    onError?: (e: any) => void;
+  };
 }) {
   if (
     !fromToken ||
@@ -232,6 +241,10 @@ export async function submitTonWalletWithdraw({
     throw new Error('No tonConnectUI or client available');
   }
   const res = await tonConnectUI.sendTransaction(transaction);
+  const bocHash = getHashByBoc(res.boc);
+  if (params.onSubmit) {
+    params.onSubmit(bocHash);
+  }
 
   const data = await waitForTransaction(
     {
@@ -240,5 +253,10 @@ export async function submitTonWalletWithdraw({
     },
     client,
   );
+  if (params.onSuccess) {
+    params.onSuccess(data?.hash()?.toString('base64') ?? bocHash, {
+      tonTransaction: data,
+    });
+  }
   return data;
 }
