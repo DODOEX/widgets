@@ -191,8 +191,10 @@ export function useFetchRoutePriceBridge({
   );
   const needLayerSwap = useMemo(
     () =>
-      fromToken?.chainId === ChainId.TON &&
-      fromToken?.chainId !== toToken?.chainId,
+      (fromToken?.chainId === ChainId.TON &&
+        fromToken?.chainId !== toToken?.chainId) ||
+      (toToken?.chainId === ChainId.TON &&
+        fromToken?.chainId !== toToken?.chainId),
     [fromToken, toToken],
   );
 
@@ -544,10 +546,18 @@ export function useFetchRoutePriceBridge({
   }, [status, fromAmount, bridgeRouteList, orbiterRouter, layerSwapRouter]);
 
   const statusRes = useMemo(() => {
+    if (orbiterRouter) return orbiterStatus;
     if (needLayerSwap) return layerSwapRouter.status;
     if (needOrbiterQuery) return orbiterStatus;
     return status;
-  }, [status, orbiterStatus, needOrbiterQuery, needLayerSwap, layerSwapRouter]);
+  }, [
+    status,
+    orbiterStatus,
+    needOrbiterQuery,
+    needLayerSwap,
+    layerSwapRouter,
+    orbiterRouter,
+  ]);
 
   const limit = useMemo<null | {
     minAmt?: number;

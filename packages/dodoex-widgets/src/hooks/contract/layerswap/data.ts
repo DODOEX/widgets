@@ -67,7 +67,7 @@ export async function getQuote({
   toToken: TokenInfo | null;
   fromNetworkName: string | undefined | null;
   toNetworkName: string | undefined | null;
-  slippage: number;
+  slippage?: number;
   fromAmount: string;
 }) {
   if (

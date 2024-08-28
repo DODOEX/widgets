@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { ChainId } from '../../../constants/chains';
 import {
   BridgeRouteI,
   RoutePriceStatus,
@@ -19,6 +20,7 @@ import {
   getQuote,
   submitTonWalletWithdraw,
 } from './data';
+import { Network } from './types';
 
 function convertAvgCompletionTime(completionTime: string) {
   const timeStr = completionTime.split('.')[0];
@@ -39,7 +41,7 @@ export function useLayerswapRouters({
     fromAmount: string;
     evmAccount: string | undefined;
     tonAccount: string | undefined;
-    slippage: number;
+    slippage?: number;
   };
 }) {
   const networkQuery = useQuery({
@@ -47,13 +49,34 @@ export function useLayerswapRouters({
     enabled: !skip,
     queryFn: getNetworks,
   });
-  const fromNetworkName = 'TON_MAINNET';
-  const toNetwork = toToken
-    ? networkQuery.data?.find(
+  let fromNetwork = null as Network | null | undefined;
+  if (fromToken) {
+    if (fromToken.chainId === ChainId.TON) {
+      fromNetwork = networkQuery.data?.find(
+        (item) => item.name === 'TON_MAINNET',
+      );
+    } else {
+      fromNetwork = networkQuery.data?.find(
+        (item) =>
+          item.chain_id === String(fromToken.chainId) && item.type === 'evm',
+      );
+    }
+  }
+  const fromNetworkName = fromNetwork?.name;
+  let toNetwork = null as Network | null | undefined;
+  if (toToken) {
+    if (toToken.chainId === ChainId.TON) {
+      toNetwork = networkQuery.data?.find(
+        (item) => item.name === 'TON_MAINNET',
+      );
+    } else {
+      toNetwork = networkQuery.data?.find(
         (item) =>
           item.chain_id === String(toToken.chainId) && item.type === 'evm',
-      )
-    : null;
+      );
+    }
+  }
+  const toNetworkName = toNetwork?.name;
 
   const limitQuery = useQuery({
     queryKey: [
@@ -61,15 +84,15 @@ export function useLayerswapRouters({
       'limitQuery',
       fromToken?.address,
       toToken?.address,
-      toNetwork?.name,
+      toNetworkName,
     ],
-    enabled: !skip && !!(fromToken && toToken && toNetwork),
+    enabled: !skip && !!(fromToken && toToken && toNetworkName),
     queryFn: () =>
       getLimits({
         fromToken,
         toToken,
         fromNetworkName,
-        toNetworkName: toNetwork?.name,
+        toNetworkName,
       }),
   });
 
@@ -79,18 +102,18 @@ export function useLayerswapRouters({
       'quoteQuery',
       fromToken?.address,
       toToken?.address,
-      toNetwork?.name,
+      toNetworkName,
       fromAmount,
     ],
-    enabled: !skip && !!(fromToken && toToken && toNetwork && fromAmount),
+    enabled: !skip && !!(fromToken && toToken && toNetworkName && fromAmount),
     refetchInterval: refreshTime,
     queryFn: async () => {
-      if (!fromToken || !toToken || !toNetwork) return;
+      if (!fromToken || !toToken || !toNetworkName) return;
       const data = await getQuote({
         fromToken,
         toToken,
         fromNetworkName,
-        toNetworkName: toNetwork?.name,
+        toNetworkName,
         fromAmount,
         slippage,
       });
@@ -140,7 +163,7 @@ export function useLayerswapRouters({
             fromToken,
             toToken,
             fromNetworkName,
-            toNetworkName: toNetwork.name,
+            toNetworkName,
             fromAmount,
             params,
           }),

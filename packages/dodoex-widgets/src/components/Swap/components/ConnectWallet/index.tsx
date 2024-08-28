@@ -7,23 +7,37 @@ import { connectWalletBtn } from '../../../../constants/testId';
 import SwitchChainDialog from '../../../SwitchChainDialog';
 import { useWalletState } from '../../../../hooks/ConnectWallet/useWalletState';
 import useTonConnectStore from '../../../../hooks/ConnectWallet/TonConnect';
+import { useWeb3React } from '@web3-react/core';
 
 export interface ConnectWalletProps {
   needSwitchChain?: ChainId;
+  needEvmChainId?: ChainId;
   /** If true is returned, the default wallet connection logic will not be executed */
   onConnectWalletClick?: () => boolean | Promise<boolean>;
-  needConnectTwoWallet?: boolean;
 }
 
 export default function ConnectWallet({
   needSwitchChain,
+  needEvmChainId,
   onConnectWalletClick,
-  needConnectTwoWallet,
 }: ConnectWalletProps) {
   const { chainId } = useWalletState();
+  const tonChainId = useTonConnectStore((state) => state.connected?.chainId);
+  const { chainId: evmChainId } = useWeb3React();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openSwitchChainDialog, setOpenSwitchChainDialog] = useState(false);
+
+  let needConnectChainId = undefined as undefined | ChainId;
+  if (needEvmChainId) {
+    if (!tonChainId) {
+      needConnectChainId = ChainId.TON;
+    } else if (!evmChainId || needEvmChainId !== evmChainId) {
+      needConnectChainId = needEvmChainId;
+    }
+  } else if (needSwitchChain !== chainId) {
+    needConnectChainId = needSwitchChain;
+  }
   return (
     <>
       <Button
@@ -33,7 +47,7 @@ export default function ConnectWallet({
           if (onConnectWalletClick) {
             // switch chain
             if (
-              !needConnectTwoWallet &&
+              !needEvmChainId &&
               chainId &&
               needSwitchChain &&
               chainId !== needSwitchChain
@@ -49,7 +63,7 @@ export default function ConnectWallet({
               return;
             }
           }
-          if (needSwitchChain !== ChainId.TON) {
+          if (needConnectChainId !== ChainId.TON) {
             setOpen(true);
           } else {
             setLoading(true);
@@ -62,9 +76,9 @@ export default function ConnectWallet({
       >
         {loading ? (
           <Trans>Connecting...</Trans>
-        ) : needConnectTwoWallet ? (
+        ) : needConnectChainId ? (
           <Trans>
-            Connect to a {needSwitchChain === ChainId.TON ? 'Ton' : 'EVM'}{' '}
+            Connect to a {needConnectChainId === ChainId.TON ? 'Ton' : 'EVM'}{' '}
             wallet
           </Trans>
         ) : (
@@ -74,7 +88,7 @@ export default function ConnectWallet({
       <ConnectWalletDialog
         open={open}
         onClose={() => setOpen(false)}
-        chainId={needSwitchChain}
+        chainId={needConnectChainId}
       />
       {/* switch chain */}
       <SwitchChainDialog

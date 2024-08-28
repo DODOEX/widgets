@@ -700,22 +700,23 @@ export function Swap({
   ]);
 
   const swapButton = useMemo(() => {
-    const needConnectTwoWallet =
-      fromToken?.chainId === ChainId.TON || toToken?.chainId === ChainId.TON;
-
+    let needEvmChainId = undefined as undefined | ChainId;
+    const isFromTon = fromToken?.chainId === ChainId.TON;
+    const isToTon = toToken?.chainId === ChainId.TON;
+    if (!(isFromTon && isToTon) && (isFromTon || isToTon)) {
+      needEvmChainId = isFromTon ? toToken?.chainId : fromToken?.chainId;
+    }
     if (
       !account ||
       (fromToken?.chainId && chainId !== fromToken.chainId) ||
-      (needConnectTwoWallet && !tonConnect.connected) ||
+      (needEvmChainId && !tonConnect.connected) ||
       !web3React.account
     )
       return (
         <ConnectWallet
-          needSwitchChain={
-            needConnectTwoWallet ? toToken?.chainId : fromToken?.chainId
-          }
+          needSwitchChain={fromToken?.chainId}
           onConnectWalletClick={onConnectWalletClick}
-          needConnectTwoWallet={needConnectTwoWallet}
+          needEvmChainId={needEvmChainId}
         />
       );
     if (isInflight) {
