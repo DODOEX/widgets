@@ -80,7 +80,8 @@
     "lodash": "^4.17.21",
     "make-plural": "^7.0.0",
     "react-window": "^1.8.8",
-    "semantic-release": "^19.0.2"
+    "semantic-release": "^19.0.2",
+    "zustand": "^4.5.5"
   },
   "peerDependencies": {
     "@babel/runtime": ">=7.17.0",

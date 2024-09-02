@@ -12,12 +12,12 @@ import { BIG_ALLOWANCE } from '../../constants/token';
 import useGetAllowance from './useGetAllowance';
 import useGetBalance from './useGetBalance';
 import { TokenInfo, ApprovalState } from './type';
-import { ExecutionResult, State } from '../Submission/types';
+import { ExecutionResult } from '../Submission/types';
 import { OpCode } from '../Submission/spec';
 import useInflights from '../Submission/useInflights';
 import { useSubmission } from '../Submission';
-import { getDefaultChainId } from '../../store/selectors/wallet';
 import { useFetchTokenAllowance } from './useFetchTokenAllowance';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export const useGetTokenStatus = ({
   account,
@@ -30,7 +30,7 @@ export const useGetTokenStatus = ({
   offset?: BigNumber;
   contractAddress?: string;
 }) => {
-  const defaultChainId = useSelector(getDefaultChainId);
+  const { defaultChainId } = useUserOptions();
   const currentContractConfig = useMemo(
     () => contractConfig[(chainId as ChainId) ?? defaultChainId],
     [chainId],

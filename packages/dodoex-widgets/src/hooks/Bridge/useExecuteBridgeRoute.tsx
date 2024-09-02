@@ -10,10 +10,9 @@ import { BridgeRouteI } from './useFetchRoutePriceBridge';
 import { OpCode } from '../Submission/spec';
 import { Box } from '@dodoex/components';
 import TokenLogo from '../../components/TokenLogo';
-import { useSelector } from 'react-redux';
-import { getGlobalProps } from '../../store/selectors/globals';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export default function useExecuteBridgeRoute({
   route,
@@ -24,7 +23,7 @@ export default function useExecuteBridgeRoute({
 }) {
   const { chainId, account } = useWeb3React();
   const submission = useSubmission();
-  const { apikey } = useSelector(getGlobalProps);
+  const { apikey } = useUserOptions();
   const bridgeCreateRouteAPI = useGetAPIService(
     APIServiceKey.bridgeCreateRoute,
   );

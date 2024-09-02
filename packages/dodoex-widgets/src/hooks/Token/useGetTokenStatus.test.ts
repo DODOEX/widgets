@@ -4,8 +4,10 @@ import { ApprovalState } from './type';
 import { renderHook } from '@testing-library/react-hooks';
 import BigNumber from 'bignumber.js';
 
-jest.mock('../../store/selectors/wallet', () => ({
-  getDefaultChainId: () => 1,
+jest.mock('../../components/UserOptionsProvider', () => ({
+  useUserOptions: () => ({
+    defaultChainId: 1,
+  }),
 }));
 jest.mock('../../store/selectors/token', () => ({
   getEthBalance: () => ({

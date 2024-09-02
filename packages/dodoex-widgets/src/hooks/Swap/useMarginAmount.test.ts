@@ -3,9 +3,6 @@ import tokenList from '../../constants/tokenList';
 import { renderHook } from '@testing-library/react-hooks';
 import BigNumber from 'bignumber.js';
 
-jest.mock('../../store/selectors/wallet', () => ({
-  getDefaultChainId: () => 1,
-}));
 jest.mock('../../store/selectors/token', () => ({
   getEthBalance: () => ({
     1: new BigNumber(12),

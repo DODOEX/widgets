@@ -1,7 +1,6 @@
 import { useWeb3React } from '@web3-react/core';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { getDefaultChainId } from '../../store/selectors/wallet';
 import { basicTokenMap, ChainId } from '../../constants/chains';
 import { getAccountBalances } from '../../store/selectors/token';
 import { TokenInfo } from './type';
@@ -9,12 +8,13 @@ import BigNumber from 'bignumber.js';
 import { isSameAddress } from '../../utils';
 import { BIG_ALLOWANCE } from '../../constants/token';
 import contractConfig from '../contract/contractConfig';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export default function useGetAllowance(
   contract: string | null,
 ): (token: TokenInfo) => BigNumber | null {
   const { account, chainId: currentChainId } = useWeb3React();
-  const defaultChainId = useSelector(getDefaultChainId);
+  const { defaultChainId } = useUserOptions();
   const chainId = useMemo(
     () => (currentChainId ?? defaultChainId) as ChainId,
     [currentChainId, defaultChainId],

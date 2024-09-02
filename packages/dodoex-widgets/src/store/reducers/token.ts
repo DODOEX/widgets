@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { AnyAction } from 'redux';
-import type { TokenList, DefaultTokenInfo } from '../../hooks/Token';
+import type { TokenList } from '../../hooks/Token';
 
 export type AccountBalance = {
   tokenBalances?: BigNumber;
@@ -21,8 +21,6 @@ export type State = {
   accountBalances: AccountBalances;
   balanceLoadings: { [key in string]: boolean };
   slippageWithTokens: SlippageWithToken[];
-  defaultFromToken?: DefaultTokenInfo;
-  defaultToToken?: DefaultTokenInfo;
 };
 
 export const initialState: State = {
@@ -58,16 +56,6 @@ export default (state: State = initialState, action: AnyAction): State => {
           ...state.ethBalance,
           ...action.payload,
         },
-      };
-    case 'SET_DEFAULT_FROM_TOKEN':
-      return {
-        ...state,
-        defaultFromToken: action.payload,
-      };
-    case 'SET_DEFAULT_TO_TOKEN':
-      return {
-        ...state,
-        defaultToToken: action.payload,
       };
     case 'SET_ACCOUNT_BALANCES':
       return {

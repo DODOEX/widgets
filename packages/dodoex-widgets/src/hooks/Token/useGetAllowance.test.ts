@@ -6,15 +6,17 @@ import { BIG_ALLOWANCE } from '../../constants/token';
 import { renderHook } from '@testing-library/react-hooks';
 import BigNumber from 'bignumber.js';
 
-jest.mock('../../store/selectors/wallet', () => ({
-  getDefaultChainId: () => 1,
+jest.mock('../../components/UserOptionsProvider', () => ({
+  useUserOptions: () => ({
+    defaultChainId: 1,
+  }),
 }));
 jest.mock('../../store/selectors/token', () => ({
   getAccountBalances: () => ({
     '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48': {
       tokenBalances: 0,
       tokenAllowances: new BigNumber(12123),
-    }
+    },
   }),
 }));
 jest.mock('react-redux', () => ({
@@ -33,9 +35,7 @@ jest.mock('@web3-react/core', () => ({
 }));
 describe('useFindTokenByAddress', () => {
   const contract = contractConfig[ChainId.MAINNET].DODO_APPROVE;
-  const { result } = renderHook(() =>
-    useGetAllowance(contract),
-  );
+  const { result } = renderHook(() => useGetAllowance(contract));
   const getAllowance = result.current;
 
   it('getAllowance: EtherToken', () => {

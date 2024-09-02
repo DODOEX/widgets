@@ -7,10 +7,8 @@ import { useSelector } from 'react-redux';
 import { WalletMap, WalletType } from '../../../../constants/wallet';
 import { connectToWallet } from '../../../../hooks/ConnectWallet';
 import { useSwitchChain } from '../../../../hooks/ConnectWallet/useSwitchChain';
-import {
-  getDefaultChainId,
-  getFromTokenChainId,
-} from '../../../../store/selectors/wallet';
+import { getFromTokenChainId } from '../../../../store/selectors/wallet';
+import { useUserOptions } from '../../../UserOptionsProvider';
 import Dialog from '../Dialog';
 
 export default function ConnectWalletDialog({
@@ -21,7 +19,7 @@ export default function ConnectWalletDialog({
   onClose: () => void;
 }) {
   useLingui();
-  const defaultChainId = useSelector(getDefaultChainId);
+  const { defaultChainId } = useUserOptions();
   const fromTokenChainId = useSelector(getFromTokenChainId);
   const chainId = useMemo(
     () => fromTokenChainId ?? defaultChainId,

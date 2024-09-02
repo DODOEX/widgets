@@ -27,7 +27,6 @@ import WithExecutionDialog from '../WithExecutionDialog';
 import { useFetchBlockNumber, useFetchETHBalance } from '../../hooks/contract';
 import { ExecutionProps } from '../../hooks/Submission';
 import { ChainId } from '../../constants/chains';
-import { useInitPropsToRedux } from '../../hooks/Swap';
 import { DefaultTokenInfo } from '../../hooks/Token/type';
 import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
@@ -35,6 +34,7 @@ import { APIServices } from '../../constants/api';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { SwapProps } from '../Swap';
 import { getFromTokenChainId } from '../../store/selectors/wallet';
+import { UserOptionsProvider } from '../UserOptionsProvider';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
@@ -114,10 +114,8 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     };
   }, [provider]);
 
-  // Init props to redux!
   const width = props.width || 375;
   const height = props.height || 494;
-  useInitPropsToRedux({ ...props, width, height });
 
   return (
     <Box
@@ -175,7 +173,9 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
       <LangProvider locale={props.locale}>
         <ThemeProvider theme={theme}>
           <CssBaseline container={`.${WIDGET_CLASS_NAME}`} />
-          <Web3Provider {...props} />
+          <UserOptionsProvider {...props}>
+            <Web3Provider {...props} />
+          </UserOptionsProvider>
         </ThemeProvider>
       </LangProvider>
     </ReduxProvider>

@@ -5,15 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getLatestBlockNumber } from '../../store/selectors/wallet';
 import { AppThunkDispatch } from '../../store/actions';
 import { setEthBalance } from '../../store/actions/token';
-import { getGlobalProps } from '../../store/selectors/globals';
 import { ChainId, rpcServerMap } from '../../constants/chains';
 import { getStaticJsonRpcProvider } from './provider';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export default function useFetchETHBalance(chainId?: number) {
   const { provider, account, chainId: connectChainId } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
   const blockNumber = useSelector(getLatestBlockNumber);
-  const jsonRpcUrlMapProps = useSelector(getGlobalProps).jsonRpcUrlMap;
+  const { jsonRpcUrlMap: jsonRpcUrlMapProps } = useUserOptions();
   useEffect(() => {
     const computed = async () => {
       if (!provider || !account) return;

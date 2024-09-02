@@ -1,16 +1,10 @@
 import { useWeb3React } from '@web3-react/core';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 import { getLastToken } from '../../constants/localstorage';
-import { AppThunkDispatch } from '../../store/actions';
-import { setGlobalProps } from '../../store/actions/globals';
-import { getGlobalProps } from '../../store/selectors/globals';
-import {
-  getDefaultFromToken,
-  getDefaultToToken,
-  getTokenList,
-} from '../../store/selectors/token';
-import { getDefaultChainId } from '../../store/selectors/wallet';
+import { getAutoConnectLoading } from '../../store/selectors/globals';
+import { getTokenList } from '../../store/selectors/token';
 import { DefaultTokenInfo, TokenInfo, TokenList } from '../Token';
 
 function getDefaultToken({
@@ -72,6 +66,7 @@ export function useInitDefaultToken({
   setToToken,
   updateFromAmt,
   updateToAmt,
+  setIsReverseRouting,
 }: {
   fromToken: TokenInfo | null;
   toToken: TokenInfo | null;
@@ -79,35 +74,30 @@ export function useInitDefaultToken({
   setToToken: (value: React.SetStateAction<TokenInfo | null>) => void;
   updateFromAmt: (v: string | number) => void;
   updateToAmt: (v: string | number) => void;
+  setIsReverseRouting: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const tokenList = useSelector(getTokenList);
-  const defaultFromToken = useSelector(getDefaultFromToken);
-  const defaultToToken = useSelector(getDefaultToToken);
-  const global = useSelector(getGlobalProps);
-  const dispatch = useDispatch<AppThunkDispatch>();
+  const { crossChain, defaultFromToken, defaultToToken } = useUserOptions();
+  const autoConnectLoading = useSelector(getAutoConnectLoading);
   const { chainId, isActivating } = useWeb3React();
 
   const initToken = () => {
     let findFromToken: TokenInfo | null = null;
     let setDefaultFromAmount: number | undefined;
-    if (!global.crossChain && global.autoConnectLoading) return;
+    if (!crossChain && autoConnectLoading) return;
     if (!fromToken) {
       const result = getDefaultToken({
         side: 'from',
         defaultToken: defaultFromToken,
         tokenList,
-        chainId: global.crossChain ? undefined : chainId,
+        chainId: crossChain ? undefined : chainId,
       });
       findFromToken = result.findToken;
       setDefaultFromAmount = result.setDefaultAmount;
       if (findFromToken) {
         setFromToken(findFromToken);
         if (setDefaultFromAmount !== undefined) {
-          dispatch(
-            setGlobalProps({
-              isReverseRouting: false,
-            }),
-          );
+          setIsReverseRouting(false);
           updateFromAmt(setDefaultFromAmount);
         }
       }
@@ -120,7 +110,7 @@ export function useInitDefaultToken({
           defaultToken: defaultToToken,
           tokenList,
           occupyToken: findFromToken,
-          chainId: global.crossChain ? undefined : chainId,
+          chainId: crossChain ? undefined : chainId,
         });
       if (findToToken) {
         setToToken(findToToken);
@@ -128,11 +118,7 @@ export function useInitDefaultToken({
           setDefaultFromAmount === undefined &&
           setDefaultToAmount !== undefined
         ) {
-          dispatch(
-            setGlobalProps({
-              isReverseRouting: true,
-            }),
-          );
+          setIsReverseRouting(true);
           updateToAmt(setDefaultToAmount);
         }
       }
@@ -151,8 +137,8 @@ export function useInitDefaultToken({
     tokenList,
     defaultFromToken,
     defaultToToken,
-    global.crossChain,
-    global.autoConnectLoading,
+    crossChain,
+    autoConnectLoading,
     chainId,
     isActivating,
   ]);

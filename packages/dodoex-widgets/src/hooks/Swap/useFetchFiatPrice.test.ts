@@ -16,8 +16,12 @@ jest.mock('react-redux', () => ({
     return [];
   },
 }));
+jest.mock('../../components/UserOptionsProvider', () => ({
+  useUserOptions: () => ({
+    apikey: '',
+  }),
+}));
 jest.mock('../../store/selectors/globals', () => ({
-  getGlobalProps: () => new BigNumber(12),
   getBalanceLoadings: () => ({
     apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
   }),
@@ -30,25 +34,24 @@ describe('useFetchFiatPrice', () => {
       data: [
         {
           address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-          network: "ethereum",
-          price: "1.23",
+          network: 'ethereum',
+          price: '1.23',
           serial: 0,
-          symbol: "BUSD",
+          symbol: 'BUSD',
         },
         {
           address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-          network: "ethereum",
-          price: "1285.86000000",
+          network: 'ethereum',
+          price: '1285.86000000',
           serial: 1,
-          symbol: "ETH",
-        }
-      ]
-    }
+          symbol: 'ETH',
+        },
+      ],
+    },
   };
   axios.post = jest.fn().mockResolvedValue(res);
   const { result } = renderHook(() =>
     useFetchFiatPrice({
-      chainId: ChainId.MAINNET,
       fromToken: tokenEther,
       toToken: tokenUSDT,
     }),

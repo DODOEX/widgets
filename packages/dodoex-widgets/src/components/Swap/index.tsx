@@ -10,7 +10,7 @@ import {
 } from '@dodoex/components';
 import { formatTokenAmountNumber } from '../../utils';
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   Setting,
   SettingCrossChain,
@@ -37,7 +37,6 @@ import {
 } from '../../hooks/Swap';
 import { formatReadableNumber } from '../../utils/formatter';
 import { useWeb3React } from '@web3-react/core';
-import { getDefaultChainId } from '../../store/selectors/wallet';
 import { AppUrl } from '../../constants/api';
 import { ChainId, basicTokenMap } from '../../constants/chains';
 import { PRICE_IMPACT_THRESHOLD } from '../../constants/swap';
@@ -50,8 +49,6 @@ import {
   swapReviewBtn,
 } from '../../constants/testId';
 import useInflights from '../../hooks/Submission/useInflights';
-import { getGlobalProps } from '../../store/selectors/globals';
-import { setGlobalProps } from '../../store/actions/globals';
 import { AppThunkDispatch } from '../../store/actions';
 import { useFetchRoutePriceBridge } from '../../hooks/Bridge/useFetchRoutePriceBridge';
 import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
@@ -72,6 +69,7 @@ import {
   useSetAutoSlippage,
 } from '../../hooks/setting/useSetAutoSlippage';
 import { setFromTokenChainId } from '../../store/actions/wallet';
+import { useUserOptions } from '../UserOptionsProvider';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -90,9 +88,10 @@ export function Swap({
   const theme = useTheme();
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
+  console.log('jie', 11);
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { isReverseRouting, noPowerBy } = useSelector(getGlobalProps);
-  const defaultChainId = useSelector(getDefaultChainId);
+  const { defaultChainId, noPowerBy } = useUserOptions();
+  const [isReverseRouting, setIsReverseRouting] = useState(false);
   const basicTokenAddress = useMemo(
     () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
     [chainId],
@@ -126,7 +125,6 @@ export function Swap({
     );
   }, [fromToken, toToken]);
   const { toFiatPrice, fromFiatPrice } = useFetchFiatPrice({
-    chainId,
     toToken,
     fromToken,
   });
@@ -250,6 +248,7 @@ export function Swap({
     fromAmount: fromAmt,
     toAmount: toAmt,
     estimateGas,
+    isReverseRouting,
   });
   const {
     resAmount,
@@ -349,6 +348,7 @@ export function Swap({
     setToToken,
     updateFromAmt,
     updateToAmt,
+    setIsReverseRouting,
   });
 
   const switchTokens = useCallback(() => {
@@ -915,7 +915,7 @@ export function Swap({
               if (isReverseRouting) {
                 updateFromAmt('');
               }
-              dispatch(setGlobalProps({ isReverseRouting: false }));
+              setIsReverseRouting(false);
             }}
             showMaxBtn={!isReverseRouting && !displayingFromAmt}
             occupiedAddrs={[toToken?.address ?? '']}
@@ -954,7 +954,7 @@ export function Swap({
               if (!isReverseRouting) {
                 updateToAmt('');
               }
-              dispatch(setGlobalProps({ isReverseRouting: true }));
+              setIsReverseRouting(true);
             }}
             occupiedAddrs={[fromToken?.address ?? '']}
             occupiedChainId={fromToken?.chainId}

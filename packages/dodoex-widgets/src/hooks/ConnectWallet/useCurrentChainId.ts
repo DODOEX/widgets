@@ -1,12 +1,11 @@
 import { useWeb3React } from '@web3-react/core';
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 import { ChainId } from '../../constants/chains';
-import { getDefaultChainId } from '../../store/selectors/wallet';
 
 export function useCurrentChainId() {
   const { chainId } = useWeb3React();
-  const defaultChainId = useSelector(getDefaultChainId);
+  const { defaultChainId } = useUserOptions();
 
   return useMemo(
     () => (chainId || defaultChainId || 1) as ChainId,

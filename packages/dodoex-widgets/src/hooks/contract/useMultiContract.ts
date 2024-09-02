@@ -8,9 +8,8 @@ import { ChainId, rpcServerMap } from '../../constants/chains';
 import contractConfig from './contractConfig';
 import { BatchThunk, runAll } from './batch';
 import { isAddress } from '../../utils';
-import { useSelector } from 'react-redux';
-import { getGlobalProps } from '../../store/selectors/globals';
 import { getStaticJsonRpcProvider } from './provider';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 // account is not optional
 function getSigner(provider: JsonRpcProvider, account: string): JsonRpcSigner {
@@ -49,7 +48,7 @@ export default function useMultiContract(chainIdProps?: number) {
     () => contractConfig[(chainIdProps ?? chainId) as ChainId],
     [chainId, chainIdProps],
   );
-  const jsonRpcUrlMapProps = useSelector(getGlobalProps).jsonRpcUrlMap;
+  const { jsonRpcUrlMap: jsonRpcUrlMapProps } = useUserOptions();
 
   const getContractRes = useCallback(
     (contractAddress: string, ABI: any) => {

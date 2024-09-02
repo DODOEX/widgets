@@ -32,18 +32,6 @@ export const getEthBalance = (state?: RootState) => {
   return (state ?? store.getState()).token.ethBalance;
 };
 
-export const getDefaultFromToken = (
-  state?: RootState,
-): DefaultTokenInfo | undefined => {
-  return (state ?? store.getState()).token.defaultFromToken;
-};
-
-export const getDefaultToToken = (
-  state?: RootState,
-): DefaultTokenInfo | undefined => {
-  return (state ?? store.getState()).token.defaultToToken;
-};
-
 export const getTokenBalance = (
   tokenAddress: string,
   state?: RootState,

@@ -13,13 +13,12 @@ import { DEFAULT_SWAP_DDL } from '../../constants/swap';
 import { getSlippage, getTxDdl } from '../../store/selectors/settings';
 import { EmptyAddress } from '../../constants/address';
 import { usePriceTimer } from './usePriceTimer';
-import { getDefaultChainId } from '../../store/selectors/wallet';
 import useExecuteSwap from './useExecuteSwap';
 import { TokenInfo } from '../Token';
 import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
-import { getGlobalProps } from '../../store/selectors/globals';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export enum RoutePriceStatus {
   Initial = 'Initial',
@@ -34,6 +33,7 @@ export interface FetchRoutePrice {
   fromAmount: string;
   toAmount: string;
   estimateGas?: boolean;
+  isReverseRouting?: boolean;
 }
 
 interface IRouteResponse {
@@ -57,9 +57,10 @@ export function useFetchRoutePrice({
   toAmount,
   marginAmount,
   estimateGas,
+  isReverseRouting,
 }: FetchRoutePrice) {
   const { account, chainId: walletChainId, provider } = useWeb3React();
-  const defaultChainId = useSelector(getDefaultChainId);
+  const { defaultChainId, feeRate, rebateTo, apikey } = useUserOptions();
   const chainId = useMemo(
     () => fromToken?.chainId || walletChainId || defaultChainId,
     [walletChainId, fromToken, defaultChainId],
@@ -69,8 +70,6 @@ export function useFetchRoutePrice({
   const slippage = useSelector(getSlippage) || defaultSlippage;
   const ddl = useSelector(getTxDdl) || DEFAULT_SWAP_DDL;
   const lastId = useRef(0);
-  const { feeRate, rebateTo, apikey, isReverseRouting } =
-    useSelector(getGlobalProps);
   const apiDdl = useMemo(() => Math.floor(Date.now() / 1000) + ddl * 60, [ddl]);
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,

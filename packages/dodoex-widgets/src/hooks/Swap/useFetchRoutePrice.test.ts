@@ -12,8 +12,10 @@ const tokenUSDTChainBSC = {
 };
 
 jest.mock('axios');
-jest.mock('../../store/selectors/wallet', () => ({
-  getDefaultChainId: () => 1,
+jest.mock('../../components/UserOptionsProvider', () => ({
+  useUserOptions: () => ({
+    defaultChainId: 1,
+  }),
 }));
 jest.mock('../../store/selectors/token', () => ({
   getEthBalance: () => ({

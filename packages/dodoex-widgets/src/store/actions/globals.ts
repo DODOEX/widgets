@@ -1,11 +1,13 @@
 import { AppThunkAction } from '.';
-import { State } from '../reducers/globals';
+import { ContractStatus, State } from '../reducers/globals';
 
-export const setGlobalProps = (globalProps: Partial<State>): AppThunkAction => {
+export const setContractStatus = (
+  contractStatus: ContractStatus,
+): AppThunkAction => {
   return async (dispatch) => {
     dispatch({
-      type: 'SET_GLOBAL_PROPS',
-      payload: globalProps,
+      type: 'SET_CONTRACT_STATUS',
+      payload: contractStatus,
     });
   };
 };

@@ -6,8 +6,7 @@ import {
   ExecutionProps,
 } from '../../hooks/Submission';
 import Dialog from '../Swap/components/Dialog';
-import { useDispatch, useSelector } from 'react-redux';
-import { setGlobalProps } from '../../store/actions/globals';
+import { useDispatch } from 'react-redux';
 import { ContractStatus } from '../../store/reducers/globals';
 import { AppThunkDispatch } from '../../store/actions';
 import { ReactComponent as LoadingIcon } from '../../assets/approveBorderRight.svg';
@@ -16,6 +15,7 @@ import { ArrowTopRightBorder, DoneBorder, ErrorWarn } from '@dodoex/icons';
 import { Showing } from '../../hooks/Submission/types';
 import { useWeb3React } from '@web3-react/core';
 import { ChainId, scanUrlDomainMap } from '../../constants/chains';
+import { setContractStatus } from '../../store/actions/globals';
 
 const strokeWidth = 6;
 
@@ -296,11 +296,7 @@ export default function WithExecutionDialog({
             fullWidth
             size={Button.Size.big}
             onClick={() => {
-              dispatch(
-                setGlobalProps({
-                  contractStatus: ContractStatus.Initial,
-                }),
-              );
+              dispatch(setContractStatus(ContractStatus.Initial));
               closeShowing();
             }}
             sx={{
