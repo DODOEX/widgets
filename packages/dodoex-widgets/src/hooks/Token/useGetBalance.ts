@@ -11,16 +11,17 @@ import { isSameAddress } from '../../utils';
 import { useWalletState } from '../ConnectWallet/useWalletState';
 
 export default function useGetBalance() {
-  const { account, chainId } = useWalletState();
+  const { chainId, evmAccount, tonAccount } = useWalletState();
   const accountBalances = useSelector(getAccountBalances);
   const ethBalance = useSelector(getEthBalance);
   const getBalance = useCallback(
     (token: TokenInfo) => {
+      const tokenChainId = token.chainId ?? chainId ?? 1;
+      const account = tokenChainId === ChainId.TON ? tonAccount : evmAccount;
       if (!account || !token) return null;
       // cross-chain basic token
       if (isSameAddress(token.address, etherTokenAddress)) {
-        const currentChainIdEthBalance =
-          ethBalance[token.chainId ?? chainId ?? 1];
+        const currentChainIdEthBalance = ethBalance[tokenChainId];
         return !currentChainIdEthBalance || currentChainIdEthBalance?.isNaN()
           ? null
           : currentChainIdEthBalance;
@@ -29,7 +30,7 @@ export default function useGetBalance() {
         accountBalances[token.address.toLocaleLowerCase()]?.tokenBalances;
       return !balance || balance?.isNaN() ? null : balance;
     },
-    [accountBalances, ethBalance, account],
+    [accountBalances, ethBalance, evmAccount, tonAccount],
   );
 
   return getBalance;

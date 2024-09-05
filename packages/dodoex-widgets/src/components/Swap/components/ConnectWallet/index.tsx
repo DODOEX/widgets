@@ -44,7 +44,7 @@ export default function ConnectWallet({
         size={Button.Size.middle}
         fullWidth
         onClick={async () => {
-          if (onConnectWalletClick) {
+          if (onConnectWalletClick && needConnectChainId !== ChainId.TON) {
             // switch chain
             if (
               !needEvmChainId &&

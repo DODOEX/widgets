@@ -5,12 +5,16 @@ import { Widget, WidgetProps } from './components/Widget';
 export type SwapWidgetProps = WidgetProps;
 export type { TokenInfo } from './hooks/Token/type';
 
+export { default as BridgeTonSummaryDialog } from './components/Widget/BridgeTonSummaryDialog';
+export { Widget } from './components/Widget';
+
 export function SwapWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>
       <Swap
         getAutoSlippage={props.getAutoSlippage}
         onConnectWalletClick={props.onConnectWalletClick}
+        bridgeToTonUrl={props.bridgeToTonUrl}
       />
     </Widget>
   );
@@ -25,6 +29,7 @@ export function InitSwapWidget(props: SwapWidgetProps) {
       <Swap
         getAutoSlippage={props.getAutoSlippage}
         onConnectWalletClick={props.onConnectWalletClick}
+        bridgeToTonUrl={props.bridgeToTonUrl}
       />
     </Widget>,
   );

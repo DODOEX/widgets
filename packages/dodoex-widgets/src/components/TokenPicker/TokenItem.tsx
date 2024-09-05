@@ -10,6 +10,7 @@ import { tokenPickerItem } from '../../constants/testId';
 import { useTheme } from '@dodoex/components';
 import { ChainId } from '../../constants/chains';
 import { useWeb3React } from '@web3-react/core';
+import useTonConnectStore from '../../hooks/ConnectWallet/TonConnect';
 
 export default function TokenItem({
   token,
@@ -24,7 +25,8 @@ export default function TokenItem({
 }) {
   const theme = useTheme();
   const getBalance = useGetBalance();
-  const { account } = useWeb3React();
+  const { account: evmAccount } = useWeb3React();
+  const tonAccount = useTonConnectStore((state) => state.connected?.account);
   const balanceBigNumber = getBalance(token);
   const balance = balanceBigNumber
     ? formatReadableNumber({
@@ -71,7 +73,7 @@ export default function TokenItem({
           >
             {token.symbol}
           </Box>
-          {account && (
+          {(token.chainId === ChainId.TON ? tonAccount : evmAccount) && (
             <Box
               sx={{
                 mt: 4,

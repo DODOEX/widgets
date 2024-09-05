@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 import { ChainId } from '../../../constants/chains';
@@ -9,12 +10,6 @@ import {
 import { refreshTime } from '../../Swap/usePriceTimer';
 import { TokenInfo } from '../../Token';
 import {
-  LAYERSWAP_QUOTE_URL,
-  LAYERSWAP_API_KEY,
-  LAYERSWAP_SWAPS_URL,
-} from './constants';
-import {
-  getLayerSwapData,
   getLimits,
   getNetworks,
   getQuote,
@@ -32,18 +27,19 @@ function convertAvgCompletionTime(completionTime: string) {
 
 export function useLayerswapRouters({
   skip,
-  data: { fromToken, toToken, fromAmount, evmAccount, tonAccount, slippage },
+  data: { fromToken, toToken, fromAmount, fromAddress, toAddress, slippage },
 }: {
   skip?: boolean;
   data: {
     fromToken: TokenInfo | null;
     toToken: TokenInfo | null;
     fromAmount: string;
-    evmAccount: string | undefined;
-    tonAccount: string | undefined;
+    fromAddress: string | undefined;
+    toAddress: string | undefined;
     slippage?: number;
   };
 }) {
+  const { provider: evmProvider } = useWeb3React();
   const networkQuery = useQuery({
     queryKey: ['layerSwap', 'networkQuery'],
     enabled: !skip,
@@ -120,11 +116,8 @@ export function useLayerswapRouters({
       if (!data) {
         throw new Error('Failed to get quote');
       }
-
-      const fromAddress = tonAccount;
-      const toAddress = evmAccount;
-      const product = 'layerswap';
       const { quote } = data;
+      const product = 'layerswap';
       const logoURI =
         'https://images.dodoex.io/PI0Kb_gccJbkOIpRNof2CUmeiyiPof28wrEH86RAlIE/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy91cGxvYWRfaW1nXzQwMTA2NzFfMjAyMzExMTYxMTE1MTM5ODAud2VicA.webp';
       const name = product.charAt(0).toUpperCase() + product.slice(1);
@@ -156,18 +149,7 @@ export function useLayerswapRouters({
             name,
           },
         },
-        sendData: (params) =>
-          submitTonWalletWithdraw({
-            fromAddress,
-            toAddress,
-            fromToken,
-            toToken,
-            fromNetworkName,
-            toNetworkName,
-            fromAmount,
-            params,
-          }),
-      } as BridgeRouteI;
+      };
     },
   });
 
@@ -185,10 +167,33 @@ export function useLayerswapRouters({
     if (!quoteQuery.data) return null;
     return {
       ...quoteQuery.data,
+      sendData: (params) =>
+        submitTonWalletWithdraw({
+          fromAddress,
+          toAddress,
+          fromToken,
+          toToken,
+          fromNetworkName,
+          toNetworkName,
+          fromAmount,
+          provider: evmProvider,
+          params,
+        }),
       minAmt: limitQuery.data?.min_amount,
       maxAmt: limitQuery.data?.max_amount,
     } as BridgeRouteI;
-  }, [limitQuery.data, quoteQuery.data]);
+  }, [
+    limitQuery.data,
+    quoteQuery.data,
+    fromAddress,
+    toAddress,
+    fromToken,
+    toToken,
+    fromNetworkName,
+    toNetworkName,
+    fromAmount,
+    evmProvider,
+  ]);
 
   return {
     status,

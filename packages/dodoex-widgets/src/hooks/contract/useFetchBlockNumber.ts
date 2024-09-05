@@ -11,7 +11,7 @@ export default function useFetchBlockNumber() {
   const updateBlockNumber = useCallback(async () => {
     if (!getLastBlockNumber || !chainId) return;
     const blockNumber = await getLastBlockNumber();
-    dispatch(setBlockNumber(blockNumber));
+    dispatch(setBlockNumber(blockNumber ?? 0));
   }, [getLastBlockNumber, chainId]);
   return {
     updateBlockNumber,

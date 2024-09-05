@@ -27,6 +27,7 @@ jest.mock('../ConnectWallet/useWalletState', () => ({
   useWalletState: () => ({
     chainId: 1,
     account: '0x2Ba1633338dDD2Ab37fbc95ea615BA98f0445380',
+    evmAccount: '0x2Ba1633338dDD2Ab37fbc95ea615BA98f0445380',
   }),
 }));
 describe('useGetBalance', () => {

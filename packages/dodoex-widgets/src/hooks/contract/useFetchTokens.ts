@@ -16,7 +16,6 @@ import { useWalletState } from '../ConnectWallet/useWalletState';
 import { ChainId } from '../../constants/chains';
 import useTonConnectStore from '../ConnectWallet/TonConnect';
 import { BIG_ALLOWANCE } from '../../constants/token';
-import { useWeb3React } from '@web3-react/core';
 
 type TokenResult = {
   address: string;
@@ -39,8 +38,7 @@ export default function useFetchTokens({
   chainId?: number;
   skip?: boolean;
 }) {
-  const { account } = useWeb3React();
-  const tonConnect = useTonConnectStore();
+  const { evmAccount, tonAccount } = useWalletState();
   const dispatch = useDispatch<AppThunkDispatch>();
   const [addresses, tonTokenList] = useMemo(() => {
     const evmList = [] as TokenList;
@@ -61,7 +59,7 @@ export default function useFetchTokens({
   const [data, setData] = useState<TokenResult[]>();
 
   const thunk = useMemo(() => {
-    if (!account || !addresses.length || !contractConfig) return undefined;
+    if (!evmAccount || !addresses.length || !contractConfig) return undefined;
     const { DODO_APPROVE: proxyAddress, ERC20_HELPER: erc20HelperAddress } =
       contractConfig;
     const contract = getContract(erc20HelperAddress, erc20Helper);
@@ -69,7 +67,7 @@ export default function useFetchTokens({
     const res = addresses.map((tokenAddress) => {
       const encoded = contract.interface.encodeFunctionData('isERC20', [
         tokenAddress,
-        account,
+        evmAccount,
         proxyAddress,
       ]);
       const callData = {
@@ -109,7 +107,7 @@ export default function useFetchTokens({
       };
     });
     return res;
-  }, [account, getContract, JSON.stringify(addresses)]);
+  }, [evmAccount, getContract, JSON.stringify(addresses)]);
 
   // query addresses
   useEffect(() => {
@@ -181,15 +179,10 @@ export default function useFetchTokens({
       }
     };
 
-    if (tonTokenList.length && !!tonConnect.connected?.account) {
+    if (tonTokenList.length && !!tonAccount) {
       computed();
     }
-  }, [
-    JSON.stringify(tonTokenList),
-    blockNumber,
-    skip,
-    tonConnect.connected?.account,
-  ]);
+  }, [JSON.stringify(tonTokenList), blockNumber, skip, tonAccount]);
 
   return {
     data,

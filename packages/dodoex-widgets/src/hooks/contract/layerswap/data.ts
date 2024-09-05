@@ -1,10 +1,19 @@
+import { Interface } from '@ethersproject/abi';
+import { Web3Provider } from '@ethersproject/providers';
+import { useWeb3React } from '@web3-react/core';
+import BigNumber from 'bignumber.js';
 import { Address, beginCell, JettonMaster, toNano } from 'ton';
+import { ChainId } from '../../../constants/chains';
+import { isETHAddress } from '../../../utils/address';
 import useTonConnectStore from '../../ConnectWallet/TonConnect';
 import {
   getHashByBoc,
   waitForTransaction,
 } from '../../ConnectWallet/TonConnect/contract';
+import { WatchResult } from '../../Submission/types';
 import { TokenInfo } from '../../Token';
+import erc20ABI from '../abis/erc20ABI';
+import { sendTransaction } from '../wallet';
 import {
   LAYERSWAP_API_KEY,
   LAYERSWAP_LIMITS_URL,
@@ -167,6 +176,7 @@ export async function submitTonWalletWithdraw({
   toNetworkName,
   fromAmount,
   slippage,
+  provider,
   params,
 }: {
   fromAddress: string | undefined;
@@ -177,6 +187,7 @@ export async function submitTonWalletWithdraw({
   toNetworkName: string | undefined | null;
   fromAmount: string;
   slippage?: number;
+  provider?: Web3Provider;
   params: {
     onSubmit?: (tx: string, reportInfo?: Record<string, any>) => void;
     onSuccess?: (tx: string, reportInfo?: Record<string, any>) => Promise<void>;
@@ -228,35 +239,81 @@ export async function submitTonWalletWithdraw({
   if (!callData || !depositAddress) {
     throw new Error('No deposit action found in the swap response');
   }
-  const transaction = await transactionBuilder(
-    amount,
-    sourceToken,
-    depositAddress,
-    fromAddress,
-    callData,
-  );
+  if (fromToken.chainId === ChainId.TON) {
+    const transaction = await transactionBuilder(
+      amount,
+      sourceToken,
+      depositAddress,
+      fromAddress,
+      callData,
+    );
 
-  const { tonConnectUI, client } = useTonConnectStore.getState();
-  if (!tonConnectUI || !client) {
-    throw new Error('No tonConnectUI or client available');
-  }
-  const res = await tonConnectUI.sendTransaction(transaction);
-  const bocHash = getHashByBoc(res.boc);
-  if (params.onSubmit) {
-    params.onSubmit(bocHash);
-  }
+    const { tonConnectUI, client } = useTonConnectStore.getState();
+    if (!tonConnectUI || !client) {
+      throw new Error('No tonConnectUI or client available');
+    }
+    const res = await tonConnectUI.sendTransaction(transaction);
+    const bocHash = getHashByBoc(res.boc);
+    if (params.onSubmit) {
+      params.onSubmit(bocHash);
+    }
 
-  const data = await waitForTransaction(
-    {
-      boc: res.boc,
-      address: fromAddress,
-    },
-    client,
-  );
-  if (params.onSuccess) {
-    params.onSuccess(data?.hash()?.toString('base64') ?? bocHash, {
-      tonTransaction: data,
-    });
+    const data = await waitForTransaction(
+      {
+        boc: res.boc,
+        address: fromAddress,
+      },
+      client,
+    );
+    if (params.onSuccess) {
+      params.onSuccess(data?.hash()?.toString('base64') ?? bocHash, {
+        tonTransaction: data,
+      });
+    }
+    return data;
+  } else {
+    if (!provider) throw new Error('Invalid provider');
+    const sendAmountWei = new BigNumber(amount)
+      .times(10 ** fromToken.decimals)
+      .toString();
+    let value = '0x0';
+    let data = '0x';
+    if (isETHAddress(fromToken.address)) {
+      value = sendAmountWei;
+    } else {
+      data = callData;
+    }
+    const executePrams = {
+      value,
+      data: data,
+      to: fromToken.address,
+      from: fromAddress,
+      chainId: fromToken.chainId,
+    };
+    try {
+      const transaction = await sendTransaction(executePrams, provider);
+      const tx = transaction.hash;
+      if (params.onSubmit) {
+        params.onSubmit(tx);
+      }
+      const receipt = await transaction.wait(1);
+      if (receipt.status === WatchResult.Success) {
+        if (params.onSuccess) {
+          params.onSuccess(tx, {
+            receipt,
+          });
+        }
+      } else if (receipt.status === WatchResult.Failed) {
+        if (params.onError) {
+          params.onError(new Error('Transaction failed'));
+        }
+      }
+      return receipt;
+    } catch (error) {
+      if (params.onError) {
+        params.onError(error);
+        return null;
+      }
+    }
   }
-  return data;
 }

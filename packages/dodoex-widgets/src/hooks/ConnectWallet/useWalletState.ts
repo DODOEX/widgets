@@ -46,7 +46,10 @@ export function useWalletState({
         isMetamask: false,
         autoConnect,
         connect: tonConnect.connect,
-        getLastBlockNumber: tonConnect.getBlockNumber,
+        getLastBlockNumber: async () => {
+          const result = await tonConnect.getBlockNumber();
+          return result;
+        },
         getBalance: async (account: string) => {
           const balance = await tonConnect.getBalance(account);
           return balance;
@@ -67,7 +70,10 @@ export function useWalletState({
           : web3React.connector.resetState();
       },
       provider: web3React.provider,
-      getLastBlockNumber: web3React.provider?.getBlockNumber,
+      getLastBlockNumber: async () => {
+        const result = await web3React.provider?.getBlockNumber();
+        return result;
+      },
       getBalance: web3React.provider
         ? async (account: string) => {
             const balance = await web3React.provider?.getBalance(account);

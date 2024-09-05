@@ -161,12 +161,16 @@ export interface FetchRoutePrice {
   toToken: TokenInfo | null;
   fromAmount: string;
   fromFiatPrice: string;
+  fromAddress?: string;
+  toAddress?: string;
 }
 export function useFetchRoutePriceBridge({
   toToken,
   fromToken,
   fromAmount,
   fromFiatPrice,
+  fromAddress: fromAddressProps,
+  toAddress: toAddressProps,
 }: FetchRoutePrice) {
   const { account, provider } = useWalletState();
   const { defaultSlippage, loading: slippageLoading } =
@@ -211,8 +215,16 @@ export function useFetchRoutePriceBridge({
       toToken,
       fromToken,
       fromAmount,
-      evmAccount: web3React.account,
-      tonAccount: tonConnect.connected?.account,
+      fromAddress:
+        fromAddressProps ??
+        (fromToken?.chainId === ChainId.TON
+          ? tonConnect.connected?.account
+          : web3React.account),
+      toAddress:
+        toAddressProps ??
+        (toToken?.chainId === ChainId.TON
+          ? tonConnect.connected?.account
+          : web3React.account),
       slippage: Number(slippage),
     },
   });
@@ -238,8 +250,8 @@ export function useFetchRoutePriceBridge({
 
     const fromTokenAddress = fromToken.address;
     const toTokenAddress = toToken.address;
-    const fromAddress = account || EmptyAddress;
-    const toAddress = account || EmptyAddress;
+    const fromAddress = fromAddressProps ?? (account || EmptyAddress);
+    const toAddress = toAddressProps ?? (account || EmptyAddress);
     const slippageNum = Number(slippage) / 100;
 
     const data: any = {
@@ -433,6 +445,8 @@ export function useFetchRoutePriceBridge({
     bridgeRoutePriceAPI,
     slippageLoading,
     needOrbiterQuery,
+    fromAddressProps,
+    toAddressProps,
   ]);
 
   usePriceTimer({ refetch });
@@ -445,6 +459,12 @@ export function useFetchRoutePriceBridge({
     if (fromToken?.chainId === ChainId.TON) {
       fromAddress = tonConnect.connected?.account;
       toAddress = web3React.account;
+    }
+    if (fromAddressProps !== undefined) {
+      fromAddress = fromAddressProps;
+    }
+    if (toAddressProps !== undefined) {
+      toAddress = toAddressProps;
     }
     if (
       !needOrbiterQuery ||
@@ -537,6 +557,8 @@ export function useFetchRoutePriceBridge({
     web3React.account,
     tonConnect.connected?.account,
     orbiterContractMapQuery,
+    fromAddressProps,
+    toAddressProps,
   ]);
 
   const bridgeRouteListRes = useMemo(() => {

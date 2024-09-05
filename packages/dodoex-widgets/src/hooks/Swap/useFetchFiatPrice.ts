@@ -10,7 +10,7 @@ import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
 
 export interface FetchFiatPriceProps {
-  chainId: ChainId | undefined;
+  chainId?: ChainId;
   fromToken: TokenInfo | null;
   toToken: TokenInfo | null;
 }
@@ -26,7 +26,7 @@ export function useFetchFiatPrice({
   const fiatPriceAPI = useGetAPIService(APIServiceKey.fiatPrice);
 
   const refetch = useCallback(() => {
-    if (!chainId || !fromToken || !toToken) return;
+    if (!fromToken || !toToken) return;
     const tokens = [] as TokenInfo[];
     if (fromToken.chainId !== ChainId.TON) {
       tokens.push(fromToken);

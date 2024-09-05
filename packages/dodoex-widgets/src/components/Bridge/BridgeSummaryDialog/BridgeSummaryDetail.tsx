@@ -194,35 +194,41 @@ export default function BridgeSummaryDetail({
                   />
                 </>
               )} */}
-                  <Box
-                    sx={{
-                      typography: 'body2',
-                      fontWeight: 600,
-                    }}
-                  >
-                    {truncatePoolAddress(route.fromAddress)}
-                  </Box>
-                  <HoverOpacity
-                    component="a"
-                    // @ts-ignore
-                    href={fromAddressScanUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      ml: 6,
-                      width: 18,
-                      height: 18,
-                      color: 'text.secondary',
-                    }}
-                  >
-                    <Box
-                      component={ArrowTopRightBorder}
-                      sx={{
-                        width: 18,
-                        height: 18,
-                      }}
-                    />
-                  </HoverOpacity>
+                  {route.fromAddress ? (
+                    <>
+                      <Box
+                        sx={{
+                          typography: 'body2',
+                          fontWeight: 600,
+                        }}
+                      >
+                        {truncatePoolAddress(route.fromAddress)}
+                      </Box>
+                      <HoverOpacity
+                        component="a"
+                        // @ts-ignore
+                        href={fromAddressScanUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          ml: 6,
+                          width: 18,
+                          height: 18,
+                          color: 'text.secondary',
+                        }}
+                      >
+                        <Box
+                          component={ArrowTopRightBorder}
+                          sx={{
+                            width: 18,
+                            height: 18,
+                          }}
+                        />
+                      </HoverOpacity>
+                    </>
+                  ) : (
+                    '-'
+                  )}
                 </Box>
               </Box>
               {route.feeUSD ? (

@@ -49,7 +49,7 @@ export default function isZero(hexNumberString: string) {
  * @param address pool address
  */
 export function truncatePoolAddress(address: string): string {
-  if (address.length <= 10) {
+  if (!address || address.length <= 10) {
     return address;
   }
   return `${address.slice(0, 6)}...${address.slice(

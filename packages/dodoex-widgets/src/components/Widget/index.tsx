@@ -41,6 +41,7 @@ import {
 import { useWalletState } from '../../hooks/ConnectWallet/useWalletState';
 import WebApp from '@twa-dev/sdk';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { isBrowser } from '../../utils/device';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export const queryClient = new QueryClient();
@@ -121,7 +122,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   }, [provider]);
 
   useEffect(() => {
-    if (props.tonConnect) {
+    if (props.tonConnect && isBrowser) {
       WebApp.ready();
     }
   }, [props.tonConnect]);

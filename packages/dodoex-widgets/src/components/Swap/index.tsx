@@ -7,8 +7,9 @@ import {
   useTheme,
   RotatingIcon,
   Tooltip,
+  Input,
 } from '@dodoex/components';
-import { formatTokenAmountNumber } from '../../utils';
+import { formatTokenAmountNumber, isAddress } from '../../utils';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Setting, Dodo, Warn, DoubleRight } from '@dodoex/icons';
@@ -71,16 +72,20 @@ import {
 import { useWalletState } from '../../hooks/ConnectWallet/useWalletState';
 import { useWeb3React } from '@web3-react/core';
 import useTonConnectStore from '../../hooks/ConnectWallet/TonConnect';
+import { isAndroid, isIOS } from '../../utils/device';
+import WebApp from '@twa-dev/sdk';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
   getAutoSlippage?: GetAutoSlippage;
   onConnectWalletClick?: ConnectWalletProps['onConnectWalletClick'];
+  bridgeToTonUrl?: string;
 }
 
 export function Swap({
   getAutoSlippage,
   onConnectWalletClick,
+  bridgeToTonUrl,
 }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
@@ -158,9 +163,17 @@ export function Swap({
   const insufficientBalance = useMemo(() => {
     const token = isReverseRouting ? toToken : fromToken;
     const balance = new BigNumber(token ? getBalance(token) || 0 : 0);
+    if (
+      !(token && getBalance(token)) &&
+      fromToken?.chainId !== ChainId.TON &&
+      toToken?.chainId === ChainId.TON
+    ) {
+      return false;
+    }
     return balance.lt(isReverseRouting ? toAmt ?? 0 : fromAmt);
   }, [isReverseRouting, fromToken, toToken, fromAmt, toAmt, getBalance]);
 
+  const [receiveAddress, setReceiveAddress] = useState('');
   const {
     bridgeRouteList,
     status: bridgeRouteStatus,
@@ -170,6 +183,7 @@ export function Swap({
     fromToken,
     fromAmount: fromAmt,
     fromFiatPrice,
+    toAddress: receiveAddress ? receiveAddress : undefined,
   });
   const [switchBridgeRouteShow, setSwitchBridgeRouteShow] = useState(false);
   const [selectedRouteIdOrigin, setSelectRouteId] = useState('');
@@ -183,7 +197,8 @@ export function Swap({
     () =>
       bridgeRouteList.find(
         (route) =>
-          route.id === selectedRouteId && route.fromAddress === account,
+          route.id === selectedRouteId &&
+          (route.fromAddress === account || !account),
       ),
     [bridgeRouteList, selectedRouteId, account],
   );
@@ -703,18 +718,29 @@ export function Swap({
     let needEvmChainId = undefined as undefined | ChainId;
     const isFromTon = fromToken?.chainId === ChainId.TON;
     const isToTon = toToken?.chainId === ChainId.TON;
-    if (!(isFromTon && isToTon) && (isFromTon || isToTon)) {
-      needEvmChainId = isFromTon ? toToken?.chainId : fromToken?.chainId;
+    let isNeedConnect = false;
+    let needSwitchChain = fromToken?.chainId;
+    if (isFromTon || isToTon) {
+      // if (window.ethereum) {
+      //   if (!(isFromTon && isToTon)) {
+      //     needEvmChainId = isFromTon ? toToken?.chainId : fromToken?.chainId;
+      //   }
+      //   isNeedConnect =
+      //     !web3React.account ||
+      //     (fromToken?.chainId && chainId !== fromToken.chainId) ||
+      //     !tonConnect.connected;
+      // } else {
+      needSwitchChain = ChainId.TON;
+      isNeedConnect = !tonConnect.connected;
+      // }
+    } else {
+      isNeedConnect =
+        !account || (!!fromToken?.chainId && chainId !== fromToken.chainId);
     }
-    if (
-      !account ||
-      (fromToken?.chainId && chainId !== fromToken.chainId) ||
-      (needEvmChainId && !tonConnect.connected) ||
-      !web3React.account
-    )
+    if (isNeedConnect)
       return (
         <ConnectWallet
-          needSwitchChain={fromToken?.chainId}
+          needSwitchChain={needSwitchChain}
           onConnectWalletClick={onConnectWalletClick}
           needEvmChainId={needEvmChainId}
         />
@@ -809,22 +835,75 @@ export function Swap({
       );
 
     if (isBridge) {
+      const needReceiveAddress =
+        !web3React.account &&
+        fromToken.chainId === ChainId.TON &&
+        toToken.chainId !== ChainId.TON;
       return (
-        <Button
-          fullWidth
-          onClick={() =>
-            handleSendBridgeRoute({
-              selectedRoute,
-              fromEtherTokenBalance,
-              goNext: () => setBridgeSummaryShow(true),
-            })
-          }
-          data-testid={swapReviewBtn}
-          disabled={!selectedRoute}
-          isLoading={sendRouteLoading}
-        >
-          <Trans>Review Cross Chain</Trans>
-        </Button>
+        <>
+          {needReceiveAddress && (
+            <Input
+              fullWidth
+              value={receiveAddress}
+              onChange={(e) => setReceiveAddress(e.target.value)}
+              errorMsg={
+                !receiveAddress || isAddress(receiveAddress)
+                  ? undefined
+                  : 'Invalid address'
+              }
+              sx={{
+                height: 48,
+                border: 'none',
+              }}
+              placeholder="Receive address"
+            />
+          )}
+          <Button
+            fullWidth
+            onClick={() => {
+              if (
+                fromToken.chainId !== ChainId.TON &&
+                toToken.chainId === ChainId.TON &&
+                bridgeToTonUrl
+              ) {
+                const splitSymbol =
+                  bridgeToTonUrl.indexOf('?') !== -1 ? '&' : '?';
+                const link = `${bridgeToTonUrl}${splitSymbol}tonAccount=${tonConnect.connected?.account}&fromTokenAddress=${fromToken.address}&fromChainId=${fromToken.chainId}&toTokenAddress=${toToken.address}&toChainId=${toToken.chainId}&fromAmt=${fromAmt}`;
+                if (isAndroid || isIOS) {
+                  WebApp.openLink(
+                    `https://metamask.app.link/dapp/${link.replace(
+                      /^https?:\/\//,
+                      '',
+                    )}`,
+                  );
+                } else {
+                  WebApp.openLink(link);
+                }
+                return;
+              }
+              handleSendBridgeRoute({
+                selectedRoute,
+                fromEtherTokenBalance,
+                goNext: () => setBridgeSummaryShow(true),
+              });
+            }}
+            data-testid={swapReviewBtn}
+            disabled={
+              !selectedRoute ||
+              (needReceiveAddress && !isAddress(receiveAddress))
+            }
+            isLoading={sendRouteLoading}
+            sx={
+              needReceiveAddress
+                ? {
+                    mt: 12,
+                  }
+                : undefined
+            }
+          >
+            <Trans>Review Cross Chain</Trans>
+          </Button>
+        </>
       );
     }
     return (
