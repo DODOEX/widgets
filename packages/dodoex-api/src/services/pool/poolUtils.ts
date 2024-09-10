@@ -2,7 +2,7 @@ import { PoolType } from './type';
 
 export const poolUtils = {
   getIsV3Mining(type: PoolType): boolean {
-    return ['DSP', 'LPTOKEN', 'V3CLASSICAL'].includes(type);
+    return ['DSP', 'GSP', 'LPTOKEN', 'V3CLASSICAL'].includes(type);
   },
 
   singleSideLp(type: PoolType): boolean {

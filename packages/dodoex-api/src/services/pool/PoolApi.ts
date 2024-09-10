@@ -30,6 +30,7 @@ const poolTypeAbiNameObject: {
 } = {
   DVM: ABIName.dvmPoolABI,
   DSP: ABIName.dvmPoolABI,
+  GSP: ABIName.dvmPoolABI,
   LPTOKEN: ABIName.dvmPoolABI,
   CLASSICAL: ABIName.classicalPoolABI,
   V3CLASSICAL: ABIName.classicalPoolABI,
@@ -716,6 +717,7 @@ export class PoolApi {
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'totalSupply',
           DSP: 'totalSupply',
+          GSP: 'totalSupply',
           LPTOKEN: 'totalSupply',
           CLASSICAL: 'getTotalBaseCapital',
           V3CLASSICAL: 'getTotalBaseCapital',
@@ -755,6 +757,7 @@ export class PoolApi {
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: null,
           DSP: null,
+          GSP: null,
           LPTOKEN: null,
           CLASSICAL: 'getTotalQuoteCapital',
           V3CLASSICAL: 'getTotalQuoteCapital',
@@ -808,6 +811,7 @@ export class PoolApi {
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'balanceOf',
           DSP: 'balanceOf',
+          GSP: 'balanceOf',
           LPTOKEN: 'balanceOf',
           CLASSICAL: 'getBaseCapitalBalanceOf',
           V3CLASSICAL: 'getBaseCapitalBalanceOf',
@@ -862,6 +866,7 @@ export class PoolApi {
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: null,
           DSP: null,
+          GSP: null,
           LPTOKEN: null,
           CLASSICAL: 'getQuoteCapitalBalanceOf',
           V3CLASSICAL: 'getQuoteCapitalBalanceOf',
@@ -925,6 +930,7 @@ export class PoolApi {
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'getVaultReserve',
           DSP: 'getVaultReserve',
+          GSP: 'getVaultReserve',
           LPTOKEN: 'getVaultReserve',
           CLASSICAL: null,
           V3CLASSICAL: null,
@@ -1033,6 +1039,7 @@ export class PoolApi {
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'balanceOf',
           DSP: 'totalSupply',
+          GSP: 'totalSupply',
           LPTOKEN: 'totalSupply',
           CLASSICAL: 'balanceOf',
           V3CLASSICAL: 'totalSupply',
@@ -1100,6 +1107,7 @@ export class PoolApi {
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: null,
           DSP: null,
+          GSP: null,
           LPTOKEN: null,
           CLASSICAL: 'balanceOf',
           V3CLASSICAL: 'totalSupply',
@@ -1170,6 +1178,7 @@ export class PoolApi {
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'getUserLpBalance',
           DSP: 'balanceOf',
+          GSP: 'balanceOf',
           LPTOKEN: 'balanceOf',
           CLASSICAL: 'getUserLpBalance',
           V3CLASSICAL: 'balanceOf',
@@ -1240,6 +1249,7 @@ export class PoolApi {
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: null,
           DSP: null,
+          GSP: null,
           LPTOKEN: null,
           CLASSICAL: 'getUserLpBalance',
           V3CLASSICAL: 'balanceOf',
@@ -1394,7 +1404,7 @@ export class PoolApi {
             },
           );
           queryResult = pmmHelperResult?.res?.[0];
-        } else if (['DVM', 'DPP', 'LPTOKEN', 'DSP'].includes(type)) {
+        } else if (['DVM', 'DPP', 'LPTOKEN', 'DSP', 'GSP'].includes(type)) {
           queryResult = await this.contractRequests.batchCallQuery(chainId, {
             abiName: ABIName.dvmPoolABI,
             contractAddress: poolAddress,
