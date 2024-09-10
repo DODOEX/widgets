@@ -295,12 +295,12 @@ if (totalSupply == 0) {
           ) {
             sharesAmount = balanceInfo.userBaseLpToTokenBalance;
           } else if (
-            balanceInfo.classicalBaseTarget &&
-            balanceInfo.classicalQuoteTarget &&
+            balanceInfo.baseReserve &&
+            balanceInfo.quoteReserve &&
             balanceInfo.userBaseLpToTokenBalance &&
             balanceInfo.totalBaseLpBalance &&
-            balanceInfo.classicalBaseTarget.gt(0) &&
-            balanceInfo.classicalQuoteTarget.eq(0)
+            balanceInfo.baseReserve.gt(0) &&
+            balanceInfo.quoteReserve.eq(0)
           ) {
             let b = baseInAmount;
             if (baseInAmount.gte(balanceInfo.userBaseLpToTokenBalance)) {
@@ -308,12 +308,12 @@ if (totalSupply == 0) {
             }
             sharesAmount = b
               .multipliedBy(balanceInfo.totalBaseLpBalance)
-              .div(balanceInfo.classicalBaseTarget);
+              .div(balanceInfo.baseReserve);
           } else if (
-            balanceInfo.classicalBaseTarget &&
-            balanceInfo.classicalQuoteTarget &&
-            balanceInfo.classicalBaseTarget.gt(0) &&
-            balanceInfo.classicalQuoteTarget.gt(0)
+            balanceInfo.baseReserve &&
+            balanceInfo.quoteReserve &&
+            balanceInfo.baseReserve.gt(0) &&
+            balanceInfo.quoteReserve.gt(0)
           ) {
             let b = baseInAmount;
             if (
@@ -322,7 +322,7 @@ if (totalSupply == 0) {
             ) {
               b = balanceInfo.userBaseLpToTokenBalance;
             }
-            const baseInputRatio = b.div(balanceInfo.classicalBaseTarget);
+            const baseInputRatio = b.div(balanceInfo.baseReserve);
             let q = quoteInAmount;
             if (
               balanceInfo.userQuoteLpToTokenBalance &&
@@ -330,7 +330,7 @@ if (totalSupply == 0) {
             ) {
               q = balanceInfo.userQuoteLpToTokenBalance;
             }
-            const quoteInputRatio = q.div(balanceInfo.classicalQuoteTarget);
+            const quoteInputRatio = q.div(balanceInfo.quoteReserve);
             let mintRatio = baseInputRatio;
             if (quoteInputRatio.lt(baseInputRatio)) {
               mintRatio = quoteInputRatio;

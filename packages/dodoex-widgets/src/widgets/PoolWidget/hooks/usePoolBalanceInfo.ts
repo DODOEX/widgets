@@ -190,17 +190,25 @@ export function usePoolBalanceInfo({
     if (quoteSupply) {
       quoteLpToTokenProportion = computeLpProportion(quoteSupply, quoteReserve);
     }
+
+    // userQuoteLpQuery returns null after querying. This kind of pool does not distinguish the balance of baseLp or quoteLp. Here, the baseLp balance of the query is directly used for calculation.
+    const userLpBalance =
+      userQuoteLpQuery.isFetched &&
+      !userQuoteLpQuery.error &&
+      userQuoteLpBalance === null
+        ? userBaseLpBalance
+        : userQuoteLpBalance;
     if (isPrivate) {
       userQuoteLpToTokenBalance = quoteReserve;
     } else if (
       !userQuoteLpQuery.isLoading &&
       !userQuoteLpQuery.error &&
-      !userQuoteLpBalance
+      !userLpBalance
     ) {
       userQuoteLpToTokenBalance = new BigNumber(0);
     } else {
       userQuoteLpToTokenBalance = getLpToTokenBalance(
-        userQuoteLpBalance,
+        userLpBalance,
         quoteSupply,
         quoteReserve,
         classicalQuoteTarget,
