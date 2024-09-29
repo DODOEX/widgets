@@ -112,4 +112,11 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WBERD',
     wrappedTokenAddress: '0x3a64Ec3606FF7310E8fAd6FcC008e39705fB496d',
   },
+  [ChainId.BARTIO_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'BERA',
+    name: 'Wrapped BERA',
+    wrappedTokenSymbol: 'WBERA',
+    wrappedTokenAddress: '0x7507c1dc16935B82698e4C63f2746A2fCf994dF8',
+  },
 };

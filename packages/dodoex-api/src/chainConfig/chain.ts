@@ -30,4 +30,6 @@ export enum ChainId {
   MANTLE = 5000,
 
   DODO_CHAIN_TESTNET = 53457,
+
+  BARTIO_TESTNET = 80084,
 }

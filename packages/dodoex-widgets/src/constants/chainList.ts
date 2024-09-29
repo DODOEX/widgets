@@ -14,6 +14,7 @@ import { ReactComponent as ScrollLogo } from '../assets/logo/networks/scroll.svg
 import { ReactComponent as MantaLogo } from '../assets/logo/networks/manta.svg';
 import { ReactComponent as MantleLogo } from '../assets/logo/networks/mantle.svg';
 import { ReactComponent as DODOchainLogo } from '../assets/logo/networks/dodochain.svg';
+import { ReactComponent as BartioTestnetLogo } from '../assets/logo/networks/bartio.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -158,6 +159,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.DODO_CHAIN_TESTNET,
       logo: DODOchainLogo,
       name: 'DODOchain testnet',
+    },
+  ],
+  [
+    ChainId.BARTIO_TESTNET,
+    {
+      chainId: ChainId.BARTIO_TESTNET,
+      logo: BartioTestnetLogo,
+      name: 'Berachain bArtio',
     },
   ],
 ]);

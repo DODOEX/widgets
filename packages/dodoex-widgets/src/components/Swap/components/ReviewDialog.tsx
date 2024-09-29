@@ -42,6 +42,7 @@ export interface ReviewDialogProps {
   curFromFiatPrice: BigNumber | null;
   pricePerFromToken: number | null;
   loading: boolean;
+  disabledFiatPrice?: boolean;
 }
 export function ReviewDialog({
   open,
@@ -60,6 +61,7 @@ export function ReviewDialog({
   pricePerFromToken,
   additionalFeeAmount,
   loading,
+  disabledFiatPrice,
 }: ReviewDialogProps) {
   const theme = useTheme();
   const { defaultSlippage } = useDefaultSlippage(false);
@@ -67,8 +69,10 @@ export function ReviewDialog({
   const dispatch = useDispatch<AppThunkDispatch>();
   const { contractStatus } = useSelector(getGlobalProps);
   const isPriceWaningShown = useMemo(
-    () => new BigNumber(priceImpact).gt(PRICE_IMPACT_THRESHOLD),
-    [priceImpact],
+    () =>
+      !disabledFiatPrice &&
+      new BigNumber(priceImpact).gt(PRICE_IMPACT_THRESHOLD),
+    [priceImpact, disabledFiatPrice],
   );
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
@@ -178,24 +182,26 @@ export function ReviewDialog({
                   decimals: toToken?.decimals,
                 })} ${toToken?.symbol}`}</LoadingSkeleton>
               </Box>
-              <LoadingSkeleton
-                loading={loading}
-                loadingProps={{
-                  width: 30,
-                }}
-                sx={{
-                  typography: 'h6',
-                  mt: 4,
-                  color: theme.palette.text.secondary,
-                }}
-              >
-                {curToFiatPrice
-                  ? `$${formatReadableNumber({
-                      input: curToFiatPrice,
-                      showDecimals: 1,
-                    })}(${priceImpact}%)`
-                  : '-'}
-              </LoadingSkeleton>
+              {!disabledFiatPrice && (
+                <LoadingSkeleton
+                  loading={loading}
+                  loadingProps={{
+                    width: 30,
+                  }}
+                  sx={{
+                    typography: 'h6',
+                    mt: 4,
+                    color: theme.palette.text.secondary,
+                  }}
+                >
+                  {curToFiatPrice
+                    ? `$${formatReadableNumber({
+                        input: curToFiatPrice,
+                        showDecimals: 1,
+                      })}(${priceImpact}%)`
+                    : '-'}
+                </LoadingSkeleton>
+              )}
             </Box>
           </Box>
           <Box
@@ -328,28 +334,30 @@ export function ReviewDialog({
               </LoadingSkeleton>
             </Box>
 
-            <Box
-              sx={{
-                mt: 8,
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Trans>Price Impact</Trans>
-                <QuestionTooltip
-                  title={
-                    <Trans>
-                      Due to the market condition, market price and estimated
-                      price may have a slight difference
-                    </Trans>
-                  }
-                  ml={5}
-                />
+            {!disabledFiatPrice && (
+              <Box
+                sx={{
+                  mt: 8,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Trans>Price Impact</Trans>
+                  <QuestionTooltip
+                    title={
+                      <Trans>
+                        Due to the market condition, market price and estimated
+                        price may have a slight difference
+                      </Trans>
+                    }
+                    ml={5}
+                  />
+                </Box>
+                <Box>{`${priceImpact}%`}</Box>
               </Box>
-              <Box>{`${priceImpact}%`}</Box>
-            </Box>
+            )}
 
             <Box
               sx={{

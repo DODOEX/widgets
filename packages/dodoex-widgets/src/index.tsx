@@ -28,6 +28,7 @@ export function SwapWidget(props: SwapWidgetProps) {
         getAutoSlippage={props.getAutoSlippage}
         onPayTokenChange={props.onPayTokenChange}
         onReceiveTokenChange={props.onReceiveTokenChange}
+        disabledFiatPrice={props.disabledFiatPrice}
       />
     </Widget>
   );
@@ -51,6 +52,7 @@ export function InitSwapWidget(props: SwapWidgetProps) {
         getAutoSlippage={props.getAutoSlippage}
         onPayTokenChange={props.onPayTokenChange}
         onReceiveTokenChange={props.onReceiveTokenChange}
+        disabledFiatPrice={props.disabledFiatPrice}
       />
     </Widget>,
   );

@@ -79,18 +79,21 @@ export interface SwapProps {
   getAutoSlippage?: GetAutoSlippage;
   onPayTokenChange?: (token: TokenInfo) => void;
   onReceiveTokenChange?: (token: TokenInfo) => void;
+  disabledFiatPrice?: boolean;
 }
 
 export function Swap({
   getAutoSlippage,
   onPayTokenChange,
   onReceiveTokenChange,
+  disabledFiatPrice,
 }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { isReverseRouting, noPowerBy } = useSelector(getGlobalProps);
+  const { isReverseRouting, noPowerBy, crossChain } =
+    useSelector(getGlobalProps);
   const defaultChainId = useSelector(getDefaultChainId);
   const basicTokenAddress = useMemo(
     () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
@@ -124,10 +127,17 @@ export function Swap({
       fromToken.chainId !== toToken.chainId
     );
   }, [fromToken, toToken]);
-  const { toFiatPrice, fromFiatPrice } = useFetchFiatPrice({
-    toToken,
-    fromToken,
-  });
+  const { toFiatPrice, fromFiatPrice } = useFetchFiatPrice(
+    disabledFiatPrice
+      ? {
+          toToken: null,
+          fromToken: null,
+        }
+      : {
+          toToken,
+          fromToken,
+        },
+  );
 
   const { marginAmount } = useMarginAmount({
     token: isReverseRouting ? toToken : fromToken,
@@ -911,7 +921,9 @@ export function Swap({
             occupiedAddrs={[toToken?.address ?? '']}
             occupiedChainId={toToken?.chainId}
             fiatPriceTxt={
-              displayFromFiatPrice
+              disabledFiatPrice
+                ? undefined
+                : displayFromFiatPrice
                 ? `$${formatReadableNumber({
                     input: displayFromFiatPrice,
                     showDecimals: 1,
@@ -920,8 +932,8 @@ export function Swap({
             }
             onTokenChange={onFromTokenChange}
             readOnly={isReverseRouting}
-            showChainLogo
-            showChainName
+            showChainLogo={crossChain}
+            showChainName={crossChain}
           />
 
           {/* Switch Icon */}
@@ -937,7 +949,9 @@ export function Swap({
             occupiedAddrs={[fromToken?.address ?? '']}
             occupiedChainId={fromToken?.chainId}
             fiatPriceTxt={
-              displayToFiatPrice
+              disabledFiatPrice
+                ? undefined
+                : displayToFiatPrice
                 ? `$${formatReadableNumber({
                     input: displayToFiatPrice,
                     showDecimals: 1,
@@ -946,8 +960,8 @@ export function Swap({
             }
             onTokenChange={onToTokenChange}
             readOnly={isBridge || !isReverseRouting}
-            showChainLogo
-            showChainName
+            showChainLogo={crossChain}
+            showChainName={crossChain}
           />
 
           {/* Price Disp or Warnings  */}
@@ -1018,6 +1032,7 @@ export function Swap({
         pricePerFromToken={resPricePerFromToken}
         onClose={() => setIsReviewDialogOpen(false)}
         loading={resPriceStatus === RoutePriceStatus.Loading}
+        disabledFiatPrice={disabledFiatPrice}
       />
       <SettingsDialog
         open={isSettingsDialogOpen}

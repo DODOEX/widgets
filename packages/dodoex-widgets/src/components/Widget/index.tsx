@@ -45,6 +45,7 @@ import {
 import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
 import { queryClient } from '../../providers/queryClient';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { setOpenConnectWalletInfo } from '../../store/actions/wallet';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
@@ -74,17 +75,20 @@ export interface WidgetProps
   noSubmissionDialog?: boolean;
 
   onProviderChanged?: (provider?: any) => void;
+  onAccountChanged?: (account?: string) => void;
   gotoBuyToken?: GlobalFunctionConfig['gotoBuyToken'];
   getStaticJsonRpcProviderByChainId?: Exclude<
     ConstructorParameters<typeof ContractRequests>[0],
     undefined
   >['getProvider'];
+  setOpenConnectWalletFC?: (fc: () => void) => void;
+  setDisconnectConnectFC?: (fc: () => void) => void;
 }
 
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useInitTokenList(props);
   useFetchBlockNumber();
-  const { provider, connector, chainId } = useWeb3React();
+  const { provider, connector, chainId, account } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
   const autoConnectLoading = useSelector(getAutoConnectLoading);
   useEffect(() => {
@@ -107,6 +111,22 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   }, [connector]);
 
   useEffect(() => {
+    if (props.setOpenConnectWalletFC) {
+      props.setOpenConnectWalletFC(() => {
+        dispatch(setOpenConnectWalletInfo(true));
+      });
+    }
+  }, [props.setOpenConnectWalletFC]);
+
+  useEffect(() => {
+    if (props.setDisconnectConnectFC) {
+      props.setDisconnectConnectFC(() => {
+        connector.deactivate ? connector.deactivate() : connector.resetState();
+      });
+    }
+  }, [props.setDisconnectConnectFC]);
+
+  useEffect(() => {
     contractRequests.setGetConfigProvider((getProviderChainId) => {
       const connectedProvider =
         chainId === getProviderChainId ? provider : null;
@@ -121,6 +141,12 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
       return null;
     });
   }, [provider, props.getStaticJsonRpcProviderByChainId]);
+
+  useEffect(() => {
+    if (props.onAccountChanged) {
+      props.onAccountChanged(account);
+    }
+  }, [account]);
 
   useEffect(() => {
     if (props.onProviderChanged) {
