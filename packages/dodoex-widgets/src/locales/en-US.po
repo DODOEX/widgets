@@ -21,7 +21,7 @@ msgstr "Transaction Time:"
 msgid "Cross Chain"
 msgstr "Cross Chain"
 
-#: src/components/Swap/index.tsx:483
+#: src/components/Swap/index.tsx:489
 msgid "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 msgstr "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 
@@ -41,13 +41,17 @@ msgstr "{0} pending"
 msgid "Balance:"
 msgstr "Balance:"
 
+#: src/components/Swap/components/ConnectWallet/index.tsx:59
+msgid "Switch to {0}"
+msgstr "Switch to {0}"
+
 #: src/components/ErrorMessageDialog.tsx:63
 #: src/components/WithExecutionDialog/index.tsx:310
 msgid "Dismiss"
 msgstr "Dismiss"
 
 #: src/components/Swap/components/ReviewDialog.tsx:342
-#: src/components/Swap/index.tsx:408
+#: src/components/Swap/index.tsx:414
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
 
@@ -55,11 +59,11 @@ msgstr "Due to the market condition, market price and estimated price may have a
 msgid "{0} confirmed"
 msgstr "{0} confirmed"
 
-#: src/components/Swap/index.tsx:515
+#: src/components/Swap/index.tsx:521
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "The current network is inconsistent with the wallet - please switch in wallet"
 
-#: src/components/Swap/index.tsx:416
+#: src/components/Swap/index.tsx:422
 msgid "Current price impact"
 msgstr "Current price impact"
 
@@ -75,7 +79,7 @@ msgstr "Hour"
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:244
+#: src/components/Bridge/BridgeRouteShortCard.tsx:137
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:187
 msgid "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
@@ -84,7 +88,7 @@ msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgid "Confirm"
 msgstr "Confirm"
 
-#: src/components/Swap/index.tsx:1004
+#: src/components/Swap/index.tsx:1009
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -141,7 +145,7 @@ msgstr "Unapproved"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 
-#: src/components/Swap/index.tsx:676
+#: src/components/Swap/index.tsx:682
 msgid "Transaction Pending"
 msgstr "Transaction Pending"
 
@@ -164,7 +168,7 @@ msgstr "Day"
 msgid "Days"
 msgstr "Days"
 
-#: src/components/Swap/components/ConnectWallet/index.tsx:53
+#: src/components/Swap/components/ConnectWallet/index.tsx:57
 msgid "Connecting..."
 msgstr "Connecting..."
 
@@ -173,11 +177,11 @@ msgid "Additional Fee"
 msgstr "Additional Fee"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:536
+#: src/components/Swap/index.tsx:542
 msgid "Fetching best price..."
 msgstr "Fetching best price..."
 
-#: src/components/Swap/index.tsx:765
+#: src/components/Swap/index.tsx:771
 msgid "Review Swap"
 msgstr "Review Swap"
 
@@ -190,21 +194,21 @@ msgstr "Select Cross Chain"
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
-#: src/components/Swap/index.tsx:683
+#: src/components/Swap/index.tsx:689
 msgid "Select Tokens"
 msgstr "Select Tokens"
 
-#: src/components/Swap/index.tsx:857
+#: src/components/Swap/index.tsx:863
 msgid "The setting has been switched to swap mode"
 msgstr "The setting has been switched to swap mode"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:591
-#: src/components/Swap/index.tsx:725
+#: src/components/Swap/index.tsx:597
+#: src/components/Swap/index.tsx:731
 msgid "Quote not available"
 msgstr "Quote not available"
 
-#: src/components/Swap/index.tsx:710
+#: src/components/Swap/index.tsx:716
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
@@ -251,7 +255,7 @@ msgstr "Swap summary"
 msgid "Tx"
 msgstr "Tx"
 
-#: src/components/Swap/index.tsx:755
+#: src/components/Swap/index.tsx:761
 msgid "Review Cross Chain"
 msgstr "Review Cross Chain"
 
@@ -300,7 +304,7 @@ msgstr "For"
 msgid "On"
 msgstr "On"
 
-#: src/components/Swap/index.tsx:693
+#: src/components/Swap/index.tsx:699
 #: src/hooks/Token/useGetTokenStatus.ts:138
 msgid "Approve"
 msgstr "Approve"
@@ -345,7 +349,7 @@ msgstr "Gas price is too low, please adjust in your wallet and try again"
 msgid "RPC node data exception"
 msgstr "RPC node data exception"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:205
+#: src/components/Bridge/BridgeRouteShortCard.tsx:98
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:148
 msgid "Estimated transaction time"
 msgstr "Estimated transaction time"
@@ -354,11 +358,11 @@ msgstr "Estimated transaction time"
 msgid "Connect to your wallet"
 msgstr "Connect to your wallet"
 
-#: src/components/Swap/index.tsx:699
+#: src/components/Swap/index.tsx:705
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
-#: src/components/Swap/index.tsx:693
+#: src/components/Swap/index.tsx:699
 msgid "Approving"
 msgstr "Approving"
 
@@ -387,11 +391,11 @@ msgstr "Send to:"
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "Unable to SETTLE during the cooling-off period"
 
-#: src/components/Swap/index.tsx:855
+#: src/components/Swap/index.tsx:861
 msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
-#: src/components/Swap/components/ConnectWallet/index.tsx:55
+#: src/components/Swap/components/ConnectWallet/index.tsx:63
 msgid "Connect to a wallet"
 msgstr "Connect to a wallet"
 
@@ -415,11 +419,11 @@ msgstr "Cross Chain Summary"
 msgid "SafeERC20: low-level call failed. Please contact the DODO team."
 msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
 
-#: src/components/Swap/index.tsx:552
+#: src/components/Swap/index.tsx:558
 msgid "Unsupported network - switch to trade"
 msgstr "Unsupported network - switch to trade"
 
-#: src/components/Swap/index.tsx:850
+#: src/components/Swap/index.tsx:856
 #: src/hooks/Swap/useExecuteSwap.ts:56
 msgid "Swap"
 msgstr "Swap"
@@ -448,6 +452,6 @@ msgstr "Close"
 msgid "Transaction Deadline"
 msgstr "Transaction Deadline"
 
-#: src/components/Swap/index.tsx:736
+#: src/components/Swap/index.tsx:742
 msgid "Insufficient balance"
 msgstr "Insufficient balance"

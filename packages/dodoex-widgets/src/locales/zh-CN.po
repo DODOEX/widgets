@@ -21,7 +21,7 @@ msgstr "交易时长:"
 msgid "Cross Chain"
 msgstr "跨链桥"
 
-#: src/components/Swap/index.tsx:483
+#: src/components/Swap/index.tsx:489
 msgid "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 msgstr "当前滑点保护系数设置超过{maxSlippageWarning}%，可能会造成损失。"
 
@@ -41,13 +41,17 @@ msgstr "{0} 等待中"
 msgid "Balance:"
 msgstr "余额:"
 
+#: src/components/Swap/components/ConnectWallet/index.tsx:59
+msgid "Switch to {0}"
+msgstr ""
+
 #: src/components/ErrorMessageDialog.tsx:63
 #: src/components/WithExecutionDialog/index.tsx:310
 msgid "Dismiss"
 msgstr "忽略"
 
 #: src/components/Swap/components/ReviewDialog.tsx:342
-#: src/components/Swap/index.tsx:408
+#: src/components/Swap/index.tsx:414
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
 
@@ -55,11 +59,11 @@ msgstr "由于市场情况不同，市场价格与估算价格可能略有差异
 msgid "{0} confirmed"
 msgstr "{0} 已确认"
 
-#: src/components/Swap/index.tsx:515
+#: src/components/Swap/index.tsx:521
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
-#: src/components/Swap/index.tsx:416
+#: src/components/Swap/index.tsx:422
 msgid "Current price impact"
 msgstr "当前价格冲击"
 
@@ -75,7 +79,7 @@ msgstr "小时"
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:244
+#: src/components/Bridge/BridgeRouteShortCard.tsx:137
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:187
 msgid "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
@@ -84,7 +88,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 msgid "Confirm"
 msgstr "确认"
 
-#: src/components/Swap/index.tsx:1004
+#: src/components/Swap/index.tsx:1009
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -141,7 +145,7 @@ msgstr "未授权"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
-#: src/components/Swap/index.tsx:676
+#: src/components/Swap/index.tsx:682
 msgid "Transaction Pending"
 msgstr "交易进行中"
 
@@ -164,7 +168,7 @@ msgstr "天"
 msgid "Days"
 msgstr "天"
 
-#: src/components/Swap/components/ConnectWallet/index.tsx:53
+#: src/components/Swap/components/ConnectWallet/index.tsx:57
 msgid "Connecting..."
 msgstr "连接中..."
 
@@ -173,11 +177,11 @@ msgid "Additional Fee"
 msgstr "额外手续费"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:536
+#: src/components/Swap/index.tsx:542
 msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
-#: src/components/Swap/index.tsx:765
+#: src/components/Swap/index.tsx:771
 msgid "Review Swap"
 msgstr "预览交易"
 
@@ -190,21 +194,21 @@ msgstr "选择跨链桥"
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
-#: src/components/Swap/index.tsx:683
+#: src/components/Swap/index.tsx:689
 msgid "Select Tokens"
 msgstr "选择代币"
 
-#: src/components/Swap/index.tsx:857
+#: src/components/Swap/index.tsx:863
 msgid "The setting has been switched to swap mode"
 msgstr "设置已切换至闪兑模式"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:591
-#: src/components/Swap/index.tsx:725
+#: src/components/Swap/index.tsx:597
+#: src/components/Swap/index.tsx:731
 msgid "Quote not available"
 msgstr "没有报价"
 
-#: src/components/Swap/index.tsx:710
+#: src/components/Swap/index.tsx:716
 msgid "Fetching Price..."
 msgstr "获取价格中..."
 
@@ -251,7 +255,7 @@ msgstr "交易预览"
 msgid "Tx"
 msgstr "交易哈希："
 
-#: src/components/Swap/index.tsx:755
+#: src/components/Swap/index.tsx:761
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
@@ -300,7 +304,7 @@ msgstr "对于"
 msgid "On"
 msgstr "在"
 
-#: src/components/Swap/index.tsx:693
+#: src/components/Swap/index.tsx:699
 #: src/hooks/Token/useGetTokenStatus.ts:138
 msgid "Approve"
 msgstr "代币授权"
@@ -345,7 +349,7 @@ msgstr "Gas 价格过低, 请调整后重试"
 msgid "RPC node data exception"
 msgstr "RPC节点异常"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:205
+#: src/components/Bridge/BridgeRouteShortCard.tsx:98
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:148
 msgid "Estimated transaction time"
 msgstr "预计交易时长"
@@ -354,11 +358,11 @@ msgstr "预计交易时长"
 msgid "Connect to your wallet"
 msgstr "连接钱包"
 
-#: src/components/Swap/index.tsx:699
+#: src/components/Swap/index.tsx:705
 msgid "Enter an amount"
 msgstr "输入代币数量"
 
-#: src/components/Swap/index.tsx:693
+#: src/components/Swap/index.tsx:699
 msgid "Approving"
 msgstr "授权中"
 
@@ -387,11 +391,11 @@ msgstr "发送至："
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "在冷静期无法进行清算"
 
-#: src/components/Swap/index.tsx:855
+#: src/components/Swap/index.tsx:861
 msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
-#: src/components/Swap/components/ConnectWallet/index.tsx:55
+#: src/components/Swap/components/ConnectWallet/index.tsx:63
 msgid "Connect to a wallet"
 msgstr "连接钱包"
 
@@ -415,11 +419,11 @@ msgstr "跨链桥概览"
 msgid "SafeERC20: low-level call failed. Please contact the DODO team."
 msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
 
-#: src/components/Swap/index.tsx:552
+#: src/components/Swap/index.tsx:558
 msgid "Unsupported network - switch to trade"
 msgstr "未支持网络 - 请切换后进行交易"
 
-#: src/components/Swap/index.tsx:850
+#: src/components/Swap/index.tsx:856
 #: src/hooks/Swap/useExecuteSwap.ts:56
 msgid "Swap"
 msgstr "交易"
@@ -448,6 +452,6 @@ msgstr "关闭"
 msgid "Transaction Deadline"
 msgstr "交易截止时间"
 
-#: src/components/Swap/index.tsx:736
+#: src/components/Swap/index.tsx:742
 msgid "Insufficient balance"
 msgstr "余额不足"
