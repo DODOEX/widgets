@@ -133,6 +133,7 @@ export default function TokenLogo({
         border: 'solid 1px',
         borderColor: 'border.main',
         borderRadius: '50%',
+        flexShrink: 0,
         ...(showChain
           ? {}
           : {
