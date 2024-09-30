@@ -147,20 +147,22 @@ export function ReviewDialog({
                   decimals: fromToken?.decimals,
                 })} ${fromToken?.symbol}`}</Box>
               </Box>
-              <Box
-                sx={{
-                  mt: 4,
-                  typography: 'h6',
-                  color: theme.palette.text.secondary,
-                }}
-              >
-                {curFromFiatPrice
-                  ? `$${formatReadableNumber({
-                      input: curFromFiatPrice,
-                      showDecimals: 1,
-                    })}`
-                  : '-'}
-              </Box>
+              {!disabledFiatPrice && (
+                <Box
+                  sx={{
+                    mt: 4,
+                    typography: 'h6',
+                    color: theme.palette.text.secondary,
+                  }}
+                >
+                  {curFromFiatPrice
+                    ? `$${formatReadableNumber({
+                        input: curFromFiatPrice,
+                        showDecimals: 1,
+                      })}`
+                    : '-'}
+                </Box>
+              )}
             </Box>
             <Box sx={{ width: 16, mx: 16 }} component={DoubleRight} />
             <Box>

@@ -86,6 +86,7 @@ export function TokenLogoCollapse({
               alignItems: 'center',
               typography: 'h6',
               color: 'text.secondary',
+              whiteSpace: 'nowrap',
             }}
           >
             {chain.name}

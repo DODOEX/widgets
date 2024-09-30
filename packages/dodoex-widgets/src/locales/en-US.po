@@ -126,7 +126,7 @@ msgstr "Remove Liquidity"
 msgid "Rewards"
 msgstr "Rewards"
 
-#: src/components/Swap/components/ReviewDialog.tsx:350
+#: src/components/Swap/components/ReviewDialog.tsx:352
 #: src/components/Swap/index.tsx:442
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
@@ -215,7 +215,7 @@ msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgid "Confirm"
 msgstr "Confirm"
 
-#: src/components/Swap/index.tsx:1012
+#: src/components/Swap/index.tsx:1010
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -239,11 +239,11 @@ msgstr "Pool Creation"
 msgid "Custom"
 msgstr "Custom"
 
-#: src/components/Swap/components/ReviewDialog.tsx:284
+#: src/components/Swap/components/ReviewDialog.tsx:286
 msgid "Estimated service provider fees"
 msgstr "Estimated service provider fees"
 
-#: src/components/Swap/components/ReviewDialog.tsx:282
+#: src/components/Swap/components/ReviewDialog.tsx:284
 msgid "Basic Fee"
 msgstr "Basic Fee"
 
@@ -303,7 +303,7 @@ msgid "Go back"
 msgstr "Go back"
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:276
-#: src/components/Swap/components/ReviewDialog.tsx:371
+#: src/components/Swap/components/ReviewDialog.tsx:373
 msgid "Slippage"
 msgstr "Slippage"
 
@@ -396,7 +396,7 @@ msgstr "on"
 msgid "Suitable for stablecoins with price fluctuations within 2%"
 msgstr "Suitable for stablecoins with price fluctuations within 2%"
 
-#: src/components/Swap/components/ReviewDialog.tsx:374
+#: src/components/Swap/components/ReviewDialog.tsx:376
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
@@ -436,7 +436,7 @@ msgstr "Deposit ratio is determined by the current assets ratio in the pool. The
 msgid "Connecting..."
 msgstr "Connecting..."
 
-#: src/components/Swap/components/ReviewDialog.tsx:312
+#: src/components/Swap/components/ReviewDialog.tsx:314
 msgid "Additional Fee"
 msgstr "Additional Fee"
 
@@ -530,7 +530,7 @@ msgstr "Owner"
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 
-#: src/components/Swap/index.tsx:886
+#: src/components/Swap/index.tsx:884
 msgid "The setting has been switched to swap mode"
 msgstr "The setting has been switched to swap mode"
 
@@ -576,7 +576,7 @@ msgid "LP Fee"
 msgstr "LP Fee"
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:155
-#: src/components/Swap/components/ReviewDialog.tsx:461
+#: src/components/Swap/components/ReviewDialog.tsx:463
 msgid "Confirming"
 msgstr "Confirming"
 
@@ -602,7 +602,7 @@ msgid "Confirm Cross Chain"
 msgstr "Confirm Cross Chain"
 
 #. js-lingui-explicit-id
-#: src/components/Swap/components/ReviewDialog.tsx:435
+#: src/components/Swap/components/ReviewDialog.tsx:437
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 
@@ -653,7 +653,7 @@ msgstr "Review Cross Chain"
 msgid "Mining"
 msgstr "Mining"
 
-#: src/components/Swap/components/ReviewDialog.tsx:347
+#: src/components/Swap/components/ReviewDialog.tsx:349
 msgid "Price Impact"
 msgstr "Price Impact"
 
@@ -731,7 +731,7 @@ msgstr "Suitable for most situations."
 msgid "Something went wrong…<0>Refresh again</0>"
 msgstr "Something went wrong…<0>Refresh again</0>"
 
-#: src/components/Swap/components/ReviewDialog.tsx:255
+#: src/components/Swap/components/ReviewDialog.tsx:257
 msgid "Swap Detail"
 msgstr "Swap Detail"
 
@@ -792,7 +792,7 @@ msgstr "Approve"
 msgid "Share"
 msgstr "Share"
 
-#: src/components/Swap/components/ReviewDialog.tsx:315
+#: src/components/Swap/components/ReviewDialog.tsx:317
 msgid "Additional routing fees set by the Widget user"
 msgstr "Additional routing fees set by the Widget user"
 
@@ -1027,7 +1027,7 @@ msgstr "Receive"
 msgid "Select Network"
 msgstr "Select Network"
 
-#: src/components/Swap/components/ReviewDialog.tsx:463
+#: src/components/Swap/components/ReviewDialog.tsx:465
 msgid "Confirm swap"
 msgstr "Confirm swap"
 
@@ -1126,7 +1126,7 @@ msgstr "Traders"
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "Unable to SETTLE during the cooling-off period"
 
-#: src/components/Swap/index.tsx:884
+#: src/components/Swap/index.tsx:882
 msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
@@ -1222,7 +1222,7 @@ msgstr "Enter parameters to view the yield curve"
 msgid "Paid"
 msgstr "Paid"
 
-#: src/components/Swap/index.tsx:879
+#: src/components/Swap/index.tsx:877
 #: src/hooks/Swap/useExecuteSwap.ts:60
 msgid "Swap"
 msgstr "Swap"
