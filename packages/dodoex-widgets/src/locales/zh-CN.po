@@ -18,7 +18,7 @@ msgstr ""
 msgid "The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth."
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:188
+#: src/components/WithExecutionDialog/index.tsx:190
 msgid "Transaction Time:"
 msgstr "交易时长:"
 
@@ -81,7 +81,7 @@ msgid "Switch to {0}"
 msgstr ""
 
 #: src/components/ErrorMessageDialog.tsx:63
-#: src/components/WithExecutionDialog/index.tsx:318
+#: src/components/WithExecutionDialog/index.tsx:320
 msgid "Dismiss"
 msgstr "忽略"
 
@@ -633,7 +633,7 @@ msgid "LP Balance:"
 msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:202
-#: src/components/WithExecutionDialog/index.tsx:203
+#: src/components/WithExecutionDialog/index.tsx:205
 msgid "Tx"
 msgstr "交易哈希："
 
@@ -1007,7 +1007,7 @@ msgid "The mid price needs to be greater than {min} and less than 100,000,000"
 msgstr ""
 
 #: src/components/ErrorMessageDialog.tsx:39
-#: src/components/WithExecutionDialog/index.tsx:279
+#: src/components/WithExecutionDialog/index.tsx:281
 msgid "Something went wrong."
 msgstr "发生异常错误."
 
@@ -1267,7 +1267,7 @@ msgstr "小时"
 msgid "High"
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:318
+#: src/components/WithExecutionDialog/index.tsx:320
 msgid "Close"
 msgstr "关闭"
 

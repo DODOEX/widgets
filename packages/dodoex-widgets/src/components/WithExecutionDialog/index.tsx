@@ -167,7 +167,9 @@ function TransactionTime({
   }, [isStarted]);
 
   useEffect(() => {
-    clearInterval(t.current);
+    if (isEnded) {
+      clearInterval(t.current);
+    }
   }, [isEnded]);
 
   return (
