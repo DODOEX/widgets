@@ -29,7 +29,6 @@ import { useFetchBlockNumber } from '../../hooks/contract';
 import { ExecutionProps } from '../../hooks/Submission';
 import { getRpcSingleUrlMap } from '../../constants/chains';
 import { ChainId } from '@dodoex/api';
-import { useInitPropsToRedux } from '../../hooks/Swap';
 import { DefaultTokenInfo } from '../../hooks/Token/type';
 import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
@@ -45,6 +44,7 @@ import {
 import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
 import { queryClient } from '../../providers/queryClient';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { UserOptionsProvider } from '../UserOptionsProvider';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
@@ -149,10 +149,8 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     };
   }, [provider]);
 
-  // Init props to redux!
   const width = props.width || 375;
   const height = props.height || 494;
-  useInitPropsToRedux({ ...props, width, height });
 
   const widgetRef = useRef<HTMLDivElement>(null);
 
@@ -232,9 +230,11 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
           <CssBaseline
             container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}`}
           />
-          <QueryClientProvider client={queryClient}>
-            <Web3Provider {...props} />
-          </QueryClientProvider>
+          <UserOptionsProvider {...props}>
+            <QueryClientProvider client={queryClient}>
+              <Web3Provider {...props} />
+            </QueryClientProvider>
+          </UserOptionsProvider>
         </ThemeProvider>
       </LangProvider>
     </ReduxProvider>

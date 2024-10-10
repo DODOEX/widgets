@@ -14,8 +14,7 @@ import { formatTokenAmountNumber } from '../../../utils/formatter';
 import { formatReadableNumber } from '../../../utils/formatter';
 import TokenLogo from '../../TokenLogo';
 import { DetailBorder, Done, CaretUp, DoubleRight } from '@dodoex/icons';
-import { setGlobalProps } from '../../../store/actions/globals';
-import { getGlobalProps } from '../../../store/selectors/globals';
+import { getContractStatus } from '../../../store/selectors/globals';
 import { ContractStatus } from '../../../store/reducers/globals';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppThunkDispatch } from '../../../store/actions';
@@ -24,6 +23,7 @@ import { PRICE_IMPACT_THRESHOLD } from '../../../constants/swap';
 import { QuestionTooltip } from '../../Tooltip';
 import { getSlippage } from '../../../store/selectors/settings';
 import { useDefaultSlippage } from '../../../hooks/setting/useDefaultSlippage';
+import { setContractStatus } from '../../../store/actions/globals';
 
 export interface ReviewDialogProps {
   open: boolean;
@@ -65,7 +65,7 @@ export function ReviewDialog({
   const { defaultSlippage } = useDefaultSlippage(false);
   const slippage = useSelector(getSlippage) ?? defaultSlippage;
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { contractStatus } = useSelector(getGlobalProps);
+  const contractStatus = useSelector(getContractStatus);
   const isPriceWaningShown = useMemo(
     () => new BigNumber(priceImpact).gt(PRICE_IMPACT_THRESHOLD),
     [priceImpact],
@@ -92,11 +92,7 @@ export function ReviewDialog({
     <Dialog
       open={open}
       onClose={() => {
-        dispatch(
-          setGlobalProps({
-            contractStatus: ContractStatus.Initial,
-          }),
-        );
+        dispatch(setContractStatus(ContractStatus.Initial));
         onClose();
       }}
       id="swap-summary"
@@ -442,11 +438,7 @@ export function ReviewDialog({
           fullWidth
           onClick={() => {
             execute();
-            dispatch(
-              setGlobalProps({
-                contractStatus: ContractStatus.Pending,
-              }),
-            );
+            dispatch(setContractStatus(ContractStatus.Pending));
           }}
         >
           {contractStatus == ContractStatus.Pending ? (

@@ -32,15 +32,6 @@ export const setSlippageWithTokens = (
   };
 };
 
-export const setDefaultFromToken = (token: TokenInfo): AppThunkAction => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'SET_DEFAULT_FROM_TOKEN',
-      payload: token,
-    });
-  };
-};
-
 export const setDefaultToToken = (token: TokenInfo): AppThunkAction => {
   return async (dispatch) => {
     dispatch({

@@ -51,10 +51,7 @@ export async function registerNetworkWithMetamask({
     const addChainParameters = {
       chainId: chainIdStr,
       chainName: chainListMap.get(chainId)?.name,
-      rpcUrls: [
-        ...rpcServerMap[chainId],
-        ...(store.getState().globals.jsonRpcUrlMap?.[chainId] ?? []),
-      ],
+      rpcUrls: [...rpcServerMap[chainId]],
       nativeCurrency: {
         name: basicToken.name,
         symbol: basicToken.symbol,

@@ -18,7 +18,7 @@ import {
 import { BIG_ALLOWANCE } from '../../constants/token';
 import { useCurrentChainId } from '../ConnectWallet';
 import { useDispatch } from 'react-redux';
-import { setGlobalProps } from '../../store/actions/globals';
+import { setContractStatus } from '../../store/actions/globals';
 import { ContractStatus } from '../../store/reducers/globals';
 import { AppThunkDispatch } from '../../store/actions';
 import { useQueryClient } from '@tanstack/react-query';
@@ -150,11 +150,7 @@ export default function useExecution({
         setShowing({ spec, brief, subtitle });
         console.error(e);
         if (e.message) {
-          dispatch(
-            setGlobalProps({
-              contractStatus: ContractStatus.Failed,
-            }),
-          );
+          dispatch(setContractStatus(ContractStatus.Failed));
           const options = { error: e.message, brief };
           if (mixpanelProps) Object.assign(options, mixpanelProps);
           if (onTxFail) {
@@ -179,11 +175,7 @@ export default function useExecution({
         nonce,
         ...mixpanelProps,
       };
-      dispatch(
-        setGlobalProps({
-          contractStatus: ContractStatus.Pending,
-        }),
-      );
+      dispatch(setContractStatus(ContractStatus.Pending));
       if (onTxSubmit) {
         onTxSubmit(tx, reportInfo);
       }
@@ -214,18 +206,10 @@ export default function useExecution({
         setShowingDone(true);
         if (receipt.status === WatchResult.Success) {
           if (reportInfo.opcode === 'TX') {
-            dispatch(
-              setGlobalProps({
-                contractStatus: ContractStatus.TxSuccess,
-              }),
-            );
+            dispatch(setContractStatus(ContractStatus.TxSuccess));
           }
           if (reportInfo.opcode === 'APPROVAL') {
-            dispatch(
-              setGlobalProps({
-                contractStatus: ContractStatus.ApproveSuccess,
-              }),
-            );
+            dispatch(setContractStatus(ContractStatus.ApproveSuccess));
           }
 
           await updateBlockNumber(); // update blockNumber once after tx

@@ -4,12 +4,12 @@ import { ChainId } from '@dodoex/api';
 import { ChainListItem, chainListMap } from '../../constants/chainList';
 import { useSelector } from 'react-redux';
 import { getAllTokenList } from '../../store/selectors/token';
-import { getGlobalProps } from '../../store/selectors/globals';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export function useSelectChainList(side?: 'from' | 'to') {
   const { chainId } = useWeb3React();
   const allTokenList = useSelector(getAllTokenList);
-  const crossChain = useSelector(getGlobalProps).crossChain;
+  const { crossChain } = useUserOptions();
   const hasTokenChainIds = useMemo(() => {
     const result = new Set<ChainId>();
     allTokenList.forEach((token) => {

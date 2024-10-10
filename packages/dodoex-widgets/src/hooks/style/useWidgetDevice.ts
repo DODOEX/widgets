@@ -1,15 +1,10 @@
 import { useTheme } from '@dodoex/components';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { getGlobalProps } from '../../store/selectors/globals';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export function useWidgetDevice() {
   const theme = useTheme();
-  const globalProps = useSelector(getGlobalProps);
-  const width = React.useMemo(
-    () => globalProps.width || 375,
-    [globalProps.width],
-  );
+  const width = useUserOptions((state) => state.width || 375);
 
   const isMobile = React.useMemo(() => {
     return width < theme.breakpoints.values.tablet;

@@ -24,15 +24,3 @@ export const getPopularTokenList = (chainId: ChainId, state?: RootState) => {
 export const getSlippageWithTokens = (state?: RootState) => {
   return (state ?? store.getState()).token.slippageWithTokens;
 };
-
-export const getDefaultFromToken = (
-  state?: RootState,
-): DefaultTokenInfo | undefined => {
-  return (state ?? store.getState()).token.defaultFromToken;
-};
-
-export const getDefaultToToken = (
-  state?: RootState,
-): DefaultTokenInfo | undefined => {
-  return (state ?? store.getState()).token.defaultToToken;
-};

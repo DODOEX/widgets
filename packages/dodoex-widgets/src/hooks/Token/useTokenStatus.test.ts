@@ -14,6 +14,14 @@ jest.mock('@tanstack/react-query', () => ({
   })),
 }));
 
+jest.mock('../../components/UserOptionsProvider', () => ({
+  useUserOptions: jest.fn((fn) => {
+    return fn({
+      defaultChainId: 1,
+    });
+  }),
+}));
+
 const useQueryMock = useQuery as unknown as jest.Mock;
 
 jest.mock('@web3-react/core', () => ({

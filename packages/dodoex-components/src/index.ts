@@ -32,7 +32,7 @@ export {
 } from './Tabs';
 export { Skeleton } from './Skeleton';
 export type { SkeletonProps } from './Skeleton';
-export { EmptyDataIcon, FailedIcon, useBodyMovin } from './Lottie';
+export { EmptyDataIcon, FailedIcon } from './Lottie';
 export { Select } from './Select';
 export { Radio } from './Radio';
 export { Slider } from './Slider';

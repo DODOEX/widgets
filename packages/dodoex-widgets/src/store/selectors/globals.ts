@@ -1,8 +1,8 @@
 import { store } from '..';
 import { RootState } from '../reducers';
 
-export const getGlobalProps = (state?: RootState) => {
-  return (state ?? store.getState()).globals;
+export const getContractStatus = (state?: RootState) => {
+  return (state ?? store.getState()).globals.contractStatus;
 };
 
 export const getAutoConnectLoading = (state?: RootState) => {

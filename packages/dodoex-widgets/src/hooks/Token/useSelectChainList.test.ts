@@ -27,8 +27,8 @@ jest.mock('../../store/selectors/token', () => ({
   getAllTokenList: jest.fn(() => tokenList),
 }));
 
-jest.mock('../../store/selectors/globals', () => ({
-  getGlobalProps: jest.fn(() => ({
+jest.mock('../../components/UserOptionsProvider', () => ({
+  useUserOptions: jest.fn(() => ({
     crossChain: true,
   })),
 }));
