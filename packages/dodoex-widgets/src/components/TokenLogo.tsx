@@ -149,7 +149,6 @@ export default function TokenLogo({
         width,
         height,
         borderRadius: '50%',
-        flexShrink: 0,
         ...(noBorder
           ? {}
           : {
