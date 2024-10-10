@@ -49,6 +49,7 @@ export const rpcServerMap: {
   [ChainId.MANTLE]: ['https://rpc.mantle.xyz'],
   [ChainId.SEPOLIA]: ['https://ethereum-sepolia-rpc.publicnode.com'],
   [ChainId.DODO_CHAIN_TESTNET]: ['https://dodochain-testnet.alt.technology'],
+  [ChainId.TAIKO]: ['https://rpc.mainnet.taiko.xyz'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -89,6 +90,7 @@ export const platformIdMap: {
   [ChainId.MANTLE]: 'mantle',
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
+  [ChainId.TAIKO]: 'taiko',
 };
 
 export const scanUrlDomainMap: {
@@ -111,6 +113,7 @@ export const scanUrlDomainMap: {
   [ChainId.MANTLE]: 'explorer.mantle.xyz',
   [ChainId.SEPOLIA]: 'sepolia.etherscan.io',
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet-explorer.alt.technology',
+  [ChainId.TAIKO]: 'taikoscan.io',
 };
 
 export const ThegraphKeyMap: {
@@ -133,4 +136,5 @@ export const ThegraphKeyMap: {
   [ChainId.MANTLE]: 'mantle',
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
+  [ChainId.TAIKO]: 'taiko',
 };

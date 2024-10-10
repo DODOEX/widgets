@@ -250,6 +250,19 @@ const contractMap: {
     DODO_DSP_PROXY: '0x886F677605512351e554AA53BA77eA493058b460',
     DODO_DPP_PROXY: '0xB4f2E70DE64F94116A6e93ff4dF2D020E91e7a63',
   },
+  [ChainId.TAIKO]: {
+    MULTI_CALL: '',
+    DODO_APPROVE: '',
+    ERC20_HELPER: '',
+
+    ROUTE_V2_DATA_FETCH: '',
+    ROUTE_V1_DATA_FETCH: '',
+    CALLEE_HELPER: '',
+
+    DODO_PROXY: '',
+    DODO_DSP_PROXY: '',
+    DODO_DPP_PROXY: '',
+  },
 };
 
 export default contractMap;
