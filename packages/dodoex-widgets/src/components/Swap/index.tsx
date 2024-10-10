@@ -819,11 +819,9 @@ export function Swap({
       >
         <TokenLogo
           token={fromToken}
-          sx={{
-            width: 16,
-            height: 16,
-            mr: 6,
-          }}
+          width={16}
+          height={16}
+          marginRight={6}
           chainId={fromToken.chainId}
         />
         {`${formatTokenAmountNumber({
@@ -840,11 +838,9 @@ export function Swap({
         />
         <TokenLogo
           token={toToken}
-          sx={{
-            width: 16,
-            height: 16,
-            mr: 6,
-          }}
+          width={16}
+          height={16}
+          marginRight={6}
           chainId={toToken.chainId}
         />
         {`${formatTokenAmountNumber({
