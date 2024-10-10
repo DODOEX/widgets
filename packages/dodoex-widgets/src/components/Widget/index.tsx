@@ -51,8 +51,7 @@ export interface WidgetProps
   extends Web3ConnectorsProps,
     InitTokenListProps,
     ExecutionProps,
-    GlobalFunctionConfig,
-    SwapProps {
+    GlobalFunctionConfig {
   apikey?: string;
   theme?: ThemeOptions;
   colorMode?: PaletteMode;
@@ -69,6 +68,7 @@ export interface WidgetProps
   apiServices?: Partial<APIServices>;
   crossChain?: boolean;
   noPowerBy?: boolean;
+  noDocuments?: boolean;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
