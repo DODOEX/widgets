@@ -3,12 +3,11 @@ import {
   QuestionTooltipProps,
 } from '@dodoex/components';
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { getGlobalProps } from '../../store/selectors/globals';
+import { useUserOptions } from '../UserOptionsProvider';
 import { WIDGET_CLASS_NAME } from '../Widget';
 
 export default function QuestionTooltip(props: QuestionTooltipProps) {
-  const { width } = useSelector(getGlobalProps);
+  const { width } = useUserOptions();
   const maxWidth = useMemo(() => {
     let res = '';
     if (typeof width === 'number') {

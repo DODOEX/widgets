@@ -173,7 +173,6 @@ export function TokenCard({
   return (
     <Box
       sx={{
-        width: '100%',
         minHeight: 133,
         padding: theme.spacing(20, 20, 24),
         borderRadius: 12,

@@ -15,8 +15,10 @@ jest.mock('react-redux', () => ({
     return [];
   },
 }));
-jest.mock('../../store/selectors/globals', () => ({
-  getGlobalProps: () => new BigNumber(12),
+jest.mock('../../components/UserOptionsProvider', () => ({
+  useUserOptions: () => ({
+    apikey: '',
+  }),
 }));
 describe('useFetchFiatPrice', () => {
   const tokenEther = tokenList[0];

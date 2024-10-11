@@ -374,7 +374,7 @@ export function RemovePoolOperate({
       <Box
         sx={{
           px: 20,
-          pt: 16,
+          py: 16,
           position: 'sticky',
           bottom: 0,
           borderStyle: 'solid',

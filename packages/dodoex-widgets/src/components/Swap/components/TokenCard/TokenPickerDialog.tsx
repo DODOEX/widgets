@@ -1,10 +1,9 @@
 import { Trans } from '@lingui/macro';
 import Dialog from '../Dialog';
-import { useSelector } from 'react-redux';
-import { getGlobalProps } from '../../../../store/selectors/globals';
 import TokenPicker, { TokenPickerProps } from '../../../TokenPicker';
 import { tokenPickerWrapper } from '../../../../constants/testId';
 import { DialogProps } from '../Dialog';
+import { useUserOptions } from '../../../UserOptionsProvider';
 
 export function TokenPickerDialog({
   open,
@@ -35,7 +34,7 @@ export function TokenPickerDialog({
   searchOtherAddress?: TokenPickerProps['searchOtherAddress'];
   chainId?: TokenPickerProps['chainId'];
 }) {
-  const { height } = useSelector(getGlobalProps);
+  const { height } = useUserOptions();
   return (
     <Dialog
       height={height}

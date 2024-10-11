@@ -8,8 +8,7 @@ export enum ContractStatus {
   TxSuccess = 'TxSuccess',
   Failed = 'Failed',
 }
-export interface State extends SwapWidgetProps {
-  isReverseRouting?: boolean; // true: reverse enquiry & false: normal enquiry
+export interface State {
   contractStatus?: ContractStatus;
   autoConnectLoading?: boolean; // default: undefined
   showCoingecko?: boolean;
@@ -21,12 +20,6 @@ export interface State extends SwapWidgetProps {
 }
 
 export const initialState: State = {
-  height: undefined,
-  width: undefined,
-  apikey: '',
-  feeRate: 0,
-  rebateTo: '',
-  isReverseRouting: false,
   contractStatus: ContractStatus.Initial,
   autoConnectLoading: undefined,
   autoSlippage: undefined,
@@ -38,6 +31,11 @@ export default (state: State = initialState, action: AnyAction): State => {
       return {
         ...state,
         ...action.payload,
+      };
+    case 'SET_CONTRACT_STATUS':
+      return {
+        ...state,
+        contractStatus: action.payload,
       };
     case 'SET_AUTO_CONNECT_LOADING':
       return {

@@ -1,9 +1,4 @@
-import {
-  basicTokenMap,
-  ChainId,
-  contractConfig,
-  CONTRACT_QUERY_KEY,
-} from '@dodoex/api';
+import { basicTokenMap, ChainId, contractConfig } from '@dodoex/api';
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';

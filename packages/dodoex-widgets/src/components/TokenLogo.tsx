@@ -5,6 +5,7 @@ import { TokenInfo, useFindTokenByAddress } from '../hooks/Token';
 import { chainListMap } from '../constants/chainList';
 import { ChainId } from '@dodoex/api';
 import { useGlobalConfig } from '../providers/GlobalConfigContext';
+import { useUserOptions } from './UserOptionsProvider';
 
 export interface TokenLogoProps {
   address?: string;
@@ -137,7 +138,8 @@ export default function TokenLogo({
   }, [address, width]);
 
   const chain = chainId ? chainListMap.get(chainId as ChainId) : null;
-  const showChain = !noShowChain && !!chain;
+  const { onlyChainId } = useUserOptions();
+  const showChain = !noShowChain && !!chain && !onlyChainId;
 
   const logo = (
     <Box

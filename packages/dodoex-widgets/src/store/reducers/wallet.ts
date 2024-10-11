@@ -2,7 +2,6 @@ import { AnyAction } from 'redux';
 import { ChainId } from '@dodoex/api';
 
 export type State = {
-  chainId: ChainId;
   fromTokenChainId?: ChainId;
   latestBlockNumber: number;
   openConnectWalletInfo:
@@ -14,18 +13,12 @@ export type State = {
 };
 
 export const initialState: State = {
-  chainId: ChainId.MAINNET,
   latestBlockNumber: 0,
   openConnectWalletInfo: false,
 };
 
 export default (state: State = initialState, action: AnyAction): State => {
   switch (action.type) {
-    case 'SET_CHAIN_ID':
-      return {
-        ...state,
-        chainId: action.payload,
-      };
     case 'SET_FROM_TOKEN_CHAIN_ID':
       return {
         ...state,

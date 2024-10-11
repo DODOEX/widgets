@@ -1,14 +1,14 @@
+import { ChainId } from '@dodoex/api';
 import { useWeb3React } from '@web3-react/core';
-import { useSelector } from 'react-redux';
-import { getDefaultChainId } from '../../store/selectors/wallet';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export function useWalletInfo() {
   const { account, chainId } = useWeb3React();
-  const defaultChainId = useSelector(getDefaultChainId);
+  const defaultChainId = useUserOptions((state) => state.defaultChainId);
 
   return {
     account,
-    chainId: chainId || defaultChainId,
+    chainId: (chainId || defaultChainId || 1) as ChainId,
     connectedChainId: chainId,
     defaultChainId,
   };

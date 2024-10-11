@@ -3,6 +3,7 @@ import {
   createTheme,
   CssBaseline,
   WIDGET_MODAL_CLASS,
+  WIDGET_MODAL_FIXED_CLASS,
   Box,
 } from '@dodoex/components';
 import {
@@ -29,7 +30,6 @@ import { useFetchBlockNumber } from '../../hooks/contract';
 import { ExecutionProps } from '../../hooks/Submission';
 import { getRpcSingleUrlMap } from '../../constants/chains';
 import { ChainId } from '@dodoex/api';
-import { useInitPropsToRedux } from '../../hooks/Swap';
 import { DefaultTokenInfo } from '../../hooks/Token/type';
 import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
@@ -45,16 +45,16 @@ import {
 import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
 import { queryClient } from '../../providers/queryClient';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { UserOptionsProvider } from '../UserOptionsProvider';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
   extends Web3ConnectorsProps,
     InitTokenListProps,
     ExecutionProps,
-    GlobalFunctionConfig,
-    SwapProps {
+    GlobalFunctionConfig {
   apikey?: string;
-  theme?: ThemeOptions;
+  theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
   defaultChainId?: ChainId;
   width?: string | number;
@@ -69,6 +69,8 @@ export interface WidgetProps
   apiServices?: Partial<APIServices>;
   crossChain?: boolean;
   noPowerBy?: boolean;
+  noDocumentLink?: boolean;
+  onlyChainId?: ChainId;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
@@ -149,10 +151,8 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     };
   }, [provider]);
 
-  // Init props to redux!
   const width = props.width || 375;
   const height = props.height || 494;
-  useInitPropsToRedux({ ...props, width, height });
 
   const widgetRef = useRef<HTMLDivElement>(null);
 
@@ -230,11 +230,13 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
       <LangProvider locale={props.locale}>
         <ThemeProvider theme={theme}>
           <CssBaseline
-            container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}`}
+            container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}, .${WIDGET_MODAL_FIXED_CLASS}`}
           />
-          <QueryClientProvider client={queryClient}>
-            <Web3Provider {...props} />
-          </QueryClientProvider>
+          <UserOptionsProvider {...props}>
+            <QueryClientProvider client={queryClient}>
+              <Web3Provider {...props} />
+            </QueryClientProvider>
+          </UserOptionsProvider>
         </ThemeProvider>
       </LangProvider>
     </ReduxProvider>

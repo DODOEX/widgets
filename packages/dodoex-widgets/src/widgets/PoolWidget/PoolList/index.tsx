@@ -12,9 +12,13 @@ import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import PoolOperate, { PoolOperateProps } from '../PoolOperate';
+import PoolOperateDialog, {
+  PoolOperateModal,
+  PoolOperateProps,
+} from '../PoolOperate';
 import { HowItWorks } from '../../../components/HowItWorks';
 import { ReactComponent as LeftImage } from './pool-left.svg';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -32,6 +36,7 @@ function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
 
 export default function PoolList() {
   const { isMobile } = useWidgetDevice();
+  const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
   const scrollParentRef = React.useRef<HTMLDivElement>();
   const { account } = useWeb3React();
   const { poolTab, tabs, handleChangePoolTab } = usePoolListTabs({
@@ -46,9 +51,10 @@ export default function PoolList() {
   return (
     <WidgetContainer
       sx={{
-        padding: 20,
         ...(isMobile
-          ? {}
+          ? {
+              p: 20,
+            }
           : {
               display: 'flex',
               gap: 12,
@@ -174,20 +180,30 @@ export default function PoolList() {
       <Box
         sx={{
           position: 'relative',
-          width: 375,
+          width: noDocumentLink && !operatePool ? 'auto' : 375,
         }}
       >
-        <HowItWorks
-          title={t`Liquidity`}
-          desc={t`Classical AMM-like pool. Suitable for most assets.`}
-          linkTo="https://docs.dodoex.io/product/tutorial/how-to-provide-liquidity"
-          LeftImage={LeftImage}
-        />
-        <PoolOperate
-          account={account}
-          onClose={() => setOperatePool(null)}
-          {...operatePool}
-        />
+        {!noDocumentLink && (
+          <HowItWorks
+            title={t`Liquidity`}
+            desc={t`Classical AMM-like pool. Suitable for most assets.`}
+            linkTo="https://docs.dodoex.io/product/tutorial/how-to-provide-liquidity"
+            LeftImage={LeftImage}
+          />
+        )}
+        {isMobile ? (
+          <PoolOperateModal
+            account={account}
+            onClose={() => setOperatePool(null)}
+            {...operatePool}
+          />
+        ) : (
+          <PoolOperateDialog
+            account={account}
+            onClose={() => setOperatePool(null)}
+            {...operatePool}
+          />
+        )}
       </Box>
     </WidgetContainer>
   );

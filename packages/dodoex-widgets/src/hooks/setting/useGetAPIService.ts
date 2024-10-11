@@ -1,13 +1,9 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 import { APIServiceKey, getAPIService } from '../../constants/api';
-import { getGlobalProps } from '../../store/selectors/globals';
 
 export function useGetAPIService(key: APIServiceKey) {
-  const globalProps = useSelector(getGlobalProps);
+  const { apiServices } = useUserOptions();
 
-  return useMemo(
-    () => getAPIService(key, globalProps.apiServices),
-    [globalProps.apiServices, key],
-  );
+  return useMemo(() => getAPIService(key, apiServices), [apiServices, key]);
 }

@@ -1,12 +1,11 @@
+import { FailedList } from '@dodoex/icons';
 import { Box, BoxProps } from '../Box';
-import { useFailedListBodyMovin } from './hooks/useFailedListBodyMovin';
 
 export default function FailedIcon({ sx }: { sx?: BoxProps['sx'] }) {
-  const ref = useFailedListBodyMovin();
-
   return (
     <Box
-      ref={ref}
+      component={FailedList}
+      viewBox="0 0 60 60"
       sx={{
         display: 'inline-block',
         width: 105,

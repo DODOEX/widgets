@@ -1,6 +1,12 @@
-import { ThemeOptions, createTheme as systemCreateTheme } from '@mui/system';
+import { createTheme as systemCreateTheme, useTheme as useThemeBase } from '@mui/system';
 import { merge } from 'lodash';
-import { getDesignTokens, PaletteMode } from './config';
+import { getDesignTokens, PaletteMode, ThemeOptions, Theme } from './config';
+
+
+
+export const useTheme: typeof useThemeBase<Theme> = (defaultTheme) => {
+  return useThemeBase<Theme>(defaultTheme);
+}
 
 function createTheme(
   {
@@ -10,7 +16,7 @@ function createTheme(
   }: {
     mode?: PaletteMode;
     lang?: string;
-    theme?: ThemeOptions;
+    theme?: PartialDeep<ThemeOptions>;
   } = {},
   ...args: object[]
 ) {
