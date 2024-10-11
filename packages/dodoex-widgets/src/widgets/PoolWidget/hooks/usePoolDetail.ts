@@ -5,7 +5,7 @@ import { TokenInfo } from '../../../hooks/Token';
 import { formatApy } from '../../../utils';
 import { convertLiquidityTokenToTokenInfo } from '../utils';
 import { ThegraphKeyMap } from '../../../constants/chains';
-import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 
 export function usePoolDetail({
   id,
@@ -15,7 +15,7 @@ export function usePoolDetail({
   chainId: ChainId | undefined;
 }) {
   const chain = chainId ? ThegraphKeyMap[chainId] : '';
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
   const query = graphQLRequests.getQuery(PoolApi.graphql.fetchPool, {
     id: id || '',
     where: {

@@ -32,13 +32,13 @@ import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
 import { getPoolTypeTag } from '../hooks/usePoolTypeTag';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
-import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
 import { FetchMyCreateListLqList } from '../utils';
 import LiquidityTable from './components/LiquidityTable';
 import { ArrowRight } from '@dodoex/icons';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import SkeletonTable from './components/SkeletonTable';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 
 function CardList({
   account,
@@ -584,7 +584,7 @@ export default function MyCreated({
     owner: account,
   };
 
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
   const query = graphQLRequests.getQuery(
     PoolApi.graphql.fetchDashboardPairList,
     {

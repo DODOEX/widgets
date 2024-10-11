@@ -4,7 +4,6 @@ import { Box, BoxProps } from '@dodoex/components';
 import { TokenInfo, useFindTokenByAddress } from '../hooks/Token';
 import { chainListMap } from '../constants/chainList';
 import { ChainId } from '@dodoex/api';
-import { useGlobalConfig } from '../providers/GlobalConfigContext';
 import { useUserOptions } from './UserOptionsProvider';
 
 export interface TokenLogoProps {
@@ -77,7 +76,7 @@ export default function TokenLogo({
   const address = addressProps || token?.address;
   const symbol = token?.symbol;
   const initial = symbol?.charAt(0).toUpperCase();
-  const { getTokenLogoUrl } = useGlobalConfig();
+  const { getTokenLogoUrl } = useUserOptions();
 
   const logoUrl = useMemo(() => {
     const tokenUrl = token?.logoURI;

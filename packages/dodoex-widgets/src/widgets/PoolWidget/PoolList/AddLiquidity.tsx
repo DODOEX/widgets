@@ -47,9 +47,9 @@ import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCo
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import LiquidityTable from './components/LiquidityTable';
-import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
 import SkeletonTable from './components/SkeletonTable';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 
 function CardList({
   lqList,
@@ -527,7 +527,7 @@ export default function AddLiquidityList({
     },
   };
 
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
 
   const query = graphQLRequests.getInfiniteQuery(
     PoolApi.graphql.fetchLiquidityList,

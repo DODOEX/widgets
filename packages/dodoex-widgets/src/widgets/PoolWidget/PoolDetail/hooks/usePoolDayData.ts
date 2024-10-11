@@ -2,7 +2,7 @@ import { ChainId, PoolApi } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { ThegraphKeyMap } from '../../../../constants/chains';
-import { useGlobalConfig } from '../../../../providers/GlobalConfigContext';
+import { useGraphQLRequests } from '../../../../hooks/useGraphQLRequests';
 
 function toNumber(v: string | number | null | undefined) {
   if (v === null || v === undefined) {
@@ -21,7 +21,7 @@ export function usePoolDayData({
   day?: number;
 }) {
   const chain = chainId ? ThegraphKeyMap[chainId] : '';
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
   const query = graphQLRequests.getQuery(PoolApi.graphql.fetchPoolDayData, {
     where: {
       pair_address: address ?? '',
