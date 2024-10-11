@@ -37,9 +37,9 @@ import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import TokenLogo from '../../../components/TokenLogo';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import LiquidityTable from './components/LiquidityTable';
-import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
 import SkeletonTable from './components/SkeletonTable';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 
 function CardList({
   account,
@@ -749,7 +749,7 @@ export default function MyLiquidity({
     },
   };
 
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
   const query = graphQLRequests.getQuery(PoolApi.graphql.fetchMyLiquidityList, {
     where: {
       ...defaultQueryFilter,

@@ -1,7 +1,7 @@
 import { ChainId, PoolApi } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import { ThegraphKeyMap } from '../../../../constants/chains';
-import { useGlobalConfig } from '../../../../providers/GlobalConfigContext';
+import { useGraphQLRequests } from '../../../../hooks/useGraphQLRequests';
 
 export function usePoolSwapList({
   chainId,
@@ -13,7 +13,7 @@ export function usePoolSwapList({
   first?: number;
 }) {
   const chain = chainId ? ThegraphKeyMap[chainId as ChainId] : '';
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
   const query = graphQLRequests.getQuery(PoolApi.graphql.fetchPoolSwapList, {
     first,
     orderBy: 'timestamp',

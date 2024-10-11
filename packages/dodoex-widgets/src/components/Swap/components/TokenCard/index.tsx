@@ -20,13 +20,13 @@ import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import BigNumber from 'bignumber.js';
 import { PercentageSelectButtonGroup } from './PercentageSelectButtonGroup';
 import { Trans } from '@lingui/macro';
-import { useGlobalConfig } from '../../../../providers/GlobalConfigContext';
 import { ChainId } from '@dodoex/api';
 import {
   BalanceData,
   useBalanceUpdateLoading,
 } from '../../../../hooks/Submission/useBalanceUpdateLoading';
 import { useFetchTokens } from '../../../../hooks/contract';
+import { useUserOptions } from '../../../UserOptionsProvider';
 
 export interface TokenCardProps {
   amt: string;
@@ -167,7 +167,7 @@ export function TokenCard({
     }
   }, [amt]);
 
-  const { gotoBuyToken } = useGlobalConfig();
+  const { gotoBuyToken } = useUserOptions();
   let showBuyTokenBtn = gotoBuyToken && balance && amt && balance.lt(amt);
 
   return (

@@ -24,7 +24,7 @@ import LpTokenMiningOperate from '../../MiningWidget/LpTokenMiningOperate';
 import { useWeb3React } from '@web3-react/core';
 import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
 import { t } from '@lingui/macro';
-import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 
 export interface PoolOperateProps {
   onClose?: () => void;
@@ -49,7 +49,7 @@ export function PoolOperate({
   const { account } = useWeb3React();
   const chain = chainId ? ThegraphKeyMap[chainId as ChainId] : '';
 
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
   const fetchResult = useQuery({
     ...graphQLRequests.getQuery(PoolApi.graphql.fetchPoolList, {
       where: {

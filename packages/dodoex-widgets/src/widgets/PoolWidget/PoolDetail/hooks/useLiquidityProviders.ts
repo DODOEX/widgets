@@ -10,7 +10,7 @@ import {
 } from '../../../../utils';
 import { useFetchFiatPrice } from '../../../../hooks/Swap';
 import { ThegraphKeyMap } from '../../../../constants/chains';
-import { useGlobalConfig } from '../../../../providers/GlobalConfigContext';
+import { useGraphQLRequests } from '../../../../hooks/useGraphQLRequests';
 
 type TmpUser = {
   id: string;
@@ -123,7 +123,7 @@ export function useLiquidityProviders({
     toToken: quoteToken ?? null,
   });
 
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
   const fetchPositionsQuery = useQuery({
     ...graphQLRequests.getQuery(PoolApi.graphql.fetchLiquidityPositions, {
       id,

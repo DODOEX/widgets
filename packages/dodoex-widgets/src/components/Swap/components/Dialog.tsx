@@ -1,7 +1,7 @@
 import { Box } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
 import { createPortal } from 'react-dom';
-import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
+import { useUserOptions } from '../../UserOptionsProvider';
 
 export const transitionTime = 300;
 export interface DialogProps {
@@ -98,7 +98,7 @@ function DialogBase({
 }
 
 export default function Dialog({ scope, ...props }: DialogProps) {
-  const { widgetRef, DialogComponent } = useGlobalConfig();
+  const { widgetRef, DialogComponent } = useUserOptions();
 
   if (DialogComponent) {
     return <DialogComponent scope={scope} {...props} />;

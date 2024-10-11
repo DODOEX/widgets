@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { OperateType } from '../types';
 import { useStatusAndStartBlockNumber } from '../hooks/useStatusAndStartBlockNumber';
-import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 
 export default function LpTokenMiningOperate({
   chainId,
@@ -17,7 +17,7 @@ export default function LpTokenMiningOperate({
   poolAddress: string;
   goLpLink?: () => void;
 }) {
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
   const query = graphQLRequests.getQuery(MiningApi.graphql.fetchMiningList, {
     where: {
       chainIds: [chainId],

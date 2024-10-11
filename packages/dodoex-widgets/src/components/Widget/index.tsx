@@ -5,14 +5,22 @@ import {
   WIDGET_MODAL_CLASS,
   WIDGET_MODAL_FIXED_CLASS,
   Box,
+  BoxProps,
 } from '@dodoex/components';
 import {
   Provider as ReduxProvider,
   useDispatch,
   useSelector,
 } from 'react-redux';
-import { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
-import { ContractRequests } from '@dodoex/api';
+import {
+  forwardRef,
+  PropsWithChildren,
+  Ref,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
+import { ContractRequests, GraphQLRequests } from '@dodoex/api';
 import { LangProvider } from '../../providers/i18n';
 import { store } from '../../store';
 import { PaletteMode, ThemeOptions } from '@dodoex/components';
@@ -30,29 +38,24 @@ import { useFetchBlockNumber } from '../../hooks/contract';
 import { ExecutionProps } from '../../hooks/Submission';
 import { getRpcSingleUrlMap } from '../../constants/chains';
 import { ChainId } from '@dodoex/api';
-import { DefaultTokenInfo } from '../../hooks/Token/type';
+import { DefaultTokenInfo, TokenInfo } from '../../hooks/Token/type';
 import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
 import { APIServices, contractRequests } from '../../constants/api';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
-import { SwapProps } from '../Swap';
 import { getFromTokenChainId } from '../../store/selectors/wallet';
-import {
-  GlobalConfigContext,
-  GlobalFunctionConfig,
-  graphQLRequests,
-} from '../../providers/GlobalConfigContext';
 import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
 import { queryClient } from '../../providers/queryClient';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { UserOptionsProvider } from '../UserOptionsProvider';
+import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
+import { ConfirmProps } from '../Confirm';
+import { DialogProps } from '../Swap/components/Dialog';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
   extends Web3ConnectorsProps,
     InitTokenListProps,
-    ExecutionProps,
-    GlobalFunctionConfig {
+    ExecutionProps {
   apikey?: string;
   theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
@@ -71,17 +74,86 @@ export interface WidgetProps
   noPowerBy?: boolean;
   noDocumentLink?: boolean;
   onlyChainId?: ChainId;
+  noUI?: boolean;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
 
   onProviderChanged?: (provider?: any) => void;
-  gotoBuyToken?: GlobalFunctionConfig['gotoBuyToken'];
   getStaticJsonRpcProviderByChainId?: Exclude<
     ConstructorParameters<typeof ContractRequests>[0],
     undefined
   >['getProvider'];
+
+  widgetRef?: React.RefObject<HTMLDivElement>;
+  /** If true is returned, the default wallet connection logic will not be executed */
+  onConnectWalletClick?: () => boolean | Promise<boolean>;
+  /** When the token balance is insufficient, users can purchase or swap callbacks */
+  gotoBuyToken?: (params: { token: TokenInfo; account: string }) => void;
+  getTokenLogoUrl?: (params: {
+    address?: string;
+    width?: number;
+    height?: number;
+    url?: string;
+    chainId?: number;
+  }) => string;
+  graphQLRequests?: GraphQLRequests;
+  ConfirmComponent?: React.FunctionComponent<ConfirmProps>;
+  DialogComponent?: React.FunctionComponent<DialogProps>;
 }
+
+export const WidgetUI = forwardRef(
+  (
+    {
+      locale,
+      sx,
+      width,
+      height,
+      children,
+      withExecutionProps,
+      ...props
+    }: PropsWithChildren<
+      {
+        locale: WidgetProps['locale'];
+        sx?: BoxProps['sx'];
+        width?: string | number;
+        height?: string | number;
+        withExecutionProps?: ExecutionProps;
+        className?: string;
+        children?: React.ReactNode;
+      } & BoxProps
+    >,
+    ref: Ref<HTMLDivElement>,
+  ) => {
+    return (
+      <LangProvider locale={locale}>
+        <Box
+          sx={{
+            width,
+            height,
+            overflow: 'hidden',
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            minWidth: 335,
+            minHeight: 494,
+            borderRadius: 16,
+            backgroundColor: 'background.paper',
+            ...sx,
+          }}
+          className={WIDGET_CLASS_NAME}
+          {...props}
+          ref={ref}
+        >
+          <OpenConnectWalletInfo />
+          <WithExecutionDialog {...withExecutionProps}>
+            {children}
+          </WithExecutionDialog>
+        </Box>
+      </LangProvider>
+    );
+  },
+);
 
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useInitTokenList(props);
@@ -154,40 +226,19 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   const width = props.width || 375;
   const height = props.height || 494;
 
-  const widgetRef = useRef<HTMLDivElement>(null);
+  const { widgetRef } = useUserOptions();
 
+  if (props.noUI) return <>{props.children}</>;
   return (
-    <GlobalConfigContext.Provider
-      value={{
-        widgetRef,
-        onConnectWalletClick: props.onConnectWalletClick,
-        gotoBuyToken: props.gotoBuyToken,
-        getTokenLogoUrl: props.getTokenLogoUrl,
-        graphQLRequests: props.graphQLRequests ?? graphQLRequests,
-        DialogComponent: props.DialogComponent,
-        ConfirmComponent: props.ConfirmComponent,
-      }}
+    <WidgetUI
+      width={width}
+      height={height}
+      withExecutionProps={props}
+      ref={widgetRef}
+      locale={props.locale}
     >
-      <Box
-        sx={{
-          width,
-          height,
-          overflow: 'hidden',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          minWidth: 335,
-          minHeight: 494,
-          borderRadius: 16,
-          backgroundColor: 'background.paper',
-        }}
-        className={WIDGET_CLASS_NAME}
-        ref={widgetRef}
-      >
-        <OpenConnectWalletInfo />
-        <WithExecutionDialog {...props}>{props.children}</WithExecutionDialog>
-      </Box>
-    </GlobalConfigContext.Provider>
+      {props.children}
+    </WidgetUI>
   );
 }
 
@@ -225,20 +276,25 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
     contractRequests.setRpc(getRpcSingleUrlMap(props.jsonRpcUrlMap));
   }
 
+  const widgetRef = useRef<HTMLDivElement>(null);
+
   return (
     <ReduxProvider store={store}>
-      <LangProvider locale={props.locale}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline
-            container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}, .${WIDGET_MODAL_FIXED_CLASS}`}
-          />
-          <UserOptionsProvider {...props}>
-            <QueryClientProvider client={queryClient}>
-              <Web3Provider {...props} />
-            </QueryClientProvider>
-          </UserOptionsProvider>
-        </ThemeProvider>
-      </LangProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline
+          container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}, .${WIDGET_MODAL_FIXED_CLASS}`}
+        />
+        <UserOptionsProvider
+          {...{
+            ...props,
+            widgetRef: props.widgetRef ?? widgetRef,
+          }}
+        >
+          <QueryClientProvider client={queryClient}>
+            <Web3Provider {...props} />
+          </QueryClientProvider>
+        </UserOptionsProvider>
+      </ThemeProvider>
     </ReduxProvider>
   );
 }
