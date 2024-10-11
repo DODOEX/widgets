@@ -34,6 +34,9 @@ interface Props extends AddressTextProps {
   iconSpace?: number;
   iconDarkHover?: boolean;
   customChainId?: number;
+  onAddressClick?: (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => void;
 }
 
 function AddressText({
@@ -108,6 +111,7 @@ export function AddressWithLinkAndCopy({
   addressHoverShowIcon,
   customChainId,
   handleOpen,
+  onAddressClick,
 }: Props) {
   const theme = useTheme();
 
@@ -158,7 +162,7 @@ export function AddressWithLinkAndCopy({
         disabledAddress={disabledAddress}
         sx={sx}
         typography={typography}
-        handleOpen={handleOpenResult}
+        handleOpen={onAddressClick ?? handleOpenResult}
         addressHoverColor={addressHoverColor}
         addressHoverShowIcon={addressHoverShowIcon}
       />

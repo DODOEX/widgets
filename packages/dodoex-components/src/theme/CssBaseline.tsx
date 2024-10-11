@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { ThemeOptions, useThemeProps, GlobalStyles } from '@mui/system';
+import { useThemeProps, GlobalStyles } from '@mui/system';
 import { Interpolation } from '@emotion/react';
+import { ThemeOptions } from './config';
 
 export const html = (theme: ThemeOptions, enableColorScheme: boolean) => ({
   WebkitFontSmoothing: 'antialiased', // Antialiasing.

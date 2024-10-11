@@ -26,6 +26,8 @@ export const Primary = (props: any) => {
 Primary.args = {
   projectId: 'project2',
   apiKey: 'ee53d6b75b12aceed4',
-  width: 375,
-  height: 494,
+  width: '100%',
+  height: '100%',
+  noDocumentLink: true,
+  onlyChainId: 1,
 };

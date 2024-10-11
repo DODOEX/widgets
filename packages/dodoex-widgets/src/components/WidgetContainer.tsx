@@ -1,12 +1,16 @@
 import { Box, BoxProps, useTheme } from '@dodoex/components';
 import { useWidgetDevice } from '../hooks/style/useWidgetDevice';
 
+export const WIDGET_MODULE_CLASS_NAME = 'widget-module-container';
+
 export default function WidgetContainer({ sx, ...props }: BoxProps) {
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
   return (
     <Box
+      className={WIDGET_MODULE_CLASS_NAME}
       sx={{
+        flex: 1,
         overflowY: 'auto',
         backgroundColor: 'background.default',
         ...(isMobile

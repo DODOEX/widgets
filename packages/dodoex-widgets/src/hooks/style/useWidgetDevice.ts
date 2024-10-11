@@ -4,7 +4,27 @@ import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export function useWidgetDevice() {
   const theme = useTheme();
-  const width = useUserOptions((state) => state.width || 375);
+  const widthProps = useUserOptions((state) => state.width);
+  const [width, setWidth] = React.useState(
+    widthProps ??
+      (typeof window === 'undefined' ? 375 : document.body.clientWidth),
+  );
+
+  React.useEffect(() => {
+    const listener = () => {
+      setWidth(typeof window === 'undefined' ? 375 : document.body.clientWidth);
+    };
+    if (typeof widthProps !== 'number') {
+      listener();
+      window.addEventListener('resize', listener);
+    } else {
+      setWidth(widthProps);
+    }
+
+    return () => {
+      window.removeEventListener('resize', listener);
+    };
+  }, [widthProps]);
 
   const isMobile = React.useMemo(() => {
     return width < theme.breakpoints.values.tablet;

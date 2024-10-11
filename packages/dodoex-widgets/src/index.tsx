@@ -10,6 +10,7 @@ export { MetadataFlag } from './hooks/Submission/types';
 
 import { Pool } from './widgets/PoolWidget';
 export { Widget } from './components/Widget';
+export { WIDGET_MODULE_CLASS_NAME } from './components/WidgetContainer';
 export type { WidgetProps } from './components/Widget';
 export type SwapWidgetProps = WidgetProps & SwapProps;
 export type { TokenInfo } from './hooks/Token/type';

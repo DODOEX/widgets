@@ -3,6 +3,7 @@ import {
   createTheme,
   CssBaseline,
   WIDGET_MODAL_CLASS,
+  WIDGET_MODAL_FIXED_CLASS,
   Box,
 } from '@dodoex/components';
 import {
@@ -53,7 +54,7 @@ export interface WidgetProps
     ExecutionProps,
     GlobalFunctionConfig {
   apikey?: string;
-  theme?: ThemeOptions;
+  theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
   defaultChainId?: ChainId;
   width?: string | number;
@@ -68,7 +69,8 @@ export interface WidgetProps
   apiServices?: Partial<APIServices>;
   crossChain?: boolean;
   noPowerBy?: boolean;
-  noDocuments?: boolean;
+  noDocumentLink?: boolean;
+  onlyChainId?: ChainId;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
@@ -228,7 +230,7 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
       <LangProvider locale={props.locale}>
         <ThemeProvider theme={theme}>
           <CssBaseline
-            container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}`}
+            container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}, .${WIDGET_MODAL_FIXED_CLASS}`}
           />
           <UserOptionsProvider {...props}>
             <QueryClientProvider client={queryClient}>

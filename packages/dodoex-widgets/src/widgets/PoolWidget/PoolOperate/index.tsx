@@ -5,6 +5,7 @@ import {
   TabPanel,
   Tabs,
   TabsGroup,
+  Modal,
 } from '@dodoex/components';
 import Dialog from '../../../components/Dialog';
 import {
@@ -43,6 +44,7 @@ export function PoolOperate({
   operate,
   chainId,
   hasMining = true,
+  sx,
 }: PoolOperateProps) {
   const { account } = useWeb3React();
   const chain = chainId ? ThegraphKeyMap[chainId as ChainId] : '';
@@ -83,13 +85,7 @@ export function PoolOperate({
   const poolAddress = address ?? pool?.address;
 
   return (
-    <Box
-      sx={{
-        pb: 20,
-        overflow: 'hidden',
-        flex: 1,
-      }}
-    >
+    <Box sx={sx}>
       <Tabs
         value={poolOrMiningTab}
         onChange={(_, value) => {
@@ -106,7 +102,7 @@ export function PoolOperate({
           tabs={poolOrMiningTabs}
           tabsListSx={{
             mx: 20,
-            justifyContent: 'space-between',
+            justifyContent: onClose ? 'space-between' : 'flex-start',
             ...(hasMining && hasLp
               ? {
                   '& button:last-child': {
@@ -131,15 +127,29 @@ export function PoolOperate({
           rightSlot={
             onClose ? (
               <Box
-                component={Error}
                 sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 24,
+                  height: 24,
+                  borderRadius: '50%',
+                  borderWidth: 1,
                   color: 'text.secondary',
                   cursor: 'pointer',
                 }}
-                onClick={() => {
-                  onClose();
-                }}
-              />
+              >
+                <Box
+                  component={Error}
+                  sx={{
+                    width: 16,
+                    height: 16,
+                  }}
+                  onClick={() => {
+                    onClose();
+                  }}
+                />
+              </Box>
             ) : undefined
           }
         />
@@ -186,7 +196,19 @@ export function PoolOperate({
   );
 }
 
-export default function PoolOperateDialog({ sx, ...props }: PoolOperateProps) {
+export function PoolOperateModal(props: PoolOperateProps) {
+  return (
+    <Modal
+      open={!!props.pool || !!props.address}
+      onClose={props.onClose}
+      id="pool-operate"
+    >
+      <PoolOperate {...props} />
+    </Modal>
+  );
+}
+
+export default function PoolOperateDialog(props: PoolOperateProps) {
   const { isMobile } = useWidgetDevice();
 
   return (

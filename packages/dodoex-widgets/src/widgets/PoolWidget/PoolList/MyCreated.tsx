@@ -38,6 +38,7 @@ import LiquidityTable from './components/LiquidityTable';
 import { ArrowRight } from '@dodoex/icons';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import SkeletonTable from './components/SkeletonTable';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
 
 function CardList({
   account,
@@ -575,6 +576,7 @@ export default function MyCreated({
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
 }) {
   const { isMobile } = useWidgetDevice();
+  const { onlyChainId } = useUserOptions();
 
   const defaultQueryFilter = {
     limit: 1000,
@@ -621,10 +623,12 @@ export default function MyCreated({
               }),
         }}
       >
-        <SelectChain
-          chainId={activeChainId}
-          setChainId={handleChangeActiveChainId}
-        />
+        {!onlyChainId && (
+          <SelectChain
+            chainId={activeChainId}
+            setChainId={handleChangeActiveChainId}
+          />
+        )}
         <Box
           component="label"
           sx={{
@@ -660,7 +664,7 @@ export default function MyCreated({
               sx={{
                 mt: 40,
               }}
-              hasSearch={!!activeChainId}
+              hasSearch={!!activeChainId && !onlyChainId}
             />
           )}
           {!!fetchResult.error && (
@@ -691,7 +695,7 @@ export default function MyCreated({
               sx={{
                 my: 40,
               }}
-              hasSearch={!!activeChainId}
+              hasSearch={!!activeChainId && !onlyChainId}
             />
           )}
           {!!fetchResult.error && (

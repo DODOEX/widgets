@@ -162,7 +162,7 @@ export class SwapWidgetApi {
     );
 
     /** set theme */
-    let theme: ThemeOptions | undefined;
+    let theme: PartialDeep<ThemeOptions> | undefined;
     if (configTokenList?.style && Object.keys(configTokenList.style).length) {
       const fontSizeModify = configTokenList?.basis?.fontSizeModify;
       theme = {

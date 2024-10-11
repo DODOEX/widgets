@@ -17,7 +17,12 @@ export { HoverOpacity, HoverAddBackground, HoverAddUnderLine } from './Hover';
 export { RotatingIcon, LoadingSkeleton } from './Loading';
 export { Tooltip, QuestionTooltip, TooltipToast } from './Tooltip';
 export type { QuestionTooltipProps } from './Tooltip';
-export { WidgetModal, WIDGET_MODAL_CLASS } from './Modal';
+export {
+  WidgetModal,
+  WIDGET_MODAL_CLASS,
+  Modal,
+  WIDGET_MODAL_FIXED_CLASS,
+} from './Modal';
 export type { ModalProps } from './Modal';
 export { Checkbox } from './Checkbox';
 export { Accordion, AccordionItem } from './Accordion';

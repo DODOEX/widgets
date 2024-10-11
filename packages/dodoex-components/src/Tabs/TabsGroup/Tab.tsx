@@ -69,9 +69,8 @@ const TabRoundedStyle = styled(BaseTab)`
   }
 
   &.${tabClasses.selected} {
-    background-color: ${({ theme }) =>
-      alpha(theme.palette.secondary.main, 0.2)};
-    color: ${({ theme }) => theme.palette.secondary.contrastText};
+    background-color: ${({ theme }) => theme.palette.tabActive.main};
+    color: ${({ theme }) => theme.palette.tabActive.contrastText};
   }
 `;
 

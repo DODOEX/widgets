@@ -49,6 +49,7 @@ import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import LiquidityTable from './components/LiquidityTable';
 import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
 import SkeletonTable from './components/SkeletonTable';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
 
 function CardList({
   lqList,
@@ -86,6 +87,7 @@ function CardList({
                 ),
               )
             : undefined;
+        const hasMining = !!item.miningAddress?.[0];
         return (
           <Box
             key={item.id + item.chainId}
@@ -141,7 +143,7 @@ function CardList({
                   {`${baseToken?.symbol}/${quoteToken?.symbol}`}
                 </Box>
               </Box>
-              {item.miningAddress ? (
+              {hasMining ? (
                 <Box
                   sx={{
                     p: 8,
@@ -194,7 +196,7 @@ function CardList({
                     baseToken={baseToken}
                     quoteToken={quoteToken}
                     hasQuote={!!quoteApy}
-                    hasMining={!!item.miningAddress}
+                    hasMining={hasMining}
                     sx={{
                       width: 14,
                       height: 14,
@@ -330,6 +332,8 @@ function TableList({
             }
           }
 
+          const hasMining = !!item.miningAddress?.[0];
+
           return (
             <Box component="tr" key={item.id + item.chainId}>
               <Box component="td">
@@ -361,6 +365,7 @@ function TableList({
                     </Box>
                     <AddressWithLinkAndCopy
                       address={item.id}
+                      customChainId={item.chainId}
                       truncate
                       showCopy
                       iconDarkHover
@@ -369,6 +374,15 @@ function TableList({
                       sx={{
                         typography: 'h6',
                         color: 'text.secondary',
+                      }}
+                      onAddressClick={() => {
+                        useRouterStore.getState().push({
+                          type: PageType.PoolDetail,
+                          params: {
+                            chainId: item.chainId as ChainId,
+                            address: item.id as string,
+                          },
+                        });
                       }}
                     />
                   </Box>
@@ -397,7 +411,7 @@ function TableList({
                     alignItems: 'center',
                   }}
                 >
-                  {item.miningAddress ? (
+                  {hasMining ? (
                     <Tooltip title={t`Mining`}>
                       <Box
                         component="span"
@@ -418,7 +432,7 @@ function TableList({
                     baseToken={baseToken}
                     quoteToken={quoteToken}
                     hasQuote={!!quoteApy}
-                    hasMining={!!item.miningAddress}
+                    hasMining={hasMining}
                   >
                     <Box
                       component="span"
@@ -489,6 +503,7 @@ export default function AddLiquidityList({
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
 }) {
   const theme = useTheme();
+  const { onlyChainId } = useUserOptions();
   const { minDevice, isMobile } = useWidgetDevice();
   const queryClient = useQueryClient();
 
@@ -592,10 +607,12 @@ export default function AddLiquidityList({
                 }),
           }}
         >
-          <SelectChain
-            chainId={activeChainId}
-            setChainId={handleChangeActiveChainId}
-          />
+          {!onlyChainId && (
+            <SelectChain
+              chainId={activeChainId}
+              setChainId={handleChangeActiveChainId}
+            />
+          )}
           <TokenAndPoolFilter
             value={filterTokens}
             onChange={handleChangeFilterTokens}
@@ -681,7 +698,13 @@ export default function AddLiquidityList({
                 sx={{
                   mt: 40,
                 }}
-                hasSearch={!!(activeChainId || filterASymbol || filterBSymbol)}
+                hasSearch={
+                  !!(
+                    (activeChainId && !onlyChainId) ||
+                    filterASymbol ||
+                    filterBSymbol
+                  )
+                }
               />
             )}
             {!!fetchResult.error && (
@@ -715,7 +738,13 @@ export default function AddLiquidityList({
               sx={{
                 my: 40,
               }}
-              hasSearch={!!(activeChainId || filterASymbol || filterBSymbol)}
+              hasSearch={
+                !!(
+                  (activeChainId && !onlyChainId) ||
+                  filterASymbol ||
+                  filterBSymbol
+                )
+              }
             />
           )}
           {!!fetchResult.error && (
