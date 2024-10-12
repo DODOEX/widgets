@@ -87,7 +87,6 @@ export function Swap({
   const theme = useTheme();
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
-  console.log('jie', 11);
   const dispatch = useDispatch<AppThunkDispatch>();
   const { defaultChainId, noPowerBy } = useUserOptions();
   const [isReverseRouting, setIsReverseRouting] = useState(false);

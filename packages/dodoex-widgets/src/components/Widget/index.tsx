@@ -74,7 +74,6 @@ export interface WidgetProps
   noPowerBy?: boolean;
   noDocumentLink?: boolean;
   onlyChainId?: ChainId;
-  noUI?: boolean;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
@@ -101,59 +100,6 @@ export interface WidgetProps
   ConfirmComponent?: React.FunctionComponent<ConfirmProps>;
   DialogComponent?: React.FunctionComponent<DialogProps>;
 }
-
-export const WidgetUI = forwardRef(
-  (
-    {
-      locale,
-      sx,
-      width,
-      height,
-      children,
-      withExecutionProps,
-      ...props
-    }: PropsWithChildren<
-      {
-        locale: WidgetProps['locale'];
-        sx?: BoxProps['sx'];
-        width?: string | number;
-        height?: string | number;
-        withExecutionProps?: ExecutionProps;
-        className?: string;
-        children?: React.ReactNode;
-      } & BoxProps
-    >,
-    ref: Ref<HTMLDivElement>,
-  ) => {
-    return (
-      <LangProvider locale={locale}>
-        <Box
-          sx={{
-            width,
-            height,
-            overflow: 'hidden',
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            minWidth: 335,
-            minHeight: 494,
-            borderRadius: 16,
-            backgroundColor: 'background.paper',
-            ...sx,
-          }}
-          className={WIDGET_CLASS_NAME}
-          {...props}
-          ref={ref}
-        >
-          <OpenConnectWalletInfo />
-          <WithExecutionDialog {...withExecutionProps}>
-            {children}
-          </WithExecutionDialog>
-        </Box>
-      </LangProvider>
-    );
-  },
-);
 
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useInitTokenList(props);
@@ -228,17 +174,26 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
 
   const { widgetRef } = useUserOptions();
 
-  if (props.noUI) return <>{props.children}</>;
   return (
-    <WidgetUI
-      width={width}
-      height={height}
-      withExecutionProps={props}
+    <Box
+      sx={{
+        width,
+        height,
+        overflow: 'hidden',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: 335,
+        minHeight: 494,
+        borderRadius: 16,
+        backgroundColor: 'background.paper',
+      }}
+      className={WIDGET_CLASS_NAME}
       ref={widgetRef}
-      locale={props.locale}
     >
-      {props.children}
-    </WidgetUI>
+      <OpenConnectWalletInfo />
+      <WithExecutionDialog {...props}>{props.children}</WithExecutionDialog>
+    </Box>
   );
 }
 
@@ -280,21 +235,23 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
 
   return (
     <ReduxProvider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline
-          container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}, .${WIDGET_MODAL_FIXED_CLASS}`}
-        />
-        <UserOptionsProvider
-          {...{
-            ...props,
-            widgetRef: props.widgetRef ?? widgetRef,
-          }}
-        >
-          <QueryClientProvider client={queryClient}>
-            <Web3Provider {...props} />
-          </QueryClientProvider>
-        </UserOptionsProvider>
-      </ThemeProvider>
+      <LangProvider locale={props.locale}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline
+            container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}, .${WIDGET_MODAL_FIXED_CLASS}`}
+          />
+          <UserOptionsProvider
+            {...{
+              ...props,
+              widgetRef: props.widgetRef ?? widgetRef,
+            }}
+          >
+            <QueryClientProvider client={queryClient}>
+              <Web3Provider {...props} />
+            </QueryClientProvider>
+          </UserOptionsProvider>
+        </ThemeProvider>
+      </LangProvider>
     </ReduxProvider>
   );
 }

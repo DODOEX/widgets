@@ -9,9 +9,7 @@ export { WIDGET_CLASS_NAME } from './components/Widget';
 export { MetadataFlag } from './hooks/Submission/types';
 
 import { Pool } from './widgets/PoolWidget';
-export { Widget, WidgetUI } from './components/Widget';
-export { default as WithExecutionDialog } from './components/WithExecutionDialog';
-export { LangProvider } from './providers/i18n';
+export { Widget } from './components/Widget';
 export { WIDGET_MODULE_CLASS_NAME } from './components/WidgetContainer';
 export type { WidgetProps } from './components/Widget';
 export type SwapWidgetProps = WidgetProps & SwapProps;
@@ -24,6 +22,14 @@ export {
 } from './widgets/PoolWidget/PoolOperate';
 export type { PoolOperateProps } from './widgets/PoolWidget/PoolOperate';
 export { usePoolBalanceInfo } from './widgets/PoolWidget/hooks/usePoolBalanceInfo';
+
+export { getEtherscanPage } from './utils/address';
+export {
+  formatReadableNumber,
+  formatTokenAmountNumber,
+  formatShortNumber,
+  formatPercentageNumber,
+} from './utils/formatter';
 
 export function SwapWidget(props: SwapWidgetProps) {
   return (

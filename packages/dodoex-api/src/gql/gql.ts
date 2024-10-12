@@ -32,6 +32,10 @@ const documents = {
     types.FetchPoolSwapListDocument,
   '\n    query FetchLiquidityPositions(\n      $id: ID!\n      $first: Int\n      $skip: Int\n      $where: LiquidityPosition_filter\n      $miningWhere: LiquidityPosition_filter\n      $orderBy: LiquidityPosition_orderBy\n      $orderDirection: OrderDirection\n    ) {\n      balance: liquidityPositions(\n        first: $first\n        skip: $skip\n        where: $where\n        orderBy: $orderBy\n        orderDirection: $orderDirection\n      ) {\n        id\n        liquidityTokenBalance\n      }\n      mining: liquidityPositions(\n        first: $first\n        skip: $skip\n        where: $miningWhere\n        orderBy: $orderBy\n        orderDirection: $orderDirection\n      ) {\n        id\n        liquidityTokenInMining\n      }\n      pair(id: $id) {\n        lastTradePrice\n        baseLpToken {\n          id\n          decimals\n        }\n        quoteLpToken {\n          id\n          decimals\n        }\n        baseToken {\n          id\n          symbol\n          name\n          decimals\n        }\n        quoteToken {\n          id\n          symbol\n          name\n          decimals\n        }\n      }\n    }\n  ':
     types.FetchLiquidityPositionsDocument,
+  '\n    query FetchUserSwapOrderHistories($where: User_swapswapFilter) {\n      user_swap_orderHistories(where: $where) {\n        count\n        page\n        list {\n          chainId\n          createdAt\n          fromAmount\n          fromTokenDecimals\n          fromTokenPrice\n          fromTokenSymbol\n          fromTokenAddress\n          fromTokenLogoImg\n          hash\n          status\n          toAmount\n          toTokenDecimals\n          toTokenPrice\n          toTokenSymbol\n          toTokenAddress\n          toTokenLogoImg\n          minAmount\n          nonce\n          extra\n          user\n        }\n      }\n    }\n  ':
+    types.FetchUserSwapOrderHistoriesDocument,
+  '\n    query FetchNoticeCenterTransactionList(\n      $where: Notice_centertransactionListFilter\n    ) {\n      notice_center_transactionList(where: $where) {\n        list {\n          chainId\n          createTime\n          extend\n          from\n          id\n          key\n          type\n        }\n        count\n      }\n    }\n  ':
+    types.FetchNoticeCenterTransactionListDocument,
 };
 
 /**
@@ -94,6 +98,18 @@ export function graphql(
 export function graphql(
   source: '\n    query FetchLiquidityPositions(\n      $id: ID!\n      $first: Int\n      $skip: Int\n      $where: LiquidityPosition_filter\n      $miningWhere: LiquidityPosition_filter\n      $orderBy: LiquidityPosition_orderBy\n      $orderDirection: OrderDirection\n    ) {\n      balance: liquidityPositions(\n        first: $first\n        skip: $skip\n        where: $where\n        orderBy: $orderBy\n        orderDirection: $orderDirection\n      ) {\n        id\n        liquidityTokenBalance\n      }\n      mining: liquidityPositions(\n        first: $first\n        skip: $skip\n        where: $miningWhere\n        orderBy: $orderBy\n        orderDirection: $orderDirection\n      ) {\n        id\n        liquidityTokenInMining\n      }\n      pair(id: $id) {\n        lastTradePrice\n        baseLpToken {\n          id\n          decimals\n        }\n        quoteLpToken {\n          id\n          decimals\n        }\n        baseToken {\n          id\n          symbol\n          name\n          decimals\n        }\n        quoteToken {\n          id\n          symbol\n          name\n          decimals\n        }\n      }\n    }\n  ',
 ): typeof import('./graphql').FetchLiquidityPositionsDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query FetchUserSwapOrderHistories($where: User_swapswapFilter) {\n      user_swap_orderHistories(where: $where) {\n        count\n        page\n        list {\n          chainId\n          createdAt\n          fromAmount\n          fromTokenDecimals\n          fromTokenPrice\n          fromTokenSymbol\n          fromTokenAddress\n          fromTokenLogoImg\n          hash\n          status\n          toAmount\n          toTokenDecimals\n          toTokenPrice\n          toTokenSymbol\n          toTokenAddress\n          toTokenLogoImg\n          minAmount\n          nonce\n          extra\n          user\n        }\n      }\n    }\n  ',
+): typeof import('./graphql').FetchUserSwapOrderHistoriesDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query FetchNoticeCenterTransactionList(\n      $where: Notice_centertransactionListFilter\n    ) {\n      notice_center_transactionList(where: $where) {\n        list {\n          chainId\n          createTime\n          extend\n          from\n          id\n          key\n          type\n        }\n        count\n      }\n    }\n  ',
+): typeof import('./graphql').FetchNoticeCenterTransactionListDocument;
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

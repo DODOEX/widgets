@@ -3,6 +3,7 @@ export {
   etherTokenAddress,
   basicTokenMap,
   contractConfig,
+  platformIdMap,
 } from './chainConfig';
 
 export { default as RestApiRequests } from './helper/RestApiRequests';
@@ -29,5 +30,8 @@ export type { PoolType } from './services/pool';
 export { MiningApi, MiningStatusE } from './services/mining';
 
 export { TokenApi } from './services/TokenApi';
+
+export { SwapApi } from './services/swap/SwapApi';
+export { SystemApi } from './services/system/SystemApi';
 
 export type ExcludeNone<T> = Exclude<Exclude<T, undefined>, null>;
