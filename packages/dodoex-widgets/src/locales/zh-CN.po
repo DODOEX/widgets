@@ -30,7 +30,7 @@ msgstr "跨链桥"
 msgid "99% Default"
 msgstr ""
 
-#: src/components/Swap/index.tsx:508
+#: src/components/Swap/index.tsx:507
 msgid "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 msgstr "当前滑点保护系数设置超过{maxSlippageWarning}%，可能会造成损失。"
 
@@ -127,7 +127,7 @@ msgid "Rewards"
 msgstr ""
 
 #: src/components/Swap/components/ReviewDialog.tsx:339
-#: src/components/Swap/index.tsx:433
+#: src/components/Swap/index.tsx:432
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
 
@@ -152,7 +152,7 @@ msgstr "{0} 已确认"
 msgid "Creation Time"
 msgstr ""
 
-#: src/components/Swap/index.tsx:540
+#: src/components/Swap/index.tsx:539
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
@@ -165,7 +165,7 @@ msgstr ""
 msgid "The token amount is calculated by initial price."
 msgstr ""
 
-#: src/components/Swap/index.tsx:441
+#: src/components/Swap/index.tsx:440
 msgid "Current price impact"
 msgstr "当前价格冲击"
 
@@ -215,7 +215,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 msgid "Confirm"
 msgstr "确认"
 
-#: src/components/Swap/index.tsx:995
+#: src/components/Swap/index.tsx:994
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -381,7 +381,7 @@ msgstr ""
 msgid "Emulator"
 msgstr ""
 
-#: src/components/Swap/index.tsx:696
+#: src/components/Swap/index.tsx:695
 msgid "Transaction Pending"
 msgstr "交易进行中"
 
@@ -461,7 +461,7 @@ msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the q
 msgstr ""
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:561
+#: src/components/Swap/index.tsx:560
 msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
@@ -473,7 +473,7 @@ msgstr ""
 msgid "Related CrowdPooling"
 msgstr ""
 
-#: src/components/Swap/index.tsx:785
+#: src/components/Swap/index.tsx:784
 msgid "Review Swap"
 msgstr "预览交易"
 
@@ -494,7 +494,7 @@ msgstr ""
 msgid "Any Ratio"
 msgstr ""
 
-#: src/components/Swap/index.tsx:703
+#: src/components/Swap/index.tsx:702
 msgid "Select Tokens"
 msgstr "选择代币"
 
@@ -530,13 +530,13 @@ msgstr ""
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr ""
 
-#: src/components/Swap/index.tsx:873
+#: src/components/Swap/index.tsx:872
 msgid "The setting has been switched to swap mode"
 msgstr "设置已切换至闪兑模式"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:616
-#: src/components/Swap/index.tsx:745
+#: src/components/Swap/index.tsx:615
+#: src/components/Swap/index.tsx:744
 msgid "Quote not available"
 msgstr "没有报价"
 
@@ -559,7 +559,7 @@ msgstr ""
 msgid "Set the fee to the same as most other pools"
 msgstr ""
 
-#: src/components/Swap/index.tsx:730
+#: src/components/Swap/index.tsx:729
 msgid "Fetching Price..."
 msgstr "获取价格中..."
 
@@ -641,7 +641,7 @@ msgstr "交易哈希："
 msgid "Single"
 msgstr ""
 
-#: src/components/Swap/index.tsx:775
+#: src/components/Swap/index.tsx:774
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
@@ -783,7 +783,7 @@ msgstr ""
 msgid "On"
 msgstr "在"
 
-#: src/components/Swap/index.tsx:713
+#: src/components/Swap/index.tsx:712
 #: src/hooks/Token/useTokenStatus.ts:128
 msgid "Approve"
 msgstr "代币授权"
@@ -978,7 +978,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: src/components/Swap/index.tsx:719
+#: src/components/Swap/index.tsx:718
 msgid "Enter an amount"
 msgstr "输入代币数量"
 
@@ -986,7 +986,7 @@ msgstr "输入代币数量"
 msgid "Ratio"
 msgstr ""
 
-#: src/components/Swap/index.tsx:713
+#: src/components/Swap/index.tsx:712
 #: src/components/TokenStatusButton.tsx:31
 msgid "Approving"
 msgstr "授权中"
@@ -1128,7 +1128,7 @@ msgstr ""
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "在冷静期无法进行清算"
 
-#: src/components/Swap/index.tsx:871
+#: src/components/Swap/index.tsx:870
 msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
@@ -1213,7 +1213,7 @@ msgstr ""
 msgid "Real Time"
 msgstr ""
 
-#: src/components/Swap/index.tsx:577
+#: src/components/Swap/index.tsx:576
 msgid "Unsupported network - switch to trade"
 msgstr "未支持网络 - 请切换后进行交易"
 
@@ -1225,7 +1225,7 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: src/components/Swap/index.tsx:866
+#: src/components/Swap/index.tsx:865
 #: src/hooks/Swap/useExecuteSwap.ts:60
 msgid "Swap"
 msgstr "交易"
@@ -1282,7 +1282,7 @@ msgstr ""
 msgid "Transaction Deadline"
 msgstr "交易截止时间"
 
-#: src/components/Swap/index.tsx:756
+#: src/components/Swap/index.tsx:755
 #: src/components/TokenStatusButton.tsx:18
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:89
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:164

@@ -30,7 +30,7 @@ msgstr "Cross Chain"
 msgid "99% Default"
 msgstr "99% Default"
 
-#: src/components/Swap/index.tsx:508
+#: src/components/Swap/index.tsx:507
 msgid "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 msgstr "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 
@@ -127,7 +127,7 @@ msgid "Rewards"
 msgstr "Rewards"
 
 #: src/components/Swap/components/ReviewDialog.tsx:339
-#: src/components/Swap/index.tsx:433
+#: src/components/Swap/index.tsx:432
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
 
@@ -152,7 +152,7 @@ msgstr "{0} confirmed"
 msgid "Creation Time"
 msgstr "Creation Time"
 
-#: src/components/Swap/index.tsx:540
+#: src/components/Swap/index.tsx:539
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "The current network is inconsistent with the wallet - please switch in wallet"
 
@@ -165,7 +165,7 @@ msgstr "Since this pool uses the PMM algorithm, which is different from the norm
 msgid "The token amount is calculated by initial price."
 msgstr "The token amount is calculated by initial price."
 
-#: src/components/Swap/index.tsx:441
+#: src/components/Swap/index.tsx:440
 msgid "Current price impact"
 msgstr "Current price impact"
 
@@ -215,7 +215,7 @@ msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgid "Confirm"
 msgstr "Confirm"
 
-#: src/components/Swap/index.tsx:995
+#: src/components/Swap/index.tsx:994
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -381,7 +381,7 @@ msgstr "TVL"
 msgid "Emulator"
 msgstr "Emulator"
 
-#: src/components/Swap/index.tsx:696
+#: src/components/Swap/index.tsx:695
 msgid "Transaction Pending"
 msgstr "Transaction Pending"
 
@@ -461,7 +461,7 @@ msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the q
 msgstr "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:561
+#: src/components/Swap/index.tsx:560
 msgid "Fetching best price..."
 msgstr "Fetching best price..."
 
@@ -473,7 +473,7 @@ msgstr "Liquidity Provider"
 msgid "Related CrowdPooling"
 msgstr "Related CrowdPooling"
 
-#: src/components/Swap/index.tsx:785
+#: src/components/Swap/index.tsx:784
 msgid "Review Swap"
 msgstr "Review Swap"
 
@@ -494,7 +494,7 @@ msgstr "Set pool parameters"
 msgid "Any Ratio"
 msgstr "Any Ratio"
 
-#: src/components/Swap/index.tsx:703
+#: src/components/Swap/index.tsx:702
 msgid "Select Tokens"
 msgstr "Select Tokens"
 
@@ -530,13 +530,13 @@ msgstr "Owner"
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 
-#: src/components/Swap/index.tsx:873
+#: src/components/Swap/index.tsx:872
 msgid "The setting has been switched to swap mode"
 msgstr "The setting has been switched to swap mode"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:616
-#: src/components/Swap/index.tsx:745
+#: src/components/Swap/index.tsx:615
+#: src/components/Swap/index.tsx:744
 msgid "Quote not available"
 msgstr "Quote not available"
 
@@ -559,7 +559,7 @@ msgstr "Unstake"
 msgid "Set the fee to the same as most other pools"
 msgstr "Set the fee to the same as most other pools"
 
-#: src/components/Swap/index.tsx:730
+#: src/components/Swap/index.tsx:729
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
@@ -641,7 +641,7 @@ msgstr "Tx"
 msgid "Single"
 msgstr "Single"
 
-#: src/components/Swap/index.tsx:775
+#: src/components/Swap/index.tsx:774
 msgid "Review Cross Chain"
 msgstr "Review Cross Chain"
 
@@ -783,7 +783,7 @@ msgstr "Total Swap Fee"
 msgid "On"
 msgstr "On"
 
-#: src/components/Swap/index.tsx:713
+#: src/components/Swap/index.tsx:712
 #: src/hooks/Token/useTokenStatus.ts:128
 msgid "Approve"
 msgstr "Approve"
@@ -978,7 +978,7 @@ msgstr "Claim"
 msgid "Back"
 msgstr "Back"
 
-#: src/components/Swap/index.tsx:719
+#: src/components/Swap/index.tsx:718
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
@@ -986,7 +986,7 @@ msgstr "Enter an amount"
 msgid "Ratio"
 msgstr "Ratio"
 
-#: src/components/Swap/index.tsx:713
+#: src/components/Swap/index.tsx:712
 #: src/components/TokenStatusButton.tsx:31
 msgid "Approving"
 msgstr "Approving"
@@ -1128,7 +1128,7 @@ msgstr "Traders"
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "Unable to SETTLE during the cooling-off period"
 
-#: src/components/Swap/index.tsx:871
+#: src/components/Swap/index.tsx:870
 msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
@@ -1213,7 +1213,7 @@ msgstr "differs from the price quoted by DODO by {lqAndDodoCompareText}"
 msgid "Real Time"
 msgstr "Real Time"
 
-#: src/components/Swap/index.tsx:577
+#: src/components/Swap/index.tsx:576
 msgid "Unsupported network - switch to trade"
 msgstr "Unsupported network - switch to trade"
 
@@ -1225,7 +1225,7 @@ msgstr "Enter parameters to view the yield curve"
 msgid "Paid"
 msgstr "Paid"
 
-#: src/components/Swap/index.tsx:866
+#: src/components/Swap/index.tsx:865
 #: src/hooks/Swap/useExecuteSwap.ts:60
 msgid "Swap"
 msgstr "Swap"
@@ -1282,7 +1282,7 @@ msgstr "Fees will be the same as in most other pools."
 msgid "Transaction Deadline"
 msgstr "Transaction Deadline"
 
-#: src/components/Swap/index.tsx:756
+#: src/components/Swap/index.tsx:755
 #: src/components/TokenStatusButton.tsx:18
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:89
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:164
