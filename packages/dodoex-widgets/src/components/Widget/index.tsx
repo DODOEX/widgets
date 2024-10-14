@@ -12,14 +12,7 @@ import {
   useDispatch,
   useSelector,
 } from 'react-redux';
-import {
-  forwardRef,
-  PropsWithChildren,
-  Ref,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
 import { ContractRequests, GraphQLRequests } from '@dodoex/api';
 import { LangProvider } from '../../providers/i18n';
 import { store } from '../../store';
@@ -50,6 +43,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
 import { ConfirmProps } from '../Confirm';
 import { DialogProps } from '../Swap/components/Dialog';
+import Message from '../Message';
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
@@ -74,6 +68,7 @@ export interface WidgetProps
   noPowerBy?: boolean;
   noDocumentLink?: boolean;
   onlyChainId?: ChainId;
+  noUI?: boolean;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
@@ -174,6 +169,8 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
 
   const { widgetRef } = useUserOptions();
 
+  if (props.noUI) return <>{props.children}</>;
+
   return (
     <Box
       sx={{
@@ -248,6 +245,7 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
           >
             <QueryClientProvider client={queryClient}>
               <Web3Provider {...props} />
+              <Message />
             </QueryClientProvider>
           </UserOptionsProvider>
         </ThemeProvider>

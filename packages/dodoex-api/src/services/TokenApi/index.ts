@@ -57,7 +57,41 @@ export class TokenApi {
         allowance.toFixed(),
       ]);
     },
+    async transferEncodeABI(receiverAddress: string, amount: string) {
+      const encoded = await encodeFunctionData(ABIName.erc20ABI, 'transfer', [
+        receiverAddress,
+        amount,
+      ]);
+      return encoded;
+    },
   };
+
+  getTokenDecimals(chainId: number | undefined, address: string | undefined) {
+    return {
+      // Unify the upper and lower case formats of queryKey into one to facilitate the use of cache
+      queryKey: [
+        'token',
+        'getTokenDecimals',
+        chainId ?? '',
+        address?.toLocaleLowerCase(),
+      ],
+      enabled: !!chainId && !!address,
+      queryFn: async () => {
+        if (!chainId || !address) return null;
+
+        const result = await this.contractRequests.batchCallQuery<number>(
+          chainId,
+          {
+            abiName: ABIName.erc20ABI,
+            contractAddress: address,
+            method: 'decimals',
+            params: [],
+          },
+        );
+        return result;
+      },
+    };
+  }
 
   getFiatPriceBatch(
     tokens: Array<{

@@ -8,6 +8,7 @@ export function formatReadableNumber({
   input,
   showDecimals = 4,
   showPrecisionDecimals = 2,
+  exponentialDecimalsAmount = 8,
   showIntegerOnly = false,
   showDecimalsOnly = false,
   noGroupSeparator = false,
@@ -18,6 +19,7 @@ export function formatReadableNumber({
   showIntegerOnly?: boolean;
   showDecimalsOnly?: boolean;
   showPrecisionDecimals?: number;
+  exponentialDecimalsAmount?: number;
   noGroupSeparator?: boolean;
   roundingMode?: BigNumber.RoundingMode;
 }): string {
@@ -27,6 +29,18 @@ export function formatReadableNumber({
   }
   let amount = source.dp(showDecimals, roundingMode);
   if (amount.eq(0) && (source.gt(0) || source.lt(0))) {
+    const significantDigits = showPrecisionDecimals ?? showDecimals;
+    amount = source.sd(significantDigits, BigNumber.ROUND_DOWN);
+    const amountDP = amount.dp();
+    if (
+      amountDP &&
+      amountDP > exponentialDecimalsAmount &&
+      !showDecimalsOnly &&
+      !showIntegerOnly
+    ) {
+      return amount.toExponential();
+    }
+
     amount = source.sd(
       showPrecisionDecimals ?? showDecimals,
       BigNumber.ROUND_DOWN,
@@ -56,11 +70,13 @@ export function formatTokenAmountNumber({
   input,
   decimals,
   showPrecisionDecimals = 2,
+  exponentialDecimalsAmount,
   noGroupSeparator,
 }: {
   input?: BigNumber | number | string | null;
   decimals?: number;
   showPrecisionDecimals?: number;
+  exponentialDecimalsAmount?: number;
   noGroupSeparator?: boolean;
 }): string {
   if (input === undefined || input === null) {
@@ -77,6 +93,7 @@ export function formatTokenAmountNumber({
     input: source,
     showDecimals,
     showPrecisionDecimals,
+    exponentialDecimalsAmount,
     noGroupSeparator,
   });
 }

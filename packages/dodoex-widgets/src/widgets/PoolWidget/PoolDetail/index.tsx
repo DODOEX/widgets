@@ -4,16 +4,12 @@ import React from 'react';
 import GoBack from '../../../components/GoBack';
 import WidgetConfirm from '../../../components/WidgetConfirm';
 import WidgetContainer from '../../../components/WidgetContainer';
-import WidgetDialog from '../../../components/WidgetDialog';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../router';
 import { Page, PageType } from '../../../router/types';
 import { usePoolDetail } from '../hooks/usePoolDetail';
-import PoolOperateDialog, {
-  PoolOperate,
-  PoolOperateModal,
-} from '../PoolOperate';
+import PoolOperateDialog, { PoolOperate } from '../PoolOperate';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import ChartInfo from './components/ChartInfo';
 import MoreDetail from './components/MoreDetail';
@@ -57,9 +53,11 @@ export default function PoolDetail() {
       pool?.owner &&
       pool.owner.toLocaleLowerCase() === account.toLocaleLowerCase());
 
-  const [operateType, setOperateType] = React.useState(
-    isMobile ? undefined : OperateTab.Add,
-  );
+  const [operateType, setOperateType] =
+    React.useState<OperateTab | undefined>();
+  if (pool && operateType === undefined && !isMobile) {
+    setOperateType(OperateTab.Add);
+  }
 
   const operatePool =
     !!operateType && pool
@@ -114,16 +112,15 @@ export default function PoolDetail() {
           <TotalLiquidity poolDetail={pool} />
           <MoreDetail poolDetail={pool} />
         </Box>
+
         {isMobile ? (
-          <PoolOperateModal
+          <PoolOperateDialog
             account={account}
             pool={operatePool}
             operate={operateType}
+            modal
             onClose={() => {
               setOperateType(undefined);
-            }}
-            sx={{
-              height: '100%',
             }}
           />
         ) : (

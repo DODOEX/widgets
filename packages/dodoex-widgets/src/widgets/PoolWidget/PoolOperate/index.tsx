@@ -196,19 +196,12 @@ export function PoolOperate({
   );
 }
 
-export function PoolOperateModal(props: PoolOperateProps) {
-  return (
-    <Modal
-      open={!!props.pool || !!props.address}
-      onClose={props.onClose}
-      id="pool-operate"
-    >
-      <PoolOperate {...props} />
-    </Modal>
-  );
-}
-
-export default function PoolOperateDialog(props: PoolOperateProps) {
+export default function PoolOperateDialog({
+  modal,
+  ...props
+}: PoolOperateProps & {
+  modal?: boolean;
+}) {
   const { isMobile } = useWidgetDevice();
 
   return (
@@ -216,6 +209,7 @@ export default function PoolOperateDialog(props: PoolOperateProps) {
       open={!!props.pool || !!props.address}
       onClose={props.onClose}
       scope={!isMobile}
+      modal={modal}
       id="pool-operate"
     >
       <PoolOperate {...props} />

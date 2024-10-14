@@ -531,6 +531,7 @@ export default function AddLiquidityList({
 
   const query = graphQLRequests.getInfiniteQuery(
     PoolApi.graphql.fetchLiquidityList,
+    'currentPage',
     {
       where: {
         ...defaultQueryFilter,
@@ -619,6 +620,7 @@ export default function AddLiquidityList({
             searchAddress={async (address, onClose) => {
               const query = graphQLRequests.getInfiniteQuery(
                 PoolApi.graphql.fetchLiquidityList,
+                'currentPage',
                 {
                   where: {
                     ...defaultQueryFilter,

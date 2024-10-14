@@ -14,21 +14,20 @@ export function EmptyList({
   return (
     <Box
       sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        typography: 'body2',
+        fontWeight: 500,
+        color: 'text.secondary',
         textAlign: 'center',
         ...sx,
       }}
     >
       <EmptyDataIcon hasSearch={hasSearch} />
-      <Box
-        sx={{
-          typography: 'body2',
-          mt: 16,
-          textAlign: 'center',
-          color: 'text.secondary',
-        }}
-      >
-        {emptyText ?? <Trans>No results found</Trans>}
-      </Box>
+      <Box>{emptyText ?? <Trans>No results found</Trans>}</Box>
     </Box>
   );
 }
