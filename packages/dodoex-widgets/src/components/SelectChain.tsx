@@ -7,6 +7,9 @@ import Dialog from './Swap/components/Dialog';
 import { ReactComponent as IconAllChains } from '../assets/icon-all-chains.svg';
 import { useLingui } from '@lingui/react';
 import { ChainListItem } from '../constants/chainList';
+import { useWidgetDevice } from '../hooks/style/useWidgetDevice';
+import Select from './Select';
+import { ChainId } from '@dodoex/api';
 
 function ChainItem({
   isMobileStyle,
@@ -91,6 +94,7 @@ export default function SelectChain({
   mainLogoWidth = 24,
   mainMobileLogoWidth = 18,
   notShowAllChain,
+  valueOnlyIcon,
   sx,
 }: {
   chainId: number | undefined;
@@ -100,14 +104,35 @@ export default function SelectChain({
   mainLogoWidth?: number;
   mainMobileLogoWidth?: number;
   notShowAllChain?: boolean;
+  valueOnlyIcon?: boolean;
   sx?: BoxProps['sx'];
 }) {
   const chainList = useChainList();
   const [isDialogVisible, setIsDialogVisible] = React.useState<boolean>(false);
-  const isMobile = true;
+  const { isMobile } = useWidgetDevice();
   const { i18n } = useLingui();
 
   const renderValue = React.useCallback(() => {
+    const activeChainItem =
+      chainId === undefined
+        ? chainList[0]
+        : chainList.find((chain) => chain.chainId === chainId);
+
+    if (valueOnlyIcon) {
+      if (chainId === undefined || !activeChainItem) {
+        return '';
+      }
+      const size = isMobile ? mobileLogoWidth : mainLogoWidth;
+      return (
+        <Box
+          component={activeChainItem?.logo}
+          sx={{
+            width: size,
+            height: size,
+          }}
+        />
+      );
+    }
     if (chainId === undefined && !notShowAllChain) {
       return (
         <ChainItem
@@ -125,10 +150,6 @@ export default function SelectChain({
         />
       );
     }
-    const activeChainItem =
-      chainId === undefined
-        ? chainList[0]
-        : chainList.find((chain) => chain.chainId === chainId);
     if (!activeChainItem) return null;
     return (
       <ChainItem
@@ -138,11 +159,11 @@ export default function SelectChain({
         mobileLogoWidth={mainMobileLogoWidth}
       />
     );
-  }, [chainId, chainList, notShowAllChain, i18n._]);
+  }, [chainId, chainList, notShowAllChain, valueOnlyIcon, isMobile, i18n._]);
 
   const options = React.useMemo(() => {
     const res = [] as Array<{
-      key: number | string;
+      key: ChainId | typeof allChainKey;
       value: string | React.ReactNode;
     }>;
     if (!notShowAllChain) {
@@ -179,6 +200,30 @@ export default function SelectChain({
     return res;
   }, [isMobile, logoWidth, mobileLogoWidth, chainList, notShowAllChain]);
 
+  if (!isMobile) {
+    return (
+      <Select<ChainId | typeof allChainKey>
+        value={chainId ?? allChainKey}
+        onChange={(v) => {
+          if (v === allChainKey) {
+            setChainId(undefined);
+          } else {
+            setChainId(v);
+          }
+        }}
+        placeholder={t`Select Network`}
+        options={options}
+        valueOnlyIcon={valueOnlyIcon}
+        sx={{
+          height: 32,
+          fontWeight: 600,
+          typography: 'body2',
+          ...sx,
+        }}
+      />
+    );
+  }
+
   return (
     <>
       <Box
@@ -212,6 +257,7 @@ export default function SelectChain({
         title={<Trans>Select Network</Trans>}
         onClose={() => setIsDialogVisible(false)}
         id="select-chain"
+        modal
       >
         <Box sx={{ mb: 20 }}>
           {options.map((item) => (

@@ -81,6 +81,7 @@ export default function TokenAndPoolFilter({
         searchOtherAddress={(address: string) => {
           return searchAddress(address, () => setShowPicker(false));
         }}
+        modal
       />
     </>
   );

@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js';
 import isZero from '../../utils/address';
 import { t } from '@lingui/macro';
 import { TokenApi } from '@dodoex/api';
+import { TokenInfo } from '../Token';
 
 export type Deferrable<T> = {
   [K in keyof T]: T[K] | Promise<T[K]>;
@@ -111,3 +112,38 @@ export const approve = async (
   }
   return await sendTransaction(params, provider);
 };
+
+/**
+ * Add custom token to metamask
+ * https://docs.metamask.io/guide/registering-your-token.html#registering-tokens-with-users
+ */
+export async function registerTokenWithMetamask(
+  provider: JsonRpcProvider | undefined,
+  token: TokenInfo,
+): Promise<{ result: boolean; failMsg?: string }> {
+  if (!provider) return { result: false };
+  try {
+    // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+    const wasAdded = await provider.send('wallet_watchAsset', {
+      // @ts-ignore
+      type: 'ERC20', // Initially only supports ERC20, but eventually more!
+      options: {
+        address: token.address, // The address that the token is at.
+        symbol: token.symbol, // A ticker symbol or shorthand, up to 5 chars.
+        decimals: token.decimals, // The number of decimals in the token
+        image: token.logoURI, // A string url of the token logo
+      },
+    });
+
+    return {
+      result: wasAdded,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      result: false,
+      // @ts-ignore
+      failMsg: error?.message,
+    };
+  }
+}

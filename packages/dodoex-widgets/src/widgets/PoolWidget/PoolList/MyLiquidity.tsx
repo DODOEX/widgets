@@ -823,6 +823,7 @@ export default function MyLiquidity({
             searchAddress={async (address, onClose) => {
               const query = graphQLRequests.getInfiniteQuery(
                 PoolApi.graphql.fetchLiquidityList,
+                'currentPage',
                 {
                   where: {
                     ...defaultQueryFilter,

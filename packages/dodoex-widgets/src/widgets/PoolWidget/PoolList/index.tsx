@@ -12,10 +12,7 @@ import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import PoolOperateDialog, {
-  PoolOperateModal,
-  PoolOperateProps,
-} from '../PoolOperate';
+import PoolOperateDialog, { PoolOperateProps } from '../PoolOperate';
 import { HowItWorks } from '../../../components/HowItWorks';
 import { ReactComponent as LeftImage } from './pool-left.svg';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
@@ -191,19 +188,12 @@ export default function PoolList() {
             LeftImage={LeftImage}
           />
         )}
-        {isMobile ? (
-          <PoolOperateModal
-            account={account}
-            onClose={() => setOperatePool(null)}
-            {...operatePool}
-          />
-        ) : (
-          <PoolOperateDialog
-            account={account}
-            onClose={() => setOperatePool(null)}
-            {...operatePool}
-          />
-        )}
+        <PoolOperateDialog
+          account={account}
+          onClose={() => setOperatePool(null)}
+          modal={isMobile}
+          {...operatePool}
+        />
       </Box>
     </WidgetContainer>
   );

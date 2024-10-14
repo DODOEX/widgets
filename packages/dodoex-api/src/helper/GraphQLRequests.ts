@@ -72,6 +72,7 @@ export default class GraphQLRequests {
 
   getInfiniteQuery<TResult, TVariables>(
     document: TypedDocumentString<TResult, TVariables>,
+    pageKey: string,
     ...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
   ) {
     return {
@@ -85,7 +86,7 @@ export default class GraphQLRequests {
           ...variables,
           where: {
             ...(variables as any)?.where,
-            currentPage: pageParam,
+            [pageKey]: pageParam,
           },
         } as Variables);
         return data as TResult;

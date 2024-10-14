@@ -32,6 +32,7 @@ export interface TokenCardProps {
   amt: string;
   fiatPriceTxt?: string | React.ReactNode;
   sx?: BoxProps['sx'];
+  inputSx?: BoxProps['sx'];
   readOnly?: boolean;
   showMaxBtn?: boolean;
   canClickBalance?: boolean;
@@ -56,6 +57,7 @@ export interface TokenCardProps {
   chainId?: ChainId;
   hideToken?: boolean;
   checkLogBalance?: BalanceData;
+  notTokenPickerModal?: boolean;
 }
 
 export function CardPlus() {
@@ -107,6 +109,7 @@ export function CardPlusConnected() {
 
 export function TokenCard({
   sx,
+  inputSx,
   amt,
   token,
   readOnly,
@@ -133,6 +136,7 @@ export function TokenCard({
   chainId,
   hideToken,
   checkLogBalance,
+  notTokenPickerModal,
 }: TokenCardProps) {
   const { account } = useWalletInfo();
   const theme = useTheme();
@@ -239,6 +243,7 @@ export function TokenCard({
               withClear
               sx={{
                 mt: 12,
+                ...inputSx,
               }}
             />
           </Box>
@@ -357,6 +362,7 @@ export function TokenCard({
             }
           }, transitionTime);
         }}
+        modal={!notTokenPickerModal}
       />
     </Box>
   );

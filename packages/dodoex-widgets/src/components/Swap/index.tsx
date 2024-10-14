@@ -88,7 +88,7 @@ export function Swap({
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { defaultChainId, noPowerBy } = useUserOptions();
+  const { defaultChainId, noPowerBy, onlyChainId } = useUserOptions();
   const [isReverseRouting, setIsReverseRouting] = useState(false);
   const basicTokenAddress = useMemo(
     () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
@@ -823,6 +823,7 @@ export function Swap({
           height={16}
           marginRight={6}
           chainId={fromToken.chainId}
+          noShowChain={!!onlyChainId}
         />
         {`${formatTokenAmountNumber({
           input: isReverseRouting ? resAmount : fromAmt,
@@ -842,6 +843,7 @@ export function Swap({
           height={16}
           marginRight={6}
           chainId={toToken.chainId}
+          noShowChain={!!onlyChainId}
         />
         {`${formatTokenAmountNumber({
           input: isReverseRouting ? toAmt : resAmount,
@@ -849,7 +851,15 @@ export function Swap({
         })} ${toToken?.symbol}`}
       </Box>
     );
-  }, [fromToken, toToken, fromAmt, toAmt, resAmount, isReverseRouting]);
+  }, [
+    fromToken,
+    toToken,
+    fromAmt,
+    toAmt,
+    resAmount,
+    isReverseRouting,
+    onlyChainId,
+  ]);
 
   return (
     <>
@@ -916,8 +926,9 @@ export function Swap({
             }
             onTokenChange={onFromTokenChange}
             readOnly={isReverseRouting}
-            showChainLogo
-            showChainName
+            showChainLogo={!onlyChainId}
+            showChainName={!onlyChainId}
+            notTokenPickerModal
           />
 
           {/* Switch Icon */}
@@ -942,8 +953,9 @@ export function Swap({
             }
             onTokenChange={onToTokenChange}
             readOnly={isBridge || !isReverseRouting}
-            showChainLogo
-            showChainName
+            showChainLogo={!onlyChainId}
+            showChainName={!onlyChainId}
+            notTokenPickerModal
           />
 
           {/* Price Disp or Warnings  */}

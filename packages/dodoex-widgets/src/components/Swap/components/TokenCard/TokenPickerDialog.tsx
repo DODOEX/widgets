@@ -4,6 +4,7 @@ import TokenPicker, { TokenPickerProps } from '../../../TokenPicker';
 import { tokenPickerWrapper } from '../../../../constants/testId';
 import { DialogProps } from '../Dialog';
 import { useUserOptions } from '../../../UserOptionsProvider';
+import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 
 export function TokenPickerDialog({
   open,
@@ -19,6 +20,7 @@ export function TokenPickerDialog({
   searchPlaceholder,
   searchOtherAddress,
   chainId,
+  modal,
 }: {
   open: boolean;
   title?: React.ReactNode | string;
@@ -33,16 +35,18 @@ export function TokenPickerDialog({
   searchPlaceholder?: TokenPickerProps['searchPlaceholder'];
   searchOtherAddress?: TokenPickerProps['searchOtherAddress'];
   chainId?: TokenPickerProps['chainId'];
+  modal?: boolean;
 }) {
   const { height } = useUserOptions();
   return (
     <Dialog
-      height={height}
+      height={modal ? '80vh' : height}
       open={open}
       onClose={onClose}
       title={title ?? <Trans>Select a token</Trans>}
       id="select-token"
       testId={tokenPickerWrapper}
+      modal={modal}
     >
       <TokenPicker
         value={value}
@@ -56,6 +60,14 @@ export function TokenPickerDialog({
         searchPlaceholder={searchPlaceholder}
         searchOtherAddress={searchOtherAddress}
         chainId={chainId}
+        sx={
+          modal
+            ? {
+                width: 420,
+                borderRadius: 16,
+              }
+            : undefined
+        }
       />
     </Dialog>
   );

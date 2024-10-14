@@ -15,6 +15,9 @@ export type { WidgetProps } from './components/Widget';
 export type SwapWidgetProps = WidgetProps & SwapProps;
 export type { TokenInfo } from './hooks/Token/type';
 export { Swap } from './components/Swap';
+export { default as SwapOrderHistory } from './components/Swap/SwapOrderHistory';
+export { useTradeSwapOrderList } from './hooks/Swap/useTradeSwapOrderList';
+export { TokenCard } from './components/Swap/components/TokenCard';
 export { Pool } from './widgets/PoolWidget';
 export {
   default as PoolOperateDialog,

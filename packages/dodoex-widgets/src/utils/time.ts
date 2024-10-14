@@ -85,3 +85,35 @@ export function formatReadableTimeDuration({
   }
   return unit1;
 }
+
+function getTimePrefix(num: number): string {
+  const numText = String(num);
+  if (numText.length === 1) {
+    return `0${numText}`;
+  }
+  return numText;
+}
+export function getTimeText(
+  time: Date,
+  split = '/',
+  {
+    noYear,
+  }: {
+    noYear?: boolean;
+  } = {},
+) {
+  const year = time.getFullYear();
+  const month = time.getMonth() + 1;
+  const date = time.getDate();
+  const hour = time.getHours();
+  const minute = time.getMinutes();
+
+  let result = `${getTimePrefix(month)}${split}${getTimePrefix(
+    date,
+  )} ${getTimePrefix(hour)}:${getTimePrefix(minute)}`;
+  if (!noYear) {
+    result = `${year}${split}${result}`;
+  }
+
+  return result;
+}

@@ -48,11 +48,12 @@ describe('formatReadableNumber', () => {
       formatReadableNumber({
         input: 0.00000000000000000123,
       }),
-    ).toBe('0.0000000000000000012');
+    ).toBe('1.2e-18');
     expect(
       formatReadableNumber({
         input: 0.00000000000000000123,
         showPrecisionDecimals: 20,
+        exponentialDecimalsAmount: 20,
       }),
     ).toBe('0.00000000000000000123');
     expect(
@@ -103,13 +104,13 @@ describe('formatTokenAmountNumber', () => {
       formatTokenAmountNumber({
         input: 0.00000000000000000123,
       }),
-    ).toBe('0.0000000000000000012');
+    ).toBe('1.2e-18');
     expect(
       formatTokenAmountNumber({
         input: 0.00000000000000000123,
         showPrecisionDecimals: 20,
       }),
-    ).toBe('0.00000000000000000123');
+    ).toBe('1.23e-18');
     expect(
       formatTokenAmountNumber({
         input: '132231123123.888',

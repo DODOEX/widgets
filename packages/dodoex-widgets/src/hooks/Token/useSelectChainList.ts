@@ -9,7 +9,7 @@ import { useUserOptions } from '../../components/UserOptionsProvider';
 export function useSelectChainList(side?: 'from' | 'to') {
   const { chainId } = useWeb3React();
   const allTokenList = useSelector(getAllTokenList);
-  const { crossChain } = useUserOptions();
+  const { crossChain, onlyChainId } = useUserOptions();
   const hasTokenChainIds = useMemo(() => {
     const result = new Set<ChainId>();
     allTokenList.forEach((token) => {
@@ -20,7 +20,7 @@ export function useSelectChainList(side?: 'from' | 'to') {
     return result;
   }, [allTokenList, side]);
   const chainList = useMemo(() => {
-    if (!crossChain) return [];
+    if (!crossChain || onlyChainId) return [];
     const currentChainListMap = new Map<ChainId, ChainListItem>();
     let replaceChainId: ChainId | undefined;
     chainListMap.forEach((chain, key) => {
@@ -38,7 +38,7 @@ export function useSelectChainList(side?: 'from' | 'to') {
       currentChainListMap.delete(replaceChainId);
     }
     return Array.from(currentChainListMap.values());
-  }, [chainId, allTokenList, crossChain]);
+  }, [chainId, allTokenList, crossChain, onlyChainId]);
 
   const defaultChainId = useMemo(
     () =>

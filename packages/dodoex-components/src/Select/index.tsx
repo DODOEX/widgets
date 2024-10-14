@@ -4,6 +4,7 @@ import {
   selectClasses,
   SelectRootSlotProps,
   SelectListboxSlotProps,
+  SelectTypeMap,
 } from '@mui/base/Select';
 import {
   Option as BaseOption,
@@ -11,7 +12,7 @@ import {
   OptionProps,
 } from '@mui/base/Option';
 import { size, flip, offset, shift } from '@floating-ui/dom';
-import { Box } from '../Box';
+import { Box, BoxProps } from '../Box';
 import React from 'react';
 import { styled, useTheme } from '@mui/system';
 import { CssTransition, PopupContext } from '@mui/base';
@@ -19,8 +20,8 @@ import { ButtonBase } from '../Button';
 
 const Option = BaseOption;
 
-export type SelectOption = {
-  key: number | string;
+export type SelectOption<V = number | string> = {
+  key: V;
   value: string | React.ReactNode;
 } & {
   [key in string]?: any;
@@ -80,13 +81,19 @@ const AnimatedListbox = React.forwardRef(function AnimatedListbox<
   const verticalPlacement = popupContext.placement.split('-')[0];
 
   return (
-    <CssTransition
+    <Box
+      component={CssTransition}
       className={`placement-${verticalPlacement}`}
       enterClassName="open"
       exitClassName="closed"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}
     >
       <Listbox {...other} ref={ref} />
-    </CssTransition>
+    </Box>
   );
 });
 
@@ -120,6 +127,7 @@ const Button = React.forwardRef(function Button<
           display: 'inline-block',
           width: 0,
           height: 0,
+          ml: 4,
           mr: 0,
           borderStyle: 'solid',
           borderWidth: '6px 4px 0 4px',
@@ -144,6 +152,9 @@ function OptionStyle(props: OptionProps<any, 'li'>) {
         padding: theme.spacing(6, 16),
         color: 'text.secondary',
         minHeight: 48,
+        cursor: 'pointer',
+        mx: 12,
+        borderRadius: 8,
         '&::after': {
           content: '""',
           display: 'inline-block',
@@ -169,10 +180,13 @@ function OptionStyle(props: OptionProps<any, 'li'>) {
 }
 
 const Popup = styled('div')`
-  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 10;
 `;
 
-interface Props<T extends {} = {}> extends SelectProps<T, boolean> {
+interface Props<T extends {} = SelectOption, Multiple extends boolean = false> extends SelectProps<T, Multiple> {
   options?: SelectOption[];
   fullWidth?: boolean;
   px?: number;
@@ -180,9 +194,10 @@ interface Props<T extends {} = {}> extends SelectProps<T, boolean> {
   /** Distance between a popup and the trigger element */
   popupOffset?: number;
   notBackground?: boolean;
+  sx?: BoxProps['sx'];
 }
 
-export function Select({
+export function Select<Value = number | string, Multiple extends boolean = false>({
   options,
   fullWidth,
   px = 20,
@@ -190,11 +205,14 @@ export function Select({
   popupOffset = 8,
   notBackground,
   ...props
-}: Props) {
+  // @ts-ignore
+}: Props<Value, Multiple>) {
   const theme = useTheme();
 
   return (
-    <BaseSelect
+    <Box
+      // @ts-ignore
+      component={BaseSelect<Value, Multiple>}
       slots={{
         root: Button,
         popup: Popup,
@@ -219,7 +237,7 @@ export function Select({
           ],
         },
         root: {
-          style: {
+          sx: {
             padding: theme.spacing(0, px),
             height,
             backgroundColor: notBackground ? 'transparent' : undefined,
@@ -244,6 +262,6 @@ export function Select({
           {option.value}
         </Box>
       ))}
-    </BaseSelect>
+    </Box>
   );
 }

@@ -3,6 +3,8 @@ import { Box, styled } from '@mui/system';
 import type { ModalProps } from '@mui/base/Modal';
 import { forwardRef } from 'react';
 import clsx from 'clsx';
+import { useMediaDevices } from '../hooks';
+import { useTheme } from '../theme';
 
 const Backdrop = forwardRef<
   HTMLDivElement,
@@ -26,6 +28,10 @@ const StyledModal = styled(ModalUnstyled)`
   justify-content: flex-end;
   flex-direction: column;
   overflow: hidden;
+  ${({ theme }) => theme.breakpoints.up('tablet')} {
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const StyledBackdrop = styled(Backdrop)`
@@ -39,6 +45,8 @@ const StyledBackdrop = styled(Backdrop)`
 export const WIDGET_MODAL_FIXED_CLASS = 'dodo-widget-modal-fixed';
 
 export default function Modal({ slots, children, ...props }: ModalProps) {
+  const { isMobile } = useMediaDevices();
+  const theme = useTheme();
   return (
     <StyledModal
       className={WIDGET_MODAL_FIXED_CLASS}
@@ -50,6 +58,7 @@ export default function Modal({ slots, children, ...props }: ModalProps) {
           maxHeight: '80vh',
           backgroundColor: 'background.paper',
           overflowY: 'auto',
+          borderRadius: isMobile ? theme.spacing(16, 16, 0, 0) : 16,
         }}
       >
         {children}
