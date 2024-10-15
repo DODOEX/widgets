@@ -16,6 +16,7 @@ export default function FixedInitPriceConfirm({
       onClose={onClose}
       onConfirm={onConfirm}
       title={t`Initial Price Alert`}
+      modal
     >
       <Trans>
         The initial price is different from the current market price, which may

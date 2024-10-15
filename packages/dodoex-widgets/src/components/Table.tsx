@@ -30,7 +30,8 @@ export default function Table({
           width: '100%',
           borderCollapse: 'collapse',
           '& th': {
-            p: 24,
+            py: 14,
+            px: 24,
             typography: 'body1',
             textAlign: 'left',
             color: 'text.secondary',
@@ -61,6 +62,9 @@ export default function Table({
                 0.1,
               )} -2px 0px 4px 0px`,
             },
+          },
+          '& tbody tr:hover td': {
+            backgroundColor: 'hover.default',
           },
         }}
       >

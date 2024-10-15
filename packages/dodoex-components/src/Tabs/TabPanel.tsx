@@ -3,7 +3,7 @@ import { Box, BoxProps } from '../Box';
 import React from 'react';
 
 export const TabPanel = React.forwardRef(function TabPanel(
-  props: TabPanelProps & {
+  props: Partial<TabPanelProps> & {
     sx?: BoxProps['sx'];
   },
   ref,

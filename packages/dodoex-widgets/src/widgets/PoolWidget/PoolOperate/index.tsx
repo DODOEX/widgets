@@ -43,7 +43,7 @@ export function PoolOperate({
   address,
   operate,
   chainId,
-  hasMining = true,
+  hasMining,
   sx,
 }: PoolOperateProps) {
   const { account } = useWeb3React();

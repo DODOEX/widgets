@@ -15,6 +15,7 @@ export default function EmptyDataIcon({
         display: 'inline-block',
         width: 105,
         height: 105,
+        borderRadius: 24,
         ...sx,
       }}
     />

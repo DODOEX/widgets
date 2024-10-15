@@ -12,7 +12,10 @@ import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import PoolOperateDialog, { PoolOperateProps } from '../PoolOperate';
+import PoolOperateDialog, {
+  PoolOperate,
+  PoolOperateProps,
+} from '../PoolOperate';
 import { HowItWorks } from '../../../components/HowItWorks';
 import { ReactComponent as LeftImage } from './pool-left.svg';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
@@ -56,7 +59,6 @@ export default function PoolList() {
               display: 'flex',
               gap: 12,
               flex: 1,
-              overflow: 'hidden',
             }),
       }}
       ref={scrollParentRef}
@@ -188,12 +190,29 @@ export default function PoolList() {
             LeftImage={LeftImage}
           />
         )}
-        <PoolOperateDialog
-          account={account}
-          onClose={() => setOperatePool(null)}
-          modal={isMobile}
-          {...operatePool}
-        />
+        {isMobile ? (
+          <PoolOperateDialog
+            account={account}
+            onClose={() => setOperatePool(null)}
+            modal={isMobile}
+            {...operatePool}
+          />
+        ) : (
+          !!operatePool && (
+            <PoolOperate
+              account={account}
+              onClose={() => setOperatePool(null)}
+              {...operatePool}
+              sx={{
+                width: 375,
+                height: 'max-content',
+                backgroundColor: 'background.paper',
+                borderRadius: 16,
+                overflow: 'hidden',
+              }}
+            />
+          )
+        )}
       </Box>
     </WidgetContainer>
   );

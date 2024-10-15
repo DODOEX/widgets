@@ -20,8 +20,7 @@ export default function SwapOrderHistory({
   const theme = useTheme();
   const { onlyChainId } = useUserOptions();
   const { isMobile } = useWidgetDevice();
-  // const { account } = useWeb3React();
-  const account = '0x1033dd8fECCe8F5FDd4B2F235B047CB1EE59512a';
+  const { account } = useWeb3React();
   const [filterChainId, setFilterChainId] =
     React.useState<ChainId | undefined>();
   const swapOrderListQueryLocal = useTradeSwapOrderList({

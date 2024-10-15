@@ -38,7 +38,7 @@ const documents = {
     types.FetchLiquidityPositionsDocument,
   '\n    query FetchUserSwapOrderHistories($where: User_swapswapFilter) {\n      user_swap_orderHistories(where: $where) {\n        count\n        page\n        list {\n          chainId\n          createdAt\n          fromAmount\n          fromTokenDecimals\n          fromTokenPrice\n          fromTokenSymbol\n          fromTokenAddress\n          fromTokenLogoImg\n          hash\n          status\n          toAmount\n          toTokenDecimals\n          toTokenPrice\n          toTokenSymbol\n          toTokenAddress\n          toTokenLogoImg\n          minAmount\n          nonce\n          extra\n          user\n        }\n      }\n    }\n  ':
     types.FetchUserSwapOrderHistoriesDocument,
-  '\n    query FetchNoticeCenterTransactionList(\n      $where: Notice_centertransactionListFilter\n    ) {\n      notice_center_transactionList(where: $where) {\n        list {\n          chainId\n          createTime\n          extend\n          from\n          id\n          key\n          type\n        }\n        count\n      }\n    }\n  ':
+  '\n    query FetchNoticeCenterTransactionList(\n      $where: Notice_centertransactionListFilter\n    ) {\n      notice_center_transactionList(where: $where) {\n        list {\n          chainId\n          createTime\n          extend\n          from\n          id\n          key\n          type\n        }\n        count\n        limit\n        page\n      }\n    }\n  ':
     types.FetchNoticeCenterTransactionListDocument,
 };
 
@@ -124,7 +124,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n    query FetchNoticeCenterTransactionList(\n      $where: Notice_centertransactionListFilter\n    ) {\n      notice_center_transactionList(where: $where) {\n        list {\n          chainId\n          createTime\n          extend\n          from\n          id\n          key\n          type\n        }\n        count\n      }\n    }\n  ',
+  source: '\n    query FetchNoticeCenterTransactionList(\n      $where: Notice_centertransactionListFilter\n    ) {\n      notice_center_transactionList(where: $where) {\n        list {\n          chainId\n          createTime\n          extend\n          from\n          id\n          key\n          type\n        }\n        count\n        limit\n        page\n      }\n    }\n  ',
 ): typeof import('./graphql').FetchNoticeCenterTransactionListDocument;
 
 export function graphql(source: string) {

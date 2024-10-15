@@ -343,6 +343,7 @@ function CardList({
                     setOperatePool({
                       operate: OperateTab.Remove,
                       pool: convertFetchLiquidityToOperateData(lq),
+                      hasMining,
                     });
                   }}
                 >
@@ -357,6 +358,7 @@ function CardList({
                   setOperatePool({
                     operate: OperateTab.Add,
                     pool: convertFetchLiquidityToOperateData(lq),
+                    hasMining,
                   });
                 }}
               >
@@ -680,6 +682,7 @@ function TableList({
                             setOperatePool({
                               operate: OperateTab.Remove,
                               pool: convertFetchLiquidityToOperateData(lq),
+                              hasMining,
                             });
                           }}
                         >
@@ -691,6 +694,7 @@ function TableList({
                         onClick={() => {
                           setOperatePool({
                             pool: convertFetchLiquidityToOperateData(lq),
+                            hasMining,
                           });
                         }}
                       >

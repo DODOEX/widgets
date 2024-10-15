@@ -38,6 +38,7 @@ export function TokenPickerDialog({
   modal?: boolean;
 }) {
   const { height } = useUserOptions();
+  const { isMobile } = useWidgetDevice();
   return (
     <Dialog
       height={modal ? '80vh' : height}
@@ -63,7 +64,7 @@ export function TokenPickerDialog({
         sx={
           modal
             ? {
-                width: 420,
+                width: isMobile ? '100%' : 420,
                 borderRadius: 16,
               }
             : undefined

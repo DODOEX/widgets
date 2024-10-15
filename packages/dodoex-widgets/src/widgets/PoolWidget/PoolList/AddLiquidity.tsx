@@ -242,6 +242,7 @@ function CardList({
                 evt.stopPropagation();
                 setOperatePool({
                   pool: convertFetchLiquidityToOperateData(lq),
+                  hasMining,
                 });
               }}
             >
@@ -469,6 +470,7 @@ function TableList({
                       onClick={() => {
                         setOperatePool({
                           pool: convertFetchLiquidityToOperateData(lq),
+                          hasMining,
                         });
                       }}
                     >

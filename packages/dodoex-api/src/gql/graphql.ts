@@ -23236,6 +23236,8 @@ export type FetchNoticeCenterTransactionListQueryVariables = Exact<{
 export type FetchNoticeCenterTransactionListQuery = {
   notice_center_transactionList?: {
     count?: number | null;
+    limit?: number | null;
+    page?: number | null;
     list?: Array<{
       chainId?: number | null;
       createTime?: string | null;
@@ -23929,6 +23931,8 @@ export const FetchNoticeCenterTransactionListDocument =
       type
     }
     count
+    limit
+    page
   }
 }
     `) as unknown as TypedDocumentString<

@@ -6,7 +6,7 @@ export const Tabs = React.forwardRef(function TabsList(
   {
     onChange,
     ...props
-  }: TabsProps & {
+  }: Partial<TabsProps> & {
     sx?: BoxProps['sx'];
   },
   ref: React.ForwardedRef<HTMLDivElement>,
