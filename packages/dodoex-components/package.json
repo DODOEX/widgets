@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/components",
-  "version": "3.0.0-taiko.1",
+  "version": "3.0.0-taiko.2",
   "description": "UI component library",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
