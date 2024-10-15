@@ -25,6 +25,7 @@ export {
 } from './widgets/PoolWidget/PoolOperate';
 export type { PoolOperateProps } from './widgets/PoolWidget/PoolOperate';
 export { usePoolBalanceInfo } from './widgets/PoolWidget/hooks/usePoolBalanceInfo';
+export { MiningList } from './widgets/MiningWidget/MiningList';
 
 export { getEtherscanPage } from './utils/address';
 export {

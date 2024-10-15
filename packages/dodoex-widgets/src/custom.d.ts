@@ -78,3 +78,5 @@ type PartialDeep<T> = T extends
     {
       [K in keyof T]?: PartialDeep<T[K]>;
     };
+
+type ElementType<T> = T extends (infer U)[] ? U : never;
