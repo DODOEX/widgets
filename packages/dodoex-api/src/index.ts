@@ -28,6 +28,7 @@ export type { PmmModelParams } from './services/pool';
 export type { PoolType } from './services/pool';
 
 export { MiningApi, MiningStatusE } from './services/mining';
+export type { MiningMiningInfo } from './services/mining';
 
 export { TokenApi } from './services/TokenApi';
 

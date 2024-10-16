@@ -17,6 +17,7 @@ export type ConfirmProps = React.PropsWithChildren<{
   confirmLoading?: boolean;
   isManualClose?: boolean;
   onConfirm?: () => void;
+  modal?: boolean;
 }>;
 export default function Confirm(props: ConfirmProps) {
   const { ConfirmComponent } = useUserOptions();
@@ -39,10 +40,11 @@ export default function Confirm(props: ConfirmProps) {
     confirmLoading,
     isManualClose,
     onConfirm,
+    modal,
   } = props;
 
   return (
-    <Dialog open={open} onClose={onClose} title={title}>
+    <Dialog open={open} onClose={onClose} title={title} modal={modal}>
       <Box
         sx={{
           display: 'flex',

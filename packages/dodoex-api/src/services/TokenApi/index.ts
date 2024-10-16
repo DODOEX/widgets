@@ -141,9 +141,9 @@ export class TokenApi {
         'token',
         'getFetchTokenQuery',
         chainId ?? '',
-        address?.toLocaleLowerCase(),
         account?.toLocaleLowerCase(),
         proxyContractAddress?.toLocaleLowerCase(),
+        address?.toLocaleLowerCase(),
       ],
       enabled: !!chainId && !!address && !!account,
       queryFn: async () => {

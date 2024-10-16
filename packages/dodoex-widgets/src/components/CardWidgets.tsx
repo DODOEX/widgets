@@ -41,6 +41,7 @@ export function CardStatus({
           display: 'flex',
           flexDirection: 'column',
           gap: 24,
+          px: 20,
         }}
       >
         {increaseArray(4).map((_, i) => (

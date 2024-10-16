@@ -1,5 +1,6 @@
-import { ExcludeNone, MiningApi } from '@dodoex/api';
+import { ExcludeNone, MiningApi, MiningStatusE } from '@dodoex/api';
 import BigNumber from 'bignumber.js';
+import { TokenInfo } from '../../hooks/Token';
 
 export type FetchMiningList = ExcludeNone<
   ReturnType<
@@ -8,6 +9,8 @@ export type FetchMiningList = ExcludeNone<
 >['list'];
 export type FetchMiningListItem = ExcludeNone<FetchMiningList>[0] | undefined;
 
+export type MiningTopTabType = null | 'all' | 'staked' | 'created';
+export type MiningTabType = 'active' | 'ended';
 export type OperateType = null | 'stake' | 'unstake' | 'claim';
 
 export interface MiningTokenI {
@@ -48,6 +51,19 @@ export interface MiningRewardTokenI extends MiningERC20TokenI {
 
   /** The apy returned by the interface is inaccurate and not timely. It is only used for initial rendering and subsequent front-end calculations */
   initialApr: BigNumber | undefined;
+
+  blockNumber: BigNumber | undefined;
+}
+
+export interface ReviewedMiningRewardTokenI
+  extends Pick<
+    MiningRewardTokenI,
+    'rewardPerBlock' | 'startBlock' | 'endBlock' | 'startTime' | 'endTime'
+  > {
+  workThroughReward: BigNumber | undefined;
+  lastFlagBlock: BigNumber | undefined;
+
+  rewardVault: string | undefined;
 }
 
 /**
@@ -74,4 +90,106 @@ export interface MiningMiningI {
    * The v2 version has only one reward token; v3 may have multiple;
    */
   rewardTokenList: MiningRewardTokenI[];
+}
+
+export interface BaseMiningI {
+  chainId: number;
+  type: 'dvm' | 'single' | 'classical' | 'vdodo' | 'lptoken';
+  version: '2' | '3';
+  stakeTokenAddress: string;
+  miningContractAddress: string;
+  quoteLpTokenMiningContractAddress?: string;
+}
+
+export enum LpTokenPlatformID {
+  dodo,
+  pancakeV2,
+}
+
+export interface CommonMiningI
+  extends Pick<BaseMiningI, 'chainId' | 'version' | 'stakeTokenAddress'> {
+  /** `${chainId}-${BaseMiningI.stakeTokenAddress}-${BaseMiningI.miningContractAddress}`.toLowerCase() */
+  id: string;
+
+  name: string | undefined;
+
+  source: 'official' | 'unofficial';
+
+  lpTokenPlatformID: LpTokenPlatformID;
+
+  miningMinings: [MiningMiningI] | [MiningMiningI, MiningMiningI];
+
+  miningTotalDollar?: string | number | null;
+
+  isGSP: boolean;
+  isNewERCMineV3: boolean;
+}
+
+interface SingleMiningI extends CommonMiningI {
+  type: 'single' | 'vdodo';
+}
+
+interface PairMiningI extends CommonMiningI {
+  type: 'dvm' | 'classical' | 'lptoken';
+  baseToken: MiningERC20TokenI;
+  quoteToken: MiningERC20TokenI;
+}
+
+export type TabMiningI = SingleMiningI | PairMiningI;
+
+export interface MiningWithBalanceI {
+  lpTokenAccountBalance: BigNumber | undefined;
+  lpTokenAccountStakedBalance: BigNumber | undefined;
+  rewardTokenWithBalanceMap: Map<string, BigNumber | undefined>;
+}
+
+export interface MiningPoolContractDataI {
+  midPrice: BigNumber | undefined;
+  baseTokenReserve: BigNumber | undefined;
+  quoteTokenReserve: BigNumber | undefined;
+}
+
+export interface MiningWithContractDataI extends MiningWithBalanceI {
+  lpTokenMiningBalance: BigNumber | undefined;
+  lpTokenTotalSupply: BigNumber | undefined;
+}
+
+export interface CompositeMiningContractDataI extends MiningPoolContractDataI {
+  balanceDataMap: Map<MiningMiningI['id'], MiningWithContractDataI>;
+  chainId: number;
+}
+
+export interface MyCreatedMiningRewardTokenI extends MiningRewardTokenI {}
+
+export interface MyCreatedMiningI {
+  id: string;
+  chainId: number;
+  type: 'single' | 'lptoken';
+  miningContractAddress: string;
+  participantsNum: number | undefined;
+  apy: BigNumber | undefined;
+  name: string | undefined;
+  token: MiningERC20TokenI;
+
+
+  lpToken: {
+    /** pair address */
+    id: string;
+    baseToken: MiningERC20TokenI;
+    quoteToken: MiningERC20TokenI;
+  };
+  status: MiningStatusE;
+  rewardTokenList: MyCreatedMiningRewardTokenI[];
+
+  isGSP: boolean;
+  isNewERCMineV3: boolean;
+}
+
+export interface RewardUpdateHistoryItemI {
+  rewardToken: TokenInfo;
+  updateTime: number;
+  endBlockBN: BigNumber;
+  dailyReward: BigNumber | null;
+  totalReward: BigNumber | null;
+  rewardPerBlockBN: BigNumber;
 }

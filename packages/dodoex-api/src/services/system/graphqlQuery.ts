@@ -16,6 +16,8 @@ export const systemGraphqlQuery = {
           type
         }
         count
+        limit
+        page
       }
     }
   `),

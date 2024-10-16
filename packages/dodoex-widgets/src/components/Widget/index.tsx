@@ -189,7 +189,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
       ref={widgetRef}
     >
       <OpenConnectWalletInfo />
-      <WithExecutionDialog {...props}>{props.children}</WithExecutionDialog>
+      {props.children}
     </Box>
   );
 }
@@ -208,7 +208,9 @@ function Web3Provider(props: PropsWithChildren<WidgetProps>) {
 
   return (
     <Web3ReactProvider connectors={connectors} key={key} lookupENS={false}>
-      <InitStatus {...props} />
+      <WithExecutionDialog {...props}>
+        <InitStatus {...props} />
+      </WithExecutionDialog>
     </Web3ReactProvider>
   );
 }

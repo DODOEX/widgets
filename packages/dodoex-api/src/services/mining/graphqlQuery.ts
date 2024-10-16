@@ -79,4 +79,166 @@ export const miningGraphqlQuery = {
       }
     }
   `),
+  fetchMiningListV1: graphql(`
+    query MiningList($where: Miningmining_list_filter) {
+      mining_list(where: $where) {
+        list {
+          chainId
+          type
+          version
+          address
+          isGSP
+          isNewERCMineV3
+          baseApy
+          baseLpToken {
+            decimals
+            id
+            symbol
+          }
+          baseToken {
+            decimals
+            id
+            price
+            symbol
+            logoImg
+          }
+          endBlock
+          miningContractAddress
+          miningTotalDollar
+          baseLpTokenMining
+          quoteLpTokenMining
+          quoteApy
+          quoteLpToken {
+            decimals
+            id
+            symbol
+          }
+          quoteToken {
+            decimals
+            id
+            price
+            symbol
+            logoImg
+          }
+          rewardTokenInfos {
+            apy
+            decimals
+            id
+            price
+            logoImg
+            rewardNumIndex
+            rewardPerBlock
+            startBlock
+            endBlock
+            startTime
+            endTime
+            symbol
+          }
+          rewardQuoteTokenInfos {
+            apy
+            decimals
+            id
+            price
+            logoImg
+            rewardNumIndex
+            rewardPerBlock
+            startBlock
+            endBlock
+            startTime
+            endTime
+            symbol
+          }
+          startBlock
+          title
+          platform
+          blockNumber
+          startTime
+          endTime
+        }
+        totalCount
+        chains
+      }
+    }
+  `),
+  fetchMyCreatedMiningList: graphql(`
+    query MyCreatedMiningList($where: Miningmining_list_filter) {
+      mining_list(where: $where) {
+        list {
+          chainId
+          type
+          version
+          address
+          isGSP
+          isNewERCMineV3
+          baseApy
+          baseLpToken {
+            decimals
+            id
+            symbol
+          }
+          baseToken {
+            decimals
+            id
+            price
+            symbol
+            logoImg
+          }
+          endBlock
+          miningContractAddress
+          baseLpTokenMining
+          quoteLpTokenMining
+          quoteApy
+          quoteLpToken {
+            decimals
+            id
+            symbol
+          }
+          quoteToken {
+            decimals
+            id
+            price
+            symbol
+            logoImg
+          }
+          rewardTokenInfos {
+            apy
+            decimals
+            id
+            price
+            logoImg
+            rewardNumIndex
+            rewardPerBlock
+            startBlock
+            endBlock
+            startTime
+            endTime
+            symbol
+          }
+          rewardQuoteTokenInfos {
+            apy
+            decimals
+            id
+            price
+            logoImg
+            rewardNumIndex
+            rewardPerBlock
+            startBlock
+            endBlock
+            startTime
+            endTime
+            symbol
+          }
+          startBlock
+          title
+          platform
+          blockNumber
+          participantsNum
+          startTime
+          endTime
+        }
+        totalCount
+        chains
+      }
+    }
+  `),
 };

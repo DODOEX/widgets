@@ -425,6 +425,7 @@ export function RemovePoolOperate({
         onClose={() => setShowCompareConfirm(false)}
         title={t`Confirm submission`}
         onConfirm={submitLq}
+        modal
       >
         <Box>
           <Box>

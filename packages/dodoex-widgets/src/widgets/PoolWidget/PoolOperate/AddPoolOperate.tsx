@@ -216,6 +216,7 @@ export function AddPoolOperate({
         onClose={() => setShowCompareConfirm(false)}
         title={t`Confirm submission`}
         onConfirm={submitLq}
+        modal
       >
         <Box>
           <Box>

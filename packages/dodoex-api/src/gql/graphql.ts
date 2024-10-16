@@ -22729,6 +22729,174 @@ export type FetchMiningListQuery = {
   } | null;
 };
 
+export type MiningListQueryVariables = Exact<{
+  where?: InputMaybe<Miningmining_List_Filter>;
+}>;
+
+export type MiningListQuery = {
+  mining_list?: {
+    totalCount?: number | null;
+    chains?: Array<string | null> | null;
+    list?: Array<{
+      chainId: number;
+      type?: string | null;
+      version?: string | null;
+      address?: string | null;
+      isGSP?: boolean | null;
+      isNewERCMineV3?: boolean | null;
+      baseApy?: string | null;
+      endBlock?: string | null;
+      miningContractAddress?: string | null;
+      miningTotalDollar?: string | null;
+      baseLpTokenMining?: string | null;
+      quoteLpTokenMining?: string | null;
+      quoteApy?: string | null;
+      startBlock?: string | null;
+      title?: string | null;
+      platform?: string | null;
+      blockNumber?: string | null;
+      startTime?: string | null;
+      endTime?: string | null;
+      baseLpToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        symbol?: string | null;
+      } | null;
+      baseToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        symbol?: string | null;
+        logoImg?: string | null;
+      } | null;
+      quoteLpToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        symbol?: string | null;
+      } | null;
+      quoteToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        symbol?: string | null;
+        logoImg?: string | null;
+      } | null;
+      rewardTokenInfos?: Array<{
+        apy?: string | null;
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        logoImg?: string | null;
+        rewardNumIndex?: number | null;
+        rewardPerBlock?: string | null;
+        startBlock?: string | null;
+        endBlock?: string | null;
+        startTime?: string | null;
+        endTime?: string | null;
+        symbol?: string | null;
+      } | null> | null;
+      rewardQuoteTokenInfos?: Array<{
+        apy?: string | null;
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        logoImg?: string | null;
+        rewardNumIndex?: number | null;
+        rewardPerBlock?: string | null;
+        startBlock?: string | null;
+        endBlock?: string | null;
+        startTime?: string | null;
+        endTime?: string | null;
+        symbol?: string | null;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+};
+
+export type MyCreatedMiningListQueryVariables = Exact<{
+  where?: InputMaybe<Miningmining_List_Filter>;
+}>;
+
+export type MyCreatedMiningListQuery = {
+  mining_list?: {
+    totalCount?: number | null;
+    chains?: Array<string | null> | null;
+    list?: Array<{
+      chainId: number;
+      type?: string | null;
+      version?: string | null;
+      address?: string | null;
+      isGSP?: boolean | null;
+      isNewERCMineV3?: boolean | null;
+      baseApy?: string | null;
+      endBlock?: string | null;
+      miningContractAddress?: string | null;
+      baseLpTokenMining?: string | null;
+      quoteLpTokenMining?: string | null;
+      quoteApy?: string | null;
+      startBlock?: string | null;
+      title?: string | null;
+      platform?: string | null;
+      blockNumber?: string | null;
+      participantsNum?: number | null;
+      startTime?: string | null;
+      endTime?: string | null;
+      baseLpToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        symbol?: string | null;
+      } | null;
+      baseToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        symbol?: string | null;
+        logoImg?: string | null;
+      } | null;
+      quoteLpToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        symbol?: string | null;
+      } | null;
+      quoteToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        symbol?: string | null;
+        logoImg?: string | null;
+      } | null;
+      rewardTokenInfos?: Array<{
+        apy?: string | null;
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        logoImg?: string | null;
+        rewardNumIndex?: number | null;
+        rewardPerBlock?: string | null;
+        startBlock?: string | null;
+        endBlock?: string | null;
+        startTime?: string | null;
+        endTime?: string | null;
+        symbol?: string | null;
+      } | null> | null;
+      rewardQuoteTokenInfos?: Array<{
+        apy?: string | null;
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        logoImg?: string | null;
+        rewardNumIndex?: number | null;
+        rewardPerBlock?: string | null;
+        startBlock?: string | null;
+        endBlock?: string | null;
+        startTime?: string | null;
+        endTime?: string | null;
+        symbol?: string | null;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+};
+
 export type FetchPoolListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<Pair_Filter>;
@@ -23068,6 +23236,8 @@ export type FetchNoticeCenterTransactionListQueryVariables = Exact<{
 export type FetchNoticeCenterTransactionListQuery = {
   notice_center_transactionList?: {
     count?: number | null;
+    limit?: number | null;
+    page?: number | null;
     list?: Array<{
       chainId?: number | null;
       createTime?: string | null;
@@ -23175,6 +23345,174 @@ export const FetchMiningListDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   FetchMiningListQuery,
   FetchMiningListQueryVariables
+>;
+export const MiningListDocument = new TypedDocumentString(`
+    query MiningList($where: Miningmining_list_filter) {
+  mining_list(where: $where) {
+    list {
+      chainId
+      type
+      version
+      address
+      isGSP
+      isNewERCMineV3
+      baseApy
+      baseLpToken {
+        decimals
+        id
+        symbol
+      }
+      baseToken {
+        decimals
+        id
+        price
+        symbol
+        logoImg
+      }
+      endBlock
+      miningContractAddress
+      miningTotalDollar
+      baseLpTokenMining
+      quoteLpTokenMining
+      quoteApy
+      quoteLpToken {
+        decimals
+        id
+        symbol
+      }
+      quoteToken {
+        decimals
+        id
+        price
+        symbol
+        logoImg
+      }
+      rewardTokenInfos {
+        apy
+        decimals
+        id
+        price
+        logoImg
+        rewardNumIndex
+        rewardPerBlock
+        startBlock
+        endBlock
+        startTime
+        endTime
+        symbol
+      }
+      rewardQuoteTokenInfos {
+        apy
+        decimals
+        id
+        price
+        logoImg
+        rewardNumIndex
+        rewardPerBlock
+        startBlock
+        endBlock
+        startTime
+        endTime
+        symbol
+      }
+      startBlock
+      title
+      platform
+      blockNumber
+      startTime
+      endTime
+    }
+    totalCount
+    chains
+  }
+}
+    `) as unknown as TypedDocumentString<
+  MiningListQuery,
+  MiningListQueryVariables
+>;
+export const MyCreatedMiningListDocument = new TypedDocumentString(`
+    query MyCreatedMiningList($where: Miningmining_list_filter) {
+  mining_list(where: $where) {
+    list {
+      chainId
+      type
+      version
+      address
+      isGSP
+      isNewERCMineV3
+      baseApy
+      baseLpToken {
+        decimals
+        id
+        symbol
+      }
+      baseToken {
+        decimals
+        id
+        price
+        symbol
+        logoImg
+      }
+      endBlock
+      miningContractAddress
+      baseLpTokenMining
+      quoteLpTokenMining
+      quoteApy
+      quoteLpToken {
+        decimals
+        id
+        symbol
+      }
+      quoteToken {
+        decimals
+        id
+        price
+        symbol
+        logoImg
+      }
+      rewardTokenInfos {
+        apy
+        decimals
+        id
+        price
+        logoImg
+        rewardNumIndex
+        rewardPerBlock
+        startBlock
+        endBlock
+        startTime
+        endTime
+        symbol
+      }
+      rewardQuoteTokenInfos {
+        apy
+        decimals
+        id
+        price
+        logoImg
+        rewardNumIndex
+        rewardPerBlock
+        startBlock
+        endBlock
+        startTime
+        endTime
+        symbol
+      }
+      startBlock
+      title
+      platform
+      blockNumber
+      participantsNum
+      startTime
+      endTime
+    }
+    totalCount
+    chains
+  }
+}
+    `) as unknown as TypedDocumentString<
+  MyCreatedMiningListQuery,
+  MyCreatedMiningListQueryVariables
 >;
 export const FetchPoolListDocument = new TypedDocumentString(`
     query FetchPoolList($first: Int, $where: Pair_filter, $orderBy: Pair_orderBy) {
@@ -23593,6 +23931,8 @@ export const FetchNoticeCenterTransactionListDocument =
       type
     }
     count
+    limit
+    page
   }
 }
     `) as unknown as TypedDocumentString<
