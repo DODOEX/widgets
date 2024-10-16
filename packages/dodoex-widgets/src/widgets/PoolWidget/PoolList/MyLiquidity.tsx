@@ -674,7 +674,6 @@ function TableList({
                     <>
                       {!!account && (
                         <NeedConnectButton
-                          fullWidth
                           variant={Button.Variant.outlined}
                           size={Button.Size.small}
                           onClick={(evt) => {

@@ -10373,6 +10373,7 @@ export type Notice_CentersystemListFilter = {
 };
 
 export type Notice_CentertransactionListFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
