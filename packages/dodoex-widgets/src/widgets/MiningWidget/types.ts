@@ -171,7 +171,6 @@ export interface MyCreatedMiningI {
   name: string | undefined;
   token: MiningERC20TokenI;
 
-
   lpToken: {
     /** pair address */
     id: string;
@@ -192,4 +191,29 @@ export interface RewardUpdateHistoryItemI {
   dailyReward: BigNumber | null;
   totalReward: BigNumber | null;
   rewardPerBlockBN: BigNumber;
+}
+
+export interface LiquidityMigrationInfo {
+  chainId: number;
+  miningContractAddress: string;
+  stakeTokenAddress: string;
+  newMiningContractAddress: string;
+  newStakeTokenAddress: string;
+}
+
+export interface MiningRewardTokenWithAprI extends MiningRewardTokenI {
+  apr: BigNumber | undefined;
+  pendingReward: BigNumber | undefined;
+}
+
+export interface MiningRewardTokenWithTagI extends MiningRewardTokenWithAprI {
+  symbolEle: JSX.Element | string | undefined;
+}
+
+export interface MiningStakeTokenWithAmountI extends MiningERC20TokenI {
+  unstakedSourceTokenAmount: BigNumber | undefined;
+  unstakedSourceTokenAmountUSD: BigNumber | undefined;
+  sourceTokenAmount: BigNumber | undefined;
+  sourceTokenAmountUSD: BigNumber | undefined;
+  valueLockedAmount: BigNumber | undefined;
 }

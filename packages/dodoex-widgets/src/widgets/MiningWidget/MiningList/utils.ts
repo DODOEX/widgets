@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import dayjs from 'dayjs';
 import { useSubmission } from '../../../hooks/Submission';
 import { formatPercentageNumber } from '../../../utils/formatter';
 import {
@@ -184,6 +185,10 @@ export function formatApr(apr?: BigNumber) {
   return formatPercentageNumber({
     input: apr.toNumber(),
   });
+}
+
+export function formatDate(time: number | null) {
+  return dayjs(time).format('YYYY-MM-DD HH:mm:ss');
 }
 
 export function getOperateAreaWrapperEle() {

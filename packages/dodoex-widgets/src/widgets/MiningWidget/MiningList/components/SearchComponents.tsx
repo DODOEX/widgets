@@ -215,7 +215,13 @@ export const SearchComponents = ({
           }}
         />
 
-        {activeTopTab === 'created' ? null : (
+        {activeTopTab === 'created' ? (
+          <Box
+            sx={{
+              ml: 'auto',
+            }}
+          />
+        ) : (
           <MiningStatusTabSelect
             value={activeTab}
             onChange={(value) => {

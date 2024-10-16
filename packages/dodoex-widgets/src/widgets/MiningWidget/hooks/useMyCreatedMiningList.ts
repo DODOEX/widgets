@@ -19,6 +19,7 @@ export function useMyCreatedMiningList({
   chainIds: Array<number> | null;
 }) {
   const graphQLRequests = useGraphQLRequests();
+  console.log('v2 account', account);
   const query = graphQLRequests.getQuery(
     MiningApi.graphql.fetchMyCreatedMiningList,
     {

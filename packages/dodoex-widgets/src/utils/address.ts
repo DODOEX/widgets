@@ -66,3 +66,17 @@ export function getEtherscanPage(
 ) {
   return `https://${scanUrlDomainMap[chainId]}${id ? `/${prefix}/${id}` : ''}`;
 }
+
+export async function openEtherscanPage(
+  path: string | undefined,
+  chainId: ChainId,
+  customUrl?: string,
+): Promise<void> {
+  const scanUrlDomain = scanUrlDomainMap[chainId];
+
+  window.open(
+    `https://${customUrl ?? scanUrlDomain}${path ? `/${path}` : ''}`,
+    '_blank',
+    'noopener,noreferrer',
+  );
+}

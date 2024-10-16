@@ -1,5 +1,6 @@
 import { MiningStatusE } from '@dodoex/api';
 import BigNumber from 'bignumber.js';
+import dayjs from 'dayjs';
 import { BaseMiningI, MiningRewardTokenI } from '../types';
 
 export const MINING_POOL_REFETCH_INTERVAL = 60000;
@@ -91,3 +92,15 @@ export function computeDailyRewardByPerBlock(
     .div(blockTime);
   return totalBlocksForOneDay.multipliedBy(rewardPerBlock);
 }
+
+export const getTimeByPreBlock = (
+  blockTime: number,
+  blockNumber: BigNumber,
+  preBlockNumber: string | number | BigNumber,
+) => {
+  const blockTimeSecond = new BigNumber(blockTime).div(1000);
+  const now = dayjs();
+  const diffBlock = new BigNumber(preBlockNumber).minus(blockNumber);
+  const diffSecond = diffBlock.times(blockTimeSecond);
+  return now.add(diffSecond.toNumber(), 's');
+};

@@ -1,40 +1,28 @@
-import { Box, Button, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
+import { ChainId } from '@dodoex/api';
+import { Box, Button, Tabs, TabsGroup } from '@dodoex/components';
 import { Plus as PlusIcon } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { useWeb3React } from '@web3-react/core';
 import { debounce } from 'lodash';
 import React, { useMemo, useState } from 'react';
+import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import WidgetContainer from '../../../components/WidgetContainer';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { MiningTabType, MiningTopTabType } from '../types';
-import { SearchComponents } from './components/SearchComponents';
-import { useMiningList } from '../hooks/useMiningList';
-import { useMyCreatedMiningList } from '../hooks/useMyCreatedMiningList';
-import { ChainId } from '@dodoex/api';
 import { isTestNet } from '../../../constants/chainList';
-import { useMiningListContractDataMap } from '../hooks/useMiningListContractDataMap';
-import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
-import LoadingCard from '../../PoolWidget/PoolList/components/LoadingCard';
-import { isJoinedOrStakedProcessing } from './utils';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useSubmission } from '../../../hooks/Submission';
+import LoadingCard from '../../PoolWidget/PoolList/components/LoadingCard';
+import { useMiningList } from '../hooks/useMiningList';
+import { useMiningListContractDataMap } from '../hooks/useMiningListContractDataMap';
+import { useMyCreatedMiningList } from '../hooks/useMyCreatedMiningList';
+import { MiningTabType, MiningTopTabType } from '../types';
 import { MiningListEmpty } from './components/MiningListEmpty';
-import { MyCreated } from './components/MyCreated';
-
-function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
-  return (
-    <TabPanel
-      {...props}
-      sx={{
-        ...sx,
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-      }}
-    />
-  );
-}
+import { SearchComponents } from './components/SearchComponents';
+import { MiningContext } from './contexts';
+import BaseMiningCard from './mining-types/BaseMiningCard';
+import { MyCreated } from './my-created';
+import { isJoinedOrStakedProcessing } from './utils';
 
 export function MiningList({
   query,
@@ -48,7 +36,10 @@ export function MiningList({
 }) {
   const { isMobile } = useWidgetDevice();
   const { i18n } = useLingui();
-  const { account, chainId: currentChainId } = useWeb3React();
+  const {
+    account = '0x1033dd8fECCe8F5FDd4B2F235B047CB1EE59512a',
+    chainId: currentChainId,
+  } = useWeb3React();
   const { requests, updateText } = useSubmission();
   const { noDocumentLink, onlyChainId } = useUserOptions();
 
@@ -174,172 +165,196 @@ export function MiningList({
               : othersChainContractDataMap.get(id);
           // const contractData =
           //   contractDataMap.get(id) ?? othersChainContractDataMap.get(id);
-          return <Box key={id}>{miningItem.name}</Box>;
+          return <Box key={id} />;
+          // return (
+          //   <BaseMiningCard
+          //     key={id}
+          //     miningItem={miningItem}
+          //     migrationItem={undefined}
+          //     contractData={contractData}
+          //     contractDataLoading={
+          //       chainId === currentChainId
+          //         ? contractDataLoading
+          //         : othersContractDataLoading
+          //     }
+          //   />
+          // );
         })}
       </DataCardGroup>
     );
   }, [
     activeTopTab,
+    contractDataLoading,
     contractDataMap,
     currentChainId,
     i18n,
     loading,
     miningList,
     othersChainContractDataMap,
+    othersContractDataLoading,
     requests,
     searchText,
   ]);
 
   return (
-    <WidgetContainer
-      sx={{
-        ...(isMobile
-          ? {
-              p: 20,
-            }
-          : {
-              display: 'flex',
-              gap: 12,
-              flex: 1,
-              overflow: 'hidden',
-            }),
+    <MiningContext.Provider
+      value={{
+        operateId,
+        viewType,
+        setOperateId,
+        setViewType,
+        refetchContractData,
       }}
-      ref={scrollParentRef}
     >
-      <Tabs
-        value={activeTopTab}
-        onChange={(_, value) => {
-          if (value !== activeTopTab) {
-            setOperateId(null);
-          }
-          setActiveTopTab(value as MiningTopTabType);
-        }}
-        sx={
-          isMobile
-            ? {}
+      <WidgetContainer
+        sx={{
+          ...(isMobile
+            ? {
+                p: 20,
+              }
             : {
                 display: 'flex',
-                flexDirection: 'column',
-                borderRadius: 16,
-                backgroundColor: 'background.paper',
+                gap: 12,
                 flex: 1,
                 overflow: 'hidden',
-                height: 'max-content',
-                maxHeight: '100%',
-              }
-        }
+              }),
+        }}
+        ref={scrollParentRef}
       >
-        <Box
+        <Tabs
+          value={activeTopTab}
+          onChange={(_, value) => {
+            if (value !== activeTopTab) {
+              setOperateId(null);
+            }
+            setActiveTopTab(value as MiningTopTabType);
+          }}
           sx={
             isMobile
               ? {}
               : {
                   display: 'flex',
-                  justifyContent: 'space-between',
-                  p: 20,
-                  borderBottomWidth: 1,
+                  flexDirection: 'column',
+                  borderRadius: 16,
+                  flex: 1,
+                  overflow: 'hidden',
+                  height: 'max-content',
+                  maxHeight: '100%',
                 }
           }
         >
-          <TabsGroup
-            tabs={tabs}
-            variant="rounded"
-            tabsListSx={{
-              justifyContent: 'space-between',
-              ...(isMobile
-                ? {
-                    mb: 16,
-                  }
+          <Box
+            sx={
+              isMobile
+                ? {}
                 : {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    py: 20,
+                    borderBottomWidth: 1,
+                  }
+            }
+          >
+            <TabsGroup
+              tabs={tabs}
+              variant="rounded"
+              tabsListSx={{
+                justifyContent: 'space-between',
+                ...(isMobile
+                  ? {
+                      mb: 16,
+                    }
+                  : {
+                      borderBottomWidth: 0,
+                    }),
+              }}
+              tabSx={
+                isMobile
+                  ? undefined
+                  : {
+                      mb: 0,
+                    }
+              }
+            />
+            <Button
+              variant={Button.Variant.outlined}
+              fullWidth={isMobile}
+              onClick={onClickCreate}
+              sx={{
+                height: 40,
+              }}
+            >
+              <Box
+                component={PlusIcon}
+                sx={{
+                  mr: 4,
+                }}
+              />
+              <Trans>Create Liquidity Mining</Trans>
+            </Button>
+          </Box>
+
+          <Box
+            sx={{
+              pt: 16,
+              display: 'flex',
+              gap: 8,
+              ...(isMobile
+                ? {}
+                : {
+                    px: 0,
                     borderBottomWidth: 0,
                   }),
             }}
-            tabSx={
-              isMobile
-                ? undefined
-                : {
-                    mb: 0,
-                  }
-            }
-          />
-          <Button
-            variant={Button.Variant.outlined}
-            fullWidth={isMobile}
-            onClick={onClickCreate}
+          >
+            <SearchComponents
+              activeTopTab={activeTopTab}
+              activeTab={activeTab}
+              activeChainId={activeChainId}
+              searchText={searchText}
+              setActiveTab={setActiveTab}
+              setActiveChainId={setActiveChainId}
+              setSearchText={setSearchText}
+              debouncedUpdateSearchText={debouncedUpdateSearchText}
+              setOperateId={setOperateId}
+            />
+          </Box>
+
+          <Box
             sx={{
-              height: 40,
+              mt: {
+                mobile: 16,
+                tablet: 20,
+              },
+              mx: {
+                mobile: 20,
+                tablet: 0,
+              },
             }}
           >
-            <Box
-              component={PlusIcon}
-              sx={{
-                mr: 4,
-              }}
-            />
-            <Trans>Create Liquidity Mining</Trans>
-          </Button>
-        </Box>
+            {activeTopTab === 'created' ? (
+              <MyCreated
+                miningList={myCreatedMining.miningList}
+                loading={myCreatedMining.loading}
+                error={myCreatedMining.error}
+                refetch={myCreatedMining.refetch}
+                hasSearch={!!searchText}
+              />
+            ) : (
+              content
+            )}
+          </Box>
+        </Tabs>
 
         <Box
           sx={{
-            py: 16,
-            display: 'flex',
-            gap: 8,
-            ...(isMobile
-              ? {}
-              : {
-                  px: 20,
-                  borderBottomWidth: 1,
-                }),
+            position: 'relative',
+            width: noDocumentLink ? 'auto' : 375,
           }}
         >
-          <SearchComponents
-            activeTopTab={activeTopTab}
-            activeTab={activeTab}
-            activeChainId={activeChainId}
-            searchText={searchText}
-            setActiveTab={setActiveTab}
-            setActiveChainId={setActiveChainId}
-            setSearchText={setSearchText}
-            debouncedUpdateSearchText={debouncedUpdateSearchText}
-            setOperateId={setOperateId}
-          />
+          operate
         </Box>
-
-        <Box
-          sx={{
-            mt: {
-              mobile: 16,
-              tablet: 20,
-            },
-            mx: {
-              mobile: 20,
-              tablet: 0,
-            },
-          }}
-        >
-          {activeTopTab === 'created' ? (
-            <MyCreated
-              miningList={myCreatedMining.miningList}
-              loading={myCreatedMining.loading}
-              error={myCreatedMining.error}
-              refetch={myCreatedMining.refetch}
-              hasSearch={!!searchText}
-            />
-          ) : (
-            content
-          )}
-        </Box>
-      </Tabs>
-
-      <Box
-        sx={{
-          position: 'relative',
-          width: noDocumentLink ? 'auto' : 375,
-        }}
-      >
-        operate
-      </Box>
-    </WidgetContainer>
+      </WidgetContainer>
+    </MiningContext.Provider>
   );
 }

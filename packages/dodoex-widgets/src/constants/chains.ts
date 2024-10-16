@@ -112,3 +112,25 @@ export const ThegraphKeyMap: {
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
 };
+
+export const blockTimeMap: {
+  [key in ChainId]: number;
+} = {
+  [ChainId.MAINNET]: 12000,
+  [ChainId.GOERLI]: 12000,
+  [ChainId.OPTIMISM]: 12000,
+  [ChainId.CONFLUX]: 3000,
+  [ChainId.BSC]: 3000,
+  [ChainId.OKCHAIN]: 4000,
+  [ChainId.POLYGON]: 2200,
+  [ChainId.ARBITRUM_ONE]: 12000,
+  [ChainId.AURORA]: 1000,
+  [ChainId.AVALANCHE]: 1000,
+  [ChainId.BASE]: 2000,
+  [ChainId.LINEA]: 2000,
+  [ChainId.SCROLL]: 3000,
+  [ChainId.MANTA]: 10000,
+  [ChainId.MANTLE]: 2000,
+  [ChainId.SEPOLIA]: 12000,
+  [ChainId.DODO_CHAIN_TESTNET]: 12000,
+};

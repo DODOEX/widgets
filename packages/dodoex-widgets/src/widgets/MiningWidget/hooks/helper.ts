@@ -7,9 +7,11 @@ import {
   MiningLpTokenI,
   MiningRewardTokenI,
   MyCreatedMiningI,
+  ReviewedMiningRewardTokenI,
   TabMiningI,
 } from '../types';
 import {
+  computeDailyRewardByPerBlock,
   getMiningStatusByTimestamp,
   VALID_MINING_TYPE,
   VALID_MINING_VERSION,
@@ -467,5 +469,117 @@ export function transformRawMiningToMyCreatedMining(
     status,
     isGSP: obj.isGSP ?? false,
     isNewERCMineV3: obj.isNewERCMineV3 ?? false,
+  };
+}
+
+export function computeUnreleasedRewardByBlock({
+  blockNumber,
+  lastFlagBlock,
+  endBlock,
+  decimals,
+  rewardPerBlock,
+}: {
+  blockNumber: BigNumber;
+  lastFlagBlock: BigNumber;
+  endBlock: BigNumber;
+  decimals: number;
+  rewardPerBlock: BigNumber;
+}) {
+  return blockNumber.lt(lastFlagBlock)
+    ? endBlock
+        .minus(lastFlagBlock)
+        .multipliedBy(rewardPerBlock)
+        .dp(decimals, BigNumber.ROUND_DOWN)
+    : (blockNumber.gt(endBlock) ? blockNumber : endBlock)
+        .minus(blockNumber)
+        .multipliedBy(rewardPerBlock)
+        .dp(decimals, BigNumber.ROUND_DOWN);
+}
+
+export function getV3MiningSingleRewardAmount(
+  t: ReviewedMiningRewardTokenI,
+  blockNumber: BigNumber,
+  blockTime: number,
+  decimals: number | undefined,
+) {
+  const {
+    rewardPerBlock,
+    startBlock,
+    endBlock,
+    startTime,
+    endTime,
+    workThroughReward,
+    lastFlagBlock,
+  } = t;
+
+  let totalReward: BigNumber | null = null;
+  let dailyReward: BigNumber | null = null;
+  let releasedReward: BigNumber | null = null;
+  let unreleasedReward: BigNumber | null = null;
+
+  if (!rewardPerBlock || decimals == null || !endBlock) {
+    return {
+      ...t,
+      totalReward,
+      dailyReward,
+      releasedReward,
+      unreleasedReward,
+    };
+  }
+
+  if (startBlock) {
+    totalReward = endBlock.minus(startBlock).multipliedBy(rewardPerBlock);
+
+    if (endTime && startTime) {
+      const currentTime = new BigNumber(Math.floor(Date.now() / 1000));
+      if (currentTime.lt(startTime)) {
+        releasedReward = new BigNumber(0);
+      } else if (currentTime.gt(endTime)) {
+        releasedReward = totalReward;
+      } else {
+        releasedReward = totalReward
+          .multipliedBy(currentTime.minus(startTime))
+          .div(endTime.minus(startTime));
+      }
+
+      unreleasedReward = totalReward.minus(releasedReward);
+    }
+  }
+
+  if (workThroughReward && lastFlagBlock) {
+    releasedReward = (
+      blockNumber.gt(endBlock)
+        ? endBlock
+        : blockNumber.lt(lastFlagBlock)
+        ? lastFlagBlock
+        : blockNumber
+    )
+      .minus(lastFlagBlock)
+      .multipliedBy(rewardPerBlock)
+      .plus(workThroughReward)
+      .dp(decimals, BigNumber.ROUND_DOWN);
+    unreleasedReward = computeUnreleasedRewardByBlock({
+      blockNumber,
+      lastFlagBlock,
+      endBlock,
+      decimals,
+      rewardPerBlock,
+    });
+
+    totalReward = endBlock
+      .minus(lastFlagBlock)
+      .multipliedBy(rewardPerBlock)
+      .plus(workThroughReward)
+      .dp(decimals, BigNumber.ROUND_DOWN);
+  }
+
+  dailyReward = computeDailyRewardByPerBlock(blockTime, rewardPerBlock);
+
+  return {
+    ...t,
+    totalReward,
+    dailyReward,
+    releasedReward,
+    unreleasedReward,
   };
 }
