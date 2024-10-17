@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import dayjs from 'dayjs';
 import { useSubmission } from '../../../hooks/Submission';
 import { formatPercentageNumber } from '../../../utils/formatter';
 import {
@@ -186,6 +187,10 @@ export function formatApr(apr?: BigNumber) {
   });
 }
 
+export function formatDate(time: number | null) {
+  return dayjs(time).format('YYYY-MM-DD HH:mm:ss');
+}
+
 export function getOperateAreaWrapperEle() {
   return document.getElementById(EARN_MINING_OPERATE_AREA) as HTMLElement;
 }
@@ -217,7 +222,7 @@ export function generateMiningDetailUrl({
   miningContractAddress,
   stakeTokenAddress,
 }: {
-  chainId: number;
+  chainId?: number;
   miningContractAddress: string | undefined;
   stakeTokenAddress: string | undefined;
 }) {

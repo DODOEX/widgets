@@ -22,7 +22,10 @@ export const Primary = (props: any) => {
   }, [projectId, apiKey]);
   return (
     <Widget {...config} {...other} apikey={apiKey}>
-      <MiningList onClickCreate={() => window.alert('Create')} />
+      <MiningList
+        handleGotoCreate={() => window.alert('view create page')}
+        handleGotoDetail={() => window.alert('view detail page')}
+      />
     </Widget>
   );
 };

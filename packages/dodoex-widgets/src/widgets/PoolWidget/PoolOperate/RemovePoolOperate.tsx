@@ -187,8 +187,6 @@ export function RemovePoolOperate({
   const baseTokenBalanceUpdateLoading = false;
   const quoteBalanceUpdateLoading = false;
 
-  const receiveList = [] as any;
-
   return (
     <>
       <Box
@@ -206,12 +204,16 @@ export function RemovePoolOperate({
           }}
         >
           <Select
-            fullWidth
             value={mode}
             options={modeOptions}
             onChange={(_, value) => handleChangeMode(value as RemoveMode)}
-            notBackground
             popupOffset={0}
+            sx={{
+              px: 20,
+              py: 12,
+              width: '100%',
+              backgroundColor: 'transparent',
+            }}
           />
           {!!pool && PoolApi.utils.singleSideLp(pool.type) && (
             <Box

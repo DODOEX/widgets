@@ -66,21 +66,35 @@ export function getLpToTokenBalance(
 ) {
   const isSpecific = address && isSpecificPool(address);
   let userLpToTokenBalance = undefined;
-  if (userLpBalance && totalLpBalance && reserve && decimals !== undefined) {
-    const lpToTokenProportion = computeLpProportion(totalLpBalance, reserve);
+  let lpToTokenProportion: BigNumber | undefined;
+  const computeProportionReserve = type === 'CLASSICAL' ? target : reserve;
+  if (
+    userLpBalance &&
+    totalLpBalance &&
+    computeProportionReserve &&
+    decimals !== undefined
+  ) {
+    lpToTokenProportion = computeLpProportion(
+      totalLpBalance,
+      computeProportionReserve,
+    );
     userLpToTokenBalance = userLpBalance.times(lpToTokenProportion);
     if (type === 'CLASSICAL' && isSpecific) {
-      if (!target) return null;
-      if (userLpToTokenBalance.gt(reserve)) {
-        const lpToTokenProportion = computeLpProportion(
+      if (!target) return [undefined, undefined];
+      if (userLpToTokenBalance.gt(target) && reserve) {
+        lpToTokenProportion = computeLpProportion(
           totalLpBalance,
           BigNumber.min(target, reserve),
         );
         userLpToTokenBalance = userLpToTokenBalance.times(lpToTokenProportion);
       }
     }
-    return userLpToTokenBalance.dp(Number(decimals), BigNumber.ROUND_DOWN);
+    return [
+      lpToTokenProportion,
+      userLpToTokenBalance.dp(Number(decimals), BigNumber.ROUND_DOWN),
+    ];
   }
+  return [undefined, undefined];
 }
 
 export function usePoolBalanceInfo({
@@ -157,12 +171,8 @@ export function usePoolBalanceInfo({
         type,
       );
 
-  const baseLpToTokenProportion =
-    totalBaseLpBalance && baseReserve
-      ? computeLpProportion(totalBaseLpBalance, baseReserve)
-      : undefined;
-  const userBaseLpToTokenBalance = isPrivate
-    ? baseReserve
+  const [baseLpToTokenProportion, userBaseLpToTokenBalance] = isPrivate
+    ? [new BigNumber(1), baseReserve]
     : getLpToTokenBalance(
         userBaseLpBalance,
         totalBaseLpBalance,
@@ -187,9 +197,6 @@ export function usePoolBalanceInfo({
       // There is only one supply and there is no quoteSupply
       quoteSupply = totalBaseLpBalance;
     }
-    if (quoteSupply) {
-      quoteLpToTokenProportion = computeLpProportion(quoteSupply, quoteReserve);
-    }
 
     // userQuoteLpQuery returns null after querying. This kind of pool does not distinguish the balance of baseLp or quoteLp. Here, the baseLp balance of the query is directly used for calculation.
     const userLpBalance =
@@ -199,23 +206,26 @@ export function usePoolBalanceInfo({
         ? userBaseLpBalance
         : userQuoteLpBalance;
     if (isPrivate) {
+      quoteLpToTokenProportion = new BigNumber(1);
       userQuoteLpToTokenBalance = quoteReserve;
     } else if (
       !userQuoteLpQuery.isLoading &&
       !userQuoteLpQuery.error &&
+      !classicalTargetQuery.error &&
       !userLpBalance
     ) {
       userQuoteLpToTokenBalance = new BigNumber(0);
     } else {
-      userQuoteLpToTokenBalance = getLpToTokenBalance(
-        userLpBalance,
-        quoteSupply,
-        quoteReserve,
-        classicalQuoteTarget,
-        address,
-        type,
-        quoteDecimals,
-      );
+      [quoteLpToTokenProportion, userQuoteLpToTokenBalance] =
+        getLpToTokenBalance(
+          userLpBalance,
+          quoteSupply,
+          quoteReserve,
+          classicalQuoteTarget,
+          address,
+          type,
+          quoteDecimals,
+        );
     }
   }
 

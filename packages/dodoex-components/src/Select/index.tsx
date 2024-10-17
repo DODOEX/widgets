@@ -193,7 +193,6 @@ interface Props<T extends {} = SelectOption, Multiple extends boolean = false> e
   height?: number;
   /** Distance between a popup and the trigger element */
   popupOffset?: number;
-  notBackground?: boolean;
   sx?: BoxProps['sx'];
 }
 
@@ -203,7 +202,6 @@ export function Select<Value = number | string, Multiple extends boolean = false
   px = 20,
   height = 48,
   popupOffset = 8,
-  notBackground,
   ...props
   // @ts-ignore
 }: Props<Value, Multiple>) {
@@ -240,7 +238,6 @@ export function Select<Value = number | string, Multiple extends boolean = false
           sx: {
             padding: theme.spacing(0, px),
             height,
-            backgroundColor: notBackground ? 'transparent' : undefined,
             ...(fullWidth
               ? {
                   display: 'flex',

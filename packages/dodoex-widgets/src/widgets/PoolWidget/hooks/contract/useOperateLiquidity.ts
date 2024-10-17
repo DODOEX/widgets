@@ -80,7 +80,7 @@ export const useOperateLiquidity = (pool?: {
       // eth points directly to weth, and only weth can be stored in the fund pool.
       const pairAIsUnWrapped = unwrappedTokenAddress === pairAAddress;
       const pairBIsUnWrapped = unwrappedTokenAddress === pairBAddress;
-      const isDsp = type === 'DSP';
+      const isDsp = type === 'DSP' || type === 'GSP';
       const isClassical = type === 'CLASSICAL';
 
       const address = pairId.toLocaleLowerCase();
@@ -93,7 +93,7 @@ export const useOperateLiquidity = (pool?: {
       const baseTokenSymbol = baseToken.symbol;
       const quoteTokenSymbol = quoteToken.symbol;
       const slippageProtectionVal = slippageProtection;
-      const baseMinAmount = !baseInAmountIsNaN
+      let baseMinAmount = !baseInAmountIsNaN
         ? parseFixed(
             baseInAmount
               .multipliedBy(1 - slippageProtectionVal)
@@ -102,7 +102,7 @@ export const useOperateLiquidity = (pool?: {
             baseTokenDecimals,
           ).toString()
         : '0';
-      const quoteMinAmount = !quoteInAmountIsNaN
+      let quoteMinAmount = !quoteInAmountIsNaN
         ? parseFixed(
             quoteInAmount
               .multipliedBy(1 - slippageProtectionVal)
@@ -287,18 +287,20 @@ if (totalSupply == 0) {
   shares = DecimalMath.mulFloor(totalSupply, mintRatio);
 }
          */
-          let sharesAmount: BigNumber = new BigNumber(0);
+
           if (
-            balanceInfo?.totalBaseLpBalance &&
-            balanceInfo.totalBaseLpBalance.lte(0) &&
-            balanceInfo.userBaseLpToTokenBalance
-          ) {
-            sharesAmount = balanceInfo.userBaseLpToTokenBalance;
+            !balanceInfo?.baseReserve ||
+            !balanceInfo.quoteReserve ||
+            !balanceInfo.totalBaseLpBalance ||
+            !balanceInfo.userBaseLpBalance ||
+            !balanceInfo.userBaseLpToTokenBalance
+          )
+            return;
+
+          let sharesAmount: BigNumber = new BigNumber(0);
+          if (balanceInfo.totalBaseLpBalance?.lte(0)) {
+            sharesAmount = balanceInfo.userBaseLpBalance || new BigNumber(0);
           } else if (
-            balanceInfo.baseReserve &&
-            balanceInfo.quoteReserve &&
-            balanceInfo.userBaseLpToTokenBalance &&
-            balanceInfo.totalBaseLpBalance &&
             balanceInfo.baseReserve.gt(0) &&
             balanceInfo.quoteReserve.eq(0)
           ) {
@@ -310,19 +312,13 @@ if (totalSupply == 0) {
               .multipliedBy(balanceInfo.totalBaseLpBalance)
               .div(balanceInfo.baseReserve);
           } else if (
-            balanceInfo.baseReserve &&
-            balanceInfo.quoteReserve &&
             balanceInfo.baseReserve.gt(0) &&
             balanceInfo.quoteReserve.gt(0)
           ) {
             let b = baseInAmount;
-            if (
-              balanceInfo.userBaseLpToTokenBalance &&
-              baseInAmount.gte(balanceInfo.userBaseLpToTokenBalance)
-            ) {
+            if (baseInAmount.gte(balanceInfo.userBaseLpToTokenBalance)) {
               b = balanceInfo.userBaseLpToTokenBalance;
             }
-            const baseInputRatio = b.div(balanceInfo.baseReserve);
             let q = quoteInAmount;
             if (
               balanceInfo.userQuoteLpToTokenBalance &&
@@ -330,15 +326,51 @@ if (totalSupply == 0) {
             ) {
               q = balanceInfo.userQuoteLpToTokenBalance;
             }
-            const quoteInputRatio = q.div(balanceInfo.quoteReserve);
-            let mintRatio = baseInputRatio;
-            if (quoteInputRatio.lt(baseInputRatio)) {
-              mintRatio = quoteInputRatio;
+
+            let removeRatio: BigNumber | undefined;
+            if (q.gt(0) && balanceInfo.userQuoteLpToTokenBalance?.gt(0)) {
+              removeRatio = q.div(balanceInfo.userQuoteLpToTokenBalance);
             }
-            sharesAmount = mintRatio.multipliedBy(
-              balanceInfo.totalBaseLpBalance as BigNumber,
+            if (b.gt(0) && balanceInfo.userBaseLpToTokenBalance.gt(0)) {
+              removeRatio = b.div(balanceInfo.userBaseLpToTokenBalance);
+            }
+            if (removeRatio?.gte(1)) {
+              removeRatio = new BigNumber(1);
+            }
+            if (!removeRatio) {
+              return;
+            }
+            // Directly use the number of lpToken to calculate sharesAmount instead of using the converted original token number to avoid the problem of being unable to be completely removed due to precision truncation
+            sharesAmount = removeRatio.multipliedBy(
+              balanceInfo.userBaseLpBalance,
             );
+
+            // Correct baseInAmount and quoteInAmount again
+            const mintRatio = sharesAmount
+              .dp(baseTokenDecimals, BigNumber.ROUND_FLOOR)
+              .div(balanceInfo.totalBaseLpBalance);
+            b = mintRatio
+              .multipliedBy(balanceInfo.baseReserve)
+              .dp(baseTokenDecimals, BigNumber.ROUND_FLOOR);
+            q = mintRatio
+              .multipliedBy(balanceInfo.quoteReserve)
+              .dp(quoteTokenDecimals, BigNumber.ROUND_FLOOR);
+            baseMinAmount = parseFixed(
+              b
+                .multipliedBy(1 - slippageProtectionVal)
+                .dp(baseTokenDecimals, BigNumber.ROUND_FLOOR)
+                .toString(),
+              baseTokenDecimals,
+            ).toString();
+            quoteMinAmount = parseFixed(
+              q
+                .multipliedBy(1 - slippageProtectionVal)
+                .dp(quoteTokenDecimals, BigNumber.ROUND_FLOOR)
+                .toString(),
+              quoteTokenDecimals,
+            ).toString();
           }
+
           const isUnWrap = pairAIsUnWrapped || pairBIsUnWrapped;
           const removeParams: Parameters<
             typeof PoolApi.encode.removeDSPLiquidityABI

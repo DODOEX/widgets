@@ -300,7 +300,7 @@ export default function ParametersTable({
   const { isMobile } = useWidgetDevice();
   const { baseToken, quoteToken } = detail ?? {};
   const isPrivate = detail?.type === 'DPP';
-  const isDsp = detail?.type === 'DSP';
+  const isDsp = detail?.type === 'DSP' || detail?.type === 'GSP';
   const isClassical = detail?.type === 'CLASSICAL';
   const dashboardQuery = usePoolDashboard({
     address: detail?.address,

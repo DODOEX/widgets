@@ -54,7 +54,8 @@ export function BalanceText({
         <RotatingIcon
           sx={{
             position: 'relative',
-            top: 6,
+            top: -2,
+            verticalAlign: 'middle',
           }}
         />
       ) : (

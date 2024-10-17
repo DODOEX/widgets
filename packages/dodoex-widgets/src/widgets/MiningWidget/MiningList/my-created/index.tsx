@@ -1,8 +1,9 @@
-import { Box } from '@dodoex/components';
+import { useLingui } from '@lingui/react';
 import { DataCardGroup } from '../../../../components/DataCard/DataCardGroup';
 import LoadingCard from '../../../PoolWidget/PoolList/components/LoadingCard';
 import { useMyCreatedMiningList } from '../../hooks/useMyCreatedMiningList';
-import { MiningListEmpty } from './MiningListEmpty';
+import { MiningListEmpty } from '../components/MiningListEmpty';
+import { MyCreatedMining } from './MyCreatedMining';
 
 export function MyCreated({
   miningList,
@@ -17,6 +18,8 @@ export function MyCreated({
   error: ReturnType<typeof useMyCreatedMiningList>['error'];
   hasSearch?: boolean;
 }) {
+  const { i18n } = useLingui();
+
   if (loading) {
     return (
       <DataCardGroup gap={12} repeatBaseForLargeScreen={2}>
@@ -38,7 +41,13 @@ export function MyCreated({
     <DataCardGroup gap={12} repeatBaseForLargeScreen={2}>
       {miningList.map((miningItem) => {
         const key = miningItem.id;
-        return <Box key={key}>{miningItem.name}</Box>;
+        return (
+          <MyCreatedMining
+            key={key}
+            miningItem={miningItem}
+            refetch={refetch}
+          />
+        );
       })}
     </DataCardGroup>
   );

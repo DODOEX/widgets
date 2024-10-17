@@ -207,7 +207,7 @@ function LiquidityBalanceItem({
           rel="noopener noreferrer"
           href={chainId ? getEtherscanPage(chainId, address, 'address') : ''}
           sx={{
-            display: 'inline-block',
+            display: 'inline-flex',
             height: 14,
           }}
         >
@@ -217,8 +217,6 @@ function LiquidityBalanceItem({
               ml: 4,
               width: 14,
               height: 14,
-              position: 'relative',
-              top: -2,
             }}
           />
         </Box>

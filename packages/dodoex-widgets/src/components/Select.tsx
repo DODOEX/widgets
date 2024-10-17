@@ -27,7 +27,6 @@ export default function Select<V extends string | number = string>({
     value: string | React.ReactNode;
   }>;
   sx?: BoxProps['sx'];
-  buttonSx?: BoxProps['sx'];
   readOnly?: boolean;
   valueOnlyIcon?: boolean;
 }) {

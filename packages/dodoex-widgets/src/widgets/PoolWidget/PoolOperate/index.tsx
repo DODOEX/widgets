@@ -25,6 +25,7 @@ import { useWeb3React } from '@web3-react/core';
 import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
 import { t } from '@lingui/macro';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { GSPPairRiskWarning } from './components/GSPPairRiskWarning';
 
 export interface PoolOperateProps {
   onClose?: () => void;
@@ -125,32 +126,42 @@ export function PoolOperate({
               : {}),
           }}
           rightSlot={
-            onClose ? (
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: 24,
-                  height: 24,
-                  borderRadius: '50%',
-                  borderWidth: 1,
-                  color: 'text.secondary',
-                  cursor: 'pointer',
-                }}
-              >
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: 12,
+              }}
+            >
+              {pool?.type === 'GSP' && <GSPPairRiskWarning />}
+              {onClose ? (
                 <Box
-                  component={Error}
                   sx={{
-                    width: 16,
-                    height: 16,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: 24,
+                    height: 24,
+                    borderRadius: '50%',
+                    borderWidth: 1,
+                    color: 'text.secondary',
+                    cursor: 'pointer',
                   }}
-                  onClick={() => {
-                    onClose();
-                  }}
-                />
-              </Box>
-            ) : undefined
+                >
+                  <Box
+                    component={Error}
+                    sx={{
+                      width: 16,
+                      height: 16,
+                    }}
+                    onClick={() => {
+                      onClose();
+                    }}
+                  />
+                </Box>
+              ) : undefined}
+            </Box>
           }
         />
         <TabPanel

@@ -399,7 +399,12 @@ function TableList({
           <Box component="th">
             <Trans>APY</Trans>
           </Box>
-          <Box component="th"></Box>
+          <Box
+            component="th"
+            sx={{
+              width: 160,
+            }}
+          ></Box>
         </Box>
       </Box>
       <Box component="tbody">
@@ -661,7 +666,7 @@ function TableList({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    textAlign: 'right',
+                    justifyContent: 'flex-end',
                     gap: '8px',
                   }}
                 >
@@ -674,7 +679,6 @@ function TableList({
                     <>
                       {!!account && (
                         <NeedConnectButton
-                          fullWidth
                           variant={Button.Variant.outlined}
                           size={Button.Size.small}
                           onClick={(evt) => {

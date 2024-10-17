@@ -7,9 +7,12 @@ import {
   MiningLpTokenI,
   MiningRewardTokenI,
   MyCreatedMiningI,
+  ReviewedMiningRewardTokenI,
   TabMiningI,
 } from '../types';
 import {
+  computeDailyRewardByPerBlock,
+  getBlocksCountPerYear,
   getMiningStatusByTimestamp,
   VALID_MINING_TYPE,
   VALID_MINING_VERSION,
@@ -396,7 +399,6 @@ export function transformRawMiningToTabMining(
 
 export function transformStrToBN(raw: any, decimals: number | undefined) {
   const result = new BigNumber(raw);
-  // console.log('v2 raw', raw, result.isNaN(), result.toString());
   if (result.isNaN() || decimals == undefined) {
     return undefined;
   }
@@ -467,5 +469,257 @@ export function transformRawMiningToMyCreatedMining(
     status,
     isGSP: obj.isGSP ?? false,
     isNewERCMineV3: obj.isNewERCMineV3 ?? false,
+  };
+}
+
+export function getStakeTokenAPR({
+  chainId,
+  rewardPerBlock,
+  rewardTokenUSDPrice,
+  totalStakedTokenUSD,
+}: {
+  chainId: number;
+  rewardPerBlock: BigNumber | undefined;
+  rewardTokenUSDPrice: BigNumber | undefined;
+  totalStakedTokenUSD: BigNumber | undefined;
+}) {
+  const blocksCountPerYear = getBlocksCountPerYear(chainId);
+  if (!totalStakedTokenUSD || !rewardPerBlock || !rewardTokenUSDPrice) {
+    return undefined;
+  }
+  if (totalStakedTokenUSD.lte(0)) {
+    return new BigNumber(Infinity);
+  }
+  return rewardPerBlock
+    .multipliedBy(rewardTokenUSDPrice)
+    .multipliedBy(blocksCountPerYear)
+    .div(totalStakedTokenUSD);
+}
+
+export function getReserveForMining({
+  balance,
+  totalSupply,
+  reserve,
+}: {
+  balance: BigNumber | undefined;
+  totalSupply: BigNumber | undefined;
+  reserve: BigNumber | undefined;
+}) {
+  if (!balance || !totalSupply || !reserve) {
+    return undefined;
+  }
+  if (totalSupply.lte(0)) {
+    return new BigNumber(0);
+  }
+  const part = balance.div(totalSupply);
+  return part.multipliedBy(reserve);
+}
+
+export function getVaultReserveForMining({
+  baseStakeTokenBalance,
+  quoteStakeTokenBalance,
+  baseStakeTokenTotalSupply,
+  quoteStakeTokenTotalSupply,
+  baseTokenReserve,
+  quoteTokenReserve,
+  midPrice,
+  baseTokenUSD,
+  quoteTokenUSD,
+}: {
+  baseStakeTokenBalance?: BigNumber;
+  quoteStakeTokenBalance?: BigNumber;
+  baseStakeTokenTotalSupply?: BigNumber;
+  quoteStakeTokenTotalSupply?: BigNumber;
+  baseTokenReserve?: BigNumber;
+  quoteTokenReserve?: BigNumber;
+  midPrice?: BigNumber;
+  baseTokenUSD?: BigNumber;
+  quoteTokenUSD?: BigNumber;
+}) {
+  const baseReserveForMining = getReserveForMining({
+    balance: baseStakeTokenBalance,
+    totalSupply: baseStakeTokenTotalSupply,
+    reserve: baseTokenReserve,
+  });
+  const quoteReserveForMining = getReserveForMining({
+    balance: quoteStakeTokenBalance,
+    totalSupply: quoteStakeTokenTotalSupply,
+    reserve: quoteTokenReserve,
+  });
+
+  let totalStakedTokenUSD: BigNumber | undefined;
+  let baseReserveForMiningUSD: BigNumber | undefined;
+  let quoteReserveForMiningUSD: BigNumber | undefined;
+  let totalStakedTokenWithoutMidPriceUSD: BigNumber | undefined;
+  if (!baseReserveForMining || !quoteReserveForMining) {
+    return {
+      baseReserveForMining,
+      quoteReserveForMining,
+      baseReserveForMiningUSD,
+      quoteReserveForMiningUSD,
+      totalStakedTokenUSD,
+      totalStakedTokenWithoutMidPriceUSD,
+    };
+  }
+
+  if (!midPrice) {
+    if (quoteTokenUSD !== undefined && baseTokenUSD !== undefined) {
+      baseReserveForMiningUSD = baseReserveForMining.multipliedBy(baseTokenUSD);
+      quoteReserveForMiningUSD =
+        quoteReserveForMining.multipliedBy(quoteTokenUSD);
+      totalStakedTokenWithoutMidPriceUSD = baseReserveForMiningUSD.plus(
+        quoteReserveForMiningUSD,
+      );
+    }
+    return {
+      baseReserveForMining,
+      quoteReserveForMining,
+      baseReserveForMiningUSD,
+      quoteReserveForMiningUSD,
+      totalStakedTokenUSD,
+      totalStakedTokenWithoutMidPriceUSD,
+    };
+  }
+
+  if (quoteTokenUSD?.gt(0)) {
+    baseReserveForMiningUSD = baseReserveForMining
+      .multipliedBy(midPrice ?? 0)
+      .multipliedBy(quoteTokenUSD);
+    quoteReserveForMiningUSD =
+      quoteReserveForMining.multipliedBy(quoteTokenUSD);
+    totalStakedTokenUSD = baseReserveForMiningUSD.plus(
+      quoteReserveForMiningUSD,
+    );
+  } else if (baseTokenUSD?.gt(0)) {
+    if (midPrice?.gt(0)) {
+      baseReserveForMiningUSD = baseReserveForMining.multipliedBy(baseTokenUSD);
+      quoteReserveForMiningUSD = quoteReserveForMining
+        .div(midPrice)
+        .multipliedBy(baseTokenUSD);
+      totalStakedTokenUSD = baseReserveForMiningUSD.plus(
+        quoteReserveForMiningUSD,
+      );
+    }
+  }
+
+  return {
+    baseReserveForMining,
+    quoteReserveForMining,
+    baseReserveForMiningUSD,
+    quoteReserveForMiningUSD,
+    totalStakedTokenUSD,
+    totalStakedTokenWithoutMidPriceUSD,
+  };
+}
+
+export function computeUnreleasedRewardByBlock({
+  blockNumber,
+  lastFlagBlock,
+  endBlock,
+  decimals,
+  rewardPerBlock,
+}: {
+  blockNumber: BigNumber;
+  lastFlagBlock: BigNumber;
+  endBlock: BigNumber;
+  decimals: number;
+  rewardPerBlock: BigNumber;
+}) {
+  return blockNumber.lt(lastFlagBlock)
+    ? endBlock
+        .minus(lastFlagBlock)
+        .multipliedBy(rewardPerBlock)
+        .dp(decimals, BigNumber.ROUND_DOWN)
+    : (blockNumber.gt(endBlock) ? blockNumber : endBlock)
+        .minus(blockNumber)
+        .multipliedBy(rewardPerBlock)
+        .dp(decimals, BigNumber.ROUND_DOWN);
+}
+
+export function getV3MiningSingleRewardAmount(
+  t: ReviewedMiningRewardTokenI,
+  blockNumber: BigNumber,
+  blockTime: number,
+  decimals: number | undefined,
+) {
+  const {
+    rewardPerBlock,
+    startBlock,
+    endBlock,
+    startTime,
+    endTime,
+    workThroughReward,
+    lastFlagBlock,
+  } = t;
+
+  let totalReward: BigNumber | null = null;
+  let dailyReward: BigNumber | null = null;
+  let releasedReward: BigNumber | null = null;
+  let unreleasedReward: BigNumber | null = null;
+
+  if (!rewardPerBlock || decimals == null || !endBlock) {
+    return {
+      ...t,
+      totalReward,
+      dailyReward,
+      releasedReward,
+      unreleasedReward,
+    };
+  }
+
+  if (startBlock) {
+    totalReward = endBlock.minus(startBlock).multipliedBy(rewardPerBlock);
+
+    if (endTime && startTime) {
+      const currentTime = new BigNumber(Math.floor(Date.now() / 1000));
+      if (currentTime.lt(startTime)) {
+        releasedReward = new BigNumber(0);
+      } else if (currentTime.gt(endTime)) {
+        releasedReward = totalReward;
+      } else {
+        releasedReward = totalReward
+          .multipliedBy(currentTime.minus(startTime))
+          .div(endTime.minus(startTime));
+      }
+
+      unreleasedReward = totalReward.minus(releasedReward);
+    }
+  }
+
+  if (workThroughReward && lastFlagBlock) {
+    releasedReward = (
+      blockNumber.gt(endBlock)
+        ? endBlock
+        : blockNumber.lt(lastFlagBlock)
+        ? lastFlagBlock
+        : blockNumber
+    )
+      .minus(lastFlagBlock)
+      .multipliedBy(rewardPerBlock)
+      .plus(workThroughReward)
+      .dp(decimals, BigNumber.ROUND_DOWN);
+    unreleasedReward = computeUnreleasedRewardByBlock({
+      blockNumber,
+      lastFlagBlock,
+      endBlock,
+      decimals,
+      rewardPerBlock,
+    });
+
+    totalReward = endBlock
+      .minus(lastFlagBlock)
+      .multipliedBy(rewardPerBlock)
+      .plus(workThroughReward)
+      .dp(decimals, BigNumber.ROUND_DOWN);
+  }
+
+  dailyReward = computeDailyRewardByPerBlock(blockTime, rewardPerBlock);
+
+  return {
+    ...t,
+    totalReward,
+    dailyReward,
+    releasedReward,
+    unreleasedReward,
   };
 }

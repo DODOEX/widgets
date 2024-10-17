@@ -10,10 +10,12 @@ export function useLiquidityOperateAmount({
   pool,
   maxBaseAmount,
   maxQuoteAmount,
+  isRemove,
 }: {
   pool: OperatePool;
   maxBaseAmount?: BigNumber | null;
   maxQuoteAmount?: BigNumber | null;
+  isRemove?: boolean;
 }) {
   const [baseAmount, setBaseAmount] = React.useState('');
   const [quoteAmount, setQuoteAmount] = React.useState('');
@@ -41,7 +43,8 @@ export function useLiquidityOperateAmount({
     const baseReserve = pmm.pmmParamsBG.b;
     const quoteReserve = pmm.pmmParamsBG.q;
     isEmptyDspPool =
-      pool.type === 'DSP' && (quoteReserve.eq(0) || baseReserve.eq(0));
+      (pool.type === 'DSP' || pool.type === 'GSP') &&
+      (quoteReserve.eq(0) || baseReserve.eq(0));
     isSinglePool = pool.type === 'DVM' && new BigNumber(quoteReserve).eq(0);
     if (isEmptyDspPool) {
       addPortion = i;
@@ -74,7 +77,11 @@ export function useLiquidityOperateAmount({
         .multipliedBy(amount)
         .dp(quoteDecimals)
         .toString();
-      if (maxQuoteAmount && maxQuoteAmount.lte(matchQuoteAmount)) {
+      if (
+        maxQuoteAmount &&
+        isRemove &&
+        (maxQuoteAmount.lte(matchQuoteAmount) || maxBaseAmount?.lte(0))
+      ) {
         matchQuoteAmount = maxQuoteAmount.toString();
       }
       setQuoteAmount(matchQuoteAmount);
@@ -89,7 +96,11 @@ export function useLiquidityOperateAmount({
         .div(addPortion)
         .dp(baseDecimals)
         .toString();
-      if (maxBaseAmount && maxBaseAmount.lte(matchBaseAmount)) {
+      if (
+        maxBaseAmount &&
+        isRemove &&
+        (maxBaseAmount.lte(matchBaseAmount) || maxQuoteAmount?.lte(0))
+      ) {
         matchBaseAmount = maxBaseAmount.toString();
       }
       setBaseAmount(matchBaseAmount);

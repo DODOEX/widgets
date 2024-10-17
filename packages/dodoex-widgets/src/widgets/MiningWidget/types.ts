@@ -1,5 +1,7 @@
 import { ExcludeNone, MiningApi, MiningStatusE } from '@dodoex/api';
+import { BoxProps } from '@dodoex/components';
 import BigNumber from 'bignumber.js';
+import { Dispatch, SetStateAction } from 'react';
 import { TokenInfo } from '../../hooks/Token';
 
 export type FetchMiningList = ExcludeNone<
@@ -171,7 +173,6 @@ export interface MyCreatedMiningI {
   name: string | undefined;
   token: MiningERC20TokenI;
 
-
   lpToken: {
     /** pair address */
     id: string;
@@ -192,4 +193,71 @@ export interface RewardUpdateHistoryItemI {
   dailyReward: BigNumber | null;
   totalReward: BigNumber | null;
   rewardPerBlockBN: BigNumber;
+}
+
+export interface LiquidityMigrationInfo {
+  chainId: number;
+  miningContractAddress: string;
+  stakeTokenAddress: string;
+  newMiningContractAddress: string;
+  newStakeTokenAddress: string;
+}
+
+export interface MiningRewardTokenWithAprI extends MiningRewardTokenI {
+  apr: BigNumber | undefined;
+  pendingReward: BigNumber | undefined;
+}
+
+export interface MiningRewardTokenWithTagI extends MiningRewardTokenWithAprI {
+  symbolEle: JSX.Element | string | undefined;
+}
+
+export interface MiningStakeTokenWithAmountI extends MiningERC20TokenI {
+  unstakedSourceTokenAmount: BigNumber | undefined;
+  unstakedSourceTokenAmountUSD: BigNumber | undefined;
+  sourceTokenAmount: BigNumber | undefined;
+  sourceTokenAmountUSD: BigNumber | undefined;
+  valueLockedAmount: BigNumber | undefined;
+}
+
+export interface OperateDataProps {
+  operateType: OperateType;
+  setOperateType: Dispatch<SetStateAction<OperateType>>;
+  miningItem: TabMiningI;
+  balanceDataMap: CompositeMiningContractDataI['balanceDataMap'] | undefined;
+
+  totalRewardUSD: BigNumber | undefined;
+  stakedTokenUSD: BigNumber | undefined;
+  rewardTokenList: MiningRewardTokenWithTagI[];
+  stakedTokenWithAmountList: MiningStakeTokenWithAmountI[];
+
+  onClose?: () => void;
+  setShareModalVisible?: Dispatch<SetStateAction<boolean>>;
+
+  refetchBalance: () => void;
+  refetchAfterClaim: () => void;
+
+  titleSectionVisible: boolean;
+  associatedMineSectionVisible: boolean;
+  associatedMineSectionShort?: boolean;
+  sx?: BoxProps['sx'];
+
+  addLiquidityEnable: boolean;
+
+  externalAddLiquidityCallback?: () => void;
+
+  miningStatusList: {
+    status: MiningStatusE;
+    firstStartTime: BigNumber | undefined;
+    lastEndTime: BigNumber | undefined;
+    currentTime: BigNumber;
+  }[];
+
+  rewardTokenWithAprListArray: MiningRewardTokenWithAprI[][];
+
+  addLiquiditySuccessfulPair: [boolean, boolean];
+  lpTokenAccountStakedBalanceLoading: [boolean, boolean];
+  lpTokenAccountBalanceLoading: [boolean, boolean];
+
+  gspPairRiskWarningVisible?: boolean;
 }

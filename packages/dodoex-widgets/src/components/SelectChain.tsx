@@ -19,7 +19,9 @@ function ChainItem({
   mobileLogoWidth,
   sx,
 }: {
-  chain?: ChainListItem;
+  chain?: Omit<ChainListItem, 'chainId'> & {
+    chainId: number;
+  };
   isLastItem?: boolean;
   isMobileStyle?: boolean;
   logoWidth?: number;

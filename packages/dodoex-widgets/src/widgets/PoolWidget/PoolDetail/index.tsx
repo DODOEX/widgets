@@ -72,6 +72,8 @@ export default function PoolDetail() {
         }
       : undefined;
 
+  const hasMining = !!pool?.miningAddress;
+
   return (
     <WidgetContainer
       sx={
@@ -118,6 +120,7 @@ export default function PoolDetail() {
             account={account}
             pool={operatePool}
             operate={operateType}
+            hasMining={hasMining}
             modal
             onClose={() => {
               setOperateType(undefined);
@@ -127,6 +130,7 @@ export default function PoolDetail() {
           <PoolOperate
             account={account}
             operate={operateType}
+            hasMining={hasMining}
             sx={{
               width: 375,
               height: 'max-content',

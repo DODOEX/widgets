@@ -6,9 +6,6 @@ import { MyCreatedMiningI } from '../types';
 import { transformRawMiningToMyCreatedMining } from './helper';
 import { MINING_POOL_REFETCH_INTERVAL } from './utils';
 
-/**
- * 查询我创建的挖矿项目
- */
 export function useMyCreatedMiningList({
   searchText,
   account,

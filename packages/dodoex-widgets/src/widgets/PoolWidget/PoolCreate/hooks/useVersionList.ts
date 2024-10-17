@@ -7,7 +7,7 @@ import { ReactComponent as SingleChartExampleDarkImgUrl } from '../components/si
 import { ReactComponent as SingleChartExampleImgUrl } from '../components/single-token-chart-example.svg';
 import { ReactComponent as StandardChartExampleDarkImgUrl } from '../components/standard-chart-example-dark.svg';
 import { ReactComponent as StandardChartExampleImgUrl } from '../components/standard-chart-example.svg';
-import { Version, VersionItem } from '../types';
+import { SubPeggedVersionE, Version, VersionItem } from '../types';
 
 export function useVersionList() {
   const docUrl =
@@ -61,5 +61,35 @@ export function useVersionList() {
     map[item.version] = item;
     return map;
   }, {} as Record<Version, VersionItem>);
-  return { versionList, versionMap };
+
+  const subPeggedVersionList = getSubPeggedVersionList();
+  return { versionList, versionMap, subPeggedVersionList };
+}
+
+export function getSubPeggedVersionList(): Array<
+  Pick<VersionItem, 'title' | 'description'> & {
+    version: SubPeggedVersionE;
+  }
+> {
+  return [
+    {
+      version: SubPeggedVersionE.DSP,
+      title: t`The pool’s market-making price is fixed`,
+      description: t`Once created, the price cannot be changed. This option applies to assets like ETH-WETH.`,
+    },
+    {
+      version: SubPeggedVersionE.GSP,
+      title: t`The pool’s market-making price can be adjusted`,
+      description: t`Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes.`,
+    },
+  ];
+}
+
+export function getSubPeggedVersionMap() {
+  const subPeggedVersionList = getSubPeggedVersionList();
+
+  return subPeggedVersionList.reduce((map, item) => {
+    map[item.version] = item;
+    return map;
+  }, {} as Record<SubPeggedVersionE, Pick<VersionItem, 'title' | 'description'>>);
 }

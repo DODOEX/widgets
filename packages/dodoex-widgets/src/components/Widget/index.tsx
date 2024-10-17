@@ -69,6 +69,7 @@ export interface WidgetProps
   noDocumentLink?: boolean;
   onlyChainId?: ChainId;
   noUI?: boolean;
+  noLangProvider?: boolean;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
@@ -169,28 +170,59 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
 
   const { widgetRef } = useUserOptions();
 
-  if (props.noUI) return <>{props.children}</>;
+  if (props.noUI) {
+    if (props.noLangProvider) {
+      return <>{props.children}</>;
+    }
+    return <LangProvider locale={props.locale}>{props.children}</LangProvider>;
+  }
+
+  if (props.noLangProvider) {
+    return (
+      <Box
+        sx={{
+          width,
+          height,
+          overflow: 'hidden',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          minWidth: 335,
+          minHeight: 494,
+          borderRadius: 16,
+          backgroundColor: 'background.paper',
+        }}
+        className={WIDGET_CLASS_NAME}
+        ref={widgetRef}
+      >
+        <OpenConnectWalletInfo />
+        {props.children}
+      </Box>
+    );
+  }
 
   return (
-    <Box
-      sx={{
-        width,
-        height,
-        overflow: 'hidden',
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        minWidth: 335,
-        minHeight: 494,
-        borderRadius: 16,
-        backgroundColor: 'background.paper',
-      }}
-      className={WIDGET_CLASS_NAME}
-      ref={widgetRef}
-    >
-      <OpenConnectWalletInfo />
-      {props.children}
-    </Box>
+    <LangProvider locale={props.locale}>
+      <Box
+        sx={{
+          width,
+          height,
+          overflow: 'hidden',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          minWidth: 335,
+          minHeight: 494,
+          borderRadius: 16,
+          backgroundColor: 'background.paper',
+        }}
+        className={WIDGET_CLASS_NAME}
+        ref={widgetRef}
+      >
+        <OpenConnectWalletInfo />
+        {props.children}
+      </Box>
+    </LangProvider>
   );
 }
 
@@ -215,6 +247,30 @@ function Web3Provider(props: PropsWithChildren<WidgetProps>) {
   );
 }
 
+export { default as Message } from '../Message';
+export { LangProvider } from '../../providers/i18n';
+/** Widgets that do not directly import themes and queryClient libraries */
+export function UnstyleWidget(props: PropsWithChildren<WidgetProps>) {
+  const widgetRef = useRef<HTMLDivElement>(null);
+
+  if (props.jsonRpcUrlMap) {
+    contractRequests.setRpc(getRpcSingleUrlMap(props.jsonRpcUrlMap));
+  }
+
+  return (
+    <ReduxProvider store={store}>
+      <UserOptionsProvider
+        {...{
+          ...props,
+          widgetRef: props.widgetRef ?? widgetRef,
+        }}
+      >
+        <Web3Provider {...props} />
+      </UserOptionsProvider>
+    </ReduxProvider>
+  );
+}
+
 export function Widget(props: PropsWithChildren<WidgetProps>) {
   const theme = createTheme({
     mode: props.colorMode,
@@ -226,32 +282,17 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
     console.error('apikey and apiServices must have a.');
   }
 
-  if (props.jsonRpcUrlMap) {
-    contractRequests.setRpc(getRpcSingleUrlMap(props.jsonRpcUrlMap));
-  }
-
-  const widgetRef = useRef<HTMLDivElement>(null);
-
   return (
-    <ReduxProvider store={store}>
-      <LangProvider locale={props.locale}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline
-            container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}, .${WIDGET_MODAL_FIXED_CLASS}`}
-          />
-          <UserOptionsProvider
-            {...{
-              ...props,
-              widgetRef: props.widgetRef ?? widgetRef,
-            }}
-          >
-            <QueryClientProvider client={queryClient}>
-              <Web3Provider {...props} />
-              <Message />
-            </QueryClientProvider>
-          </UserOptionsProvider>
-        </ThemeProvider>
-      </LangProvider>
-    </ReduxProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline
+        container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}, .${WIDGET_MODAL_FIXED_CLASS}`}
+      />
+      <QueryClientProvider client={queryClient}>
+        <UnstyleWidget {...props}>
+          {props.children}
+          <Message />
+        </UnstyleWidget>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }

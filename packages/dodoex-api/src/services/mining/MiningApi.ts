@@ -223,4 +223,38 @@ export class MiningApi {
       },
     };
   }
+
+  getRewardTokenInfos(
+    chainId: number | undefined,
+    miningContractAddress: string | undefined,
+    index: number,
+    skip?: Boolean,
+  ) {
+    return {
+      queryKey: [
+        CONTRACT_QUERY_KEY,
+        'mining',
+        'getRewardTokenInfos',
+        ...arguments,
+      ],
+      enabled:
+        chainId != null &&
+        miningContractAddress != null &&
+        index != null &&
+        !skip,
+      queryFn: async () => {
+        if (!chainId || !miningContractAddress) {
+          return null;
+        }
+
+        const result = await this.contractRequests.batchCallQuery(chainId, {
+          abiName: ABIName.v3MiningABI,
+          contractAddress: miningContractAddress,
+          method: 'rewardTokenInfos',
+          params: [index],
+        });
+        return result ?? null;
+      },
+    };
+  }
 }

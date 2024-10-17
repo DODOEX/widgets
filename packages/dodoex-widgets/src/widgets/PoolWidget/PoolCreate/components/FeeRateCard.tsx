@@ -5,10 +5,10 @@ import { DEFAULT_FEE_RATE } from '../utils';
 import { RadioButtonTag } from './RadioButtonTag';
 
 export function FeeRateCard({
-  currentStep,
+  isWaiting,
   feeRate,
 }: {
-  currentStep: StateProps['currentStep'];
+  isWaiting: boolean;
   feeRate: StateProps['feeRate'];
 }) {
   const theme = useTheme();
@@ -20,7 +20,7 @@ export function FeeRateCard({
         borderRadius: 8,
         backgroundColor: theme.palette.background.paper,
         width: '50%',
-        opacity: currentStep === 2 ? 1 : 0.5,
+        opacity: !isWaiting ? 1 : 0.5,
       }}
     >
       <Box
@@ -31,7 +31,7 @@ export function FeeRateCard({
           fontWeight: 600,
         }}
       >
-        {currentStep === 2 ? (
+        {!isWaiting ? (
           <>
             {feeRate || '-'}%
             {feeRate === DEFAULT_FEE_RATE && (

@@ -46,6 +46,9 @@ export const styles = (
     'strong, b': {
       fontWeight: (theme.typography as any)?.fontWeightBold || 'bolder',
     },
+    'svg, img': {
+      verticalAlign: 'middle',
+    },
     body: {
       margin: 0, // Remove the margin in all browsers.
       ...body(theme),

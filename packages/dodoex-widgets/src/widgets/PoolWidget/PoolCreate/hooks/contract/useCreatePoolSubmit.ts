@@ -4,10 +4,11 @@ import BigNumber from 'bignumber.js';
 import { useWalletInfo } from '../../../../../hooks/ConnectWallet/useWalletInfo';
 import { TokenInfo } from '../../../../../hooks/Token';
 import { getEthersValue } from '../../../../../utils/bytes';
-import { Version as PoolVersionE } from '../../types';
+import { SubPeggedVersionE, Version as PoolVersionE } from '../../types';
 
 export const useCreatePoolSubmit = ({
   selectedVersion,
+  selectedSubPeggedVersion,
   baseToken,
   quoteToken,
   baseAmount,
@@ -17,6 +18,7 @@ export const useCreatePoolSubmit = ({
   slippageCoefficient,
 }: {
   selectedVersion: PoolVersionE;
+  selectedSubPeggedVersion?: SubPeggedVersionE;
   baseToken: TokenInfo | null;
   quoteToken: TokenInfo | null;
   baseAmount: string;
@@ -41,28 +43,52 @@ export const useCreatePoolSubmit = ({
     const isPrivate = selectedVersion === PoolVersionE.marketMakerPool;
     const isStandard = selectedVersion === PoolVersionE.standard;
     const isDsp = selectedVersion === PoolVersionE.pegged;
+    const isGSP =
+      selectedVersion === PoolVersionE.pegged &&
+      selectedSubPeggedVersion === SubPeggedVersionE.GSP;
+    const baseTokenParam = {
+      decimals: baseDecimals,
+      address: baseToken.address,
+    };
+    const quoteTokenParam = {
+      decimals: quoteDecimals,
+      address: quoteToken.address,
+    };
+    const baseInAmount = parseFixed(baseAmount, baseDecimals).toString();
+    const quoteInAmount = parseFixed(
+      quoteAmount || '0',
+      quoteDecimals,
+    ).toString();
+    // lpFeeRate is the lp fee rate
+    //The actual handling fee is 80% of the input value
+    const lpFeeRate = isPrivate
+      ? feeRateNumber.times(100).toNumber()
+      : feeRateNumber.times(80).toNumber();
+    // i = min price
+    const i =
+      isPrivate && isStandard
+        ? new BigNumber(quoteAmount)
+            .div(baseAmount)
+            .dp(quoteDecimals, BigNumber.ROUND_DOWN)
+            .toString()
+        : new BigNumber(initPrice).toString();
+    // k is the volatility
+    const k = Number(slippageCoefficient || (isDsp ? '0.1' : '1'));
+    // Transaction Deadline
+    const deadLine = Math.ceil(Date.now() / 1000) + 60 * 60;
 
     let result: any;
     const createPrams: Parameters<typeof PoolApi.encode.createDVMPoolABI> = [
       chainId,
-      {
-        decimals: baseDecimals,
-        address: baseToken.address,
-      },
-      {
-        decimals: quoteDecimals,
-        address: quoteToken.address,
-      },
-      parseFixed(baseAmount, baseDecimals).toString(),
-      parseFixed(quoteAmount || '0', quoteDecimals).toString(),
-      isPrivate
-        ? feeRateNumber.times(100).toNumber()
-        : feeRateNumber.times(80).toNumber(), // The actual handling fee is 80% of the input value
+      baseTokenParam,
+      quoteTokenParam,
+      baseInAmount,
+      quoteInAmount,
+      lpFeeRate,
       // i = min price
-      new BigNumber(initPrice).toString(),
-      Number(slippageCoefficient || (isDsp ? '0.1' : '1')),
-      // Transaction Deadline
-      Math.ceil(Date.now() / 1000) + 60 * 60,
+      i,
+      k,
+      deadLine,
     ];
 
     // console.log('2.0 CreatePool createPrams', createPrams);
@@ -76,6 +102,19 @@ export const useCreatePoolSubmit = ({
         result = await PoolApi.encode.createDPPPoolABI(...createPrams);
       } else if (isDsp) {
         result = await PoolApi.encode.createDSPPoolABI(...createPrams);
+      } else if (isGSP) {
+        result = await PoolApi.encode.createGSPPoolABI(
+          chainId,
+          account,
+          baseTokenParam,
+          quoteTokenParam,
+          baseInAmount,
+          quoteInAmount,
+          lpFeeRate,
+          i,
+          k,
+          deadLine,
+        );
       }
     } catch (error) {
       console.error('2.0 CreatePool createPrams error', createPrams, error);

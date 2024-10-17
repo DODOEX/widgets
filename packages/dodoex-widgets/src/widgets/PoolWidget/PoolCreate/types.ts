@@ -1,11 +1,16 @@
 import React from 'react';
 
+export enum SubPeggedVersionE {
+  DSP = 'dsp',
+  GSP = 'gsp',
+}
+
 export enum Version {
   /** DVM; public pool */
   standard = 'standard',
   /** DVM: quoteReserve = 0; public pool */
   singleToken = 'single-token',
-  /** DSP */
+  /** DSP or GSP */
   pegged = 'pagged',
   /** DPP; private pool */
   marketMakerPool = 'market-maker-pool',

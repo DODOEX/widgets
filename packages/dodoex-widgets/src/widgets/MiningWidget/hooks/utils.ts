@@ -1,6 +1,8 @@
-import { MiningStatusE } from '@dodoex/api';
+import { ChainId, MiningStatusE } from '@dodoex/api';
 import BigNumber from 'bignumber.js';
+import dayjs from 'dayjs';
 import { BaseMiningI, MiningRewardTokenI } from '../types';
+import { blockTimeMap } from '../../../constants/chains';
 
 export const MINING_POOL_REFETCH_INTERVAL = 60000;
 // export const MINING_POOL_REFETCH_INTERVAL = 600000;
@@ -90,4 +92,28 @@ export function computeDailyRewardByPerBlock(
     .times(1000)
     .div(blockTime);
   return totalBlocksForOneDay.multipliedBy(rewardPerBlock);
+}
+
+export const getTimeByPreBlock = (
+  blockTime: number,
+  blockNumber: BigNumber,
+  preBlockNumber: string | number | BigNumber,
+) => {
+  const blockTimeSecond = new BigNumber(blockTime).div(1000);
+  const now = dayjs();
+  const diffBlock = new BigNumber(preBlockNumber).minus(blockNumber);
+  const diffSecond = diffBlock.times(blockTimeSecond);
+  return now.add(diffSecond.toNumber(), 's');
+};
+
+/**
+ * 一天预估产生多少区块
+ */
+export function getBlocksCountPerDay(chainId: ChainId) {
+  const blockTime = blockTimeMap[chainId];
+  return (24 * 60 * 60 * 1000) / blockTime;
+}
+
+export function getBlocksCountPerYear(chainId: number) {
+  return getBlocksCountPerDay(chainId) * 365;
 }

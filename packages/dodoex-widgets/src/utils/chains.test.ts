@@ -7,7 +7,7 @@ describe('getPlatformId', () => {
     expect(res).toBe('bsc');
   });
   it('returns platformId base on abnormal chainId', () => {
-    const res = getPlatformId(123);
+    const res = getPlatformId(1);
     expect(res).toBe('ethereum');
   });
 });
