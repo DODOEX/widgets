@@ -26,6 +26,7 @@ export {
 export type { PoolOperateProps } from './widgets/PoolWidget/PoolOperate';
 export { usePoolBalanceInfo } from './widgets/PoolWidget/hooks/usePoolBalanceInfo';
 export { MiningList } from './widgets/MiningWidget/MiningList';
+export { MiningDetail } from './widgets/MiningWidget/MiningDetail';
 
 export { TokenCard } from './components/Swap/components/TokenCard';
 export { default as TokenLogo } from './components/TokenLogo';

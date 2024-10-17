@@ -2,22 +2,16 @@ import { MiningApi } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { transformRawMiningToTabMining } from './helper';
 import { TabMiningI } from '../types';
+import { transformRawMiningToTabMining } from './helper';
 import { MINING_POOL_REFETCH_INTERVAL } from './utils';
 
-/**
- * 查询挖矿项目：包括官方配置的和用户参与的第三方挖矿项目，只包括基础数据，不包括用户相关的数据如奖励数或 lp 余额等
- *
- * @see https://app.asana.com/0/1201249472074782/1204692961732935/f
- */
 export function useMiningList({
   isEnded,
   searchText,
   account,
   chainIds,
 }: {
-  /** 查询已结束挖矿项目：默认查询 active 或 upcoming 状态的 */
   isEnded: boolean | undefined;
   searchText: string | undefined;
   account: string | undefined;

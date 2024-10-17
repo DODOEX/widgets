@@ -222,7 +222,7 @@ export function generateMiningDetailUrl({
   miningContractAddress,
   stakeTokenAddress,
 }: {
-  chainId: number;
+  chainId?: number;
   miningContractAddress: string | undefined;
   stakeTokenAddress: string | undefined;
 }) {
