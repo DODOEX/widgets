@@ -144,7 +144,7 @@ export function MiningInfo({
                       sx={{
                         width: '1px',
                         height: 8,
-                        backgroundColor: theme.palette.divider,
+                        backgroundColor: theme.palette.border.main,
                         mx: 8,
                       }}
                     />
@@ -338,7 +338,7 @@ export function MiningInfo({
             alignItems: 'center',
             justifyContent: 'space-between',
             borderBottomStyle: 'solid',
-            borderBottomColor: theme.palette.divider,
+            borderBottomColor: theme.palette.border.main,
             borderBottomWidth: 1,
           }}
         >

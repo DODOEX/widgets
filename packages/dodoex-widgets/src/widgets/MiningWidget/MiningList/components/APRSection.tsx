@@ -5,6 +5,7 @@ import { formatApr } from '../utils';
 import { TextAndDesc } from './widgets';
 import { useLingui } from '@lingui/react';
 import { Tooltip } from '@dodoex/components';
+import { Trans } from '@lingui/macro';
 
 export function APRWrapper({ children }: { children: React.ReactNode }) {
   const { i18n } = useLingui();
@@ -31,7 +32,7 @@ export function APRWrapper({ children }: { children: React.ReactNode }) {
             right: 0,
             height: 24,
             width: '1px',
-            backgroundColor: theme.palette.divider,
+            backgroundColor: theme.palette.border.main,
           },
         }}
       >
@@ -67,7 +68,9 @@ export function APRSection({
                 color: theme.palette.text.secondary,
               }}
             >
-              <Box>({t('mining.apr.new-pool') as string})</Box>
+              <Box>
+                <Trans>Fresh Mining</Trans>
+              </Box>
             </Tooltip>
           )}
         </>

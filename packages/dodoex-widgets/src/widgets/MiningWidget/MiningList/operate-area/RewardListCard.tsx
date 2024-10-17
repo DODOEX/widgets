@@ -29,7 +29,7 @@ export function RewardListCard({
   return (
     <Box
       sx={{
-        borderColor: theme.palette.divider,
+        borderColor: theme.palette.border.main,
         borderWidth: 1,
         borderStyle: 'solid',
         borderRadius: 12,
@@ -64,7 +64,7 @@ export function RewardListCard({
 
       <Box
         sx={{
-          borderTopColor: theme.palette.divider,
+          borderTopColor: theme.palette.border.main,
           borderTopWidth: 1,
           borderTopStyle: 'solid',
           px: 20,

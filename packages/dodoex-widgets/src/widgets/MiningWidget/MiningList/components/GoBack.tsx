@@ -36,7 +36,7 @@ export default function GoBack({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          borderColor: theme.palette.divider,
+          borderColor: theme.palette.border.main,
           borderStyle: 'solid',
           borderWidth: 1,
           borderRadius: '50%',

@@ -10,7 +10,7 @@ export function CloseButton({ onClick }: { onClick?: () => void }) {
         width: 24,
         height: 24,
         borderRadius: '50%',
-        borderColor: theme.palette.divider,
+        borderColor: theme.palette.border.main,
         borderWidth: 1,
         borderStyle: 'solid',
         color: theme.palette.text.secondary,

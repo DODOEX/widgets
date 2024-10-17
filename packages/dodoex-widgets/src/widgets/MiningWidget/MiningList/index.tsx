@@ -72,7 +72,9 @@ export function MiningList({
     }, 600);
   }, []);
 
-  const tabs = useMemo<Array<{ key: MiningTopTabType; value: string }>>(
+  const tabs = useMemo<
+    Array<{ key: NonNullable<MiningTopTabType>; value: string }>
+  >(
     () => [
       {
         key: 'all',

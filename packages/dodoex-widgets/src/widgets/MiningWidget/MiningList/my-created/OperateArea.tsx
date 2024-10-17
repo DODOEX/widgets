@@ -182,7 +182,7 @@ export function OperateArea({
       <Box
         sx={{
           backgroundColor: theme.palette.background.paper,
-          borderTopColor: theme.palette.divider,
+          borderTopColor: theme.palette.border.main,
           borderTopWidth: 1,
           borderTopStyle: 'solid',
           pt: 20,
@@ -288,7 +288,7 @@ export function OperateArea({
               width: 32,
               height: 32,
               borderRadius: '50%',
-              borderColor: theme.palette.divider,
+              borderColor: theme.palette.border.main,
               borderWidth: 1,
               borderStyle: 'solid',
               color: theme.palette.text.secondary,
@@ -317,7 +317,7 @@ export function OperateArea({
                 width: 32,
                 height: 32,
                 borderRadius: '50%',
-                borderColor: theme.palette.divider,
+                borderColor: theme.palette.border.main,
                 borderWidth: 1,
                 borderStyle: 'solid',
                 color: theme.palette.text.secondary,

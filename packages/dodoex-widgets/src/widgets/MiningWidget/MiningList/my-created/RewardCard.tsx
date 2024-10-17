@@ -173,7 +173,7 @@ export function RewardCard({
         sx={{
           borderTopStyle: 'solid',
           borderTopWidth: 1,
-          borderTopColor: theme.palette.divider,
+          borderTopColor: theme.palette.border.main,
           pt: 12,
           color: theme.palette.text.secondary,
           typography: 'body2',

@@ -150,7 +150,7 @@ export function StakeTokenSelect({
       <Box
         sx={{
           mt: 20,
-          borderColor: theme.palette.divider,
+          borderColor: theme.palette.border.main,
           borderWidth: 1,
           borderStyle: 'solid',
           borderRadius: 12,
@@ -197,7 +197,7 @@ export function StakeTokenSelect({
     <Box
       sx={{
         mt: 20,
-        borderColor: theme.palette.divider,
+        borderColor: theme.palette.border.main,
         borderWidth: 1,
         borderStyle: 'solid',
         borderRadius: 12,
@@ -218,7 +218,7 @@ export function StakeTokenSelect({
             sx={
               index === 1
                 ? {
-                    borderTopColor: theme.palette.divider,
+                    borderTopColor: theme.palette.border.main,
                     borderTopWidth: 1,
                     borderTopStyle: 'solid',
                   }

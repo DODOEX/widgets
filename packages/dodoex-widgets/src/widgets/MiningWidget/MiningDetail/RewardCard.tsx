@@ -143,7 +143,7 @@ export const RewardCard = ({
         borderRadius: 16,
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: theme.palette.divider,
+        borderColor: theme.palette.border.main,
         backgroundColor: theme.palette.background.tag,
         [theme.breakpoints.up('tablet')]: {
           flexBasis: 'calc(50% - 6px)',
@@ -201,7 +201,7 @@ export const RewardCard = ({
         sx={{
           width: '100%',
           height: '1px',
-          backgroundColor: theme.palette.divider,
+          backgroundColor: theme.palette.border.main,
         }}
       />
 

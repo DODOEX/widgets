@@ -104,7 +104,7 @@ export function AssociatedMine({
       sx={{
         backgroundColor: theme.palette.background.paper,
         borderRadius: 8,
-        borderColor: theme.palette.divider,
+        borderColor: theme.palette.border.main,
         borderStyle: 'solid',
         borderWidth: 1,
         mb: 20,
@@ -141,7 +141,7 @@ export function AssociatedMine({
           sx={{
             width: '1px',
             height: 30,
-            backgroundColor: theme.palette.divider,
+            backgroundColor: theme.palette.border.main,
             flexGrow: 0,
             flexShrink: 0,
           }}

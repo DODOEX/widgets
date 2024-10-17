@@ -54,9 +54,9 @@ msgstr "To"
 msgid "{0} pending"
 msgstr "{0} pending"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:328
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:336
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:474
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:324
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:341
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:479
 msgid "Removing"
 msgstr "Removing"
 
@@ -80,7 +80,7 @@ msgstr "* Please note that the Fee Rate cannot be modified after the pool is cre
 msgid "Switch to {0}"
 msgstr "Switch to {0}"
 
-#: src/widgets/MiningWidget/MiningList/index.tsx:302
+#: src/widgets/MiningWidget/MiningList/index.tsx:304
 msgid "Create Liquidity Mining"
 msgstr "Create Liquidity Mining"
 
@@ -98,9 +98,9 @@ msgstr "Dismiss"
 msgid "Unstaking"
 msgstr "Unstaking"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:331
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:339
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:477
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:327
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:344
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:482
 msgid "Adding"
 msgstr "Adding"
 
@@ -305,12 +305,12 @@ msgid "DODO provides a variety of pool versions to suit your needs."
 msgstr "DODO provides a variety of pool versions to suit your needs."
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/components/APRSection.tsx:38
+#: src/widgets/MiningWidget/MiningList/components/APRSection.tsx:39
 msgid "APR"
 msgstr "APR"
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/components/APRSection.tsx:15
+#: src/widgets/MiningWidget/MiningList/components/APRSection.tsx:16
 msgid "APR = Reward Token Value per Year / TVL"
 msgstr "APR = Reward Token Value per Year / TVL"
 
@@ -325,7 +325,7 @@ msgid "Price impact exceeds the slippage tolerance you set. Try increasing the s
 msgstr "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/index.tsx:79
+#: src/widgets/MiningWidget/MiningList/index.tsx:81
 msgid "All Mining"
 msgstr "All Mining"
 
@@ -338,7 +338,7 @@ msgstr "Amount of token rewards"
 msgid "No results found"
 msgstr "No results found"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:282
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:273
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:295
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:391
 msgid "Pair"
@@ -483,8 +483,8 @@ msgstr "Users buy {0} amount:"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:230
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:285
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:221
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:276
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:77
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:197
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:298
@@ -699,12 +699,12 @@ msgid "Mining Pool"
 msgstr "Mining Pool"
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/index.tsx:83
+#: src/widgets/MiningWidget/MiningList/index.tsx:85
 msgid "My Mining"
 msgstr "My Mining"
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/index.tsx:85
+#: src/widgets/MiningWidget/MiningList/index.tsx:87
 msgid "My Pools"
 msgstr "My Pools"
 
@@ -727,7 +727,7 @@ msgid "Use the recommended ratio"
 msgstr "Use the recommended ratio"
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/index.tsx:155
+#: src/widgets/MiningWidget/MiningList/index.tsx:157
 msgid "No LP pools match your criteria"
 msgstr "No LP pools match your criteria"
 
@@ -761,6 +761,10 @@ msgstr "Reset"
 #: src/components/Bridge/SelectBridgeDialog/RouteTagList.tsx:68
 msgid "Best offer"
 msgstr "Best offer"
+
+#: src/widgets/MiningWidget/MiningList/components/APRSection.tsx:72
+msgid "Fresh Mining"
+msgstr "Fresh Mining"
 
 #: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:148
 msgid "LP Fee"
@@ -880,10 +884,10 @@ msgstr "Staked"
 msgid "Start Time"
 msgstr "Start Time"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:161
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:416
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:152
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:412
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:185
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:619
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:624
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:20
 msgid "Mining"
 msgstr "Mining"
@@ -927,7 +931,7 @@ msgid "Users sell {0} amount:"
 msgstr "Users sell {0} amount:"
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/components/APRSection.tsx:61
+#: src/widgets/MiningWidget/MiningList/components/APRSection.tsx:62
 msgid "The newly created mining pool can start counting APR after depositing any liquidity."
 msgstr "The newly created mining pool can start counting APR after depositing any liquidity."
 
@@ -1047,7 +1051,7 @@ msgid "{lqAndDodoCompareText} Price Difference"
 msgstr "{lqAndDodoCompareText} Price Difference"
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/index.tsx:157
+#: src/widgets/MiningWidget/MiningList/index.tsx:159
 msgid "You are not currently providing liquidity for any LP pools."
 msgstr "You are not currently providing liquidity for any LP pools."
 
@@ -1196,7 +1200,7 @@ msgstr "Initial asset ratio"
 
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:115
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:182
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:444
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:449
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:84
 msgid "Edit"
 msgstr "Edit"
@@ -1205,7 +1209,7 @@ msgstr "Edit"
 msgid "Min"
 msgstr "Min"
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:653
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:658
 msgid "Hide TVL=0 pools"
 msgstr "Hide TVL=0 pools"
 
@@ -1383,12 +1387,12 @@ msgid "My Staked"
 msgstr "My Staked"
 
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:200
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:249
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:477
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:240
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:473
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:267
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:547
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:552
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:365
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:700
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:705
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:89
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
 msgid "Add"
@@ -1497,8 +1501,8 @@ msgid "Detail"
 msgstr "Detail"
 
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:194
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:192
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:288
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:183
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:279
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:57
 #: src/widgets/PoolWidget/PoolList/components/TokenListPoolItem.tsx:102
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:216
@@ -1530,9 +1534,9 @@ msgstr "Initial Price Alert"
 
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:193
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:252
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:535
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:540
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:350
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:688
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:693
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:164
 msgid "Remove"

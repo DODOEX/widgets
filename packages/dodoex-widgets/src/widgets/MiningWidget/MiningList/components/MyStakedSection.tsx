@@ -128,7 +128,7 @@ export function MyStakedSection({
           left: 0,
           height: 24,
           width: '1px',
-          backgroundColor: theme.palette.divider,
+          backgroundColor: theme.palette.border.main,
         },
       }}
     >

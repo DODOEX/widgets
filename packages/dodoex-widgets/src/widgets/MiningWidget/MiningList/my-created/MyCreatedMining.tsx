@@ -122,7 +122,7 @@ export function MyCreatedMining({
               right: 0,
               height: 24,
               width: '1px',
-              backgroundColor: theme.palette.divider,
+              backgroundColor: theme.palette.border.main,
             },
           }}
         >
