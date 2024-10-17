@@ -5,8 +5,10 @@ import { StateProps } from '../reducer';
 
 export function StepTitle({
   currentStep,
+  isPeggedVersion,
 }: {
   currentStep: StateProps['currentStep'];
+  isPeggedVersion: boolean;
 }) {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
@@ -22,8 +24,25 @@ export function StepTitle({
       titleLabel = t`Parameter Settings`;
       break;
     case 2:
+      if (isPeggedVersion) {
+        titleLabel = t`Pricing Model`;
+      } else {
+        titleLabel = t`Fee Rate`;
+        titleQuestion = t`Pools with lower transaction fees will attract more traders.`;
+      }
+      break;
+    case 3:
+      if (!isPeggedVersion) {
+        throw new Error('type is error');
+      }
       titleLabel = t`Fee Rate`;
       titleQuestion = t`Pools with lower transaction fees will attract more traders.`;
+      break;
+    case 4:
+      if (!isPeggedVersion) {
+        throw new Error('type is error');
+      }
+      titleLabel = t`Asset ratio within the pool`;
       break;
     default:
       throw new Error(`Invalid Step ${currentStep}`);
@@ -80,7 +99,7 @@ export function StepTitle({
             gap: 12,
           }}
         >
-          {[0, 1, 2].map((i) => {
+          {(isPeggedVersion ? [0, 1, 2, 3, 4] : [0, 1, 2]).map((i) => {
             return (
               <Box
                 key={i}

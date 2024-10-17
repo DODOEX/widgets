@@ -26,6 +26,8 @@ export default function RadioButton({
   return (
     <Box
       sx={{
+        display: 'flex',
+        alignItems: 'center',
         p: 20,
         backgroundColor: theme.palette.background.tag,
         borderWidth: 1,

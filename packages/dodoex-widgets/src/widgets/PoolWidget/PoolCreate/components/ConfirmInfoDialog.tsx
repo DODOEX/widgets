@@ -4,8 +4,12 @@ import TokenLogo from '../../../../components/TokenLogo';
 import WidgetDialog from '../../../../components/WidgetDialog';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { useCreatePmm } from '../hooks/useCreatePmm';
-import { useVersionList } from '../hooks/useVersionList';
+import {
+  getSubPeggedVersionMap,
+  useVersionList,
+} from '../hooks/useVersionList';
 import { StateProps } from '../reducer';
+import { Version } from '../types';
 import { computeInitPriceText } from '../utils';
 
 function Item({
@@ -69,6 +73,10 @@ export default function ConfirmInfoDialog({
     initPrice: state.initPrice,
     slippageCoefficient: state.slippageCoefficient,
   });
+
+  const subPeggedVersionMap = getSubPeggedVersionMap();
+  const isPeggedVersion = state.selectedVersion === Version.pegged;
+
   return (
     <WidgetDialog
       open={on}
@@ -134,7 +142,10 @@ export default function ConfirmInfoDialog({
               </>
             }
           />
-          <Item label={t`Fee Rate`} value={`${state.feeRate}%`} />
+          <Item
+            label={t`Slippage Coefficient`}
+            value={state.slippageCoefficient}
+          />
           <Item
             label={initPriceLabel}
             value={
@@ -148,10 +159,29 @@ export default function ConfirmInfoDialog({
                 : ''
             }
           />
-          <Item
-            label={t`Slippage Coefficient`}
-            value={state.slippageCoefficient}
-          />
+          {isPeggedVersion && (
+            <Item
+              label={t`Pricing Model`}
+              value={
+                state.selectedSubPeggedVersion
+                  ? subPeggedVersionMap[state.selectedSubPeggedVersion]?.title
+                  : '-'
+              }
+            />
+          )}
+          <Item label={t`Fee Rate`} value={`${state.feeRate}%`} />
+          {isPeggedVersion && (
+            <Item
+              label={t`Initial asset ratio`}
+              value={
+                <>
+                  {state.peggedBaseTokenRatio}%&nbsp;{state.baseToken?.symbol}
+                  &nbsp;:&nbsp;{state.peggedQuoteTokenRatio}%&nbsp;
+                  {state.quoteToken?.symbol}
+                </>
+              }
+            />
+          )}
         </Box>
         <Button
           fullWidth

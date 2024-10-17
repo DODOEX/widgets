@@ -300,7 +300,12 @@ function TableList({
           <Box component="th">
             <Trans>Total Fee Revenue</Trans>
           </Box>
-          <Box component="th"></Box>
+          <Box
+            component="th"
+            sx={{
+              width: 160,
+            }}
+          ></Box>
         </Box>
       </Box>
       <Box component="tbody">
@@ -508,7 +513,7 @@ function TableList({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    textAlign: 'right',
+                    justifyContent: 'flex-end',
                     gap: '8px',
                   }}
                 >

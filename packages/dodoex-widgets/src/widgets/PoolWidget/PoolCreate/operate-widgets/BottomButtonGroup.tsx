@@ -20,23 +20,32 @@ import { PoolTab } from '../../PoolList/hooks/usePoolListTabs';
 import ConfirmInfoDialog from '../components/ConfirmInfoDialog';
 import { useCreatePoolSubmit } from '../hooks/contract/useCreatePoolSubmit';
 import { Actions, StateProps, Types } from '../reducer';
-import { Version } from '../types';
+import { SubPeggedVersionE, Version } from '../types';
 import {
   DEFAULT_SLIPPAGE_COEFFICIENT,
   MAX_SLIPPAGE_COEFFICIENT_PEGGED,
   MAX_FEE_RATE,
   MAX_INIT_PRICE,
   MIN_FEE_RATE,
+  isGasWrapGasTokenPair,
 } from '../utils';
 
 function OperateBtn({
   state,
   dispatch,
   openConfirm,
+  isPeggedVersion,
+  isStandardVersion,
+  isSingleTokenVersion,
+  fiatPriceLoading,
 }: {
   state: StateProps;
   dispatch: Dispatch<Actions>;
   openConfirm: () => void;
+  isPeggedVersion: boolean;
+  isStandardVersion: boolean;
+  isSingleTokenVersion: boolean;
+  fiatPriceLoading: boolean;
 }) {
   const {
     currentStep,
@@ -71,6 +80,12 @@ function OperateBtn({
     </Button>
   );
 
+  const confirmButton = (
+    <Button variant={Button.Variant.contained} fullWidth onClick={openConfirm}>
+      <Trans>Create</Trans>
+    </Button>
+  );
+
   if (currentStep === 0) {
     return (
       <Button
@@ -87,62 +102,90 @@ function OperateBtn({
       </Button>
     );
   }
+
+  const invalidBaseTokenAmount =
+    !baseToken || baseAmountBN.isNaN() || baseAmountBN.lte(0);
+
+  const invalidQuoteTokenAmount =
+    !quoteToken || quoteAmountBN.isNaN() || quoteAmountBN.lte(0);
+
   if (currentStep === 1) {
-    if (
-      !baseToken ||
-      !quoteToken ||
-      baseAmountBN.isNaN() ||
-      baseAmountBN.lte(0)
-    ) {
-      return disabledButton;
-    }
-    if (
-      baseTokenStatus.needShowTokenStatusButton ||
-      baseTokenStatus.insufficientBalance
-    ) {
-      return (
-        <TokenStatusButton status={baseTokenStatus} buttonProps={buttonProps} />
-      );
-    }
-    if (selectedVersion !== Version.singleToken) {
-      if (!quoteToken || quoteAmountBN.isNaN() || quoteAmountBN.lte(0)) {
+    if (isPeggedVersion) {
+      if (!baseToken || !quoteToken) {
+        return disabledButton;
+      }
+    } else {
+      if (invalidBaseTokenAmount) {
         return disabledButton;
       }
       if (
-        quoteTokenStatus.needShowTokenStatusButton ||
-        quoteTokenStatus.insufficientBalance
+        baseTokenStatus.needShowTokenStatusButton ||
+        baseTokenStatus.insufficientBalance
       ) {
         return (
           <TokenStatusButton
-            status={quoteTokenStatus}
+            status={baseTokenStatus}
             buttonProps={buttonProps}
           />
         );
       }
-    }
+      if (!isSingleTokenVersion) {
+        if (invalidQuoteTokenAmount) {
+          return disabledButton;
+        }
+        if (
+          quoteTokenStatus.needShowTokenStatusButton ||
+          quoteTokenStatus.insufficientBalance
+        ) {
+          return (
+            <TokenStatusButton
+              status={quoteTokenStatus}
+              buttonProps={buttonProps}
+            />
+          );
+        }
+      }
 
-    if (state.selectedVersion !== Version.standard) {
-      const initPriceBN = new BigNumber(initPrice);
-      const decimalsLimit = Math.min(quoteToken.decimals, 16);
-      if (
-        !initPrice ||
-        initPriceBN.isNaN() ||
-        initPriceBN.lt(`1e-${decimalsLimit}`) ||
-        initPriceBN.gt(MAX_INIT_PRICE)
-      ) {
+      if (!isStandardVersion) {
+        if (!quoteToken) {
+          return disabledButton;
+        }
+        const initPriceBN = new BigNumber(initPrice);
+        const decimalsLimit = Math.min(quoteToken.decimals, 16);
+        if (
+          !initPrice ||
+          initPriceBN.isNaN() ||
+          initPriceBN.lt(`1e-${decimalsLimit}`) ||
+          initPriceBN.gt(MAX_INIT_PRICE)
+        ) {
+          return disabledButton;
+        }
+
+        const slippageCoefficientBN = new BigNumber(slippageCoefficient);
+        if (
+          !slippageCoefficient ||
+          slippageCoefficientBN.isNaN() ||
+          slippageCoefficientBN.lt(0) ||
+          slippageCoefficientBN.gt(
+            selectedVersion === Version.pegged
+              ? MAX_SLIPPAGE_COEFFICIENT_PEGGED
+              : DEFAULT_SLIPPAGE_COEFFICIENT,
+          )
+        ) {
+          return disabledButton;
+        }
+      }
+
+      if (fiatPriceLoading) {
         return disabledButton;
       }
 
-      const slippageCoefficientBN = new BigNumber(slippageCoefficient);
       if (
-        !slippageCoefficient ||
-        slippageCoefficientBN.isNaN() ||
-        slippageCoefficientBN.lt(0) ||
-        slippageCoefficientBN.gt(
-          selectedVersion === Version.pegged
-            ? MAX_SLIPPAGE_COEFFICIENT_PEGGED
-            : DEFAULT_SLIPPAGE_COEFFICIENT,
-        )
+        isGasWrapGasTokenPair({
+          chainId: baseToken.chainId,
+          baseToken,
+          quoteToken,
+        })
       ) {
         return disabledButton;
       }
@@ -163,25 +206,87 @@ function OperateBtn({
       </Button>
     );
   }
+
+  const feeRateBN = new BigNumber(feeRate);
+  const invalidFeeRate =
+    !feeRate ||
+    feeRateBN.isNaN() ||
+    feeRateBN.lt(MIN_FEE_RATE) ||
+    feeRateBN.gt(MAX_FEE_RATE);
   if (currentStep === 2) {
-    const feeRateBN = new BigNumber(feeRate);
-    if (
-      !feeRate ||
-      feeRateBN.isNaN() ||
-      feeRateBN.lt(MIN_FEE_RATE) ||
-      feeRateBN.gt(MAX_FEE_RATE)
-    ) {
+    if (isPeggedVersion) {
+      return (
+        <Button
+          fullWidth
+          {...buttonProps}
+          onClick={() => {
+            dispatch({
+              type: Types.SetCurrentStep,
+              payload: 3,
+            });
+          }}
+        >
+          {nextButtonText}
+        </Button>
+      );
+    }
+    if (invalidFeeRate) {
       return disabledButton;
     }
+    return confirmButton;
+  }
+
+  if (currentStep === 3) {
+    if (invalidFeeRate) {
+      return disabledButton;
+    }
+
     return (
       <Button
-        variant={Button.Variant.contained}
         fullWidth
-        onClick={openConfirm}
+        {...buttonProps}
+        onClick={() => {
+          dispatch({
+            type: Types.SetCurrentStep,
+            payload: 4,
+          });
+        }}
       >
-        <Trans>Create</Trans>
+        {nextButtonText}
       </Button>
     );
+  }
+
+  if (currentStep === 4) {
+    if (invalidBaseTokenAmount) {
+      return disabledButton;
+    }
+
+    if (invalidQuoteTokenAmount) {
+      return disabledButton;
+    }
+
+    if (
+      baseTokenStatus.needShowTokenStatusButton ||
+      baseTokenStatus.insufficientBalance
+    ) {
+      return (
+        <TokenStatusButton status={baseTokenStatus} buttonProps={buttonProps} />
+      );
+    }
+    if (
+      quoteTokenStatus.needShowTokenStatusButton ||
+      quoteTokenStatus.insufficientBalance
+    ) {
+      return (
+        <TokenStatusButton
+          status={quoteTokenStatus}
+          buttonProps={buttonProps}
+        />
+      );
+    }
+
+    return confirmButton;
   }
   return null;
 }
@@ -189,11 +294,19 @@ function OperateBtn({
 export function BottomButtonGroup({
   state,
   dispatch,
+  isPeggedVersion,
+  isStandardVersion,
+  isSingleTokenVersion,
+  fiatPriceLoading,
 }: {
   state: StateProps;
   dispatch: Dispatch<Actions>;
+  isPeggedVersion: boolean;
+  isStandardVersion: boolean;
+  isSingleTokenVersion: boolean;
+  fiatPriceLoading: boolean;
 }) {
-  const { currentStep, baseAmount, quoteAmount } = state;
+  const { currentStep } = state;
 
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
@@ -224,7 +337,9 @@ export function BottomButtonGroup({
             [state.selectedVersion === Version.marketMakerPool
               ? MetadataFlag.createDPPPool
               : state.selectedVersion === Version.pegged
-              ? MetadataFlag.createDSPPool
+              ? state.selectedSubPeggedVersion === SubPeggedVersionE.DSP
+                ? MetadataFlag.createDSPPool
+                : MetadataFlag.createGSPPool
               : MetadataFlag.createDVMPool]: '1',
           },
         },
@@ -275,7 +390,7 @@ export function BottomButtonGroup({
           </Button>
         )}
 
-        {(currentStep === 1 || currentStep === 2) && (
+        {currentStep > 0 && (
           <Button
             variant={Button.Variant.second}
             fullWidth
@@ -302,6 +417,10 @@ export function BottomButtonGroup({
             openConfirm={() => {
               setConfirmModalVisible(true);
             }}
+            isPeggedVersion={isPeggedVersion}
+            isStandardVersion={isStandardVersion}
+            isSingleTokenVersion={isSingleTokenVersion}
+            fiatPriceLoading={fiatPriceLoading}
           />
         </NeedConnectButton>
       </Box>

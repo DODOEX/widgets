@@ -187,8 +187,6 @@ export function RemovePoolOperate({
   const baseTokenBalanceUpdateLoading = false;
   const quoteBalanceUpdateLoading = false;
 
-  const receiveList = [] as any;
-
   return (
     <>
       <Box

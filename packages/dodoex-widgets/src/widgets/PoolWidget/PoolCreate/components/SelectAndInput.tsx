@@ -49,7 +49,7 @@ export function SelectAndInput({
           value={isCustomized ? value : ''}
           onChange={onChange}
           suffix={<RadioButtonIcon selected={isCustomized} />}
-          placeholder={`${t`Custom`} %`}
+          placeholder={t`Custom`}
           sx={{
             backgroundColor: 'transparent',
             '& input': {

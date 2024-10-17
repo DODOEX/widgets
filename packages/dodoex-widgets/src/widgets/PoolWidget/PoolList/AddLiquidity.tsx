@@ -1,12 +1,4 @@
-import {
-  alpha,
-  Box,
-  Button,
-  useTheme,
-  Tooltip,
-  ButtonBase,
-  RotatingIcon,
-} from '@dodoex/components';
+import { alpha, Box, Button, useTheme, Tooltip } from '@dodoex/components';
 import { PoolApi, PoolType } from '@dodoex/api';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -16,7 +8,6 @@ import {
   FetchLiquidityListLqList,
 } from '../utils';
 import { ChainId } from '@dodoex/api';
-import { ArrowRight } from '@dodoex/icons';
 import React from 'react';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { Trans, t } from '@lingui/macro';
@@ -287,7 +278,12 @@ function TableList({
           <Box component="th">
             <Trans>APY</Trans>
           </Box>
-          <Box component="th"></Box>
+          <Box
+            component="th"
+            sx={{
+              width: 80,
+            }}
+          ></Box>
         </Box>
       </Box>
       <Box component="tbody">

@@ -15,6 +15,7 @@ export enum MetadataFlag {
   removeLiquidity = 'removeLiquidity',
   createDPPPool = 'createDPPPool',
   createDSPPool = 'createDSPPool',
+  createGSPPool = 'createGSPPool',
   createDVMPool = 'createDVMPool',
   stakeMining = 'stakeMining',
   unstakeMining = 'unstakeMining',

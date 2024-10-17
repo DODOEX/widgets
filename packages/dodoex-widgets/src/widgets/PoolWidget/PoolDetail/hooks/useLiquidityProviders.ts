@@ -169,7 +169,7 @@ export function useLiquidityProviders({
         userMap.set(newUser.id, newUser);
       }
 
-      const baseSupplied = getLpToTokenBalance(
+      const [, baseSupplied] = getLpToTokenBalance(
         liquidityTokenBalanceBN,
         totalBaseLpBalance,
         baseReserve,
@@ -181,7 +181,7 @@ export function useLiquidityProviders({
       if (baseSupplied && (baseLpEqQuoteLp || lpId === baseLpToken?.id)) {
         newUser.baseSupplied = baseSupplied;
       }
-      const quoteSupplied = getLpToTokenBalance(
+      const [, quoteSupplied] = getLpToTokenBalance(
         liquidityTokenBalanceBN,
         totalQuoteLpBalance,
         quoteReserve,
@@ -202,7 +202,7 @@ export function useLiquidityProviders({
       );
       const [userId, lpId] = id.split('-');
 
-      const baseSupplied = getLpToTokenBalance(
+      const [, baseSupplied] = getLpToTokenBalance(
         liquidityTokenInMiningBN,
         totalBaseLpBalance,
         baseReserve,
@@ -212,7 +212,7 @@ export function useLiquidityProviders({
         undefined,
         baseDecimals,
       );
-      const quoteSupplied = getLpToTokenBalance(
+      const [, quoteSupplied] = getLpToTokenBalance(
         liquidityTokenInMiningBN,
         totalQuoteLpBalance,
         quoteReserve,

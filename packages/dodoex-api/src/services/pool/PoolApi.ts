@@ -132,6 +132,59 @@ export class PoolApi {
     },
 
     /**
+     * @notice Create GSP pool
+     * @param baseToken     {"decimals","address"}
+     * @param account       account address
+     * @param quoteToken    {"decimals","address"}
+     * @param baseInAmount  The initial amount of liquidity base provided (considering decimals)
+     * @param quoteInAmount The initial amount of liquidity quote provided (considering decimals)
+     * @param lpFeeRate     Example: 0.0001 is passed in 1
+     * @param i             Decimals are not considered
+     * @param k             Scope: 0 => 1
+     */
+    async createGSPPoolABI(
+      chainId: number,
+      account: string,
+      baseToken: { decimals: number; address: string },
+      quoteToken: { decimals: number; address: string },
+      baseInAmount: string,
+      quoteInAmount: string,
+      lpFeeRate: number,
+      i: string,
+      k: number,
+      deadline: number,
+    ) {
+      const { DODO_DSP_PROXY } = contractConfig[chainId as ChainId];
+      const data = await encodeFunctionData(
+        ABIName.dodoDspProxy,
+        'createDODOGasSavingPair',
+        [
+          account,
+          baseToken.address,
+          quoteToken.address,
+          baseInAmount,
+          quoteInAmount,
+          new BigNumber(lpFeeRate)
+            .div(10000)
+            .multipliedBy(10 ** 18)
+            .toString(),
+          parseFixed(
+            new BigNumber(i).toString(),
+            18 - baseToken.decimals + quoteToken.decimals,
+          ).toString(),
+          parseFixed(new BigNumber(k).toString(), 18).toString(),
+          '1000',
+          deadline,
+        ],
+      );
+
+      return {
+        to: DODO_DSP_PROXY,
+        data,
+      };
+    },
+
+    /**
      * @notice Create DVM pool
      * @param baseToken     {"decimals","address"}
      * @param quoteToken    {"decimals","address"}
@@ -458,9 +511,6 @@ export class PoolApi {
         const { CALLEE_HELPER } = contractConfig[chainId as ChainId];
         if (isUnWrap) assetTo = CALLEE_HELPER;
       }
-      if (!baseMinAmount || baseMinAmount === '0') {
-        throw new Error('Invalid baseMinAmount');
-      }
       const data = await encodeFunctionData(ABIName.dodoDSP, 'sellShares', [
         sharesAmount,
         assetTo,
@@ -498,9 +548,6 @@ export class PoolApi {
       if (!(chainId == 28 || chainId == 69)) {
         const { CALLEE_HELPER } = contractConfig[chainId as ChainId];
         if (isUnWrap) assetTo = CALLEE_HELPER;
-      }
-      if (!baseMinAmount || baseMinAmount === '0') {
-        throw new Error('Invalid baseMinAmount');
       }
       const data = await encodeFunctionData(ABIName.dodoDVM, 'sellShares', [
         sharesAmount,

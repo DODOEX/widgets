@@ -30,6 +30,14 @@ export function useSlippageCoefficientList({
     if (selectedVersion === Version.pegged) {
       return [
         {
+          tag: '',
+          description: t`Applicable to pegged assets with a fixed price and no fluctuation`,
+          value: '0',
+          title: 'K=0',
+          tagBackgroundColor: 'transparent',
+          tagColor: 'transparent',
+        },
+        {
           tag: t`Low`,
           description: t`Suitable for stablecoins with price fluctuations within 0.5%`,
           value: '0.0001',
