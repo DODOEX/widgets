@@ -7,7 +7,7 @@ import url from '@rollup/plugin-url';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import svgr from '@svgr/rollup';
-import pkg from './package.json' assert { type: 'json' };
+import pkg from './package.json' with { type: 'json' };
 import globby from 'globby';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
