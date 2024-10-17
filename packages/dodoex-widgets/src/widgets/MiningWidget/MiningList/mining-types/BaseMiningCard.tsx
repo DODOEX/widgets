@@ -1,15 +1,14 @@
 import { Box } from '@dodoex/components';
 import { useWeb3React } from '@web3-react/core';
 import { memo, useContext } from 'react';
-import { createPortal } from 'react-dom';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
-import { useMyStakedLoading } from '../../hooks/useMyStakedLoading';
 import {
   CompositeMiningContractDataI,
   LiquidityMigrationInfo,
   TabMiningI,
 } from '../../types';
 import { APRSection, APRWrapper } from '../components/APRSection';
+import { MiningCardLayout } from '../components/MiningCardLayout';
 import { MiningTitle } from '../components/MiningTitle';
 import { MyStakedSection } from '../components/MyStakedSection';
 import { OperateButtonList } from '../components/OperateButtonList';
@@ -17,24 +16,26 @@ import { RewardsSection } from '../components/RewardsSection';
 import { TVLSection } from '../components/TVLSection';
 import { MiningContext } from '../contexts';
 import { createPortalOrDialog } from '../dom';
+import { useMyStakedLoading } from '../hooks/useMyStakedLoading';
 import { useOperateHooks } from '../hooks/useOperateHooks';
 import { useRewardTokenInfo } from '../hooks/useRewardTokenInfo';
 import { useStakedInfo } from '../hooks/useStakedInfo';
 import { useStatusAndStartBlockNumber } from '../hooks/useStatusAndStartBlockNumber';
 import { OperateArea } from '../operate-area';
 import { getDetailWrapperEle, getOperateAreaWrapperEle } from '../utils';
-import { MiningCardLayout } from './MiningCardLayout';
 
 export default memo(function BaseMiningCard({
   contractData,
   miningItem,
   migrationItem,
   contractDataLoading,
+  handleGotoDetail,
 }: {
   contractData: CompositeMiningContractDataI | undefined;
   miningItem: TabMiningI;
   migrationItem: LiquidityMigrationInfo | undefined;
   contractDataLoading: boolean;
+  handleGotoDetail?: () => void;
 }) {
   const {
     stakeTokenAddress,
@@ -79,6 +80,7 @@ export default memo(function BaseMiningCard({
   } = useOperateHooks({
     status,
     id,
+    handleGotoDetail,
   });
 
   const { stakedTokenWithAmountList, totalStakedTokenUSD } = useStakedInfo({
@@ -218,10 +220,6 @@ export default memo(function BaseMiningCard({
         operateId === id && operateType !== null,
         operateId !== id && operateId !== null,
       )}
-
-      {operateId === id &&
-        viewType === 'view' &&
-        createPortal(<Box>detail</Box>, detailEle)}
     </>
   );
 });

@@ -19,20 +19,27 @@ import { useMyCreatedMiningList } from '../hooks/useMyCreatedMiningList';
 import { MiningTabType, MiningTopTabType } from '../types';
 import { MiningListEmpty } from './components/MiningListEmpty';
 import { SearchComponents } from './components/SearchComponents';
+import { HowItWorksWrapper } from './components/widgets';
 import { MiningContext } from './contexts';
 import BaseMiningCard from './mining-types/BaseMiningCard';
 import { MyCreated } from './my-created';
-import { isJoinedOrStakedProcessing } from './utils';
+import {
+  EARN_MINING_CREATE_AREA,
+  EARN_MINING_OPERATE_AREA,
+  isJoinedOrStakedProcessing,
+} from './utils';
 
 export function MiningList({
   query,
-  onClickCreate,
+  handleGotoCreate,
+  handleGotoDetail,
 }: {
   query?: {
     mining?: string;
     address?: string;
   };
-  onClickCreate?: () => void;
+  handleGotoCreate?: () => void;
+  handleGotoDetail?: () => void;
 }) {
   const { isMobile } = useWidgetDevice();
   const { i18n } = useLingui();
@@ -165,20 +172,21 @@ export function MiningList({
               : othersChainContractDataMap.get(id);
           // const contractData =
           //   contractDataMap.get(id) ?? othersChainContractDataMap.get(id);
-          return <Box key={id} />;
-          // return (
-          //   <BaseMiningCard
-          //     key={id}
-          //     miningItem={miningItem}
-          //     migrationItem={undefined}
-          //     contractData={contractData}
-          //     contractDataLoading={
-          //       chainId === currentChainId
-          //         ? contractDataLoading
-          //         : othersContractDataLoading
-          //     }
-          //   />
-          // );
+          // return <Box key={id} />;
+          return (
+            <BaseMiningCard
+              key={id}
+              miningItem={miningItem}
+              migrationItem={undefined}
+              contractData={contractData}
+              contractDataLoading={
+                chainId === currentChainId
+                  ? contractDataLoading
+                  : othersContractDataLoading
+              }
+              handleGotoDetail={handleGotoDetail}
+            />
+          );
         })}
       </DataCardGroup>
     );
@@ -187,6 +195,7 @@ export function MiningList({
     contractDataLoading,
     contractDataMap,
     currentChainId,
+    handleGotoDetail,
     i18n,
     loading,
     miningList,
@@ -279,7 +288,7 @@ export function MiningList({
             <Button
               variant={Button.Variant.outlined}
               fullWidth={isMobile}
-              onClick={onClickCreate}
+              onClick={handleGotoCreate}
               sx={{
                 height: 40,
               }}
@@ -346,14 +355,25 @@ export function MiningList({
           </Box>
         </Tabs>
 
-        <Box
+        <HowItWorksWrapper
+          id={EARN_MINING_CREATE_AREA}
           sx={{
-            position: 'relative',
-            width: noDocumentLink ? 'auto' : 375,
+            display:
+              activeTopTab === 'created' && operateId !== null
+                ? 'block'
+                : 'none',
           }}
-        >
-          operate
-        </Box>
+        />
+
+        <HowItWorksWrapper
+          id={EARN_MINING_OPERATE_AREA}
+          sx={{
+            display:
+              activeTopTab !== 'created' && operateId !== null
+                ? 'block'
+                : 'none',
+          }}
+        />
       </WidgetContainer>
     </MiningContext.Provider>
   );

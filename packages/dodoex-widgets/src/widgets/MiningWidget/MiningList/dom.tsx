@@ -6,7 +6,7 @@ export const SlideDurationTime = 300;
 
 export function createPortalOrDialog(
   children: React.ReactNode,
-  container: Element | DocumentFragment,
+  container: Element | DocumentFragment | null,
   isMobile: boolean,
   visible: boolean,
   openOther: boolean,
@@ -19,5 +19,8 @@ export function createPortalOrDialog(
     );
   }
 
+  if (!container || !visible) {
+    return null;
+  }
   return createPortal(<Box>{visible ? children : null}</Box>, container);
 }

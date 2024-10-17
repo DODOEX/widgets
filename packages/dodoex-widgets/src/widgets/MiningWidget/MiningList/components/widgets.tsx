@@ -169,3 +169,76 @@ export const DailyRewardsLabel = ({
     </Box>
   );
 };
+
+export const HowItWorksWrapper = ({
+  id,
+  sx,
+  children,
+}: {
+  id?: string;
+  sx?: BoxProps['sx'];
+  children?: React.ReactNode;
+}) => {
+  const theme = useTheme();
+  return (
+    <Box
+      id={id}
+      sx={{
+        marginLeft: 20,
+        marginRight: 20,
+        flexGrow: 0,
+        flexShrink: 0,
+        marginTop: 4,
+        [theme.breakpoints.up('tablet')]: {
+          width: 375,
+          marginLeft: 12,
+          marginRight: 0,
+          marginTop: 0,
+        },
+        [theme.breakpoints.up('laptop')]: {
+          height: '100%',
+          minHeight: 'calc(100vh - 28px - 70px - 20px)',
+          position: 'sticky',
+          top: '28px',
+          overflowY: 'hidden',
+        },
+        ...sx,
+      }}
+    >
+      {children}
+    </Box>
+  );
+};
+
+export const OperateButtonWrapper = ({
+  sx,
+  children,
+}: {
+  sx?: BoxProps['sx'];
+  children?: React.ReactNode;
+}) => {
+  const theme = useTheme();
+  return (
+    <Box
+      sx={{
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 20,
+        paddingBottom: 20,
+        backgroundColor: theme.palette.background.paper,
+        [theme.breakpoints.up('tablet')]: {
+          borderBottomLeftRadius: 16,
+          borderBottomRightRadius: 16,
+        },
+        [theme.breakpoints.down('tablet')]: {
+          marginTop: 'auto',
+          position: 'sticky',
+          bottom: 0,
+        },
+        ...sx,
+      }}
+    >
+      {children}
+    </Box>
+  );
+};

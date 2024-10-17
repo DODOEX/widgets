@@ -1,7 +1,7 @@
 import { Box, BoxProps, HoverOpacity, useTheme } from '@dodoex/components';
 import { useLingui } from '@lingui/react';
 import { merge } from 'lodash';
-import BackIcon from './arrow_back.svg';
+import { ReactComponent as BackIcon } from './arrow_back.svg';
 
 export default function GoBack({
   sx,

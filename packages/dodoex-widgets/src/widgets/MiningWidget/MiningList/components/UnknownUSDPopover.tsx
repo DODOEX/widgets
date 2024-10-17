@@ -37,7 +37,7 @@ export function UnknownUSDPopover({
         sx={{
           width: iconWidth,
           height: iconWidth,
-          color: theme.palette.custom.status.yellow.secondary,
+          color: theme.palette.warning.main,
           ml: 4,
         }}
         component={WarningIcon}

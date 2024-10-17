@@ -30,8 +30,8 @@ export function OperateButtonList({
             color:
               theme.palette.mode === 'light'
                 ? theme.palette.text.primary
-                : theme.palette.custom.text.contrastText,
-            backgroundColor: theme.palette.custom.button.main,
+                : theme.palette.primary.contrastText,
+            backgroundColor: theme.palette.secondary.main,
           },
         }}
         onClick={() => onClick('stake')}

@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSubmission } from '../../../hooks/Submission';
-import { MetadataFlag, State } from '../../../hooks/Submission/types';
-import { isUnexpiredTx } from '../MiningList/utils';
-import { CompositeMiningContractDataI, TabMiningI } from '../types';
-import { usePrevious } from './usePrevious';
+import { useSubmission } from '../../../../hooks/Submission';
+import { MetadataFlag, State } from '../../../../hooks/Submission/types';
+import { isUnexpiredTx } from '../utils';
+import { CompositeMiningContractDataI, TabMiningI } from '../../types';
+import { usePrevious } from '../../hooks/usePrevious';
 
 export function useMyStakedLoading({
   id,

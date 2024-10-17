@@ -1,5 +1,7 @@
 import { ExcludeNone, MiningApi, MiningStatusE } from '@dodoex/api';
+import { BoxProps } from '@dodoex/components';
 import BigNumber from 'bignumber.js';
+import { Dispatch, SetStateAction } from 'react';
 import { TokenInfo } from '../../hooks/Token';
 
 export type FetchMiningList = ExcludeNone<
@@ -216,4 +218,46 @@ export interface MiningStakeTokenWithAmountI extends MiningERC20TokenI {
   sourceTokenAmount: BigNumber | undefined;
   sourceTokenAmountUSD: BigNumber | undefined;
   valueLockedAmount: BigNumber | undefined;
+}
+
+export interface OperateDataProps {
+  operateType: OperateType;
+  setOperateType: Dispatch<SetStateAction<OperateType>>;
+  miningItem: TabMiningI;
+  balanceDataMap: CompositeMiningContractDataI['balanceDataMap'] | undefined;
+
+  totalRewardUSD: BigNumber | undefined;
+  stakedTokenUSD: BigNumber | undefined;
+  rewardTokenList: MiningRewardTokenWithTagI[];
+  stakedTokenWithAmountList: MiningStakeTokenWithAmountI[];
+
+  onClose?: () => void;
+  setShareModalVisible?: Dispatch<SetStateAction<boolean>>;
+
+  refetchBalance: () => void;
+  refetchAfterClaim: () => void;
+
+  titleSectionVisible: boolean;
+  associatedMineSectionVisible: boolean;
+  associatedMineSectionShort?: boolean;
+  sx?: BoxProps['sx'];
+
+  addLiquidityEnable: boolean;
+
+  externalAddLiquidityCallback?: () => void;
+
+  miningStatusList: {
+    status: MiningStatusE;
+    firstStartTime: BigNumber | undefined;
+    lastEndTime: BigNumber | undefined;
+    currentTime: BigNumber;
+  }[];
+
+  rewardTokenWithAprListArray: MiningRewardTokenWithAprI[][];
+
+  addLiquiditySuccessfulPair: [boolean, boolean];
+  lpTokenAccountStakedBalanceLoading: [boolean, boolean];
+  lpTokenAccountBalanceLoading: [boolean, boolean];
+
+  gspPairRiskWarningVisible?: boolean;
 }
