@@ -344,7 +344,9 @@ export function MiningInfo({
         >
           <Tabs
             value={selectedStakeTokenIndex}
-            onChange={(_, v) => setSelectedStakeTokenIndex(v)}
+            onChange={(_, v) =>
+              setSelectedStakeTokenIndex(v as typeof selectedStakeTokenIndex)
+            }
             sx={{
               border: 'none',
               '& .MuiTabs-indicator': {

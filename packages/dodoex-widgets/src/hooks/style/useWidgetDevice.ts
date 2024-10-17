@@ -27,23 +27,23 @@ export function useWidgetDevice() {
   }, [widthProps]);
 
   const isMobile = React.useMemo(() => {
-    return width < theme.breakpoints.values.tablet;
+    return typeof width === 'number' && width < theme.breakpoints.values.tablet;
   }, [width, theme.breakpoints.values]);
 
   const isTablet = React.useMemo(() => {
-    return width < theme.breakpoints.values.tablet;
+    return typeof width === 'number' && width < theme.breakpoints.values.tablet;
   }, [width, theme.breakpoints.values]);
 
   const minDevice = React.useCallback(
     (minWidth: number) => {
-      return width > minWidth;
+      return typeof width === 'number' && width > minWidth;
     },
     [width],
   );
 
   const maxDevice = React.useCallback(
     (maxWidth: number) => {
-      return width < maxWidth;
+      return typeof width === 'number' && width < maxWidth;
     },
     [width],
   );

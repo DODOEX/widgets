@@ -590,7 +590,7 @@ msgid "End release time before adjustment"
 msgstr ""
 
 #: src/widgets/MiningWidget/hooks/useStakeMiningSubmit.ts:81
-#: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:438
+#: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:440
 #: src/widgets/MiningWidget/MiningList/hooks/useDepositOrWithdrawOrClaim.ts:187
 #: src/widgets/MiningWidget/MiningList/operate-area/index.tsx:180
 #: src/widgets/MiningWidget/MiningList/operate-area/StakeButton.tsx:72
@@ -737,7 +737,7 @@ msgid "Add Liquidity"
 msgstr ""
 
 #: src/widgets/MiningWidget/hooks/useUnstakeMiningSubmit.ts:63
-#: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:455
+#: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:457
 #: src/widgets/MiningWidget/MiningList/operate-area/index.tsx:184
 #: src/widgets/MiningWidget/MiningList/operate-area/UnstakeButton.tsx:53
 #: src/widgets/MiningWidget/MiningList/operate-area/UnstakeButton.tsx:81
@@ -1288,7 +1288,7 @@ msgid "Select Pool Version"
 msgstr ""
 
 #: src/widgets/MiningWidget/hooks/useClaimMiningSubmit.ts:46
-#: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:465
+#: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:467
 #: src/widgets/MiningWidget/MiningList/operate-area/index.tsx:188
 #: src/widgets/MiningWidget/OperateArea/index.tsx:75
 msgid "Claim"
@@ -1353,8 +1353,8 @@ msgstr ""
 msgid "Receive"
 msgstr ""
 
-#: src/components/SelectChain.tsx:214
-#: src/components/SelectChain.tsx:257
+#: src/components/SelectChain.tsx:216
+#: src/components/SelectChain.tsx:259
 msgid "Select Network"
 msgstr ""
 
@@ -1449,8 +1449,8 @@ msgstr ""
 msgid "MT Fee"
 msgstr ""
 
-#: src/components/SelectChain.tsx:143
-#: src/components/SelectChain.tsx:178
+#: src/components/SelectChain.tsx:145
+#: src/components/SelectChain.tsx:180
 msgid "All chains"
 msgstr ""
 
