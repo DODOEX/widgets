@@ -136,4 +136,5 @@ export const blockTimeMap: {
   [ChainId.MANTLE]: 2000,
   [ChainId.SEPOLIA]: 12000,
   [ChainId.DODO_CHAIN_TESTNET]: 12000,
+  [ChainId.TAIKO]: 12000,
 };
