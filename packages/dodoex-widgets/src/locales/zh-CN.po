@@ -213,7 +213,7 @@ msgid "Pricing Model"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:74
-#: src/widgets/PoolWidget/PoolList/index.tsx:187
+#: src/widgets/PoolWidget/PoolList/index.tsx:192
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:17
 msgid "Liquidity"
 msgstr ""
@@ -409,7 +409,7 @@ msgstr ""
 msgid "Swap Rate"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolDetail/index.tsx:150
+#: src/widgets/PoolWidget/PoolDetail/index.tsx:152
 #: src/widgets/PoolWidget/PoolModify/index.tsx:436
 msgid "Pool not found. Please switch to another network and retry."
 msgstr ""
@@ -731,7 +731,7 @@ msgstr ""
 msgid "No LP pools match your criteria"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:19
+#: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:23
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:101
 msgid "Add Liquidity"
 msgstr ""
@@ -814,7 +814,7 @@ msgid "Estimated Time"
 msgstr "预计时间"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:19
-#: src/widgets/PoolWidget/PoolList/index.tsx:188
+#: src/widgets/PoolWidget/PoolList/index.tsx:193
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr ""
 
@@ -1035,7 +1035,7 @@ msgstr ""
 msgid "You are making changes to the liquidity of a private pool. This is a highly discretionary operation that may cause substantial inflows/outflows of funds and changes in market prices. Please make sure you are fully aware of the implications of each parameter modification."
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:22
+#: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:26
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:325
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:397
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:357
@@ -1199,7 +1199,7 @@ msgid "Initial asset ratio"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:115
-#: src/widgets/PoolWidget/PoolDetail/index.tsx:182
+#: src/widgets/PoolWidget/PoolDetail/index.tsx:184
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:449
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:84
 msgid "Edit"
@@ -1230,7 +1230,7 @@ msgstr ""
 msgid "Received"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:24
+#: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:28
 msgid "My Pools"
 msgstr ""
 
@@ -1386,7 +1386,7 @@ msgstr "发送至："
 msgid "My Staked"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolDetail/index.tsx:200
+#: src/widgets/PoolWidget/PoolDetail/index.tsx:202
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:240
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:473
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:267
@@ -1424,7 +1424,7 @@ msgstr ""
 msgid "Select a liquidity pool"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/index.tsx:137
+#: src/widgets/PoolWidget/PoolList/index.tsx:142
 msgid "Create Pool"
 msgstr ""
 
@@ -1532,7 +1532,7 @@ msgstr ""
 msgid "Initial Price Alert"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolDetail/index.tsx:193
+#: src/widgets/PoolWidget/PoolDetail/index.tsx:195
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:252
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:540
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:350

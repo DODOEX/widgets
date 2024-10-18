@@ -17,22 +17,23 @@ import Overview from './components/Overview';
 import TitleInfo from './components/TitleInfo';
 import TotalLiquidity from './components/TotalLiquidity';
 
-export default function PoolDetail() {
+export default function PoolDetail({
+  params,
+}: {
+  params: Page<PageType.PoolDetail>['params'];
+}) {
   const router = useRouterStore();
   const { isMobile } = useWidgetDevice();
   const { account } = useWalletInfo();
   const theme = useTheme();
-  const params =
-    router.page?.type === PageType.PoolDetail
-      ? (router.page as Page<PageType.PoolDetail>).params
-      : undefined;
 
   const { poolDetail: pool, ...fetchPoolQuery } = usePoolDetail({
     id: params?.address,
     chainId: params?.chainId,
   });
-  const [noResultModalVisible, setNoResultModalVisible] =
-    React.useState<'inital' | 'open' | 'close'>('inital');
+  const [noResultModalVisible, setNoResultModalVisible] = React.useState<
+    'inital' | 'open' | 'close'
+  >('inital');
   if (
     !fetchPoolQuery.isPending &&
     !fetchPoolQuery.error &&
@@ -53,8 +54,9 @@ export default function PoolDetail() {
       pool?.owner &&
       pool.owner.toLocaleLowerCase() === account.toLocaleLowerCase());
 
-  const [operateType, setOperateType] =
-    React.useState<OperateTab | undefined>();
+  const [operateType, setOperateType] = React.useState<
+    OperateTab | undefined
+  >();
   if (pool && operateType === undefined && !isMobile) {
     setOperateType(OperateTab.Add);
   }

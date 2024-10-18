@@ -43,6 +43,7 @@ import Message from '../Message';
 import { DialogProps } from '../Swap/components/Dialog';
 import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
 import WithExecutionDialog from '../WithExecutionDialog';
+import { Page } from '../../router';
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
@@ -70,6 +71,7 @@ export interface WidgetProps
   onlyChainId?: ChainId;
   noUI?: boolean;
   noLangProvider?: boolean;
+  routerPage?: Page;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;

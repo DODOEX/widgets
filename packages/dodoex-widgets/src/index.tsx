@@ -19,6 +19,10 @@ export { Swap } from './components/Swap';
 export { default as SwapOrderHistory } from './components/Swap/SwapOrderHistory';
 export { useTradeSwapOrderList } from './hooks/Swap/useTradeSwapOrderList';
 export { Pool } from './widgets/PoolWidget';
+export { default as PoolList } from './widgets/PoolWidget/PoolList';
+export { default as PoolCreate } from './widgets/PoolWidget/PoolCreate';
+export { default as PoolModify } from './widgets/PoolWidget/PoolModify';
+export { default as PoolDetail } from './widgets/PoolWidget/PoolDetail';
 export {
   default as PoolOperateDialog,
   PoolOperate,

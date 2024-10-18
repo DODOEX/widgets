@@ -41,15 +41,14 @@ import { FeeRateSetting } from './operate-widgets/FeeRateSetting';
 import { SectionTitle } from './SectionTitle';
 import { usePriceInit } from '../PoolCreate/hooks/usePriceInit';
 
-export default function PoolModify() {
+export default function PoolModify({
+  params,
+}: {
+  params: Page<PageType.PoolDetail>['params'];
+}) {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
   const { chainId } = useWalletInfo();
-  const params = useRouterStore((state) => {
-    if (state.page?.type === PageType.ModifyPool) {
-      return (state.page as Page<PageType.ModifyPool>).params;
-    }
-  });
 
   const [showRiskDialog, setShowRiskDialog] = React.useState(false);
 
@@ -76,8 +75,9 @@ export default function PoolModify() {
     setShowRiskDialog(getIsPoolEditRiskWarningOpen());
   }, []);
 
-  const [noResultModalVisible, setNoResultModalVisible] =
-    React.useState<'inital' | 'open' | 'close'>('inital');
+  const [noResultModalVisible, setNoResultModalVisible] = React.useState<
+    'inital' | 'open' | 'close'
+  >('inital');
 
   const { poolDetail, ...fetchPoolQuery } = usePoolDetail({
     id: params?.address,

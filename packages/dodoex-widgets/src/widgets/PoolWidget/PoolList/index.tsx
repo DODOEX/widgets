@@ -9,7 +9,7 @@ import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
 import MyLiquidity from './MyLiquidity';
 import MyCreated from './MyCreated';
 import { useRouterStore } from '../../../router';
-import { PageType } from '../../../router/types';
+import { Page, PageType } from '../../../router/types';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import PoolOperateDialog, {
@@ -34,13 +34,18 @@ function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   );
 }
 
-export default function PoolList() {
+export default function PoolList({
+  params,
+}: {
+  params?: Page<PageType.Pool>['params'];
+}) {
   const { isMobile } = useWidgetDevice();
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
   const scrollParentRef = React.useRef<HTMLDivElement>();
   const { account } = useWeb3React();
   const { poolTab, tabs, handleChangePoolTab } = usePoolListTabs({
     account,
+    paramsTab: params?.tab,
   });
   const { activeChainId, filterChainIds, handleChangeActiveChainId } =
     usePoolListFilterChainId();
