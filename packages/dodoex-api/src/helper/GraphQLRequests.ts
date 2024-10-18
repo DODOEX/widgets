@@ -9,7 +9,9 @@ type Fetch = typeof crossFetch;
 export interface GraphQLRequestsConfig {
   url?: string;
   fetch?: Fetch;
-  getHeaders?: () => GraphQLClientRequestHeaders;
+  getHeaders?: () =>
+    | GraphQLClientRequestHeaders
+    | Promise<GraphQLClientRequestHeaders>;
 }
 
 const defaultConfig = {
@@ -41,8 +43,8 @@ export default class GraphQLRequests {
     this.setHeaders();
   }
 
-  setHeaders() {
-    const headers = this.getHeaders?.();
+  async setHeaders() {
+    const headers = await this.getHeaders?.();
     if (headers) {
       this.client.setHeaders(headers);
     }
@@ -52,7 +54,7 @@ export default class GraphQLRequests {
     document: RequestDocument | TypedDocumentNode<T, V>,
     variables?: V,
   ) {
-    this.setHeaders();
+    await this.setHeaders();
     const client = this.client;
     // @ts-ignore
     return client.request<T, V>(document, variables);

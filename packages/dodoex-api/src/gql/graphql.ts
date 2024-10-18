@@ -22649,6 +22649,29 @@ export type VDodo_OrderBy =
   | 'totalStakingPower'
   | 'totalUsers';
 
+export type FetchErc20SwapCrossChainListQueryVariables = Exact<{
+  where?: InputMaybe<Erc20listV2Filter>;
+}>;
+
+export type FetchErc20SwapCrossChainListQuery = {
+  erc20_swapCrossChainList?: Array<{
+    name?: string | null;
+    address?: string | null;
+    symbol?: string | null;
+    decimals?: number | null;
+    slippage?: string | null;
+    chainId?: number | null;
+    logoImg?: string | null;
+    tokenlists?: Array<{
+      name?: string | null;
+      status?: string | null;
+    } | null> | null;
+    domains?: Array<{ name?: string | null } | null> | null;
+    funcLabels?: Array<{ key?: string | null } | null> | null;
+    attributeLabels?: Array<{ key?: string | null } | null> | null;
+  } | null> | null;
+};
+
 export type FetchMiningListQueryVariables = Exact<{
   where?: InputMaybe<Miningmining_List_Filter>;
 }>;
@@ -23266,6 +23289,35 @@ export class TypedDocumentString<TResult, TVariables>
   }
 }
 
+export const FetchErc20SwapCrossChainListDocument = new TypedDocumentString(`
+    query FetchErc20SwapCrossChainList($where: Erc20listV2Filter) {
+  erc20_swapCrossChainList(where: $where) {
+    name
+    address
+    symbol
+    decimals
+    slippage
+    chainId
+    logoImg
+    tokenlists {
+      name
+      status
+    }
+    domains {
+      name
+    }
+    funcLabels {
+      key
+    }
+    attributeLabels {
+      key
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchErc20SwapCrossChainListQuery,
+  FetchErc20SwapCrossChainListQueryVariables
+>;
 export const FetchMiningListDocument = new TypedDocumentString(`
     query FetchMiningList($where: Miningmining_list_filter) {
   mining_list(where: $where) {

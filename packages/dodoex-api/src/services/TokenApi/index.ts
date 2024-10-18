@@ -14,6 +14,7 @@ import { getTokenBlackList } from './tokenBlackList';
 import { isSameAddress } from './utils';
 import { encodeFunctionData } from '../../helper/ContractRequests/encode';
 import RestApiRequest from '../../helper/RestApiRequests';
+import { tokenGraphqlQuery } from './graphqlQuery';
 
 const BIG_ALLOWANCE = new BigNumber(2).pow(256).minus(1);
 
@@ -45,6 +46,8 @@ export class TokenApi {
 
     this.restApiRequest = config?.restApiRequest || new RestApiRequest();
   }
+
+  static graphql = tokenGraphqlQuery;
 
   static utils = {
     isSameAddress,
