@@ -6,7 +6,7 @@ import url from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
 import terser from '@rollup/plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import pkg from './package.json' assert { type: 'json' };
+import pkg from './package.json' with { type: 'json' };
 
 const extensions = ['.js', '.ts', '.jsx', '.tsx'];
 

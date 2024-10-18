@@ -1,49 +1,49 @@
+import { ChainId, ContractRequests, GraphQLRequests } from '@dodoex/api';
 import {
-  ThemeProvider,
+  Box,
   createTheme,
   CssBaseline,
+  PaletteMode,
+  ThemeOptions,
+  ThemeProvider,
   WIDGET_MODAL_CLASS,
   WIDGET_MODAL_FIXED_CLASS,
-  Box,
-  BoxProps,
 } from '@dodoex/components';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
+import { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
 import {
   Provider as ReduxProvider,
   useDispatch,
   useSelector,
 } from 'react-redux';
-import { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
-import { ContractRequests, GraphQLRequests } from '@dodoex/api';
-import { LangProvider } from '../../providers/i18n';
-import { store } from '../../store';
-import { PaletteMode, ThemeOptions } from '@dodoex/components';
+import { APIServices, contractRequests } from '../../constants/api';
+import { getRpcSingleUrlMap } from '../../constants/chains';
 import { defaultLang, SupportedLang } from '../../constants/locales';
-import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
 import {
   useWeb3Connectors,
   Web3ConnectorsProps,
 } from '../../hooks/ConnectWallet';
+import { useFetchBlockNumber } from '../../hooks/contract';
+import { ExecutionProps } from '../../hooks/Submission';
+import { DefaultTokenInfo, TokenInfo } from '../../hooks/Token/type';
 import useInitTokenList, {
   InitTokenListProps,
 } from '../../hooks/Token/useInitTokenList';
-import WithExecutionDialog from '../WithExecutionDialog';
-import { useFetchBlockNumber } from '../../hooks/contract';
-import { ExecutionProps } from '../../hooks/Submission';
-import { getRpcSingleUrlMap } from '../../constants/chains';
-import { ChainId } from '@dodoex/api';
-import { DefaultTokenInfo, TokenInfo } from '../../hooks/Token/type';
+import { LangProvider } from '../../providers/i18n';
+import { queryClient } from '../../providers/queryClient';
+import { store } from '../../store';
 import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
-import { APIServices, contractRequests } from '../../constants/api';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { getFromTokenChainId } from '../../store/selectors/wallet';
-import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
-import { queryClient } from '../../providers/queryClient';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
 import { ConfirmProps } from '../Confirm';
-import { DialogProps } from '../Swap/components/Dialog';
+import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
 import Message from '../Message';
+import { DialogProps } from '../Swap/components/Dialog';
+import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
+import WithExecutionDialog from '../WithExecutionDialog';
+
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
@@ -247,8 +247,9 @@ function Web3Provider(props: PropsWithChildren<WidgetProps>) {
   );
 }
 
-export { default as Message } from '../Message';
 export { LangProvider } from '../../providers/i18n';
+export { default as Message } from '../Message';
+
 /** Widgets that do not directly import themes and queryClient libraries */
 export function UnstyleWidget(props: PropsWithChildren<WidgetProps>) {
   const widgetRef = useRef<HTMLDivElement>(null);
