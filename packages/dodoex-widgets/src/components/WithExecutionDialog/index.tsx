@@ -152,23 +152,23 @@ function TransactionTime({
     }
     return `${sec}s`;
   }, [time]);
-  const t = useRef<NodeJS.Timer>();
+  const t = useRef<number>();
   useEffect(() => {
     if (isStarted) {
       setTime(0);
-      clearInterval(t.current);
-      t.current = setInterval(() => {
+      window.clearInterval(t.current);
+      t.current = window.setInterval(() => {
         setTime((i) => i + 1);
       }, 1000);
     }
     return () => {
-      clearInterval(t.current);
+      window.clearInterval(t.current);
     };
   }, [isStarted]);
 
   useEffect(() => {
     if (isEnded) {
-      clearInterval(t.current);
+      window.clearInterval(t.current);
     }
   }, [isEnded]);
 
@@ -237,7 +237,9 @@ export default function WithExecutionDialog({
   };
   const dispatch = useDispatch<AppThunkDispatch>();
 
-  const noSubmissionDialog = useUserOptions(state => state.noSubmissionDialog);
+  const noSubmissionDialog = useUserOptions(
+    (state) => state.noSubmissionDialog,
+  );
 
   return (
     <ExecutionContext.Provider value={ctxVal}>

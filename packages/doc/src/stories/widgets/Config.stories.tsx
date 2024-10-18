@@ -85,5 +85,5 @@ Primary.args = {
   projectId: 'project2',
   apiKey: 'ee53d6b75b12aceed4',
   hasOrder: true,
-  onlyChainId: 56,
+  onlyChainId: 167000,
 };

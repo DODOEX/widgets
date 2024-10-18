@@ -22,11 +22,16 @@ function getDefaultToken({
 }) {
   let findToken = null as TokenInfo | null;
   let setDefaultAmount: number | undefined;
-  const tokenListTarget = tokenList.filter(
+  let tokenListTarget = tokenList.filter(
     (token) =>
       (!token.side || token.side === side) &&
       (!chainId || token.chainId === chainId),
   );
+  if (!tokenListTarget.length) {
+    tokenListTarget = tokenList.filter(
+      (token) => !token.side || token.side === side,
+    );
+  }
   if (tokenListTarget.length) {
     let needFindToken = getLastToken(side);
     if (!needFindToken && defaultToken) {
@@ -77,7 +82,8 @@ export function useInitDefaultToken({
   setIsReverseRouting: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const tokenList = useSelector(getTokenList);
-  const { crossChain, defaultFromToken, defaultToToken } = useUserOptions();
+  const { crossChain, defaultFromToken, defaultToToken, onlyChainId } =
+    useUserOptions();
   const autoConnectLoading = useSelector(getAutoConnectLoading);
   const { chainId, isActivating } = useWeb3React();
 
@@ -85,12 +91,13 @@ export function useInitDefaultToken({
     let findFromToken: TokenInfo | null = null;
     let setDefaultFromAmount: number | undefined;
     if (!crossChain && autoConnectLoading) return;
+    const findChainId = crossChain ? undefined : onlyChainId ?? chainId;
     if (!fromToken) {
       const result = getDefaultToken({
         side: 'from',
         defaultToken: defaultFromToken,
         tokenList,
-        chainId: crossChain ? undefined : chainId,
+        chainId: findChainId,
       });
       findFromToken = result.findToken;
       setDefaultFromAmount = result.setDefaultAmount;
@@ -110,7 +117,7 @@ export function useInitDefaultToken({
           defaultToken: defaultToToken,
           tokenList,
           occupyToken: findFromToken,
-          chainId: crossChain ? undefined : chainId,
+          chainId: findChainId,
         });
       if (findToToken) {
         setToToken(findToToken);
@@ -140,6 +147,7 @@ export function useInitDefaultToken({
     crossChain,
     autoConnectLoading,
     chainId,
+    onlyChainId,
     isActivating,
   ]);
 }

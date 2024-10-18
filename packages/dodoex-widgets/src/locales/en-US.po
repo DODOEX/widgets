@@ -89,7 +89,7 @@ msgid "Start Time"
 msgstr "Start Time"
 
 #: src/components/ErrorMessageDialog.tsx:63
-#: src/components/WithExecutionDialog/index.tsx:316
+#: src/components/WithExecutionDialog/index.tsx:318
 msgid "Dismiss"
 msgstr "Dismiss"
 
@@ -1336,7 +1336,7 @@ msgid "The mid price needs to be greater than {min} and less than 100,000,000"
 msgstr "The mid price needs to be greater than {min} and less than 100,000,000"
 
 #: src/components/ErrorMessageDialog.tsx:39
-#: src/components/WithExecutionDialog/index.tsx:281
+#: src/components/WithExecutionDialog/index.tsx:283
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
@@ -1645,7 +1645,7 @@ msgstr "Hours"
 msgid "High"
 msgstr "High"
 
-#: src/components/WithExecutionDialog/index.tsx:316
+#: src/components/WithExecutionDialog/index.tsx:318
 msgid "Close"
 msgstr "Close"
 
