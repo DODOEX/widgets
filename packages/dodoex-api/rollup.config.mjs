@@ -6,7 +6,7 @@ import url from '@rollup/plugin-url';
 import terser from '@rollup/plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import dynamicImportVariables from 'rollup-plugin-dynamic-import-variables';
-import pkg from './package.json' assert { type: 'json' };
+import pkg from './package.json' with { type: 'json' };
 
 const extensions = ['.js', '.ts', '.jsx', '.tsx'];
 
