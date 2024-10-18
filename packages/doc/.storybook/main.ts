@@ -1,26 +1,46 @@
-const { merge } = require('lodash');
-const path = require('path');
-const webpack = require('webpack');
+import type { StorybookConfig } from '@storybook/react-webpack5';
+import { merge } from 'lodash';
 
-module.exports = {
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+import path, { join, dirname } from 'path';
+
+/**
+ * This function is used to resolve the absolute path of a package.
+ * It is needed in projects that use Yarn PnP or are set up within a monorepo.
+ */
+function getAbsolutePath(value: string): any {
+  return dirname(require.resolve(join(value, 'package.json')));
+}
+const config: StorybookConfig = {
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+
   addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    // "@storybook/addon-interactions",
-    '@storybook/addon-docs',
-    // https://storybook.js.org/addons/storybook-addon-designs/
-    'storybook-addon-designs',
+    getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
+    getAbsolutePath('@storybook/addon-onboarding'),
+    getAbsolutePath('@storybook/addon-links'),
+    getAbsolutePath('@storybook/addon-essentials'),
+    getAbsolutePath('@chromatic-com/storybook'),
+    getAbsolutePath('@storybook/addon-interactions'),
+    getAbsolutePath('@storybook/addon-webpack5-compiler-babel'),
   ],
-  framework: '@storybook/react',
-  core: {
-    builder: 'webpack5',
+
+  framework: {
+    name: getAbsolutePath('@storybook/react-webpack5'),
+    options: {},
   },
+
+  docs: {
+    autodocs: false,
+  },
+
   webpackFinal: async (config) => {
-    const svgLoaderRule = config.module.rules.find(
+    const svgLoaderRule = (config.module?.rules ?? []).find(
+      // @ts-ignore
       (rule) => rule.test && rule.test.test && rule.test.test('.svg'),
     );
-    svgLoaderRule.exclude = /svg$/;
+    if (svgLoaderRule) {
+      // @ts-ignore
+      svgLoaderRule.exclude = /svg$/;
+    }
     return merge(config, {
       resolve: {
         ...config.resolve,
@@ -36,7 +56,7 @@ module.exports = {
             'src/',
           ),
           '@dodoex/icons': path.resolve(__dirname, '../../dodoex-icons'),
-          ...config.resolve.alias,
+          ...config.resolve?.alias,
         },
         fallback: {
           ...(config.resolve || {}).fallback,
@@ -69,7 +89,7 @@ module.exports = {
       },
       module: {
         rules: [
-          ...config.module.rules,
+          ...(config.module?.rules ?? []),
           {
             test: /\.svg$/,
             // type: 'asset/inline',
@@ -103,16 +123,7 @@ module.exports = {
           },
         ],
       },
-      plugins: [
-        ...config.plugins,
-        // https://stackoverflow.com/questions/68707553/uncaught-referenceerror-buffer-is-not-defined
-        new webpack.ProvidePlugin({
-          Buffer: ['buffer', 'Buffer'],
-        }),
-        new webpack.ProvidePlugin({
-          process: 'process/browser',
-        }),
-      ],
     });
   },
 };
+export default config;
