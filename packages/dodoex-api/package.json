@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/api",
-  "version": "3.0.0-taiko.9",
+  "version": "3.0.0-taiko.10",
   "description": "DODO API Kit",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",

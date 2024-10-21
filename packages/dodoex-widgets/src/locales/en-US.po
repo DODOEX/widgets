@@ -65,11 +65,11 @@ msgid "Traders sold ‪{0}‬ {1}, price in the pool increased to {2}"
 msgstr "Traders sold ‪{0}‬ {1}, price in the pool increased to {2}"
 
 #: src/components/Swap/components/TokenCard/BalanceText.tsx:52
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:238
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:239
 msgid "Balance:"
 msgstr "Balance:"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:319
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:320
 msgid "The start time cannot be in the past"
 msgstr "The start time cannot be in the past"
 
@@ -91,12 +91,12 @@ msgid "Switch to {0}"
 msgstr "Switch to {0}"
 
 #: src/widgets/MiningWidget/MiningCreate/hooks/useCreateMining.ts:133
-#: src/widgets/MiningWidget/MiningList/index.tsx:304
+#: src/widgets/MiningWidget/MiningList/index.tsx:301
 msgid "Create Liquidity Mining"
 msgstr "Create Liquidity Mining"
 
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:157
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:293
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:294
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:227
 msgid "Start Time"
 msgstr "Start Time"
@@ -125,7 +125,7 @@ msgstr "Deposit Ratio"
 msgid "Ended"
 msgstr "Ended"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:364
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:365
 msgid "The end time must be later than the start time."
 msgstr "The end time must be later than the start time."
 
@@ -166,7 +166,7 @@ msgstr "Search by address"
 msgid "Asset ratio within the pool"
 msgstr "Asset ratio within the pool"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:107
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:108
 #: src/widgets/MiningWidget/MiningList/operate-area/AssociatedMine.tsx:151
 #: src/widgets/MiningWidget/MiningList/operate-area/RewardListCard.tsx:49
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:305
@@ -208,7 +208,7 @@ msgstr "Creation Time"
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "The current network is inconsistent with the wallet - please switch in wallet"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:570
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:571
 msgid "*Depending on the block time, the real amount of Daily Rewards may deviate slightly."
 msgstr "*Depending on the block time, the real amount of Daily Rewards may deviate slightly."
 
@@ -216,7 +216,7 @@ msgstr "*Depending on the block time, the real amount of Daily Rewards may devia
 msgid "Since this pool uses the PMM algorithm, which is different from the normal AMM pool mechanism, the initial price calculation is also different from AMM."
 msgstr "Since this pool uses the PMM algorithm, which is different from the normal AMM pool mechanism, the initial price calculation is also different from AMM."
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:420
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:421
 msgid "Expected to start at block {0} and end at block {1}. There may be slight differences between actual and expected block numbers."
 msgstr "Expected to start at block {0} and end at block {1}. There may be slight differences between actual and expected block numbers."
 
@@ -224,6 +224,10 @@ msgstr "Expected to start at block {0} and end at block {1}. There may be slight
 #: src/widgets/PoolWidget/PoolCreate/index.tsx:180
 msgid "The token amount is calculated by initial price."
 msgstr "The token amount is calculated by initial price."
+
+#: src/widgets/MiningWidget/MiningCreate/components/StakingRules.tsx:91
+msgid "Staked Tokens"
+msgstr "Staked Tokens"
 
 #: src/components/Swap/index.tsx:452
 msgid "Current price impact"
@@ -375,7 +379,7 @@ msgid "Price impact exceeds the slippage tolerance you set. Try increasing the s
 msgstr "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/index.tsx:81
+#: src/widgets/MiningWidget/MiningList/index.tsx:78
 msgid "All Mining"
 msgstr "All Mining"
 
@@ -704,7 +708,7 @@ msgstr "Select Cross Chain"
 msgid "Daily rewards before adjustment"
 msgstr "Daily rewards before adjustment"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:569
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:570
 msgid "*Deflationary tokens are not supported"
 msgstr "*Deflationary tokens are not supported"
 
@@ -790,12 +794,12 @@ msgid "No pools yet? Create one!"
 msgstr "No pools yet? Create one!"
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/index.tsx:85
+#: src/widgets/MiningWidget/MiningList/index.tsx:82
 msgid "My Mining"
 msgstr "My Mining"
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/index.tsx:87
+#: src/widgets/MiningWidget/MiningList/index.tsx:84
 msgid "My Pools"
 msgstr "My Pools"
 
@@ -823,7 +827,7 @@ msgid "Stake LP tokens and receive mining rewards."
 msgstr "Stake LP tokens and receive mining rewards."
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/index.tsx:157
+#: src/widgets/MiningWidget/MiningList/index.tsx:154
 msgid "No LP pools match your criteria"
 msgstr "No LP pools match your criteria"
 
@@ -845,6 +849,11 @@ msgstr "Unstake"
 #: src/widgets/PoolWidget/PoolCreate/hooks/useFeeRateList.ts:15
 msgid "Set the fee to the same as most other pools"
 msgstr "Set the fee to the same as most other pools"
+
+#: src/widgets/MiningWidget/MiningCreate/index.tsx:344
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:299
+msgid "If there are no participants before the end, the rewards cannot be taken out anymore."
+msgstr "If there are no participants before the end, the rewards cannot be taken out anymore."
 
 #: src/components/Swap/index.tsx:741
 msgid "Fetching Price..."
@@ -1176,7 +1185,7 @@ msgid "{lqAndDodoCompareText} Price Difference"
 msgstr "{lqAndDodoCompareText} Price Difference"
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/index.tsx:159
+#: src/widgets/MiningWidget/MiningList/index.tsx:156
 msgid "You are not currently providing liquidity for any LP pools."
 msgstr "You are not currently providing liquidity for any LP pools."
 
@@ -1201,6 +1210,7 @@ msgid "On"
 msgstr "On"
 
 #: src/components/Swap/index.tsx:724
+#: src/hooks/Token/useGetTokenStatus.ts:128
 #: src/hooks/Token/useTokenStatus.ts:128
 msgid "Approve"
 msgstr "Approve"
@@ -1290,7 +1300,7 @@ msgstr "Dynamic"
 msgid "SEE HOW IT WORKS"
 msgstr "SEE HOW IT WORKS"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:445
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:446
 msgid "Delete"
 msgstr "Delete"
 
@@ -1520,7 +1530,7 @@ msgid "Something went wrong."
 msgstr "Something went wrong."
 
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:176
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:393
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:394
 msgid "Daily Rewards"
 msgstr "Daily Rewards"
 
@@ -1570,7 +1580,7 @@ msgstr "Send to:"
 msgid "My Staked"
 msgstr "My Staked"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:454
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:455
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:202
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:240
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:473
@@ -1687,7 +1697,7 @@ msgid "Buy"
 msgstr "Buy"
 
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:165
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:207
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:208
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:282
 msgid "Total Rewards"
 msgstr "Total Rewards"
@@ -1698,7 +1708,7 @@ msgid "Connect to a wallet"
 msgstr "Connect to a wallet"
 
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:161
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:338
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:339
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:244
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:268
 msgid "End Time"
@@ -1718,11 +1728,17 @@ msgstr "Detail"
 msgid "APY"
 msgstr "APY"
 
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/TokenPairSelect.tsx:55
+msgid "Select Platform"
+msgstr "Select Platform"
+
 #: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:64
+#: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:351
+#: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:407
 msgid "SELECT TOKEN"
 msgstr "SELECT TOKEN"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:555
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:556
 msgid "Add Token"
 msgstr "Add Token"
 
@@ -1821,6 +1837,10 @@ msgstr "Swap"
 msgid "There is risk of being arbitraged if adding this liquidity."
 msgstr "There is risk of being arbitraged if adding this liquidity."
 
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/SingleTokenSelect.tsx:104
+msgid "address"
+msgstr "address"
+
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:246
 msgid "This trading pair does not have enough historical data and has used the default dynamic slippage."
 msgstr "This trading pair does not have enough historical data and has used the default dynamic slippage."
@@ -1832,6 +1852,10 @@ msgstr "Source"
 #: src/components/Swap/components/SwapSettingsDialog/index.tsx:90
 msgid "You may modify the transaction deadline, the maximum time allowed for a trade to be processed on-chain. However, please note that this may lead to your trade executing at a subpar price, as the market price may change during that time."
 msgstr "You may modify the transaction deadline, the maximum time allowed for a trade to be processed on-chain. However, please note that this may lead to your trade executing at a subpar price, as the market price may change during that time."
+
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:133
+msgid "{0}  Approval Pending"
+msgstr "{0}  Approval Pending"
 
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/RatioSetting.tsx:297
 msgid "Liquidity Burn Ratio"
@@ -1898,6 +1922,11 @@ msgstr "Fees will be the same as in most other pools."
 msgid "Mining Pool"
 msgstr "Mining Pool"
 
+#: src/widgets/MiningWidget/MiningCreate/index.tsx:345
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:300
+msgid "To avoid loss of rewards, please ensure that at least 1 or more participating users exist."
+msgstr "To avoid loss of rewards, please ensure that at least 1 or more participating users exist."
+
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:111
 msgid "https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef"
 msgstr "https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef"
@@ -1909,6 +1938,10 @@ msgstr "Transaction Deadline"
 #: src/widgets/MiningWidget/MiningList/hooks/useDepositOrWithdrawOrClaim.ts:190
 msgid "Claim Rewards"
 msgstr "Claim Rewards"
+
+#: src/widgets/MiningWidget/MiningCreate/components/StepTitle.tsx:90
+msgid "Total Rewards=Daily Rewards*Duration"
+msgstr "Total Rewards=Daily Rewards*Duration"
 
 #: src/components/Swap/index.tsx:767
 #: src/components/TokenStatusButton.tsx:18

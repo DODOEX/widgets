@@ -65,7 +65,7 @@ function PCDateTimePickerComponent({
 
   const [dateTimeEle, setDateTimeEle] = useState<React.ReactNode>();
   useEffect(() => {
-    const onDateTimeChange = (val: dayjs.Dayjs | string) => {
+    const onDateTimeChange = (val: any) => {
       if (typeof val === 'string') {
         throw new Error('Date in the input is not valid');
       }

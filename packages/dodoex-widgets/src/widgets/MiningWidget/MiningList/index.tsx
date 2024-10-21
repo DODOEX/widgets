@@ -43,10 +43,7 @@ export function MiningList({
 }) {
   const { isMobile } = useWidgetDevice();
   const { i18n } = useLingui();
-  const {
-    account = '0x1033dd8fECCe8F5FDd4B2F235B047CB1EE59512a',
-    chainId: currentChainId,
-  } = useWeb3React();
+  const { account, chainId: currentChainId } = useWeb3React();
   const { requests, updateText } = useSubmission();
   const { noDocumentLink, onlyChainId } = useUserOptions();
 

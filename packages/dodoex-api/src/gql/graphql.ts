@@ -22,26 +22,26 @@ export type Incremental<T> =
     };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
   /** BigDecimal custom scalar type */
-  BigDecimal: { input: any; output: any; }
+  BigDecimal: { input: any; output: any };
   /** BigInt custom scalar type */
-  BigInt: { input: any; output: any; }
-  BigNumber: { input: any; output: any; }
+  BigInt: { input: any; output: any };
+  BigNumber: { input: any; output: any };
   /** Bytes custom scalar type */
-  Bytes: { input: any; output: any; }
-  Dodochain_earnBytes: { input: any; output: any; }
+  Bytes: { input: any; output: any };
+  Dodochain_earnBytes: { input: any; output: any };
   /**
    * 8 bytes signed integer
    *
    */
-  Int8: { input: any; output: any; }
-  JSON: { input: any; output: any; }
-  LiquidityBytes: { input: any; output: any; }
+  Int8: { input: any; output: any };
+  JSON: { input: any; output: any };
+  LiquidityBytes: { input: any; output: any };
 };
 
 export type Account = {
@@ -54,7 +54,6 @@ export type Account = {
   /** updatedAt */
   updatedAt: Scalars['BigInt']['output'];
 };
-
 
 export type AccountBalancesArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -462,9 +461,7 @@ export type All_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type All_OrderBy =
-  | 'chain'
-  | 'id';
+export type All_OrderBy = 'chain' | 'id';
 
 export type AnnouncementAnnouncement = {
   endAt?: Maybe<Scalars['String']['output']>;
@@ -525,9 +522,7 @@ export type Approval_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Approval_OrderBy =
-  | 'chain'
-  | 'id';
+export type Approval_OrderBy = 'chain' | 'id';
 
 export type AuctionAuctionActive = {
   baseTokenSoldTokenAmount?: Maybe<Scalars['String']['output']>;
@@ -1020,11 +1015,7 @@ export type Avatar_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Avatar_OrderBy =
-  | 'balance'
-  | 'chain'
-  | 'componentsID'
-  | 'id';
+export type Avatar_OrderBy = 'balance' | 'chain' | 'componentsID' | 'id';
 
 export type Balance = {
   /** vault */
@@ -1489,9 +1480,7 @@ export type BrowserChainInput = {
   chains: Array<InputMaybe<Scalars['Int']['input']>>;
 };
 
-export type ChartKLineChartScope =
-  | 'ALL'
-  | 'DODO';
+export type ChartKLineChartScope = 'ALL' | 'DODO';
 
 export type ChartOhlcv2Input = {
   aChainId: Scalars['Int']['input'];
@@ -2188,10 +2177,7 @@ export type Component_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Component_OrderBy =
-  | 'balance'
-  | 'chain'
-  | 'id';
+export type Component_OrderBy = 'balance' | 'chain' | 'id';
 
 export type Controller = {
   chain: Scalars['String']['output'];
@@ -2230,9 +2216,7 @@ export type Controller_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Controller_OrderBy =
-  | 'chain'
-  | 'id';
+export type Controller_OrderBy = 'chain' | 'id';
 
 export type Cross_Chain_SwapCrossChainOrderCreate = {
   createdAt?: Maybe<Scalars['String']['output']>;
@@ -2311,7 +2295,9 @@ export type Cross_Chain_SwapCrossChainOrderListList = {
 
 export type Cross_Chain_SwapCrossChainOrderNewStatusList = {
   createdAt?: Maybe<Scalars['String']['output']>;
-  crossChainOrderStatus?: Maybe<Array<Maybe<Cross_Chain_SwapCrossChainOrderStatus>>>;
+  crossChainOrderStatus?: Maybe<
+    Array<Maybe<Cross_Chain_SwapCrossChainOrderStatus>>
+  >;
   fromAmount?: Maybe<Scalars['String']['output']>;
   fromChainId?: Maybe<Scalars['Int']['output']>;
   fromHash?: Maybe<Scalars['String']['output']>;
@@ -2361,7 +2347,9 @@ export type Cross_Chain_SwapCrossChainRoute = {
 export type Cross_Chain_SwapCrossChainRouteV2 = {
   amountLimit?: Maybe<Cross_Chain_SwapCrossChainRouteV2AmountLimit>;
   routes?: Maybe<Array<Maybe<Cross_Chain_SwapCrossChainRoute>>>;
-  ruoteErrorCodes?: Maybe<Array<Maybe<Cross_Chain_SwapCrossChainRouteV2ErrorCode>>>;
+  ruoteErrorCodes?: Maybe<
+    Array<Maybe<Cross_Chain_SwapCrossChainRouteV2ErrorCode>>
+  >;
 };
 
 export type Cross_Chain_SwapCrossChainRouteV2AmountLimit = {
@@ -2534,16 +2522,24 @@ export type Cross_Chain_SwaptransactionEncodeData = {
 export type Cross_Chain_TokenCrossChainPair = {
   fromChainId?: Maybe<Scalars['Int']['output']>;
   fromChainToken?: Maybe<Scalars['String']['output']>;
-  fromChainTokenAttributeLabels?: Maybe<Array<Maybe<Cross_Chain_TokenCrossChainTokenLabel>>>;
+  fromChainTokenAttributeLabels?: Maybe<
+    Array<Maybe<Cross_Chain_TokenCrossChainTokenLabel>>
+  >;
   fromChainTokenDecimals?: Maybe<Scalars['Int']['output']>;
-  fromChainTokenFuncLabels?: Maybe<Array<Maybe<Cross_Chain_TokenCrossChainTokenLabel>>>;
+  fromChainTokenFuncLabels?: Maybe<
+    Array<Maybe<Cross_Chain_TokenCrossChainTokenLabel>>
+  >;
   fromChainTokenName?: Maybe<Scalars['String']['output']>;
   fromChainTokenSymbol?: Maybe<Scalars['String']['output']>;
   toChainId?: Maybe<Scalars['Int']['output']>;
   toChainToken?: Maybe<Scalars['String']['output']>;
-  toChainTokenAttributeLabels?: Maybe<Array<Maybe<Cross_Chain_TokenCrossChainTokenLabel>>>;
+  toChainTokenAttributeLabels?: Maybe<
+    Array<Maybe<Cross_Chain_TokenCrossChainTokenLabel>>
+  >;
   toChainTokenDecimals?: Maybe<Scalars['Int']['output']>;
-  toChainTokenFuncLabels?: Maybe<Array<Maybe<Cross_Chain_TokenCrossChainTokenLabel>>>;
+  toChainTokenFuncLabels?: Maybe<
+    Array<Maybe<Cross_Chain_TokenCrossChainTokenLabel>>
+  >;
   toChainTokenName?: Maybe<Scalars['String']['output']>;
   toChainTokenSymbol?: Maybe<Scalars['String']['output']>;
 };
@@ -3777,11 +3773,7 @@ export type D3mmStrategyProviderInfo = {
   volumeUsd: Scalars['BigDecimal']['output'];
 };
 
-export type D3mmTimeScaleOptions =
-  | 'All'
-  | 'Month'
-  | 'Quarter'
-  | 'Year';
+export type D3mmTimeScaleOptions = 'All' | 'Month' | 'Quarter' | 'Year';
 
 export type D3mmToken = {
   address: Scalars['String']['output'];
@@ -3857,9 +3849,7 @@ export type D3mtOptionalChainUserPositionStatusrPaginationInput = {
   user: Scalars['String']['input'];
 };
 
-export type D3mtOrderDirection =
-  | 'Asc'
-  | 'Desc';
+export type D3mtOrderDirection = 'Asc' | 'Desc';
 
 export type D3mtOrderFields =
   | 'APR'
@@ -3874,8 +3864,7 @@ export type D3mtPaginationInput = {
   size?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type D3mtPlatform =
-  | 'AAVE';
+export type D3mtPlatform = 'AAVE';
 
 export type D3mtPositionPaginationResult = {
   count: Scalars['Int']['output'];
@@ -4591,9 +4580,7 @@ export type DecimalValue_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DecimalValue_OrderBy =
-  | 'chain'
-  | 'id';
+export type DecimalValue_OrderBy = 'chain' | 'id';
 
 export type DepositHistory = {
   /** allocation amount */
@@ -5074,9 +5061,7 @@ export type DodoStarter_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DodoStarter_OrderBy =
-  | 'chain'
-  | 'id';
+export type DodoStarter_OrderBy = 'chain' | 'id';
 
 export type DodoToken = {
   chain: Scalars['String']['output'];
@@ -5122,10 +5107,7 @@ export type DodoToken_Filter = {
   tokens_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
 };
 
-export type DodoToken_OrderBy =
-  | 'chain'
-  | 'id'
-  | 'tokens';
+export type DodoToken_OrderBy = 'chain' | 'id' | 'tokens';
 
 export type DodoZoo = {
   /** DIP3 maintainer fee usd  */
@@ -5161,7 +5143,9 @@ export type DodoZoo_Filter = {
   DIP3MaintainerFeeUSD_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   DIP3MaintainerFeeUSD_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   DIP3MaintainerFeeUSD_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  DIP3MaintainerFeeUSD_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  DIP3MaintainerFeeUSD_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   chain?: InputMaybe<Scalars['String']['input']>;
   chain_contains?: InputMaybe<Scalars['String']['input']>;
   chain_ends_with?: InputMaybe<Scalars['String']['input']>;
@@ -5317,11 +5301,12 @@ export type Dodo_Two_Anniversary_ActivitylistFilter = {
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type Dodo_Two_Anniversary_H5_Qa_ActivitySaveDodoTwoAnniversaryH5QaActivity = {
-  code?: Maybe<Scalars['Int']['output']>;
-  message?: Maybe<Scalars['String']['output']>;
-  success?: Maybe<Scalars['Boolean']['output']>;
-};
+export type Dodo_Two_Anniversary_H5_Qa_ActivitySaveDodoTwoAnniversaryH5QaActivity =
+  {
+    code?: Maybe<Scalars['Int']['output']>;
+    message?: Maybe<Scalars['String']['output']>;
+    success?: Maybe<Scalars['Boolean']['output']>;
+  };
 
 export type Dodo_Two_Anniversary_H5_Qa_ActivitysaveData = {
   address?: InputMaybe<Scalars['String']['input']>;
@@ -5605,9 +5590,7 @@ export type Dodochain_ActivityAssetInfo = {
   type: Dodochain_ActivityAssetInfoType;
 };
 
-export type Dodochain_ActivityAssetInfoType =
-  | 'Lp'
-  | 'Token';
+export type Dodochain_ActivityAssetInfoType = 'Lp' | 'Token';
 
 export type Dodochain_ActivityLiquidity = {
   /** base Token */
@@ -6481,7 +6464,6 @@ export type Filter = {
   updatedAt: Scalars['BigInt']['output'];
 };
 
-
 export type FilterNftsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<FilterNft_OrderBy>;
@@ -6489,7 +6471,6 @@ export type FilterNftsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<FilterNft_Filter>;
 };
-
 
 export type FilterSpreadIdsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -6527,7 +6508,6 @@ export type FilterAdmin = {
   /** updatedAt */
   updatedAt: Scalars['BigInt']['output'];
 };
-
 
 export type FilterAdminFiltersArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -7406,7 +7386,9 @@ export type Fragment_Filter = {
   feeDistributor_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
   feeDistributor_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
   feeDistributor_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  feeDistributor_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  feeDistributor_not_starts_with_nocase?: InputMaybe<
+    Scalars['String']['input']
+  >;
   feeDistributor_starts_with?: InputMaybe<Scalars['String']['input']>;
   feeDistributor_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -7889,24 +7871,16 @@ export type Limit_And_RfqgetPrivateOrderParam = {
   hash?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Limit_And_RfqlimitCancelSignType =
-  | 'eip191'
-  | 'eip712'
-  | 'eip1271';
+export type Limit_And_RfqlimitCancelSignType = 'eip191' | 'eip712' | 'eip1271';
 
-export type Limit_And_RfqlimitCreateOrderWalletType =
-  | 'common'
-  | 'unipass';
+export type Limit_And_RfqlimitCreateOrderWalletType = 'common' | 'unipass';
 
 export type Limit_And_RfqlimitOrderAmountLimitParam = {
   network?: InputMaybe<Scalars['String']['input']>;
   token?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Limit_And_RfqlimitOrderQueryEnum =
-  | 'ALL'
-  | 'FRESH'
-  | 'NOT_FRESH';
+export type Limit_And_RfqlimitOrderQueryEnum = 'ALL' | 'FRESH' | 'NOT_FRESH';
 
 export type Limit_And_RfquserCancelLimitOrder = {
   address?: InputMaybe<Scalars['String']['input']>;
@@ -8576,7 +8550,9 @@ export type LiquidityPosition_Filter = {
   accInterestTokenUSD_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   accInterestTokenUSD_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   accInterestTokenUSD_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  accInterestTokenUSD_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  accInterestTokenUSD_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   accTokenDeposit?: InputMaybe<Scalars['BigInt']['input']>;
   accTokenDeposit_gt?: InputMaybe<Scalars['BigInt']['input']>;
   accTokenDeposit_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -8678,7 +8654,9 @@ export type LiquidityPosition_Filter = {
   liquidityTokenBalance_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   liquidityTokenBalance_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   liquidityTokenBalance_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  liquidityTokenBalance_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  liquidityTokenBalance_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   liquidityTokenInMining?: InputMaybe<Scalars['BigDecimal']['input']>;
   liquidityTokenInMining_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
   liquidityTokenInMining_gte?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -8686,7 +8664,9 @@ export type LiquidityPosition_Filter = {
   liquidityTokenInMining_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   liquidityTokenInMining_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   liquidityTokenInMining_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  liquidityTokenInMining_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  liquidityTokenInMining_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   lpToken?: InputMaybe<Scalars['String']['input']>;
   lpToken_?: InputMaybe<Token_Filter>;
   lpToken_contains?: InputMaybe<Scalars['String']['input']>;
@@ -9297,10 +9277,7 @@ export type Maker_Filter = {
   updatedAt_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
 };
 
-export type Maker_OrderBy =
-  | 'id'
-  | 'pool'
-  | 'updatedAt';
+export type Maker_OrderBy = 'id' | 'pool' | 'updatedAt';
 
 export type ManageBanner = {
   /** chain */
@@ -9754,11 +9731,7 @@ export type MiningPool_Filter = {
   updatedAt_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type MiningPool_OrderBy =
-  | 'chain'
-  | 'id'
-  | 'lpToken'
-  | 'updatedAt';
+export type MiningPool_OrderBy = 'chain' | 'id' | 'lpToken' | 'updatedAt';
 
 export type MiningRewardDetailHistory = {
   accRewardPerShare: Scalars['String']['output'];
@@ -9966,7 +9939,6 @@ export type NftCollateralVault = {
   /** vault nfts */
   vaultNfts: Array<VaultNft>;
 };
-
 
 export type NftCollateralVaultVaultNftsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -10208,11 +10180,7 @@ export type NftPool_Filter = {
   updatedAt_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
 };
 
-export type NftPool_OrderBy =
-  | 'chain'
-  | 'createdAt'
-  | 'id'
-  | 'updatedAt';
+export type NftPool_OrderBy = 'chain' | 'createdAt' | 'id' | 'updatedAt';
 
 export type Nft_ContractChain = {
   alias?: Maybe<Scalars['String']['output']>;
@@ -10416,14 +10384,9 @@ export type Notice_CentertransactionListFilter = {
   user?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type OperationType =
-  | 'Claim'
-  | 'Deposit'
-  | 'Withdraw';
+export type OperationType = 'Claim' | 'Deposit' | 'Withdraw';
 
-export type OrderDirection =
-  | 'asc'
-  | 'desc';
+export type OrderDirection = 'asc' | 'desc';
 
 export type OrderHistory = {
   /** from token amount */
@@ -10696,9 +10659,7 @@ export type OwnerPerTokenContract_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type OwnerPerTokenContract_OrderBy =
-  | 'chain'
-  | 'id';
+export type OwnerPerTokenContract_OrderBy = 'chain' | 'id';
 
 export type Owner_Filter = {
   chain?: InputMaybe<Scalars['String']['input']>;
@@ -10728,9 +10689,7 @@ export type Owner_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Owner_OrderBy =
-  | 'chain'
-  | 'id';
+export type Owner_OrderBy = 'chain' | 'id';
 
 export type Pair = {
   /** base LP token, for DPP is null, for dodo v1 lpToken is different */
@@ -10874,7 +10833,9 @@ export type PairDayData_Filter = {
   baseLpTokenTotalSupply_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   baseLpTokenTotalSupply_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   baseLpTokenTotalSupply_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  baseLpTokenTotalSupply_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  baseLpTokenTotalSupply_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   baseToken?: InputMaybe<Scalars['String']['input']>;
   baseTokenReserve?: InputMaybe<Scalars['BigDecimal']['input']>;
   baseTokenReserve_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -10982,11 +10943,15 @@ export type PairDayData_Filter = {
   quoteLpTokenTotalSupply?: InputMaybe<Scalars['BigDecimal']['input']>;
   quoteLpTokenTotalSupply_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
   quoteLpTokenTotalSupply_gte?: InputMaybe<Scalars['BigDecimal']['input']>;
-  quoteLpTokenTotalSupply_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  quoteLpTokenTotalSupply_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   quoteLpTokenTotalSupply_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   quoteLpTokenTotalSupply_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   quoteLpTokenTotalSupply_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  quoteLpTokenTotalSupply_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  quoteLpTokenTotalSupply_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   quoteToken?: InputMaybe<Scalars['String']['input']>;
   quoteTokenReserve?: InputMaybe<Scalars['BigDecimal']['input']>;
   quoteTokenReserve_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -11043,7 +11008,9 @@ export type PairDayData_Filter = {
   untrackedBaseVolume_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedBaseVolume_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedBaseVolume_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  untrackedBaseVolume_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  untrackedBaseVolume_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   untrackedQuoteVolume?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedQuoteVolume_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedQuoteVolume_gte?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -11051,7 +11018,9 @@ export type PairDayData_Filter = {
   untrackedQuoteVolume_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedQuoteVolume_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedQuoteVolume_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  untrackedQuoteVolume_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  untrackedQuoteVolume_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   updatedAt_contains?: InputMaybe<Scalars['String']['input']>;
   updatedAt_ends_with?: InputMaybe<Scalars['String']['input']>;
@@ -11197,7 +11166,9 @@ export type PairHourData_Filter = {
   baseLpTokenTotalSupply_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   baseLpTokenTotalSupply_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   baseLpTokenTotalSupply_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  baseLpTokenTotalSupply_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  baseLpTokenTotalSupply_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   baseToken?: InputMaybe<Scalars['String']['input']>;
   baseTokenReserve?: InputMaybe<Scalars['BigDecimal']['input']>;
   baseTokenReserve_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -11305,11 +11276,15 @@ export type PairHourData_Filter = {
   quoteLpTokenTotalSupply?: InputMaybe<Scalars['BigDecimal']['input']>;
   quoteLpTokenTotalSupply_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
   quoteLpTokenTotalSupply_gte?: InputMaybe<Scalars['BigDecimal']['input']>;
-  quoteLpTokenTotalSupply_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  quoteLpTokenTotalSupply_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   quoteLpTokenTotalSupply_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   quoteLpTokenTotalSupply_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   quoteLpTokenTotalSupply_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  quoteLpTokenTotalSupply_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  quoteLpTokenTotalSupply_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   quoteToken?: InputMaybe<Scalars['String']['input']>;
   quoteTokenReserve?: InputMaybe<Scalars['BigDecimal']['input']>;
   quoteTokenReserve_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -11366,7 +11341,9 @@ export type PairHourData_Filter = {
   untrackedBaseVolume_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedBaseVolume_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedBaseVolume_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  untrackedBaseVolume_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  untrackedBaseVolume_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   untrackedQuoteVolume?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedQuoteVolume_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedQuoteVolume_gte?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -11374,7 +11351,9 @@ export type PairHourData_Filter = {
   untrackedQuoteVolume_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedQuoteVolume_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedQuoteVolume_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  untrackedQuoteVolume_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  untrackedQuoteVolume_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   updatedAt_contains?: InputMaybe<Scalars['String']['input']>;
   updatedAt_ends_with?: InputMaybe<Scalars['String']['input']>;
@@ -11926,7 +11905,9 @@ export type Pair_Filter = {
   untrackedBaseVolume_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedBaseVolume_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedBaseVolume_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  untrackedBaseVolume_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  untrackedBaseVolume_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   untrackedQuoteVolume?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedQuoteVolume_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedQuoteVolume_gte?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -11934,7 +11915,9 @@ export type Pair_Filter = {
   untrackedQuoteVolume_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedQuoteVolume_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   untrackedQuoteVolume_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  untrackedQuoteVolume_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  untrackedQuoteVolume_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   updatedAt_contains?: InputMaybe<Scalars['String']['input']>;
   updatedAt_ends_with?: InputMaybe<Scalars['String']['input']>;
@@ -12061,9 +12044,7 @@ export type PersistentStringArray_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type PersistentStringArray_OrderBy =
-  | 'chain'
-  | 'id';
+export type PersistentStringArray_OrderBy = 'chain' | 'id';
 
 export type PersistentString_Filter = {
   chain?: InputMaybe<Scalars['String']['input']>;
@@ -12093,9 +12074,7 @@ export type PersistentString_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type PersistentString_OrderBy =
-  | 'chain'
-  | 'id';
+export type PersistentString_OrderBy = 'chain' | 'id';
 
 export type Pool = {
   allFlag: Scalars['BigInt']['output'];
@@ -12148,7 +12127,6 @@ export type Pool = {
   version?: Maybe<Scalars['String']['output']>;
 };
 
-
 export type PoolPoolDayDatasArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<PoolDayData_OrderBy>;
@@ -12156,7 +12134,6 @@ export type PoolPoolDayDatasArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PoolDayData_Filter>;
 };
-
 
 export type PoolTokenListArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -12364,9 +12341,7 @@ export type PoolFunding = {
   vault: Vault;
 };
 
-export type PoolFundingType =
-  | 'Borrow'
-  | 'Repay';
+export type PoolFundingType = 'Borrow' | 'Repay';
 
 export type PoolFunding_Filter = {
   /** Filter for the block changed event. */
@@ -12710,7 +12685,9 @@ export type PoolTokenHistory_Filter = {
   latestOraclePriceUSD_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   latestOraclePriceUSD_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   latestOraclePriceUSD_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  latestOraclePriceUSD_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  latestOraclePriceUSD_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   latestOraclePrice_gt?: InputMaybe<Scalars['BigInt']['input']>;
   latestOraclePrice_gte?: InputMaybe<Scalars['BigInt']['input']>;
   latestOraclePrice_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
@@ -12890,7 +12867,9 @@ export type PoolToken_Filter = {
   latestOraclePriceUSD_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   latestOraclePriceUSD_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   latestOraclePriceUSD_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  latestOraclePriceUSD_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  latestOraclePriceUSD_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   latestOraclePrice_gt?: InputMaybe<Scalars['BigInt']['input']>;
   latestOraclePrice_gte?: InputMaybe<Scalars['BigInt']['input']>;
   latestOraclePrice_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
@@ -13210,9 +13189,7 @@ export type PoolTradeHistory_OrderBy =
   | 'to'
   | 'updatedAt';
 
-export type PoolType =
-  | 'Fair'
-  | 'Instant';
+export type PoolType = 'Fair' | 'Instant';
 
 export type Pool_Filter = {
   /** Filter for the block changed event. */
@@ -13562,7 +13539,9 @@ export type Query = {
   claimHistory?: Maybe<ClaimHistory>;
   claimed?: Maybe<Claimed>;
   claimeds: Array<Claimed>;
-  coinmarketcap_token_list?: Maybe<Array<Maybe<Coinmarketcap_TokenCoinmarketcapTokenlist>>>;
+  coinmarketcap_token_list?: Maybe<
+    Array<Maybe<Coinmarketcap_TokenCoinmarketcapTokenlist>>
+  >;
   component?: Maybe<Component>;
   componentBalance?: Maybe<ComponentBalance>;
   componentBalances: Array<ComponentBalance>;
@@ -13579,7 +13558,9 @@ export type Query = {
   cross_chain_swap_orderCreate?: Maybe<Cross_Chain_SwapCrossChainOrderCreate>;
   cross_chain_swap_orderDetail?: Maybe<Cross_Chain_SwapCrossChainOrderDetail>;
   cross_chain_swap_orderList?: Maybe<Cross_Chain_SwapCrossChainOrderList>;
-  cross_chain_swap_orderNewStatus?: Maybe<Array<Maybe<Cross_Chain_SwapCrossChainOrderNewStatusList>>>;
+  cross_chain_swap_orderNewStatus?: Maybe<
+    Array<Maybe<Cross_Chain_SwapCrossChainOrderNewStatusList>>
+  >;
   cross_chain_swap_orderRefundCount?: Maybe<Cross_Chain_SwapOrderRefundCountResult>;
   cross_chain_swap_routesV2?: Maybe<Cross_Chain_SwapCrossChainRouteV2>;
   cross_chain_swap_transactionEncode?: Maybe<Cross_Chain_SwapCrossChainTransactionEncode>;
@@ -13593,14 +13574,20 @@ export type Query = {
   crowdPoolings: Array<CrowdPooling>;
   crowd_pooling_count_data?: Maybe<Crowd_PoolingCountData>;
   crowd_pooling_list?: Maybe<Array<Maybe<Crowd_PoolingCrowdpoolingList>>>;
-  crowd_pooling_read_server_list?: Maybe<Array<Maybe<Crowd_Pooling_Read_ServerCrowdpoolingList>>>;
+  crowd_pooling_read_server_list?: Maybe<
+    Array<Maybe<Crowd_Pooling_Read_ServerCrowdpoolingList>>
+  >;
   crowd_pooling_read_server_unvote?: Maybe<Crowd_Pooling_Read_ServerJwt>;
   crowd_pooling_read_server_vote?: Maybe<Crowd_Pooling_Read_ServerJwt>;
-  crowd_pooling_read_server_voteList?: Maybe<Array<Maybe<Crowd_Pooling_Read_ServerCrowdpoolingVoteList>>>;
+  crowd_pooling_read_server_voteList?: Maybe<
+    Array<Maybe<Crowd_Pooling_Read_ServerCrowdpoolingVoteList>>
+  >;
   crowd_pooling_top_list?: Maybe<Array<Maybe<Crowd_PoolingCrowdPooling>>>;
   crowd_pooling_unvote?: Maybe<Crowd_PoolingJwt>;
   crowd_pooling_vote?: Maybe<Crowd_PoolingJwt>;
-  crowd_pooling_voteList?: Maybe<Array<Maybe<Crowd_PoolingCrowdpoolingVoteList>>>;
+  crowd_pooling_voteList?: Maybe<
+    Array<Maybe<Crowd_PoolingCrowdpoolingVoteList>>
+  >;
   /** 资产每日收益折线图 */
   d3mm_getAssetDailyInterests: Array<Maybe<D3mmAssetDailyInterest>>;
   /** 资产详情信息, 如果资产不存在则返回null */
@@ -13612,7 +13599,9 @@ export type Query = {
   /** 资产列表 */
   d3mm_getAssetsList: D3mmSimplifyAssetPaginationResult;
   /** 总LP APY收益折线图 */
-  d3mm_getLiquidityProviderDailyProfits: Array<Maybe<D3mmLiquidityProviderDailyProfit>>;
+  d3mm_getLiquidityProviderDailyProfits: Array<
+    Maybe<D3mmLiquidityProviderDailyProfit>
+  >;
   /** V3 概览, 如果链不支持则返回null */
   d3mm_getOverview?: Maybe<D3mmOverview>;
   /** SP Strategy 列表 */
@@ -13624,7 +13613,9 @@ export type Query = {
   /** 策略信息, 如果池子不存在则返回null */
   d3mm_getStrategyInfo?: Maybe<D3mmStrategyPoolInfo>;
   /** 总SP APY收益折线图 */
-  d3mm_getStrategyProviderDailyInterests: Array<Maybe<D3mmStrategyProviderDailyInterest>>;
+  d3mm_getStrategyProviderDailyInterests: Array<
+    Maybe<D3mmStrategyProviderDailyInterest>
+  >;
   /** 策略的交易记录列表 */
   d3mm_getStrategySwapsList: D3mmPoolSwapPaginationResult;
   /** 用户的资产收益信息, 如果用户不存在则返回null */
@@ -13671,7 +13662,9 @@ export type Query = {
   dodoZoo?: Maybe<DodoZoo>;
   dodoZoos: Array<DodoZoo>;
   dodo_app_version_new?: Maybe<Dodo_App_VersionDodoAppVersion>;
-  dodo_two_anniversary_activity_list?: Maybe<Array<Maybe<Dodo_Two_Anniversary_ActivityDodoTwoAnniversaryActivityList>>>;
+  dodo_two_anniversary_activity_list?: Maybe<
+    Array<Maybe<Dodo_Two_Anniversary_ActivityDodoTwoAnniversaryActivityList>>
+  >;
   dodo_two_anniversary_h5_qa_activity_save?: Maybe<Dodo_Two_Anniversary_H5_Qa_ActivitySaveDodoTwoAnniversaryH5QaActivity>;
   /** 接受邀请 */
   dodochain_acceptInvite: Scalars['Boolean']['output'];
@@ -13702,7 +13695,9 @@ export type Query = {
   /** 获取twigs挖矿数据概览 */
   dodochain_getOverviewTwigsMine: DodochainTwigsMineOverview;
   /** 获取stake dashboard数据 */
-  dodochain_getStakeDashboardDatas: Array<Maybe<DodochainStakeDashboardDataResult>>;
+  dodochain_getStakeDashboardDatas: Array<
+    Maybe<DodochainStakeDashboardDataResult>
+  >;
   /** 获取twigs挖矿列表 */
   dodochain_getTwigsMineList: DodochainTwigsMinePaginationResult;
   /** 获取积分详情 阶段一 */
@@ -13747,8 +13742,12 @@ export type Query = {
   incentiveRewardHistories: Array<IncentiveRewardHistory>;
   incentiveRewardHistory?: Maybe<IncentiveRewardHistory>;
   limit_and_rfq_createPrivateOrder?: Maybe<Scalars['String']['output']>;
-  limit_and_rfq_getOrderStatusBroadcasts?: Maybe<Array<Maybe<Limit_And_RfqLimitOrderStatusBroadcastInfo>>>;
-  limit_and_rfq_getPendingOrderChainList?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
+  limit_and_rfq_getOrderStatusBroadcasts?: Maybe<
+    Array<Maybe<Limit_And_RfqLimitOrderStatusBroadcastInfo>>
+  >;
+  limit_and_rfq_getPendingOrderChainList?: Maybe<
+    Array<Maybe<Scalars['Int']['output']>>
+  >;
   limit_and_rfq_getPrivateOrder?: Maybe<Limit_And_RfqPrivateOrderInfo>;
   limit_and_rfq_limitOrderAmountLimit?: Maybe<Scalars['Float']['output']>;
   limit_and_rfq_limitOrderCancel?: Maybe<Limit_And_RfqCancelLimitOrderResponse>;
@@ -13869,13 +13868,17 @@ export type Query = {
   /** 获取被邀请者的交易列表 */
   referral_getReferrerTradesList: ReferralReferrerTradesPaginationResult;
   /** 获取未发放的返利记录 */
-  referral_getUnreleasedCommissionChainIds: Array<Maybe<Scalars['Int']['output']>>;
+  referral_getUnreleasedCommissionChainIds: Array<
+    Maybe<Scalars['Int']['output']>
+  >;
   /** 获取未发放的返利记录 */
   referral_getUnreleasedCommissionList: ReferralUnreleasedCommissionPaginationResult;
   registries: Array<Registry>;
   registry?: Maybe<Registry>;
   /** get request split config */
-  request_split_config_getRequestSplitConfig?: Maybe<Array<Maybe<Request_Split_ConfigRequestSplitConfigItem>>>;
+  request_split_config_getRequestSplitConfig?: Maybe<
+    Array<Maybe<Request_Split_ConfigRequestSplitConfigItem>>
+  >;
   rewardDetail?: Maybe<RewardDetail>;
   rewardDetails: Array<RewardDetail>;
   rfq_order_confirm?: Maybe<Rfq_OrderRfqConfimrOrderResult>;
@@ -13931,7 +13934,9 @@ export type Query = {
   userTokenBlances: Array<UserTokenBlance>;
   user_swap_orderHistories?: Maybe<User_SwapUserSwapOrder>;
   user_swap_pair_slippage_delete?: Maybe<User_Swap_Pair_SlippageJwt>;
-  user_swap_pair_slippage_list?: Maybe<Array<Maybe<User_Swap_Pair_SlippageUserSwapPairSlippageList>>>;
+  user_swap_pair_slippage_list?: Maybe<
+    Array<Maybe<User_Swap_Pair_SlippageUserSwapPairSlippageList>>
+  >;
   user_swap_pair_slippage_upsert?: Maybe<User_Swap_Pair_SlippageJwtAndList>;
   userprofile_asset?: Maybe<UserprofileUserProfile>;
   userprofile_inviteUser?: Maybe<UserprofileUserInvite>;
@@ -13963,18 +13968,15 @@ export type Query = {
   withdrawReserves: Array<WithdrawReserve>;
 };
 
-
 export type Query_MetaArgs = {
   block?: InputMaybe<Block_Height>;
 };
-
 
 export type QueryAccountArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<Account_Filter>;
 };
-
 
 export type QueryAccountsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -13985,28 +13987,23 @@ export type QueryAccountsArgs = {
   where?: InputMaybe<Account_Filter>;
 };
 
-
 export type QueryAchievement_DetailArgs = {
   where?: InputMaybe<AchievementDetail_Filter>;
 };
-
 
 export type QueryAchievement_MeArgs = {
   where?: InputMaybe<AchievementMe_Filter>;
 };
 
-
 export type QueryActivity_Banner_QueryArgs = {
   where?: InputMaybe<Activity_Bannerqueryilter>;
 };
-
 
 export type QueryAggregateFragmentArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<AggregateFragment_Filter>;
 };
-
 
 export type QueryAggregateFragmentsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14017,13 +14014,11 @@ export type QueryAggregateFragmentsArgs = {
   where?: InputMaybe<AggregateFragment_Filter>;
 };
 
-
 export type QueryAllArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<All_Filter>;
 };
-
 
 export type QueryAllsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14034,18 +14029,15 @@ export type QueryAllsArgs = {
   where?: InputMaybe<All_Filter>;
 };
 
-
 export type QueryAnnouncement_GetAnnouncementArgs = {
   lang?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type QueryApprovalArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<Approval_Filter>;
 };
-
 
 export type QueryApprovalsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14056,31 +14048,25 @@ export type QueryApprovalsArgs = {
   where?: InputMaybe<Approval_Filter>;
 };
 
-
 export type QueryAuction_AuctionActiveArgs = {
   where?: InputMaybe<AuctionactiveFilter>;
 };
-
 
 export type QueryAuction_AuctionDetailArgs = {
   where?: InputMaybe<AuctiondetailFilter>;
 };
 
-
 export type QueryAuction_AuctionListArgs = {
   where?: InputMaybe<AuctionlistFilter>;
 };
-
 
 export type QueryAuction_AuctionOperationRecordArgs = {
   where?: InputMaybe<AuctionoperationRecordFilter>;
 };
 
-
 export type QueryAuth_LoginArgs = {
   where?: InputMaybe<AuthLoginInput>;
 };
-
 
 export type QueryAvatarArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14088,13 +14074,11 @@ export type QueryAvatarArgs = {
   where?: InputMaybe<Avatar_Filter>;
 };
 
-
 export type QueryAvatarBalanceArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<AvatarBalance_Filter>;
 };
-
 
 export type QueryAvatarBalancesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14105,7 +14089,6 @@ export type QueryAvatarBalancesArgs = {
   where?: InputMaybe<AvatarBalance_Filter>;
 };
 
-
 export type QueryAvatarDecomposeHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -14115,13 +14098,11 @@ export type QueryAvatarDecomposeHistoriesArgs = {
   where?: InputMaybe<AvatarDecomposeHistory_Filter>;
 };
 
-
 export type QueryAvatarDecomposeHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<AvatarDecomposeHistory_Filter>;
 };
-
 
 export type QueryAvatarMintHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14132,13 +14113,11 @@ export type QueryAvatarMintHistoriesArgs = {
   where?: InputMaybe<AvatarMintHistory_Filter>;
 };
 
-
 export type QueryAvatarMintHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<AvatarMintHistory_Filter>;
 };
-
 
 export type QueryAvatarTransferHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14149,13 +14128,11 @@ export type QueryAvatarTransferHistoriesArgs = {
   where?: InputMaybe<AvatarTransferHistory_Filter>;
 };
 
-
 export type QueryAvatarTransferHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<AvatarTransferHistory_Filter>;
 };
-
 
 export type QueryAvatarsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14166,13 +14143,11 @@ export type QueryAvatarsArgs = {
   where?: InputMaybe<Avatar_Filter>;
 };
 
-
 export type QueryBalanceArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<Balance_Filter>;
 };
-
 
 export type QueryBalancesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14183,7 +14158,6 @@ export type QueryBalancesArgs = {
   where?: InputMaybe<Balance_Filter>;
 };
 
-
 export type QueryBidHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -14193,20 +14167,17 @@ export type QueryBidHistoriesArgs = {
   where?: InputMaybe<BidHistory_Filter>;
 };
 
-
 export type QueryBidHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<BidHistory_Filter>;
 };
 
-
 export type QueryBidPositionArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<BidPosition_Filter>;
 };
-
 
 export type QueryBidPositionsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14217,21 +14188,17 @@ export type QueryBidPositionsArgs = {
   where?: InputMaybe<BidPosition_Filter>;
 };
 
-
 export type QueryBrowser_GetRpcArgs = {
   where: BrowserChainInput;
 };
-
 
 export type QueryChart_GetOhlcv2ChartArgs = {
   where?: InputMaybe<ChartOhlcv2Input>;
 };
 
-
 export type QueryChart_GetOhlcvDataArgs = {
   where?: InputMaybe<ChartOhlcvInput>;
 };
-
 
 export type QueryClaimHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14242,20 +14209,17 @@ export type QueryClaimHistoriesArgs = {
   where?: InputMaybe<ClaimHistory_Filter>;
 };
 
-
 export type QueryClaimHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<ClaimHistory_Filter>;
 };
 
-
 export type QueryClaimedArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryClaimedsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14267,11 +14231,9 @@ export type QueryClaimedsArgs = {
   where?: InputMaybe<Claimed_Filter>;
 };
 
-
 export type QueryCoinmarketcap_Token_ListArgs = {
   where?: InputMaybe<Coinmarketcap_TokenCoinmarketcapTokenListFilter>;
 };
-
 
 export type QueryComponentArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14279,13 +14241,11 @@ export type QueryComponentArgs = {
   where?: InputMaybe<Component_Filter>;
 };
 
-
 export type QueryComponentBalanceArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<ComponentBalance_Filter>;
 };
-
 
 export type QueryComponentBalancesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14296,7 +14256,6 @@ export type QueryComponentBalancesArgs = {
   where?: InputMaybe<ComponentBalance_Filter>;
 };
 
-
 export type QueryComponentBurnHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -14306,13 +14265,11 @@ export type QueryComponentBurnHistoriesArgs = {
   where?: InputMaybe<ComponentBurnHistory_Filter>;
 };
 
-
 export type QueryComponentBurnHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<ComponentBurnHistory_Filter>;
 };
-
 
 export type QueryComponentMintHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14323,13 +14280,11 @@ export type QueryComponentMintHistoriesArgs = {
   where?: InputMaybe<ComponentMintHistory_Filter>;
 };
 
-
 export type QueryComponentMintHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<ComponentMintHistory_Filter>;
 };
-
 
 export type QueryComponentTransferHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14340,13 +14295,11 @@ export type QueryComponentTransferHistoriesArgs = {
   where?: InputMaybe<ComponentTransferHistory_Filter>;
 };
 
-
 export type QueryComponentTransferHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<ComponentTransferHistory_Filter>;
 };
-
 
 export type QueryComponentsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14357,13 +14310,11 @@ export type QueryComponentsArgs = {
   where?: InputMaybe<Component_Filter>;
 };
 
-
 export type QueryControllerArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<Controller_Filter>;
 };
-
 
 export type QueryControllersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14374,56 +14325,45 @@ export type QueryControllersArgs = {
   where?: InputMaybe<Controller_Filter>;
 };
 
-
 export type QueryCross_Chain_Swap_DodoOrderListArgs = {
   where?: InputMaybe<Cross_Chain_SwapdodoOrderListData>;
 };
-
 
 export type QueryCross_Chain_Swap_OrderCreateArgs = {
   data?: InputMaybe<Cross_Chain_SwaporderCreateData>;
 };
 
-
 export type QueryCross_Chain_Swap_OrderDetailArgs = {
   where?: InputMaybe<Cross_Chain_SwaporderDetailData>;
 };
-
 
 export type QueryCross_Chain_Swap_OrderListArgs = {
   where?: InputMaybe<Cross_Chain_SwaporderListData>;
 };
 
-
 export type QueryCross_Chain_Swap_OrderNewStatusArgs = {
   where?: InputMaybe<Cross_Chain_SwaporderNewStatusData>;
 };
-
 
 export type QueryCross_Chain_Swap_OrderRefundCountArgs = {
   where?: InputMaybe<Cross_Chain_SwaporderRefundCountData>;
 };
 
-
 export type QueryCross_Chain_Swap_RoutesV2Args = {
   data?: InputMaybe<Cross_Chain_SwaprouteData>;
 };
-
 
 export type QueryCross_Chain_Swap_TransactionEncodeArgs = {
   data?: InputMaybe<Cross_Chain_SwaptransactionEncodeData>;
 };
 
-
 export type QueryCross_Chain_Token_ListArgs = {
   where?: InputMaybe<Cross_Chain_TokentokenlistFilter>;
 };
 
-
 export type QueryCross_Chain_Token_TokenPairArgs = {
   where?: InputMaybe<Cross_Chain_TokentokenPairFilter>;
 };
-
 
 export type QueryCrowdPoolingArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14431,13 +14371,11 @@ export type QueryCrowdPoolingArgs = {
   where?: InputMaybe<CrowdPooling_Filter>;
 };
 
-
 export type QueryCrowdPoolingDayDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<CrowdPoolingDayData_Filter>;
 };
-
 
 export type QueryCrowdPoolingDayDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14448,13 +14386,11 @@ export type QueryCrowdPoolingDayDatasArgs = {
   where?: InputMaybe<CrowdPoolingDayData_Filter>;
 };
 
-
 export type QueryCrowdPoolingHourDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<CrowdPoolingHourData_Filter>;
 };
-
 
 export type QueryCrowdPoolingHourDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14465,7 +14401,6 @@ export type QueryCrowdPoolingHourDatasArgs = {
   where?: InputMaybe<CrowdPoolingHourData_Filter>;
 };
 
-
 export type QueryCrowdPoolingsArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -14475,148 +14410,119 @@ export type QueryCrowdPoolingsArgs = {
   where?: InputMaybe<CrowdPooling_Filter>;
 };
 
-
 export type QueryCrowd_Pooling_ListArgs = {
   where?: InputMaybe<Crowd_PoolingcrowdpoolingListFilter>;
 };
-
 
 export type QueryCrowd_Pooling_Read_Server_ListArgs = {
   where?: InputMaybe<Crowd_Pooling_Read_ServercrowdpoolingListFilter>;
 };
 
-
 export type QueryCrowd_Pooling_Read_Server_UnvoteArgs = {
   data?: InputMaybe<Crowd_Pooling_Read_ServercrowdpoolingUnvoteData>;
 };
-
 
 export type QueryCrowd_Pooling_Read_Server_VoteArgs = {
   data?: InputMaybe<Crowd_Pooling_Read_ServercrowdpoolingVoteData>;
 };
 
-
 export type QueryCrowd_Pooling_Read_Server_VoteListArgs = {
   where?: InputMaybe<Crowd_Pooling_Read_ServercrowdpoolingVoteListFilter>;
 };
-
 
 export type QueryCrowd_Pooling_Top_ListArgs = {
   where?: InputMaybe<Crowd_Poolinglist_Filter>;
 };
 
-
 export type QueryCrowd_Pooling_UnvoteArgs = {
   data?: InputMaybe<Crowd_PoolingcrowdpoolingUnvoteData>;
 };
-
 
 export type QueryCrowd_Pooling_VoteArgs = {
   data?: InputMaybe<Crowd_PoolingcrowdpoolingVoteData>;
 };
 
-
 export type QueryCrowd_Pooling_VoteListArgs = {
   where?: InputMaybe<Crowd_PoolingcrowdpoolingVoteListFilter>;
 };
-
 
 export type QueryD3mm_GetAssetDailyInterestsArgs = {
   where?: InputMaybe<D3mmTokenInput>;
 };
 
-
 export type QueryD3mm_GetAssetInfoArgs = {
   where?: InputMaybe<D3mmTokenOptionalUserInput>;
 };
-
 
 export type QueryD3mm_GetAssetOperationPaginationArgs = {
   where?: InputMaybe<D3mmChainUserTokenPaginationInput>;
 };
 
-
 export type QueryD3mm_GetAssetStrategiesListArgs = {
   where?: InputMaybe<D3mmChainTokenPaginationInput>;
 };
-
 
 export type QueryD3mm_GetAssetsListArgs = {
   where?: InputMaybe<D3mmChainUserPaginationInput>;
 };
 
-
 export type QueryD3mm_GetLiquidityProviderDailyProfitsArgs = {
   where?: InputMaybe<D3mmChainIdInput>;
 };
-
 
 export type QueryD3mm_GetOverviewArgs = {
   where?: InputMaybe<D3mmChainIdInput>;
 };
 
-
 export type QueryD3mm_GetStrategiesListArgs = {
   where?: InputMaybe<D3mmChainIdInput>;
 };
-
 
 export type QueryD3mm_GetStrategyAssetsArgs = {
   where?: InputMaybe<D3mmPoolInput>;
 };
 
-
 export type QueryD3mm_GetStrategyDailySwapsArgs = {
   where?: InputMaybe<D3mmPoolInput>;
 };
-
 
 export type QueryD3mm_GetStrategyInfoArgs = {
   where?: InputMaybe<D3mmPoolInput>;
 };
 
-
 export type QueryD3mm_GetStrategyProviderDailyInterestsArgs = {
   where?: InputMaybe<D3mmChainIdInput>;
 };
-
 
 export type QueryD3mm_GetStrategySwapsListArgs = {
   where?: InputMaybe<D3mmChainPoolPaginationInput>;
 };
 
-
 export type QueryD3mm_GetUserCapitalsInfoArgs = {
   where?: InputMaybe<D3mmUserInput>;
 };
-
 
 export type QueryD3mt_GetAssetListArgs = {
   where?: InputMaybe<D3mtPaginationInput>;
 };
 
-
 export type QueryD3mt_GetUserOverviewArgs = {
   where: D3mtUserInput;
 };
-
 
 export type QueryD3mt_GetUserPositionInfoArgs = {
   where: D3mtUserPositionInput;
 };
 
-
 export type QueryD3mt_GetUserPositionListArgs = {
   where: D3mtOptionalChainUserPositionStatusrPaginationInput;
 };
-
 
 export type QueryDOdoArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<Dodo_Filter>;
 };
-
 
 export type QueryDOdOsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14627,13 +14533,11 @@ export type QueryDOdOsArgs = {
   where?: InputMaybe<Dodo_Filter>;
 };
 
-
 export type QueryDailyScheduledTaskArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryDailyScheduledTasksArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14645,63 +14549,51 @@ export type QueryDailyScheduledTasksArgs = {
   where?: InputMaybe<DailyScheduledTask_Filter>;
 };
 
-
 export type QueryDashboard_Chain_Day_DataArgs = {
   where?: InputMaybe<Dashboardchain_Daily_Data_Filter>;
 };
-
 
 export type QueryDashboard_Chain_Summary_And_Daily_DataArgs = {
   where?: InputMaybe<Dashboardchain_Daily_Data_Filter>;
 };
 
-
 export type QueryDashboard_Pair_Count_Data_Range_TimeArgs = {
   where?: InputMaybe<Dashboardpair_Data_Filter>;
 };
-
 
 export type QueryDashboard_Pairs_Count_DataArgs = {
   where?: InputMaybe<Dashboardtype_Filter>;
 };
 
-
 export type QueryDashboard_Pairs_Day_DataArgs = {
   where?: InputMaybe<Dashboardday_Filter>;
 };
-
 
 export type QueryDashboard_Pairs_DetailArgs = {
   where?: InputMaybe<Dashboardpair_Detail_Filter>;
 };
 
-
 export type QueryDashboard_Pairs_Hour_DataArgs = {
   where?: InputMaybe<Dashboardhour_Filter>;
 };
-
 
 export type QueryDashboard_Pairs_ListArgs = {
   where?: InputMaybe<Dashboardtype_List_Filter>;
 };
 
-
 export type QueryDashboard_Pairs_Pair_Symbol_ListArgs = {
   where?: InputMaybe<Dashboardsymbol_Detail_Filter>;
 };
 
-
 export type QueryDashboard_Pairs_Rate_24Args = {
   where?: InputMaybe<Dashboardrate24h_Filter>;
 };
-
 
 export type QueryDecimalValueArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<DecimalValue_Filter>;
 };
-
 
 export type QueryDecimalValuesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14712,7 +14604,6 @@ export type QueryDecimalValuesArgs = {
   where?: InputMaybe<DecimalValue_Filter>;
 };
 
-
 export type QueryDepositHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -14722,25 +14613,21 @@ export type QueryDepositHistoriesArgs = {
   where?: InputMaybe<DepositHistory_Filter>;
 };
 
-
 export type QueryDepositHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<DepositHistory_Filter>;
 };
 
-
 export type QueryDip_Whitelist_ListArgs = {
   where?: InputMaybe<Dip_WhitelistlistFilter>;
 };
-
 
 export type QueryDodoAvatarArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<DodoAvatar_Filter>;
 };
-
 
 export type QueryDodoAvatarsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14751,13 +14638,11 @@ export type QueryDodoAvatarsArgs = {
   where?: InputMaybe<DodoAvatar_Filter>;
 };
 
-
 export type QueryDodoDayDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<DodoDayData_Filter>;
 };
-
 
 export type QueryDodoDayDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14768,13 +14653,11 @@ export type QueryDodoDayDatasArgs = {
   where?: InputMaybe<DodoDayData_Filter>;
 };
 
-
 export type QueryDodoStarterArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<DodoStarter_Filter>;
 };
-
 
 export type QueryDodoStartersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14785,13 +14668,11 @@ export type QueryDodoStartersArgs = {
   where?: InputMaybe<DodoStarter_Filter>;
 };
 
-
 export type QueryDodoTokenArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<DodoToken_Filter>;
 };
-
 
 export type QueryDodoTokensArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14802,13 +14683,11 @@ export type QueryDodoTokensArgs = {
   where?: InputMaybe<DodoToken_Filter>;
 };
 
-
 export type QueryDodoZooArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<DodoZoo_Filter>;
 };
-
 
 export type QueryDodoZoosArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14819,131 +14698,105 @@ export type QueryDodoZoosArgs = {
   where?: InputMaybe<DodoZoo_Filter>;
 };
 
-
 export type QueryDodo_App_Version_NewArgs = {
   where?: InputMaybe<Dodo_App_VersionnewFilter>;
 };
-
 
 export type QueryDodo_Two_Anniversary_Activity_ListArgs = {
   where?: InputMaybe<Dodo_Two_Anniversary_ActivitylistFilter>;
 };
 
-
 export type QueryDodo_Two_Anniversary_H5_Qa_Activity_SaveArgs = {
   data?: InputMaybe<Dodo_Two_Anniversary_H5_Qa_ActivitysaveData>;
 };
-
 
 export type QueryDodochain_AcceptInviteArgs = {
   where: DodochainUserAcceptInvitationInput;
 };
 
-
 export type QueryDodochain_Activity_GetClaimActivityArgs = {
   where: Dodochain_ActivityUserPaginationInput;
 };
-
 
 export type QueryDodochain_Activity_GetLiquidityActivityArgs = {
   where: Dodochain_ActivityUserPaginationInput;
 };
 
-
 export type QueryDodochain_Activity_GetStakeActivityArgs = {
   where: Dodochain_ActivityUserPaginationInput;
 };
-
 
 export type QueryDodochain_Assets_GetAssetsDataArgs = {
   where: Dodochain_AssetsUserInput;
 };
 
-
 export type QueryDodochain_Assets_GetClaimableRewardsDataArgs = {
   where: Dodochain_AssetsUserInput;
 };
-
 
 export type QueryDodochain_Assets_GetLpDepositedDataArgs = {
   where: Dodochain_AssetsUserInput;
 };
 
-
 export type QueryDodochain_Assets_GetStakedDataArgs = {
   where: Dodochain_AssetsUserInput;
 };
-
 
 export type QueryDodochain_Assets_GetWalletBalanceDataArgs = {
   where: Dodochain_AssetsUserInput;
 };
 
-
 export type QueryDodochain_Dashboard_GetBridgeDataChartArgs = {
   where?: InputMaybe<Dodochain_DashboardBridgeDataChartInput>;
 };
-
 
 export type QueryDodochain_Dashboard_GetLiquidityStakeChartArgs = {
   where?: InputMaybe<Dodochain_DashboardChatInput>;
 };
 
-
 export type QueryDodochain_Dashboard_GetSupportTokensArgs = {
   where: Dodochain_DashboardOnlyEvmOrBtcInput;
 };
-
 
 export type QueryDodochain_Earn_ListArgs = {
   where?: InputMaybe<Dodochain_Earnlist_Filter>;
 };
 
-
 export type QueryDodochain_GetInviteCodeArgs = {
   where: DodochainUserInput;
 };
-
 
 export type QueryDodochain_GetInviteStatusArgs = {
   where: DodochainUserInput;
 };
 
-
 export type QueryDodochain_GetInviteesListArgs = {
   where: DodochainUserPaginationInput;
 };
-
 
 export type QueryDodochain_GetTwigsMineListArgs = {
   where?: InputMaybe<DodochaintwigsMineInput>;
 };
 
-
 export type QueryDodochain_GetUserPointsDetailJourneyOneArgs = {
   where: DodochainUserInput;
 };
-
 
 export type QueryDodochain_GetUserPointsJourneyOneArgs = {
   where?: InputMaybe<DodochainUserInput>;
 };
 
-
 export type QueryDodochain_GetUserStakedHistoryListJourneyOneArgs = {
   where?: InputMaybe<DodochainuserStakedInput>;
 };
-
 
 export type QueryDodochain_GetUserStakedListJourneyOneArgs = {
   where?: InputMaybe<DodochainuserStakedInput>;
 };
 
-
 export type QueryDodochain_GetUserTwigsMineListArgs = {
   where?: InputMaybe<DodochainuserTwigsMineInput>;
 };
-
 
 export type QueryDonateHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -14954,63 +14807,51 @@ export type QueryDonateHistoriesArgs = {
   where?: InputMaybe<DonateHistory_Filter>;
 };
 
-
 export type QueryDonateHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<DonateHistory_Filter>;
 };
 
-
 export type QueryDpoint_GetActivityInfoArgs = {
   where?: InputMaybe<DpointChainOptionalUserInput>;
 };
-
 
 export type QueryDpoint_GetUserClaimedListArgs = {
   where?: InputMaybe<DpointChainUserPaginationInput>;
 };
 
-
 export type QueryDpoint_GetUserPointsListArgs = {
   where?: InputMaybe<DpointChainUserPaginationInput>;
 };
-
 
 export type QueryDpoint_GetUserRewardInfosArgs = {
   where?: InputMaybe<DpointChainUserInput>;
 };
 
-
 export type QueryErc20_Extend_Erc20ExtendArgs = {
   where?: InputMaybe<Erc20_Extenderc20ExtendFilter>;
 };
-
 
 export type QueryErc20_Extend_Erc20ExtendV2Args = {
   where?: InputMaybe<Erc20_Extenderc20ExtendV2Filter>;
 };
 
-
 export type QueryErc20_ListArgs = {
   where?: InputMaybe<Erc20listFilter>;
 };
-
 
 export type QueryErc20_ListV2Args = {
   where?: InputMaybe<Erc20listV2Filter>;
 };
 
-
 export type QueryErc20_RelationListArgs = {
   where?: InputMaybe<Erc20relationListFilter>;
 };
 
-
 export type QueryErc20_SwapCrossChainListArgs = {
   where?: InputMaybe<Erc20listV2Filter>;
 };
-
 
 export type QueryFilterArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15018,13 +14859,11 @@ export type QueryFilterArgs = {
   where?: InputMaybe<Filter_Filter>;
 };
 
-
 export type QueryFilterAdminArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<FilterAdmin_Filter>;
 };
-
 
 export type QueryFilterAdminsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15035,13 +14874,11 @@ export type QueryFilterAdminsArgs = {
   where?: InputMaybe<FilterAdmin_Filter>;
 };
 
-
 export type QueryFilterNftArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<FilterNft_Filter>;
 };
-
 
 export type QueryFilterNftsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15052,13 +14889,11 @@ export type QueryFilterNftsArgs = {
   where?: InputMaybe<FilterNft_Filter>;
 };
 
-
 export type QueryFilterSpreadIdArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<FilterSpreadId_Filter>;
 };
-
 
 export type QueryFilterSpreadIdsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15069,7 +14904,6 @@ export type QueryFilterSpreadIdsArgs = {
   where?: InputMaybe<FilterSpreadId_Filter>;
 };
 
-
 export type QueryFiltersArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -15079,13 +14913,11 @@ export type QueryFiltersArgs = {
   where?: InputMaybe<Filter_Filter>;
 };
 
-
 export type QueryFlashLoanArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<FlashLoan_Filter>;
 };
-
 
 export type QueryFlashLoansArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15096,13 +14928,11 @@ export type QueryFlashLoansArgs = {
   where?: InputMaybe<FlashLoan_Filter>;
 };
 
-
 export type QueryFragmentArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<Fragment_Filter>;
 };
-
 
 export type QueryFragmentsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15113,11 +14943,9 @@ export type QueryFragmentsArgs = {
   where?: InputMaybe<Fragment_Filter>;
 };
 
-
 export type QueryGas_Feeder_GetGasPricesArgs = {
   where?: InputMaybe<Gas_FeedergasPrices>;
 };
-
 
 export type QueryIncentiveRewardHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15128,80 +14956,65 @@ export type QueryIncentiveRewardHistoriesArgs = {
   where?: InputMaybe<IncentiveRewardHistory_Filter>;
 };
 
-
 export type QueryIncentiveRewardHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<IncentiveRewardHistory_Filter>;
 };
 
-
 export type QueryLimit_And_Rfq_CreatePrivateOrderArgs = {
   where?: InputMaybe<Limit_And_RfqcreatePrivateOrderInfo>;
 };
-
 
 export type QueryLimit_And_Rfq_GetOrderStatusBroadcastsArgs = {
   where?: InputMaybe<Limit_And_RfqgetPendingLimitOrderParam>;
 };
 
-
 export type QueryLimit_And_Rfq_GetPendingOrderChainListArgs = {
   where?: InputMaybe<Limit_And_RfqgetPendingLimitOrderParam>;
 };
-
 
 export type QueryLimit_And_Rfq_GetPrivateOrderArgs = {
   where?: InputMaybe<Limit_And_RfqgetPrivateOrderParam>;
 };
 
-
 export type QueryLimit_And_Rfq_LimitOrderAmountLimitArgs = {
   where?: InputMaybe<Limit_And_RfqlimitOrderAmountLimitParam>;
 };
-
 
 export type QueryLimit_And_Rfq_LimitOrderCancelArgs = {
   where?: InputMaybe<Limit_And_RfquserCancelLimitOrder>;
 };
 
-
 export type QueryLimit_And_Rfq_LimitOrderCreateArgs = {
   where?: InputMaybe<Limit_And_RfquserCreateLimitOrder>;
 };
-
 
 export type QueryLimit_And_Rfq_LimitOrderCreateV2Args = {
   where?: InputMaybe<Limit_And_RfquserCreateLimitOrderV2>;
 };
 
-
 export type QueryLimit_And_Rfq_LimitOrderFeeArgs = {
   where?: InputMaybe<Limit_And_RfquserQueryLimitOrderFee>;
 };
-
 
 export type QueryLimit_And_Rfq_LimitOrderListArgs = {
   where?: InputMaybe<Limit_And_RfquserQueryLimitOrderList>;
 };
 
-
 export type QueryLimit_And_Rfq_LimitOrderListWithPageArgs = {
   where?: InputMaybe<Limit_And_RfquserQueryLimitOrderListWithPage>;
 };
 
-
 export type QueryLimit_And_Rfq_LimitOrderListWithPageV2Args = {
   where?: InputMaybe<Limit_And_RfquserQueryLimitOrderListWithPage>;
 };
-
 
 export type QueryLiquidatorArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryLiquidatorsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15213,7 +15026,6 @@ export type QueryLiquidatorsArgs = {
   where?: InputMaybe<Liquidator_Filter>;
 };
 
-
 export type QueryLiquidityHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -15223,20 +15035,17 @@ export type QueryLiquidityHistoriesArgs = {
   where?: InputMaybe<LiquidityHistory_Filter>;
 };
 
-
 export type QueryLiquidityHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<LiquidityHistory_Filter>;
 };
 
-
 export type QueryLiquidityPositionArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<LiquidityPosition_Filter>;
 };
-
 
 export type QueryLiquidityPositionsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15247,33 +15056,27 @@ export type QueryLiquidityPositionsArgs = {
   where?: InputMaybe<LiquidityPosition_Filter>;
 };
 
-
 export type QueryLiquidity_Count_DataArgs = {
   where?: InputMaybe<Liquiditycount_Data_Query>;
 };
-
 
 export type QueryLiquidity_GetLpPartnerRewardsArgs = {
   where?: InputMaybe<LiquidityLpPartnerRewardsInput>;
 };
 
-
 export type QueryLiquidity_ListArgs = {
   where?: InputMaybe<Liquiditylist_Filter>;
 };
 
-
 export type QueryLiquidity_Pool_Apy_UserArgs = {
   where?: InputMaybe<Liquiditypool_Apy_Query>;
 };
-
 
 export type QueryLpTokenArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<LpToken_Filter>;
 };
-
 
 export type QueryLpTokensArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15284,7 +15087,6 @@ export type QueryLpTokensArgs = {
   where?: InputMaybe<LpToken_Filter>;
 };
 
-
 export type QueryMaintainerEarningsArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -15294,13 +15096,11 @@ export type QueryMaintainerEarningsArgs = {
   where?: InputMaybe<MaintainerEarnings_Filter>;
 };
 
-
 export type QueryMaintainerFeeTxArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<MaintainerFeeTx_Filter>;
 };
-
 
 export type QueryMaintainerFeeTxesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15311,13 +15111,11 @@ export type QueryMaintainerFeeTxesArgs = {
   where?: InputMaybe<MaintainerFeeTx_Filter>;
 };
 
-
 export type QueryMakerArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryMakersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15329,33 +15127,27 @@ export type QueryMakersArgs = {
   where?: InputMaybe<Maker_Filter>;
 };
 
-
 export type QueryManage_Dpp_ConfigArgs = {
   where?: InputMaybe<ManagechainFilter>;
 };
-
 
 export type QueryManage_Service_GetCautionsV2Args = {
   where?: InputMaybe<Manage_ServiceCautionTokensInput>;
 };
 
-
 export type QueryManage_Slippage_Tolerance_ListArgs = {
   where?: InputMaybe<ManagechainFilter>;
 };
 
-
 export type QueryMarket_Maker_Pool_Apply_CreateArgs = {
   data?: InputMaybe<Market_Maker_Pool_ApplypoolApplyData>;
 };
-
 
 export type QueryMinePoolArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<MinePool_Filter>;
 };
-
 
 export type QueryMinePoolsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15366,13 +15158,11 @@ export type QueryMinePoolsArgs = {
   where?: InputMaybe<MinePool_Filter>;
 };
 
-
 export type QueryMiningPoolArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<MiningPool_Filter>;
 };
-
 
 export type QueryMiningPoolsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15383,26 +15173,21 @@ export type QueryMiningPoolsArgs = {
   where?: InputMaybe<MiningPool_Filter>;
 };
 
-
 export type QueryMining_GetRewardDetailHistoryArgs = {
   where?: InputMaybe<MiningrewardDetailHistory_Filter>;
 };
-
 
 export type QueryMining_InfoArgs = {
   where?: InputMaybe<Mininginfo_Filter>;
 };
 
-
 export type QueryMining_InfosArgs = {
   where?: InputMaybe<Mininginfo_Filter>;
 };
 
-
 export type QueryMining_ListArgs = {
   where?: InputMaybe<Miningmining_List_Filter>;
 };
-
 
 export type QueryMintHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15413,13 +15198,11 @@ export type QueryMintHistoriesArgs = {
   where?: InputMaybe<MintHistory_Filter>;
 };
 
-
 export type QueryMintHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<MintHistory_Filter>;
 };
-
 
 export type QueryNftArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15427,13 +15210,11 @@ export type QueryNftArgs = {
   where?: InputMaybe<Nft_Filter>;
 };
 
-
 export type QueryNftCollateralVaultArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<NftCollateralVault_Filter>;
 };
-
 
 export type QueryNftCollateralVaultsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15444,13 +15225,11 @@ export type QueryNftCollateralVaultsArgs = {
   where?: InputMaybe<NftCollateralVault_Filter>;
 };
 
-
 export type QueryNftPoolArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<NftPool_Filter>;
 };
-
 
 export type QueryNftPoolsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15461,11 +15240,9 @@ export type QueryNftPoolsArgs = {
   where?: InputMaybe<NftPool_Filter>;
 };
 
-
 export type QueryNft_Contract_ListArgs = {
   where?: InputMaybe<Nft_Contractlist_Filter>;
 };
-
 
 export type QueryNftsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15476,26 +15253,21 @@ export type QueryNftsArgs = {
   where?: InputMaybe<Nft_Filter>;
 };
 
-
 export type QueryNotice_Center_SystemListArgs = {
   where?: InputMaybe<Notice_CentersystemListFilter>;
 };
-
 
 export type QueryNotice_Center_SystemReadArgs = {
   data?: InputMaybe<Notice_CenternoticeCenterReadData>;
 };
 
-
 export type QueryNotice_Center_TransactionListArgs = {
   where?: InputMaybe<Notice_CentertransactionListFilter>;
 };
 
-
 export type QueryNotice_Center_UnreadArgs = {
   where?: InputMaybe<Notice_CenternoticeCenterUnreadFilter>;
 };
-
 
 export type QueryOrderHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15506,13 +15278,11 @@ export type QueryOrderHistoriesArgs = {
   where?: InputMaybe<OrderHistory_Filter>;
 };
 
-
 export type QueryOrderHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<OrderHistory_Filter>;
 };
-
 
 export type QueryOwnerArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15520,13 +15290,11 @@ export type QueryOwnerArgs = {
   where?: InputMaybe<Owner_Filter>;
 };
 
-
 export type QueryOwnerPerTokenContractArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<OwnerPerTokenContract_Filter>;
 };
-
 
 export type QueryOwnerPerTokenContractsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15537,7 +15305,6 @@ export type QueryOwnerPerTokenContractsArgs = {
   where?: InputMaybe<OwnerPerTokenContract_Filter>;
 };
 
-
 export type QueryOwnersArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -15547,20 +15314,17 @@ export type QueryOwnersArgs = {
   where?: InputMaybe<Owner_Filter>;
 };
 
-
 export type QueryPairArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<Pair_Filter>;
 };
 
-
 export type QueryPairDayDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<PairDayData_Filter>;
 };
-
 
 export type QueryPairDayDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15571,13 +15335,11 @@ export type QueryPairDayDatasArgs = {
   where?: InputMaybe<PairDayData_Filter>;
 };
 
-
 export type QueryPairHourDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<PairHourData_Filter>;
 };
-
 
 export type QueryPairHourDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15588,13 +15350,11 @@ export type QueryPairHourDatasArgs = {
   where?: InputMaybe<PairHourData_Filter>;
 };
 
-
 export type QueryPairTraderArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<PairTrader_Filter>;
 };
-
 
 export type QueryPairTradersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15605,11 +15365,9 @@ export type QueryPairTradersArgs = {
   where?: InputMaybe<PairTrader_Filter>;
 };
 
-
 export type QueryPair_HotsArgs = {
   where?: InputMaybe<Pairhots_List_Info_Filter>;
 };
-
 
 export type QueryPairsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15620,20 +15378,17 @@ export type QueryPairsArgs = {
   where?: InputMaybe<Pair_Filter>;
 };
 
-
 export type QueryPersistentStringArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<PersistentString_Filter>;
 };
 
-
 export type QueryPersistentStringArrayArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<PersistentStringArray_Filter>;
 };
-
 
 export type QueryPersistentStringArraysArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15644,7 +15399,6 @@ export type QueryPersistentStringArraysArgs = {
   where?: InputMaybe<PersistentStringArray_Filter>;
 };
 
-
 export type QueryPersistentStringsArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -15654,20 +15408,17 @@ export type QueryPersistentStringsArgs = {
   where?: InputMaybe<PersistentString_Filter>;
 };
 
-
 export type QueryPoolArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<Pool_Filter>;
 };
 
-
 export type QueryPoolDayDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryPoolDayDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15679,13 +15430,11 @@ export type QueryPoolDayDatasArgs = {
   where?: InputMaybe<PoolDayData_Filter>;
 };
 
-
 export type QueryPoolFundingArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryPoolFundingsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15697,13 +15446,11 @@ export type QueryPoolFundingsArgs = {
   where?: InputMaybe<PoolFunding_Filter>;
 };
 
-
 export type QueryPoolTokenArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryPoolTokenHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15715,13 +15462,11 @@ export type QueryPoolTokenHistoriesArgs = {
   where?: InputMaybe<PoolTokenHistory_Filter>;
 };
 
-
 export type QueryPoolTokenHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryPoolTokensArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15733,7 +15478,6 @@ export type QueryPoolTokensArgs = {
   where?: InputMaybe<PoolToken_Filter>;
 };
 
-
 export type QueryPoolTradeHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -15743,18 +15487,15 @@ export type QueryPoolTradeHistoriesArgs = {
   where?: InputMaybe<PoolTradeHistory_Filter>;
 };
 
-
 export type QueryPoolTradeHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<PoolTradeHistory_Filter>;
 };
 
-
 export type QueryPool_Real_Volume_UsdArgs = {
   where?: InputMaybe<Poolreal_Volume_Usd_Filter>;
 };
-
 
 export type QueryPoolsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15765,36 +15506,29 @@ export type QueryPoolsArgs = {
   where?: InputMaybe<Pool_Filter>;
 };
 
-
 export type QueryQuest3_GetGaslessVolumeArgs = {
   where?: InputMaybe<Quest3UserFilterInput>;
 };
-
 
 export type QueryQuest3_GetLimitpriceVolumeArgs = {
   where?: InputMaybe<Quest3UserFilterInput>;
 };
 
-
 export type QueryQuest3_GetLpQualifiedArgs = {
   where?: InputMaybe<Quest3UserLpQualifiedFilterInput>;
 };
-
 
 export type QueryQuest3_GetMiningQualifiedArgs = {
   where?: InputMaybe<Quest3UserMiningQualifiedFilterInput>;
 };
 
-
 export type QueryQuest3_GetSwapVolumeArgs = {
   where?: InputMaybe<Quest3UserFilterInput>;
 };
 
-
 export type QueryQuest3_GetVdodoAmountArgs = {
   where?: InputMaybe<Quest3UserFilterInput>;
 };
-
 
 export type QueryRedeemHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15805,63 +15539,51 @@ export type QueryRedeemHistoriesArgs = {
   where?: InputMaybe<RedeemHistory_Filter>;
 };
 
-
 export type QueryRedeemHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<RedeemHistory_Filter>;
 };
 
-
 export type QueryReferral_AcceptArgs = {
   where: ReferralUserAcceptInvitationInput;
 };
-
 
 export type QueryReferral_GetCommissionReleasesListArgs = {
   where: ReferralUserPaginationInput;
 };
 
-
 export type QueryReferral_GetInviteStatusArgs = {
   where: ReferralUserInput;
 };
-
 
 export type QueryReferral_GetInviterStatsArgs = {
   where: ReferralUserInput;
 };
 
-
 export type QueryReferral_GetReferrerListArgs = {
   where: ReferralUserPaginationInput;
 };
-
 
 export type QueryReferral_GetReferrerStatsArgs = {
   where: ReferralUserInput;
 };
 
-
 export type QueryReferral_GetReferrerTradesChainIdsArgs = {
   where: ReferralUserInput;
 };
-
 
 export type QueryReferral_GetReferrerTradesListArgs = {
   where: ReferralChainUserPaginationInput;
 };
 
-
 export type QueryReferral_GetUnreleasedCommissionChainIdsArgs = {
   where: ReferralUserTypeInput;
 };
 
-
 export type QueryReferral_GetUnreleasedCommissionListArgs = {
   where: ReferralChainUserTypePaginationInput;
 };
-
 
 export type QueryRegistriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15873,20 +15595,17 @@ export type QueryRegistriesArgs = {
   where?: InputMaybe<Registry_Filter>;
 };
 
-
 export type QueryRegistryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryRewardDetailArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<RewardDetail_Filter>;
 };
-
 
 export type QueryRewardDetailsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15897,28 +15616,23 @@ export type QueryRewardDetailsArgs = {
   where?: InputMaybe<RewardDetail_Filter>;
 };
 
-
 export type QueryRfq_Order_ConfirmArgs = {
   where?: InputMaybe<Rfq_OrderRfqConfimrOrder>;
 };
-
 
 export type QueryRfq_Order_InquiryArgs = {
   where?: InputMaybe<Rfq_OrderRfqInquiry>;
 };
 
-
 export type QueryRfq_Order_TokenPairsArgs = {
   where?: InputMaybe<Rfq_OrderRfqTokenPairs>;
 };
-
 
 export type QueryRouterArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryRoutersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15930,13 +15644,11 @@ export type QueryRoutersArgs = {
   where?: InputMaybe<Router_Filter>;
 };
 
-
 export type QuerySetPoolInfoArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QuerySetPoolInfosArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15948,13 +15660,11 @@ export type QuerySetPoolInfosArgs = {
   where?: InputMaybe<SetPoolInfo_Filter>;
 };
 
-
 export type QuerySetVaultInfoArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QuerySetVaultInfosArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15966,13 +15676,11 @@ export type QuerySetVaultInfosArgs = {
   where?: InputMaybe<SetVaultInfo_Filter>;
 };
 
-
 export type QueryStarterArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<Starter_Filter>;
 };
-
 
 export type QueryStartersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -15983,13 +15691,11 @@ export type QueryStartersArgs = {
   where?: InputMaybe<Starter_Filter>;
 };
 
-
 export type QuerySwapArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<Swap_Filter>;
 };
-
 
 export type QuerySwapsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16000,11 +15706,9 @@ export type QuerySwapsArgs = {
   where?: InputMaybe<Swap_Filter>;
 };
 
-
 export type QueryThird_Party_Token_ListArgs = {
   data?: InputMaybe<Third_Party_TokenlistData>;
 };
-
 
 export type QueryTokenArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16012,13 +15716,11 @@ export type QueryTokenArgs = {
   where?: InputMaybe<Token_Filter>;
 };
 
-
 export type QueryTokenContractArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<TokenContract_Filter>;
 };
-
 
 export type QueryTokenContractsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16029,13 +15731,11 @@ export type QueryTokenContractsArgs = {
   where?: InputMaybe<TokenContract_Filter>;
 };
 
-
 export type QueryTokenDayDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<TokenDayData_Filter>;
 };
-
 
 export type QueryTokenDayDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16046,7 +15746,6 @@ export type QueryTokenDayDatasArgs = {
   where?: InputMaybe<TokenDayData_Filter>;
 };
 
-
 export type QueryTokenRegistriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -16056,20 +15755,17 @@ export type QueryTokenRegistriesArgs = {
   where?: InputMaybe<TokenRegistry_Filter>;
 };
 
-
 export type QueryTokenRegistryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<TokenRegistry_Filter>;
 };
 
-
 export type QueryTokenTraderArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<TokenTrader_Filter>;
 };
-
 
 export type QueryTokenTradersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16080,16 +15776,13 @@ export type QueryTokenTradersArgs = {
   where?: InputMaybe<TokenTrader_Filter>;
 };
 
-
 export type QueryToken_Info_BalancesArgs = {
   data?: InputMaybe<Token_InfoTokenBalanceListData>;
 };
 
-
 export type QueryToken_Info_BalancesV2Args = {
   data?: InputMaybe<Token_InfoTokenBalanceListDataV2>;
 };
-
 
 export type QueryTokensArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16100,18 +15793,15 @@ export type QueryTokensArgs = {
   where?: InputMaybe<Token_Filter>;
 };
 
-
 export type QueryTokens_GetCautionsArgs = {
   where?: InputMaybe<TokensCautionTokensInput>;
 };
-
 
 export type QueryTradeHistoryTransferDetailArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<TradeHistoryTransferDetail_Filter>;
 };
-
 
 export type QueryTradeHistoryTransferDetailsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16122,13 +15812,11 @@ export type QueryTradeHistoryTransferDetailsArgs = {
   where?: InputMaybe<TradeHistoryTransferDetail_Filter>;
 };
 
-
 export type QueryTradingIncentiveArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<TradingIncentive_Filter>;
 };
-
 
 export type QueryTradingIncentivesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16139,13 +15827,11 @@ export type QueryTradingIncentivesArgs = {
   where?: InputMaybe<TradingIncentive_Filter>;
 };
 
-
 export type QueryTransactionArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<Transaction_Filter>;
 };
-
 
 export type QueryTransactionsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16156,13 +15842,11 @@ export type QueryTransactionsArgs = {
   where?: InputMaybe<Transaction_Filter>;
 };
 
-
 export type QueryTransferArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<Transfer_Filter>;
 };
-
 
 export type QueryTransferHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16173,13 +15857,11 @@ export type QueryTransferHistoriesArgs = {
   where?: InputMaybe<TransferHistory_Filter>;
 };
 
-
 export type QueryTransferHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<TransferHistory_Filter>;
 };
-
 
 export type QueryTransfersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16190,20 +15872,17 @@ export type QueryTransfersArgs = {
   where?: InputMaybe<Transfer_Filter>;
 };
 
-
 export type QueryUserArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<User_Filter>;
 };
 
-
 export type QueryUserDayDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<UserDayData_Filter>;
 };
-
 
 export type QueryUserDayDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16214,13 +15893,11 @@ export type QueryUserDayDatasArgs = {
   where?: InputMaybe<UserDayData_Filter>;
 };
 
-
 export type QueryUserFundingArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryUserFundingsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16232,13 +15909,11 @@ export type QueryUserFundingsArgs = {
   where?: InputMaybe<UserFunding_Filter>;
 };
 
-
 export type QueryUserNftArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<UserNft_Filter>;
 };
-
 
 export type QueryUserNftsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16249,7 +15924,6 @@ export type QueryUserNftsArgs = {
   where?: InputMaybe<UserNft_Filter>;
 };
 
-
 export type QueryUserOperationHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -16259,20 +15933,17 @@ export type QueryUserOperationHistoriesArgs = {
   where?: InputMaybe<UserOperationHistory_Filter>;
 };
 
-
 export type QueryUserOperationHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<UserOperationHistory_Filter>;
 };
 
-
 export type QueryUserStakeArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<UserStake_Filter>;
 };
-
 
 export type QueryUserStakesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16283,13 +15954,11 @@ export type QueryUserStakesArgs = {
   where?: InputMaybe<UserStake_Filter>;
 };
 
-
 export type QueryUserTokenBlanceArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<UserTokenBlance_Filter>;
 };
-
 
 export type QueryUserTokenBlancesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16300,51 +15969,41 @@ export type QueryUserTokenBlancesArgs = {
   where?: InputMaybe<UserTokenBlance_Filter>;
 };
 
-
 export type QueryUser_Swap_OrderHistoriesArgs = {
   where?: InputMaybe<User_SwapswapFilter>;
 };
-
 
 export type QueryUser_Swap_Pair_Slippage_DeleteArgs = {
   data?: InputMaybe<User_Swap_Pair_SlippagedeleteData>;
 };
 
-
 export type QueryUser_Swap_Pair_Slippage_ListArgs = {
   where?: InputMaybe<User_Swap_Pair_SlippagelistFilter>;
 };
-
 
 export type QueryUser_Swap_Pair_Slippage_UpsertArgs = {
   data?: InputMaybe<User_Swap_Pair_SlippageupsertData>;
 };
 
-
 export type QueryUserprofile_AssetArgs = {
   where?: InputMaybe<UserprofileAsset_Filter>;
 };
-
 
 export type QueryUserprofile_InviteUserArgs = {
   where?: InputMaybe<UserprofileUserInviteFilter>;
 };
 
-
 export type QueryUserprofile_NftAssetsArgs = {
   where?: InputMaybe<UserprofileNftAssetsFilter>;
 };
-
 
 export type QueryUserprofile_PrivatePoolsArgs = {
   where?: InputMaybe<Userprofileprivate_Pools_List_Filter>;
 };
 
-
 export type QueryUserprofile_RewardArgs = {
   where?: InputMaybe<UserprofileReward_Filter>;
 };
-
 
 export type QueryUsersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16355,13 +16014,11 @@ export type QueryUsersArgs = {
   where?: InputMaybe<User_Filter>;
 };
 
-
 export type QueryVDodoArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<VDodo_Filter>;
 };
-
 
 export type QueryVDodOsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16372,13 +16029,11 @@ export type QueryVDodOsArgs = {
   where?: InputMaybe<VDodo_Filter>;
 };
 
-
 export type QueryVaultArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryVaultAssetInfoArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16386,13 +16041,11 @@ export type QueryVaultAssetInfoArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryVaultAssetInfoDayDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryVaultAssetInfoDayDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16404,7 +16057,6 @@ export type QueryVaultAssetInfoDayDatasArgs = {
   where?: InputMaybe<VaultAssetInfoDayData_Filter>;
 };
 
-
 export type QueryVaultAssetInfoHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -16415,13 +16067,11 @@ export type QueryVaultAssetInfoHistoriesArgs = {
   where?: InputMaybe<VaultAssetInfoHistory_Filter>;
 };
 
-
 export type QueryVaultAssetInfoHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryVaultAssetInfosArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16433,13 +16083,11 @@ export type QueryVaultAssetInfosArgs = {
   where?: InputMaybe<VaultAssetInfo_Filter>;
 };
 
-
 export type QueryVaultDayDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryVaultDayDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16451,13 +16099,11 @@ export type QueryVaultDayDatasArgs = {
   where?: InputMaybe<VaultDayData_Filter>;
 };
 
-
 export type QueryVaultNftArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<VaultNft_Filter>;
 };
-
 
 export type QueryVaultNftsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16467,7 +16113,6 @@ export type QueryVaultNftsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<VaultNft_Filter>;
 };
-
 
 export type QueryVaultsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16479,16 +16124,13 @@ export type QueryVaultsArgs = {
   where?: InputMaybe<Vault_Filter>;
 };
 
-
 export type QueryVdodo_GetServiceChargesArgs = {
   where?: InputMaybe<VdodoChainsInput>;
 };
 
-
 export type QueryVdodo_GetStatsArgs = {
   where?: InputMaybe<VdodoChainsInput>;
 };
-
 
 export type QueryWithdrawFundHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16499,20 +16141,17 @@ export type QueryWithdrawFundHistoriesArgs = {
   where?: InputMaybe<WithdrawFundHistory_Filter>;
 };
 
-
 export type QueryWithdrawFundHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<WithdrawFundHistory_Filter>;
 };
 
-
 export type QueryWithdrawReserveArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryWithdrawReservesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -16791,7 +16430,6 @@ export type Registry = {
   vaults: Array<Vault>;
 };
 
-
 export type RegistryPoolsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Pool_OrderBy>;
@@ -16799,7 +16437,6 @@ export type RegistryPoolsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<Pool_Filter>;
 };
-
 
 export type RegistryVaultsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -16844,11 +16481,7 @@ export type Registry_Filter = {
   vaults_not_contains_nocase?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
-export type Registry_OrderBy =
-  | 'id'
-  | 'pools'
-  | 'updatedAt'
-  | 'vaults';
+export type Registry_OrderBy = 'id' | 'pools' | 'updatedAt' | 'vaults';
 
 export type Request_Split_ConfigRequestSplitConfigItem = {
   name?: Maybe<Scalars['String']['output']>;
@@ -17083,11 +16716,7 @@ export type Router_Filter = {
   updatedAt_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
 };
 
-export type Router_OrderBy =
-  | 'addTimestamp'
-  | 'id'
-  | 'isRemove'
-  | 'updatedAt';
+export type Router_OrderBy = 'addTimestamp' | 'id' | 'isRemove' | 'updatedAt';
 
 export type SetPoolInfo = {
   /**  Block number of this event  */
@@ -17534,18 +17163,15 @@ export type Subscription = {
   withdrawReserves: Array<WithdrawReserve>;
 };
 
-
 export type Subscription_MetaArgs = {
   block?: InputMaybe<Block_Height>;
 };
-
 
 export type SubscriptionAccountArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionAccountsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17557,13 +17183,11 @@ export type SubscriptionAccountsArgs = {
   where?: InputMaybe<Account_Filter>;
 };
 
-
 export type SubscriptionAggregateFragmentArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionAggregateFragmentsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17575,13 +17199,11 @@ export type SubscriptionAggregateFragmentsArgs = {
   where?: InputMaybe<AggregateFragment_Filter>;
 };
 
-
 export type SubscriptionBalanceArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionBalancesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17593,7 +17215,6 @@ export type SubscriptionBalancesArgs = {
   where?: InputMaybe<Balance_Filter>;
 };
 
-
 export type SubscriptionClaimHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -17604,20 +17225,17 @@ export type SubscriptionClaimHistoriesArgs = {
   where?: InputMaybe<ClaimHistory_Filter>;
 };
 
-
 export type SubscriptionClaimHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionClaimedArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionClaimedsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17629,13 +17247,11 @@ export type SubscriptionClaimedsArgs = {
   where?: InputMaybe<Claimed_Filter>;
 };
 
-
 export type SubscriptionControllerArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionControllersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17647,13 +17263,11 @@ export type SubscriptionControllersArgs = {
   where?: InputMaybe<Controller_Filter>;
 };
 
-
 export type SubscriptionDailyScheduledTaskArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionDailyScheduledTasksArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17665,7 +17279,6 @@ export type SubscriptionDailyScheduledTasksArgs = {
   where?: InputMaybe<DailyScheduledTask_Filter>;
 };
 
-
 export type SubscriptionDepositHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -17676,20 +17289,17 @@ export type SubscriptionDepositHistoriesArgs = {
   where?: InputMaybe<DepositHistory_Filter>;
 };
 
-
 export type SubscriptionDepositHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionDodoStarterArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionDodoStartersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17701,20 +17311,17 @@ export type SubscriptionDodoStartersArgs = {
   where?: InputMaybe<DodoStarter_Filter>;
 };
 
-
 export type SubscriptionFilterArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionFilterAdminArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionFilterAdminsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17726,13 +17333,11 @@ export type SubscriptionFilterAdminsArgs = {
   where?: InputMaybe<FilterAdmin_Filter>;
 };
 
-
 export type SubscriptionFilterNftArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionFilterNftsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17744,13 +17349,11 @@ export type SubscriptionFilterNftsArgs = {
   where?: InputMaybe<FilterNft_Filter>;
 };
 
-
 export type SubscriptionFilterSpreadIdArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionFilterSpreadIdsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17762,7 +17365,6 @@ export type SubscriptionFilterSpreadIdsArgs = {
   where?: InputMaybe<FilterSpreadId_Filter>;
 };
 
-
 export type SubscriptionFiltersArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -17773,13 +17375,11 @@ export type SubscriptionFiltersArgs = {
   where?: InputMaybe<Filter_Filter>;
 };
 
-
 export type SubscriptionFragmentArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionFragmentsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17791,13 +17391,11 @@ export type SubscriptionFragmentsArgs = {
   where?: InputMaybe<Fragment_Filter>;
 };
 
-
 export type SubscriptionLiquidatorArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionLiquidatorsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17809,13 +17407,11 @@ export type SubscriptionLiquidatorsArgs = {
   where?: InputMaybe<Liquidator_Filter>;
 };
 
-
 export type SubscriptionLiquidityPositionArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionLiquidityPositionsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17827,13 +17423,11 @@ export type SubscriptionLiquidityPositionsArgs = {
   where?: InputMaybe<LiquidityPosition_Filter>;
 };
 
-
 export type SubscriptionMakerArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionMakersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17845,20 +17439,17 @@ export type SubscriptionMakersArgs = {
   where?: InputMaybe<Maker_Filter>;
 };
 
-
 export type SubscriptionNftArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionNftCollateralVaultArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionNftCollateralVaultsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17870,13 +17461,11 @@ export type SubscriptionNftCollateralVaultsArgs = {
   where?: InputMaybe<NftCollateralVault_Filter>;
 };
 
-
 export type SubscriptionNftPoolArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionNftPoolsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17888,7 +17477,6 @@ export type SubscriptionNftPoolsArgs = {
   where?: InputMaybe<NftPool_Filter>;
 };
 
-
 export type SubscriptionNftsArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -17899,20 +17487,17 @@ export type SubscriptionNftsArgs = {
   where?: InputMaybe<Nft_Filter>;
 };
 
-
 export type SubscriptionPoolArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionPoolDayDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionPoolDayDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17924,13 +17509,11 @@ export type SubscriptionPoolDayDatasArgs = {
   where?: InputMaybe<PoolDayData_Filter>;
 };
 
-
 export type SubscriptionPoolFundingArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionPoolFundingsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17942,13 +17525,11 @@ export type SubscriptionPoolFundingsArgs = {
   where?: InputMaybe<PoolFunding_Filter>;
 };
 
-
 export type SubscriptionPoolTokenArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionPoolTokenHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17960,13 +17541,11 @@ export type SubscriptionPoolTokenHistoriesArgs = {
   where?: InputMaybe<PoolTokenHistory_Filter>;
 };
 
-
 export type SubscriptionPoolTokenHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionPoolTokensArgs = {
   block?: InputMaybe<Block_Height>;
@@ -17978,7 +17557,6 @@ export type SubscriptionPoolTokensArgs = {
   where?: InputMaybe<PoolToken_Filter>;
 };
 
-
 export type SubscriptionPoolTradeHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -17989,13 +17567,11 @@ export type SubscriptionPoolTradeHistoriesArgs = {
   where?: InputMaybe<PoolTradeHistory_Filter>;
 };
 
-
 export type SubscriptionPoolTradeHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionPoolsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18007,7 +17583,6 @@ export type SubscriptionPoolsArgs = {
   where?: InputMaybe<Pool_Filter>;
 };
 
-
 export type SubscriptionRegistriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -18018,20 +17593,17 @@ export type SubscriptionRegistriesArgs = {
   where?: InputMaybe<Registry_Filter>;
 };
 
-
 export type SubscriptionRegistryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionRouterArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionRoutersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18043,13 +17615,11 @@ export type SubscriptionRoutersArgs = {
   where?: InputMaybe<Router_Filter>;
 };
 
-
 export type SubscriptionSetPoolInfoArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionSetPoolInfosArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18061,13 +17631,11 @@ export type SubscriptionSetPoolInfosArgs = {
   where?: InputMaybe<SetPoolInfo_Filter>;
 };
 
-
 export type SubscriptionSetVaultInfoArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionSetVaultInfosArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18079,13 +17647,11 @@ export type SubscriptionSetVaultInfosArgs = {
   where?: InputMaybe<SetVaultInfo_Filter>;
 };
 
-
 export type SubscriptionStarterArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionStartersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18097,13 +17663,11 @@ export type SubscriptionStartersArgs = {
   where?: InputMaybe<Starter_Filter>;
 };
 
-
 export type SubscriptionSwapArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionSwapsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18115,13 +17679,11 @@ export type SubscriptionSwapsArgs = {
   where?: InputMaybe<Swap_Filter>;
 };
 
-
 export type SubscriptionTokenArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionTokensArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18133,13 +17695,11 @@ export type SubscriptionTokensArgs = {
   where?: InputMaybe<Token_Filter>;
 };
 
-
 export type SubscriptionTradeHistoryTransferDetailArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionTradeHistoryTransferDetailsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18151,20 +17711,17 @@ export type SubscriptionTradeHistoryTransferDetailsArgs = {
   where?: InputMaybe<TradeHistoryTransferDetail_Filter>;
 };
 
-
 export type SubscriptionUserArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionUserFundingArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionUserFundingsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18176,13 +17733,11 @@ export type SubscriptionUserFundingsArgs = {
   where?: InputMaybe<UserFunding_Filter>;
 };
 
-
 export type SubscriptionUserNftArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionUserNftsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18194,7 +17749,6 @@ export type SubscriptionUserNftsArgs = {
   where?: InputMaybe<UserNft_Filter>;
 };
 
-
 export type SubscriptionUsersArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -18205,13 +17759,11 @@ export type SubscriptionUsersArgs = {
   where?: InputMaybe<User_Filter>;
 };
 
-
 export type SubscriptionVaultArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionVaultAssetInfoArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18219,13 +17771,11 @@ export type SubscriptionVaultAssetInfoArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionVaultAssetInfoDayDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionVaultAssetInfoDayDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18237,7 +17787,6 @@ export type SubscriptionVaultAssetInfoDayDatasArgs = {
   where?: InputMaybe<VaultAssetInfoDayData_Filter>;
 };
 
-
 export type SubscriptionVaultAssetInfoHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -18248,13 +17797,11 @@ export type SubscriptionVaultAssetInfoHistoriesArgs = {
   where?: InputMaybe<VaultAssetInfoHistory_Filter>;
 };
 
-
 export type SubscriptionVaultAssetInfoHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionVaultAssetInfosArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18266,13 +17813,11 @@ export type SubscriptionVaultAssetInfosArgs = {
   where?: InputMaybe<VaultAssetInfo_Filter>;
 };
 
-
 export type SubscriptionVaultDayDataArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionVaultDayDatasArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18284,13 +17829,11 @@ export type SubscriptionVaultDayDatasArgs = {
   where?: InputMaybe<VaultDayData_Filter>;
 };
 
-
 export type SubscriptionVaultNftArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionVaultNftsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18302,7 +17845,6 @@ export type SubscriptionVaultNftsArgs = {
   where?: InputMaybe<VaultNft_Filter>;
 };
 
-
 export type SubscriptionVaultsArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -18312,7 +17854,6 @@ export type SubscriptionVaultsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<Vault_Filter>;
 };
-
 
 export type SubscriptionWithdrawFundHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18324,20 +17865,17 @@ export type SubscriptionWithdrawFundHistoriesArgs = {
   where?: InputMaybe<WithdrawFundHistory_Filter>;
 };
 
-
 export type SubscriptionWithdrawFundHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionWithdrawReserveArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionWithdrawReservesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -18479,11 +18017,15 @@ export type Swap_Filter = {
   fromTokenOraclePriceUSD?: InputMaybe<Scalars['BigDecimal']['input']>;
   fromTokenOraclePriceUSD_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
   fromTokenOraclePriceUSD_gte?: InputMaybe<Scalars['BigDecimal']['input']>;
-  fromTokenOraclePriceUSD_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  fromTokenOraclePriceUSD_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   fromTokenOraclePriceUSD_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   fromTokenOraclePriceUSD_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   fromTokenOraclePriceUSD_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  fromTokenOraclePriceUSD_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  fromTokenOraclePriceUSD_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   fromTokenOraclePrice_gt?: InputMaybe<Scalars['BigInt']['input']>;
   fromTokenOraclePrice_gte?: InputMaybe<Scalars['BigInt']['input']>;
   fromTokenOraclePrice_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
@@ -18712,7 +18254,9 @@ export type Swap_Filter = {
   toTokenOraclePriceUSD_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   toTokenOraclePriceUSD_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   toTokenOraclePriceUSD_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  toTokenOraclePriceUSD_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  toTokenOraclePriceUSD_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   toTokenOraclePrice_gt?: InputMaybe<Scalars['BigInt']['input']>;
   toTokenOraclePrice_gte?: InputMaybe<Scalars['BigInt']['input']>;
   toTokenOraclePrice_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
@@ -18901,9 +18445,7 @@ export type TokenContract_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type TokenContract_OrderBy =
-  | 'chain'
-  | 'id';
+export type TokenContract_OrderBy = 'chain' | 'id';
 
 export type TokenDayData = {
   chain: Scalars['String']['output'];
@@ -19018,7 +18560,9 @@ export type TokenDayData_Filter = {
   totalLiquidityToken_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   totalLiquidityToken_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   totalLiquidityToken_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  totalLiquidityToken_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  totalLiquidityToken_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   traders?: InputMaybe<Scalars['BigInt']['input']>;
   traders_gt?: InputMaybe<Scalars['BigInt']['input']>;
   traders_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -19142,9 +18686,7 @@ export type TokenRegistry_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type TokenRegistry_OrderBy =
-  | 'chain'
-  | 'id';
+export type TokenRegistry_OrderBy = 'chain' | 'id';
 
 export type TokenTrader = {
   chain: Scalars['String']['output'];
@@ -19377,7 +18919,9 @@ export type Token_Filter = {
   totalLiquidityOnDODO_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   totalLiquidityOnDODO_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   totalLiquidityOnDODO_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  totalLiquidityOnDODO_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  totalLiquidityOnDODO_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   totalSupply?: InputMaybe<Scalars['BigInt']['input']>;
   totalSupply_gt?: InputMaybe<Scalars['BigInt']['input']>;
   totalSupply_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -19958,12 +19502,7 @@ export type TransferHistory_Filter = {
   to_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type TransferHistory_OrderBy =
-  | 'amount'
-  | 'chain'
-  | 'from'
-  | 'id'
-  | 'to';
+export type TransferHistory_OrderBy = 'amount' | 'chain' | 'from' | 'id' | 'to';
 
 export type Transfer_Filter = {
   chain?: InputMaybe<Scalars['String']['input']>;
@@ -19993,9 +19532,7 @@ export type Transfer_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Transfer_OrderBy =
-  | 'chain'
-  | 'id';
+export type Transfer_OrderBy = 'chain' | 'id';
 
 export type User = {
   /** user accumulated interest */
@@ -20042,7 +19579,6 @@ export type User = {
   /** liquidity Positions */
   userFundings?: Maybe<Array<UserFunding>>;
 };
-
 
 export type UserUserFundingsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -20210,9 +19746,7 @@ export type UserFunding = {
   vault: Vault;
 };
 
-export type UserFundingType =
-  | 'Deposit'
-  | 'Withdraw';
+export type UserFundingType = 'Deposit' | 'Withdraw';
 
 export type UserFunding_Filter = {
   /** Filter for the block changed event. */
@@ -20613,7 +20147,9 @@ export type UserOperationHistory_Filter = {
   superiorCreditChange_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   superiorCreditChange_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   superiorCreditChange_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  superiorCreditChange_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  superiorCreditChange_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   superiorSpChange?: InputMaybe<Scalars['BigInt']['input']>;
   superiorSpChange_gt?: InputMaybe<Scalars['BigInt']['input']>;
   superiorSpChange_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -20792,10 +20328,7 @@ export type UserTokenBlance_Filter = {
   schemaName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type UserTokenBlance_OrderBy =
-  | 'balance'
-  | 'chain'
-  | 'id';
+export type UserTokenBlance_OrderBy = 'balance' | 'chain' | 'id';
 
 export type User_Filter = {
   /** Filter for the block changed event. */
@@ -20909,7 +20442,9 @@ export type User_Filter = {
   redeemRecieveAmount_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   redeemRecieveAmount_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   redeemRecieveAmount_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  redeemRecieveAmount_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  redeemRecieveAmount_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
   /** dodoex,vdodo,mine,token,nft,eip721,eip1155 */
   schemaName?: InputMaybe<Scalars['String']['input']>;
@@ -20980,7 +20515,9 @@ export type User_Filter = {
   tradingRewardRecieved_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   tradingRewardRecieved_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   tradingRewardRecieved_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  tradingRewardRecieved_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  tradingRewardRecieved_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   txCount?: InputMaybe<Scalars['BigInt']['input']>;
   txCount_gt?: InputMaybe<Scalars['BigInt']['input']>;
   txCount_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -21386,7 +20923,6 @@ export type Vault = {
   vaultAssetInfos: Array<VaultAssetInfo>;
 };
 
-
 export type VaultTokenListArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Token_OrderBy>;
@@ -21394,7 +20930,6 @@ export type VaultTokenListArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<Token_Filter>;
 };
-
 
 export type VaultVaultAssetInfosArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -21515,7 +21050,9 @@ export type VaultAssetInfoDayData_Filter = {
   tokenOraclePriceUSD_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   tokenOraclePriceUSD_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   tokenOraclePriceUSD_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  tokenOraclePriceUSD_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  tokenOraclePriceUSD_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   tokenOraclePrice_gt?: InputMaybe<Scalars['BigInt']['input']>;
   tokenOraclePrice_gte?: InputMaybe<Scalars['BigInt']['input']>;
   tokenOraclePrice_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
@@ -21566,7 +21103,9 @@ export type VaultAssetInfoDayData_Filter = {
   vaultAssetInfo_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
   vaultAssetInfo_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
   vaultAssetInfo_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  vaultAssetInfo_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  vaultAssetInfo_not_starts_with_nocase?: InputMaybe<
+    Scalars['String']['input']
+  >;
   vaultAssetInfo_starts_with?: InputMaybe<Scalars['String']['input']>;
   vaultAssetInfo_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   vault_?: InputMaybe<Vault_Filter>;
@@ -21829,7 +21368,9 @@ export type VaultAssetInfoHistory_Filter = {
   tokenOraclePriceUSD_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   tokenOraclePriceUSD_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   tokenOraclePriceUSD_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  tokenOraclePriceUSD_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  tokenOraclePriceUSD_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   tokenOraclePrice_gt?: InputMaybe<Scalars['BigInt']['input']>;
   tokenOraclePrice_gte?: InputMaybe<Scalars['BigInt']['input']>;
   tokenOraclePrice_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
@@ -22060,7 +21601,9 @@ export type VaultAssetInfo_Filter = {
   tokenOraclePriceUSD_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   tokenOraclePriceUSD_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   tokenOraclePriceUSD_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  tokenOraclePriceUSD_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  tokenOraclePriceUSD_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   tokenOraclePrice_gt?: InputMaybe<Scalars['BigInt']['input']>;
   tokenOraclePrice_gte?: InputMaybe<Scalars['BigInt']['input']>;
   tokenOraclePrice_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
@@ -22544,10 +22087,14 @@ export type Vault_Filter = {
   vaultAssetInfos?: InputMaybe<Array<Scalars['String']['input']>>;
   vaultAssetInfos_?: InputMaybe<VaultAssetInfo_Filter>;
   vaultAssetInfos_contains?: InputMaybe<Array<Scalars['String']['input']>>;
-  vaultAssetInfos_contains_nocase?: InputMaybe<Array<Scalars['String']['input']>>;
+  vaultAssetInfos_contains_nocase?: InputMaybe<
+    Array<Scalars['String']['input']>
+  >;
   vaultAssetInfos_not?: InputMaybe<Array<Scalars['String']['input']>>;
   vaultAssetInfos_not_contains?: InputMaybe<Array<Scalars['String']['input']>>;
-  vaultAssetInfos_not_contains_nocase?: InputMaybe<Array<Scalars['String']['input']>>;
+  vaultAssetInfos_not_contains_nocase?: InputMaybe<
+    Array<Scalars['String']['input']>
+  >;
 };
 
 export type Vault_OrderBy =
@@ -23050,7 +22597,9 @@ export type VDodo_Filter = {
   totalBlockDistribution_lt?: InputMaybe<Scalars['BigDecimal']['input']>;
   totalBlockDistribution_lte?: InputMaybe<Scalars['BigDecimal']['input']>;
   totalBlockDistribution_not?: InputMaybe<Scalars['BigDecimal']['input']>;
-  totalBlockDistribution_not_in?: InputMaybe<Array<Scalars['BigDecimal']['input']>>;
+  totalBlockDistribution_not_in?: InputMaybe<
+    Array<Scalars['BigDecimal']['input']>
+  >;
   totalBlockReward?: InputMaybe<Scalars['BigDecimal']['input']>;
   totalBlockReward_gt?: InputMaybe<Scalars['BigDecimal']['input']>;
   totalBlockReward_gte?: InputMaybe<Scalars['BigDecimal']['input']>;
@@ -23108,8 +22657,24 @@ export type FetchErc20SwapCrossChainListQueryVariables = Exact<{
   where?: InputMaybe<Erc20listV2Filter>;
 }>;
 
-
-export type FetchErc20SwapCrossChainListQuery = { erc20_swapCrossChainList?: Array<{ name?: string | null, address?: string | null, symbol?: string | null, decimals?: number | null, slippage?: string | null, chainId?: number | null, logoImg?: string | null, tokenlists?: Array<{ name?: string | null, status?: string | null } | null> | null, domains?: Array<{ name?: string | null } | null> | null, funcLabels?: Array<{ key?: string | null } | null> | null, attributeLabels?: Array<{ key?: string | null } | null> | null } | null> | null };
+export type FetchErc20SwapCrossChainListQuery = {
+  erc20_swapCrossChainList?: Array<{
+    name?: string | null;
+    address?: string | null;
+    symbol?: string | null;
+    decimals?: number | null;
+    slippage?: string | null;
+    chainId?: number | null;
+    logoImg?: string | null;
+    tokenlists?: Array<{
+      name?: string | null;
+      status?: string | null;
+    } | null> | null;
+    domains?: Array<{ name?: string | null } | null> | null;
+    funcLabels?: Array<{ key?: string | null } | null> | null;
+    attributeLabels?: Array<{ key?: string | null } | null> | null;
+  } | null> | null;
+};
 
 export type FetchErc20ForecastSlippageQueryVariables = Exact<{
   where?: InputMaybe<Erc20_Extenderc20ExtendV2Filter>;
@@ -23131,22 +22696,250 @@ export type FetchMiningListQueryVariables = Exact<{
   where?: InputMaybe<Miningmining_List_Filter>;
 }>;
 
-
-export type FetchMiningListQuery = { mining_list?: { totalCount?: number | null, chains?: Array<string | null> | null, list?: Array<{ chainId: number, type?: string | null, version?: string | null, address?: string | null, baseApy?: string | null, endBlock?: string | null, miningContractAddress?: string | null, miningTotalDollar?: string | null, baseLpTokenMining?: string | null, quoteLpTokenMining?: string | null, quoteApy?: string | null, startBlock?: string | null, title?: string | null, platform?: string | null, startTime?: string | null, endTime?: string | null, baseLpToken?: { decimals?: number | null, symbol?: string | null, address?: string | null } | null, baseToken?: { decimals?: number | null, price?: string | null, symbol?: string | null, logoImg?: string | null, address?: string | null } | null, quoteLpToken?: { decimals?: number | null, symbol?: string | null, address?: string | null } | null, quoteToken?: { decimals?: number | null, price?: string | null, symbol?: string | null, logoImg?: string | null, address?: string | null } | null, rewardTokenInfos?: Array<{ apy?: string | null, decimals?: number | null, price?: string | null, logoImg?: string | null, rewardNumIndex?: number | null, rewardPerBlock?: string | null, startBlock?: string | null, endBlock?: string | null, startTime?: string | null, endTime?: string | null, symbol?: string | null, address?: string | null } | null> | null, rewardQuoteTokenInfos?: Array<{ apy?: string | null, decimals?: number | null, price?: string | null, logoImg?: string | null, rewardNumIndex?: number | null, rewardPerBlock?: string | null, startBlock?: string | null, endBlock?: string | null, startTime?: string | null, endTime?: string | null, symbol?: string | null, address?: string | null } | null> | null } | null> | null } | null };
+export type FetchMiningListQuery = {
+  mining_list?: {
+    totalCount?: number | null;
+    chains?: Array<string | null> | null;
+    list?: Array<{
+      chainId: number;
+      type?: string | null;
+      version?: string | null;
+      address?: string | null;
+      baseApy?: string | null;
+      endBlock?: string | null;
+      miningContractAddress?: string | null;
+      miningTotalDollar?: string | null;
+      baseLpTokenMining?: string | null;
+      quoteLpTokenMining?: string | null;
+      quoteApy?: string | null;
+      startBlock?: string | null;
+      title?: string | null;
+      platform?: string | null;
+      startTime?: string | null;
+      endTime?: string | null;
+      baseLpToken?: {
+        decimals?: number | null;
+        symbol?: string | null;
+        address?: string | null;
+      } | null;
+      baseToken?: {
+        decimals?: number | null;
+        price?: string | null;
+        symbol?: string | null;
+        logoImg?: string | null;
+        address?: string | null;
+      } | null;
+      quoteLpToken?: {
+        decimals?: number | null;
+        symbol?: string | null;
+        address?: string | null;
+      } | null;
+      quoteToken?: {
+        decimals?: number | null;
+        price?: string | null;
+        symbol?: string | null;
+        logoImg?: string | null;
+        address?: string | null;
+      } | null;
+      rewardTokenInfos?: Array<{
+        apy?: string | null;
+        decimals?: number | null;
+        price?: string | null;
+        logoImg?: string | null;
+        rewardNumIndex?: number | null;
+        rewardPerBlock?: string | null;
+        startBlock?: string | null;
+        endBlock?: string | null;
+        startTime?: string | null;
+        endTime?: string | null;
+        symbol?: string | null;
+        address?: string | null;
+      } | null> | null;
+      rewardQuoteTokenInfos?: Array<{
+        apy?: string | null;
+        decimals?: number | null;
+        price?: string | null;
+        logoImg?: string | null;
+        rewardNumIndex?: number | null;
+        rewardPerBlock?: string | null;
+        startBlock?: string | null;
+        endBlock?: string | null;
+        startTime?: string | null;
+        endTime?: string | null;
+        symbol?: string | null;
+        address?: string | null;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+};
 
 export type MiningListQueryVariables = Exact<{
   where?: InputMaybe<Miningmining_List_Filter>;
 }>;
 
-
-export type MiningListQuery = { mining_list?: { totalCount?: number | null, chains?: Array<string | null> | null, list?: Array<{ chainId: number, type?: string | null, version?: string | null, address?: string | null, isGSP?: boolean | null, isNewERCMineV3?: boolean | null, baseApy?: string | null, endBlock?: string | null, miningContractAddress?: string | null, miningTotalDollar?: string | null, baseLpTokenMining?: string | null, quoteLpTokenMining?: string | null, quoteApy?: string | null, startBlock?: string | null, title?: string | null, platform?: string | null, blockNumber?: string | null, startTime?: string | null, endTime?: string | null, baseLpToken?: { decimals?: number | null, id?: string | null, symbol?: string | null } | null, baseToken?: { decimals?: number | null, id?: string | null, price?: string | null, symbol?: string | null, logoImg?: string | null } | null, quoteLpToken?: { decimals?: number | null, id?: string | null, symbol?: string | null } | null, quoteToken?: { decimals?: number | null, id?: string | null, price?: string | null, symbol?: string | null, logoImg?: string | null } | null, rewardTokenInfos?: Array<{ apy?: string | null, decimals?: number | null, id?: string | null, price?: string | null, logoImg?: string | null, rewardNumIndex?: number | null, rewardPerBlock?: string | null, startBlock?: string | null, endBlock?: string | null, startTime?: string | null, endTime?: string | null, symbol?: string | null } | null> | null, rewardQuoteTokenInfos?: Array<{ apy?: string | null, decimals?: number | null, id?: string | null, price?: string | null, logoImg?: string | null, rewardNumIndex?: number | null, rewardPerBlock?: string | null, startBlock?: string | null, endBlock?: string | null, startTime?: string | null, endTime?: string | null, symbol?: string | null } | null> | null } | null> | null } | null };
+export type MiningListQuery = {
+  mining_list?: {
+    totalCount?: number | null;
+    chains?: Array<string | null> | null;
+    list?: Array<{
+      chainId: number;
+      type?: string | null;
+      version?: string | null;
+      address?: string | null;
+      isGSP?: boolean | null;
+      isNewERCMineV3?: boolean | null;
+      baseApy?: string | null;
+      endBlock?: string | null;
+      miningContractAddress?: string | null;
+      miningTotalDollar?: string | null;
+      baseLpTokenMining?: string | null;
+      quoteLpTokenMining?: string | null;
+      quoteApy?: string | null;
+      startBlock?: string | null;
+      title?: string | null;
+      platform?: string | null;
+      blockNumber?: string | null;
+      startTime?: string | null;
+      endTime?: string | null;
+      baseLpToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        symbol?: string | null;
+      } | null;
+      baseToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        symbol?: string | null;
+        logoImg?: string | null;
+      } | null;
+      quoteLpToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        symbol?: string | null;
+      } | null;
+      quoteToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        symbol?: string | null;
+        logoImg?: string | null;
+      } | null;
+      rewardTokenInfos?: Array<{
+        apy?: string | null;
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        logoImg?: string | null;
+        rewardNumIndex?: number | null;
+        rewardPerBlock?: string | null;
+        startBlock?: string | null;
+        endBlock?: string | null;
+        startTime?: string | null;
+        endTime?: string | null;
+        symbol?: string | null;
+      } | null> | null;
+      rewardQuoteTokenInfos?: Array<{
+        apy?: string | null;
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        logoImg?: string | null;
+        rewardNumIndex?: number | null;
+        rewardPerBlock?: string | null;
+        startBlock?: string | null;
+        endBlock?: string | null;
+        startTime?: string | null;
+        endTime?: string | null;
+        symbol?: string | null;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+};
 
 export type MyCreatedMiningListQueryVariables = Exact<{
   where?: InputMaybe<Miningmining_List_Filter>;
 }>;
 
-
-export type MyCreatedMiningListQuery = { mining_list?: { totalCount?: number | null, chains?: Array<string | null> | null, list?: Array<{ chainId: number, type?: string | null, version?: string | null, address?: string | null, isGSP?: boolean | null, isNewERCMineV3?: boolean | null, baseApy?: string | null, endBlock?: string | null, miningContractAddress?: string | null, baseLpTokenMining?: string | null, quoteLpTokenMining?: string | null, quoteApy?: string | null, startBlock?: string | null, title?: string | null, platform?: string | null, blockNumber?: string | null, participantsNum?: number | null, startTime?: string | null, endTime?: string | null, baseLpToken?: { decimals?: number | null, id?: string | null, symbol?: string | null } | null, baseToken?: { decimals?: number | null, id?: string | null, price?: string | null, symbol?: string | null, logoImg?: string | null } | null, quoteLpToken?: { decimals?: number | null, id?: string | null, symbol?: string | null } | null, quoteToken?: { decimals?: number | null, id?: string | null, price?: string | null, symbol?: string | null, logoImg?: string | null } | null, rewardTokenInfos?: Array<{ apy?: string | null, decimals?: number | null, id?: string | null, price?: string | null, logoImg?: string | null, rewardNumIndex?: number | null, rewardPerBlock?: string | null, startBlock?: string | null, endBlock?: string | null, startTime?: string | null, endTime?: string | null, symbol?: string | null } | null> | null, rewardQuoteTokenInfos?: Array<{ apy?: string | null, decimals?: number | null, id?: string | null, price?: string | null, logoImg?: string | null, rewardNumIndex?: number | null, rewardPerBlock?: string | null, startBlock?: string | null, endBlock?: string | null, startTime?: string | null, endTime?: string | null, symbol?: string | null } | null> | null } | null> | null } | null };
+export type MyCreatedMiningListQuery = {
+  mining_list?: {
+    totalCount?: number | null;
+    chains?: Array<string | null> | null;
+    list?: Array<{
+      chainId: number;
+      type?: string | null;
+      version?: string | null;
+      address?: string | null;
+      isGSP?: boolean | null;
+      isNewERCMineV3?: boolean | null;
+      baseApy?: string | null;
+      endBlock?: string | null;
+      miningContractAddress?: string | null;
+      baseLpTokenMining?: string | null;
+      quoteLpTokenMining?: string | null;
+      quoteApy?: string | null;
+      startBlock?: string | null;
+      title?: string | null;
+      platform?: string | null;
+      blockNumber?: string | null;
+      participantsNum?: number | null;
+      startTime?: string | null;
+      endTime?: string | null;
+      baseLpToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        symbol?: string | null;
+      } | null;
+      baseToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        symbol?: string | null;
+        logoImg?: string | null;
+      } | null;
+      quoteLpToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        symbol?: string | null;
+      } | null;
+      quoteToken?: {
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        symbol?: string | null;
+        logoImg?: string | null;
+      } | null;
+      rewardTokenInfos?: Array<{
+        apy?: string | null;
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        logoImg?: string | null;
+        rewardNumIndex?: number | null;
+        rewardPerBlock?: string | null;
+        startBlock?: string | null;
+        endBlock?: string | null;
+        startTime?: string | null;
+        endTime?: string | null;
+        symbol?: string | null;
+      } | null> | null;
+      rewardQuoteTokenInfos?: Array<{
+        apy?: string | null;
+        decimals?: number | null;
+        id?: string | null;
+        price?: string | null;
+        logoImg?: string | null;
+        rewardNumIndex?: number | null;
+        rewardPerBlock?: string | null;
+        startBlock?: string | null;
+        endBlock?: string | null;
+        startTime?: string | null;
+        endTime?: string | null;
+        symbol?: string | null;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+};
 
 export type FetchPoolListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -23154,29 +22947,145 @@ export type FetchPoolListQueryVariables = Exact<{
   orderBy?: InputMaybe<Pair_OrderBy>;
 }>;
 
-
-export type FetchPoolListQuery = { pairs: Array<{ id: string, type: string, creator: any, owner?: any | null, lpFeeRate: any, i?: any | null, k?: any | null, baseReserve: any, quoteReserve: any, lastTradePrice: any, feeBase: any, feeQuote: any, baseToken: { id: string, symbol: string, name: string, decimals: any }, quoteToken: { id: string, symbol: string, name: string, decimals: any }, baseLpToken?: { id: string } | null, quoteLpToken?: { id: string } | null }> };
+export type FetchPoolListQuery = {
+  pairs: Array<{
+    id: string;
+    type: string;
+    creator: any;
+    owner?: any | null;
+    lpFeeRate: any;
+    i?: any | null;
+    k?: any | null;
+    baseReserve: any;
+    quoteReserve: any;
+    lastTradePrice: any;
+    feeBase: any;
+    feeQuote: any;
+    baseToken: { id: string; symbol: string; name: string; decimals: any };
+    quoteToken: { id: string; symbol: string; name: string; decimals: any };
+    baseLpToken?: { id: string } | null;
+    quoteLpToken?: { id: string } | null;
+  }>;
+};
 
 export type FetchLiquidityListQueryVariables = Exact<{
   where?: InputMaybe<Liquiditylist_Filter>;
 }>;
 
-
-export type FetchLiquidityListQuery = { liquidity_list?: { currentPage?: number | null, pageSize?: number | null, totalCount?: number | null, lqList?: Array<{ id?: string | null, pair?: { id: string, chainId: number, type: string, lpFeeRate: any, creator: any, tvl?: any | null, miningAddress?: Array<string | null> | null, baseLpToken?: { id: string } | null, quoteLpToken?: { id: string } | null, baseToken: { id: string, symbol: string, name: string, decimals: any, logoImg?: string | null }, quoteToken: { id: string, symbol: string, name: string, decimals: any, logoImg?: string | null }, apy?: { miningBaseApy?: any | null, miningQuoteApy?: any | null, transactionBaseApy?: any | null, transactionQuoteApy?: any | null } | null } | null } | null> | null } | null };
+export type FetchLiquidityListQuery = {
+  liquidity_list?: {
+    currentPage?: number | null;
+    pageSize?: number | null;
+    totalCount?: number | null;
+    lqList?: Array<{
+      id?: string | null;
+      pair?: {
+        id: string;
+        chainId: number;
+        type: string;
+        lpFeeRate: any;
+        creator: any;
+        tvl?: any | null;
+        miningAddress?: Array<string | null> | null;
+        baseLpToken?: { id: string } | null;
+        quoteLpToken?: { id: string } | null;
+        baseToken: {
+          id: string;
+          symbol: string;
+          name: string;
+          decimals: any;
+          logoImg?: string | null;
+        };
+        quoteToken: {
+          id: string;
+          symbol: string;
+          name: string;
+          decimals: any;
+          logoImg?: string | null;
+        };
+        apy?: {
+          miningBaseApy?: any | null;
+          miningQuoteApy?: any | null;
+          transactionBaseApy?: any | null;
+          transactionQuoteApy?: any | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+};
 
 export type FetchMyLiquidityListQueryVariables = Exact<{
   where?: InputMaybe<Liquiditylist_Filter>;
 }>;
 
-
-export type FetchMyLiquidityListQuery = { liquidity_list?: { lqList?: Array<{ id?: string | null, liquidityPositions?: Array<{ id?: string | null, liquidityTokenBalance?: string | null } | null> | null, pair?: { id: string, chainId: number, type: string, lpFeeRate: any, creator: any, tvl?: any | null, miningAddress?: Array<string | null> | null, baseLpToken?: { id: string } | null, quoteLpToken?: { id: string } | null, baseToken: { id: string, symbol: string, name: string, decimals: any, logoImg?: string | null }, quoteToken: { id: string, symbol: string, name: string, decimals: any, logoImg?: string | null }, apy?: { miningBaseApy?: any | null, miningQuoteApy?: any | null, transactionBaseApy?: any | null, transactionQuoteApy?: any | null } | null } | null } | null> | null } | null };
+export type FetchMyLiquidityListQuery = {
+  liquidity_list?: {
+    lqList?: Array<{
+      id?: string | null;
+      liquidityPositions?: Array<{
+        id?: string | null;
+        liquidityTokenBalance?: string | null;
+      } | null> | null;
+      pair?: {
+        id: string;
+        chainId: number;
+        type: string;
+        lpFeeRate: any;
+        creator: any;
+        tvl?: any | null;
+        miningAddress?: Array<string | null> | null;
+        baseLpToken?: { id: string } | null;
+        quoteLpToken?: { id: string } | null;
+        baseToken: {
+          id: string;
+          symbol: string;
+          name: string;
+          decimals: any;
+          logoImg?: string | null;
+        };
+        quoteToken: {
+          id: string;
+          symbol: string;
+          name: string;
+          decimals: any;
+          logoImg?: string | null;
+        };
+        apy?: {
+          miningBaseApy?: any | null;
+          miningQuoteApy?: any | null;
+          transactionBaseApy?: any | null;
+          transactionQuoteApy?: any | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+};
 
 export type FetchDashboardPairListQueryVariables = Exact<{
   where?: InputMaybe<Dashboardtype_List_Filter>;
 }>;
 
-
-export type FetchDashboardPairListQuery = { dashboard_pairs_list?: { list?: Array<{ chainId?: number | null, pairAddress?: string | null, poolType?: string | null, baseReserve?: string | null, quoteReserve?: string | null, totalFee?: string | null, baseAddress?: string | null, quoteAddress?: string | null, baseSymbol?: string | null, quoteSymbol?: string | null, tvl?: string | null, baseTvl?: string | null, quoteTvl?: string | null, baseTvlRate?: string | null, quoteTvlRate?: string | null } | null> | null } | null };
+export type FetchDashboardPairListQuery = {
+  dashboard_pairs_list?: {
+    list?: Array<{
+      chainId?: number | null;
+      pairAddress?: string | null;
+      poolType?: string | null;
+      baseReserve?: string | null;
+      quoteReserve?: string | null;
+      totalFee?: string | null;
+      baseAddress?: string | null;
+      quoteAddress?: string | null;
+      baseSymbol?: string | null;
+      quoteSymbol?: string | null;
+      tvl?: string | null;
+      baseTvl?: string | null;
+      quoteTvl?: string | null;
+      baseTvlRate?: string | null;
+      quoteTvlRate?: string | null;
+    } | null> | null;
+  } | null;
+};
 
 export type FetchPoolQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -23184,22 +23093,106 @@ export type FetchPoolQueryVariables = Exact<{
   liquidityWhere?: InputMaybe<Liquiditylist_Filter>;
 }>;
 
-
-export type FetchPoolQuery = { pair?: { id: string, type: string, creator: any, owner?: any | null, traderCount: any, volumeBaseToken: any, volumeQuoteToken: any, volumeUSD: any, feeBase: any, feeQuote: any, mtFeeRate: any, lpFeeRate: any, i?: any | null, k?: any | null, baseReserve: any, quoteReserve: any, createdAtTimestamp: any, lastTradePrice: any, baseToken: { id: string, symbol: string, name: string, decimals: any }, quoteToken: { id: string, symbol: string, name: string, decimals: any, usdPrice: any }, baseLpToken?: { id: string, symbol: string, name: string } | null, quoteLpToken?: { id: string, symbol: string, name: string } | null } | null, liquidity_list?: { lqList?: Array<{ pair?: { miningAddress?: Array<string | null> | null, apy?: { miningBaseApy?: any | null, miningQuoteApy?: any | null, transactionBaseApy?: any | null, transactionQuoteApy?: any | null } | null } | null } | null> | null } | null };
+export type FetchPoolQuery = {
+  pair?: {
+    id: string;
+    type: string;
+    creator: any;
+    owner?: any | null;
+    traderCount: any;
+    volumeBaseToken: any;
+    volumeQuoteToken: any;
+    volumeUSD: any;
+    feeBase: any;
+    feeQuote: any;
+    mtFeeRate: any;
+    lpFeeRate: any;
+    i?: any | null;
+    k?: any | null;
+    baseReserve: any;
+    quoteReserve: any;
+    createdAtTimestamp: any;
+    lastTradePrice: any;
+    baseToken: { id: string; symbol: string; name: string; decimals: any };
+    quoteToken: {
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: any;
+      usdPrice: any;
+    };
+    baseLpToken?: { id: string; symbol: string; name: string } | null;
+    quoteLpToken?: { id: string; symbol: string; name: string } | null;
+  } | null;
+  liquidity_list?: {
+    lqList?: Array<{
+      pair?: {
+        miningAddress?: Array<string | null> | null;
+        apy?: {
+          miningBaseApy?: any | null;
+          miningQuoteApy?: any | null;
+          transactionBaseApy?: any | null;
+          transactionQuoteApy?: any | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+};
 
 export type FetchPoolDayDataQueryVariables = Exact<{
   where?: InputMaybe<Dashboardday_Filter>;
 }>;
 
-
-export type FetchPoolDayDataQuery = { dashboard_pairs_day_data?: Array<{ timestamp?: number | null, date?: string | null, volume?: string | null, fee?: string | null, tvl?: string | null, addresses?: string | null, txes?: string | null } | null> | null };
+export type FetchPoolDayDataQuery = {
+  dashboard_pairs_day_data?: Array<{
+    timestamp?: number | null;
+    date?: string | null;
+    volume?: string | null;
+    fee?: string | null;
+    tvl?: string | null;
+    addresses?: string | null;
+    txes?: string | null;
+  } | null> | null;
+};
 
 export type FetchPoolDashboardQueryVariables = Exact<{
   where?: InputMaybe<Dashboardpair_Detail_Filter>;
 }>;
 
-
-export type FetchPoolDashboardQuery = { dashboard_pairs_detail?: { fee?: string | null, volume?: string | null, totalFee?: string | null, totalVolume?: string | null, tvl?: string | null, turnover?: string | null, liquidity?: string | null, baseReserve?: string | null, quoteReserve?: string | null, baseVolume?: string | null, quoteVolume?: string | null, basePrice?: string | null, quotePrice?: string | null, price?: string | null, baseFee?: string | null, quoteFee?: string | null, pair?: string | null, poolType?: string | null, baseVolumeCumulative?: string | null, quoteVolumeCumulative?: string | null, baseAddress?: string | null, baseSymbol?: string | null, quoteAddress?: string | null, quoteSymbol?: string | null, network?: string | null, pairAddress?: string | null, txes?: number | null, txesNear24h?: number | null, txUsers?: number | null, txUserNear24h?: number | null } | null };
+export type FetchPoolDashboardQuery = {
+  dashboard_pairs_detail?: {
+    fee?: string | null;
+    volume?: string | null;
+    totalFee?: string | null;
+    totalVolume?: string | null;
+    tvl?: string | null;
+    turnover?: string | null;
+    liquidity?: string | null;
+    baseReserve?: string | null;
+    quoteReserve?: string | null;
+    baseVolume?: string | null;
+    quoteVolume?: string | null;
+    basePrice?: string | null;
+    quotePrice?: string | null;
+    price?: string | null;
+    baseFee?: string | null;
+    quoteFee?: string | null;
+    pair?: string | null;
+    poolType?: string | null;
+    baseVolumeCumulative?: string | null;
+    quoteVolumeCumulative?: string | null;
+    baseAddress?: string | null;
+    baseSymbol?: string | null;
+    quoteAddress?: string | null;
+    quoteSymbol?: string | null;
+    network?: string | null;
+    pairAddress?: string | null;
+    txes?: number | null;
+    txesNear24h?: number | null;
+    txUsers?: number | null;
+    txUserNear24h?: number | null;
+  } | null;
+};
 
 export type FetchPoolSwapListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -23209,8 +23202,21 @@ export type FetchPoolSwapListQueryVariables = Exact<{
   orderDirection?: InputMaybe<OrderDirection>;
 }>;
 
-
-export type FetchPoolSwapListQuery = { swaps: Array<{ id: string, timestamp: any, from: any, baseVolume: any, quoteVolume: any, feeBase: any, feeQuote: any, amountIn: any, amountOut: any, fromToken: { id: string, symbol: string, name: string, decimals: any }, toToken: { id: string, symbol: string, name: string, decimals: any } }> };
+export type FetchPoolSwapListQuery = {
+  swaps: Array<{
+    id: string;
+    timestamp: any;
+    from: any;
+    baseVolume: any;
+    quoteVolume: any;
+    feeBase: any;
+    feeQuote: any;
+    amountIn: any;
+    amountOut: any;
+    fromToken: { id: string; symbol: string; name: string; decimals: any };
+    toToken: { id: string; symbol: string; name: string; decimals: any };
+  }>;
+};
 
 export type FetchLiquidityPositionsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -23222,8 +23228,17 @@ export type FetchLiquidityPositionsQueryVariables = Exact<{
   orderDirection?: InputMaybe<OrderDirection>;
 }>;
 
-
-export type FetchLiquidityPositionsQuery = { balance: Array<{ id: string, liquidityTokenBalance: any }>, mining: Array<{ id: string, liquidityTokenInMining: any }>, pair?: { lastTradePrice: any, baseLpToken?: { id: string, decimals: any } | null, quoteLpToken?: { id: string, decimals: any } | null, baseToken: { id: string, symbol: string, name: string, decimals: any }, quoteToken: { id: string, symbol: string, name: string, decimals: any } } | null };
+export type FetchLiquidityPositionsQuery = {
+  balance: Array<{ id: string; liquidityTokenBalance: any }>;
+  mining: Array<{ id: string; liquidityTokenInMining: any }>;
+  pair?: {
+    lastTradePrice: any;
+    baseLpToken?: { id: string; decimals: any } | null;
+    quoteLpToken?: { id: string; decimals: any } | null;
+    baseToken: { id: string; symbol: string; name: string; decimals: any };
+    quoteToken: { id: string; symbol: string; name: string; decimals: any };
+  } | null;
+};
 
 export type FetchPoolPairListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -23233,22 +23248,116 @@ export type FetchPoolPairListQueryVariables = Exact<{
   orderDirection?: InputMaybe<OrderDirection>;
 }>;
 
-
-export type FetchPoolPairListQuery = { basePairs: Array<{ id: string, type: string, creator: any, lpFeeRate: any, i?: any | null, k?: any | null, baseReserve: any, quoteReserve: any, createdAtTimestamp: any, lastTradePrice: any, volumeUSD: any, baseToken: { id: string, symbol: string, name: string, decimals: any, usdPrice: any }, quoteToken: { id: string, symbol: string, name: string, decimals: any, usdPrice: any } }>, quotePairs: Array<{ id: string, type: string, creator: any, lpFeeRate: any, i?: any | null, k?: any | null, baseReserve: any, quoteReserve: any, createdAtTimestamp: any, lastTradePrice: any, volumeUSD: any, baseToken: { id: string, symbol: string, name: string, decimals: any, usdPrice: any }, quoteToken: { id: string, symbol: string, name: string, decimals: any, usdPrice: any } }> };
+export type FetchPoolPairListQuery = {
+  basePairs: Array<{
+    id: string;
+    type: string;
+    creator: any;
+    lpFeeRate: any;
+    i?: any | null;
+    k?: any | null;
+    baseReserve: any;
+    quoteReserve: any;
+    createdAtTimestamp: any;
+    lastTradePrice: any;
+    volumeUSD: any;
+    baseToken: {
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: any;
+      usdPrice: any;
+    };
+    quoteToken: {
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: any;
+      usdPrice: any;
+    };
+  }>;
+  quotePairs: Array<{
+    id: string;
+    type: string;
+    creator: any;
+    lpFeeRate: any;
+    i?: any | null;
+    k?: any | null;
+    baseReserve: any;
+    quoteReserve: any;
+    createdAtTimestamp: any;
+    lastTradePrice: any;
+    volumeUSD: any;
+    baseToken: {
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: any;
+      usdPrice: any;
+    };
+    quoteToken: {
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: any;
+      usdPrice: any;
+    };
+  }>;
+};
 
 export type FetchUserSwapOrderHistoriesQueryVariables = Exact<{
   where?: InputMaybe<User_SwapswapFilter>;
 }>;
 
-
-export type FetchUserSwapOrderHistoriesQuery = { user_swap_orderHistories?: { count?: number | null, page?: number | null, list?: Array<{ chainId?: number | null, createdAt?: string | null, fromAmount?: string | null, fromTokenDecimals?: number | null, fromTokenPrice?: string | null, fromTokenSymbol?: string | null, fromTokenAddress?: string | null, fromTokenLogoImg?: string | null, hash?: string | null, status?: string | null, toAmount?: string | null, toTokenDecimals?: number | null, toTokenPrice?: string | null, toTokenSymbol?: string | null, toTokenAddress?: string | null, toTokenLogoImg?: string | null, minAmount?: string | null, nonce?: number | null, extra?: any | null, user?: string | null } | null> | null } | null };
+export type FetchUserSwapOrderHistoriesQuery = {
+  user_swap_orderHistories?: {
+    count?: number | null;
+    page?: number | null;
+    list?: Array<{
+      chainId?: number | null;
+      createdAt?: string | null;
+      fromAmount?: string | null;
+      fromTokenDecimals?: number | null;
+      fromTokenPrice?: string | null;
+      fromTokenSymbol?: string | null;
+      fromTokenAddress?: string | null;
+      fromTokenLogoImg?: string | null;
+      hash?: string | null;
+      status?: string | null;
+      toAmount?: string | null;
+      toTokenDecimals?: number | null;
+      toTokenPrice?: string | null;
+      toTokenSymbol?: string | null;
+      toTokenAddress?: string | null;
+      toTokenLogoImg?: string | null;
+      minAmount?: string | null;
+      nonce?: number | null;
+      extra?: any | null;
+      user?: string | null;
+    } | null> | null;
+  } | null;
+};
 
 export type FetchNoticeCenterTransactionListQueryVariables = Exact<{
   where?: InputMaybe<Notice_CentertransactionListFilter>;
 }>;
 
-
-export type FetchNoticeCenterTransactionListQuery = { notice_center_transactionList?: { count?: number | null, limit?: number | null, page?: number | null, list?: Array<{ chainId?: number | null, createTime?: string | null, extend?: any | null, from?: string | null, id?: number | null, key?: string | null, type?: string | null } | null> | null } | null };
+export type FetchNoticeCenterTransactionListQuery = {
+  notice_center_transactionList?: {
+    count?: number | null;
+    limit?: number | null;
+    page?: number | null;
+    list?: Array<{
+      chainId?: number | null;
+      createTime?: string | null;
+      extend?: any | null;
+      from?: string | null;
+      id?: number | null;
+      key?: string | null;
+      type?: string | null;
+    } | null> | null;
+  } | null;
+};
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -23390,7 +23499,10 @@ export const FetchMiningListDocument = new TypedDocumentString(`
     chains
   }
 }
-    `) as unknown as TypedDocumentString<FetchMiningListQuery, FetchMiningListQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  FetchMiningListQuery,
+  FetchMiningListQueryVariables
+>;
 export const MiningListDocument = new TypedDocumentString(`
     query MiningList($where: Miningmining_list_filter) {
   mining_list(where: $where) {
@@ -23471,7 +23583,10 @@ export const MiningListDocument = new TypedDocumentString(`
     chains
   }
 }
-    `) as unknown as TypedDocumentString<MiningListQuery, MiningListQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  MiningListQuery,
+  MiningListQueryVariables
+>;
 export const MyCreatedMiningListDocument = new TypedDocumentString(`
     query MyCreatedMiningList($where: Miningmining_list_filter) {
   mining_list(where: $where) {
@@ -23552,7 +23667,10 @@ export const MyCreatedMiningListDocument = new TypedDocumentString(`
     chains
   }
 }
-    `) as unknown as TypedDocumentString<MyCreatedMiningListQuery, MyCreatedMiningListQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  MyCreatedMiningListQuery,
+  MyCreatedMiningListQueryVariables
+>;
 export const FetchPoolListDocument = new TypedDocumentString(`
     query FetchPoolList($first: Int, $where: Pair_filter, $orderBy: Pair_orderBy) {
   pairs(first: $first, where: $where, orderBy: $orderBy, orderDirection: desc) {
@@ -23588,7 +23706,10 @@ export const FetchPoolListDocument = new TypedDocumentString(`
     }
   }
 }
-    `) as unknown as TypedDocumentString<FetchPoolListQuery, FetchPoolListQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  FetchPoolListQuery,
+  FetchPoolListQueryVariables
+>;
 export const FetchLiquidityListDocument = new TypedDocumentString(`
     query FetchLiquidityList($where: Liquiditylist_filter) {
   liquidity_list(where: $where) {
@@ -23635,7 +23756,10 @@ export const FetchLiquidityListDocument = new TypedDocumentString(`
     }
   }
 }
-    `) as unknown as TypedDocumentString<FetchLiquidityListQuery, FetchLiquidityListQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  FetchLiquidityListQuery,
+  FetchLiquidityListQueryVariables
+>;
 export const FetchMyLiquidityListDocument = new TypedDocumentString(`
     query FetchMyLiquidityList($where: Liquiditylist_filter) {
   liquidity_list(where: $where) {
@@ -23683,7 +23807,10 @@ export const FetchMyLiquidityListDocument = new TypedDocumentString(`
     }
   }
 }
-    `) as unknown as TypedDocumentString<FetchMyLiquidityListQuery, FetchMyLiquidityListQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  FetchMyLiquidityListQuery,
+  FetchMyLiquidityListQueryVariables
+>;
 export const FetchDashboardPairListDocument = new TypedDocumentString(`
     query FetchDashboardPairList($where: Dashboardtype_list_filter) {
   dashboard_pairs_list(where: $where) {
@@ -23706,7 +23833,10 @@ export const FetchDashboardPairListDocument = new TypedDocumentString(`
     }
   }
 }
-    `) as unknown as TypedDocumentString<FetchDashboardPairListQuery, FetchDashboardPairListQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  FetchDashboardPairListQuery,
+  FetchDashboardPairListQueryVariables
+>;
 export const FetchPoolDocument = new TypedDocumentString(`
     query FetchPool($id: ID!, $where: Pair_filter, $liquidityWhere: Liquiditylist_filter) {
   pair(id: $id, where: $where) {
@@ -23766,7 +23896,10 @@ export const FetchPoolDocument = new TypedDocumentString(`
     }
   }
 }
-    `) as unknown as TypedDocumentString<FetchPoolQuery, FetchPoolQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  FetchPoolQuery,
+  FetchPoolQueryVariables
+>;
 export const FetchPoolDayDataDocument = new TypedDocumentString(`
     query FetchPoolDayData($where: Dashboardday_filter) {
   dashboard_pairs_day_data(where: $where) {
@@ -23779,7 +23912,10 @@ export const FetchPoolDayDataDocument = new TypedDocumentString(`
     txes
   }
 }
-    `) as unknown as TypedDocumentString<FetchPoolDayDataQuery, FetchPoolDayDataQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  FetchPoolDayDataQuery,
+  FetchPoolDayDataQueryVariables
+>;
 export const FetchPoolDashboardDocument = new TypedDocumentString(`
     query FetchPoolDashboard($where: Dashboardpair_detail_filter) {
   dashboard_pairs_detail(where: $where) {
@@ -23815,7 +23951,10 @@ export const FetchPoolDashboardDocument = new TypedDocumentString(`
     txUserNear24h
   }
 }
-    `) as unknown as TypedDocumentString<FetchPoolDashboardQuery, FetchPoolDashboardQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  FetchPoolDashboardQuery,
+  FetchPoolDashboardQueryVariables
+>;
 export const FetchPoolSwapListDocument = new TypedDocumentString(`
     query FetchPoolSwapList($first: Int, $skip: Int, $where: Swap_filter, $orderBy: Swap_orderBy, $orderDirection: OrderDirection) {
   swaps(
@@ -23848,7 +23987,10 @@ export const FetchPoolSwapListDocument = new TypedDocumentString(`
     amountOut
   }
 }
-    `) as unknown as TypedDocumentString<FetchPoolSwapListQuery, FetchPoolSwapListQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  FetchPoolSwapListQuery,
+  FetchPoolSwapListQueryVariables
+>;
 export const FetchLiquidityPositionsDocument = new TypedDocumentString(`
     query FetchLiquidityPositions($id: ID!, $first: Int, $skip: Int, $where: LiquidityPosition_filter, $miningWhere: LiquidityPosition_filter, $orderBy: LiquidityPosition_orderBy, $orderDirection: OrderDirection) {
   balance: liquidityPositions(
@@ -23895,7 +24037,10 @@ export const FetchLiquidityPositionsDocument = new TypedDocumentString(`
     }
   }
 }
-    `) as unknown as TypedDocumentString<FetchLiquidityPositionsQuery, FetchLiquidityPositionsQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  FetchLiquidityPositionsQuery,
+  FetchLiquidityPositionsQueryVariables
+>;
 export const FetchPoolPairListDocument = new TypedDocumentString(`
     query FetchPoolPairList($first: Int, $baseWhere: Pair_filter, $quoteWhere: Pair_filter, $orderBy: Pair_orderBy, $orderDirection: OrderDirection) {
   basePairs: pairs(
@@ -23963,7 +24108,10 @@ export const FetchPoolPairListDocument = new TypedDocumentString(`
     }
   }
 }
-    `) as unknown as TypedDocumentString<FetchPoolPairListQuery, FetchPoolPairListQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  FetchPoolPairListQuery,
+  FetchPoolPairListQueryVariables
+>;
 export const FetchUserSwapOrderHistoriesDocument = new TypedDocumentString(`
     query FetchUserSwapOrderHistories($where: User_swapswapFilter) {
   user_swap_orderHistories(where: $where) {
@@ -23993,8 +24141,12 @@ export const FetchUserSwapOrderHistoriesDocument = new TypedDocumentString(`
     }
   }
 }
-    `) as unknown as TypedDocumentString<FetchUserSwapOrderHistoriesQuery, FetchUserSwapOrderHistoriesQueryVariables>;
-export const FetchNoticeCenterTransactionListDocument = new TypedDocumentString(`
+    `) as unknown as TypedDocumentString<
+  FetchUserSwapOrderHistoriesQuery,
+  FetchUserSwapOrderHistoriesQueryVariables
+>;
+export const FetchNoticeCenterTransactionListDocument =
+  new TypedDocumentString(`
     query FetchNoticeCenterTransactionList($where: Notice_centertransactionListFilter) {
   notice_center_transactionList(where: $where) {
     list {
@@ -24011,4 +24163,7 @@ export const FetchNoticeCenterTransactionListDocument = new TypedDocumentString(
     page
   }
 }
-    `) as unknown as TypedDocumentString<FetchNoticeCenterTransactionListQuery, FetchNoticeCenterTransactionListQueryVariables>;
+    `) as unknown as TypedDocumentString<
+    FetchNoticeCenterTransactionListQuery,
+    FetchNoticeCenterTransactionListQueryVariables
+  >;

@@ -9,6 +9,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import svgr from '@svgr/rollup';
 import pkg from './package.json' with { type: 'json' };
 import globby from 'globby';
+import css from "rollup-plugin-import-css";
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const baseConfig = {
@@ -38,6 +39,7 @@ const baseConfig = {
       extensions,
       babelHelpers: 'bundled',
     }),
+    css(),
   ],
   external: [
     ...Object.keys(pkg.dependencies || {}).filter(

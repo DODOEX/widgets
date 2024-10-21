@@ -49,10 +49,7 @@ const InnerMining = ({
 
   const { isMobile } = useWidgetDevice();
 
-  const {
-    account = '0x1033dd8fECCe8F5FDd4B2F235B047CB1EE59512a',
-    chainId: currentChainId,
-  } = useWalletInfo();
+  const { account, chainId: currentChainId } = useWalletInfo();
 
   const [operateType, setOperateType] = useState<OperateType>(
     isMobile ? null : 'stake',
@@ -200,10 +197,7 @@ export function MiningDetail({
   };
 }) {
   const theme = useTheme();
-  const {
-    account = '0x1033dd8fECCe8F5FDd4B2F235B047CB1EE59512a',
-    chainId: currentChainId,
-  } = useWeb3React();
+  const { account, chainId: currentChainId } = useWeb3React();
   const { isMobile } = useWidgetDevice();
 
   const { miningItem, error, loading, refetch } = useMiningItem({

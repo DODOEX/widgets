@@ -131,7 +131,7 @@ export function RewardTokenSelect({
                   color: alpha(theme.palette.primary.main, 0.5),
                 },
               }}
-              onClick={(evt) => {
+              onClick={() => {
                 submitApprove(token, rewardStatus.pendingReset);
               }}
             >

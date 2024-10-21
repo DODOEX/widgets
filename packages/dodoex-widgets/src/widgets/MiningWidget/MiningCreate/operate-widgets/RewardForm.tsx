@@ -16,6 +16,7 @@ import { Actions, RewardI, StateProps, Types } from '../hooks/reducers';
 import { RewardStatus } from '../types';
 import { computeDailyAmount, isValidRewardInfo } from '../utils';
 import { DateTimePickerInput } from '../../../../components/DateTimePickerInput';
+import { ApprovalState } from '../../../../hooks/Token/type';
 
 function RewardItem({
   index,

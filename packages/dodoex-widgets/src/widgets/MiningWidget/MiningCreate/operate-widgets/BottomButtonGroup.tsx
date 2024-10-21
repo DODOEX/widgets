@@ -323,7 +323,7 @@ export function BottomButtonGroup({
           >
             <Checkbox
               checked={confirmChecked}
-              onChange={(evt) => {
+              onChange={(evt: any) => {
                 setConfirmChecked(evt.target.checked);
               }}
             />
