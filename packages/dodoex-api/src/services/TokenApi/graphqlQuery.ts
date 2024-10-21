@@ -27,4 +27,17 @@ export const tokenGraphqlQuery = {
       }
     }
   `),
+  fetchErc20ForecastSlippage: graphql(`
+    query FetchErc20ForecastSlippage($where: Erc20_extenderc20ExtendV2Filter) {
+      erc20_extend_erc20ExtendV2(where: $where) {
+        forecastSlippageList {
+          forecastSlippage
+          forecastValue
+          confidenceRatio
+          confidenceIntervalUpper
+          confidenceIntervalLower
+        }
+      }
+    }
+  `),
 };

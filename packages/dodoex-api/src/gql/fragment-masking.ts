@@ -6,13 +6,14 @@ import { Incremental, TypedDocumentString } from './graphql';
 
 export type FragmentType<
   TDocumentType extends DocumentTypeDecoration<any, any>,
-> = TDocumentType extends DocumentTypeDecoration<infer TType, any>
-  ? [TType] extends [{ ' $fragmentName'?: infer TKey }]
-    ? TKey extends string
-      ? { ' $fragmentRefs'?: { [key in TKey]: TType } }
+> =
+  TDocumentType extends DocumentTypeDecoration<infer TType, any>
+    ? [TType] extends [{ ' $fragmentName'?: infer TKey }]
+      ? TKey extends string
+        ? { ' $fragmentRefs'?: { [key in TKey]: TType } }
+        : never
       : never
-    : never
-  : never;
+    : never;
 
 // return non-nullable if `fragmentType` is non-nullable
 export function useFragment<TType>(

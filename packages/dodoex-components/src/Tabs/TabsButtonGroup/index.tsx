@@ -3,6 +3,9 @@ import { BoxProps } from '../../Box';
 import { Tab, TabProps } from './Tab';
 import { TabsList } from './TabsList';
 
+export { Tab as TabButton } from './Tab';
+export { TabsList as TabListButton } from './TabsList';
+
 export function TabsButtonGroup<T extends string | number = string | number>({
   tabs,
   variant,

@@ -71,6 +71,8 @@ import { setFromTokenChainId } from '../../store/actions/wallet';
 import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
 import { useFetchETHBalance } from '../../hooks/contract';
 import { useUserOptions } from '../UserOptionsProvider';
+import { SwapSettingsDialog } from './components/SwapSettingsDialog';
+import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -137,6 +139,11 @@ export function Swap({
     toToken,
     getAutoSlippage,
   });
+  const { slippage: slippageSwap, slippageLoading: slippageLoadingSwap } =
+    useSwapSlippage({
+      fromToken,
+      toToken,
+    });
 
   const fromEtherTokenQuery = useFetchETHBalance(fromToken?.chainId);
 
@@ -202,6 +209,7 @@ export function Swap({
     needApprove,
   ]);
 
+  console.log('jie', slippageSwap);
   const {
     status: resPriceStatus,
     rawBrief,
@@ -215,6 +223,8 @@ export function Swap({
     toAmount: toAmt,
     estimateGas,
     isReverseRouting,
+    slippage: slippageSwap,
+    slippageLoading: slippageLoadingSwap,
   });
   const {
     resAmount,
@@ -384,7 +394,9 @@ export function Swap({
     setIsReverseRouting(true);
   }, [isReverseRouting, updateToAmt, dispatch]);
 
-  const isSlippageExceedLimit = useSlippageLimit(isBridge);
+  const isSlippageExceedLimit = useSlippageLimit(
+    isBridge ? undefined : slippageSwap,
+  );
 
   const displayPriceImpact = useMemo(
     () => (Number(priceImpact) * 100).toFixed(2),
@@ -1026,12 +1038,22 @@ export function Swap({
         pricePerFromToken={resPricePerFromToken}
         onClose={() => setIsReviewDialogOpen(false)}
         loading={resPriceStatus === RoutePriceStatus.Loading}
+        slippage={slippageSwap}
       />
-      <SettingsDialog
-        open={isSettingsDialogOpen}
-        onClose={() => setIsSettingsDialogOpen(false)}
-        isBridge={isBridge}
-      />
+      {isBridge ? (
+        <SettingsDialog
+          open={isSettingsDialogOpen}
+          onClose={() => setIsSettingsDialogOpen(false)}
+          isBridge
+        />
+      ) : (
+        <SwapSettingsDialog
+          open={isSettingsDialogOpen}
+          onClose={() => setIsSettingsDialogOpen(false)}
+          fromToken={fromToken}
+          toToken={toToken}
+        />
+      )}
       <SelectBridgeDialog
         open={switchBridgeRouteShow}
         onClose={() => setSwitchBridgeRouteShow(false)}

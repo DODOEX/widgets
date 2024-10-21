@@ -5,12 +5,16 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
-  { [_ in K]?: never };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T,
+> = { [_ in K]?: never };
 export type Incremental<T> =
   | T
   | {
@@ -22672,6 +22676,22 @@ export type FetchErc20SwapCrossChainListQuery = {
   } | null> | null;
 };
 
+export type FetchErc20ForecastSlippageQueryVariables = Exact<{
+  where?: InputMaybe<Erc20_Extenderc20ExtendV2Filter>;
+}>;
+
+export type FetchErc20ForecastSlippageQuery = {
+  erc20_extend_erc20ExtendV2?: {
+    forecastSlippageList?: Array<{
+      forecastSlippage?: any | null;
+      forecastValue?: any | null;
+      confidenceRatio?: any | null;
+      confidenceIntervalUpper?: any | null;
+      confidenceIntervalLower?: any | null;
+    } | null> | null;
+  } | null;
+};
+
 export type FetchMiningListQueryVariables = Exact<{
   where?: InputMaybe<Miningmining_List_Filter>;
 }>;
@@ -23280,7 +23300,10 @@ export class TypedDocumentString<TResult, TVariables>
 {
   __apiType?: DocumentTypeDecoration<TResult, TVariables>['__apiType'];
 
-  constructor(private value: string, public __meta__?: Record<string, any>) {
+  constructor(
+    private value: string,
+    public __meta__?: Record<string, any>,
+  ) {
     super(value);
   }
 
@@ -23317,6 +23340,22 @@ export const FetchErc20SwapCrossChainListDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   FetchErc20SwapCrossChainListQuery,
   FetchErc20SwapCrossChainListQueryVariables
+>;
+export const FetchErc20ForecastSlippageDocument = new TypedDocumentString(`
+    query FetchErc20ForecastSlippage($where: Erc20_extenderc20ExtendV2Filter) {
+  erc20_extend_erc20ExtendV2(where: $where) {
+    forecastSlippageList {
+      forecastSlippage
+      forecastValue
+      confidenceRatio
+      confidenceIntervalUpper
+      confidenceIntervalLower
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchErc20ForecastSlippageQuery,
+  FetchErc20ForecastSlippageQueryVariables
 >;
 export const FetchMiningListDocument = new TypedDocumentString(`
     query FetchMiningList($where: Miningmining_list_filter) {

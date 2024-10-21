@@ -21,8 +21,6 @@ import { AppThunkDispatch } from '../../../store/actions';
 import useInflights from '../../../hooks/Submission/useInflights';
 import { PRICE_IMPACT_THRESHOLD } from '../../../constants/swap';
 import { QuestionTooltip } from '../../Tooltip';
-import { getSlippage } from '../../../store/selectors/settings';
-import { useDefaultSlippage } from '../../../hooks/setting/useDefaultSlippage';
 import { setContractStatus } from '../../../store/actions/globals';
 
 export interface ReviewDialogProps {
@@ -42,6 +40,7 @@ export interface ReviewDialogProps {
   curFromFiatPrice: BigNumber | null;
   pricePerFromToken: number | null;
   loading: boolean;
+  slippage: string | number | null;
 }
 export function ReviewDialog({
   open,
@@ -60,10 +59,9 @@ export function ReviewDialog({
   pricePerFromToken,
   additionalFeeAmount,
   loading,
+  slippage,
 }: ReviewDialogProps) {
   const theme = useTheme();
-  const { defaultSlippage } = useDefaultSlippage(false);
-  const slippage = useSelector(getSlippage) ?? defaultSlippage;
   const dispatch = useDispatch<AppThunkDispatch>();
   const contractStatus = useSelector(getContractStatus);
   const isPriceWaningShown = useMemo(

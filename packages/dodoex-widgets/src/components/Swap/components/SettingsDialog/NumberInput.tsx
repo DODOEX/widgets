@@ -1,6 +1,5 @@
-import { Box, Input, InputProps, BoxProps, useTheme } from '@dodoex/components';
+import { Input, InputProps } from '@dodoex/components';
 import { BigNumber } from 'bignumber.js';
-import { useMemo, useRef } from 'react';
 import { fixedInputStringToFormattedNumber } from '../../../../utils/formatter';
 
 export interface NumberInputProps extends InputProps {
@@ -15,8 +14,6 @@ export function NumberInput({
   onInputChange,
   ...props
 }: NumberInputProps) {
-  const theme = useTheme();
-
   return (
     <Input
       {...props}
@@ -29,7 +26,6 @@ export function NumberInput({
           maxVal && inputVal && new BigNumber(inputVal).gt(maxVal)
             ? maxVal.toString()
             : inputVal;
-        console.log('finalVal:', finalVal);
         onInputChange && onInputChange(finalVal);
       }}
     />

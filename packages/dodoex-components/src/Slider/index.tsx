@@ -1,9 +1,8 @@
 import React from 'react';
-import { Box, BoxProps } from '../Box';
 import {
   Slider as BaseSlider,
   sliderClasses,
-  SliderProps,
+  SliderProps as BaseSliderProps,
 } from '@mui/base/Slider';
 import { alpha, styled } from '@mui/system';
 import { ButtonBase } from '../Button';
@@ -119,8 +118,8 @@ function ThumbComponent(props: React.HTMLAttributes<unknown>) {
   );
 }
 
-interface Props extends SliderProps {}
-export const Slider = (other: Props) => {
+export interface SliderProps extends BaseSliderProps {}
+export const Slider = (other: SliderProps) => {
   return (
     <SliderStyle
       slots={{

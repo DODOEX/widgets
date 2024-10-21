@@ -66,6 +66,8 @@ export default class GraphQLRequests {
   ) {
     return {
       queryKey: [
+        'graphql',
+        'getQuery',
         // This logic can be customized as desired
         document,
         variables,
@@ -87,6 +89,9 @@ export default class GraphQLRequests {
   ) {
     return {
       queryKey: [
+        'graphql',
+        'getInfiniteQuery',
+        pageKey,
         // This logic can be customized as desired
         document,
         variables,
