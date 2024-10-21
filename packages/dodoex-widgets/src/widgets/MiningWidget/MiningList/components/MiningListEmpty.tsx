@@ -16,7 +16,7 @@ export function MiningListEmpty({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        color: 'custom.text.weak',
+        color: 'text.disabled',
         textAlign: 'center',
         width: '100%',
       }}

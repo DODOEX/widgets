@@ -20,6 +20,7 @@ export enum MetadataFlag {
   stakeMining = 'stakeMining',
   unstakeMining = 'unstakeMining',
   claimMining = 'claimMining',
+  submissionCreateMetaKey = 'submissionCreateMetaKey',
 }
 
 export type Metadata = Record<string, any>;

@@ -59,6 +59,11 @@ export function truncatePoolAddress(address: string): string {
   )}`;
 }
 
+export function sortsAddress(address0: string, address1: string): boolean {
+  // invariant(address0 !== address1, 'ADDRESSES')
+  return address0.toLowerCase() < address1.toLowerCase();
+}
+
 export function getEtherscanPage(
   chainId: ChainId,
   id?: string | null,

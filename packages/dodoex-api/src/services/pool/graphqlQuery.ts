@@ -371,4 +371,78 @@ export const poolGraphqlQuery = {
       }
     }
   `),
+  fetchPoolPairList: graphql(`
+    query FetchPoolPairList(
+      $first: Int
+      $baseWhere: Pair_filter
+      $quoteWhere: Pair_filter
+      $orderBy: Pair_orderBy
+      $orderDirection: OrderDirection
+    ) {
+      basePairs: pairs(
+        first: $first
+        where: $baseWhere
+        orderBy: $orderBy
+        orderDirection: $orderDirection
+      ) {
+        id
+        type
+        creator
+        lpFeeRate
+        i
+        k
+        baseReserve
+        quoteReserve
+        createdAtTimestamp
+        lastTradePrice
+        volumeUSD
+        baseToken {
+          id
+          symbol
+          name
+          decimals
+          usdPrice
+        }
+        quoteToken {
+          id
+          symbol
+          name
+          decimals
+          usdPrice
+        }
+      }
+      quotePairs: pairs(
+        first: $first
+        where: $quoteWhere
+        orderBy: $orderBy
+        orderDirection: $orderDirection
+      ) {
+        id
+        type
+        creator
+        lpFeeRate
+        i
+        k
+        baseReserve
+        quoteReserve
+        createdAtTimestamp
+        lastTradePrice
+        volumeUSD
+        baseToken {
+          id
+          symbol
+          name
+          decimals
+          usdPrice
+        }
+        quoteToken {
+          id
+          symbol
+          name
+          decimals
+          usdPrice
+        }
+      }
+    }
+  `),
 };

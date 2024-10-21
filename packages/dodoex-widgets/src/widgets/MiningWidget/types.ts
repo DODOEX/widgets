@@ -1,12 +1,12 @@
 import { ExcludeNone, MiningApi, MiningStatusE } from '@dodoex/api';
 import { BoxProps } from '@dodoex/components';
 import BigNumber from 'bignumber.js';
-import { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { TokenInfo } from '../../hooks/Token';
 
 export type FetchMiningList = ExcludeNone<
   ReturnType<
-    Exclude<typeof MiningApi.graphql.fetchMiningList['__apiType'], undefined>
+    Exclude<(typeof MiningApi.graphql.fetchMiningList)['__apiType'], undefined>
   >['mining_list']
 >['list'];
 export type FetchMiningListItem = ExcludeNone<FetchMiningList>[0] | undefined;
@@ -106,6 +106,15 @@ export interface BaseMiningI {
 export enum LpTokenPlatformID {
   dodo,
   pancakeV2,
+}
+
+export interface DexConfigI {
+  name: string;
+  Icon: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement> & { title?: string }
+  >;
+  createMiningEnable?: boolean;
+  platformID?: LpTokenPlatformID;
 }
 
 export interface CommonMiningI

@@ -1,14 +1,16 @@
+import { parseFixed } from '@ethersproject/bignumber';
+import BigNumber from 'bignumber.js';
+import { ChainId } from '../../chainConfig/chain';
+import contractConfig from '../../chainConfig/contractConfig';
 import ContractRequests, {
   ABIName,
-  ContractRequestsConfig,
   CONTRACT_QUERY_KEY,
+  ContractRequestsConfig,
 } from '../../helper/ContractRequests';
 import { encodeFunctionDataByFragments } from '../../helper/ContractRequests/encode';
-import { parseFixed } from '@ethersproject/bignumber';
 import { byWei } from '../../utils/number';
 import { miningGraphqlQuery } from './graphqlQuery';
 import { miningUtils } from './utils';
-import BigNumber from 'bignumber.js';
 
 const miningFragments = [
   {
@@ -29,6 +31,33 @@ const miningFragments = [
     inputs: [],
     name: 'claimAllRewards',
     outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'stakeToken', type: 'address' },
+      { internalType: 'bool', name: 'isLpToken', type: 'bool' },
+      { internalType: 'uint256', name: 'platform', type: 'uint256' },
+      {
+        internalType: 'address[]',
+        name: 'rewardTokens',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'rewardPerBlock',
+        type: 'uint256[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'startBlock',
+        type: 'uint256[]',
+      },
+      { internalType: 'uint256[]', name: 'endBlock', type: 'uint256[]' },
+    ],
+    name: 'createDODOMineV3',
+    outputs: [{ internalType: 'address', name: 'newMineV3', type: 'address' }],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -103,6 +132,40 @@ export class MiningApi {
 
       return {
         to: miningContractAddress,
+        data,
+      };
+    },
+
+    async createDODOMineV3(
+      chainId: ChainId,
+      stakeToken: string,
+      isLpToken: boolean,
+      platform: number,
+      rewardTokens: string[],
+      rewardPerBlock: string[],
+      startBlock: number[],
+      endBlock: number[],
+    ) {
+      const { DODO_MINEV3_PROXY } = contractConfig[chainId as ChainId];
+      if (!DODO_MINEV3_PROXY) {
+        return null;
+      }
+      const data = encodeFunctionDataByFragments(
+        miningFragments,
+        'createDODOMineV3',
+        [
+          stakeToken,
+          isLpToken,
+          platform,
+          rewardTokens,
+          rewardPerBlock,
+          startBlock,
+          endBlock,
+        ],
+      );
+
+      return {
+        to: DODO_MINEV3_PROXY,
         data,
       };
     },

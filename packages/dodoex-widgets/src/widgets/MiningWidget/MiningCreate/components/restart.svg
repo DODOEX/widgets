@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ICON/restart_24dp</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="图标" transform="translate(-1637.000000, -244.000000)">
+            <g id="ICON/restart_24dp" transform="translate(1637.000000, 244.000000)">
+                <polygon id="路径" points="0 0 24 0 24 24 0 24"></polygon>
+                <path d="M6,13 C6,11.35 6.67,9.85 7.76,8.76 L6.34,7.34 C4.9,8.79 4,10.79 4,13 C4,17.08 7.05,20.44 11,20.93 L11,18.91 C8.17,18.43 6,15.97 6,13 Z M20,13 C20,8.58 16.42,5 12,5 C11.94,5 11.88,5.01 11.82,5.01 L12.91,3.92 L11.5,2.5 L8,6 L11.5,9.5 L12.91,8.09 L11.83,7.01 C11.89,7.01 11.95,7 12,7 C15.31,7 18,9.69 18,13 C18,15.97 15.83,18.43 13,18.91 L13,20.93 C16.95,20.44 20,17.08 20,13 Z" id="形状" fill="#F1F902" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

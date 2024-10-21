@@ -90,7 +90,7 @@ export function InputArea({
         px: 20,
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: 'custom.border.default',
+        borderColor: 'border.main',
         borderRadius: 12,
         backgroundColor: theme.palette.background.input,
       }}

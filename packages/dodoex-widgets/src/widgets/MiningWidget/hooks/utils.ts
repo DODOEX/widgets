@@ -94,6 +94,17 @@ export function computeDailyRewardByPerBlock(
   return totalBlocksForOneDay.multipliedBy(rewardPerBlock);
 }
 
+export const getPreBlock = (
+  blockTime: number,
+  blockNumber: BigNumber,
+  time: number | Date,
+) => {
+  const blockTimeSecond = new BigNumber(blockTime).div(1000);
+  const diffSecond = dayjs(time).diff(dayjs(), 'seconds');
+  const diffBlock = new BigNumber(diffSecond).div(blockTimeSecond);
+  return diffBlock.plus(blockNumber).decimalPlaces(0, 1);
+};
+
 export const getTimeByPreBlock = (
   blockTime: number,
   blockNumber: BigNumber,
