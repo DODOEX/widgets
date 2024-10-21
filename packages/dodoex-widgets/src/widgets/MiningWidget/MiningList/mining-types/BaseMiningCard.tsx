@@ -35,7 +35,15 @@ export default memo(function BaseMiningCard({
   miningItem: TabMiningI;
   migrationItem: LiquidityMigrationInfo | undefined;
   contractDataLoading: boolean;
-  handleGotoDetail?: () => void;
+  handleGotoDetail: ({
+    mining,
+    pool,
+    chainId,
+  }: {
+    mining: string;
+    pool: string;
+    chainId: number;
+  }) => void;
 }) {
   const {
     stakeTokenAddress,
@@ -80,7 +88,17 @@ export default memo(function BaseMiningCard({
   } = useOperateHooks({
     status,
     id,
-    handleGotoDetail,
+    handleGotoDetail: () => {
+      const mining = miningMinings[0].miningContractAddress;
+      if (!mining) {
+        return;
+      }
+      handleGotoDetail({
+        mining,
+        pool: stakeTokenAddress,
+        chainId,
+      });
+    },
   });
 
   const { stakedTokenWithAmountList, totalStakedTokenUSD } = useStakedInfo({
@@ -108,8 +126,8 @@ export default memo(function BaseMiningCard({
   const gspPairRiskWarningVisible = isMobile
     ? false
     : viewType === 'view'
-    ? isGSP
-    : false;
+      ? isGSP
+      : false;
   return (
     <>
       <MiningCardLayout

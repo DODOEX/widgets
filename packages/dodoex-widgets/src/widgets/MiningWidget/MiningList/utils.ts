@@ -227,20 +227,18 @@ export function generateMiningDetailUrl({
   stakeTokenAddress: string | undefined;
 }) {
   if (!miningContractAddress) {
-    return `${
-      window.location.origin
-    }${`/earn/mining?address=${stakeTokenAddress}`}`;
+    return `${window.location.origin}${`/mining?address=${stakeTokenAddress}`}`;
   }
 
   if (!stakeTokenAddress) {
     return `${
       window.location.origin
-    }${`/earn/mining?mining=${miningContractAddress}`}`;
+    }${`/mining?mining=${miningContractAddress}`}`;
   }
 
   return `${
     window.location.origin
-  }${`/earn/mining/${miningContractAddress}/${stakeTokenAddress}`}`;
+  }${`/mining/${miningContractAddress}/${stakeTokenAddress}`}`;
 }
 
 export function computeEndTimestampByEndBlock({

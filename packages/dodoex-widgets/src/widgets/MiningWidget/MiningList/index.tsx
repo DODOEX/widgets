@@ -39,7 +39,15 @@ export function MiningList({
     address?: string;
   };
   handleGotoCreate?: () => void;
-  handleGotoDetail?: () => void;
+  handleGotoDetail: ({
+    mining,
+    pool,
+    chainId,
+  }: {
+    mining: string;
+    pool: string;
+    chainId: number;
+  }) => void;
 }) {
   const { isMobile } = useWidgetDevice();
   const { i18n } = useLingui();
@@ -169,9 +177,6 @@ export function MiningList({
             chainId === currentChainId
               ? contractDataMap.get(id)
               : othersChainContractDataMap.get(id);
-          // const contractData =
-          //   contractDataMap.get(id) ?? othersChainContractDataMap.get(id);
-          // return <Box key={id} />;
           return (
             <BaseMiningCard
               key={id}

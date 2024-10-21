@@ -1,7 +1,9 @@
 import { MiningStatusE } from '@dodoex/api';
 import { Box, Skeleton, useTheme } from '@dodoex/components';
+import { useWeb3React } from '@web3-react/core';
 import { useEffect, useMemo, useState } from 'react';
 import Dialog from '../../../components/Dialog';
+import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useMiningItem } from '../hooks/useMiningItem';
@@ -23,19 +25,19 @@ import {
   TabMiningI,
 } from '../types';
 import { MiningInfo } from './MiningInfo';
-import { useWeb3React } from '@web3-react/core';
-import WidgetContainer from '../../../components/WidgetContainer';
 
 export interface InnerMiningProps {
   contractData: CompositeMiningContractDataI | undefined;
   miningItem: TabMiningI;
   refetchContractData: () => void;
+  handleGotoMiningList: () => void;
 }
 
 const InnerMining = ({
   contractData,
   miningItem,
   refetchContractData,
+  handleGotoMiningList,
 }: InnerMiningProps) => {
   const {
     stakeTokenAddress,
@@ -156,15 +158,7 @@ const InnerMining = ({
       >
         <MiningInfo
           status={status}
-          onClose={() =>
-            window.open(
-              generateMiningDetailUrl({
-                chainId,
-                miningContractAddress: miningMinings[0].miningContractAddress,
-                stakeTokenAddress: undefined,
-              }),
-            )
-          }
+          onClose={() => handleGotoMiningList()}
           onClick={(type) => setOperateType(type)}
           setShareModalVisible={setShareModalVisible}
           stakedTokenList={stakedTokenWithAmountList}
@@ -189,12 +183,14 @@ const InnerMining = ({
 
 export function MiningDetail({
   query,
+  handleGotoMiningList,
 }: {
   query: {
     mining?: string;
     address?: string;
     chainId: number;
   };
+  handleGotoMiningList: () => void;
 }) {
   const theme = useTheme();
   const { account, chainId: currentChainId } = useWeb3React();
@@ -257,15 +253,9 @@ export function MiningDetail({
               }}
             >
               <GoBack
-                onClick={() =>
-                  window.open(
-                    generateMiningDetailUrl({
-                      chainId: miningItem?.chainId,
-                      miningContractAddress: query?.mining as string,
-                      stakeTokenAddress: undefined,
-                    }),
-                  )
-                }
+                onClick={() => {
+                  handleGotoMiningList();
+                }}
               />
               <Skeleton variant="rounded" width="100%" height={97} />
             </Box>
