@@ -276,6 +276,7 @@ export function MiningDetail({
             contractData={contractData}
             miningItem={miningItem}
             refetchContractData={refetchContractData}
+            handleGotoMiningList={handleGotoMiningList}
           />
         )}
       </Box>
