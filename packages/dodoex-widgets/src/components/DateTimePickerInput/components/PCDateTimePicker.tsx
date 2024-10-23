@@ -151,6 +151,7 @@ function PCDateTimePickerComponent({
   return (
     <>
       <Tooltip
+        leaveDelay={300}
         title={
           <Box
             sx={{

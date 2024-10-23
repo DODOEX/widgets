@@ -52,7 +52,7 @@ export const SearchComponents = ({
           justifyContent: 'flex-start',
           flexWrap: 'wrap',
           mt: activeTopTab === null ? 0 : -18,
-          mx: 20,
+          mx: 0,
           pt: 16,
           gap: 8,
           [theme.breakpoints.up('tablet')]: {
@@ -203,11 +203,13 @@ export const SearchComponents = ({
             setSearchText(v);
             debouncedUpdateSearchText(v);
             setSelectedToken(undefined);
+            setActiveChainId(undefined);
           }}
           clearValue={() => {
             setSearchText('');
             debouncedUpdateSearchText('');
             setSelectedToken(undefined);
+            setActiveChainId(undefined);
           }}
           placeholder={i18n._(`Search by address`)}
           sx={{

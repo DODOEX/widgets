@@ -15,10 +15,7 @@ import { useRewardTokenInfo } from '../MiningList/hooks/useRewardTokenInfo';
 import { useStakedInfo } from '../MiningList/hooks/useStakedInfo';
 import { useStatusAndStartBlockNumber } from '../MiningList/hooks/useStatusAndStartBlockNumber';
 import { OperateArea } from '../MiningList/operate-area';
-import {
-  EARN_MINING_DETAIL_ID,
-  generateMiningDetailUrl,
-} from '../MiningList/utils';
+import { EARN_MINING_DETAIL_ID } from '../MiningList/utils';
 import {
   CompositeMiningContractDataI,
   OperateType,

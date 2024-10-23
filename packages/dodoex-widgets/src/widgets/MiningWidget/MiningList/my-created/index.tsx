@@ -4,6 +4,7 @@ import LoadingCard from '../../../PoolWidget/PoolList/components/LoadingCard';
 import { useMyCreatedMiningList } from '../../hooks/useMyCreatedMiningList';
 import { MiningListEmpty } from '../components/MiningListEmpty';
 import { MyCreatedMining } from './MyCreatedMining';
+import { MiningListLoading } from '../components/MiningListLoading';
 
 export function MyCreated({
   miningList,
@@ -23,7 +24,7 @@ export function MyCreated({
   if (loading) {
     return (
       <DataCardGroup gap={12} repeatBaseForLargeScreen={2}>
-        <LoadingCard />
+        <MiningListLoading />
       </DataCardGroup>
     );
   }

@@ -6,6 +6,9 @@ export function CloseButton({ onClick }: { onClick?: () => void }) {
   return (
     <Box
       sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         flexShrink: 0,
         width: 24,
         height: 24,

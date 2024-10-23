@@ -58,7 +58,7 @@ export function useMyCreatedMiningList({
   return {
     error,
     refetch,
-    loading: isLoading || isPending,
+    loading: isLoading,
     miningList,
   };
 }

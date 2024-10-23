@@ -31,7 +31,8 @@ export function BottomButtonGroup({
 
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
-  const { account, chainId } = useWalletInfo();
+  const { account = '0x1033dd8fECCe8F5FDd4B2F235B047CB1EE59512a', chainId } =
+    useWalletInfo();
 
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [confirmChecked, setConfirmChecked] = useState(false);

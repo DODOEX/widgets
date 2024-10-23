@@ -91,7 +91,7 @@ msgid "Switch to {0}"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/hooks/useCreateMining.ts:133
-#: src/widgets/MiningWidget/MiningList/index.tsx:306
+#: src/widgets/MiningWidget/MiningList/index.tsx:310
 msgid "Create Liquidity Mining"
 msgstr ""
 
@@ -237,7 +237,7 @@ msgstr "当前价格冲击"
 msgid "Minute"
 msgstr "分钟"
 
-#: src/components/CopyTooltipToast.tsx:22
+#: src/components/CopyTooltipToast.tsx:25
 msgid "Copied"
 msgstr ""
 
@@ -402,7 +402,7 @@ msgstr ""
 msgid "s"
 msgstr "秒"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:337
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:338
 msgid "Yes, I am sure"
 msgstr ""
 
@@ -433,7 +433,7 @@ msgid "Slippage"
 msgstr "滑点"
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/components/widgets.tsx:145
+#: src/widgets/MiningWidget/MiningList/components/widgets.tsx:141
 msgid "Calculation = current rewards for a single block  × number of blocks in 24h"
 msgstr ""
 
@@ -478,7 +478,7 @@ msgid "Pool not found. Please switch to another network and retry."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/components/widgets.tsx:138
+#: src/widgets/MiningWidget/MiningList/components/widgets.tsx:134
 msgid "Daily Rewards"
 msgstr ""
 
@@ -827,7 +827,7 @@ msgid "Stake LP tokens and receive mining rewards."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/index.tsx:162
+#: src/widgets/MiningWidget/MiningList/index.tsx:166
 msgid "No LP pools match your criteria"
 msgstr ""
 
@@ -851,7 +851,7 @@ msgid "Set the fee to the same as most other pools"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/index.tsx:344
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:299
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:300
 msgid "If there are no participants before the end, the rewards cannot be taken out anymore."
 msgstr ""
 
@@ -976,7 +976,7 @@ msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/components/SearchComponents.tsx:212
+#: src/widgets/MiningWidget/MiningList/components/SearchComponents.tsx:214
 msgid "Search by address"
 msgstr ""
 
@@ -1132,7 +1132,7 @@ msgid "End mining"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/components/widgets.tsx:150
+#: src/widgets/MiningWidget/MiningList/components/widgets.tsx:146
 msgid "When adding rewards, the number of rewards for a single block may be adjusted"
 msgstr ""
 
@@ -1185,12 +1185,12 @@ msgid "{lqAndDodoCompareText} Price Difference"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/index.tsx:164
+#: src/widgets/MiningWidget/MiningList/index.tsx:168
 msgid "You are not currently providing liquidity for any LP pools."
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/widgets/MiningWidget/MiningList/my-created/index.tsx:34
+#: src/widgets/MiningWidget/MiningList/my-created/index.tsx:35
 msgid "You have not create any mining"
 msgstr ""
 
@@ -1321,7 +1321,7 @@ msgstr ""
 #: src/components/DateTimePickerInput/components/MobileDateTimePicker.tsx:203
 #: src/components/SwitchChainDialog/index.tsx:128
 #: src/components/WidgetConfirm.tsx:112
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:231
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:232
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:389
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:208
 msgid "Cancel"
@@ -1406,7 +1406,7 @@ msgstr ""
 msgid "My Pools"
 msgstr ""
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:150
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:151
 msgid "Approve {0}"
 msgstr ""
 
@@ -1445,17 +1445,17 @@ msgid "Total Fee Revenue"
 msgstr ""
 
 #: src/components/DateTimePickerInput/components/MobileDateTimePicker.tsx:223
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:45
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:69
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:94
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:173
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:46
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:70
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:95
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:174
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:75
 msgid "Next"
 msgstr ""
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:173
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:184
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:352
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:174
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:185
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:353
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:194
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:85
 msgid "Create"
@@ -1482,7 +1482,7 @@ msgstr ""
 msgid "Disclaimer"
 msgstr ""
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:246
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:247
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:404
 msgid "Back"
 msgstr ""
@@ -1629,7 +1629,7 @@ msgid "Low"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/index.tsx:343
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:298
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:299
 msgid "Once Mining has started, it cannot be stopped."
 msgstr ""
 
@@ -1703,7 +1703,7 @@ msgid "Total Rewards"
 msgstr ""
 
 #: src/components/ConnectWallet/NeedConnectButton.tsx:87
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:52
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:53
 msgid "Connect to a wallet"
 msgstr "连接钱包"
 
@@ -1853,7 +1853,7 @@ msgstr "源"
 msgid "You may modify the transaction deadline, the maximum time allowed for a trade to be processed on-chain. However, please note that this may lead to your trade executing at a subpar price, as the market price may change during that time."
 msgstr ""
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:133
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:134
 msgid "{0}  Approval Pending"
 msgstr ""
 
@@ -1873,8 +1873,12 @@ msgstr ""
 msgid "User denied transaction signature."
 msgstr "用户拒绝交易签名."
 
+#: src/widgets/MiningWidget/MiningList/components/ShareModeSelect.tsx:30
+msgid "Copy link"
+msgstr ""
+
 #: src/widgets/MiningWidget/MiningCreate/index.tsx:326
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:284
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:285
 msgid "WARNING"
 msgstr ""
 
@@ -1923,7 +1927,7 @@ msgid "Mining Pool"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/index.tsx:345
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:300
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:301
 msgid "To avoid loss of rewards, please ensure that at least 1 or more participating users exist."
 msgstr ""
 

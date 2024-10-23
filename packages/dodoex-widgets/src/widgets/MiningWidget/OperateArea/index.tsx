@@ -336,7 +336,7 @@ export default function OperateArea({
               overrideBalanceLoading={lpTokenAccountBalanceQuery.isLoading}
               amt={
                 isEnded
-                  ? lpTokenAccountBalanceQuery.data?.toString() ?? ''
+                  ? (lpTokenAccountBalanceQuery.data?.toString() ?? '')
                   : currentUnstakeTokenAmount
               }
               onInputChange={(value) => {

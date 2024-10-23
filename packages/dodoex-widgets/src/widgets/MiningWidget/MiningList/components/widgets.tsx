@@ -66,23 +66,19 @@ export const OperateButton = ({
 
   return (
     <Button
+      size={Button.Size.small}
       onClick={onClick}
       disabled={disabled}
       sx={{
         textTransform: 'none',
-        fontSize: 12,
-        lineHeight: '17px',
-        fontWeight: 600,
-        paddingTop: 7,
         paddingRight: 0,
-        paddingBottom: 8,
         paddingLeft: 0,
         width: '100%',
         flex: '1 1 auto',
         borderRadius: 8,
         color: operating
           ? theme.palette.mode === 'light'
-            ? alpha(theme.palette.text.primary, 0.3)
+            ? alpha(theme.palette.secondary.contrastText, 0.3)
             : alpha(theme.palette.primary.contrastText, 0.3)
           : theme.palette.text.primary,
         ...(operating
@@ -90,22 +86,22 @@ export const OperateButton = ({
               background: `linear-gradient(0deg, ${theme.palette.background.tag}, ${theme.palette.background.tag}), ${theme.palette.secondary.main}`,
             }
           : {
-              backgroundColor: theme.palette.background.tag,
+              background: theme.palette.background.tag,
             }),
-        '&:hover': operating
+        '&:not([disabled]):hover, &:focus-visible': operating
           ? {
               color:
                 theme.palette.mode === 'light'
-                  ? alpha(theme.palette.text.primary, 0.3)
+                  ? alpha(theme.palette.secondary.contrastText, 0.3)
                   : alpha(theme.palette.primary.contrastText, 0.3),
-              backgroundColor: theme.palette.secondary.main,
+              background: theme.palette.secondary.main,
             }
           : {
               color:
                 theme.palette.mode === 'light'
-                  ? theme.palette.text.primary
+                  ? theme.palette.secondary.contrastText
                   : theme.palette.primary.contrastText,
-              backgroundColor: theme.palette.secondary.main,
+              background: theme.palette.secondary.main,
             },
         '&[disabled]': {
           backgroundColor: theme.palette.background.tag,

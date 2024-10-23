@@ -3,21 +3,21 @@ import { Box, Button, Tabs, TabsGroup } from '@dodoex/components';
 import { Plus as PlusIcon } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { useWeb3React } from '@web3-react/core';
 import { debounce } from 'lodash';
 import React, { useMemo, useState } from 'react';
 import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { isTestNet } from '../../../constants/chainList';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useSubmission } from '../../../hooks/Submission';
-import LoadingCard from '../../PoolWidget/PoolList/components/LoadingCard';
 import { useMiningList } from '../hooks/useMiningList';
 import { useMiningListContractDataMap } from '../hooks/useMiningListContractDataMap';
 import { useMyCreatedMiningList } from '../hooks/useMyCreatedMiningList';
 import { MiningTabType, MiningTopTabType } from '../types';
 import { MiningListEmpty } from './components/MiningListEmpty';
+import { MiningListLoading } from './components/MiningListLoading';
 import { SearchComponents } from './components/SearchComponents';
 import { HowItWorksWrapper } from './components/widgets';
 import { MiningContext } from './contexts';
@@ -51,9 +51,9 @@ export function MiningList({
 }) {
   const { isMobile } = useWidgetDevice();
   const { i18n } = useLingui();
-  const { account, chainId: currentChainId } = useWeb3React();
-  const { requests, updateText } = useSubmission();
+  const { account, chainId: currentChainId } = useWalletInfo();
   const { noDocumentLink, onlyChainId } = useUserOptions();
+  const { requests, updateText } = useSubmission();
 
   const scrollParentRef = React.useRef<HTMLDivElement>();
 
@@ -95,6 +95,10 @@ export function MiningList({
   );
 
   const chainIds = useMemo(() => {
+    if (onlyChainId) {
+      return [onlyChainId];
+    }
+
     if (activeChainId) {
       return [activeChainId];
     }
@@ -108,7 +112,7 @@ export function MiningList({
     }
 
     return supportedChainIdList;
-  }, [activeChainId, currentChainId]);
+  }, [activeChainId, currentChainId, onlyChainId]);
 
   const { miningList, error, loading, refetch } = useMiningList({
     chainIds,
@@ -141,7 +145,7 @@ export function MiningList({
       if (loading) {
         return (
           <DataCardGroup gap={12} repeatBaseForLargeScreen={2}>
-            <LoadingCard />
+            <MiningListLoading />
           </DataCardGroup>
         );
       }
@@ -227,9 +231,9 @@ export function MiningList({
               }
             : {
                 display: 'flex',
-                gap: 12,
+                gap: 0,
                 flex: 1,
-                overflow: 'hidden',
+                overflowY: 'unset',
               }),
         }}
         ref={scrollParentRef}
@@ -248,7 +252,7 @@ export function MiningList({
               : {
                   display: 'flex',
                   flexDirection: 'column',
-                  borderRadius: 16,
+                  borderRadius: 0,
                   flex: 1,
                   overflow: 'hidden',
                   height: 'max-content',
@@ -263,7 +267,7 @@ export function MiningList({
                 : {
                     display: 'flex',
                     justifyContent: 'space-between',
-                    py: 20,
+                    pb: 20,
                     borderBottomWidth: 1,
                   }
             }
@@ -339,10 +343,7 @@ export function MiningList({
                 mobile: 16,
                 tablet: 20,
               },
-              mx: {
-                mobile: 20,
-                tablet: 0,
-              },
+              mx: 0,
             }}
           >
             {activeTopTab === 'created' ? (
