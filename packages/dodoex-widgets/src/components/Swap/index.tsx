@@ -209,7 +209,6 @@ export function Swap({
     needApprove,
   ]);
 
-  console.log('jie', slippageSwap);
   const {
     status: resPriceStatus,
     rawBrief,

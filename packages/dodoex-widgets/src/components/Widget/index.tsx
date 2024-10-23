@@ -85,6 +85,7 @@ export interface WidgetProps
   widgetRef?: React.RefObject<HTMLDivElement>;
   /** If true is returned, the default wallet connection logic will not be executed */
   onConnectWalletClick?: () => boolean | Promise<boolean>;
+  onSwitchChain?: (chainId?: ChainId) => Promise<boolean>;
   /** When the token balance is insufficient, users can purchase or swap callbacks */
   gotoBuyToken?: (params: { token: TokenInfo; account: string }) => void;
   getTokenLogoUrl?: (params: {

@@ -184,7 +184,7 @@ export default function SlippageSetting({
               sx={{
                 position: 'relative',
                 '&:not(:hover) .weak': {
-                  color: 'text.secondary',
+                  color: alpha(theme.palette.secondary.contrastText, 0.5),
                 },
               }}
             >

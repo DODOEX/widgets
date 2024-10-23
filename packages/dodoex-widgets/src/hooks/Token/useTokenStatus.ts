@@ -10,7 +10,7 @@ import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import useFetchBlockNumber from '../contract/useFetchBlockNumber';
 import { useInflights, useSubmission } from '../Submission';
 import { OpCode } from '../Submission/spec';
-import { ExecutionResult } from '../Submission/types';
+import { ExecutionResult, MetadataFlag } from '../Submission/types';
 import { ApprovalState, TokenInfo } from './type';
 
 function getPendingRest(
@@ -132,12 +132,20 @@ export function useTokenStatus(
   const submitApprove = React.useCallback(async () => {
     if (!proxyContractAddress || !account || !token) return;
     const amt = needReset ? new BigNumber(0) : undefined;
-    const result = await submission.execute(approveTitle, {
-      opcode: OpCode.Approval,
-      token,
-      contract: proxyContractAddress,
-      amt,
-    });
+    const result = await submission.execute(
+      approveTitle,
+      {
+        opcode: OpCode.Approval,
+        token,
+        contract: proxyContractAddress,
+        amt,
+      },
+      {
+        metadata: {
+          [needReset ? MetadataFlag.approve : MetadataFlag.approve]: true,
+        },
+      },
+    );
 
     if (result !== ExecutionResult.Success) return;
     await updateBlockNumber();

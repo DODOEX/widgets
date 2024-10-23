@@ -8,7 +8,7 @@ import { getTokenSymbolDisplay } from '../../utils/token';
 import useFetchBlockNumber from '../contract/useFetchBlockNumber';
 import { useInflights, useSubmission } from '../Submission';
 import { OpCode } from '../Submission/spec';
-import { ExecutionResult } from '../Submission/types';
+import { ExecutionResult, MetadataFlag } from '../Submission/types';
 import { ApprovalState, BalanceState, TokenInfo } from './type';
 
 export const useGetTokenStatus = ({
@@ -137,6 +137,9 @@ export const useGetTokenStatus = ({
         },
         {
           submittedBack,
+          metadata: {
+            [isReset ? MetadataFlag.approve : MetadataFlag.approve]: true,
+          },
         },
       );
 

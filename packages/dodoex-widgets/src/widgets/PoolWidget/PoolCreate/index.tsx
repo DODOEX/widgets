@@ -211,6 +211,7 @@ export default function PoolCreate() {
           ...(!isMobile
             ? {
                 height: 'auto',
+                overflowX: 'auto',
               }
             : {}),
         }}
@@ -221,6 +222,7 @@ export default function PoolCreate() {
               mr: 12,
               flexGrow: 1,
               display: 'block',
+              overflow: 'hidden',
             }}
           >
             <GoBack />
@@ -254,8 +256,8 @@ export default function PoolCreate() {
                 state.currentStep === 0
                   ? 'waiting'
                   : state.currentStep === 1
-                  ? 'running'
-                  : 'completed'
+                    ? 'running'
+                    : 'completed'
               }
             />
             {isPeggedVersion ? (
@@ -264,8 +266,8 @@ export default function PoolCreate() {
                   state.currentStep === 0
                     ? 'waiting'
                     : state.currentStep === 1
-                    ? 'running'
-                    : 'completed'
+                      ? 'running'
+                      : 'completed'
                 }
                 baseToken={state.baseToken}
                 quoteToken={state.quoteToken}
@@ -280,8 +282,8 @@ export default function PoolCreate() {
                   state.currentStep === 0
                     ? 'waiting'
                     : state.currentStep === 1
-                    ? 'running'
-                    : 'completed'
+                      ? 'running'
+                      : 'completed'
                 }
                 baseToken={state.baseToken}
                 quoteToken={state.quoteToken}
@@ -302,8 +304,8 @@ export default function PoolCreate() {
                     state.currentStep > 2
                       ? 'completed'
                       : state.currentStep === 2
-                      ? 'running'
-                      : 'waiting'
+                        ? 'running'
+                        : 'waiting'
                   }
                 />
                 <PriceModeCard
@@ -332,8 +334,8 @@ export default function PoolCreate() {
                     state.currentStep > 4
                       ? 'completed'
                       : state.currentStep === 4
-                      ? 'running'
-                      : 'waiting'
+                        ? 'running'
+                        : 'waiting'
                   }
                 />
                 <LqRatioSet

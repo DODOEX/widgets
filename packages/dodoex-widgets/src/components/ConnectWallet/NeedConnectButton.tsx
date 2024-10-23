@@ -21,7 +21,7 @@ export default function NeedConnectButton({
 }) {
   const { account, chainId: currentChainId, connector } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { onConnectWalletClick } = useUserOptions();
+  const { onConnectWalletClick, onSwitchChain } = useUserOptions();
   const [loading, setLoading] = React.useState(false);
   const switchChain = useSwitchChain(chainId);
   const needSwitchNetwork =
@@ -45,6 +45,12 @@ export default function NeedConnectButton({
         onClick={async () => {
           // switch chain
           if (needSwitchNetwork) {
+            if (onSwitchChain) {
+              setLoading(true);
+              await onSwitchChain();
+              setLoading(false);
+              return;
+            }
             if (switchChain) {
               setLoading(true);
               await switchChain();
