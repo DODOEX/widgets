@@ -9,7 +9,6 @@ import {
 } from '@dodoex/components';
 import BigNumber from 'bignumber.js';
 import { chainListMap } from '../constants/chainList';
-import { scanUrlDomainMap } from '../constants/chains';
 import { TokenInfo } from '../hooks/Token';
 import {
   formatReadableNumber,
@@ -21,27 +20,32 @@ import { EmptyList } from './List/EmptyList';
 import TokenLogo from './TokenLogo';
 import { TokenLogoPair } from './TokenLogoPair';
 import { ReactComponent as Link } from '../assets/logo/link.svg';
+import { FailedList } from './List/FailedList';
 
 export function CardStatus({
-  isMobile,
   loading,
   empty,
+  hasSearch,
   children,
+  refetch,
 }: React.PropsWithChildren<{
-  isMobile: boolean;
+  isMobile?: boolean;
   loading: boolean;
   empty: boolean;
+  hasSearch?: boolean;
+  refetch?: () => void;
 }>) {
-  const gap = isMobile ? 28 : 16;
+  const height = 320;
   if (loading) {
     return (
       <Box
         sx={{
-          mt: gap,
           display: 'flex',
           flexDirection: 'column',
+          justifyContent: 'center',
           gap: 24,
-          px: 20,
+          px: 24,
+          height,
         }}
       >
         {increaseArray(4).map((_, i) => (
@@ -50,12 +54,22 @@ export function CardStatus({
       </Box>
     );
   }
+  if (refetch) {
+    return (
+      <FailedList
+        refresh={refetch}
+        sx={{
+          height,
+        }}
+      />
+    );
+  }
   if (empty) {
     return (
       <EmptyList
+        hasSearch={hasSearch}
         sx={{
-          mt: gap,
-          height: 252,
+          height,
         }}
       />
     );

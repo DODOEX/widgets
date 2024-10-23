@@ -74,7 +74,7 @@ export function BaseQuotePie({
     quoteTvlRate || quoteAmount.div(total).multipliedBy(100).toFixed(2);
 
   const isEmpty = baseAmount.lte(0) && quoteAmount.lte(0);
-  const baseColor = theme.palette.mode === 'light' ? '#6851B4' : '#BC9CFF';
+  const baseColor = theme.palette.purple.main;
   const quoteColor = theme.palette.secondary.main;
   const data = [
     {
@@ -143,8 +143,7 @@ export function BaseQuotePie({
               left: '0',
               top: '50%',
               transform: 'translateY(-50%)',
-              backgroundColor:
-                theme.palette.mode === 'light' ? '#6851B4' : '#BC9CFF',
+              backgroundColor: theme.palette.purple.main,
               borderRadius: '50%',
             },
             '&:last-child::before': {

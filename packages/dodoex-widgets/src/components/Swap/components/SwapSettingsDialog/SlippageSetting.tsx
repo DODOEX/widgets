@@ -216,7 +216,7 @@ export default function SlippageSetting({
                               ? '#E6D9FF'
                               : '#BFAFF3'
                           } 98.67%)`
-                        : 'linear-gradient(90deg, #6851B4 -1.33%, #BFAFF3 98.67%)',
+                        : `linear-gradient(90deg, ${theme.palette.purple.main} -1.33%, #BFAFF3 98.67%)`,
                       backgroundClip: 'text',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',

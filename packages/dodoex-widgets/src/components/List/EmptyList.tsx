@@ -26,7 +26,14 @@ export function EmptyList({
         ...sx,
       }}
     >
-      <EmptyDataIcon hasSearch={hasSearch} />
+      <EmptyDataIcon
+        hasSearch={hasSearch}
+        sx={{
+          width: 60,
+          height: 60,
+          borderRadius: 12,
+        }}
+      />
       <Box>{emptyText ?? <Trans>No results found</Trans>}</Box>
     </Box>
   );

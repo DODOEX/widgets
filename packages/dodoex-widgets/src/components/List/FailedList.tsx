@@ -1,4 +1,5 @@
-import { Box, BoxProps, HoverOpacity, FailedIcon } from '@dodoex/components';
+import { Box, BoxProps, HoverOpacity } from '@dodoex/components';
+import { ReactComponent as FailedListIcon } from '../../assets/failed-list.svg';
 import { Trans } from '@lingui/macro';
 import { merge } from 'lodash';
 
@@ -21,8 +22,12 @@ export function FailedList({
         sx,
       )}
     >
-      <FailedIcon
+      <Box
+        component={FailedListIcon}
         sx={{
+          display: 'inline-block',
+          width: 60,
+          height: 60,
           mb: 12,
         }}
       />

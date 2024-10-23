@@ -8,6 +8,8 @@ export { WIDGET_CLASS_NAME } from './components/Widget';
 
 export { MetadataFlag } from './hooks/Submission/types';
 
+export { rpcServerMap, scanUrlDomainMap } from './constants/chains';
+export { chainListMap } from './constants/chainList';
 import { Pool } from './widgets/PoolWidget';
 export { Widget, UnstyleWidget, Message } from './components/Widget';
 export { WIDGET_MODULE_CLASS_NAME } from './components/WidgetContainer';

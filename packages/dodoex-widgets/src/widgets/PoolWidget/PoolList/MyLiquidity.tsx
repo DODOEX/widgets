@@ -40,6 +40,7 @@ import LiquidityTable from './components/LiquidityTable';
 import SkeletonTable from './components/SkeletonTable';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { CardStatus } from '../../../components/CardWidgets';
 
 function CardList({
   account,
@@ -923,29 +924,19 @@ export default function MyLiquidity({
             operatePool={operatePool}
             setOperatePool={setOperatePool}
           />
-          {fetchResult.isLoading && !lqList?.length && <SkeletonTable />}
-          {!fetchResult.isLoading && !lqList?.length && !fetchResult.error && (
-            <EmptyList
-              sx={{
-                my: 40,
-              }}
-              hasSearch={
-                !!(
-                  (activeChainId && !onlyChainId) ||
-                  filterASymbol ||
-                  filterBSymbol
-                )
-              }
-            />
-          )}
-          {!!fetchResult.error && (
-            <FailedList
-              refresh={fetchResult.refetch}
-              sx={{
-                my: 40,
-              }}
-            />
-          )}
+
+          <CardStatus
+            loading={fetchResult.isLoading}
+            refetch={fetchResult.error ? fetchResult.refetch : undefined}
+            empty={!lqList?.length}
+            hasSearch={
+              !!(
+                (activeChainId && !onlyChainId) ||
+                filterASymbol ||
+                filterBSymbol
+              )
+            }
+          />
         </>
       )}
     </>

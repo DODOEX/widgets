@@ -39,6 +39,7 @@ import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import SkeletonTable from './components/SkeletonTable';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { CardStatus } from '../../../components/CardWidgets';
 
 function CardList({
   account,
@@ -693,23 +694,12 @@ export default function MyCreated({
             operatePool={operatePool}
             setOperatePool={setOperatePool}
           />
-          {fetchResult.isLoading && !list?.length && <SkeletonTable />}
-          {!fetchResult.isLoading && !list?.length && !fetchResult.error && (
-            <EmptyList
-              sx={{
-                my: 40,
-              }}
-              hasSearch={!!activeChainId && !onlyChainId}
-            />
-          )}
-          {!!fetchResult.error && (
-            <FailedList
-              refresh={fetchResult.refetch}
-              sx={{
-                my: 40,
-              }}
-            />
-          )}
+          <CardStatus
+            loading={fetchResult.isLoading}
+            refetch={fetchResult.error ? fetchResult.refetch : undefined}
+            empty={!list?.length}
+            hasSearch={!!activeChainId && !onlyChainId}
+          />
         </>
       )}
     </>

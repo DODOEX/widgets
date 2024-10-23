@@ -89,16 +89,17 @@ export function useSwitchChain(chainId?: ChainId) {
   const { provider } = useWeb3React();
 
   const switchChain = useMemo(() => {
-    if (!chainId || !provider?.provider?.isMetaMask) {
+    const providerResult: any = provider?.provider ?? provider;
+    if (!chainId || !providerResult?.isMetaMask) {
       return undefined;
     }
     return () => {
       return registerNetworkWithMetamask({
         chainId,
-        provider: provider?.provider,
+        provider: providerResult,
       });
     };
-  }, [chainId]);
+  }, [chainId, provider]);
 
   return switchChain;
 }

@@ -36,6 +36,7 @@ export default function RadioButton({
         borderRadius: 12,
         flexWrap: 'wrap',
         justifyContent: 'flex-start',
+        textAlign: 'left',
         '&:hover': {
           borderColor: theme.palette.primary.main,
         },
@@ -51,6 +52,7 @@ export default function RadioButton({
           width: '100%',
           justifyContent: 'space-between',
           typography: 'caption',
+          pr: 2,
           color: selected
             ? isLight
               ? theme.palette.text.primary

@@ -173,9 +173,7 @@ export function SwapSettingsDialog({
               justifyContent: 'space-between',
             }}
           >
-            <Box
-              sx={{ display: 'flex', alignItems: 'center', fontWeight: 600 }}
-            >
+            <Box sx={{ fontWeight: 600 }}>
               <Trans>Disable Indirect Routing</Trans>
               <QuestionTooltip
                 title={
