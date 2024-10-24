@@ -54,9 +54,9 @@ msgstr "至"
 msgid "{0} pending"
 msgstr "{0} 等待中"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:324
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:341
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:479
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:325
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:342
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:480
 msgid "Removing"
 msgstr ""
 
@@ -111,9 +111,9 @@ msgstr "忽略"
 msgid "Unstaking"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:327
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:344
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:482
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:328
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:345
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:483
 msgid "Adding"
 msgstr ""
 
@@ -249,7 +249,7 @@ msgstr ""
 msgid "Hour"
 msgstr "小时"
 
-#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:164
+#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:167
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:28
 #: src/widgets/PoolWidget/PoolCreate/index.tsx:301
 msgid "Pricing Model"
@@ -289,7 +289,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 #: src/components/SwitchChainDialog/index.tsx:139
 #: src/components/WidgetConfirm.tsx:130
 #: src/widgets/MiningWidget/MiningCreate/components/StepTitle.tsx:50
-#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:194
+#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:197
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:240
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:74
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:197
@@ -304,7 +304,7 @@ msgstr "Powered by DODO protocol"
 msgid "Fees (24H)"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:104
+#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:107
 msgid "Initial Tokens"
 msgstr ""
 
@@ -388,13 +388,13 @@ msgstr ""
 msgid "Amount of token rewards"
 msgstr ""
 
-#: src/components/List/EmptyList.tsx:30
+#: src/components/List/EmptyList.tsx:37
 msgid "No results found"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:273
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:295
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:391
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:274
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:296
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:392
 msgid "Pair"
 msgstr ""
 
@@ -557,13 +557,13 @@ msgstr ""
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:221
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:276
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:222
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:277
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:77
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:197
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:298
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:254
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:394
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:198
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:299
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:255
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:395
 msgid "TVL"
 msgstr ""
 
@@ -780,7 +780,7 @@ msgstr ""
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr ""
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:179
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:177
 msgid "Disable Indirect Routing"
 msgstr ""
 
@@ -990,10 +990,10 @@ msgstr ""
 msgid "Start Time"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:152
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:412
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:185
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:624
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:153
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:413
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:186
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:625
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:20
 msgid "Mining"
 msgstr ""
@@ -1113,7 +1113,7 @@ msgstr ""
 msgid "Suitable for most situations."
 msgstr ""
 
-#: src/components/List/FailedList.tsx:42
+#: src/components/List/FailedList.tsx:47
 msgid "Something went wrong…<0>Refresh again</0>"
 msgstr ""
 
@@ -1148,11 +1148,11 @@ msgstr "交易详情"
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:182
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:180
 msgid "Checking this option means that the routing algorithm will only route to liquidity pools between the two tokens in the trading pair and will ignore routes with any intermediary tokens."
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:172
+#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:175
 #: src/widgets/PoolWidget/PoolCreate/components/FeeRateCard.tsx:57
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:30
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:38
@@ -1170,8 +1170,8 @@ msgid "You are making changes to the liquidity of a private pool. This is a high
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:26
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:325
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:397
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:326
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:398
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:357
 msgid "My Liquidity"
 msgstr ""
@@ -1350,22 +1350,22 @@ msgstr ""
 msgid "I have read, understand, and agree to the <0>Terms of Service</0>."
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:84
+#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:86
 msgid "Modify Confirmation"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:102
+#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:105
 msgid "Version"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:175
+#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:178
 #: src/widgets/PoolWidget/PoolCreate/components/LqRatioSet.tsx:87
 msgid "Initial asset ratio"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:115
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:184
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:449
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:450
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:84
 msgid "Edit"
 msgstr ""
@@ -1374,7 +1374,7 @@ msgstr ""
 msgid "Min"
 msgstr "分钟"
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:658
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:659
 msgid "Hide TVL=0 pools"
 msgstr ""
 
@@ -1439,8 +1439,8 @@ msgstr "预计交易时长"
 msgid "Connect to your wallet"
 msgstr "连接钱包"
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:226
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:301
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:227
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:302
 msgid "Total Fee Revenue"
 msgstr ""
 
@@ -1456,7 +1456,7 @@ msgstr ""
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:174
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:185
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:353
-#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:194
+#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:197
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:85
 msgid "Create"
 msgstr ""
@@ -1582,12 +1582,12 @@ msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:455
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:202
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:240
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:473
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:267
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:552
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:365
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:705
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:241
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:474
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:268
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:553
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:366
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:706
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:89
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
 msgid "Add"
@@ -1719,12 +1719,12 @@ msgid "Detail"
 msgstr "详情"
 
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:194
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:183
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:279
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:184
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:280
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:57
 #: src/widgets/PoolWidget/PoolList/components/TokenListPoolItem.tsx:102
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:216
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:400
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:217
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:401
 msgid "APY"
 msgstr ""
 
@@ -1748,7 +1748,7 @@ msgid "Total Liquidity"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/components/BaseInfoCardList.tsx:55
-#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:146
+#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:149
 #: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:139
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:68
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:135
@@ -1765,10 +1765,10 @@ msgid "Initial Price Alert"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:195
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:252
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:540
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:350
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:693
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:253
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:541
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:351
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:694
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:164
 msgid "Remove"
@@ -1787,7 +1787,7 @@ msgstr "跨链桥概览"
 msgid "SafeERC20: low-level call failed. Please contact the DODO team."
 msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
 
-#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:84
+#: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:86
 msgid "Pool Creation Confirmation"
 msgstr ""
 

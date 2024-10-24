@@ -30,7 +30,7 @@ import { DefaultTokenInfo, TokenInfo } from '../../hooks/Token/type';
 import useInitTokenList, {
   InitTokenListProps,
 } from '../../hooks/Token/useInitTokenList';
-import { LangProvider } from '../../providers/i18n';
+import { LangProvider as LangProviderBase } from '../../providers/i18n';
 import { queryClient } from '../../providers/queryClient';
 import { store } from '../../store';
 import { AppThunkDispatch } from '../../store/actions';
@@ -98,6 +98,17 @@ export interface WidgetProps
   graphQLRequests?: GraphQLRequests;
   ConfirmComponent?: React.FunctionComponent<ConfirmProps>;
   DialogComponent?: React.FunctionComponent<DialogProps>;
+}
+
+function LangProvider(props: PropsWithChildren<WidgetProps>) {
+  if (props.noLangProvider) {
+    return <>{props.children}</>;
+  }
+  return (
+    <LangProviderBase locale={props.locale}>
+      <WithExecutionDialog {...props}>{props.children}</WithExecutionDialog>
+    </LangProviderBase>
+  );
 }
 
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
@@ -174,34 +185,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   const { widgetRef } = useUserOptions();
 
   if (props.noUI) {
-    if (props.noLangProvider) {
-      return <>{props.children}</>;
-    }
     return <LangProvider locale={props.locale}>{props.children}</LangProvider>;
-  }
-
-  if (props.noLangProvider) {
-    return (
-      <Box
-        sx={{
-          width,
-          height,
-          overflow: 'hidden',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          minWidth: 335,
-          minHeight: 494,
-          borderRadius: 16,
-          backgroundColor: 'background.paper',
-        }}
-        className={WIDGET_CLASS_NAME}
-        ref={widgetRef}
-      >
-        <OpenConnectWalletInfo />
-        {props.children}
-      </Box>
-    );
   }
 
   return (
@@ -243,9 +227,7 @@ function Web3Provider(props: PropsWithChildren<WidgetProps>) {
 
   return (
     <Web3ReactProvider connectors={connectors} key={key} lookupENS={false}>
-      <WithExecutionDialog {...props}>
-        <InitStatus {...props} />
-      </WithExecutionDialog>
+      <InitStatus {...props} />
     </Web3ReactProvider>
   );
 }

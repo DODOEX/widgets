@@ -164,14 +164,17 @@ function updateFixedRatioPriceAndInitPrice({
   let initPrice = isStandard
     ? DEFAULT_INIT_PRICE_STANDARD
     : isForward
-    ? fixedRatioPrice
-    : !fixedRatioPriceBN.isNaN() && fixedRatioPriceBN.gt(0)
-    ? new BigNumber(1)
-        .div(fixedRatioPriceBN)
-        .dp(isForward ? quoteToken.decimals : baseToken.decimals)
-        .toString()
-    : DEFAULT_INIT_PRICE;
+      ? fixedRatioPrice
+      : !fixedRatioPriceBN.isNaN() && fixedRatioPriceBN.gt(0)
+        ? new BigNumber(1)
+            .div(fixedRatioPriceBN)
+            .dp(isForward ? quoteToken.decimals : baseToken.decimals)
+            .toString()
+        : DEFAULT_INIT_PRICE;
   if (isStandard) {
+    /**
+     * The standard pool is not necessarily fixed to this. When 18 - baseDecimals + quoteDecimals is less than the number of decimal places, use the bottom-line selection.
+     */
     const iDecimals = 18 - baseToken.decimals + quoteToken.decimals;
     if (iDecimals < String(DEFAULT_INIT_PRICE_STANDARD).split('.')[1].length) {
       initPrice = new BigNumber(1).div(10 ** iDecimals).toString();

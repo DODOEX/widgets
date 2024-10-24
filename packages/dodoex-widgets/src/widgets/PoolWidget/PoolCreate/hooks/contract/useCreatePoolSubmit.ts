@@ -5,6 +5,7 @@ import { useWalletInfo } from '../../../../../hooks/ConnectWallet/useWalletInfo'
 import { TokenInfo } from '../../../../../hooks/Token';
 import { getEthersValue } from '../../../../../utils/bytes';
 import { SubPeggedVersionE, Version as PoolVersionE } from '../../types';
+import { DEFAULT_INIT_PRICE_STANDARD } from '../../utils';
 
 export const useCreatePoolSubmit = ({
   selectedVersion,
@@ -65,13 +66,23 @@ export const useCreatePoolSubmit = ({
       ? feeRateNumber.times(100).toNumber()
       : feeRateNumber.times(80).toNumber();
     // i = min price
-    const i =
+    let i =
       isPrivate && isStandard
         ? new BigNumber(quoteAmount)
             .div(baseAmount)
             .dp(quoteDecimals, BigNumber.ROUND_DOWN)
             .toString()
         : new BigNumber(initPrice).toString();
+    if (isStandard) {
+      /**
+       * The standard pool is not necessarily fixed to this. When 18 - baseDecimals + quoteDecimals is less than the number of decimal places, use the bottom-line selection.
+       */ const iDecimals = 18 - baseToken.decimals + quoteToken.decimals;
+      if (
+        iDecimals < String(DEFAULT_INIT_PRICE_STANDARD).split('.')[1].length
+      ) {
+        i = new BigNumber(1).div(10 ** iDecimals).toString();
+      }
+    }
     // k is the volatility
     const k = Number(slippageCoefficient || (isDsp ? '0.1' : '1'));
     // Transaction Deadline

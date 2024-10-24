@@ -11,6 +11,7 @@ import {
 import { StateProps } from '../reducer';
 import { Version } from '../types';
 import { computeInitPriceText } from '../utils';
+import Dialog from '../../../../components/Dialog';
 
 function Item({
   label,
@@ -78,9 +79,10 @@ export default function ConfirmInfoDialog({
   const isPeggedVersion = state.selectedVersion === Version.pegged;
 
   return (
-    <WidgetDialog
+    <Dialog
       open={on}
       onClose={onClose}
+      modal
       title={isModify ? t`Modify Confirmation` : t`Pool Creation Confirmation`}
     >
       <Box
@@ -91,6 +93,7 @@ export default function ConfirmInfoDialog({
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
+          width: 420,
         }}
       >
         <Box
@@ -194,6 +197,6 @@ export default function ConfirmInfoDialog({
           {isModify ? t`Confirm` : t`Create`}
         </Button>
       </Box>
-    </WidgetDialog>
+    </Dialog>
   );
 }
