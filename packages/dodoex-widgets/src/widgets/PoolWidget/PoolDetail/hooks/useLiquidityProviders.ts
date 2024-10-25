@@ -250,8 +250,8 @@ export function useLiquidityProviders({
       }
     }
 
-    const baseShowDecimals = baseToken?.decimals ?? 0 > 6 ? 6 : 4;
-    const quoteShowDecimals = quoteToken?.decimals ?? 0 > 6 ? 6 : 4;
+    const baseShowDecimals = (baseToken?.decimals ?? 0 > 6) ? 6 : 4;
+    const quoteShowDecimals = (quoteToken?.decimals ?? 0 > 6) ? 6 : 4;
     const quoteTokenPrice = fiatPriceQuery.toFiatPrice;
     userMap.forEach((user) => {
       newLpList.push({

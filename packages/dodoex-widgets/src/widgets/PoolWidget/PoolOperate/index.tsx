@@ -35,6 +35,7 @@ export interface PoolOperateProps {
   operate?: PoolOperateInnerProps['operate'];
   chainId?: number;
   hasMining?: boolean;
+  hidePoolInfo?: boolean;
   sx?: BoxProps['sx'];
 }
 
@@ -45,6 +46,7 @@ export function PoolOperate({
   operate,
   chainId,
   hasMining,
+  hidePoolInfo,
   sx,
 }: PoolOperateProps) {
   const { account } = useWeb3React();
@@ -174,6 +176,7 @@ export function PoolOperate({
           <PoolOperateInner
             pool={pool}
             operate={operate}
+            hidePoolInfo={hidePoolInfo}
             errorRefetch={poolErrorRefetch}
             submittedBack={() => {
               if (hasMining) {

@@ -13,6 +13,7 @@ import { RemovePoolOperate } from './RemovePoolOperate';
 export interface PoolOperateInnerProps {
   pool: OperatePool;
   operate?: OperateTab;
+  hidePoolInfo?: boolean;
   errorRefetch?: () => void;
   submittedBack?: () => void;
 }
@@ -20,6 +21,7 @@ export interface PoolOperateInnerProps {
 export default function PoolOperateInner({
   pool,
   operate,
+  hidePoolInfo,
   errorRefetch,
   submittedBack,
 }: PoolOperateInnerProps) {
@@ -54,6 +56,7 @@ export default function PoolOperateInner({
           }
         }}
         sx={{
+          my: 40,
           height: '100%',
         }}
       />
@@ -61,7 +64,11 @@ export default function PoolOperateInner({
   }
   return (
     <>
-      <LiquidityInfo pool={pool} balanceInfo={balanceInfo} />
+      <LiquidityInfo
+        pool={pool}
+        balanceInfo={balanceInfo}
+        hidePoolInfo={hidePoolInfo}
+      />
       <Tabs
         value={operateTab}
         onChange={(_, value) => {

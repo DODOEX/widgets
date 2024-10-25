@@ -72,20 +72,23 @@ export function RemovePoolOperate({
   });
   const [baseAmountDelay, setBaseAmountDelay] = React.useState('');
   const [quoteAmountDelay, setQuoteAmountDelay] = React.useState('');
-  const setDelayAmount = React.useCallback(() => {
+  React.useEffect(() => {
     const time = setTimeout(() => {
       setBaseAmountDelay(baseAmount);
+    }, 80);
+    return () => clearTimeout(time);
+  }, [baseAmount]);
+  React.useEffect(() => {
+    const time = setTimeout(() => {
       setQuoteAmountDelay(quoteAmount);
     }, 80);
     return () => clearTimeout(time);
-  }, [baseAmount, quoteAmount]);
+  }, [quoteAmount]);
   const handleChangeBaseAmount = (amount: string) => {
     handleChangeBaseAmountOrigin(amount);
-    setDelayAmount();
   };
   const handleChangeQuoteAmount = (amount: string) => {
     handleChangeQuoteAmountOrigin(amount);
-    setDelayAmount();
   };
 
   const withdrawInfo = useWithdrawInfo({

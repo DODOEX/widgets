@@ -102,16 +102,18 @@ export default function PoolDetail({
             : {
                 display: 'flex',
                 gap: 12,
+                overflow: 'hidden',
               }
         }
       >
         <Box
           sx={{
             flex: 1,
+            overflow: 'hidden',
           }}
         >
           <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
-          <ChartInfo poolDetail={pool} />
+          <ChartInfo poolDetail={pool} chart24hDataFirst />
           <Overview poolDetail={pool} />
           <TotalLiquidity poolDetail={pool} />
           <MoreDetail poolDetail={pool} />
@@ -141,6 +143,7 @@ export default function PoolDetail({
               overflow: 'hidden',
             }}
             pool={operatePool}
+            hidePoolInfo
           />
         )}
       </Box>

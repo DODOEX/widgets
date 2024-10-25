@@ -4,12 +4,13 @@ import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export function useWalletInfo() {
   const { account, chainId } = useWeb3React();
-  const defaultChainId = useUserOptions((state) => state.defaultChainId);
+  const { onlyChainId, defaultChainId } = useUserOptions();
 
   return {
     account,
-    chainId: (chainId || defaultChainId || 1) as ChainId,
+    chainId: (chainId || onlyChainId || defaultChainId || 1) as ChainId,
     connectedChainId: chainId,
     defaultChainId,
+    onlyChainId,
   };
 }

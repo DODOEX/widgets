@@ -7,10 +7,10 @@ import { useQuery } from '@tanstack/react-query';
 import { poolApi } from '../../../utils';
 import React from 'react';
 import { useLiquidityProviders } from '../../hooks/useLiquidityProviders';
-import { FailedList } from '../../../../../components/List/FailedList';
 import { Trans } from '@lingui/macro';
 import { AddressWithLinkAndCopy } from '../../../../../components/AddressWithLinkAndCopy';
 import TokenLogo from '../../../../../components/TokenLogo';
+import { CardStatus } from '../../../../../components/CardWidgets';
 
 export default function LiquidityProvidersTable({
   poolDetail,
@@ -49,205 +49,188 @@ export default function LiquidityProvidersTable({
         flexDirection: 'column',
       }}
     >
-      {!!positionQuery.error && (
-        <FailedList
-          refresh={positionQuery.refetch}
-          sx={{
-            my: 40,
-          }}
-        />
-      )}
-      {!!positionQuery.isLoading && !list?.length && (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: isMobile ? 12 : 16,
-            p: 20,
-          }}
-        >
-          <Skeleton height={30} />
-          <Skeleton height={30} />
-          <Skeleton height={30} />
-          <Skeleton height={30} />
-        </Box>
-      )}
-      {!!list?.length && (
-        <Box>
-          <Box
-            sx={{
-              overflowX: 'auto',
-              minHeight: 244,
-            }}
-          >
+      <CardStatus
+        refetch={positionQuery.error ? positionQuery.refetch : undefined}
+        loading={positionQuery.isLoading}
+        empty={!list?.length}
+      >
+        {!!list?.length && (
+          <Box>
             <Box
-              component="table"
               sx={{
-                minWidth: '100%',
+                overflowX: 'auto',
+                minHeight: 244,
               }}
             >
               <Box
-                component="thead"
+                component="table"
                 sx={{
-                  position: 'sticky',
-                  top: 0,
+                  minWidth: '100%',
                 }}
               >
                 <Box
-                  component="tr"
+                  component="thead"
                   sx={{
-                    '& th': {
-                      p: 24,
-                      borderBottomWidth: 1,
-                      typography: 'body1',
-                      lineHeight: 1,
-                      textAlign: 'left',
-                      whiteSpace: 'nowrap',
-                    },
+                    position: 'sticky',
+                    top: 0,
                   }}
                 >
-                  <Box component="th">
-                    <Trans>Liquidity Provider</Trans>
-                  </Box>
-                  <Box component="th">
-                    <Trans>Liquidity Supplied</Trans>
-                  </Box>
                   <Box
-                    component="th"
+                    component="tr"
                     sx={{
-                      '&&': {
-                        textAlign: 'right',
+                      '& th': {
+                        p: 24,
+                        borderBottomWidth: 1,
+                        typography: 'body1',
+                        lineHeight: 1,
+                        textAlign: 'left',
+                        whiteSpace: 'nowrap',
                       },
                     }}
                   >
-                    <Trans>Value (USD)</Trans>
-                  </Box>
-                  <Box
-                    component="th"
-                    sx={{
-                      '&&': {
-                        textAlign: 'right',
-                      },
-                    }}
-                  >
-                    <Trans>Share</Trans>
-                  </Box>
-                </Box>
-              </Box>
-              <Box component="tbody">
-                {list?.map((item) => {
-                  return (
+                    <Box component="th">
+                      <Trans>Liquidity Provider</Trans>
+                    </Box>
+                    <Box component="th">
+                      <Trans>Liquidity Supplied</Trans>
+                    </Box>
                     <Box
-                      component="tr"
-                      key={item.userId}
+                      component="th"
                       sx={{
-                        '& td': {
-                          px: 24,
-                          py: 20,
-                          whiteSpace: 'nowrap',
+                        '&&': {
+                          textAlign: 'right',
                         },
                       }}
                     >
-                      <td>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <AddressWithLinkAndCopy
-                            address={item.userId}
-                            truncate
-                          />
-                        </Box>
-                      </td>
-                      <td>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 8,
-                          }}
-                        >
-                          <TokenLogo
-                            address={item.baseTokenAddress}
-                            chainId={chainId}
-                            width={18}
-                            height={18}
-                          />
-                          {`${item.baseSupplied} ${item.baseTokenSymbol}`}
-                        </Box>
-                        <Box
-                          sx={{
-                            mt: 4,
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 8,
-                          }}
-                        >
-                          <TokenLogo
-                            address={item.quoteTokenAddress}
-                            chainId={chainId}
-                            width={18}
-                            height={18}
-                          />
-                          {`${item.quoteSupplied} ${item.quoteTokenSymbol}`}
-                        </Box>
-                      </td>
-                      <Box
-                        component="td"
-                        sx={{
-                          textAlign: 'right',
-                        }}
-                      >
-                        {item.dollarValue}
-                      </Box>
-                      <Box
-                        component="td"
-                        sx={{
-                          textAlign: 'right',
-                        }}
-                      >
-                        {`${item.sharePercentage}%`}
-                      </Box>
+                      <Trans>Value (USD)</Trans>
                     </Box>
-                  );
-                })}
+                    <Box
+                      component="th"
+                      sx={{
+                        '&&': {
+                          textAlign: 'right',
+                        },
+                      }}
+                    >
+                      <Trans>Share</Trans>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box component="tbody">
+                  {list?.map((item) => {
+                    return (
+                      <Box
+                        component="tr"
+                        key={item.userId}
+                        sx={{
+                          '& td': {
+                            px: 24,
+                            py: 20,
+                            whiteSpace: 'nowrap',
+                          },
+                        }}
+                      >
+                        <td>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <AddressWithLinkAndCopy
+                              address={item.userId}
+                              truncate
+                            />
+                          </Box>
+                        </td>
+                        <td>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 8,
+                            }}
+                          >
+                            <TokenLogo
+                              address={item.baseTokenAddress}
+                              chainId={chainId}
+                              width={18}
+                              height={18}
+                            />
+                            {`${item.baseSupplied} ${item.baseTokenSymbol}`}
+                          </Box>
+                          <Box
+                            sx={{
+                              mt: 4,
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 8,
+                            }}
+                          >
+                            <TokenLogo
+                              address={item.quoteTokenAddress}
+                              chainId={chainId}
+                              width={18}
+                              height={18}
+                            />
+                            {`${item.quoteSupplied} ${item.quoteTokenSymbol}`}
+                          </Box>
+                        </td>
+                        <Box
+                          component="td"
+                          sx={{
+                            textAlign: 'right',
+                          }}
+                        >
+                          {item.dollarValue}
+                        </Box>
+                        <Box
+                          component="td"
+                          sx={{
+                            textAlign: 'right',
+                          }}
+                        >
+                          {`${item.sharePercentage}%`}
+                        </Box>
+                      </Box>
+                    );
+                  })}
+                </Box>
               </Box>
             </Box>
-          </Box>
 
-          {/** load more */}
-          {hasMore && (
-            <ButtonBase
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 64,
-                width: '100%',
-                borderStyle: 'solid',
-                borderColor: 'border.main',
-                borderWidth: theme.spacing(1, 0, 0, 0),
-                typography: 'body2',
-                color: 'text.secondary',
-                '&:hover': {
-                  color: 'text.primary',
-                },
-              }}
-              onClick={() => setPage((prev) => prev + 1)}
-            >
-              <Trans>Load more</Trans>
-              <Box
-                component={ArrowRight}
+            {/** load more */}
+            {hasMore && (
+              <ButtonBase
                 sx={{
-                  transform: 'rotate(90deg)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 64,
+                  width: '100%',
+                  borderStyle: 'solid',
+                  borderColor: 'border.main',
+                  borderWidth: theme.spacing(1, 0, 0, 0),
+                  typography: 'body2',
+                  color: 'text.secondary',
+                  '&:hover': {
+                    color: 'text.primary',
+                  },
                 }}
-              />
-            </ButtonBase>
-          )}
-        </Box>
-      )}
+                onClick={() => setPage((prev) => prev + 1)}
+              >
+                <Trans>Load more</Trans>
+                <Box
+                  component={ArrowRight}
+                  sx={{
+                    transform: 'rotate(90deg)',
+                  }}
+                />
+              </ButtonBase>
+            )}
+          </Box>
+        )}
+      </CardStatus>
     </Box>
   );
 }

@@ -61,6 +61,7 @@ export function SliderPercentageCard({
         sx={{
           mt: 12,
           '& input': {
+            pl: 0,
             typography: 'h1',
           },
         }}

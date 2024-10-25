@@ -120,14 +120,18 @@ export default function PoolCreate() {
         canClickBalance
         showPercentage
         amt={isSingleTokenVersion ? state.quoteAmount : state.baseAmount}
-        onInputChange={(payload) => {
-          dispatch({
-            type: isSingleTokenVersion
-              ? Types.UpdateQuoteAmount
-              : Types.UpdateBaseAmount,
-            payload,
-          });
-        }}
+        onInputChange={
+          isSingleTokenVersion
+            ? undefined
+            : (payload) => {
+                dispatch({
+                  type: isSingleTokenVersion
+                    ? Types.UpdateQuoteAmount
+                    : Types.UpdateBaseAmount,
+                  payload,
+                });
+              }
+        }
         readOnly={isSingleTokenVersion || peggedBaseTokenRatioBNLte0}
         inputReadonlyTooltip={
           peggedBaseTokenRatioBNLte0 ? t`ratio is 0` : undefined

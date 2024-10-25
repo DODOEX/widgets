@@ -51,7 +51,7 @@ export function useRemoveLiquidityTokenStatus({
       amount: baseLpAmount,
       skipQuery: !proxyContractAddress || !baseLpTokenId || !isClassical,
       contractAddress: proxyContractAddress,
-      overrideBalance: balanceInfo.userBaseLpBalance,
+      overrideBalance: balanceInfo.userBaseLpToTokenBalance,
     },
   );
   const quoteTokenStatus = useTokenStatus(
@@ -65,7 +65,7 @@ export function useRemoveLiquidityTokenStatus({
       amount: quoteLpAmount,
       skipQuery: !proxyContractAddress || !quoteLpTokenId || !isClassical,
       contractAddress: proxyContractAddress,
-      overrideBalance: balanceInfo.userQuoteLpBalance,
+      overrideBalance: balanceInfo.userQuoteLpToTokenBalance,
     },
   );
 

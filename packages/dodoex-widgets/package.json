@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.0-taiko.23",
+  "version": "3.0.0-taiko.24",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/index.d.ts",

@@ -102,32 +102,39 @@ export default function Ratio({
                   })
                 : ''
             } ${currentPriceRightSymbol}`}
-            sx={{
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
           >
-            <Box>
-              {`1 ${currentPriceLeftSymbol} = `}
-              <LoadingSkeleton
-                loading={!midPrice}
-                loadingProps={{
-                  width: 30,
-                }}
-                component="span"
+            {!midPrice ? (
+              <Box>
+                {`1 ${currentPriceLeftSymbol} = `}
+                <LoadingSkeleton
+                  loading
+                  loadingProps={{
+                    width: 30,
+                  }}
+                  component="span"
+                  sx={{
+                    display: 'inline-block',
+                  }}
+                />
+                {` ${currentPriceRightSymbol}`}
+              </Box>
+            ) : (
+              <Box
                 sx={{
-                  display: 'inline-block',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
                 }}
               >
-                {currentPriceRightValue
-                  ? formatReadableNumber({
-                      input: currentPriceRightValue,
-                    })
-                  : ''}
-              </LoadingSkeleton>
-              {` ${currentPriceRightSymbol}`}
-            </Box>
+                {`1 ${currentPriceLeftSymbol} = ${
+                  currentPriceRightValue
+                    ? formatReadableNumber({
+                        input: currentPriceRightValue,
+                      })
+                    : ''
+                } ${currentPriceRightSymbol}`}
+              </Box>
+            )}
           </Tooltip>
           <Box
             sx={{
@@ -203,15 +210,16 @@ export default function Ratio({
             <Trans>Any Ratio</Trans>
           ) : (
             <>
-              <Tooltip
-                title={depositRatio}
-                sx={{
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                <Box>{depositRatio}</Box>
+              <Tooltip title={depositRatio}>
+                <Box
+                  sx={{
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {depositRatio}
+                </Box>
               </Tooltip>
             </>
           )}

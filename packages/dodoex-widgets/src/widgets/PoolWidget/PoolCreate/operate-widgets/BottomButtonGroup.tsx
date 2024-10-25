@@ -29,6 +29,7 @@ import {
   MIN_FEE_RATE,
   isGasWrapGasTokenPair,
 } from '../utils';
+import { GasWrapGasTokenError } from '../components/GasWrapGasTokenError';
 
 function OperateBtn({
   state,
@@ -312,7 +313,7 @@ export function BottomButtonGroup({
   const { isMobile } = useWidgetDevice();
   const submission = useSubmission();
 
-  const { chainId } = useWalletInfo();
+  const { onlyChainId, chainId } = useWalletInfo();
 
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
 
@@ -333,14 +334,15 @@ export function BottomButtonGroup({
           ...params,
         },
         {
+          early: true,
           metadata: {
             [state.selectedVersion === Version.marketMakerPool
               ? MetadataFlag.createDPPPool
               : state.selectedVersion === Version.pegged
-              ? state.selectedSubPeggedVersion === SubPeggedVersionE.DSP
-                ? MetadataFlag.createDSPPool
-                : MetadataFlag.createGSPPool
-              : MetadataFlag.createDVMPool]: '1',
+                ? state.selectedSubPeggedVersion === SubPeggedVersionE.DSP
+                  ? MetadataFlag.createDSPPool
+                  : MetadataFlag.createGSPPool
+                : MetadataFlag.createDVMPool]: '1',
           },
         },
       );
@@ -373,56 +375,69 @@ export function BottomButtonGroup({
                 py: 0,
               }
             : {}),
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
         }}
       >
-        {currentStep === 0 && isMobile && (
-          <Button
-            variant={Button.Variant.second}
-            fullWidth
-            onClick={() => {
-              useRouterStore.getState().back();
-            }}
-          >
-            <Trans>Cancel</Trans>
-          </Button>
-        )}
-
-        {currentStep > 0 && (
-          <Button
-            variant={Button.Variant.second}
-            fullWidth
-            onClick={() => {
-              dispatch({
-                type: Types.SetCurrentStep,
-                payload: (currentStep - 1) as 0 | 1,
-              });
-            }}
-          >
-            <Trans>Back</Trans>
-          </Button>
-        )}
-
-        <NeedConnectButton
-          chainId={chainId}
-          variant={Button.Variant.contained}
-          fullWidth
-          includeButton
-        >
-          <OperateBtn
-            state={state}
-            dispatch={dispatch}
-            openConfirm={() => {
-              setConfirmModalVisible(true);
-            }}
-            isPeggedVersion={isPeggedVersion}
-            isStandardVersion={isStandardVersion}
-            isSingleTokenVersion={isSingleTokenVersion}
-            fiatPriceLoading={fiatPriceLoading}
+        {currentStep == 1 && (
+          <GasWrapGasTokenError
+            chainId={chainId}
+            baseToken={state.baseToken}
+            quoteToken={state.quoteToken}
           />
-        </NeedConnectButton>
+        )}
+
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
+          {currentStep === 0 && isMobile && (
+            <Button
+              variant={Button.Variant.second}
+              fullWidth
+              onClick={() => {
+                useRouterStore.getState().back();
+              }}
+            >
+              <Trans>Cancel</Trans>
+            </Button>
+          )}
+
+          {currentStep > 0 && (
+            <Button
+              variant={Button.Variant.second}
+              fullWidth
+              onClick={() => {
+                dispatch({
+                  type: Types.SetCurrentStep,
+                  payload: (currentStep - 1) as 0 | 1,
+                });
+              }}
+            >
+              <Trans>Back</Trans>
+            </Button>
+          )}
+
+          <NeedConnectButton
+            chainId={onlyChainId}
+            variant={Button.Variant.contained}
+            fullWidth
+            includeButton
+          >
+            <OperateBtn
+              state={state}
+              dispatch={dispatch}
+              openConfirm={() => {
+                setConfirmModalVisible(true);
+              }}
+              isPeggedVersion={isPeggedVersion}
+              isStandardVersion={isStandardVersion}
+              isSingleTokenVersion={isSingleTokenVersion}
+              fiatPriceLoading={fiatPriceLoading}
+            />
+          </NeedConnectButton>
+        </Box>
       </Box>
 
       <ConfirmInfoDialog

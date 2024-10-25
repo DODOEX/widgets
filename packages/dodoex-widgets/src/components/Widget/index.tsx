@@ -185,11 +185,11 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   const { widgetRef } = useUserOptions();
 
   if (props.noUI) {
-    return <LangProvider locale={props.locale}>{props.children}</LangProvider>;
+    return <LangProvider {...props}>{props.children}</LangProvider>;
   }
 
   return (
-    <LangProvider locale={props.locale}>
+    <LangProvider {...props}>
       <Box
         sx={{
           width,

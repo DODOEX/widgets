@@ -2,8 +2,11 @@ import { Box, BoxProps, Skeleton, useTheme } from '@dodoex/components';
 import BigNumber from 'bignumber.js';
 import { Cell, Pie, PieChart } from 'recharts';
 import { formatReadableNumber, formatShortNumber } from '../../../../utils';
+import { AddressWithLinkAndCopy } from '../../../../components/AddressWithLinkAndCopy';
+import { ChainId } from '@dodoex/api';
 
 export function BaseQuotePie({
+  chainId,
   shortNumber,
   pieSize = 'default',
   baseReserve = new BigNumber(1),
@@ -13,6 +16,8 @@ export function BaseQuotePie({
   quoteTokenSymbol = '-',
   quoteTokenDecimals = 18,
   baseTokenDecimals = 18,
+  baseTokenAddress,
+  quoteTokenAddress,
   baseTvlRate,
   quoteTvlRate,
   disabledAmount,
@@ -22,6 +27,7 @@ export function BaseQuotePie({
   sx,
   pieRadius: pieRadiusProp,
 }: {
+  chainId?: ChainId;
   baseReserve?: BigNumber;
   /** Quantity converted by midPrice, used to calculate percentages */
   baseAmount?: BigNumber;
@@ -30,6 +36,8 @@ export function BaseQuotePie({
   quoteAmount?: BigNumber;
   quoteTokenDecimals?: number;
   quoteTokenSymbol?: string;
+  baseTokenAddress?: string;
+  quoteTokenAddress?: string;
   // radius: 23px 30px
   pieSize?: 'small' | 'default';
   shortNumber?: boolean;
@@ -45,8 +53,7 @@ export function BaseQuotePie({
 }) {
   const theme = useTheme();
   const isSmall = pieSize === 'small';
-  const pieMarginRight = isSmall ? 10 : 20;
-  const symbolMarginTop = isSmall ? 6 : 13;
+  const symbolMarginTop = isSmall ? 6 : 16;
   const pieRadius = pieRadiusProp || (isSmall ? 23 : 30);
 
   const baseTokenShowDecimals =
@@ -94,6 +101,8 @@ export function BaseQuotePie({
       sx={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
         ...(sx || {}),
       }}
     >
@@ -130,7 +139,9 @@ export function BaseQuotePie({
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          marginLeft: pieMarginRight,
+          ml: 0,
+          mt: 20,
+          width: '100%',
 
           '& > div': {
             paddingLeft: '16px',
@@ -168,24 +179,50 @@ export function BaseQuotePie({
             sx={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'space-between',
             }}
           >
-            {!disabledAmount ? `${baseAmountText} ` : ''}
-            <span className="symbol" title={baseTokenSymbol}>
-              {baseTokenSymbol}
-            </span>
-            {disabledPercentage || disabledRate ? (
-              ''
-            ) : (
-              <Box
-                component="span"
-                sx={{
-                  color: 'text.secondary',
-                }}
-              >
-                &nbsp;{`(${basePercentage}%)`}
-              </Box>
-            )}
+            <Box>
+              <div className="symbol" title={baseTokenSymbol}>
+                {baseTokenSymbol}
+              </div>
+              {baseTokenAddress ? (
+                <AddressWithLinkAndCopy
+                  address={baseTokenAddress}
+                  customChainId={chainId}
+                  truncate
+                  showCopy
+                  size="small"
+                  iconSpace={4}
+                  sx={{
+                    typography: 'h6',
+                    color: 'text.secondary',
+                  }}
+                />
+              ) : (
+                ''
+              )}
+            </Box>
+            <Box
+              sx={{
+                textAlign: 'right',
+              }}
+            >
+              {!disabledAmount ? `${baseAmountText} ` : ''}
+              {disabledPercentage || disabledRate ? (
+                ''
+              ) : (
+                <Box
+                  sx={{
+                    color: 'text.secondary',
+                    typography: 'h6',
+                    fontWeight: 600,
+                  }}
+                >
+                  &nbsp;{`(${basePercentage}%)`}
+                </Box>
+              )}
+            </Box>
           </Box>
         )}
         {loading ? (
@@ -198,25 +235,51 @@ export function BaseQuotePie({
             sx={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'space-between',
               marginTop: `${symbolMarginTop}px`,
             }}
           >
-            {!disabledAmount ? `${quoteAmountText} ` : ''}
-            <span className="symbol" title={quoteTokenSymbol}>
-              {quoteTokenSymbol}
-            </span>
-            {disabledPercentage || disabledRate ? (
-              ''
-            ) : (
-              <Box
-                component="span"
-                sx={{
-                  color: 'text.secondary',
-                }}
-              >
-                &nbsp;{`(${quotePercentage}%)`}
-              </Box>
-            )}
+            <Box>
+              <span className="symbol" title={quoteTokenSymbol}>
+                {quoteTokenSymbol}
+              </span>
+              {quoteTokenAddress ? (
+                <AddressWithLinkAndCopy
+                  address={quoteTokenAddress}
+                  customChainId={chainId}
+                  truncate
+                  showCopy
+                  size="small"
+                  iconSpace={4}
+                  sx={{
+                    typography: 'h6',
+                    color: 'text.secondary',
+                  }}
+                />
+              ) : (
+                ''
+              )}
+            </Box>
+            <Box
+              sx={{
+                textAlign: 'right',
+              }}
+            >
+              {!disabledAmount ? `${quoteAmountText} ` : ''}
+              {disabledPercentage || disabledRate ? (
+                ''
+              ) : (
+                <Box
+                  sx={{
+                    color: 'text.secondary',
+                    typography: 'h6',
+                    fontWeight: 600,
+                  }}
+                >
+                  &nbsp;{`(${quotePercentage}%)`}
+                </Box>
+              )}
+            </Box>
           </Box>
         )}
       </Box>

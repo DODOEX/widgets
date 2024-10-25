@@ -174,10 +174,12 @@ export function TokenCard({
   const { gotoBuyToken } = useUserOptions();
   let showBuyTokenBtn = gotoBuyToken && balance && amt && balance.lt(amt);
 
+  const showInputNumber = !!onInputChange || !!inputReadonlyTooltip;
+
   return (
     <Box
       sx={{
-        minHeight: 133,
+        minHeight: showInputNumber ? 133 : 'auto',
         padding: theme.spacing(20, 20, 24),
         borderRadius: 12,
         overflow: 'hidden',
@@ -234,60 +236,61 @@ export function TokenCard({
         />
       </Box>
 
-      {readOnly && inputReadonlyTooltip ? (
-        <TooltipToast title={inputReadonlyTooltip} arrow={false}>
-          <Box>
-            <NumberInput
-              value={amt}
-              readOnly
-              withClear
-              sx={{
-                mt: 12,
-                ...inputSx,
-              }}
-            />
-          </Box>
-        </TooltipToast>
-      ) : (
-        <NumberInput
-          value={amt}
-          onFocus={onInputFocus}
-          onChange={
-            onInputChange
-              ? (v) => {
-                  onInputChange(v);
-                  setPercentage(0);
-                }
-              : undefined
-          }
-          readOnly={readOnly}
-          withClear
-          suffix={
-            showBuyTokenBtn ? (
-              <Button
-                variant={Button.Variant.tag}
-                backgroundColor={theme.palette.background.paperDarkContrast}
+      {showInputNumber &&
+        (readOnly && inputReadonlyTooltip ? (
+          <TooltipToast title={inputReadonlyTooltip} arrow={false}>
+            <Box>
+              <NumberInput
+                value={amt}
+                readOnly
+                withClear
                 sx={{
-                  fontSize: 12,
+                  mt: 12,
+                  ...inputSx,
                 }}
-                onClick={(evt) => {
-                  evt.stopPropagation();
-                  gotoBuyToken?.({
-                    token: token as TokenInfo,
-                    account: account as string,
-                  });
-                }}
-              >
-                <Trans>Buy</Trans>
-              </Button>
-            ) : undefined
-          }
-          typography={inputTypography}
-          sx={{
-            mt: 12,
-          }}
-        />
-      )}
+              />
+            </Box>
+          </TooltipToast>
+        ) : (
+          <NumberInput
+            value={amt}
+            onFocus={onInputFocus}
+            onChange={
+              onInputChange
+                ? (v) => {
+                    onInputChange(v);
+                    setPercentage(0);
+                  }
+                : undefined
+            }
+            readOnly={readOnly}
+            withClear
+            suffix={
+              showBuyTokenBtn ? (
+                <Button
+                  variant={Button.Variant.tag}
+                  backgroundColor={theme.palette.background.paperDarkContrast}
+                  sx={{
+                    fontSize: 12,
+                  }}
+                  onClick={(evt) => {
+                    evt.stopPropagation();
+                    gotoBuyToken?.({
+                      token: token as TokenInfo,
+                      account: account as string,
+                    });
+                  }}
+                >
+                  <Trans>Buy</Trans>
+                </Button>
+              ) : undefined
+            }
+            typography={inputTypography}
+            sx={{
+              mt: 12,
+            }}
+          />
+        ))}
 
       {!readOnly && showPercentage ? (
         <PercentageSelectButtonGroup
