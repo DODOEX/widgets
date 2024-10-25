@@ -135,6 +135,7 @@ export function BaseQuotePie({
         )}
       </div>
       <Box
+        className="symbol-wrapper"
         sx={{
           display: 'flex',
           flexDirection: 'column',

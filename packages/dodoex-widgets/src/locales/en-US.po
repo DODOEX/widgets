@@ -1277,7 +1277,7 @@ msgstr "Confirm submission"
 msgid "Select pool by tokens"
 msgstr "Select pool by tokens"
 
-#: src/widgets/PoolWidget/PoolDetail/components/TotalLiquidity.tsx:173
+#: src/widgets/PoolWidget/PoolDetail/components/TotalLiquidity.tsx:174
 msgid "Asset"
 msgstr "Asset"
 
@@ -1460,7 +1460,7 @@ msgstr "Next"
 msgid "Create"
 msgstr "Create"
 
-#: src/widgets/PoolWidget/PoolDetail/components/TotalLiquidity.tsx:176
+#: src/widgets/PoolWidget/PoolDetail/components/TotalLiquidity.tsx:177
 msgid "Token Amount"
 msgstr "Token Amount"
 
@@ -1494,7 +1494,7 @@ msgstr "Dynamic slippage is {recommendSlippage}%,the current slippage setting is
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
-#: src/widgets/PoolWidget/PoolDetail/components/TotalLiquidity.tsx:179
+#: src/widgets/PoolWidget/PoolDetail/components/TotalLiquidity.tsx:180
 msgid "Ratio"
 msgstr "Ratio"
 

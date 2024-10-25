@@ -71,6 +71,7 @@ export interface WidgetProps
   onlyChainId?: ChainId;
   noUI?: boolean;
   noLangProvider?: boolean;
+  noAutoConnect?: boolean;
   routerPage?: Page;
 
   /** When the winding status changes, no pop-up window will be displayed. */
@@ -119,22 +120,26 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   const autoConnectLoading = useSelector(getAutoConnectLoading);
   useEffect(() => {
     if (autoConnectLoading === undefined) {
-      dispatch(setAutoConnectLoading(true));
-      const connectWallet = async () => {
-        const defaultChainId = props.defaultChainId;
-        try {
-          if (connector?.connectEagerly) {
-            await connector.connectEagerly(defaultChainId);
-          } else {
-            await connector.activate(defaultChainId);
+      if (props.noAutoConnect) {
+        dispatch(setAutoConnectLoading(false));
+      } else {
+        dispatch(setAutoConnectLoading(true));
+        const connectWallet = async () => {
+          const defaultChainId = props.defaultChainId;
+          try {
+            if (connector?.connectEagerly) {
+              await connector.connectEagerly(defaultChainId);
+            } else {
+              await connector.activate(defaultChainId);
+            }
+          } finally {
+            dispatch(setAutoConnectLoading(false));
           }
-        } finally {
-          dispatch(setAutoConnectLoading(false));
-        }
-      };
-      connectWallet();
+        };
+        connectWallet();
+      }
     }
-  }, [connector]);
+  }, [connector, props.noAutoConnect]);
 
   useEffect(() => {
     contractRequests.setGetConfigProvider((getProviderChainId) => {

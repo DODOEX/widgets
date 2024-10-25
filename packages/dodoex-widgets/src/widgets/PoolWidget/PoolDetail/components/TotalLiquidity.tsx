@@ -73,6 +73,7 @@ export default function TotalLiquidity({
           mt: 16,
           backgroundColor: 'background.paper',
           borderRadius: 16,
+          overflowX: 'auto',
         }}
       >
         {/* chart */}
