@@ -1,10 +1,10 @@
-import { useWeb3React } from '@web3-react/core';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { TokenList } from '../Token';
 import { useQueries } from '@tanstack/react-query';
-import { tokenApi } from '../../constants/api';
+import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { isEqual } from 'lodash';
+import { useEffect, useMemo, useState } from 'react';
+import { tokenApi } from '../../constants/api';
+import { TokenList } from '../Token';
 
 type TokenInfoMap = Map<
   string,

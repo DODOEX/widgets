@@ -1,5 +1,5 @@
 import { MiningStatusE } from '@dodoex/api';
-import { Box, useTheme } from '@dodoex/components';
+import { Box, ButtonBase, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { formatTokenAmountNumber } from '../../../../utils/formatter';
@@ -56,8 +56,10 @@ function Item({
         <TokenAmountPopover
           trigger={
             <Box
-              component={HoverIcon}
+              component={ButtonBase}
               sx={{
+                display: 'flex',
+                alignItems: 'center',
                 color: theme.palette.text.secondary,
                 width: 16,
                 height: 17,
@@ -65,7 +67,9 @@ function Item({
                   color: theme.palette.text.primary,
                 },
               }}
-            />
+            >
+              <HoverIcon />
+            </Box>
           }
           tokenList={tokenList}
         />

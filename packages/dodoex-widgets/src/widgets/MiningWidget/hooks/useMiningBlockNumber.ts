@@ -1,10 +1,11 @@
 import { ChainId } from '@dodoex/api';
 import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { blockTimeMap } from '../../../constants/chains';
 import { getLatestBlockNumber } from '../../../store/selectors/wallet';
+import useFetchBlockNumber from '../../../hooks/contract/useFetchBlockNumber';
 
 export function useMiningBlockNumber(
   chainId: ChainId,
@@ -12,6 +13,10 @@ export function useMiningBlockNumber(
 ) {
   const { chainId: currentChainId } = useWeb3React();
 
+  const { updateBlockNumber } = useFetchBlockNumber();
+  useEffect(() => {
+    updateBlockNumber();
+  }, [updateBlockNumber]);
   const currentChainBlockNumber = useSelector(getLatestBlockNumber);
 
   const [blockNumber, blockTime] = useMemo(() => {
@@ -20,7 +25,7 @@ export function useMiningBlockNumber(
       new BigNumber(
         chainId === currentChainId
           ? currentChainBlockNumber
-          : otherChainBlockNumber ?? currentChainBlockNumber,
+          : (otherChainBlockNumber ?? currentChainBlockNumber),
       ),
       b,
     ];

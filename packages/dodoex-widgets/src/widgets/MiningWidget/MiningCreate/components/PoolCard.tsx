@@ -11,7 +11,7 @@ import {
 } from '../../../../utils/address';
 import { formatReadableNumber } from '../../../../utils/formatter';
 import { DexConfigI, LpTokenPlatformID } from '../../types';
-import CheckIcon from './check.svg';
+import { ReactComponent as CheckIcon } from './check.svg';
 import { ReactComponent as LinkIcon } from './open_link_24dp.svg';
 
 export default function PoolCard({

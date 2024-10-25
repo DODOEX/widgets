@@ -1,4 +1,4 @@
-import { Box, Tooltip, useTheme } from '@dodoex/components';
+import { Box, ButtonBase, Tooltip, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import React, { useMemo } from 'react';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
@@ -252,8 +252,10 @@ export const RewardCard = ({
                 }
               >
                 <Box
-                  component={HoverIcon}
+                  component={ButtonBase}
                   sx={{
+                    display: 'flex',
+                    alignItems: 'center',
                     color: theme.palette.text.secondary,
                     width: 16,
                     height: 17,
@@ -261,7 +263,9 @@ export const RewardCard = ({
                       color: theme.palette.text.primary,
                     },
                   }}
-                />
+                >
+                  <HoverIcon />
+                </Box>
               </Tooltip>
             </Box>
           ) : (

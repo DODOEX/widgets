@@ -1,8 +1,8 @@
 import { ChainId, ExcludeNone, PoolApi } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import { useEffect, useState } from 'react';
 import { ThegraphKeyMap } from '../../../../constants/chains';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { useGraphQLRequests } from '../../../../hooks/useGraphQLRequests';
 
 export type FetchPoolList = ExcludeNone<
@@ -24,7 +24,7 @@ export const usePoolPairList = ({
   isMyPool?: boolean;
   skip?: boolean;
 }) => {
-  const { account, chainId } = useWeb3React();
+  const { account, chainId } = useWalletInfo();
 
   const [poolList, setPoolList] = useState<FetchPoolList>([]);
   const chain = chainId ? ThegraphKeyMap[chainId as ChainId] : '';
@@ -62,7 +62,7 @@ export const usePoolPairList = ({
   }, [data]);
 
   return {
-    loading: isPending || isLoading,
+    loading: isLoading,
     datas: poolList,
   };
 };

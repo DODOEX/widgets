@@ -41,7 +41,7 @@ export const ShareModeSelect = ({ shareUrl, sx }: ShareModeSelectProps) => {
           component={ShareIcon}
           sx={{
             cursor: 'pointer',
-            color: theme.palette.text.secondary,
+            color: theme.palette.text.primary,
             '&:hover': {
               color: theme.palette.text.primary,
             },

@@ -9,6 +9,7 @@ import { RewardI } from './hooks/reducers';
 import { ReactComponent as PancakeImg } from './pancake.svg';
 import { basicTokenMap, ChainId } from '@dodoex/api';
 import { dexKeysMap } from '../../../constants/chains';
+import { Box } from '@dodoex/components';
 
 export const dexListObj: Record<string, DexConfigI> = {
   dodo: {
@@ -96,10 +97,27 @@ export const getChainDexList = (
   filterCreateMiningEnable?: boolean,
 ) => {
   const dexKeys = dexKeysMap[chainId];
+  const { name, Icon } = dexListObj.dodo;
   const defaultDexList = [
     {
       key: 'dodo' as DexKey,
-      value: dexListObj.dodo.name,
+      value: (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
+          <Icon
+            style={{
+              width: 24,
+              height: 24,
+            }}
+          />
+          {name}
+        </Box>
+      ),
     },
   ];
   if (!dexKeys) {
@@ -114,10 +132,29 @@ export const getChainDexList = (
         }
         return true;
       })
-      .map((key) => ({
-        key,
-        value: dexListObj[key].name,
-      })),
+      .map((key) => {
+        const { name, Icon } = dexListObj[key];
+        return {
+          key,
+          value: (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+              }}
+            >
+              <Icon
+                style={{
+                  width: 24,
+                  height: 24,
+                }}
+              />
+              {name}
+            </Box>
+          ),
+        };
+      }),
   ];
 };
 
@@ -167,8 +204,8 @@ export function isValidRewardInfo({
   const endTimeIsError = startTimeIsError
     ? false
     : reward.endTime && reward.startTime
-    ? reward.endTime <= now || reward.endTime <= reward.startTime
-    : true;
+      ? reward.endTime <= now || reward.endTime <= reward.startTime
+      : true;
   const totalIsError = !reward.total || reward.total === '0';
 
   return {

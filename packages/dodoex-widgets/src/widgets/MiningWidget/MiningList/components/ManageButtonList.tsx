@@ -1,4 +1,4 @@
-import { Box, useTheme } from '@dodoex/components';
+import { Box, Button, useTheme } from '@dodoex/components';
 import { useLingui } from '@lingui/react';
 import { generateMiningDetailUrl } from '../utils';
 import { ShareModeSelect } from './ShareModeSelect';
@@ -33,40 +33,16 @@ export function ManageButtonList({
           flexShrink: 0,
         }}
       />
-      <ShareModeSelect
-        shareUrl={generateMiningDetailUrl({
-          chainId,
-          miningContractAddress,
-          stakeTokenAddress,
-        })}
-        sx={{
-          width: 40,
-          minWidth: 40,
-          textTransform: 'none',
-          fontSize: 12,
-          lineHeight: '17px',
-          fontWeight: 600,
-          paddingTop: 7,
-          paddingRight: 0,
-          paddingBottom: 8,
-          paddingLeft: 0,
-          flex: '1 1 auto',
-          borderRadius: 8,
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.background.tag,
-          '&:hover': {
-            color:
-              theme.palette.mode === 'light'
-                ? theme.palette.text.primary
-                : theme.palette.primary.contrastText,
-            backgroundColor: theme.palette.secondary.main,
-          },
-          '&[disabled]': {
-            backgroundColor: theme.palette.background.tag,
-            color: theme.palette.text.disabled,
-          },
-        }}
-      />
+      <Button size={Button.Size.small}>
+        <ShareModeSelect
+          shareUrl={generateMiningDetailUrl({
+            chainId,
+            miningContractAddress,
+            stakeTokenAddress,
+          })}
+          sx={{}}
+        />
+      </Button>
     </>
   );
 }

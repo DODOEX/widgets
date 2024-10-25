@@ -1,6 +1,7 @@
 import {
   alpha,
   Box,
+  Button,
   ButtonBase,
   TooltipToast,
   useTheme,
@@ -392,26 +393,29 @@ export function OperateArea({
             title={i18n._(`Copied`)}
             open={open}
             onClose={() => setOpen(false)}
+            arrow={false}
           >
-            <Box
-              component={ButtonBase}
-              onClick={(evt: any) => {
-                evt.stopPropagation();
-                const copyText = generateMiningDetailUrl({
-                  chainId,
-                  miningContractAddress,
-                  stakeTokenAddress,
-                });
-                if (copyText) {
-                  copy(copyText);
-                  setOpen(true);
-                }
-              }}
-              sx={{
-                cursor: 'pointer',
-              }}
-            >
-              {i18n._('Invite')}
+            <Box>
+              <Button
+                fullWidth
+                onClick={(evt: any) => {
+                  evt.stopPropagation();
+                  const copyText = generateMiningDetailUrl({
+                    chainId,
+                    miningContractAddress,
+                    stakeTokenAddress,
+                  });
+                  if (copyText) {
+                    copy(copyText);
+                    setOpen(true);
+                  }
+                }}
+                sx={{
+                  cursor: 'pointer',
+                }}
+              >
+                {i18n._('Invite')}
+              </Button>
             </Box>
           </TooltipToast>
         </Box>

@@ -44,7 +44,12 @@ export function RewardsSection({
       );
     }
     return (
-      <>
+      <Box
+        sx={{
+          display: 'inline-flex',
+          alignItems: 'center',
+        }}
+      >
         <Box
           component="span"
           sx={{
@@ -57,7 +62,7 @@ export function RewardsSection({
           input: totalRewardUSD,
           decimals: 4,
         })}
-      </>
+      </Box>
     );
   }, [totalRewardUSD, isDataLoading]);
 

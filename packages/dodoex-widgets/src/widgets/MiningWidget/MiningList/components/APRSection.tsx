@@ -1,11 +1,10 @@
-import { Box, Skeleton, useTheme } from '@dodoex/components';
+import { Box, Skeleton, Tooltip, useTheme } from '@dodoex/components';
+import { t } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
 import { formatApr } from '../utils';
 import { TextAndDesc } from './widgets';
-import { useLingui } from '@lingui/react';
-import { Tooltip } from '@dodoex/components';
-import { Trans } from '@lingui/macro';
 
 export function APRWrapper({ children }: { children: React.ReactNode }) {
   const { i18n } = useLingui();
@@ -49,7 +48,6 @@ export function APRSection({
   apr?: BigNumber;
   size: 'small' | 'medium' | 'large';
 }) {
-  const { i18n } = useLingui();
   const theme = useTheme();
 
   const aprText = useMemo(() => {
@@ -59,17 +57,17 @@ export function APRSection({
           {formatApr(apr)}
           {!apr.isFinite() && (
             <Tooltip
-              title={i18n._(
-                'The newly created mining pool can start counting APR after depositing any liquidity.',
-              )}
-              sx={{
-                typography:
-                  size === 'large' ? 'h4' : size === 'small' ? 'body2' : 'h5',
-                color: theme.palette.text.secondary,
-              }}
+              maxWidth={200}
+              title={t`The newly created mining pool can start counting APR after depositing any liquidity.`}
             >
-              <Box>
-                <Trans>Fresh Mining</Trans>
+              <Box
+                sx={{
+                  typography:
+                    size === 'large' ? 'h4' : size === 'small' ? 'body2' : 'h5',
+                  color: theme.palette.text.secondary,
+                }}
+              >
+                {t`Fresh Mining`}
               </Box>
             </Tooltip>
           )}
@@ -83,7 +81,7 @@ export function APRSection({
         height={size === 'large' ? 33 : size === 'small' ? 19 : 24}
       />
     );
-  }, [apr, i18n, size, theme.palette.text.secondary]);
+  }, [apr, size, theme.palette.text.secondary]);
 
   return <>{aprText}</>;
 }

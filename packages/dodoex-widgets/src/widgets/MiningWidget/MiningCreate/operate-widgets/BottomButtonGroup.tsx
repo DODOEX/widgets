@@ -11,6 +11,7 @@ import { Actions, StateProps, TokenType, Types } from '../hooks/reducers';
 import { RewardStatus } from '../types';
 import { isValidRewardInfo } from '../utils';
 import { ReactComponent as AlertIcon } from './alarm_24dp.svg';
+import NeedConnectButton from '../../../../components/ConnectWallet/NeedConnectButton';
 
 export function BottomButtonGroup({
   state,
@@ -31,8 +32,7 @@ export function BottomButtonGroup({
 
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
-  const { account = '0x1033dd8fECCe8F5FDd4B2F235B047CB1EE59512a', chainId } =
-    useWalletInfo();
+  const { account, chainId } = useWalletInfo();
 
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [confirmChecked, setConfirmChecked] = useState(false);
@@ -49,9 +49,11 @@ export function BottomButtonGroup({
 
     if (!account) {
       return (
-        <Button variant={Button.Variant.contained} fullWidth disabled>
-          <Trans>Connect to a wallet</Trans>
-        </Button>
+        <NeedConnectButton fullWidth>
+          <Button variant={Button.Variant.contained} fullWidth disabled>
+            <Trans>Connect to a wallet</Trans>
+          </Button>
+        </NeedConnectButton>
       );
     }
 
@@ -257,7 +259,11 @@ export function BottomButtonGroup({
           setConfirmModalVisible(false);
         }}
       >
-        <>
+        <Box
+          sx={{
+            p: 20,
+          }}
+        >
           <Box
             sx={{
               display: 'flex',
@@ -305,6 +311,7 @@ export function BottomButtonGroup({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              gap: 4,
               mt: 20,
               mx: 0,
               mb: 0,
@@ -352,7 +359,7 @@ export function BottomButtonGroup({
           >
             {t`Create`}
           </Button>
-        </>
+        </Box>
       </WidgetDialog>
     </>
   );

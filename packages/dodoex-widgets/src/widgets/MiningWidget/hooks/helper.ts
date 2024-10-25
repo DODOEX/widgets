@@ -1,4 +1,5 @@
 import { MiningApi, MiningMiningInfo } from '@dodoex/api';
+import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber';
 import BigNumber from 'bignumber.js';
 import { sortBy } from 'lodash';
 import {
@@ -30,7 +31,7 @@ type MiningListQueryListItem = ElementType<
     NonNullable<
       ReturnType<
         Exclude<
-          typeof MiningApi.graphql.fetchMiningListV1['__apiType'],
+          (typeof MiningApi.graphql.fetchMiningListV1)['__apiType'],
           undefined
         >
       >['mining_list']
@@ -224,23 +225,23 @@ function checkRewardTokenList({
         startBlock: token?.startBlock
           ? new BigNumber(token.startBlock)
           : startBlock
-          ? new BigNumber(startBlock)
-          : undefined,
+            ? new BigNumber(startBlock)
+            : undefined,
         startTime: token?.startTime
           ? new BigNumber(token.startTime)
           : startTime
-          ? new BigNumber(startTime)
-          : undefined,
+            ? new BigNumber(startTime)
+            : undefined,
         endBlock: token?.endBlock
           ? new BigNumber(token.endBlock)
           : endBlock
-          ? new BigNumber(endBlock)
-          : undefined,
+            ? new BigNumber(endBlock)
+            : undefined,
         endTime: token?.endTime
           ? new BigNumber(token.endTime)
           : endTime
-          ? new BigNumber(endTime)
-          : undefined,
+            ? new BigNumber(endTime)
+            : undefined,
         rewardPerBlock:
           token?.rewardPerBlock && rewardToken.decimals
             ? new BigNumber(token.rewardPerBlock).div(
@@ -398,7 +399,8 @@ export function transformRawMiningToTabMining(
 }
 
 export function transformStrToBN(raw: any, decimals: number | undefined) {
-  const result = new BigNumber(raw);
+  const num = EthersBigNumber.isBigNumber(raw) ? raw.toString() : raw;
+  const result = new BigNumber(num);
   if (result.isNaN() || decimals == undefined) {
     return undefined;
   }
@@ -411,7 +413,7 @@ export function transformRawMiningToMyCreatedMining(
       NonNullable<
         ReturnType<
           Exclude<
-            typeof MiningApi.graphql.fetchMyCreatedMiningList['__apiType'],
+            (typeof MiningApi.graphql.fetchMyCreatedMiningList)['__apiType'],
             undefined
           >
         >['mining_list']
@@ -691,8 +693,8 @@ export function getV3MiningSingleRewardAmount(
       blockNumber.gt(endBlock)
         ? endBlock
         : blockNumber.lt(lastFlagBlock)
-        ? lastFlagBlock
-        : blockNumber
+          ? lastFlagBlock
+          : blockNumber
     )
       .minus(lastFlagBlock)
       .multipliedBy(rewardPerBlock)

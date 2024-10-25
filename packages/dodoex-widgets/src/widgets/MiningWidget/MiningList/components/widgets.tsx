@@ -3,6 +3,7 @@ import {
   Box,
   BoxProps,
   Button,
+  ButtonBase,
   Tooltip,
   useTheme,
 } from '@dodoex/components';
@@ -134,6 +135,7 @@ export const DailyRewardsLabel = ({
       {i18n._('Daily Rewards')}
       <Tooltip
         placement="top"
+        maxWidth={200}
         title={
           <>
             {titleTitle}
@@ -151,8 +153,10 @@ export const DailyRewardsLabel = ({
         }
       >
         <Box
-          component={HoverIcon}
+          component={ButtonBase}
           sx={{
+            display: 'flex',
+            alignItems: 'center',
             color: theme.palette.text.secondary,
             width: 16,
             height: 17,
@@ -160,7 +164,9 @@ export const DailyRewardsLabel = ({
               color: theme.palette.text.primary,
             },
           }}
-        />
+        >
+          <HoverIcon />
+        </Box>
       </Tooltip>
     </Box>
   );

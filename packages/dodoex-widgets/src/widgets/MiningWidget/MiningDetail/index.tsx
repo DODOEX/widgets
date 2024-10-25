@@ -228,9 +228,23 @@ export function MiningDetail({
   }, [contractDataMap, currentChainId, miningItem, othersChainContractDataMap]);
 
   return (
-    <WidgetContainer>
+    <WidgetContainer
+      sx={{
+        ...(isMobile
+          ? {
+              p: 20,
+            }
+          : {
+              display: 'flex',
+              gap: 0,
+              flex: 1,
+              overflowY: 'unset',
+            }),
+      }}
+    >
       <Box
         sx={{
+          flexGrow: 1,
           display: 'flex',
           flexDirection: {
             mobile: 'column',

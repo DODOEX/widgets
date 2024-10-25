@@ -113,13 +113,25 @@ function PCDateTimePickerComponent({
                 top: 20,
                 cursor: 'pointer',
                 fontWeight: 'bold',
-                fontSize: 21,
+                fontSize: '21px',
+                lineHeight: '18px',
                 '&:hover': {
                   background: alpha(theme.palette.text.primary, 0.04),
                 },
               }}
             >
-              &lt;
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+              >
+                <path
+                  d="M10.5001 3.75L11.7339 4.98375L7.72639 9L11.7339 13.0162L10.5001 14.25L5.25014 9L10.5001 3.75Z"
+                  fill="#1A1A1B"
+                />
+              </svg>
             </Box>
             {renderDefault()}
           </Box>
@@ -151,7 +163,9 @@ function PCDateTimePickerComponent({
   return (
     <>
       <Tooltip
-        leaveDelay={300}
+        arrow={false}
+        onlyClick
+        placement="bottom-start"
         title={
           <Box
             sx={{
@@ -407,6 +421,19 @@ function PCDateTimePickerComponent({
             {dateTimeEle}
           </Box>
         }
+        maxWidth={345}
+        sx={{
+          typography: 'body1',
+          padding: 12,
+          fontWeight: 500,
+          backgroundColor: theme.palette.background.paperContrast,
+          borderRadius: 8,
+          color: theme.palette.text.primary,
+          borderColor: 'transparent',
+          borderWidth: 1,
+          borderStyle: 'solid',
+          whiteSpace: 'pre-wrap',
+        }}
       >
         <Box
           ref={pcTimepickerInputRef}

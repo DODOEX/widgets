@@ -116,8 +116,8 @@ export function MiningCreate({
             state.currentStep === 0
               ? 'waiting'
               : state.currentStep === 1
-              ? 'running'
-              : 'completed'
+                ? 'running'
+                : 'completed'
           }
         />
         <StakingRules
@@ -125,8 +125,8 @@ export function MiningCreate({
             state.currentStep === 0
               ? 'waiting'
               : state.currentStep === 1
-              ? 'running'
-              : 'completed'
+                ? 'running'
+                : 'completed'
           }
           tokenType={state.tokenType}
           saveAToken={state.saveAToken}
@@ -140,8 +140,8 @@ export function MiningCreate({
             state.currentStep === 2
               ? 'running'
               : state.currentStep === 3
-              ? 'completed'
-              : 'waiting'
+                ? 'completed'
+                : 'waiting'
           }
         />
         <RewardDetailList
@@ -151,8 +151,8 @@ export function MiningCreate({
             state.currentStep === 2
               ? 'running'
               : state.currentStep === 3
-              ? 'completed'
-              : 'waiting'
+                ? 'completed'
+                : 'waiting'
           }
         />
       </>
@@ -177,13 +177,27 @@ export function MiningCreate({
   const isSingle = state.tokenType === TokenType.SINGLE;
 
   return (
-    <WidgetContainer>
+    <WidgetContainer
+      sx={{
+        ...(isMobile
+          ? {
+              p: 20,
+            }
+          : {
+              display: 'flex',
+              gap: 0,
+              flex: 1,
+              overflowY: 'unset',
+            }),
+      }}
+    >
       <Box
         sx={{
+          flexGrow: 1,
           padding: 0,
           height: '100%',
           [theme.breakpoints.up('tablet')]: {
-            padding: theme.spacing(28, 40, 40),
+            // padding: theme.spacing(28, 40, 40),
             height: 'auto',
           },
         }}

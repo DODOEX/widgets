@@ -60,8 +60,9 @@ export function MiningInfo({
     isGSP,
   } = miningItem;
 
-  const [selectedStakeTokenIndex, setSelectedStakeTokenIndex] =
-    useState<0 | 1>(0);
+  const [selectedStakeTokenIndex, setSelectedStakeTokenIndex] = useState<0 | 1>(
+    0,
+  );
 
   const rewardTokenWithAprList =
     rewardTokenWithAprListArray[selectedStakeTokenIndex];
@@ -301,6 +302,8 @@ export function MiningInfo({
                 <Box
                   component={ButtonBase}
                   sx={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
                     color: theme.palette.text.secondary,
                     width: 14,
                     height: 14,
@@ -358,7 +361,7 @@ export function MiningInfo({
           >
             <TabsGroup
               tabs={tabItems}
-              variant="rounded"
+              variant="default"
               tabsListSx={{
                 justifyContent: 'space-between',
                 ...(isMobile

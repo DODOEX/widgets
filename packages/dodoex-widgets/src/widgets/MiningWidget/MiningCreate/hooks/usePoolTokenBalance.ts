@@ -36,7 +36,7 @@ export const usePoolTokenBalance = (
     combine: (results) => {
       return {
         data: results.map((result) => result.data?.balance),
-        pending: results.some((result) => result.isPending),
+        loading: results.some((result) => result.isLoading),
       };
     },
   });
@@ -54,7 +54,7 @@ export const usePoolTokenBalance = (
   }, [tokensQueries.data]);
 
   return {
-    loading: tokensQueries.pending,
+    loading: tokensQueries.loading,
     reserves: tokenReserves,
   };
 };

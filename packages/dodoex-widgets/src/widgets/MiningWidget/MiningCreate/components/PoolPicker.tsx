@@ -299,7 +299,13 @@ export default function PoolPicker({
   }, [on, isThirdPlatform]);
 
   return (
-    <Dialog open={on} onClose={onClose} title={t`Select Pool`}>
+    <Dialog
+      open={on}
+      onClose={onClose}
+      title={t`Select Pool`}
+      modal
+      height="75vh"
+    >
       <Tabs
         value={poolTab}
         onChange={(_, value) => {
@@ -310,21 +316,24 @@ export default function PoolPicker({
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          overflow: 'hidden',
-          height: '100%',
         }}
       >
         <TabsGroup
           tabs={tabList}
           tabsListSx={{
-            mx: 20,
+            mx: 0,
             justifyContent: 'flex-start',
+          }}
+          tabSx={{
+            pt: 0,
+            px: 20,
           }}
         />
       </Tabs>
 
       <Box
         sx={{
+          width: 420,
           px: 20,
         }}
       >
@@ -461,6 +470,7 @@ export default function PoolPicker({
             }}
           >
             <SearchInput
+              fullWidth
               placeholder={t`Search by address`}
               value={search}
               onChange={(evt) => {
@@ -475,6 +485,7 @@ export default function PoolPicker({
         ) : (
           ''
         )}
+
         {poolTab === PoolPickerTabType.address && !search ? (
           ''
         ) : (loading && !skip) || reserveLoading ? (

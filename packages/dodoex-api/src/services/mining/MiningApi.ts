@@ -63,6 +63,35 @@ const miningFragments = [
   },
 ];
 
+const oldMiningFragments = [
+  {
+    inputs: [
+      { internalType: 'address', name: 'stakeToken', type: 'address' },
+      { internalType: 'bool', name: 'isLpToken', type: 'bool' },
+      {
+        internalType: 'address[]',
+        name: 'rewardTokens',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'rewardPerBlock',
+        type: 'uint256[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'startBlock',
+        type: 'uint256[]',
+      },
+      { internalType: 'uint256[]', name: 'endBlock', type: 'uint256[]' },
+    ],
+    name: 'createDODOMineV3',
+    outputs: [{ internalType: 'address', name: 'newMineV3', type: 'address' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+];
+
 export interface MiningApiProps {
   contractRequests?: ContractRequests;
   contractRequestsConfig?: ContractRequestsConfig;
@@ -150,19 +179,39 @@ export class MiningApi {
       if (!DODO_MINEV3_PROXY) {
         return null;
       }
-      const data = encodeFunctionDataByFragments(
-        miningFragments,
-        'createDODOMineV3',
-        [
-          stakeToken,
-          isLpToken,
-          platform,
-          rewardTokens,
-          rewardPerBlock,
-          startBlock,
-          endBlock,
-        ],
-      );
+      let data;
+      if (
+        [1, 10, 288, 66, 128, 137, 1285, 42161, 1313161554, 43114].includes(
+          chainId,
+        )
+      ) {
+        data = encodeFunctionDataByFragments(
+          oldMiningFragments,
+          'createDODOMineV3',
+          [
+            stakeToken,
+            isLpToken,
+            rewardTokens,
+            rewardPerBlock,
+            startBlock,
+            endBlock,
+          ],
+        );
+      } else {
+        data = encodeFunctionDataByFragments(
+          miningFragments,
+          'createDODOMineV3',
+          [
+            stakeToken,
+            isLpToken,
+            platform,
+            rewardTokens,
+            rewardPerBlock,
+            startBlock,
+            endBlock,
+          ],
+        );
+      }
 
       return {
         to: DODO_MINEV3_PROXY,
@@ -316,7 +365,27 @@ export class MiningApi {
           method: 'rewardTokenInfos',
           params: [index],
         });
-        return result ?? null;
+        if (!result) {
+          return null;
+        }
+        const {
+          rewardVault,
+          rewardPerBlock,
+          workThroughReward,
+          lastFlagBlock,
+          startBlock,
+          endBlock,
+        } = result;
+        return {
+          rewardVault,
+          rewardPerBlock: byWei(rewardPerBlock, 0),
+          workThroughReward: workThroughReward
+            ? byWei(workThroughReward, 0)
+            : undefined,
+          lastFlagBlock: lastFlagBlock ? byWei(lastFlagBlock, 0) : undefined,
+          startBlock: byWei(startBlock, 0),
+          endBlock: byWei(endBlock, 0),
+        };
       },
     };
   }
