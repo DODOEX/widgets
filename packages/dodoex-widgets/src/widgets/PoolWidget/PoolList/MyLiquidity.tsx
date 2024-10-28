@@ -41,6 +41,7 @@ import SkeletonTable from './components/SkeletonTable';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { CardStatus } from '../../../components/CardWidgets';
+import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
 
 function CardList({
   account,
@@ -146,13 +147,14 @@ function CardList({
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
+                  gap: 8,
                 }}
               >
                 {baseToken && quoteToken ? (
                   <TokenLogoPair
                     tokens={[baseToken, quoteToken]}
                     width={24}
-                    mr={8}
+                    mr={6}
                     chainId={item.chainId}
                     showChainLogo
                   />
@@ -166,6 +168,10 @@ function CardList({
                   }}
                 >
                   {`${baseToken?.symbol}/${quoteToken?.symbol}`}
+                  <LiquidityLpPartnerReward
+                    address={item.id}
+                    chainId={item.chainId}
+                  />
                 </Box>
               </Box>
               {hasMining ? (
@@ -509,11 +515,18 @@ function TableList({
                   <Box>
                     <Box
                       sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 4,
                         typography: 'body2',
                         fontWeight: 600,
                       }}
                     >
                       {`${baseToken?.symbol}/${quoteToken?.symbol}`}
+                      <LiquidityLpPartnerReward
+                        address={item.id}
+                        chainId={item.chainId}
+                      />
                     </Box>
                     <AddressWithLinkAndCopy
                       address={item.id}

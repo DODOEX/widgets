@@ -2545,6 +2545,7 @@ export type Cross_Chain_TokenCrossChainPair = {
 };
 
 export type Cross_Chain_TokenCrossChainProduct = {
+  extend?: Maybe<Scalars['JSON']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   isProduction?: Maybe<Scalars['Boolean']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -8477,6 +8478,9 @@ export type LiquidityPartnerInfo = {
   link?: Maybe<Scalars['String']['output']>;
   logo?: Maybe<Scalars['String']['output']>;
   partner?: Maybe<Scalars['String']['output']>;
+  platform?: Maybe<Scalars['Int']['output']>;
+  sort?: Maybe<Scalars['Int']['output']>;
+  theme?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
 };
 
 export type LiquidityPoolApy = {
@@ -23359,6 +23363,32 @@ export type FetchNoticeCenterTransactionListQuery = {
   } | null;
 };
 
+export type FetchLiquidityLpPartnerRewardsQueryVariables = Exact<{
+  where?: InputMaybe<LiquidityLpPartnerRewardsInput>;
+}>;
+
+export type FetchLiquidityLpPartnerRewardsQuery = {
+  liquidity_getLpPartnerRewards?: {
+    partnerInfos?: Array<{
+      partner?: string | null;
+      logo?: string | null;
+      introduction?: string | null;
+      link?: string | null;
+      theme?: Array<string | null> | null;
+      sort?: number | null;
+      platform?: number | null;
+      extra?: any | null;
+    } | null> | null;
+    partnerRewards?: Array<{
+      chainId?: number | null;
+      pool?: string | null;
+      partner?: string | null;
+      reward?: string | null;
+      type?: string | null;
+    } | null> | null;
+  } | null;
+};
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -24167,3 +24197,29 @@ export const FetchNoticeCenterTransactionListDocument =
     FetchNoticeCenterTransactionListQuery,
     FetchNoticeCenterTransactionListQueryVariables
   >;
+export const FetchLiquidityLpPartnerRewardsDocument = new TypedDocumentString(`
+    query FetchLiquidityLpPartnerRewards($where: LiquidityLpPartnerRewardsInput) {
+  liquidity_getLpPartnerRewards(where: $where) {
+    partnerInfos {
+      partner
+      logo
+      introduction
+      link
+      theme
+      sort
+      platform
+      extra
+    }
+    partnerRewards {
+      chainId
+      pool
+      partner
+      reward
+      type
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchLiquidityLpPartnerRewardsQuery,
+  FetchLiquidityLpPartnerRewardsQueryVariables
+>;

@@ -44,7 +44,7 @@ export const useSwapSettingStore = create(
       disableIndirectRouting: false,
     }),
     {
-      name: 'dodo-widgets-storage',
+      name: 'swap-setting-storage',
       storage: createJSONStorage(() => localStorage),
     },
   ),

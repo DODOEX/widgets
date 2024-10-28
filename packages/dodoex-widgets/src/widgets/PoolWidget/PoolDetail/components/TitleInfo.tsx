@@ -16,6 +16,7 @@ import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../../router';
 import { PageType } from '../../../../router/types';
 import { usePoolDetail } from '../../hooks/usePoolDetail';
+import LiquidityLpPartnerReward from '../../../../components/LiquidityLpPartnerReward';
 
 export default function TitleInfo({
   poolDetail,
@@ -75,14 +76,22 @@ export default function TitleInfo({
         <Box>
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
               typography: 'h4',
             }}
           >
             {poolDetail?.baseToken
               ? `${poolDetail.baseToken?.symbol} / ${poolDetail.quoteToken?.symbol}`
               : '-'}
+
+            <LiquidityLpPartnerReward
+              address={address}
+              chainId={poolDetail?.chainId}
+              hideName={isMobile}
+              sx={{
+                display: 'inline-flex',
+                ml: 8,
+              }}
+            />
             {canEdit && !isMobile ? (
               <Box
                 component={ButtonBase}

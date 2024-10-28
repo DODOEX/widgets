@@ -46,6 +46,8 @@ const documents = {
     types.FetchUserSwapOrderHistoriesDocument,
   '\n    query FetchNoticeCenterTransactionList(\n      $where: Notice_centertransactionListFilter\n    ) {\n      notice_center_transactionList(where: $where) {\n        list {\n          chainId\n          createTime\n          extend\n          from\n          id\n          key\n          type\n        }\n        count\n        limit\n        page\n      }\n    }\n  ':
     types.FetchNoticeCenterTransactionListDocument,
+  '\n    query FetchLiquidityLpPartnerRewards(\n      $where: LiquidityLpPartnerRewardsInput\n    ) {\n      liquidity_getLpPartnerRewards(where: $where) {\n        partnerInfos {\n          partner\n          logo\n          introduction\n          link\n          theme\n          sort\n          platform\n          extra\n        }\n        partnerRewards {\n          chainId\n          pool\n          partner\n          reward\n          type\n        }\n      }\n    }\n  ':
+    types.FetchLiquidityLpPartnerRewardsDocument,
 };
 
 /**
@@ -150,6 +152,12 @@ export function graphql(
 export function graphql(
   source: '\n    query FetchNoticeCenterTransactionList(\n      $where: Notice_centertransactionListFilter\n    ) {\n      notice_center_transactionList(where: $where) {\n        list {\n          chainId\n          createTime\n          extend\n          from\n          id\n          key\n          type\n        }\n        count\n        limit\n        page\n      }\n    }\n  ',
 ): typeof import('./graphql').FetchNoticeCenterTransactionListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query FetchLiquidityLpPartnerRewards(\n      $where: LiquidityLpPartnerRewardsInput\n    ) {\n      liquidity_getLpPartnerRewards(where: $where) {\n        partnerInfos {\n          partner\n          logo\n          introduction\n          link\n          theme\n          sort\n          platform\n          extra\n        }\n        partnerRewards {\n          chainId\n          pool\n          partner\n          reward\n          type\n        }\n      }\n    }\n  ',
+): typeof import('./graphql').FetchLiquidityLpPartnerRewardsDocument;
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

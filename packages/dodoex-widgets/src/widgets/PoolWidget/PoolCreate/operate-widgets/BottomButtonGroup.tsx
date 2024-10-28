@@ -446,6 +446,7 @@ export function BottomButtonGroup({
         state={state}
         isModify={false}
         onConfirm={createPoolMutation.mutate}
+        loading={createPoolMutation.isPending}
       />
     </>
   );
