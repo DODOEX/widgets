@@ -1,7 +1,7 @@
 import { Box, BoxProps, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
+import TokenLogo from '../../../../components/TokenLogo';
 import { TokenLogoPair } from '../../../../components/TokenLogoPair';
-import TokenLogoSimple from '../../../../components/TokenLogoSimple';
 import { truncatePoolAddress } from '../../../../utils/address';
 import { StateProps, TokenType } from '../hooks/reducers';
 import { SectionStatusT } from '../types';
@@ -123,12 +123,14 @@ export function StakingRules({
             )
           ) : saveAToken ? (
             <>
-              <TokenLogoSimple
-                address={saveAToken?.address}
-                marginRight={8}
+              <TokenLogo
+                address={saveAToken.address}
                 width={24}
                 height={24}
-                url={''}
+                chainId={saveAToken.chainId}
+                url={saveAToken.logoURI}
+                noShowChain
+                marginRight={8}
               />
               {saveAToken?.symbol}
             </>
@@ -155,8 +157,8 @@ export function StakingRules({
               ? pool.id
               : '-'
             : saveAToken
-            ? saveAToken.address
-            : '-',
+              ? saveAToken.address
+              : '-',
         )}
       </Card>
     </Box>

@@ -2,7 +2,7 @@ import { MiningStatusE } from '@dodoex/api';
 import { Box, Button, useTheme } from '@dodoex/components';
 import { useLingui } from '@lingui/react';
 import { useMemo, useState } from 'react';
-import TokenLogoSimple from '../../../../components/TokenLogoSimple';
+import TokenLogo from '../../../../components/TokenLogo';
 import { formatShortNumber } from '../../../../utils/formatter';
 import { useMyCreatedMiningList } from '../../hooks/useMyCreatedMiningList';
 import { useReviewRewardToken } from '../../hooks/useReviewRewardToken';
@@ -139,11 +139,14 @@ export function RewardCard({
               gap: 4,
             }}
           >
-            <TokenLogoSimple
+            <TokenLogo
               address={address}
               width={32}
               height={32}
-              url={''}
+              chainId={chainId}
+              url={rewardToken.logoImg}
+              noShowChain
+              marginRight={0}
             />
             <Box
               sx={{

@@ -1,6 +1,6 @@
 import { alpha, Box, BoxProps, ButtonBase, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import TokenLogoSimple from '../../../../components/TokenLogoSimple';
+import TokenLogo from '../../../../components/TokenLogo';
 import { TokenInfo } from '../../../../hooks/Token';
 import { ApprovalState } from '../../../../hooks/Token/type';
 import { useGetTokenStatus } from '../../../../hooks/Token/useGetTokenStatus';
@@ -93,14 +93,15 @@ export function RewardTokenSelect({
             gap: 4,
           }}
         >
-          <TokenLogoSimple
+          <TokenLogo
             address={token.address}
-            marginRight={0}
             width={24}
             height={24}
-            url={''}
+            chainId={token.chainId}
+            url={token.logoURI}
+            noShowChain
+            marginRight={0}
           />
-
           {token.symbol}
         </Box>
 

@@ -75,6 +75,10 @@ export function StakeButton({
     );
   }
 
+  const isMutating =
+    depositOrWithdrawOrClaimMutation.isPending &&
+    depositOrWithdrawOrClaimMutation.variables?.metadata?.operateType ===
+      'stake';
   return (
     <>
       {version === '2' && <ClaimTips />}
@@ -83,7 +87,7 @@ export function StakeButton({
         <TokenStatusButton status={approveTokenStatus}>
           <Button
             fullWidth
-            isLoading={depositOrWithdrawOrClaimMutation.isPending}
+            isLoading={isMutating}
             disabled={!Number(amount)}
             onClick={() => {
               depositOrWithdrawOrClaimMutation.mutate({
@@ -92,14 +96,13 @@ export function StakeButton({
                 submitCallback: () => {
                   // setOperateModalVisible(false);
                 },
+                metadata: {
+                  operateType: 'stake',
+                },
               });
             }}
           >
-            {depositOrWithdrawOrClaimMutation.isPending ? (
-              <Trans>Staking</Trans>
-            ) : (
-              <Trans>Stake</Trans>
-            )}
+            {isMutating ? <Trans>Staking</Trans> : <Trans>Stake</Trans>}
           </Button>
         </TokenStatusButton>
       </NeedConnectButton>

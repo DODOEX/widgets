@@ -136,7 +136,7 @@ export const blockTimeMap: {
   [ChainId.MANTLE]: 2000,
   [ChainId.SEPOLIA]: 12000,
   [ChainId.DODO_CHAIN_TESTNET]: 12000,
-  [ChainId.TAIKO]: 12000,
+  [ChainId.TAIKO]: 48000,
 };
 
 export const dexKeysMap: {
@@ -146,15 +146,7 @@ export const dexKeysMap: {
   [ChainId.GOERLI]: [],
   [ChainId.OPTIMISM]: [],
   [ChainId.CONFLUX]: [],
-  [ChainId.BSC]: [
-    'pancakeV2',
-    'pancakeV1',
-    'MDEX',
-    'bakery',
-    'biSwap',
-    'apeSwap',
-    'babySwap',
-  ],
+  [ChainId.BSC]: [],
   [ChainId.OKCHAIN]: [],
   [ChainId.POLYGON]: [],
   [ChainId.ARBITRUM_ONE]: [],

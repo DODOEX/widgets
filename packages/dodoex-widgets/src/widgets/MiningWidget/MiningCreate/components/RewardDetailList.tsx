@@ -1,6 +1,6 @@
 import { Box, ButtonBase, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import TokenLogoSimple from '../../../../components/TokenLogoSimple';
+import TokenLogo from '../../../../components/TokenLogo';
 import { truncatePoolAddress } from '../../../../utils/address';
 import { formatTokenAmountNumber } from '../../../../utils/formatter';
 import { Actions, RewardI, StateProps, Types } from '../hooks/reducers';
@@ -97,12 +97,14 @@ function RewardCard({
             }}
           >
             {reward.token && reward.token.address ? (
-              <TokenLogoSimple
+              <TokenLogo
                 address={reward.token?.address as string}
-                marginRight={0}
                 width={32}
                 height={32}
-                url={''}
+                chainId={reward.token?.chainId}
+                url={reward.token?.logoURI}
+                noShowChain
+                marginRight={0}
               />
             ) : null}
 

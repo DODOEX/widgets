@@ -37,6 +37,7 @@ export function MiningCreate({
   const { state, dispatch, createMutation, blockNumber, blockTime } =
     useCreateMining({
       submittedBack: undefined,
+      handleGotoMiningList,
     });
 
   const { createMiningTypeMap } = useCreateMiningTypeList();
@@ -375,6 +376,7 @@ export function MiningCreate({
               dispatch={dispatch}
               rewardsStatus={rewardsStatus}
               submitApprove={submitApprove}
+              createLoading={createMutation.isPending}
               handleCreate={confirmCreate}
               handleGoBack={handleGoBack}
             />

@@ -1,8 +1,8 @@
 import {
-  MiningTokenI,
-  TabMiningI,
   MiningLpTokenI,
   MiningStakeTokenWithAmountI,
+  MiningTokenI,
+  TabMiningI,
 } from '../../types';
 
 export function getOptTokenSymbol({
@@ -42,7 +42,7 @@ export function getOptToken({
   type: TabMiningI['type'];
   lpToken: MiningLpTokenI;
   selectedStakeTokenIndex: 0 | 1;
-}): MiningLpTokenI {
+}) {
   const symbol = getOptTokenSymbol({
     stakedTokenList,
     type,

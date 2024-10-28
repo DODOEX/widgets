@@ -1,10 +1,10 @@
 {
   "name": "@dodoex/api",
-  "version": "3.0.0-taiko.13",
+  "version": "3.0.0-taiko.14",
   "description": "DODO API Kit",
   "source": "src/index.ts",
-  "types": "dist/index.d.ts",
-  "main": "dist/cjs/index.cjs",
+  "types": "dist/types/index.d.ts",
+  "main": "dist/index.cjs",
   "module": "dist/index.js",
   "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/DODOEX/widgets#readme",
@@ -19,7 +19,8 @@
     "schema:watch": "export $(cat .env | xargs) && env graphql-codegen -w",
     "prerelease": "yarn run build",
     "release": "semantic-release",
-    "release:local": "np --any-branch --no-cleanup --no-tests"
+    "release:local": "np --any-branch --no-cleanup --no-tests",
+    "release.npm-publish-beta": "npm publish --tag beta"
   },
   "author": "",
   "publishConfig": {
@@ -28,9 +29,9 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/cjs/index.cjs"
+      "require": "./dist/index.cjs"
     }
   },
   "keywords": [
@@ -79,6 +80,7 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-replace": "^5.0.7",
     "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.1",
     "@rollup/plugin-url": "^8.0.2",
     "@svgr/rollup": "^6.2.1",
     "@testing-library/jest-dom": "^5.16.5",
@@ -93,8 +95,8 @@
     "jest-environment-jsdom": "^29.0.3",
     "np": "^7.6.1",
     "rollup": "^4.18.0",
+    "rollup-plugin-clear": "^2.0.7",
     "rollup-plugin-dynamic-import-variables": "^1.1.0",
-    "rollup-plugin-typescript2": "^0.36.0",
     "svg-jest": "^1.0.1",
     "ts-jest": "^29.0.1",
     "typescript": "^5.6.3"

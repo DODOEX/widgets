@@ -1,6 +1,6 @@
 import { Box, useTheme } from '@dodoex/components';
 import BigNumber from 'bignumber.js';
-import TokenLogoSimple from '../../../../components/TokenLogoSimple';
+import TokenLogo from '../../../../components/TokenLogo';
 import { formatTokenAmountNumber } from '../../../../utils/formatter';
 import { MiningRewardTokenWithAprI } from '../../types';
 
@@ -45,13 +45,15 @@ export function RewardTokenTable({
                     typography: 'h5',
                   }}
                 >
-                  <TokenLogoSimple
+                  <TokenLogo
                     address={address}
                     width={24}
                     height={24}
-                    url={''}
+                    chainId={customChainId}
+                    url={logoImg}
+                    noShowChain
+                    marginRight={0}
                   />
-
                   <Box component="span">{symbol}</Box>
                 </Box>
               )}

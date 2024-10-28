@@ -2,6 +2,7 @@ import { Box, Button, Checkbox, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import dayjs from 'dayjs';
 import { Dispatch, useMemo, useState } from 'react';
+import NeedConnectButton from '../../../../components/ConnectWallet/NeedConnectButton';
 import WidgetDialog from '../../../../components/WidgetDialog';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
@@ -11,13 +12,13 @@ import { Actions, StateProps, TokenType, Types } from '../hooks/reducers';
 import { RewardStatus } from '../types';
 import { isValidRewardInfo } from '../utils';
 import { ReactComponent as AlertIcon } from './alarm_24dp.svg';
-import NeedConnectButton from '../../../../components/ConnectWallet/NeedConnectButton';
 
 export function BottomButtonGroup({
   state,
   dispatch,
   rewardsStatus,
   submitApprove,
+  createLoading,
   handleCreate,
   handleGoBack,
 }: {
@@ -25,6 +26,7 @@ export function BottomButtonGroup({
   dispatch: Dispatch<Actions>;
   rewardsStatus: RewardStatus[];
   submitApprove: ReturnType<typeof useGetTokenStatus>['submitApprove'];
+  createLoading: boolean;
   handleCreate: () => void;
   handleGoBack: () => void;
 }) {
@@ -34,7 +36,6 @@ export function BottomButtonGroup({
   const { isMobile } = useWidgetDevice();
   const { account, chainId } = useWalletInfo();
 
-  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [confirmChecked, setConfirmChecked] = useState(false);
 
   const nextButton = useMemo(() => {
@@ -170,7 +171,10 @@ export function BottomButtonGroup({
               });
               return;
             }
-            setConfirmModalVisible(true);
+            dispatch({
+              type: Types.SetConfirmModalVisible,
+              payload: true,
+            });
           }}
         >
           {isMobile ? t`Next` : t`Create`}
@@ -254,9 +258,12 @@ export function BottomButtonGroup({
       </Box>
 
       <WidgetDialog
-        open={confirmModalVisible}
+        open={state.confirmModalVisible}
         onClose={() => {
-          setConfirmModalVisible(false);
+          dispatch({
+            type: Types.SetConfirmModalVisible,
+            payload: false,
+          });
         }}
       >
         <Box
@@ -348,16 +355,16 @@ export function BottomButtonGroup({
 
           <Button
             fullWidth
+            isLoading={createLoading}
             disabled={!confirmChecked}
             sx={{
               mt: 30,
             }}
             onClick={() => {
-              setConfirmModalVisible(false);
               handleCreate();
             }}
           >
-            {t`Create`}
+            {createLoading ? <Trans>Confirming</Trans> : <Trans>Create</Trans>}
           </Button>
         </Box>
       </WidgetDialog>

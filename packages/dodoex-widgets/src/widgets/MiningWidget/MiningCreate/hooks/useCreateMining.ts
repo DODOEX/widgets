@@ -138,16 +138,20 @@ export const useCreateMining = ({
         },
         {
           metadata: {
-            [MetadataFlag.submissionCreateMetaKey]: '1',
+            [MetadataFlag.submissionCreateMetaKey]: true,
           },
-          submittedBack() {
-            if (submittedBack) {
-              submittedBack();
-            }
+          submittedBack,
+          successBack() {
             handleGotoMiningList?.();
           },
         },
       );
+    },
+    onSettled() {
+      dispatch({
+        type: Types.SetConfirmModalVisible,
+        payload: false,
+      });
     },
   });
 

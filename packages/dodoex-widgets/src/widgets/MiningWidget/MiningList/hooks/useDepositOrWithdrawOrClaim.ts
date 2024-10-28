@@ -1,4 +1,4 @@
-import { basicTokenMap } from '@dodoex/api';
+import { basicTokenMap, CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { parseFixed } from '@ethersproject/bignumber';
 import { t } from '@lingui/macro';
 import { useMutation } from '@tanstack/react-query';
@@ -8,7 +8,7 @@ import { useMemo } from 'react';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { useSubmission } from '../../../../hooks/Submission';
 import { OpCode } from '../../../../hooks/Submission/spec';
-import { Metadata } from '../../../../hooks/Submission/types';
+import { Metadata, MetadataFlag } from '../../../../hooks/Submission/types';
 import { getEthersValue } from '../../../../utils/bytes';
 import {
   MiningLpTokenI,
@@ -186,8 +186,8 @@ export function useDepositOrWithdrawOrClaim({
         operateType === 'stake'
           ? t`Stake`
           : operateType === 'unstake'
-          ? t`End mining`
-          : t`Claim Rewards`;
+            ? t`End mining`
+            : t`Claim Rewards`;
       const submitTime = Math.ceil(Date.now() / 1000);
       const result = await submission.execute(
         brief,
@@ -202,6 +202,9 @@ export function useDepositOrWithdrawOrClaim({
             depositOrWithdrawMining:
               operateType === 'stake' || operateType === 'unstake',
             claimMiningReward: operateType === 'claim',
+            [MetadataFlag.stakeMining]: operateType === 'stake',
+            [MetadataFlag.unstakeMining]: operateType === 'unstake',
+            [MetadataFlag.claimMining]: operateType === 'claim',
             source,
             id,
             operateType,

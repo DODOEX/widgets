@@ -25,6 +25,9 @@ export function MiningListEmpty({
         hasSearch={hasSearch}
         sx={{
           mb: 12,
+          width: 60,
+          height: 60,
+          borderRadius: (24 / 105) * 60,
         }}
       />
       {notFoundText}

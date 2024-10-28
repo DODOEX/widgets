@@ -1,10 +1,10 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.0-taiko.29",
+  "version": "3.0.0-taiko.33",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
-  "types": "dist/index.d.ts",
-  "main": "dist/cjs/index.cjs",
+  "types": "dist/types/index.d.ts",
+  "main": "dist/index.cjs",
   "module": "dist/index.js",
   "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/DODOEX/widgets#readme",
@@ -23,6 +23,7 @@
     "release": "semantic-release",
     "release:local": "np --any-branch --no-cleanup --no-tests",
     "release.npm-publish": "npm publish --access public",
+    "release.npm-publish-beta": "npm publish --tag beta",
     "test": "jest src",
     "test:e2e": "jest e2e"
   },
@@ -33,9 +34,9 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/cjs/index.cjs"
+      "require": "./dist/index.cjs"
     }
   },
   "keywords": [
@@ -57,8 +58,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/api": ">=3.0.0-taiko.13",
-    "@dodoex/components": ">=3.0.0-taiko.5",
+    "@dodoex/api": ">=3.0.0-taiko.14",
+    "@dodoex/components": ">=3.0.0-taiko.6",
     "@dodoex/icons": "^2.0.1",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
@@ -116,6 +117,7 @@
     "@rollup/plugin-multi-entry": "^6.0.1",
     "@rollup/plugin-replace": "^5.0.7",
     "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.1",
     "@rollup/plugin-url": "^8.0.2",
     "@svgr/rollup": "^6.2.1",
     "@testing-library/jest-dom": "^5.16.5",
@@ -139,8 +141,8 @@
     "jest-environment-jsdom": "^29.0.3",
     "np": "^7.6.1",
     "rollup": "^4.18.0",
+    "rollup-plugin-clear": "^2.0.7",
     "rollup-plugin-import-css": "^3.5.5",
-    "rollup-plugin-typescript2": "^0.36.0",
     "svg-jest": "^1.0.1",
     "ts-jest": "^29.0.1",
     "typescript": "^5.6.3"

@@ -119,7 +119,6 @@ function RewardItem({
         </Box>
         <Box
           component={ButtonBase}
-          disabled={addButtonDisabled}
           onClick={() => {
             setActive(!active);
           }}
@@ -254,6 +253,8 @@ function RewardItem({
                   justifyContent: 'stretch',
                   borderRadius: 8,
                   backgroundColor: theme.palette.background.input,
+                  height: 48,
+                  pl: 12,
                 }}
               >
                 <NumberInput
@@ -273,6 +274,7 @@ function RewardItem({
                     mt: 0,
                     flex: '1 1 auto',
                   }}
+                  typography="body1"
                 />
               </Box>
             </Box>
@@ -450,7 +452,6 @@ function RewardItem({
                 variant={Button.Variant.contained}
                 fullWidth
                 onClick={() => setActive(!active)}
-                disabled={addButtonDisabled}
               >
                 {t`Add`}
               </Button>
@@ -578,6 +579,7 @@ export default function RewardForm({
             : state.rewards[rewardPickerIndex].token
         }
         open={showRewardPicker}
+        chainId={chainId}
         onClose={() => setShowRewardPicker(false)}
         hiddenAddrs={[EtherToken.address]}
         onTokenChange={(token) => {

@@ -128,7 +128,7 @@ export const getChainDexList = (
     ...dexKeys
       .filter((key) => {
         if (filterCreateMiningEnable) {
-          return dexListObj[key].createMiningEnable;
+          return dexListObj[key]?.createMiningEnable ?? false;
         }
         return true;
       })

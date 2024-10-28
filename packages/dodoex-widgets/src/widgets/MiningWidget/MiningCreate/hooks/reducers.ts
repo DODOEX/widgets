@@ -22,6 +22,7 @@ export interface StateProps {
   rewards: RewardI[];
   isInitCache: boolean;
   currentStep: 0 | 1 | 2 | 3;
+  confirmModalVisible: boolean;
 }
 
 export function init(): StateProps {
@@ -44,6 +45,7 @@ export function init(): StateProps {
     ],
     isInitCache: false,
     currentStep: 0,
+    confirmModalVisible: false,
   };
 }
 
@@ -59,6 +61,7 @@ export enum Types {
   cover,
   updateInitCache,
   SetCurrentStep,
+  SetConfirmModalVisible,
 }
 
 interface PayloadRewardI extends Partial<RewardI> {
@@ -76,6 +79,7 @@ type Payload = {
   [Types.cover]: StateProps;
   [Types.updateInitCache]: boolean;
   [Types.SetCurrentStep]: StateProps['currentStep'];
+  [Types.SetConfirmModalVisible]: boolean;
 };
 
 export type Actions = ActionMap<Payload>[keyof ActionMap<Payload>];
@@ -177,6 +181,12 @@ export function reducer(state: StateProps, action: Actions): StateProps {
       return {
         ...state,
         isInitCache: action.payload,
+      };
+
+    case Types.SetConfirmModalVisible:
+      return {
+        ...state,
+        confirmModalVisible: action.payload,
       };
 
     default:

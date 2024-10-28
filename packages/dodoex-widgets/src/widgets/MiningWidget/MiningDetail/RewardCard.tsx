@@ -2,7 +2,7 @@ import { Box, ButtonBase, Tooltip, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import React, { useMemo } from 'react';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
-import TokenLogoSimple from '../../../components/TokenLogoSimple';
+import TokenLogo from '../../../components/TokenLogo';
 import { formatShortNumber } from '../../../utils';
 import { useReviewRewardToken } from '../hooks/useReviewRewardToken';
 import { getMiningRewardStatus } from '../hooks/utils';
@@ -181,12 +181,14 @@ export const RewardCard = ({
             }}
           >
             {rewardToken && rewardToken.address ? (
-              <TokenLogoSimple
-                address={rewardToken?.address as string}
-                marginRight={0}
+              <TokenLogo
+                address={rewardToken.address}
                 width={24}
                 height={24}
-                url={''}
+                chainId={chainId}
+                url={undefined}
+                noShowChain
+                marginRight={0}
               />
             ) : null}
 

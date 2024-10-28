@@ -23,8 +23,9 @@ export const Primary = (props: any) => {
   return (
     <Widget {...config} {...other} apikey={apiKey}>
       <MiningCreate
-        handleGotoMiningList={() => window.alert('view create page')}
-        handleGotoCreatePool={() => window.alert('view detail page')}
+        handleGotoMiningList={() => window.alert('handleGotoMiningList')}
+        handleGotoCreatePool={() => window.alert('handleGotoCreatePool')}
+        handleGoBack={() => window.alert('handleGoBack')}
       />
     </Widget>
   );

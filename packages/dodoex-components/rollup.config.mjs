@@ -1,11 +1,12 @@
 import { babel } from '@rollup/plugin-babel';
-import typescript from 'rollup-plugin-typescript2';
+import typescript from '@rollup/plugin-typescript';
 import json from '@rollup/plugin-json';
 import commonjs from '@rollup/plugin-commonjs';
 import url from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
 import terser from '@rollup/plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import clear from 'rollup-plugin-clear';
 import pkg from './package.json' with { type: 'json' };
 
 const extensions = ['.js', '.ts', '.jsx', '.tsx'];
@@ -41,6 +42,12 @@ const config = {
       extensions,
       babelHelpers: 'bundled',
     }),
+    clear({
+      // required, point out which directories should be clear.
+      targets: ['dist'],
+      // optional, whether clear the directores when rollup recompile on --watch mode.
+      watch: true, // default: false
+    }),
   ],
   external: [...Object.keys(pkg.peerDependencies || {}), '@floating-ui/dom'],
 };
@@ -52,10 +59,11 @@ export default [
       {
         dir: 'dist',
         format: 'es',
+        // plugins: [terser()],
         plugins: [terser()],
       },
       {
-        dir: 'dist/cjs',
+        dir: 'dist',
         entryFileNames: '[name].cjs',
         chunkFileNames: '[name]-[hash].cjs',
         format: 'cjs',

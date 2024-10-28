@@ -24,7 +24,18 @@ export const Primary = (props: any) => {
     <Widget {...config} {...other} apikey={apiKey}>
       <MiningList
         handleGotoCreate={() => window.alert('view create page')}
-        handleGotoDetail={() => window.alert('view detail page')}
+        handleGotoDetail={({ mining, pool, chainId }) =>
+          window.alert(`view detail page, ${mining}, ${pool}, ${chainId}`)
+        }
+        handleGotoPoolDetail={function ({
+          pool,
+          chainId,
+        }: {
+          pool: string;
+          chainId: number;
+        }): void {
+          window.alert(`view detail page, ${pool}, ${chainId}`);
+        }}
       />
     </Widget>
   );

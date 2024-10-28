@@ -30,6 +30,7 @@ export default memo(function BaseMiningCard({
   migrationItem,
   contractDataLoading,
   handleGotoDetail,
+  handleGotoPoolDetail,
 }: {
   contractData: CompositeMiningContractDataI | undefined;
   miningItem: TabMiningI;
@@ -41,6 +42,13 @@ export default memo(function BaseMiningCard({
     chainId,
   }: {
     mining: string;
+    pool: string;
+    chainId: number;
+  }) => void;
+  handleGotoPoolDetail: ({
+    pool,
+    chainId,
+  }: {
     pool: string;
     chainId: number;
   }) => void;
@@ -232,6 +240,9 @@ export default memo(function BaseMiningCard({
             lpTokenAccountStakedBalanceLoading
           }
           lpTokenAccountBalanceLoading={lpTokenAccountBalanceLoading}
+          externalAddLiquidityCallback={() => {
+            handleGotoPoolDetail({ pool: stakeTokenAddress, chainId });
+          }}
         />,
         operateAreaEle,
         isMobile,

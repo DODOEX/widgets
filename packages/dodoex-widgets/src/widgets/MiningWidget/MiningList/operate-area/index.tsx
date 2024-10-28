@@ -74,8 +74,9 @@ export function OperateArea(props: OperateDataProps) {
   const skipApprove =
     type === 'vdodo' || operateType !== 'stake' || !isInCurrentChain;
 
-  const [selectedStakeTokenIndex, setSelectedStakeTokenIndex] =
-    useState<0 | 1>(0);
+  const [selectedStakeTokenIndex, setSelectedStakeTokenIndex] = useState<0 | 1>(
+    0,
+  );
   const [currentStakeTokenAmount, setCurrentStakeTokenAmount] = useState('');
   const [currentUnstakeTokenAmount, setCurrentUnstakeTokenAmount] =
     useState('');
@@ -112,10 +113,25 @@ export function OperateArea(props: OperateDataProps) {
   });
 
   // 将 lpToken 授权给挖矿合约
-  const approveToken =
-    optToken.address && optToken.decimals !== undefined && isInCurrentChain
-      ? (optToken as TokenInfo)
+  const approveToken = useMemo<TokenInfo | null>(() => {
+    return optToken.address &&
+      optToken.decimals !== undefined &&
+      isInCurrentChain
+      ? {
+          address: optToken.address,
+          decimals: optToken.decimals,
+          symbol: optToken.symbol,
+          name: optToken.symbol,
+          chainId,
+        }
       : null;
+  }, [
+    chainId,
+    isInCurrentChain,
+    optToken.address,
+    optToken.decimals,
+    optToken.symbol,
+  ]);
 
   const approveTokenStatus = useTokenStatus(approveToken, {
     contractAddress: miningContractAddress,
@@ -361,7 +377,7 @@ export function OperateArea(props: OperateDataProps) {
             lpTokenBalance={lpTokenAccountStakedBalance}
             currentTokenAmount={
               lpTokenStatus === MiningStatusE.ended
-                ? lpTokenAccountStakedBalance?.toString() ?? ''
+                ? (lpTokenAccountStakedBalance?.toString() ?? '')
                 : currentUnstakeTokenAmount
             }
             setCurrentTokenAmount={setCurrentUnstakeTokenAmount}

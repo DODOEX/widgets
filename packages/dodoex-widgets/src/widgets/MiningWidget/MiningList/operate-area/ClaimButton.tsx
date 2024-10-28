@@ -20,23 +20,26 @@ export function ClaimButton({
   chainId: number;
   currentChainId: number | undefined;
 }) {
+  const isMutating =
+    depositOrWithdrawOrClaimMutation.isPending &&
+    depositOrWithdrawOrClaimMutation.variables?.metadata?.operateType ===
+      'claim';
   return (
     <NeedConnectButton includeButton fullWidth chainId={chainId}>
       <Button
         fullWidth
-        isLoading={depositOrWithdrawOrClaimMutation.isPending}
+        isLoading={isMutating}
         disabled={!hasUnclaimedReward}
         onClick={() => {
           depositOrWithdrawOrClaimMutation.mutate({
             amount: new BigNumber(0),
+            metadata: {
+              operateType: 'claim',
+            },
           });
         }}
       >
-        {depositOrWithdrawOrClaimMutation.isPending ? (
-          <Trans>Claiming</Trans>
-        ) : (
-          <Trans>One-Click Claim</Trans>
-        )}
+        {isMutating ? <Trans>Claiming</Trans> : <Trans>One-Click Claim</Trans>}
       </Button>
     </NeedConnectButton>
   );

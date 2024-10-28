@@ -1,6 +1,7 @@
 import { Box, BoxProps, Tooltip, useTheme } from '@dodoex/components';
 import { JSXElementConstructor, ReactElement } from 'react';
-import TokenLogoSimple from '../../../../components/TokenLogoSimple';
+import TokenLogo from '../../../../components/TokenLogo';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 
 export function TokenAmountPopover({
   trigger,
@@ -18,6 +19,7 @@ export function TokenAmountPopover({
   sx?: BoxProps['sx'];
 }) {
   const theme = useTheme();
+  const { chainId } = useWalletInfo();
 
   return (
     <Tooltip
@@ -42,11 +44,14 @@ export function TokenAmountPopover({
                     flexShrink: 0,
                   }}
                 >
-                  <TokenLogoSimple
+                  <TokenLogo
+                    address={address}
                     width={20}
                     height={20}
-                    address={address}
-                    url={''}
+                    chainId={chainId}
+                    url={undefined}
+                    noShowChain
+                    marginRight={0}
                   />
                 </Box>
                 <Box sx={{ mx: 6, fontWeight: 600 }}>{symbolEle}</Box>

@@ -3,7 +3,7 @@ import { alpha, Box, Input, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import { useMemo, useState } from 'react';
 import { TokenPickerDialog } from '../../../../components/Swap/components/TokenCard/TokenPickerDialog';
-import TokenLogoSimple from '../../../../components/TokenLogoSimple';
+import TokenLogo from '../../../../components/TokenLogo';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { truncatePoolAddress } from '../../../../utils';
 import { Actions, StateProps, Types } from '../hooks/reducers';
@@ -85,12 +85,14 @@ export function SingleTokenSelect({
                   typography: 'body2',
                 }}
               >
-                <TokenLogoSimple
+                <TokenLogo
                   address={state.saveAToken.address}
-                  marginRight={6}
                   width={24}
                   height={24}
-                  url={''}
+                  chainId={state.saveAToken.chainId}
+                  url={state.saveAToken.logoURI}
+                  noShowChain
+                  marginRight={6}
                 />
                 {state.saveAToken.symbol}
                 <Box

@@ -2,7 +2,7 @@ import { useTheme } from '@dodoex/components';
 import { useLingui } from '@lingui/react';
 import { useContext, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
-import TokenLogoSimple from '../../../../components/TokenLogoSimple';
+import TokenLogo from '../../../../components/TokenLogo';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { useMyCreatedMiningList } from '../../hooks/useMyCreatedMiningList';
 import { MiningERC20TokenI, MyCreatedMiningI } from '../../types';
@@ -99,13 +99,15 @@ export function MyCreatedMining({
                   return null;
                 }
                 return (
-                  <TokenLogoSimple
+                  <TokenLogo
                     key={rewardToken.address}
-                    url={rewardToken.logoImg ?? ''}
                     address={rewardToken.address}
-                    marginRight={4}
                     width={20}
                     height={20}
+                    chainId={chainId}
+                    url={rewardToken.logoImg}
+                    noShowChain
+                    marginRight={4}
                   />
                 );
               })}

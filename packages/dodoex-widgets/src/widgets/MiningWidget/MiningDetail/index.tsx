@@ -28,6 +28,13 @@ export interface InnerMiningProps {
   miningItem: TabMiningI;
   refetchContractData: () => void;
   handleGotoMiningList: () => void;
+  handleGotoPoolDetail: ({
+    pool,
+    chainId,
+  }: {
+    pool: string;
+    chainId: number;
+  }) => void;
 }
 
 const InnerMining = ({
@@ -35,6 +42,7 @@ const InnerMining = ({
   miningItem,
   refetchContractData,
   handleGotoMiningList,
+  handleGotoPoolDetail,
 }: InnerMiningProps) => {
   const {
     stakeTokenAddress,
@@ -122,6 +130,9 @@ const InnerMining = ({
         addLiquiditySuccessfulPair={addLiquiditySuccessfulPair}
         lpTokenAccountStakedBalanceLoading={lpTokenAccountStakedBalanceLoading}
         lpTokenAccountBalanceLoading={lpTokenAccountBalanceLoading}
+        externalAddLiquidityCallback={() => {
+          handleGotoPoolDetail({ pool: stakeTokenAddress, chainId });
+        }}
       />
     );
   }, [
@@ -130,6 +141,7 @@ const InnerMining = ({
     balanceDataMap,
     chainId,
     currentChainId,
+    handleGotoPoolDetail,
     isMobile,
     lpTokenAccountBalanceLoading,
     lpTokenAccountStakedBalanceLoading,
@@ -139,6 +151,7 @@ const InnerMining = ({
     refetchContractData,
     rewardTokenWithAprListArray,
     rewardTokenWithAprTotalList,
+    stakeTokenAddress,
     stakedTokenWithAmountList,
     totalRewardUSD,
     totalStakedTokenUSD,
@@ -181,6 +194,7 @@ const InnerMining = ({
 export function MiningDetail({
   query,
   handleGotoMiningList,
+  handleGotoPoolDetail,
 }: {
   query: {
     mining?: string;
@@ -188,6 +202,13 @@ export function MiningDetail({
     chainId: number;
   };
   handleGotoMiningList: () => void;
+  handleGotoPoolDetail: ({
+    pool,
+    chainId,
+  }: {
+    pool: string;
+    chainId: number;
+  }) => void;
 }) {
   const theme = useTheme();
   const { account, chainId: currentChainId } = useWeb3React();
@@ -288,6 +309,7 @@ export function MiningDetail({
             miningItem={miningItem}
             refetchContractData={refetchContractData}
             handleGotoMiningList={handleGotoMiningList}
+            handleGotoPoolDetail={handleGotoPoolDetail}
           />
         )}
       </Box>

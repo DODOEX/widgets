@@ -33,6 +33,7 @@ export function MiningList({
   query,
   handleGotoCreate,
   handleGotoDetail,
+  handleGotoPoolDetail,
 }: {
   query?: {
     mining?: string;
@@ -45,6 +46,13 @@ export function MiningList({
     chainId,
   }: {
     mining: string;
+    pool: string;
+    chainId: number;
+  }) => void;
+  handleGotoPoolDetail: ({
+    pool,
+    chainId,
+  }: {
     pool: string;
     chainId: number;
   }) => void;
@@ -193,6 +201,7 @@ export function MiningList({
                   : othersContractDataLoading
               }
               handleGotoDetail={handleGotoDetail}
+              handleGotoPoolDetail={handleGotoPoolDetail}
             />
           );
         })}
@@ -204,6 +213,7 @@ export function MiningList({
     contractDataMap,
     currentChainId,
     handleGotoDetail,
+    handleGotoPoolDetail,
     i18n,
     loading,
     miningList,

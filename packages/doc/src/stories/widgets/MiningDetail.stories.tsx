@@ -28,6 +28,18 @@ export const Primary = (props: any) => {
           address: '0xE9a586152879f4817cb6c599E32e8f8e96BFba4c',
           chainId: 11155111,
         }}
+        handleGotoMiningList={function (): void {
+          throw new Error('Function not implemented.');
+        }}
+        handleGotoPoolDetail={function ({
+          pool,
+          chainId,
+        }: {
+          pool: string;
+          chainId: number;
+        }): void {
+          window.alert(`view detail page, ${pool}, ${chainId}`);
+        }}
       />
     </Widget>
   );

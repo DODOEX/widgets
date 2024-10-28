@@ -2,7 +2,7 @@ import { Box, HoverOpacity } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
-import TokenLogoSimple from '../../../../components/TokenLogoSimple';
+import TokenLogo from '../../../../components/TokenLogo';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { TokenInfo } from '../../../../hooks/Token';
 import {
@@ -147,12 +147,14 @@ export default function PoolCard({
           alignItems: 'center',
         }}
       >
-        <TokenLogoSimple
+        <TokenLogo
           address={baseToken.address}
-          marginRight={8}
           width={16}
           height={16}
-          url={''}
+          chainId={baseToken.chainId}
+          url={baseToken.logoURI}
+          noShowChain
+          marginRight={8}
         />
         {formatReadableNumber({
           input: baseReserve,
@@ -174,12 +176,14 @@ export default function PoolCard({
           mt: 4,
         }}
       >
-        <TokenLogoSimple
+        <TokenLogo
           address={quoteToken.address}
-          marginRight={8}
           width={16}
           height={16}
-          url={''}
+          chainId={quoteToken.chainId}
+          url={quoteToken.logoURI}
+          noShowChain
+          marginRight={8}
         />
         {formatReadableNumber({
           input: quoteReserve,

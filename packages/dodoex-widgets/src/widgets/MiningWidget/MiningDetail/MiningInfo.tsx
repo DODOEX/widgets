@@ -1,17 +1,10 @@
 import { MiningStatusE } from '@dodoex/api';
-import {
-  Box,
-  ButtonBase,
-  Tab,
-  Tabs,
-  TabsGroup,
-  useTheme,
-} from '@dodoex/components';
+import { Box, ButtonBase, Tabs, TabsGroup, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { Dispatch, Fragment, SetStateAction, useMemo, useState } from 'react';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
-import TokenLogoSimple from '../../../components/TokenLogoSimple';
+import TokenLogo from '../../../components/TokenLogo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { formatShortNumber, openEtherscanPage } from '../../../utils';
 import { APRSection } from '../MiningList/components/APRSection';
@@ -281,12 +274,14 @@ export function MiningInfo({
                 }}
               >
                 {type === 'vdodo' ? null : (
-                  <TokenLogoSimple
+                  <TokenLogo
                     address={rt.address}
-                    marginRight={0}
                     width={22}
                     height={22}
-                    url={''}
+                    chainId={chainId}
+                    url={undefined}
+                    noShowChain
+                    marginRight={0}
                   />
                 )}
 

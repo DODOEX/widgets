@@ -56,6 +56,10 @@ export function UnstakeButton({
     );
   }
 
+  const isMutating =
+    depositOrWithdrawOrClaimMutation.isPending &&
+    depositOrWithdrawOrClaimMutation.variables?.metadata?.operateType ===
+      'unstake';
   return (
     <>
       {version === '2' && <ClaimTips />}
@@ -63,7 +67,7 @@ export function UnstakeButton({
       <NeedConnectButton includeButton fullWidth chainId={chainId}>
         <Button
           fullWidth
-          isLoading={depositOrWithdrawOrClaimMutation.isPending}
+          isLoading={isMutating}
           onClick={() => {
             const withdrawAllLp = lpTokenAccountStakedBalance.lte(amount);
             depositOrWithdrawOrClaimMutation.mutate({
@@ -72,14 +76,13 @@ export function UnstakeButton({
               submitCallback: () => {
                 // setOperateModalVisible(false);
               },
+              metadata: {
+                operateType: 'unstake',
+              },
             });
           }}
         >
-          {depositOrWithdrawOrClaimMutation.isPending ? (
-            <Trans>Unstaking</Trans>
-          ) : (
-            <Trans>Unstake</Trans>
-          )}
+          {isMutating ? <Trans>Unstaking</Trans> : <Trans>Unstake</Trans>}
         </Button>
       </NeedConnectButton>
     </>

@@ -455,7 +455,7 @@ export function Swap({
         </Box>
       </Box>
     );
-  }, [displayPriceImpact]);
+  }, [displayPriceImpact, theme.palette.error.main]);
 
   const tokenPairPrice = useMemo(() => {
     return (

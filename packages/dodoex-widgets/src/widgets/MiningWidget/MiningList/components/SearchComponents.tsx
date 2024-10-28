@@ -5,7 +5,7 @@ import { DebouncedFunc } from 'lodash';
 import { Dispatch, SetStateAction, useState } from 'react';
 import SelectChain from '../../../../components/SelectChain';
 import { TokenPickerDialog } from '../../../../components/Swap/components/TokenCard/TokenPickerDialog';
-import TokenLogoSimple from '../../../../components/TokenLogoSimple';
+import TokenLogo from '../../../../components/TokenLogo';
 import { useUserOptions } from '../../../../components/UserOptionsProvider';
 import { TokenInfo } from '../../../../hooks/Token/type';
 import { MiningTabType, MiningTopTabType } from '../../types';
@@ -146,11 +146,14 @@ export const SearchComponents = ({
                 backgroundColor: theme.palette.background.tag,
               }}
             >
-              <TokenLogoSimple
+              <TokenLogo
                 address={selectedToken.address}
-                url={selectedToken.logoURI ?? ''}
                 width={20}
                 height={20}
+                chainId={selectedToken.chainId}
+                url={selectedToken.logoURI}
+                noShowChain
+                marginRight={0}
               />
               <Box
                 component={ButtonBase}

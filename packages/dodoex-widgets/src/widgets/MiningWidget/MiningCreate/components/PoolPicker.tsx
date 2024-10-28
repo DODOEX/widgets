@@ -15,7 +15,7 @@ import { t } from '@lingui/macro';
 import { useEffect, useMemo, useState } from 'react';
 import Dialog from '../../../../components/Dialog';
 import { TokenPickerDialog } from '../../../../components/Swap/components/TokenCard/TokenPickerDialog';
-import TokenLogoSimple from '../../../../components/TokenLogoSimple';
+import TokenLogo from '../../../../components/TokenLogo';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { TokenInfo } from '../../../../hooks/Token';
 import { useFetchFiatPriceBatch } from '../../../../hooks/useFetchFiatPriceBatch';
@@ -380,12 +380,14 @@ export default function PoolPicker({
                       lineHeight: 1,
                     }}
                   >
-                    <TokenLogoSimple
+                    <TokenLogo
                       address={baseToken.address}
-                      marginRight={8}
                       width={24}
                       height={24}
-                      url={''}
+                      chainId={baseToken.chainId}
+                      url={baseToken.logoURI}
+                      noShowChain
+                      marginRight={8}
                     />
                     {baseToken.symbol}
                   </Box>
@@ -437,12 +439,14 @@ export default function PoolPicker({
                       lineHeight: 1,
                     }}
                   >
-                    <TokenLogoSimple
+                    <TokenLogo
                       address={quoteToken.address}
-                      marginRight={8}
                       width={24}
                       height={24}
-                      url={''}
+                      chainId={quoteToken.chainId}
+                      url={quoteToken.logoURI}
+                      noShowChain
+                      marginRight={8}
                     />
                     {quoteToken.symbol}
                   </Box>
