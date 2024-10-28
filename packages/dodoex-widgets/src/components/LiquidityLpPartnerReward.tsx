@@ -76,8 +76,7 @@ export default function LiquidityLpPartnerReward({
           rewardData.push({
             partner: {
               name: partnerInfo?.partner ?? '',
-              // logo: partnerInfo?.logo ?? '',
-              logo: 'https://unagiswap.xyz/favicon.svg',
+              logo: partnerInfo?.logo ?? '',
               introduction: partnerInfo?.introduction ?? '',
               link: partnerInfo?.link ?? '',
               extra: partnerInfo?.extra ?? {},
