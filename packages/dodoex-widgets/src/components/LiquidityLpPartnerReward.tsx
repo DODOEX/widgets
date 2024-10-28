@@ -172,7 +172,7 @@ export default function LiquidityLpPartnerReward({
                 borderRadius: '50%',
               }}
             />
-            {!hideName && !!item.partner.name && (
+            {!hideName && !!item.reward && (
               <Box
                 sx={{
                   fontSize: '12px',
@@ -180,7 +180,7 @@ export default function LiquidityLpPartnerReward({
                   fontWeight: 600,
                 }}
               >
-                {item.partner.name}
+                {item.reward}
               </Box>
             )}
           </ButtonBase>
