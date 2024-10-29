@@ -1,6 +1,6 @@
 import { basicTokenMap, ChainId, contractConfig } from '@dodoex/api';
 import { t } from '@lingui/macro';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import React, { useCallback } from 'react';
 import { tokenApi } from '../../constants/api';
@@ -38,90 +38,22 @@ export const useGetTokenStatus = ({
     [chainId],
   );
 
-  const getApprovalState = useCallback(
-    (
-      token: Pick<TokenInfo, 'address' | 'decimals' | 'symbol'> | null,
-      value: string | number | BigNumber,
-      balance: BigNumber | null,
-      allowance: BigNumber | null,
-    ) => {
-      if (!token) {
-        return ApprovalState.Loading;
-      }
-
-      const isApproving = runningRequests.some(
-        (k) =>
-          k.spec?.opcode === OpCode.Approval &&
-          k.spec?.token.address === token?.address &&
-          k.spec?.contract === contract,
-      );
-
-      const parsed = new BigNumber(value ?? 0);
-      if (!account) return ApprovalState.Unchecked;
-      if (!balance || parsed.minus(offset ?? 0).gt(balance))
-        return ApprovalState.Unchecked;
-
-      if (parsed.isZero()) return ApprovalState.Unchecked;
-      const isEth = !!token && token.address === basicTokenAddress;
-      if (isEth) return ApprovalState.Sufficient;
-      if (isApproving) return ApprovalState.Approving;
-      if (!allowance) {
-        return ApprovalState.Loading;
-      }
-      if (parsed.minus(offset ?? 0).gt(allowance))
-        return ApprovalState.Insufficient;
-      return ApprovalState.Sufficient;
-    },
-    [account, basicTokenAddress, contract, offset, runningRequests],
-  );
-
-  const getPendingRest = useCallback(
-    (
-      token:
-        | Pick<TokenInfo, 'address' | 'decimals' | 'symbol'>
-        | null
-        | undefined,
-      allowance: BigNumber | null,
-    ) => {
-      const isUSDT =
-        token?.symbol === 'USDT' ||
-        token?.address.toLowerCase() ===
-          '0x6426e6017968377529487E0ef0aA4E7759724e05'.toLowerCase();
-      return isUSDT && allowance !== null && allowance.gt(0);
-    },
-    [],
-  );
-
-  const getBalanceState = useCallback(
-    (
-      parsed: BigNumber,
-      token:
-        | Pick<TokenInfo, 'address' | 'decimals' | 'symbol'>
-        | null
-        | undefined,
-      balance: BigNumber | null,
-    ) => {
-      // if ((!checked && !overrideBalance) || !account) return BalanceState.Unchecked;
-      if (!account) return BalanceState.Unchecked;
-      if (!balance) {
-        return BalanceState.Loading;
-      }
-      if (parsed.minus(offset ?? 0).gt(balance))
-        return BalanceState.Insufficient;
-      return BalanceState.Sufficient;
-    },
-    [account, offset],
-  );
-
-  const submitApprove = useCallback(
-    async (
-      token: TokenInfo | null,
-      isReset?: boolean,
-      submittedBack?: () => void,
-      canceledCallback?: () => void,
-      successBack?: () => void,
-      failedCallback?: () => void,
-    ) => {
+  const submitApproveMutation = useMutation({
+    mutationFn: async ({
+      token,
+      isReset,
+      submittedBack,
+      canceledCallback,
+      successBack,
+      failedCallback,
+    }: {
+      token: TokenInfo | null;
+      isReset?: boolean;
+      submittedBack?: () => void;
+      canceledCallback?: () => void;
+      successBack?: () => void;
+      failedCallback?: () => void;
+    }) => {
       if (!contract || !account || !token) return;
       const tokenDisp = getTokenSymbolDisplay(token);
       const amt = isReset ? new BigNumber(0) : undefined;
@@ -172,7 +104,115 @@ export const useGetTokenStatus = ({
         refetchType: 'all',
       });
     },
-    [account, chainId, contract, queryClient, submission, updateBlockNumber],
+  });
+
+  const getApprovalState = useCallback(
+    (
+      token: Pick<TokenInfo, 'address' | 'decimals' | 'symbol'> | null,
+      value: string | number | BigNumber,
+      balance: BigNumber | null,
+      allowance: BigNumber | null,
+    ) => {
+      if (!token) {
+        return ApprovalState.Loading;
+      }
+
+      const isApproving = runningRequests.some(
+        (k) =>
+          k.spec?.opcode === OpCode.Approval &&
+          k.spec?.token.address === token?.address &&
+          k.spec?.contract === contract,
+      );
+      const isApproveMutationPending =
+        submitApproveMutation.variables?.token?.address === token?.address &&
+        submitApproveMutation.isPending;
+
+      const parsed = new BigNumber(value ?? 0);
+      if (!account) return ApprovalState.Unchecked;
+      if (!balance || parsed.minus(offset ?? 0).gt(balance))
+        return ApprovalState.Unchecked;
+
+      if (parsed.isZero()) return ApprovalState.Unchecked;
+      const isEth = !!token && token.address === basicTokenAddress;
+      if (isEth) return ApprovalState.Sufficient;
+      if (isApproving || isApproveMutationPending) {
+        return ApprovalState.Approving;
+      }
+      if (!allowance) {
+        return ApprovalState.Loading;
+      }
+      if (parsed.minus(offset ?? 0).gt(allowance))
+        return ApprovalState.Insufficient;
+      return ApprovalState.Sufficient;
+    },
+    [
+      account,
+      basicTokenAddress,
+      contract,
+      offset,
+      runningRequests,
+      submitApproveMutation.isPending,
+      submitApproveMutation.variables?.token?.address,
+    ],
+  );
+
+  const getPendingRest = useCallback(
+    (
+      token:
+        | Pick<TokenInfo, 'address' | 'decimals' | 'symbol'>
+        | null
+        | undefined,
+      allowance: BigNumber | null,
+    ) => {
+      const isUSDT =
+        token?.symbol === 'USDT' ||
+        token?.address.toLowerCase() ===
+          '0x6426e6017968377529487E0ef0aA4E7759724e05'.toLowerCase();
+      return isUSDT && allowance !== null && allowance.gt(0);
+    },
+    [],
+  );
+
+  const getBalanceState = useCallback(
+    (
+      parsed: BigNumber,
+      token:
+        | Pick<TokenInfo, 'address' | 'decimals' | 'symbol'>
+        | null
+        | undefined,
+      balance: BigNumber | null,
+    ) => {
+      // if ((!checked && !overrideBalance) || !account) return BalanceState.Unchecked;
+      if (!account) return BalanceState.Unchecked;
+      if (!balance) {
+        return BalanceState.Loading;
+      }
+      if (parsed.minus(offset ?? 0).gt(balance))
+        return BalanceState.Insufficient;
+      return BalanceState.Sufficient;
+    },
+    [account, offset],
+  );
+
+  const submitApprove = useCallback(
+    async (
+      token: TokenInfo | null,
+      isReset?: boolean,
+      submittedBack?: () => void,
+      canceledCallback?: () => void,
+      successBack?: () => void,
+      failedCallback?: () => void,
+    ) => {
+      submitApproveMutation.mutate({
+        token,
+        isReset,
+        submittedBack,
+        canceledCallback,
+        successBack,
+        failedCallback,
+      });
+    },
+    [submitApproveMutation],
   );
 
   const getMaxBalance = useCallback(

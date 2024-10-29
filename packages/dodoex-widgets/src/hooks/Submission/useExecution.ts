@@ -135,6 +135,7 @@ export default function useExecution({
               }
             } catch (error) {
               console.debug(error);
+              throw error;
             }
           }
 
@@ -290,15 +291,16 @@ export default function useExecution({
     [account, chainId, requests],
   );
 
-  const ctxVal = useMemo(
+  const ctxVal = useMemo<ExecutionCtx>(
     () => ({
       execute: handler,
       requests,
       updateText,
       setShowing,
       waitingSubmit,
+      errorMessage,
     }),
-    [handler, requests, updateText, waitingSubmit, setShowing],
+    [handler, requests, updateText, waitingSubmit, errorMessage],
   );
 
   const closeShowing = useCallback(() => {

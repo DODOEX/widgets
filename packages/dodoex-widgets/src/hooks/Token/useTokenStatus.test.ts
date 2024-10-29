@@ -2,7 +2,7 @@ import { TokenInfo } from './type';
 import { renderHook } from '@testing-library/react-hooks';
 import BigNumber from 'bignumber.js';
 import { useTokenStatus } from './useTokenStatus';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 jest.mock('@tanstack/react-query', () => ({
   useQuery: jest.fn(() => ({
@@ -11,6 +11,10 @@ jest.mock('@tanstack/react-query', () => ({
   })),
   useQueryClient: jest.fn(() => ({
     refetchQueries: jest.fn(),
+  })),
+  useMutation: jest.fn(() => ({
+    mutate: jest.fn(),
+    isPending: false,
   })),
 }));
 

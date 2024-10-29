@@ -100,6 +100,7 @@ export type ExecutionCtx = {
   updateText: (upd: TextUpdater) => void;
   setShowing?: React.Dispatch<React.SetStateAction<Showing | null>>;
   waitingSubmit: boolean;
+  errorMessage: string | null;
 };
 
 export enum WatchResult {

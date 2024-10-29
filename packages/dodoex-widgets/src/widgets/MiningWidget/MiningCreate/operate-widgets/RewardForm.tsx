@@ -4,10 +4,13 @@ import { t } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
+import { DateTimePickerInput } from '../../../../components/DateTimePickerInput';
 import { LoadingRotation } from '../../../../components/LoadingRotation';
 import { NumberInput } from '../../../../components/Swap/components/TokenCard/NumberInput';
 import { TokenPickerDialog } from '../../../../components/Swap/components/TokenCard/TokenPickerDialog';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
+import { useSubmission } from '../../../../hooks/Submission';
+import { ApprovalState } from '../../../../hooks/Token/type';
 import { useGetTokenStatus } from '../../../../hooks/Token/useGetTokenStatus';
 import { formatTokenAmountNumber } from '../../../../utils/formatter';
 import { getPreBlock } from '../../hooks/utils';
@@ -15,8 +18,6 @@ import { RewardTokenSelect } from '../components/RewardTokenSelect';
 import { Actions, RewardI, StateProps, Types } from '../hooks/reducers';
 import { RewardStatus } from '../types';
 import { computeDailyAmount, isValidRewardInfo } from '../utils';
-import { DateTimePickerInput } from '../../../../components/DateTimePickerInput';
-import { ApprovalState } from '../../../../hooks/Token/type';
 
 function RewardItem({
   index,
@@ -44,6 +45,7 @@ function RewardItem({
   setRewardPickerIndex: Dispatch<SetStateAction<number | undefined>>;
 }) {
   const theme = useTheme();
+  const submission = useSubmission();
 
   const [active, setActive] = useState(true);
 
@@ -62,14 +64,22 @@ function RewardItem({
     if (!reward.startTime || !reward.endTime) {
       return [undefined, undefined];
     }
-    const start = getPreBlock(
-      blockTime,
-      blockNumber,
-      reward.startTime,
-    ).toNumber();
-    const end = getPreBlock(blockTime, blockNumber, reward.endTime).toNumber();
+    const start = getPreBlock(blockTime, blockNumber, reward.startTime)
+      .plus(10)
+      .toNumber();
+    const end = getPreBlock(blockTime, blockNumber, reward.endTime)
+      .plus(10)
+      .toNumber();
     return [start, end];
   }, [reward.startTime, reward.endTime, blockNumber, blockTime]);
+
+  const isStartBlockError = useMemo(() => {
+    return (
+      submission.errorMessage?.startsWith(
+        'Unexpected issue with estimating the gas',
+      ) ?? false
+    );
+  }, [submission.errorMessage]);
 
   return (
     <Box
@@ -320,6 +330,18 @@ function RewardItem({
                   }}
                 >
                   *{t`The start time cannot be in the past`}
+                </Box>
+              )}
+              {isStartBlockError && (
+                <Box
+                  className="input_error-text"
+                  sx={{
+                    typography: 'h6',
+                    color: 'error.main',
+                    mt: -4,
+                  }}
+                >
+                  *{t`The start time is too soon, please set a later time`}
                 </Box>
               )}
             </Box>

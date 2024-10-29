@@ -65,11 +65,11 @@ msgid "Traders sold ‪{0}‬ {1}, price in the pool increased to {2}"
 msgstr "Traders sold ‪{0}‬ {1}, price in the pool increased to {2}"
 
 #: src/components/Swap/components/TokenCard/BalanceText.tsx:52
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:238
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:248
 msgid "Balance:"
 msgstr "Balance:"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:322
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:332
 msgid "The start time cannot be in the past"
 msgstr "The start time cannot be in the past"
 
@@ -96,7 +96,7 @@ msgid "Create Liquidity Mining"
 msgstr "Create Liquidity Mining"
 
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:159
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:296
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:306
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:229
 msgid "Start Time"
 msgstr "Start Time"
@@ -125,7 +125,7 @@ msgstr "Deposit Ratio"
 msgid "Ended"
 msgstr "Ended"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:367
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:389
 msgid "The end time must be later than the start time."
 msgstr "The end time must be later than the start time."
 
@@ -166,7 +166,7 @@ msgstr "Search by address"
 msgid "Asset ratio within the pool"
 msgstr "Asset ratio within the pool"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:108
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:118
 #: src/widgets/MiningWidget/MiningList/operate-area/AssociatedMine.tsx:155
 #: src/widgets/MiningWidget/MiningList/operate-area/RewardListCard.tsx:49
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:315
@@ -208,7 +208,7 @@ msgstr "Creation Time"
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "The current network is inconsistent with the wallet - please switch in wallet"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:572
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:594
 msgid "*Depending on the block time, the real amount of Daily Rewards may deviate slightly."
 msgstr "*Depending on the block time, the real amount of Daily Rewards may deviate slightly."
 
@@ -216,7 +216,7 @@ msgstr "*Depending on the block time, the real amount of Daily Rewards may devia
 msgid "Since this pool uses the PMM algorithm, which is different from the normal AMM pool mechanism, the initial price calculation is also different from AMM."
 msgstr "Since this pool uses the PMM algorithm, which is different from the normal AMM pool mechanism, the initial price calculation is also different from AMM."
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:423
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:445
 msgid "Expected to start at block {0} and end at block {1}. There may be slight differences between actual and expected block numbers."
 msgstr "Expected to start at block {0} and end at block {1}. There may be slight differences between actual and expected block numbers."
 
@@ -712,7 +712,7 @@ msgstr "Select Cross Chain"
 msgid "Daily rewards before adjustment"
 msgstr "Daily rewards before adjustment"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:571
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:593
 msgid "*Deflationary tokens are not supported"
 msgstr "*Deflationary tokens are not supported"
 
@@ -863,8 +863,8 @@ msgstr "If there are no participants before the end, the rewards cannot be taken
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
-#: src/hooks/Token/useGetTokenStatus.ts:128
-#: src/hooks/Token/useTokenStatus.ts:128
+#: src/hooks/Token/useGetTokenStatus.ts:60
+#: src/hooks/Token/useTokenStatus.ts:133
 msgid "Reset"
 msgstr "Reset"
 
@@ -1210,8 +1210,8 @@ msgid "On"
 msgstr "On"
 
 #: src/components/Swap/index.tsx:723
-#: src/hooks/Token/useGetTokenStatus.ts:128
-#: src/hooks/Token/useTokenStatus.ts:128
+#: src/hooks/Token/useGetTokenStatus.ts:60
+#: src/hooks/Token/useTokenStatus.ts:133
 msgid "Approve"
 msgstr "Approve"
 
@@ -1222,6 +1222,10 @@ msgstr "Share"
 #: src/components/Swap/components/ReviewDialog.tsx:303
 msgid "Additional routing fees set by the Widget user"
 msgstr "Additional routing fees set by the Widget user"
+
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:344
+msgid "The start time is too soon, please set a later time"
+msgstr "The start time is too soon, please set a later time"
 
 #: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:61
 msgid "Current liquidity pool token price"
@@ -1300,7 +1304,7 @@ msgstr "Dynamic"
 msgid "SEE HOW IT WORKS"
 msgstr "SEE HOW IT WORKS"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:448
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:470
 msgid "Delete"
 msgstr "Delete"
 
@@ -1530,7 +1534,7 @@ msgid "Something went wrong."
 msgstr "Something went wrong."
 
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:178
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:396
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:418
 msgid "Daily Rewards"
 msgstr "Daily Rewards"
 
@@ -1580,7 +1584,7 @@ msgstr "Send to:"
 msgid "My Staked"
 msgstr "My Staked"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:456
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:478
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:205
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:247
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:487
@@ -1701,7 +1705,7 @@ msgid "Buy"
 msgstr "Buy"
 
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:167
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:207
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:217
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:288
 msgid "Total Rewards"
 msgstr "Total Rewards"
@@ -1712,7 +1716,7 @@ msgid "Connect to a wallet"
 msgstr "Connect to a wallet"
 
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:163
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:341
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:363
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:246
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:274
 msgid "End Time"
@@ -1742,7 +1746,7 @@ msgstr "Select Platform"
 msgid "SELECT TOKEN"
 msgstr "SELECT TOKEN"
 
-#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:557
+#: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:579
 msgid "Add Token"
 msgstr "Add Token"
 

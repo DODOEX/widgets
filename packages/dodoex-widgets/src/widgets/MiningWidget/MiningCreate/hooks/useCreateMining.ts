@@ -108,8 +108,8 @@ export const useCreateMining = ({
                 .toString(),
               token.decimals,
             ).toString(),
-            startBlock: startBlock.toNumber(),
-            endBlock: endBlock.toNumber(),
+            startBlock: startBlock.plus(10).toNumber(),
+            endBlock: endBlock.plus(10).toNumber(),
           };
         })
         .filter((r) => r !== null) as Array<RewardTokenT>;

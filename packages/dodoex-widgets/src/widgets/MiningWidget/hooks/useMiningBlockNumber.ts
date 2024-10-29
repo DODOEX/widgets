@@ -12,12 +12,16 @@ export function useMiningBlockNumber(
   otherChainBlockNumber: BigNumber | undefined,
 ) {
   const { chainId: currentChainId } = useWeb3React();
+  const currentChainBlockNumber = useSelector(getLatestBlockNumber);
 
   const { updateBlockNumber } = useFetchBlockNumber();
+
   useEffect(() => {
-    updateBlockNumber();
+    const inter = setInterval(() => {
+      updateBlockNumber();
+    }, 12000);
+    return () => clearInterval(inter);
   }, [updateBlockNumber]);
-  const currentChainBlockNumber = useSelector(getLatestBlockNumber);
 
   const [blockNumber, blockTime] = useMemo(() => {
     const b = blockTimeMap[chainId];

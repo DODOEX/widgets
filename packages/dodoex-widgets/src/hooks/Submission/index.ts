@@ -12,6 +12,7 @@ export const ExecutionContext = createContext<ExecutionCtx>({
     /* Nothing */
   },
   waitingSubmit: false,
+  errorMessage: null,
 });
 
 /**
