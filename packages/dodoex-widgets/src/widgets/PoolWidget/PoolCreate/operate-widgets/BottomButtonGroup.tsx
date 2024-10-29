@@ -347,12 +347,14 @@ export function BottomButtonGroup({
         },
       );
       if (succ === ExecutionResult.Submitted) {
-        useRouterStore.getState().push({
-          type: PageType.Pool,
-          params: {
-            tab: PoolTab.myCreated,
-          },
-        });
+        setTimeout(() => {
+          useRouterStore.getState().push({
+            type: PageType.Pool,
+            params: {
+              tab: PoolTab.myCreated,
+            },
+          });
+        }, 100);
       }
     },
   });

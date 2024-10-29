@@ -154,13 +154,12 @@ export default function LiquidityLpPartnerReward({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: 4.8,
-              p: theme.spacing(0, 4.8),
-              height: 21.68,
-              borderRadius: 4.8,
+              gap: 4,
+              p: theme.spacing(0, 4),
+              height: 20,
+              borderRadius: 4,
               background: item.partner.background,
               color: item.partner.color,
-              transform: 'scale(0.83)',
               whiteSpace: 'nowrap',
             }}
           >
@@ -169,15 +168,15 @@ export default function LiquidityLpPartnerReward({
               src={item.partner.logo}
               alt={item.partner.name}
               sx={{
-                width: 14.45,
-                height: 14.45,
+                width: 14,
+                height: 14,
                 borderRadius: '50%',
               }}
             />
             {!hideName && !!item.reward && (
               <Box
                 sx={{
-                  fontSize: '12px',
+                  fontSize: '10px',
                   fontWeight: 600,
                 }}
               >

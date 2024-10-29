@@ -80,7 +80,7 @@ function CardList({
               px: 20,
               pt: 20,
               pb: 12,
-              backgroundColor: 'background.paperContrast',
+              backgroundColor: 'background.paper',
               borderRadius: 16,
             }}
             onClick={() => {

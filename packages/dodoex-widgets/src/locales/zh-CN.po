@@ -1326,7 +1326,7 @@ msgstr ""
 #: src/components/SwitchChainDialog/index.tsx:128
 #: src/components/WidgetConfirm.tsx:112
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:238
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:403
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:405
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:208
 msgid "Cancel"
 msgstr "取消"
@@ -1487,7 +1487,7 @@ msgid "Disclaimer"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:253
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:418
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:420
 msgid "Back"
 msgstr ""
 
