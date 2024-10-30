@@ -110,42 +110,44 @@ export default function LiquidityLpPartnerReward({
           title={
             <Box
               sx={{
-                width: 240,
+                maxWidth: 240,
                 whiteSpace: 'pre-wrap',
               }}
             >
               {item.partner.introduction}
-              <Box
-                component="a"
-                target="_blank"
-                href={item.partner.link}
-                rel="noopener noreferrer"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 4,
-                  color: 'primary.main',
-                  '&:hover': {
-                    opacity: 0.5,
-                  },
-                }}
-              >
-                <Trans>Learn more</Trans>{' '}
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+              {!!item.partner.link && (
+                <Box
+                  component="a"
+                  target="_blank"
+                  href={item.partner.link}
+                  rel="noopener noreferrer"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    color: 'primary.main',
+                    '&:hover': {
+                      opacity: 0.5,
+                    },
+                  }}
                 >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M2.91667 2.91667V11.0833H11.0833V7H12.25V11.0833C12.25 11.725 11.725 12.25 11.0833 12.25H2.91667C2.26917 12.25 1.75 11.725 1.75 11.0833V2.91667C1.75 2.275 2.26917 1.75 2.91667 1.75H7V2.91667H2.91667ZM8.16667 2.91667V1.75H12.25V5.83333H11.0833V3.73917L5.34917 9.47333L4.52667 8.65083L10.2608 2.91667H8.16667Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </Box>
+                  <Trans>Learn more</Trans>{' '}
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M2.91667 2.91667V11.0833H11.0833V7H12.25V11.0833C12.25 11.725 11.725 12.25 11.0833 12.25H2.91667C2.26917 12.25 1.75 11.725 1.75 11.0833V2.91667C1.75 2.275 2.26917 1.75 2.91667 1.75H7V2.91667H2.91667ZM8.16667 2.91667V1.75H12.25V5.83333H11.0833V3.73917L5.34917 9.47333L4.52667 8.65083L10.2608 2.91667H8.16667Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </Box>
+              )}
             </Box>
           }
         >

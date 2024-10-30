@@ -1966,6 +1966,6 @@ msgstr "余额不足"
 msgid "Private"
 msgstr ""
 
-#: src/components/LiquidityLpPartnerReward.tsx:133
+#: src/components/LiquidityLpPartnerReward.tsx:134
 msgid "Learn more"
 msgstr ""
