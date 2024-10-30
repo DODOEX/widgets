@@ -468,7 +468,7 @@ msgstr ""
 msgid "Results in a relatively fixed price."
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:196
+#: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:205
 msgid "Swap Rate"
 msgstr ""
 
@@ -493,7 +493,7 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:210
+#: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:219
 msgid "The area of the chart indicates the buy/sell volume of {baseSymbol} that can be carried by the market when the current price changes to the hover price."
 msgstr ""
 
