@@ -12,6 +12,7 @@ import { StateProps } from '../reducer';
 import { Version } from '../types';
 import { computeInitPriceText } from '../utils';
 import Dialog from '../../../../components/Dialog';
+import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 
 function Item({
   label,
@@ -65,6 +66,7 @@ export default function ConfirmInfoDialog({
 }) {
   const { chainId } = useWalletInfo();
   const { versionMap } = useVersionList();
+  const { isMobile } = useWidgetDevice();
 
   const { title, initPriceLabel } = versionMap[state.selectedVersion];
   const { midPrice } = useCreatePmm({
@@ -93,7 +95,7 @@ export default function ConfirmInfoDialog({
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          width: 420,
+          width: isMobile ? undefined : 420,
         }}
       >
         <Box

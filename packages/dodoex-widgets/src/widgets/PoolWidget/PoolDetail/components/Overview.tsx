@@ -1,14 +1,16 @@
 import { Box, Skeleton, useTheme } from '@dodoex/components';
-import { t } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { formatShortNumber } from '../../../../utils';
 import { usePoolDetail } from '../../hooks/usePoolDetail';
 import { usePoolDashboard } from '../hooks/usePoolDashboard';
+import QuestionTooltip from '../../../../components/Tooltip/QuestionTooltip';
 
 interface OverviewItem {
   description: string;
   text: string | React.ReactNode;
+  question?: string | React.ReactNode;
 }
 
 function OverviewSkeleton() {
@@ -71,10 +73,52 @@ export default function Overview({
       description: t`Fees (24H)`,
       text: dashboardQuery.isLoading ? (
         <OverviewSkeleton />
-      ) : pairsStat?.fee === null || pairsStat?.fee === undefined ? (
+      ) : !pairsStat?.feeNear24h === null && !pairsStat?.mtFeeNear24h ? (
         '-'
       ) : (
-        `$${formatShortNumber(new BigNumber(pairsStat?.fee))}`
+        `$${formatShortNumber(
+          new BigNumber(pairsStat?.feeNear24h ?? 0).plus(
+            pairsStat?.mtFeeNear24h ?? 0,
+          ),
+        )}`
+      ),
+      question: dashboardQuery.isLoading ? undefined : (
+        <Box
+          sx={{
+            width: 198,
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Trans>LP Fee</Trans>
+            <Box>
+              {!pairsStat?.feeNear24h
+                ? '-'
+                : `$${formatShortNumber(new BigNumber(pairsStat?.feeNear24h))}`}
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Trans>MT Fee</Trans>
+            <Box>
+              {!pairsStat?.mtFeeNear24h
+                ? '-'
+                : `$${formatShortNumber(
+                    new BigNumber(pairsStat?.mtFeeNear24h),
+                  )}`}
+            </Box>
+          </Box>
+        </Box>
       ),
     },
   ];
@@ -114,8 +158,17 @@ export default function Overview({
           >
             {item.text}
           </Box>
-          <Box sx={{ typography: 'h6', color: 'text.secondary' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              typography: 'h6',
+              color: 'text.secondary',
+              gap: 4,
+            }}
+          >
             {item.description}
+            {item.question ? <QuestionTooltip title={item.question} /> : ''}
           </Box>
         </Box>
       ))}

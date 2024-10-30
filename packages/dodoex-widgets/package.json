@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.0-taiko.41",
+  "version": "3.0.0-taiko.42",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/api": ">=3.0.0-taiko.14",
+    "@dodoex/api": ">=3.0.0-taiko.15",
     "@dodoex/components": ">=3.0.0-taiko.6",
     "@dodoex/icons": "^2.0.1",
     "@emotion/react": "^11.10.0",

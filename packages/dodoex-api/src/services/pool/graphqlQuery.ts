@@ -247,6 +247,7 @@ export const poolGraphqlQuery = {
         fee
         volume
         totalFee
+        totalMtFee
         totalVolume
         tvl
         turnover
@@ -260,6 +261,8 @@ export const poolGraphqlQuery = {
         price
         baseFee
         quoteFee
+        baseMtFee
+        quoteMtFee
         pair
         poolType
         baseVolumeCumulative
@@ -274,6 +277,8 @@ export const poolGraphqlQuery = {
         txesNear24h
         txUsers
         txUserNear24h
+        mtFeeNear24h
+        feeNear24h
       }
     }
   `),

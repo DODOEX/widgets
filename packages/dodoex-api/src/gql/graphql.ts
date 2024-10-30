@@ -23168,6 +23168,7 @@ export type FetchPoolDashboardQuery = {
     fee?: string | null;
     volume?: string | null;
     totalFee?: string | null;
+    totalMtFee?: string | null;
     totalVolume?: string | null;
     tvl?: string | null;
     turnover?: string | null;
@@ -23181,6 +23182,8 @@ export type FetchPoolDashboardQuery = {
     price?: string | null;
     baseFee?: string | null;
     quoteFee?: string | null;
+    baseMtFee?: string | null;
+    quoteMtFee?: string | null;
     pair?: string | null;
     poolType?: string | null;
     baseVolumeCumulative?: string | null;
@@ -23195,6 +23198,8 @@ export type FetchPoolDashboardQuery = {
     txesNear24h?: number | null;
     txUsers?: number | null;
     txUserNear24h?: number | null;
+    mtFeeNear24h?: string | null;
+    feeNear24h?: string | null;
   } | null;
 };
 
@@ -23952,6 +23957,7 @@ export const FetchPoolDashboardDocument = new TypedDocumentString(`
     fee
     volume
     totalFee
+    totalMtFee
     totalVolume
     tvl
     turnover
@@ -23965,6 +23971,8 @@ export const FetchPoolDashboardDocument = new TypedDocumentString(`
     price
     baseFee
     quoteFee
+    baseMtFee
+    quoteMtFee
     pair
     poolType
     baseVolumeCumulative
@@ -23979,6 +23987,8 @@ export const FetchPoolDashboardDocument = new TypedDocumentString(`
     txesNear24h
     txUsers
     txUserNear24h
+    mtFeeNear24h
+    feeNear24h
   }
 }
     `) as unknown as TypedDocumentString<
