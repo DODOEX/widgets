@@ -30,8 +30,9 @@ export default function StatBarChart({
 }) {
   const theme = useTheme();
   const chartParentRef = React.useRef<HTMLDivElement>(null);
-  const [referenceLineX, setReferenceLineX] =
-    React.useState<number | null>(null);
+  const [referenceLineX, setReferenceLineX] = React.useState<number | null>(
+    null,
+  );
 
   const [chartWidth, setChartWidth] = React.useState(0);
   React.useEffect(() => {
@@ -61,7 +62,11 @@ export default function StatBarChart({
     data.forEach((d) => {
       if (d[masterKey] > max) max = d[masterKey];
     });
-    ticksY = [0, Math.ceil(max / 3), Math.ceil((max / 3) * 2), max];
+    if (max) {
+      ticksY = [0, Math.ceil(max / 3), Math.ceil((max / 3) * 2), max];
+    } else {
+      ticksY = [0];
+    }
   }
   let maxLen = 0;
   ticksY.forEach((num) => {

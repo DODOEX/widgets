@@ -23151,11 +23151,11 @@ export type FetchPoolDayDataQuery = {
   dashboard_pairs_day_data?: Array<{
     timestamp?: number | null;
     date?: string | null;
-    volume?: string | null;
-    fee?: string | null;
-    tvl?: string | null;
+    volumeUsd?: string | null;
+    feeUsd?: string | null;
+    mtFeeUsd?: string | null;
+    tvlUsd?: string | null;
     addresses?: string | null;
-    txes?: string | null;
   } | null> | null;
 };
 
@@ -23940,11 +23940,11 @@ export const FetchPoolDayDataDocument = new TypedDocumentString(`
   dashboard_pairs_day_data(where: $where) {
     timestamp
     date
-    volume
-    fee
-    tvl
+    volumeUsd
+    feeUsd
+    mtFeeUsd
+    tvlUsd
     addresses
-    txes
   }
 }
     `) as unknown as TypedDocumentString<

@@ -1,14 +1,19 @@
 import { Box, BoxProps, useTheme } from '@dodoex/components';
 import { useWidgetDevice } from '../hooks/style/useWidgetDevice';
+import React from 'react';
 
 export const WIDGET_MODULE_CLASS_NAME = 'widget-module-container';
 
-export default function WidgetContainer({ sx, ...props }: BoxProps) {
+const WidgetContainer = React.forwardRef(function WidgetContainer(
+  { sx, ...props }: BoxProps,
+  ref: React.ForwardedRef<HTMLDivElement>,
+) {
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
   return (
     <Box
       className={WIDGET_MODULE_CLASS_NAME}
+      ref={ref}
       sx={{
         flex: 1,
         overflowY: 'auto',
@@ -29,4 +34,6 @@ export default function WidgetContainer({ sx, ...props }: BoxProps) {
       {...props}
     />
   );
-}
+});
+
+export default WidgetContainer;

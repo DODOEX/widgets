@@ -233,11 +233,11 @@ export const poolGraphqlQuery = {
       dashboard_pairs_day_data(where: $where) {
         timestamp
         date
-        volume
-        fee
-        tvl
+        volumeUsd
+        feeUsd
+        mtFeeUsd
+        tvlUsd
         addresses
-        txes
       }
     }
   `),

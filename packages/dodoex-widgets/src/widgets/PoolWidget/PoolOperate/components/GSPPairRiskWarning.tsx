@@ -7,6 +7,7 @@ export const GSPPairRiskWarning = () => {
   return (
     <Tooltip
       placement="top-end"
+      leaveDelay={100}
       title={
         <Box
           sx={{

@@ -37,7 +37,6 @@ import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import TokenLogo from '../../../components/TokenLogo';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import LiquidityTable from './components/LiquidityTable';
-import SkeletonTable from './components/SkeletonTable';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { CardStatus } from '../../../components/CardWidgets';

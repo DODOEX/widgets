@@ -1,4 +1,4 @@
-import { Box, ButtonBase, Skeleton, useTheme } from '@dodoex/components';
+import { Box, ButtonBase, useTheme } from '@dodoex/components';
 import { Switch, ArrowRight } from '@dodoex/icons';
 import { useQuery } from '@tanstack/react-query';
 import { useWeb3React } from '@web3-react/core';
@@ -16,7 +16,7 @@ import { poolApi } from '../../../utils';
 import { AddressWithLinkAndCopy } from '../../../../../components/AddressWithLinkAndCopy';
 import TokenLogo from '../../../../../components/TokenLogo';
 import BigNumber from 'bignumber.js';
-import { FailedList } from '../../../../../components/List/FailedList';
+import { CardStatus } from '../../../../../components/CardWidgets';
 
 export function formatDateTimeStr(timestamp?: number, short?: boolean): string {
   if (!timestamp) {
@@ -122,224 +122,210 @@ export default function SwapsTable({
         flexDirection: 'column',
       }}
     >
-      {!!swapListQuery.error && (
-        <FailedList
-          refresh={swapListQuery.refetch}
-          sx={{
-            my: 40,
-          }}
-        />
-      )}
-      {!!swapListQuery.isLoading && (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: isMobile ? 12 : 16,
-            p: 20,
-          }}
-        >
-          <Skeleton height={30} />
-          <Skeleton height={30} />
-          <Skeleton height={30} />
-          <Skeleton height={30} />
-        </Box>
-      )}
-      {!!swapList?.length && (
-        <Box>
-          <Box
-            sx={{
-              overflowX: 'auto',
-              minHeight: 244,
-            }}
-          >
+      <CardStatus
+        refetch={swapListQuery.error ? swapListQuery.refetch : undefined}
+        loading={swapListQuery.isLoading}
+        empty={!swapList?.length}
+      >
+        {!!swapList?.length && (
+          <Box>
             <Box
-              component="table"
               sx={{
-                minWidth: '100%',
+                overflowX: 'auto',
+                minHeight: 244,
               }}
             >
               <Box
-                component="thead"
+                component="table"
                 sx={{
-                  position: 'sticky',
-                  top: 0,
+                  minWidth: '100%',
                 }}
               >
                 <Box
-                  component="tr"
+                  component="thead"
                   sx={{
-                    '& th': {
-                      p: 24,
-                      borderBottomWidth: 1,
-                      typography: 'body1',
-                      lineHeight: 1,
-                      textAlign: 'left',
-                      whiteSpace: 'nowrap',
-                    },
+                    position: 'sticky',
+                    top: 0,
                   }}
                 >
-                  <Box component="th">
-                    <Trans>Time</Trans>
-                  </Box>
-                  <Box component="th">
-                    <Trans>Trader</Trans>
-                  </Box>
-                  <Box component="th">
-                    <Trans>Paid</Trans>
-                  </Box>
-                  <Box component="th">
-                    <Trans>Received</Trans>
-                  </Box>
-                  <Box component="th">
-                    <Trans>Price</Trans>
-                  </Box>
                   <Box
-                    component="th"
+                    component="tr"
                     sx={{
-                      '&&': {
-                        textAlign: 'right',
+                      '& th': {
+                        p: 24,
+                        borderBottomWidth: 1,
+                        typography: 'body1',
+                        lineHeight: 1,
+                        textAlign: 'left',
+                        whiteSpace: 'nowrap',
                       },
                     }}
                   >
-                    <Trans>Fee Rate</Trans>
-                  </Box>
-                  <Box
-                    component="th"
-                    sx={{
-                      '&&': {
-                        textAlign: 'right',
-                      },
-                    }}
-                  >
-                    <Trans>Fee</Trans>
-                  </Box>
-                </Box>
-              </Box>
-              <Box component="tbody">
-                {swapList?.map((item) => {
-                  return (
+                    <Box component="th">
+                      <Trans>Time</Trans>
+                    </Box>
+                    <Box component="th">
+                      <Trans>Trader</Trans>
+                    </Box>
+                    <Box component="th">
+                      <Trans>Paid</Trans>
+                    </Box>
+                    <Box component="th">
+                      <Trans>Received</Trans>
+                    </Box>
+                    <Box component="th">
+                      <Trans>Price</Trans>
+                    </Box>
                     <Box
-                      component="tr"
-                      key={item.id}
+                      component="th"
                       sx={{
-                        '& td': {
-                          px: 24,
-                          py: 20,
-                          whiteSpace: 'nowrap',
+                        '&&': {
+                          textAlign: 'right',
                         },
                       }}
                     >
-                      <td>{formatDateTimeStr(item.timestamp * 1000)}</td>
-                      <td>
-                        <AddressWithLinkAndCopy address={item.from} truncate />
-                      </td>
-                      <td>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 8,
-                          }}
-                        >
-                          <TokenLogo
-                            address={item.fromToken.id}
-                            chainId={chainId}
-                            width={18}
-                            height={18}
-                          />
-                          {`${formatReadableNumber({
-                            input: item.amountIn,
-                            showDecimals: 2,
-                          })} ${item.fromToken.symbol}`}
-                        </Box>
-                      </td>
-                      <td>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 8,
-                          }}
-                        >
-                          <TokenLogo
-                            address={item.toToken.id}
-                            chainId={chainId}
-                            width={18}
-                            height={18}
-                          />
-                          {`${formatReadableNumber({
-                            input: item.amountOut,
-                            showDecimals: 2,
-                          })} ${item.toToken.symbol}`}
-                        </Box>
-                      </td>
-                      <td>
-                        <PriceWrapper
-                          amountOut={item.amountOut}
-                          amountIn={item.amountIn}
-                          fromTokenSymbol={item.fromToken.symbol}
-                          toTokenSymbol={item.toToken.symbol}
-                        />
-                      </td>
-                      <Box
-                        component="td"
-                        sx={{
+                      <Trans>Fee Rate</Trans>
+                    </Box>
+                    <Box
+                      component="th"
+                      sx={{
+                        '&&': {
                           textAlign: 'right',
+                        },
+                      }}
+                    >
+                      <Trans>Fee</Trans>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box component="tbody">
+                  {swapList?.map((item) => {
+                    return (
+                      <Box
+                        component="tr"
+                        key={item.id}
+                        sx={{
+                          '& td': {
+                            px: 24,
+                            py: 20,
+                            whiteSpace: 'nowrap',
+                          },
                         }}
                       >
-                        {formatPercentageNumber({
-                          input: totalFeeRate,
-                        })}
+                        <td>{formatDateTimeStr(item.timestamp * 1000)}</td>
+                        <td>
+                          <AddressWithLinkAndCopy
+                            address={item.from}
+                            truncate
+                          />
+                        </td>
+                        <td>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 8,
+                            }}
+                          >
+                            <TokenLogo
+                              address={item.fromToken.id}
+                              chainId={chainId}
+                              width={18}
+                              height={18}
+                            />
+                            {`${formatReadableNumber({
+                              input: item.amountIn,
+                              showDecimals: 2,
+                            })} ${item.fromToken.symbol}`}
+                          </Box>
+                        </td>
+                        <td>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 8,
+                            }}
+                          >
+                            <TokenLogo
+                              address={item.toToken.id}
+                              chainId={chainId}
+                              width={18}
+                              height={18}
+                            />
+                            {`${formatReadableNumber({
+                              input: item.amountOut,
+                              showDecimals: 2,
+                            })} ${item.toToken.symbol}`}
+                          </Box>
+                        </td>
+                        <td>
+                          <PriceWrapper
+                            amountOut={item.amountOut}
+                            amountIn={item.amountIn}
+                            fromTokenSymbol={item.fromToken.symbol}
+                            toTokenSymbol={item.toToken.symbol}
+                          />
+                        </td>
+                        <Box
+                          component="td"
+                          sx={{
+                            textAlign: 'right',
+                          }}
+                        >
+                          {formatPercentageNumber({
+                            input: totalFeeRate,
+                          })}
+                        </Box>
+                        <Box
+                          component="td"
+                          sx={{
+                            textAlign: 'right',
+                          }}
+                        >{`${formatReadableNumber({
+                          input: new BigNumber(item.amountOut).times(
+                            totalFeeRate ?? 0,
+                          ),
+                        })} ${item.toToken.symbol}`}</Box>
                       </Box>
-                      <Box
-                        component="td"
-                        sx={{
-                          textAlign: 'right',
-                        }}
-                      >{`${formatReadableNumber({
-                        input: new BigNumber(item.amountOut).times(
-                          totalFeeRate ?? 0,
-                        ),
-                      })} ${item.toToken.symbol}`}</Box>
-                    </Box>
-                  );
-                })}
+                    );
+                  })}
+                </Box>
               </Box>
             </Box>
-          </Box>
 
-          {/** load more */}
-          {hasMore && (
-            <ButtonBase
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 64,
-                width: '100%',
-                borderStyle: 'solid',
-                borderColor: 'border.main',
-                borderWidth: theme.spacing(1, 0, 0, 0),
-                typography: 'body2',
-                color: 'text.secondary',
-                '&:hover': {
-                  color: 'text.primary',
-                },
-              }}
-              onClick={() => setPage((prev) => prev + 1)}
-            >
-              <Trans>Load more</Trans>
-              <Box
-                component={ArrowRight}
+            {/** load more */}
+            {hasMore && (
+              <ButtonBase
                 sx={{
-                  transform: 'rotate(90deg)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 64,
+                  width: '100%',
+                  borderStyle: 'solid',
+                  borderColor: 'border.main',
+                  borderWidth: theme.spacing(1, 0, 0, 0),
+                  typography: 'body2',
+                  color: 'text.secondary',
+                  '&:hover': {
+                    color: 'text.primary',
+                  },
                 }}
-              />
-            </ButtonBase>
-          )}
-        </Box>
-      )}
+                onClick={() => setPage((prev) => prev + 1)}
+              >
+                <Trans>Load more</Trans>
+                <Box
+                  component={ArrowRight}
+                  sx={{
+                    transform: 'rotate(90deg)',
+                  }}
+                />
+              </ButtonBase>
+            )}
+          </Box>
+        )}
+      </CardStatus>
     </Box>
   );
 }

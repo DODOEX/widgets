@@ -36,11 +36,13 @@ export function usePoolDayData({
 
   const dayDataList =
     result.data?.dashboard_pairs_day_data?.map((item) => ({
-      volume: toNumber(item?.volume),
-      fee: toNumber(item?.fee),
+      volume: toNumber(item?.volumeUsd),
+      fee: toNumber(
+        new BigNumber(item?.feeUsd ?? 0).plus(item?.mtFeeUsd ?? 0).toString(),
+      ),
       traders: item?.addresses ? Number(item.addresses) : 0,
       date: item?.timestamp ? item?.timestamp * 1000 : 0,
-      tvl: toNumber(item?.tvl),
+      tvl: toNumber(item?.tvlUsd),
     })) ?? [];
 
   return {

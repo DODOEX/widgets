@@ -41,7 +41,7 @@ export default function PoolList({
 }) {
   const { isMobile } = useWidgetDevice();
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
-  const scrollParentRef = React.useRef<HTMLDivElement>();
+  const scrollParentRef = React.useRef<HTMLDivElement>(null);
   const { account } = useWeb3React();
   const { poolTab, tabs, handleChangePoolTab } = usePoolListTabs({
     account,

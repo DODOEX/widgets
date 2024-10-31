@@ -38,7 +38,6 @@ import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCo
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import LiquidityTable from './components/LiquidityTable';
-import SkeletonTable from './components/SkeletonTable';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { CardStatus } from '../../../components/CardWidgets';
@@ -505,7 +504,7 @@ export default function AddLiquidityList({
   operatePool,
   setOperatePool,
 }: {
-  scrollParentRef: React.MutableRefObject<HTMLDivElement | undefined>;
+  scrollParentRef: React.MutableRefObject<HTMLDivElement | null>;
   account?: string;
   filterChainIds?: ChainId[];
 
@@ -535,7 +534,7 @@ export default function AddLiquidityList({
     pageSize: isMobile ? 4 : 8,
     filterState: {
       viewOnlyOwn: false,
-      filterTypes: ['CLASSICAL', 'DVM', 'DSP'],
+      filterTypes: ['CLASSICAL', 'DVM', 'DSP', 'GSP'],
     },
   };
 
