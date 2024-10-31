@@ -22,15 +22,10 @@ import { useFetchFiatPriceBatch } from '../../../../hooks/useFetchFiatPriceBatch
 import { usePoolPairList } from '../hooks/usePoolPairList';
 import { usePoolTokenBalance } from '../hooks/usePoolTokenBalance';
 import { useTokenPair } from '../hooks/useTokenPair';
-import {
-  DexKey,
-  dexListObj,
-  GetGeneralUniInfo,
-  getOtherDexPool,
-  getWrappedTokenAddress,
-} from '../utils';
+import { getOtherDexPool, getWrappedTokenAddress } from '../utils';
 import PoolCard from './PoolCard';
 import { ReactComponent as SelectTokenIcon } from './select-token.svg';
+import { DexKey, useDexList } from '../hooks/useDexList';
 
 export interface PoolInfo {
   id: string;
@@ -138,11 +133,12 @@ export default function PoolPicker({
     skip,
     poolAddress: (search && search.toLocaleLowerCase()) || undefined,
   });
+  const { dexListObj, GetGeneralUniInfo } = useDexList();
 
   const activePlatform = useMemo(() => {
     if (!platform) return null;
     return dexListObj[platform];
-  }, [platform]);
+  }, [platform, dexListObj]);
 
   const platformPoolAddress = useMemo(() => {
     if (!isThirdPlatform || !activePlatform || !baseAddress || !quoteAddress)

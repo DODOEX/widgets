@@ -14,8 +14,8 @@ import { DexConfigI } from '../../types';
 import PoolCard from '../components/PoolCard';
 import PoolPicker from '../components/PoolPicker';
 import { Actions, StateProps, Types } from '../hooks/reducers';
-import { DexKey, dexListObj, getChainDexList } from '../utils';
 import { ReactComponent as DeleteIcon } from './delete.svg';
+import { DexKey, useDexList } from '../hooks/useDexList';
 
 export function TokenPairSelect({
   state,
@@ -38,6 +38,7 @@ export function TokenPairSelect({
 
   const [showPoolPicker, setShowPoolPicker] = useState(false);
 
+  const { dexListObj, getChainDexList } = useDexList();
   const dexList = getChainDexList(chainId, true);
   return (
     <>

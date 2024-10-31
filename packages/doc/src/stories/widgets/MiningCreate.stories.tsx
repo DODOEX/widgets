@@ -20,8 +20,14 @@ export const Primary = (props: any) => {
         });
     }
   }, [projectId, apiKey]);
+  const dappMetadata = React.useMemo(() => {
+    return {
+      name: 'test dapp',
+      logoUrl: 'https://app.dodoex.io/DODO.svg',
+    };
+  }, []);
   return (
-    <Widget {...config} {...other} apikey={apiKey}>
+    <Widget {...config} {...other} apikey={apiKey} dappMetadata={dappMetadata}>
       <MiningCreate
         handleGotoMiningList={() => window.alert('handleGotoMiningList')}
         handleGotoCreatePool={() => window.alert('handleGotoCreatePool')}

@@ -73,6 +73,10 @@ export interface WidgetProps
   noLangProvider?: boolean;
   noAutoConnect?: boolean;
   routerPage?: Page;
+  dappMetadata?: {
+    name: string;
+    logoUrl?: string;
+  };
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;

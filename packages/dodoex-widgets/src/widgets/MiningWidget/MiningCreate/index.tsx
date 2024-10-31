@@ -18,7 +18,7 @@ import CreateMiningTypeSelect from './operate-widgets/CreateMiningTypeSelect';
 import RewardForm from './operate-widgets/RewardForm';
 import { SingleTokenSelect } from './operate-widgets/SingleTokenSelect';
 import { TokenPairSelect } from './operate-widgets/TokenPairSelect';
-import { DexKey, dexListObj } from './utils';
+import { DexKey, useDexList } from './hooks/useDexList';
 
 export function MiningCreate({
   handleGotoMiningList,
@@ -32,6 +32,7 @@ export function MiningCreate({
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
 
+  const { dexListObj } = useDexList();
   const [platform, setPlatform] = useState<DexKey>('dodo');
 
   const { state, dispatch, createMutation, blockNumber, blockTime } =
