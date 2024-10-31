@@ -1,8 +1,7 @@
-import { useTheme, Box, Skeleton, ButtonBase } from '@dodoex/components';
+import { useTheme, Box, ButtonBase } from '@dodoex/components';
 import { useWidgetDevice } from '../../../../../hooks/style/useWidgetDevice';
 import { ArrowRight } from '@dodoex/icons';
 import { usePoolDetail } from '../../../hooks/usePoolDetail';
-import { useWeb3React } from '@web3-react/core';
 import { useQuery } from '@tanstack/react-query';
 import { poolApi } from '../../../utils';
 import React from 'react';
@@ -19,7 +18,7 @@ export default function LiquidityProvidersTable({
 }) {
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
-  const { account, chainId } = useWeb3React();
+  const chainId = poolDetail?.chainId;
   const pmmStateQuery = useQuery(
     poolApi.getPMMStateQuery(
       poolDetail?.chainId as number,
@@ -51,7 +50,7 @@ export default function LiquidityProvidersTable({
     >
       <CardStatus
         refetch={positionQuery.error ? positionQuery.refetch : undefined}
-        loading={positionQuery.isLoading}
+        loading={positionQuery.isLoading && !list?.length}
         empty={!list?.length}
       >
         {!!list?.length && (
@@ -139,6 +138,7 @@ export default function LiquidityProvidersTable({
                           >
                             <AddressWithLinkAndCopy
                               address={item.userId}
+                              customChainId={chainId}
                               truncate
                             />
                           </Box>

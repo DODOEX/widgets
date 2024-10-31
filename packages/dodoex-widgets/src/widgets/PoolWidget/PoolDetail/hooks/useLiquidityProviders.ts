@@ -8,9 +8,9 @@ import {
   formatReadableNumber,
   formatUnknownTokenSymbol,
 } from '../../../../utils';
-import { useFetchFiatPrice } from '../../../../hooks/Swap';
 import { ThegraphKeyMap } from '../../../../constants/chains';
 import { useGraphQLRequests } from '../../../../hooks/useGraphQLRequests';
+import { useFetchFiatPriceBatch } from '../../../../hooks/useFetchFiatPriceBatch';
 
 type TmpUser = {
   id: string;
@@ -92,7 +92,7 @@ export function useLiquidityProviders({
     poolApi.getTotalBaseLpQuery(chainId, address, type, baseDecimals),
   );
   const totalQuoteLpQuery = useQuery(
-    poolApi.getTotalBaseLpQuery(chainId, address, type, quoteDecimals),
+    poolApi.getTotalQuoteLpQuery(chainId, address, type, quoteDecimals),
   );
   const reserveQuery = useQuery(
     poolApi.getReserveLpQuery(
@@ -113,14 +113,22 @@ export function useLiquidityProviders({
     ),
   );
   const totalBaseLpBalance = totalBaseLpQuery.data;
-  const totalQuoteLpBalance = totalQuoteLpQuery.data;
+  let totalQuoteLpBalance = totalQuoteLpQuery.data;
+  if (
+    !totalQuoteLpBalance &&
+    !totalQuoteLpQuery.isLoading &&
+    !totalQuoteLpQuery.error &&
+    totalBaseLpBalance
+  ) {
+    // There is only one supply and there is no quoteSupply
+    totalQuoteLpBalance = totalBaseLpBalance;
+  }
   const { baseReserve, quoteReserve } = reserveQuery.data || {};
   const classicalBaseTarget = classicalTargetQuery.data?.baseTarget;
   const classicalQuoteTarget = classicalTargetQuery.data?.quoteTarget;
 
-  const fiatPriceQuery = useFetchFiatPrice({
-    fromToken: baseToken ?? null,
-    toToken: quoteToken ?? null,
+  const fiatPriceQuery = useFetchFiatPriceBatch({
+    tokens: quoteToken ? [quoteToken] : [],
   });
 
   const graphQLRequests = useGraphQLRequests();
@@ -131,6 +139,7 @@ export function useLiquidityProviders({
         pair: id,
         liquidityTokenBalance_not: '0',
         chain,
+        refreshNow: true,
       },
       miningWhere: {
         pair: id,
@@ -146,7 +155,10 @@ export function useLiquidityProviders({
 
   const { balance, mining, pair } = fetchPositionsQuery.data ?? {};
   let newLpList: Array<LpItem> = [];
-  if (balance && mining && pair && fiatPriceQuery.toFiatPrice) {
+  const toFiatPrice = quoteToken
+    ? fiatPriceQuery.data?.get(quoteToken.address)
+    : undefined;
+  if (balance && mining && pair && toFiatPrice) {
     const { baseLpToken, quoteLpToken } = pair;
 
     const userMap = new Map<string, TmpUser>();
@@ -208,8 +220,7 @@ export function useLiquidityProviders({
         baseReserve,
         classicalBaseTarget,
         address,
-        /** Mining does not require judging the type */
-        undefined,
+        type,
         baseDecimals,
       );
       const [, quoteSupplied] = getLpToTokenBalance(
@@ -218,8 +229,7 @@ export function useLiquidityProviders({
         quoteReserve,
         classicalQuoteTarget,
         address,
-        /** Mining does not require judging the type */
-        undefined,
+        type,
         quoteDecimals,
       );
       if (userMap.has(userId)) {
@@ -240,19 +250,19 @@ export function useLiquidityProviders({
           baseSupplied: new BigNumber(0),
           quoteSupplied: new BigNumber(0),
         };
-        if (baseSupplied) {
+        if (baseSupplied && (baseLpEqQuoteLp || lpId === baseLpToken?.id)) {
           newUser.baseSupplied = baseSupplied;
         }
-        if (quoteSupplied) {
+        if (quoteSupplied && (baseLpEqQuoteLp || lpId === quoteLpToken?.id)) {
           newUser.quoteSupplied = quoteSupplied;
         }
         userMap.set(newUser.id, newUser);
       }
     }
 
-    const baseShowDecimals = (baseToken?.decimals ?? 0 > 6) ? 6 : 4;
-    const quoteShowDecimals = (quoteToken?.decimals ?? 0 > 6) ? 6 : 4;
-    const quoteTokenPrice = fiatPriceQuery.toFiatPrice;
+    const baseShowDecimals = (baseToken?.decimals ?? 0) > 6 ? 6 : 4;
+    const quoteShowDecimals = (quoteToken?.decimals ?? 0) > 6 ? 6 : 4;
+    const quoteTokenPrice = toFiatPrice;
     userMap.forEach((user) => {
       newLpList.push({
         userId: user.id,
