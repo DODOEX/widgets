@@ -1,1 +1,2 @@
-export { useDevices } from './mediaQuery';
+export { useMediaDevices } from './mediaQuery';
+export { useDevices } from './useDevices';

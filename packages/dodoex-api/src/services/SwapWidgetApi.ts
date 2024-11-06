@@ -1,8 +1,6 @@
-import RestApiRequest, {
-  RestApiRequestConfig,
-} from '../helper/RestApiRequests';
+import RestApiRequest from '../helper/RestApiRequests';
 import { strToColorStr } from '../utils/color';
-import type { SwapWidgetProps } from '@dodoex/widgets';
+import { ThemeOptions } from '@dodoex/components';
 
 interface WidgetConfigBasis {
   crossChainSupport: boolean;
@@ -62,25 +60,47 @@ export interface ConfigTokenList {
   }>;
   rebateAddress: string | null;
   rebateRatio: number | null;
-  swapSlippage: number | null;
+  swapSlippage: number | null | undefined;
   crossChainSlippage: number | null;
   basis?: WidgetConfigBasis;
   style?: WidgetConfigColor;
 }
+interface TokenInfo {
+  readonly chainId: number;
+  readonly address: string;
+  readonly name: string;
+  readonly decimals: number;
+  readonly symbol: string;
+  readonly logoURI?: string;
+  readonly tags?: string[];
+  readonly extensions?: any;
+  readonly side?: 'from' | 'to';
+}
+type TokenList = TokenInfo[];
+enum TokenListType {
+  All = 'all',
+}
 
-export class SwapWidgetApi extends RestApiRequest {
-  constructor(configProps?: RestApiRequestConfig) {
-    super(configProps);
+export interface SwapWidgetApiProps {
+  restApiRequest?: RestApiRequest;
+}
+export class SwapWidgetApi {
+  restApiRequest: RestApiRequest;
+  constructor(configProps?: SwapWidgetApiProps) {
+    this.restApiRequest = configProps?.restApiRequest || new RestApiRequest();
   }
 
   getWidgetTokenListConfig(projectId: string, apikey: string) {
     const path = `/config-center/user/tokenlist/v2`;
-    return this.getJson<ConfigTokenList>(path, { project: projectId, apikey });
+    return this.restApiRequest.getJson<ConfigTokenList>(path, {
+      project: projectId,
+      apikey,
+    });
   }
 
   convertConfigToSwapWidgetProps(configTokenList: ConfigTokenList) {
     /** set token list */
-    const tokenList: SwapWidgetProps['tokenList'] = [];
+    const tokenList: TokenList | TokenListType = [];
     let isAllChainFrom = true;
     let isAllChainTo = true;
     configTokenList.chains.forEach((item) => {
@@ -142,7 +162,7 @@ export class SwapWidgetApi extends RestApiRequest {
     );
 
     /** set theme */
-    let theme: SwapWidgetProps['theme'] | undefined;
+    let theme: PartialDeep<ThemeOptions> | undefined;
     if (configTokenList?.style && Object.keys(configTokenList.style).length) {
       const fontSizeModify = configTokenList?.basis?.fontSizeModify;
       theme = {
@@ -168,7 +188,6 @@ export class SwapWidgetApi extends RestApiRequest {
             main: strToColorStr(configTokenList.style.success),
           },
           background: {
-            default: strToColorStr(configTokenList.style.background1),
             paper: strToColorStr(configTokenList.style.background1),
             paperContrast: strToColorStr(configTokenList.style.background2),
             backdrop: strToColorStr(configTokenList.style.mask),
@@ -245,7 +264,7 @@ export class SwapWidgetApi extends RestApiRequest {
       crossChain,
       jsonRpcUrlMap,
       noPowerBy,
-    } as SwapWidgetProps;
+    };
   }
 
   async getConfigSwapWidgetProps(projectId: string, apikey: string) {

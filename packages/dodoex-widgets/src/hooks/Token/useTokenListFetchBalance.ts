@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { getLatestBlockNumber } from '../../store/selectors/wallet';
-import { useFetchETHBalance, useFetchTokens } from '../contract';
+import { useFetchTokens } from '../contract';
 import { TokenInfo, TokenList } from './type';
 
 export default function useTokenListFetchBalance({
@@ -14,7 +14,7 @@ export default function useTokenListFetchBalance({
   defaultLoadBalance,
 }: {
   chainId: number;
-  value?: TokenInfo | null;
+  value?: TokenInfo | null | Array<TokenInfo>;
   tokenList: TokenList;
   popularTokenList?: TokenList;
   visible?: boolean;
@@ -40,26 +40,28 @@ export default function useTokenListFetchBalance({
     return Array.from(addressSet);
   }, [tokenList, popularTokenList, chainId, autoConnectLoading]);
 
-  const selectTokenAddress = useMemo(
-    () => (value ? [value.address] : []),
-    [value],
-  );
-  const selectChainId = useMemo(
-    () => value?.chainId ?? chainId,
-    [value?.chainId, chainId],
-  );
+  const selectTokenAddress = useMemo(() => {
+    if (!value) return [];
+    if (Array.isArray(value)) return value.map((item) => item.address);
+    return [value.address];
+  }, [value]);
+  const selectChainId = useMemo(() => {
+    if (!value) return chainId;
+    if (Array.isArray(value)) return value[0]?.chainId ?? chainId;
+    return value.chainId;
+  }, [value, chainId]);
 
-  useFetchTokens({
+  const tokenInfoMap = useFetchTokens({
     addresses: checkTokenAddresses,
     chainId,
     skip: visible === false && !defaultLoadBalance,
   });
-
-  useFetchETHBalance(chainId);
 
   useFetchTokens({
     addresses: selectTokenAddress,
     chainId: selectChainId,
     blockNumber,
   });
+
+  return tokenInfoMap;
 }

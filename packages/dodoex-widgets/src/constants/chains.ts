@@ -1,33 +1,5 @@
-export enum ChainId {
-  MAINNET = 1,
-  GOERLI = 5,
-
-  BSC = 56,
-
-  POLYGON = 137,
-
-  ARBITRUM_ONE = 42161,
-
-  AURORA = 1313161554,
-
-  OKCHAIN = 66,
-
-  OPTIMISM = 10,
-
-  AVALANCHE = 43114,
-
-  CONFLUX = 1030,
-
-  BASE = 8453,
-
-  LINEA = 59144,
-
-  SCROLL = 534352,
-
-  MANTA = 169,
-
-  MANTLE = 5000,
-}
+import { ChainId } from '@dodoex/api';
+export { etherTokenAddress, basicTokenMap } from '@dodoex/api';
 
 export const rpcServerMap: {
   [key in ChainId]: Array<string>;
@@ -38,7 +10,7 @@ export const rpcServerMap: {
     'https://eth-rpc.gateway.pokt.network',
     'https://main-rpc.linkpool.io',
   ],
-  [ChainId.GOERLI]: ['https://goerli.optimism.io/'],
+  [ChainId.GOERLI]: ['https://gateway.tenderly.co/public/goerli'],
   [ChainId.BSC]: [
     'https://bsc-dataseed1.binance.org',
     'https://bsc-dataseed2.binance.org',
@@ -75,129 +47,27 @@ export const rpcServerMap: {
   [ChainId.SCROLL]: ['https://rpc.scroll.io'],
   [ChainId.MANTA]: ['https://pacific-rpc.manta.network/http'],
   [ChainId.MANTLE]: ['https://rpc.mantle.xyz'],
+  [ChainId.SEPOLIA]: ['https://ethereum-sepolia-rpc.publicnode.com'],
+  [ChainId.DODO_CHAIN_TESTNET]: ['https://dodochain-testnet.alt.technology'],
+  [ChainId.TAIKO]: ['https://rpc.mainnet.taiko.xyz'],
 };
-
-export const etherTokenAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
-
-const DEFAULT_BASIC_TOKEN = {
-  symbol: 'ETH',
-  address: etherTokenAddress,
-  name: 'Ether',
-  decimals: 18,
-  showDecimals: 4,
-  wrappedTokenSymbol: 'WETH',
-};
-export const basicTokenMap: {
-  [key in ChainId]: typeof DEFAULT_BASIC_TOKEN & {
-    wrappedTokenAddress: string;
+export const getRpcSingleUrlMap = (newRpcServerMap?: {
+  [chainId: number]: string[];
+}) => {
+  const result = {} as {
+    [key in ChainId]?: string;
   };
-} = {
-  [ChainId.MAINNET]: {
-    ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-  },
-  [ChainId.GOERLI]: {
-    ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenAddress: '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
-  },
-  [ChainId.OPTIMISM]: {
-    ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
-  },
-  [ChainId.CONFLUX]: {
-    ...DEFAULT_BASIC_TOKEN,
-    symbol: 'CFX',
-    name: 'CFX',
-    wrappedTokenSymbol: 'WCFX',
-    wrappedTokenAddress: '0x14b2d3bc65e74dae1030eafd8ac30c533c976a9b',
-  },
-  [ChainId.BSC]: {
-    ...DEFAULT_BASIC_TOKEN,
-    symbol: 'BNB',
-    name: 'BNB',
-    wrappedTokenSymbol: 'WBNB',
-    wrappedTokenAddress: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
-  },
-  [ChainId.OKCHAIN]: {
-    ...DEFAULT_BASIC_TOKEN,
-    symbol: 'OKT',
-    name: 'OKT',
-    wrappedTokenSymbol: 'WOKT',
-    wrappedTokenAddress: '0x8F8526dbfd6E38E3D8307702cA8469Bae6C56C15',
-  },
-  [ChainId.POLYGON]: {
-    ...DEFAULT_BASIC_TOKEN,
-    symbol: 'MATIC',
-    name: 'MATIC',
-    showDecimals: 6,
-    wrappedTokenSymbol: 'WMATIC',
-    wrappedTokenAddress: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
-  },
-  [ChainId.ARBITRUM_ONE]: {
-    ...DEFAULT_BASIC_TOKEN,
-    name: 'Ethereum',
-    showDecimals: 6,
-    wrappedTokenAddress: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
-  },
-  [ChainId.AURORA]: {
-    ...DEFAULT_BASIC_TOKEN,
-    name: 'Ethereum',
-    showDecimals: 6,
-    wrappedTokenAddress: '0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB',
-  },
-  [ChainId.AVALANCHE]: {
-    ...DEFAULT_BASIC_TOKEN,
-    symbol: 'AVAX',
-    name: 'Avalanche',
-    showDecimals: 6,
-    wrappedTokenSymbol: 'WAVAX',
-    wrappedTokenAddress: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
-  },
-  [ChainId.BASE]: {
-    ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenSymbol: 'WETH',
-    wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
-  },
-  [ChainId.LINEA]: {
-    ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenSymbol: 'WETH',
-    wrappedTokenAddress: '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f',
-  },
-  [ChainId.SCROLL]: {
-    ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenSymbol: 'WETH',
-    wrappedTokenAddress: '0x5300000000000000000000000000000000000004',
-  },
-  [ChainId.MANTA]: {
-    ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenSymbol: 'WETH',
-    wrappedTokenAddress: '0x0Dc808adcE2099A9F62AA87D9670745AbA741746',
-  },
-  [ChainId.MANTLE]: {
-    ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenSymbol: 'WMNT',
-    wrappedTokenAddress: '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8',
-  },
-};
-
-export const platformIdMap: {
-  [key in ChainId]: string;
-} = {
-  [ChainId.MAINNET]: 'ethereum',
-  [ChainId.GOERLI]: 'goerli',
-  [ChainId.OPTIMISM]: 'optimism',
-  [ChainId.CONFLUX]: 'cfx',
-  [ChainId.BSC]: 'bsc',
-  [ChainId.OKCHAIN]: 'okex-chain',
-  [ChainId.POLYGON]: 'polygon',
-  [ChainId.ARBITRUM_ONE]: 'arbitrum',
-  [ChainId.AURORA]: 'aurora',
-  [ChainId.AVALANCHE]: 'avalanche', // Needs confirm
-  [ChainId.BASE]: 'base',
-  [ChainId.LINEA]: 'linea',
-  [ChainId.SCROLL]: 'scr',
-  [ChainId.MANTA]: 'manta',
-  [ChainId.MANTLE]: 'mantle',
+  Object.entries(rpcServerMap).forEach(([key, urls]) => {
+    const chainId = Number(key) as ChainId;
+    const urlsResult = newRpcServerMap?.[chainId] || urls;
+    const [url] = urlsResult;
+    if (url) {
+      result[chainId] = url;
+    }
+  });
+  return result as {
+    [key in ChainId]: string;
+  };
 };
 
 export const scanUrlDomainMap: {
@@ -218,4 +88,76 @@ export const scanUrlDomainMap: {
   [ChainId.SCROLL]: 'scrollscan.com',
   [ChainId.MANTA]: 'pacific-explorer.manta.network',
   [ChainId.MANTLE]: 'explorer.mantle.xyz',
+  [ChainId.SEPOLIA]: 'sepolia.etherscan.io',
+  [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet-explorer.alt.technology',
+  [ChainId.TAIKO]: 'taikoscan.io',
+};
+
+export const ThegraphKeyMap: {
+  [key in ChainId]: string;
+} = {
+  [ChainId.BSC]: 'bsc',
+  [ChainId.MAINNET]: 'ethereum-mainnet',
+  [ChainId.POLYGON]: 'polygon',
+  [ChainId.ARBITRUM_ONE]: 'arbitrum',
+  [ChainId.OKCHAIN]: 'okchain',
+  [ChainId.OPTIMISM]: 'optimism',
+  [ChainId.AURORA]: 'aurora',
+  [ChainId.AVALANCHE]: 'avalanche',
+  [ChainId.GOERLI]: 'gor',
+  [ChainId.CONFLUX]: 'cfx',
+  [ChainId.BASE]: 'base',
+  [ChainId.LINEA]: 'linea',
+  [ChainId.SCROLL]: 'scr',
+  [ChainId.MANTA]: 'manta',
+  [ChainId.MANTLE]: 'mantle',
+  [ChainId.SEPOLIA]: 'sepolia',
+  [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
+  [ChainId.TAIKO]: 'taiko',
+};
+
+export const blockTimeMap: {
+  [key in ChainId]: number;
+} = {
+  [ChainId.MAINNET]: 12000,
+  [ChainId.GOERLI]: 12000,
+  [ChainId.OPTIMISM]: 12000,
+  [ChainId.CONFLUX]: 3000,
+  [ChainId.BSC]: 3000,
+  [ChainId.OKCHAIN]: 4000,
+  [ChainId.POLYGON]: 2200,
+  [ChainId.ARBITRUM_ONE]: 12000,
+  [ChainId.AURORA]: 1000,
+  [ChainId.AVALANCHE]: 1000,
+  [ChainId.BASE]: 2000,
+  [ChainId.LINEA]: 2000,
+  [ChainId.SCROLL]: 3000,
+  [ChainId.MANTA]: 10000,
+  [ChainId.MANTLE]: 2000,
+  [ChainId.SEPOLIA]: 12000,
+  [ChainId.DODO_CHAIN_TESTNET]: 12000,
+  [ChainId.TAIKO]: 48000,
+};
+
+export const dexKeysMap: {
+  [key in ChainId]: string[];
+} = {
+  [ChainId.MAINNET]: [],
+  [ChainId.GOERLI]: [],
+  [ChainId.OPTIMISM]: [],
+  [ChainId.CONFLUX]: [],
+  [ChainId.BSC]: [],
+  [ChainId.OKCHAIN]: [],
+  [ChainId.POLYGON]: [],
+  [ChainId.ARBITRUM_ONE]: [],
+  [ChainId.AURORA]: [],
+  [ChainId.AVALANCHE]: [],
+  [ChainId.BASE]: [],
+  [ChainId.LINEA]: [],
+  [ChainId.SCROLL]: [],
+  [ChainId.MANTA]: [],
+  [ChainId.MANTLE]: [],
+  [ChainId.SEPOLIA]: [],
+  [ChainId.DODO_CHAIN_TESTNET]: [],
+  [ChainId.TAIKO]: [],
 };

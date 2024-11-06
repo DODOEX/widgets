@@ -1,30 +1,29 @@
 import { Box } from '@dodoex/components';
-import BigNumber from 'bignumber.js';
 import { CSSProperties } from 'react';
 import { formatReadableNumber } from '../../utils';
-import useGetBalance from '../../hooks/Token/useGetBalance';
 import TokenLogo from '../TokenLogo';
 import { TokenInfo } from './../../hooks/Token';
 import { Loading } from '@dodoex/icons';
 import { tokenPickerItem } from '../../constants/testId';
 import { useTheme } from '@dodoex/components';
 import { useWeb3React } from '@web3-react/core';
+import BigNumber from 'bignumber.js';
 
 export default function TokenItem({
   token,
   disabled,
   style,
+  balance: balanceBigNumber,
   onClick,
 }: {
   token: TokenInfo;
   disabled?: boolean;
   style?: CSSProperties;
+  balance?: BigNumber;
   onClick: () => void;
 }) {
   const theme = useTheme();
-  const getBalance = useGetBalance();
   const { account } = useWeb3React();
-  const balanceBigNumber = getBalance(token);
   const balance = balanceBigNumber
     ? formatReadableNumber({
         input: balanceBigNumber,

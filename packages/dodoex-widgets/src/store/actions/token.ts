@@ -32,63 +32,11 @@ export const setSlippageWithTokens = (
   };
 };
 
-export const setDefaultFromToken = (token: TokenInfo): AppThunkAction => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'SET_DEFAULT_FROM_TOKEN',
-      payload: token,
-    });
-  };
-};
-
 export const setDefaultToToken = (token: TokenInfo): AppThunkAction => {
   return async (dispatch) => {
     dispatch({
       type: 'SET_DEFAULT_TO_TOKEN',
       payload: token,
-    });
-  };
-};
-
-export const setEthBalance = (
-  chainId: number,
-  balance: BigNumber,
-): AppThunkAction => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'SET_ETH_BALANCE',
-      payload: {
-        [chainId]: balance,
-      },
-    });
-  };
-};
-
-export const setTokenBalances = (
-  accountBalances: AccountBalances,
-): AppThunkAction => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'SET_ACCOUNT_BALANCES',
-      payload: accountBalances,
-    });
-  };
-};
-export const setTokenAllowances = (allowance: BigNumber): AppThunkAction => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'SET_ACCOUNT_ALLOWANCES',
-      payload: allowance,
-    });
-  };
-};
-export const setBalanceLoadings = (
-  balanceLoadings: { [key in string]: boolean },
-): AppThunkAction => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'SET_BALANCE_LOADINGS',
-      payload: balanceLoadings,
     });
   };
 };

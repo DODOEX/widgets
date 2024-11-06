@@ -1,5 +1,6 @@
-import ClickAwayListener from '@mui/base/ClickAwayListener';
-import PopperUnstyled, {
+import { ClickAwayListener } from '@mui/base/ClickAwayListener';
+import {
+  Popper as PopperUnstyled,
   PopperProps as PopperUnstyledProps,
 } from '@mui/base/Popper';
 import { styled } from '@mui/system';
@@ -10,7 +11,6 @@ import {
   JSXElementConstructor,
   MouseEventHandler,
   ReactElement,
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -34,13 +34,19 @@ export interface TooltipProps {
   transition?: PopperUnstyledProps['transition'];
   // @ts-ignore: Unreachable code error
   componentsProps?: PopperUnstyledProps['componentsProps'];
+  PopperProps?: Partial<PopperUnstyledProps>;
   onlyHover?: boolean;
+  onlyClick?: boolean;
   open?: boolean;
+  onOpen?: () => void;
+  onClose?: () => void;
   enterDelay?: number;
   leaveDelay?: number;
+  arrow?: boolean;
+  disabled?: boolean;
 }
 
-const tooltipClasses = {
+export const tooltipClasses = {
   arrow: 'DODOTooltip-arrow',
 };
 
@@ -77,14 +83,22 @@ const StyledTooltipRoot = styled('div')(
 export default function Tooltip({
   title,
   sx,
-  maxWidth = 'auto',
+  maxWidth = 'none',
   popperOptions,
   children,
   onlyHover,
+  onlyClick,
   /** This prop won't impact the enter click delay  */
   enterDelay = 100,
   /** This prop won't impact the enter click delay  */
   leaveDelay = 0,
+  arrow = true,
+  PopperProps,
+  open: openProps,
+  onOpen,
+  onClose,
+  disabled,
+  placement = 'top',
   ...attrs
 }: TooltipProps) {
   const theme = useTheme();
@@ -98,23 +112,41 @@ export default function Tooltip({
   const [arrowRef, setArrowRef] = useState<HTMLDivElement>();
 
   const [open, setOpen] = useState(false);
-  const clickEmit = isMobile && !onlyHover;
+  const clickEmit = onlyClick || (isMobile && !onlyHover);
+
+  const handleChangeOpen = (value: boolean) => {
+    if (value) {
+      if (openProps === undefined) {
+        setOpen(true);
+      }
+      if (onOpen) {
+        onOpen();
+      }
+    } else {
+      if (openProps === undefined) {
+        setOpen(false);
+      }
+      if (onClose) {
+        onClose();
+      }
+    }
+  };
 
   const handleOverTooltip: MouseEventHandler<HTMLDivElement> = () => {
-    if (clickEmit) return;
+    if (disabled || clickEmit) return;
     enterTooltip.current = true;
     clearTimeout(leaveTimer.current);
     clearTimeout(enterTimer.current);
   };
 
   const handleOutTooltip: MouseEventHandler<HTMLDivElement> = () => {
-    if (clickEmit) return;
+    if (disabled || clickEmit) return;
     enterTooltip.current = false;
     clearTimeout(leaveTimer.current);
     clearTimeout(enterTimer.current);
     leaveTimer.current = setTimeout(() => {
       if (!enterTrigger.current && !enterTooltip.current) {
-        setOpen(false);
+        handleChangeOpen(false);
       }
     }, leaveDelay);
   };
@@ -123,37 +155,42 @@ export default function Tooltip({
     ref: setChildrenRef,
   };
 
-  if (!clickEmit) {
-    const onMouseEnter = () => {
-      enterTrigger.current = true;
-      clearTimeout(leaveTimer.current);
-      clearTimeout(enterTimer.current);
-      enterTimer.current = setTimeout(() => {
-        setOpen(true);
-      }, enterDelay);
-    };
-    const onMouseLeave = () => {
-      enterTrigger.current = false;
-      clearTimeout(leaveTimer.current);
-      clearTimeout(enterTimer.current);
-      leaveTimer.current = setTimeout(() => {
-        if (!enterTrigger.current && !enterTooltip.current) {
-          setOpen(false);
+  if (!disabled) {
+    if (!clickEmit) {
+      const onMouseEnter = () => {
+        enterTrigger.current = true;
+        clearTimeout(leaveTimer.current);
+        clearTimeout(enterTimer.current);
+        enterTimer.current = setTimeout(() => {
+          handleChangeOpen(true);
+        }, enterDelay);
+      };
+      const onMouseLeave = () => {
+        enterTrigger.current = false;
+        clearTimeout(leaveTimer.current);
+        clearTimeout(enterTimer.current);
+        leaveTimer.current = setTimeout(() => {
+          if (!enterTrigger.current && !enterTooltip.current) {
+            handleChangeOpen(false);
+          }
+        }, leaveDelay);
+      };
+      childrenProps.onMouseOut = onMouseEnter;
+      childrenProps.onMouseEnter = onMouseEnter;
+      childrenProps.onMouseLeave = onMouseLeave;
+    } else {
+      childrenProps.onClick = (evt: any) => {
+        if (typeof children === 'object' && children.props.onClick) {
+          children.props.onClick(evt);
         }
-      }, leaveDelay);
-    };
-    childrenProps.onMouseOut = onMouseEnter;
-    childrenProps.onMouseEnter = onMouseEnter;
-    childrenProps.onMouseLeave = onMouseLeave;
-  } else {
-    childrenProps.onClick = () => {
-      setOpen(true);
-    };
+        handleChangeOpen(true);
+      };
+    }
   }
 
   useEffect(() => {
     return () => {
-      setOpen(false);
+      handleChangeOpen(false);
       clearTimeout(leaveTimer.current);
       clearTimeout(enterTimer.current);
     };
@@ -162,7 +199,7 @@ export default function Tooltip({
   return (
     <>
       <PopperUnstyled
-        open={open}
+        open={openProps ?? open}
         anchorEl={childrenRef}
         slots={{
           root: StyledTooltipRoot,
@@ -182,18 +219,24 @@ export default function Tooltip({
                   padding: 20,
                 },
               },
-              {
-                name: 'arrow',
-                options: {
-                  element: arrowRef,
-                  padding: 4,
-                },
-              },
+              ...(arrow
+                ? [
+                    {
+                      name: 'arrow',
+                      options: {
+                        element: arrowRef,
+                        padding: 4,
+                      },
+                    },
+                  ]
+                : []),
             ],
           },
           popperOptions,
         )}
+        placement={placement}
         {...attrs}
+        {...PopperProps}
       >
         <Box
           sx={{
@@ -216,37 +259,39 @@ export default function Tooltip({
         >
           {title}
         </Box>
-        <Box
-          ref={setArrowRef}
-          className={tooltipClasses.arrow}
-          sx={{
-            overflow: 'hidden',
-            position: 'absolute',
-            width: 16,
-            height: arrowHeight + 1,
-            boxSizing: 'border-box',
-            color: 'background.paperContrast',
-            bottom: 0,
-            marginBottom: -arrowHeight,
-            '&::before': {
-              transformOrigin: '100% 0',
-              content: '""',
-              margin: 'auto',
-              display: 'block',
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'currentColor',
-              transform: 'rotate(45deg)',
-              border: 'solid 1px',
-              borderColor: 'border.main',
-            },
-          }}
-        />
+        {arrow && (
+          <Box
+            ref={setArrowRef}
+            className={tooltipClasses.arrow}
+            sx={{
+              overflow: 'hidden',
+              position: 'absolute',
+              width: 16,
+              height: arrowHeight + 1,
+              boxSizing: 'border-box',
+              color: 'background.paperContrast',
+              bottom: 0,
+              marginBottom: -arrowHeight,
+              '&::before': {
+                transformOrigin: '100% 0',
+                content: '""',
+                margin: 'auto',
+                display: 'block',
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'currentColor',
+                transform: 'rotate(45deg)',
+                border: 'solid 1px',
+                borderColor: 'border.main',
+              },
+            }}
+          />
+        )}
       </PopperUnstyled>
       <ClickAwayListener
         onClickAway={() => {
           if (clickEmit) {
-            setOpen(false);
+            handleChangeOpen(false);
           }
         }}
       >

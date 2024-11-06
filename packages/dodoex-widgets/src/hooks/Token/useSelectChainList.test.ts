@@ -27,8 +27,8 @@ jest.mock('../../store/selectors/token', () => ({
   getAllTokenList: jest.fn(() => tokenList),
 }));
 
-jest.mock('../../store/selectors/globals', () => ({
-  getGlobalProps: jest.fn(() => ({
+jest.mock('../../components/UserOptionsProvider', () => ({
+  useUserOptions: jest.fn(() => ({
     crossChain: true,
   })),
 }));
@@ -37,15 +37,13 @@ describe('useSelectChainList:default', () => {
   it('default', () => {
     const { result } = renderHook(() => useSelectChainList());
     const { chainList } = result.current;
-    expect(chainList.length).toBe(
-      allChainList.filter((chain) => !chain.mainnet).length,
+    const expectChainList = allChainList.filter(
+      (chain) =>
+        !chain.mainnet &&
+        tokenList.some((token) => token.chainId === chain.chainId),
     );
-    expect(
-      isEqual(
-        chainList,
-        allChainList.filter((chain) => !chain.mainnet),
-      ),
-    ).toBeTruthy();
+    expect(chainList.length).toBe(expectChainList.length);
+    expect(isEqual(chainList, expectChainList)).toBeTruthy();
   });
 
   it('test net', () => {
@@ -62,9 +60,12 @@ describe('useSelectChainList:default', () => {
     });
     const { result } = renderHook(() => useSelectChainList());
     const { chainList } = result.current;
-    expect(chainList.length).toBe(
-      allChainList.filter((chain) => !chain.mainnet).length,
+    const expectChainList = allChainList.filter(
+      (chain) =>
+        !chain.mainnet &&
+        tokenList.some((token) => token.chainId === chain.chainId),
     );
+    expect(chainList.length).toBe(expectChainList.length);
     expect(
       chainList.some((chain) => chain.chainId === testChainId),
     ).toBeTruthy();

@@ -40,6 +40,7 @@ Supported [API](https://docs.dodoex.io/english/developers/swap-widget/api) from 
 - `onTxFail`: Triggered if transaction fails
 - `onTxSubmit`: Triggered after transaction is submitted
 - `onTxSuccess`: Triggered if transaction executes successfully
+- `onTxReverted`: Triggered if transaction executes reverted
 
 - `theme`: Can override theme, text, and style. Refer to the Instructions page for more information.
 - `colorMode`: Light or dark mode

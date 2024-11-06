@@ -8,23 +8,39 @@ export function formatReadableNumber({
   input,
   showDecimals = 4,
   showPrecisionDecimals = 2,
+  exponentialDecimalsAmount = 8,
   showIntegerOnly = false,
   showDecimalsOnly = false,
   noGroupSeparator = false,
+  roundingMode = BigNumber.ROUND_DOWN,
 }: {
   input: BigNumber | number | string;
   showDecimals?: number;
   showIntegerOnly?: boolean;
   showDecimalsOnly?: boolean;
   showPrecisionDecimals?: number;
+  exponentialDecimalsAmount?: number;
   noGroupSeparator?: boolean;
+  roundingMode?: BigNumber.RoundingMode;
 }): string {
   const source = new BigNumber(input);
   if (source.isNaN()) {
     return '-';
   }
-  let amount = source.dp(showDecimals, BigNumber.ROUND_DOWN);
+  let amount = source.dp(showDecimals, roundingMode);
   if (amount.eq(0) && (source.gt(0) || source.lt(0))) {
+    const significantDigits = showPrecisionDecimals ?? showDecimals;
+    amount = source.sd(significantDigits, BigNumber.ROUND_DOWN);
+    const amountDP = amount.dp();
+    if (
+      amountDP &&
+      amountDP > exponentialDecimalsAmount &&
+      !showDecimalsOnly &&
+      !showIntegerOnly
+    ) {
+      return amount.toExponential();
+    }
+
     amount = source.sd(
       showPrecisionDecimals ?? showDecimals,
       BigNumber.ROUND_DOWN,
@@ -54,11 +70,13 @@ export function formatTokenAmountNumber({
   input,
   decimals,
   showPrecisionDecimals = 2,
+  exponentialDecimalsAmount,
   noGroupSeparator,
 }: {
   input?: BigNumber | number | string | null;
   decimals?: number;
   showPrecisionDecimals?: number;
+  exponentialDecimalsAmount?: number;
   noGroupSeparator?: boolean;
 }): string {
   if (input === undefined || input === null) {
@@ -75,6 +93,7 @@ export function formatTokenAmountNumber({
     input: source,
     showDecimals,
     showPrecisionDecimals,
+    exponentialDecimalsAmount,
     noGroupSeparator,
   });
 }
@@ -205,4 +224,104 @@ export const getDecimalLimit = (decimals: number | undefined | null) =>
 
 export function getIntegerNumber(v: number) {
   return Number(v.toString().split('.')[0]);
+}
+
+const kilo = 1000;
+const million = 1000000;
+const billion = 1000000000;
+function getNegative(num: number) {
+  return new BigNumber(num).negated();
+}
+
+/**
+ * format to short number, like: -0.12 -> 0, 0.0000123->0.000012, 123.234 -> 123.23, 1234.12 -> 1.23K, 1000000.123->1.00M
+ * @param n
+ */
+export function formatShortNumber(n?: BigNumber, showDecimals = 4): string {
+  if (!n || n.isNaN()) {
+    return '-';
+  }
+  if (n.eq(0)) {
+    return '0';
+  }
+  if (n.lte(0.000001) && n.gte(-0.000001)) {
+    return n.toExponential(2);
+  }
+  if (n.lt(1) && n.gt(-1)) {
+    return formatReadableNumber({ input: n, showDecimals });
+  }
+  if (n.lt(kilo) && n.gt(getNegative(kilo))) {
+    return formatReadableNumber({ input: n, showDecimals });
+  }
+  if (n.lt(million) && n.gt(getNegative(million))) {
+    return `${formatReadableNumber({ input: n.div(kilo), showDecimals: 2 })}K`;
+  }
+  return `${formatReadableNumber({
+    input: n.div(million),
+    showDecimals: 2,
+  })}M`;
+}
+
+export function formatExponentialNotation(n?: BigNumber) {
+  if (!n || n.isNaN()) {
+    return '-';
+  }
+  if (n.isZero()) {
+    return '0';
+  }
+  if (n.lte(billion) && n.gt(getNegative(billion))) {
+    return formatShortNumber(n);
+  }
+
+  const n1 = n.toExponential(2);
+  if (n1.includes('e+')) {
+    const [a1, b1] = n1.split('e+');
+    if (a1 && b1) {
+      return `${a1}x10^${b1}`;
+    }
+  }
+  return n1;
+}
+
+/**
+ * format to percentage number
+ * @param param0 input number
+ */
+export function formatPercentageNumber({
+  input,
+  showDecimals = 2,
+  /** The percentage is rounded by default. */
+  roundingMode = BigNumber.ROUND_HALF_UP,
+}: {
+  input?: BigNumber | string | number | null;
+  showDecimals?: number;
+  roundingMode?: BigNumber.RoundingMode;
+}): string {
+  if (input === null || input === undefined) {
+    return '-';
+  }
+  return `${formatReadableNumber({
+    input: new BigNumber(input || 0).multipliedBy(100),
+    showDecimals,
+    roundingMode,
+  })}%`;
+}
+
+export const formatApy = (amount: BigNumber, showDecimals = 2): string => {
+  return formatPercentageNumber({
+    input: amount,
+    showDecimals,
+  });
+};
+
+export function formatUnknownTokenSymbol(
+  token?: {
+    symbol: string;
+    name: string;
+  } | null,
+) {
+  if (!token) {
+    return '';
+  }
+  return token.symbol === 'unknown' ? token.name : token.symbol;
 }

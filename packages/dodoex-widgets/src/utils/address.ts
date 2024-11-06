@@ -1,5 +1,6 @@
 import { getAddress } from '@ethersproject/address';
-import { ChainId, scanUrlDomainMap } from '../constants/chains';
+import { ChainId } from '@dodoex/api';
+import { scanUrlDomainMap } from '../constants/chains';
 
 export const isSameAddress = (
   tokenAddress1: string,
@@ -23,9 +24,9 @@ export const isSameAddress = (
   return trimAddress2.endsWith(trimAddress1);
 };
 
-export function isAddress(value: any): string | false {
+export function isAddress(value: any): boolean {
   try {
-    return getAddress(value);
+    return !!getAddress(value);
   } catch {
     return false;
   }
@@ -58,10 +59,29 @@ export function truncatePoolAddress(address: string): string {
   )}`;
 }
 
+export function sortsAddress(address0: string, address1: string): boolean {
+  // invariant(address0 !== address1, 'ADDRESSES')
+  return address0.toLowerCase() < address1.toLowerCase();
+}
+
 export function getEtherscanPage(
+  chainId: ChainId,
+  id?: string | null,
+  prefix = 'address',
+) {
+  return `https://${scanUrlDomainMap[chainId]}${id ? `/${prefix}/${id}` : ''}`;
+}
+
+export async function openEtherscanPage(
   path: string | undefined,
   chainId: ChainId,
-): string {
-  const domain = scanUrlDomainMap[chainId || 1];
-  return `https://${domain}${path ? `/${path}` : ''}`;
+  customUrl?: string,
+): Promise<void> {
+  const scanUrlDomain = scanUrlDomainMap[chainId];
+
+  window.open(
+    `https://${customUrl ?? scanUrlDomain}${path ? `/${path}` : ''}`,
+    '_blank',
+    'noopener,noreferrer',
+  );
 }

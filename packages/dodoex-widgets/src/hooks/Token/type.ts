@@ -26,3 +26,10 @@ export enum ApprovalState {
   Sufficient = 'Sufficient',
   Unchecked = 'Unchecked',
 }
+
+export enum BalanceState {
+  Loading = 'Loading',
+  Insufficient = 'BalanceInsufficient',
+  Sufficient = 'Sufficient',
+  Unchecked = 'Unchecked',
+}

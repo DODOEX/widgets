@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { CSSProperties, useMemo } from 'react';
 import { chainListMap } from '../../../constants/chainList';
-import { ChainId } from '../../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { TokenInfo } from '../../../hooks/Token';
 import { formatTokenAmountNumber } from '../../../utils/formatter';
 import TokenLogo from '../../TokenLogo';

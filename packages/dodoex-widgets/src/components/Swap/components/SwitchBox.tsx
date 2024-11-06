@@ -1,5 +1,5 @@
 import { ArrowBack } from '@dodoex/icons';
-import { Box, useTheme, BaseButton } from '@dodoex/components';
+import { Box, useTheme, ButtonBase } from '@dodoex/components';
 
 export function SwitchBox({
   onClick,
@@ -18,7 +18,7 @@ export function SwitchBox({
       }}
     >
       <Box
-        component={BaseButton}
+        component={ButtonBase}
         sx={{
           width: size,
           height: size,

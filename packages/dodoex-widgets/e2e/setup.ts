@@ -1,4 +1,5 @@
 const error = console.error;
+
 global.console = {
   ...console,
   error: (message: string, ...options: any[]) => {
@@ -24,7 +25,11 @@ jest.mock('@lingui/core', () => ({
 }));
 jest.mock('@lingui/react', () => ({
   I18nProvider: ({ children }: { children: any }) => children,
-  useLingui: jest.fn(),
+  useLingui: () => ({
+    i18n: {
+      _: null,
+    },
+  }),
 }));
 jest.mock('@lingui/macro', () => ({
   t: (str: string) => str,
@@ -35,3 +40,14 @@ jest.mock('lodash', () => ({
   ...jest.requireActual('lodash'),
   debounce: (fn: () => void) => fn,
 }));
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: (fn: () => any) => {
+    if (typeof fn === 'function') {
+      return fn();
+    }
+    return [];
+  },
+}));
+
+export {};

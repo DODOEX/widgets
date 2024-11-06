@@ -1,2 +1,4 @@
-import { platformIdMap, ChainId } from '../constants/chains'
-export const getPlatformId = (chainId: ChainId) => (platformIdMap[chainId] || platformIdMap[ChainId.MAINNET])
+import { ChainId, platformIdMap } from '@dodoex/api';
+
+export const getPlatformId = (chainId: ChainId) =>
+  platformIdMap[chainId] || platformIdMap[ChainId.MAINNET];

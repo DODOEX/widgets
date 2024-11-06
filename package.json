@@ -13,7 +13,7 @@
     "tsc": "lerna run typescript",
     "test": "lerna run test",
     "test:e2e": "lerna run test:e2e",
-    "build": "yarn workspace @dodoex/icons build && yarn workspace @dodoex/components build && yarn workspace @dodoex/widgets build && yarn workspace @dodoex/api build",
+    "build": "yarn workspace @dodoex/icons build && yarn workspace @dodoex/components build && yarn workspace @dodoex/api build && yarn workspace @dodoex/widgets build",
     "release": "yarn run build && yarn workspace @dodoex/widgets release",
     "build-doc": "yarn run build && yarn workspace doc build"
   },
@@ -22,7 +22,12 @@
   ],
   "license": "GPL-3.0-or-later",
   "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-config-next": "^13.2.4",
+    "eslint-config-prettier": "^8.7.0",
     "husky": "^8.0.3",
-    "lerna": "^5.4.0"
-  }
+    "lerna": "^5.4.0",
+    "prettier": "^3.3.3"
+  },
+  "dependencies": {}
 }

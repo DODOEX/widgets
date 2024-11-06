@@ -15,6 +15,7 @@ import { ReactComponent as symbiosisLogoUrl } from '../../../assets/bridge/symbi
 import { ReactComponent as scrollLogoUrl } from '../../../assets/logo/networks/scroll.svg';
 import { ReactComponent as mantaLogoUrl } from '../../../assets/logo/networks/manta.svg';
 import { ReactComponent as orbiterLogoUrl } from '../../../assets/bridge/orbiter.svg';
+import { ReactComponent as DODOLogoUrl } from '../../../assets/bridge/dodochain.svg';
 
 export const productList = [
   {
@@ -101,5 +102,10 @@ export const productList = [
     id: 'orbiter',
     logoURI: orbiterLogoUrl,
     name: 'Orbiter',
+  },
+  {
+    id: 'dodo',
+    logoURI: DODOLogoUrl,
+    name: 'Omni-Trade',
   },
 ];

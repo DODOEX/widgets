@@ -3,11 +3,13 @@ import { useWeb3React } from '@web3-react/core';
 import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber';
 import BigNumber from 'bignumber.js';
 import React, { useCallback, useMemo } from 'react';
-import { basicTokenMap, ChainId } from '../../constants/chains';
+import { basicTokenMap } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { getSwapTxValue } from '../../utils';
 import { MIN_GAS_LIMIT } from '../../constants/swap';
 import { useSubmission } from '../Submission';
 import { OpCode } from '../Submission/spec';
+import { MetadataFlag } from '../Submission/types';
 
 export default function useExecuteSwap() {
   const { chainId, account } = useWeb3React();
@@ -23,8 +25,9 @@ export default function useExecuteSwap() {
       gasLimit,
       subtitle,
       value,
+      mixpanelProps,
     }: {
-        value: string;
+      value: string;
       to: string;
       data: string;
       useSource?: string;
@@ -32,6 +35,7 @@ export default function useExecuteSwap() {
       ddl: number;
       gasLimit?: EthersBigNumber;
       subtitle: React.ReactNode;
+      mixpanelProps?: Record<string, any>;
     }) => {
       const ddlSecRel = ddl * 60;
       const txValue = value;
@@ -58,10 +62,16 @@ export default function useExecuteSwap() {
           opcode: OpCode.TX,
           ...params,
         },
-        subtitle,
+        {
+          subtitle,
+          metadata: {
+            [MetadataFlag.swap]: true,
+          },
+          mixpanelProps,
+        },
       );
     },
-    [account, chainId],
+    [account, submission],
   );
 
   return execute;

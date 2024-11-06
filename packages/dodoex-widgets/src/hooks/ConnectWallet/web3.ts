@@ -9,7 +9,7 @@ import {
 } from '@web3-react/types';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import JsonRpcConnector from './Connectors/JsonRpcConnector';
-import type { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 
 export type Web3Connection = [Connector, Web3ReactHooks];
 

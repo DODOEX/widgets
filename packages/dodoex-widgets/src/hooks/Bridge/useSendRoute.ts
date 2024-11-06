@@ -2,17 +2,17 @@ import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import { useCallback, useState } from 'react';
 import { t } from '@lingui/macro';
-import { basicTokenMap, ChainId } from '../../constants/chains';
+import { basicTokenMap } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { byWei, formatTokenAmountNumber } from '../../utils';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
 import { useWeb3React } from '@web3-react/core';
 import { getEstimateGas } from '../contract/wallet';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
-import { useSelector } from 'react-redux';
-import { getGlobalProps } from '../../store/selectors/globals';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
 import { EmptyAddress } from '../../constants/address';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export function useSendRoute() {
   const { provider } = useWeb3React();
@@ -20,7 +20,7 @@ export function useSendRoute() {
     useState<BridgeTXRequest | undefined>();
   const [sendRouteLoading, setSendRouteLoading] = useState(false);
   const [sendRouteError, setSendRouteError] = useState('');
-  const { apikey } = useSelector(getGlobalProps);
+  const { apikey } = useUserOptions();
   const bridgeEncodeAPI = useGetAPIService(APIServiceKey.bridgeEncode);
   const handleClickSend = useCallback(
     async ({

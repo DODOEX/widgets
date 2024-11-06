@@ -1,41 +1,35 @@
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { getGlobalProps } from '../../store/selectors/globals';
 import { useCallback, useState } from 'react';
 import { getPlatformId } from '../../utils';
-import { ChainId } from '../../constants/chains';
 import { usePriceTimer } from './usePriceTimer';
 import { TokenInfo } from '../Token';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export interface FetchFiatPriceProps {
-  chainId: ChainId | undefined;
   fromToken: TokenInfo | null;
   toToken: TokenInfo | null;
 }
-export function useFetchFiatPrice({
-  fromToken,
-  toToken,
-  chainId,
-}: FetchFiatPriceProps) {
-  const [loading, setLoading] = useState<boolean>(false);
-  const { apikey } = useSelector(getGlobalProps);
+export function useFetchFiatPrice({ fromToken, toToken }: FetchFiatPriceProps) {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
+  const { apikey } = useUserOptions();
   const [fromFiatPrice, setFromFiatPrice] = useState<string>('');
   const [toFiatPrice, setToFiatPrice] = useState<string>('');
   const fiatPriceAPI = useGetAPIService(APIServiceKey.fiatPrice);
 
   const refetch = useCallback(() => {
-    if (!chainId || !fromToken || !toToken) return;
+    if (!fromToken || !toToken) return;
     setLoading(true);
+    setError(null);
     const tokens = [fromToken, toToken];
 
     axios
       .post(
-        // TODO: set timeout value!!
         fiatPriceAPI,
         {
-          networks: tokens.map(() => getPlatformId(chainId)),
+          networks: tokens.map((token) => getPlatformId(token.chainId)),
           addresses: tokens.map((token) => token.address),
           symbols: tokens.map((token) => token.symbol),
           isCache: true,
@@ -62,16 +56,19 @@ export function useFetchFiatPrice({
         }
       })
       .catch((error) => {
+        setError(error);
         setLoading(false);
         console.error(error);
       });
-  }, [chainId, fromToken, toToken, apikey, fiatPriceAPI]);
+  }, [fromToken, toToken, apikey, fiatPriceAPI]);
 
   usePriceTimer({ refetch });
 
   return {
     loading,
+    isLoading: loading,
     refetch,
+    error,
     toFiatPrice,
     fromFiatPrice,
   };

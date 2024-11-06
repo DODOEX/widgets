@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
 import { chainListMap } from '../../../../constants/chainList';
-import { ChainId } from '../../../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { BridgeStepTool } from '../../../../hooks/Bridge/useFetchRoutePriceBridge';
 import { formatTokenAmountNumber } from '../../../../utils';
 import { EtherscanLinkButton } from './EtherscanLinkButton';

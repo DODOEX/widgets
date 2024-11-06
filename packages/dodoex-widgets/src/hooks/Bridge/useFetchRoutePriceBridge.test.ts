@@ -4,7 +4,6 @@ import {
 } from './useFetchRoutePriceBridge';
 import tokenList from '../../constants/tokenList';
 import { renderHook } from '@testing-library/react-hooks';
-import BigNumber from 'bignumber.js';
 import axios from 'axios';
 
 const tokenEther = tokenList[0];
@@ -15,22 +14,10 @@ const tokenUSDTChainBSC = {
 };
 
 jest.mock('axios');
-jest.mock('../../store/selectors/wallet', () => ({
-  getDefaultChainId: () => 1,
-}));
-jest.mock('../../store/selectors/token', () => ({
-  getEthBalance: () => ({
-    1: new BigNumber(12),
-  }),
-  getBalanceLoadings: () => ({
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee': false,
-    '0xdac17f958d2ee523a2206206994597c13d831ec7': false,
-  }),
-  getAccountBalances: () => ({
-    '0xdac17f958d2ee523a2206206994597c13d831ec7': {
-      tokenBalances: new BigNumber(123),
-      tokenAllowances: new BigNumber(456),
-    },
+jest.mock('../../components/UserOptionsProvider', () => ({
+  useUserOptions: () => ({
+    apikey: '',
+    defaultChainId: 1,
   }),
 }));
 jest.mock('react-redux', () => ({

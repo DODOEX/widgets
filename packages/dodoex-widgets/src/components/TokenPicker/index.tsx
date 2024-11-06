@@ -1,5 +1,11 @@
-import { Box, SearchInput } from '@dodoex/components';
-import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import { Box, BoxProps, SearchInput } from '@dodoex/components';
+import React, {
+  CSSProperties,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { FixedSizeList as List } from 'react-window';
 import type { TokenInfo } from '../../hooks/Token';
 import { useTokenList } from '../../hooks/Token';
@@ -7,11 +13,15 @@ import TokenItem from './TokenItem';
 import { t } from '@lingui/macro';
 import SelectChainItem from './SelectChainItem';
 import { useSelectChainList } from '../../hooks/Token/useSelectChainList';
-import { ChainId } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
+import { useQuery } from '@tanstack/react-query';
+import { isAddress } from '../../utils';
+import { TokenSearchLoadingSkelton } from './TokenSearchLoadingSkelton';
 
 export interface TokenPickerProps {
-  value?: TokenInfo | null;
-  onChange: (token: TokenInfo, isOccupied: boolean) => void;
+  chainId?: ChainId;
+  value?: TokenInfo | null | Array<TokenInfo>;
+  onChange: (token: TokenInfo | Array<TokenInfo>, isOccupied: boolean) => void;
   /** token pair usage */
   occupiedAddrs?: string[];
   /** token pair usage */
@@ -23,9 +33,15 @@ export interface TokenPickerProps {
   visible?: boolean;
   side?: 'from' | 'to';
   defaultLoadBalance?: boolean;
+  multiple?: boolean;
+  searchPlaceholder?: string;
+  /** like search pool address */
+  searchOtherAddress?: (address: string) => Promise<JSX.Element | null>;
+  sx?: BoxProps['sx'];
 }
 
 export default function TokenPicker({
+  chainId,
   value,
   onChange,
   occupiedAddrs,
@@ -35,28 +51,47 @@ export default function TokenPicker({
   visible,
   side,
   defaultLoadBalance,
+  multiple,
+  searchPlaceholder,
+  searchOtherAddress,
+  sx,
 }: TokenPickerProps) {
   const { chainList, selectChainId, setSelectChainId } =
     useSelectChainList(side);
-  const { showTokenList, filter, setFilter, onSelectToken, popularTokenList } =
-    useTokenList({
-      value,
-      onChange,
-      occupiedAddrs,
-      occupiedChainId,
-      hiddenAddrs,
-      showAddrs,
-      side,
-      chainId: selectChainId,
-      visible,
-      defaultLoadBalance,
-    });
+  const {
+    showTokenList,
+    filter,
+    setFilter,
+    onSelectToken,
+    popularTokenList,
+    tokenInfoMap,
+  } = useTokenList({
+    value,
+    onChange,
+    occupiedAddrs,
+    occupiedChainId,
+    hiddenAddrs,
+    showAddrs,
+    side,
+    chainId: chainId ?? selectChainId,
+    visible,
+    defaultLoadBalance,
+    multiple,
+  });
+
   const ref = useRef<HTMLDivElement>(null);
   const [fixedSizeHeight, setFixedSizeHeight] = useState(0);
 
   useEffect(() => {
-    if (visible && value?.chainId && value?.chainId !== selectChainId) {
-      setSelectChainId(value.chainId);
+    if (visible && value) {
+      if (Array.isArray(value)) {
+        const [firstValue] = value;
+        if (firstValue && firstValue.chainId !== selectChainId) {
+          setSelectChainId(firstValue.chainId);
+        }
+      } else {
+        setSelectChainId(value.chainId);
+      }
     }
   }, [value, visible]);
 
@@ -69,21 +104,39 @@ export default function TokenPicker({
     }
   }, [ref, visible, selectChainId]);
 
+  const searchOtherAddressQuery = useQuery({
+    queryKey: ['token-picker-searchOtherAddress', filter],
+    queryFn: () => {
+      if (!searchOtherAddress) return null;
+      return searchOtherAddress(filter);
+    },
+    enabled: isAddress(filter) && !!searchOtherAddress,
+  });
+
   const TokenItemFixedSizeMemo = useCallback(
     ({ index, style }: { index: number; style: CSSProperties }) => {
       const token = showTokenList[index];
       if (!token) return null;
+      let disabled = false;
+      if (value) {
+        disabled = Array.isArray(value)
+          ? value.some(
+              (valueItem) =>
+                valueItem.address === token.address &&
+                valueItem.chainId === token.chainId,
+            )
+          : value.address === token.address && value.chainId === token.chainId;
+      }
       return (
         <TokenItem
           key={token.address + token.chainId}
           token={token}
-          disabled={
-            !!value &&
-            value.address === token.address &&
-            value.chainId === token.chainId
-          }
+          disabled={disabled}
           style={style}
           onClick={() => onSelectToken(token)}
+          balance={
+            tokenInfoMap.get(`${token.chainId}-${token.address}`)?.balance
+          }
         />
       );
     },
@@ -98,6 +151,7 @@ export default function TokenPicker({
         px: 20,
         flex: 1,
         overflow: 'hidden',
+        ...sx,
       }}
     >
       <SearchInput
@@ -106,12 +160,12 @@ export default function TokenPicker({
         value={filter}
         onChange={(evt: any) => setFilter(evt.target.value)}
         clearValue={() => setFilter('')}
-        placeholder={t`Enter the token symbol or address`}
+        placeholder={searchPlaceholder ?? t`Enter the token symbol or address`}
         sx={{
           mb: 16,
         }}
       />
-      {chainList.length ? (
+      {chainId === undefined && chainList.length ? (
         <Box
           sx={{
             position: 'relative',
@@ -152,15 +206,31 @@ export default function TokenPicker({
         }}
         ref={ref}
       >
-        <List
-          height={fixedSizeHeight}
-          itemCount={showTokenList.length}
-          itemSize={52}
-          width={'100%'}
-          className="token-list"
-        >
-          {TokenItemFixedSizeMemo as any}
-        </List>
+        {showTokenList.length ? (
+          <List
+            height={fixedSizeHeight}
+            itemCount={showTokenList.length}
+            itemSize={52}
+            width={'100%'}
+            className="token-list"
+          >
+            {TokenItemFixedSizeMemo as any}
+          </List>
+        ) : (
+          <Box
+            sx={{
+              height: fixedSizeHeight,
+              overflowY: 'auto',
+            }}
+          >
+            {searchOtherAddressQuery.isLoading ? (
+              <TokenSearchLoadingSkelton />
+            ) : (
+              ''
+            )}
+            {searchOtherAddressQuery.data ? searchOtherAddressQuery.data : ''}
+          </Box>
+        )}
       </Box>
     </Box>
   );

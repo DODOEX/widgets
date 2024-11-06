@@ -3,7 +3,6 @@ import { useWeb3React } from '@web3-react/core';
 import { parseFixed } from '@ethersproject/bignumber';
 import { useCallback, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getGlobalProps } from '../../store/selectors/globals';
 import { getSlippage } from '../../store/selectors/settings';
 import { EmptyAddress } from '../../constants/address';
 import { usePriceTimer } from '../Swap/usePriceTimer';
@@ -12,6 +11,7 @@ import BigNumber from 'bignumber.js';
 import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export interface BridgeRouteI {
   /** update */
@@ -150,7 +150,7 @@ export function useFetchRoutePriceBridge({
   const { defaultSlippage, loading: slippageLoading } =
     useDefaultSlippage(true);
   const slippage = useSelector(getSlippage) || defaultSlippage;
-  const { apikey } = useSelector(getGlobalProps);
+  const { apikey } = useUserOptions();
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,
   );
@@ -212,6 +212,7 @@ export function useFetchRoutePriceBridge({
         'scroll',
         'manta',
         'orbiter',
+        'dodo',
         // Sync with src/components/Bridge/SelectBridgeDialog/productList.ts
       ],
     };

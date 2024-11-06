@@ -5,10 +5,12 @@ import { useMemo } from 'react';
 
 export const maxSlippageWarning = 5;
 
-export const useSlippageLimit = (isBridge: boolean | undefined) => {
-  const { defaultSlippage } = useDefaultSlippage(isBridge);
+export const useSlippageLimit = (slippageSwap?: number) => {
+  const { defaultSlippage } = useDefaultSlippage(slippageSwap === undefined);
   const slippage = useSelector(getSlippage) || defaultSlippage;
   return useMemo(() => {
-    return Number(slippage) > maxSlippageWarning;
-  }, [slippage]);
+    const compareSlippage =
+      slippageSwap === undefined ? Number(slippage) : slippageSwap;
+    return compareSlippage > maxSlippageWarning;
+  }, [slippage, slippageSwap]);
 };

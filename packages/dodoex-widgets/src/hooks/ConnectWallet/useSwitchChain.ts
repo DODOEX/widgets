@@ -3,10 +3,10 @@ import { useMemo } from 'react';
 import { chainListMap } from '../../constants/chainList';
 import {
   basicTokenMap,
-  ChainId,
   rpcServerMap,
   scanUrlDomainMap,
 } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { store } from '../../store';
 
 interface AddChainParameter {
@@ -51,10 +51,7 @@ export async function registerNetworkWithMetamask({
     const addChainParameters = {
       chainId: chainIdStr,
       chainName: chainListMap.get(chainId)?.name,
-      rpcUrls: [
-        ...rpcServerMap[chainId],
-        ...(store.getState().globals.jsonRpcUrlMap?.[chainId] ?? []),
-      ],
+      rpcUrls: [...rpcServerMap[chainId]],
       nativeCurrency: {
         name: basicToken.name,
         symbol: basicToken.symbol,
@@ -92,16 +89,17 @@ export function useSwitchChain(chainId?: ChainId) {
   const { provider } = useWeb3React();
 
   const switchChain = useMemo(() => {
-    if (!chainId || !provider?.provider?.isMetaMask) {
+    const providerResult: any = provider?.provider ?? provider;
+    if (!chainId || !providerResult?.isMetaMask) {
       return undefined;
     }
     return () => {
       return registerNetworkWithMetamask({
         chainId,
-        provider: provider?.provider,
+        provider: providerResult,
       });
     };
-  }, [chainId]);
+  }, [chainId, provider]);
 
   return switchChain;
 }

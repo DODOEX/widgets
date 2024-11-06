@@ -1,4 +1,8 @@
-import { alpha, ThemeOptions } from '@mui/system';
+import {
+  alpha,
+  ThemeOptions as ThemeOptionsBase,
+  Theme as ThemeBase,
+} from '@mui/system';
 import { merge } from 'lodash';
 
 export type PaletteMode = 'light' | 'dark';
@@ -7,13 +11,14 @@ interface PaletteColorOptions {
   light?: string;
   main: string;
   dark?: string;
-  contrastText?: string;
+  contrastText: string;
 }
 
 interface TypeBackground {
   default: string;
   paper: string;
   paperContrast: string;
+  paperDarkContrast: string;
   backdrop: string;
   input: string;
   tag: string;
@@ -38,18 +43,27 @@ interface TypeHover {
 }
 
 export interface PaletteOptions {
-  primary?: PaletteColorOptions;
-  secondary?: PaletteColorOptions;
-  error?: PaletteColorOptions;
-  warning?: PaletteColorOptions;
-  success?: PaletteColorOptions;
-  purple?: PaletteColorOptions;
-  mode?: PaletteMode;
-  text?: Partial<TypeText>;
-  border?: Partial<TypeBorder>;
-  hover?: Partial<TypeHover>;
-  background?: Partial<TypeBackground>;
+  primary: PaletteColorOptions;
+  secondary: PaletteColorOptions;
+  error: PaletteColorOptions;
+  warning: PaletteColorOptions;
+  success: PaletteColorOptions;
+  purple: PaletteColorOptions;
+  mode: PaletteMode;
+  text: TypeText;
+  border: TypeBorder;
+  hover: TypeHover;
+  background: TypeBackground;
+  tabActive: PaletteColorOptions;
   getContrastText?: (background: string) => string;
+}
+
+export interface ThemeOptions extends ThemeOptionsBase {
+  palette?: PaletteOptions;
+}
+
+export interface Theme extends ThemeBase {
+  palette: PaletteOptions & { mode: 'light' | 'dark' };
 }
 
 export interface ZIndex {
@@ -83,6 +97,7 @@ export const darkPalette: PaletteOptions = {
   mode: 'dark',
   primary: {
     main: '#FFE804',
+    contrastText: '#1A1A1B',
   },
   secondary: {
     main: '#FFE804',
@@ -108,6 +123,7 @@ export const darkPalette: PaletteOptions = {
     default: '#252831',
     paper: '#33363F',
     paperContrast: '#41454F',
+    paperDarkContrast: alpha('#FFF', 0.1),
     backdrop: alpha('#000', 0.9),
     input: '#252831',
     tag: alpha('#FFF', 0.04),
@@ -127,12 +143,17 @@ export const darkPalette: PaletteOptions = {
   hover: {
     default: alpha('#FFF', 0.1),
   },
+  tabActive: {
+    main: alpha('#FFE804', 0.2),
+    contrastText: '#FFE804',
+  },
 };
 
 export const lightPalette: PaletteOptions = {
   mode: 'light',
   primary: {
     main: '#1A1A1B',
+    contrastText: '#fff',
   },
   secondary: {
     main: '#FFE804',
@@ -158,6 +179,7 @@ export const lightPalette: PaletteOptions = {
     default: '#F9F6E8',
     paper: '#FFFFFF',
     paperContrast: '#F6F6F6',
+    paperDarkContrast: alpha('#1A1A1B', 0.1),
     backdrop: alpha('#000', 0.9),
     input: '#F0F0F0',
     tag: alpha('#1A1A1B', 0.04),
@@ -177,18 +199,22 @@ export const lightPalette: PaletteOptions = {
   hover: {
     default: alpha('#1A1A1B', 0.1),
   },
+  tabActive: {
+    main: alpha('#FFE804', 0.2),
+    contrastText: '#1A1A1B',
+  },
 };
 
 export const getDesignTokens = (
   mode: PaletteMode,
-  themeProps?: ThemeOptions,
+  themeProps?: PartialDeep<ThemeOptions>,
   lang?: string,
 ): ThemeOptions => {
   const isLight = mode === 'light';
   const normalFontWeight = lang ? getNormalFontWeight(lang) : 400;
   let palette = isLight ? lightPalette : darkPalette;
   if (themeProps?.palette?.mode === mode) {
-    palette = themeProps.palette;
+    palette = merge(palette, themeProps.palette);
   }
   const defaultTheme = {
     spacing: 1,
@@ -230,6 +256,11 @@ export const getDesignTokens = (
         fontWeight: 600,
         lineHeight: '38px',
       },
+      h4: {
+        fontSize: 24,
+        lineHeight: '33px',
+        fontWeight: 600,
+      },
       caption: {
         fontSize: 20,
         fontWeight: 600,
@@ -264,8 +295,13 @@ export const getDesignTokens = (
     components: {
       MuiCssBaseline: {
         styleOverrides: {
+          '': {
+            border: `0 solid ${palette.border?.main}`,
+            fontFamily: 'inherit',
+          },
           '::-webkit-scrollbar': {
             width: 6,
+            height: 8,
             backgroundColor: 'transparent',
           },
           '::-webkit-scrollbar-thumb': {
@@ -301,5 +337,5 @@ export const getDesignTokens = (
   return {
     ...merge(defaultTheme, themeProps),
     palette,
-  };
+  } as ThemeOptions;
 };

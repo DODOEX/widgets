@@ -1,4 +1,5 @@
-import { ChainId } from './chains';
+import { ContractRequests, TokenApi, ChainId } from '@dodoex/api';
+import { getRpcSingleUrlMap } from './chains';
 
 export enum APIServiceKey {
   routePrice = 'routePrice',
@@ -53,3 +54,13 @@ export function getAPIService(
       throw new Error(`Invalid key = ${key}`);
   }
 }
+
+export const contractRequests = new ContractRequests({
+  rpc: getRpcSingleUrlMap(),
+  // debugQuery: process.env.NODE_ENV === 'development',
+  // debugProvider: process.env.NODE_ENV === 'development',
+});
+export const tokenContractRequests = contractRequests.createContractRequests();
+export const tokenApi = new TokenApi({
+  contractRequests: tokenContractRequests,
+});

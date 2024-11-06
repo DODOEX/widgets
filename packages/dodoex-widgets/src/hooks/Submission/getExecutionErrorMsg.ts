@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro';
-import { basicTokenMap, ChainId } from '../../constants/chains';
+import { basicTokenMap } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
 
 export default function getExecutionErrorMsg(
   chainId: ChainId,

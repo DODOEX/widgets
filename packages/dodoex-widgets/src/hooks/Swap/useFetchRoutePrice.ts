@@ -8,18 +8,14 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { useSelector } from 'react-redux';
-import { DEFAULT_SWAP_DDL } from '../../constants/swap';
-import { getSlippage, getTxDdl } from '../../store/selectors/settings';
 import { EmptyAddress } from '../../constants/address';
 import { usePriceTimer } from './usePriceTimer';
-import { getDefaultChainId } from '../../store/selectors/wallet';
 import useExecuteSwap from './useExecuteSwap';
 import { TokenInfo } from '../Token';
-import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
-import { getGlobalProps } from '../../store/selectors/globals';
+import { useUserOptions } from '../../components/UserOptionsProvider';
+import { useSwapSettingStore } from './useSwapSettingStore';
 
 export enum RoutePriceStatus {
   Initial = 'Initial',
@@ -34,6 +30,9 @@ export interface FetchRoutePrice {
   fromAmount: string;
   toAmount: string;
   estimateGas?: boolean;
+  isReverseRouting?: boolean;
+  slippage?: number;
+  slippageLoading?: boolean;
 }
 
 interface IRouteResponse {
@@ -57,20 +56,21 @@ export function useFetchRoutePrice({
   toAmount,
   marginAmount,
   estimateGas,
+  isReverseRouting,
+  slippage,
+  slippageLoading,
 }: FetchRoutePrice) {
   const { account, chainId: walletChainId, provider } = useWeb3React();
-  const defaultChainId = useSelector(getDefaultChainId);
+  const { defaultChainId, feeRate, rebateTo, apikey } = useUserOptions();
   const chainId = useMemo(
     () => fromToken?.chainId || walletChainId || defaultChainId,
     [walletChainId, fromToken, defaultChainId],
   );
-  const { defaultSlippage, loading: slippageLoading } =
-    useDefaultSlippage(false);
-  const slippage = useSelector(getSlippage) || defaultSlippage;
-  const ddl = useSelector(getTxDdl) || DEFAULT_SWAP_DDL;
+  const ddl = useSwapSettingStore((state) => Number(state.ddl));
+  const disableIndirectRouting = useSwapSettingStore((state) =>
+    Number(state.disableIndirectRouting),
+  );
   const lastId = useRef(0);
-  const { feeRate, rebateTo, apikey, isReverseRouting } =
-    useSelector(getGlobalProps);
   const apiDdl = useMemo(() => Math.floor(Date.now() / 1000) + ddl * 60, [ddl]);
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,
@@ -108,7 +108,7 @@ export function useFetchRoutePrice({
       deadLine: apiDdl,
       apikey,
       slippage,
-      source: 'dodoV2AndMixWasm',
+      source: disableIndirectRouting ? 'noMaxHops' : 'dodoV2AndMixWasm',
       toTokenAddress: toToken.address,
       fromTokenAddress: fromToken.address,
       userAddr: account || EmptyAddress,
@@ -166,6 +166,7 @@ export function useFetchRoutePrice({
     routePriceAPI,
     slippageLoading,
     estimateGas,
+    disableIndirectRouting,
   ]);
 
   usePriceTimer({ refetch });
@@ -184,6 +185,7 @@ export function useFetchRoutePrice({
       const { resAmount, to, data, useSource, duration, value } =
         rawBriefResult;
       const finalFromAmount = isReverseRouting ? resAmount : fromAmount;
+      const finalToAmount = isReverseRouting ? fromAmount : resAmount;
       if (!fromToken || !finalFromAmount) return;
       execute({
         to,
@@ -193,9 +195,37 @@ export function useFetchRoutePrice({
         ddl,
         value,
         subtitle,
+        mixpanelProps: {
+          from: account,
+          fromTokenAddress: fromToken.address,
+          toTokenAddress: toToken?.address,
+          fromAmount: parseFixed(
+            String(finalFromAmount || 1),
+            fromToken.decimals,
+          ).toString(),
+          resAmount: finalToAmount,
+          resPricePerFromToken: isReverseRouting
+            ? rawBriefResult.resPricePerToToken
+            : rawBriefResult.resPricePerFromToken,
+          resPricePerToToken: isReverseRouting
+            ? rawBriefResult.resPricePerFromToken
+            : rawBriefResult.resPricePerToToken,
+          fromTokenSymbol: fromToken.symbol,
+          toTokenSymbol: toToken?.symbol,
+          fromTokenDecimals: fromToken.decimals,
+          toTokenDecimals: toToken?.decimals,
+        },
       });
     },
-    [ddl, fromToken, fromAmount, isReverseRouting, rawBriefResult],
+    [
+      ddl,
+      account,
+      fromToken,
+      fromAmount,
+      toToken,
+      isReverseRouting,
+      rawBriefResult,
+    ],
   );
 
   return {

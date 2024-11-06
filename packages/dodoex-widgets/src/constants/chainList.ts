@@ -1,4 +1,4 @@
-import { ChainId } from './chains';
+import { ChainId } from '@dodoex/api';
 import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg';
 import { ReactComponent as ArbitrumLogo } from '../assets/logo/networks/arbitrum.svg';
 import { ReactComponent as PolygonLogo } from '../assets/logo/networks/polygon.svg';
@@ -13,6 +13,8 @@ import { ReactComponent as LINEALogo } from '../assets/logo/networks/linea.svg';
 import { ReactComponent as ScrollLogo } from '../assets/logo/networks/scroll.svg';
 import { ReactComponent as MantaLogo } from '../assets/logo/networks/manta.svg';
 import { ReactComponent as MantleLogo } from '../assets/logo/networks/mantle.svg';
+import { ReactComponent as DODOchainLogo } from '../assets/logo/networks/dodochain.svg';
+import { ReactComponent as TaikoLogo } from '../assets/logo/networks/taiko.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -35,6 +37,15 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.GOERLI,
       logo: ETHereumLogo,
       name: 'Goerli',
+      mainnet: ChainId.MAINNET,
+    },
+  ],
+  [
+    ChainId.SEPOLIA,
+    {
+      chainId: ChainId.SEPOLIA,
+      logo: ETHereumLogo,
+      name: 'Sepolia',
       mainnet: ChainId.MAINNET,
     },
   ],
@@ -142,4 +153,24 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       name: 'Mantle',
     },
   ],
+  [
+    ChainId.DODO_CHAIN_TESTNET,
+    {
+      chainId: ChainId.DODO_CHAIN_TESTNET,
+      logo: DODOchainLogo,
+      name: 'DODOchain testnet',
+    },
+  ],
+  [
+    ChainId.TAIKO,
+    {
+      chainId: ChainId.TAIKO,
+      logo: TaikoLogo,
+      name: 'Taiko',
+    },
+  ],
 ]);
+
+export const isTestNet = (chainId: ChainId) => {
+  return !!chainListMap.get(chainId)?.mainnet;
+};

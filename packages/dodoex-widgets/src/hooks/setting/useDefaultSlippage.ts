@@ -1,28 +1,24 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 import {
   DEFAULT_BRIDGE_SLIPPAGE,
   DEFAULT_SWAP_SLIPPAGE,
 } from '../../constants/swap';
-import { getAutoSlippage, getGlobalProps } from '../../store/selectors/globals';
+import { getAutoSlippage } from '../../store/selectors/globals';
 
 export function useDefaultSlippage(isBridge: boolean | undefined) {
-  const globalProps = useSelector(getGlobalProps);
+  const { bridgeSlippage, swapSlippage } = useUserOptions();
   const autoSlippage = useSelector(getAutoSlippage);
 
   const defaultSlippage = useMemo(() => {
     if (!autoSlippage?.loading && autoSlippage?.value)
       return autoSlippage.value;
     if (isBridge) {
-      return globalProps.bridgeSlippage ?? DEFAULT_BRIDGE_SLIPPAGE;
+      return bridgeSlippage ?? DEFAULT_BRIDGE_SLIPPAGE;
     }
-    return globalProps.swapSlippage ?? DEFAULT_SWAP_SLIPPAGE;
-  }, [
-    globalProps.swapSlippage,
-    globalProps.bridgeSlippage,
-    isBridge,
-    autoSlippage,
-  ]);
+    return swapSlippage ?? DEFAULT_SWAP_SLIPPAGE;
+  }, [swapSlippage, bridgeSlippage, isBridge, autoSlippage]);
 
   return {
     defaultSlippage,

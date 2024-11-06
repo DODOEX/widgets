@@ -1,5 +1,5 @@
 import { TokenInfo } from '../hooks/Token';
-import { ChainId } from './chains';
+import { ChainId } from '@dodoex/api';
 
 const AUTO_SWITCH_NETWORK = 'DODO_WIDGET_AUTO_SWITCH_NETWORK';
 export function getAuthSwitchCache() {
@@ -58,4 +58,13 @@ export function setLastSlippage(
       String(slippage),
     );
   }
+}
+
+// The data stored in the corresponding Key means that it has been confirmed. After confirmation, the risk prompt will no longer be displayed.
+const RiskWarningOnceKeyPrefix = 'risk-warning-once-';
+export const RiskOncePageLocalStorage: Record<string, string> = {
+  PoolEditPage: `${RiskWarningOnceKeyPrefix}pool-edit`,
+};
+export function getIsPoolEditRiskWarningOpen() {
+  return !window.localStorage.getItem(RiskOncePageLocalStorage.PoolEditPage);
 }

@@ -1,25 +1,33 @@
-import { t } from '@lingui/macro';
+import { CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { useWeb3React } from '@web3-react/core';
-import BigNumber from 'bignumber.js';
 import type { TransactionResponse } from '@ethersproject/abstract-provider';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { basicTokenMap, ChainId } from '../../constants/chains';
+import { useCallback, useMemo, useState } from 'react';
 import { useFetchBlockNumber } from '../contract';
 import { approve, getEstimateGas, sendTransaction } from '../contract/wallet';
 import getExecutionErrorMsg from './getExecutionErrorMsg';
 import { OpCode, Step as StepSpec } from './spec';
-import { ExecutionResult, State, Request, WatchResult, Showing } from './types';
+import {
+  ExecutionResult,
+  State,
+  Request,
+  WatchResult,
+  Showing,
+  ExecutionCtx,
+  TextUpdater,
+} from './types';
 import { BIG_ALLOWANCE } from '../../constants/token';
 import { useCurrentChainId } from '../ConnectWallet';
-import { useDispatch, useSelector } from 'react-redux';
-import { setGlobalProps } from '../../store/actions/globals';
+import { useDispatch } from 'react-redux';
+import { setContractStatus } from '../../store/actions/globals';
 import { ContractStatus } from '../../store/reducers/globals';
 import { AppThunkDispatch } from '../../store/actions';
+import { useQueryClient } from '@tanstack/react-query';
 
 export interface ExecutionProps {
   onTxFail?: (error: Error, data: any) => void;
   onTxSubmit?: (tx: string, data: any) => void;
   onTxSuccess?: (tx: string, data: any) => void;
+  onTxReverted?: (tx: string, data: any) => void;
   executionStatus?: {
     showing?: Showing | null;
     showingDone?: boolean;
@@ -34,8 +42,10 @@ export default function useExecution({
   onTxFail,
   onTxSubmit,
   onTxSuccess,
+  onTxReverted,
 }: ExecutionProps = {}) {
   const { account, provider } = useWeb3React();
+  const queryClient = useQueryClient();
   const chainId = useCurrentChainId();
   const [waitingSubmit, setWaitingSubmit] = useState(false);
   const [requests, setRequests] = useState<Map<string, [Request, State]>>(
@@ -56,16 +66,17 @@ export default function useExecution({
     async (
       brief: string,
       spec: StepSpec,
-      subtitle?: string | React.ReactNode | null,
-      early = false,
-      submittedBack?: () => void,
-      mixpanelProps?: Record<string, any>,
-      submittedConfirmBack?: () => void,
-      successBack?: (
-        tx: string,
-        callback?: ExecutionProps['onTxSuccess'],
-      ) => void,
+      options?: Parameters<ExecutionCtx['execute']>[2],
     ) => {
+      const {
+        subtitle,
+        early,
+        submittedBack,
+        mixpanelProps,
+        submittedConfirmBack,
+        successBack,
+        metadata,
+      } = options ?? {};
       setTransactionTx('');
       setErrorMessage('');
       if (!account || !provider)
@@ -75,6 +86,7 @@ export default function useExecution({
       setSubmittedConfirmBack(() => submittedConfirmBack);
       let tx: string | undefined;
       let params: any;
+      let nonce: number | undefined;
       let transaction: TransactionResponse | undefined;
       setWaitingSubmit(false);
       try {
@@ -86,10 +98,14 @@ export default function useExecution({
             spec.contract,
             spec.amt || BIG_ALLOWANCE,
             provider,
-            account,
           );
           tx = transaction.hash;
           setTransactionTx(tx);
+          try {
+            nonce = await provider.getTransactionCount(account);
+          } catch (e) {
+            console.error(e);
+          }
         } else if (spec.opcode === OpCode.TX) {
           // Sanity check
           if (spec.to === '') throw new Error('Submission: malformed to');
@@ -97,8 +113,11 @@ export default function useExecution({
             throw new Error('Submission: malformed data');
           if (spec.data.indexOf('0x') === 0 && spec.data.length <= 2)
             throw new Error('Submission: malformed data');
-          // private swap need
-          // nonce = await web3.eth.getTransactionCount(account);
+          try {
+            nonce = await provider.getTransactionCount(account);
+          } catch (e) {
+            console.error(e);
+          }
           params = {
             value: spec.value,
             data: spec.data,
@@ -116,6 +135,7 @@ export default function useExecution({
               }
             } catch (error) {
               console.debug(error);
+              throw error;
             }
           }
 
@@ -131,11 +151,7 @@ export default function useExecution({
         setShowing({ spec, brief, subtitle });
         console.error(e);
         if (e.message) {
-          dispatch(
-            setGlobalProps({
-              contractStatus: ContractStatus.Failed,
-            }),
-          );
+          dispatch(setContractStatus(ContractStatus.Failed));
           const options = { error: e.message, brief };
           if (mixpanelProps) Object.assign(options, mixpanelProps);
           if (onTxFail) {
@@ -156,13 +172,11 @@ export default function useExecution({
         ...params,
         tx,
         subtitle,
+        metadata,
+        nonce,
         ...mixpanelProps,
       };
-      dispatch(
-        setGlobalProps({
-          contractStatus: ContractStatus.Pending,
-        }),
-      );
+      dispatch(setContractStatus(ContractStatus.Pending));
       if (onTxSubmit) {
         onTxSubmit(tx, reportInfo);
       }
@@ -175,6 +189,7 @@ export default function useExecution({
         spec,
         tx,
         subtitle,
+        metadata,
       };
 
       setRequests((res) => res.set(tx as string, [request, State.Running]));
@@ -188,50 +203,104 @@ export default function useExecution({
 
       if (transaction?.wait) {
         const receipt = await transaction.wait(1);
+        reportInfo.receipt = receipt;
         setShowingDone(true);
         if (receipt.status === WatchResult.Success) {
           if (reportInfo.opcode === 'TX') {
-            dispatch(
-              setGlobalProps({
-                contractStatus: ContractStatus.TxSuccess,
-              }),
-            );
+            dispatch(setContractStatus(ContractStatus.TxSuccess));
           }
           if (reportInfo.opcode === 'APPROVAL') {
-            dispatch(
-              setGlobalProps({
-                contractStatus: ContractStatus.ApproveSuccess,
-              }),
-            );
+            dispatch(setContractStatus(ContractStatus.ApproveSuccess));
           }
 
+          await updateBlockNumber(); // update blockNumber once after tx
           if (successBack) {
             successBack(tx, onTxSuccess);
           }
           if (onTxSuccess) {
             onTxSuccess(tx, reportInfo);
           }
-          await updateBlockNumber(); // update blockNumber once after tx
-          setRequests((res) => res.set(tx as string, [request, State.Success]));
+          queryClient.invalidateQueries({
+            queryKey: [CONTRACT_QUERY_KEY],
+          });
+          setRequests((res) =>
+            res.set(tx as string, [
+              {
+                ...request,
+                doneTime: Math.ceil(Date.now() / 1000),
+              },
+              State.Success,
+            ]),
+          );
           return ExecutionResult.Success;
         }
       }
+      if (onTxReverted) {
+        onTxReverted(tx, reportInfo);
+      }
       await updateBlockNumber(); // update blockNumber once after tx
       setShowingDone(true);
-      setRequests((res) => res.set(tx as string, [request, State.Failed]));
+      setRequests((res) =>
+        res.set(tx as string, [
+          {
+            ...request,
+            doneTime: Math.ceil(Date.now() / 1000),
+          },
+          State.Failed,
+        ]),
+      );
       return ExecutionResult.Failed;
     },
-    [account, chainId, setWaitingSubmit, provider, updateBlockNumber],
+    [
+      account,
+      chainId,
+      setWaitingSubmit,
+      provider,
+      updateBlockNumber,
+      queryClient,
+    ],
   );
 
-  const ctxVal = useMemo(
+  /**
+   * update requests text
+   */
+  const updateText = useCallback(
+    (upd: TextUpdater) => {
+      setRequests((requests) => {
+        const newRequests = new Map<string, [Request, State]>();
+        requests.forEach((value, key) => {
+          const [request, state] = value;
+          const updated = upd(request);
+          if (updated) {
+            newRequests.set(key, [
+              {
+                ...request,
+                brief: updated.brief,
+                subtitle: updated.subtitle,
+                metadata: updated.metadata,
+              },
+              state,
+            ]);
+          } else {
+            newRequests.set(key, value);
+          }
+        });
+        return newRequests;
+      });
+    },
+    [account, chainId, requests],
+  );
+
+  const ctxVal = useMemo<ExecutionCtx>(
     () => ({
       execute: handler,
       requests,
+      updateText,
       setShowing,
       waitingSubmit,
+      errorMessage,
     }),
-    [handler, requests, setShowing],
+    [handler, requests, updateText, waitingSubmit, errorMessage],
   );
 
   const closeShowing = useCallback(() => {

@@ -1,11 +1,9 @@
-import { alpha, Box, Tooltip, useTheme } from '@dodoex/components';
-import { Trans, t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
+import { Box, Tooltip, useTheme } from '@dodoex/components';
+import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
 import { BridgeRouteI } from '../../../hooks/Bridge/useFetchRoutePriceBridge';
-import { ApprovalState, TokenInfo } from '../../../hooks/Token/type';
-import { useGetTokenStatus } from '../../../hooks/Token/useGetTokenStatus';
+import { TokenInfo } from '../../../hooks/Token/type';
 import { productList } from './productList';
 import { RouteTag, RouteTagList } from './RouteTagList';
 import { GasFee as FeeIcon, Time as TimeIcon } from '@dodoex/icons';
@@ -14,6 +12,7 @@ import { formatTokenAmountNumber } from '../../../utils/formatter';
 import { TokenWithChain } from './TokenWithChain';
 import { DirectionLine } from './DirectionLine';
 import { BridgeLogo } from './BridgeLogo';
+import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
 
 export default function RouteCard({
   fromToken,
@@ -21,7 +20,6 @@ export default function RouteCard({
   fromChainId,
   toChainId,
   fromAmount,
-  fromTokenBalance,
   toTokenAmount,
   toolDetails,
   product,
@@ -37,7 +35,6 @@ export default function RouteCard({
   fromChainId: number;
   toChainId: number;
   fromAmount?: BridgeRouteI['fromAmount'];
-  fromTokenBalance: BigNumber | null;
   toTokenAmount?: BigNumber | null;
   toolDetails: BridgeRouteI['step']['toolDetails'];
   product: BridgeRouteI['product'];
@@ -50,20 +47,11 @@ export default function RouteCard({
   isBestPrice?: boolean;
 }) {
   const theme = useTheme();
-  const { account } = useWeb3React();
   const productDetail = productList.find((i) => i.id === product);
-  const { getApprovalState } = useGetTokenStatus({
-    account,
-    chainId: fromChainId,
+  const { isApproving, needApprove } = useTokenStatus(fromToken, {
+    amount: fromAmount,
     contractAddress: spenderContractAddress,
   });
-
-  const approvalState = useMemo(() => {
-    if (!fromToken || !fromAmount || !fromTokenBalance) {
-      return ApprovalState.Loading;
-    }
-    return getApprovalState(fromToken, fromAmount, fromTokenBalance);
-  }, [fromToken, fromAmount, fromTokenBalance, getApprovalState]);
 
   const routeTagList = useMemo<RouteTag[]>(() => {
     const restTagList: RouteTag[] = [];
@@ -72,10 +60,7 @@ export default function RouteCard({
         type: 'best-price',
       });
     }
-    if (
-      approvalState === ApprovalState.Approving ||
-      approvalState === ApprovalState.Insufficient
-    ) {
+    if (isApproving || needApprove) {
       return [
         ...restTagList,
         {
@@ -84,7 +69,7 @@ export default function RouteCard({
       ];
     }
     return restTagList;
-  }, [approvalState, isBestPrice]);
+  }, [isApproving, needApprove, isBestPrice]);
 
   return (
     <Box

@@ -1,8 +1,7 @@
 import { Box, useTheme } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
-import { Dispatch, SetStateAction, useMemo } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { BridgeRouteI } from '../../../hooks/Bridge/useFetchRoutePriceBridge';
-import useGetBalance from '../../../hooks/Token/useGetBalance';
 import Dialog from '../../Swap/components/Dialog';
 import RouteCard from './RouteCard';
 
@@ -21,17 +20,11 @@ export default function SelectBridgeDialog({
 }) {
   const theme = useTheme();
 
-  const getBalance = useGetBalance();
-  const fromTokenBalance = useMemo(() => {
-    if (!bridgeRouteList?.length) return null;
-    const { fromToken } = bridgeRouteList[0];
-    return getBalance(fromToken);
-  }, [bridgeRouteList, getBalance]);
-
   return (
     <Dialog
       open={open}
       onClose={onClose}
+      id="select-cross-chain"
       title={<Trans>Select Cross Chain</Trans>}
     >
       <Box
@@ -64,7 +57,6 @@ export default function SelectBridgeDialog({
               fromToken={r.fromToken}
               toToken={r.toToken}
               fromAmount={r.fromAmount}
-              fromTokenBalance={fromTokenBalance}
               toTokenAmount={r.toTokenAmount}
               toolDetails={r.step.toolDetails}
               spenderContractAddress={r.spenderContractAddress}

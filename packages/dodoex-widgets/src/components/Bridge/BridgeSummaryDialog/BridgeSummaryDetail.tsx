@@ -16,7 +16,7 @@ import {
 import { Trans } from '@lingui/macro';
 import { useMemo, useState } from 'react';
 import { chainListMap } from '../../../constants/chainList';
-import { ChainId } from '../../../constants/chains';
+import { ChainId } from '@dodoex/api';
 import { BridgeRouteI } from '../../../hooks/Bridge/useFetchRoutePriceBridge';
 import {
   formatReadableNumber,
@@ -37,7 +37,7 @@ export default function BridgeSummaryDetail({
   // const [isEditFromAddress, setIsEditFromAddress] = useState(false);
   // const [fromAddress, setFromAddress] = useState(route.fromAddress);
   const fromAddressScanUrl = useMemo(() => {
-    return getEtherscanPage(`address/${route.fromAddress}`, route.fromChainId);
+    return getEtherscanPage(route.fromChainId, route.fromAddress, 'address');
   }, [route.fromAddress, route.fromChainId]);
   return (
     <Box>

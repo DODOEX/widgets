@@ -1,4 +1,4 @@
-import { Box, Button, HoverOpacity } from '@dodoex/components';
+import { Box, Button, HoverOpacity, useTheme } from '@dodoex/components';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ExecutionContext,
@@ -6,8 +6,7 @@ import {
   ExecutionProps,
 } from '../../hooks/Submission';
 import Dialog from '../Swap/components/Dialog';
-import { useDispatch, useSelector } from 'react-redux';
-import { setGlobalProps } from '../../store/actions/globals';
+import { useDispatch } from 'react-redux';
 import { ContractStatus } from '../../store/reducers/globals';
 import { AppThunkDispatch } from '../../store/actions';
 import { ReactComponent as LoadingIcon } from '../../assets/approveBorderRight.svg';
@@ -15,7 +14,10 @@ import { t, Trans } from '@lingui/macro';
 import { ArrowTopRightBorder, DoneBorder, ErrorWarn } from '@dodoex/icons';
 import { Showing } from '../../hooks/Submission/types';
 import { useWeb3React } from '@web3-react/core';
-import { ChainId, scanUrlDomainMap } from '../../constants/chains';
+import { scanUrlDomainMap } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
+import { setContractStatus } from '../../store/actions/globals';
+import { useUserOptions } from '../UserOptionsProvider';
 
 const strokeWidth = 6;
 
@@ -26,6 +28,7 @@ function ExecuteIcon({
   showingDone: boolean;
   errorMessage?: string | null;
 }) {
+  const theme = useTheme();
   if (errorMessage) {
     return (
       <Box
@@ -55,8 +58,7 @@ function ExecuteIcon({
     <Box
       sx={{
         mx: 'auto',
-        border: (theme) =>
-          `${strokeWidth}px solid ${theme.palette?.background.input}`,
+        border: `${strokeWidth}px solid ${theme.palette?.background.input}`,
         borderRadius: '50%',
         width: '64px',
         height: '64px',
@@ -150,22 +152,24 @@ function TransactionTime({
     }
     return `${sec}s`;
   }, [time]);
-  const t = useRef<NodeJS.Timer>();
+  const t = useRef<number>();
   useEffect(() => {
     if (isStarted) {
       setTime(0);
-      clearInterval(t.current);
-      t.current = setInterval(() => {
+      window.clearInterval(t.current);
+      t.current = window.setInterval(() => {
         setTime((i) => i + 1);
       }, 1000);
     }
     return () => {
-      clearInterval(t.current);
+      window.clearInterval(t.current);
     };
   }, [isStarted]);
 
   useEffect(() => {
-    clearInterval(t.current);
+    if (isEnded) {
+      window.clearInterval(t.current);
+    }
   }, [isEnded]);
 
   return (
@@ -233,10 +237,18 @@ export default function WithExecutionDialog({
   };
   const dispatch = useDispatch<AppThunkDispatch>();
 
+  const noSubmissionDialog = useUserOptions(
+    (state) => state.noSubmissionDialog,
+  );
+
   return (
     <ExecutionContext.Provider value={ctxVal}>
       {children}
-      <Dialog open={!!showing} onClose={closeShowing}>
+      <Dialog
+        open={!!showing && !noSubmissionDialog}
+        onClose={closeShowing}
+        id="submission"
+      >
         <Box
           sx={{
             display: 'flex',
@@ -296,11 +308,7 @@ export default function WithExecutionDialog({
             fullWidth
             size={Button.Size.big}
             onClick={() => {
-              dispatch(
-                setGlobalProps({
-                  contractStatus: ContractStatus.Initial,
-                }),
-              );
+              dispatch(setContractStatus(ContractStatus.Initial));
               closeShowing();
             }}
             sx={{

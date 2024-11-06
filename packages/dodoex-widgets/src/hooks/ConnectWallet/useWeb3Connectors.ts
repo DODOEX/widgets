@@ -1,6 +1,7 @@
 import { Provider as Eip1193Provider } from '@web3-react/types';
 import { JsonRpcProvider } from '@ethersproject/providers';
-import { ChainId, rpcServerMap } from '../../constants/chains';
+import { ChainId } from '@dodoex/api';
+import { rpcServerMap } from '../../constants/chains';
 import { useEffect, useMemo, useRef } from 'react';
 import {
   getConnectionFromMetaMask,

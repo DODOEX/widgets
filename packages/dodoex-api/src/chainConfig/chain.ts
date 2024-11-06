@@ -1,0 +1,35 @@
+export enum ChainId {
+  MAINNET = 1,
+  GOERLI = 5,
+  SEPOLIA = 11155111,
+
+  BSC = 56,
+
+  POLYGON = 137,
+
+  ARBITRUM_ONE = 42161,
+
+  AURORA = 1313161554,
+
+  OKCHAIN = 66,
+
+  OPTIMISM = 10,
+
+  AVALANCHE = 43114,
+
+  CONFLUX = 1030,
+
+  BASE = 8453,
+
+  LINEA = 59144,
+
+  SCROLL = 534352,
+
+  MANTA = 169,
+
+  MANTLE = 5000,
+
+  DODO_CHAIN_TESTNET = 53457,
+
+  TAIKO = 167000,
+}
