@@ -97,6 +97,15 @@ export default {
     onTxSuccess: {
       action: 'txSuccess',
     },
+    onTxReverted: {
+      action: 'txReverted',
+    },
+    onPayTokenChange: {
+      action: 'payTokenChange',
+    },
+    onReceiveTokenChange: {
+      action: 'receiveTokenChange',
+    },
     onConnectWalletClick: {
       action: 'connectWalletClick',
     },
