@@ -1243,21 +1243,21 @@
   dependencies:
     "@babel/runtime" "^7.17.2"
 
-"@dodoex/icons@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@dodoex/icons/-/icons-2.0.1.tgz#f241c1812bf32d13d51a948ccb3c585de311b008"
-  integrity sha512-4E0L5jtaZ+Ya48KAH1ODBk2oX1kWsBKa5nscal8MhlrZkqynbB52TJFI+t95SL6j1iwQen12U/iAHazUuycFTA==
+"@dodoex/icons@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@dodoex/icons/-/icons-2.0.2.tgz#b0df6d5fafc2466294738af9e3505375cd386c7a"
+  integrity sha512-rsIIt4FJflR1FC6RcD7+EtkuAZ+V71MVUId+BFrMyBN0QnH2vTunXebRhp66llTgEey5uJ88oNdbWD1+J7SeEQ==
   dependencies:
     "@babel/runtime" "^7.17.2"
 
-"@dodoex/widgets@^2.6.4":
-  version "2.6.4"
-  resolved "https://registry.yarnpkg.com/@dodoex/widgets/-/widgets-2.6.4.tgz#b67cb5cc7bfd774c4847e840d73e08a4f29ef00a"
-  integrity sha512-g5PdNobkAcnCtImgaQkNVZONuxGJWswhI6aooW212K5GY31dP6x6PL3YZ4euZAmim8UsX7J0HVcjD5I1IdTHUg==
+"@dodoex/widgets@^2.6.13":
+  version "2.6.13"
+  resolved "https://registry.yarnpkg.com/@dodoex/widgets/-/widgets-2.6.13.tgz#d31ac1901168e60f6fd3c372e8c8bcbcc1046154"
+  integrity sha512-zh8So7RunR2Jf2gcR/ijHY/j/YpQYzVbG5CHXOH2Ngk7+zIavqp1ijQzYgykkL+/ZkjT5fPCbChSZTOvACgYRQ==
   dependencies:
     "@babel/runtime" "^7.17.0"
     "@dodoex/components" "^2.0.1"
-    "@dodoex/icons" "^2.0.1"
+    "@dodoex/icons" "^2.0.2"
     "@emotion/react" "^11.10.0"
     "@emotion/styled" "^11.10.0"
     "@ethersproject/bignumber" "^5.6.2"

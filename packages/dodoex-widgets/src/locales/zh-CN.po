@@ -43,7 +43,7 @@ msgstr "余额:"
 
 #: src/components/Swap/components/ConnectWallet/index.tsx:59
 msgid "Switch to {0}"
-msgstr ""
+msgstr "切换到 {0}"
 
 #: src/components/ErrorMessageDialog.tsx:63
 #: src/components/WithExecutionDialog/index.tsx:312

@@ -150,12 +150,12 @@ function TransactionTime({
     }
     return `${sec}s`;
   }, [time]);
-  const t = useRef<NodeJS.Timer>();
+  const t = useRef<number>();
   useEffect(() => {
     if (isStarted) {
       setTime(0);
       clearInterval(t.current);
-      t.current = setInterval(() => {
+      t.current = window.setInterval(() => {
         setTime((i) => i + 1);
       }, 1000);
     }
