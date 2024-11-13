@@ -199,6 +199,7 @@ export function useTokenStatus(
   const isApprovingOrApproveMutationPending =
     isApproving || submitApproveMutation.isPending;
   return {
+    token,
     isApproving: isApprovingOrApproveMutationPending,
     isGetApproveLoading,
     needApprove,

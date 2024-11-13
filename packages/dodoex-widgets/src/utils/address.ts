@@ -1,6 +1,9 @@
-import { getAddress } from '@ethersproject/address';
+import { getAddress, getCreate2Address } from '@ethersproject/address';
 import { ChainId } from '@dodoex/api';
 import { scanUrlDomainMap } from '../constants/chains';
+import { keccak256, pack } from '@ethersproject/solidity';
+import { TokenInfo } from '../hooks/Token';
+import { toWei } from './formatter';
 
 export const isSameAddress = (
   tokenAddress1: string,
@@ -85,3 +88,43 @@ export async function openEtherscanPage(
     'noopener,noreferrer',
   );
 }
+
+export const UNI_INIT_CODE_HASH =
+  '0x62543e8738c2449ea6d378de41d932dc92a6fabeb3cc19b8e4f05af1582b238c';
+
+export function sortsBefore(tokenA: TokenInfo, tokenB: TokenInfo): boolean {
+  if (tokenA.chainId !== tokenB.chainId) {
+    throw new Error('token is not in the same chain');
+  }
+  return tokenA.address.toLowerCase() < tokenB.address.toLowerCase();
+}
+
+// https://github.com/Uniswap/sdks/blob/8b2649bf956f0cae69d58b8e3a4fd4cc8f164756/sdks/v2-sdk/src/entities/pair.ts#L24
+export const computePairAddress = ({
+  factoryAddress,
+  tokenA,
+  tokenB,
+  fee,
+}: {
+  factoryAddress: string;
+  tokenA: TokenInfo;
+  tokenB: TokenInfo;
+  fee: number;
+}): string => {
+  const [token0, token1] = sortsBefore(tokenA, tokenB)
+    ? [tokenA, tokenB]
+    : [tokenB, tokenA]; // does safety checks
+  return getCreate2Address(
+    factoryAddress,
+    keccak256(
+      ['bytes'],
+      [
+        pack(
+          ['address', 'address', 'uint256'],
+          [token0.address, token1.address, toWei(fee, 18).toString()],
+        ),
+      ],
+    ),
+    UNI_INIT_CODE_HASH,
+  );
+};

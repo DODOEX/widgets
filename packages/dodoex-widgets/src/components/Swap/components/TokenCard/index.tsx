@@ -296,7 +296,6 @@ export function TokenCard({
         <PercentageSelectButtonGroup
           sx={{
             mt: 16,
-            mb: 9,
           }}
           value={percentage}
           onChange={
@@ -333,6 +332,7 @@ export function TokenCard({
       {fiatPriceTxt !== undefined ? (
         <Box
           sx={{
+            mt: showPercentage ? 9 : 0,
             typography: 'h6',
             color: theme.palette.text.secondary,
           }}

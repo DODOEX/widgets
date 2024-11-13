@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.0",
+  "version": "3.0.1-taiko.1",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -58,8 +58,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/api": "3.0.0",
-    "@dodoex/components": "3.0.0",
+    "@dodoex/api": "3.0.1-taiko.1",
+    "@dodoex/components": "3.0.1-taiko-1",
     "@dodoex/icons": "^2.0.2",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
@@ -72,6 +72,8 @@
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
     "@tanstack/react-query": "^5.18.1",
+    "@uniswap/sdk-core": "^5.9.0",
+    "@uniswap/v2-sdk": "^4.6.2",
     "@web3-react/core": "8.2.0",
     "@web3-react/eip1193": "8.2.0",
     "@web3-react/metamask": "8.2.1",

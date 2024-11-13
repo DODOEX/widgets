@@ -1,4 +1,4 @@
-import { PoolApi, ExcludeNone, PoolType } from '@dodoex/api';
+import { PoolApi, ExcludeNone, PoolType, UniPoolV2Api } from '@dodoex/api';
 import { contractRequests } from '../../constants/api';
 import { ChainId } from '@dodoex/api';
 import { TokenInfo } from '../../hooks/Token';
@@ -8,22 +8,29 @@ export const poolApi = new PoolApi({
   contractRequests,
 });
 
+export const uniPoolV2Api = new UniPoolV2Api({
+  contractRequests,
+});
+
 export type FetchLiquidityListLqList = ExcludeNone<
   ReturnType<
-    Exclude<typeof PoolApi.graphql.fetchLiquidityList['__apiType'], undefined>
+    Exclude<(typeof PoolApi.graphql.fetchLiquidityList)['__apiType'], undefined>
   >['liquidity_list']
 >['lqList'];
 
 export type FetchMyLiquidityListLqList = ExcludeNone<
   ReturnType<
-    Exclude<typeof PoolApi.graphql.fetchMyLiquidityList['__apiType'], undefined>
+    Exclude<
+      (typeof PoolApi.graphql.fetchMyLiquidityList)['__apiType'],
+      undefined
+    >
   >['liquidity_list']
 >['lqList'];
 
 export type FetchMyCreateListLqList = ExcludeNone<
   ReturnType<
     Exclude<
-      typeof PoolApi.graphql.fetchDashboardPairList['__apiType'],
+      (typeof PoolApi.graphql.fetchDashboardPairList)['__apiType'],
       undefined
     >
   >['dashboard_pairs_list']
@@ -31,7 +38,7 @@ export type FetchMyCreateListLqList = ExcludeNone<
 
 export type FetchPoolList = ExcludeNone<
   ReturnType<
-    Exclude<typeof PoolApi.graphql.fetchPoolList['__apiType'], undefined>
+    Exclude<(typeof PoolApi.graphql.fetchPoolList)['__apiType'], undefined>
   >['pairs']
 >;
 

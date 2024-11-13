@@ -58,7 +58,7 @@ export default function TokenLogo({
   address: addressProps,
   token: tokenProps,
   sx,
-  chainId,
+  chainId: chainIdProp,
   noShowChain,
   noBorder,
   chainSize = 12,
@@ -77,6 +77,10 @@ export default function TokenLogo({
   const symbol = token?.symbol;
   const initial = symbol?.charAt(0).toUpperCase();
   const { getTokenLogoUrl } = useUserOptions();
+  const chainId = useMemo(
+    () => chainIdProp ?? token?.chainId,
+    [chainIdProp, token],
+  );
 
   const logoUrl = useMemo(() => {
     const tokenUrl = token?.logoURI;
@@ -191,8 +195,8 @@ export default function TokenLogo({
           !(cross ? crossLogoUrl : logoUrl) || error
             ? defaultUrl
             : cross
-            ? crossLogoUrl
-            : logoUrl
+              ? crossLogoUrl
+              : logoUrl
         }
         onLoad={onLoad}
         onError={(e: any) => {

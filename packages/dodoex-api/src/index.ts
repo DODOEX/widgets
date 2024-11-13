@@ -35,4 +35,6 @@ export { TokenApi } from './services/TokenApi';
 export { SwapApi } from './services/swap/SwapApi';
 export { SystemApi } from './services/system/SystemApi';
 
-export type ExcludeNone<T> = Exclude<Exclude<T, undefined>, null>;
+export { UniPoolV2Api } from './services/UniPoolV2Api';
+
+export type ExcludeNone<T> = NonNullable<T>;

@@ -75,4 +75,8 @@ export enum ABIName {
   DODOV1PmmHelperABI = 'DODOV1PmmHelperABI',
 
   D3MM_READ_ABI = 'D3MM_READ_ABI',
+
+  // uni
+  IUniswapV2Pair = 'IUniswapV2Pair',
+  IUniswapV2Router02 = 'IUniswapV2Router02',
 }

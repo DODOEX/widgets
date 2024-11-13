@@ -1,15 +1,18 @@
-import { ArrowBack } from '@dodoex/icons';
+import { ArrowBack, Plus } from '@dodoex/icons';
 import { Box, useTheme, ButtonBase } from '@dodoex/components';
 
 export function SwitchBox({
   onClick,
-  disabled,
+  disabled: disabledProps,
+  plus,
 }: {
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
+  plus?: boolean;
 }) {
   const theme = useTheme();
   const size = 36;
+  const disabled = disabledProps || plus || !onClick;
   return (
     <Box
       sx={{
@@ -33,8 +36,10 @@ export function SwitchBox({
           top: '50%',
           transform: 'translate(-50%, -50%) rotate(-90deg)',
           color: 'text.secondary',
-          ...(disabled || !onClick
-            ? {}
+          ...(disabled
+            ? {
+                cursor: 'inherit',
+              }
             : {
                 '&:hover': {
                   color: 'text.primary',
@@ -64,13 +69,23 @@ export function SwitchBox({
           }
         }}
       >
-        <Box
-          component={ArrowBack}
-          sx={{
-            width: 18,
-            height: 18,
-          }}
-        />
+        {plus ? (
+          <Box
+            component={Plus}
+            sx={{
+              width: 18,
+              height: 18,
+            }}
+          />
+        ) : (
+          <Box
+            component={ArrowBack}
+            sx={{
+              width: 18,
+              height: 18,
+            }}
+          />
+        )}
       </Box>
     </Box>
   );

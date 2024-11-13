@@ -17,6 +17,8 @@ export enum MetadataFlag {
   createDSPPool = 'createDSPPool',
   createGSPPool = 'createGSPPool',
   createDVMPool = 'createDVMPool',
+  createAMMV2Position = 'createAMMV2Position',
+  addLiquidityAMMV2Position = 'addLiquidityAMMV2Position',
   stakeMining = 'stakeMining',
   unstakeMining = 'unstakeMining',
   claimMining = 'claimMining',

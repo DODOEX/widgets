@@ -3,18 +3,26 @@ import { Box, BoxProps } from '../Box';
 
 type RadioProps = {
   sx?: BoxProps['sx'];
-  checked: boolean;
-  onChange: (
+  size?: number;
+  checkedIconSize?: number;
+  checked?: boolean;
+  onChange?: (
     evt: React.ChangeEvent<HTMLInputElement>,
     checked: boolean,
   ) => void;
 };
 export const Radio = React.forwardRef(function Radio(
-  { sx, onChange, ...other }: RadioProps,
+  {
+    sx,
+    onChange,
+    size: sizeProps,
+    checkedIconSize: checkedIconSizeProps,
+    ...other
+  }: RadioProps,
   ref,
 ) {
-  const size = 20;
-  const checkedIconSize = size / 2 + 2;
+  const size = sizeProps ?? 20;
+  const checkedIconSize = checkedIconSizeProps ?? size / 2 + 2;
   return (
     <Box
       component="span"
@@ -38,7 +46,7 @@ export const Radio = React.forwardRef(function Radio(
         {...other}
         ref={ref}
         onChange={(evt) => {
-          onChange(evt, evt.target.checked);
+          onChange?.(evt, evt.target.checked);
         }}
         sx={{
           position: 'absolute',
