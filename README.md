@@ -35,7 +35,7 @@ You can find the DODO Widget documentation [on the website](https://docs.dodoex
 
 ## Examples
 
-Inside the `examples` folder, there two different examples,
+Inside the `examples` folder, there are two different examples,
 
 For react app:
 
