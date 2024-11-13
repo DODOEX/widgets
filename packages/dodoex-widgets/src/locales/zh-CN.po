@@ -95,7 +95,7 @@ msgstr ""
 msgid "Create Liquidity Mining"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:318
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:319
 msgid "By adding liquidity you’ll earn <0>{0}</0> of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr ""
 
@@ -515,7 +515,7 @@ msgstr ""
 msgid "Add Initial Liquidity"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:184
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:185
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:113
 msgid "Add liquidity"
 msgstr ""
@@ -811,7 +811,7 @@ msgstr ""
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:253
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:254
 msgid "Deposit amounts"
 msgstr ""
 
@@ -967,6 +967,10 @@ msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/components/GSPPairRiskWarning.tsx:27
 msgid "The creator of the liquidity pool can adjust the liquidity distribution by modifying the market-making price parameters. <0>Learn more</0>"
+msgstr ""
+
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:364
+msgid "Invalid pair"
 msgstr ""
 
 #: src/components/AutoButton.tsx:50
@@ -1329,7 +1333,7 @@ msgstr ""
 msgid "Asset"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:358
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:366
 msgid "Supply"
 msgstr ""
 
@@ -1409,7 +1413,7 @@ msgstr ""
 msgid "Modify Confirmation"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:316
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:317
 msgid "Tips:"
 msgstr ""
 
@@ -1696,7 +1700,7 @@ msgstr ""
 msgid "Low"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:202
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:203
 msgid "Select pair"
 msgstr ""
 

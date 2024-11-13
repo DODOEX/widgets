@@ -63,6 +63,7 @@ export default function AMMV2Create() {
     pairAddress,
     pair,
     price,
+    isInvalidPair,
     invertedPrice,
     priceLoading,
     liquidityMinted,
@@ -351,11 +352,19 @@ export default function AMMV2Create() {
                 fullWidth
                 size={Button.Size.big}
                 disabled={
-                  !baseToken || !quoteToken || !baseAmount || !quoteAmount
+                  !baseToken ||
+                  !quoteToken ||
+                  !baseAmount ||
+                  !quoteAmount ||
+                  isInvalidPair
                 }
                 onClick={() => setShowConfirm(true)}
               >
-                <Trans>Supply</Trans>
+                {isInvalidPair ? (
+                  <Trans>Invalid pair</Trans>
+                ) : (
+                  <Trans>Supply</Trans>
+                )}
               </Button>
             </TokenPairStatusButton>
           </NeedConnectButton>

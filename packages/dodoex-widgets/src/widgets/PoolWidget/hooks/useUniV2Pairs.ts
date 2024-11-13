@@ -20,39 +20,48 @@ export function useUniV2Pairs({
   quoteAmount: string;
   fee: number;
 }) {
-  const [tokenA, tokenB, token0, token1, isRearTokenA] = React.useMemo(() => {
-    let isRearTokenA = false;
-    if (!baseToken || !quoteToken)
-      return [null, null, null, null, isRearTokenA];
-    const etherToken = basicTokenMap[baseToken.chainId as ChainId];
-    const baseTokenAddress =
-      etherToken.address?.toLowerCase() === baseToken.address.toLowerCase()
+  const [tokenA, tokenB, token0, token1, isRearTokenA, isInvalidPair] =
+    React.useMemo(() => {
+      let isRearTokenA = false;
+      if (!baseToken || !quoteToken)
+        return [null, null, null, null, isRearTokenA, false];
+      const etherToken = basicTokenMap[baseToken.chainId as ChainId];
+      const isBaseTokenEther =
+        etherToken.address?.toLowerCase() === baseToken.address.toLowerCase();
+      const isQuoteTokenEther =
+        etherToken.address?.toLowerCase() === quoteToken.address.toLowerCase();
+      const baseTokenAddress = isBaseTokenEther
         ? etherToken.wrappedTokenAddress
         : baseToken.address;
-    const quoteTokenAddress =
-      etherToken.address?.toLowerCase() === quoteToken.address.toLowerCase()
+      const quoteTokenAddress = isQuoteTokenEther
         ? etherToken.wrappedTokenAddress
         : quoteToken.address;
-    const tokenA = new Token(
-      baseToken.chainId,
-      baseTokenAddress,
-      baseToken.decimals,
-      baseToken.symbol,
-      baseToken.name,
-    );
-    const tokenB = new Token(
-      quoteToken.chainId,
-      quoteTokenAddress,
-      quoteToken.decimals,
-      quoteToken.symbol,
-      quoteToken.name,
-    );
-    isRearTokenA = !tokenA.sortsBefore(tokenB);
-    const [token0, token1] = !isRearTokenA
-      ? [tokenA, tokenB]
-      : [tokenB, tokenA];
-    return [tokenA, tokenB, token0, token1, isRearTokenA];
-  }, [baseToken, quoteToken]);
+
+      const isInvalidPair =
+        baseTokenAddress.toLowerCase() === quoteTokenAddress.toLowerCase();
+      if (isInvalidPair) {
+        return [null, null, null, null, isRearTokenA, true];
+      }
+      const tokenA = new Token(
+        baseToken.chainId,
+        baseTokenAddress,
+        baseToken.decimals,
+        baseToken.symbol,
+        baseToken.name,
+      );
+      const tokenB = new Token(
+        quoteToken.chainId,
+        quoteTokenAddress,
+        quoteToken.decimals,
+        quoteToken.symbol,
+        quoteToken.name,
+      );
+      isRearTokenA = !tokenA.sortsBefore(tokenB);
+      const [token0, token1] = !isRearTokenA
+        ? [tokenA, tokenB]
+        : [tokenB, tokenA];
+      return [tokenA, tokenB, token0, token1, isRearTokenA, isInvalidPair];
+    }, [baseToken, quoteToken]);
 
   const pairAddress = React.useMemo(() => {
     if (!tokenA || !tokenB || fee === undefined) return undefined;
@@ -181,6 +190,7 @@ export function useUniV2Pairs({
   return {
     pairAddress,
     pair,
+    isInvalidPair,
     price: priceBg,
     invertedPrice: invertedPriceBg,
     priceLoading: reserveQuery.isLoading,

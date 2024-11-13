@@ -23,6 +23,7 @@ export { useTradeSwapOrderList } from './hooks/Swap/useTradeSwapOrderList';
 export { Pool } from './widgets/PoolWidget';
 export { default as PoolList } from './widgets/PoolWidget/PoolList';
 export { default as PoolCreate } from './widgets/PoolWidget/PoolCreate';
+export { default as AMMV2Create } from './widgets/PoolWidget/AMMV2Create';
 export { default as PoolModify } from './widgets/PoolWidget/PoolModify';
 export { default as PoolDetail } from './widgets/PoolWidget/PoolDetail';
 export {

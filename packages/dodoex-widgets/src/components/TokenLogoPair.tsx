@@ -59,7 +59,10 @@ export function TokenLogoPair({
           <Box
             key={index}
             sx={{
-              zIndex: tokens.length - index,
+              // zIndex: tokens.length - index,
+              display: 'inline-flex',
+              width,
+              height: width,
               ml: index > 0 ? gap : 0,
               borderRadius: '50%',
               backgroundColor: theme.palette.background.default,
