@@ -6,6 +6,8 @@ import PoolModify from './PoolModify';
 import PoolDetail from './PoolDetail';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 
+export { default as AMMV3Create } from './AMMV3/AddLiquidityV3';
+
 export function Pool() {
   const { routerPage } = useUserOptions();
   const pageLocal = useRouterStore((state) => state.page);
