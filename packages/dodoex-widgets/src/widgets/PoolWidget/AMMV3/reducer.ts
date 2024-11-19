@@ -1,14 +1,12 @@
 import { TokenInfo } from '../../../hooks/Token/type';
-import { Currency } from './sdks/sdk-core/entities/currency';
-import { FeeAmount } from './sdks/v3-sdk/constants';
+import { Currency } from './sdks/sdk-core';
+import { FeeAmount } from './sdks/v3-sdk';
 import { Field, FullRange } from './types';
 import { buildCurrency } from './utils';
 
 export interface StateProps {
   baseToken: Maybe<Currency>;
   quoteToken: Maybe<Currency>;
-  baseAmount: string;
-  quoteAmount: string;
   feeAmount: FeeAmount | undefined;
 
   readonly independentField: Field;
@@ -22,8 +20,6 @@ export enum Types {
   UpdateBaseToken,
   UpdateQuoteToken,
   UpdateBaseTokenAndClearQuoteToken,
-  UpdateBaseAmount,
-  UpdateQuoteAmount,
   UpdateFeeAmount,
   ToggleRate,
   setFullRange,
@@ -37,8 +33,6 @@ type Payload = {
   [Types.UpdateBaseToken]: TokenInfo;
   [Types.UpdateQuoteToken]: TokenInfo;
   [Types.UpdateBaseTokenAndClearQuoteToken]: TokenInfo;
-  [Types.UpdateBaseAmount]: string;
-  [Types.UpdateQuoteAmount]: string;
   [Types.UpdateFeeAmount]: FeeAmount;
   [Types.ToggleRate]: void;
   [Types.setFullRange]: void;
@@ -57,7 +51,6 @@ export function reducer(state: StateProps, action: Actions): StateProps {
       return {
         ...state,
         baseToken: buildCurrency(baseToken),
-        baseAmount: '',
       };
     }
 
@@ -66,7 +59,6 @@ export function reducer(state: StateProps, action: Actions): StateProps {
       return {
         ...state,
         quoteToken: buildCurrency(quoteToken),
-        quoteAmount: '',
       };
     }
 
@@ -76,8 +68,6 @@ export function reducer(state: StateProps, action: Actions): StateProps {
         ...state,
         baseToken: buildCurrency(baseToken),
         quoteToken: null,
-        baseAmount: '',
-        quoteAmount: '',
       };
     }
 
@@ -94,8 +84,6 @@ export function reducer(state: StateProps, action: Actions): StateProps {
         ...state,
         baseToken: quoteToken,
         quoteToken: baseToken,
-        baseAmount: '',
-        quoteAmount: '',
       };
     }
 
@@ -156,31 +144,6 @@ export function reducer(state: StateProps, action: Actions): StateProps {
           typedValue,
         };
       }
-    }
-
-    case Types.UpdateBaseAmount: {
-      const baseAmount = action.payload;
-      const { quoteToken } = state;
-      if (!quoteToken) {
-        throw new Error('token is required');
-      }
-
-      return {
-        ...state,
-        baseAmount,
-      };
-    }
-
-    case Types.UpdateQuoteAmount: {
-      const quoteAmount = action.payload;
-      const { baseToken } = state;
-      if (!baseToken) {
-        throw new Error('token is required');
-      }
-      return {
-        ...state,
-        quoteAmount,
-      };
     }
 
     default:

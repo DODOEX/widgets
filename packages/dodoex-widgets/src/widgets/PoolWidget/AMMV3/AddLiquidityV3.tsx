@@ -50,8 +50,6 @@ export default function AddLiquidityV3({
   const [state, dispatch] = useReducer<typeof reducer>(reducer, {
     baseToken: null,
     quoteToken: null,
-    baseAmount: '',
-    quoteAmount: '',
     feeAmount: undefined,
     independentField: Field.CURRENCY_A,
     typedValue: '',

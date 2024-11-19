@@ -1,9 +1,9 @@
 import { SwapWidgetApi } from '@dodoex/api';
-import { AMMV3Create, SwapWidgetProps, Widget } from '@dodoex/widgets';
+import { AddLiquidityV3, SwapWidgetProps, Widget } from '@dodoex/widgets';
 import React from 'react';
 
 export default {
-  title: 'Widgets/AMMV3Create',
+  title: 'Widgets/AddLiquidityV3',
   component: 'div',
 };
 
@@ -23,7 +23,10 @@ export const Primary = (props: any) => {
 
   return (
     <Widget {...config} {...other} apikey={apiKey}>
-      <AMMV3Create />
+      <AddLiquidityV3
+        handleGoBack={() => window.alert('handleGoBack')}
+        handleGoToPoolList={() => window.alert('handleGoToPoolList')}
+      />
     </Widget>
   );
 };

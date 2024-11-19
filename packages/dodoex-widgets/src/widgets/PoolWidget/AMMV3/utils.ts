@@ -1,6 +1,6 @@
 import { basicTokenMap, ChainId, UniswapGraphqlChainId } from '@dodoex/api';
 import { TokenInfo } from '../../../hooks/Token';
-import { Token } from './sdks/sdk-core/entities/token';
+import { Token } from './sdks/sdk-core';
 import { NativeCurrency } from './sdks/sdk-core/entities/nativeCurrency';
 
 export function getNativeAddress(chainId: ChainId): string {

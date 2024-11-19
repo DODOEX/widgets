@@ -1,9 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { Actions, StateProps, Types } from '../reducer';
 import { Rounding } from '../sdks/sdk-core/constants';
-import { TICK_SPACINGS } from '../sdks/v3-sdk/constants';
-import { Pool } from '../sdks/v3-sdk/entities/pool';
-import { tickToPrice } from '../sdks/v3-sdk/utils/priceTickConversions';
+import { Pool, TICK_SPACINGS, tickToPrice } from '../sdks/v3-sdk';
 
 export function useRangeHopCallbacks({
   tickLower,

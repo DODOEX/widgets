@@ -6,16 +6,16 @@ import { tokenApi } from '../../../../constants/api';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { BIG_INT_ZERO } from '../constants/misc';
 import { StateProps } from '../reducer';
-import { Currency } from '../sdks/sdk-core/entities/currency';
-import { CurrencyAmount, Price } from '../sdks/sdk-core/entities/fractions';
-import { Token } from '../sdks/sdk-core/entities/token';
-import { TICK_SPACINGS } from '../sdks/v3-sdk/constants';
-import { Pool } from '../sdks/v3-sdk/entities/pool';
-import { Position } from '../sdks/v3-sdk/entities/position';
-import { encodeSqrtRatioX96 } from '../sdks/v3-sdk/utils/encodeSqrtRatioX96';
-import { nearestUsableTick } from '../sdks/v3-sdk/utils/nearestUsableTick';
-import { priceToClosestTick } from '../sdks/v3-sdk/utils/priceTickConversions';
-import { TickMath } from '../sdks/v3-sdk/utils/tickMath';
+import { Currency, CurrencyAmount, Price, Token } from '../sdks/sdk-core';
+import {
+  encodeSqrtRatioX96,
+  nearestUsableTick,
+  Pool,
+  Position,
+  priceToClosestTick,
+  TICK_SPACINGS,
+  TickMath,
+} from '../sdks/v3-sdk';
 import { Bound, Field } from '../types';
 import { getTickToPrice } from '../utils/getTickToPrice';
 import tryParseCurrencyAmount from '../utils/tryParseCurrencyAmount';
