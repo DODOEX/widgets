@@ -53,7 +53,7 @@ export function buildCurrency(
 }
 
 export function convertBackToTokenInfo(
-  currency: Token | NativeCurrency | undefined,
+  currency: Token | NativeCurrency | undefined | null,
 ): TokenInfo | undefined {
   if (!currency) {
     return undefined;

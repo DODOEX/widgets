@@ -110,11 +110,10 @@ export class CurrencyAmount<T extends Currency> extends Fraction {
       .toFixed(decimalPlaces, format, rounding);
   }
 
-  public toExact(format: object = { groupSeparator: '' }): string {
-    return new BigNumber(this.quotient.toString())
-      .decimalPlaces(this.currency.decimals)
-      .div(this.decimalScale.toString())
-      .toFormat(this.currency.decimals, format);
+  public toExact(): BigNumber {
+    return new BigNumber(this.quotient.toString()).div(
+      this.decimalScale.toString(),
+    );
   }
 
   public get wrapped(): CurrencyAmount<Token> {

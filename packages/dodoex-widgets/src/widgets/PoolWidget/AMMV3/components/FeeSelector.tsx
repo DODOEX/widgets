@@ -1,7 +1,6 @@
 import { Box, Button, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import { useState } from 'react';
-import { formatPercentageNumber } from '../../../../utils';
 import { Actions, Types } from '../reducer';
 import { FeeAmount } from '../sdks/v3-sdk/constants';
 import { FEE_AMOUNT_DETAIL } from './shared';
@@ -49,9 +48,7 @@ export const FeeSelector = ({
           }}
         >
           {feeAmount
-            ? `${formatPercentageNumber({
-                input: FEE_AMOUNT_DETAIL[feeAmount].label,
-              })} ${t`fee tier`}`
+            ? `${FEE_AMOUNT_DETAIL[feeAmount].label} ${t`fee tier`}`
             : t`Fee tier`}
         </Box>
         <Button
@@ -82,7 +79,7 @@ export const FeeSelector = ({
             return (
               <Button
                 key={fee}
-                size={Button.Size.small}
+                size={Button.Size.middle}
                 variant={Button.Variant.outlined}
                 disabled={disabled}
                 onClick={() => {
@@ -91,10 +88,18 @@ export const FeeSelector = ({
                     payload: fee,
                   });
                 }}
+                sx={{
+                  flexBasis: '25%',
+                  flexShrink: 1,
+                  flexGrow: 1,
+                  justifyContent: 'space-between',
+                  px: 20,
+                  borderColor: isSelected
+                    ? theme.palette.primary.main
+                    : theme.palette.border.main,
+                }}
               >
-                {formatPercentageNumber({
-                  input: FEE_AMOUNT_DETAIL[fee].label,
-                })}
+                {FEE_AMOUNT_DETAIL[fee].label}
 
                 {isSelected ? (
                   <svg
@@ -110,7 +115,7 @@ export const FeeSelector = ({
                       width="17"
                       height="17"
                       rx="8.5"
-                      stroke="#ED5AD5"
+                      stroke={theme.palette.primary.main}
                     />
                     <rect
                       x="4.5"
@@ -118,8 +123,8 @@ export const FeeSelector = ({
                       width="9"
                       height="9"
                       rx="4.5"
-                      fill="#ED5AD5"
-                      stroke="#ED5AD5"
+                      fill={theme.palette.primary.main}
+                      stroke={theme.palette.primary.main}
                     />
                   </svg>
                 ) : (
@@ -136,8 +141,7 @@ export const FeeSelector = ({
                       width="17"
                       height="17"
                       rx="8.5"
-                      stroke="#1A1A1B"
-                      stroke-opacity="0.5"
+                      stroke={theme.palette.text.secondary}
                     />
                   </svg>
                 )}

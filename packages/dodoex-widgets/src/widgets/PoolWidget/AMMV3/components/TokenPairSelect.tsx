@@ -1,12 +1,14 @@
 import { Box, ButtonBase, useTheme } from '@dodoex/components';
+import { t } from '@lingui/macro';
 import { useState } from 'react';
 import { TokenPickerDialog } from '../../../../components/Swap/components/TokenCard/TokenPickerDialog';
 import TokenLogo from '../../../../components/TokenLogo';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { TokenInfo } from '../../../../hooks/Token';
 import { Actions, StateProps, Types } from '../reducer';
+import { Currency } from '../sdks/sdk-core/entities/currency';
 import { ReactComponent as Arrow } from './arrow.svg';
-import { t } from '@lingui/macro';
+import { convertBackToTokenInfo } from '../utils';
 
 function TokenPickSelect({
   token,
@@ -14,7 +16,7 @@ function TokenPickSelect({
   dispatch,
   tokenSelectOnChange,
 }: {
-  token: TokenInfo | null;
+  token: Maybe<Currency>;
   oppositeTokenAddress: string;
   dispatch: React.Dispatch<Actions>;
   tokenSelectOnChange: (value: TokenInfo) => void;
@@ -29,6 +31,9 @@ function TokenPickSelect({
       <Box
         component={ButtonBase}
         sx={{
+          flexBasis: '50%',
+          flexGrow: 1,
+          flexShrink: 1,
           display: 'flex',
           alignItems: 'center',
           px: 20,
@@ -36,14 +41,13 @@ function TokenPickSelect({
           borderRadius: 12,
           borderWidth: 1,
           borderStyle: 'solid',
-          borderColor: token
-            ? theme.palette.border.main
-            : theme.palette.purple.main,
-          backgroundColor: token ? 'transparent' : theme.palette.purple.main,
+          borderColor: token ? theme.palette.border.main : '#ED5AD5',
+          color: token
+            ? theme.palette.text.primary
+            : theme.palette.primary.contrastText,
+          backgroundColor: token ? 'transparent' : '#ED5AD5',
           '&:hover': {
-            borderColor: token
-              ? theme.palette.border.main
-              : theme.palette.purple.main,
+            borderColor: token ? theme.palette.border.main : '#ED5AD5',
           },
         }}
         onClick={() => {
@@ -73,7 +77,6 @@ function TokenPickSelect({
             <Box
               sx={{
                 typography: 'h5',
-                color: theme.palette.text.primary,
                 fontWeight: 600,
                 lineHeight: '32px',
                 flexShrink: 0,
@@ -86,7 +89,6 @@ function TokenPickSelect({
           <Box
             sx={{
               typography: 'h5',
-              color: theme.palette.primary.contrastText,
               fontWeight: 600,
               lineHeight: '32px',
               flexShrink: 0,
@@ -108,7 +110,7 @@ function TokenPickSelect({
       </Box>
 
       <TokenPickerDialog
-        value={token}
+        value={convertBackToTokenInfo(token)}
         open={tokenPickerVisible}
         chainId={chainId}
         occupiedAddrs={[oppositeTokenAddress]}

@@ -20,7 +20,7 @@ import { RangeSelector } from './components/RangeSelector';
 import { RateToggle } from './components/RateToggle';
 import { ReviewModal } from './components/ReviewModal';
 import { TokenPairSelect } from './components/TokenPairSelect';
-import { YellowCard } from './components/widgets';
+import { DynamicSection, YellowCard } from './components/widgets';
 import { useRangeHopCallbacks } from './hooks/useRangeHopCallbacks';
 import { useV3DerivedMintInfo } from './hooks/useV3DerivedMintInfo';
 import { useV3MintActionHandlers } from './hooks/useV3MintActionHandlers';
@@ -31,9 +31,9 @@ import {
   NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
   Percent,
 } from './sdks/sdk-core';
-import { NonfungiblePositionManager } from './sdks/v3-sdk';
+import { FeeAmount, NonfungiblePositionManager } from './sdks/v3-sdk';
 import { Bound, Field } from './types';
-import { convertBackToTokenInfo } from './utils';
+import { buildCurrency, convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
 
 export default function AddLiquidityV3({
@@ -48,9 +48,21 @@ export default function AddLiquidityV3({
   const submission = useSubmission();
 
   const [state, dispatch] = useReducer<typeof reducer>(reducer, {
-    baseToken: null,
-    quoteToken: null,
-    feeAmount: undefined,
+    baseToken: buildCurrency({
+      address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+      decimals: 18,
+      symbol: 'ETH',
+      name: 'ETH',
+      chainId: 11155111,
+    }),
+    quoteToken: buildCurrency({
+      address: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
+      decimals: 6,
+      symbol: 'USDC',
+      name: 'USDC',
+      chainId: 11155111,
+    }),
+    feeAmount: FeeAmount.HIGH,
     independentField: Field.CURRENCY_A,
     typedValue: '',
     startPriceTypedValue: '',
@@ -318,6 +330,7 @@ export default function AddLiquidityV3({
           <Box
             sx={{
               typography: 'body1',
+              fontWeight: 600,
               color: theme.palette.text.primary,
               textAlign: 'left',
             }}
@@ -330,22 +343,15 @@ export default function AddLiquidityV3({
             dispatch={dispatch}
           />
           <FeeSelector
-            disabled={tokenPairIsNull}
+            disabled={!state.baseToken || !state.quoteToken}
             feeAmount={state.feeAmount}
             dispatch={dispatch}
           />
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'stretch',
-            gap: 12,
-          }}
-        >
+        <DynamicSection disabled={!state.feeAmount || invalidPool}>
           <Box
             sx={{
-              display: 'fle',
+              display: 'flex',
               alignItems: 'center',
               gap: 8,
             }}
@@ -353,45 +359,58 @@ export default function AddLiquidityV3({
             <Box
               sx={{
                 typography: 'body1',
+                fontWeight: 600,
                 color: theme.palette.text.primary,
                 textAlign: 'left',
               }}
             >
               {t`Set price range`}
             </Box>
-            <Button
-              size={Button.Size.small}
-              variant={Button.Variant.outlined}
-              onClick={handleSetFullRange}
-              sx={{
-                ml: 'auto',
-              }}
-            >{t`Full range`}</Button>
-            <RateToggle
-              baseToken={state.baseToken}
-              quoteToken={state.quoteToken}
-              handleRateToggle={() => {
-                if (!ticksAtLimit[Bound.LOWER] && !ticksAtLimit[Bound.UPPER]) {
-                  onLeftRangeInput(
-                    (invertPrice
-                      ? priceLower
-                      : priceUpper?.invert()
-                    )?.toSignificant(6) ?? '',
-                  );
-                  onRightRangeInput(
-                    (invertPrice
-                      ? priceUpper
-                      : priceLower?.invert()
-                    )?.toSignificant(6) ?? '',
-                  );
-                  onFieldAInput(formattedAmounts[Field.CURRENCY_B] ?? '');
-                }
-                dispatch({
-                  type: Types.ToggleRate,
-                  payload: undefined,
-                });
-              }}
-            />
+            {Boolean(state.baseToken && state.quoteToken) && (
+              <>
+                <Button
+                  size={Button.Size.small}
+                  variant={Button.Variant.outlined}
+                  onClick={handleSetFullRange}
+                  sx={{
+                    ml: 'auto',
+                    py: 4,
+                    px: 12,
+                    height: 26,
+                    typography: 'h6',
+                    fontWeight: 600,
+                  }}
+                >{t`Full range`}</Button>
+                <RateToggle
+                  baseToken={state.baseToken}
+                  quoteToken={state.quoteToken}
+                  handleRateToggle={() => {
+                    if (
+                      !ticksAtLimit[Bound.LOWER] &&
+                      !ticksAtLimit[Bound.UPPER]
+                    ) {
+                      onLeftRangeInput(
+                        (invertPrice
+                          ? priceLower
+                          : priceUpper?.invert()
+                        )?.toSignificant(6) ?? '',
+                      );
+                      onRightRangeInput(
+                        (invertPrice
+                          ? priceUpper
+                          : priceLower?.invert()
+                        )?.toSignificant(6) ?? '',
+                      );
+                      onFieldAInput(formattedAmounts[Field.CURRENCY_B] ?? '');
+                    }
+                    dispatch({
+                      type: Types.ToggleRate,
+                      payload: undefined,
+                    });
+                  }}
+                />
+              </>
+            )}
           </Box>
           <RangeSelector
             priceLower={priceLower}
@@ -417,18 +436,12 @@ export default function AddLiquidityV3({
               {t`Invalid range selected. The min price must be lower than the max price.`}
             </YellowCard>
           )}
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'stretch',
-            gap: 12,
-          }}
-        >
+        </DynamicSection>
+        <DynamicSection disabled={!state.feeAmount || invalidPool}>
           <Box
             sx={{
               typography: 'body1',
+              fontWeight: 600,
               color: theme.palette.text.primary,
               textAlign: 'left',
             }}
@@ -457,33 +470,30 @@ export default function AddLiquidityV3({
             onRightRangeInput={onRightRangeInput}
             interactive={true}
           />
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'stretch',
-            gap: 12,
-          }}
+        </DynamicSection>
+        <DynamicSection
+          disabled={
+            invalidPool ||
+            invalidRange ||
+            (noLiquidity && !startPriceTypedValue)
+          }
         >
           <Box
             sx={{
               typography: 'body1',
+              fontWeight: 600,
               color: theme.palette.text.primary,
               textAlign: 'left',
             }}
           >
             {t`Deposit amounts`}
           </Box>
-          <Box
-            sx={{
-              px: 20,
-            }}
-          >
+          <Box>
             <CurrencyInputPanel
               value={formattedAmounts[Field.CURRENCY_A]}
               onUserInput={onFieldAInput}
               maxAmount={maxAmounts[Field.CURRENCY_A]}
+              balance={currencyBalances[Field.CURRENCY_A]}
               currency={currencies[Field.CURRENCY_A] ?? null}
               locked={depositADisabled}
             />
@@ -492,6 +502,7 @@ export default function AddLiquidityV3({
               value={formattedAmounts[Field.CURRENCY_B]}
               onUserInput={onFieldBInput}
               maxAmount={maxAmounts[Field.CURRENCY_B]}
+              balance={currencyBalances[Field.CURRENCY_B]}
               currency={currencies[Field.CURRENCY_B] ?? null}
               locked={depositBDisabled}
             />
@@ -501,7 +512,7 @@ export default function AddLiquidityV3({
             onChange={setSlipper}
             disabled={false}
           />
-        </Box>
+        </DynamicSection>
       </Box>
 
       <Box

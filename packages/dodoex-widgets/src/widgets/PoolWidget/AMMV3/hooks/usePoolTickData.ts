@@ -124,7 +124,7 @@ export function usePoolActiveLiquidity(
   data?: TickProcessed[];
 } {
   const { chainId: defaultChainId } = useWalletInfo();
-  const pool = usePool(currencyA?.wrapped, currencyB?.wrapped, feeAmount);
+  const pool = usePool(currencyA, currencyB, feeAmount);
   const liquidity = pool[1]?.liquidity;
   const sqrtPriceX96 = pool[1]?.sqrtRatioX96;
 

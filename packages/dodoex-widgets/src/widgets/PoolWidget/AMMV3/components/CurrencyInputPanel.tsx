@@ -11,6 +11,7 @@ export interface CurrencyInputPanelProps {
   value: string;
   onUserInput: (value: string) => void;
   maxAmount: CurrencyAmount<Currency> | undefined;
+  balance: CurrencyAmount<Currency> | undefined;
   currency?: Currency | null;
   locked?: boolean;
 }
@@ -19,6 +20,7 @@ export const CurrencyInputPanel = ({
   value,
   onUserInput,
   maxAmount,
+  balance,
   currency,
   locked,
 }: CurrencyInputPanelProps) => {
@@ -26,24 +28,29 @@ export const CurrencyInputPanel = ({
 
   const handleTokenPartChange = useCallback(
     (part: number) => {
-      if (!maxAmount) {
+      if (!maxAmount || !currency) {
         return;
       }
-      const amount = maxAmount.multiply(part).toExact();
+      const amount = maxAmount
+        .toExact()
+        .multipliedBy(part)
+        .dp(currency.decimals)
+        .toString();
       onUserInput(amount);
     },
-    [maxAmount, onUserInput],
+    [currency, maxAmount, onUserInput],
   );
 
   const optTokenBalanceStr = useMemo(() => {
-    if (!maxAmount) {
+    if (!balance) {
       return '-';
     }
+
     return formatTokenAmountNumber({
-      input: parseFloat(maxAmount.toSignificant()),
+      input: balance.toExact(),
       decimals: currency?.decimals,
     });
-  }, [currency?.decimals, maxAmount]);
+  }, [currency?.decimals, balance]);
 
   return (
     <Box

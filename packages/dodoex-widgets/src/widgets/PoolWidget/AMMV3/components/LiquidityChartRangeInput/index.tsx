@@ -194,9 +194,9 @@ export default function LiquidityChartRangeInput({
               viewBox="0 0 24 24"
               fill="none"
               stroke={themeColor.neutral1}
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
               <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
@@ -216,9 +216,9 @@ export default function LiquidityChartRangeInput({
               viewBox="0 0 24 24"
               fill="none"
               stroke={themeColor.neutral2}
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <path d="M22.61 16.95A5 5 0 0 0 18 10h-1.26a8 8 0 0 0-7.05-6M5 5a8 8 0 0 0 4 15h9a5 5 0 0 0 1.7-.3"></path>
               <line x1="1" y1="1" x2="23" y2="23"></line>
@@ -236,9 +236,9 @@ export default function LiquidityChartRangeInput({
               viewBox="0 0 24 24"
               fill="none"
               stroke={themeColor.neutral2}
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <line x1="18" y1="20" x2="18" y2="10"></line>
               <line x1="12" y1="20" x2="12" y2="4"></line>

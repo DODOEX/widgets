@@ -134,7 +134,14 @@ export class Fraction {
 
   public toSignificant(
     significantDigits: number,
-    format: object = { groupSeparator: '' },
+    format: object = {
+      decimalSeparator: '.',
+      groupSeparator: '',
+      groupSize: 3,
+      secondaryGroupSize: 0,
+      fractionGroupSeparator: '',
+      fractionGroupSize: 0,
+    },
     rounding: Rounding = Rounding.ROUND_HALF_UP,
   ): string {
     invariant(
@@ -156,7 +163,14 @@ export class Fraction {
 
   public toFixed(
     decimalPlaces: number,
-    format: object = { groupSeparator: '' },
+    format: object = {
+      decimalSeparator: '.',
+      groupSeparator: '',
+      groupSize: 3,
+      secondaryGroupSize: 0,
+      fractionGroupSeparator: '',
+      fractionGroupSize: 0,
+    },
     rounding: Rounding = Rounding.ROUND_HALF_UP,
   ): string {
     invariant(

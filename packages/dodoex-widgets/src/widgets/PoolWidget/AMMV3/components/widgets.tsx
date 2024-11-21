@@ -235,3 +235,29 @@ export function RowFixed({
     </Row>
   );
 }
+
+export function DynamicSection({
+  children,
+  disabled,
+  sx,
+}: {
+  children: React.ReactNode;
+  disabled?: boolean;
+  sx?: BoxProps['sx'];
+}) {
+  return (
+    <Row
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        gap: 12,
+        opacity: disabled ? 0.2 : 1,
+        pointerEvents: disabled ? 'none' : 'auto',
+        ...sx,
+      }}
+    >
+      {children}
+    </Row>
+  );
+}

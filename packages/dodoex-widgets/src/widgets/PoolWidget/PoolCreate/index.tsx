@@ -45,6 +45,8 @@ export default function PoolCreate() {
   const { defaultBaseToken, defaultQuoteToken } = useDefaultTokens();
   const { chainId } = useWalletInfo();
 
+  console.log('v2 ', { defaultBaseToken, defaultQuoteToken });
+
   const [state, dispatch] = React.useReducer<typeof reducer>(reducer, {
     currentStep: 0,
     selectedVersion: Version.standard,

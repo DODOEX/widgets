@@ -123,16 +123,11 @@ export function useV3DerivedMintInfo({
             ? CurrencyAmount.fromRawAmount(
                 currencies[Field.CURRENCY_A],
                 JSBI.BigInt(
-                  Math.floor(
-                    currencyATokenQuery.data?.balance
-                      .multipliedBy(
-                        Math.pow(
-                          10,
-                          currencies[Field.CURRENCY_A].decimals ?? 18,
-                        ),
-                      )
-                      .toNumber(),
-                  ),
+                  currencyATokenQuery.data?.balance
+                    .multipliedBy(
+                      Math.pow(10, currencies[Field.CURRENCY_A].decimals ?? 18),
+                    )
+                    .toString(),
                 ),
               )
             : CurrencyAmount.fromRawAmount(currencies[Field.CURRENCY_A], 0),
@@ -142,16 +137,11 @@ export function useV3DerivedMintInfo({
             ? CurrencyAmount.fromRawAmount(
                 currencies[Field.CURRENCY_B],
                 JSBI.BigInt(
-                  Math.floor(
-                    currencyBTokenQuery.data?.balance
-                      .multipliedBy(
-                        Math.pow(
-                          10,
-                          currencies[Field.CURRENCY_B].decimals ?? 18,
-                        ),
-                      )
-                      .toNumber(),
-                  ),
+                  currencyBTokenQuery.data?.balance
+                    .multipliedBy(
+                      Math.pow(10, currencies[Field.CURRENCY_B].decimals ?? 18),
+                    )
+                    .toString(),
                 ),
               )
             : CurrencyAmount.fromRawAmount(currencies[Field.CURRENCY_B], 0),
@@ -297,7 +287,16 @@ export function useV3DerivedMintInfo({
                   rightRangeTypedValue.toString(),
                 ),
     };
-  }, []);
+  }, [
+    existingPosition,
+    feeAmount,
+    invertPrice,
+    leftRangeTypedValue,
+    rightRangeTypedValue,
+    tickSpaceLimits,
+    token0,
+    token1,
+  ]);
 
   const { [Bound.LOWER]: tickLower, [Bound.UPPER]: tickUpper } = ticks || {};
 
