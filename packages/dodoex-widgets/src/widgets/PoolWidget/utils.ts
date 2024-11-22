@@ -117,3 +117,14 @@ export function convertFetchPoolToOperateData(
     },
   };
 }
+
+export function getPoolAMMOrPMM(type: PoolType) {
+  switch (type) {
+    case 'AMMV2':
+      return 'AMM V2';
+    case 'AMMV3':
+      return 'AMM V3';
+    default:
+      return 'PMM';
+  }
+}

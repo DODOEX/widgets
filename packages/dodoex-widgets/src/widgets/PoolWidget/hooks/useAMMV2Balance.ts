@@ -31,7 +31,8 @@ export function useAMMV2Balance({
         !pair ||
         !balanceQuery.data ||
         !totalSupplyQuery.data ||
-        !totalSupplyQuery.data.gte(balanceQuery.data)
+        !totalSupplyQuery.data.gte(balanceQuery.data) ||
+        totalSupplyQuery.data.eq(0)
       ) {
         return [undefined, undefined, undefined];
       }

@@ -8321,6 +8321,8 @@ export type LiquidityLp = {
   id?: Maybe<Scalars['String']['output']>;
   liquidityTokenBalance?: Maybe<Scalars['String']['output']>;
   liquidityTokenInMining?: Maybe<Scalars['String']['output']>;
+  /** Share in the pool */
+  poolShare?: Maybe<Scalars['String']['output']>;
 };
 
 export type LiquidityListInfo = {
@@ -8462,6 +8464,8 @@ export type LiquidityPair = {
   untrackedBaseVolume: Scalars['BigDecimal']['output'];
   /** untracked quote volume */
   untrackedQuoteVolume: Scalars['BigDecimal']['output'];
+  /** Trading volume in the last 24 hours */
+  volume24H?: Maybe<Scalars['BigDecimal']['output']>;
   /** trade volume of basetoken */
   volumeBaseToken: Scalars['BigDecimal']['output'];
   /** trade volume of quotetoken */
@@ -22988,9 +22992,11 @@ export type FetchLiquidityListQuery = {
         chainId: number;
         type: string;
         lpFeeRate: any;
+        mtFeeRate: any;
         creator: any;
         tvl?: any | null;
         miningAddress?: Array<string | null> | null;
+        volume24H?: any | null;
         baseLpToken?: { id: string } | null;
         quoteLpToken?: { id: string } | null;
         baseToken: {
@@ -23029,15 +23035,18 @@ export type FetchMyLiquidityListQuery = {
       liquidityPositions?: Array<{
         id?: string | null;
         liquidityTokenBalance?: string | null;
+        poolShare?: string | null;
       } | null> | null;
       pair?: {
         id: string;
         chainId: number;
         type: string;
         lpFeeRate: any;
+        mtFeeRate: any;
         creator: any;
         tvl?: any | null;
         miningAddress?: Array<string | null> | null;
+        volume24H?: any | null;
         baseLpToken?: { id: string } | null;
         quoteLpToken?: { id: string } | null;
         baseToken: {
@@ -23758,6 +23767,7 @@ export const FetchLiquidityListDocument = new TypedDocumentString(`
         chainId
         type
         lpFeeRate
+        mtFeeRate
         creator
         baseLpToken {
           id
@@ -23787,6 +23797,7 @@ export const FetchLiquidityListDocument = new TypedDocumentString(`
           transactionQuoteApy
         }
         miningAddress
+        volume24H
       }
     }
   }
@@ -23803,12 +23814,14 @@ export const FetchMyLiquidityListDocument = new TypedDocumentString(`
       liquidityPositions {
         id
         liquidityTokenBalance
+        poolShare
       }
       pair {
         id
         chainId
         type
         lpFeeRate
+        mtFeeRate
         creator
         baseLpToken {
           id
@@ -23838,6 +23851,7 @@ export const FetchMyLiquidityListDocument = new TypedDocumentString(`
           transactionQuoteApy
         }
         miningAddress
+        volume24H
       }
     }
   }

@@ -1,31 +1,43 @@
-import { Pair } from '@uniswap/v2-sdk';
-import { CurrencyAmount, Percent, Price, Token } from '@uniswap/sdk-core';
-import { TokenInfo } from '../../../hooks/Token';
 import React from 'react';
-import { basicTokenMap, ChainId, contractConfig } from '@dodoex/api';
-import { computePairAddress, toWei } from '../../../utils';
-import { uniPoolV2Api } from '../utils';
+import { TokenInfo } from '../../../hooks/Token';
+import { CurrencyAmount, Percent, Price, Token } from '@uniswap/sdk-core';
+import { basicTokenMap, ChainId, PoolType } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
+import { poolApi } from '../utils';
+import { Pair } from '@uniswap/v2-sdk';
 import BigNumber from 'bignumber.js';
+import { byWei, formatReadableNumber, toWei } from '../../../utils';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+
 export function useUniV2Pairs({
-  baseToken,
-  quoteToken,
+  pool,
   baseAmount,
   quoteAmount,
-  fee,
 }: {
-  baseToken: TokenInfo | undefined;
-  quoteToken: TokenInfo | undefined;
-  baseAmount: string;
-  quoteAmount: string;
-  fee: number;
+  pool?: {
+    type: string;
+    address: string;
+    baseToken: TokenInfo;
+    quoteToken: TokenInfo;
+  };
+  baseAmount?: string;
+  quoteAmount?: string;
 }) {
-  const [tokenA, tokenB, token0, token1, isRearTokenA, isInvalidPair] =
+  const [chainId, type, address, token0, token1, isRearTokenA] =
     React.useMemo(() => {
+      const { baseToken, quoteToken } = pool || {};
       let isRearTokenA = false;
       if (!baseToken || !quoteToken)
-        return [null, null, null, null, isRearTokenA, false];
-      const etherToken = basicTokenMap[baseToken.chainId as ChainId];
+        return [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          isRearTokenA,
+        ];
+      const chainId = baseToken.chainId as ChainId;
+      const etherToken = basicTokenMap[chainId];
       const isBaseTokenEther =
         etherToken.address?.toLowerCase() === baseToken.address.toLowerCase();
       const isQuoteTokenEther =
@@ -36,12 +48,6 @@ export function useUniV2Pairs({
       const quoteTokenAddress = isQuoteTokenEther
         ? etherToken.wrappedTokenAddress
         : quoteToken.address;
-
-      const isInvalidPair =
-        baseTokenAddress.toLowerCase() === quoteTokenAddress.toLowerCase();
-      if (isInvalidPair) {
-        return [null, null, null, null, isRearTokenA, true];
-      }
       const tokenA = new Token(
         baseToken.chainId,
         baseTokenAddress,
@@ -60,59 +66,78 @@ export function useUniV2Pairs({
       const [token0, token1] = !isRearTokenA
         ? [tokenA, tokenB]
         : [tokenB, tokenA];
-      return [tokenA, tokenB, token0, token1, isRearTokenA, isInvalidPair];
-    }, [baseToken, quoteToken]);
+      return [
+        chainId,
+        pool?.type as PoolType,
+        pool?.address,
+        token0,
+        token1,
+        isRearTokenA,
+      ];
+    }, [pool]);
 
-  const pairAddress = React.useMemo(() => {
-    if (!tokenA || !tokenB || fee === undefined) return undefined;
-    const chainId = tokenA.chainId;
-    const factoryAddress = chainId
-      ? contractConfig[chainId as ChainId]?.AMM_V2_FACTORY_ADDRESS
-      : undefined;
-    if (!factoryAddress) return undefined;
-    return computePairAddress({
-      factoryAddress,
-      tokenA: tokenA as TokenInfo,
-      tokenB: tokenB as TokenInfo,
-      fee,
-    });
-  }, [tokenA, tokenB, fee]);
-
+  const reserveQueryParams = poolApi.getReserveLpQuery(
+    chainId as number,
+    address,
+    type,
+    token0?.decimals,
+    token1?.decimals,
+  );
+  const isAMMV2 = type === 'AMMV2';
   const reserveQuery = useQuery({
-    ...uniPoolV2Api.getReserves(baseToken?.chainId, pairAddress),
-    retry: false,
+    ...reserveQueryParams,
+    enabled: !!reserveQueryParams.enabled && isAMMV2,
   });
-  const totalSupplyQuery = useQuery({
-    ...uniPoolV2Api.getTotalSupply(baseToken?.chainId, pairAddress),
-    retry: false,
+  const totalBaseLpQueryParams = poolApi.getTotalBaseLpQuery(
+    chainId as number,
+    address,
+    type,
+    token0?.decimals,
+  );
+  const totalBaseLpQuery = useQuery({
+    ...totalBaseLpQueryParams,
+    enabled: !!totalBaseLpQueryParams.enabled && isAMMV2,
+  });
+  const { account } = useWalletInfo();
+  const userBaseLpQueryParams = poolApi.getUserBaseLpQuery(
+    chainId,
+    address,
+    type,
+    token0?.decimals,
+    account,
+  );
+  const userBaseLpQuery = useQuery({
+    ...userBaseLpQueryParams,
+    enabled: !!userBaseLpQueryParams.enabled && isAMMV2,
   });
   const isExists = React.useMemo(
     () =>
       reserveQuery.isFetched &&
       !!reserveQuery.data &&
-      totalSupplyQuery.isFetched &&
-      !!totalSupplyQuery.data,
+      totalBaseLpQuery.isFetched &&
+      !!totalBaseLpQuery.data,
     [
       reserveQuery.isFetched,
       reserveQuery.data,
-      totalSupplyQuery.isFetched,
-      totalSupplyQuery.data,
+      totalBaseLpQuery.isFetched,
+      totalBaseLpQuery.data,
     ],
   );
 
   const [pair, price] = React.useMemo(() => {
-    if (!token0 || !token1 || !isExists) return [null, null];
-    const { _reserve0, _reserve1 } = reserveQuery.data ?? {
-      _reserve0: 0,
-      _reserve1: 0,
-    };
+    if (!token0 || !token1 || isExists === false) return [null, null];
+    const { baseReserve: _reserve0, quoteReserve: _reserve1 } =
+      reserveQuery.data ?? {
+        baseReserve: 0,
+        quoteReserve: 0,
+      };
     const currency0Amount = CurrencyAmount.fromRawAmount(
       token0,
-      _reserve0.toString(),
+      toWei(_reserve0, token0.decimals).toString(),
     );
     const currency1Amount = CurrencyAmount.fromRawAmount(
       token1,
-      _reserve1.toString(),
+      toWei(_reserve1, token1.decimals).toString(),
     );
     let currencyAAmount = currency0Amount;
     let currencyBAmount = currency1Amount;
@@ -121,7 +146,8 @@ export function useUniV2Pairs({
       currencyBAmount = currency0Amount;
     }
     const pair = new Pair(currencyAAmount, currencyBAmount);
-    if (!_reserve0 && !_reserve1) return [pair, null];
+    if (currencyAAmount.equalTo(0) || currencyBAmount.equalTo(0))
+      return [pair, null];
     const value = currencyBAmount.divide(currencyAAmount);
     const price = new Price(
       currencyAAmount.currency,
@@ -132,44 +158,6 @@ export function useUniV2Pairs({
     return [pair, price];
   }, [token0, token1, reserveQuery.data, isRearTokenA]);
 
-  const totalSupplyStr = isExists ? totalSupplyQuery.data?.toString() : '0';
-  let poolTokenPercentage: BigNumber | undefined;
-  let liquidityMinted: CurrencyAmount<Token> | undefined;
-  if (
-    pair?.liquidityToken &&
-    totalSupplyStr &&
-    tokenA &&
-    tokenB &&
-    Number(baseAmount) &&
-    Number(quoteAmount)
-  ) {
-    const totalSupply = CurrencyAmount.fromRawAmount(
-      pair?.liquidityToken,
-      totalSupplyStr,
-    );
-    const tokenAmountA = CurrencyAmount.fromRawAmount(
-      tokenA,
-      toWei(baseAmount, tokenA.decimals).toString(),
-    );
-    const tokenAmountB = CurrencyAmount.fromRawAmount(
-      tokenB,
-      toWei(quoteAmount, tokenB.decimals).toString(),
-    );
-    liquidityMinted = pair?.getLiquidityMinted(
-      totalSupply,
-      tokenAmountA,
-      tokenAmountB,
-    );
-
-    const percent = new Percent(
-      liquidityMinted.quotient,
-      totalSupply.add(liquidityMinted).quotient,
-    );
-    poolTokenPercentage = new BigNumber(percent.toSignificant());
-  } else if (!isExists) {
-    poolTokenPercentage = new BigNumber(100);
-  }
-
   const [priceBg, invertedPriceBg] = React.useMemo(() => {
     if (isExists) {
       if (price) {
@@ -178,26 +166,89 @@ export function useUniV2Pairs({
           new BigNumber(price.invert().toSignificant()),
         ];
       }
-      return [null, null];
+      return [undefined, undefined];
     }
-    if (!baseAmount || !quoteAmount) return [null, null];
+    if (!baseAmount || !quoteAmount) return [undefined, undefined];
     return [
       new BigNumber(quoteAmount).div(baseAmount),
       new BigNumber(baseAmount).div(quoteAmount),
     ];
   }, [price, isExists, baseAmount, quoteAmount]);
 
+  const totalSupplyBg = totalBaseLpQuery.data;
+  const totalSupplyStr = isExists
+    ? totalBaseLpQuery.data && token0
+      ? toWei(totalBaseLpQuery.data, token0?.decimals).toString()
+      : ''
+    : '0';
+  let poolTokenPercentage: BigNumber | undefined;
+  let liquidityMintedBg: BigNumber | undefined;
+  const tokenA = isRearTokenA ? token1 : token0;
+  const tokenB = isRearTokenA ? token0 : token1;
+  if (
+    pair?.liquidityToken &&
+    totalSupplyStr &&
+    totalSupplyBg &&
+    tokenA &&
+    tokenB
+  ) {
+    const totalSupply = CurrencyAmount.fromRawAmount(
+      pair?.liquidityToken,
+      totalSupplyStr,
+    );
+    if (baseAmount !== undefined && quoteAmount !== undefined) {
+      if (Number(baseAmount) && Number(quoteAmount)) {
+        const tokenAmountA = CurrencyAmount.fromRawAmount(
+          tokenA,
+          toWei(baseAmount as string, tokenA.decimals).toString(),
+        );
+        const tokenAmountB = CurrencyAmount.fromRawAmount(
+          tokenB,
+          toWei(quoteAmount as string, tokenB.decimals).toString(),
+        );
+        const liquidityMinted = pair?.getLiquidityMinted(
+          totalSupply,
+          tokenAmountA,
+          tokenAmountB,
+        );
+        liquidityMintedBg = byWei(
+          liquidityMinted.quotient.toString(),
+          tokenA?.decimals,
+        );
+        poolTokenPercentage = liquidityMintedBg
+          .div(totalSupplyBg.plus(liquidityMintedBg))
+          .times(100);
+      }
+    } else {
+      liquidityMintedBg = userBaseLpQuery.data || undefined;
+      if (liquidityMintedBg) {
+        poolTokenPercentage = liquidityMintedBg.div(totalSupplyBg).times(100);
+      }
+    }
+  } else if (!isExists) {
+    poolTokenPercentage = new BigNumber(100);
+  }
+  let shareOfPool = '-';
+  if (pool?.baseToken && pool.quoteToken) {
+    shareOfPool = poolTokenPercentage
+      ? `${formatReadableNumber({
+          input: poolTokenPercentage,
+          showDecimals: 2,
+          roundingMode: BigNumber.ROUND_HALF_UP,
+        })}%`
+      : '0%';
+  }
+
   return {
-    pairAddress,
+    isRearTokenA,
     pair,
-    isInvalidPair,
     price: priceBg,
     invertedPrice: invertedPriceBg,
-    priceLoading: reserveQuery.isLoading,
-    liquidityMinted: liquidityMinted
-      ? new BigNumber(liquidityMinted.toSignificant())
-      : undefined,
+    reserveQuery,
+    totalBaseLpQuery,
+    liquidityMinted: liquidityMintedBg,
     poolTokenPercentage,
+    shareOfPool,
     isExists,
   };
 }

@@ -2,6 +2,7 @@ import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import React from 'react';
 import { POOLS_LIST_TAB } from '../../../../constants/sessionStorage';
+import { useUserOptions } from '../../../../components/UserOptionsProvider';
 
 export enum PoolTab {
   addLiquidity = 'add-liquidity',
@@ -18,6 +19,7 @@ export function usePoolListTabs({
 }) {
   const { i18n } = useLingui();
   const [poolTab, setPoolTab] = React.useState(PoolTab.addLiquidity);
+  const { supportAMMV2 } = useUserOptions();
   const tabs = React.useMemo(
     () => [
       { key: PoolTab.addLiquidity, value: t`Add Liquidity` },
@@ -25,9 +27,12 @@ export function usePoolListTabs({
         key: PoolTab.myLiquidity,
         value: t`My Liquidity`,
       },
-      { key: PoolTab.myCreated, value: t`My Pools` },
+      {
+        key: PoolTab.myCreated,
+        value: supportAMMV2 ? t`My Pools (PMM)` : t`My Pools`,
+      },
     ],
-    [i18n._],
+    [i18n._, supportAMMV2],
   );
 
   const isSetPoolTabCache = React.useRef(false);

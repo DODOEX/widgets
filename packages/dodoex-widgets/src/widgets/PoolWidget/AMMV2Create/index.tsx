@@ -12,7 +12,7 @@ import { TokenInfo } from '../../../hooks/Token';
 import { SwitchBox } from '../../../components/Swap/components/SwitchBox';
 import Ratio from './Ratio';
 import Setting from './Setting';
-import { useUniV2Pairs } from '../hooks/useUniV2Pairs';
+import { useUniV2CreatePairs } from '../hooks/useUniV2CreatePairs';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
 import { formatPercentageNumber, formatReadableNumber } from '../../../utils';
@@ -67,9 +67,9 @@ export default function AMMV2Create() {
     invertedPrice,
     priceLoading,
     liquidityMinted,
-    poolTokenPercentage,
+    shareOfPool,
     isExists,
-  } = useUniV2Pairs({
+  } = useUniV2CreatePairs({
     baseToken,
     quoteToken,
     baseAmount,
@@ -123,13 +123,6 @@ export default function AMMV2Create() {
     contractAddress: proxyContract,
   });
 
-  const shareOfPool = poolTokenPercentage
-    ? `${formatReadableNumber({
-        input: poolTokenPercentage,
-        showDecimals: 2,
-        roundingMode: BigNumber.ROUND_HALF_UP,
-      })}%`
-    : undefined;
   const [showConfirm, setShowConfirm] = React.useState(false);
 
   const needToken = !baseToken || !quoteToken;
@@ -171,6 +164,7 @@ export default function AMMV2Create() {
               alignItems: 'center',
               px: 20,
               py: 24,
+              typography: 'caption',
             }}
           >
             <Box

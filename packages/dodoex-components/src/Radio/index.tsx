@@ -34,7 +34,7 @@ export const Radio = React.forwardRef(function Radio(
         height: size,
         position: 'relative',
         borderRadius: '50%',
-        border: '2px solid',
+        border: '1px solid',
         borderColor: other.checked ? 'primary.main' : 'text.secondary',
         cursor: 'pointer',
         ...sx,

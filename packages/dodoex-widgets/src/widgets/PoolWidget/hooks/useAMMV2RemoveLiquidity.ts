@@ -11,28 +11,28 @@ import { useSubmission } from '../../../hooks/Submission';
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import {
-  encodeUniswapV2Router02AddLiquidity,
-  encodeUniswapV2Router02AddLiquidityETH,
+  encodeUniswapV2Router02RemoveLiquidityETH,
+  encodeUniswapV2Router02RemoveLiquidity,
   getUniswapV2Router02ContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
 
-export function useAMMV2AddLiquidity({
+export function useAMMV2RemoveLiquidity({
   baseToken,
   quoteToken,
   baseAmount,
   quoteAmount,
+  liquidityAmount,
   slippage,
   fee,
-  isExists,
   successBack,
 }: {
   baseToken: TokenInfo | undefined;
   quoteToken: TokenInfo | undefined;
   baseAmount: string;
   quoteAmount: string;
+  liquidityAmount: string;
   slippage: number;
   fee: number | undefined;
-  isExists?: boolean;
   successBack?: () => void;
 }) {
   const submission = useSubmission();
@@ -62,24 +62,25 @@ export function useAMMV2AddLiquidity({
         quoteToken.address.toLowerCase() === basicTokenAddressLow;
       const baseInAmountBg = toWei(baseAmount, baseToken.decimals);
       const quoteInAmountBg = toWei(quoteAmount, quoteToken.decimals);
-      const baseInAmountMinBg = baseInAmountBg
-        .times(1 - slippage)
-        .dp(baseToken.decimals, BigNumber.ROUND_FLOOR);
-      const quoteInAmountMinBg = quoteInAmountBg
-        .times(1 - slippage)
-        .dp(quoteToken.decimals, BigNumber.ROUND_FLOOR);
+      const baseInAmountMinBg = toWei(
+        new BigNumber(baseAmount).times(1 - slippage),
+        baseToken.decimals,
+      );
+      const quoteInAmountMinBg = toWei(
+        new BigNumber(quoteAmount).times(1 - slippage),
+        quoteToken.decimals,
+      );
       const feeWei = toWei(fee, 18).toString();
       const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
       if (baseIsETH) {
         const tokenAddress = quoteToken.address;
-        const tokenInAmount = quoteInAmountBg.toString();
         const tokenInAmountMin = quoteInAmountMinBg.toString();
         const ethAmountMin = baseInAmountMinBg.toString();
         value = NumberToHex(baseInAmountBg) ?? '';
-        data = encodeUniswapV2Router02AddLiquidityETH(
+        data = encodeUniswapV2Router02RemoveLiquidityETH(
           tokenAddress,
           feeWei,
-          tokenInAmount,
+          liquidityAmount,
           tokenInAmountMin,
           ethAmountMin,
           account,
@@ -87,26 +88,24 @@ export function useAMMV2AddLiquidity({
         );
       } else if (quoteIsETH) {
         const tokenAddress = baseToken.address;
-        const tokenInAmount = baseInAmountBg.toString();
         const tokenInAmountMin = baseInAmountMinBg.toString();
         const ethAmountMin = quoteInAmountMinBg.toString();
         value = NumberToHex(quoteInAmountBg) ?? '';
-        data = encodeUniswapV2Router02AddLiquidityETH(
+        data = encodeUniswapV2Router02RemoveLiquidityETH(
           tokenAddress,
           feeWei,
-          tokenInAmount,
+          liquidityAmount,
           tokenInAmountMin,
           ethAmountMin,
           account,
           deadline,
         );
       } else {
-        data = encodeUniswapV2Router02AddLiquidity(
+        data = encodeUniswapV2Router02RemoveLiquidity(
           baseToken.address,
           quoteToken.address,
           feeWei,
-          baseInAmountBg.toString(),
-          quoteInAmountBg.toString(),
+          liquidityAmount,
           baseInAmountMinBg.toString(),
           quoteInAmountMinBg.toString(),
           account,
@@ -115,7 +114,7 @@ export function useAMMV2AddLiquidity({
       }
 
       const txResult = await submission.execute(
-        isExists ? t`Add liquidity` : t`Create AMM V2 Position`,
+        t`Remove liquidity`,
         {
           opcode: OpCode.TX,
           to,
@@ -124,9 +123,7 @@ export function useAMMV2AddLiquidity({
         },
         {
           metadata: {
-            [isExists
-              ? MetadataFlag.addLiquidityAMMV2Position
-              : MetadataFlag.createAMMV2Position]: true,
+            [MetadataFlag.removeLiqidityAMMV2Position]: true,
           },
           successBack,
         },

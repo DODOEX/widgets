@@ -40,7 +40,7 @@ export default function ConfirmDialog({
   baseAmount: string;
   quoteAmount: string;
   lpAmount: BigNumber | undefined;
-  fee: number;
+  fee: number | undefined;
   price?: BigNumber | null;
   shareOfPool?: string;
   pairAddress?: string;
@@ -251,6 +251,9 @@ export default function ConfirmDialog({
               customChainId={baseToken?.chainId}
               truncate
               iconSpace={4}
+              sx={{
+                typography: 'body2',
+              }}
             />
           </SpaceBetweenItem>
         </Box>

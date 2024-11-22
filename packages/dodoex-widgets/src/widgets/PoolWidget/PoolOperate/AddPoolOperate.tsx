@@ -20,6 +20,9 @@ import Confirm from '../../../components/Confirm';
 import { useOperateLiquidity } from '../hooks/contract/useOperateLiquidity';
 import { SLIPPAGE_PROTECTION } from '../../../constants/pool';
 import ErrorMessageDialog from '../../../components/ErrorMessageDialog';
+import ConfirmDialog from '../AMMV2Create/ConfirmDialog';
+import { useQuery } from '@tanstack/react-query';
+import { poolApi } from '../utils';
 
 export function AddPoolOperate({
   submittedBack: submittedBackProps,
@@ -43,13 +46,20 @@ export function AddPoolOperate({
     midPrice,
     amountLoading,
     amountCheckedDisabled,
+    uniV2Pair,
 
     reset,
   } = useLiquidityOperateAmount({
     pool,
   });
+  const feeRateQuery = useQuery(
+    poolApi.getFeeRateQuery(pool?.chainId, pool?.address, pool?.type, account),
+  );
+  const isAMMV2 = pool?.type === 'AMMV2';
+  const [showConfirmAMMV2, setShowConfirmAMMV2] = React.useState(false);
   const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
     address: pool?.address,
+    type: pool?.type,
   });
 
   React.useEffect(() => {
@@ -84,9 +94,13 @@ export function AddPoolOperate({
     !midPrice ||
     !!balanceInfo.loading ||
     !!balanceInfo.error ||
-    amountCheckedDisabled;
+    amountCheckedDisabled ||
+    feeRateQuery.isLoading;
 
-  const submitBtnText = isOverBalance ? t`Insufficient balance` : t`Add`;
+  let submitBtnText = isAMMV2 ? t`Supply` : t`Add`;
+  if (isOverBalance) {
+    submitBtnText = t`Insufficient balance`;
+  }
 
   const submittedBack = () => {
     reset();
@@ -153,11 +167,13 @@ export function AddPoolOperate({
             value={slipper}
             onChange={setSlipper}
             disabled={!canOperate}
+            type={pool?.type}
           />
           <Ratio
             pool={pool as OperatePool}
             addPortion={addPortion}
             midPrice={midPrice}
+            shareOfPool={uniV2Pair?.shareOfPool}
           />
         </LoadingSkeleton>
       </Box>
@@ -199,6 +215,10 @@ export function AddPoolOperate({
                   setShowCompareConfirm(true);
                   return;
                 }
+                if (isAMMV2) {
+                  setShowConfirmAMMV2(true);
+                  return;
+                }
                 submitLq();
               }}
             >
@@ -231,6 +251,25 @@ export function AddPoolOperate({
         message={operateLiquidityMutation.error?.message}
         onClose={() => operateLiquidityMutation.reset()}
       />
+      {isAMMV2 && !!pool && (
+        <ConfirmDialog
+          open={showConfirmAMMV2}
+          onClose={() => setShowConfirmAMMV2(false)}
+          slippage={slipperValue}
+          baseToken={pool.baseToken}
+          baseAmount={baseAmount}
+          quoteToken={pool.quoteToken}
+          quoteAmount={quoteAmount}
+          fee={feeRateQuery.data?.mtFeeRate
+            ?.plus(feeRateQuery.data?.lpFeeRate ?? 0)
+            ?.toNumber()}
+          price={uniV2Pair?.price}
+          lpAmount={uniV2Pair?.liquidityMinted}
+          shareOfPool={uniV2Pair?.shareOfPool}
+          pairAddress={pool.address}
+          isExists
+        />
+      )}
     </>
   );
 }

@@ -4,18 +4,26 @@ import {
   HoverAddBackground,
   useTheme,
   Tooltip,
+  BoxProps,
 } from '@dodoex/components';
 import BigNumber from 'bignumber.js';
 import { ChangeEvent, useMemo, useState } from 'react';
 import { Setting } from '@dodoex/icons';
 import {
+  AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION,
   AUTO_LIQUIDITY_SLIPPAGE_PROTECTION,
   AUTO_SWAP_SLIPPAGE_PROTECTION,
 } from '../../../../constants/pool';
 import { Trans } from '@lingui/macro';
 import { AutoButton } from '../../../../components/AutoButton';
 
-export const useSlipper = ({ address }: { address?: string }) => {
+export const useSlipper = ({
+  address,
+  type,
+}: {
+  address?: string;
+  type?: string;
+}) => {
   const [slipper, setSlipper] = useState<
     number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION
   >(AUTO_SWAP_SLIPPAGE_PROTECTION);
@@ -23,9 +31,15 @@ export const useSlipper = ({ address }: { address?: string }) => {
   const slipperValue = useMemo(
     () =>
       slipper === AUTO_SWAP_SLIPPAGE_PROTECTION
-        ? new BigNumber(AUTO_LIQUIDITY_SLIPPAGE_PROTECTION).div(100).toNumber()
+        ? type === 'AMMV2'
+          ? new BigNumber(AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION)
+              .div(100)
+              .toNumber()
+          : new BigNumber(AUTO_LIQUIDITY_SLIPPAGE_PROTECTION)
+              .div(100)
+              .toNumber()
         : slipper,
-    [slipper],
+    [slipper, type],
   );
 
   const resetSlipper = () => {
@@ -41,13 +55,17 @@ export const useSlipper = ({ address }: { address?: string }) => {
 };
 
 export default function SlippageSetting({
+  type,
   disabled,
   value,
   onChange,
+  sx,
 }: {
+  type?: string;
   disabled?: boolean;
   value: number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION;
   onChange: (val: number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION) => void;
+  sx?: BoxProps['sx'];
 }) {
   const theme = useTheme();
   const isAuto = value === AUTO_SWAP_SLIPPAGE_PROTECTION;
@@ -64,6 +82,11 @@ export default function SlippageSetting({
         : AUTO_SWAP_SLIPPAGE_PROTECTION,
     );
   };
+
+  const autoValue =
+    type == 'AMMV2'
+      ? AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION
+      : AUTO_LIQUIDITY_SLIPPAGE_PROTECTION;
 
   return (
     <Tooltip
@@ -93,7 +116,7 @@ export default function SlippageSetting({
             </span>
             <span>
               {isAuto
-                ? AUTO_LIQUIDITY_SLIPPAGE_PROTECTION
+                ? autoValue
                 : value && new BigNumber(value).times(100).toNumber()}
               %
             </span>
@@ -117,7 +140,7 @@ export default function SlippageSetting({
               active={isAuto}
             />
             <Input
-              placeholder={String(AUTO_LIQUIDITY_SLIPPAGE_PROTECTION)}
+              placeholder={String(autoValue)}
               value={tempValue}
               onChange={handleChange}
               onBlur={() => {
@@ -164,6 +187,7 @@ export default function SlippageSetting({
           p: theme.spacing(4, 12),
           borderRadius: 20,
           backgroundColor: 'background.paperDarkContrast',
+          ...sx,
         }}
       >
         <Box

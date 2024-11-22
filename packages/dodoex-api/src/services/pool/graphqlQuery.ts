@@ -59,6 +59,7 @@ export const poolGraphqlQuery = {
             chainId
             type
             lpFeeRate
+            mtFeeRate
             creator
             baseLpToken {
               id
@@ -88,6 +89,7 @@ export const poolGraphqlQuery = {
               transactionQuoteApy
             }
             miningAddress
+            volume24H
           }
         }
       }
@@ -101,12 +103,14 @@ export const poolGraphqlQuery = {
           liquidityPositions {
             id
             liquidityTokenBalance
+            poolShare
           }
           pair {
             id
             chainId
             type
             lpFeeRate
+            mtFeeRate
             creator
             baseLpToken {
               id
@@ -136,6 +140,7 @@ export const poolGraphqlQuery = {
               transactionQuoteApy
             }
             miningAddress
+            volume24H
           }
         }
       }

@@ -23,7 +23,8 @@ export default function FeeEdit({
   const [customValue, setCustomValue] = React.useState('');
   const { isMobile } = useWidgetDevice();
 
-  const isCustom = !feeList.includes(fee) || editCustom;
+  const isCustomValue = !feeList.includes(fee);
+  const isCustom = isCustomValue || editCustom;
   return (
     <Box
       sx={{
@@ -139,13 +140,18 @@ export default function FeeEdit({
                 <Input
                   value={customValue}
                   autoFocus
-                  onChange={(e) => setCustomValue(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (isNaN(Number(value))) return;
+                    setCustomValue(value);
+                  }}
                   onBlur={() => {
                     const newFee = Number(customValue);
                     if (!!customValue && (newFee || newFee === 0)) {
                       onChange(new BigNumber(newFee).div(100).toNumber());
                     }
                     setEditCustom(false);
+                    setCustomValue('');
                   }}
                   sx={{
                     p: 0,
@@ -159,7 +165,13 @@ export default function FeeEdit({
                   }}
                 />
               ) : (
-                <Trans>Custom</Trans>
+                <>
+                  {isCustomValue ? (
+                    new BigNumber(fee).times(100).toNumber()
+                  ) : (
+                    <Trans>Custom</Trans>
+                  )}
+                </>
               )}
               <Radio
                 size={18}

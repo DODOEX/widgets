@@ -5,6 +5,7 @@ export {
   contractConfig,
   platformIdMap,
 } from './chainConfig';
+export { setContractRequests } from '@dodoex/dodo-contract-request';
 
 export { default as RestApiRequests } from './helper/RestApiRequests';
 export { default as GraphQLRequests } from './helper/GraphQLRequests';
