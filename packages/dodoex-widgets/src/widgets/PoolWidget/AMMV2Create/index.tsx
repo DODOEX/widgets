@@ -141,6 +141,8 @@ export default function AMMV2Create() {
           borderRadius: isMobile ? 0 : 16,
           backgroundColor: 'background.paper',
           width: isMobile ? '100%' : 600,
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
         {isMobile ? (

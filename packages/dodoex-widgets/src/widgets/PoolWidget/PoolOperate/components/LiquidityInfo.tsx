@@ -268,6 +268,7 @@ export default function LiquidityInfo({
       );
     }
   }
+  const isAMMV2 = pool?.type === 'AMMV2';
 
   return (
     <Box
@@ -377,7 +378,7 @@ export default function LiquidityInfo({
               />
             </LoadingSkeleton>
           </Box>
-          {pool?.address ? (
+          {pool?.address && !isAMMV2 ? (
             <Box
               component={ButtonBase}
               sx={{

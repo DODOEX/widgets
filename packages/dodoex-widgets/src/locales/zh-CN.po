@@ -99,8 +99,8 @@ msgstr ""
 msgid "Create Liquidity Mining"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:313
-#: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:335
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:315
+#: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:336
 msgid "By adding liquidity you’ll earn <0>{0}</0> of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr ""
 
@@ -527,7 +527,7 @@ msgstr ""
 msgid "Add Initial Liquidity"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:179
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:181
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:118
 msgid "Add liquidity"
 msgstr ""
@@ -823,7 +823,7 @@ msgstr ""
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:248
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:250
 msgid "Deposit amounts"
 msgstr ""
 
@@ -997,7 +997,7 @@ msgstr ""
 msgid "The creator of the liquidity pool can adjust the liquidity distribution by modifying the market-making price parameters. <0>Learn more</0>"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:358
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:360
 msgid "Invalid pair"
 msgstr ""
 
@@ -1143,7 +1143,7 @@ msgstr ""
 #: src/components/Swap/SwapOrderHistory/index.tsx:113
 #: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:55
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:269
-#: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:399
+#: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:400
 msgid "Details"
 msgstr ""
 
@@ -1243,7 +1243,7 @@ msgstr ""
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:28
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:414
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:497
-#: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:429
+#: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:430
 msgid "My Liquidity"
 msgstr ""
 
@@ -1361,7 +1361,7 @@ msgstr ""
 msgid "Asset"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:360
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:362
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:100
 msgid "Supply"
 msgstr ""
@@ -1446,8 +1446,8 @@ msgstr ""
 msgid "Modify Confirmation"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:311
-#: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:333
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:313
+#: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:334
 msgid "Tips:"
 msgstr ""
 
@@ -1738,7 +1738,7 @@ msgstr ""
 msgid "Low"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:197
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:199
 msgid "Select pair"
 msgstr ""
 
