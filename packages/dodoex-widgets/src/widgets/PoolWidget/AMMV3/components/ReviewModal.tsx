@@ -38,7 +38,7 @@ export const ReviewModal = ({
         sx={{
           flex: 1,
           px: 20,
-          pb: 20,
+          pb: 24,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
@@ -47,8 +47,8 @@ export const ReviewModal = ({
       >
         <Box
           sx={{
-            pt: 40,
-            px: 8,
+            pt: 0,
+            px: 0,
           }}
         >
           {position ? (
@@ -62,10 +62,11 @@ export const ReviewModal = ({
         </Box>
 
         <Button
+          size={Button.Size.big}
           fullWidth
           isLoading={loading}
           sx={{
-            mt: 30,
+            mt: 20,
           }}
           onClick={onConfirm}
         >

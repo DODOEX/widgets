@@ -2,7 +2,10 @@ import { Box, LoadingSkeleton } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { ReactNode, useCallback, useMemo } from 'react';
 import { batch } from 'react-redux';
-import { formatPercentageNumber } from '../../../../../utils';
+import {
+  formatPercentageNumber,
+  formatTokenAmountNumber,
+} from '../../../../../utils';
 import { Currency, Price } from '../../sdks/sdk-core';
 import { FeeAmount } from '../../sdks/v3-sdk';
 import { Bound } from '../../types';
@@ -165,12 +168,10 @@ export default function LiquidityChartRangeInput({
         100;
 
       return price
-        ? `${
-            (Math.sign(percent) < 0 ? '-' : '') +
-            formatPercentageNumber({
-              input: percent,
-            })
-          }`
+        ? `${formatTokenAmountNumber({
+            input: percent,
+            decimals: 2,
+          })}%`
         : '';
     },
     [isSorted, price, ticksAtLimit],

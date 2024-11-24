@@ -31,6 +31,7 @@ export const Card = ({
         px: 20,
         py: 20,
         borderRadius: 12,
+        ...sx,
       }}
     >
       {children}

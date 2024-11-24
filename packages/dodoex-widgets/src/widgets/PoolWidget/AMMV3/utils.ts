@@ -69,5 +69,8 @@ export function convertBackToTokenInfo(
 
 // TODO
 export function toGraphQLChain(chainId: ChainId): UniswapGraphqlChainId {
+  if (chainId === ChainId.MAINNET) {
+    return 'ETHEREUM';
+  }
   return 'ETHEREUM_SEPOLIA';
 }

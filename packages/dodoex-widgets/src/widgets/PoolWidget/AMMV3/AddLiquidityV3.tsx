@@ -29,12 +29,12 @@ import {
   Currency,
   CurrencyAmount,
   NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
-  Percent,
 } from './sdks/sdk-core';
 import { FeeAmount, NonfungiblePositionManager } from './sdks/v3-sdk';
 import { Bound, Field } from './types';
 import { buildCurrency, convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
+import { toSlippagePercent } from './utils/slippage';
 
 export default function AddLiquidityV3({
   handleGoBack,
@@ -54,13 +54,16 @@ export default function AddLiquidityV3({
       symbol: 'ETH',
       name: 'ETH',
       chainId: 11155111,
+      // chainId: 1,
     }),
     quoteToken: buildCurrency({
       address: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
+      // address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
       decimals: 6,
       symbol: 'USDC',
       name: 'USDC',
       chainId: 11155111,
+      // chainId: 1,
     }),
     feeAmount: FeeAmount.HIGH,
     independentField: Field.CURRENCY_A,
@@ -209,40 +212,42 @@ export default function AddLiquidityV3({
         : state.quoteToken.isNative
           ? state.quoteToken
           : undefined;
-      const { calldata, value } = NonfungiblePositionManager.addCallParameters(
-        position,
-        {
-          slippageTolerance: new Percent(slipperValue),
-          recipient: account,
-          deadline: deadline.toString(),
-          useNative,
-          createPool: noLiquidity,
-        },
-      );
 
-      let txn: { to: string; data: string; value: string } = {
-        to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
-        data: calldata,
-        value,
-      };
+      try {
+        const { calldata, value } =
+          NonfungiblePositionManager.addCallParameters(position, {
+            slippageTolerance: toSlippagePercent(slipperValue * 100),
+            recipient: account,
+            deadline: deadline.toString(),
+            useNative,
+            createPool: noLiquidity,
+          });
+        let txn: { to: string; data: string; value: string } = {
+          to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
+          data: calldata,
+          value,
+        };
 
-      const succ = await submission.execute(
-        t`Add liquidity`,
-        {
-          opcode: OpCode.TX,
-          ...txn,
-        },
-        {
-          early: true,
-          metadata: {
-            [MetadataFlag.createAMMV3Pool]: '1',
+        const succ = await submission.execute(
+          t`Add liquidity`,
+          {
+            opcode: OpCode.TX,
+            ...txn,
           },
-        },
-      );
-      if (succ === ExecutionResult.Submitted) {
-        setTimeout(() => {
-          handleGoToPoolList();
-        }, 100);
+          {
+            early: true,
+            metadata: {
+              [MetadataFlag.createAMMV3Pool]: '1',
+            },
+          },
+        );
+        if (succ === ExecutionResult.Submitted) {
+          setTimeout(() => {
+            handleGoToPoolList();
+          }, 100);
+        }
+      } catch (error) {
+        console.error('onAddMutation', error);
       }
     },
   });
@@ -446,7 +451,7 @@ export default function AddLiquidityV3({
               textAlign: 'left',
             }}
           >
-            {t`Current price:`}
+            {t`Current price`}
             <Box>
               {formattedPrice}&nbsp;{t`per`}&nbsp;
               {state.baseToken?.symbol ?? ''}

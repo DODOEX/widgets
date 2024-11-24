@@ -1,4 +1,4 @@
-import { Box } from '@dodoex/components';
+import { Box, useTheme } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import JSBI from 'jsbi';
 import { ReactNode, useCallback, useState } from 'react';
@@ -16,6 +16,7 @@ import { formatTickPrice } from '../utils/formatTickPrice';
 import RangeBadge from './Badge/RangeBadge';
 import { RateToggle } from './RateToggle';
 import { AutoColumn, LightCard, RowBetween, RowFixed } from './widgets';
+import { AMMV3 } from './Badge/AMMV3';
 
 export const PositionPreview = ({
   position,
@@ -32,6 +33,8 @@ export const PositionPreview = ({
 }) => {
   const currency0 = position.pool.token0;
   const currency1 = position.pool.token1;
+
+  const theme = useTheme();
 
   // track which currency should be base
   const [baseCurrency, setBaseCurrency] = useState(
@@ -67,7 +70,7 @@ export const PositionPreview = ({
 
   return (
     <AutoColumn gap="md" style={{ marginTop: '0.5rem' }}>
-      <RowBetween style={{ marginBottom: '0.5rem' }}>
+      <RowBetween style={{ gap: 4 }}>
         <RowFixed>
           <TokenLogoPair
             tokens={[
@@ -84,6 +87,11 @@ export const PositionPreview = ({
             {currency0?.symbol} / {currency1?.symbol}
           </Box>
         </RowFixed>
+        <AMMV3
+          sx={{
+            ml: 'auto',
+          }}
+        />
         <RangeBadge removed={removed} inRange={inRange} />
       </RowBetween>
 
@@ -142,22 +150,32 @@ export const PositionPreview = ({
               </Box>
             </RowFixed>
           </RowBetween>
-
-          <RowBetween>
-            <Box>
-              <Trans>Fee tier</Trans>
-            </Box>
-            <Box>
-              {formatPercentageNumber({
-                input: position?.pool?.fee / BIPS_BASE,
-              })}
-            </Box>
-          </RowBetween>
         </AutoColumn>
+        <RowBetween>
+          <Box>
+            <Trans>Fee tier</Trans>
+          </Box>
+          <Box>
+            {formatTokenAmountNumber({
+              input: position?.pool?.fee / BIPS_BASE,
+              decimals: 2,
+            })}
+          </Box>
+        </RowBetween>
       </LightCard>
       <AutoColumn gap="md">
         <RowBetween>
-          {title ? <Box>{title}</Box> : <div />}
+          {title ? (
+            <Box
+              sx={{
+                color: theme.palette.text.secondary,
+              }}
+            >
+              {title}
+            </Box>
+          ) : (
+            <div />
+          )}
           <RateToggle
             baseToken={sorted ? currency0 : currency1}
             quoteToken={sorted ? currency1 : currency0}
@@ -169,83 +187,156 @@ export const PositionPreview = ({
           <LightCard
             sx={{
               width: '48%',
-              padding: '8px',
+              py: 12,
+              gap: 12,
             }}
           >
-            <AutoColumn gap="4px" justify="center">
-              <Box fontSize="12px">
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 4,
+              }}
+            >
+              <Box
+                sx={{
+                  color: theme.palette.text.primary,
+                  typography: 'body2',
+                }}
+              >
                 <Trans>Min price</Trans>
               </Box>
-              <Box textAlign="center">
-                {formatTickPrice({
-                  price: priceLower,
-                  atLimit: ticksAtLimit,
-                  direction: Bound.LOWER,
-                })}
-              </Box>
-              <Box textAlign="center" fontSize="12px">
+              <Box
+                sx={{
+                  color: theme.palette.text.secondary,
+                  typography: 'h6',
+                }}
+              >
                 <Trans>
                   {quoteCurrency.symbol} per {baseCurrency.symbol}
                 </Trans>
               </Box>
-              <Box fontSize={11} textAlign="center" color="$neutral3" mt={4}>
-                <Trans>
-                  Your position will be 100% composed of {baseCurrency?.symbol}{' '}
-                  at this price
-                </Trans>
-              </Box>
-            </AutoColumn>
+            </Box>
+            <Box
+              sx={{
+                color: theme.palette.text.primary,
+                typography: 'caption',
+              }}
+            >
+              {formatTickPrice({
+                price: priceLower,
+                atLimit: ticksAtLimit,
+                direction: Bound.LOWER,
+              })}
+            </Box>
+            <Box
+              sx={{
+                color: theme.palette.text.secondary,
+                typography: 'h6',
+              }}
+            >
+              <Trans>
+                Your position will be 100% composed of {baseCurrency?.symbol} at
+                this price
+              </Trans>
+            </Box>
           </LightCard>
 
           <LightCard
             sx={{
               width: '48%',
-              padding: '8px',
+              py: 12,
+              gap: 12,
             }}
           >
-            <AutoColumn gap="4px" justify="center">
-              <Box fontSize="12px">
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 4,
+              }}
+            >
+              <Box
+                sx={{
+                  color: theme.palette.text.primary,
+                  typography: 'body2',
+                }}
+              >
                 <Trans>Max price</Trans>
               </Box>
-              <Box textAlign="center">
-                {formatTickPrice({
-                  price: priceUpper,
-                  atLimit: ticksAtLimit,
-                  direction: Bound.UPPER,
-                })}
-              </Box>
-              <Box textAlign="center" fontSize="12px">
+              <Box
+                sx={{
+                  color: theme.palette.text.secondary,
+                  typography: 'h6',
+                }}
+              >
                 <Trans>
                   {quoteCurrency.symbol} per {baseCurrency.symbol}
                 </Trans>
               </Box>
-              <Box fontSize={11} textAlign="center" color="$neutral3" mt={4}>
-                <Trans>
-                  Your position will be 100% composed of {quoteCurrency?.symbol}{' '}
-                  at this price
-                </Trans>
-              </Box>
-            </AutoColumn>
+            </Box>
+            <Box
+              sx={{
+                color: theme.palette.text.primary,
+                typography: 'caption',
+              }}
+            >
+              {formatTickPrice({
+                price: priceUpper,
+                atLimit: ticksAtLimit,
+                direction: Bound.UPPER,
+              })}
+            </Box>
+
+            <Box
+              sx={{
+                color: theme.palette.text.secondary,
+                typography: 'h6',
+              }}
+            >
+              <Trans>
+                Your position will be 100% composed of {quoteCurrency?.symbol}{' '}
+                at this price
+              </Trans>
+            </Box>
           </LightCard>
         </RowBetween>
         <LightCard
           sx={{
-            padding: 12,
+            py: 12,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
           }}
         >
           <AutoColumn gap="4px" justify="center">
-            <Box fontSize="12px">
+            <Box
+              sx={{
+                color: theme.palette.text.primary,
+                typography: 'body2',
+              }}
+            >
               <Trans>Current price</Trans>
             </Box>
-            <Box>{`${formatTokenAmountNumber({
-              input: price.toSignificant(),
-            })} `}</Box>
-            <Box textAlign="center" fontSize="12px">
+            <Box
+              sx={{
+                color: theme.palette.text.secondary,
+                typography: 'h6',
+              }}
+            >
               <Trans>
                 {quoteCurrency.symbol} per {baseCurrency.symbol}
               </Trans>
             </Box>
           </AutoColumn>
+          <Box
+            sx={{
+              color: theme.palette.text.primary,
+              typography: 'caption',
+            }}
+          >{`${formatTokenAmountNumber({
+            input: price.toSignificant(),
+          })} `}</Box>
         </LightCard>
       </AutoColumn>
     </AutoColumn>

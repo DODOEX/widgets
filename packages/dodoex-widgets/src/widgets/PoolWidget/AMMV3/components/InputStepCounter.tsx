@@ -91,7 +91,10 @@ const StepCounter = ({
     >
       <Box
         sx={{
+          width: '100%',
           display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
       >
         <Box
@@ -146,6 +149,10 @@ const StepCounter = ({
               size={Button.Size.small}
               onClick={handleIncrement}
               disabled={incrementDisabled}
+              sx={{
+                px: 4,
+                backgroundColor: theme.palette.background.paper,
+              }}
             >
               <svg
                 width="18"
@@ -166,6 +173,10 @@ const StepCounter = ({
               size={Button.Size.small}
               onClick={handleDecrement}
               disabled={decrementDisabled}
+              sx={{
+                px: 4,
+                backgroundColor: theme.palette.background.paper,
+              }}
             >
               <svg
                 width="18"

@@ -41,7 +41,12 @@ export const Buttons = ({
 
   return (
     <NeedConnectButton includeButton fullWidth chainId={chainId}>
-      <AutoColumn gap="md">
+      <AutoColumn
+        gap="md"
+        style={{
+          width: '100%',
+        }}
+      >
         {(approvalA.needApprove || approvalB.needApprove) && isValid && (
           <Box
             sx={{
@@ -87,6 +92,7 @@ export const Buttons = ({
         )}
 
         <Button
+          fullWidth
           size={Button.Size.big}
           onClick={() => {
             setShowConfirm(true);
