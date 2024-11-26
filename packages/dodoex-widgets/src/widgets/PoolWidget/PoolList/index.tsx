@@ -1,4 +1,13 @@
-import { Box, Button, Tabs, TabsGroup, TabPanel } from '@dodoex/components';
+import {
+  Box,
+  Button,
+  Tabs,
+  TabsGroup,
+  TabPanel,
+  Tooltip,
+  useTheme,
+  ButtonBase,
+} from '@dodoex/components';
 import { Trans, t } from '@lingui/macro';
 import React from 'react';
 import { Plus as PlusIcon } from '@dodoex/icons';
@@ -34,13 +43,68 @@ function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   );
 }
 
+function CreateItem({
+  onClick,
+  title,
+  desc,
+}: {
+  onClick: () => void;
+  title: React.ReactNode;
+  desc: React.ReactNode;
+}) {
+  const theme = useTheme();
+
+  return (
+    <Box
+      sx={{
+        px: 16,
+        py: 8,
+      }}
+    >
+      <ButtonBase
+        onClick={onClick}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 0,
+          p: 8,
+          borderRadius: 8,
+          '&:hover': {
+            backgroundColor: theme.palette.background.tag,
+          },
+        }}
+      >
+        <Box
+          sx={{
+            typography: 'body1',
+            fontWeight: 600,
+          }}
+        >
+          {title}
+        </Box>
+        <Box
+          sx={{
+            typography: 'h6',
+            fontWeight: 500,
+            color: theme.palette.text.secondary,
+          }}
+        >
+          {desc}
+        </Box>
+      </ButtonBase>
+    </Box>
+  );
+}
+
 export default function PoolList({
   params,
 }: {
   params?: Page<PageType.Pool>['params'];
 }) {
+  const theme = useTheme();
   const { isMobile } = useWidgetDevice();
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
+  const { supportAMMV2, supportAMMV3 } = useUserOptions();
   const scrollParentRef = React.useRef<HTMLDivElement>(null);
   const { account } = useWeb3React();
   const { poolTab, tabs, handleChangePoolTab } = usePoolListTabs({
@@ -121,26 +185,98 @@ export default function PoolList({
                   }
             }
           />
-          <Button
-            variant={Button.Variant.outlined}
-            fullWidth={isMobile}
-            onClick={() => {
-              useRouterStore.getState().push({
-                type: PageType.CreatePool,
-              });
-            }}
-            sx={{
-              height: 40,
-            }}
-          >
-            <Box
-              component={PlusIcon}
+          {supportAMMV2 || supportAMMV3 ? (
+            <Tooltip
+              arrow={false}
+              leaveDelay={300}
+              placement={isMobile ? 'bottom' : 'bottom-end'}
               sx={{
-                mr: 4,
+                p: 0,
               }}
-            />
-            <Trans>Create Pool</Trans>
-          </Button>
+              title={
+                <Box>
+                  <CreateItem
+                    onClick={() => {
+                      useRouterStore.getState().push({
+                        type: PageType.CreatePool,
+                      });
+                    }}
+                    title={<Trans>PMM Pool</Trans>}
+                    desc={<Trans>Description of this type of pool</Trans>}
+                  />
+                  {supportAMMV2 && (
+                    <CreateItem
+                      onClick={() => {
+                        useRouterStore.getState().push({
+                          type: PageType.createPoolAMMV2,
+                        });
+                      }}
+                      title={<Trans>AMM V2 Position</Trans>}
+                      desc={<Trans>Description of this type of pool</Trans>}
+                    />
+                  )}
+                  {supportAMMV3 && (
+                    <CreateItem
+                      onClick={() => {
+                        useRouterStore.getState().push({
+                          type: PageType.createPoolAMMV3,
+                        });
+                      }}
+                      title={<Trans>AMM V3 Position</Trans>}
+                      desc={<Trans>Description of this type of pool</Trans>}
+                    />
+                  )}
+                </Box>
+              }
+            >
+              <Box
+                sx={{
+                  width: isMobile ? '100%' : 'auto',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 10,
+                  pl: 8,
+                  pr: 16,
+                  py: 7,
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderColor: theme.palette.text.primary,
+                  typography: 'body1',
+                  fontWeight: 600,
+                  color: theme.palette.text.primary,
+                  cursor: 'pointer',
+                  '&:hover': {
+                    backgroundColor: theme.palette.background.tag,
+                  },
+                }}
+              >
+                <Box component={PlusIcon} />
+                <Trans>Create Pool</Trans>
+              </Box>
+            </Tooltip>
+          ) : (
+            <Button
+              variant={Button.Variant.outlined}
+              fullWidth={isMobile}
+              onClick={() => {
+                useRouterStore.getState().push({
+                  type: PageType.CreatePool,
+                });
+              }}
+              sx={{
+                height: 40,
+              }}
+            >
+              <Box
+                component={PlusIcon}
+                sx={{
+                  mr: 4,
+                }}
+              />
+              <Trans>Create Pool</Trans>
+            </Button>
+          )}
         </Box>
         <TabPanelFlexCol
           value={PoolTab.addLiquidity}

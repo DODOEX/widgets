@@ -79,6 +79,7 @@ export interface WidgetProps
     logoUrl?: string;
   };
   supportAMMV2?: boolean;
+  supportAMMV3?: boolean;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;

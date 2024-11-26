@@ -81,5 +81,6 @@ Primary.args = {
   noDocumentLink: true,
   routerPage: undefined,
   supportAMMV2: true,
+  supportAMMV3: true,
   // onlyChainId: 1,
 };

@@ -9,6 +9,7 @@ export enum PageType {
   MiningList = 'miningList',
   MiningDetail = 'miningDetail',
   createPoolAMMV2 = 'createPoolAMMV2',
+  createPoolAMMV3 = 'createPoolAMMV3',
 }
 
 interface PageTypeParams {
@@ -40,6 +41,7 @@ interface PageTypeParams {
     stakeTokenAddress: string | undefined;
   };
   [PageType.createPoolAMMV2]: undefined;
+  [PageType.createPoolAMMV3]: undefined;
 }
 
 export interface Page<T extends PageType = PageType> {

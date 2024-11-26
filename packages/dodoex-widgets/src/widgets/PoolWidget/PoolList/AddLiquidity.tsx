@@ -678,7 +678,7 @@ export default function AddLiquidityList({
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
 }) {
   const theme = useTheme();
-  const { onlyChainId, supportAMMV2 } = useUserOptions();
+  const { onlyChainId, supportAMMV2, supportAMMV3 } = useUserOptions();
   const { minDevice, isMobile } = useWidgetDevice();
   const queryClient = useQueryClient();
 
@@ -697,6 +697,9 @@ export default function AddLiquidityList({
   // const filterTypes = [];
   if (supportAMMV2) {
     filterTypes.push('AMMV2');
+  }
+  if (supportAMMV3) {
+    filterTypes.push('AMMV3');
   }
   const defaultQueryFilter = {
     chainIds: filterChainIds,
@@ -902,7 +905,7 @@ export default function AddLiquidityList({
             <CardList
               lqList={lqList}
               setOperatePool={setOperatePool}
-              supportAMM={supportAMMV2}
+              supportAMM={supportAMMV2 || supportAMMV3}
             />
           </DataCardGroup>
         </InfiniteScroll>
@@ -919,7 +922,7 @@ export default function AddLiquidityList({
                 fetchResult.fetchNextPage();
               }
             }}
-            supportAMM={supportAMMV2}
+            supportAMM={supportAMMV2 || supportAMMV3}
           />
           <CardStatus
             loading={fetchResult.isLoading}
