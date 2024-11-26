@@ -1,19 +1,19 @@
-import BigNumber from 'bignumber.js';
+import { FeeAmount } from '../sdks/v3-sdk';
 
 export interface PositionDetails {
-  nonce: BigNumber;
-  tokenId: BigNumber;
+  nonce: string;
+  tokenId: string;
   operator: string;
   token0: string;
   token1: string;
-  fee: number;
+  fee: FeeAmount;
   tickLower: number;
   tickUpper: number;
-  liquidity: BigNumber;
-  feeGrowthInside0LastX128: BigNumber;
-  feeGrowthInside1LastX128: BigNumber;
-  tokensOwed0: BigNumber;
-  tokensOwed1: BigNumber;
+  liquidity: string;
+  feeGrowthInside0LastX128: string;
+  feeGrowthInside1LastX128: string;
+  tokensOwed0: string;
+  tokensOwed1: string;
 }
 
 export enum PositionField {

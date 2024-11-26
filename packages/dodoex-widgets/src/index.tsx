@@ -36,6 +36,8 @@ export { MiningList } from './widgets/MiningWidget/MiningList';
 export { MiningDetail } from './widgets/MiningWidget/MiningDetail';
 export { MiningCreate } from './widgets/MiningWidget/MiningCreate';
 export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
+export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
+export { AMMV3PositionManage } from './widgets/PoolWidget/AMMV3/AMMV3PositionManage';
 
 export { TokenCard } from './components/Swap/components/TokenCard';
 export { default as TokenLogo } from './components/TokenLogo';

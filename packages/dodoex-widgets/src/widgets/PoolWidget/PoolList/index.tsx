@@ -1,33 +1,35 @@
 import {
   Box,
   Button,
+  ButtonBase,
+  TabPanel,
   Tabs,
   TabsGroup,
-  TabPanel,
   Tooltip,
   useTheme,
-  ButtonBase,
 } from '@dodoex/components';
-import { Trans, t } from '@lingui/macro';
-import React from 'react';
 import { Plus as PlusIcon } from '@dodoex/icons';
-import AddLiquidityList from './AddLiquidity';
+import { Trans, t } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
-import { usePoolListTabs, PoolTab } from './hooks/usePoolListTabs';
-import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
-import MyLiquidity from './MyLiquidity';
-import MyCreated from './MyCreated';
-import { useRouterStore } from '../../../router';
-import { Page, PageType } from '../../../router/types';
+import React from 'react';
+import { HowItWorks } from '../../../components/HowItWorks';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useRouterStore } from '../../../router';
+import { Page, PageType } from '../../../router/types';
+import { AMMV3PositionsView } from '../AMMV3/AMMV3PositionsView';
+import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
 import PoolOperateDialog, {
   PoolOperate,
   PoolOperateProps,
 } from '../PoolOperate';
-import { HowItWorks } from '../../../components/HowItWorks';
+import AddLiquidityList from './AddLiquidity';
+import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
+import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
+import MyCreated from './MyCreated';
+import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -331,7 +333,16 @@ export default function PoolList({
             LeftImage={LeftImage}
           />
         )}
-        {isMobile ? (
+        {operatePool?.pool?.type === 'AMMV3' && operatePool.chainId ? (
+          <AMMV3PositionsView
+            account={account}
+            chainId={operatePool.chainId}
+            baseToken={operatePool.pool.baseToken}
+            quoteToken={operatePool.pool.quoteToken}
+            feeAmount={FeeAmount.HIGH}
+            onClose={() => setOperatePool(null)}
+          />
+        ) : isMobile ? (
           <PoolOperateDialog
             account={account}
             onClose={() => setOperatePool(null)}

@@ -72,10 +72,10 @@ export class AMMV3Api {
   getPositions(
     chainId: number | undefined,
     contractAddress: string | undefined,
-    inputs: BigNumber[][],
+    inputs: string[][],
   ) {
     return {
-      queryKey: [CONTRACT_QUERY_KEY, 'pool', 'getPositions', ...arguments],
+      queryKey: [CONTRACT_QUERY_KEY, 'ammv3', 'getPositions', ...arguments],
       enabled: !!chainId && !!contractAddress,
       queryFn: async () => {
         if (!chainId || !contractAddress) {
@@ -89,7 +89,7 @@ export class AMMV3Api {
               abiName: ABIName.NonfungiblePositionManager,
               contractAddress,
               method: 'positions',
-              params: input.map((i) => i.toString()),
+              params: input,
             };
           }),
         );
@@ -104,7 +104,7 @@ export class AMMV3Api {
     account: string | undefined,
   ) {
     return {
-      queryKey: [CONTRACT_QUERY_KEY, 'pool', 'getBalanceOf', ...arguments],
+      queryKey: [CONTRACT_QUERY_KEY, 'ammv3', 'getBalanceOf', ...arguments],
       enabled: !!chainId && !!contractAddress && !!account,
       queryFn: async () => {
         if (!chainId || !contractAddress || !account) {
@@ -130,7 +130,7 @@ export class AMMV3Api {
     return {
       queryKey: [
         CONTRACT_QUERY_KEY,
-        'pool',
+        'ammv3',
         'getTokenOfOwnerByIndex',
         ...arguments,
       ],
@@ -158,7 +158,7 @@ export class AMMV3Api {
 
   getV3PoolSlot0(chainId: number | undefined, poolAddress: string | undefined) {
     return {
-      queryKey: [CONTRACT_QUERY_KEY, 'pool', 'getSlot0', ...arguments],
+      queryKey: [CONTRACT_QUERY_KEY, 'ammv3', 'getSlot0', ...arguments],
       enabled: !!chainId || !!poolAddress,
       queryFn: async () => {
         if (!chainId || !poolAddress) {
@@ -183,7 +183,7 @@ export class AMMV3Api {
     return {
       queryKey: [
         CONTRACT_QUERY_KEY,
-        'pool',
+        'ammv3',
         'getV3PoolLiquidity',
         ...arguments,
       ],
