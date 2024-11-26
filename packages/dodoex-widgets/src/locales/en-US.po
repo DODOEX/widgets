@@ -73,6 +73,10 @@ msgstr "Traders sold ‪{0}‬ {1}, price in the pool increased to {2}"
 msgid "Balance:"
 msgstr "Balance:"
 
+#: src/widgets/PoolWidget/AMMV3/components/TokenPairSelect.tsx:95
+msgid "Select token"
+msgstr "Select token"
+
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:332
 msgid "The start time cannot be in the past"
 msgstr "The start time cannot be in the past"
@@ -93,6 +97,10 @@ msgstr "* Please note that the Fee Rate cannot be modified after the pool is cre
 #: src/components/ConnectWallet/NeedConnectButton.tsx:85
 msgid "Switch to {0}"
 msgstr "Switch to {0}"
+
+#: src/widgets/PoolWidget/AMMV3/components/InputStepCounter.tsx:121
+msgid "{tokenB} per {tokenA}"
+msgstr "{tokenB} per {tokenA}"
 
 #: src/widgets/MiningWidget/MiningCreate/hooks/useCreateMining.ts:133
 #: src/widgets/MiningWidget/MiningList/index.tsx:320
@@ -224,6 +232,14 @@ msgstr "Creation Time"
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "The current network is inconsistent with the wallet - please switch in wallet"
 
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:360
+msgid "Set price range"
+msgstr "Set price range"
+
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:369
+msgid "Full range"
+msgstr "Full range"
+
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:594
 msgid "*Depending on the block time, the real amount of Daily Rewards may deviate slightly."
 msgstr "*Depending on the block time, the real amount of Daily Rewards may deviate slightly."
@@ -240,6 +256,10 @@ msgstr "Expected to start at block {0} and end at block {1}. There may be slight
 #: src/widgets/PoolWidget/PoolCreate/index.tsx:184
 msgid "The token amount is calculated by initial price."
 msgstr "The token amount is calculated by initial price."
+
+#: src/widgets/PoolWidget/AMMV3/components/PositionPreview.tsx:208
+msgid "Max price"
+msgstr "Max price"
 
 #: src/widgets/MiningWidget/MiningCreate/components/StakingRules.tsx:91
 msgid "Staked Tokens"
@@ -286,6 +306,10 @@ msgstr "APR"
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
+#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:210
+msgid "Liquidity data not available."
+msgstr "Liquidity data not available."
+
 #: src/hooks/Submission/useSubmissionStatusColor.ts:33
 msgid "Failed"
 msgstr "Failed"
@@ -320,6 +344,12 @@ msgstr "Powered by DODO protocol"
 #: src/widgets/PoolWidget/PoolDetail/components/Overview.tsx:73
 msgid "Fees (24H)"
 msgstr "Fees (24H)"
+
+#: src/widgets/PoolWidget/AMMV3/components/PositionPreview.tsx:187
+#: src/widgets/PoolWidget/AMMV3/components/PositionPreview.tsx:218
+#: src/widgets/PoolWidget/AMMV3/components/PositionPreview.tsx:244
+msgid "{0} per {1}"
+msgstr "{0} per {1}"
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:109
 msgid "Initial Tokens"
@@ -481,6 +511,10 @@ msgstr "Copied"
 msgid "The pool’s market-making price is fixed"
 msgstr "The pool’s market-making price is fixed"
 
+#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:31
+msgid "Closed"
+msgstr "Closed"
+
 #: src/components/Confirm.tsx:86
 #: src/components/WidgetConfirm.tsx:90
 msgid "Done"
@@ -489,6 +523,10 @@ msgstr "Done"
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:77
 msgid "Results in a relatively fixed price."
 msgstr "Results in a relatively fixed price."
+
+#: src/widgets/PoolWidget/AMMV3/components/PositionPreview.tsx:238
+msgid "Current price"
+msgstr "Current price"
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:205
 msgid "Swap Rate"
@@ -663,6 +701,10 @@ msgstr "minutes"
 msgid "You can set the minimum selling price for single-token pools."
 msgstr "You can set the minimum selling price for single-token pools."
 
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:532
+msgid "Invalid price input"
+msgstr "Invalid price input"
+
 #: src/utils/time.ts:27
 msgid "Days"
 msgstr "Days"
@@ -684,6 +726,10 @@ msgstr "Insufficient market depth to capture the dollar value of [ {{symbols}} ]
 #: src/widgets/MiningWidget/MiningList/my-created/OperateArea.tsx:417
 msgid "Invite"
 msgstr "Invite"
+
+#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:47
+msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
+msgstr "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 
 #: src/components/ConnectWallet/NeedConnectButton.tsx:83
 msgid "Connecting..."
@@ -726,6 +772,10 @@ msgstr "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the 
 #: src/components/Swap/index.tsx:571
 msgid "Fetching best price..."
 msgstr "Fetching best price..."
+
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:417
+msgid "Invalid range selected. The min price must be lower than the max price."
+msgstr "Invalid range selected. The min price must be lower than the max price."
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/LiquidityProvidersTable.tsx:91
 msgid "Liquidity Provider"
@@ -831,6 +881,10 @@ msgstr "Deposit amounts"
 msgid "Disable Indirect Routing"
 msgstr "Disable Indirect Routing"
 
+#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:29
+msgid "Your position has 0 liquidity, and is not earning fees."
+msgstr "Your position has 0 liquidity, and is not earning fees."
+
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/my-created/OperateArea.tsx:266
 msgid "Mining Pool"
@@ -912,6 +966,10 @@ msgstr "Set the fee to the same as most other pools"
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:313
 msgid "If there are no participants before the end, the rewards cannot be taken out anymore."
 msgstr "If there are no participants before the end, the rewards cannot be taken out anymore."
+
+#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:188
+msgid "Your position will appear here."
+msgstr "Your position will appear here."
 
 #: src/components/Swap/index.tsx:740
 msgid "Fetching Price..."
@@ -1196,6 +1254,11 @@ msgstr "Select Token"
 msgid "End mining"
 msgstr "End mining"
 
+#: src/widgets/PoolWidget/AMMV3/components/PositionPreview.tsx:192
+#: src/widgets/PoolWidget/AMMV3/components/PositionPreview.tsx:223
+msgid "Your position will be 100% composed of {0} at this price"
+msgstr "Your position will be 100% composed of {0} at this price"
+
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/components/widgets.tsx:148
 msgid "When adding rewards, the number of rewards for a single block may be adjusted"
@@ -1343,6 +1406,14 @@ msgstr "Minutes"
 #: src/components/TextSwitch.tsx:61
 msgid "Off"
 msgstr "Off"
+
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:412
+msgid "Your position will not earn fees or be used in trades until the market price moves into your range."
+msgstr "Your position will not earn fees or be used in trades until the market price moves into your range."
+
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:438
+msgid "per"
+msgstr "per"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:58
 msgid "Suitable for stablecoins with price fluctuations within 10%"
@@ -1513,9 +1584,14 @@ msgstr "Approve {0}"
 msgid "Rate"
 msgstr "Rate"
 
+#: src/widgets/PoolWidget/AMMV3/components/CurrencyInputPanel.tsx:118
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/TokenPairSelect.tsx:95
 msgid "Balance"
 msgstr "Balance"
+
+#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:54
+msgid "fee tier"
+msgstr "fee tier"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:66
 msgid "Service update, please wait and try again"
@@ -1581,6 +1657,10 @@ msgstr "Select Pool Version"
 msgid "Claim"
 msgstr "Claim"
 
+#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:49
+msgid "Out of range"
+msgstr "Out of range"
+
 #: src/widgets/PoolWidget/PoolOperate/components/GSPPairRiskWarning.tsx:69
 msgid "Disclaimer"
 msgstr "Disclaimer"
@@ -1595,6 +1675,7 @@ msgid "Dynamic slippage is {recommendSlippage}%,the current slippage setting is 
 msgstr "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 
 #: src/components/Swap/index.tsx:729
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:539
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
@@ -1605,6 +1686,8 @@ msgstr "Ratio"
 #: src/components/Swap/index.tsx:723
 #: src/components/TokenPairStatusButton.tsx:45
 #: src/components/TokenStatusButton.tsx:31
+#: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:64
+#: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:80
 msgid "Approving"
 msgstr "Approving"
 
@@ -1687,6 +1770,7 @@ msgid "My Staked"
 msgstr "My Staked"
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:478
+#: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:72
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:205
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:336
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:650
@@ -1827,6 +1911,7 @@ msgstr "Total Rewards"
 
 #: src/components/ConnectWallet/NeedConnectButton.tsx:87
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:55
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:524
 msgid "Connect to a wallet"
 msgstr "Connect to a wallet"
 
@@ -1867,6 +1952,7 @@ msgstr "Select Platform"
 #: src/components/TokenSelect.tsx:124
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:356
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:414
+#: src/widgets/PoolWidget/AMMV3/components/CurrencyInputPanel.tsx:92
 msgid "SELECT TOKEN"
 msgstr "SELECT TOKEN"
 
@@ -1942,6 +2028,10 @@ msgstr "Create One"
 #: src/components/Swap/SwapOrderHistory/index.tsx:102
 msgid "Status"
 msgstr "Status"
+
+#: src/widgets/PoolWidget/AMMV3/components/RangeSelector.tsx:73
+msgid "Low price"
+msgstr "Low price"
 
 #: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:64
 msgid "differs from the price quoted by DODO by {lqAndDodoCompareText}"

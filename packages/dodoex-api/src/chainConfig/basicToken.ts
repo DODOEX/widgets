@@ -25,7 +25,8 @@ export const basicTokenMap: {
   },
   [ChainId.SEPOLIA]: {
     ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenAddress: '0x7B07164ecFaF0F0D85DFC062Bc205a4674c75Aa0',
+    // wrappedTokenAddress: '0x7B07164ecFaF0F0D85DFC062Bc205a4674c75Aa0',
+    wrappedTokenAddress: '0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14',
   },
   [ChainId.OPTIMISM]: {
     ...DEFAULT_BASIC_TOKEN,

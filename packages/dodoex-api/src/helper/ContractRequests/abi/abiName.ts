@@ -45,6 +45,8 @@ export enum ABIName {
   dodoABI = 'dodoABI',
   /** pancake pair pool */
   PancakePairABI = 'PancakePairABI',
+  NonfungiblePositionManager = 'NonfungiblePositionManager',
+  UniswapV3Pool = 'UniswapV3Pool',
 
   dodoDspProxy = 'dodoDspProxy',
   dodoDppProxy = 'dodoDppProxy',

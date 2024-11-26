@@ -1,6 +1,12 @@
-import { PoolApi, ExcludeNone, PoolType, UniPoolV2Api } from '@dodoex/api';
+import {
+  AMMV3Api,
+  ChainId,
+  ExcludeNone,
+  PoolApi,
+  PoolType,
+  UniPoolV2Api,
+} from '@dodoex/api';
 import { contractRequests } from '../../constants/api';
-import { ChainId } from '@dodoex/api';
 import { TokenInfo } from '../../hooks/Token';
 import { OperatePool } from './PoolOperate/types';
 
@@ -9,6 +15,10 @@ export const poolApi = new PoolApi({
 });
 
 export const uniPoolV2Api = new UniPoolV2Api({
+  contractRequests,
+});
+
+export const ammV3Api = new AMMV3Api({
   contractRequests,
 });
 
