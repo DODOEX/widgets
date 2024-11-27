@@ -9,3 +9,5 @@ export enum Bound {
 }
 
 export type FullRange = true;
+
+export type OperateType = null | 'stake' | 'unstake' | 'claim';

@@ -1,3 +1,4 @@
+import { MiningStatusE, PoolType } from '@dodoex/api';
 import {
   Box,
   TabPanel,
@@ -5,31 +6,29 @@ import {
   TabsButtonGroup,
   useTheme,
 } from '@dodoex/components';
-import { AssociatedMine } from './AssociateMine';
-import { FetchMiningListItem, OperateType } from '../types';
-import { TokenInfo } from '../../../hooks/Token';
+import { t } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
+import { useWeb3React } from '@web3-react/core';
+import BigNumber from 'bignumber.js';
+import React from 'react';
+import { TokenCard } from '../../../components/Swap/components/TokenCard';
+import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { BalanceData } from '../../../hooks/Submission/useBalanceUpdateLoading';
 import {
   convertFetchTokenToTokenInfo,
   formatTokenAmountNumber,
 } from '../../../utils';
-import { t } from '@lingui/macro';
 import { usePoolBalanceInfo } from '../../PoolWidget/hooks/usePoolBalanceInfo';
-import { useWeb3React } from '@web3-react/core';
-import { StakeButton } from './StakeButton';
-import GetLpLink from './GetLpLink';
-import { TokenLogoPair } from '../../../components/TokenLogoPair';
-import { TokenCard } from '../../../components/Swap/components/TokenCard';
-import { MiningStatusE, PoolType } from '@dodoex/api';
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { miningApi } from '../helper';
-import BigNumber from 'bignumber.js';
-import UnstakeButton from './UnstakeButton';
-import { RewardListCard } from './RewardListCard';
-import ClaimButton from './ClaimButton';
 import { poolApi } from '../../PoolWidget/utils';
+import { miningApi } from '../helper';
+import { FetchMiningListItem, OperateType } from '../types';
+import { AssociatedMine } from './AssociateMine';
+import ClaimButton from './ClaimButton';
+import GetLpLink from './GetLpLink';
+import { RewardListCard } from './RewardListCard';
+import { StakeButton } from './StakeButton';
+import UnstakeButton from './UnstakeButton';
 import { OperateButtonWrapper } from './Widgets';
-import { BalanceData } from '../../../hooks/Submission/useBalanceUpdateLoading';
 
 export default function OperateArea({
   chainId,

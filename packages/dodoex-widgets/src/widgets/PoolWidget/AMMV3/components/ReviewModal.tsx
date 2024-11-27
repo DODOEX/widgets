@@ -56,7 +56,7 @@ export const ReviewModal = ({
               position={position}
               inRange={!outOfRange}
               ticksAtLimit={ticksAtLimit}
-              title="Selected Range"
+              title={t`Selected Range`}
             />
           ) : null}
         </Box>
