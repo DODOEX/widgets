@@ -54,8 +54,8 @@
     ]
   },
   "peerDependencies": {
-    "@dodoex/contract-request": "^1.0.1",
-    "@dodoex/dodo-contract-request": "1.3.1",
+    "@dodoex/contract-request": "^1.2.0",
+    "@dodoex/dodo-contract-request": "1.5.0",
     "bignumber.js": ">=9",
     "lodash": ">=4"
   },
