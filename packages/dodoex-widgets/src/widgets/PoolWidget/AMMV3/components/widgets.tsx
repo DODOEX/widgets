@@ -82,8 +82,8 @@ export const YellowCard = ({ children }: YellowCardProps) => {
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M0.75 16.125L9 1.875L17.25 16.125H0.75ZM14.6475 14.625L8.99998 4.86749L3.35247 14.625H14.6475ZM9.75004 12.375H8.25003V13.875H9.75004V12.375ZM8.25003 7.875H9.75004V10.875H8.25003V7.875Z"
           fill={theme.palette.warning.main}
         />

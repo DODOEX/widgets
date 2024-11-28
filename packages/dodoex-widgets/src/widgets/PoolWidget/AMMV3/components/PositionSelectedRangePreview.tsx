@@ -203,7 +203,7 @@ export const PositionSelectedRangePreview = ({
           justifyContent: 'space-between',
         }}
       >
-        <AutoColumn gap="4px" justify="center">
+        <AutoColumn gap="4px" justify="flex-start">
           <Box
             sx={{
               color: theme.palette.text.primary,

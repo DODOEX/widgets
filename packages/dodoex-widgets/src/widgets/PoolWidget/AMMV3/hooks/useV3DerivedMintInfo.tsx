@@ -301,13 +301,12 @@ export function useV3DerivedMintInfo({
   const { [Bound.LOWER]: tickLower, [Bound.UPPER]: tickUpper } = ticks || {};
 
   // specifies whether the lower and upper ticks is at the exteme bounds
-  const ticksAtLimit = useMemo(
-    () => ({
+  const ticksAtLimit = useMemo(() => {
+    return {
       [Bound.LOWER]: feeAmount && tickLower === tickSpaceLimits.LOWER,
       [Bound.UPPER]: feeAmount && tickUpper === tickSpaceLimits.UPPER,
-    }),
-    [tickSpaceLimits, tickLower, tickUpper, feeAmount],
-  );
+    };
+  }, [tickSpaceLimits, tickLower, tickUpper, feeAmount]);
 
   // mark invalid range
   const invalidRange = Boolean(

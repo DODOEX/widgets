@@ -241,8 +241,8 @@ export const PositionViewCard = ({
               fill="none"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M0.583252 12.5416L6.99992 1.45825L13.4166 12.5416H0.583252ZM11.3924 11.3749L6.9999 3.78575L2.6074 11.3749H11.3924ZM7.58328 9.62492H6.41661V10.7916H7.58328V9.62492ZM6.41661 6.12492H7.58328V8.45825H6.41661V6.12492Z"
                 fill={theme.palette.warning.main}
               />

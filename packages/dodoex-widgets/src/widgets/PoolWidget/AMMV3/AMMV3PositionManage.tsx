@@ -7,11 +7,12 @@ import {
 } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
 import { t } from '@lingui/macro';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useMemo, useReducer, useState } from 'react';
 import Dialog from '../../../components/Dialog';
 import { CardPlusConnected } from '../../../components/Swap/components/TokenCard';
+import TokenLogo from '../../../components/TokenLogo';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useSubmission } from '../../../hooks/Submission';
@@ -19,12 +20,14 @@ import { OpCode } from '../../../hooks/Submission/spec';
 import { ExecutionResult, MetadataFlag } from '../../../hooks/Submission/types';
 import { TokenInfo } from '../../../hooks/Token';
 import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
+import { formatTokenAmountNumber } from '../../../utils';
 import { SliderPercentageCard } from '../PoolOperate/components/SliderPercentageCard';
 import SlippageSetting, {
   useSlipper,
 } from '../PoolOperate/components/SlippageSetting';
 import { initSliderPercentage } from '../PoolOperate/hooks/usePercentageRemove';
 import { Buttons } from './components/Buttons';
+import { ClaimButton } from './components/ClaimButton';
 import { CurrencyInputPanel } from './components/CurrencyInputPanel';
 import { PositionAmountPreview } from './components/PositionAmountPreview';
 import { PositionSelectedRangePreview } from './components/PositionSelectedRangePreview';
@@ -34,6 +37,7 @@ import { useDerivedPositionInfo } from './hooks/useDerivedPositionInfo';
 import { useDerivedV3BurnInfo } from './hooks/useDerivedV3BurnInfo';
 import { useV3DerivedMintInfo } from './hooks/useV3DerivedMintInfo';
 import { useV3MintActionHandlers } from './hooks/useV3MintActionHandlers';
+import { useV3PositionFees } from './hooks/useV3PositionFees';
 import { useV3PositionFromTokenId } from './hooks/useV3Positions';
 import { reducer } from './reducer';
 import {
@@ -47,6 +51,49 @@ import { Bound, Field, OperateType } from './types';
 import { buildCurrency, convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
 import { toSlippagePercent } from './utils/slippage';
+import { CONTRACT_QUERY_KEY } from '@dodoex/api';
+
+const RewardItem = ({
+  token,
+  amount,
+}: {
+  token: Currency | undefined;
+  amount: CurrencyAmount<Currency> | undefined;
+}) => {
+  const theme = useTheme();
+  return (
+    <Box
+      sx={{
+        py: 8,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 6,
+        typography: 'h5',
+        color: theme.palette.text.primary,
+      }}
+    >
+      <TokenLogo
+        address={token?.address ?? ''}
+        chainId={token?.chainId}
+        noShowChain
+        width={24}
+        height={24}
+        marginRight={0}
+      />
+      <Box>{token?.symbol}</Box>
+      <Box
+        sx={{
+          ml: 'auto',
+        }}
+      >
+        {formatTokenAmountNumber({
+          input: amount?.toSignificant(),
+          decimals: token?.decimals,
+        })}
+      </Box>
+    </Box>
+  );
+};
 
 export interface AMMV3PositionManageProps {
   chainId: ChainId;
@@ -68,6 +115,7 @@ export const AMMV3PositionManage = ({
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
   const submission = useSubmission();
+  const queryClient = useQueryClient();
 
   const { account } = useWalletInfo();
 
@@ -126,8 +174,8 @@ export const AMMV3PositionManage = ({
     liquidityPercentage,
     liquidityValue0,
     liquidityValue1,
-    feeValue0,
-    feeValue1,
+    feeValue0: feeValue0Remove,
+    feeValue1: feeValue1Remove,
     error,
   } = useDerivedV3BurnInfo({
     position: existingPositionDetails,
@@ -137,6 +185,17 @@ export const AMMV3PositionManage = ({
     quoteToken: state.quoteToken,
   });
   const removed = existingPositionDetails?.liquidity === '0';
+
+  // fees
+  const [feeValue0, feeValue1] = useV3PositionFees({
+    pool: pool ?? undefined,
+    tokenId,
+    asWETH: false,
+    chainId,
+  });
+  const inverted = false;
+  const feeValueUpper = inverted ? feeValue0 : feeValue1;
+  const feeValueLower = inverted ? feeValue1 : feeValue0;
 
   const formattedPrice = useMemo(() => {
     return (invertPrice ? price?.invert() : price)?.toSignificant();
@@ -246,19 +305,140 @@ export const AMMV3PositionManage = ({
             ...txn,
           },
           {
-            early: true,
+            early: false,
             metadata: {
               [MetadataFlag.addAMMV3Pool]: '1',
             },
           },
         );
-        if (succ === ExecutionResult.Submitted) {
+        if (succ === ExecutionResult.Success) {
+          setShowConfirm(false);
           setTimeout(() => {
             onClose?.();
           }, 100);
         }
+        queryClient.invalidateQueries({
+          queryKey: [CONTRACT_QUERY_KEY, 'ammv3'],
+          refetchType: 'all',
+        });
       } catch (error) {
         console.error('onAddMutation', error);
+      }
+    },
+  });
+
+  const onRemoveMutation = useMutation({
+    mutationFn: async () => {
+      if (
+        !account ||
+        !chainId ||
+        !positionSDK ||
+        !liquidityPercentage ||
+        !liquidityValue0 ||
+        !liquidityValue1
+      ) {
+        return;
+      }
+
+      const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
+
+      try {
+        const { calldata, value } =
+          NonfungiblePositionManager.removeCallParameters(positionSDK, {
+            tokenId: tokenId.toString(),
+            liquidityPercentage,
+            slippageTolerance: toSlippagePercent(slipperValue * 100),
+            deadline: deadline.toString(),
+            collectOptions: {
+              expectedCurrencyOwed0:
+                feeValue0Remove ??
+                CurrencyAmount.fromRawAmount(liquidityValue0.currency, 0),
+              expectedCurrencyOwed1:
+                feeValue1Remove ??
+                CurrencyAmount.fromRawAmount(liquidityValue1.currency, 0),
+              recipient: account,
+            },
+          });
+        let txn: { to: string; data: string; value: string } = {
+          to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
+          data: calldata,
+          value,
+        };
+
+        const succ = await submission.execute(
+          t`Add liquidity`,
+          {
+            opcode: OpCode.TX,
+            ...txn,
+          },
+          {
+            early: false,
+            metadata: {
+              [MetadataFlag.removeAMMV3Pool]: '1',
+            },
+          },
+        );
+        if (succ === ExecutionResult.Success) {
+          setTimeout(() => {
+            onClose?.();
+          }, 100);
+        }
+        queryClient.invalidateQueries({
+          queryKey: [CONTRACT_QUERY_KEY, 'ammv3'],
+          refetchType: 'all',
+        });
+      } catch (error) {
+        console.error('onRemoveMutation', error);
+      }
+    },
+  });
+
+  const onClaimMutation = useMutation({
+    mutationFn: async () => {
+      if (!account || !chainId || !pool) {
+        return;
+      }
+
+      try {
+        const { calldata, value } =
+          NonfungiblePositionManager.collectCallParameters({
+            tokenId: tokenId.toString(),
+            expectedCurrencyOwed0:
+              feeValue0 ?? CurrencyAmount.fromRawAmount(pool.token0, 0),
+            expectedCurrencyOwed1:
+              feeValue1 ?? CurrencyAmount.fromRawAmount(pool.token1, 0),
+            recipient: account,
+          });
+        let txn: { to: string; data: string; value: string } = {
+          to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
+          data: calldata,
+          value,
+        };
+
+        const succ = await submission.execute(
+          t`Add liquidity`,
+          {
+            opcode: OpCode.TX,
+            ...txn,
+          },
+          {
+            early: false,
+            metadata: {
+              [MetadataFlag.claimAMMV3Pool]: '1',
+            },
+          },
+        );
+        if (succ === ExecutionResult.Success) {
+          setTimeout(() => {
+            onClose?.();
+          }, 100);
+        }
+        queryClient.invalidateQueries({
+          queryKey: [CONTRACT_QUERY_KEY, 'ammv3'],
+          refetchType: 'all',
+        });
+      } catch (error) {
+        console.error('onClaimMutation', error);
       }
     },
   });
@@ -464,6 +644,78 @@ export const AMMV3PositionManage = ({
             </Box>
             <Box
               sx={{
+                mt: 16,
+                mx: 20,
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Box
+                sx={{
+                  typography: 'body2',
+                  color: theme.palette.text.secondary,
+                }}
+              >
+                Receive
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-end',
+                  gap: 4,
+                }}
+              >
+                <Box
+                  sx={{
+                    typography: 'body1',
+                    fontWeight: 600,
+                    color: theme.palette.text.primary,
+                  }}
+                >
+                  <Box
+                    component="span"
+                    sx={{
+                      color: theme.palette.primary.main,
+                    }}
+                  >
+                    {liquidityValue0
+                      ? formatTokenAmountNumber({
+                          input: liquidityValue0.toExact(),
+                          decimals: liquidityValue0.currency.decimals,
+                        })
+                      : '-'}
+                  </Box>
+                  &nbsp;{liquidityValue0?.currency?.symbol}
+                </Box>
+                <Box
+                  sx={{
+                    typography: 'body1',
+                    fontWeight: 600,
+                    color: theme.palette.text.primary,
+                  }}
+                >
+                  <Box
+                    component="span"
+                    sx={{
+                      color: theme.palette.primary.main,
+                    }}
+                  >
+                    {liquidityValue1
+                      ? formatTokenAmountNumber({
+                          input: liquidityValue1.toExact(),
+                          decimals: liquidityValue1.currency.decimals,
+                        })
+                      : '-'}
+                  </Box>
+                  &nbsp;{liquidityValue1?.currency?.symbol}
+                </Box>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                mt: 20,
                 display: 'flex',
                 alignItems: 'center',
                 px: 20,
@@ -477,17 +729,79 @@ export const AMMV3PositionManage = ({
                 chainId={chainId}
                 disabled={removed || sliderPercentage === 0 || !liquidityValue0}
                 removed={removed}
-                isLoading={false}
-                error={undefined}
-                onConfirm={function (): void {
-                  throw new Error('Function not implemented.');
-                }}
+                error={error}
+                onConfirm={onRemoveMutation.mutate}
+                isLoading={onRemoveMutation.isPending}
               />
             </Box>
           </TabPanel>
           <TabPanel value="claim">
-            <Box>
+            <Box
+              sx={{
+                mx: 20,
+                mt: 16,
+                borderRadius: 12,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                borderColor: theme.palette.border.main,
+              }}
+            >
+              <Box
+                sx={{
+                  py: 12,
+                  px: 20,
+                  typography: 'body1',
+                  color: theme.palette.text.primary,
+                  borderBottomWidth: 1,
+                  borderBottomStyle: 'solid',
+                  borderBottomColor: theme.palette.border.main,
+                }}
+              >
+                {t`Claim fees`}
+              </Box>
+              <Box
+                sx={{
+                  p: 20,
+                }}
+              >
+                <RewardItem
+                  token={feeValueUpper?.currency}
+                  amount={feeValueUpper}
+                />
+                <RewardItem
+                  token={feeValueLower?.currency}
+                  amount={feeValueLower}
+                />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                mx: 20,
+                mt: 16,
+                typography: 'h6',
+                color: theme.palette.text.secondary,
+              }}
+            >
               {t`*Collecting fees will withdraw currently available fees for you.`}
+            </Box>
+            <Box
+              sx={{
+                mt: 20,
+                display: 'flex',
+                alignItems: 'center',
+                px: 20,
+                py: 16,
+                borderBottomLeftRadius: 16,
+                borderBottomRightRadius: 16,
+                backgroundColor: theme.palette.background.paper,
+              }}
+            >
+              <ClaimButton
+                chainId={chainId}
+                disabled={onClaimMutation.isPending}
+                onConfirm={onClaimMutation.mutate}
+                isLoading={onClaimMutation.isPending}
+              />
             </Box>
           </TabPanel>
         </Tabs>
@@ -501,18 +815,26 @@ export const AMMV3PositionManage = ({
     currencyBalances,
     depositADisabled,
     depositBDisabled,
+    error,
     errorMessage,
     existingPosition,
+    feeValueLower,
+    feeValueUpper,
     formattedAmounts,
     hasExistingPosition,
     isValid,
     liquidityValue0,
+    liquidityValue1,
     maxAmounts,
     onAddMutation.isPending,
     onAddMutation.mutate,
+    onClaimMutation.isPending,
+    onClaimMutation.mutate,
     onClose,
     onFieldAInput,
     onFieldBInput,
+    onRemoveMutation.isPending,
+    onRemoveMutation.mutate,
     operateType,
     outOfRange,
     parsedAmounts,
@@ -525,6 +847,8 @@ export const AMMV3PositionManage = ({
     sliderPercentage,
     slipper,
     theme.palette.background.paper,
+    theme.palette.border.main,
+    theme.palette.primary.main,
     theme.palette.text.primary,
     theme.palette.text.secondary,
     ticksAtLimit,

@@ -29,8 +29,8 @@ export function ClaimTips() {
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M9.20379 1.80945L4.81274 1.79788L1.69961 4.89464L1.68804 9.28569L4.7848 12.3988L9.17585 12.4104L12.289 9.31363L12.3006 4.92258L9.20379 1.80945ZM13.4685 4.44241L9.69012 0.644062L4.33257 0.629942L0.534222 4.40832L0.520101 9.76587L4.29848 13.5642L9.65602 13.5783L13.4544 9.79996L13.4685 4.44241Z"
           fill="currentColor"
         />

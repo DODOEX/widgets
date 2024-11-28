@@ -129,8 +129,8 @@ function RewardCard({
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M9.66659 2H6.33325L5.66659 2.66667H3.33325V4H12.6666V2.66667H10.3333L9.66659 2ZM10.6666 6V12.6667H5.33325V6H10.6666ZM3.99992 4.66667H11.9999V12.6667C11.9999 13.4 11.3999 14 10.6666 14H5.33325C4.59992 14 3.99992 13.4 3.99992 12.6667V4.66667Z"
                 fill={theme.palette.error.main}
               />

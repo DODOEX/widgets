@@ -30,8 +30,20 @@ export function useDerivedV3BurnInfo({
 } {
   const { account, chainId } = useWalletInfo();
 
-  const token0 = baseToken ?? undefined;
-  const token1 = quoteToken ?? undefined;
+  const [tokenA, tokenB] = useMemo(
+    () => [baseToken?.wrapped, quoteToken?.wrapped],
+    [baseToken, quoteToken],
+  );
+
+  const [token0, token1] = useMemo(
+    () =>
+      tokenA && tokenB
+        ? tokenA.sortsBefore(tokenB)
+          ? [tokenA, tokenB]
+          : [tokenB, tokenA]
+        : [undefined, undefined],
+    [tokenA, tokenB],
+  );
 
   const [, pool] = usePool(
     token0 ?? undefined,

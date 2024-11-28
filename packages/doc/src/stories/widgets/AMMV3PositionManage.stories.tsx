@@ -42,7 +42,9 @@ export const Primary = (props: any) => {
           chainId: 11155111,
           // chainId: 1,
         }}
-        feeAmount={500}
+        // feeAmount={500}
+        // tokenId={'25235'}
+        feeAmount={10000}
         tokenId={'26887'}
         onClose={() => window.alert('onClose')}
       />

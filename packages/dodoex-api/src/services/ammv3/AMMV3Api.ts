@@ -1,13 +1,12 @@
+import { BigNumber as BigNumberE } from '@ethersproject/bignumber';
 import BigNumber from 'bignumber.js';
-import { ChainId, contractConfig } from '../../chainConfig';
 import ContractRequests, {
   CONTRACT_QUERY_KEY,
   ContractRequestsConfig,
 } from '../../helper/ContractRequests';
 import { ABIName } from '../../helper/ContractRequests/abi/abiName';
-import { encodeFunctionData } from '../../helper/ContractRequests/encode';
-import { AllV3TicksDocument } from './queries';
 import { poolUtils } from '../pool/poolUtils';
+import { AllV3TicksDocument } from './queries';
 
 export interface AMMV3ApiProps {
   contractRequests?: ContractRequests;
@@ -34,40 +33,7 @@ export class AMMV3Api {
 
   static utils = poolUtils;
 
-  static encode = {
-    async addDVMLiquidityABI(
-      chainId: number,
-      dvmAddress: string,
-      baseInAmount: string,
-      quoteInAmount: string,
-      baseMinAmount: string,
-      quoteMinAmount: string,
-      flag: number,
-      deadline: number,
-    ) {
-      if (!baseMinAmount || baseMinAmount === '0') {
-        throw new Error('Invalid baseMinAmount');
-      }
-      const { DODO_PROXY } = contractConfig[chainId as ChainId];
-      const data = await encodeFunctionData(
-        ABIName.dodoProxyV2,
-        'addDVMLiquidity',
-        [
-          dvmAddress,
-          baseInAmount,
-          quoteInAmount,
-          baseMinAmount,
-          quoteMinAmount,
-          flag,
-          deadline,
-        ],
-      );
-      return {
-        to: DODO_PROXY,
-        data,
-      };
-    },
-  };
+  static encode = {};
 
   getPositions(
     chainId: number | undefined,
@@ -93,6 +59,30 @@ export class AMMV3Api {
             };
           }),
         );
+        return result;
+      },
+    };
+  }
+
+  getOwner(
+    chainId: number | undefined,
+    contractAddress: string | undefined,
+    tokenId: string,
+  ) {
+    return {
+      queryKey: [CONTRACT_QUERY_KEY, 'ammv3', 'getOwner', ...arguments],
+      enabled: !!chainId && !!contractAddress,
+      queryFn: async () => {
+        if (!chainId || !contractAddress) {
+          return null;
+        }
+
+        const result = await this.contractRequests.batchCallQuery(chainId, {
+          abiName: ABIName.NonfungiblePositionManager,
+          contractAddress,
+          method: 'ownerOf',
+          params: [tokenId],
+        });
         return result;
       },
     };
@@ -198,6 +188,39 @@ export class AMMV3Api {
           contractAddress: poolAddress,
           method: 'liquidity',
           params: [],
+        });
+        return result;
+      },
+    };
+  }
+
+  getCollect(
+    chainId: number | undefined,
+    contractAddress: string | undefined,
+    tokenId: string,
+    recipient: string,
+  ) {
+    return {
+      queryKey: [CONTRACT_QUERY_KEY, 'ammv3', 'getCollect', ...arguments],
+      enabled: !!chainId || !!contractAddress,
+      queryFn: async () => {
+        if (!chainId || !contractAddress || !tokenId || !recipient) {
+          return null;
+        }
+        const MAX_UINT128 = BigNumberE.from(2).pow(128).sub(1);
+        const result = await this.contractRequests.callQuery(chainId, {
+          abiName: ABIName.NonfungiblePositionManager,
+          contractAddress,
+          method: 'collect',
+          params: [
+            {
+              tokenId,
+              recipient, // some tokens might fail if transferred to address(0)
+              amount0Max: MAX_UINT128,
+              amount1Max: MAX_UINT128,
+            },
+            { from: recipient }, // need to simulate the call as the owner
+          ],
         });
         return result;
       },
