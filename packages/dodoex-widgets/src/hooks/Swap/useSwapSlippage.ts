@@ -3,6 +3,7 @@ import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { TokenInfo } from '../Token/type';
 import { useCustomSlippage } from './useCustomSlippage';
 import { useForecastSlippageList } from './useForecastSlippageList';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export function useSwapSlippage({
   fromToken,
@@ -16,10 +17,11 @@ export function useSwapSlippage({
       fromToken,
       toToken,
     });
+  const { onlySolana } = useUserOptions();
   const { defaultSlippage } = useDefaultSlippage(false);
   const forecastSlippageQuery = useForecastSlippageList({
     fromToken,
-    toToken,
+    toToken: onlySolana ? null : toToken,
   });
   const forecastSlippageOrigin =
     forecastSlippageQuery.slippageData.recommendSlippage?.forecastSlippage;

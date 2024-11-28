@@ -9,6 +9,8 @@ import { setOpenConnectWalletInfo } from '../../store/actions/wallet';
 import { chainListMap } from '../../constants/chainList';
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
 import { useUserOptions } from '../UserOptionsProvider';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 
 export default function NeedConnectButton({
   chainId,
@@ -19,15 +21,18 @@ export default function NeedConnectButton({
   chainId?: ChainId;
   includeButton?: boolean;
 }) {
-  const { account, chainId: currentChainId, connector } = useWeb3React();
+  const { connector } = useWeb3React();
+  const { account, chainId: currentChainId } = useWalletInfo();
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { onConnectWalletClick, onSwitchChain } = useUserOptions();
+  const { onConnectWalletClick, onSwitchChain, onlySolana } = useUserOptions();
   const [loading, setLoading] = React.useState(false);
   const switchChain = useSwitchChain(chainId);
+  const { setVisible } = useWalletModal();
   const needSwitchNetwork =
     currentChainId !== undefined &&
     chainId !== undefined &&
-    currentChainId !== chainId;
+    currentChainId !== chainId &&
+    !onlySolana;
   if (
     account &&
     !loading &&
@@ -43,6 +48,18 @@ export default function NeedConnectButton({
         {...props}
         isLoading={loading}
         onClick={async () => {
+          if (onConnectWalletClick) {
+            setLoading(true);
+            const isConnected = await onConnectWalletClick();
+            setLoading(false);
+            if (isConnected) {
+              return;
+            }
+          }
+          if (onlySolana) {
+            setVisible(true);
+            return;
+          }
           // switch chain
           if (needSwitchNetwork) {
             if (onSwitchChain) {
@@ -63,15 +80,6 @@ export default function NeedConnectButton({
               }),
             );
             return;
-          }
-
-          if (onConnectWalletClick) {
-            setLoading(true);
-            const isConnected = await onConnectWalletClick();
-            setLoading(false);
-            if (isConnected) {
-              return;
-            }
           }
           connector.deactivate
             ? connector.deactivate()

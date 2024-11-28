@@ -5,9 +5,10 @@ import { ChainListItem, chainListMap } from '../../constants/chainList';
 import { useSelector } from 'react-redux';
 import { getAllTokenList } from '../../store/selectors/token';
 import { useUserOptions } from '../../components/UserOptionsProvider';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 
 export function useSelectChainList(side?: 'from' | 'to') {
-  const { chainId } = useWeb3React();
+  const { chainId } = useWalletInfo();
   const allTokenList = useSelector(getAllTokenList);
   const { crossChain, onlyChainId } = useUserOptions();
   const hasTokenChainIds = useMemo(() => {

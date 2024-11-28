@@ -21,6 +21,8 @@ import { Alarm } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import SlippageCurveChart from './SlippageCurveChart';
 import { SlippageWarning } from './SlippageWarning';
+import { useUserOptions } from '../../../UserOptionsProvider';
+import { MAX_SWAP_SLIPPAGE } from '../../../../constants/swap';
 
 enum SlippageType {
   recommend = 'recommend',
@@ -35,6 +37,7 @@ export default function SlippageSetting({
   toToken?: TokenInfo | null;
 }) {
   const theme = useTheme();
+  const { onlySolana } = useUserOptions();
   const {
     slippageAdvanced: advanced,
     notRemindAgainSlippageHigher,
@@ -85,6 +88,86 @@ export default function SlippageSetting({
     },
     [isCustomActive, recommendSlippage, handleSlippageChange],
   );
+
+  if (onlySolana) {
+    return (
+      <Box
+        sx={{
+          pt: 20,
+          borderTop: `1px solid ${theme.palette.border.main}`,
+        }}
+      >
+        <Box sx={{ mb: 16, display: 'flex', alignItems: 'center' }}>
+          <Trans>Slippage Tolerance</Trans>
+          <QuestionTooltip
+            title={
+              <Trans>
+                Attention: High slippage tolerance will increase the success
+                rate of transaction, but might not get the best quote.
+              </Trans>
+            }
+            ml={7}
+          />
+        </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Input
+            placeholder={String(recommendSlippage)}
+            fullWidth
+            sx={{
+              height: 36,
+              '& input': {
+                boxSizing: 'border-box',
+                '&::placeholder': {
+                  color: 'custom.input.placeholder',
+                  opacity: 1,
+                },
+              },
+            }}
+            inputMode="decimal"
+            suffix={<Box sx={{ color: 'text.disabled' }}>%</Box>}
+            value={customSlippage || ''}
+            onChange={(e) => {
+              const slippage = e.target.value;
+              handleSlippageChange({
+                slippage,
+                disabled: false,
+                recommend: String(recommendSlippage),
+              });
+            }}
+            onBlur={() => {
+              setTimeout(() => {
+                setIsCustomInputActive(false);
+                if (!customSlippageNum) {
+                  setOperateTab(SlippageType.recommend);
+                  return;
+                }
+                const deleted = !customSlippageNum || customSlippageNum < 0;
+                if (deleted && customSlippage) {
+                  handleSlippageChange({
+                    slippage: customSlippage,
+                    disabled: deleted,
+                    deleted,
+                    recommend: String(recommendSlippage),
+                  });
+                }
+              }, 10);
+            }}
+          />
+          {Number(customSlippage) >= MAX_SWAP_SLIPPAGE && (
+            <Box
+              sx={{
+                typography: 'h6',
+                mt: 6,
+                color: 'error.main',
+              }}
+            >
+              <Trans>Maximum slippage do not exceed 50%</Trans>
+            </Box>
+          )}
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <>

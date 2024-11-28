@@ -117,4 +117,13 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WMNT',
     wrappedTokenAddress: '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8',
   },
+
+  // solana
+  [ChainId.SOON_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    decimals: 9,
+    symbol: 'SOL',
+    wrappedTokenSymbol: 'WSOL',
+    wrappedTokenAddress: 'So11111111111111111111111111111111111111112',
+  },
 };

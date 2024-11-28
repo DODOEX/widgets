@@ -210,7 +210,7 @@ export default function useTokenList({
   }, [preloaded, getNeedShowList, popularTokenList]);
 
   const tokenInfoMap = useTokenListFetchBalance({
-    chainId,
+    chainId: chainId as number,
     tokenList: showTokenList,
     popularTokenList,
     value,

@@ -11,6 +11,7 @@ const tokenUSDTChainBSC = {
   chainId: 56,
 };
 
+jest.mock('../solana/useFetchSolanaRoutePrice');
 jest.mock('axios');
 jest.mock('../../components/UserOptionsProvider', () => ({
   useUserOptions: () => ({

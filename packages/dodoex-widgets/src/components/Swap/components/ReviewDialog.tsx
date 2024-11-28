@@ -31,7 +31,7 @@ export interface ReviewDialogProps {
   clearFromAmt: () => void;
   toToken: TokenInfo | null;
   fromToken: TokenInfo | null;
-  priceImpact: string;
+  priceImpact: string | null;
   fromAmount: string | number | null;
   toAmount: string | number | null;
   baseFeeAmount: number | null;
@@ -65,7 +65,8 @@ export function ReviewDialog({
   const dispatch = useDispatch<AppThunkDispatch>();
   const contractStatus = useSelector(getContractStatus);
   const isPriceWaningShown = useMemo(
-    () => new BigNumber(priceImpact).gt(PRICE_IMPACT_THRESHOLD),
+    () =>
+      !!priceImpact && new BigNumber(priceImpact).gt(PRICE_IMPACT_THRESHOLD),
     [priceImpact],
   );
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -137,20 +138,22 @@ export function ReviewDialog({
                   decimals: fromToken?.decimals,
                 })} ${fromToken?.symbol}`}</Box>
               </Box>
-              <Box
-                sx={{
-                  mt: 4,
-                  typography: 'h6',
-                  color: theme.palette.text.secondary,
-                }}
-              >
-                {curFromFiatPrice
-                  ? `$${formatReadableNumber({
-                      input: curFromFiatPrice,
-                      showDecimals: 1,
-                    })}`
-                  : '-'}
-              </Box>
+              {curFromFiatPrice !== null && (
+                <Box
+                  sx={{
+                    mt: 4,
+                    typography: 'h6',
+                    color: theme.palette.text.secondary,
+                  }}
+                >
+                  {curFromFiatPrice
+                    ? `$${formatReadableNumber({
+                        input: curFromFiatPrice,
+                        showDecimals: 1,
+                      })}`
+                    : '-'}
+                </Box>
+              )}
             </Box>
             <Box sx={{ width: 16, mx: 16 }} component={DoubleRight} />
             <Box>
@@ -172,24 +175,26 @@ export function ReviewDialog({
                   decimals: toToken?.decimals,
                 })} ${toToken?.symbol}`}</LoadingSkeleton>
               </Box>
-              <LoadingSkeleton
-                loading={loading}
-                loadingProps={{
-                  width: 30,
-                }}
-                sx={{
-                  typography: 'h6',
-                  mt: 4,
-                  color: theme.palette.text.secondary,
-                }}
-              >
-                {curToFiatPrice
-                  ? `$${formatReadableNumber({
-                      input: curToFiatPrice,
-                      showDecimals: 1,
-                    })}(${priceImpact}%)`
-                  : '-'}
-              </LoadingSkeleton>
+              {curFromFiatPrice !== null && (
+                <LoadingSkeleton
+                  loading={loading}
+                  loadingProps={{
+                    width: 30,
+                  }}
+                  sx={{
+                    typography: 'h6',
+                    mt: 4,
+                    color: theme.palette.text.secondary,
+                  }}
+                >
+                  {curToFiatPrice
+                    ? `$${formatReadableNumber({
+                        input: curToFiatPrice,
+                        showDecimals: 1,
+                      })}(${priceImpact}%)`
+                    : '-'}
+                </LoadingSkeleton>
+              )}
             </Box>
           </Box>
           <Box
@@ -322,28 +327,30 @@ export function ReviewDialog({
               </LoadingSkeleton>
             </Box>
 
-            <Box
-              sx={{
-                mt: 8,
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Trans>Price Impact</Trans>
-                <QuestionTooltip
-                  title={
-                    <Trans>
-                      Due to the market condition, market price and estimated
-                      price may have a slight difference
-                    </Trans>
-                  }
-                  ml={5}
-                />
+            {!!priceImpact && (
+              <Box
+                sx={{
+                  mt: 8,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Trans>Price Impact</Trans>
+                  <QuestionTooltip
+                    title={
+                      <Trans>
+                        Due to the market condition, market price and estimated
+                        price may have a slight difference
+                      </Trans>
+                    }
+                    ml={5}
+                  />
+                </Box>
+                <Box>{`${priceImpact}%`}</Box>
               </Box>
-              <Box>{`${priceImpact}%`}</Box>
-            </Box>
+            )}
 
             <Box
               sx={{

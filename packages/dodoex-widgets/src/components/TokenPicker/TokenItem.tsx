@@ -8,6 +8,7 @@ import { tokenPickerItem } from '../../constants/testId';
 import { useTheme } from '@dodoex/components';
 import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 
 export default function TokenItem({
   token,
@@ -23,7 +24,7 @@ export default function TokenItem({
   onClick: () => void;
 }) {
   const theme = useTheme();
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const balance = balanceBigNumber
     ? formatReadableNumber({
         input: balanceBigNumber,

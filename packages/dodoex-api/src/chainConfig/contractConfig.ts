@@ -285,6 +285,21 @@ const contractMap: {
     DODO_DPP_PROXY: '0x38886EDE1Fc92886F9a11C37a1f5e75474858eaa',
     DODO_MINEV3_PROXY: '0x1dFd36964e21a2eb633991f0B95b4241c20e1db3',
   },
+
+  [ChainId.SOON_TESTNET]: {
+    MULTI_CALL: '',
+    DODO_APPROVE: '',
+    ERC20_HELPER: '',
+
+    ROUTE_V2_DATA_FETCH: '',
+    ROUTE_V1_DATA_FETCH: '',
+    CALLEE_HELPER: '',
+
+    DODO_PROXY: '',
+    DODO_DSP_PROXY: '',
+    DODO_DPP_PROXY: '',
+    DODO_MINEV3_PROXY: '',
+  },
 };
 
 export default contractMap;

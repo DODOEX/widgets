@@ -18,6 +18,7 @@ import { scanUrlDomainMap } from '../../constants/chains';
 import { ChainId } from '@dodoex/api';
 import { setContractStatus } from '../../store/actions/globals';
 import { useUserOptions } from '../UserOptionsProvider';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 
 const strokeWidth = 6;
 
@@ -137,7 +138,7 @@ function TransactionTime({
   tx: string;
 }) {
   const [time, setTime] = useState(0);
-  const { chainId } = useWeb3React();
+  const { chainId } = useWalletInfo();
 
   const scanUrl = useMemo(() => {
     const domain = scanUrlDomainMap[(chainId as ChainId) || 1];

@@ -1,10 +1,13 @@
 import { useQueries } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { isEqual } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import { tokenApi } from '../../constants/api';
 import { TokenList } from '../Token';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
+import { CONTRACT_QUERY_KEY } from '@dodoex/api';
+import { useSolanaConnection } from '../solana/useSolanaConnection';
+import { BIG_ALLOWANCE } from '../../constants/token';
 
 type TokenInfoMap = Map<
   string,
@@ -16,38 +19,57 @@ type TokenInfoMap = Map<
 
 export default function useFetchTokens({
   tokenList,
-  addresses: addressesProps,
   blockNumber,
   chainId,
   skip,
 }: {
   tokenList?: TokenList;
-  addresses?: string[];
   blockNumber?: number;
   chainId?: number;
   skip?: boolean;
 }) {
-  const { account } = useWeb3React();
+  const { account, isSolana } = useWalletInfo();
   const [tokenInfoMap, setTokenInfoMap] = useState<TokenInfoMap>(new Map());
-  const addresses = useMemo(() => {
-    return [
-      ...(tokenList?.map((token) => token.address) || []),
-      ...(addressesProps || []),
-    ].map((address) => address);
-  }, [tokenList, JSON.stringify(addressesProps)]);
 
+  const { fetchTokenBalance } = useSolanaConnection();
   const tokensQueries = useQueries({
-    queries: addresses.map((address) => {
-      const query = tokenApi.getFetchTokenQuery(chainId, address, account);
+    queries:
+      (isSolana
+        ? tokenList?.map((token) => ({
+            queryKey: [
+              CONTRACT_QUERY_KEY,
+              'token',
+              'getFetchTokenQuery',
+              chainId,
+              account?.toLocaleLowerCase(),
+              undefined,
+              token.address,
+            ],
+            queryFn: (async () => {
+              const result = await fetchTokenBalance(token.address);
+              return {
+                ...token,
+                spender: undefined,
+                balance: result.amount,
+                allowance: BIG_ALLOWANCE,
+              };
+            }) as ReturnType<typeof tokenApi.getFetchTokenQuery>['queryFn'],
+          }))
+        : tokenList?.map((token) => {
+            const query = tokenApi.getFetchTokenQuery(
+              token.chainId || chainId,
+              token.address,
+              account,
+            );
 
-      return {
-        queryKey: blockNumber
-          ? [...query.queryKey, blockNumber]
-          : query.queryKey,
-        enabled: query.enabled && !skip,
-        queryFn: query.queryFn,
-      };
-    }),
+            return {
+              queryKey: blockNumber
+                ? [...query.queryKey, blockNumber]
+                : query.queryKey,
+              enabled: query.enabled && !skip,
+              queryFn: query.queryFn,
+            };
+          })) ?? [],
     combine: (results) => {
       return {
         data: results.map((result) => result.data),

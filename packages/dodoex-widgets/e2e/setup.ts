@@ -49,5 +49,29 @@ jest.mock('react-redux', () => ({
     return [];
   },
 }));
+jest.mock('@solana/wallet-adapter-react', () => ({
+  useConnection: jest.fn(() => ({
+    connection: {
+      getBalance: jest.fn(),
+      getTokenAccountsByOwner: jest.fn(),
+      getTokenAccountBalance: jest.fn(),
+      getBlockHeight: jest.fn(),
+    },
+  })),
+  useWallet: jest.fn(),
+  useAnchorWallet: jest.fn(),
+}));
+jest.mock('@coral-xyz/anchor', () => ({
+  utils: {
+    bytes: {
+      utf8: {
+        encode: jest.fn(() => '0x'),
+      },
+    },
+  },
+}));
+jest.mock('@solana/web3.js', () => ({
+  PublicKey: jest.fn(),
+}));
 
 export {};

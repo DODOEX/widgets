@@ -1,0 +1,1119 @@
+{
+  "address": "E2U6mJwFYKqjz5DCLD9hJHJNBsUajhVLefA5Yd1TTy1R",
+  "metadata": {
+    "name": "dodo_stable_pool",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "add_liquidity",
+      "discriminator": [
+        181,
+        157,
+        89,
+        67,
+        143,
+        182,
+        52,
+        72
+      ],
+      "accounts": [
+        {
+          "name": "pool_state",
+          "writable": true
+        },
+        {
+          "name": "user_base_account",
+          "writable": true
+        },
+        {
+          "name": "user_quote_account",
+          "writable": true
+        },
+        {
+          "name": "base_vault",
+          "writable": true
+        },
+        {
+          "name": "quote_vault",
+          "writable": true
+        },
+        {
+          "name": "lp_mint",
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner_lp_token",
+          "writable": true
+        },
+        {
+          "name": "base_token_mint",
+          "docs": [
+            "The mint of token_0 vault"
+          ]
+        },
+        {
+          "name": "quote_token_mint",
+          "docs": [
+            "The mint of token_1 vault"
+          ]
+        },
+        {
+          "name": "user",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "docs": [
+            "token Program"
+          ],
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "Token program 2022"
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "base_amount",
+          "type": "u64"
+        },
+        {
+          "name": "quote_amount",
+          "type": "u64"
+        },
+        {
+          "name": "min_lp_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize",
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "pool_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "base_token"
+              },
+              {
+                "kind": "account",
+                "path": "quote_token"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_token"
+        },
+        {
+          "name": "quote_token"
+        },
+        {
+          "name": "lp_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  112,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "docs": [
+            "Program to create mint account and mint tokens"
+          ],
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "token_base_program",
+          "docs": [
+            "Spl token program or token program 2022"
+          ]
+        },
+        {
+          "name": "token_quote_program",
+          "docs": [
+            "Spl token program or token program 2022"
+          ]
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "is_open_twap",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "initialize_fee_account",
+      "discriminator": [
+        99,
+        139,
+        228,
+        221,
+        223,
+        40,
+        153,
+        21
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "pool_state",
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_token"
+        },
+        {
+          "name": "quote_token"
+        },
+        {
+          "name": "mt_fee_base_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  116,
+                  95,
+                  102,
+                  101,
+                  101,
+                  95,
+                  98,
+                  97,
+                  115,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mt_fee_quote_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  116,
+                  95,
+                  102,
+                  101,
+                  101,
+                  95,
+                  113,
+                  117,
+                  111,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_base_program",
+          "docs": [
+            "Spl token program or token program 2022"
+          ]
+        },
+        {
+          "name": "token_quote_program",
+          "docs": [
+            "Spl token program or token program 2022"
+          ]
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_pool",
+      "discriminator": [
+        95,
+        180,
+        10,
+        172,
+        84,
+        174,
+        232,
+        40
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "pool_state",
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_token"
+        },
+        {
+          "name": "quote_token"
+        },
+        {
+          "name": "base_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  115,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state"
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  113,
+                  117,
+                  111,
+                  116,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_base_program",
+          "docs": [
+            "Spl token program or token program 2022"
+          ]
+        },
+        {
+          "name": "token_quote_program",
+          "docs": [
+            "Spl token program or token program 2022"
+          ]
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "lp_fee_rate",
+          "type": "u64"
+        },
+        {
+          "name": "mt_fee_rate",
+          "type": "u64"
+        },
+        {
+          "name": "i",
+          "type": "u64"
+        },
+        {
+          "name": "k",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "query_swap",
+      "discriminator": [
+        160,
+        52,
+        250,
+        177,
+        38,
+        177,
+        233,
+        108
+      ],
+      "accounts": [
+        {
+          "name": "pool_state",
+          "docs": [
+            "池子状态账户"
+          ]
+        },
+        {
+          "name": "token_mint"
+        }
+      ],
+      "args": [
+        {
+          "name": "from_amount",
+          "type": "u64"
+        }
+      ],
+      "returns": {
+        "defined": {
+          "name": "QuerySwapResult"
+        }
+      }
+    },
+    {
+      "name": "remove_liquidity",
+      "discriminator": [
+        80,
+        85,
+        209,
+        72,
+        24,
+        206,
+        177,
+        108
+      ],
+      "accounts": [
+        {
+          "name": "lp_mint",
+          "writable": true
+        },
+        {
+          "name": "pool_state",
+          "writable": true
+        },
+        {
+          "name": "base_vault",
+          "writable": true
+        },
+        {
+          "name": "quote_vault",
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner_lp_token",
+          "writable": true
+        },
+        {
+          "name": "base_token_mint",
+          "docs": [
+            "The mint of token_0 vault"
+          ]
+        },
+        {
+          "name": "quote_token_mint",
+          "docs": [
+            "The mint of token_1 vault"
+          ]
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "user_base_account",
+          "writable": true
+        },
+        {
+          "name": "user_quote_account",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "docs": [
+            "token Program"
+          ],
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "Token program 2022"
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "lp_amount",
+          "type": "u64"
+        },
+        {
+          "name": "min_base_amount",
+          "type": "u64"
+        },
+        {
+          "name": "min_quote_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "set_mt_fee_rate",
+      "discriminator": [
+        233,
+        83,
+        63,
+        24,
+        235,
+        29,
+        52,
+        74
+      ],
+      "accounts": [
+        {
+          "name": "pool_state",
+          "writable": true
+        },
+        {
+          "name": "maintainer",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "new_mt_fee_rate",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "swap",
+      "discriminator": [
+        248,
+        198,
+        158,
+        145,
+        225,
+        117,
+        135,
+        200
+      ],
+      "accounts": [
+        {
+          "name": "pool_state",
+          "docs": [
+            "池子状态账户"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_source_token",
+          "docs": [
+            "用户的源代币账户"
+          ],
+          "writable": true
+        },
+        {
+          "name": "user_destination_token",
+          "docs": [
+            "用户的目标代币账户"
+          ],
+          "writable": true
+        },
+        {
+          "name": "base_vault",
+          "writable": true
+        },
+        {
+          "name": "quote_vault",
+          "writable": true
+        },
+        {
+          "name": "mt_fee_base_account",
+          "docs": [
+            "维护费基础代币账户"
+          ],
+          "writable": true
+        },
+        {
+          "name": "mt_fee_quote_account",
+          "docs": [
+            "维护费报价代币账户"
+          ],
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_token_mint"
+        },
+        {
+          "name": "quote_token_mint",
+          "docs": [
+            "The mint of token_1 vault"
+          ]
+        },
+        {
+          "name": "user",
+          "docs": [
+            "用户的签名账户"
+          ],
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "docs": [
+            "token Program"
+          ],
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "token_program_2022",
+          "docs": [
+            "Token program 2022"
+          ],
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "系统程序"
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "from_amount",
+          "type": "u64"
+        },
+        {
+          "name": "min_receive_amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "PoolState",
+      "discriminator": [
+        247,
+        237,
+        227,
+        245,
+        215,
+        195,
+        222,
+        70
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "SlippageExceeded",
+      "msg": "Slippage tolerance exceeded"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidFeeRate",
+      "msg": "Invalid fee rate"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidToken",
+      "msg": "Invalid token"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidAmount",
+      "msg": "Invalid amount"
+    },
+    {
+      "code": 6004,
+      "name": "MathOverflow",
+      "msg": "Math overflow"
+    },
+    {
+      "code": 6005,
+      "name": "InsufficientLiquidity",
+      "msg": "Insufficient liquidity"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidDecimals",
+      "msg": "Invalid decimals"
+    },
+    {
+      "code": 6007,
+      "name": "UnauthorizedMaintainer",
+      "msg": "Unauthorized maintainer"
+    },
+    {
+      "code": 6008,
+      "name": "QuerySellBaseError",
+      "msg": "Query_sell_base error"
+    },
+    {
+      "code": 6009,
+      "name": "QuerySellQuoteError",
+      "msg": "Query_sell_quote error"
+    },
+    {
+      "code": 6010,
+      "name": "InitializeError",
+      "msg": "Initialize error"
+    }
+  ],
+  "types": [
+    {
+      "name": "PoolState",
+      "serialization": "bytemuckunsafe",
+      "repr": {
+        "kind": "rust",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "base_token",
+            "docs": [
+              "基础代币的铸币账户地址"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_token",
+            "docs": [
+              "报价代币的铸币账户地址"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "base_vault",
+            "docs": [
+              "基础代币在池中的保管库账户地址"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_vault",
+            "docs": [
+              "报价代币在池中的保管库账户地址"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "lp_mint",
+            "docs": [
+              "LP代币(流动性提供者代币)的铸币账户地址"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "base_reserve",
+            "docs": [
+              "池中当前的基础代币储备量"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "quote_reserve",
+            "docs": [
+              "池中当前的报价代币储备量"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "lp_fee_rate",
+            "docs": [
+              "LP费率,表示为百分比的10000倍(例如,30表示0.3%)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "mt_fee_rate",
+            "docs": [
+              "维护费率,表示为百分比的10000倍"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "i",
+            "docs": [
+              "理想价格参数,用于PMM算法"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "k",
+            "docs": [
+              "价格波动系数,用于PMM算法"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "base_target",
+            "docs": [
+              "基础代币的目标储备量"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "quote_target",
+            "docs": [
+              "报价代币的目标储备量"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "base_price_cumulative_last",
+            "docs": [
+              "用于TWAP计算的基础代币累积价格"
+            ],
+            "type": "u128"
+          },
+          {
+            "name": "block_timestamp_last",
+            "docs": [
+              "上次更新价格的时间戳"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "r_state",
+            "docs": [
+              "当前R状态(0: ONE, 1: ABOVE_ONE, 2: BELOW_ONE)"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "lp_supply",
+            "docs": [
+              "LP代币的总供应量"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "maintainer",
+            "docs": [
+              "维护者地址,有权执行某些特殊操作"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "is_open_twap",
+            "docs": [
+              "是否启用TWAP(时间加权平均价格)"
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "base_decimals",
+            "docs": [
+              "基础代币的小数位数"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "quote_decimals",
+            "docs": [
+              "报价代币的小数位数"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "mt_fee_base_account",
+            "docs": [
+              "维护费基础代币账户地址"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "mt_fee_quote_account",
+            "docs": [
+              "维护费报价代币账户地址"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA的bump值,用于地址派生"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "auth_bump",
+            "type": "u8"
+          },
+          {
+            "name": "state",
+            "docs": [
+              "状态,0: 初始化,1: 初始化中,2: 完成初始化，3:暂停"
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "QuerySwapResult",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          "u128",
+          "u64",
+          "u64"
+        ]
+      }
+    }
+  ],
+  "constants": [
+    {
+      "name": "AUTHORITY_SEED",
+      "type": "bytes",
+      "value": "[97, 117, 116, 104, 111, 114, 105, 116, 121]"
+    },
+    {
+      "name": "LIQUIDITY_SEED",
+      "type": "bytes",
+      "value": "[108, 105, 113, 117, 105, 100, 105, 116, 121]"
+    },
+    {
+      "name": "MINIMUM_LIQUIDITY",
+      "type": "u64",
+      "value": "100"
+    },
+    {
+      "name": "POOL_SEED",
+      "type": "bytes",
+      "value": "[112, 111, 111, 108]"
+    }
+  ]
+}

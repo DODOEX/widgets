@@ -20,13 +20,15 @@ import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import BigNumber from 'bignumber.js';
 import { PercentageSelectButtonGroup } from './PercentageSelectButtonGroup';
 import { Trans } from '@lingui/macro';
-import { ChainId } from '@dodoex/api';
+import { ChainId, CONTRACT_QUERY_KEY } from '@dodoex/api';
 import {
   BalanceData,
   useBalanceUpdateLoading,
 } from '../../../../hooks/Submission/useBalanceUpdateLoading';
 import { useFetchTokens } from '../../../../hooks/contract';
 import { useUserOptions } from '../../../UserOptionsProvider';
+import { useSolanaConnection } from '../../../../hooks/solana/useSolanaConnection';
+import { BIG_ALLOWANCE } from '../../../../constants/token';
 
 export interface TokenCardProps {
   amt: string;
@@ -138,12 +140,40 @@ export function TokenCard({
   checkLogBalance,
   notTokenPickerModal,
 }: TokenCardProps) {
-  const { account } = useWalletInfo();
+  const { account, isSolana } = useWalletInfo();
   const theme = useTheme();
+  const { gotoBuyToken } = useUserOptions();
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
-  const tokenQuery = useQuery(
-    tokenApi.getFetchTokenQuery(token?.chainId, token?.address, account),
+  const evmTokenQuery = useQuery(
+    tokenApi.getFetchTokenQuery(
+      isSolana ? undefined : token?.chainId,
+      token?.address,
+      account,
+    ),
   );
+  const { fetchTokenBalance } = useSolanaConnection();
+  const svmTokenQuery = useQuery({
+    queryKey: [
+      CONTRACT_QUERY_KEY,
+      'token',
+      'getFetchTokenQuery',
+      chainId,
+      account?.toLocaleLowerCase(),
+      undefined,
+      token?.address,
+    ],
+    queryFn: async () => {
+      if (!token) return;
+      const result = await fetchTokenBalance(token.address);
+      return {
+        ...token,
+        balance: result.amount,
+        allowance: BIG_ALLOWANCE,
+      };
+    },
+    enabled: !!account && isSolana && !!token,
+  });
+  const tokenQuery = isSolana ? svmTokenQuery : evmTokenQuery;
   const balance = overrideBalance ?? tokenQuery.data?.balance ?? null;
   const { isTokenLoading } = useBalanceUpdateLoading();
   let balanceLoading = overrideBalanceLoading ?? tokenQuery.isLoading;
@@ -157,7 +187,7 @@ export function TokenCard({
     }
   }
   useFetchTokens({
-    addresses: token ? [token.address] : [],
+    tokenList: token ? [token] : [],
     chainId: token?.chainId,
   });
 
@@ -171,7 +201,6 @@ export function TokenCard({
     }
   }, [amt]);
 
-  const { gotoBuyToken } = useUserOptions();
   let showBuyTokenBtn = gotoBuyToken && balance && amt && balance.lt(amt);
 
   const showInputNumber = !!onInputChange || !!inputReadonlyTooltip;

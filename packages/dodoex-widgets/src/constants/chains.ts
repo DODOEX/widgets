@@ -50,6 +50,8 @@ export const rpcServerMap: {
   [ChainId.SEPOLIA]: ['https://ethereum-sepolia-rpc.publicnode.com'],
   [ChainId.DODO_CHAIN_TESTNET]: ['https://dodochain-testnet.alt.technology'],
   [ChainId.TAIKO]: ['https://rpc.mainnet.taiko.xyz'],
+
+  [ChainId.SOON_TESTNET]: ['https://rpc.testnet.soo.network/rpc'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -91,6 +93,8 @@ export const scanUrlDomainMap: {
   [ChainId.SEPOLIA]: 'sepolia.etherscan.io',
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet-explorer.alt.technology',
   [ChainId.TAIKO]: 'taikoscan.io',
+
+  [ChainId.SOON_TESTNET]: 'explorer.testnet.soo.network',
 };
 
 export const ThegraphKeyMap: {
@@ -114,6 +118,8 @@ export const ThegraphKeyMap: {
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
   [ChainId.TAIKO]: 'taiko',
+
+  [ChainId.SOON_TESTNET]: '',
 };
 
 export const blockTimeMap: {
@@ -137,6 +143,8 @@ export const blockTimeMap: {
   [ChainId.SEPOLIA]: 12000,
   [ChainId.DODO_CHAIN_TESTNET]: 12000,
   [ChainId.TAIKO]: 48000,
+
+  [ChainId.SOON_TESTNET]: 12000,
 };
 
 export const dexKeysMap: {
@@ -160,4 +168,6 @@ export const dexKeysMap: {
   [ChainId.SEPOLIA]: [],
   [ChainId.DODO_CHAIN_TESTNET]: [],
   [ChainId.TAIKO]: [],
+
+  [ChainId.SOON_TESTNET]: [],
 };

@@ -34,7 +34,6 @@ import {
   useFetchRoutePrice,
 } from '../../hooks/Swap';
 import { formatReadableNumber } from '../../utils/formatter';
-import { useWeb3React } from '@web3-react/core';
 import { AppUrl } from '../../constants/api';
 import { ChainId } from '@dodoex/api';
 import { basicTokenMap } from '../../constants/chains';
@@ -73,6 +72,7 @@ import { useFetchETHBalance } from '../../hooks/contract';
 import { useUserOptions } from '../UserOptionsProvider';
 import { SwapSettingsDialog } from './components/SwapSettingsDialog';
 import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -88,9 +88,10 @@ export function Swap({
 }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
-  const { chainId, account } = useWeb3React();
+  const { chainId, account } = useWalletInfo();
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { defaultChainId, noPowerBy, onlyChainId } = useUserOptions();
+  const { defaultChainId, noPowerBy, onlyChainId, onlySolana } =
+    useUserOptions();
   const [isReverseRouting, setIsReverseRouting] = useState(false);
   const basicTokenAddress = useMemo(
     () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
@@ -398,7 +399,7 @@ export function Swap({
   );
 
   const displayPriceImpact = useMemo(
-    () => (Number(priceImpact) * 100).toFixed(2),
+    () => (priceImpact ? (Number(priceImpact) * 100).toFixed(2) : null),
     [priceImpact],
   );
 
@@ -475,10 +476,17 @@ export function Swap({
     resPricePerFromToken,
   ]);
 
-  const isUnSupportChain = useMemo(() => !ChainId[chainId || 1], [chainId]);
+  const isUnSupportChain = useMemo(
+    () => !ChainId[chainId || 1] && (!onlyChainId || onlyChainId !== chainId),
+    [chainId],
+  );
   const isNotCurrentChain = useMemo(
-    () => !!chainId && !!fromToken?.chainId && fromToken?.chainId !== chainId,
-    [chainId, fromToken?.chainId],
+    () =>
+      !onlySolana &&
+      !!chainId &&
+      !!fromToken?.chainId &&
+      fromToken?.chainId !== chainId,
+    [chainId, fromToken?.chainId, onlySolana],
   );
 
   const disabledSwitch = useDisabledTokenSwitch({
@@ -591,6 +599,7 @@ export function Swap({
     if (
       !isBridge &&
       displayingFromAmt &&
+      displayPriceImpact &&
       new BigNumber(displayPriceImpact).gt(PRICE_IMPACT_THRESHOLD)
     ) {
       return priceImpactWarning;

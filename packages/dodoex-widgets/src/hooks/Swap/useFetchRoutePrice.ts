@@ -16,6 +16,7 @@ import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import { useSwapSettingStore } from './useSwapSettingStore';
+import { useFetchSolanaRoutePrice } from '../solana/useFetchSolanaRoutePrice';
 
 export enum RoutePriceStatus {
   Initial = 'Initial',
@@ -61,7 +62,8 @@ export function useFetchRoutePrice({
   slippageLoading,
 }: FetchRoutePrice) {
   const { account, chainId: walletChainId, provider } = useWeb3React();
-  const { defaultChainId, feeRate, rebateTo, apikey } = useUserOptions();
+  const { defaultChainId, feeRate, rebateTo, apikey, onlySolana } =
+    useUserOptions();
   const chainId = useMemo(
     () => fromToken?.chainId || walletChainId || defaultChainId,
     [walletChainId, fromToken, defaultChainId],
@@ -88,6 +90,7 @@ export function useFetchRoutePrice({
 
   const refetch = useCallback(async () => {
     if (
+      onlySolana ||
       !chainId ||
       !fromToken ||
       !toToken ||
@@ -150,6 +153,7 @@ export function useFetchRoutePrice({
       console.error(error);
     }
   }, [
+    onlySolana,
     apiDdl,
     account,
     chainId,
@@ -158,7 +162,6 @@ export function useFetchRoutePrice({
     slippage,
     rebateTo,
     fromToken,
-    provider,
     fromAmount,
     toAmount,
     apikey,
@@ -171,19 +174,60 @@ export function useFetchRoutePrice({
 
   usePriceTimer({ refetch });
 
+  const solanaRoute = useFetchSolanaRoutePrice({
+    toToken,
+    fromToken,
+    marginAmount,
+    fromAmount,
+    toAmount,
+    estimateGas,
+    isReverseRouting,
+    slippage,
+  });
+
+  const statusRes = React.useMemo(() => {
+    if (onlySolana) {
+      if (solanaRoute.fetchRouteQuery.isLoading)
+        return RoutePriceStatus.Loading;
+      if (solanaRoute.fetchRouteQuery.error) return RoutePriceStatus.Failed;
+      if (solanaRoute.fetchRouteQuery.data) return RoutePriceStatus.Success;
+      return RoutePriceStatus.Initial;
+    }
+    return status;
+  }, [status, solanaRoute, onlySolana]);
+
   const rawBriefResult = useMemo(() => {
     const tokenAmount = isReverseRouting ? toAmount : fromAmount;
-    if (!rawBrief || status === RoutePriceStatus.Loading || !tokenAmount)
+    if (statusRes === RoutePriceStatus.Loading || !tokenAmount) {
       return null;
+    }
+    if (onlySolana) {
+      return solanaRoute.fetchRouteQuery.data;
+    }
     return rawBrief;
-  }, [rawBrief, status, isReverseRouting, toAmount, fromAmount]);
+  }, [
+    rawBrief,
+    statusRes,
+    isReverseRouting,
+    toAmount,
+    fromAmount,
+    solanaRoute,
+    onlySolana,
+  ]);
 
   const execute = useExecuteSwap();
   const executeSwap = useCallback(
     (subtitle: React.ReactNode) => {
       if (!rawBriefResult) return;
+      if (onlySolana) {
+        return solanaRoute.execute.mutate({
+          resAmount: rawBriefResult.resAmount,
+          subtitle,
+        });
+      }
+
       const { resAmount, to, data, useSource, duration, value } =
-        rawBriefResult;
+        rawBriefResult as IRouteResponse;
       const finalFromAmount = isReverseRouting ? resAmount : fromAmount;
       const finalToAmount = isReverseRouting ? fromAmount : resAmount;
       if (!fromToken || !finalFromAmount) return;
@@ -225,11 +269,13 @@ export function useFetchRoutePrice({
       toToken,
       isReverseRouting,
       rawBriefResult,
+      onlySolana,
+      solanaRoute,
     ],
   );
 
   return {
-    status,
+    status: statusRes,
     rawBrief: rawBriefResult,
     refetch,
     executeSwap,

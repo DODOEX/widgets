@@ -5,6 +5,7 @@ export enum WalletType {
   INTEGRATOR = 'integrator',
   METAMASK = 'metamask',
   WALLET_CONNECT = 'walletConnect',
+  SOLANG = 'solang',
 }
 
 export const WalletMap = {
@@ -17,6 +18,11 @@ export const WalletMap = {
   [WalletType.WALLET_CONNECT]: {
     name: 'WalletConnect',
     type: WalletType.WALLET_CONNECT,
+    icon: WalletConnectIcon,
+  },
+  [WalletType.SOLANG]: {
+    name: 'Solang',
+    type: WalletType.SOLANG,
     icon: WalletConnectIcon,
   },
 };

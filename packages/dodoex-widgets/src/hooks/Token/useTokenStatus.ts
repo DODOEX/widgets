@@ -1,4 +1,9 @@
-import { basicTokenMap, ChainId, contractConfig } from '@dodoex/api';
+import {
+  basicTokenMap,
+  ChainId,
+  CONTRACT_QUERY_KEY,
+  contractConfig,
+} from '@dodoex/api';
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -12,6 +17,8 @@ import { useInflights, useSubmission } from '../Submission';
 import { OpCode } from '../Submission/spec';
 import { ExecutionResult, MetadataFlag } from '../Submission/types';
 import { ApprovalState, TokenInfo } from './type';
+import { useSolanaConnection } from '../solana/useSolanaConnection';
+import { BIG_ALLOWANCE } from '../../constants/token';
 
 function getPendingRest(
   token: TokenInfo | undefined | null,
@@ -40,25 +47,49 @@ export function useTokenStatus(
     skipQuery?: boolean;
   } = {},
 ) {
-  const { account } = useWalletInfo();
+  const { account, isSolana } = useWalletInfo();
   const [chainId, proxyContractAddress] = React.useMemo(() => {
     if (!token) return [undefined, contractAddress];
     return [
       token.chainId,
-      contractAddress ?? contractConfig[token.chainId as ChainId].DODO_APPROVE,
+      contractAddress ?? contractConfig[token.chainId as ChainId]?.DODO_APPROVE,
     ];
   }, [token, contractAddress]) as [number | undefined, string | undefined];
 
   const queryClient = useQueryClient();
-  const tokenQuery = useQuery(
+  const evmTokenQuery = useQuery(
     tokenApi.getFetchTokenQuery(
       // skip the query
-      skipQuery ? undefined : chainId,
+      skipQuery || isSolana ? undefined : chainId,
       token?.address,
       account,
       proxyContractAddress,
     ),
   );
+
+  const { fetchTokenBalance } = useSolanaConnection();
+  const svmTokenQuery = useQuery({
+    queryKey: [
+      CONTRACT_QUERY_KEY,
+      'token',
+      'getFetchTokenQuery',
+      chainId,
+      account?.toLocaleLowerCase(),
+      undefined,
+      token?.address,
+    ],
+    queryFn: async () => {
+      if (!token) return;
+      const result = await fetchTokenBalance(token.address);
+      return {
+        ...token,
+        balance: result.amount,
+        allowance: BIG_ALLOWANCE,
+      };
+    },
+    enabled: !!account && isSolana && !!token,
+  });
+  const tokenQuery = isSolana ? svmTokenQuery : evmTokenQuery;
   const { runningRequests } = useInflights();
   const { updateBlockNumber } = useFetchBlockNumber();
   const { i18n } = useLingui();

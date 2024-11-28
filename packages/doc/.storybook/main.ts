@@ -2,6 +2,7 @@ import type { StorybookConfig } from '@storybook/react-webpack5';
 import { merge } from 'lodash';
 
 import path, { join, dirname } from 'path';
+import { ProvidePlugin } from 'webpack';
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -63,7 +64,7 @@ const config: StorybookConfig = {
           // https://stackoverflow.com/questions/71158775/storybook-couldnt-resolve-fs
           fs: false,
           assert: false,
-          // "buffer": require.resolve("buffer"),
+          buffer: require.resolve('buffer'),
           console: false,
           constants: false,
           crypto: false,
@@ -123,6 +124,12 @@ const config: StorybookConfig = {
           },
         ],
       },
+      plugins: [
+        ...(config.plugins ?? []),
+        new ProvidePlugin({
+          Buffer: ['buffer', 'Buffer'],
+        }),
+      ],
     });
   },
 };

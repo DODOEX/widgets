@@ -44,6 +44,8 @@ import { DialogProps } from '../Swap/components/Dialog';
 import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
 import WithExecutionDialog from '../WithExecutionDialog';
 import { Page } from '../../router';
+import { SolanaReactProvider } from '../../providers/SolanaReactProvider';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
@@ -54,7 +56,7 @@ export interface WidgetProps
   apikey?: string;
   theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
-  defaultChainId?: ChainId;
+  defaultChainId?: number;
   width?: string | number;
   height?: string | number;
   feeRate?: number; // Unit: 1e18
@@ -68,7 +70,7 @@ export interface WidgetProps
   crossChain?: boolean;
   noPowerBy?: boolean;
   noDocumentLink?: boolean;
-  onlyChainId?: ChainId;
+  onlyChainId?: number;
   noUI?: boolean;
   noLangProvider?: boolean;
   noAutoConnect?: boolean;
@@ -80,6 +82,9 @@ export interface WidgetProps
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
+  onlySolana?: boolean;
+  noSolanaProvider?: boolean;
+  solanaWallet?: ReturnType<typeof useWallet>;
 
   onProviderChanged?: (provider?: any) => void;
   getStaticJsonRpcProviderByChainId?: Exclude<
@@ -241,6 +246,17 @@ function Web3Provider(props: PropsWithChildren<WidgetProps>) {
   );
 }
 
+function Web3ProviderAndSolang(props: WidgetProps) {
+  if (props.onlySolana && !props.noSolanaProvider) {
+    return (
+      <SolanaReactProvider>
+        <Web3Provider {...props} />
+      </SolanaReactProvider>
+    );
+  }
+  return <Web3Provider {...props} />;
+}
+
 export { LangProvider } from '../../providers/i18n';
 export { default as Message } from '../Message';
 
@@ -260,7 +276,7 @@ export function UnstyleWidget(props: PropsWithChildren<WidgetProps>) {
           widgetRef: props.widgetRef ?? widgetRef,
         }}
       >
-        <Web3Provider {...props} />
+        <Web3ProviderAndSolang {...props} />
       </UserOptionsProvider>
     </ReduxProvider>
   );

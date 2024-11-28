@@ -22,28 +22,31 @@ export default function useTokenListFetchBalance({
 }) {
   const autoConnectLoading = useSelector(getAutoConnectLoading);
   const blockNumber = useSelector(getLatestBlockNumber);
-  const checkTokenAddresses = useMemo(() => {
+  const checkTokens = useMemo(() => {
     if (autoConnectLoading === undefined || autoConnectLoading) {
       return [];
     }
     const addressSet = new Set<string>();
+    const result = [] as TokenInfo[];
     tokenList.forEach((token) => {
-      if (token.chainId === chainId) {
+      if (token.chainId === chainId && !addressSet.has(token.address)) {
         addressSet.add(token.address);
+        result.push(token);
       }
     });
     popularTokenList?.forEach((token) => {
-      if (token.chainId === chainId) {
+      if (token.chainId === chainId && !addressSet.has(token.address)) {
         addressSet.add(token.address);
+        result.push(token);
       }
     });
-    return Array.from(addressSet);
+    return result;
   }, [tokenList, popularTokenList, chainId, autoConnectLoading]);
 
-  const selectTokenAddress = useMemo(() => {
+  const selectTokens = useMemo(() => {
     if (!value) return [];
-    if (Array.isArray(value)) return value.map((item) => item.address);
-    return [value.address];
+    if (Array.isArray(value)) return value;
+    return [value];
   }, [value]);
   const selectChainId = useMemo(() => {
     if (!value) return chainId;
@@ -52,13 +55,13 @@ export default function useTokenListFetchBalance({
   }, [value, chainId]);
 
   const tokenInfoMap = useFetchTokens({
-    addresses: checkTokenAddresses,
+    tokenList: checkTokens,
     chainId,
     skip: visible === false && !defaultLoadBalance,
   });
 
   useFetchTokens({
-    addresses: selectTokenAddress,
+    tokenList: selectTokens,
     chainId: selectChainId,
     blockNumber,
   });

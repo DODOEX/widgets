@@ -1,4 +1,4 @@
-import { CONTRACT_QUERY_KEY } from '@dodoex/api';
+import { ChainId, CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { useWeb3React } from '@web3-react/core';
 import type { TransactionResponse } from '@ethersproject/abstract-provider';
 import { useCallback, useMemo, useState } from 'react';
@@ -14,6 +14,7 @@ import {
   Showing,
   ExecutionCtx,
   TextUpdater,
+  ExecuteCustomHandlerParameters,
 } from './types';
 import { BIG_ALLOWANCE } from '../../constants/token';
 import { useCurrentChainId } from '../ConnectWallet';
@@ -158,7 +159,7 @@ export default function useExecution({
             onTxFail(e, mixpanelProps);
           }
 
-          setErrorMessage(getExecutionErrorMsg(chainId, e.message));
+          setErrorMessage(getExecutionErrorMsg(chainId as ChainId, e.message));
         }
         return ExecutionResult.Failed;
       }
@@ -261,6 +262,182 @@ export default function useExecution({
     ],
   );
 
+  const handlerCustom: ExecutionCtx['executeCustom'] = useCallback(
+    async ({
+      brief,
+      subtitle,
+      early,
+      mixpanelProps,
+      metadata,
+      submittedBack,
+      submittedConfirmBack,
+      successBack,
+      handler,
+    }) => {
+      setSubmittedConfirmBack(() => submittedConfirmBack);
+      setTransactionTx('');
+      setErrorMessage('');
+      setWaitingSubmit(false);
+      const reportInfo = {
+        brief,
+        subtitle,
+        ...mixpanelProps,
+      };
+
+      return new Promise<ExecutionResult>(async (resolve) => {
+        const spec = {
+          opcode: OpCode.TX,
+          value: '',
+          to: '',
+          data: '',
+        } as StepSpec;
+
+        const request = {
+          brief,
+          spec,
+          subtitle,
+          metadata,
+        } as Request;
+
+        let submitTx = '';
+        const onSubmit: ExecuteCustomHandlerParameters['onSubmit'] = (
+          tx: string,
+          { showing, reportInfo: reportInfoProps } = {},
+        ) => {
+          submitTx = tx;
+          setTransactionTx(tx);
+          if (showing !== null) {
+            setShowing({ spec, brief, subtitle, ...showing });
+          }
+          setWaitingSubmit(false);
+          setRequests((res) =>
+            res.set(tx as string, [
+              {
+                ...request,
+                tx,
+              },
+              State.Running,
+            ]),
+          );
+
+          setContractStatus(ContractStatus.Pending);
+          if (onTxSubmit) {
+            onTxSubmit(tx, {
+              tx,
+              ...reportInfo,
+              ...reportInfoProps,
+            });
+          }
+          if (submittedBack) {
+            submittedBack();
+          }
+          if (early) {
+            resolve(ExecutionResult.Submitted);
+            return;
+          }
+        };
+
+        const onSuccess: ExecuteCustomHandlerParameters['onSuccess'] = async (
+          tx: string,
+          { showing, reportInfo: reportInfoProps, notShowingDone } = {},
+        ) => {
+          setTransactionTx(tx);
+          if (showing) {
+            setShowing(
+              (prev) =>
+                ({
+                  ...prev,
+                  ...showing,
+                }) as Showing,
+            );
+          }
+          setContractStatus(ContractStatus.TxSuccess);
+          setRequests((res) =>
+            res.set(submitTx ?? tx, [
+              {
+                ...request,
+                tx: submitTx,
+              },
+              State.Success,
+            ]),
+          );
+          if (successBack) {
+            successBack(tx, onTxSuccess);
+          }
+          if (onTxSuccess) {
+            onTxSuccess(tx, {
+              tx,
+              ...reportInfo,
+              ...reportInfoProps,
+            });
+          }
+          await updateBlockNumber(); // update blockNumber once after tx
+          queryClient.invalidateQueries({
+            queryKey: [CONTRACT_QUERY_KEY],
+          });
+          if (!notShowingDone) {
+            setShowingDone(true);
+            setShowing(
+              (prev) =>
+                ({
+                  ...prev,
+                  done: true,
+                }) as Showing,
+            );
+          }
+        };
+
+        const onError = (e: any) => {
+          setWaitingSubmit(false);
+          setShowing({
+            spec,
+            brief,
+            subtitle,
+          });
+          if (submitTx) {
+            setRequests((res) =>
+              res.set(submitTx as string, [
+                {
+                  ...request,
+                  tx: submitTx,
+                },
+                State.Failed,
+              ]),
+            );
+          }
+          console.error(e);
+          if (e.message) {
+            console.error(e.code);
+            setContractStatus(ContractStatus.Failed);
+            const options = { error: e.message, brief };
+            if (mixpanelProps) Object.assign(options, mixpanelProps);
+            if (onTxFail) {
+              onTxFail(e, mixpanelProps);
+            }
+
+            setErrorMessage(
+              getExecutionErrorMsg(chainId as ChainId, e.message),
+            );
+          }
+          resolve(ExecutionResult.Failed);
+        };
+        try {
+          setWaitingSubmit(true);
+          await handler({
+            onSubmit,
+            onSuccess,
+            onError,
+            setShowing,
+          });
+        } catch (e: any) {
+          onError(e);
+          return;
+        }
+      });
+    },
+    [chainId, setWaitingSubmit, updateBlockNumber, queryClient],
+  );
+
   /**
    * update requests text
    */
@@ -294,13 +471,14 @@ export default function useExecution({
   const ctxVal = useMemo<ExecutionCtx>(
     () => ({
       execute: handler,
+      executeCustom: handlerCustom,
       requests,
       updateText,
       setShowing,
       waitingSubmit,
       errorMessage,
     }),
-    [handler, requests, updateText, waitingSubmit, errorMessage],
+    [handler, handlerCustom, requests, updateText, waitingSubmit, errorMessage],
   );
 
   const closeShowing = useCallback(() => {

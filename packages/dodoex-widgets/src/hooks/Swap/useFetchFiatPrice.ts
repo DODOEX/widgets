@@ -14,13 +14,13 @@ export interface FetchFiatPriceProps {
 export function useFetchFiatPrice({ fromToken, toToken }: FetchFiatPriceProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
-  const { apikey } = useUserOptions();
+  const { apikey, onlySolana } = useUserOptions();
   const [fromFiatPrice, setFromFiatPrice] = useState<string>('');
   const [toFiatPrice, setToFiatPrice] = useState<string>('');
   const fiatPriceAPI = useGetAPIService(APIServiceKey.fiatPrice);
 
   const refetch = useCallback(() => {
-    if (!fromToken || !toToken) return;
+    if (!fromToken || !toToken || onlySolana) return;
     setLoading(true);
     setError(null);
     const tokens = [fromToken, toToken];
@@ -60,7 +60,7 @@ export function useFetchFiatPrice({ fromToken, toToken }: FetchFiatPriceProps) {
         setLoading(false);
         console.error(error);
       });
-  }, [fromToken, toToken, apikey, fiatPriceAPI]);
+  }, [fromToken, toToken, apikey, fiatPriceAPI, onlySolana]);
 
   usePriceTimer({ refetch });
 

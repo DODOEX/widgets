@@ -118,7 +118,6 @@ export default {
 } as ComponentMeta<typeof SwapWidget>;
 
 export const Primary = (args) => <SwapWidget {...args} />;
-
 Primary.args = {
   apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
   theme: {
@@ -191,7 +190,7 @@ Primary.args = {
     symbol: 'USDC',
     logoURI:
       'https://images.dodoex.io/sQ5dF3FkjjQUsmfqFFE5cKq-cthh4u0wUooBE5Epf-k/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTDlEVElLa2dONG5mRkNTSF9GMUdXU3JiZkJDa2JZRTkwbmFDS0dIWnRsby9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMM1Z6WkdOZlpXVTFNbUV4WldReVlpOTFjMlJqWDJWbE5USmhNV1ZrTW1JdWNHNW4ucG5n.webp',
-    amount: 100,
+    // amount: 100,
   },
   popularTokenList: [
     {
@@ -222,8 +221,33 @@ Primary.args = {
       logoURI: '',
     },
   ],
-  tokenList: 'all',
-  crossChain: true,
+  // tokenList: 'all',
+  tokenList: [
+    {
+      decimals: 9,
+      name: 'SOL',
+      address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+      symbol: 'SOL',
+      chainId: -1000,
+      side: 'from',
+    },
+    {
+      decimals: 9,
+      name: 'WSOL',
+      address: 'So11111111111111111111111111111111111111112',
+      symbol: 'WSOL',
+      chainId: -1000,
+    },
+    {
+      decimals: 9,
+      name: 'test1',
+      address: 'W9qPz1vXFmKago2TsUJeixxh1tSEzeimebJEEf2kY2j',
+      symbol: 'test1',
+      chainId: -1000,
+    },
+  ],
+  crossChain: false,
+  onlySolana: true,
   getAutoSlippage: ({
     fromToken,
     toToken,
