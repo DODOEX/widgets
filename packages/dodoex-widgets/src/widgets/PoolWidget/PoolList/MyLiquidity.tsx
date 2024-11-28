@@ -45,6 +45,7 @@ import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { CardStatus } from '../../../components/CardWidgets';
 import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
 import GoPoolDetailBtn from './components/GoPoolDetailBtn';
+import { OnlyV3Toggle } from './components/OnlyV3Toggle';
 
 function CardList({
   account,
@@ -892,7 +893,8 @@ export default function MyLiquidity({
   const theme = useTheme();
   const { minDevice, isMobile } = useWidgetDevice();
   const queryClient = useQueryClient();
-  const { onlyChainId, supportAMMV2 } = useUserOptions();
+  const { onlyChainId, supportAMMV2, supportAMMV3 } = useUserOptions();
+  const [onlyV3, setOnlyV3] = React.useState(false);
 
   const {
     filterTokens,
@@ -908,9 +910,15 @@ export default function MyLiquidity({
   const defaultQueryFilter = {
     currentPage: 1,
     pageSize: 1000,
-    user: account,
+    // user: account,
+    user: '0x483e5c0f309577f79b0a19ce65e332dd388ad7a8',
     filterState: {
       viewOnlyOwn: true,
+      filterTypes: supportAMMV3
+        ? onlyV3
+          ? ['AMMV3']
+          : ['CLASSICAL', 'DVM', 'DSP', 'GSP', 'AMMV2']
+        : undefined,
     },
   };
 
@@ -981,6 +989,9 @@ export default function MyLiquidity({
               chainId={activeChainId}
               setChainId={handleChangeActiveChainId}
             />
+          )}
+          {supportAMMV3 && (
+            <OnlyV3Toggle onlyV3={onlyV3} setOnlyV3={setOnlyV3} />
           )}
           <TokenAndPoolFilter
             value={filterTokens}

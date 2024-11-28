@@ -30,6 +30,7 @@ import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
 import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
+import { AMMV3PositionManage } from '../AMMV3/AMMV3PositionManage';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -333,15 +334,30 @@ export default function PoolList({
             LeftImage={LeftImage}
           />
         )}
-        {operatePool?.pool?.type === 'AMMV3' && operatePool.chainId ? (
-          <AMMV3PositionsView
-            account={account}
-            chainId={operatePool.chainId}
-            baseToken={operatePool.pool.baseToken}
-            quoteToken={operatePool.pool.quoteToken}
-            feeAmount={FeeAmount.HIGH}
-            onClose={() => setOperatePool(null)}
-          />
+        {operatePool?.pool?.type === 'AMMV3' && operatePool.pool.chainId ? (
+          poolTab === PoolTab.myLiquidity ? (
+            <AMMV3PositionManage
+              baseToken={operatePool.pool.baseToken}
+              quoteToken={operatePool.pool.quoteToken}
+              feeAmount={FeeAmount.LOWEST}
+              tokenId={'1'}
+              chainId={operatePool.pool.chainId}
+              onClose={() => setOperatePool(null)}
+            />
+          ) : (
+            <AMMV3PositionsView
+              chainId={operatePool.pool.chainId}
+              baseToken={operatePool.pool.baseToken}
+              quoteToken={operatePool.pool.quoteToken}
+              feeAmount={FeeAmount.HIGH}
+              onClose={() => setOperatePool(null)}
+              handleGoToAddLiquidityV3={() => {
+                useRouterStore.getState().push({
+                  type: PageType.createPoolAMMV3,
+                });
+              }}
+            />
+          )
         ) : isMobile ? (
           <PoolOperateDialog
             account={account}

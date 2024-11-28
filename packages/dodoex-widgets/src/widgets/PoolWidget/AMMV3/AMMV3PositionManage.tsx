@@ -450,7 +450,11 @@ export const AMMV3PositionManage = ({
       { key: 'claim', value: t`Claim` },
     ];
     return (
-      <>
+      <Box
+        sx={{
+          backgroundColor: theme.palette.background.paper,
+        }}
+      >
         <Box
           sx={{
             display: 'flex',
@@ -805,7 +809,7 @@ export const AMMV3PositionManage = ({
             </Box>
           </TabPanel>
         </Tabs>
-      </>
+      </Box>
     );
   }, [
     approvalA,
