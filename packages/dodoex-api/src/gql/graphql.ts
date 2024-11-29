@@ -6821,8 +6821,16 @@ export type LiquidityLp = {
   id?: Maybe<Scalars['String']['output']>;
   liquidityTokenBalance?: Maybe<Scalars['String']['output']>;
   liquidityTokenInMining?: Maybe<Scalars['String']['output']>;
+  /** my liquidity usd */
+  liquidityUSD?: Maybe<Scalars['String']['output']>;
+  outOfRange?: Maybe<Scalars['Boolean']['output']>;
   /** Share in the pool */
   poolShare?: Maybe<Scalars['String']['output']>;
+  priceRange?: Maybe<LiquidityLpPriceRange>;
+  tickLower?: Maybe<LiquidityTick>;
+  tickUpper?: Maybe<LiquidityTick>;
+  /** AMM V3 info */
+  tokenId?: Maybe<Scalars['String']['output']>;
 };
 
 export type LiquidityListInfo = {
@@ -6855,6 +6863,17 @@ export type LiquidityLpPartnerRewardsInput = {
 export type LiquidityLpPartnerRewardsResult = {
   partnerInfos?: Maybe<Array<Maybe<LiquidityPartnerInfo>>>;
   partnerRewards?: Maybe<Array<Maybe<LiquidityLpPartnerRewards>>>;
+};
+
+export type LiquidityLpPriceRange = {
+  /** token0 lower  price */
+  token0LowerPrice: Scalars['BigDecimal']['output'];
+  /** token0 upper  price */
+  token0UpperPrice: Scalars['BigDecimal']['output'];
+  /** token1 lower  price */
+  token1LowerPrice: Scalars['BigDecimal']['output'];
+  /** token1 upper  price */
+  token1UpperPrice: Scalars['BigDecimal']['output'];
 };
 
 export type LiquidityLpToken = {
@@ -7332,6 +7351,15 @@ export type LiquidityPosition_OrderBy =
   | 'user'
   | 'vault'
   | 'yesterdayInterest';
+
+export type LiquidityTick = {
+  id: Scalars['ID']['output'];
+  liquidityGross: Scalars['BigInt']['output'];
+  liquidityNet: Scalars['BigInt']['output'];
+  price0: Scalars['BigDecimal']['output'];
+  price1: Scalars['BigDecimal']['output'];
+  tickIdx: Scalars['BigInt']['output'];
+};
 
 export type LiquidityToken = {
   /** token decimals */
@@ -20698,7 +20726,33 @@ export type FetchMyLiquidityListQuery = {
       liquidityPositions?: Array<{
         id?: string | null;
         liquidityTokenBalance?: string | null;
+        liquidityTokenInMining?: string | null;
         poolShare?: string | null;
+        liquidityUSD?: string | null;
+        tokenId?: string | null;
+        outOfRange?: boolean | null;
+        priceRange?: {
+          token0LowerPrice: any;
+          token0UpperPrice: any;
+          token1LowerPrice: any;
+          token1UpperPrice: any;
+        } | null;
+        tickLower?: {
+          id: string;
+          tickIdx: any;
+          liquidityGross: any;
+          liquidityNet: any;
+          price0: any;
+          price1: any;
+        } | null;
+        tickUpper?: {
+          id: string;
+          tickIdx: any;
+          liquidityGross: any;
+          liquidityNet: any;
+          price0: any;
+          price1: any;
+        } | null;
       } | null> | null;
       pair?: {
         id: string;
@@ -21477,7 +21531,33 @@ export const FetchMyLiquidityListDocument = new TypedDocumentString(`
       liquidityPositions {
         id
         liquidityTokenBalance
+        liquidityTokenInMining
         poolShare
+        liquidityUSD
+        tokenId
+        outOfRange
+        priceRange {
+          token0LowerPrice
+          token0UpperPrice
+          token1LowerPrice
+          token1UpperPrice
+        }
+        tickLower {
+          id
+          tickIdx
+          liquidityGross
+          liquidityNet
+          price0
+          price1
+        }
+        tickUpper {
+          id
+          tickIdx
+          liquidityGross
+          liquidityNet
+          price0
+          price1
+        }
       }
       pair {
         id

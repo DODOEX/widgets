@@ -452,6 +452,7 @@ export const AMMV3PositionManage = ({
     return (
       <Box
         sx={{
+          borderRadius: 16,
           backgroundColor: theme.palette.background.paper,
         }}
       >

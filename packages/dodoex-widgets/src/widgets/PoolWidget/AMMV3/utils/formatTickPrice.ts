@@ -7,7 +7,7 @@ export function formatTickPrice({
   atLimit,
   direction,
 }: {
-  price?: Price<Currency, Currency>;
+  price?: Price<Currency, Currency> | string;
   atLimit: { [bound in Bound]?: boolean | undefined };
   direction: Bound;
 }) {
@@ -16,6 +16,6 @@ export function formatTickPrice({
   }
 
   return formatTokenAmountNumber({
-    input: price?.toSignificant(),
+    input: typeof price === 'string' ? price : price?.toSignificant(),
   });
 }

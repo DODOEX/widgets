@@ -335,12 +335,13 @@ export default function PoolList({
           />
         )}
         {operatePool?.pool?.type === 'AMMV3' && operatePool.pool.chainId ? (
-          poolTab === PoolTab.myLiquidity ? (
+          poolTab === PoolTab.myLiquidity &&
+          operatePool.pool.liquidityPositions?.[0]?.tokenId ? (
             <AMMV3PositionManage
               baseToken={operatePool.pool.baseToken}
               quoteToken={operatePool.pool.quoteToken}
-              feeAmount={FeeAmount.LOWEST}
-              tokenId={'1'}
+              feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
+              tokenId={operatePool.pool.liquidityPositions[0].tokenId}
               chainId={operatePool.pool.chainId}
               onClose={() => setOperatePool(null)}
             />
@@ -349,7 +350,7 @@ export default function PoolList({
               chainId={operatePool.pool.chainId}
               baseToken={operatePool.pool.baseToken}
               quoteToken={operatePool.pool.quoteToken}
-              feeAmount={FeeAmount.HIGH}
+              feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
               onClose={() => setOperatePool(null)}
               handleGoToAddLiquidityV3={() => {
                 useRouterStore.getState().push({

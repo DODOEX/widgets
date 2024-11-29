@@ -1,12 +1,13 @@
-import { Box, ButtonBase, useTheme } from '@dodoex/components';
+import { Box, BoxProps, ButtonBase, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
 
 export interface OnlyV3ToggleProps {
   onlyV3: boolean;
   setOnlyV3: React.Dispatch<React.SetStateAction<boolean>>;
+  sx?: BoxProps['sx'];
 }
 
-export const OnlyV3Toggle = ({ onlyV3, setOnlyV3 }: OnlyV3ToggleProps) => {
+export const OnlyV3Toggle = ({ onlyV3, setOnlyV3, sx }: OnlyV3ToggleProps) => {
   const theme = useTheme();
 
   return (
@@ -19,6 +20,7 @@ export const OnlyV3Toggle = ({ onlyV3, setOnlyV3 }: OnlyV3ToggleProps) => {
         p: 2,
         borderRadius: 8,
         backgroundColor: theme.palette.border.main,
+        ...sx,
       }}
     >
       <Box

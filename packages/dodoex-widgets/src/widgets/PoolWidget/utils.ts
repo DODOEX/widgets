@@ -101,6 +101,22 @@ export function convertFetchLiquidityToOperateData(
     },
   };
 }
+
+export function convertFetchMyLiquidityToOperateData(
+  lqData: ExcludeNone<FetchMyLiquidityListLqList>[0],
+): OperatePool {
+  const data = convertFetchLiquidityToOperateData(lqData);
+  if (!data) {
+    return undefined;
+  }
+
+  return {
+    ...data,
+    lpFeeRate: lqData?.pair?.lpFeeRate,
+    liquidityPositions: lqData?.liquidityPositions,
+  };
+}
+
 export function convertFetchPoolToOperateData(
   pool: FetchPoolList[0],
   chainId: number,
