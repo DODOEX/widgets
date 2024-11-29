@@ -18,7 +18,9 @@ export interface StateProps {
 
 export enum Types {
   UpdateBaseToken,
+  UpdateDefaultBaseToken,
   UpdateQuoteToken,
+  UpdateDefaultQuoteToken,
   UpdateBaseTokenAndClearQuoteToken,
   UpdateFeeAmount,
   ToggleRate,
@@ -31,7 +33,9 @@ export enum Types {
 
 type Payload = {
   [Types.UpdateBaseToken]: TokenInfo;
+  [Types.UpdateDefaultBaseToken]: TokenInfo;
   [Types.UpdateQuoteToken]: TokenInfo;
+  [Types.UpdateDefaultQuoteToken]: TokenInfo;
   [Types.UpdateBaseTokenAndClearQuoteToken]: TokenInfo;
   [Types.UpdateFeeAmount]: FeeAmount;
   [Types.ToggleRate]: void;
@@ -54,12 +58,34 @@ export function reducer(state: StateProps, action: Actions): StateProps {
       };
     }
 
+    case Types.UpdateDefaultBaseToken: {
+      const baseToken = action.payload;
+      if (!state.baseToken) {
+        return {
+          ...state,
+          baseToken: buildCurrency(baseToken),
+        };
+      }
+      return state;
+    }
+
     case Types.UpdateQuoteToken: {
       const quoteToken = action.payload;
       return {
         ...state,
         quoteToken: buildCurrency(quoteToken),
       };
+    }
+
+    case Types.UpdateDefaultQuoteToken: {
+      const quoteToken = action.payload;
+      if (!state.quoteToken) {
+        return {
+          ...state,
+          quoteToken: buildCurrency(quoteToken),
+        };
+      }
+      return state;
     }
 
     case Types.UpdateBaseTokenAndClearQuoteToken: {

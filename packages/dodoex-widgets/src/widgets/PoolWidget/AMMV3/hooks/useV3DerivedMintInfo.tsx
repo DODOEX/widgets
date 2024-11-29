@@ -84,20 +84,17 @@ export function useV3DerivedMintInfo({
   );
 
   // formatted with tokens
-  const [tokenA, tokenB, baseToken] = useMemo(
-    () => [currencyA?.wrapped, currencyB?.wrapped, baseCurrency?.wrapped],
-    [currencyA, currencyB, baseCurrency],
-  );
+  const [tokenA, tokenB, baseToken] = useMemo(() => {
+    return [currencyA?.wrapped, currencyB?.wrapped, baseCurrency?.wrapped];
+  }, [currencyA, currencyB, baseCurrency]);
 
-  const [token0, token1] = useMemo(
-    () =>
-      tokenA && tokenB
-        ? tokenA.sortsBefore(tokenB)
-          ? [tokenA, tokenB]
-          : [tokenB, tokenA]
-        : [undefined, undefined],
-    [tokenA, tokenB],
-  );
+  const [token0, token1] = useMemo(() => {
+    return tokenA && tokenB
+      ? tokenA.sortsBefore(tokenB)
+        ? [tokenA, tokenB]
+        : [tokenB, tokenA]
+      : [undefined, undefined];
+  }, [tokenA, tokenB]);
 
   // balances
   const currencyATokenQuery = useQuery(

@@ -167,12 +167,12 @@ export function usePools(
       const [token0, token1, fee] = tokens;
 
       if (!slot0s[index]) {
-        return [PoolState.INVALID, null];
+        return [PoolState.NOT_EXISTS, null];
       }
       const slot0 = slot0s[index];
 
       if (!liquidities[index]) {
-        return [PoolState.INVALID, null];
+        return [PoolState.NOT_EXISTS, null];
       }
       const liquidity = liquidities[index];
 

@@ -1,7 +1,6 @@
 import { Box, Button, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import { useMemo } from 'react';
-import { TokenInfo } from '../../../../hooks/Token';
 import { formatTokenAmountNumber } from '../../../../utils';
 import useIsTickAtLimit from '../hooks/useIsTickAtLimit';
 import { usePool } from '../hooks/usePools';
@@ -9,7 +8,6 @@ import { Currency, Price, Token } from '../sdks/sdk-core';
 import { Position as V3Position } from '../sdks/v3-sdk';
 import { Bound } from '../types';
 import { PositionDetails } from '../types/position';
-import { buildCurrency } from '../utils';
 import { formatTickPrice } from '../utils/formatTickPrice';
 import { InRangeDot } from './InRangeDot';
 
@@ -73,27 +71,18 @@ export function getPriceOrderingFromPositionForUI(
 
 export interface PositionViewCardProps {
   p: PositionDetails;
-  baseToken: TokenInfo;
-  quoteToken: TokenInfo;
+  currency0: Currency | undefined;
+  currency1: Currency | undefined;
   onClickManage: () => void;
 }
 
 export const PositionViewCard = ({
   p,
-  baseToken,
-  quoteToken,
+  currency0,
+  currency1,
   onClickManage,
 }: PositionViewCardProps) => {
   const theme = useTheme();
-
-  const currency0 = useMemo(
-    () => (baseToken ? buildCurrency(baseToken) : undefined),
-    [baseToken],
-  );
-  const currency1 = useMemo(
-    () => (quoteToken ? buildCurrency(quoteToken) : undefined),
-    [quoteToken],
-  );
 
   // construct Position from details returned
   const [, pool] = usePool(

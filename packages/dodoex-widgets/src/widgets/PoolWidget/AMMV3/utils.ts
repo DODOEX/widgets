@@ -35,8 +35,12 @@ function isNonNativeAddress(
 }
 
 export function buildCurrency(
-  token: TokenInfo,
+  token: TokenInfo | null,
 ): Token | NativeCurrency | undefined {
+  if (!token) {
+    return undefined;
+  }
+
   const { name, chainId, address, decimals, symbol } = token;
 
   const result = isNonNativeAddress(chainId, address)

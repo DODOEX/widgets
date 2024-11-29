@@ -26,6 +26,11 @@ export const Primary = (props: any) => {
       <AddLiquidityV3
         handleGoBack={() => window.alert('handleGoBack')}
         handleGoToPoolList={() => window.alert('handleGoToPoolList')}
+        params={{
+          from: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+          to: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
+          fee: '100',
+        }}
       />
     </Widget>
   );

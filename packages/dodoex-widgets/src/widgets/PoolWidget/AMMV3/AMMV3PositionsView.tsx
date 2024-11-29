@@ -13,6 +13,7 @@ import { PositionViewCard } from './components/PositionViewCard';
 import { useV3Positions } from './hooks/useV3Positions';
 import { FeeAmount } from './sdks/v3-sdk';
 import { PositionDetails } from './types/position';
+import { areAddressesEqual, buildCurrency } from './utils';
 
 export interface AMMV3PositionsViewProps {
   chainId: ChainId;
@@ -21,9 +22,9 @@ export interface AMMV3PositionsViewProps {
   feeAmount: FeeAmount;
   onClose: (() => void) | undefined;
   handleGoToAddLiquidityV3: (params: {
-    fromAddress: string;
-    toAddress: string;
-    feeAmount: FeeAmount;
+    from?: string;
+    to?: string;
+    fee?: string;
   }) => void;
 }
 
@@ -42,6 +43,42 @@ export const AMMV3PositionsView = ({
 
   const { positions, loading } = useV3Positions(account, chainId);
 
+  const currencyA = useMemo(
+    () => (baseToken ? buildCurrency(baseToken) : undefined),
+    [baseToken],
+  );
+  const currencyB = useMemo(
+    () => (quoteToken ? buildCurrency(quoteToken) : undefined),
+    [quoteToken],
+  );
+
+  const [tokenA, tokenB] = useMemo(
+    () => [currencyA?.wrapped, currencyB?.wrapped],
+    [currencyA, currencyB],
+  );
+
+  const [token0, token1] = useMemo(
+    () =>
+      tokenA && tokenB
+        ? tokenA.sortsBefore(tokenB)
+          ? [tokenA, tokenB]
+          : [tokenB, tokenA]
+        : [undefined, undefined],
+    [tokenA, tokenB],
+  );
+
+  const currentPairPositions = useMemo<PositionDetails[] | undefined>(() => {
+    if (positions === undefined) {
+      return undefined;
+    }
+    return positions.filter(
+      (p) =>
+        areAddressesEqual(token0?.address, p.token0) &&
+        areAddressesEqual(token1?.address, p.token1) &&
+        p.fee === feeAmount,
+    );
+  }, [feeAmount, positions, token0?.address, token1?.address]);
+
   const [manageItem, setManageItem] = useState<PositionDetails | null>(null);
 
   const content = useMemo(() => {
@@ -52,6 +89,8 @@ export const AMMV3PositionsView = ({
           display: 'flex',
           flexDirection: 'column',
           gap: 16,
+          borderRadius: 16,
+          backgroundColor: theme.palette.background.paper,
         }}
       >
         <Box
@@ -72,7 +111,7 @@ export const AMMV3PositionsView = ({
               color: theme.palette.text.primary,
             }}
           >
-            {t`My Positions`}&nbsp;({positions?.length ?? 0})
+            {t`My Positions`}&nbsp;({currentPairPositions?.length ?? 0})
           </Box>
 
           {onClose ? (
@@ -103,15 +142,15 @@ export const AMMV3PositionsView = ({
           ) : undefined}
         </Box>
 
-        {positions && positions.length > 0 ? (
+        {currentPairPositions && currentPairPositions.length > 0 ? (
           <>
-            {positions?.map((p) => {
+            {currentPairPositions?.map((p) => {
               return (
                 <PositionViewCard
                   key={p.tokenId}
                   p={p}
-                  baseToken={baseToken}
-                  quoteToken={quoteToken}
+                  currency0={currencyA}
+                  currency1={currencyB}
                   onClickManage={() => {
                     setManageItem(p);
                   }}
@@ -123,9 +162,9 @@ export const AMMV3PositionsView = ({
               variant={Button.Variant.second}
               onClick={() => {
                 handleGoToAddLiquidityV3({
-                  fromAddress: baseToken.address,
-                  toAddress: quoteToken.address,
-                  feeAmount,
+                  from: baseToken.address,
+                  to: quoteToken.address,
+                  fee: String(feeAmount),
                 });
               }}
               sx={{
@@ -173,14 +212,15 @@ export const AMMV3PositionsView = ({
                 alignItems: 'center',
               }}
             >
-              {positions !== undefined && positions.length === 0 ? (
+              {currentPairPositions !== undefined &&
+              currentPairPositions.length === 0 ? (
                 <Button
                   size={Button.Size.small}
                   onClick={() => {
                     handleGoToAddLiquidityV3({
-                      fromAddress: baseToken.address,
-                      toAddress: quoteToken.address,
-                      feeAmount,
+                      from: baseToken.address,
+                      to: quoteToken.address,
+                      fee: String(feeAmount),
                     });
                   }}
                 >{t`Add Position`}</Button>
@@ -193,15 +233,18 @@ export const AMMV3PositionsView = ({
       </Box>
     );
   }, [
-    baseToken,
-    feeAmount,
-    handleGoToAddLiquidityV3,
-    onClose,
-    positions,
-    quoteToken,
+    theme.palette.background.paper,
     theme.palette.border.main,
     theme.palette.text.primary,
     theme.palette.text.secondary,
+    currentPairPositions,
+    onClose,
+    currencyA,
+    currencyB,
+    handleGoToAddLiquidityV3,
+    baseToken.address,
+    quoteToken.address,
+    feeAmount,
   ]);
 
   if (manageItem !== null) {

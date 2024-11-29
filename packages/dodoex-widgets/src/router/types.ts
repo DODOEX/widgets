@@ -41,7 +41,13 @@ interface PageTypeParams {
     stakeTokenAddress: string | undefined;
   };
   [PageType.createPoolAMMV2]: undefined;
-  [PageType.createPoolAMMV3]: undefined;
+  [PageType.createPoolAMMV3]:
+    | {
+        from?: string;
+        to?: string;
+        fee?: string;
+      }
+    | undefined;
 }
 
 export interface Page<T extends PageType = PageType> {

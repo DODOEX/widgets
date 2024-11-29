@@ -46,6 +46,8 @@ import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { CardStatus } from '../../../components/CardWidgets';
 import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
 import GoPoolDetailBtn from './components/GoPoolDetailBtn';
+import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
+import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
 
 function CardList({
   lqList,
@@ -89,6 +91,7 @@ function CardList({
 
         const type = item.type as PoolType;
         const poolType = getPoolAMMOrPMM(type);
+        const isAMMV3 = type === 'AMMV3';
 
         return (
           <Box
@@ -221,11 +224,14 @@ function CardList({
                           color: 'text.secondary',
                         }}
                       >
-                        {formatPercentageNumber({
-                          input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                            item.mtFeeRate ? byWei(item.mtFeeRate, 18) : 0,
-                          ),
-                        })}
+                        {isAMMV3
+                          ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
+                              ?.label ?? '-')
+                          : formatPercentageNumber({
+                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
+                                item.mtFeeRate ? byWei(item.mtFeeRate, 18) : 0,
+                              ),
+                            })}
                       </Box>
                     </Tooltip>
                   </Box>
@@ -445,6 +451,7 @@ function TableList({
 
           const type = item.type as PoolType;
           const poolType = getPoolAMMOrPMM(type);
+          const isAMMV3 = type === 'AMMV3';
 
           return (
             <Box component="tr" key={item.id + item.chainId}>
@@ -541,11 +548,14 @@ function TableList({
                           color: 'text.secondary',
                         }}
                       >
-                        {formatPercentageNumber({
-                          input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                            item.mtFeeRate ? byWei(item.mtFeeRate, 18) : 0,
-                          ),
-                        })}
+                        {isAMMV3
+                          ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
+                              ?.label ?? '-')
+                          : formatPercentageNumber({
+                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
+                                item.mtFeeRate ? byWei(item.mtFeeRate, 18) : 0,
+                              ),
+                            })}
                       </Box>
                     </Tooltip>
                   </Box>

@@ -99,6 +99,7 @@ export function convertFetchLiquidityToOperateData(
     quoteLpToken: {
       id: pair.quoteLpToken?.id as string,
     },
+    lpFeeRate: lqData?.pair?.lpFeeRate,
   };
 }
 
@@ -112,7 +113,6 @@ export function convertFetchMyLiquidityToOperateData(
 
   return {
     ...data,
-    lpFeeRate: lqData?.pair?.lpFeeRate,
     liquidityPositions: lqData?.liquidityPositions,
   };
 }

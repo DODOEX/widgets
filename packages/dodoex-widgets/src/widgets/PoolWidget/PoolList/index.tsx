@@ -352,9 +352,10 @@ export default function PoolList({
               quoteToken={operatePool.pool.quoteToken}
               feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
               onClose={() => setOperatePool(null)}
-              handleGoToAddLiquidityV3={() => {
+              handleGoToAddLiquidityV3={(params) => {
                 useRouterStore.getState().push({
                   type: PageType.createPoolAMMV3,
+                  params,
                 });
               }}
             />

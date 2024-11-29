@@ -1,10 +1,13 @@
-import { Box, Button, ButtonBase, useTheme } from '@dodoex/components';
+import { alpha, Box, Button, ButtonBase, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
-import { useCallback, useMemo, useReducer, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { CardPlusConnected } from '../../../components/Swap/components/TokenCard';
+import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
+import { tokenApi } from '../../../constants/api';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useSubmission } from '../../../hooks/Submission';
 import { OpCode } from '../../../hooks/Submission/spec';
 import { ExecutionResult, MetadataFlag } from '../../../hooks/Submission/types';
@@ -30,42 +33,41 @@ import {
   CurrencyAmount,
   NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
 } from './sdks/sdk-core';
-import { FeeAmount, NonfungiblePositionManager } from './sdks/v3-sdk';
+import { NonfungiblePositionManager } from './sdks/v3-sdk';
 import { Bound, Field } from './types';
-import { buildCurrency, convertBackToTokenInfo } from './utils';
+import { convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
 import { toSlippagePercent } from './utils/slippage';
 
 export default function AddLiquidityV3({
+  params,
   handleGoBack,
   handleGoToPoolList,
 }: {
+  params?: {
+    from?: string;
+    to?: string;
+    fee?: string;
+  };
   handleGoBack: () => void;
   handleGoToPoolList: () => void;
 }) {
   const { chainId, account } = useWalletInfo();
   const theme = useTheme();
   const submission = useSubmission();
+  const { isMobile } = useWidgetDevice();
+
+  const defaultBaseTokenQuery = useQuery({
+    ...tokenApi.getFetchTokenQuery(chainId, params?.from, account),
+  });
+  const defaultQuoteTokenQuery = useQuery({
+    ...tokenApi.getFetchTokenQuery(chainId, params?.to, account),
+  });
 
   const [state, dispatch] = useReducer<typeof reducer>(reducer, {
-    baseToken: buildCurrency({
-      address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-      decimals: 18,
-      symbol: 'ETH',
-      name: 'ETH',
-      chainId: 11155111,
-      // chainId: 1,
-    }),
-    quoteToken: buildCurrency({
-      address: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
-      // address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-      decimals: 6,
-      symbol: 'USDC',
-      name: 'USDC',
-      chainId: 11155111,
-      // chainId: 1,
-    }),
-    feeAmount: FeeAmount.HIGH,
+    baseToken: null,
+    quoteToken: null,
+    feeAmount: params?.fee ? Number(params?.fee) : undefined,
     independentField: Field.CURRENCY_A,
     typedValue: '',
     startPriceTypedValue: '',
@@ -73,9 +75,26 @@ export default function AddLiquidityV3({
     rightRangeTypedValue: '',
   });
 
-  const { independentField, typedValue, startPriceTypedValue } = state;
+  useEffect(() => {
+    if (!defaultBaseTokenQuery.data) {
+      return;
+    }
+    dispatch({
+      type: Types.UpdateDefaultBaseToken,
+      payload: defaultBaseTokenQuery.data,
+    });
+  }, [defaultBaseTokenQuery]);
+  useEffect(() => {
+    if (!defaultQuoteTokenQuery.data) {
+      return;
+    }
+    dispatch({
+      type: Types.UpdateDefaultQuoteToken,
+      payload: defaultQuoteTokenQuery.data,
+    });
+  }, [defaultQuoteTokenQuery]);
 
-  const tokenPairIsNull = !state.baseToken || !state.quoteToken;
+  const { independentField, typedValue, startPriceTypedValue } = state;
 
   const {
     pool,
@@ -235,13 +254,13 @@ export default function AddLiquidityV3({
             ...txn,
           },
           {
-            early: true,
+            early: false,
             metadata: {
               [MetadataFlag.createAMMV3Pool]: '1',
             },
           },
         );
-        if (succ === ExecutionResult.Submitted) {
+        if (succ === ExecutionResult.Success) {
           setTimeout(() => {
             handleGoToPoolList();
           }, 100);
@@ -255,6 +274,10 @@ export default function AddLiquidityV3({
   return (
     <Box
       sx={{
+        mx: 'auto',
+        borderRadius: isMobile ? 0 : 16,
+        backgroundColor: 'background.paper',
+        width: isMobile ? '100%' : 600,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
@@ -442,40 +465,84 @@ export default function AddLiquidityV3({
             </YellowCard>
           )}
         </DynamicSection>
-        <DynamicSection disabled={!state.feeAmount || invalidPool}>
-          <Box
-            sx={{
-              typography: 'body1',
-              fontWeight: 600,
-              color: theme.palette.text.primary,
-              textAlign: 'left',
-            }}
-          >
-            {t`Current price`}
-            <Box>
-              {formattedPrice}&nbsp;{t`per`}&nbsp;
-              {state.baseToken?.symbol ?? ''}
+        {noLiquidity ? (
+          <DynamicSection>
+            <Box
+              sx={{
+                typography: 'body1',
+                fontWeight: 600,
+                color: theme.palette.text.primary,
+                textAlign: 'left',
+              }}
+            >
+              {t`Starting price`}
             </Box>
-          </Box>
-          <LiquidityChartRangeInput
-            currencyA={state.baseToken ?? undefined}
-            currencyB={state.quoteToken ?? undefined}
-            feeAmount={state.feeAmount}
-            ticksAtLimit={ticksAtLimit}
-            price={
-              price
-                ? parseFloat(
-                    (invertPrice ? price.invert() : price).toSignificant(8),
-                  )
-                : undefined
-            }
-            priceLower={priceLower}
-            priceUpper={priceUpper}
-            onLeftRangeInput={onLeftRangeInput}
-            onRightRangeInput={onRightRangeInput}
-            interactive={true}
-          />
-        </DynamicSection>
+            <Box
+              sx={{
+                p: 8,
+                borderRadius: 8,
+                backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                typography: 'h6',
+                color: theme.palette.primary.main,
+              }}
+            >
+              {t`This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction.`}
+            </Box>
+            <Box
+              sx={{
+                px: 16,
+                py: 12,
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: theme.palette.border.main,
+                borderStyle: 'solid',
+              }}
+            >
+              <NumberInput
+                sx={{
+                  backgroundColor: 'transparent',
+                }}
+                value={startPriceTypedValue}
+                onChange={onStartPriceInput}
+              />
+            </Box>
+          </DynamicSection>
+        ) : (
+          <DynamicSection disabled={!state.feeAmount || invalidPool}>
+            <Box
+              sx={{
+                typography: 'body1',
+                fontWeight: 600,
+                color: theme.palette.text.primary,
+                textAlign: 'left',
+              }}
+            >
+              {t`Current price`}
+              <Box>
+                {formattedPrice}&nbsp;{t`per`}&nbsp;
+                {state.baseToken?.symbol ?? ''}
+              </Box>
+            </Box>
+            <LiquidityChartRangeInput
+              currencyA={state.baseToken ?? undefined}
+              currencyB={state.quoteToken ?? undefined}
+              feeAmount={state.feeAmount}
+              ticksAtLimit={ticksAtLimit}
+              price={
+                price
+                  ? parseFloat(
+                      (invertPrice ? price.invert() : price).toSignificant(8),
+                    )
+                  : undefined
+              }
+              priceLower={priceLower}
+              priceUpper={priceUpper}
+              onLeftRangeInput={onLeftRangeInput}
+              onRightRangeInput={onRightRangeInput}
+              interactive={true}
+            />
+          </DynamicSection>
+        )}
         <DynamicSection
           disabled={
             invalidPool ||

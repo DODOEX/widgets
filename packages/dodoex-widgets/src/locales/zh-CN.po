@@ -241,11 +241,11 @@ msgstr ""
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:372
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:387
 msgid "Set price range"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:388
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:403
 msgid "Full range"
 msgstr ""
 
@@ -538,7 +538,7 @@ msgstr ""
 msgid "Results in a relatively fixed price."
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:454
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:469
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:213
 #: src/widgets/PoolWidget/AMMV3/components/PositionViewCard.tsx:244
 msgid "Current price"
@@ -582,8 +582,8 @@ msgid "Add Initial Liquidity"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:181
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:232
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:307
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:243
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:322
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:302
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:369
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:419
@@ -820,7 +820,7 @@ msgstr ""
 msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:441
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:456
 msgid "Invalid range selected. The min price must be lower than the max price."
 msgstr ""
 
@@ -925,7 +925,7 @@ msgid "The pegged exchange rate refers to the exchange rate between two token as
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:250
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:494
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:509
 msgid "Deposit amounts"
 msgstr ""
 
@@ -1480,11 +1480,11 @@ msgstr "分钟"
 msgid "Off"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:436
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:451
 msgid "Your position will not earn fees or be used in trades until the market price moves into your range."
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:456
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:471
 msgid "per"
 msgstr ""
 
@@ -1920,7 +1920,7 @@ msgid "Low"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:199
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:343
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:358
 msgid "Select pair"
 msgstr ""
 

@@ -31,6 +31,7 @@ export function Pool() {
     case PageType.createPoolAMMV3:
       return (
         <AMMV3Create
+          params={(page as Page<PageType.createPoolAMMV3>).params}
           handleGoBack={() => {
             useRouterStore.getState().push({
               type: PageType.Pool,
