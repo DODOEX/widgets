@@ -1,14 +1,14 @@
-import { graphql } from '../../uniswap-data-api/gql';
+import { graphql } from '../../gql';
 
 export const AllV3TicksDocument = graphql(/* GraphQL */ `
-  query AllV3Ticks($chain: Chain!, $address: String!, $skip: Int, $first: Int) {
-    v3Pool(chain: $chain, address: $address) {
-      ticks(skip: $skip, first: $first) {
-        tick: tickIdx
-        liquidityNet
-        price0
-        price1
-      }
+  query Ticks($where: Tick_filter, $skip: Int, $first: Int) {
+    ticks(where: $where, skip: $skip, first: $first) {
+      id
+      poolAddress
+      tickIdx
+      liquidityNet
+      price0
+      price1
     }
   }
 `);

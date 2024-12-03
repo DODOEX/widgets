@@ -26,7 +26,7 @@ export default function computeSurroundingTicks(
     ascending ? i < sortedTickData.length : i >= 0;
     ascending ? i++ : i--
   ) {
-    const tick = Number(sortedTickData[i]?.tick);
+    const tick = Number(sortedTickData[i]?.tickIdx);
     const sdkPrice = tickToPrice(token0, token1, tick);
     const currentTickProcessed: TickProcessed = {
       liquidityActive: previousTickProcessed.liquidityActive,

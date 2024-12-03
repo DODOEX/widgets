@@ -1,3 +1,4 @@
+export { setContractRequests } from '@dodoex/dodo-contract-request';
 export {
   ChainId,
   basicTokenMap,
@@ -5,7 +6,6 @@ export {
   etherTokenAddress,
   platformIdMap,
 } from './chainConfig';
-export { setContractRequests } from '@dodoex/dodo-contract-request';
 
 export {
   ABIName,
@@ -17,7 +17,7 @@ export { default as GraphQLRequests } from './helper/GraphQLRequests';
 export { default as RestApiRequests } from './helper/RestApiRequests';
 
 export { AMMV3Api } from './services/ammv3';
-export type { TickData, Ticks, UniswapGraphqlChainId } from './services/ammv3';
+export type { TickData, Ticks } from './services/ammv3';
 export {
   PMMHelper,
   PMMModel,

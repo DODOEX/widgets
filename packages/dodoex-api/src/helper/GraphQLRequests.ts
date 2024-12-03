@@ -1,9 +1,8 @@
+import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import crossFetch from 'cross-fetch';
 import { GraphQLClient, RequestDocument, Variables } from 'graphql-request';
-import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
-import { TypedDocumentString } from '../gql/graphql';
-import { TypedDocumentString as UniswapTypedDocumentString } from '../uniswap-data-api/graphql';
 import { GraphQLClientRequestHeaders } from 'graphql-request/build/esm/types';
+import { TypedDocumentString } from '../gql/graphql';
 
 type Fetch = typeof crossFetch;
 
@@ -62,9 +61,7 @@ export default class GraphQLRequests {
   }
 
   getQuery<TResult, TVariables>(
-    document:
-      | TypedDocumentString<TResult, TVariables>
-      | UniswapTypedDocumentString<TResult, TVariables>,
+    document: TypedDocumentString<TResult, TVariables>,
     ...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
   ) {
     return {
@@ -86,9 +83,7 @@ export default class GraphQLRequests {
   }
 
   getInfiniteQuery<TResult, TVariables>(
-    document:
-      | TypedDocumentString<TResult, TVariables>
-      | UniswapTypedDocumentString<TResult, TVariables>,
+    document: TypedDocumentString<TResult, TVariables>,
     pageKey: string,
     ...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
   ) {

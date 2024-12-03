@@ -20391,6 +20391,23 @@ export type FetchErc20ForecastSlippageQuery = {
   } | null;
 };
 
+export type TicksQueryVariables = Exact<{
+  where?: InputMaybe<Tick_Filter>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type TicksQuery = {
+  ticks: Array<{
+    id: string;
+    poolAddress?: string | null;
+    tickIdx: any;
+    liquidityNet: any;
+    price0: any;
+    price1: any;
+  }>;
+};
+
 export type FetchMiningListQueryVariables = Exact<{
   where?: InputMaybe<Miningmining_List_Filter>;
 }>;
@@ -21183,6 +21200,18 @@ export const FetchErc20ForecastSlippageDocument = new TypedDocumentString(`
   FetchErc20ForecastSlippageQuery,
   FetchErc20ForecastSlippageQueryVariables
 >;
+export const TicksDocument = new TypedDocumentString(`
+    query Ticks($where: Tick_filter, $skip: Int, $first: Int) {
+  ticks(where: $where, skip: $skip, first: $first) {
+    id
+    poolAddress
+    tickIdx
+    liquidityNet
+    price0
+    price1
+  }
+}
+    `) as unknown as TypedDocumentString<TicksQuery, TicksQueryVariables>;
 export const FetchMiningListDocument = new TypedDocumentString(`
     query FetchMiningList($where: Miningmining_list_filter) {
   mining_list(where: $where) {

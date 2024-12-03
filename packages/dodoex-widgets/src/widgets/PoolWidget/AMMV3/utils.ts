@@ -1,4 +1,4 @@
-import { basicTokenMap, ChainId, UniswapGraphqlChainId } from '@dodoex/api';
+import { basicTokenMap, ChainId } from '@dodoex/api';
 import { TokenInfo } from '../../../hooks/Token';
 import { Token } from './sdks/sdk-core';
 import { NativeCurrency } from './sdks/sdk-core/entities/nativeCurrency';
@@ -69,12 +69,4 @@ export function convertBackToTokenInfo(
     symbol: currency.symbol ?? '',
     name: currency.name ?? '',
   };
-}
-
-// TODO
-export function toGraphQLChain(chainId: ChainId): UniswapGraphqlChainId {
-  if (chainId === ChainId.MAINNET) {
-    return 'ETHEREUM';
-  }
-  return 'ETHEREUM_SEPOLIA';
 }

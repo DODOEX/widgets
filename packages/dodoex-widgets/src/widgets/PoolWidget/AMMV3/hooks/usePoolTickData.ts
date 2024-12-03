@@ -2,8 +2,9 @@ import { AMMV3Api, ChainId, TickData, Ticks } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import JSBI from 'jsbi';
 import { useEffect, useMemo, useState } from 'react';
+import { ThegraphKeyMap } from '../../../../constants/chains';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
-import { graphQLRequestsUniswap } from '../../../../hooks/useGraphQLRequests';
+import { useGraphQLRequests } from '../../../../hooks/useGraphQLRequests';
 import {
   Currency,
   Price,
@@ -11,7 +12,6 @@ import {
   V3_CORE_FACTORY_ADDRESSES,
 } from '../sdks/sdk-core';
 import { FeeAmount, Pool, TICK_SPACINGS, tickToPrice } from '../sdks/v3-sdk';
-import { toGraphQLChain } from '../utils';
 import computeSurroundingTicks from '../utils/computeSurroundingTicks';
 import { PoolState, usePool } from './usePools';
 
@@ -43,6 +43,8 @@ function usePaginatedTickQuery(
   skip = 0,
   chainId: ChainId,
 ) {
+  const graphQLRequests = useGraphQLRequests();
+
   const poolAddress =
     currencyA && currencyB && feeAmount
       ? Pool.getAddress(
@@ -54,15 +56,12 @@ function usePaginatedTickQuery(
         )
       : undefined;
 
-  const query = graphQLRequestsUniswap.getQuery(
-    AMMV3Api.graphql.AllV3TicksDocument,
-    {
-      address: poolAddress?.toLowerCase() ?? '',
-      chain: toGraphQLChain(chainId),
-      skip,
-      first: MAX_TICK_FETCH_VALUE,
-    },
-  );
+  const query = graphQLRequests.getQuery(AMMV3Api.graphql.AllV3TicksDocument, {
+    address: poolAddress?.toLowerCase() ?? undefined,
+    chain: chainId ? ThegraphKeyMap[chainId] : undefined,
+    skip,
+    first: MAX_TICK_FETCH_VALUE,
+  });
 
   const result = useQuery({
     ...query,
@@ -91,7 +90,7 @@ function useAllV3Ticks(
     skipNumber,
     chainId,
   );
-  const ticks: Ticks = data?.v3Pool?.ticks as Ticks;
+  const ticks: Ticks = data?.ticks as Ticks;
 
   useEffect(() => {
     if (ticks?.length) {
@@ -168,7 +167,7 @@ export function usePoolActiveLiquidity(
     // if not, take the previous tick as pivot
     const pivot =
       ticks.findIndex(
-        (tickData) => tickData?.tick && tickData.tick > activeTick,
+        (tickData) => tickData?.tickIdx && tickData.tickIdx > activeTick,
       ) - 1;
 
     if (pivot < 0) {
@@ -196,7 +195,7 @@ export function usePoolActiveLiquidity(
       liquidityActive: JSBI.BigInt(pool[1]?.liquidity ?? 0),
       tick: activeTick,
       liquidityNet:
-        Number(ticks[pivot]?.tick) === activeTick
+        Number(ticks[pivot]?.tickIdx) === activeTick
           ? JSBI.BigInt(ticks[pivot]?.liquidityNet ?? 0)
           : JSBI.BigInt(0),
       price0: sdkPrice.toFixed(PRICE_FIXED_DIGITS),
