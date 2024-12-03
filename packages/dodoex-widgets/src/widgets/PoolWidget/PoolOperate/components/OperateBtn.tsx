@@ -35,7 +35,10 @@ export default function OperateBtn({
   if (baseTokenStatus.needShowTokenStatusButton) {
     buttons.push(<TokenStatusButton status={baseTokenStatus} />);
   }
-  if (quoteTokenStatus.needShowTokenStatusButton) {
+  if (
+    quoteTokenStatus.needShowTokenStatusButton &&
+    !baseTokenStatus.isApproving
+  ) {
     buttons.push(<TokenStatusButton status={quoteTokenStatus} />);
   }
 

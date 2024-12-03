@@ -529,7 +529,10 @@ export function RemovePoolOperate({
               fullWidth
               disabled={disabled}
               danger={isWarnCompare}
-              isLoading={operateLiquidityMutation.isPending}
+              isLoading={
+                operateLiquidityMutation.isPending ||
+                removeAMMV2LiquidityMutataion.isPending
+              }
               onClick={() => {
                 if (disabled) return;
                 if (isWarnCompare) {

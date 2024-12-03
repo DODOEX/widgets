@@ -14,8 +14,6 @@ import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCo
 import { RatioPrice } from './Ratio';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
-import { PageType, useRouterStore } from '../../../router';
-import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
 
 export default function ConfirmDialog({
   open,
@@ -30,7 +28,7 @@ export default function ConfirmDialog({
   price,
   shareOfPool,
   pairAddress,
-  isExists,
+  createMutation,
 }: {
   open: boolean;
   onClose: () => void;
@@ -44,27 +42,10 @@ export default function ConfirmDialog({
   price?: BigNumber | null;
   shareOfPool?: string;
   pairAddress?: string;
-  isExists: boolean;
+  createMutation: ReturnType<typeof useAMMV2AddLiquidity>;
 }) {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
-  const createMutation = useAMMV2AddLiquidity({
-    baseToken,
-    quoteToken,
-    baseAmount,
-    quoteAmount,
-    fee,
-    isExists,
-    slippage,
-    successBack: () => {
-      useRouterStore.getState().push({
-        type: PageType.Pool,
-        params: {
-          tab: PoolTab.myLiquidity,
-        },
-      });
-    },
-  });
   return (
     <Dialog
       modal

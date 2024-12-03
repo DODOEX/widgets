@@ -90,7 +90,7 @@ export async function openEtherscanPage(
 }
 
 export const UNI_INIT_CODE_HASH =
-  '0x62543e8738c2449ea6d378de41d932dc92a6fabeb3cc19b8e4f05af1582b238c';
+  '0x67a372377cf6d7f78cfdcc9df0bc21e1139bd49e5a47c33ee0de5389a4396410';
 
 export function sortsBefore(tokenA: TokenInfo, tokenB: TokenInfo): boolean {
   if (tokenA.chainId !== tokenB.chainId) {
@@ -121,7 +121,7 @@ export const computePairAddress = ({
       [
         pack(
           ['address', 'address', 'uint256'],
-          [token0.address, token1.address, toWei(fee, 18).toString()],
+          [token0.address, token1.address, toWei(fee, 4).toString()],
         ),
       ],
     ),

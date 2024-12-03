@@ -68,7 +68,7 @@ export function useAMMV2AddLiquidity({
       const quoteInAmountMinBg = quoteInAmountBg
         .times(1 - slippage)
         .dp(quoteToken.decimals, BigNumber.ROUND_FLOOR);
-      const feeWei = toWei(fee, 18).toString();
+      const feeWei = toWei(fee, 4).toString();
       const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
       if (baseIsETH) {
         const tokenAddress = quoteToken.address;

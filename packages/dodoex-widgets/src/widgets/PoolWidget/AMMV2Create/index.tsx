@@ -29,6 +29,8 @@ import { ChainId, contractConfig } from '@dodoex/api';
 import GoBack from '../../../components/GoBack';
 import { PageType, useRouterStore } from '../../../router';
 import MyLiquidity from './MyLiqidity';
+import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
+import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
 
 export default function AMMV2Create() {
   const [fee, setFee] = React.useState(0.003);
@@ -132,6 +134,24 @@ export default function AMMV2Create() {
       type: PageType.Pool,
     });
   };
+
+  const createMutation = useAMMV2AddLiquidity({
+    baseToken,
+    quoteToken,
+    baseAmount,
+    quoteAmount,
+    fee,
+    isExists,
+    slippage: slippageNumber,
+    successBack: () => {
+      useRouterStore.getState().push({
+        type: PageType.Pool,
+        params: {
+          tab: PoolTab.myLiquidity,
+        },
+      });
+    },
+  });
 
   return (
     <WidgetContainer>
@@ -352,7 +372,7 @@ export default function AMMV2Create() {
                   !quoteToken ||
                   !baseAmount ||
                   !quoteAmount ||
-                  isInvalidPair
+                  !!isInvalidPair
                 }
                 onClick={() => setShowConfirm(true)}
               >
@@ -379,7 +399,7 @@ export default function AMMV2Create() {
         lpAmount={liquidityMinted}
         shareOfPool={shareOfPool}
         pairAddress={pairAddress}
-        isExists={isExists}
+        createMutation={createMutation}
       />
     </WidgetContainer>
   );

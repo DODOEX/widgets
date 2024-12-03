@@ -268,9 +268,9 @@ function CardList({
                           ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
                               ?.label ?? '-')
                           : formatPercentageNumber({
-                              input: item.mtFeeRate
-                                ? byWei(item.mtFeeRate, 18)
-                                : 0,
+                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
+                                item.mtFeeRate ? byWei(item.mtFeeRate, 18) : 0,
+                              ),
                             })}
                       </Box>
                     </Tooltip>
@@ -597,6 +597,11 @@ function TableList({
               <Trans>TVL</Trans>
             </Box>
           )}
+          {onlyV3 ? null : (
+            <Box component="th">
+              <Trans>APY</Trans>
+            </Box>
+          )}
           <Box component="th">
             <Trans>My Liquidity</Trans>
           </Box>
@@ -606,12 +611,6 @@ function TableList({
               <Trans>Price Range</Trans>
             </Box>
           ) : null}
-
-          {onlyV3 ? null : (
-            <Box component="th">
-              <Trans>APY</Trans>
-            </Box>
-          )}
 
           <Box
             component="th"
@@ -835,6 +834,58 @@ function TableList({
                   </Box>
                 </Box>
               )}
+
+              {isAMMV3 ? null : (
+                <Box component="td">
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    {hasMining ? (
+                      <Tooltip title={t`Mining`}>
+                        <Box
+                          component="span"
+                          sx={{
+                            typography: 'body2',
+                            color: 'success.main',
+                          }}
+                        >
+                          ✨{' '}
+                        </Box>
+                      </Tooltip>
+                    ) : (
+                      ''
+                    )}
+                    <PoolApyTooltip
+                      chainId={item.chainId}
+                      apy={item.apy}
+                      baseToken={baseToken}
+                      quoteToken={quoteToken}
+                      hasQuote={!!quoteApy}
+                      hasMining={hasMining}
+                    >
+                      <Box
+                        component="span"
+                        sx={{
+                          typography: 'body2',
+                          fontWeight: 600,
+                          display: 'flex',
+                          alignItems: 'center',
+                          width: 'max-content',
+                          color: 'success.main',
+                          cursor: 'auto',
+                        }}
+                      >
+                        {baseApy || '0%'}
+                        {quoteApy ? `/${quoteApy}` : ''}
+                      </Box>
+                    </PoolApyTooltip>
+                  </Box>
+                </Box>
+              )}
+
               <Box component="td">
                 <Box
                   sx={{
@@ -962,57 +1013,6 @@ function TableList({
                   </Box>
                 </Box>
               ) : null}
-
-              {isAMMV3 ? null : (
-                <Box component="td">
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    {hasMining ? (
-                      <Tooltip title={t`Mining`}>
-                        <Box
-                          component="span"
-                          sx={{
-                            typography: 'body2',
-                            color: 'success.main',
-                          }}
-                        >
-                          ✨{' '}
-                        </Box>
-                      </Tooltip>
-                    ) : (
-                      ''
-                    )}
-                    <PoolApyTooltip
-                      chainId={item.chainId}
-                      apy={item.apy}
-                      baseToken={baseToken}
-                      quoteToken={quoteToken}
-                      hasQuote={!!quoteApy}
-                      hasMining={hasMining}
-                    >
-                      <Box
-                        component="span"
-                        sx={{
-                          typography: 'body2',
-                          fontWeight: 600,
-                          display: 'flex',
-                          alignItems: 'center',
-                          width: 'max-content',
-                          color: 'success.main',
-                          cursor: 'auto',
-                        }}
-                      >
-                        {baseApy || '0%'}
-                        {quoteApy ? `/${quoteApy}` : ''}
-                      </Box>
-                    </PoolApyTooltip>
-                  </Box>
-                </Box>
-              )}
 
               <Box component="td">
                 <Box

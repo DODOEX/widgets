@@ -23,6 +23,9 @@ import ErrorMessageDialog from '../../../components/ErrorMessageDialog';
 import ConfirmDialog from '../AMMV2Create/ConfirmDialog';
 import { useQuery } from '@tanstack/react-query';
 import { poolApi } from '../utils';
+import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
+import { PageType, useRouterStore } from '../../../router';
+import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
 
 export function AddPoolOperate({
   submittedBack: submittedBackProps,
@@ -55,6 +58,9 @@ export function AddPoolOperate({
   const feeRateQuery = useQuery(
     poolApi.getFeeRateQuery(pool?.chainId, pool?.address, pool?.type, account),
   );
+  const feeNumber = feeRateQuery.data?.mtFeeRate
+    ?.plus(feeRateQuery.data?.lpFeeRate ?? 0)
+    ?.toNumber();
   const isAMMV2 = pool?.type === 'AMMV2';
   const [showConfirmAMMV2, setShowConfirmAMMV2] = React.useState(false);
   const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
@@ -101,7 +107,6 @@ export function AddPoolOperate({
   if (isOverBalance) {
     submitBtnText = t`Insufficient balance`;
   }
-
   const submittedBack = () => {
     reset();
     resetSlipper();
@@ -122,6 +127,19 @@ export function AddPoolOperate({
       submittedBack,
     });
   };
+
+  const operateAMMV2LiquidityMutation = useAMMV2AddLiquidity({
+    baseToken: pool?.baseToken,
+    quoteToken: pool?.quoteToken,
+    baseAmount,
+    quoteAmount,
+    fee: feeNumber,
+    isExists: true,
+    slippage: slipperValue,
+    successBack: () => {
+      setShowConfirmAMMV2(false);
+    },
+  });
 
   return (
     <>
@@ -208,7 +226,10 @@ export function AddPoolOperate({
               fullWidth
               disabled={disabled}
               danger={isWarnCompare}
-              isLoading={operateLiquidityMutation.isPending}
+              isLoading={
+                operateLiquidityMutation.isPending ||
+                operateAMMV2LiquidityMutation.isPending
+              }
               onClick={() => {
                 if (disabled) return;
                 if (isWarnCompare) {
@@ -260,14 +281,12 @@ export function AddPoolOperate({
           baseAmount={baseAmount}
           quoteToken={pool.quoteToken}
           quoteAmount={quoteAmount}
-          fee={feeRateQuery.data?.mtFeeRate
-            ?.plus(feeRateQuery.data?.lpFeeRate ?? 0)
-            ?.toNumber()}
+          fee={feeNumber}
           price={uniV2Pair?.price}
           lpAmount={uniV2Pair?.liquidityMinted}
           shareOfPool={uniV2Pair?.shareOfPool}
           pairAddress={pool.address}
-          isExists
+          createMutation={operateAMMV2LiquidityMutation}
         />
       )}
     </>

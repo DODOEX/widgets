@@ -1428,7 +1428,7 @@ export class PoolApi {
           );
         } else if (type === 'AMMV2') {
           const result = await fetchUniswapV2PairFeeRate(chainId, poolAddress);
-          const feeRate = byWei(result.toString(), 18);
+          const feeRate = byWei(result.toString(), 4);
           lpFeeRate = feeRate.times(0.8);
           mtFeeRate = feeRate.times(0.2);
         } else {

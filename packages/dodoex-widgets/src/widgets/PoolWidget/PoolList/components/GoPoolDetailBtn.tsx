@@ -14,7 +14,8 @@ export default function GoPoolDetailBtn({
   return (
     <Box
       component="button"
-      onClick={() => {
+      onClick={(evt) => {
+        evt.stopPropagation();
         useRouterStore.getState().push({
           type: PageType.PoolDetail,
           params: {
