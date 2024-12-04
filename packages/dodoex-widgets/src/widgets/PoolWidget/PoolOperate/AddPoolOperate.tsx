@@ -116,6 +116,10 @@ export function AddPoolOperate({
   };
   const { operateLiquidityMutation } = useOperateLiquidity(pool);
   const submitLq = () => {
+    if (isAMMV2) {
+      setShowConfirmAMMV2(true);
+      return;
+    }
     operateLiquidityMutation.mutate({
       txTitle: t`Add Liquidity`,
       isRemove: false,
@@ -136,7 +140,8 @@ export function AddPoolOperate({
     fee: feeNumber,
     isExists: true,
     slippage: slipperValue,
-    successBack: () => {
+    submittedBack: () => {
+      submittedBack();
       setShowConfirmAMMV2(false);
     },
   });
@@ -234,10 +239,6 @@ export function AddPoolOperate({
                 if (disabled) return;
                 if (isWarnCompare) {
                   setShowCompareConfirm(true);
-                  return;
-                }
-                if (isAMMV2) {
-                  setShowConfirmAMMV2(true);
                   return;
                 }
                 submitLq();

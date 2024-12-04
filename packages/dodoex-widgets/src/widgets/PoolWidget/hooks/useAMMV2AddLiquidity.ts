@@ -25,6 +25,7 @@ export function useAMMV2AddLiquidity({
   fee,
   isExists,
   successBack,
+  submittedBack,
 }: {
   baseToken: TokenInfo | undefined;
   quoteToken: TokenInfo | undefined;
@@ -34,6 +35,7 @@ export function useAMMV2AddLiquidity({
   fee: number | undefined;
   isExists?: boolean;
   successBack?: () => void;
+  submittedBack?: () => void;
 }) {
   const submission = useSubmission();
   const { account } = useWalletInfo();
@@ -129,6 +131,7 @@ export function useAMMV2AddLiquidity({
               : MetadataFlag.createAMMV2Position]: true,
           },
           successBack,
+          submittedBack,
         },
       );
       return txResult;

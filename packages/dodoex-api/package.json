@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/api",
-  "version": "3.0.1-taiko.4",
+  "version": "3.0.1-taiko.5",
   "description": "DODO API Kit",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
@@ -53,7 +53,7 @@
   },
   "peerDependencies": {
     "@dodoex/contract-request": "^1.2.0",
-    "@dodoex/dodo-contract-request": "1.6.0-alpha.2",
+    "@dodoex/dodo-contract-request": "1.6.0-alpha.4",
     "bignumber.js": ">=9",
     "lodash": ">=4"
   },

@@ -1,11 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import { uniPoolV2Api } from '../utils';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { CurrencyAmount, Percent } from '@uniswap/sdk-core';
 import React from 'react';
 import { Pair } from '@uniswap/v2-sdk';
 import BigNumber from 'bignumber.js';
 import { byWei } from '../../../utils';
+import {
+  getFetchUniswapV2PairBalanceOfQueryOptions,
+  getFetchUniswapV2PairTotalSupplyQueryOptions,
+} from '@dodoex/dodo-contract-request';
 
 export function useAMMV2Balance({
   pairAddress,
@@ -17,11 +20,15 @@ export function useAMMV2Balance({
   const { account } = useWalletInfo();
   const chainId = pair?.liquidityToken?.chainId;
   const balanceQuery = useQuery({
-    ...uniPoolV2Api.getBalance(chainId, pairAddress, account),
+    ...getFetchUniswapV2PairBalanceOfQueryOptions(
+      chainId,
+      pairAddress,
+      account,
+    ),
     retry: false,
   });
   const totalSupplyQuery = useQuery({
-    ...uniPoolV2Api.getTotalSupply(chainId, pairAddress),
+    ...getFetchUniswapV2PairTotalSupplyQueryOptions(chainId, pairAddress),
     retry: false,
   });
 
@@ -31,8 +38,7 @@ export function useAMMV2Balance({
         !pair ||
         !balanceQuery.data ||
         !totalSupplyQuery.data ||
-        !totalSupplyQuery.data.gte(balanceQuery.data) ||
-        totalSupplyQuery.data.eq(0)
+        totalSupplyQuery.data < balanceQuery.data
       ) {
         return [undefined, undefined, undefined];
       }

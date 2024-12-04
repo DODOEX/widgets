@@ -70,7 +70,7 @@ export function useAMMV2RemoveLiquidity({
         new BigNumber(quoteAmount).times(1 - slippage),
         quoteToken.decimals,
       );
-      const feeWei = toWei(fee, 18).toString();
+      const feeWei = toWei(fee, 4).toString();
       const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
       if (baseIsETH) {
         const tokenAddress = quoteToken.address;

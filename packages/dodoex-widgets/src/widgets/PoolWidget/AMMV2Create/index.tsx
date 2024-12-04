@@ -31,6 +31,7 @@ import { PageType, useRouterStore } from '../../../router';
 import MyLiquidity from './MyLiqidity';
 import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
 import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
+import { getUniswapV2Router02ContractAddressByChainId } from '@dodoex/dodo-contract-request';
 
 export default function AMMV2Create() {
   const [fee, setFee] = React.useState(0.003);
@@ -114,7 +115,7 @@ export default function AMMV2Create() {
     }
   };
   const proxyContract = chainId
-    ? contractConfig[chainId]?.AMM_V2_ROUTER_ADDRESS
+    ? getUniswapV2Router02ContractAddressByChainId(chainId)
     : undefined;
   const baseTokenStatus = useTokenStatus(baseToken, {
     amount: baseAmount,
@@ -372,7 +373,8 @@ export default function AMMV2Create() {
                   !quoteToken ||
                   !baseAmount ||
                   !quoteAmount ||
-                  !!isInvalidPair
+                  !!isInvalidPair ||
+                  !fee
                 }
                 onClick={() => setShowConfirm(true)}
               >

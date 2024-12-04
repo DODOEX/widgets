@@ -131,6 +131,7 @@ function CardList({
 
         const type = item.type as PoolType;
         const poolType = getPoolAMMOrPMM(type);
+        const isAMMV2 = type === 'AMMV2';
         const isAMMV3 = type === 'AMMV3';
 
         return (
@@ -269,7 +270,9 @@ function CardList({
                               ?.label ?? '-')
                           : formatPercentageNumber({
                               input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                                item.mtFeeRate ? byWei(item.mtFeeRate, 18) : 0,
+                                item.mtFeeRate
+                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
+                                  : 0,
                               ),
                             })}
                       </Box>
@@ -686,6 +689,7 @@ function TableList({
 
           const type = item.type as PoolType;
           const poolType = getPoolAMMOrPMM(type);
+          const isAMMV2 = type === 'AMMV2';
           const isAMMV3 = type === 'AMMV3';
 
           let operateBtnText = '';
@@ -808,7 +812,9 @@ function TableList({
                               ?.label ?? '-')
                           : formatPercentageNumber({
                               input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                                item.mtFeeRate ? byWei(item.mtFeeRate, 18) : 0,
+                                item.mtFeeRate
+                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
+                                  : 0,
                               ),
                             })}
                       </Box>

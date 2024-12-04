@@ -1,8 +1,18 @@
-import { Box, ButtonBase, Input, Radio, useTheme } from '@dodoex/components';
+import {
+  alpha,
+  Box,
+  ButtonBase,
+  Input,
+  Radio,
+  useTheme,
+} from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { ErrorBorder } from '@dodoex/icons';
+
+const MIN_FEE = 0.0001;
 
 export default function FeeEdit({
   disabled,
@@ -25,6 +35,11 @@ export default function FeeEdit({
 
   const isCustomValue = !feeList.includes(fee);
   const isCustom = isCustomValue || editCustom;
+  const isLessFee =
+    !editCustom &&
+    isCustomValue &&
+    (customValue ? new BigNumber(customValue).div(100).lt(MIN_FEE) : false);
+  const hideOrShowDisabled = disabled || isLessFee;
   return (
     <Box
       sx={{
@@ -44,7 +59,7 @@ export default function FeeEdit({
         }}
       >
         <Trans>
-          {fee ? new BigNumber(fee).times(100).toString() : 0}% fee tier
+          {fee ? new BigNumber(fee).times(100).toString() : '-'}% fee tier
         </Trans>
         <ButtonBase
           sx={{
@@ -53,10 +68,13 @@ export default function FeeEdit({
             border: `solid 1px ${theme.palette.text.primary}`,
             borderRadius: 8,
             fontWeight: 600,
-            cursor: disabled ? 'default' : 'pointer',
+            color: 'text.primary',
+            cursor: hideOrShowDisabled ? 'default' : 'pointer',
+            opacity: isLessFee ? 0.3 : 1,
           }}
+          disabled={hideOrShowDisabled}
           onClick={() => {
-            if (disabled) return;
+            if (hideOrShowDisabled) return;
             setEdit((prev) => !prev);
           }}
         >
@@ -64,30 +82,61 @@ export default function FeeEdit({
         </ButtonBase>
       </Box>
       {edit && (
-        <Box
-          sx={{
-            mt: 12,
-            ...(isMobile
-              ? {
-                  display: 'grid',
-                  gap: 8,
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                }
-              : {
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  '& > label': {
-                    flex: 1,
-                  },
-                }),
-          }}
-        >
-          {feeList.map((value) => {
-            const active = fee === value && !isCustom;
-            return (
+        <>
+          <Box
+            sx={{
+              mt: 12,
+              ...(isMobile
+                ? {
+                    display: 'grid',
+                    gap: 8,
+                    gridTemplateColumns: 'repeat(2, 1fr)',
+                  }
+                : {
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    '& > label': {
+                      flex: 1,
+                    },
+                  }),
+            }}
+          >
+            {feeList.map((value) => {
+              const active = fee === value && !isCustom;
+              return (
+                <Box
+                  key={value}
+                  component="label"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    px: 20,
+                    py: 12,
+                    borderWidth: 1,
+                    borderRadius: 12,
+                    cursor: 'pointer',
+                    ...(active && {
+                      borderColor: theme.palette.primary.main,
+                    }),
+                  }}
+                >
+                  {value * 100}%
+                  <Radio
+                    size={18}
+                    checked={active}
+                    onChange={(_, checked) => {
+                      if (checked) {
+                        onChange(value);
+                      }
+                    }}
+                  />
+                </Box>
+              );
+            })}
+            {hasCustom && (
               <Box
-                key={value}
                 component="label"
                 sx={{
                   display: 'flex',
@@ -98,91 +147,95 @@ export default function FeeEdit({
                   borderWidth: 1,
                   borderRadius: 12,
                   cursor: 'pointer',
-                  ...(active && {
+                  color: isLessFee ? theme.palette.error.main : 'text.primary',
+                  ...(isCustom && {
                     borderColor: theme.palette.primary.main,
                   }),
                 }}
+                onClick={() => {
+                  setEditCustom(true);
+                  setCustomValue('');
+                }}
               >
-                {value * 100}%
+                {editCustom ? (
+                  <Input
+                    value={customValue}
+                    autoFocus
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (isNaN(Number(value))) return;
+                      setCustomValue(value);
+                    }}
+                    onBlur={() => {
+                      const newFee = Number(customValue);
+                      const newFeeResult = newFee
+                        ? new BigNumber(newFee).div(100).toNumber()
+                        : newFee;
+                      if (newFeeResult && newFeeResult < MIN_FEE) {
+                        onChange(0);
+                      } else if (!!customValue && (newFee || newFee === 0)) {
+                        onChange(newFeeResult);
+                      }
+                      setEditCustom(false);
+                    }}
+                    sx={{
+                      p: 0,
+                      flex: 1,
+                      height: '100%',
+                      border: 'none',
+                      backgroundColor: 'none',
+                    }}
+                    inputSx={{
+                      p: 0,
+                    }}
+                  />
+                ) : (
+                  <>
+                    {isCustomValue ? (
+                      new BigNumber(fee).times(100).toNumber() || customValue
+                    ) : (
+                      <Trans>Custom</Trans>
+                    )}
+                  </>
+                )}
                 <Radio
                   size={18}
-                  checked={active}
-                  onChange={(_, checked) => {
-                    if (checked) {
-                      onChange(value);
-                    }
+                  checked={isCustom}
+                  sx={{
+                    flexShrink: 0,
                   }}
                 />
               </Box>
-            );
-          })}
-          {hasCustom && (
+            )}
+          </Box>
+          {isLessFee && (
             <Box
-              component="label"
               sx={{
+                mt: 12,
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between',
-                px: 20,
-                py: 12,
-                borderWidth: 1,
-                borderRadius: 12,
-                cursor: 'pointer',
-                ...(isCustom && {
-                  borderColor: theme.palette.primary.main,
-                }),
-              }}
-              onClick={() => {
-                setEditCustom(true);
+                gap: 8,
+                p: 8,
+                borderRadius: 8,
+                typography: 'h6',
+                backgroundColor: alpha(theme.palette.error.main, 0.1),
+                color: theme.palette.error.main,
               }}
             >
-              {editCustom ? (
-                <Input
-                  value={customValue}
-                  autoFocus
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (isNaN(Number(value))) return;
-                    setCustomValue(value);
-                  }}
-                  onBlur={() => {
-                    const newFee = Number(customValue);
-                    if (!!customValue && (newFee || newFee === 0)) {
-                      onChange(new BigNumber(newFee).div(100).toNumber());
-                    }
-                    setEditCustom(false);
-                    setCustomValue('');
-                  }}
-                  sx={{
-                    p: 0,
-                    flex: 1,
-                    height: '100%',
-                    border: 'none',
-                    backgroundColor: 'none',
-                  }}
-                  inputSx={{
-                    p: 0,
-                  }}
-                />
-              ) : (
-                <>
-                  {isCustomValue ? (
-                    new BigNumber(fee).times(100).toNumber()
-                  ) : (
-                    <Trans>Custom</Trans>
-                  )}
-                </>
-              )}
-              <Radio
-                size={18}
-                checked={isCustom}
+              <Box
+                component={ErrorBorder}
                 sx={{
-                  flexShrink: 0,
+                  width: 18,
+                  height: 18,
                 }}
               />
+              <Trans>
+                The fee tier is too low. Please enter a value greater than{' '}
+                {MIN_FEE}.
+              </Trans>
             </Box>
           )}
-        </Box>
+        </>
       )}
     </Box>
   );
