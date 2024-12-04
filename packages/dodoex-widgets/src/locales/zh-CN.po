@@ -294,6 +294,10 @@ msgstr ""
 msgid "Hour"
 msgstr "小时"
 
+#: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:233
+msgid "The fee tier is too low. Please enter a value greater than {0}%."
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:169
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:28
 #: src/widgets/PoolWidget/PoolCreate/index.tsx:305
@@ -377,7 +381,7 @@ msgid "Pool Creation"
 msgstr ""
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:413
-#: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:197
+#: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:198
 #: src/widgets/PoolWidget/PoolCreate/components/SelectAndInput.tsx:52
 msgid "Custom"
 msgstr ""
@@ -988,10 +992,6 @@ msgstr ""
 msgid "No LP pools match your criteria"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:232
-msgid "The fee tier is too low. Please enter a value greater than {MIN_FEE}."
-msgstr ""
-
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:217
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:544
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:257
@@ -1531,7 +1531,7 @@ msgstr ""
 msgid "Settler"
 msgstr ""
 
-#: src/widgets/PoolWidget/hooks/useAMMV2RemoveLiquidity.ts:117
+#: src/widgets/PoolWidget/hooks/useAMMV2RemoveLiquidity.ts:113
 msgid "Remove liquidity"
 msgstr ""
 

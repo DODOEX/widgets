@@ -25,8 +25,7 @@ export const basicTokenMap: {
   },
   [ChainId.SEPOLIA]: {
     ...DEFAULT_BASIC_TOKEN,
-    // wrappedTokenAddress: '0x7B07164ecFaF0F0D85DFC062Bc205a4674c75Aa0',
-    wrappedTokenAddress: '0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14',
+    wrappedTokenAddress: '0x7B07164ecFaF0F0D85DFC062Bc205a4674c75Aa0',
   },
   [ChainId.OPTIMISM]: {
     ...DEFAULT_BASIC_TOKEN,
@@ -115,7 +114,6 @@ export const basicTokenMap: {
   },
   [ChainId.TAIKO]: {
     ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenSymbol: 'WMNT',
-    wrappedTokenAddress: '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8',
+    wrappedTokenAddress: '0xA51894664A773981C6C112C43ce576f315d5b1B6',
   },
 };

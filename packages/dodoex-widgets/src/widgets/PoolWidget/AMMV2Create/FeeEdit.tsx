@@ -192,7 +192,8 @@ export default function FeeEdit({
                 ) : (
                   <>
                     {isCustomValue ? (
-                      new BigNumber(fee).times(100).toNumber() || customValue
+                      (new BigNumber(fee).times(100).toNumber() ||
+                        customValue) + '%'
                     ) : (
                       <Trans>Custom</Trans>
                     )}
@@ -231,7 +232,7 @@ export default function FeeEdit({
               />
               <Trans>
                 The fee tier is too low. Please enter a value greater than{' '}
-                {MIN_FEE}.
+                {MIN_FEE * 100}%.
               </Trans>
             </Box>
           )}

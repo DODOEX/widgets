@@ -24,7 +24,7 @@ export function useAMMV2RemoveLiquidity({
   liquidityAmount,
   slippage,
   fee,
-  successBack,
+  submittedBack,
 }: {
   baseToken: TokenInfo | undefined;
   quoteToken: TokenInfo | undefined;
@@ -33,7 +33,7 @@ export function useAMMV2RemoveLiquidity({
   liquidityAmount: string;
   slippage: number;
   fee: number | undefined;
-  successBack?: () => void;
+  submittedBack?: () => void;
 }) {
   const submission = useSubmission();
   const { account } = useWalletInfo();
@@ -55,13 +55,11 @@ export function useAMMV2RemoveLiquidity({
       const basicTokenAddressLow = basicToken.address.toLowerCase();
       const to = getUniswapV2Router02ContractAddressByChainId(chainId);
       let data = '';
-      let value = '0x0';
+      const value = '0x0';
       const baseIsETH =
         baseToken.address.toLowerCase() === basicTokenAddressLow;
       const quoteIsETH =
         quoteToken.address.toLowerCase() === basicTokenAddressLow;
-      const baseInAmountBg = toWei(baseAmount, baseToken.decimals);
-      const quoteInAmountBg = toWei(quoteAmount, quoteToken.decimals);
       const baseInAmountMinBg = toWei(
         new BigNumber(baseAmount).times(1 - slippage),
         baseToken.decimals,
@@ -76,7 +74,6 @@ export function useAMMV2RemoveLiquidity({
         const tokenAddress = quoteToken.address;
         const tokenInAmountMin = quoteInAmountMinBg.toString();
         const ethAmountMin = baseInAmountMinBg.toString();
-        value = NumberToHex(baseInAmountBg) ?? '';
         data = encodeUniswapV2Router02RemoveLiquidityETH(
           tokenAddress,
           feeWei,
@@ -90,7 +87,6 @@ export function useAMMV2RemoveLiquidity({
         const tokenAddress = baseToken.address;
         const tokenInAmountMin = baseInAmountMinBg.toString();
         const ethAmountMin = quoteInAmountMinBg.toString();
-        value = NumberToHex(quoteInAmountBg) ?? '';
         data = encodeUniswapV2Router02RemoveLiquidityETH(
           tokenAddress,
           feeWei,
@@ -125,7 +121,7 @@ export function useAMMV2RemoveLiquidity({
           metadata: {
             [MetadataFlag.removeLiqidityAMMV2Position]: true,
           },
-          successBack,
+          submittedBack,
         },
       );
       return txResult;

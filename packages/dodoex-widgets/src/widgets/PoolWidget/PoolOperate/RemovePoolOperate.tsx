@@ -251,7 +251,7 @@ export function RemovePoolOperate({
     liquidityAmount: liquidityAmountWei,
     slippage: slipperValue,
     fee: feeRate,
-    successBack: submittedBack,
+    submittedBack,
   });
   const submitLq = () => {
     if (isAMMV2) {
