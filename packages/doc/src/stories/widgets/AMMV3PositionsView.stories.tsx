@@ -26,23 +26,20 @@ export const Primary = (props: any) => {
       <AMMV3PositionsView
         chainId={11155111}
         baseToken={{
-          address: '0x8f2a9f23d5d70226491B0c10365dE88f64cD4a01',
+          address: '0x163D876AF3949f45D934870a1783A040Cf717Bc5',
           decimals: 18,
-          symbol: 'TK1A',
-          name: 'token1A',
+          symbol: 'uni_test2',
+          name: 'uni_test2',
           chainId: 11155111,
-          // chainId: 1,
         }}
         quoteToken={{
-          address: '0xd05553BC85FA8c004073d91097B7611CD5E478f5',
-          // address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+          address: '0x444d30Eeb001Dc8B7B96cEF088381418B82f9441',
           decimals: 6,
-          symbol: 'USDT-A',
-          name: 'usdtA',
+          symbol: 'uni_test3',
+          name: 'uni_test3',
           chainId: 11155111,
-          // chainId: 1,
         }}
-        feeAmount={100}
+        feeAmount={500}
         onClose={() => window.alert('onClose')}
         handleGoToAddLiquidityV3={() =>
           window.alert('handleGoToAddLiquidityV3')

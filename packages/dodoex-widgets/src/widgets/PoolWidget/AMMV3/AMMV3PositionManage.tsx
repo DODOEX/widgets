@@ -300,7 +300,7 @@ export const AMMV3PositionManage = ({
         };
 
         const succ = await submission.execute(
-          t`Add liquidity`,
+          t`Add Liquidity`,
           {
             opcode: OpCode.TX,
             ...txn,
@@ -367,7 +367,7 @@ export const AMMV3PositionManage = ({
         };
 
         const succ = await submission.execute(
-          t`Add liquidity`,
+          t`Remove Liquidity`,
           {
             opcode: OpCode.TX,
             ...txn,
@@ -417,7 +417,7 @@ export const AMMV3PositionManage = ({
         };
 
         const succ = await submission.execute(
-          t`Add liquidity`,
+          t`Claim Rewards`,
           {
             opcode: OpCode.TX,
             ...txn,

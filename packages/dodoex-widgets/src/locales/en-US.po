@@ -186,6 +186,7 @@ msgstr "Selected Range"
 msgid "Do not remind again"
 msgstr "Do not remind again"
 
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:370
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:261
 msgid "Remove Liquidity"
 msgstr "Remove Liquidity"
@@ -372,6 +373,7 @@ msgstr "This token is on"
 msgid "Success Rate"
 msgstr "Success Rate"
 
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:252
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:330
 msgid "Pool Creation"
 msgstr "Pool Creation"
@@ -582,11 +584,7 @@ msgid "Add Initial Liquidity"
 msgstr "Add Initial Liquidity"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:202
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:252
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:331
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:303
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:370
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:420
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:479
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:36
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:120
@@ -999,6 +997,7 @@ msgstr "No LP pools match your criteria"
 msgid "Fee rate"
 msgstr "Fee rate"
 
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:303
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:25
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:124
 msgid "Add Liquidity"
@@ -2324,6 +2323,7 @@ msgid "Transaction Deadline"
 msgstr "Transaction Deadline"
 
 #: src/widgets/MiningWidget/MiningList/hooks/useDepositOrWithdrawOrClaim.ts:190
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:420
 msgid "Claim Rewards"
 msgstr "Claim Rewards"
 

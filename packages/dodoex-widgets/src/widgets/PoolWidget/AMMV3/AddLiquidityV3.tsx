@@ -249,7 +249,7 @@ export default function AddLiquidityV3({
         };
 
         const succ = await submission.execute(
-          t`Add liquidity`,
+          t`Pool Creation`,
           {
             opcode: OpCode.TX,
             ...txn,
