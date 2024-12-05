@@ -583,6 +583,7 @@ function TableList({
   supportAMM?: boolean;
   onlyV3?: boolean;
 }) {
+  const theme = useTheme();
   return (
     <LiquidityTable>
       <Box component="thead">
@@ -711,9 +712,18 @@ function TableList({
             }
           }
           const hasMining = !!item.miningAddress?.[0];
+          const hoverBg = theme.palette.background.tag;
 
           return (
-            <Box component="tr" key={item.id + item.chainId}>
+            <Box
+              component="tr"
+              key={item.id + item.chainId}
+              sx={{
+                [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
+                  backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
+                },
+              }}
+            >
               <Box component="td">
                 <Box
                   sx={{
@@ -960,6 +970,25 @@ function TableList({
                               })
                             : '0'}
                         </>
+                      )}
+                      {isAMMV2 && (
+                        <Box
+                          sx={{
+                            ml: 4,
+                            px: 4,
+                            py: 2,
+                            borderRadius: 4,
+                            fontSize: '10px',
+                            fontWeight: 600,
+                            lineHeight: 1,
+                            backgroundColor: 'background.paperDarkContrast',
+                            color: 'text.secondary',
+                          }}
+                        >
+                          {formatPercentageNumber({
+                            input: lq.liquidityPositions?.[0]?.poolShare,
+                          })}
+                        </Box>
                       )}
                     </>
                   )}

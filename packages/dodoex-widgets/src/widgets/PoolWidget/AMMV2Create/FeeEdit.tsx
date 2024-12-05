@@ -230,10 +230,7 @@ export default function FeeEdit({
                   height: 18,
                 }}
               />
-              <Trans>
-                The fee tier is too low. Please enter a value greater than{' '}
-                {MIN_FEE * 100}%.
-              </Trans>
+              <Trans>The fee tier should greater than {MIN_FEE * 100}%</Trans>
             </Box>
           )}
         </>

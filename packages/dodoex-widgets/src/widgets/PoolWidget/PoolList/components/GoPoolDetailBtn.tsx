@@ -31,6 +31,7 @@ export default function GoPoolDetailBtn({
         height: 32,
         borderRadius: 8,
         cursor: 'pointer',
+        flexShrink: 0,
         '&:hover': {
           opacity: 0.5,
         },

@@ -27,7 +27,7 @@ export default function ComparePrice({
       sx={{
         p: 10,
         mb: 12,
-        backgroundColor: 'custom.background.disabled',
+        backgroundColor: 'background.paperDarkContrast',
         borderRadius: 12,
       }}
     >

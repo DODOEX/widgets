@@ -346,9 +346,18 @@ function TableList({
                 break;
             }
           }
+          const hoverBg = theme.palette.background.tag;
 
           return (
-            <Box component="tr" key={pairAddress + chainId}>
+            <Box
+              component="tr"
+              key={pairAddress + chainId}
+              sx={{
+                [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
+                  backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
+                },
+              }}
+            >
               <Box component="td">
                 <Box
                   sx={{

@@ -372,6 +372,7 @@ function TableList({
   loadMoreLoading?: boolean;
   supportAMM?: boolean;
 }) {
+  const theme = useTheme();
   return (
     <LiquidityTable
       hasMore={hasMore}
@@ -457,8 +458,17 @@ function TableList({
           const isAMMV2 = type === 'AMMV2';
           const isAMMV3 = type === 'AMMV3';
 
+          const hoverBg = theme.palette.background.tag;
           return (
-            <Box component="tr" key={item.id + item.chainId}>
+            <Box
+              component="tr"
+              key={item.id + item.chainId}
+              sx={{
+                [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
+                  backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
+                },
+              }}
+            >
               <Box component="td">
                 <Box
                   sx={{
