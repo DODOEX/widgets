@@ -976,23 +976,23 @@ function TableList({
                         </>
                       )}
                       {isAMMV2 && (
-                        <Box
-                          sx={{
-                            ml: 4,
-                            px: 4,
-                            py: 2,
-                            borderRadius: 4,
-                            fontSize: '10px',
-                            fontWeight: 600,
-                            lineHeight: 1,
-                            backgroundColor: 'background.paperDarkContrast',
-                            color: 'text.secondary',
-                          }}
-                        >
-                          {formatPercentageNumber({
-                            input: lq.liquidityPositions?.[0]?.poolShare,
-                          })}
-                        </Box>
+                        <Tooltip title={<Trans>My pool share</Trans>}>
+                          <Box
+                            sx={{
+                              ml: 4,
+                              px: 8,
+                              py: 4,
+                              borderRadius: 4,
+                              typography: 'h6',
+                              backgroundColor: 'background.tag',
+                              color: 'text.secondary',
+                            }}
+                          >
+                            {formatPercentageNumber({
+                              input: lq.liquidityPositions?.[0]?.poolShare,
+                            })}
+                          </Box>
+                        </Tooltip>
                       )}
                     </>
                   )}
