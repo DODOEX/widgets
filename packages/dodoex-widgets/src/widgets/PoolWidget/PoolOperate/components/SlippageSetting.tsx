@@ -1,28 +1,29 @@
 import {
   Box,
-  Input,
-  HoverAddBackground,
-  useTheme,
-  Tooltip,
   BoxProps,
+  HoverAddBackground,
+  Input,
+  Tooltip,
+  useTheme,
 } from '@dodoex/components';
+import { Setting } from '@dodoex/icons';
+import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { ChangeEvent, useMemo, useState } from 'react';
-import { Setting } from '@dodoex/icons';
+import { AutoButton } from '../../../../components/AutoButton';
 import {
   AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION,
+  AUTO_AMM_V3_LIQUIDITY_SLIPPAGE_PROTECTION,
   AUTO_LIQUIDITY_SLIPPAGE_PROTECTION,
   AUTO_SWAP_SLIPPAGE_PROTECTION,
 } from '../../../../constants/pool';
-import { Trans } from '@lingui/macro';
-import { AutoButton } from '../../../../components/AutoButton';
 
 export const useSlipper = ({
   address,
   type,
 }: {
   address?: string;
-  type?: string;
+  type?: 'AMMV2' | 'AMMV3';
 }) => {
   const [slipper, setSlipper] = useState<
     number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION
@@ -31,13 +32,17 @@ export const useSlipper = ({
   const slipperValue = useMemo(
     () =>
       slipper === AUTO_SWAP_SLIPPAGE_PROTECTION
-        ? type === 'AMMV2'
-          ? new BigNumber(AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION)
+        ? type === 'AMMV3'
+          ? new BigNumber(AUTO_AMM_V3_LIQUIDITY_SLIPPAGE_PROTECTION)
               .div(100)
               .toNumber()
-          : new BigNumber(AUTO_LIQUIDITY_SLIPPAGE_PROTECTION)
-              .div(100)
-              .toNumber()
+          : type === 'AMMV2'
+            ? new BigNumber(AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION)
+                .div(100)
+                .toNumber()
+            : new BigNumber(AUTO_LIQUIDITY_SLIPPAGE_PROTECTION)
+                .div(100)
+                .toNumber()
         : slipper,
     [slipper, type],
   );
@@ -61,7 +66,7 @@ export default function SlippageSetting({
   onChange,
   sx,
 }: {
-  type?: string;
+  type?: 'AMMV2' | 'AMMV3';
   disabled?: boolean;
   value: number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION;
   onChange: (val: number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION) => void;
@@ -84,9 +89,11 @@ export default function SlippageSetting({
   };
 
   const autoValue =
-    type == 'AMMV2'
-      ? AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION
-      : AUTO_LIQUIDITY_SLIPPAGE_PROTECTION;
+    type == 'AMMV3'
+      ? AUTO_AMM_V3_LIQUIDITY_SLIPPAGE_PROTECTION
+      : type == 'AMMV2'
+        ? AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION
+        : AUTO_LIQUIDITY_SLIPPAGE_PROTECTION;
 
   return (
     <Tooltip

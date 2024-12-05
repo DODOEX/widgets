@@ -133,6 +133,7 @@ export default function AddLiquidityV3({
 
   const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
     address: undefined,
+    type: 'AMMV3',
   });
 
   const isValid = !errorMessage && !invalidRange;
@@ -583,6 +584,7 @@ export default function AddLiquidityV3({
             value={slipper}
             onChange={setSlipper}
             disabled={false}
+            type="AMMV3"
           />
         </DynamicSection>
       </Box>

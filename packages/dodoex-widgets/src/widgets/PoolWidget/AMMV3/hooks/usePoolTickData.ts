@@ -57,10 +57,14 @@ function usePaginatedTickQuery(
       : undefined;
 
   const query = graphQLRequests.getQuery(AMMV3Api.graphql.AllV3TicksDocument, {
-    address: poolAddress?.toLowerCase() ?? undefined,
-    chain: chainId ? ThegraphKeyMap[chainId] : undefined,
     skip,
     first: MAX_TICK_FETCH_VALUE,
+    where: {
+      chain: chainId ? ThegraphKeyMap[chainId] : undefined,
+      poolAddress: poolAddress?.toLowerCase() ?? undefined,
+      refreshNow: true,
+      schemaName: 'ammv3',
+    },
   });
 
   const result = useQuery({

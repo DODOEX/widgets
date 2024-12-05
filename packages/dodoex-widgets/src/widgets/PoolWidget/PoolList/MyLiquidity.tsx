@@ -136,7 +136,7 @@ function CardList({
 
         return (
           <Box
-            key={item.id + item.chainId}
+            key={isAMMV3 ? position?.id : item.id + item.chainId}
             sx={{
               px: 20,
               pt: 20,
@@ -694,13 +694,17 @@ function TableList({
           const isAMMV3 = type === 'AMMV3';
 
           let operateBtnText = '';
-          if (
-            operatePool?.pool?.address === item.id ||
-            operatePool?.address === item.id
-          ) {
-            if (isAMMV3) {
+          if (isAMMV3) {
+            if (
+              operatePool?.pool?.liquidityPositions?.[0]?.id === position?.id
+            ) {
               operateBtnText = t`Managing`;
-            } else {
+            }
+          } else {
+            if (
+              operatePool?.pool?.address === item.id ||
+              operatePool?.address === item.id
+            ) {
               switch (operatePool.operate) {
                 case OperateTab.Remove:
                   operateBtnText = t`Removing`;
@@ -717,7 +721,7 @@ function TableList({
           return (
             <Box
               component="tr"
-              key={item.id + item.chainId}
+              key={isAMMV3 ? position?.id : item.id + item.chainId}
               sx={{
                 [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
                   backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
@@ -1036,7 +1040,7 @@ function TableList({
                       <>
                         <span>
                           {formatTickPrice({
-                            price: position?.priceRange?.token1LowerPrice,
+                            price: position?.priceRange?.token0UpperPrice,
                             atLimit: {},
                             direction: Bound.UPPER,
                           })}

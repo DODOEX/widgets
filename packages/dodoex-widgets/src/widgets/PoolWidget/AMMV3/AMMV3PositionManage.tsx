@@ -211,6 +211,7 @@ export const AMMV3PositionManage = ({
 
   const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
     address: undefined,
+    type: 'AMMV3',
   });
 
   const isValid = !errorMessage && !invalidRange;
@@ -582,6 +583,7 @@ export const AMMV3PositionManage = ({
                 value={slipper}
                 onChange={setSlipper}
                 disabled={false}
+                type="AMMV3"
               />
             </Box>
 
@@ -645,6 +647,7 @@ export const AMMV3PositionManage = ({
                 value={slipper}
                 onChange={setSlipper}
                 disabled={false}
+                type="AMMV3"
               />
             </Box>
             <Box
