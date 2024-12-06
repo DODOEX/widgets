@@ -28,10 +28,10 @@ export default function GoPoolDetailBtn({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        height: 32,
         borderRadius: 8,
         cursor: 'pointer',
         flexShrink: 0,
+        height: 36,
         '&:hover': {
           opacity: 0.5,
         },
