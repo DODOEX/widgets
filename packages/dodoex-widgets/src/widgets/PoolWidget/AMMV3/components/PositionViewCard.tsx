@@ -106,8 +106,12 @@ export const PositionViewCard = ({
   const tickAtLimit = useIsTickAtLimit(p.fee, p.tickLower, p.tickUpper);
 
   // prices
-  const { priceLower, priceUpper, quote, base } =
-    getPriceOrderingFromPositionForUI(position);
+  // const { priceLower, priceUpper, quote, base } =
+  //   getPriceOrderingFromPositionForUI(position);
+  const priceLower = position?.token0PriceLower;
+  const priceUpper = position?.token0PriceUpper;
+  const quote = position?.amount1.currency;
+  const base = position?.amount0.currency;
 
   const currencyQuote = quote;
   const currencyBase = base;
@@ -165,8 +169,6 @@ export const PositionViewCard = ({
               </span>
               {currencyQuote?.symbol}
             </>
-            &nbsp;per&nbsp;
-            {currencyBase?.symbol ?? ''}
           </Box>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -193,8 +195,6 @@ export const PositionViewCard = ({
               </span>
               {currencyQuote?.symbol}
             </>
-            &nbsp;per&nbsp;
-            {currencyBase?.symbol}
           </Box>
           {/* <Box
             component="svg"
@@ -233,7 +233,7 @@ export const PositionViewCard = ({
             {t`Current price`}:&nbsp;
             {`${formatTokenAmountNumber({
               input: price?.toSignificant(),
-            })} `}
+            })}`}
             &nbsp;{currencyQuote?.symbol}&nbsp;per&nbsp;
             {currencyBase?.symbol}
           </Box>

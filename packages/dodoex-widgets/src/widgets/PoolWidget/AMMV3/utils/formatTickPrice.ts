@@ -15,6 +15,10 @@ export function formatTickPrice({
     return direction === Bound.LOWER ? '0' : '∞';
   }
 
+  if (typeof price === 'string' && price === '∞') {
+    return '∞';
+  }
+
   return formatTokenAmountNumber({
     input: typeof price === 'string' ? price : price?.toSignificant(),
   });

@@ -972,6 +972,10 @@ msgstr "The setting has been switched to swap mode"
 msgid "Quote not available"
 msgstr "Quote not available"
 
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:979
+msgid "My pool share"
+msgstr "My pool share"
+
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:122
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:112
 msgid "Learn More"
