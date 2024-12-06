@@ -152,6 +152,9 @@ const StepCounter = ({
               sx={{
                 px: 4,
                 backgroundColor: theme.palette.background.paper,
+                '&[disabled]': {
+                  cursor: 'default',
+                },
               }}
             >
               <svg
@@ -163,7 +166,11 @@ const StepCounter = ({
               >
                 <path
                   d="M14.25 9.75H9.75V14.25H8.25V9.75H3.75V8.25H8.25V3.75H9.75V8.25H14.25V9.75Z"
-                  fill={theme.palette.text.primary}
+                  fill={
+                    decrementDisabled
+                      ? theme.palette.text.disabled
+                      : theme.palette.text.primary
+                  }
                 />
               </svg>
             </Button>
@@ -176,6 +183,9 @@ const StepCounter = ({
               sx={{
                 px: 4,
                 backgroundColor: theme.palette.background.paper,
+                '&[disabled]': {
+                  cursor: 'default',
+                },
               }}
             >
               <svg
@@ -190,7 +200,11 @@ const StepCounter = ({
                   y="8.25"
                   width="10.5"
                   height="1.5"
-                  fill={theme.palette.text.primary}
+                  fill={
+                    decrementDisabled
+                      ? theme.palette.text.disabled
+                      : theme.palette.text.primary
+                  }
                 />
               </svg>
             </Button>

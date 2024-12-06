@@ -1,15 +1,5 @@
-import {
-  Box,
-  Button,
-  ButtonBase,
-  TabPanel,
-  Tabs,
-  TabsGroup,
-  Tooltip,
-  useTheme,
-} from '@dodoex/components';
-import { Plus as PlusIcon } from '@dodoex/icons';
-import { Trans, t } from '@lingui/macro';
+import { Box, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
+import { t } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { HowItWorks } from '../../../components/HowItWorks';
@@ -18,6 +8,7 @@ import WidgetContainer from '../../../components/WidgetContainer';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../router';
 import { Page, PageType } from '../../../router/types';
+import { AMMV3PositionManage } from '../AMMV3/AMMV3PositionManage';
 import { AMMV3PositionsView } from '../AMMV3/AMMV3PositionsView';
 import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
 import PoolOperateDialog, {
@@ -25,12 +16,12 @@ import PoolOperateDialog, {
   PoolOperateProps,
 } from '../PoolOperate';
 import AddLiquidityList from './AddLiquidity';
+import { CreatePoolBtn } from './components/CreatePoolBtn';
 import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
 import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
 import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
-import { AMMV3PositionManage } from '../AMMV3/AMMV3PositionManage';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -46,68 +37,13 @@ function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   );
 }
 
-function CreateItem({
-  onClick,
-  title,
-  desc,
-}: {
-  onClick: () => void;
-  title: React.ReactNode;
-  desc: React.ReactNode;
-}) {
-  const theme = useTheme();
-
-  return (
-    <Box
-      sx={{
-        px: 16,
-        py: 8,
-      }}
-    >
-      <ButtonBase
-        onClick={onClick}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 0,
-          p: 8,
-          borderRadius: 8,
-          '&:hover': {
-            backgroundColor: theme.palette.background.tag,
-          },
-        }}
-      >
-        <Box
-          sx={{
-            typography: 'body1',
-            fontWeight: 600,
-          }}
-        >
-          {title}
-        </Box>
-        <Box
-          sx={{
-            typography: 'h6',
-            fontWeight: 500,
-            color: theme.palette.text.secondary,
-          }}
-        >
-          {desc}
-        </Box>
-      </ButtonBase>
-    </Box>
-  );
-}
-
 export default function PoolList({
   params,
 }: {
   params?: Page<PageType.Pool>['params'];
 }) {
-  const theme = useTheme();
   const { isMobile } = useWidgetDevice();
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
-  const { supportAMMV2, supportAMMV3, notSupportPMM } = useUserOptions();
   const scrollParentRef = React.useRef<HTMLDivElement>(null);
   const { account } = useWeb3React();
   const { poolTab, tabs, handleChangePoolTab } = usePoolListTabs({
@@ -119,19 +55,6 @@ export default function PoolList({
 
   const [operatePool, setOperatePool] =
     React.useState<Partial<PoolOperateProps> | null>(null);
-
-  const poolTypeSupportObject = {
-    [PageType.CreatePool]: !notSupportPMM,
-    [PageType.createPoolAMMV2]: !!supportAMMV2,
-    [PageType.createPoolAMMV3]: !!supportAMMV3,
-  };
-  const activePoolTypes = Object.entries(poolTypeSupportObject).filter(
-    ([_, value]) => value === true,
-  );
-  const singleActiveCreatePoolType =
-    activePoolTypes.length === 1
-      ? (activePoolTypes[0][0] as PageType)
-      : undefined;
 
   return (
     <WidgetContainer
@@ -201,100 +124,7 @@ export default function PoolList({
                   }
             }
           />
-          {!singleActiveCreatePoolType ? (
-            <Tooltip
-              arrow={false}
-              leaveDelay={300}
-              placement={isMobile ? 'bottom' : 'bottom-end'}
-              sx={{
-                p: 0,
-              }}
-              title={
-                <Box>
-                  {!notSupportPMM && (
-                    <CreateItem
-                      onClick={() => {
-                        useRouterStore.getState().push({
-                          type: PageType.CreatePool,
-                        });
-                      }}
-                      title={<Trans>PMM Pool</Trans>}
-                      desc={<Trans>Description of this type of pool</Trans>}
-                    />
-                  )}
-                  {supportAMMV2 && (
-                    <CreateItem
-                      onClick={() => {
-                        useRouterStore.getState().push({
-                          type: PageType.createPoolAMMV2,
-                        });
-                      }}
-                      title={<Trans>AMM V2 Position</Trans>}
-                      desc={<Trans>Description of this type of pool</Trans>}
-                    />
-                  )}
-                  {supportAMMV3 && (
-                    <CreateItem
-                      onClick={() => {
-                        useRouterStore.getState().push({
-                          type: PageType.createPoolAMMV3,
-                        });
-                      }}
-                      title={<Trans>AMM V3 Position</Trans>}
-                      desc={<Trans>Description of this type of pool</Trans>}
-                    />
-                  )}
-                </Box>
-              }
-            >
-              <Box
-                sx={{
-                  width: isMobile ? '100%' : 'auto',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 10,
-                  pl: 8,
-                  pr: 16,
-                  py: 7,
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  borderColor: theme.palette.text.primary,
-                  typography: 'body1',
-                  fontWeight: 600,
-                  color: theme.palette.text.primary,
-                  cursor: 'pointer',
-                  '&:hover': {
-                    backgroundColor: theme.palette.background.tag,
-                  },
-                }}
-              >
-                <Box component={PlusIcon} />
-                <Trans>Create Pool</Trans>
-              </Box>
-            </Tooltip>
-          ) : (
-            <Button
-              variant={Button.Variant.outlined}
-              fullWidth={isMobile}
-              onClick={() => {
-                useRouterStore.getState().push({
-                  type: singleActiveCreatePoolType,
-                });
-              }}
-              sx={{
-                height: 40,
-              }}
-            >
-              <Box
-                component={PlusIcon}
-                sx={{
-                  mr: 4,
-                }}
-              />
-              <Trans>Create Pool</Trans>
-            </Button>
-          )}
+          <CreatePoolBtn />
         </Box>
         <TabPanelFlexCol
           value={PoolTab.addLiquidity}

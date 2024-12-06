@@ -31,7 +31,7 @@ function TokenPickSelect({
       <Box
         component={ButtonBase}
         sx={{
-          flexBasis: '50%',
+          flexBasis: '100%',
           flexGrow: 1,
           flexShrink: 1,
           display: 'flex',
@@ -48,6 +48,9 @@ function TokenPickSelect({
           backgroundColor: token ? 'transparent' : '#ED5AD5',
           '&:hover': {
             borderColor: token ? theme.palette.border.main : '#ED5AD5',
+          },
+          [theme.breakpoints.up('tablet')]: {
+            flexBasis: '50%',
           },
         }}
         onClick={() => {
@@ -150,12 +153,18 @@ export const TokenPairSelect = ({
   quoteToken,
   dispatch,
 }: TokenPairSelectProps) => {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
         display: 'flex',
         alignItems: 'center',
         gap: 12,
+        flexWrap: 'wrap',
+        [theme.breakpoints.up('tablet')]: {
+          flexWrap: 'nowrap',
+        },
       }}
     >
       <TokenPickSelect

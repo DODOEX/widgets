@@ -1,16 +1,18 @@
-import { Box, ButtonBase, useTheme } from '@dodoex/components';
+import { Box, BoxProps, ButtonBase, useTheme } from '@dodoex/components';
 import { StateProps } from '../reducer';
 
 export interface RateToggleProps {
   baseToken: StateProps['baseToken'];
   quoteToken: StateProps['quoteToken'];
   handleRateToggle: () => void;
+  sx?: BoxProps['sx'];
 }
 
 export const RateToggle = ({
   baseToken,
   quoteToken,
   handleRateToggle,
+  sx,
 }: RateToggleProps) => {
   const theme = useTheme();
 
@@ -29,12 +31,17 @@ export const RateToggle = ({
         p: 1,
         borderRadius: 8,
         backgroundColor: theme.palette.border.main,
+        ...sx,
       }}
     >
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
+          width: '100%',
+          [theme.breakpoints.up('tablet')]: {
+            width: 'auto',
+          },
         }}
       >
         <Box

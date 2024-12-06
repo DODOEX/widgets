@@ -29,15 +29,22 @@ export const OnlyV3Toggle = ({ onlyV3, setOnlyV3, sx }: OnlyV3ToggleProps) => {
         sx={{
           display: 'flex',
           alignItems: 'center',
+          width: '100%',
+          [theme.breakpoints.up('tablet')]: {
+            width: 97 + 97,
+          },
         }}
       >
         <Box
           sx={{
-            px: 16,
-            py: 4,
+            flex: 1,
+            width: 0,
+            pt: 4,
+            pb: 5,
             borderRadius: 6,
             textAlign: 'center',
             typography: 'body2',
+            whiteSpace: 'nowrap',
             ...(onlyV3
               ? {
                   color: theme.palette.text.primary,
@@ -53,11 +60,14 @@ export const OnlyV3Toggle = ({ onlyV3, setOnlyV3, sx }: OnlyV3ToggleProps) => {
         </Box>
         <Box
           sx={{
-            px: 12,
-            py: 4,
+            flex: 1,
+            width: 0,
+            pt: 4,
+            pb: 5,
             borderRadius: 6,
             textAlign: 'center',
             typography: 'body2',
+            whiteSpace: 'nowrap',
             ...(!onlyV3
               ? {
                   color: theme.palette.text.primary,

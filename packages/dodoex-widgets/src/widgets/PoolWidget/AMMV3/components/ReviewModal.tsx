@@ -33,7 +33,13 @@ export const ReviewModal = ({
   const { isMobile } = useWidgetDevice();
 
   return (
-    <Dialog open={on} onClose={onClose} modal title={t`Add liquidity`}>
+    <Dialog
+      open={on}
+      onClose={onClose}
+      modal
+      title={t`Add liquidity`}
+      height={683}
+    >
       <Box
         sx={{
           flex: 1,

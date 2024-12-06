@@ -76,7 +76,6 @@ export const PositionPreview = ({
               />
               <Box
                 sx={{
-                  typography: 'h5',
                   ml: 8,
                 }}
               >

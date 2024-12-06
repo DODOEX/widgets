@@ -35,9 +35,11 @@ export const Buttons = ({
 }: ButtonsProps) => {
   // we need an existence check on parsed amounts for single-asset deposits
   const showApprovalA =
-    approvalA.needApprove && !!parsedAmounts[Field.CURRENCY_A];
+    (approvalA.needApprove && !!parsedAmounts[Field.CURRENCY_A]) ||
+    approvalA.isApproving;
   const showApprovalB =
-    approvalB.needApprove && !!parsedAmounts[Field.CURRENCY_B];
+    (approvalB.needApprove && !!parsedAmounts[Field.CURRENCY_B]) ||
+    approvalB.isApproving;
 
   return (
     <NeedConnectButton includeButton fullWidth chainId={chainId}>
@@ -47,7 +49,7 @@ export const Buttons = ({
           width: '100%',
         }}
       >
-        {(approvalA.needApprove || approvalB.needApprove) && isValid && (
+        {(showApprovalA || showApprovalB) && isValid && (
           <Box
             sx={{
               width: '100%',
@@ -55,6 +57,7 @@ export const Buttons = ({
               padding: 0,
               alignItems: 'center',
               justifyContent: 'space-between',
+              gap: 8,
             }}
           >
             {showApprovalA && (
@@ -63,10 +66,10 @@ export const Buttons = ({
                 isLoading={approvalA.isApproving}
                 onClick={approvalA.submitApprove}
                 disabled={approvalA.insufficientBalance}
-                width={showApprovalB ? '48%' : '100%'}
+                width={showApprovalB ? '50%' : '100%'}
               >
                 {approvalA.isApproving ? (
-                  <Trans>Approving</Trans>
+                  <Trans>Approving {approvalA.token?.symbol}...</Trans>
                 ) : (
                   approvalA.approveTitle
                 )}
@@ -79,10 +82,10 @@ export const Buttons = ({
                 isLoading={approvalB.isApproving}
                 onClick={approvalB.submitApprove}
                 disabled={approvalB.insufficientBalance}
-                width={showApprovalB ? '48%' : '100%'}
+                width={showApprovalA ? '50%' : '100%'}
               >
                 {approvalB.isApproving ? (
-                  <Trans>Approving</Trans>
+                  <Trans>Approving {approvalB.token?.symbol}...</Trans>
                 ) : (
                   approvalB.approveTitle
                 )}

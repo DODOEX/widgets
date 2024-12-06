@@ -91,6 +91,7 @@ export const AMMV3PositionsView = ({
           gap: 16,
           borderRadius: 16,
           backgroundColor: theme.palette.background.paper,
+          minHeight: 480,
         }}
       >
         <Box
@@ -197,7 +198,13 @@ export const AMMV3PositionsView = ({
                 gap: 12,
               }}
             >
-              <EmptyDataIcon />
+              <EmptyDataIcon
+                sx={{
+                  width: 60,
+                  height: 60,
+                  borderRadius: (24 / 105) * 60,
+                }}
+              />
               <Box
                 sx={{
                   typography: 'body1',

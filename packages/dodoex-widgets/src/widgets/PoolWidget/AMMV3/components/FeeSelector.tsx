@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Actions, Types } from '../reducer';
 import { FeeAmount } from '../sdks/v3-sdk/constants';
 import { FEE_AMOUNT_DETAIL } from './shared';
+import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 
 export interface FeeSelectorProps {
   disabled: boolean;
@@ -17,6 +18,7 @@ export const FeeSelector = ({
   dispatch,
 }: FeeSelectorProps) => {
   const theme = useTheme();
+  const { isMobile } = useWidgetDevice();
 
   const [active, setActive] = useState(false);
 
@@ -32,7 +34,7 @@ export const FeeSelector = ({
           borderWidth: 1,
           borderStyle: 'solid',
           borderColor: theme.palette.border.main,
-          borderRadius: 16,
+          borderRadius: 12,
 
           ...(disabled
             ? {
@@ -56,6 +58,10 @@ export const FeeSelector = ({
           variant={Button.Variant.outlined}
           disabled={disabled}
           onClick={() => setActive((prev) => !prev)}
+          sx={{
+            color: theme.palette.text.primary,
+            border: `solid 1px ${theme.palette.text.primary}`,
+          }}
         >
           {active ? t`Hide` : t`Edit`}
         </Button>
@@ -64,9 +70,17 @@ export const FeeSelector = ({
       {active && (
         <Box
           sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
+            ...(isMobile
+              ? {
+                  display: 'grid',
+                  gap: 8,
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                }
+              : {
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                }),
           }}
         >
           {[
@@ -89,14 +103,19 @@ export const FeeSelector = ({
                   });
                 }}
                 sx={{
-                  flexBasis: '25%',
+                  flexBasis: '50%',
                   flexShrink: 1,
                   flexGrow: 1,
                   justifyContent: 'space-between',
                   px: 20,
+                  color: theme.palette.text.primary,
+                  borderRadius: 12,
                   borderColor: isSelected
                     ? theme.palette.primary.main
                     : theme.palette.border.main,
+                  [theme.breakpoints.up('tablet')]: {
+                    flexBasis: '25%',
+                  },
                 }}
               >
                 {FEE_AMOUNT_DETAIL[fee].label}

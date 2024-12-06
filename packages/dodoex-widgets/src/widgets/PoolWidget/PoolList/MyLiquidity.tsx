@@ -1231,6 +1231,7 @@ export default function MyLiquidity({
               : {
                   '& > button': {
                     flex: 1,
+                    flexBasis: '100%',
                   },
                 }),
             ...(isMobile
