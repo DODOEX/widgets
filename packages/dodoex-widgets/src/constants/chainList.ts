@@ -169,6 +169,15 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       name: 'Taiko',
     },
   ],
+  [
+    ChainId.PLUME,
+    {
+      chainId: ChainId.PLUME,
+      // TODO: need replace
+      logo: TaikoLogo,
+      name: 'Plume',
+    },
+  ],
 ]);
 
 export const isTestNet = (chainId: ChainId) => {
