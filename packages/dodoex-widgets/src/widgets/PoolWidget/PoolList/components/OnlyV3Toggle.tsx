@@ -1,5 +1,6 @@
 import { Box, BoxProps, ButtonBase, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
+import { useUserOptions } from '../../../../components/UserOptionsProvider';
 
 export interface OnlyV3ToggleProps {
   onlyV3: boolean;
@@ -9,6 +10,7 @@ export interface OnlyV3ToggleProps {
 
 export const OnlyV3Toggle = ({ onlyV3, setOnlyV3, sx }: OnlyV3ToggleProps) => {
   const theme = useTheme();
+  const { notSupportPMM } = useUserOptions();
 
   return (
     <Box
@@ -67,7 +69,7 @@ export const OnlyV3Toggle = ({ onlyV3, setOnlyV3, sx }: OnlyV3ToggleProps) => {
                 }),
           }}
         >
-          {t`V2 & PMM`}
+          {notSupportPMM ? 'V2' : t`V2 & PMM`}
         </Box>
       </Box>
     </Box>

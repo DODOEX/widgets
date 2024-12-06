@@ -78,6 +78,7 @@ export interface WidgetProps
     name: string;
     logoUrl?: string;
   };
+  notSupportPMM?: boolean;
   supportAMMV2?: boolean;
   supportAMMV3?: boolean;
 

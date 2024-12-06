@@ -1134,7 +1134,8 @@ export default function MyLiquidity({
   const theme = useTheme();
   const { minDevice, isMobile } = useWidgetDevice();
   const queryClient = useQueryClient();
-  const { onlyChainId, supportAMMV2, supportAMMV3 } = useUserOptions();
+  const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
+    useUserOptions();
   const [onlyV3, setOnlyV3] = React.useState(false);
 
   const {
@@ -1148,17 +1149,27 @@ export default function MyLiquidity({
     handleChangeFilterAddress,
   } = usePoolListFilterTokenAndPool();
 
+  let filterTypes: PoolType[] = notSupportPMM
+    ? []
+    : ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
+  if (supportAMMV2) {
+    filterTypes.push('AMMV2');
+  }
+  if (supportAMMV3) {
+    if (onlyV3) {
+      filterTypes = ['AMMV3'];
+    } else {
+      filterTypes.push('AMMV3');
+    }
+  }
+
   const defaultQueryFilter = {
     currentPage: 1,
     pageSize: 1000,
     user: account,
     filterState: {
       viewOnlyOwn: true,
-      filterTypes: supportAMMV3
-        ? onlyV3
-          ? ['AMMV3']
-          : ['CLASSICAL', 'DVM', 'DSP', 'GSP', 'AMMV2']
-        : undefined,
+      filterTypes,
     },
   };
 

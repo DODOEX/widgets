@@ -704,7 +704,8 @@ export default function AddLiquidityList({
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
 }) {
   const theme = useTheme();
-  const { onlyChainId, supportAMMV2, supportAMMV3 } = useUserOptions();
+  const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
+    useUserOptions();
   const { minDevice, isMobile } = useWidgetDevice();
   const queryClient = useQueryClient();
 
@@ -719,8 +720,7 @@ export default function AddLiquidityList({
     handleChangeFilterAddress,
   } = usePoolListFilterTokenAndPool();
 
-  const filterTypes = ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
-  // const filterTypes = [];
+  const filterTypes = notSupportPMM ? [] : ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
   if (supportAMMV2) {
     filterTypes.push('AMMV2');
   }

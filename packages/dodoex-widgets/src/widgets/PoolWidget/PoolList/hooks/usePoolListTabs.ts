@@ -19,21 +19,23 @@ export function usePoolListTabs({
 }) {
   const { i18n } = useLingui();
   const [poolTab, setPoolTab] = React.useState(PoolTab.addLiquidity);
-  const { supportAMMV2, supportAMMV3 } = useUserOptions();
-  const tabs = React.useMemo(
-    () => [
+  const { supportAMMV2, supportAMMV3, notSupportPMM } = useUserOptions();
+  const tabs = React.useMemo(() => {
+    const result = [
       { key: PoolTab.addLiquidity, value: t`Add Liquidity` },
       {
         key: PoolTab.myLiquidity,
         value: t`My Liquidity`,
       },
-      {
+    ];
+    if (!notSupportPMM) {
+      result.push({
         key: PoolTab.myCreated,
         value: supportAMMV2 || supportAMMV3 ? t`My Pools (PMM)` : t`My Pools`,
-      },
-    ],
-    [i18n._, supportAMMV2, supportAMMV3],
-  );
+      });
+    }
+    return result;
+  }, [i18n._, supportAMMV2, supportAMMV3, notSupportPMM]);
 
   const isSetPoolTabCache = React.useRef(false);
   React.useEffect(() => {

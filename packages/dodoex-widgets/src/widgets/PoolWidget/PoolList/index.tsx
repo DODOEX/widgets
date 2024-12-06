@@ -107,7 +107,7 @@ export default function PoolList({
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
-  const { supportAMMV2, supportAMMV3 } = useUserOptions();
+  const { supportAMMV2, supportAMMV3, notSupportPMM } = useUserOptions();
   const scrollParentRef = React.useRef<HTMLDivElement>(null);
   const { account } = useWeb3React();
   const { poolTab, tabs, handleChangePoolTab } = usePoolListTabs({
@@ -119,6 +119,19 @@ export default function PoolList({
 
   const [operatePool, setOperatePool] =
     React.useState<Partial<PoolOperateProps> | null>(null);
+
+  const poolTypeSupportObject = {
+    [PageType.CreatePool]: !notSupportPMM,
+    [PageType.createPoolAMMV2]: !!supportAMMV2,
+    [PageType.createPoolAMMV3]: !!supportAMMV3,
+  };
+  const activePoolTypes = Object.entries(poolTypeSupportObject).filter(
+    ([_, value]) => value === true,
+  );
+  const singleActiveCreatePoolType =
+    activePoolTypes.length === 1
+      ? (activePoolTypes[0][0] as PageType)
+      : undefined;
 
   return (
     <WidgetContainer
@@ -188,7 +201,7 @@ export default function PoolList({
                   }
             }
           />
-          {supportAMMV2 || supportAMMV3 ? (
+          {!singleActiveCreatePoolType ? (
             <Tooltip
               arrow={false}
               leaveDelay={300}
@@ -198,15 +211,17 @@ export default function PoolList({
               }}
               title={
                 <Box>
-                  <CreateItem
-                    onClick={() => {
-                      useRouterStore.getState().push({
-                        type: PageType.CreatePool,
-                      });
-                    }}
-                    title={<Trans>PMM Pool</Trans>}
-                    desc={<Trans>Description of this type of pool</Trans>}
-                  />
+                  {!notSupportPMM && (
+                    <CreateItem
+                      onClick={() => {
+                        useRouterStore.getState().push({
+                          type: PageType.CreatePool,
+                        });
+                      }}
+                      title={<Trans>PMM Pool</Trans>}
+                      desc={<Trans>Description of this type of pool</Trans>}
+                    />
+                  )}
                   {supportAMMV2 && (
                     <CreateItem
                       onClick={() => {
@@ -264,7 +279,7 @@ export default function PoolList({
               fullWidth={isMobile}
               onClick={() => {
                 useRouterStore.getState().push({
-                  type: PageType.CreatePool,
+                  type: singleActiveCreatePoolType,
                 });
               }}
               sx={{
