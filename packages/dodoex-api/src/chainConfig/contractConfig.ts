@@ -296,7 +296,7 @@ const contractMap: {
     CALLEE_HELPER: plume.DODOCalleeHelper,
 
     DODO_PROXY: plume.DODOV2Proxy02,
-    DODO_DSP_PROXY: plume.DODODspProxy,
+    DODO_DSP_PROXY: plume.DODODspProxyWithoutGSP,
     DODO_DPP_PROXY: plume.DODODppProxy,
     DODO_MINEV3_PROXY: plume.DODOMineV3Proxy,
   },
