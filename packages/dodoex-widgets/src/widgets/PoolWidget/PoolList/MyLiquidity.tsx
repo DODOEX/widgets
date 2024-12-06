@@ -1151,16 +1151,12 @@ export default function MyLiquidity({
 
   let filterTypes: PoolType[] = notSupportPMM
     ? []
-    : ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
+    : ['CLASSICAL', 'DVM', 'DSP', 'GSP', 'DPP'];
   if (supportAMMV2) {
     filterTypes.push('AMMV2');
   }
-  if (supportAMMV3) {
-    if (onlyV3) {
-      filterTypes = ['AMMV3'];
-    } else {
-      filterTypes.push('AMMV3');
-    }
+  if (supportAMMV3 && onlyV3) {
+    filterTypes = ['AMMV3'];
   }
 
   const defaultQueryFilter = {
