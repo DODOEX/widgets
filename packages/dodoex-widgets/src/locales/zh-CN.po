@@ -111,7 +111,7 @@ msgstr ""
 msgid "Create Liquidity Mining"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:336
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:339
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:336
 msgid "By adding liquidity you’ll earn <0>{0}</0> of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr ""
@@ -588,11 +588,11 @@ msgstr ""
 msgid "Add Initial Liquidity"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:202
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:203
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:333
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:479
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
-#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:120
+#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:166
 msgid "Add liquidity"
 msgstr ""
 
@@ -890,7 +890,7 @@ msgstr ""
 msgid "Claiming"
 msgstr ""
 
-#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:120
+#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:166
 msgid "Create AMM V2 Position"
 msgstr ""
 
@@ -931,7 +931,7 @@ msgstr ""
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:271
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:274
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:591
 msgid "Deposit amounts"
 msgstr ""
@@ -1124,7 +1124,7 @@ msgstr ""
 msgid "The creator of the liquidity pool can adjust the liquidity distribution by modifying the market-making price parameters. <0>Learn more</0>"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:382
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:385
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:523
 msgid "Invalid pair"
 msgstr ""
@@ -1521,7 +1521,7 @@ msgstr ""
 msgid "Asset"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:384
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:387
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:106
 msgid "Supply"
 msgstr ""
@@ -1539,7 +1539,7 @@ msgstr ""
 msgid "Settler"
 msgstr ""
 
-#: src/widgets/PoolWidget/hooks/useAMMV2RemoveLiquidity.ts:113
+#: src/widgets/PoolWidget/hooks/useAMMV2RemoveLiquidity.ts:158
 msgid "Remove liquidity"
 msgstr ""
 
@@ -1606,7 +1606,7 @@ msgstr ""
 msgid "Modify Confirmation"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:334
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:337
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:334
 msgid "Tips:"
 msgstr ""
@@ -1856,7 +1856,7 @@ msgstr ""
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:50
 #: src/widgets/PoolWidget/AMMV2Create/Setting.tsx:100
-#: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:122
+#: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:123
 msgid "Slippage Tolerance"
 msgstr "滑点"
 
@@ -1933,7 +1933,7 @@ msgstr ""
 msgid "Low"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV2Create/index.tsx:220
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:221
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:369
 msgid "Select pair"
 msgstr ""

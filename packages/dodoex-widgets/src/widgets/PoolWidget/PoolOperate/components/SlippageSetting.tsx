@@ -17,6 +17,7 @@ import {
   AUTO_LIQUIDITY_SLIPPAGE_PROTECTION,
   AUTO_SWAP_SLIPPAGE_PROTECTION,
 } from '../../../../constants/pool';
+import { PoolType } from '@dodoex/api';
 
 export const useSlipper = ({
   address,
@@ -66,7 +67,7 @@ export default function SlippageSetting({
   onChange,
   sx,
 }: {
-  type?: 'AMMV2' | 'AMMV3';
+  type?: PoolType;
   disabled?: boolean;
   value: number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION;
   onChange: (val: number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION) => void;

@@ -2,6 +2,10 @@ import { AMMV3Api, ChainId, ExcludeNone, PoolApi, PoolType } from '@dodoex/api';
 import { contractRequests } from '../../constants/api';
 import { TokenInfo } from '../../hooks/Token';
 import { OperatePool } from './PoolOperate/types';
+import {
+  getUniswapV2FactoryContractAddressByChainId,
+  getUniswapV2Router02ContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
 
 export const poolApi = new PoolApi({
   contractRequests,
@@ -142,4 +146,11 @@ export function getPoolAMMOrPMM(type: PoolType) {
     default:
       return 'PMM';
   }
+}
+
+export function getIsAMMV2DynamicFeeContractByChainId(chainId: number) {
+  return !!(
+    getUniswapV2FactoryContractAddressByChainId(chainId) &&
+    getUniswapV2Router02ContractAddressByChainId(chainId)
+  );
 }

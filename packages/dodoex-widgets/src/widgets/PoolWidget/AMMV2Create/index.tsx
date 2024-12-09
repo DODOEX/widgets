@@ -32,6 +32,7 @@ import MyLiquidity from './MyLiqidity';
 import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
 import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
 import { getUniswapV2Router02ContractAddressByChainId } from '@dodoex/dodo-contract-request';
+import { getIsAMMV2DynamicFeeContractByChainId } from '../utils';
 
 export default function AMMV2Create() {
   const [fee, setFee] = React.useState(0.003);
@@ -259,13 +260,15 @@ export default function AMMV2Create() {
                 occupiedToken={baseToken}
               />
             </Box>
-            <FeeEdit
-              fee={fee}
-              onChange={setFee}
-              feeList={feeList}
-              hasCustom
-              disabled={needToken}
-            />
+            {(!chainId || getIsAMMV2DynamicFeeContractByChainId(chainId)) && (
+              <FeeEdit
+                fee={fee}
+                onChange={setFee}
+                feeList={feeList}
+                hasCustom
+                disabled={needToken}
+              />
+            )}
           </CreateItem>
           <CreateItem
             title={<Trans>Deposit amounts</Trans>}

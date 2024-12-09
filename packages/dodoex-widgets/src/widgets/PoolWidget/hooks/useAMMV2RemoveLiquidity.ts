@@ -14,6 +14,9 @@ import {
   encodeUniswapV2Router02RemoveLiquidityETH,
   encodeUniswapV2Router02RemoveLiquidity,
   getUniswapV2Router02ContractAddressByChainId,
+  getUniswapV2Router02FixedFeeContractAddressByChainId,
+  encodeUniswapV2Router02FixedFeeRemoveLiquidityETH,
+  encodeUniswapV2Router02FixedFeeRemoveLiquidity,
 } from '@dodoex/dodo-contract-request';
 
 export function useAMMV2RemoveLiquidity({
@@ -53,7 +56,15 @@ export function useAMMV2RemoveLiquidity({
       const chainId = baseToken.chainId as ChainId;
       const basicToken = basicTokenMap[chainId];
       const basicTokenAddressLow = basicToken.address.toLowerCase();
-      const to = getUniswapV2Router02ContractAddressByChainId(chainId);
+      const dynamicFeeContractAddress =
+        getUniswapV2Router02ContractAddressByChainId(chainId);
+      const fixedFeeContractAddress =
+        getUniswapV2Router02FixedFeeContractAddressByChainId(chainId);
+      const isFixedFee = !dynamicFeeContractAddress;
+      const to = dynamicFeeContractAddress || fixedFeeContractAddress;
+      if (!to) {
+        throw new Error('AMMV2 contract address is not valid.');
+      }
       let data = '';
       const value = '0x0';
       const baseIsETH =
@@ -74,39 +85,73 @@ export function useAMMV2RemoveLiquidity({
         const tokenAddress = quoteToken.address;
         const tokenInAmountMin = quoteInAmountMinBg.toString();
         const ethAmountMin = baseInAmountMinBg.toString();
-        data = encodeUniswapV2Router02RemoveLiquidityETH(
-          tokenAddress,
-          feeWei,
-          liquidityAmount,
-          tokenInAmountMin,
-          ethAmountMin,
-          account,
-          deadline,
-        );
+        if (isFixedFee) {
+          data = encodeUniswapV2Router02FixedFeeRemoveLiquidityETH(
+            tokenAddress,
+            liquidityAmount,
+            tokenInAmountMin,
+            ethAmountMin,
+            account,
+            deadline,
+          );
+        } else {
+          data = encodeUniswapV2Router02RemoveLiquidityETH(
+            tokenAddress,
+            feeWei,
+            liquidityAmount,
+            tokenInAmountMin,
+            ethAmountMin,
+            account,
+            deadline,
+          );
+        }
       } else if (quoteIsETH) {
         const tokenAddress = baseToken.address;
         const tokenInAmountMin = baseInAmountMinBg.toString();
         const ethAmountMin = quoteInAmountMinBg.toString();
-        data = encodeUniswapV2Router02RemoveLiquidityETH(
-          tokenAddress,
-          feeWei,
-          liquidityAmount,
-          tokenInAmountMin,
-          ethAmountMin,
-          account,
-          deadline,
-        );
+        if (isFixedFee) {
+          data = encodeUniswapV2Router02FixedFeeRemoveLiquidityETH(
+            tokenAddress,
+            liquidityAmount,
+            tokenInAmountMin,
+            ethAmountMin,
+            account,
+            deadline,
+          );
+        } else {
+          data = encodeUniswapV2Router02RemoveLiquidityETH(
+            tokenAddress,
+            feeWei,
+            liquidityAmount,
+            tokenInAmountMin,
+            ethAmountMin,
+            account,
+            deadline,
+          );
+        }
       } else {
-        data = encodeUniswapV2Router02RemoveLiquidity(
-          baseToken.address,
-          quoteToken.address,
-          feeWei,
-          liquidityAmount,
-          baseInAmountMinBg.toString(),
-          quoteInAmountMinBg.toString(),
-          account,
-          deadline,
-        );
+        if (isFixedFee) {
+          data = encodeUniswapV2Router02FixedFeeRemoveLiquidity(
+            baseToken.address,
+            quoteToken.address,
+            liquidityAmount,
+            baseInAmountMinBg.toString(),
+            quoteInAmountMinBg.toString(),
+            account,
+            deadline,
+          );
+        } else {
+          data = encodeUniswapV2Router02RemoveLiquidity(
+            baseToken.address,
+            quoteToken.address,
+            feeWei,
+            liquidityAmount,
+            baseInAmountMinBg.toString(),
+            quoteInAmountMinBg.toString(),
+            account,
+            deadline,
+          );
+        }
       }
 
       const txResult = await submission.execute(

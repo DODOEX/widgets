@@ -4,6 +4,7 @@ import { scanUrlDomainMap } from '../constants/chains';
 import { keccak256, pack } from '@ethersproject/solidity';
 import { TokenInfo } from '../hooks/Token';
 import { toWei } from './formatter';
+import { getIsAMMV2DynamicFeeContractByChainId } from '../widgets/PoolWidget/utils';
 
 export const isSameAddress = (
   tokenAddress1: string,
@@ -89,8 +90,16 @@ export async function openEtherscanPage(
   );
 }
 
-export const UNI_INIT_CODE_HASH =
+const UNI_DYNAMIC_FEE_INIT_CODE_HASH =
   '0x67a372377cf6d7f78cfdcc9df0bc21e1139bd49e5a47c33ee0de5389a4396410';
+const UNI_FIXED_FEE_INIT_CODE_HASH =
+  '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
+export const getUniInitCodeHash = (chainId: number) => {
+  const isDynamic = getIsAMMV2DynamicFeeContractByChainId(chainId);
+  return isDynamic
+    ? UNI_DYNAMIC_FEE_INIT_CODE_HASH
+    : UNI_FIXED_FEE_INIT_CODE_HASH;
+};
 
 export function sortsBefore(tokenA: TokenInfo, tokenB: TokenInfo): boolean {
   if (tokenA.chainId !== tokenB.chainId) {
@@ -114,6 +123,10 @@ export const computePairAddress = ({
   const [token0, token1] = sortsBefore(tokenA, tokenB)
     ? [tokenA, tokenB]
     : [tokenB, tokenA]; // does safety checks
+
+  if (tokenA.chainId !== tokenB.chainId) {
+    throw new Error('token is not valid.');
+  }
   return getCreate2Address(
     factoryAddress,
     keccak256(
@@ -125,6 +138,6 @@ export const computePairAddress = ({
         ),
       ],
     ),
-    UNI_INIT_CODE_HASH,
+    getUniInitCodeHash(tokenA.chainId),
   );
 };

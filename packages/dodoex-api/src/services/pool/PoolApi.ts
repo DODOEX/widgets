@@ -20,6 +20,8 @@ import {
   fetchUniswapV2PairTotalSupply,
   fetchUniswapV2PairGetReserves,
   fetchUniswapV2PairFeeRate,
+  getUniswapV2Router02ContractAddressByChainId,
+  getUniswapV2FactoryContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
 import { formatUnits } from '@dodoex/contract-request';
 
@@ -1427,10 +1429,22 @@ export class PoolApi {
             10 ** 18,
           );
         } else if (type === 'AMMV2') {
-          const result = await fetchUniswapV2PairFeeRate(chainId, poolAddress);
-          const feeRate = byWei(result.toString(), 4);
-          lpFeeRate = feeRate.times(0.8);
-          mtFeeRate = feeRate.times(0.2);
+          if (
+            getUniswapV2Router02ContractAddressByChainId(chainId) &&
+            getUniswapV2FactoryContractAddressByChainId(chainId)
+          ) {
+            const result = await fetchUniswapV2PairFeeRate(
+              chainId,
+              poolAddress,
+            );
+            const feeRate = byWei(result.toString(), 4);
+            lpFeeRate = feeRate.times(0.8);
+            mtFeeRate = feeRate.times(0.2);
+          } else {
+            // For the original contract, the handling fee is fixed.
+            lpFeeRate = new BigNumber(0.003);
+            mtFeeRate = new BigNumber(0);
+          }
         } else {
           const queryResult = await this.contractRequests.batchCallQuery(
             chainId,
