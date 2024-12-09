@@ -50,7 +50,7 @@ export const rpcServerMap: {
   [ChainId.SEPOLIA]: ['https://ethereum-sepolia-rpc.publicnode.com'],
   [ChainId.DODO_CHAIN_TESTNET]: ['https://dodochain-testnet.alt.technology'],
   [ChainId.TAIKO]: ['https://rpc.mainnet.taiko.xyz'],
-  [ChainId.PLUME]: ['https://rpc.plumenetwork.xyz'],
+  [ChainId.PLUME]: ['https://phoenix-rpc.plumenetwork.xyz'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -92,7 +92,7 @@ export const scanUrlDomainMap: {
   [ChainId.SEPOLIA]: 'sepolia.etherscan.io',
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet-explorer.alt.technology',
   [ChainId.TAIKO]: 'taikoscan.io',
-  [ChainId.PLUME]: 'phoenix-explorer.plumenetwork.xyz/',
+  [ChainId.PLUME]: 'phoenix-explorer.plumenetwork.xyz',
 };
 
 export const ThegraphKeyMap: {

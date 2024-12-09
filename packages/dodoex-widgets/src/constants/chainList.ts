@@ -15,6 +15,7 @@ import { ReactComponent as MantaLogo } from '../assets/logo/networks/manta.svg';
 import { ReactComponent as MantleLogo } from '../assets/logo/networks/mantle.svg';
 import { ReactComponent as DODOchainLogo } from '../assets/logo/networks/dodochain.svg';
 import { ReactComponent as TaikoLogo } from '../assets/logo/networks/taiko.svg';
+import { ReactComponent as PlumeLogo } from '../assets/logo/networks/plume.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -173,8 +174,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     ChainId.PLUME,
     {
       chainId: ChainId.PLUME,
-      // TODO: need replace
-      logo: TaikoLogo,
+      logo: PlumeLogo,
       name: 'Plume',
     },
   ],
