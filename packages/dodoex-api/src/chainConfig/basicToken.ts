@@ -120,4 +120,12 @@ export const basicTokenMap: {
     ...DEFAULT_BASIC_TOKEN,
     wrappedTokenAddress: '0x562723560131C47417dfcD6BB1A089E4D7C7943C',
   },
+  [ChainId.NEOX]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'GAS',
+    name: 'GAS',
+    showDecimals: 6,
+    wrappedTokenSymbol: 'WGAS10',
+    wrappedTokenAddress: '0xdE41591ED1f8ED1484aC2CD8ca0876428de60EfF',
+  },
 };
