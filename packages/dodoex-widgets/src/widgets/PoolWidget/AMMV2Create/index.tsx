@@ -25,13 +25,16 @@ import ConfirmDialog from './ConfirmDialog';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
 import TokenPairStatusButton from '../../../components/TokenPairStatusButton';
-import { ChainId, contractConfig } from '@dodoex/api';
+import { ChainId } from '@dodoex/api';
 import GoBack from '../../../components/GoBack';
 import { PageType, useRouterStore } from '../../../router';
 import MyLiquidity from './MyLiqidity';
 import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
 import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
-import { getUniswapV2Router02ContractAddressByChainId } from '@dodoex/dodo-contract-request';
+import {
+  getUniswapV2Router02ContractAddressByChainId,
+  getUniswapV2Router02FixedFeeContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
 import { getIsAMMV2DynamicFeeContractByChainId } from '../utils';
 
 export default function AMMV2Create() {
@@ -116,7 +119,8 @@ export default function AMMV2Create() {
     }
   };
   const proxyContract = chainId
-    ? getUniswapV2Router02ContractAddressByChainId(chainId)
+    ? getUniswapV2Router02ContractAddressByChainId(chainId) ||
+      getUniswapV2Router02FixedFeeContractAddressByChainId(chainId)
     : undefined;
   const baseTokenStatus = useTokenStatus(baseToken, {
     amount: baseAmount,
