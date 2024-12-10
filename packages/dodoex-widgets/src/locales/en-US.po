@@ -378,13 +378,13 @@ msgstr "Success Rate"
 msgid "Pool Creation"
 msgstr "Pool Creation"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:413
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:411
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:198
 #: src/widgets/PoolWidget/PoolCreate/components/SelectAndInput.tsx:52
 msgid "Custom"
 msgstr "Custom"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:441
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:439
 msgid "Higher than dynamic slippage"
 msgstr "Higher than dynamic slippage"
 
@@ -1229,7 +1229,7 @@ msgstr "Standard"
 msgid "Token"
 msgstr "Token"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:453
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:451
 msgid "Lower than dynamic slippage"
 msgstr "Lower than dynamic slippage"
 
@@ -1544,7 +1544,7 @@ msgid "Remove liquidity"
 msgstr "Remove liquidity"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/SlippageSlider.tsx:186
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:287
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:288
 msgid "Dynamic"
 msgstr "Dynamic"
 
@@ -1770,7 +1770,7 @@ msgstr "Disclaimer"
 msgid "Back"
 msgstr "Back"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:442
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:440
 msgid "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 msgstr "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 
@@ -2106,7 +2106,7 @@ msgstr "AMM V3 Position"
 msgid "Slippage Coefficient"
 msgstr "Slippage Coefficient"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:146
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:147
 msgid "Advanced"
 msgstr "Advanced"
 
@@ -2224,7 +2224,7 @@ msgstr "There is risk of being arbitraged if adding this liquidity."
 msgid "address"
 msgstr "address"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:246
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:247
 msgid "This trading pair does not have enough historical data and has used the default dynamic slippage."
 msgstr "This trading pair does not have enough historical data and has used the default dynamic slippage."
 
@@ -2297,7 +2297,7 @@ msgstr "Hours"
 msgid "V3"
 msgstr "V3"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:454
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:452
 msgid "Dynamic slippage is {recommendSlippage}% , the current slippage setting may increase the failure rate of transactions."
 msgstr "Dynamic slippage is {recommendSlippage}% , the current slippage setting may increase the failure rate of transactions."
 
