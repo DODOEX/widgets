@@ -4,7 +4,10 @@ import React from 'react';
 import { basicTokenMap, ChainId } from '@dodoex/api';
 import { computePairAddress } from '../../../utils';
 import { useUniV2Pairs } from './useUniV2Pairs';
-import { getUniswapV2FactoryContractAddressByChainId } from '@dodoex/dodo-contract-request';
+import {
+  getUniswapV2FactoryContractAddressByChainId,
+  getUniswapV2FactoryFixedFeeContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
 export function useUniV2CreatePairs({
   baseToken,
   quoteToken,
@@ -58,7 +61,8 @@ export function useUniV2CreatePairs({
     if (!tokenA || !tokenB || fee === undefined) return undefined;
     const chainId = tokenA.chainId;
     const factoryAddress = chainId
-      ? getUniswapV2FactoryContractAddressByChainId(chainId)
+      ? getUniswapV2FactoryContractAddressByChainId(chainId) ||
+        getUniswapV2FactoryFixedFeeContractAddressByChainId(chainId)
       : undefined;
     if (!factoryAddress) return undefined;
     return computePairAddress({
