@@ -1,4 +1,4 @@
-import { Box, useTheme } from '@dodoex/components';
+import { alpha, Box, useTheme } from '@dodoex/components';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { SectionStatusT } from '../types';
 
@@ -58,10 +58,8 @@ export function SectionTitle({
             textAlign: 'center',
             color:
               status === 'waiting'
-                ? theme.palette.text.disabled
-                : theme.palette.mode === 'light'
-                ? theme.palette.text.primary
-                : theme.palette.primary.contrastText,
+                ? alpha(theme.palette.secondary.contrastText, 0.3)
+                : theme.palette.secondary.contrastText,
           }}
         >
           {status === 'completed' ? (
