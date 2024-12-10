@@ -95,6 +95,9 @@ const UNI_DYNAMIC_FEE_INIT_CODE_HASH =
 const UNI_FIXED_FEE_INIT_CODE_HASH =
   '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
 export const getUniInitCodeHash = (chainId: number) => {
+  if (chainId === ChainId.PLUME) {
+    return '0x593ac4223f084467e0d81c9091be3e5fc936d3674e385bae66ee8ec3b54e07dd';
+  }
   const isDynamic = getIsAMMV2DynamicFeeContractByChainId(chainId);
   return isDynamic
     ? UNI_DYNAMIC_FEE_INIT_CODE_HASH

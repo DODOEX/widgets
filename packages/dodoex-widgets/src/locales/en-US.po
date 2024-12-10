@@ -374,7 +374,7 @@ msgid "Success Rate"
 msgstr "Success Rate"
 
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:253
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:330
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:339
 msgid "Pool Creation"
 msgstr "Pool Creation"
 
@@ -1574,7 +1574,7 @@ msgstr "Guide Price"
 #: src/components/SwitchChainDialog/index.tsx:128
 #: src/components/WidgetConfirm.tsx:112
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:238
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:405
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:414
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:208
 msgid "Cancel"
 msgstr "Cancel"
@@ -1726,7 +1726,7 @@ msgstr "Total Fee Revenue"
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:73
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:98
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:180
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:76
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:82
 msgid "Next"
 msgstr "Next"
 
@@ -1734,7 +1734,7 @@ msgstr "Next"
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:191
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:367
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:199
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:86
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:92
 msgid "Create"
 msgstr "Create"
 
@@ -1766,7 +1766,7 @@ msgid "Disclaimer"
 msgstr "Disclaimer"
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:253
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:420
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:429
 msgid "Back"
 msgstr "Back"
 
