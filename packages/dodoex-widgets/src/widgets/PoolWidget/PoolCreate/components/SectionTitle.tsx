@@ -58,7 +58,7 @@ export function SectionTitle({
             textAlign: 'center',
             color:
               status === 'waiting'
-                ? alpha(theme.palette.secondary.contrastText, 0.3)
+                ? theme.palette.text.disabled
                 : theme.palette.secondary.contrastText,
           }}
         >
