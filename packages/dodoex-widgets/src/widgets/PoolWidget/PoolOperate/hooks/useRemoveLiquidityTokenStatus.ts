@@ -43,11 +43,20 @@ export function useRemoveLiquidityTokenStatus({
         }
       : undefined,
     {
-      amount: baseAmount,
+      amount: isAMMV2
+        ? balanceInfo.userBaseLpToTokenBalance && balanceInfo.userBaseLpBalance
+          ? new BigNumber(baseAmount)
+              .div(balanceInfo.userBaseLpToTokenBalance)
+              .times(balanceInfo.userBaseLpBalance)
+              .toString()
+          : baseAmount
+        : baseAmount,
       skipQuery:
         !proxyContractAddress || !baseLpTokenId || (!isClassical && !isAMMV2),
       contractAddress: proxyContractAddress,
-      overrideBalance: balanceInfo.userBaseLpToTokenBalance,
+      overrideBalance: isAMMV2
+        ? balanceInfo.userBaseLpBalance
+        : balanceInfo.userBaseLpToTokenBalance,
     },
   );
   const quoteTokenStatus = useTokenStatus(
