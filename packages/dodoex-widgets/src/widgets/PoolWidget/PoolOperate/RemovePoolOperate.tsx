@@ -235,7 +235,7 @@ export function RemovePoolOperate({
     }
   };
   const liquidityDecimals = uniV2Pair?.pair?.liquidityToken.decimals;
-  const liquidityAmountBg = balanceInfo.totalBaseLpBalance?.times(
+  const liquidityAmountBg = balanceInfo.userBaseLpBalance?.times(
     sliderPercentage / 100,
   );
   const liquidityAmountWei =
