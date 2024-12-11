@@ -90,6 +90,7 @@ export default function PoolList({
                 maxHeight: '100%',
               }
         }
+        className={isMobile ? undefined : 'gradient-card-border'}
       >
         <Box
           sx={

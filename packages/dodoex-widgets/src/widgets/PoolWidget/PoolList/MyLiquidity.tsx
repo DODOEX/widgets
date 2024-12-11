@@ -144,6 +144,7 @@ function CardList({
               backgroundColor: 'background.paper',
               borderRadius: 16,
             }}
+            className="gradient-card-border"
             onClick={() => {
               if (supportAMM) return;
               useRouterStore.getState().push({
