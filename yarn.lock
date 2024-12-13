@@ -1849,22 +1849,6 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@dodoex/components@^3.0.0-beta.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@dodoex/components/-/components-3.0.0.tgz#d47d92792f39ef728d35ec5e1563a4d2a21c865a"
-  integrity sha512-wh89hQ/DECQ7S8a6Ku0Q9C2zD3SL2qes78DdzPg2F/vB+fp2FFeRivhGYaDTz5bGGNRD6CRyK9nebvY5bi5cNg==
-  dependencies:
-    "@babel/runtime" "^7.17.0"
-    "@dodoex/icons" "^2.0.1"
-    "@emotion/react" "^11.10.0"
-    "@emotion/styled" "^11.10.0"
-    "@mui/base" "5.0.0-beta.58"
-    "@mui/system" "5.8.4"
-    "@szhsin/react-accordion" "^1.2.1"
-    any-touch "^2.2.0"
-    clsx "^1.2.1"
-    lottie-web "^5.12.2"
-
 "@dodoex/contract-request@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@dodoex/contract-request/-/contract-request-1.3.0.tgz#226272dc0460be4a02f2bdde6483d7ad84ce8afa"
@@ -1873,10 +1857,10 @@
     ethers "^6.13.2"
     https-proxy-agent "^7.0.5"
 
-"@dodoex/dodo-contract-request@1.7.0-alpha.8":
-  version "1.7.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/@dodoex/dodo-contract-request/-/dodo-contract-request-1.7.0-alpha.8.tgz#057ce45390dfac854e4a7f41f9095c584ab4dfaf"
-  integrity sha512-+gSdqfGwttA1DkDozanpgGeU/03Y82XeYZNPQPB75cOmSK5mbYTmvohLU+gWAxHfod6TF2yc523Rfj32hwv9cg==
+"@dodoex/dodo-contract-request@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@dodoex/dodo-contract-request/-/dodo-contract-request-1.8.0.tgz#5a7585cd97b871316584cbf6b0d4f458ddf579a4"
+  integrity sha512-gKjmMexi5DTVR6s/0IZcdoHCyAAZgyKAGskLzSisgAwu4qAELr3cfjH3eH9lV72NsfvE6FvQ97t27+J5f5anLQ==
   dependencies:
     typescript "^5"
 

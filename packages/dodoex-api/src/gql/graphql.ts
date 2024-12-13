@@ -6818,6 +6818,9 @@ export type LiquidityHistory_OrderBy =
   | 'user';
 
 export type LiquidityLp = {
+  baseTokenAmount?: Maybe<Scalars['String']['output']>;
+  baseTokenAmountInMining?: Maybe<Scalars['String']['output']>;
+  baseTokenPrice?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   liquidityTokenBalance?: Maybe<Scalars['String']['output']>;
   liquidityTokenInMining?: Maybe<Scalars['String']['output']>;
@@ -6827,6 +6830,9 @@ export type LiquidityLp = {
   /** Share in the pool */
   poolShare?: Maybe<Scalars['String']['output']>;
   priceRange?: Maybe<LiquidityLpPriceRange>;
+  quoteTokenAmount?: Maybe<Scalars['String']['output']>;
+  quoteTokenAmountInMining?: Maybe<Scalars['String']['output']>;
+  quoteTokenPrice?: Maybe<Scalars['String']['output']>;
   tickLower?: Maybe<LiquidityTick>;
   tickUpper?: Maybe<LiquidityTick>;
   /** AMM V3 info */
@@ -6867,13 +6873,13 @@ export type LiquidityLpPartnerRewardsResult = {
 
 export type LiquidityLpPriceRange = {
   /** token0 lower  price */
-  token0LowerPrice: Scalars['BigDecimal']['output'];
+  token0LowerPrice: Scalars['String']['output'];
   /** token0 upper  price */
-  token0UpperPrice: Scalars['BigDecimal']['output'];
+  token0UpperPrice: Scalars['String']['output'];
   /** token1 lower  price */
-  token1LowerPrice: Scalars['BigDecimal']['output'];
+  token1LowerPrice: Scalars['String']['output'];
   /** token1 upper  price */
-  token1UpperPrice: Scalars['BigDecimal']['output'];
+  token1UpperPrice: Scalars['String']['output'];
 };
 
 export type LiquidityLpToken = {
@@ -20749,10 +20755,10 @@ export type FetchMyLiquidityListQuery = {
         tokenId?: string | null;
         outOfRange?: boolean | null;
         priceRange?: {
-          token0LowerPrice: any;
-          token0UpperPrice: any;
-          token1LowerPrice: any;
-          token1UpperPrice: any;
+          token0LowerPrice: string;
+          token0UpperPrice: string;
+          token1LowerPrice: string;
+          token1UpperPrice: string;
         } | null;
         tickLower?: {
           id: string;
@@ -21135,6 +21141,26 @@ export type FetchLiquidityLpPartnerRewardsQuery = {
       type?: string | null;
     } | null> | null;
   } | null;
+};
+
+export type FetchUserprofileRewardQueryVariables = Exact<{
+  where?: InputMaybe<UserprofileReward_Filter>;
+}>;
+
+export type FetchUserprofileRewardQuery = {
+  userprofile_reward?: Array<{
+    name_key?: string | null;
+    token_address?: string | null;
+    contract_address?: string | null;
+    token_symbol?: string | null;
+    locking?: string | null;
+    version?: string | null;
+    merkle?: {
+      index?: string | null;
+      amout?: string | null;
+      proof?: Array<string | null> | null;
+    } | null;
+  }> | null;
 };
 
 export class TypedDocumentString<TResult, TVariables>
@@ -22018,4 +22044,24 @@ export const FetchLiquidityLpPartnerRewardsDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   FetchLiquidityLpPartnerRewardsQuery,
   FetchLiquidityLpPartnerRewardsQueryVariables
+>;
+export const FetchUserprofileRewardDocument = new TypedDocumentString(`
+    query FetchUserprofileReward($where: UserprofileReward_filter) {
+  userprofile_reward(where: $where) {
+    name_key
+    token_address
+    contract_address
+    token_symbol
+    locking
+    version
+    merkle {
+      index
+      amout
+      proof
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchUserprofileRewardQuery,
+  FetchUserprofileRewardQueryVariables
 >;

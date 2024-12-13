@@ -50,6 +50,8 @@ const documents = {
     types.FetchNoticeCenterTransactionListDocument,
   '\n    query FetchLiquidityLpPartnerRewards(\n      $where: LiquidityLpPartnerRewardsInput\n    ) {\n      liquidity_getLpPartnerRewards(where: $where) {\n        partnerInfos {\n          partner\n          logo\n          introduction\n          link\n          theme\n          sort\n          platform\n          extra\n        }\n        partnerRewards {\n          chainId\n          pool\n          partner\n          reward\n          type\n        }\n      }\n    }\n  ':
     types.FetchLiquidityLpPartnerRewardsDocument,
+  '\n    query FetchUserprofileReward($where: UserprofileReward_filter) {\n      userprofile_reward(where: $where) {\n        name_key\n        token_address\n        contract_address\n        token_symbol\n        locking\n        version\n        merkle {\n          index\n          amout\n          proof\n        }\n      }\n    }\n  ':
+    types.FetchUserprofileRewardDocument,
 };
 
 /**
@@ -166,6 +168,12 @@ export function graphql(
 export function graphql(
   source: '\n    query FetchLiquidityLpPartnerRewards(\n      $where: LiquidityLpPartnerRewardsInput\n    ) {\n      liquidity_getLpPartnerRewards(where: $where) {\n        partnerInfos {\n          partner\n          logo\n          introduction\n          link\n          theme\n          sort\n          platform\n          extra\n        }\n        partnerRewards {\n          chainId\n          pool\n          partner\n          reward\n          type\n        }\n      }\n    }\n  ',
 ): typeof import('./graphql').FetchLiquidityLpPartnerRewardsDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query FetchUserprofileReward($where: UserprofileReward_filter) {\n      userprofile_reward(where: $where) {\n        name_key\n        token_address\n        contract_address\n        token_symbol\n        locking\n        version\n        merkle {\n          index\n          amout\n          proof\n        }\n      }\n    }\n  ',
+): typeof import('./graphql').FetchUserprofileRewardDocument;
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
