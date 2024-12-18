@@ -52,6 +52,7 @@ export const rpcServerMap: {
   [ChainId.TAIKO]: ['https://rpc.mainnet.taiko.xyz'],
   [ChainId.PLUME]: ['https://phoenix-rpc.plumenetwork.xyz'],
   [ChainId.NEOX]: ['https://mainnet-1.rpc.banelabs.org'],
+  [ChainId.MORPH]: ['https://rpc.morphl2.io'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -95,6 +96,7 @@ export const scanUrlDomainMap: {
   [ChainId.TAIKO]: 'taikoscan.io',
   [ChainId.PLUME]: 'phoenix-explorer.plumenetwork.xyz',
   [ChainId.NEOX]: 'xexplorer.neo.org',
+  [ChainId.MORPH]: 'explorer.morphl2.io',
 };
 
 export const ThegraphKeyMap: {
@@ -120,6 +122,7 @@ export const ThegraphKeyMap: {
   [ChainId.TAIKO]: 'taiko',
   [ChainId.PLUME]: 'plume',
   [ChainId.NEOX]: 'neox',
+  [ChainId.MORPH]: 'morph',
 };
 
 export const blockTimeMap: {
@@ -145,6 +148,7 @@ export const blockTimeMap: {
   [ChainId.TAIKO]: 48000,
   [ChainId.PLUME]: 12000,
   [ChainId.NEOX]: 12000,
+  [ChainId.MORPH]: 3200,
 };
 
 export const dexKeysMap: {
@@ -170,4 +174,5 @@ export const dexKeysMap: {
   [ChainId.TAIKO]: [],
   [ChainId.PLUME]: [],
   [ChainId.NEOX]: [],
+  [ChainId.MORPH]: [],
 };

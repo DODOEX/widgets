@@ -1,4 +1,4 @@
-import { neox, plume } from '@dodoex/dodo-contract-request';
+import { morph, neox, plume } from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
 const contractMap: {
@@ -313,6 +313,20 @@ const contractMap: {
     DODO_DSP_PROXY: neox.DODODspProxyWithoutGSP,
     DODO_DPP_PROXY: neox.DODODppProxy,
     DODO_MINEV3_PROXY: neox.DODOMineV3Proxy,
+  },
+  [ChainId.MORPH]: {
+    MULTI_CALL: morph.MulticallWithValid,
+    DODO_APPROVE: morph.DODOApprove,
+    ERC20_HELPER: morph.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: morph.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: morph.DODOV1PmmHelper,
+    CALLEE_HELPER: morph.DODOCalleeHelper,
+
+    DODO_PROXY: morph.DODOV2Proxy02,
+    DODO_DSP_PROXY: morph.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: morph.DODODppProxy,
+    DODO_MINEV3_PROXY: morph.DODOMineV3Proxy,
   },
 };
 

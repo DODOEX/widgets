@@ -23,4 +23,5 @@ export const platformIdMap: {
   [ChainId.TAIKO]: 'taiko',
   [ChainId.PLUME]: 'plume',
   [ChainId.NEOX]: 'neox',
+  [ChainId.MORPH]: 'morph',
 };

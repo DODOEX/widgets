@@ -36,4 +36,6 @@ export enum ChainId {
   PLUME = 98865,
 
   NEOX = 47763,
+
+  MORPH = 2818,
 }

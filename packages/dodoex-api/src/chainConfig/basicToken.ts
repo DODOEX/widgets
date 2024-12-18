@@ -128,4 +128,8 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WGAS10',
     wrappedTokenAddress: '0xdE41591ED1f8ED1484aC2CD8ca0876428de60EfF',
   },
+  [ChainId.MORPH]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x5300000000000000000000000000000000000011',
+  },
 };
