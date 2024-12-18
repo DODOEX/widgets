@@ -1,3 +1,4 @@
+import { neox, plume } from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
 const contractMap: {
@@ -284,6 +285,34 @@ const contractMap: {
     DODO_DSP_PROXY: '0x928e9762B5223d5A2ac1F5b13E8A61907aCaa9Bd',
     DODO_DPP_PROXY: '0x38886EDE1Fc92886F9a11C37a1f5e75474858eaa',
     DODO_MINEV3_PROXY: '0x1dFd36964e21a2eb633991f0B95b4241c20e1db3',
+  },
+  [ChainId.PLUME]: {
+    MULTI_CALL: plume.MulticallWithValid,
+    DODO_APPROVE: plume.DODOApprove,
+    ERC20_HELPER: plume.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: plume.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: plume.DODOV1PmmHelper,
+    CALLEE_HELPER: plume.DODOCalleeHelper,
+
+    DODO_PROXY: plume.DODOV2Proxy02,
+    DODO_DSP_PROXY: plume.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: plume.DODODppProxy,
+    DODO_MINEV3_PROXY: plume.DODOMineV3Proxy,
+  },
+  [ChainId.NEOX]: {
+    MULTI_CALL: neox.MulticallWithValid,
+    DODO_APPROVE: neox.DODOApprove,
+    ERC20_HELPER: neox.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: neox.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: neox.DODOV1PmmHelper,
+    CALLEE_HELPER: neox.DODOCalleeHelper,
+
+    DODO_PROXY: neox.DODOV2Proxy02,
+    DODO_DSP_PROXY: neox.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: neox.DODODppProxy,
+    DODO_MINEV3_PROXY: neox.DODOMineV3Proxy,
   },
 };
 

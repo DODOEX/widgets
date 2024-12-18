@@ -55,6 +55,7 @@ export default function LiquidityTable({
           },
           '& th:last-child, & td:last-child': {
             position: 'sticky',
+            right: 0,
             zIndex: 1,
             backgroundColor: 'background.paper',
             '&::before': {

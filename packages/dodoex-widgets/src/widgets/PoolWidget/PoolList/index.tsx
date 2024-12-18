@@ -1,24 +1,27 @@
-import { Box, Button, Tabs, TabsGroup, TabPanel } from '@dodoex/components';
-import { Trans, t } from '@lingui/macro';
-import React from 'react';
-import { Plus as PlusIcon } from '@dodoex/icons';
-import AddLiquidityList from './AddLiquidity';
+import { Box, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
+import { t } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
-import { usePoolListTabs, PoolTab } from './hooks/usePoolListTabs';
-import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
-import MyLiquidity from './MyLiquidity';
-import MyCreated from './MyCreated';
-import { useRouterStore } from '../../../router';
-import { Page, PageType } from '../../../router/types';
+import React from 'react';
+import { HowItWorks } from '../../../components/HowItWorks';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useRouterStore } from '../../../router';
+import { Page, PageType } from '../../../router/types';
+import { AMMV3PositionManage } from '../AMMV3/AMMV3PositionManage';
+import { AMMV3PositionsView } from '../AMMV3/AMMV3PositionsView';
+import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
 import PoolOperateDialog, {
   PoolOperate,
   PoolOperateProps,
 } from '../PoolOperate';
-import { HowItWorks } from '../../../components/HowItWorks';
+import AddLiquidityList from './AddLiquidity';
+import { CreatePoolBtn } from './components/CreatePoolBtn';
+import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
+import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
+import MyCreated from './MyCreated';
+import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -87,6 +90,7 @@ export default function PoolList({
                 maxHeight: '100%',
               }
         }
+        className={isMobile ? undefined : 'gradient-card-border'}
       >
         <Box
           sx={
@@ -121,26 +125,7 @@ export default function PoolList({
                   }
             }
           />
-          <Button
-            variant={Button.Variant.outlined}
-            fullWidth={isMobile}
-            onClick={() => {
-              useRouterStore.getState().push({
-                type: PageType.CreatePool,
-              });
-            }}
-            sx={{
-              height: 40,
-            }}
-          >
-            <Box
-              component={PlusIcon}
-              sx={{
-                mr: 4,
-              }}
-            />
-            <Trans>Create Pool</Trans>
-          </Button>
+          <CreatePoolBtn />
         </Box>
         <TabPanelFlexCol
           value={PoolTab.addLiquidity}
@@ -195,7 +180,33 @@ export default function PoolList({
             LeftImage={LeftImage}
           />
         )}
-        {isMobile ? (
+        {operatePool?.pool?.type === 'AMMV3' && operatePool.pool.chainId ? (
+          poolTab === PoolTab.myLiquidity &&
+          operatePool.pool.liquidityPositions?.[0]?.tokenId ? (
+            <AMMV3PositionManage
+              baseToken={operatePool.pool.baseToken}
+              quoteToken={operatePool.pool.quoteToken}
+              feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
+              tokenId={operatePool.pool.liquidityPositions[0].tokenId}
+              chainId={operatePool.pool.chainId}
+              onClose={() => setOperatePool(null)}
+            />
+          ) : (
+            <AMMV3PositionsView
+              chainId={operatePool.pool.chainId}
+              baseToken={operatePool.pool.baseToken}
+              quoteToken={operatePool.pool.quoteToken}
+              feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
+              onClose={() => setOperatePool(null)}
+              handleGoToAddLiquidityV3={(params) => {
+                useRouterStore.getState().push({
+                  type: PageType.createPoolAMMV3,
+                  params,
+                });
+              }}
+            />
+          )
+        ) : isMobile ? (
           <PoolOperateDialog
             account={account}
             onClose={() => setOperatePool(null)}

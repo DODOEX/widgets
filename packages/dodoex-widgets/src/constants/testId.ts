@@ -9,5 +9,6 @@ export const swapAlertInsufficientBalanceBtn =
 
 export const numberInputWrapper = 'number-input-wrapper';
 
+export const selectTokenBtn = 'select-token-btn';
 export const tokenPickerWrapper = 'token-picker-wrapper';
 export const tokenPickerItem = 'token-picker-item';

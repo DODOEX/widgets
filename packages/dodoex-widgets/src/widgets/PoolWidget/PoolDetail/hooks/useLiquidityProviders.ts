@@ -158,7 +158,7 @@ export function useLiquidityProviders({
   const toFiatPrice = quoteToken
     ? fiatPriceQuery.data?.get(quoteToken.address)
     : undefined;
-  if (balance && mining && pair && toFiatPrice) {
+  if (balance && mining && pair) {
     const { baseLpToken, quoteLpToken } = pair;
 
     const userMap = new Map<string, TmpUser>();
@@ -296,7 +296,7 @@ export function useLiquidityProviders({
               })
             : '',
         dollarValue:
-          quoteTokenPrice === null || !midPrice
+          quoteTokenPrice == null || !midPrice
             ? '-'
             : `$${formatReadableNumber({
                 input: midPrice

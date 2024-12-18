@@ -71,7 +71,6 @@ export function useFetchRoutePrice({
     Number(state.disableIndirectRouting),
   );
   const lastId = useRef(0);
-  const apiDdl = useMemo(() => Math.floor(Date.now() / 1000) + ddl * 60, [ddl]);
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,
   );
@@ -103,6 +102,7 @@ export function useFetchRoutePrice({
     setStatus(RoutePriceStatus.Loading);
     // waiting for set auto slippage
     if (slippageLoading) return;
+    const apiDdl = Math.floor(Date.now() / 1000) + ddl * 60;
     const params: any = {
       chainId,
       deadLine: apiDdl,
@@ -150,7 +150,7 @@ export function useFetchRoutePrice({
       console.error(error);
     }
   }, [
-    apiDdl,
+    ddl,
     account,
     chainId,
     toToken,

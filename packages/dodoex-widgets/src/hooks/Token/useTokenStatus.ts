@@ -50,15 +50,16 @@ export function useTokenStatus(
   }, [token, contractAddress]) as [number | undefined, string | undefined];
 
   const queryClient = useQueryClient();
-  const tokenQuery = useQuery(
-    tokenApi.getFetchTokenQuery(
+  const tokenQuery = useQuery({
+    ...tokenApi.getFetchTokenQuery(
       // skip the query
       skipQuery ? undefined : chainId,
       token?.address,
       account,
       proxyContractAddress,
     ),
-  );
+    refetchInterval: chainId === ChainId.NEOX ? 3000 : undefined,
+  });
   const { runningRequests } = useInflights();
   const { updateBlockNumber } = useFetchBlockNumber();
   const { i18n } = useLingui();
@@ -199,6 +200,7 @@ export function useTokenStatus(
   const isApprovingOrApproveMutationPending =
     isApproving || submitApproveMutation.isPending;
   return {
+    token,
     isApproving: isApprovingOrApproveMutationPending,
     isGetApproveLoading,
     needApprove,

@@ -21,10 +21,12 @@ export default function Ratio({
   pool,
   addPortion,
   midPrice,
+  shareOfPool,
 }: {
   pool?: OperatePool;
   addPortion?: BigNumber;
   midPrice?: BigNumber;
+  shareOfPool?: string;
 }) {
   const theme = useTheme();
   const [reserve, setReserve] = useState(false);
@@ -163,68 +165,108 @@ export default function Ratio({
           </Box>
         </LoadingSkeleton>
       </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          px: 12,
-          py: 4,
-          minHeight: 36,
-          typography: 'body2',
-          borderStyle: 'solid',
-          borderWidth: theme.spacing(1, 0, 0),
-          borderColor: 'border.main',
-        }}
-      >
+      {pool?.type === 'AMMV2' ? (
         <Box
           sx={{
             display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'center',
-            color: 'text.secondary',
-            whiteSpace: 'nowrap',
+            px: 12,
+            py: 4,
+            minHeight: 36,
+            typography: 'body2',
+            borderStyle: 'solid',
+            borderWidth: theme.spacing(1, 0, 0),
+            borderColor: 'border.main',
           }}
         >
-          <Trans>Deposit Ratio</Trans>
-          <QuestionTooltip
-            ml={4}
-            title={
-              <Trans>
-                Deposit ratio is determined by the current assets ratio in the
-                pool. The ratio does not represent the exchange price
-              </Trans>
-            }
-          />
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              color: 'text.secondary',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <Trans>Share Of Pool</Trans>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              fontWeight: 600,
+              textAlign: 'right',
+              ml: 8,
+              overflow: 'hidden',
+            }}
+          >
+            {shareOfPool}
+          </Box>
         </Box>
+      ) : (
         <Box
           sx={{
             display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'center',
-            fontWeight: 600,
-            textAlign: 'right',
-            ml: 8,
-            overflow: 'hidden',
+            px: 12,
+            py: 4,
+            minHeight: 36,
+            typography: 'body2',
+            borderStyle: 'solid',
+            borderWidth: theme.spacing(1, 0, 0),
+            borderColor: 'border.main',
           }}
         >
-          {pool && PoolApi.utils.singleSideLp(pool.type) ? (
-            <Trans>Any Ratio</Trans>
-          ) : (
-            <>
-              <Tooltip title={depositRatio}>
-                <Box
-                  sx={{
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
-                  {depositRatio}
-                </Box>
-              </Tooltip>
-            </>
-          )}
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              color: 'text.secondary',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <Trans>Deposit Ratio</Trans>
+            <QuestionTooltip
+              ml={4}
+              title={
+                <Trans>
+                  Deposit ratio is determined by the current assets ratio in the
+                  pool. The ratio does not represent the exchange price
+                </Trans>
+              }
+            />
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              fontWeight: 600,
+              textAlign: 'right',
+              ml: 8,
+              overflow: 'hidden',
+            }}
+          >
+            {pool && PoolApi.utils.singleSideLp(pool.type) ? (
+              <Trans>Any Ratio</Trans>
+            ) : (
+              <>
+                <Tooltip title={depositRatio}>
+                  <Box
+                    sx={{
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    {depositRatio}
+                  </Box>
+                </Tooltip>
+              </>
+            )}
+          </Box>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 }

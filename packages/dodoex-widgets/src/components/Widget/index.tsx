@@ -44,6 +44,7 @@ import { DialogProps } from '../Swap/components/Dialog';
 import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
 import WithExecutionDialog from '../WithExecutionDialog';
 import { Page } from '../../router';
+import { useInitContractRequest } from '../../providers/useInitContractRequest';
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
@@ -77,6 +78,9 @@ export interface WidgetProps
     name: string;
     logoUrl?: string;
   };
+  notSupportPMM?: boolean;
+  supportAMMV2?: boolean;
+  supportAMMV3?: boolean;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
@@ -119,6 +123,7 @@ function LangProvider(props: PropsWithChildren<WidgetProps>) {
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useInitTokenList(props);
   useFetchBlockNumber();
+  useInitContractRequest();
   const { provider, connector, chainId } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
   const autoConnectLoading = useSelector(getAutoConnectLoading);

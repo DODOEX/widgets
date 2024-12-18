@@ -1,5 +1,7 @@
 export const AUTO_SWAP_SLIPPAGE_PROTECTION = 'auto';
 export const AUTO_LIQUIDITY_SLIPPAGE_PROTECTION = '0.1';
+export const AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION = '0.5';
+export const AUTO_AMM_V3_LIQUIDITY_SLIPPAGE_PROTECTION = '0.5';
 
 /**
  * slippage protection

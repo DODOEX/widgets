@@ -17,6 +17,7 @@ import { useRouterStore } from '../../../../router';
 import { PageType } from '../../../../router/types';
 import { usePoolDetail } from '../../hooks/usePoolDetail';
 import LiquidityLpPartnerReward from '../../../../components/LiquidityLpPartnerReward';
+import { useUserOptions } from '../../../../components/UserOptionsProvider';
 
 export default function TitleInfo({
   poolDetail,
@@ -34,6 +35,7 @@ export default function TitleInfo({
     account &&
     poolDetail?.type === 'DPP' &&
     poolDetail?.owner?.toLocaleLowerCase() === account.toLocaleLowerCase();
+  const { supportAMMV2 } = useUserOptions();
 
   return (
     <Box
@@ -82,6 +84,26 @@ export default function TitleInfo({
             {poolDetail?.baseToken
               ? `${poolDetail.baseToken?.symbol} / ${poolDetail.quoteToken?.symbol}`
               : '-'}
+            {supportAMMV2 && (
+              <Box
+                component="span"
+                sx={{
+                  position: 'relative',
+                  top: -4,
+                  ml: 4,
+                  px: 4,
+                  py: 2,
+                  borderRadius: 4,
+                  fontSize: 10,
+                  lineHeight: 1,
+                  fontWeight: 600,
+                  backgroundColor: alpha(theme.palette.purple.main, 0.1),
+                  color: theme.palette.purple.main,
+                }}
+              >
+                PMM
+              </Box>
+            )}
 
             <LiquidityLpPartnerReward
               address={address}

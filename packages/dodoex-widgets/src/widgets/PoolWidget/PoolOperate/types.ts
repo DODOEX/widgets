@@ -1,5 +1,6 @@
-import { PoolType } from '@dodoex/api';
+import { ExcludeNone, PoolType } from '@dodoex/api';
 import { TokenInfo } from '../../../hooks/Token';
+import { FetchMyLiquidityListLqList } from '../utils';
 
 export type OperatePool =
   | {
@@ -16,5 +17,9 @@ export type OperatePool =
       type: PoolType;
       owner?: string;
       creator: string;
+      lpFeeRate?: string;
+      liquidityPositions?: ExcludeNone<
+        ExcludeNone<FetchMyLiquidityListLqList>[0]
+      >['liquidityPositions'];
     }
   | undefined;
