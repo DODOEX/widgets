@@ -30,7 +30,17 @@ export default function PoolOperateInner({
   const { account } = useWeb3React();
   const balanceInfo = usePoolBalanceInfo({
     account,
-    pool,
+    pool: pool
+      ? {
+          chainId: pool.chainId,
+          address: pool.address,
+          type: pool.type,
+          baseTokenDecimals: pool.baseToken.decimals,
+          quoteTokenDecimals: pool.quoteToken.decimals,
+          baseLpTokenDecimals: pool.baseLpToken?.decimals ?? 18,
+          quoteLpTokenDecimals: pool.quoteLpToken?.decimals ?? 18,
+        }
+      : undefined,
   });
   const pmmStateQuery = useQuery(
     poolApi.getPMMStateQuery(

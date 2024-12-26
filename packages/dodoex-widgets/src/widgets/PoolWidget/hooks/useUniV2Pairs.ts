@@ -92,7 +92,7 @@ export function useUniV2Pairs({
     chainId as number,
     address,
     type,
-    token0?.decimals,
+    18,
   );
   const totalBaseLpQuery = useQuery({
     ...totalBaseLpQueryParams,
@@ -103,7 +103,7 @@ export function useUniV2Pairs({
     chainId,
     address,
     type,
-    token0?.decimals,
+    18,
     account,
   );
   const userBaseLpQuery = useQuery({
@@ -178,7 +178,7 @@ export function useUniV2Pairs({
   const totalSupplyBg = totalBaseLpQuery.data;
   const totalSupplyStr = isExists
     ? totalBaseLpQuery.data && token0
-      ? toWei(totalBaseLpQuery.data, token0?.decimals).toString()
+      ? toWei(totalBaseLpQuery.data, 18).toString()
       : ''
     : '0';
   let poolTokenPercentage: BigNumber | undefined;
@@ -211,9 +211,13 @@ export function useUniV2Pairs({
           tokenAmountA,
           tokenAmountB,
         );
-        liquidityMintedBg = byWei(
-          liquidityMinted.quotient.toString(),
-          tokenA?.decimals,
+        liquidityMintedBg = byWei(liquidityMinted.quotient.toString(), 18);
+        console.log(
+          'v2 totalSupplyBg',
+          totalSupplyBg.toString(),
+          'liquidityMintedBg',
+          liquidityMintedBg.toString(),
+          tokenAmountA.toSignificant(),
         );
         poolTokenPercentage = liquidityMintedBg
           .div(totalSupplyBg.plus(liquidityMintedBg))

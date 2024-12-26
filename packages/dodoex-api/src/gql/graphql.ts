@@ -5408,6 +5408,119 @@ export type DodochainuserTwigsMineInput = {
   user: Scalars['String']['input'];
 };
 
+export type DodopointsChainOptionalUserInput = {
+  chainId: Scalars['BigDecimal']['input'];
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DodopointsChainUserInput = {
+  chainId: Scalars['BigDecimal']['input'];
+  user: Scalars['String']['input'];
+};
+
+export type DodopointsChainUserPaginationInput = {
+  chainId: Scalars['BigDecimal']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
+  user: Scalars['String']['input'];
+};
+
+export type DodopointsClaimedRecord = {
+  amount: Scalars['BigDecimal']['output'];
+  symbol: Scalars['String']['output'];
+  timestamp: Scalars['BigDecimal']['output'];
+  token: Scalars['String']['output'];
+};
+
+export type DodopointsClaimedRecordPaginationResult = {
+  count: Scalars['Int']['output'];
+  list: Array<Maybe<DodopointsClaimedRecord>>;
+  page: Scalars['Int']['output'];
+  size: Scalars['Int']['output'];
+};
+
+export type DodopointsDodoPointsActivityInfo = {
+  describe: Scalars['String']['output'];
+  fulfilledPeriodsCoefficient: Scalars['BigDecimal']['output'];
+  fulfilledPeriodsNumber: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  periods: Array<Maybe<DodopointsPeriodInfo>>;
+  totalPoints: Scalars['BigDecimal']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type DodopointsDodoPointsActivityRewardInfo = {
+  endAt: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  periods: Array<Maybe<DodopointsDodoPointsPeriodRewardInfo>>;
+  startAt: Scalars['Int']['output'];
+  totalPoints: Scalars['BigDecimal']['output'];
+};
+
+export type DodopointsDodoPointsPeriodRewardInfo = {
+  contractAddress: Scalars['String']['output'];
+  decimals: Scalars['Int']['output'];
+  num: Scalars['Int']['output'];
+  points: Scalars['BigDecimal']['output'];
+  shareAmount: Scalars['Int']['output'];
+  symbol: Scalars['String']['output'];
+  token: Scalars['String']['output'];
+};
+
+export type DodopointsPairPoints = {
+  baseSymbol: Scalars['String']['output'];
+  baseToken: Scalars['String']['output'];
+  points: Scalars['BigDecimal']['output'];
+  quoteSymbol: Scalars['String']['output'];
+  quoteToken: Scalars['String']['output'];
+};
+
+export type DodopointsPeriodInfo = {
+  decimals: Scalars['Int']['output'];
+  endAt: Scalars['Int']['output'];
+  fulfilled: Scalars['Boolean']['output'];
+  num: Scalars['Int']['output'];
+  points: Scalars['BigDecimal']['output'];
+  rules: Array<Maybe<DodopointsRuleInfo>>;
+  shareAmount: Scalars['BigDecimal']['output'];
+  startAt: Scalars['Int']['output'];
+  symbol: Scalars['String']['output'];
+  token: Scalars['String']['output'];
+  tradePairs: Array<Maybe<DodopointsTradePairInfo>>;
+};
+
+export type DodopointsPointRecord = {
+  points: Scalars['BigDecimal']['output'];
+  timestamp: Scalars['BigDecimal']['output'];
+};
+
+export type DodopointsPointRecordPaginationResult = {
+  count: Scalars['Int']['output'];
+  list: Array<Maybe<DodopointsPointRecord>>;
+  page: Scalars['Int']['output'];
+  size: Scalars['Int']['output'];
+  totalPoints: Scalars['BigDecimal']['output'];
+};
+
+export type DodopointsRuleInfo = {
+  num: Scalars['Int']['output'];
+  points: Scalars['BigDecimal']['output'];
+  swapUsd: Scalars['BigDecimal']['output'];
+};
+
+export type DodopointsToken = {
+  address: Scalars['String']['output'];
+  decimals: Scalars['Int']['output'];
+  logoImg: Scalars['String']['output'];
+  symbol: Scalars['String']['output'];
+};
+
+export type DodopointsTradePairInfo = {
+  coefficient?: Maybe<Scalars['BigDecimal']['output']>;
+  fromToken: DodopointsToken;
+  toToken: DodopointsToken;
+};
+
 export type DonateHistory = {
   /** block */
   blockNumber: Scalars['BigInt']['output'];
@@ -12131,6 +12244,12 @@ export type Query = {
   dodochain_getUserStakedListJourneyOne: DodochainUserStakedPaginationResult;
   /** 获取用户参与的twigs挖矿列表 */
   dodochain_getUserTwigsMineList: DodochainUserTwigsMinePaginationResult;
+  /** 活动相关信息 */
+  dodopoints_getActivityInfo?: Maybe<DodopointsDodoPointsActivityInfo>;
+  /** Lp交易对积分记录 */
+  dodopoints_getUserLpPairsPoints: Array<Maybe<DodopointsPairPoints>>;
+  /** 交易积分发放记录 */
+  dodopoints_getUserSwapPointsList: DodopointsPointRecordPaginationResult;
   donateHistories: Array<DonateHistory>;
   donateHistory?: Maybe<DonateHistory>;
   /** 活动相关信息 */
@@ -13207,6 +13326,18 @@ export type QueryDodochain_GetUserStakedListJourneyOneArgs = {
 
 export type QueryDodochain_GetUserTwigsMineListArgs = {
   where?: InputMaybe<DodochainuserTwigsMineInput>;
+};
+
+export type QueryDodopoints_GetActivityInfoArgs = {
+  where?: InputMaybe<DodopointsChainOptionalUserInput>;
+};
+
+export type QueryDodopoints_GetUserLpPairsPointsArgs = {
+  where?: InputMaybe<DodopointsChainOptionalUserInput>;
+};
+
+export type QueryDodopoints_GetUserSwapPointsListArgs = {
+  where?: InputMaybe<DodopointsChainUserPaginationInput>;
 };
 
 export type QueryDonateHistoriesArgs = {
@@ -20685,8 +20816,8 @@ export type FetchPoolListQuery = {
     feeQuote: any;
     baseToken: { id: string; symbol: string; name: string; decimals: any };
     quoteToken: { id: string; symbol: string; name: string; decimals: any };
-    baseLpToken?: { id: string } | null;
-    quoteLpToken?: { id: string } | null;
+    baseLpToken?: { id: string; decimals: any } | null;
+    quoteLpToken?: { id: string; decimals: any } | null;
   }>;
 };
 
@@ -20711,8 +20842,8 @@ export type FetchLiquidityListQuery = {
         tvl?: any | null;
         miningAddress?: Array<string | null> | null;
         volume24H?: any | null;
-        baseLpToken?: { id: string } | null;
-        quoteLpToken?: { id: string } | null;
+        baseLpToken?: { id: string; decimals: any } | null;
+        quoteLpToken?: { id: string; decimals: any } | null;
         baseToken: {
           id: string;
           symbol: string;
@@ -20787,8 +20918,8 @@ export type FetchMyLiquidityListQuery = {
         tvl?: any | null;
         miningAddress?: Array<string | null> | null;
         volume24H?: any | null;
-        baseLpToken?: { id: string } | null;
-        quoteLpToken?: { id: string } | null;
+        baseLpToken?: { id: string; decimals: any } | null;
+        quoteLpToken?: { id: string; decimals: any } | null;
         baseToken: {
           id: string;
           symbol: string;
@@ -20874,8 +21005,18 @@ export type FetchPoolQuery = {
       decimals: any;
       usdPrice: any;
     };
-    baseLpToken?: { id: string; symbol: string; name: string } | null;
-    quoteLpToken?: { id: string; symbol: string; name: string } | null;
+    baseLpToken?: {
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: any;
+    } | null;
+    quoteLpToken?: {
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: any;
+    } | null;
   } | null;
   liquidity_list?: {
     lqList?: Array<{
@@ -21516,9 +21657,11 @@ export const FetchPoolListDocument = new TypedDocumentString(`
     }
     baseLpToken {
       id
+      decimals
     }
     quoteLpToken {
       id
+      decimals
     }
   }
 }
@@ -21543,9 +21686,11 @@ export const FetchLiquidityListDocument = new TypedDocumentString(`
         creator
         baseLpToken {
           id
+          decimals
         }
         quoteLpToken {
           id
+          decimals
         }
         baseToken {
           id
@@ -21623,9 +21768,11 @@ export const FetchMyLiquidityListDocument = new TypedDocumentString(`
         creator
         baseLpToken {
           id
+          decimals
         }
         quoteLpToken {
           id
+          decimals
         }
         baseToken {
           id
@@ -21722,11 +21869,13 @@ export const FetchPoolDocument = new TypedDocumentString(`
       id
       symbol
       name
+      decimals
     }
     quoteLpToken {
       id
       symbol
       name
+      decimals
     }
   }
   liquidity_list(where: $liquidityWhere) {

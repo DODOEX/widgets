@@ -10,9 +10,11 @@ export type OperatePool =
       quoteToken: TokenInfo;
       baseLpToken?: {
         id: string;
+        decimals: number;
       };
       quoteLpToken?: {
         id: string;
+        decimals: number;
       };
       type: PoolType;
       owner?: string;
