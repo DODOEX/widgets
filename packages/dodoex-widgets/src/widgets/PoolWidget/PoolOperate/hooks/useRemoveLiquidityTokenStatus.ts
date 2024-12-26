@@ -1,9 +1,9 @@
 import { ChainId, contractConfig } from '@dodoex/api';
+import { getUniswapV2Router02ContractAddressByChainId } from '@dodoex/dodo-contract-request';
 import BigNumber from 'bignumber.js';
 import { useTokenStatus } from '../../../../hooks/Token/useTokenStatus';
 import { usePoolBalanceInfo } from '../../hooks/usePoolBalanceInfo';
 import { OperatePool } from '../types';
-import { getUniswapV2Router02ContractAddressByChainId } from '@dodoex/dodo-contract-request';
 
 export function useRemoveLiquidityTokenStatus({
   pool,

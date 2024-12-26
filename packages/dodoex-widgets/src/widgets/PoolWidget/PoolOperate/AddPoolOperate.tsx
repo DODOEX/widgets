@@ -26,6 +26,10 @@ import { poolApi } from '../utils';
 import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
 import { PageType, useRouterStore } from '../../../router';
 import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
+import {
+  getUniswapV2Router02ContractAddressByChainId,
+  getUniswapV2Router02FixedFeeContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
 
 export function AddPoolOperate({
   submittedBack: submittedBackProps,
@@ -84,11 +88,19 @@ export function AddPoolOperate({
   const { isShowCompare, lqAndDodoCompareText, isWarnCompare } =
     useComparePrice(pool?.baseToken, pool?.quoteToken, midPrice);
 
+  const proxyContract = isAMMV2
+    ? pool.chainId
+      ? getUniswapV2Router02ContractAddressByChainId(pool.chainId) ||
+        getUniswapV2Router02FixedFeeContractAddressByChainId(pool.chainId)
+      : undefined
+    : undefined;
   const baseTokenStatus = useTokenStatus(pool?.baseToken, {
     amount: baseAmount,
+    contractAddress: proxyContract,
   });
   const quoteTokenStatus = useTokenStatus(pool?.quoteToken, {
     amount: quoteAmount,
+    contractAddress: proxyContract,
   });
 
   const isOverBalance =

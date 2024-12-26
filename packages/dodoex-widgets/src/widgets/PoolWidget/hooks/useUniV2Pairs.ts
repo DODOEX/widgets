@@ -212,13 +212,6 @@ export function useUniV2Pairs({
           tokenAmountB,
         );
         liquidityMintedBg = byWei(liquidityMinted.quotient.toString(), 18);
-        console.log(
-          'v2 totalSupplyBg',
-          totalSupplyBg.toString(),
-          'liquidityMintedBg',
-          liquidityMintedBg.toString(),
-          tokenAmountA.toSignificant(),
-        );
         poolTokenPercentage = liquidityMintedBg
           .div(totalSupplyBg.plus(liquidityMintedBg))
           .times(100);
