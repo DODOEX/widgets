@@ -592,7 +592,7 @@ msgstr "Add Initial Liquidity"
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:333
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:479
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
-#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:166
+#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:172
 msgid "Add liquidity"
 msgstr "Add liquidity"
 
@@ -890,7 +890,7 @@ msgstr "Staking"
 msgid "Claiming"
 msgstr "Claiming"
 
-#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:166
+#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:172
 msgid "Create AMM V2 Position"
 msgstr "Create AMM V2 Position"
 
@@ -1539,7 +1539,7 @@ msgstr "Mining Type"
 msgid "Settler"
 msgstr "Settler"
 
-#: src/widgets/PoolWidget/hooks/useAMMV2RemoveLiquidity.ts:158
+#: src/widgets/PoolWidget/hooks/useAMMV2RemoveLiquidity.ts:162
 msgid "Remove liquidity"
 msgstr "Remove liquidity"
 
