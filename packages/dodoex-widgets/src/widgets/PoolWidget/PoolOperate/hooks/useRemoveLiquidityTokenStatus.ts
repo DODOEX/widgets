@@ -1,5 +1,8 @@
 import { ChainId, contractConfig } from '@dodoex/api';
-import { getUniswapV2Router02ContractAddressByChainId } from '@dodoex/dodo-contract-request';
+import {
+  getUniswapV2Router02ContractAddressByChainId,
+  getUniswapV2Router02FixedFeeContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
 import BigNumber from 'bignumber.js';
 import { useTokenStatus } from '../../../../hooks/Token/useTokenStatus';
 import { usePoolBalanceInfo } from '../../hooks/usePoolBalanceInfo';
@@ -25,7 +28,8 @@ export function useRemoveLiquidityTokenStatus({
       contractConfig[chainId as ChainId].DODO_V1_PAIR_PROXY ?? '';
     if (isAMMV2) {
       proxyContractAddress =
-        getUniswapV2Router02ContractAddressByChainId(chainId);
+        getUniswapV2Router02ContractAddressByChainId(chainId) ||
+        getUniswapV2Router02FixedFeeContractAddressByChainId(pool.chainId);
     }
   }
   const baseLpTokenId = pool?.baseLpToken?.id ?? '';
