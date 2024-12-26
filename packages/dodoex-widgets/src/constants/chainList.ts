@@ -181,6 +181,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     },
   ],
   [
+    ChainId.PLUME_TESTNET,
+    {
+      chainId: ChainId.PLUME_TESTNET,
+      logo: PlumeLogo,
+      name: 'plume testnet',
+    },
+  ],
+  [
     ChainId.NEOX,
     {
       chainId: ChainId.NEOX,

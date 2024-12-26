@@ -120,6 +120,10 @@ export const basicTokenMap: {
     ...DEFAULT_BASIC_TOKEN,
     wrappedTokenAddress: '0x562723560131C47417dfcD6BB1A089E4D7C7943C',
   },
+  [ChainId.PLUME_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0xaA6210015fbf0855F0D9fDA3C415c1B12776Ae74',
+  },
   [ChainId.NEOX]: {
     ...DEFAULT_BASIC_TOKEN,
     symbol: 'GAS',

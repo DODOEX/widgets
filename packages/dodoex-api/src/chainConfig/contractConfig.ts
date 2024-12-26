@@ -1,4 +1,9 @@
-import { morph, neox, plume } from '@dodoex/dodo-contract-request';
+import {
+  morph,
+  neox,
+  plume,
+  plumeTestnet,
+} from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
 const contractMap: {
@@ -299,6 +304,20 @@ const contractMap: {
     DODO_DSP_PROXY: plume.DODODspProxyWithoutGSP,
     DODO_DPP_PROXY: plume.DODODppProxy,
     DODO_MINEV3_PROXY: plume.DODOMineV3Proxy,
+  },
+  [ChainId.PLUME_TESTNET]: {
+    MULTI_CALL: plumeTestnet.MulticallWithValid,
+    DODO_APPROVE: plumeTestnet.DODOApprove,
+    ERC20_HELPER: plumeTestnet.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: plumeTestnet.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: plumeTestnet.DODOV1PmmHelper,
+    CALLEE_HELPER: plumeTestnet.DODOCalleeHelper,
+
+    DODO_PROXY: plumeTestnet.DODOV2Proxy02,
+    DODO_DSP_PROXY: plumeTestnet.DODODspProxy,
+    DODO_DPP_PROXY: plumeTestnet.DODODppProxy,
+    DODO_MINEV3_PROXY: plumeTestnet.DODOMineV3Proxy,
   },
   [ChainId.NEOX]: {
     MULTI_CALL: neox.MulticallWithValid,
