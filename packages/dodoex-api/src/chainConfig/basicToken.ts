@@ -114,8 +114,19 @@ export const basicTokenMap: {
   },
   [ChainId.TAIKO]: {
     ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenSymbol: 'WMNT',
-    wrappedTokenAddress: '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8',
+    wrappedTokenAddress: '0xA51894664A773981C6C112C43ce576f315d5b1B6',
+  },
+  [ChainId.PLUME]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x562723560131C47417dfcD6BB1A089E4D7C7943C',
+  },
+  [ChainId.NEOX]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'GAS',
+    name: 'GAS',
+    showDecimals: 6,
+    wrappedTokenSymbol: 'WGAS10',
+    wrappedTokenAddress: '0xdE41591ED1f8ED1484aC2CD8ca0876428de60EfF',
   },
 
   // solana

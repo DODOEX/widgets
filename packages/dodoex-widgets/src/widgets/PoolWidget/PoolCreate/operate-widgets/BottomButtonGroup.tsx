@@ -73,6 +73,12 @@ function OperateBtn({
     variant: Button.Variant.contained,
   };
 
+  const isGasWrapGasError = isGasWrapGasTokenPair({
+    chainId: state.baseToken?.chainId ?? 1,
+    baseToken,
+    quoteToken,
+  });
+
   const nextButtonText = t`Next`;
 
   const disabledButton = (
@@ -111,6 +117,9 @@ function OperateBtn({
     !quoteToken || quoteAmountBN.isNaN() || quoteAmountBN.lte(0);
 
   if (currentStep === 1) {
+    if (isGasWrapGasError) {
+      return disabledButton;
+    }
     if (isPeggedVersion) {
       if (!baseToken || !quoteToken) {
         return disabledButton;

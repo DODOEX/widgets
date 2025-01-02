@@ -1,29 +1,39 @@
-import { PoolApi, ExcludeNone, PoolType } from '@dodoex/api';
+import { AMMV3Api, ChainId, ExcludeNone, PoolApi, PoolType } from '@dodoex/api';
 import { contractRequests } from '../../constants/api';
-import { ChainId } from '@dodoex/api';
 import { TokenInfo } from '../../hooks/Token';
 import { OperatePool } from './PoolOperate/types';
+import {
+  getUniswapV2FactoryContractAddressByChainId,
+  getUniswapV2Router02ContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
 
 export const poolApi = new PoolApi({
   contractRequests,
 });
 
+export const ammV3Api = new AMMV3Api({
+  contractRequests,
+});
+
 export type FetchLiquidityListLqList = ExcludeNone<
   ReturnType<
-    Exclude<typeof PoolApi.graphql.fetchLiquidityList['__apiType'], undefined>
+    Exclude<(typeof PoolApi.graphql.fetchLiquidityList)['__apiType'], undefined>
   >['liquidity_list']
 >['lqList'];
 
 export type FetchMyLiquidityListLqList = ExcludeNone<
   ReturnType<
-    Exclude<typeof PoolApi.graphql.fetchMyLiquidityList['__apiType'], undefined>
+    Exclude<
+      (typeof PoolApi.graphql.fetchMyLiquidityList)['__apiType'],
+      undefined
+    >
   >['liquidity_list']
 >['lqList'];
 
 export type FetchMyCreateListLqList = ExcludeNone<
   ReturnType<
     Exclude<
-      typeof PoolApi.graphql.fetchDashboardPairList['__apiType'],
+      (typeof PoolApi.graphql.fetchDashboardPairList)['__apiType'],
       undefined
     >
   >['dashboard_pairs_list']
@@ -31,7 +41,7 @@ export type FetchMyCreateListLqList = ExcludeNone<
 
 export type FetchPoolList = ExcludeNone<
   ReturnType<
-    Exclude<typeof PoolApi.graphql.fetchPoolList['__apiType'], undefined>
+    Exclude<(typeof PoolApi.graphql.fetchPoolList)['__apiType'], undefined>
   >['pairs']
 >;
 
@@ -82,8 +92,24 @@ export function convertFetchLiquidityToOperateData(
     quoteLpToken: {
       id: pair.quoteLpToken?.id as string,
     },
+    lpFeeRate: lqData?.pair?.lpFeeRate,
   };
 }
+
+export function convertFetchMyLiquidityToOperateData(
+  lqData: ExcludeNone<FetchMyLiquidityListLqList>[0],
+): OperatePool {
+  const data = convertFetchLiquidityToOperateData(lqData);
+  if (!data) {
+    return undefined;
+  }
+
+  return {
+    ...data,
+    liquidityPositions: lqData?.liquidityPositions,
+  };
+}
+
 export function convertFetchPoolToOperateData(
   pool: FetchPoolList[0],
   chainId: number,
@@ -109,4 +135,22 @@ export function convertFetchPoolToOperateData(
       id: pool.quoteLpToken?.id as string,
     },
   };
+}
+
+export function getPoolAMMOrPMM(type: PoolType) {
+  switch (type) {
+    case 'AMMV2':
+      return 'AMM V2';
+    case 'AMMV3':
+      return 'AMM V3';
+    default:
+      return 'PMM';
+  }
+}
+
+export function getIsAMMV2DynamicFeeContractByChainId(chainId: number) {
+  return !!(
+    getUniswapV2FactoryContractAddressByChainId(chainId) &&
+    getUniswapV2Router02ContractAddressByChainId(chainId)
+  );
 }

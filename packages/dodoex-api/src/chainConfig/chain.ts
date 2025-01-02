@@ -33,5 +33,11 @@ export enum ChainId {
 
   TAIKO = 167000,
 
-  SOON_TESTNET = -1000,
+  PLUME = 98865,
+
+  NEOX = 47763,
+
+  // svm
+  SOON_TESTNET = 903,
+  SOON = 9031,
 }

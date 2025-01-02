@@ -16,7 +16,6 @@ export default function AddingOrRemovingBtn({
         display: 'inline-flex',
         alignItems: 'center',
         p: theme.spacing(0, 4, 0, 8),
-        mx: 'auto',
         width: 'max-content',
         height: 32,
         backgroundColor: 'hover.default',

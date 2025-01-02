@@ -210,7 +210,8 @@ export default function SlippageSetting({
             ml={7}
           />
         </Box>
-        {forecastSlippageQuery.isLoading || !!recommendSlippage ? (
+        {forecastSlippageQuery.isLoading ||
+        !!forecastSlippageQuery.slippageData.slippageList?.length ? (
           <LoadingSkeleton
             loading={forecastSlippageQuery.isLoading}
             loadingProps={{
@@ -259,6 +260,9 @@ export default function SlippageSetting({
             variant="inPaper"
             sx={{
               mt: 16,
+              '&:not(:hover) [aria-selected="true"] .weak': {
+                color: alpha(theme.palette.secondary.contrastText, 0.5),
+              },
             }}
           >
             <TabButton
@@ -266,9 +270,6 @@ export default function SlippageSetting({
               variant="inPaper"
               sx={{
                 position: 'relative',
-                '&:not(:hover) .weak': {
-                  color: alpha(theme.palette.secondary.contrastText, 0.5),
-                },
               }}
             >
               <>
@@ -378,9 +379,6 @@ export default function SlippageSetting({
               sx={{
                 position: 'relative',
                 p: 0,
-                '&:not(:hover) .weak': {
-                  color: 'text.secondary',
-                },
               }}
             >
               <Box

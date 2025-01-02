@@ -23,6 +23,7 @@ export { useTradeSwapOrderList } from './hooks/Swap/useTradeSwapOrderList';
 export { Pool } from './widgets/PoolWidget';
 export { default as PoolList } from './widgets/PoolWidget/PoolList';
 export { default as PoolCreate } from './widgets/PoolWidget/PoolCreate';
+export { default as AMMV2Create } from './widgets/PoolWidget/AMMV2Create';
 export { default as PoolModify } from './widgets/PoolWidget/PoolModify';
 export { default as PoolDetail } from './widgets/PoolWidget/PoolDetail';
 export {
@@ -34,6 +35,9 @@ export { usePoolBalanceInfo } from './widgets/PoolWidget/hooks/usePoolBalanceInf
 export { MiningList } from './widgets/MiningWidget/MiningList';
 export { MiningDetail } from './widgets/MiningWidget/MiningDetail';
 export { MiningCreate } from './widgets/MiningWidget/MiningCreate';
+export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
+export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
+export { AMMV3PositionManage } from './widgets/PoolWidget/AMMV3/AMMV3PositionManage';
 
 export { TokenCard } from './components/Swap/components/TokenCard';
 export { default as TokenLogo } from './components/TokenLogo';

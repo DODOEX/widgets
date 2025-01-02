@@ -1,8 +1,8 @@
+import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import crossFetch from 'cross-fetch';
 import { GraphQLClient, RequestDocument, Variables } from 'graphql-request';
-import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
-import { TypedDocumentString } from '../gql/graphql';
 import { GraphQLClientRequestHeaders } from 'graphql-request/build/esm/types';
+import { TypedDocumentString } from '../gql/graphql';
 
 type Fetch = typeof crossFetch;
 

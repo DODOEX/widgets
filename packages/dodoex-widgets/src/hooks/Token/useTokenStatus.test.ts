@@ -90,6 +90,7 @@ describe('useTokenStatus', () => {
       insufficientBalance: true,
       needShowTokenStatusButton: true,
       loading: true,
+      token: mockToken,
     });
   });
 
@@ -109,6 +110,7 @@ describe('useTokenStatus', () => {
       ...defaultReturnResult,
       insufficientBalance: true,
       needShowTokenStatusButton: true,
+      token: mockToken,
     });
   });
 
@@ -128,6 +130,7 @@ describe('useTokenStatus', () => {
       ...defaultReturnResult,
       needApprove: true,
       needShowTokenStatusButton: true,
+      token: mockToken,
     });
   });
 
@@ -139,14 +142,12 @@ describe('useTokenStatus', () => {
       },
       isLoading: false,
     });
+    const token = {
+      ...mockToken,
+      symbol: 'USDT',
+    };
     const { result } = renderHook(() =>
-      useTokenStatus(
-        {
-          ...mockToken,
-          symbol: 'USDT',
-        },
-        { amount: '10' },
-      ),
+      useTokenStatus(token, { amount: '10' }),
     );
 
     expect(result.current).toEqual({
@@ -154,6 +155,7 @@ describe('useTokenStatus', () => {
       needReset: true,
       needShowTokenStatusButton: true,
       approveTitle: 'Reset USDT',
+      token,
     });
   });
 
@@ -169,6 +171,9 @@ describe('useTokenStatus', () => {
       useTokenStatus(mockToken, { amount: '10' }),
     );
 
-    expect(result.current).toEqual(defaultReturnResult);
+    expect(result.current).toEqual({
+      ...defaultReturnResult,
+      token: mockToken,
+    });
   });
 });

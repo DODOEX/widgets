@@ -15,6 +15,15 @@ import { PMMHelper } from './pmm/pmmHelper';
 import { PMMState } from './pmm/PMMState';
 import { convertPmmParams, PmmData } from './pmm/convertPmmParams';
 import { encodeFunctionData } from '../../helper/ContractRequests/encode';
+import {
+  fetchUniswapV2PairBalanceOf,
+  fetchUniswapV2PairTotalSupply,
+  fetchUniswapV2PairGetReserves,
+  fetchUniswapV2PairFeeRate,
+  getUniswapV2Router02ContractAddressByChainId,
+  getUniswapV2FactoryContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
+import { formatUnits } from '@dodoex/contract-request';
 
 export interface PoolApiProps {
   contractRequests?: ContractRequests;
@@ -22,11 +31,11 @@ export interface PoolApiProps {
 }
 
 type PoolTypeMethodObject = {
-  [key in PoolType]: string | null;
+  [key in PoolType]?: string | null;
 };
 
 const poolTypeAbiNameObject: {
-  [key in PoolType]: ABIName;
+  [key in PoolType]?: ABIName;
 } = {
   DVM: ABIName.dvmPoolABI,
   DSP: ABIName.dvmPoolABI,
@@ -46,14 +55,16 @@ function getPoolQueryFactory({
   poolAddress: string;
   type: PoolType;
   typeMethodObject: {
-    [key in PoolType]: string | null;
+    [key in PoolType]?: string | null;
   };
   params?: any[];
 }) {
   const method = typeMethodObject[type];
   if (!method) return null;
+  const abiName = poolTypeAbiNameObject[type];
+  if (!abiName) return null;
   return {
-    abiName: poolTypeAbiNameObject[type],
+    abiName,
     contractAddress: poolAddress,
     method,
     params,
@@ -761,6 +772,14 @@ export class PoolApi {
       queryFn: async () => {
         if (!chainId || !poolAddress || !type || decimals === undefined)
           return null;
+
+        if (type === 'AMMV2') {
+          const result = await fetchUniswapV2PairTotalSupply(
+            chainId,
+            poolAddress,
+          );
+          return new BigNumber(formatUnits(result, decimals));
+        }
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'totalSupply',
           DSP: 'totalSupply',
@@ -855,6 +874,14 @@ export class PoolApi {
           )
         )
           return null;
+        if (type === 'AMMV2') {
+          const result = await fetchUniswapV2PairBalanceOf(
+            chainId,
+            poolAddress,
+            account,
+          );
+          return new BigNumber(formatUnits(result, decimals));
+        }
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'balanceOf',
           DSP: 'balanceOf',
@@ -937,6 +964,7 @@ export class PoolApi {
 
   /**
    * Get the total deposited lp balance
+   * The base and quote of the AMM pool should be passed in in order
    */
   getReserveLpQuery(
     chainId: number | undefined,
@@ -954,6 +982,7 @@ export class PoolApi {
         quoteDecimals,
       );
     }
+
     return {
       queryKey: [CONTRACT_QUERY_KEY, 'pool', 'getReserveLp', ...arguments],
       enabled:
@@ -974,6 +1003,16 @@ export class PoolApi {
         )
           return null;
 
+        if (type === 'AMMV2') {
+          const result = await fetchUniswapV2PairGetReserves(
+            chainId,
+            poolAddress,
+          );
+          return {
+            baseReserve: byWei(result._reserve0.toString(), baseDecimals),
+            quoteReserve: byWei(result._reserve1.toString(), quoteDecimals),
+          };
+        }
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'getVaultReserve',
           DSP: 'getVaultReserve',
@@ -1389,6 +1428,23 @@ export class PoolApi {
           mtFeeRate = new BigNumber(queryResult.mtFeeRate.toString()).div(
             10 ** 18,
           );
+        } else if (type === 'AMMV2') {
+          if (
+            getUniswapV2Router02ContractAddressByChainId(chainId) &&
+            getUniswapV2FactoryContractAddressByChainId(chainId)
+          ) {
+            const result = await fetchUniswapV2PairFeeRate(
+              chainId,
+              poolAddress,
+            );
+            const feeRate = byWei(result.toString(), 4);
+            lpFeeRate = feeRate.times(0.8);
+            mtFeeRate = feeRate.times(0.2);
+          } else {
+            // For the original contract, the handling fee is fixed.
+            lpFeeRate = new BigNumber(0.003);
+            mtFeeRate = new BigNumber(0);
+          }
         } else {
           const queryResult = await this.contractRequests.batchCallQuery(
             chainId,
@@ -1438,6 +1494,7 @@ export class PoolApi {
           quoteDecimals === undefined
         )
           return null;
+        if (type === 'AMMV2' || type === 'AMMV3') return null;
         let queryResult: PmmData | null = null;
         if (type === 'CLASSICAL') {
           const { ROUTE_V1_DATA_FETCH } = contractConfig[chainId as ChainId];

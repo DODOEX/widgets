@@ -1,6 +1,10 @@
-import { getAddress } from '@ethersproject/address';
+import { getAddress, getCreate2Address } from '@ethersproject/address';
 import { ChainId } from '@dodoex/api';
 import { scanUrlDomainMap } from '../constants/chains';
+import { keccak256, pack } from '@ethersproject/solidity';
+import { TokenInfo } from '../hooks/Token';
+import { toWei } from './formatter';
+import { getIsAMMV2DynamicFeeContractByChainId } from '../widgets/PoolWidget/utils';
 
 export const isSameAddress = (
   tokenAddress1: string,
@@ -85,3 +89,61 @@ export async function openEtherscanPage(
     'noopener,noreferrer',
   );
 }
+
+const UNI_DYNAMIC_FEE_INIT_CODE_HASH =
+  '0x67a372377cf6d7f78cfdcc9df0bc21e1139bd49e5a47c33ee0de5389a4396410';
+const UNI_FIXED_FEE_INIT_CODE_HASH =
+  '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
+export const getUniInitCodeHash = (chainId: number) => {
+  if (chainId === ChainId.PLUME) {
+    return '0x593ac4223f084467e0d81c9091be3e5fc936d3674e385bae66ee8ec3b54e07dd';
+  }
+  if (chainId === ChainId.NEOX) {
+    return '0x007722521498f3d29a63d1eb6ab35e202874706c77ce73d45c1ad9da88174a3f';
+  }
+  const isDynamic = getIsAMMV2DynamicFeeContractByChainId(chainId);
+  return isDynamic
+    ? UNI_DYNAMIC_FEE_INIT_CODE_HASH
+    : UNI_FIXED_FEE_INIT_CODE_HASH;
+};
+
+export function sortsBefore(tokenA: TokenInfo, tokenB: TokenInfo): boolean {
+  if (tokenA.chainId !== tokenB.chainId) {
+    throw new Error('token is not in the same chain');
+  }
+  return tokenA.address.toLowerCase() < tokenB.address.toLowerCase();
+}
+
+// https://github.com/Uniswap/sdks/blob/8b2649bf956f0cae69d58b8e3a4fd4cc8f164756/sdks/v2-sdk/src/entities/pair.ts#L24
+export const computePairAddress = ({
+  factoryAddress,
+  tokenA,
+  tokenB,
+  fee,
+}: {
+  factoryAddress: string;
+  tokenA: TokenInfo;
+  tokenB: TokenInfo;
+  fee: number;
+}): string => {
+  const [token0, token1] = sortsBefore(tokenA, tokenB)
+    ? [tokenA, tokenB]
+    : [tokenB, tokenA]; // does safety checks
+
+  if (tokenA.chainId !== tokenB.chainId) {
+    throw new Error('token is not valid.');
+  }
+  return getCreate2Address(
+    factoryAddress,
+    keccak256(
+      ['bytes'],
+      [
+        pack(
+          ['address', 'address', 'uint256'],
+          [token0.address, token1.address, toWei(fee, 4).toString()],
+        ),
+      ],
+    ),
+    getUniInitCodeHash(tokenA.chainId),
+  );
+};

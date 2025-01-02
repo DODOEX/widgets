@@ -55,7 +55,7 @@ export default function Modal({ slots, children, ...props }: ModalProps) {
     >
       <Box
         sx={{
-          maxHeight: '80vh',
+          maxHeight: '85vh',
           backgroundColor: 'background.paper',
           overflowY: 'auto',
           borderRadius: isMobile ? theme.spacing(16, 16, 0, 0) : 16,

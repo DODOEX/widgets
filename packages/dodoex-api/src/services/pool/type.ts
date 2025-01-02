@@ -5,4 +5,6 @@ export type PoolType =
   | 'LPTOKEN'
   | 'CLASSICAL'
   | 'V3CLASSICAL'
-  | 'DPP';
+  | 'DPP'
+  | 'AMMV2'
+  | 'AMMV3';

@@ -32,3 +32,4 @@ cache
 
 #lingui
 .linguirc.local
+packages/dodoex-widgets/src/widgets/PoolWidget/AMMV3/sdks/contracts
