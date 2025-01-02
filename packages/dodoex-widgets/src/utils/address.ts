@@ -102,19 +102,18 @@ const UNI_FIXED_FEE_INIT_CODE_HASH =
  * @see https://test-explorer.plumenetwork.xyz/address/0x3A7Bc5F9E41356728f037f17D88c642EE46d1Aaa?tab=contract
  */
 export const getUniInitCodeHash = (chainId: number) => {
-  if (chainId === ChainId.PLUME) {
-    return '0x593ac4223f084467e0d81c9091be3e5fc936d3674e385bae66ee8ec3b54e07dd';
-  }
-  if (chainId === ChainId.PLUME_TESTNET) {
-    return '0xa4de01798f22e55768aefad88d0086aff38b510d4becdcbecb7c8ec69f5242ba';
-  }
-  if (chainId === ChainId.NEOX) {
-    return '0x007722521498f3d29a63d1eb6ab35e202874706c77ce73d45c1ad9da88174a3f';
-  }
   const isDynamic = getIsAMMV2DynamicFeeContractByChainId(chainId);
-  return isDynamic
-    ? UNI_DYNAMIC_FEE_INIT_CODE_HASH
-    : UNI_FIXED_FEE_INIT_CODE_HASH;
+  switch (chainId) {
+    case ChainId.PLUME:
+    case ChainId.PLUME_TESTNET:
+      return '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
+    case ChainId.NEOX:
+      return '0x007722521498f3d29a63d1eb6ab35e202874706c77ce73d45c1ad9da88174a3f';
+    default:
+      return isDynamic
+        ? UNI_DYNAMIC_FEE_INIT_CODE_HASH
+        : UNI_FIXED_FEE_INIT_CODE_HASH;
+  }
 };
 
 export function sortsBefore(tokenA: TokenInfo, tokenB: TokenInfo): boolean {
