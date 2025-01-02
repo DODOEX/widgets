@@ -39,8 +39,10 @@ function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
 
 export default function PoolList({
   params,
+  scrollRef: scrollParentRefProps,
 }: {
   params?: Page<PageType.Pool>['params'];
+  scrollRef?: React.RefObject<any>;
 }) {
   const { isMobile } = useWidgetDevice();
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
@@ -138,7 +140,7 @@ export default function PoolList({
           <AddLiquidityList
             account={account}
             filterChainIds={filterChainIds}
-            scrollParentRef={scrollParentRef}
+            scrollParentRef={scrollParentRefProps ?? scrollParentRef}
             activeChainId={activeChainId}
             handleChangeActiveChainId={handleChangeActiveChainId}
             operatePool={operatePool}
