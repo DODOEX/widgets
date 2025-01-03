@@ -4,6 +4,7 @@ import { TokenInfo } from '../../../../hooks/Token';
 import { Search } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import { TokenPickerDialog } from '../../../../components/Swap/components/TokenCard/TokenPickerDialog';
+import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 
 export default function TokenAndPoolFilter({
   sx,
@@ -20,6 +21,7 @@ export default function TokenAndPoolFilter({
   ) => Promise<JSX.Element | null>;
 }) {
   const [showPicker, setShowPicker] = React.useState(false);
+  const { isMobile } = useWidgetDevice();
   return (
     <>
       <Box
@@ -35,6 +37,11 @@ export default function TokenAndPoolFilter({
           color: 'text.secondary',
           borderRadius: 8,
           fontWeight: 600,
+          ...(isMobile
+            ? {}
+            : {
+                minWidth: 220,
+              }),
           ...sx,
         }}
         onClick={() => setShowPicker(true)}
@@ -74,6 +81,7 @@ export default function TokenAndPoolFilter({
         searchOtherAddress={(address: string) => {
           return searchAddress(address, () => setShowPicker(false));
         }}
+        modal
       />
     </>
   );

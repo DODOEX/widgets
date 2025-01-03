@@ -3,6 +3,19 @@ import useTokenList, { getFuzzySearchTokenSort } from './useTokenList';
 import { renderHook } from '@testing-library/react-hooks';
 import useTokenListFetchBalance from './useTokenListFetchBalance';
 
+jest.mock('../../components/UserOptionsProvider', () => ({
+  useUserOptions: jest.fn((fn) => {
+    if (typeof fn === 'function') {
+      return fn({
+        defaultChainId: 1,
+      });
+    }
+    return {
+      defaultChainId: 1,
+    };
+  }),
+}));
+
 jest.mock('./useTokenListFetchBalance');
 
 (useTokenListFetchBalance as jest.Mock).mockReturnValue(new Map());

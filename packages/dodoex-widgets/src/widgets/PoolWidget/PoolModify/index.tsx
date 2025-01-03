@@ -39,16 +39,16 @@ import { poolApi } from '../utils';
 import { BottomButtonGroup } from './operate-widgets/BottomButtonGroup';
 import { FeeRateSetting } from './operate-widgets/FeeRateSetting';
 import { SectionTitle } from './SectionTitle';
+import { usePriceInit } from '../PoolCreate/hooks/usePriceInit';
 
-export default function PoolModify() {
+export default function PoolModify({
+  params,
+}: {
+  params: Page<PageType.PoolDetail>['params'];
+}) {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
   const { chainId } = useWalletInfo();
-  const params = useRouterStore((state) => {
-    if (state.page?.type === PageType.ModifyPool) {
-      return (state.page as Page<PageType.ModifyPool>).params;
-    }
-  });
 
   const [showRiskDialog, setShowRiskDialog] = React.useState(false);
 
@@ -67,14 +67,17 @@ export default function PoolModify() {
     isFeeRateCustomized: false,
     slippageCoefficient: DEFAULT_SLIPPAGE_COEFFICIENT,
     isSlippageCoefficientCustomized: false,
+    peggedBaseTokenRatio: '',
+    peggedQuoteTokenRatio: '',
   });
 
   React.useEffect(() => {
     setShowRiskDialog(getIsPoolEditRiskWarningOpen());
   }, []);
 
-  const [noResultModalVisible, setNoResultModalVisible] =
-    React.useState<'inital' | 'open' | 'close'>('inital');
+  const [noResultModalVisible, setNoResultModalVisible] = React.useState<
+    'inital' | 'open' | 'close'
+  >('inital');
 
   const { poolDetail, ...fetchPoolQuery } = usePoolDetail({
     id: params?.address,
@@ -156,6 +159,17 @@ export default function PoolModify() {
       payload: isFeeRateCustomized,
     });
   }
+
+  const isSingleTokenVersion = state.selectedVersion === Version.singleToken;
+  const isStandardVersion = state.selectedVersion === Version.standard;
+
+  const priceInfo = usePriceInit({
+    isSingleTokenVersion,
+    leftTokenAddress: state.leftTokenAddress,
+    baseToken: state.baseToken,
+    quoteToken: state.quoteToken,
+    dispatch,
+  });
 
   const { versionMap } = useVersionList();
 
@@ -247,7 +261,7 @@ export default function PoolModify() {
               {poolDetailLoading ? (
                 loadingEle
               ) : (
-                <FeeRateCard currentStep={2} feeRate={state.feeRate} />
+                <FeeRateCard isWaiting={false} feeRate={state.feeRate} />
               )}
             </Box>
           )}
@@ -338,7 +352,7 @@ export default function PoolModify() {
                       payload,
                     });
                   }}
-                  readOnly={state.selectedVersion === Version.singleToken}
+                  readOnly={isSingleTokenVersion}
                   token={state.baseToken}
                   occupiedAddrs={
                     state.quoteToken ? [state.quoteToken.address] : undefined
@@ -368,8 +382,16 @@ export default function PoolModify() {
             )}
             {poolDetailLoading ? null : (
               <>
+                {state.selectedVersion !== Version.standard && (
+                  <SlippageCoefficientSetting
+                    dispatch={dispatch}
+                    slippageCoefficient={state.slippageCoefficient}
+                    selectedVersion={state.selectedVersion}
+                    isCustomized={state.isSlippageCoefficientCustomized}
+                    isStandardVersion={isStandardVersion}
+                  />
+                )}
                 <InitPriceSetting
-                  isEdit
                   selectedVersion={state.selectedVersion}
                   isFixedRatio={state.isFixedRatio}
                   leftTokenAddress={state.leftTokenAddress}
@@ -377,15 +399,10 @@ export default function PoolModify() {
                   quoteToken={state.quoteToken}
                   fixedRatioPrice={state.fixedRatioPrice}
                   dispatch={dispatch}
+                  isStandardVersion={isStandardVersion}
+                  isSingleTokenVersion={isSingleTokenVersion}
+                  priceInfo={priceInfo}
                 />
-                {state.selectedVersion !== Version.standard && (
-                  <SlippageCoefficientSetting
-                    dispatch={dispatch}
-                    slippageCoefficient={state.slippageCoefficient}
-                    selectedVersion={state.selectedVersion}
-                    isCustomized={state.isSlippageCoefficientCustomized}
-                  />
-                )}
                 <FeeRateSetting
                   dispatch={dispatch}
                   feeRate={state.feeRate}

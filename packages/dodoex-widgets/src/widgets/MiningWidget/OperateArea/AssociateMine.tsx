@@ -1,4 +1,10 @@
-import { Box, LoadingSkeleton, Tooltip, useTheme } from '@dodoex/components';
+import {
+  Box,
+  ButtonBase,
+  LoadingSkeleton,
+  Tooltip,
+  useTheme,
+} from '@dodoex/components';
 import { DetailBorder } from '@dodoex/icons';
 import BigNumber from 'bignumber.js';
 import { formatTokenAmountNumber } from '../../../utils';
@@ -100,8 +106,10 @@ function Item({
           }
         >
           <Box
-            component={DetailBorder}
+            component={ButtonBase}
             sx={{
+              display: 'flex',
+              alignItems: 'center',
               color: theme.palette.text.secondary,
               width: 16,
               height: 16,
@@ -109,7 +117,9 @@ function Item({
                 color: 'text.primary',
               },
             }}
-          />
+          >
+            <DetailBorder />
+          </Box>
         </Tooltip>
       </Box>
     </Box>

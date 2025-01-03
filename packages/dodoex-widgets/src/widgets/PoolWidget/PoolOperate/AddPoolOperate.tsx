@@ -20,6 +20,16 @@ import Confirm from '../../../components/Confirm';
 import { useOperateLiquidity } from '../hooks/contract/useOperateLiquidity';
 import { SLIPPAGE_PROTECTION } from '../../../constants/pool';
 import ErrorMessageDialog from '../../../components/ErrorMessageDialog';
+import ConfirmDialog from '../AMMV2Create/ConfirmDialog';
+import { useQuery } from '@tanstack/react-query';
+import { poolApi } from '../utils';
+import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
+import { PageType, useRouterStore } from '../../../router';
+import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
+import {
+  getUniswapV2Router02ContractAddressByChainId,
+  getUniswapV2Router02FixedFeeContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
 
 export function AddPoolOperate({
   submittedBack: submittedBackProps,
@@ -43,13 +53,23 @@ export function AddPoolOperate({
     midPrice,
     amountLoading,
     amountCheckedDisabled,
+    uniV2Pair,
 
     reset,
   } = useLiquidityOperateAmount({
     pool,
   });
+  const feeRateQuery = useQuery(
+    poolApi.getFeeRateQuery(pool?.chainId, pool?.address, pool?.type, account),
+  );
+  const feeNumber = feeRateQuery.data?.mtFeeRate
+    ?.plus(feeRateQuery.data?.lpFeeRate ?? 0)
+    ?.toNumber();
+  const isAMMV2 = pool?.type === 'AMMV2';
+  const [showConfirmAMMV2, setShowConfirmAMMV2] = React.useState(false);
   const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
     address: pool?.address,
+    type: pool?.type,
   });
 
   React.useEffect(() => {
@@ -68,11 +88,19 @@ export function AddPoolOperate({
   const { isShowCompare, lqAndDodoCompareText, isWarnCompare } =
     useComparePrice(pool?.baseToken, pool?.quoteToken, midPrice);
 
+  const proxyContract = isAMMV2
+    ? pool.chainId
+      ? getUniswapV2Router02ContractAddressByChainId(pool.chainId) ||
+        getUniswapV2Router02FixedFeeContractAddressByChainId(pool.chainId)
+      : undefined
+    : undefined;
   const baseTokenStatus = useTokenStatus(pool?.baseToken, {
     amount: baseAmount,
+    contractAddress: proxyContract,
   });
   const quoteTokenStatus = useTokenStatus(pool?.quoteToken, {
     amount: quoteAmount,
+    contractAddress: proxyContract,
   });
 
   const isOverBalance =
@@ -84,10 +112,13 @@ export function AddPoolOperate({
     !midPrice ||
     !!balanceInfo.loading ||
     !!balanceInfo.error ||
-    amountCheckedDisabled;
+    amountCheckedDisabled ||
+    feeRateQuery.isLoading;
 
-  const submitBtnText = isOverBalance ? t`Insufficient balance` : t`Add`;
-
+  let submitBtnText = isAMMV2 ? t`Supply` : t`Add`;
+  if (isOverBalance) {
+    submitBtnText = t`Insufficient balance`;
+  }
   const submittedBack = () => {
     reset();
     resetSlipper();
@@ -97,6 +128,10 @@ export function AddPoolOperate({
   };
   const { operateLiquidityMutation } = useOperateLiquidity(pool);
   const submitLq = () => {
+    if (isAMMV2) {
+      setShowConfirmAMMV2(true);
+      return;
+    }
     operateLiquidityMutation.mutate({
       txTitle: t`Add Liquidity`,
       isRemove: false,
@@ -108,6 +143,20 @@ export function AddPoolOperate({
       submittedBack,
     });
   };
+
+  const operateAMMV2LiquidityMutation = useAMMV2AddLiquidity({
+    baseToken: pool?.baseToken,
+    quoteToken: pool?.quoteToken,
+    baseAmount,
+    quoteAmount,
+    fee: feeNumber,
+    isExists: true,
+    slippage: slipperValue,
+    submittedBack: () => {
+      submittedBack();
+      setShowConfirmAMMV2(false);
+    },
+  });
 
   return (
     <>
@@ -153,11 +202,13 @@ export function AddPoolOperate({
             value={slipper}
             onChange={setSlipper}
             disabled={!canOperate}
+            type={pool?.type}
           />
           <Ratio
             pool={pool as OperatePool}
             addPortion={addPortion}
             midPrice={midPrice}
+            shareOfPool={uniV2Pair?.shareOfPool}
           />
         </LoadingSkeleton>
       </Box>
@@ -165,7 +216,7 @@ export function AddPoolOperate({
       <Box
         sx={{
           px: 20,
-          pt: 16,
+          py: 16,
           position: 'sticky',
           bottom: 0,
           borderStyle: 'solid',
@@ -192,7 +243,10 @@ export function AddPoolOperate({
               fullWidth
               disabled={disabled}
               danger={isWarnCompare}
-              isLoading={operateLiquidityMutation.isPending}
+              isLoading={
+                operateLiquidityMutation.isPending ||
+                operateAMMV2LiquidityMutation.isPending
+              }
               onClick={() => {
                 if (disabled) return;
                 if (isWarnCompare) {
@@ -216,6 +270,7 @@ export function AddPoolOperate({
         onClose={() => setShowCompareConfirm(false)}
         title={t`Confirm submission`}
         onConfirm={submitLq}
+        modal
       >
         <Box>
           <Box>
@@ -230,6 +285,23 @@ export function AddPoolOperate({
         message={operateLiquidityMutation.error?.message}
         onClose={() => operateLiquidityMutation.reset()}
       />
+      {isAMMV2 && !!pool && (
+        <ConfirmDialog
+          open={showConfirmAMMV2}
+          onClose={() => setShowConfirmAMMV2(false)}
+          slippage={slipperValue}
+          baseToken={pool.baseToken}
+          baseAmount={baseAmount}
+          quoteToken={pool.quoteToken}
+          quoteAmount={quoteAmount}
+          fee={feeNumber}
+          price={uniV2Pair?.price}
+          lpAmount={uniV2Pair?.liquidityMinted}
+          shareOfPool={uniV2Pair?.shareOfPool}
+          pairAddress={pool.address}
+          createMutation={operateAMMV2LiquidityMutation}
+        />
+      )}
     </>
   );
 }

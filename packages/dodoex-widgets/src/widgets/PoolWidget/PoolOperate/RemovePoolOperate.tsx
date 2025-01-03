@@ -1,4 +1,4 @@
-import { PoolApi } from '@dodoex/api';
+import { basicTokenMap, ChainId, PoolApi } from '@dodoex/api';
 import { Box, Button, LoadingSkeleton, Select } from '@dodoex/components';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
@@ -29,6 +29,11 @@ import {
 import { useWithdrawInfo } from '../hooks/contract/useWithdrawInfo';
 import TokenList from './components/TokenList';
 import { SliderPercentageCard } from './components/SliderPercentageCard';
+import { useAMMV2RemoveLiquidity } from '../hooks/useAMMV2RemoveLiquidity';
+import { useQuery } from '@tanstack/react-query';
+import { poolApi } from '../utils';
+import { toWei } from '../../../utils';
+import { TokenInfo } from '../../../hooks/Token';
 
 export function RemovePoolOperate({
   submittedBack: submittedBackProps,
@@ -63,6 +68,7 @@ export function RemovePoolOperate({
     midPrice,
     amountLoading,
     amountCheckedDisabled,
+    uniV2Pair,
 
     reset,
   } = useLiquidityOperateAmount({
@@ -72,24 +78,74 @@ export function RemovePoolOperate({
   });
   const [baseAmountDelay, setBaseAmountDelay] = React.useState('');
   const [quoteAmountDelay, setQuoteAmountDelay] = React.useState('');
-  const setDelayAmount = React.useCallback(() => {
+  React.useEffect(() => {
     const time = setTimeout(() => {
       setBaseAmountDelay(baseAmount);
+    }, 80);
+    return () => clearTimeout(time);
+  }, [baseAmount]);
+  React.useEffect(() => {
+    const time = setTimeout(() => {
       setQuoteAmountDelay(quoteAmount);
     }, 80);
     return () => clearTimeout(time);
-  }, [baseAmount, quoteAmount]);
+  }, [quoteAmount]);
   const handleChangeBaseAmount = (amount: string) => {
     handleChangeBaseAmountOrigin(amount);
-    setDelayAmount();
   };
   const handleChangeQuoteAmount = (amount: string) => {
     handleChangeQuoteAmountOrigin(amount);
-    setDelayAmount();
   };
 
+  const isAMMV2 = pool?.type === 'AMMV2';
+  const basicToken = pool?.chainId
+    ? basicTokenMap[pool.chainId as ChainId]
+    : undefined;
+  const basicAddressLow = basicToken?.address?.toLowerCase();
+  const basicWrappedAddressLow = basicToken?.wrappedTokenAddress?.toLowerCase();
+  const isBaseEther =
+    !!pool &&
+    [basicAddressLow, basicWrappedAddressLow].includes(
+      pool.baseToken.address.toLowerCase(),
+    );
+  const isQuoteEther =
+    !!pool &&
+    [basicAddressLow, basicWrappedAddressLow].includes(
+      pool.quoteToken.address.toLowerCase(),
+    );
+  const canWithdrawBasicToken =
+    isAMMV2 && pool && (isBaseEther || isQuoteEther);
+  const [receiveWrapped, setReceiveWrapped] = React.useState(false);
+
+  const withdrawBaseToken =
+    canWithdrawBasicToken && isBaseEther && !receiveWrapped && basicToken
+      ? pool
+        ? {
+            ...pool.baseToken,
+            symbol: basicToken.symbol,
+            address: basicToken.address,
+          }
+        : undefined
+      : pool?.baseToken;
+  const withdrawQuoteToken =
+    canWithdrawBasicToken && isQuoteEther && !receiveWrapped && basicToken
+      ? pool
+        ? {
+            ...pool.quoteToken,
+            symbol: basicToken.symbol,
+            address: basicToken.address,
+          }
+        : undefined
+      : pool?.quoteToken;
+
   const withdrawInfo = useWithdrawInfo({
-    pool,
+    pool: pool
+      ? {
+          ...pool,
+          baseToken: withdrawBaseToken as TokenInfo,
+          quoteToken: withdrawQuoteToken as TokenInfo,
+        }
+      : pool,
     isBase,
     baseAmount: baseAmountDelay,
     quoteAmount: quoteAmountDelay,
@@ -141,6 +197,13 @@ export function RemovePoolOperate({
   const { isShowCompare, lqAndDodoCompareText, isWarnCompare } =
     useComparePrice(pool?.baseToken, pool?.quoteToken, midPrice);
 
+  const feeRateQuery = useQuery(
+    poolApi.getFeeRateQuery(pool?.chainId, pool?.address, pool?.type, account),
+  );
+  const feeRate = feeRateQuery.data?.mtFeeRate
+    ?.plus(feeRateQuery.data?.lpFeeRate ?? 0)
+    ?.toNumber();
+
   const { baseTokenStatus, quoteTokenStatus } = useRemoveLiquidityTokenStatus({
     pool,
     baseAmount,
@@ -159,7 +222,8 @@ export function RemovePoolOperate({
     amountCheckedDisabled ||
     !!withdrawInfo.error ||
     withdrawInfo.loading ||
-    !!withdrawInfo.receiveAmountBg?.lte(0);
+    !!withdrawInfo.receiveAmountBg?.lte(0) ||
+    feeRateQuery.isLoading;
 
   const submitBtnText = isOverBalance ? t`Insufficient balance` : t`Remove`;
 
@@ -170,8 +234,29 @@ export function RemovePoolOperate({
       submittedBackProps();
     }
   };
+  const liquidityDecimals = uniV2Pair?.pair?.liquidityToken.decimals;
+  const liquidityAmountBg = balanceInfo.userBaseLpBalance?.times(
+    sliderPercentage / 100,
+  );
+  const liquidityAmountWei =
+    liquidityAmountBg && liquidityDecimals !== undefined
+      ? toWei(liquidityAmountBg, liquidityDecimals).toString()
+      : '';
   const { operateLiquidityMutation } = useOperateLiquidity(pool);
+  const removeAMMV2LiquidityMutataion = useAMMV2RemoveLiquidity({
+    baseToken: withdrawBaseToken,
+    quoteToken: withdrawQuoteToken,
+    baseAmount,
+    quoteAmount,
+    liquidityAmount: liquidityAmountWei,
+    slippage: slipperValue,
+    fee: feeRate,
+    submittedBack,
+  });
   const submitLq = () => {
+    if (isAMMV2) {
+      return removeAMMV2LiquidityMutataion.mutate();
+    }
     operateLiquidityMutation.mutate({
       txTitle: t`Remove Liquidity`,
       isRemove: true,
@@ -187,53 +272,57 @@ export function RemovePoolOperate({
   const baseTokenBalanceUpdateLoading = false;
   const quoteBalanceUpdateLoading = false;
 
-  const receiveList = [] as any;
-
   return (
     <>
       <Box
         sx={{
-          pt: 20,
           pb: 18,
           px: 20,
         }}
       >
-        <Box
-          sx={{
-            borderStyle: 'solid',
-            borderWidth: 1,
-            borderRadius: 12,
-          }}
-        >
-          <Select
-            fullWidth
-            value={mode}
-            options={modeOptions}
-            onChange={(_, value) => handleChangeMode(value as RemoveMode)}
-            notBackground
-            popupOffset={0}
-          />
-          {!!pool && PoolApi.utils.singleSideLp(pool.type) && (
-            <Box
+        {!isAMMV2 && (
+          <Box
+            sx={{
+              mt: 20,
+              borderStyle: 'solid',
+              borderWidth: 1,
+              borderRadius: 12,
+            }}
+          >
+            <Select
+              value={mode}
+              options={modeOptions}
+              onChange={(_, value) => handleChangeMode(value as RemoveMode)}
+              popupOffset={0}
               sx={{
-                pt: 20,
-                pb: 13,
                 px: 20,
-                borderStyle: 'solid',
-                borderWidth: '1px 0 0',
+                py: 12,
+                width: '100%',
+                backgroundColor: 'transparent',
               }}
-            >
-              <TokenList
-                pool={pool}
-                balanceInfo={balanceInfo}
-                checkTokenType={checkTokenType}
-                setCheckToken={setCheckToken}
-                baseTokenBalanceUpdateLoading={baseTokenBalanceUpdateLoading}
-                quoteBalanceUpdateLoading={quoteBalanceUpdateLoading}
-              />
-            </Box>
-          )}
-        </Box>
+            />
+            {!!pool && PoolApi.utils.singleSideLp(pool.type) && (
+              <Box
+                sx={{
+                  pt: 20,
+                  pb: 13,
+                  px: 20,
+                  borderStyle: 'solid',
+                  borderWidth: '1px 0 0',
+                }}
+              >
+                <TokenList
+                  pool={pool}
+                  balanceInfo={balanceInfo}
+                  checkTokenType={checkTokenType}
+                  setCheckToken={setCheckToken}
+                  baseTokenBalanceUpdateLoading={baseTokenBalanceUpdateLoading}
+                  quoteBalanceUpdateLoading={quoteBalanceUpdateLoading}
+                />
+              </Box>
+            )}
+          </Box>
+        )}
         <Box
           sx={{
             pt: 20,
@@ -294,15 +383,54 @@ export function RemovePoolOperate({
             mt: 8,
           }}
         >
-          <SlippageSetting
-            value={slipper}
-            onChange={setSlipper}
-            disabled={!canOperate}
-          />
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              gap: 8,
+            }}
+          >
+            {isAMMV2 && canWithdrawBasicToken && (
+              <Box
+                sx={{
+                  px: 12,
+                  py: 4,
+                  borderRadius: 20,
+                  borderWidth: 1,
+                  backgroundColor: 'transparent',
+                  color: 'primary.main',
+                  cursor: 'pointer',
+                  typography: 'body2',
+                  '&:hover': {
+                    backgroundColor: 'hover.default',
+                  },
+                }}
+                component="button"
+                onClick={() => setReceiveWrapped((prev) => !prev)}
+              >
+                <Trans>
+                  Receive{' '}
+                  {receiveWrapped
+                    ? basicToken?.symbol
+                    : basicToken?.wrappedTokenSymbol}
+                </Trans>
+              </Box>
+            )}
+            <SlippageSetting
+              value={slipper}
+              onChange={setSlipper}
+              disabled={!canOperate}
+              type={pool?.type}
+              sx={{
+                margin: 0,
+              }}
+            />
+          </Box>
           <Ratio
             pool={pool as OperatePool}
             addPortion={addPortion}
             midPrice={midPrice}
+            shareOfPool={uniV2Pair?.shareOfPool}
           />
         </LoadingSkeleton>
         {!!pool && (
@@ -374,7 +502,7 @@ export function RemovePoolOperate({
       <Box
         sx={{
           px: 20,
-          pt: 16,
+          py: 16,
           position: 'sticky',
           bottom: 0,
           borderStyle: 'solid',
@@ -401,7 +529,10 @@ export function RemovePoolOperate({
               fullWidth
               disabled={disabled}
               danger={isWarnCompare}
-              isLoading={operateLiquidityMutation.isPending}
+              isLoading={
+                operateLiquidityMutation.isPending ||
+                removeAMMV2LiquidityMutataion.isPending
+              }
               onClick={() => {
                 if (disabled) return;
                 if (isWarnCompare) {
@@ -425,6 +556,7 @@ export function RemovePoolOperate({
         onClose={() => setShowCompareConfirm(false)}
         title={t`Confirm submission`}
         onConfirm={submitLq}
+        modal
       >
         <Box>
           <Box>

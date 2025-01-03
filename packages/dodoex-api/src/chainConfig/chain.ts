@@ -32,4 +32,14 @@ export enum ChainId {
   DODO_CHAIN_TESTNET = 53457,
 
   BARTIO_TESTNET = 80084,
+
+  TAIKO = 167000,
+
+  PLUME = 98865,
+
+  PLUME_TESTNET = 98864,
+
+  NEOX = 47763,
+
+  MORPH = 2818,
 }

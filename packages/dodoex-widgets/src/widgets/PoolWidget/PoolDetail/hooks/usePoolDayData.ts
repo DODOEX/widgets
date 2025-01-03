@@ -2,7 +2,7 @@ import { ChainId, PoolApi } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { ThegraphKeyMap } from '../../../../constants/chains';
-import { useGlobalConfig } from '../../../../providers/GlobalConfigContext';
+import { useGraphQLRequests } from '../../../../hooks/useGraphQLRequests';
 
 function toNumber(v: string | number | null | undefined) {
   if (v === null || v === undefined) {
@@ -21,7 +21,7 @@ export function usePoolDayData({
   day?: number;
 }) {
   const chain = chainId ? ThegraphKeyMap[chainId] : '';
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
   const query = graphQLRequests.getQuery(PoolApi.graphql.fetchPoolDayData, {
     where: {
       pair_address: address ?? '',
@@ -36,11 +36,13 @@ export function usePoolDayData({
 
   const dayDataList =
     result.data?.dashboard_pairs_day_data?.map((item) => ({
-      volume: toNumber(item?.volume),
-      fee: toNumber(item?.fee),
+      volume: toNumber(item?.volumeUsd),
+      fee: toNumber(
+        new BigNumber(item?.feeUsd ?? 0).plus(item?.mtFeeUsd ?? 0).toString(),
+      ),
       traders: item?.addresses ? Number(item.addresses) : 0,
       date: item?.timestamp ? item?.timestamp * 1000 : 0,
-      tvl: toNumber(item?.tvl),
+      tvl: toNumber(item?.tvlUsd),
     })) ?? [];
 
   return {

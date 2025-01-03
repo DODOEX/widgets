@@ -126,15 +126,48 @@ export default function DepthAndLiquidityChart({
         </Box>
         <TabPanel value={DepthTab.depth}>
           {chartWidth && (
-            <DepthChart
+            <React.Suspense>
+              <DepthChart
+                width={chartWidth}
+                height={isMobile ? 261 : 364}
+                chartId="create-pool-depth-chart"
+                baseTokenSymbol={baseSymbol}
+                quoteTokenSymbol={quoteSymbol}
+                pmmModel={pmmModel}
+                pmmParams={pmmParams}
+                midPrice={midPrice}
+                colorMap={{
+                  grid: theme.palette.mode === 'light' ? '#E4E4E4' : undefined,
+                  midPriceLine:
+                    theme.palette.mode === 'light' ? '#E4E4E4' : undefined,
+                  leftBg: [0, alpha(leftColor, 0.04), 1, alpha(leftColor, 0.3)],
+                  leftLine: leftColor,
+                  rightBg: [
+                    0,
+                    alpha(rightColor, 0.04),
+                    1,
+                    alpha(rightColor, 0.3),
+                  ],
+                  rightLine: rightColor,
+                  tooltipBg: theme.palette.background.paperContrast,
+                  tooltipColor: theme.palette.text.primary,
+                }}
+                notShowAmountInput={isMobile}
+              />
+            </React.Suspense>
+          )}
+        </TabPanel>
+        <TabPanel value={DepthTab.liquidity}>
+          <React.Suspense>
+            <LiquidityChart
               width={chartWidth}
               height={isMobile ? 261 : 364}
-              chartId="create-pool-depth-chart"
               baseTokenSymbol={baseSymbol}
               quoteTokenSymbol={quoteSymbol}
               pmmModel={pmmModel}
               pmmParams={pmmParams}
               midPrice={midPrice}
+              notShowTipText
               colorMap={{
                 grid: theme.palette.mode === 'light' ? '#E4E4E4' : undefined,
                 midPriceLine:
@@ -150,34 +183,10 @@ export default function DepthAndLiquidityChart({
                 rightLine: rightColor,
                 tooltipBg: theme.palette.background.paperContrast,
                 tooltipColor: theme.palette.text.primary,
+                textColor: theme.palette.text.secondary,
               }}
-              notShowAmountInput={isMobile}
             />
-          )}
-        </TabPanel>
-        <TabPanel value={DepthTab.liquidity}>
-          <LiquidityChart
-            width={chartWidth}
-            height={isMobile ? 261 : 364}
-            baseTokenSymbol={baseSymbol}
-            quoteTokenSymbol={quoteSymbol}
-            pmmModel={pmmModel}
-            pmmParams={pmmParams}
-            midPrice={midPrice}
-            notShowTipText
-            colorMap={{
-              grid: theme.palette.mode === 'light' ? '#E4E4E4' : undefined,
-              midPriceLine:
-                theme.palette.mode === 'light' ? '#E4E4E4' : undefined,
-              leftBg: [0, alpha(leftColor, 0.04), 1, alpha(leftColor, 0.3)],
-              leftLine: leftColor,
-              rightBg: [0, alpha(rightColor, 0.04), 1, alpha(rightColor, 0.3)],
-              rightLine: rightColor,
-              tooltipBg: theme.palette.background.paperContrast,
-              tooltipColor: theme.palette.text.primary,
-              textColor: theme.palette.text.secondary,
-            }}
-          />
+          </React.Suspense>
         </TabPanel>
       </Tabs>
       <Box

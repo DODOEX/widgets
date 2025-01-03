@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { getGlobalProps } from '../../store/selectors/globals';
 import { useCallback, useState } from 'react';
 import { getPlatformId } from '../../utils';
 import { usePriceTimer } from './usePriceTimer';
 import { TokenInfo } from '../Token';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export interface FetchFiatPriceProps {
   fromToken: TokenInfo | null;
@@ -15,7 +14,7 @@ export interface FetchFiatPriceProps {
 export function useFetchFiatPrice({ fromToken, toToken }: FetchFiatPriceProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
-  const { apikey } = useSelector(getGlobalProps);
+  const { apikey } = useUserOptions();
   const [fromFiatPrice, setFromFiatPrice] = useState<string>('');
   const [toFiatPrice, setToFiatPrice] = useState<string>('');
   const fiatPriceAPI = useGetAPIService(APIServiceKey.fiatPrice);
@@ -28,7 +27,6 @@ export function useFetchFiatPrice({ fromToken, toToken }: FetchFiatPriceProps) {
 
     axios
       .post(
-        // TODO: set timeout value!!
         fiatPriceAPI,
         {
           networks: tokens.map((token) => getPlatformId(token.chainId)),

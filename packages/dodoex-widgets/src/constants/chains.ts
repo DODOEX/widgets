@@ -50,6 +50,11 @@ export const rpcServerMap: {
   [ChainId.SEPOLIA]: ['https://ethereum-sepolia-rpc.publicnode.com'],
   [ChainId.DODO_CHAIN_TESTNET]: ['https://dodochain-testnet.alt.technology'],
   [ChainId.BARTIO_TESTNET]: ['https://bartio.rpc.berachain.com'],
+  [ChainId.TAIKO]: ['https://rpc.mainnet.taiko.xyz'],
+  [ChainId.PLUME]: ['https://phoenix-rpc.plumenetwork.xyz'],
+  [ChainId.PLUME_TESTNET]: ['https://test-rpc.plumenetwork.xyz'],
+  [ChainId.NEOX]: ['https://mainnet-1.rpc.banelabs.org'],
+  [ChainId.MORPH]: ['https://rpc.morphl2.io'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -114,6 +119,11 @@ export const scanUrlDomainMap: {
   [ChainId.SEPOLIA]: 'sepolia.etherscan.io',
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet-explorer.alt.technology',
   [ChainId.BARTIO_TESTNET]: 'bartio.beratrail.io',
+  [ChainId.TAIKO]: 'taikoscan.io',
+  [ChainId.PLUME]: 'phoenix-explorer.plumenetwork.xyz',
+  [ChainId.PLUME_TESTNET]: 'test-explorer.plumenetwork.xyz',
+  [ChainId.NEOX]: 'xexplorer.neo.org',
+  [ChainId.MORPH]: 'explorer.morphl2.io',
 };
 
 export const ThegraphKeyMap: {
@@ -137,4 +147,63 @@ export const ThegraphKeyMap: {
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
   [ChainId.BARTIO_TESTNET]: '',
+  [ChainId.TAIKO]: 'taiko',
+  [ChainId.PLUME]: 'plume',
+  [ChainId.PLUME_TESTNET]: 'plume-testnet',
+  [ChainId.NEOX]: 'neox',
+  [ChainId.MORPH]: 'morph',
+};
+
+export const blockTimeMap: {
+  [key in ChainId]: number;
+} = {
+  [ChainId.MAINNET]: 12000,
+  [ChainId.GOERLI]: 12000,
+  [ChainId.OPTIMISM]: 12000,
+  [ChainId.CONFLUX]: 3000,
+  [ChainId.BSC]: 3000,
+  [ChainId.OKCHAIN]: 4000,
+  [ChainId.POLYGON]: 2200,
+  [ChainId.ARBITRUM_ONE]: 12000,
+  [ChainId.AURORA]: 1000,
+  [ChainId.AVALANCHE]: 1000,
+  [ChainId.BASE]: 2000,
+  [ChainId.LINEA]: 2000,
+  [ChainId.SCROLL]: 3000,
+  [ChainId.MANTA]: 10000,
+  [ChainId.MANTLE]: 2000,
+  [ChainId.SEPOLIA]: 12000,
+  [ChainId.DODO_CHAIN_TESTNET]: 12000,
+  [ChainId.TAIKO]: 48000,
+  [ChainId.PLUME]: 12000,
+  [ChainId.PLUME_TESTNET]: 2600,
+  [ChainId.NEOX]: 12000,
+  [ChainId.MORPH]: 3200,
+};
+
+export const dexKeysMap: {
+  [key in ChainId]: string[];
+} = {
+  [ChainId.MAINNET]: [],
+  [ChainId.GOERLI]: [],
+  [ChainId.OPTIMISM]: [],
+  [ChainId.CONFLUX]: [],
+  [ChainId.BSC]: [],
+  [ChainId.OKCHAIN]: [],
+  [ChainId.POLYGON]: [],
+  [ChainId.ARBITRUM_ONE]: [],
+  [ChainId.AURORA]: [],
+  [ChainId.AVALANCHE]: [],
+  [ChainId.BASE]: [],
+  [ChainId.LINEA]: [],
+  [ChainId.SCROLL]: [],
+  [ChainId.MANTA]: [],
+  [ChainId.MANTLE]: [],
+  [ChainId.SEPOLIA]: [],
+  [ChainId.DODO_CHAIN_TESTNET]: [],
+  [ChainId.TAIKO]: [],
+  [ChainId.PLUME]: [],
+  [ChainId.PLUME_TESTNET]: [],
+  [ChainId.NEOX]: [],
+  [ChainId.MORPH]: [],
 };

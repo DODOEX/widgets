@@ -4,11 +4,11 @@ import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ChainId } from '@dodoex/api';
-import { useGlobalConfig } from '../../providers/GlobalConfigContext';
 import { AppThunkDispatch } from '../../store/actions';
 import { setOpenConnectWalletInfo } from '../../store/actions/wallet';
 import { chainListMap } from '../../constants/chainList';
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
+import { useUserOptions } from '../UserOptionsProvider';
 
 export default function NeedConnectButton({
   chainId,
@@ -21,7 +21,7 @@ export default function NeedConnectButton({
 }) {
   const { account, chainId: currentChainId, connector } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { onConnectWalletClick } = useGlobalConfig();
+  const { onConnectWalletClick, onSwitchChain } = useUserOptions();
   const [loading, setLoading] = React.useState(false);
   const switchChain = useSwitchChain(chainId);
   const needSwitchNetwork =
@@ -45,6 +45,12 @@ export default function NeedConnectButton({
         onClick={async () => {
           // switch chain
           if (needSwitchNetwork) {
+            if (onSwitchChain) {
+              setLoading(true);
+              await onSwitchChain();
+              setLoading(false);
+              return;
+            }
             if (switchChain) {
               setLoading(true);
               await switchChain();

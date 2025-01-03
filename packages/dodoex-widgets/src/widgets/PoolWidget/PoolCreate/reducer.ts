@@ -1,19 +1,22 @@
 import BigNumber from 'bignumber.js';
-import { Version } from './types';
+import { SubPeggedVersionE, Version } from './types';
 import {
-  DEFAULT_FEE_RATE,
+  computePeggedRecommendRatio,
   DEFAULT_INIT_PRICE,
   DEFAULT_INIT_PRICE_STANDARD,
   DEFAULT_SLIPPAGE_COEFFICIENT,
   DEFAULT_SLIPPAGE_COEFFICIENT_PEGGED,
+  PEGGED_RATIO_DECIMALS,
 } from './utils';
 import { getDefaultSlippageCoefficientList } from './hooks/useSlippageCoefficientList';
 import { TokenInfo } from '../../../hooks/Token';
 import { PMMModel } from '@dodoex/api';
 
 export interface StateProps {
-  currentStep: 0 | 1 | 2;
+  /** The pegged type is created in 5 steps, and the other types are created in 3 steps. */
+  currentStep: 0 | 1 | 2 | 3 | 4;
   selectedVersion: Version;
+  selectedSubPeggedVersion?: SubPeggedVersionE;
   baseToken: TokenInfo | null;
   quoteToken: TokenInfo | null;
   baseAmount: string;
@@ -43,6 +46,10 @@ export interface StateProps {
   isSlippageCoefficientCustomized: boolean;
   feeRate: string | '0.01' | '0.3' | '1';
   isFeeRateCustomized: boolean;
+  /** pegged type base token liquidity ratio */
+  peggedBaseTokenRatio: string;
+  /** pegged type quote token liquidity ratio */
+  peggedQuoteTokenRatio: string;
 }
 
 type Pool = any;
@@ -50,6 +57,7 @@ type Pool = any;
 export enum Types {
   SetCurrentStep = 1,
   SelectNewVersion,
+  SelectNewSubPeggedVersion,
   UpdateBaseToken,
   UpdateQuoteToken,
   SwitchTokens,
@@ -64,11 +72,14 @@ export enum Types {
   UpdateFeeRate,
   UpdateIsFeeRateCustomized,
   InitEditParameters,
+  UpdatePeggedBaseTokenRatio,
+  UpdatePeggedQuoteTokenRatio,
 }
 
 type Payload = {
   [Types.SetCurrentStep]: StateProps['currentStep'];
   [Types.SelectNewVersion]: Version;
+  [Types.SelectNewSubPeggedVersion]: SubPeggedVersionE;
   [Types.UpdateBaseToken]: TokenInfo;
   [Types.UpdateQuoteToken]: TokenInfo;
   [Types.SwitchTokens]: undefined;
@@ -86,6 +97,8 @@ type Payload = {
   [Types.UpdateFeeRate]: StateProps['feeRate'];
   [Types.UpdateIsFeeRateCustomized]: boolean;
   [Types.InitEditParameters]: Pool;
+  [Types.UpdatePeggedBaseTokenRatio]: string;
+  [Types.UpdatePeggedQuoteTokenRatio]: string;
 };
 
 export type Actions = ActionMap<Payload>[keyof ActionMap<Payload>];
@@ -145,22 +158,49 @@ function updateFixedRatioPriceAndInitPrice({
     throw new Error('token is required');
   }
   const isForward = leftTokenAddress === baseToken?.address;
+  const isStandard = selectedVersion === Version.standard;
+  const isPegged = selectedVersion === Version.pegged;
   const fixedRatioPriceBN = new BigNumber(fixedRatioPrice);
-  const initPrice =
-    selectedVersion === Version.standard
-      ? DEFAULT_INIT_PRICE_STANDARD
-      : isForward
+  let initPrice = isStandard
+    ? DEFAULT_INIT_PRICE_STANDARD
+    : isForward
       ? fixedRatioPrice
       : !fixedRatioPriceBN.isNaN() && fixedRatioPriceBN.gt(0)
-      ? new BigNumber(1)
-          .div(fixedRatioPriceBN)
-          .dp(isForward ? quoteToken.decimals : baseToken.decimals)
-          .toString()
-      : DEFAULT_INIT_PRICE;
-  if (
-    (selectedVersion === Version.standard && isFixedRatio) ||
-    selectedVersion === Version.pegged
-  ) {
+        ? new BigNumber(1)
+            .div(fixedRatioPriceBN)
+            .dp(isForward ? quoteToken.decimals : baseToken.decimals)
+            .toString()
+        : DEFAULT_INIT_PRICE;
+  if (isStandard) {
+    /**
+     * The standard pool is not necessarily fixed to this. When 18 - baseDecimals + quoteDecimals is less than the number of decimal places, use the bottom-line selection.
+     */
+    const iDecimals = 18 - baseToken.decimals + quoteToken.decimals;
+    if (iDecimals < String(DEFAULT_INIT_PRICE_STANDARD).split('.')[1].length) {
+      initPrice = new BigNumber(1).div(10 ** iDecimals).toString();
+    }
+  }
+
+  if (isPegged) {
+    const peggedRecommendRatio = computePeggedRecommendRatio({
+      initPrice,
+    });
+    const peggedBaseTokenRatio = peggedRecommendRatio.base
+      ? peggedRecommendRatio.base.multipliedBy(100).toString()
+      : '';
+    const peggedQuoteTokenRatio = peggedRecommendRatio.quote
+      ? peggedRecommendRatio.quote.multipliedBy(100).toString()
+      : '';
+    return {
+      ...state,
+      initPrice,
+      fixedRatioPrice,
+      peggedBaseTokenRatio,
+      peggedQuoteTokenRatio,
+    };
+  }
+
+  if (isStandard && isFixedRatio) {
     const baseAmountBN = new BigNumber(baseAmount);
     if (
       !baseAmountBN.isNaN() &&
@@ -190,6 +230,12 @@ export function reducer(state: StateProps, action: Actions): StateProps {
   switch (action.type) {
     case Types.SetCurrentStep: {
       const { payload: nextStep } = action;
+      if (state.selectedVersion === Version.pegged) {
+        return {
+          ...state,
+          currentStep: nextStep >= 4 ? 4 : nextStep <= 0 ? 0 : nextStep,
+        };
+      }
       return {
         ...state,
         currentStep: nextStep >= 2 ? 2 : nextStep <= 0 ? 0 : nextStep,
@@ -201,8 +247,10 @@ export function reducer(state: StateProps, action: Actions): StateProps {
         return state;
       }
       let slippageCoefficient = DEFAULT_SLIPPAGE_COEFFICIENT;
+      let selectedSubPeggedVersion: SubPeggedVersionE | undefined;
       if (newVersion === Version.pegged) {
         slippageCoefficient = DEFAULT_SLIPPAGE_COEFFICIENT_PEGGED;
+        selectedSubPeggedVersion = SubPeggedVersionE.DSP;
       }
       let initPrice = DEFAULT_INIT_PRICE_STANDARD;
       if (newVersion === Version.singleToken) {
@@ -227,7 +275,14 @@ export function reducer(state: StateProps, action: Actions): StateProps {
           selectedVersion: action.payload,
         }).includes(slippageCoefficient),
         selectedVersion: action.payload,
+        selectedSubPeggedVersion,
         leftTokenAddress: state.baseToken?.address,
+      };
+    }
+    case Types.SelectNewSubPeggedVersion: {
+      return {
+        ...state,
+        selectedSubPeggedVersion: action.payload,
       };
     }
     case Types.UpdateBaseToken: {
@@ -277,33 +332,41 @@ export function reducer(state: StateProps, action: Actions): StateProps {
       const baseAmount = action.payload;
       const {
         selectedVersion,
-        baseToken,
         quoteToken,
         fixedRatioPrice,
         isFixedRatio,
-        leftTokenAddress,
+        peggedBaseTokenRatio,
       } = state;
       if (!quoteToken) {
         throw new Error('token is required');
       }
-      const isForward = leftTokenAddress === baseToken?.address;
       const baseAmountBN = new BigNumber(baseAmount);
 
       /**
-       * pegged 池子 fixedRatioPrice baseAmount quoteAmount 三者修改联动
-       * 如果法币价格即初始价格查询价格查询失败，此时 fixedRatioPrice 输入框可以修改，填充默认 fixedRatioPrice, 依然保持三者联动修改
+       * pegged pool fixedRatioPrice baseAmount quoteAmount three modifications linked together
+       * If the legal currency price is the initial price query and the price query fails, the fixedRatioPrice input box can be modified at this time and filled with the default fixedRatioPrice. The three will still be modified in conjunction with each other.
        *
-       * dpp, single-token 池子无需联动，各自修改
+       * dpp, single-token pools do not need to be linked and can be modified separately
        */
 
-      // baseAmount 变化，保持 initPrice 不变，修改 quoteAmount
+      // baseAmount changes, keep initPrice unchanged, modify quoteAmount
       if (selectedVersion === Version.pegged) {
-        const fixedRatioPriceBN = new BigNumber(fixedRatioPrice);
-        const quoteAmountBN = fixedRatioPriceBN.gt(0)
-          ? isForward
-            ? baseAmountBN.multipliedBy(fixedRatioPriceBN)
-            : baseAmountBN.div(fixedRatioPriceBN)
-          : undefined;
+        const peggedBaseTokenRatioBN = new BigNumber(peggedBaseTokenRatio)
+          .div(100)
+          .dp(PEGGED_RATIO_DECIMALS, BigNumber.ROUND_DOWN);
+        if (
+          !peggedBaseTokenRatioBN.isFinite() ||
+          peggedBaseTokenRatioBN.lt(0)
+        ) {
+          return {
+            ...state,
+            baseAmount,
+            quoteAmount: '',
+          };
+        }
+        const quoteAmountBN = baseAmountBN
+          .div(peggedBaseTokenRatioBN)
+          .minus(baseAmountBN);
         return {
           ...state,
           baseAmount,
@@ -312,7 +375,7 @@ export function reducer(state: StateProps, action: Actions): StateProps {
       }
 
       /**
-       * standard 池子绑定 fixedRatioPrice 联动时，根据算法计算 quoteAmount
+       * When the standard pool is bound to fixedRatioPrice, quoteAmount is calculated according to the algorithm.
        */
 
       if (
@@ -354,6 +417,7 @@ export function reducer(state: StateProps, action: Actions): StateProps {
         fixedRatioPrice,
         isFixedRatio,
         leftTokenAddress,
+        peggedQuoteTokenRatio,
       } = state;
       if (!baseToken) {
         throw new Error('token is required');
@@ -361,10 +425,31 @@ export function reducer(state: StateProps, action: Actions): StateProps {
       const isForward = leftTokenAddress === baseToken?.address;
       const quoteAmountBN = new BigNumber(quoteAmount);
 
-      if (
-        (selectedVersion === Version.standard && isFixedRatio) ||
-        selectedVersion === Version.pegged
-      ) {
+      if (selectedVersion === Version.pegged) {
+        const peggedQuoteTokenRatioBN = new BigNumber(peggedQuoteTokenRatio)
+          .div(100)
+          .dp(PEGGED_RATIO_DECIMALS, BigNumber.ROUND_DOWN);
+        if (
+          !peggedQuoteTokenRatioBN.isFinite() ||
+          peggedQuoteTokenRatioBN.lt(0)
+        ) {
+          return {
+            ...state,
+            baseAmount: '',
+            quoteAmount,
+          };
+        }
+        const baseAmountBN = quoteAmountBN
+          .div(peggedQuoteTokenRatioBN)
+          .minus(quoteAmountBN);
+        return {
+          ...state,
+          baseAmount: formatBN(baseAmountBN, baseToken.decimals),
+          quoteAmount,
+        };
+      }
+
+      if (selectedVersion === Version.standard && isFixedRatio) {
         const fixedRatioPriceBN = new BigNumber(fixedRatioPrice);
         const baseAmountBN = fixedRatioPriceBN.gt(0)
           ? isForward
@@ -473,6 +558,87 @@ export function reducer(state: StateProps, action: Actions): StateProps {
     case Types.InitEditParameters: {
       // @ts-ignore
       return initEditParameters(state, action.payload);
+    }
+    case Types.UpdatePeggedBaseTokenRatio: {
+      if (!state.quoteToken) {
+        throw new Error('token is required');
+      }
+      const peggedBaseTokenRatio = action.payload;
+      const peggedBaseTokenRatioBN = new BigNumber(peggedBaseTokenRatio).dp(
+        PEGGED_RATIO_DECIMALS - 2,
+        BigNumber.ROUND_DOWN,
+      );
+      if (!peggedBaseTokenRatioBN.isFinite() || peggedBaseTokenRatioBN.lt(0)) {
+        return {
+          ...state,
+          peggedBaseTokenRatio: '',
+          peggedQuoteTokenRatio: '',
+          baseAmount: '',
+          quoteAmount: '',
+        };
+      }
+      const peggedQuoteTokenRatioBN = new BigNumber(100)
+        .minus(peggedBaseTokenRatioBN)
+        .dp(PEGGED_RATIO_DECIMALS - 2, BigNumber.ROUND_DOWN);
+
+      const baseAmount = peggedBaseTokenRatioBN.lte(0) ? '0' : state.baseAmount;
+      const baseAmountBN = new BigNumber(baseAmount);
+      const quoteAmountBN = baseAmountBN
+        .div(peggedBaseTokenRatioBN.div(100))
+        .minus(baseAmountBN);
+
+      return {
+        ...state,
+        peggedBaseTokenRatio,
+        peggedQuoteTokenRatio: peggedQuoteTokenRatioBN.lt(0)
+          ? '0'
+          : peggedQuoteTokenRatioBN.toString(),
+        baseAmount,
+        quoteAmount: formatBN(quoteAmountBN, state.quoteToken.decimals),
+      };
+    }
+    case Types.UpdatePeggedQuoteTokenRatio: {
+      if (!state.baseToken) {
+        throw new Error('token is required');
+      }
+      const peggedQuoteTokenRatio = action.payload;
+      const peggedQuoteTokenRatioBN = new BigNumber(peggedQuoteTokenRatio).dp(
+        PEGGED_RATIO_DECIMALS - 2,
+        BigNumber.ROUND_DOWN,
+      );
+      if (
+        !peggedQuoteTokenRatioBN.isFinite() ||
+        peggedQuoteTokenRatioBN.lt(0)
+      ) {
+        return {
+          ...state,
+          peggedBaseTokenRatio: '',
+          peggedQuoteTokenRatio,
+          baseAmount: '',
+          quoteAmount: '',
+        };
+      }
+      const peggedBaseTokenRatioBN = new BigNumber(100)
+        .minus(peggedQuoteTokenRatioBN)
+        .dp(PEGGED_RATIO_DECIMALS - 2, BigNumber.ROUND_DOWN);
+
+      const quoteAmount = peggedQuoteTokenRatioBN.lte(0)
+        ? '0'
+        : state.quoteAmount;
+      const quoteAmountBN = new BigNumber(quoteAmount);
+      const baseAmountBN = quoteAmountBN
+        .div(peggedQuoteTokenRatioBN.div(100))
+        .minus(quoteAmountBN);
+
+      return {
+        ...state,
+        peggedBaseTokenRatio: peggedBaseTokenRatioBN.lt(0)
+          ? '0'
+          : peggedBaseTokenRatioBN.toString(),
+        peggedQuoteTokenRatio,
+        baseAmount: formatBN(baseAmountBN, state.baseToken.decimals),
+        quoteAmount,
+      };
     }
     default:
       // @ts-ignore

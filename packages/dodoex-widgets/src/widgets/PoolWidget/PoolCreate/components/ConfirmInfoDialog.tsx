@@ -4,9 +4,15 @@ import TokenLogo from '../../../../components/TokenLogo';
 import WidgetDialog from '../../../../components/WidgetDialog';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { useCreatePmm } from '../hooks/useCreatePmm';
-import { useVersionList } from '../hooks/useVersionList';
+import {
+  getSubPeggedVersionMap,
+  useVersionList,
+} from '../hooks/useVersionList';
 import { StateProps } from '../reducer';
+import { Version } from '../types';
 import { computeInitPriceText } from '../utils';
+import Dialog from '../../../../components/Dialog';
+import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 
 function Item({
   label,
@@ -60,6 +66,7 @@ export default function ConfirmInfoDialog({
 }) {
   const { chainId } = useWalletInfo();
   const { versionMap } = useVersionList();
+  const { isMobile } = useWidgetDevice();
 
   const { title, initPriceLabel } = versionMap[state.selectedVersion];
   const { midPrice } = useCreatePmm({
@@ -69,10 +76,15 @@ export default function ConfirmInfoDialog({
     initPrice: state.initPrice,
     slippageCoefficient: state.slippageCoefficient,
   });
+
+  const subPeggedVersionMap = getSubPeggedVersionMap();
+  const isPeggedVersion = state.selectedVersion === Version.pegged;
+
   return (
-    <WidgetDialog
+    <Dialog
       open={on}
       onClose={onClose}
+      modal
       title={isModify ? t`Modify Confirmation` : t`Pool Creation Confirmation`}
     >
       <Box
@@ -83,6 +95,7 @@ export default function ConfirmInfoDialog({
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
+          width: isMobile ? undefined : 420,
         }}
       >
         <Box
@@ -134,7 +147,10 @@ export default function ConfirmInfoDialog({
               </>
             }
           />
-          <Item label={t`Fee Rate`} value={`${state.feeRate}%`} />
+          <Item
+            label={t`Slippage Coefficient`}
+            value={state.slippageCoefficient}
+          />
           <Item
             label={initPriceLabel}
             value={
@@ -148,10 +164,29 @@ export default function ConfirmInfoDialog({
                 : ''
             }
           />
-          <Item
-            label={t`Slippage Coefficient`}
-            value={state.slippageCoefficient}
-          />
+          {isPeggedVersion && (
+            <Item
+              label={t`Pricing Model`}
+              value={
+                state.selectedSubPeggedVersion
+                  ? subPeggedVersionMap[state.selectedSubPeggedVersion]?.title
+                  : '-'
+              }
+            />
+          )}
+          <Item label={t`Fee Rate`} value={`${state.feeRate}%`} />
+          {isPeggedVersion && (
+            <Item
+              label={t`Initial asset ratio`}
+              value={
+                <>
+                  {state.peggedBaseTokenRatio}%&nbsp;{state.baseToken?.symbol}
+                  &nbsp;:&nbsp;{state.peggedQuoteTokenRatio}%&nbsp;
+                  {state.quoteToken?.symbol}
+                </>
+              }
+            />
+          )}
         </Box>
         <Button
           fullWidth
@@ -164,6 +199,6 @@ export default function ConfirmInfoDialog({
           {isModify ? t`Confirm` : t`Create`}
         </Button>
       </Box>
-    </WidgetDialog>
+    </Dialog>
   );
 }

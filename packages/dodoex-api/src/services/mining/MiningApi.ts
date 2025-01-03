@@ -1,14 +1,16 @@
+import { parseFixed } from '@ethersproject/bignumber';
+import BigNumber from 'bignumber.js';
+import { ChainId } from '../../chainConfig/chain';
+import contractConfig from '../../chainConfig/contractConfig';
 import ContractRequests, {
   ABIName,
-  ContractRequestsConfig,
   CONTRACT_QUERY_KEY,
+  ContractRequestsConfig,
 } from '../../helper/ContractRequests';
 import { encodeFunctionDataByFragments } from '../../helper/ContractRequests/encode';
-import { parseFixed } from '@ethersproject/bignumber';
 import { byWei } from '../../utils/number';
 import { miningGraphqlQuery } from './graphqlQuery';
 import { miningUtils } from './utils';
-import BigNumber from 'bignumber.js';
 
 const miningFragments = [
   {
@@ -29,6 +31,62 @@ const miningFragments = [
     inputs: [],
     name: 'claimAllRewards',
     outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'stakeToken', type: 'address' },
+      { internalType: 'bool', name: 'isLpToken', type: 'bool' },
+      { internalType: 'uint256', name: 'platform', type: 'uint256' },
+      {
+        internalType: 'address[]',
+        name: 'rewardTokens',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'rewardPerBlock',
+        type: 'uint256[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'startBlock',
+        type: 'uint256[]',
+      },
+      { internalType: 'uint256[]', name: 'endBlock', type: 'uint256[]' },
+    ],
+    name: 'createDODOMineV3',
+    outputs: [{ internalType: 'address', name: 'newMineV3', type: 'address' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+];
+
+const oldMiningFragments = [
+  {
+    inputs: [
+      { internalType: 'address', name: 'stakeToken', type: 'address' },
+      { internalType: 'bool', name: 'isLpToken', type: 'bool' },
+      {
+        internalType: 'address[]',
+        name: 'rewardTokens',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'rewardPerBlock',
+        type: 'uint256[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'startBlock',
+        type: 'uint256[]',
+      },
+      { internalType: 'uint256[]', name: 'endBlock', type: 'uint256[]' },
+    ],
+    name: 'createDODOMineV3',
+    outputs: [{ internalType: 'address', name: 'newMineV3', type: 'address' }],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -103,6 +161,60 @@ export class MiningApi {
 
       return {
         to: miningContractAddress,
+        data,
+      };
+    },
+
+    async createDODOMineV3(
+      chainId: ChainId,
+      stakeToken: string,
+      isLpToken: boolean,
+      platform: number,
+      rewardTokens: string[],
+      rewardPerBlock: string[],
+      startBlock: number[],
+      endBlock: number[],
+    ) {
+      const { DODO_MINEV3_PROXY } = contractConfig[chainId as ChainId];
+      if (!DODO_MINEV3_PROXY) {
+        return null;
+      }
+      let data;
+      if (
+        [1, 10, 288, 66, 128, 137, 1285, 42161, 1313161554, 43114].includes(
+          chainId,
+        )
+      ) {
+        data = encodeFunctionDataByFragments(
+          oldMiningFragments,
+          'createDODOMineV3',
+          [
+            stakeToken,
+            isLpToken,
+            rewardTokens,
+            rewardPerBlock,
+            startBlock,
+            endBlock,
+          ],
+        );
+      } else {
+        data = encodeFunctionDataByFragments(
+          miningFragments,
+          'createDODOMineV3',
+          [
+            stakeToken,
+            isLpToken,
+            platform,
+            rewardTokens,
+            rewardPerBlock,
+            startBlock,
+            endBlock,
+          ],
+        );
+      }
+
+      return {
+        to: DODO_MINEV3_PROXY,
         data,
       };
     },
@@ -220,6 +332,60 @@ export class MiningApi {
             break;
         }
         return byWei(result, tokenDecimals);
+      },
+    };
+  }
+
+  getRewardTokenInfos(
+    chainId: number | undefined,
+    miningContractAddress: string | undefined,
+    index: number,
+    skip?: Boolean,
+  ) {
+    return {
+      queryKey: [
+        CONTRACT_QUERY_KEY,
+        'mining',
+        'getRewardTokenInfos',
+        ...arguments,
+      ],
+      enabled:
+        chainId != null &&
+        miningContractAddress != null &&
+        index != null &&
+        !skip,
+      queryFn: async () => {
+        if (!chainId || !miningContractAddress) {
+          return null;
+        }
+
+        const result = await this.contractRequests.batchCallQuery(chainId, {
+          abiName: ABIName.v3MiningABI,
+          contractAddress: miningContractAddress,
+          method: 'rewardTokenInfos',
+          params: [index],
+        });
+        if (!result) {
+          return null;
+        }
+        const {
+          rewardVault,
+          rewardPerBlock,
+          workThroughReward,
+          lastFlagBlock,
+          startBlock,
+          endBlock,
+        } = result;
+        return {
+          rewardVault,
+          rewardPerBlock: byWei(rewardPerBlock, 0),
+          workThroughReward: workThroughReward
+            ? byWei(workThroughReward, 0)
+            : undefined,
+          lastFlagBlock: lastFlagBlock ? byWei(lastFlagBlock, 0) : undefined,
+          startBlock: byWei(startBlock, 0),
+          endBlock: byWei(endBlock, 0),
+        };
       },
     };
   }

@@ -16,7 +16,7 @@ import {
   setAuthSwitchCache,
 } from '../../constants/localstorage';
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
-import { getGlobalProps } from '../../store/selectors/globals';
+import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { WIDGET_CLASS_NAME } from '../Widget';
 
 export default function SwitchChainDialog({
@@ -33,7 +33,7 @@ export default function SwitchChainDialog({
   const { chainId: currentChainId } = useWeb3React();
   const [autoSwitch, setAutoSwitch] = useState(getAuthSwitchCache());
   const switchChain = useSwitchChain(chainId);
-  const autoConnectLoading = useSelector(getGlobalProps).autoConnectLoading;
+  const autoConnectLoading = useSelector(getAutoConnectLoading);
   useEffect(() => {
     const computed = async () => {
       if (open) {

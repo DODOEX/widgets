@@ -1,6 +1,6 @@
 import { Box, BoxProps } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
-import TokenLogoSimple from '../../../../components/TokenLogoSimple';
+import TokenLogo from '../../../../components/TokenLogo';
 import { TokenInfo } from '../../../../hooks/Token';
 
 export default function FilterTokenTags({
@@ -36,14 +36,14 @@ export default function FilterTokenTags({
             backgroundColor: 'hover.default',
           }}
         >
-          <TokenLogoSimple
+          <TokenLogo
             address={tag.address}
-            url={tag.logoURI ?? ''}
             width={20}
             height={20}
-            sx={{
-              mr: 8,
-            }}
+            chainId={tag.chainId}
+            url={tag.logoURI}
+            noShowChain
+            marginRight={8}
           />
           {tag.symbol}
           <Box

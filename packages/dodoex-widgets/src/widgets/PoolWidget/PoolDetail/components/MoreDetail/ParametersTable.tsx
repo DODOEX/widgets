@@ -18,6 +18,7 @@ import { poolApi } from '../../../utils';
 import { t } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import { useWidgetDevice } from '../../../../../hooks/style/useWidgetDevice';
+import { isNotEmpty } from '../../../../../utils/utils';
 
 export function formatDateTimeStr(timestamp?: number, short?: boolean): string {
   if (!timestamp) {
@@ -273,17 +274,10 @@ function FeeRateDetail({
           showDecimals: 6,
         })}
       </span>
-      <span>&nbsp;/&nbsp;{t`vDODO Rewards`}&nbsp;</span>
-      <span>
-        {formatPercentageNumber({
-          input: new BigNumber(mtFeeRate).multipliedBy(0.75).toNumber(),
-          showDecimals: 6,
-        })}
-      </span>
       <span>&nbsp;/&nbsp;{t`Community Treasury`}&nbsp;</span>
       <span>
         {formatPercentageNumber({
-          input: new BigNumber(mtFeeRate ?? 0).multipliedBy(0.25).toNumber(),
+          input: new BigNumber(mtFeeRate ?? 0).toNumber(),
           showDecimals: 6,
         })}
       </span>
@@ -300,7 +294,7 @@ export default function ParametersTable({
   const { isMobile } = useWidgetDevice();
   const { baseToken, quoteToken } = detail ?? {};
   const isPrivate = detail?.type === 'DPP';
-  const isDsp = detail?.type === 'DSP';
+  const isDsp = detail?.type === 'DSP' || detail?.type === 'GSP';
   const isClassical = detail?.type === 'CLASSICAL';
   const dashboardQuery = usePoolDashboard({
     address: detail?.address,
@@ -332,11 +326,14 @@ export default function ParametersTable({
   );
   const totalSwapFee = pairsStatLoading ? (
     <ParametersSkeleton />
-  ) : pairsStat?.totalFee === null || pairsStat?.totalFee === undefined ? (
+  ) : !pairsStat ||
+    (!isNotEmpty(pairsStat.totalFee) && !isNotEmpty(pairsStat.totalMtFee)) ? (
     '-'
   ) : (
     `$${formatReadableNumber({
-      input: new BigNumber(pairsStat.totalFee),
+      input: new BigNumber(pairsStat.totalFee || 0).plus(
+        pairsStat.totalMtFee || 0,
+      ),
       showDecimals: 2,
     })}`
   );
@@ -439,11 +436,15 @@ export default function ParametersTable({
             baseToken={detail.baseToken}
             quoteToken={detail.quoteToken}
             baseAmount={formatReadableNumber({
-              input: pairsStat?.baseFee ?? 0,
+              input: new BigNumber(pairsStat?.baseFee ?? 0).plus(
+                pairsStat?.baseMtFee ?? 0,
+              ),
               showDecimals: 2,
             })}
             quoteAmount={formatReadableNumber({
-              input: pairsStat?.quoteFee ?? 0,
+              input: new BigNumber(pairsStat?.quoteFee ?? 0).plus(
+                pairsStat?.quoteMtFee ?? 0,
+              ),
               showDecimals: 2,
             })}
           />
@@ -580,7 +581,10 @@ export default function ParametersTable({
 
         <InfoItem label={t`Fee Rate`} poolDetailLoading={poolDetailLoading}>
           <div className="detail-title" style={{ textAlign: 'right' }}>
-            {formatPercentageNumber({ input: fullFeeRate?.toNumber() })}
+            {formatPercentageNumber({
+              input: fullFeeRate?.toNumber(),
+              showDecimals: 6,
+            })}
           </div>
           <FeeRateDetail
             detail={detail}
@@ -604,10 +608,10 @@ export default function ParametersTable({
             isClassical
               ? t`Guide Price`
               : isPrivate
-              ? t`Mid Price`
-              : isDsp
-              ? t`Pegged Exchange Rate`
-              : t`Min Price`
+                ? t`Mid Price`
+                : isDsp
+                  ? t`Pegged Exchange Rate`
+                  : t`Min Price`
           }
         >
           {poolDetailLoading ? (

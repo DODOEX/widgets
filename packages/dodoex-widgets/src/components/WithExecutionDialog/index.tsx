@@ -6,8 +6,7 @@ import {
   ExecutionProps,
 } from '../../hooks/Submission';
 import Dialog from '../Swap/components/Dialog';
-import { useDispatch, useSelector } from 'react-redux';
-import { setGlobalProps } from '../../store/actions/globals';
+import { useDispatch } from 'react-redux';
 import { ContractStatus } from '../../store/reducers/globals';
 import { AppThunkDispatch } from '../../store/actions';
 import { ReactComponent as LoadingIcon } from '../../assets/approveBorderRight.svg';
@@ -17,7 +16,8 @@ import { Showing } from '../../hooks/Submission/types';
 import { useWeb3React } from '@web3-react/core';
 import { scanUrlDomainMap } from '../../constants/chains';
 import { ChainId } from '@dodoex/api';
-import { getGlobalProps } from '../../store/selectors/globals';
+import { setContractStatus } from '../../store/actions/globals';
+import { useUserOptions } from '../UserOptionsProvider';
 
 const strokeWidth = 6;
 
@@ -152,23 +152,23 @@ function TransactionTime({
     }
     return `${sec}s`;
   }, [time]);
-  const t = useRef<NodeJS.Timer>();
+  const t = useRef<number>();
   useEffect(() => {
     if (isStarted) {
       setTime(0);
-      clearInterval(t.current);
-      t.current = setInterval(() => {
+      window.clearInterval(t.current);
+      t.current = window.setInterval(() => {
         setTime((i) => i + 1);
       }, 1000);
     }
     return () => {
-      clearInterval(t.current);
+      window.clearInterval(t.current);
     };
   }, [isStarted]);
 
   useEffect(() => {
     if (isEnded) {
-      clearInterval(t.current);
+      window.clearInterval(t.current);
     }
   }, [isEnded]);
 
@@ -237,7 +237,9 @@ export default function WithExecutionDialog({
   };
   const dispatch = useDispatch<AppThunkDispatch>();
 
-  const { noSubmissionDialog } = useSelector(getGlobalProps);
+  const noSubmissionDialog = useUserOptions(
+    (state) => state.noSubmissionDialog,
+  );
 
   return (
     <ExecutionContext.Provider value={ctxVal}>
@@ -306,11 +308,7 @@ export default function WithExecutionDialog({
             fullWidth
             size={Button.Size.big}
             onClick={() => {
-              dispatch(
-                setGlobalProps({
-                  contractStatus: ContractStatus.Initial,
-                }),
-              );
+              dispatch(setContractStatus(ContractStatus.Initial));
               closeShowing();
             }}
             sx={{

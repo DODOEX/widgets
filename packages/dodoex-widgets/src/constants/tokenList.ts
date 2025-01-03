@@ -778,4 +778,22 @@ export default [
     symbol: 'USDC',
     chainId: 5000,
   },
+  {
+    decimals: 18,
+    logoURI:
+      'https://maticnetwork.github.io/polygon-token-assets/assets/eth.svg',
+    name: 'Ether',
+    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+    symbol: 'ETH',
+    chainId: 167000,
+  },
+  {
+    decimals: 6,
+    logoURI:
+      'https://images.dodoex.io/XbtxsPIscM6p5ClHbLO0JumFHA9U23eON8-MDh-Plkg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vaG1nM3hRa1BUTUtkcUNFVnd0LXU4S2lwTW5od1JCdGhLYWxENW9vSWlTZy9hSFIwY0hNNkx5OXpkRzl5WVdkbExtZHZiMmRzWldGd2FYTXVZMjl0TDJSdlpHOHRiV1ZrYVdFdGMzUmhaMmx1Wnk5MWNHeHZZV1JmYVcxblh6UXlNRFEyTkRaZk1qQXlNakEwTWpJd01UQTFNekF4TmpVdWNHNW4ucG5n.webp',
+    name: 'USD Coin',
+    address: '0x07d83526730c7438048d55a4fc0b850e2aab6f0b',
+    symbol: 'USDC',
+    chainId: 167000,
+  },
 ];

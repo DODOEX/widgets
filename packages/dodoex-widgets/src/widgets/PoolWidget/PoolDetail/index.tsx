@@ -1,5 +1,5 @@
-import { Box, useTheme } from '@dodoex/components';
-import { t } from '@lingui/macro';
+import { Box, Button, useTheme, Modal } from '@dodoex/components';
+import { t, Trans } from '@lingui/macro';
 import React from 'react';
 import GoBack from '../../../components/GoBack';
 import WidgetConfirm from '../../../components/WidgetConfirm';
@@ -9,29 +9,31 @@ import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../router';
 import { Page, PageType } from '../../../router/types';
 import { usePoolDetail } from '../hooks/usePoolDetail';
-import PoolOperate from '../PoolOperate';
+import PoolOperateDialog, { PoolOperate } from '../PoolOperate';
+import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import ChartInfo from './components/ChartInfo';
 import MoreDetail from './components/MoreDetail';
 import Overview from './components/Overview';
 import TitleInfo from './components/TitleInfo';
 import TotalLiquidity from './components/TotalLiquidity';
 
-export default function PoolDetail() {
+export default function PoolDetail({
+  params,
+}: {
+  params: Page<PageType.PoolDetail>['params'];
+}) {
   const router = useRouterStore();
   const { isMobile } = useWidgetDevice();
   const { account } = useWalletInfo();
   const theme = useTheme();
-  const params =
-    router.page?.type === PageType.PoolDetail
-      ? (router.page as Page<PageType.PoolDetail>).params
-      : undefined;
 
   const { poolDetail: pool, ...fetchPoolQuery } = usePoolDetail({
     id: params?.address,
     chainId: params?.chainId,
   });
-  const [noResultModalVisible, setNoResultModalVisible] =
-    React.useState<'inital' | 'open' | 'close'>('inital');
+  const [noResultModalVisible, setNoResultModalVisible] = React.useState<
+    'inital' | 'open' | 'close'
+  >('inital');
   if (
     !fetchPoolQuery.isPending &&
     !fetchPoolQuery.error &&
@@ -52,12 +54,34 @@ export default function PoolDetail() {
       pool?.owner &&
       pool.owner.toLocaleLowerCase() === account.toLocaleLowerCase());
 
+  const [operateType, setOperateType] = React.useState<
+    OperateTab | undefined
+  >();
+  if (pool && operateType === undefined && !isMobile) {
+    setOperateType(OperateTab.Add);
+  }
+
+  const operatePool =
+    !!operateType && pool
+      ? {
+          ...pool,
+          baseLpToken: {
+            id: pool.baseLpToken?.id as string,
+          },
+          quoteLpToken: {
+            id: pool.quoteLpToken?.id as string,
+          },
+        }
+      : undefined;
+
+  const hasMining = !!pool?.miningAddress;
+
   return (
     <WidgetContainer
       sx={
         isMobile
           ? {
-              p: theme.spacing(28, 20, canOperate ? 68 : 0),
+              p: theme.spacing(28, 20, canOperate ? 108 : 0),
             }
           : {
               p: theme.spacing(28, 40, 40),
@@ -78,43 +102,50 @@ export default function PoolDetail() {
             : {
                 display: 'flex',
                 gap: 12,
+                overflow: 'hidden',
               }
         }
       >
         <Box
           sx={{
             flex: 1,
+            overflow: 'hidden',
           }}
         >
           <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
-          <ChartInfo poolDetail={pool} />
+          <ChartInfo poolDetail={pool} chart24hDataFirst />
           <Overview poolDetail={pool} />
           <TotalLiquidity poolDetail={pool} />
           <MoreDetail poolDetail={pool} />
         </Box>
-        <PoolOperate
-          account={account}
-          sx={
-            isMobile
-              ? undefined
-              : {
-                  width: 375,
-                }
-          }
-          pool={
-            pool
-              ? {
-                  ...pool,
-                  baseLpToken: {
-                    id: pool.baseLpToken?.id as string,
-                  },
-                  quoteLpToken: {
-                    id: pool.quoteLpToken?.id as string,
-                  },
-                }
-              : undefined
-          }
-        />
+
+        {isMobile ? (
+          <PoolOperateDialog
+            account={account}
+            pool={operatePool}
+            operate={operateType}
+            hasMining={hasMining}
+            modal
+            onClose={() => {
+              setOperateType(undefined);
+            }}
+          />
+        ) : (
+          <PoolOperate
+            account={account}
+            operate={operateType}
+            hasMining={hasMining}
+            sx={{
+              width: 375,
+              height: 'max-content',
+              backgroundColor: 'background.paper',
+              borderRadius: 16,
+              overflow: 'hidden',
+            }}
+            pool={operatePool}
+            hidePoolInfo
+          />
+        )}
       </Box>
       <WidgetConfirm
         singleBtn
@@ -123,6 +154,59 @@ export default function PoolDetail() {
         onConfirm={() => setNoResultModalVisible('close')}
         title={t`Pool not found. Please switch to another network and retry.`}
       />
+      {isMobile && canOperate && (
+        <>
+          <Box
+            sx={{
+              position: 'fixed',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              p: 20,
+              display: 'grid',
+              gap: '8px',
+              gridTemplateColumns: canEdit
+                ? 'repeat(3, 1fr)'
+                : 'repeat(2, 1fr)',
+              backgroundColor: 'background.paperContrast',
+            }}
+          >
+            {canEdit ? (
+              <Button
+                variant={Button.Variant.second}
+                onClick={() => {
+                  useRouterStore.getState().push({
+                    type: PageType.ModifyPool,
+                    params: {
+                      chainId: pool.chainId,
+                      address: pool.address,
+                    },
+                  });
+                }}
+              >
+                <Trans>Edit</Trans>
+              </Button>
+            ) : (
+              ''
+            )}
+            <Button
+              variant={Button.Variant.second}
+              onClick={() => {
+                setOperateType(OperateTab.Remove);
+              }}
+            >
+              <Trans>Remove</Trans>
+            </Button>
+            <Button
+              onClick={() => {
+                setOperateType(OperateTab.Add);
+              }}
+            >
+              <Trans>Add</Trans>
+            </Button>
+          </Box>
+        </>
+      )}
     </WidgetContainer>
   );
 }

@@ -15,6 +15,15 @@ import { PMMHelper } from './pmm/pmmHelper';
 import { PMMState } from './pmm/PMMState';
 import { convertPmmParams, PmmData } from './pmm/convertPmmParams';
 import { encodeFunctionData } from '../../helper/ContractRequests/encode';
+import {
+  fetchUniswapV2PairBalanceOf,
+  fetchUniswapV2PairTotalSupply,
+  fetchUniswapV2PairGetReserves,
+  fetchUniswapV2PairFeeRate,
+  getUniswapV2Router02ContractAddressByChainId,
+  getUniswapV2FactoryContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
+import { formatUnits } from '@dodoex/contract-request';
 
 export interface PoolApiProps {
   contractRequests?: ContractRequests;
@@ -22,11 +31,11 @@ export interface PoolApiProps {
 }
 
 type PoolTypeMethodObject = {
-  [key in PoolType]: string | null;
+  [key in PoolType]?: string | null;
 };
 
 const poolTypeAbiNameObject: {
-  [key in PoolType]: ABIName;
+  [key in PoolType]?: ABIName;
 } = {
   DVM: ABIName.dvmPoolABI,
   DSP: ABIName.dvmPoolABI,
@@ -46,14 +55,16 @@ function getPoolQueryFactory({
   poolAddress: string;
   type: PoolType;
   typeMethodObject: {
-    [key in PoolType]: string | null;
+    [key in PoolType]?: string | null;
   };
   params?: any[];
 }) {
   const method = typeMethodObject[type];
   if (!method) return null;
+  const abiName = poolTypeAbiNameObject[type];
+  if (!abiName) return null;
   return {
-    abiName: poolTypeAbiNameObject[type],
+    abiName,
     contractAddress: poolAddress,
     method,
     params,
@@ -121,6 +132,59 @@ export class PoolApi {
           ).toString(),
           parseFixed(new BigNumber(k).toString(), 18).toString(),
           isOpenTWAP,
+          deadline,
+        ],
+      );
+
+      return {
+        to: DODO_DSP_PROXY,
+        data,
+      };
+    },
+
+    /**
+     * @notice Create GSP pool
+     * @param baseToken     {"decimals","address"}
+     * @param account       account address
+     * @param quoteToken    {"decimals","address"}
+     * @param baseInAmount  The initial amount of liquidity base provided (considering decimals)
+     * @param quoteInAmount The initial amount of liquidity quote provided (considering decimals)
+     * @param lpFeeRate     Example: 0.0001 is passed in 1
+     * @param i             Decimals are not considered
+     * @param k             Scope: 0 => 1
+     */
+    async createGSPPoolABI(
+      chainId: number,
+      account: string,
+      baseToken: { decimals: number; address: string },
+      quoteToken: { decimals: number; address: string },
+      baseInAmount: string,
+      quoteInAmount: string,
+      lpFeeRate: number,
+      i: string,
+      k: number,
+      deadline: number,
+    ) {
+      const { DODO_DSP_PROXY } = contractConfig[chainId as ChainId];
+      const data = await encodeFunctionData(
+        ABIName.dodoDspProxy,
+        'createDODOGasSavingPair',
+        [
+          account,
+          baseToken.address,
+          quoteToken.address,
+          baseInAmount,
+          quoteInAmount,
+          new BigNumber(lpFeeRate)
+            .div(10000)
+            .multipliedBy(10 ** 18)
+            .toString(),
+          parseFixed(
+            new BigNumber(i).toString(),
+            18 - baseToken.decimals + quoteToken.decimals,
+          ).toString(),
+          parseFixed(new BigNumber(k).toString(), 18).toString(),
+          '1000',
           deadline,
         ],
       );
@@ -458,9 +522,6 @@ export class PoolApi {
         const { CALLEE_HELPER } = contractConfig[chainId as ChainId];
         if (isUnWrap) assetTo = CALLEE_HELPER;
       }
-      if (!baseMinAmount || baseMinAmount === '0') {
-        throw new Error('Invalid baseMinAmount');
-      }
       const data = await encodeFunctionData(ABIName.dodoDSP, 'sellShares', [
         sharesAmount,
         assetTo,
@@ -498,9 +559,6 @@ export class PoolApi {
       if (!(chainId == 28 || chainId == 69)) {
         const { CALLEE_HELPER } = contractConfig[chainId as ChainId];
         if (isUnWrap) assetTo = CALLEE_HELPER;
-      }
-      if (!baseMinAmount || baseMinAmount === '0') {
-        throw new Error('Invalid baseMinAmount');
       }
       const data = await encodeFunctionData(ABIName.dodoDVM, 'sellShares', [
         sharesAmount,
@@ -714,6 +772,14 @@ export class PoolApi {
       queryFn: async () => {
         if (!chainId || !poolAddress || !type || decimals === undefined)
           return null;
+
+        if (type === 'AMMV2') {
+          const result = await fetchUniswapV2PairTotalSupply(
+            chainId,
+            poolAddress,
+          );
+          return new BigNumber(formatUnits(result, decimals));
+        }
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'totalSupply',
           DSP: 'totalSupply',
@@ -808,6 +874,14 @@ export class PoolApi {
           )
         )
           return null;
+        if (type === 'AMMV2') {
+          const result = await fetchUniswapV2PairBalanceOf(
+            chainId,
+            poolAddress,
+            account,
+          );
+          return new BigNumber(formatUnits(result, decimals));
+        }
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'balanceOf',
           DSP: 'balanceOf',
@@ -890,6 +964,7 @@ export class PoolApi {
 
   /**
    * Get the total deposited lp balance
+   * The base and quote of the AMM pool should be passed in in order
    */
   getReserveLpQuery(
     chainId: number | undefined,
@@ -907,6 +982,7 @@ export class PoolApi {
         quoteDecimals,
       );
     }
+
     return {
       queryKey: [CONTRACT_QUERY_KEY, 'pool', 'getReserveLp', ...arguments],
       enabled:
@@ -927,6 +1003,16 @@ export class PoolApi {
         )
           return null;
 
+        if (type === 'AMMV2') {
+          const result = await fetchUniswapV2PairGetReserves(
+            chainId,
+            poolAddress,
+          );
+          return {
+            baseReserve: byWei(result._reserve0.toString(), baseDecimals),
+            quoteReserve: byWei(result._reserve1.toString(), quoteDecimals),
+          };
+        }
         const typeMethodObject: PoolTypeMethodObject = {
           DVM: 'getVaultReserve',
           DSP: 'getVaultReserve',
@@ -1342,6 +1428,23 @@ export class PoolApi {
           mtFeeRate = new BigNumber(queryResult.mtFeeRate.toString()).div(
             10 ** 18,
           );
+        } else if (type === 'AMMV2') {
+          if (
+            getUniswapV2Router02ContractAddressByChainId(chainId) &&
+            getUniswapV2FactoryContractAddressByChainId(chainId)
+          ) {
+            const result = await fetchUniswapV2PairFeeRate(
+              chainId,
+              poolAddress,
+            );
+            const feeRate = byWei(result.toString(), 4);
+            lpFeeRate = feeRate.times(0.8);
+            mtFeeRate = feeRate.times(0.2);
+          } else {
+            // For the original contract, the handling fee is fixed.
+            lpFeeRate = new BigNumber(0.003);
+            mtFeeRate = new BigNumber(0);
+          }
         } else {
           const queryResult = await this.contractRequests.batchCallQuery(
             chainId,
@@ -1391,6 +1494,7 @@ export class PoolApi {
           quoteDecimals === undefined
         )
           return null;
+        if (type === 'AMMV2' || type === 'AMMV3') return null;
         let queryResult: PmmData | null = null;
         if (type === 'CLASSICAL') {
           const { ROUTE_V1_DATA_FETCH } = contractConfig[chainId as ChainId];

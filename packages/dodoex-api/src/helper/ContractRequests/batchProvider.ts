@@ -43,7 +43,7 @@ const time = 10;
 const maxCallCount = 800;
 
 export class BatchProvider extends StaticJsonRpcProvider {
-  _pendingBatchAggregator: NodeJS.Timer | null = null;
+  _pendingBatchAggregator: any | null = null;
   _pendingBatch: Array<{
     request: {
       method: string;

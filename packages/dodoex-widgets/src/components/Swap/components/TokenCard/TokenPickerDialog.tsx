@@ -1,10 +1,10 @@
 import { Trans } from '@lingui/macro';
 import Dialog from '../Dialog';
-import { useSelector } from 'react-redux';
-import { getGlobalProps } from '../../../../store/selectors/globals';
 import TokenPicker, { TokenPickerProps } from '../../../TokenPicker';
 import { tokenPickerWrapper } from '../../../../constants/testId';
 import { DialogProps } from '../Dialog';
+import { useUserOptions } from '../../../UserOptionsProvider';
+import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 
 export function TokenPickerDialog({
   open,
@@ -12,6 +12,7 @@ export function TokenPickerDialog({
   value,
   onClose,
   occupiedAddrs,
+  hiddenAddrs,
   occupiedChainId,
   onTokenChange,
   side,
@@ -20,10 +21,12 @@ export function TokenPickerDialog({
   searchPlaceholder,
   searchOtherAddress,
   chainId,
+  modal,
 }: {
   open: boolean;
   title?: React.ReactNode | string;
   occupiedAddrs?: string[];
+  hiddenAddrs?: string[];
   occupiedChainId?: TokenPickerProps['occupiedChainId'];
   onClose: DialogProps['onClose'];
   value?: TokenPickerProps['value'];
@@ -34,16 +37,19 @@ export function TokenPickerDialog({
   searchPlaceholder?: TokenPickerProps['searchPlaceholder'];
   searchOtherAddress?: TokenPickerProps['searchOtherAddress'];
   chainId?: TokenPickerProps['chainId'];
+  modal?: boolean;
 }) {
-  const { height } = useSelector(getGlobalProps);
+  const { height } = useUserOptions();
+  const { isMobile } = useWidgetDevice();
   return (
     <Dialog
-      height={height}
+      height={modal ? '80vh' : height}
       open={open}
       onClose={onClose}
       title={title ?? <Trans>Select a token</Trans>}
       id="select-token"
       testId={tokenPickerWrapper}
+      modal={modal}
     >
       <TokenPicker
         value={value}
@@ -51,12 +57,21 @@ export function TokenPickerDialog({
         onChange={onTokenChange}
         occupiedAddrs={occupiedAddrs}
         occupiedChainId={occupiedChainId}
+        hiddenAddrs={hiddenAddrs}
         side={side}
         defaultLoadBalance={defaultLoadBalance}
         multiple={multiple}
         searchPlaceholder={searchPlaceholder}
         searchOtherAddress={searchOtherAddress}
         chainId={chainId}
+        sx={
+          modal
+            ? {
+                width: isMobile ? '100%' : 420,
+                borderRadius: 16,
+              }
+            : undefined
+        }
       />
     </Dialog>
   );

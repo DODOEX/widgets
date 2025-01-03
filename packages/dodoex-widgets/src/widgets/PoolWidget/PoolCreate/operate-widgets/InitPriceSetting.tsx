@@ -11,110 +11,56 @@ import {
 } from '@dodoex/components';
 import BigNumber from 'bignumber.js';
 import { Warn, Switch } from '@dodoex/icons';
-import {
-  ChangeEvent,
-  Dispatch,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { Dispatch, useMemo, useState } from 'react';
 import FixedInitPriceConfirm from '../components/FixedInitPriceConfirm';
 import { validInitPrice } from '../hooks/useValidation';
 import { useVersionList } from '../hooks/useVersionList';
 import { Actions, StateProps, Types } from '../reducer';
-import { Version } from '../types';
-import { useFetchFiatPrice } from '../../../../hooks/Swap';
-import { t, Trans } from '@lingui/macro';
+import { Trans } from '@lingui/macro';
 import { formatTokenAmountNumber } from '../../../../utils/formatter';
 import { NumberInput } from '../../../../components/Swap/components/TokenCard/NumberInput';
+import { usePriceInit } from '../hooks/usePriceInit';
+import { SettingItemWrapper } from './widgets';
 
 export function InitPriceSetting({
-  isEdit,
   selectedVersion,
+  isStandardVersion,
+  isSingleTokenVersion,
   isFixedRatio,
   leftTokenAddress,
   baseToken,
   quoteToken,
   fixedRatioPrice,
   dispatch,
+  priceInfo,
 }: {
-  isEdit?: boolean;
   selectedVersion: StateProps['selectedVersion'];
+  isStandardVersion: boolean;
+  isSingleTokenVersion: boolean;
   isFixedRatio: StateProps['isFixedRatio'];
   leftTokenAddress: StateProps['leftTokenAddress'];
   baseToken: StateProps['baseToken'];
   quoteToken: StateProps['quoteToken'];
   fixedRatioPrice: StateProps['fixedRatioPrice'];
   dispatch: Dispatch<Actions>;
+  priceInfo: ReturnType<typeof usePriceInit>;
 }) {
   const theme = useTheme();
 
   const [cancelFixedModalVisible, setCancelFixedModalVisible] = useState(false);
 
   const { versionMap } = useVersionList();
-  const { fromFiatPrice, toFiatPrice, loading } = useFetchFiatPrice({
-    fromToken: baseToken,
-    toToken: quoteToken,
-  });
 
   const { initPriceLabel, initPriceTips, initPriceTipsLink } =
     versionMap[selectedVersion];
   const isForward = leftTokenAddress === baseToken?.address;
   const leftTokenSymbol = isForward ? baseToken?.symbol : quoteToken?.symbol;
   const rightTokenSymbol = isForward ? quoteToken?.symbol : baseToken?.symbol;
-  const baseTokenFiatPrice = baseToken ? fromFiatPrice : undefined;
-  const quoteTokenFiatPrice = quoteToken ? toFiatPrice : undefined;
-  const currentPrice = useMemo(() => {
-    const base2QuotePrice =
-      baseTokenFiatPrice && quoteTokenFiatPrice
-        ? new BigNumber(baseTokenFiatPrice).div(quoteTokenFiatPrice)
-        : undefined;
-    const quote2basePrice =
-      baseTokenFiatPrice && quoteTokenFiatPrice
-        ? new BigNumber(quoteTokenFiatPrice).div(baseTokenFiatPrice)
-        : undefined;
-    return isForward ? base2QuotePrice : quote2basePrice;
-  }, [baseTokenFiatPrice, isForward, quoteTokenFiatPrice]);
+  const { currentPrice, isErrorPrice, isNullPrice, fiatPriceLoading } =
+    priceInfo;
   const currentTokenDecimals = isForward
     ? quoteToken?.decimals
     : baseToken?.decimals;
-  const isNullPrice = !currentPrice || currentPrice.isNaN();
-  const isErrorPrice = !loading && isNullPrice;
-
-  // If the initial fiat currency price query fails, the user is allowed to enter the price and the checkbox is hidden.
-  useLayoutEffect(() => {
-    if (isErrorPrice) {
-      dispatch({
-        type: Types.UpdateIsFixedRatio,
-        payload: false,
-      });
-    }
-  }, [dispatch, isErrorPrice]);
-
-  // The initial legal currency price query is successful, and fixedRatioPrice is initialized using this price.
-  useLayoutEffect(() => {
-    if (!isEdit && selectedVersion !== Version.singleToken) {
-      dispatch({
-        type: Types.InitFixedRatioPrice,
-        payload: {
-          baseTokenFiatPrice:
-            baseTokenFiatPrice !== undefined
-              ? Number(baseTokenFiatPrice)
-              : baseTokenFiatPrice,
-          quoteTokenFiatPrice:
-            quoteTokenFiatPrice !== undefined
-              ? Number(quoteTokenFiatPrice)
-              : quoteTokenFiatPrice,
-        },
-      });
-    }
-  }, [
-    isEdit,
-    baseTokenFiatPrice,
-    dispatch,
-    quoteTokenFiatPrice,
-    selectedVersion,
-  ]);
 
   const errorMsg = useMemo(() => {
     if (!quoteToken) return '';
@@ -138,34 +84,10 @@ export function InitPriceSetting({
 
   return (
     <>
-      <Box
-        sx={{
-          mt: 20,
-          px: 20,
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
-        }}
-      >
-        <Box
-          sx={{
-            flexGrow: 1,
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <Box
-              sx={{
-                typography: 'body2',
-                color: theme.palette.text.secondary,
-              }}
-            >
-              {initPriceLabel}
-            </Box>
+      <SettingItemWrapper
+        title={
+          <>
+            {initPriceLabel}
             {initPriceTips && (
               <QuestionTooltip
                 title={
@@ -200,42 +122,154 @@ export function InitPriceSetting({
                 sx={{
                   width: 14,
                   height: 14,
-                  mr: 14,
+                  alignItems: 'center',
                 }}
               />
             )}
-            <Box
-              sx={{
-                ml: 'auto',
-                typography: 'body2',
-              }}
-            >
-              =<Trans>Current:</Trans>
-            </Box>
-          </Box>
+          </>
+        }
+        sx={{
+          mt: 20,
+        }}
+      >
+        <Box
+          sx={{
+            pt: isStandardVersion ? 11 : 19,
+            px: 19,
+            pb: 11,
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor:
+              errorMsg || errorInput
+                ? 'error.main'
+                : theme.palette.background.input,
+            borderRadius: 8,
+            backgroundColor: theme.palette.background.input,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            gap: 20,
+          }}
+        >
+          {isStandardVersion ? null : (
+            <>
+              <Box
+                sx={{
+                  typography: 'body2',
+                  color: theme.palette.text.primary,
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <Box
+                  sx={{
+                    fontWeight: 600,
+                    color: theme.palette.text.disabled,
+                    flexShrink: 0,
+                  }}
+                >
+                  1&nbsp;{leftTokenSymbol ?? '-'}&nbsp;=
+                </Box>
+
+                <NumberInput
+                  value={fixedRatioPrice}
+                  onChange={(v) => {
+                    dispatch({
+                      type: Types.UpdateFixedRatioPrice,
+                      payload: v,
+                    });
+                  }}
+                  readOnly={isFixedRatio}
+                  sx={{
+                    pl: 0,
+                    pr: 0,
+                    mt: 0,
+                    flex: '1 1 auto',
+                    '& input': {
+                      textAlign: 'right',
+                      typography: 'h5',
+                      height: 25,
+                      py: 0,
+                      px: 8,
+                      color: theme.palette.text.primary,
+                      '&::placeholder': {
+                        color: theme.palette.text.disabled,
+                      },
+                    },
+                  }}
+                />
+                <Box
+                  sx={{
+                    typography: 'body2',
+                    fontWeight: 600,
+                    color: theme.palette.text.disabled,
+                    flexShrink: 0,
+                  }}
+                >
+                  {rightTokenSymbol ?? '-'}
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                  component={ButtonBase}
+                  onClick={() => {
+                    dispatch({
+                      type: Types.ToggleLeftToken,
+                    });
+                  }}
+                >
+                  <HoverOpacity
+                    weak
+                    component={Switch}
+                    sx={{
+                      marginLeft: 8,
+                      p: theme.spacing(2),
+                      color: theme.palette.text.primary,
+                      backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                      borderRadius: '50%',
+                    }}
+                  />
+                </Box>
+              </Box>
+
+              {errorMsg && (
+                <Box
+                  sx={{
+                    typography: 'h6',
+                    color: 'error.main',
+                    mt: -14,
+                  }}
+                >
+                  {errorMsg}
+                </Box>
+              )}
+            </>
+          )}
 
           <Box
             sx={{
-              typography: 'body2',
-              flexGrow: 1,
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'flex-end',
-              wordBreak: 'break-all',
+              justifyContent: isStandardVersion ? 'flex-start' : 'flex-end',
+              typography: 'h6',
+              color: theme.palette.text.primary,
+              fontWeight: 500,
             }}
           >
-            {loading ? (
-              <Skeleton sx={{ borderRadius: 4 }} width={50} height={19} />
+            =<Trans>Current Market Price:</Trans>&nbsp;
+            {fiatPriceLoading ? (
+              <Skeleton sx={{ borderRadius: 4 }} width={50} height={17} />
             ) : isNullPrice ? (
-              <Tooltip title={t`Failed to get price of the token`}>
+              <Tooltip title={<Trans>Failed to get price of the token</Trans>}>
                 <Box
                   component={Warn}
                   sx={{
                     width: 14,
                     height: 14,
-                    color: 'error.main',
+                    color: theme.palette.error.main,
                     typography: 'h6',
-                    mt: -2,
                   }}
                 />
               </Tooltip>
@@ -246,18 +280,10 @@ export function InitPriceSetting({
               })
             )}
             &nbsp;{rightTokenSymbol}
-          </Box>
-        </Box>
-
-        {isErrorPrice
-          ? null
-          : selectedVersion !== Version.singleToken && (
+            {isErrorPrice ? null : isSingleTokenVersion ? null : (
               <Checkbox
-                sx={{
-                  top: -1,
-                }}
                 checked={isFixedRatio}
-                onChange={(evt: ChangeEvent<HTMLInputElement>) => {
+                onChange={(evt: any) => {
                   if (!evt.target.checked) {
                     setCancelFixedModalVisible(true);
                     return;
@@ -266,10 +292,10 @@ export function InitPriceSetting({
                     type: Types.UpdateIsFixedRatio,
                     payload: true,
                   });
-                  if (!isNullPrice) {
-                    if (currentTokenDecimals === undefined) {
-                      throw new Error('currentTokenDecimals is undefined');
-                    }
+                  if (!currentTokenDecimals) {
+                    throw new Error('currentTokenDecimals is undefined');
+                  }
+                  if (currentPrice && !currentPrice.isNaN()) {
                     dispatch({
                       type: Types.UpdateFixedRatioPrice,
                       payload: currentPrice
@@ -278,111 +304,14 @@ export function InitPriceSetting({
                     });
                   }
                 }}
-              />
-            )}
-      </Box>
-
-      {selectedVersion !== Version.standard && (
-        <>
-          <Box
-            sx={{
-              typography: 'body2',
-              color: theme.palette.text.primary,
-              mt: 12,
-              mx: 20,
-              pt: 16,
-              pb: 16,
-              display: 'flex',
-              alignItems: 'center',
-              borderWidth: 1,
-              borderStyle: 'solid',
-              borderColor:
-                errorMsg || errorInput
-                  ? 'error.main'
-                  : theme.palette.border.main,
-              borderRadius: 8,
-              backgroundColor: 'background.input',
-            }}
-          >
-            <Box
-              sx={{
-                ml: 16,
-                fontWeight: 600,
-                color: theme.palette.text.disabled,
-              }}
-            >
-              1&nbsp;{leftTokenSymbol ?? '-'}&nbsp;=
-            </Box>
-            <NumberInput
-              value={fixedRatioPrice}
-              onChange={(v) => {
-                dispatch({
-                  type: Types.UpdateFixedRatioPrice,
-                  payload: v,
-                });
-              }}
-              readOnly={isFixedRatio}
-              sx={{
-                pl: 8,
-                pr: 12,
-                mt: 0,
-                flex: '1 1 auto',
-                '& input': {
-                  textAlign: 'right',
-                  typography: 'h5',
-                  height: 25,
-                  p: theme.spacing(0),
-                  color: theme.palette.text.primary,
-                  '&::placeholder': {
-                    color: theme.palette.text.disabled,
-                  },
-                },
-              }}
-            />
-            <Box
-              sx={{
-                typography: 'body2',
-                fontWeight: 600,
-                mr: 16,
-                display: 'flex',
-                alignItems: 'center',
-                color: theme.palette.text.disabled,
-              }}
-              component={ButtonBase}
-              onClick={() => {
-                dispatch({
-                  type: Types.ToggleLeftToken,
-                });
-              }}
-            >
-              {rightTokenSymbol ?? '-'}
-              <HoverOpacity
-                weak
-                component={Switch}
                 sx={{
-                  marginLeft: 16,
-                  p: theme.spacing(2),
-                  color: theme.palette.text.primary,
-                  backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                  borderRadius: '50%',
+                  ml: 8,
                 }}
               />
-            </Box>
+            )}
           </Box>
-          {errorMsg && (
-            <Box
-              sx={{
-                typography: 'h6',
-                color: 'error.main',
-                mt: 6,
-                mx: 20,
-              }}
-            >
-              {errorMsg}
-            </Box>
-          )}
-        </>
-      )}
+        </Box>
+      </SettingItemWrapper>
 
       <FixedInitPriceConfirm
         on={cancelFixedModalVisible}

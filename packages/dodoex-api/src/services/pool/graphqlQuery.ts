@@ -39,9 +39,11 @@ export const poolGraphqlQuery = {
         }
         baseLpToken {
           id
+          decimals
         }
         quoteLpToken {
           id
+          decimals
         }
       }
     }
@@ -59,12 +61,15 @@ export const poolGraphqlQuery = {
             chainId
             type
             lpFeeRate
+            mtFeeRate
             creator
             baseLpToken {
               id
+              decimals
             }
             quoteLpToken {
               id
+              decimals
             }
             baseToken {
               id
@@ -88,6 +93,7 @@ export const poolGraphqlQuery = {
               transactionQuoteApy
             }
             miningAddress
+            volume24H
           }
         }
       }
@@ -101,18 +107,48 @@ export const poolGraphqlQuery = {
           liquidityPositions {
             id
             liquidityTokenBalance
+            liquidityTokenInMining
+            poolShare
+            liquidityUSD
+            tokenId
+            outOfRange
+            priceRange {
+              token0LowerPrice
+              token0UpperPrice
+              token1LowerPrice
+              token1UpperPrice
+            }
+            tickLower {
+              id
+              tickIdx
+              liquidityGross
+              liquidityNet
+              price0
+              price1
+            }
+            tickUpper {
+              id
+              tickIdx
+              liquidityGross
+              liquidityNet
+              price0
+              price1
+            }
           }
           pair {
             id
             chainId
             type
             lpFeeRate
+            mtFeeRate
             creator
             baseLpToken {
               id
+              decimals
             }
             quoteLpToken {
               id
+              decimals
             }
             baseToken {
               id
@@ -136,6 +172,7 @@ export const poolGraphqlQuery = {
               transactionQuoteApy
             }
             miningAddress
+            volume24H
           }
         }
       }
@@ -206,11 +243,13 @@ export const poolGraphqlQuery = {
           id
           symbol
           name
+          decimals
         }
         quoteLpToken {
           id
           symbol
           name
+          decimals
         }
       }
       liquidity_list(where: $liquidityWhere) {
@@ -233,11 +272,11 @@ export const poolGraphqlQuery = {
       dashboard_pairs_day_data(where: $where) {
         timestamp
         date
-        volume
-        fee
-        tvl
+        volumeUsd
+        feeUsd
+        mtFeeUsd
+        tvlUsd
         addresses
-        txes
       }
     }
   `),
@@ -247,6 +286,7 @@ export const poolGraphqlQuery = {
         fee
         volume
         totalFee
+        totalMtFee
         totalVolume
         tvl
         turnover
@@ -260,6 +300,8 @@ export const poolGraphqlQuery = {
         price
         baseFee
         quoteFee
+        baseMtFee
+        quoteMtFee
         pair
         poolType
         baseVolumeCumulative
@@ -274,6 +316,8 @@ export const poolGraphqlQuery = {
         txesNear24h
         txUsers
         txUserNear24h
+        mtFeeNear24h
+        feeNear24h
       }
     }
   `),
@@ -367,6 +411,80 @@ export const poolGraphqlQuery = {
           symbol
           name
           decimals
+        }
+      }
+    }
+  `),
+  fetchPoolPairList: graphql(`
+    query FetchPoolPairList(
+      $first: Int
+      $baseWhere: Pair_filter
+      $quoteWhere: Pair_filter
+      $orderBy: Pair_orderBy
+      $orderDirection: OrderDirection
+    ) {
+      basePairs: pairs(
+        first: $first
+        where: $baseWhere
+        orderBy: $orderBy
+        orderDirection: $orderDirection
+      ) {
+        id
+        type
+        creator
+        lpFeeRate
+        i
+        k
+        baseReserve
+        quoteReserve
+        createdAtTimestamp
+        lastTradePrice
+        volumeUSD
+        baseToken {
+          id
+          symbol
+          name
+          decimals
+          usdPrice
+        }
+        quoteToken {
+          id
+          symbol
+          name
+          decimals
+          usdPrice
+        }
+      }
+      quotePairs: pairs(
+        first: $first
+        where: $quoteWhere
+        orderBy: $orderBy
+        orderDirection: $orderDirection
+      ) {
+        id
+        type
+        creator
+        lpFeeRate
+        i
+        k
+        baseReserve
+        quoteReserve
+        createdAtTimestamp
+        lastTradePrice
+        volumeUSD
+        baseToken {
+          id
+          symbol
+          name
+          decimals
+          usdPrice
+        }
+        quoteToken {
+          id
+          symbol
+          name
+          decimals
+          usdPrice
         }
       }
     }

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Page } from './types';
+import { Page, PageType } from './types';
 
 export { PageType } from './types';
 export type { Page } from './types';
@@ -17,9 +17,15 @@ export const useRouterStore = create<RouterState>((set, get) => ({
   historyList: [],
   push: (page: Page) => {
     set((oldState) => {
+      const historyList = [
+        ...oldState.historyList,
+        oldState.page ?? {
+          type: PageType.Pool,
+        },
+      ];
       return {
         page,
-        historyList: [...oldState.historyList, page],
+        historyList,
       };
     });
   },

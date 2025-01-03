@@ -13,6 +13,7 @@ import { RemovePoolOperate } from './RemovePoolOperate';
 export interface PoolOperateInnerProps {
   pool: OperatePool;
   operate?: OperateTab;
+  hidePoolInfo?: boolean;
   errorRefetch?: () => void;
   submittedBack?: () => void;
 }
@@ -20,6 +21,7 @@ export interface PoolOperateInnerProps {
 export default function PoolOperateInner({
   pool,
   operate,
+  hidePoolInfo,
   errorRefetch,
   submittedBack,
 }: PoolOperateInnerProps) {
@@ -28,7 +30,17 @@ export default function PoolOperateInner({
   const { account } = useWeb3React();
   const balanceInfo = usePoolBalanceInfo({
     account,
-    pool,
+    pool: pool
+      ? {
+          chainId: pool.chainId,
+          address: pool.address,
+          type: pool.type,
+          baseTokenDecimals: pool.baseToken.decimals,
+          quoteTokenDecimals: pool.quoteToken.decimals,
+          baseLpTokenDecimals: pool.baseLpToken?.decimals ?? 18,
+          quoteLpTokenDecimals: pool.quoteLpToken?.decimals ?? 18,
+        }
+      : undefined,
   });
   const pmmStateQuery = useQuery(
     poolApi.getPMMStateQuery(
@@ -54,6 +66,7 @@ export default function PoolOperateInner({
           }
         }}
         sx={{
+          my: 40,
           height: '100%',
         }}
       />
@@ -61,7 +74,11 @@ export default function PoolOperateInner({
   }
   return (
     <>
-      <LiquidityInfo pool={pool} balanceInfo={balanceInfo} />
+      <LiquidityInfo
+        pool={pool}
+        balanceInfo={balanceInfo}
+        hidePoolInfo={hidePoolInfo}
+      />
       <Tabs
         value={operateTab}
         onChange={(_, value) => {

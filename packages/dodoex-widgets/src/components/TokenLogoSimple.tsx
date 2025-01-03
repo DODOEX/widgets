@@ -1,7 +1,13 @@
 import { Box, BoxProps } from '@dodoex/components';
-import React from 'react';
 import Identicon from 'identicon.js';
+import React from 'react';
 
+/**
+ *
+ * @param param0
+ * @returns
+ * @deprecated
+ */
 export default function TokenLogoSimple({
   address,
   url,

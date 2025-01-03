@@ -1,4 +1,10 @@
-import { Button, Box, useTheme, QuestionTooltip } from '@dodoex/components';
+import {
+  Button,
+  Box,
+  useTheme,
+  QuestionTooltip,
+  ButtonBase,
+} from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { Dispatch, useMemo, useState } from 'react';
 import Dialog from '../../../../components/WidgetDialog';
@@ -8,18 +14,21 @@ import { SelectAndInput } from '../components/SelectAndInput';
 import { useSlippageCoefficientList } from '../hooks/useSlippageCoefficientList';
 import { validSlippageCoefficient } from '../hooks/useValidation';
 import { Actions, StateProps, Types } from '../reducer';
-import { Version } from '../types';
+import { SettingItemWrapper } from './widgets';
+import { ReactComponent as Arrow } from './arrow.svg';
 
 export function SlippageCoefficientSetting({
   dispatch,
   slippageCoefficient,
   selectedVersion,
   isCustomized,
+  isStandardVersion,
 }: {
   dispatch: Dispatch<Actions>;
   slippageCoefficient: StateProps['slippageCoefficient'];
   selectedVersion: StateProps['selectedVersion'];
   isCustomized: StateProps['isSlippageCoefficientCustomized'];
+  isStandardVersion: boolean;
 }) {
   const theme = useTheme();
 
@@ -53,56 +62,70 @@ export function SlippageCoefficientSetting({
 
   return (
     <>
-      <Box
+      <SettingItemWrapper
+        title={
+          <>
+            <Trans>Slippage Coefficient</Trans>
+            <QuestionTooltip
+              title={t`The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth.`}
+              ml={4}
+              sx={{
+                width: 14,
+                height: 14,
+              }}
+            />
+          </>
+        }
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
           mt: 20,
-          px: 20,
         }}
       >
         <Box
+          component={ButtonBase}
           sx={{
-            fontWeight: 500,
             display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'center',
+            px: 20,
+            py: 8,
+            color: theme.palette.text.primary,
+            borderRadius: 8,
+            backgroundColor: theme.palette.background.input,
+            '&:hover': {
+              backgroundColor: theme.palette.hover.default,
+            },
+            '&[disabled]>svg': {
+              color: theme.palette.text.disabled,
+            },
           }}
+          disabled={isStandardVersion}
+          onClick={
+            isStandardVersion
+              ? undefined
+              : () => {
+                  setShowSlippageCoefficientDialog(true);
+                }
+          }
         >
-          <Trans>Slippage Coefficient</Trans>
-          <QuestionTooltip
-            title={t`The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth.`}
-            ml={8}
+          <Box
             sx={{
-              width: 16,
-              height: 16,
+              typography: 'h5',
+              fontWeight: 600,
+              lineHeight: '32px',
+            }}
+          >
+            {slippageCoefficient}
+          </Box>
+          <Box
+            component={Arrow}
+            sx={{
+              flexShrink: 0,
+              width: 18,
+              height: 18,
             }}
           />
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            ml: 12,
-          }}
-        >
-          {slippageCoefficient}
-          {selectedVersion !== Version.standard ? (
-            <Button
-              variant={Button.Variant.tag}
-              sx={{
-                ml: 12,
-                fontSize: 12,
-              }}
-              onClick={() => setShowSlippageCoefficientDialog(true)}
-            >
-              {t`Edit`}
-            </Button>
-          ) : (
-            ''
-          )}
-        </Box>
-      </Box>
+      </SettingItemWrapper>
 
       <Dialog
         open={showSlippageCoefficientDialog}

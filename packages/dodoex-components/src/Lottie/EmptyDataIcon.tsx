@@ -1,7 +1,5 @@
+import { NoFound, NoToken } from '@dodoex/icons';
 import { Box, BoxProps } from '../Box';
-import { useNoFoundBodyMovin } from './hooks/useNoFoundBodyMovin';
-import { useNoResultBodyMovin } from './hooks/useNoResultBodyMovin';
-
 export default function EmptyDataIcon({
   hasSearch,
   sx,
@@ -9,16 +7,15 @@ export default function EmptyDataIcon({
   hasSearch?: boolean;
   sx?: BoxProps['sx'];
 }) {
-  const noFoundBodyMovinRef = useNoFoundBodyMovin();
-  const noResultBodyMovinRef = useNoResultBodyMovin();
-
   return (
     <Box
-      ref={hasSearch ? noFoundBodyMovinRef : noResultBodyMovinRef}
+      component={hasSearch ? NoFound : NoToken}
+      viewBox="0 0 60 60"
       sx={{
         display: 'inline-block',
         width: 105,
         height: 105,
+        borderRadius: 24,
         ...sx,
       }}
     />

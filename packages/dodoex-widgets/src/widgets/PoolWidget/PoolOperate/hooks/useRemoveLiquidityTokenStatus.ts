@@ -1,4 +1,8 @@
 import { ChainId, contractConfig } from '@dodoex/api';
+import {
+  getUniswapV2Router02ContractAddressByChainId,
+  getUniswapV2Router02FixedFeeContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
 import BigNumber from 'bignumber.js';
 import { useTokenStatus } from '../../../../hooks/Token/useTokenStatus';
 import { usePoolBalanceInfo } from '../../hooks/usePoolBalanceInfo';
@@ -16,25 +20,17 @@ export function useRemoveLiquidityTokenStatus({
   balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
 }) {
   const { chainId, baseToken, quoteToken } = pool ?? {};
-  const baseLpAmount =
-    balanceInfo.baseLpToTokenProportion && baseToken
-      ? new BigNumber(baseAmount)
-          .div(balanceInfo.baseLpToTokenProportion)
-          .dp(Number(baseToken.decimals), BigNumber.ROUND_DOWN)
-          .toString()
-      : undefined;
-  const quoteLpAmount =
-    balanceInfo.quoteLpToTokenProportion && quoteToken
-      ? new BigNumber(quoteAmount)
-          .div(balanceInfo.quoteLpToTokenProportion)
-          .dp(Number(quoteToken.decimals), BigNumber.ROUND_DOWN)
-          .toString()
-      : undefined;
 
   let proxyContractAddress = '';
+  const isAMMV2 = pool?.type === 'AMMV2';
   if (chainId) {
     proxyContractAddress =
       contractConfig[chainId as ChainId].DODO_V1_PAIR_PROXY ?? '';
+    if (isAMMV2) {
+      proxyContractAddress =
+        getUniswapV2Router02ContractAddressByChainId(chainId) ||
+        getUniswapV2Router02FixedFeeContractAddressByChainId(pool.chainId);
+    }
   }
   const baseLpTokenId = pool?.baseLpToken?.id ?? '';
   const quoteLpTokenId = pool?.quoteLpToken?.id ?? '';
@@ -44,14 +40,27 @@ export function useRemoveLiquidityTokenStatus({
     baseToken
       ? {
           ...baseToken,
+          symbol: isClassical
+            ? baseToken.symbol + ' LP'
+            : `${baseToken.symbol}/${quoteToken?.symbol} LP`,
           address: baseLpTokenId,
         }
       : undefined,
     {
-      amount: baseLpAmount,
-      skipQuery: !proxyContractAddress || !baseLpTokenId || !isClassical,
+      amount: isAMMV2
+        ? balanceInfo.userBaseLpToTokenBalance && balanceInfo.userBaseLpBalance
+          ? new BigNumber(baseAmount)
+              .div(balanceInfo.userBaseLpToTokenBalance)
+              .times(balanceInfo.userBaseLpBalance)
+              .toString()
+          : baseAmount
+        : baseAmount,
+      skipQuery:
+        !proxyContractAddress || !baseLpTokenId || (!isClassical && !isAMMV2),
       contractAddress: proxyContractAddress,
-      overrideBalance: balanceInfo.userBaseLpBalance,
+      overrideBalance: isAMMV2
+        ? balanceInfo.userBaseLpBalance
+        : balanceInfo.userBaseLpToTokenBalance,
     },
   );
   const quoteTokenStatus = useTokenStatus(
@@ -62,10 +71,10 @@ export function useRemoveLiquidityTokenStatus({
         }
       : undefined,
     {
-      amount: quoteLpAmount,
+      amount: quoteAmount,
       skipQuery: !proxyContractAddress || !quoteLpTokenId || !isClassical,
       contractAddress: proxyContractAddress,
-      overrideBalance: balanceInfo.userQuoteLpBalance,
+      overrideBalance: balanceInfo.userQuoteLpToTokenBalance,
     },
   );
 

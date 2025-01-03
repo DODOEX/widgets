@@ -1,4 +1,8 @@
-import { alpha, ThemeOptions } from '@mui/system';
+import {
+  alpha,
+  ThemeOptions as ThemeOptionsBase,
+  Theme as ThemeBase,
+} from '@mui/system';
 import { merge } from 'lodash';
 
 export type PaletteMode = 'light' | 'dark';
@@ -7,7 +11,7 @@ interface PaletteColorOptions {
   light?: string;
   main: string;
   dark?: string;
-  contrastText?: string;
+  contrastText: string;
 }
 
 interface TypeBackground {
@@ -39,18 +43,27 @@ interface TypeHover {
 }
 
 export interface PaletteOptions {
-  primary?: PaletteColorOptions;
-  secondary?: PaletteColorOptions;
-  error?: PaletteColorOptions;
-  warning?: PaletteColorOptions;
-  success?: PaletteColorOptions;
-  purple?: PaletteColorOptions;
-  mode?: PaletteMode;
-  text?: Partial<TypeText>;
-  border?: Partial<TypeBorder>;
-  hover?: Partial<TypeHover>;
-  background?: Partial<TypeBackground>;
+  primary: PaletteColorOptions;
+  secondary: PaletteColorOptions;
+  error: PaletteColorOptions;
+  warning: PaletteColorOptions;
+  success: PaletteColorOptions;
+  purple: PaletteColorOptions;
+  mode: PaletteMode;
+  text: TypeText;
+  border: TypeBorder;
+  hover: TypeHover;
+  background: TypeBackground;
+  tabActive: PaletteColorOptions;
   getContrastText?: (background: string) => string;
+}
+
+export interface ThemeOptions extends ThemeOptionsBase {
+  palette?: PaletteOptions;
+}
+
+export interface Theme extends ThemeBase {
+  palette: PaletteOptions & { mode: 'light' | 'dark' };
 }
 
 export interface ZIndex {
@@ -130,6 +143,10 @@ export const darkPalette: PaletteOptions = {
   hover: {
     default: alpha('#FFF', 0.1),
   },
+  tabActive: {
+    main: alpha('#FFE804', 0.2),
+    contrastText: '#FFE804',
+  },
 };
 
 export const lightPalette: PaletteOptions = {
@@ -182,11 +199,15 @@ export const lightPalette: PaletteOptions = {
   hover: {
     default: alpha('#1A1A1B', 0.1),
   },
+  tabActive: {
+    main: alpha('#FFE804', 0.2),
+    contrastText: '#1A1A1B',
+  },
 };
 
 export const getDesignTokens = (
   mode: PaletteMode,
-  themeProps?: ThemeOptions,
+  themeProps?: PartialDeep<ThemeOptions>,
   lang?: string,
 ): ThemeOptions => {
   const isLight = mode === 'light';
@@ -316,5 +337,5 @@ export const getDesignTokens = (
   return {
     ...merge(defaultTheme, themeProps),
     palette,
-  };
+  } as ThemeOptions;
 };

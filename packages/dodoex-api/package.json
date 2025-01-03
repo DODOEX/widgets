@@ -1,10 +1,10 @@
 {
   "name": "@dodoex/api",
-  "version": "3.0.0-bartio.0",
+  "version": "3.0.3-bartio.0",
   "description": "DODO API Kit",
   "source": "src/index.ts",
-  "types": "dist/index.d.ts",
-  "main": "dist/cjs/index.cjs",
+  "types": "dist/types/index.d.ts",
+  "main": "dist/index.cjs",
   "module": "dist/index.js",
   "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/DODOEX/widgets#readme",
@@ -19,7 +19,9 @@
     "schema:watch": "export $(cat .env | xargs) && env graphql-codegen -w",
     "prerelease": "yarn run build",
     "release": "semantic-release",
-    "release:local": "np --any-branch --no-cleanup --no-tests"
+    "release:local": "np --any-branch --no-cleanup --no-tests",
+    "release.npm-publish": "npm publish --access public",
+    "release.npm-publish-beta": "npm publish --tag beta"
   },
   "author": "",
   "publishConfig": {
@@ -28,9 +30,9 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/cjs/index.cjs"
+      "require": "./dist/index.cjs"
     }
   },
   "keywords": [
@@ -51,10 +53,16 @@
     ]
   },
   "peerDependencies": {
-    "lodash": ">=4",
-    "bignumber.js": ">=9"
+    "@dodoex/contract-request": "1.x",
+    "@dodoex/dodo-contract-request": "1.x",
+    "bignumber.js": ">=9",
+    "lodash": ">=4"
   },
   "dependencies": {
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/properties": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
+    "@ethersproject/web": "^5.7.1",
     "cross-fetch": "^4.0.0",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
@@ -65,9 +73,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.16.7",
-    "@ethersproject/abi": ">=5",
     "@ethersproject/contracts": ">=5",
-    "@ethersproject/providers": ">=5",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/client-preset": "^4.1.0",
     "@rollup/plugin-babel": "^6.0.4",
@@ -75,6 +81,7 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-replace": "^5.0.7",
     "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.1",
     "@rollup/plugin-url": "^8.0.2",
     "@svgr/rollup": "^6.2.1",
     "@testing-library/jest-dom": "^5.16.5",
@@ -89,10 +96,10 @@
     "jest-environment-jsdom": "^29.0.3",
     "np": "^7.6.1",
     "rollup": "^4.18.0",
-    "rollup-plugin-typescript2": "^0.36.0",
+    "rollup-plugin-clear": "^2.0.7",
     "rollup-plugin-dynamic-import-variables": "^1.1.0",
     "svg-jest": "^1.0.1",
     "ts-jest": "^29.0.1",
-    "typescript": "^4.7.3"
+    "typescript": "^5.6.3"
   }
 }

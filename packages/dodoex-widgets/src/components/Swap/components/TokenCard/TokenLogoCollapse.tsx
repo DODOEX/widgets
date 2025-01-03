@@ -45,7 +45,8 @@ export function TokenLogoCollapse({
         <TokenLogo
           url={token?.logoURI}
           address={token?.address ?? ''}
-          chainId={showChainLogo ? token?.chainId : undefined}
+          chainId={token?.chainId}
+          noShowChain={!showChainLogo}
           width={30}
           height={30}
           chainSize={16}

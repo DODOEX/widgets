@@ -8,18 +8,14 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { useSelector } from 'react-redux';
-import { DEFAULT_SWAP_DDL } from '../../constants/swap';
-import { getSlippage, getTxDdl } from '../../store/selectors/settings';
 import { EmptyAddress } from '../../constants/address';
 import { usePriceTimer } from './usePriceTimer';
-import { getDefaultChainId } from '../../store/selectors/wallet';
 import useExecuteSwap from './useExecuteSwap';
 import { TokenInfo } from '../Token';
-import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
-import { getGlobalProps } from '../../store/selectors/globals';
+import { useUserOptions } from '../../components/UserOptionsProvider';
+import { useSwapSettingStore } from './useSwapSettingStore';
 
 export enum RoutePriceStatus {
   Initial = 'Initial',
@@ -34,6 +30,9 @@ export interface FetchRoutePrice {
   fromAmount: string;
   toAmount: string;
   estimateGas?: boolean;
+  isReverseRouting?: boolean;
+  slippage?: number;
+  slippageLoading?: boolean;
 }
 
 interface IRouteResponse {
@@ -57,21 +56,21 @@ export function useFetchRoutePrice({
   toAmount,
   marginAmount,
   estimateGas,
+  isReverseRouting,
+  slippage,
+  slippageLoading,
 }: FetchRoutePrice) {
   const { account, chainId: walletChainId, provider } = useWeb3React();
-  const defaultChainId = useSelector(getDefaultChainId);
+  const { defaultChainId, feeRate, rebateTo, apikey } = useUserOptions();
   const chainId = useMemo(
     () => fromToken?.chainId || walletChainId || defaultChainId,
     [walletChainId, fromToken, defaultChainId],
   );
-  const { defaultSlippage, loading: slippageLoading } =
-    useDefaultSlippage(false);
-  const slippage = useSelector(getSlippage) || defaultSlippage;
-  const ddl = useSelector(getTxDdl) || DEFAULT_SWAP_DDL;
+  const ddl = useSwapSettingStore((state) => Number(state.ddl));
+  const disableIndirectRouting = useSwapSettingStore((state) =>
+    Number(state.disableIndirectRouting),
+  );
   const lastId = useRef(0);
-  const { feeRate, rebateTo, apikey, isReverseRouting } =
-    useSelector(getGlobalProps);
-  const apiDdl = useMemo(() => Math.floor(Date.now() / 1000) + ddl * 60, [ddl]);
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,
   );
@@ -103,12 +102,13 @@ export function useFetchRoutePrice({
     setStatus(RoutePriceStatus.Loading);
     // waiting for set auto slippage
     if (slippageLoading) return;
+    const apiDdl = Math.floor(Date.now() / 1000) + ddl * 60;
     const params: any = {
       chainId,
       deadLine: apiDdl,
       apikey,
       slippage,
-      source: 'dodoV2AndMixWasm',
+      source: disableIndirectRouting ? 'noMaxHops' : 'dodoV2AndMixWasm',
       toTokenAddress: toToken.address,
       fromTokenAddress: fromToken.address,
       userAddr: account || EmptyAddress,
@@ -150,7 +150,7 @@ export function useFetchRoutePrice({
       console.error(error);
     }
   }, [
-    apiDdl,
+    ddl,
     account,
     chainId,
     toToken,
@@ -166,6 +166,7 @@ export function useFetchRoutePrice({
     routePriceAPI,
     slippageLoading,
     estimateGas,
+    disableIndirectRouting,
   ]);
 
   usePriceTimer({ refetch });

@@ -5,6 +5,7 @@ import {
   TabPanel,
   Tabs,
   TabsGroup,
+  Modal,
 } from '@dodoex/components';
 import Dialog from '../../../components/Dialog';
 import {
@@ -23,7 +24,8 @@ import LpTokenMiningOperate from '../../MiningWidget/LpTokenMiningOperate';
 import { useWeb3React } from '@web3-react/core';
 import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
 import { t } from '@lingui/macro';
-import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { GSPPairRiskWarning } from './components/GSPPairRiskWarning';
 
 export interface PoolOperateProps {
   onClose?: () => void;
@@ -33,6 +35,7 @@ export interface PoolOperateProps {
   operate?: PoolOperateInnerProps['operate'];
   chainId?: number;
   hasMining?: boolean;
+  hidePoolInfo?: boolean;
   sx?: BoxProps['sx'];
 }
 
@@ -42,12 +45,14 @@ export function PoolOperate({
   address,
   operate,
   chainId,
-  hasMining = true,
+  hasMining,
+  hidePoolInfo,
+  sx,
 }: PoolOperateProps) {
   const { account } = useWeb3React();
   const chain = chainId ? ThegraphKeyMap[chainId as ChainId] : '';
 
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
   const fetchResult = useQuery({
     ...graphQLRequests.getQuery(PoolApi.graphql.fetchPoolList, {
       where: {
@@ -73,7 +78,17 @@ export function PoolOperate({
 
   const balanceInfo = usePoolBalanceInfo({
     account,
-    pool,
+    pool: pool
+      ? {
+          chainId: pool.chainId,
+          address: pool.address,
+          type: pool.type,
+          baseTokenDecimals: pool.baseToken.decimals,
+          quoteTokenDecimals: pool.quoteToken.decimals,
+          baseLpTokenDecimals: pool.baseLpToken?.decimals ?? 18,
+          quoteLpTokenDecimals: pool.quoteLpToken?.decimals ?? 18,
+        }
+      : undefined,
   });
   const hasLp =
     !!balanceInfo.userBaseLpBalance?.gt(0) ||
@@ -83,13 +98,7 @@ export function PoolOperate({
   const poolAddress = address ?? pool?.address;
 
   return (
-    <Box
-      sx={{
-        pb: 20,
-        overflow: 'hidden',
-        flex: 1,
-      }}
-    >
+    <Box sx={sx}>
       <Tabs
         value={poolOrMiningTab}
         onChange={(_, value) => {
@@ -106,7 +115,7 @@ export function PoolOperate({
           tabs={poolOrMiningTabs}
           tabsListSx={{
             mx: 20,
-            justifyContent: 'space-between',
+            justifyContent: onClose ? 'space-between' : 'flex-start',
             ...(hasMining && hasLp
               ? {
                   '& button:last-child': {
@@ -129,18 +138,42 @@ export function PoolOperate({
               : {}),
           }}
           rightSlot={
-            onClose ? (
-              <Box
-                component={Error}
-                sx={{
-                  color: 'text.secondary',
-                  cursor: 'pointer',
-                }}
-                onClick={() => {
-                  onClose();
-                }}
-              />
-            ) : undefined
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: 12,
+              }}
+            >
+              {pool?.type === 'GSP' && <GSPPairRiskWarning />}
+              {onClose ? (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: 24,
+                    height: 24,
+                    borderRadius: '50%',
+                    borderWidth: 1,
+                    color: 'text.secondary',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Box
+                    component={Error}
+                    sx={{
+                      width: 16,
+                      height: 16,
+                    }}
+                    onClick={() => {
+                      onClose();
+                    }}
+                  />
+                </Box>
+              ) : undefined}
+            </Box>
           }
         />
         <TabPanel
@@ -153,6 +186,7 @@ export function PoolOperate({
           <PoolOperateInner
             pool={pool}
             operate={operate}
+            hidePoolInfo={hidePoolInfo}
             errorRefetch={poolErrorRefetch}
             submittedBack={() => {
               if (hasMining) {
@@ -186,7 +220,12 @@ export function PoolOperate({
   );
 }
 
-export default function PoolOperateDialog({ sx, ...props }: PoolOperateProps) {
+export default function PoolOperateDialog({
+  modal,
+  ...props
+}: PoolOperateProps & {
+  modal?: boolean;
+}) {
   const { isMobile } = useWidgetDevice();
 
   return (
@@ -194,6 +233,7 @@ export default function PoolOperateDialog({ sx, ...props }: PoolOperateProps) {
       open={!!props.pool || !!props.address}
       onClose={props.onClose}
       scope={!isMobile}
+      modal={modal}
       id="pool-operate"
     >
       <PoolOperate {...props} />

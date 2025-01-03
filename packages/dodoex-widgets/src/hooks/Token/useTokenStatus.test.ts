@@ -2,7 +2,7 @@ import { TokenInfo } from './type';
 import { renderHook } from '@testing-library/react-hooks';
 import BigNumber from 'bignumber.js';
 import { useTokenStatus } from './useTokenStatus';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 jest.mock('@tanstack/react-query', () => ({
   useQuery: jest.fn(() => ({
@@ -12,6 +12,23 @@ jest.mock('@tanstack/react-query', () => ({
   useQueryClient: jest.fn(() => ({
     refetchQueries: jest.fn(),
   })),
+  useMutation: jest.fn(() => ({
+    mutate: jest.fn(),
+    isPending: false,
+  })),
+}));
+
+jest.mock('../../components/UserOptionsProvider', () => ({
+  useUserOptions: jest.fn((fn) => {
+    if (typeof fn === 'function') {
+      return fn({
+        defaultChainId: 1,
+      });
+    }
+    return {
+      defaultChainId: 1,
+    };
+  }),
 }));
 
 const useQueryMock = useQuery as unknown as jest.Mock;
@@ -73,6 +90,7 @@ describe('useTokenStatus', () => {
       insufficientBalance: true,
       needShowTokenStatusButton: true,
       loading: true,
+      token: mockToken,
     });
   });
 
@@ -92,6 +110,7 @@ describe('useTokenStatus', () => {
       ...defaultReturnResult,
       insufficientBalance: true,
       needShowTokenStatusButton: true,
+      token: mockToken,
     });
   });
 
@@ -111,6 +130,7 @@ describe('useTokenStatus', () => {
       ...defaultReturnResult,
       needApprove: true,
       needShowTokenStatusButton: true,
+      token: mockToken,
     });
   });
 
@@ -122,14 +142,12 @@ describe('useTokenStatus', () => {
       },
       isLoading: false,
     });
+    const token = {
+      ...mockToken,
+      symbol: 'USDT',
+    };
     const { result } = renderHook(() =>
-      useTokenStatus(
-        {
-          ...mockToken,
-          symbol: 'USDT',
-        },
-        { amount: '10' },
-      ),
+      useTokenStatus(token, { amount: '10' }),
     );
 
     expect(result.current).toEqual({
@@ -137,6 +155,7 @@ describe('useTokenStatus', () => {
       needReset: true,
       needShowTokenStatusButton: true,
       approveTitle: 'Reset USDT',
+      token,
     });
   });
 
@@ -152,6 +171,9 @@ describe('useTokenStatus', () => {
       useTokenStatus(mockToken, { amount: '10' }),
     );
 
-    expect(result.current).toEqual(defaultReturnResult);
+    expect(result.current).toEqual({
+      ...defaultReturnResult,
+      token: mockToken,
+    });
   });
 });

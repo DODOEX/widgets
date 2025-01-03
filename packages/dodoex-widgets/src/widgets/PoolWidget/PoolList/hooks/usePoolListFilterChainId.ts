@@ -3,11 +3,13 @@ import React from 'react';
 import { isTestNet } from '../../../../constants/chainList';
 import { ChainId } from '@dodoex/api';
 import { POOLS_LIST_FILTER_CHAIN } from '../../../../constants/sessionStorage';
+import { useUserOptions } from '../../../../components/UserOptionsProvider';
 
 export function usePoolListFilterChainId() {
   const { chainId: currentChainId } = useWeb3React();
+  const { onlyChainId } = useUserOptions();
   const [activeChainId, setActiveChainId] =
-    React.useState<ChainId | undefined>(undefined);
+    React.useState<ChainId | undefined>(onlyChainId);
 
   const filterChainIds = React.useMemo(() => {
     if (activeChainId !== undefined) return [activeChainId];

@@ -10,16 +10,23 @@ export function CopyTooltipToast({
   sx,
   componentProps,
   onClick,
+  children,
 }: {
   copyText?: string;
   size: number;
   sx?: BoxProps['sx'];
   componentProps?: BoxProps;
   onClick?: () => void;
+  children?: React.ReactNode;
 }) {
   const [open, setOpen] = React.useState(false);
   return (
-    <TooltipToast title={t`Copied`} open={open} onClose={() => setOpen(false)}>
+    <TooltipToast
+      title={t`Copied`}
+      open={open}
+      onClose={() => setOpen(false)}
+      arrow={false}
+    >
       <Box
         {...componentProps}
         component={componentProps?.component ?? ButtonBase}
@@ -49,6 +56,7 @@ export function CopyTooltipToast({
             ...sx,
           }}
         />
+        {children}
       </Box>
     </TooltipToast>
   );

@@ -20,23 +20,33 @@ import { PoolTab } from '../../PoolList/hooks/usePoolListTabs';
 import ConfirmInfoDialog from '../components/ConfirmInfoDialog';
 import { useCreatePoolSubmit } from '../hooks/contract/useCreatePoolSubmit';
 import { Actions, StateProps, Types } from '../reducer';
-import { Version } from '../types';
+import { SubPeggedVersionE, Version } from '../types';
 import {
   DEFAULT_SLIPPAGE_COEFFICIENT,
   MAX_SLIPPAGE_COEFFICIENT_PEGGED,
   MAX_FEE_RATE,
   MAX_INIT_PRICE,
   MIN_FEE_RATE,
+  isGasWrapGasTokenPair,
 } from '../utils';
+import { GasWrapGasTokenError } from '../components/GasWrapGasTokenError';
 
 function OperateBtn({
   state,
   dispatch,
   openConfirm,
+  isPeggedVersion,
+  isStandardVersion,
+  isSingleTokenVersion,
+  fiatPriceLoading,
 }: {
   state: StateProps;
   dispatch: Dispatch<Actions>;
   openConfirm: () => void;
+  isPeggedVersion: boolean;
+  isStandardVersion: boolean;
+  isSingleTokenVersion: boolean;
+  fiatPriceLoading: boolean;
 }) {
   const {
     currentStep,
@@ -63,11 +73,23 @@ function OperateBtn({
     variant: Button.Variant.contained,
   };
 
+  const isGasWrapGasError = isGasWrapGasTokenPair({
+    chainId: state.baseToken?.chainId ?? 1,
+    baseToken,
+    quoteToken,
+  });
+
   const nextButtonText = t`Next`;
 
   const disabledButton = (
     <Button fullWidth disabled {...buttonProps}>
       {nextButtonText}
+    </Button>
+  );
+
+  const confirmButton = (
+    <Button variant={Button.Variant.contained} fullWidth onClick={openConfirm}>
+      <Trans>Create</Trans>
     </Button>
   );
 
@@ -87,62 +109,93 @@ function OperateBtn({
       </Button>
     );
   }
+
+  const invalidBaseTokenAmount =
+    !baseToken || baseAmountBN.isNaN() || baseAmountBN.lte(0);
+
+  const invalidQuoteTokenAmount =
+    !quoteToken || quoteAmountBN.isNaN() || quoteAmountBN.lte(0);
+
   if (currentStep === 1) {
-    if (
-      !baseToken ||
-      !quoteToken ||
-      baseAmountBN.isNaN() ||
-      baseAmountBN.lte(0)
-    ) {
+    if (isGasWrapGasError) {
       return disabledButton;
     }
-    if (
-      baseTokenStatus.needShowTokenStatusButton ||
-      baseTokenStatus.insufficientBalance
-    ) {
-      return (
-        <TokenStatusButton status={baseTokenStatus} buttonProps={buttonProps} />
-      );
-    }
-    if (selectedVersion !== Version.singleToken) {
-      if (!quoteToken || quoteAmountBN.isNaN() || quoteAmountBN.lte(0)) {
+    if (isPeggedVersion) {
+      if (!baseToken || !quoteToken) {
+        return disabledButton;
+      }
+    } else {
+      if (invalidBaseTokenAmount) {
         return disabledButton;
       }
       if (
-        quoteTokenStatus.needShowTokenStatusButton ||
-        quoteTokenStatus.insufficientBalance
+        baseTokenStatus.needShowTokenStatusButton ||
+        baseTokenStatus.insufficientBalance
       ) {
         return (
           <TokenStatusButton
-            status={quoteTokenStatus}
+            status={baseTokenStatus}
             buttonProps={buttonProps}
           />
         );
       }
-    }
+      if (!isSingleTokenVersion) {
+        if (invalidQuoteTokenAmount) {
+          return disabledButton;
+        }
+        if (
+          quoteTokenStatus.needShowTokenStatusButton ||
+          quoteTokenStatus.insufficientBalance
+        ) {
+          return (
+            <TokenStatusButton
+              status={quoteTokenStatus}
+              buttonProps={buttonProps}
+            />
+          );
+        }
+      }
 
-    if (state.selectedVersion !== Version.standard) {
-      const initPriceBN = new BigNumber(initPrice);
-      const decimalsLimit = Math.min(quoteToken.decimals, 16);
-      if (
-        !initPrice ||
-        initPriceBN.isNaN() ||
-        initPriceBN.lt(`1e-${decimalsLimit}`) ||
-        initPriceBN.gt(MAX_INIT_PRICE)
-      ) {
+      if (!isStandardVersion) {
+        if (!quoteToken) {
+          return disabledButton;
+        }
+        const initPriceBN = new BigNumber(initPrice);
+        const decimalsLimit = Math.min(quoteToken.decimals, 16);
+        if (
+          !initPrice ||
+          initPriceBN.isNaN() ||
+          initPriceBN.lt(`1e-${decimalsLimit}`) ||
+          initPriceBN.gt(MAX_INIT_PRICE)
+        ) {
+          return disabledButton;
+        }
+
+        const slippageCoefficientBN = new BigNumber(slippageCoefficient);
+        if (
+          !slippageCoefficient ||
+          slippageCoefficientBN.isNaN() ||
+          slippageCoefficientBN.lt(0) ||
+          slippageCoefficientBN.gt(
+            selectedVersion === Version.pegged
+              ? MAX_SLIPPAGE_COEFFICIENT_PEGGED
+              : DEFAULT_SLIPPAGE_COEFFICIENT,
+          )
+        ) {
+          return disabledButton;
+        }
+      }
+
+      if (fiatPriceLoading) {
         return disabledButton;
       }
 
-      const slippageCoefficientBN = new BigNumber(slippageCoefficient);
       if (
-        !slippageCoefficient ||
-        slippageCoefficientBN.isNaN() ||
-        slippageCoefficientBN.lt(0) ||
-        slippageCoefficientBN.gt(
-          selectedVersion === Version.pegged
-            ? MAX_SLIPPAGE_COEFFICIENT_PEGGED
-            : DEFAULT_SLIPPAGE_COEFFICIENT,
-        )
+        isGasWrapGasTokenPair({
+          chainId: baseToken.chainId,
+          baseToken,
+          quoteToken,
+        })
       ) {
         return disabledButton;
       }
@@ -163,25 +216,87 @@ function OperateBtn({
       </Button>
     );
   }
+
+  const feeRateBN = new BigNumber(feeRate);
+  const invalidFeeRate =
+    !feeRate ||
+    feeRateBN.isNaN() ||
+    feeRateBN.lt(MIN_FEE_RATE) ||
+    feeRateBN.gt(MAX_FEE_RATE);
   if (currentStep === 2) {
-    const feeRateBN = new BigNumber(feeRate);
-    if (
-      !feeRate ||
-      feeRateBN.isNaN() ||
-      feeRateBN.lt(MIN_FEE_RATE) ||
-      feeRateBN.gt(MAX_FEE_RATE)
-    ) {
+    if (isPeggedVersion) {
+      return (
+        <Button
+          fullWidth
+          {...buttonProps}
+          onClick={() => {
+            dispatch({
+              type: Types.SetCurrentStep,
+              payload: 3,
+            });
+          }}
+        >
+          {nextButtonText}
+        </Button>
+      );
+    }
+    if (invalidFeeRate) {
       return disabledButton;
     }
+    return confirmButton;
+  }
+
+  if (currentStep === 3) {
+    if (invalidFeeRate) {
+      return disabledButton;
+    }
+
     return (
       <Button
-        variant={Button.Variant.contained}
         fullWidth
-        onClick={openConfirm}
+        {...buttonProps}
+        onClick={() => {
+          dispatch({
+            type: Types.SetCurrentStep,
+            payload: 4,
+          });
+        }}
       >
-        <Trans>Create</Trans>
+        {nextButtonText}
       </Button>
     );
+  }
+
+  if (currentStep === 4) {
+    if (invalidBaseTokenAmount) {
+      return disabledButton;
+    }
+
+    if (invalidQuoteTokenAmount) {
+      return disabledButton;
+    }
+
+    if (
+      baseTokenStatus.needShowTokenStatusButton ||
+      baseTokenStatus.insufficientBalance
+    ) {
+      return (
+        <TokenStatusButton status={baseTokenStatus} buttonProps={buttonProps} />
+      );
+    }
+    if (
+      quoteTokenStatus.needShowTokenStatusButton ||
+      quoteTokenStatus.insufficientBalance
+    ) {
+      return (
+        <TokenStatusButton
+          status={quoteTokenStatus}
+          buttonProps={buttonProps}
+        />
+      );
+    }
+
+    return confirmButton;
   }
   return null;
 }
@@ -189,17 +304,25 @@ function OperateBtn({
 export function BottomButtonGroup({
   state,
   dispatch,
+  isPeggedVersion,
+  isStandardVersion,
+  isSingleTokenVersion,
+  fiatPriceLoading,
 }: {
   state: StateProps;
   dispatch: Dispatch<Actions>;
+  isPeggedVersion: boolean;
+  isStandardVersion: boolean;
+  isSingleTokenVersion: boolean;
+  fiatPriceLoading: boolean;
 }) {
-  const { currentStep, baseAmount, quoteAmount } = state;
+  const { currentStep } = state;
 
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
   const submission = useSubmission();
 
-  const { chainId } = useWalletInfo();
+  const { onlyChainId, chainId } = useWalletInfo();
 
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
 
@@ -220,22 +343,27 @@ export function BottomButtonGroup({
           ...params,
         },
         {
+          early: true,
           metadata: {
             [state.selectedVersion === Version.marketMakerPool
               ? MetadataFlag.createDPPPool
               : state.selectedVersion === Version.pegged
-              ? MetadataFlag.createDSPPool
-              : MetadataFlag.createDVMPool]: '1',
+                ? state.selectedSubPeggedVersion === SubPeggedVersionE.DSP
+                  ? MetadataFlag.createDSPPool
+                  : MetadataFlag.createGSPPool
+                : MetadataFlag.createDVMPool]: '1',
           },
         },
       );
       if (succ === ExecutionResult.Submitted) {
-        useRouterStore.getState().push({
-          type: PageType.Pool,
-          params: {
-            tab: PoolTab.myCreated,
-          },
-        });
+        setTimeout(() => {
+          useRouterStore.getState().push({
+            type: PageType.Pool,
+            params: {
+              tab: PoolTab.myCreated,
+            },
+          });
+        }, 100);
       }
     },
   });
@@ -258,52 +386,69 @@ export function BottomButtonGroup({
                 py: 0,
               }
             : {}),
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
         }}
       >
-        {currentStep === 0 && isMobile && (
-          <Button
-            variant={Button.Variant.second}
-            fullWidth
-            onClick={() => {
-              useRouterStore.getState().back();
-            }}
-          >
-            <Trans>Cancel</Trans>
-          </Button>
-        )}
-
-        {(currentStep === 1 || currentStep === 2) && (
-          <Button
-            variant={Button.Variant.second}
-            fullWidth
-            onClick={() => {
-              dispatch({
-                type: Types.SetCurrentStep,
-                payload: (currentStep - 1) as 0 | 1,
-              });
-            }}
-          >
-            <Trans>Back</Trans>
-          </Button>
-        )}
-
-        <NeedConnectButton
-          chainId={chainId}
-          variant={Button.Variant.contained}
-          fullWidth
-          includeButton
-        >
-          <OperateBtn
-            state={state}
-            dispatch={dispatch}
-            openConfirm={() => {
-              setConfirmModalVisible(true);
-            }}
+        {currentStep == 1 && (
+          <GasWrapGasTokenError
+            chainId={chainId}
+            baseToken={state.baseToken}
+            quoteToken={state.quoteToken}
           />
-        </NeedConnectButton>
+        )}
+
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
+          {currentStep === 0 && isMobile && (
+            <Button
+              variant={Button.Variant.second}
+              fullWidth
+              onClick={() => {
+                useRouterStore.getState().back();
+              }}
+            >
+              <Trans>Cancel</Trans>
+            </Button>
+          )}
+
+          {currentStep > 0 && (
+            <Button
+              variant={Button.Variant.second}
+              fullWidth
+              onClick={() => {
+                dispatch({
+                  type: Types.SetCurrentStep,
+                  payload: (currentStep - 1) as 0 | 1,
+                });
+              }}
+            >
+              <Trans>Back</Trans>
+            </Button>
+          )}
+
+          <NeedConnectButton
+            chainId={onlyChainId}
+            variant={Button.Variant.contained}
+            fullWidth
+            includeButton
+          >
+            <OperateBtn
+              state={state}
+              dispatch={dispatch}
+              openConfirm={() => {
+                setConfirmModalVisible(true);
+              }}
+              isPeggedVersion={isPeggedVersion}
+              isStandardVersion={isStandardVersion}
+              isSingleTokenVersion={isSingleTokenVersion}
+              fiatPriceLoading={fiatPriceLoading}
+            />
+          </NeedConnectButton>
+        </Box>
       </Box>
 
       <ConfirmInfoDialog
@@ -312,6 +457,7 @@ export function BottomButtonGroup({
         state={state}
         isModify={false}
         onConfirm={createPoolMutation.mutate}
+        loading={createPoolMutation.isPending}
       />
     </>
   );

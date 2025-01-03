@@ -1,7 +1,7 @@
-import { Box } from '@dodoex/components';
+import { Box, Modal } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
 import { createPortal } from 'react-dom';
-import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
+import { useUserOptions } from '../../UserOptionsProvider';
 
 export const transitionTime = 300;
 export interface DialogProps {
@@ -28,6 +28,7 @@ export interface DialogProps {
   height?: number | string;
   testId?: string;
 }
+
 function DialogBase({
   open,
   onClose,
@@ -97,14 +98,91 @@ function DialogBase({
   );
 }
 
-export default function Dialog({ scope, ...props }: DialogProps) {
-  const { widgetRef, DialogComponent } = useGlobalConfig();
+function ModalDialog({
+  open,
+  onClose,
+  afterClose,
+  title,
+  rightSlot,
+  canBack = true,
+  children,
+  height,
+  testId,
+}: DialogProps) {
+  return (
+    <Modal
+      open={open}
+      onClose={onClose}
+      data-testid={testId}
+      data-active={open ? '1' : '0'}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height,
+        }}
+      >
+        {title ? (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              p: 20,
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                typography: 'caption',
+              }}
+            >
+              {title}
+            </Box>
+            {rightSlot}
+            {!rightSlot && canBack && (
+              <Box
+                component={Error}
+                sx={{ color: 'text.secondary', cursor: 'pointer' }}
+                onClick={() => {
+                  onClose && onClose();
+                  setTimeout(() => afterClose && afterClose(), transitionTime);
+                }}
+              />
+            )}
+          </Box>
+        ) : (
+          ''
+        )}
+        {/* When not turned on, the element is not rendered. This prevents the tab from focusing on the hidden dialog. It also prevents the svg from pointing to a hidden element with the same id. */}
+        {open ? children : ''}
+      </Box>
+    </Modal>
+  );
+}
+
+export default function Dialog({
+  scope,
+  modal,
+  ...props
+}: DialogProps & {
+  modal?: boolean;
+}) {
+  const { widgetRef, DialogComponent } = useUserOptions();
 
   if (DialogComponent) {
     return <DialogComponent scope={scope} {...props} />;
   }
+
+  const DialogComponentResult = modal ? ModalDialog : DialogBase;
+
   if (widgetRef?.current && !scope) {
-    return createPortal(<DialogBase {...props} />, widgetRef.current);
+    return createPortal(
+      <DialogComponentResult {...props} />,
+      widgetRef.current,
+    );
   }
-  return <DialogBase {...props} />;
+  return <DialogComponentResult {...props} />;
 }

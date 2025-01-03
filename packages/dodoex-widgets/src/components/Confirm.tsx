@@ -1,8 +1,8 @@
 import { Box, Button } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import React from 'react';
-import { useGlobalConfig } from '../providers/GlobalConfigContext';
 import Dialog from './Dialog';
+import { useUserOptions } from './UserOptionsProvider';
 
 export type ConfirmProps = React.PropsWithChildren<{
   open: boolean;
@@ -17,9 +17,10 @@ export type ConfirmProps = React.PropsWithChildren<{
   confirmLoading?: boolean;
   isManualClose?: boolean;
   onConfirm?: () => void;
+  modal?: boolean;
 }>;
 export default function Confirm(props: ConfirmProps) {
-  const { ConfirmComponent } = useGlobalConfig();
+  const { ConfirmComponent } = useUserOptions();
 
   if (ConfirmComponent) {
     return <ConfirmComponent {...props} />;
@@ -39,10 +40,11 @@ export default function Confirm(props: ConfirmProps) {
     confirmLoading,
     isManualClose,
     onConfirm,
+    modal,
   } = props;
 
   return (
-    <Dialog open={open} onClose={onClose} title={title}>
+    <Dialog open={open} onClose={onClose} title={title} modal={modal}>
       <Box
         sx={{
           display: 'flex',

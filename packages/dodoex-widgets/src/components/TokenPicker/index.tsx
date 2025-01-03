@@ -1,4 +1,4 @@
-import { Box, SearchInput } from '@dodoex/components';
+import { Box, BoxProps, SearchInput } from '@dodoex/components';
 import React, {
   CSSProperties,
   useCallback,
@@ -37,6 +37,7 @@ export interface TokenPickerProps {
   searchPlaceholder?: string;
   /** like search pool address */
   searchOtherAddress?: (address: string) => Promise<JSX.Element | null>;
+  sx?: BoxProps['sx'];
 }
 
 export default function TokenPicker({
@@ -53,6 +54,7 @@ export default function TokenPicker({
   multiple,
   searchPlaceholder,
   searchOtherAddress,
+  sx,
 }: TokenPickerProps) {
   const { chainList, selectChainId, setSelectChainId } =
     useSelectChainList(side);
@@ -149,6 +151,7 @@ export default function TokenPicker({
         px: 20,
         flex: 1,
         overflow: 'hidden',
+        ...sx,
       }}
     >
       <SearchInput

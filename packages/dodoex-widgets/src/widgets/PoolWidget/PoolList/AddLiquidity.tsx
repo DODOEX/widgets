@@ -1,12 +1,4 @@
-import {
-  alpha,
-  Box,
-  Button,
-  useTheme,
-  Tooltip,
-  ButtonBase,
-  RotatingIcon,
-} from '@dodoex/components';
+import { alpha, Box, Button, useTheme, Tooltip } from '@dodoex/components';
 import { PoolApi, PoolType } from '@dodoex/api';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -14,16 +6,18 @@ import {
   convertFetchLiquidityToOperateData,
   convertLiquidityTokenToTokenInfo,
   FetchLiquidityListLqList,
+  getPoolAMMOrPMM,
 } from '../utils';
 import { ChainId } from '@dodoex/api';
-import { ArrowRight } from '@dodoex/icons';
 import React from 'react';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { Trans, t } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import {
+  byWei,
   formatApy,
   formatExponentialNotation,
+  formatPercentageNumber,
   formatReadableNumber,
 } from '../../../utils';
 import PoolApyTooltip from './components/PoolApyTooltip';
@@ -47,15 +41,22 @@ import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCo
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import LiquidityTable from './components/LiquidityTable';
-import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
-import SkeletonTable from './components/SkeletonTable';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { CardStatus } from '../../../components/CardWidgets';
+import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
+import GoPoolDetailBtn from './components/GoPoolDetailBtn';
+import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
+import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
 
 function CardList({
   lqList,
   setOperatePool,
+  supportAMM,
 }: {
   lqList: FetchLiquidityListLqList;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  supportAMM?: boolean;
 }) {
   const theme = useTheme();
   return (
@@ -86,6 +87,13 @@ function CardList({
                 ),
               )
             : undefined;
+        const hasMining = !!item.miningAddress?.[0];
+
+        const type = item.type as PoolType;
+        const poolType = getPoolAMMOrPMM(type);
+        const isAMMV2 = type === 'AMMV2';
+        const isAMMV3 = type === 'AMMV3';
+
         return (
           <Box
             key={item.id + item.chainId}
@@ -93,10 +101,12 @@ function CardList({
               px: 20,
               pt: 20,
               pb: 12,
-              backgroundColor: 'background.paperContrast',
+              backgroundColor: 'background.paper',
               borderRadius: 16,
             }}
+            className="gradient-card-border"
             onClick={() => {
+              if (supportAMM) return;
               useRouterStore.getState().push({
                 type: PageType.PoolDetail,
                 params: {
@@ -119,13 +129,14 @@ function CardList({
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
+                  gap: 8,
                 }}
               >
                 {baseToken && quoteToken ? (
                   <TokenLogoPair
                     tokens={[baseToken, quoteToken]}
                     width={24}
-                    mr={8}
+                    mr={6}
                     chainId={item.chainId}
                     showChainLogo
                   />
@@ -139,9 +150,13 @@ function CardList({
                   }}
                 >
                   {`${baseToken?.symbol}/${quoteToken?.symbol}`}
+                  <LiquidityLpPartnerReward
+                    address={item.id}
+                    chainId={item.chainId}
+                  />
                 </Box>
               </Box>
-              {item.miningAddress ? (
+              {hasMining ? (
                 <Box
                   sx={{
                     p: 8,
@@ -165,15 +180,81 @@ function CardList({
             {/* info */}
             <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                rowGap: 20,
                 mt: 44,
+                '& > div:nth-child(odd)': {
+                  pr: 20,
+                },
+                '& > div:nth-child(even)': {
+                  position: 'relative',
+                  pl: 20,
+                  '&::before': {
+                    position: 'absolute',
+                    left: 0,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    display: 'inline-block',
+                    content: '""',
+                    height: 24,
+                    width: '1px',
+                    backgroundColor: 'border.main',
+                  },
+                },
               }}
             >
+              {supportAMM && (
+                <Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 4,
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {poolType}
+                    <Tooltip title={<Trans>Fee rate</Trans>}>
+                      <Box
+                        sx={{
+                          px: 8,
+                          py: 4,
+                          borderRadius: 4,
+                          typography: 'h6',
+                          backgroundColor: 'background.tag',
+                          color: 'text.secondary',
+                        }}
+                      >
+                        {isAMMV3
+                          ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
+                              ?.label ?? '-')
+                          : formatPercentageNumber({
+                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
+                                item.mtFeeRate
+                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
+                                  : 0,
+                              ),
+                            })}
+                      </Box>
+                    </Tooltip>
+                  </Box>
+                  <Box
+                    sx={{
+                      typography: 'h6',
+                      color: 'text.secondary',
+                    }}
+                  >
+                    <Trans>Pool Type</Trans>
+                  </Box>
+                </Box>
+              )}
+
               <Box>
                 <Box
                   sx={{
                     typography: 'h5',
+                    color: 'success.main',
                   }}
                 >
                   {baseApy}
@@ -194,7 +275,7 @@ function CardList({
                     baseToken={baseToken}
                     quoteToken={quoteToken}
                     hasQuote={!!quoteApy}
-                    hasMining={!!item.miningAddress}
+                    hasMining={hasMining}
                     sx={{
                       width: 14,
                       height: 14,
@@ -202,15 +283,7 @@ function CardList({
                   />
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  display: 'inline-block',
-                  mx: 20,
-                  height: 24,
-                  width: '1px',
-                  backgroundColor: 'custom.border.default',
-                }}
-              />
+
               <Box>
                 <Box
                   sx={{
@@ -228,23 +301,54 @@ function CardList({
                   <Trans>TVL</Trans>
                 </Box>
               </Box>
+
+              {supportAMM && (
+                <Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
+                  >
+                    ${formatReadableNumber({ input: item.volume24H || 0 })}
+                  </Box>
+                  <Box
+                    sx={{
+                      typography: 'h6',
+                      color: 'text.secondary',
+                    }}
+                  >
+                    <Trans>Volume (1D)</Trans>
+                  </Box>
+                </Box>
+              )}
             </Box>
             {/* operate */}
-            <NeedConnectButton
-              fullWidth
-              size={Button.Size.small}
+            <Box
               sx={{
                 mt: 20,
-              }}
-              onClick={(evt) => {
-                evt.stopPropagation();
-                setOperatePool({
-                  pool: convertFetchLiquidityToOperateData(lq),
-                });
+                display: 'flex',
+                gap: '8px',
               }}
             >
-              <Trans>Add</Trans>
-            </NeedConnectButton>
+              <NeedConnectButton
+                fullWidth
+                size={Button.Size.small}
+                onClick={(evt) => {
+                  evt.stopPropagation();
+                  setOperatePool({
+                    pool: convertFetchLiquidityToOperateData(lq),
+                    hasMining,
+                  });
+                }}
+              >
+                <Trans>Add</Trans>
+              </NeedConnectButton>
+              {supportAMM && poolType === 'PMM' && (
+                <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
+              )}
+            </Box>
           </Box>
         );
       })}
@@ -259,6 +363,7 @@ function TableList({
   hasMore,
   loadMore,
   loadMoreLoading,
+  supportAMM,
 }: {
   lqList: FetchLiquidityListLqList;
   operatePool: Partial<PoolOperateProps> | null;
@@ -266,7 +371,9 @@ function TableList({
   hasMore?: boolean;
   loadMore?: () => void;
   loadMoreLoading?: boolean;
+  supportAMM?: boolean;
 }) {
+  const theme = useTheme();
   return (
     <LiquidityTable
       hasMore={hasMore}
@@ -278,13 +385,28 @@ function TableList({
           <Box component="th">
             <Trans>Pair</Trans>
           </Box>
+          {supportAMM && (
+            <Box component="th">
+              <Trans>Pool Type</Trans>
+            </Box>
+          )}
           <Box component="th">
             <Trans>TVL</Trans>
           </Box>
           <Box component="th">
             <Trans>APY</Trans>
           </Box>
-          <Box component="th"></Box>
+          {supportAMM && (
+            <th>
+              <Trans>Volume (1D)</Trans>
+            </th>
+          )}
+          <Box
+            component="th"
+            sx={{
+              width: 80,
+            }}
+          ></Box>
         </Box>
       </Box>
       <Box component="tbody">
@@ -330,8 +452,24 @@ function TableList({
             }
           }
 
+          const hasMining = !!item.miningAddress?.[0];
+
+          const type = item.type as PoolType;
+          const poolType = getPoolAMMOrPMM(type);
+          const isAMMV2 = type === 'AMMV2';
+          const isAMMV3 = type === 'AMMV3';
+
+          const hoverBg = theme.palette.background.tag;
           return (
-            <Box component="tr" key={item.id + item.chainId}>
+            <Box
+              component="tr"
+              key={item.id + item.chainId}
+              sx={{
+                [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
+                  backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
+                },
+              }}
+            >
               <Box component="td">
                 <Box
                   sx={{
@@ -353,14 +491,22 @@ function TableList({
                   <Box>
                     <Box
                       sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 4,
                         typography: 'body2',
                         fontWeight: 600,
                       }}
                     >
                       {`${baseToken?.symbol}/${quoteToken?.symbol}`}
+                      <LiquidityLpPartnerReward
+                        address={item.id}
+                        chainId={item.chainId}
+                      />
                     </Box>
                     <AddressWithLinkAndCopy
                       address={item.id}
+                      customChainId={item.chainId}
                       truncate
                       showCopy
                       iconDarkHover
@@ -370,10 +516,68 @@ function TableList({
                         typography: 'h6',
                         color: 'text.secondary',
                       }}
+                      disabledAddress={supportAMM}
+                      onAddressClick={() => {
+                        useRouterStore.getState().push({
+                          type: PageType.PoolDetail,
+                          params: {
+                            chainId: item.chainId as ChainId,
+                            address: item.id as string,
+                          },
+                        });
+                      }}
                     />
                   </Box>
                 </Box>
               </Box>
+              {supportAMM && (
+                <Box component="td">
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        px: 8,
+                        py: 4,
+                        borderRadius: 4,
+                        typography: 'h6',
+                        backgroundColor: 'background.tag',
+                        color: 'text.secondary',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {poolType}
+                    </Box>
+                    <Tooltip title={<Trans>Fee rate</Trans>}>
+                      <Box
+                        sx={{
+                          px: 8,
+                          py: 4,
+                          borderRadius: 4,
+                          typography: 'h6',
+                          backgroundColor: 'background.tag',
+                          color: 'text.secondary',
+                        }}
+                      >
+                        {isAMMV3
+                          ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
+                              ?.label ?? '-')
+                          : formatPercentageNumber({
+                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
+                                item.mtFeeRate
+                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
+                                  : 0,
+                              ),
+                            })}
+                      </Box>
+                    </Tooltip>
+                  </Box>
+                </Box>
+              )}
               <Box component="td">
                 <Box
                   sx={{
@@ -397,7 +601,7 @@ function TableList({
                     alignItems: 'center',
                   }}
                 >
-                  {item.miningAddress ? (
+                  {hasMining ? (
                     <Tooltip title={t`Mining`}>
                       <Box
                         component="span"
@@ -418,7 +622,7 @@ function TableList({
                     baseToken={baseToken}
                     quoteToken={quoteToken}
                     hasQuote={!!quoteApy}
-                    hasMining={!!item.miningAddress}
+                    hasMining={hasMining}
                   >
                     <Box
                       component="span"
@@ -438,12 +642,23 @@ function TableList({
                   </PoolApyTooltip>
                 </Box>
               </Box>
+              {supportAMM && (
+                <Box component="td">
+                  ${formatReadableNumber({ input: item.volume24H || 0 })}
+                </Box>
+              )}
               <Box component="td">
                 <Box
                   sx={{
-                    textAlign: 'right',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    gap: '8px',
                   }}
                 >
+                  {supportAMM && poolType === 'PMM' && (
+                    <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
+                  )}
                   {operateBtnText ? (
                     <AddingOrRemovingBtn
                       text={operateBtnText}
@@ -455,6 +670,7 @@ function TableList({
                       onClick={() => {
                         setOperatePool({
                           pool: convertFetchLiquidityToOperateData(lq),
+                          hasMining,
                         });
                       }}
                     >
@@ -479,7 +695,7 @@ export default function AddLiquidityList({
   operatePool,
   setOperatePool,
 }: {
-  scrollParentRef: React.MutableRefObject<HTMLDivElement | undefined>;
+  scrollParentRef: React.MutableRefObject<HTMLDivElement | null>;
   account?: string;
   filterChainIds?: ChainId[];
 
@@ -489,6 +705,8 @@ export default function AddLiquidityList({
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
 }) {
   const theme = useTheme();
+  const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
+    useUserOptions();
   const { minDevice, isMobile } = useWidgetDevice();
   const queryClient = useQueryClient();
 
@@ -503,19 +721,27 @@ export default function AddLiquidityList({
     handleChangeFilterAddress,
   } = usePoolListFilterTokenAndPool();
 
+  const filterTypes = notSupportPMM ? [] : ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
+  if (supportAMMV2) {
+    filterTypes.push('AMMV2');
+  }
+  if (supportAMMV3) {
+    filterTypes.push('AMMV3');
+  }
   const defaultQueryFilter = {
     chainIds: filterChainIds,
     pageSize: isMobile ? 4 : 8,
     filterState: {
       viewOnlyOwn: false,
-      filterTypes: ['CLASSICAL', 'DVM', 'DSP'],
+      filterTypes,
     },
   };
 
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
 
   const query = graphQLRequests.getInfiniteQuery(
     PoolApi.graphql.fetchLiquidityList,
+    'currentPage',
     {
       where: {
         ...defaultQueryFilter,
@@ -592,16 +818,19 @@ export default function AddLiquidityList({
                 }),
           }}
         >
-          <SelectChain
-            chainId={activeChainId}
-            setChainId={handleChangeActiveChainId}
-          />
+          {!onlyChainId && (
+            <SelectChain
+              chainId={activeChainId}
+              setChainId={handleChangeActiveChainId}
+            />
+          )}
           <TokenAndPoolFilter
             value={filterTokens}
             onChange={handleChangeFilterTokens}
             searchAddress={async (address, onClose) => {
               const query = graphQLRequests.getInfiniteQuery(
                 PoolApi.graphql.fetchLiquidityList,
+                'currentPage',
                 {
                   where: {
                     ...defaultQueryFilter,
@@ -676,14 +905,22 @@ export default function AddLiquidityList({
         >
           <DataCardGroup>
             {fetchResult.isLoading ? <LoadingCard /> : ''}
-            {!fetchResult.isLoading && !lqList?.length && !fetchResult.error && (
-              <EmptyList
-                sx={{
-                  mt: 40,
-                }}
-                hasSearch={!!(activeChainId || filterASymbol || filterBSymbol)}
-              />
-            )}
+            {!fetchResult.isLoading &&
+              !lqList?.length &&
+              !fetchResult.error && (
+                <EmptyList
+                  sx={{
+                    mt: 40,
+                  }}
+                  hasSearch={
+                    !!(
+                      (activeChainId && !onlyChainId) ||
+                      filterASymbol ||
+                      filterBSymbol
+                    )
+                  }
+                />
+              )}
             {!!fetchResult.error && (
               <FailedList
                 refresh={fetchResult.refetch}
@@ -692,7 +929,11 @@ export default function AddLiquidityList({
                 }}
               />
             )}
-            <CardList lqList={lqList} setOperatePool={setOperatePool} />
+            <CardList
+              lqList={lqList}
+              setOperatePool={setOperatePool}
+              supportAMM={supportAMMV2 || supportAMMV3}
+            />
           </DataCardGroup>
         </InfiniteScroll>
       ) : (
@@ -708,24 +949,20 @@ export default function AddLiquidityList({
                 fetchResult.fetchNextPage();
               }
             }}
+            supportAMM={supportAMMV2 || supportAMMV3}
           />
-          {fetchResult.isLoading && !lqList?.length && <SkeletonTable />}
-          {!fetchResult.isLoading && !lqList?.length && !fetchResult.error && (
-            <EmptyList
-              sx={{
-                my: 40,
-              }}
-              hasSearch={!!(activeChainId || filterASymbol || filterBSymbol)}
-            />
-          )}
-          {!!fetchResult.error && (
-            <FailedList
-              refresh={fetchResult.refetch}
-              sx={{
-                my: 40,
-              }}
-            />
-          )}
+          <CardStatus
+            loading={fetchResult.isLoading}
+            refetch={fetchResult.error ? fetchResult.refetch : undefined}
+            empty={!lqList?.length}
+            hasSearch={
+              !!(
+                (activeChainId && !onlyChainId) ||
+                filterASymbol ||
+                filterBSymbol
+              )
+            }
+          />
         </>
       )}
     </>

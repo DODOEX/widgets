@@ -1,61 +1,60 @@
+import { ChainId, ContractRequests, GraphQLRequests } from '@dodoex/api';
 import {
-  ThemeProvider,
+  Box,
   createTheme,
   CssBaseline,
+  PaletteMode,
+  ThemeOptions,
+  ThemeProvider,
   WIDGET_MODAL_CLASS,
-  Box,
+  WIDGET_MODAL_FIXED_CLASS,
 } from '@dodoex/components';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
+import { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
 import {
   Provider as ReduxProvider,
   useDispatch,
   useSelector,
 } from 'react-redux';
-import { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
-import { ContractRequests } from '@dodoex/api';
-import { LangProvider } from '../../providers/i18n';
-import { store } from '../../store';
-import { PaletteMode, ThemeOptions } from '@dodoex/components';
+import { APIServices, contractRequests } from '../../constants/api';
+import { getRpcSingleUrlMap } from '../../constants/chains';
 import { defaultLang, SupportedLang } from '../../constants/locales';
-import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
 import {
   useWeb3Connectors,
   Web3ConnectorsProps,
 } from '../../hooks/ConnectWallet';
+import { useFetchBlockNumber } from '../../hooks/contract';
+import { ExecutionProps } from '../../hooks/Submission';
+import { DefaultTokenInfo, TokenInfo } from '../../hooks/Token/type';
 import useInitTokenList, {
   InitTokenListProps,
 } from '../../hooks/Token/useInitTokenList';
-import WithExecutionDialog from '../WithExecutionDialog';
-import { useFetchBlockNumber } from '../../hooks/contract';
-import { ExecutionProps } from '../../hooks/Submission';
-import { getRpcSingleUrlMap } from '../../constants/chains';
-import { ChainId } from '@dodoex/api';
-import { useInitPropsToRedux } from '../../hooks/Swap';
-import { DefaultTokenInfo } from '../../hooks/Token/type';
+import { LangProvider as LangProviderBase } from '../../providers/i18n';
+import { queryClient } from '../../providers/queryClient';
+import { store } from '../../store';
 import { AppThunkDispatch } from '../../store/actions';
 import { setAutoConnectLoading } from '../../store/actions/globals';
-import { APIServices, contractRequests } from '../../constants/api';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
-import { SwapProps } from '../Swap';
 import { getFromTokenChainId } from '../../store/selectors/wallet';
-import {
-  GlobalConfigContext,
-  GlobalFunctionConfig,
-  graphQLRequests,
-} from '../../providers/GlobalConfigContext';
+import { ConfirmProps } from '../Confirm';
 import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
-import { queryClient } from '../../providers/queryClient';
-import { QueryClientProvider } from '@tanstack/react-query';
 import { setOpenConnectWalletInfo } from '../../store/actions/wallet';
+import Message from '../Message';
+import { DialogProps } from '../Swap/components/Dialog';
+import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
+import WithExecutionDialog from '../WithExecutionDialog';
+import { Page } from '../../router';
+import { useInitContractRequest } from '../../providers/useInitContractRequest';
+
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps
   extends Web3ConnectorsProps,
     InitTokenListProps,
-    ExecutionProps,
-    GlobalFunctionConfig,
-    SwapProps {
+    ExecutionProps {
   apikey?: string;
-  theme?: ThemeOptions;
+  theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
   defaultChainId?: ChainId;
   width?: string | number;
@@ -70,45 +69,90 @@ export interface WidgetProps
   apiServices?: Partial<APIServices>;
   crossChain?: boolean;
   noPowerBy?: boolean;
+  noDocumentLink?: boolean;
+  onlyChainId?: ChainId;
+  noUI?: boolean;
+  noLangProvider?: boolean;
+  noAutoConnect?: boolean;
+  routerPage?: Page;
+  dappMetadata?: {
+    name: string;
+    logoUrl?: string;
+  };
+  notSupportPMM?: boolean;
+  supportAMMV2?: boolean;
+  supportAMMV3?: boolean;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
 
   onProviderChanged?: (provider?: any) => void;
   onAccountChanged?: (account?: string) => void;
-  gotoBuyToken?: GlobalFunctionConfig['gotoBuyToken'];
   getStaticJsonRpcProviderByChainId?: Exclude<
     ConstructorParameters<typeof ContractRequests>[0],
     undefined
   >['getProvider'];
   setOpenConnectWalletFC?: (fc: () => void) => void;
   setDisconnectConnectFC?: (fc: () => void) => void;
+
+  widgetRef?: React.RefObject<HTMLDivElement>;
+  /** If true is returned, the default wallet connection logic will not be executed */
+  onConnectWalletClick?: () => boolean | Promise<boolean>;
+  onSwitchChain?: (chainId?: ChainId) => Promise<boolean>;
+  /** When the token balance is insufficient, users can purchase or swap callbacks */
+  gotoBuyToken?: (params: { token: TokenInfo; account: string }) => void;
+  getTokenLogoUrl?: (params: {
+    address?: string;
+    width?: number;
+    height?: number;
+    url?: string;
+    chainId?: number;
+  }) => string;
+  graphQLRequests?: GraphQLRequests;
+  ConfirmComponent?: React.FunctionComponent<ConfirmProps>;
+  DialogComponent?: React.FunctionComponent<DialogProps>;
+}
+
+function LangProvider(props: PropsWithChildren<WidgetProps>) {
+  if (props.noLangProvider) {
+    return <>{props.children}</>;
+  }
+  return (
+    <LangProviderBase locale={props.locale}>
+      <WithExecutionDialog {...props}>{props.children}</WithExecutionDialog>
+    </LangProviderBase>
+  );
 }
 
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useInitTokenList(props);
   useFetchBlockNumber();
+  useInitContractRequest();
   const { provider, connector, chainId, account } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
   const autoConnectLoading = useSelector(getAutoConnectLoading);
   useEffect(() => {
     if (autoConnectLoading === undefined) {
-      dispatch(setAutoConnectLoading(true));
-      const connectWallet = async () => {
-        const defaultChainId = props.defaultChainId;
-        try {
-          if (connector?.connectEagerly) {
-            await connector.connectEagerly(defaultChainId);
-          } else {
-            await connector.activate(defaultChainId);
+      if (props.noAutoConnect) {
+        dispatch(setAutoConnectLoading(false));
+      } else {
+        dispatch(setAutoConnectLoading(true));
+        const connectWallet = async () => {
+          const defaultChainId = props.defaultChainId;
+          try {
+            if (connector?.connectEagerly) {
+              await connector.connectEagerly(defaultChainId);
+            } else {
+              await connector.activate(defaultChainId);
+            }
+          } finally {
+            dispatch(setAutoConnectLoading(false));
           }
-        } finally {
-          dispatch(setAutoConnectLoading(false));
-        }
-      };
-      connectWallet();
+        };
+        connectWallet();
+      }
     }
-  }, [connector]);
+  }, [connector, props.noAutoConnect]);
 
   useEffect(() => {
     if (props.setOpenConnectWalletFC) {
@@ -175,25 +219,17 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     };
   }, [provider]);
 
-  // Init props to redux!
   const width = props.width || 375;
   const height = props.height || 494;
-  useInitPropsToRedux({ ...props, width, height });
 
-  const widgetRef = useRef<HTMLDivElement>(null);
+  const { widgetRef } = useUserOptions();
+
+  if (props.noUI) {
+    return <LangProvider {...props}>{props.children}</LangProvider>;
+  }
 
   return (
-    <GlobalConfigContext.Provider
-      value={{
-        widgetRef,
-        onConnectWalletClick: props.onConnectWalletClick,
-        gotoBuyToken: props.gotoBuyToken,
-        getTokenLogoUrl: props.getTokenLogoUrl,
-        graphQLRequests: props.graphQLRequests ?? graphQLRequests,
-        DialogComponent: props.DialogComponent,
-        ConfirmComponent: props.ConfirmComponent,
-      }}
-    >
+    <LangProvider {...props}>
       <Box
         sx={{
           width,
@@ -211,9 +247,9 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
         ref={widgetRef}
       >
         <OpenConnectWalletInfo />
-        <WithExecutionDialog {...props}>{props.children}</WithExecutionDialog>
+        {props.children}
       </Box>
-    </GlobalConfigContext.Provider>
+    </LangProvider>
   );
 }
 
@@ -236,6 +272,31 @@ function Web3Provider(props: PropsWithChildren<WidgetProps>) {
   );
 }
 
+export { LangProvider } from '../../providers/i18n';
+export { default as Message } from '../Message';
+
+/** Widgets that do not directly import themes and queryClient libraries */
+export function UnstyleWidget(props: PropsWithChildren<WidgetProps>) {
+  const widgetRef = useRef<HTMLDivElement>(null);
+
+  if (props.jsonRpcUrlMap) {
+    contractRequests.setRpc(getRpcSingleUrlMap(props.jsonRpcUrlMap));
+  }
+
+  return (
+    <ReduxProvider store={store}>
+      <UserOptionsProvider
+        {...{
+          ...props,
+          widgetRef: props.widgetRef ?? widgetRef,
+        }}
+      >
+        <Web3Provider {...props} />
+      </UserOptionsProvider>
+    </ReduxProvider>
+  );
+}
+
 export function Widget(props: PropsWithChildren<WidgetProps>) {
   const theme = createTheme({
     mode: props.colorMode,
@@ -247,22 +308,17 @@ export function Widget(props: PropsWithChildren<WidgetProps>) {
     console.error('apikey and apiServices must have a.');
   }
 
-  if (props.jsonRpcUrlMap) {
-    contractRequests.setRpc(getRpcSingleUrlMap(props.jsonRpcUrlMap));
-  }
-
   return (
-    <ReduxProvider store={store}>
-      <LangProvider locale={props.locale}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline
-            container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}`}
-          />
-          <QueryClientProvider client={queryClient}>
-            <Web3Provider {...props} />
-          </QueryClientProvider>
-        </ThemeProvider>
-      </LangProvider>
-    </ReduxProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline
+        container={`.${WIDGET_CLASS_NAME}, .${WIDGET_MODAL_CLASS}, .${WIDGET_MODAL_FIXED_CLASS}`}
+      />
+      <QueryClientProvider client={queryClient}>
+        <UnstyleWidget {...props}>
+          {props.children}
+          <Message />
+        </UnstyleWidget>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }

@@ -4,16 +4,24 @@ import ContractRequests, {
 } from '../../helper/ContractRequests';
 import { ABIName } from '../../helper/ContractRequests';
 import BigNumber from 'bignumber.js';
-import { contractConfig, ChainId, basicTokenMap } from '../../chainConfig';
+import {
+  contractConfig,
+  ChainId,
+  basicTokenMap,
+  platformIdMap,
+} from '../../chainConfig';
 import { getTokenBlackList } from './tokenBlackList';
 import { isSameAddress } from './utils';
 import { encodeFunctionData } from '../../helper/ContractRequests/encode';
+import RestApiRequest from '../../helper/RestApiRequests';
+import { tokenGraphqlQuery } from './graphqlQuery';
 
 const BIG_ALLOWANCE = new BigNumber(2).pow(256).minus(1);
 
 export interface TokenApiProps {
   contractRequests?: ContractRequests;
   contractRequestsConfig?: ContractRequestsConfig;
+  restApiRequest?: RestApiRequest;
 }
 
 // When the erc20Helper contract queries the old erc20 token, the returned symbol and name contain spaces and must be removed.
@@ -24,6 +32,7 @@ function trimSpace(str: string) {
 
 export class TokenApi {
   contractRequests: ContractRequests;
+  restApiRequest: RestApiRequest;
   constructor(config: TokenApiProps) {
     if (config.contractRequests) {
       this.contractRequests = config.contractRequests;
@@ -34,7 +43,11 @@ export class TokenApi {
     } else {
       throw new Error('TokenApi does not initialize the contractRequests');
     }
+
+    this.restApiRequest = config?.restApiRequest || new RestApiRequest();
   }
+
+  static graphql = tokenGraphqlQuery;
 
   static utils = {
     isSameAddress,
@@ -47,7 +60,67 @@ export class TokenApi {
         allowance.toFixed(),
       ]);
     },
+    async transferEncodeABI(receiverAddress: string, amount: string) {
+      const encoded = await encodeFunctionData(ABIName.erc20ABI, 'transfer', [
+        receiverAddress,
+        amount,
+      ]);
+      return encoded;
+    },
   };
+
+  getTokenDecimals(chainId: number | undefined, address: string | undefined) {
+    return {
+      // Unify the upper and lower case formats of queryKey into one to facilitate the use of cache
+      queryKey: [
+        'token',
+        'getTokenDecimals',
+        chainId ?? '',
+        address?.toLocaleLowerCase(),
+      ],
+      enabled: !!chainId && !!address,
+      queryFn: async () => {
+        if (!chainId || !address) return null;
+
+        const result = await this.contractRequests.batchCallQuery<number>(
+          chainId,
+          {
+            abiName: ABIName.erc20ABI,
+            contractAddress: address,
+            method: 'decimals',
+            params: [],
+          },
+        );
+        return result;
+      },
+    };
+  }
+
+  getFiatPriceBatch(
+    tokens: Array<{
+      chainId: ChainId;
+      address: string;
+      symbol: string;
+    }>,
+    token: string,
+  ) {
+    const path = `/frontend-v2-price-api/current/batch`;
+    return this.restApiRequest.postJson(
+      path,
+      {
+        networks: tokens.map((token) => platformIdMap[token.chainId]),
+        addresses: tokens.map((token) => token.address),
+        symbols: tokens.map((token) => token.symbol),
+        isCache: true,
+      },
+      undefined,
+      {
+        headers: {
+          'pass-key': token,
+        },
+      },
+    );
+  }
 
   getFetchTokenQuery(
     chainId: number | undefined,
@@ -71,9 +144,9 @@ export class TokenApi {
         'token',
         'getFetchTokenQuery',
         chainId ?? '',
-        address?.toLocaleLowerCase(),
         account?.toLocaleLowerCase(),
         proxyContractAddress?.toLocaleLowerCase(),
+        address?.toLocaleLowerCase(),
       ],
       enabled: !!chainId && !!address && !!account,
       queryFn: async () => {

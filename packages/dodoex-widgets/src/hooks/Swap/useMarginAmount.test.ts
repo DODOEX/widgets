@@ -1,11 +1,7 @@
 import { useMarginAmount } from './useMarginAmount';
 import tokenList from '../../constants/tokenList';
 import { renderHook } from '@testing-library/react-hooks';
-import BigNumber from 'bignumber.js';
 
-jest.mock('../../store/selectors/wallet', () => ({
-  getDefaultChainId: () => 1,
-}));
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: () => jest.fn(),

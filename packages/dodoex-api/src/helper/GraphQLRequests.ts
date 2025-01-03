@@ -1,6 +1,7 @@
+import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import crossFetch from 'cross-fetch';
 import { GraphQLClient, RequestDocument, Variables } from 'graphql-request';
-import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
+import { GraphQLClientRequestHeaders } from 'graphql-request/build/esm/types';
 import { TypedDocumentString } from '../gql/graphql';
 
 type Fetch = typeof crossFetch;
@@ -8,6 +9,9 @@ type Fetch = typeof crossFetch;
 export interface GraphQLRequestsConfig {
   url?: string;
   fetch?: Fetch;
+  getHeaders?: () =>
+    | GraphQLClientRequestHeaders
+    | Promise<GraphQLClientRequestHeaders>;
 }
 
 const defaultConfig = {
@@ -17,9 +21,11 @@ const defaultConfig = {
 export default class GraphQLRequests {
   private url: string;
   private client: GraphQLClient;
+  private getHeaders?: GraphQLRequestsConfig['getHeaders'];
   constructor(configProps?: GraphQLRequestsConfig) {
     const config = { ...defaultConfig, ...configProps };
     this.url = config.url;
+    this.getHeaders = config.getHeaders;
     const client = new GraphQLClient(this.url, {
       fetch: config.fetch,
       requestMiddleware: (request) => {
@@ -33,18 +39,22 @@ export default class GraphQLRequests {
         };
       },
     });
-    const auth =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMxMzg2NDYzMzAzMjMxNjQzNzM5NjIzMTM4Mzk2MjJkMzA2MjYzMzkzMDYxMzc2NjM4NjQzNDMxMzYzMTJkMzEzNjM0MzYzMjYzMzY2NjJkMzE2NjYxMzQzMDMwMmQzMTM4NjQ2MzMwMzIzMTY0MzczOTYzNjI2MjYzIiwicyI6NDAsImlhdCI6MTcwODMyNzg4OSwiZXhwIjoxNzA4NDE0Mjg5fQ.S6uFXnNWL64nGj23AHuWBV7fxJ0DGlpHXoZAZXtA_Zs';
-    client.setHeaders({
-      'Access-Token': auth,
-    });
     this.client = client;
+    this.setHeaders();
+  }
+
+  async setHeaders() {
+    const headers = await this.getHeaders?.();
+    if (headers) {
+      this.client.setHeaders(headers);
+    }
   }
 
   async getData<T, V extends Variables = Variables>(
     document: RequestDocument | TypedDocumentNode<T, V>,
     variables?: V,
   ) {
+    await this.setHeaders();
     const client = this.client;
     // @ts-ignore
     return client.request<T, V>(document, variables);
@@ -56,6 +66,8 @@ export default class GraphQLRequests {
   ) {
     return {
       queryKey: [
+        'graphql',
+        'getQuery',
         // This logic can be customized as desired
         document,
         variables,
@@ -72,10 +84,14 @@ export default class GraphQLRequests {
 
   getInfiniteQuery<TResult, TVariables>(
     document: TypedDocumentString<TResult, TVariables>,
+    pageKey: string,
     ...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
   ) {
     return {
       queryKey: [
+        'graphql',
+        'getInfiniteQuery',
+        pageKey,
         // This logic can be customized as desired
         document,
         variables,
@@ -85,7 +101,7 @@ export default class GraphQLRequests {
           ...variables,
           where: {
             ...(variables as any)?.where,
-            currentPage: pageParam,
+            [pageKey]: pageParam,
           },
         } as Variables);
         return data as TResult;

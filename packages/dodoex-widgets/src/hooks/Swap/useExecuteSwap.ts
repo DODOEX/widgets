@@ -71,7 +71,7 @@ export default function useExecuteSwap() {
         },
       );
     },
-    [account, chainId],
+    [account, submission],
   );
 
   return execute;

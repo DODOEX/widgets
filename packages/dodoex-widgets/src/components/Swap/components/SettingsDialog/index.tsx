@@ -1,19 +1,15 @@
-import { t, Trans } from '@lingui/macro';
-import { useState, useMemo } from 'react';
+import { Trans } from '@lingui/macro';
+import { useMemo } from 'react';
 import Dialog from '../Dialog';
 import { QuestionTooltip } from '../../../Tooltip';
 import { Box, useTheme } from '@dodoex/components';
 import { NumberInput } from './NumberInput';
-import {
-  DEFAULT_SWAP_DDL,
-  MAX_SWAP_SLIPPAGE,
-} from '../../../../constants/swap';
-import { TokenInfo } from '../../../../hooks/Token';
+import { MAX_SWAP_SLIPPAGE } from '../../../../constants/swap';
 import { useSelector } from 'react-redux';
-import { getSlippage, getTxDdl } from '../../../../store/selectors/settings';
+import { getSlippage } from '../../../../store/selectors/settings';
 import { useDispatch } from 'react-redux';
 import { AppThunkDispatch } from '../../../../store/actions';
-import { setSlippage, setTxDdl } from '../../../../store/actions/settings';
+import { setSlippage } from '../../../../store/actions/settings';
 import { setLastSlippage } from '../../../../constants/localstorage';
 import { useDefaultSlippage } from '../../../../hooks/setting/useDefaultSlippage';
 
@@ -30,7 +26,6 @@ export function SettingsDialog({
   const theme = useTheme();
   const dispatch = useDispatch<AppThunkDispatch>();
   const slippage = useSelector(getSlippage);
-  const ddl = useSelector(getTxDdl);
   const isSlippageGTMax = useMemo(
     () => Number(slippage) >= MAX_SWAP_SLIPPAGE,
     [slippage],
@@ -92,39 +87,6 @@ export function SettingsDialog({
             )}
           </Box>
         </Box>
-
-        {isBridge ? (
-          ''
-        ) : (
-          <Box
-            sx={{ py: 20, borderTop: `1px solid ${theme.palette.border.main}` }}
-          >
-            <Box sx={{ mb: 16, display: 'flex', alignItems: 'center' }}>
-              <Trans>Transaction Deadline</Trans>
-              <QuestionTooltip
-                title={
-                  <Trans>
-                    If your transaction time exceeds the deadline, your
-                    transaction will be rescinded.
-                  </Trans>
-                }
-                ml={7}
-              />
-            </Box>
-            <NumberInput
-              value={ddl}
-              fullWidth
-              height={36}
-              placeholder={t`${DEFAULT_SWAP_DDL} minutes`}
-              onInputChange={(val: string | null) => {
-                dispatch(setTxDdl(val ? Math.max(Number(val), 1) : ''));
-              }}
-              sx={{
-                mt: 12,
-              }}
-            />
-          </Box>
-        )}
       </Box>
     </Dialog>
   );

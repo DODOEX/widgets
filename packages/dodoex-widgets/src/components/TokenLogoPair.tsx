@@ -2,6 +2,7 @@ import { Box, BoxProps, useTheme } from '@dodoex/components';
 import { chainListMap } from '../constants/chainList';
 import { ChainId } from '@dodoex/api';
 import TokenLogo from './TokenLogo';
+import { useUserOptions } from './UserOptionsProvider';
 
 export interface TokenLogoPairProps {
   tokens: Array<
@@ -28,10 +29,12 @@ export function TokenLogoPair({
   cross,
   mr,
   chainId,
-  showChainLogo,
+  showChainLogo: showChainLogoProps,
   sx,
 }: TokenLogoPairProps) {
   const theme = useTheme();
+  const { onlyChainId } = useUserOptions();
+  const showChainLogo = showChainLogoProps && !onlyChainId;
 
   if (!tokens || tokens.length <= 0) {
     return null;
@@ -56,7 +59,10 @@ export function TokenLogoPair({
           <Box
             key={index}
             sx={{
-              zIndex: tokens.length - index,
+              // zIndex: tokens.length - index,
+              display: 'inline-flex',
+              width,
+              height: width,
               ml: index > 0 ? gap : 0,
               borderRadius: '50%',
               backgroundColor: theme.palette.background.default,

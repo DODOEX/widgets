@@ -15,10 +15,21 @@ export enum MetadataFlag {
   removeLiquidity = 'removeLiquidity',
   createDPPPool = 'createDPPPool',
   createDSPPool = 'createDSPPool',
+  createGSPPool = 'createGSPPool',
   createDVMPool = 'createDVMPool',
+  createAMMV2Position = 'createAMMV2Position',
+  addLiquidityAMMV2Position = 'addLiquidityAMMV2Position',
+  removeLiqidityAMMV2Position = 'removeLiqidityAMMV2Position',
+  createAMMV3Pool = 'createAMMV3Pool',
+  addAMMV3Pool = 'addAMMV3Pool',
+  removeAMMV3Pool = 'removeAMMV3Pool',
+  claimAMMV3Pool = 'claimAMMV3Pool',
   stakeMining = 'stakeMining',
   unstakeMining = 'unstakeMining',
   claimMining = 'claimMining',
+  submissionCreateMetaKey = 'submissionCreateMetaKey',
+  approve = 'approve',
+  reset = 'reset',
 }
 
 export type Metadata = Record<string, any>;
@@ -96,6 +107,7 @@ export type ExecutionCtx = {
   updateText: (upd: TextUpdater) => void;
   setShowing?: React.Dispatch<React.SetStateAction<Showing | null>>;
   waitingSubmit: boolean;
+  errorMessage: string | null;
 };
 
 export enum WatchResult {

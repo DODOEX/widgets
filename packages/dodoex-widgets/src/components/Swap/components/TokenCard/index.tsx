@@ -20,18 +20,19 @@ import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import BigNumber from 'bignumber.js';
 import { PercentageSelectButtonGroup } from './PercentageSelectButtonGroup';
 import { Trans } from '@lingui/macro';
-import { useGlobalConfig } from '../../../../providers/GlobalConfigContext';
 import { ChainId } from '@dodoex/api';
 import {
   BalanceData,
   useBalanceUpdateLoading,
 } from '../../../../hooks/Submission/useBalanceUpdateLoading';
 import { useFetchTokens } from '../../../../hooks/contract';
+import { useUserOptions } from '../../../UserOptionsProvider';
 
 export interface TokenCardProps {
   amt: string;
   fiatPriceTxt?: string | React.ReactNode;
   sx?: BoxProps['sx'];
+  inputSx?: BoxProps['sx'];
   readOnly?: boolean;
   showMaxBtn?: boolean;
   canClickBalance?: boolean;
@@ -56,6 +57,7 @@ export interface TokenCardProps {
   chainId?: ChainId;
   hideToken?: boolean;
   checkLogBalance?: BalanceData;
+  notTokenPickerModal?: boolean;
 }
 
 export function CardPlus() {
@@ -107,6 +109,7 @@ export function CardPlusConnected() {
 
 export function TokenCard({
   sx,
+  inputSx,
   amt,
   token,
   readOnly,
@@ -133,6 +136,7 @@ export function TokenCard({
   chainId,
   hideToken,
   checkLogBalance,
+  notTokenPickerModal,
 }: TokenCardProps) {
   const { account } = useWalletInfo();
   const theme = useTheme();
@@ -167,14 +171,15 @@ export function TokenCard({
     }
   }, [amt]);
 
-  const { gotoBuyToken } = useGlobalConfig();
+  const { gotoBuyToken } = useUserOptions();
   let showBuyTokenBtn = gotoBuyToken && balance && amt && balance.lt(amt);
+
+  const showInputNumber = !!onInputChange || !!inputReadonlyTooltip;
 
   return (
     <Box
       sx={{
-        width: '100%',
-        minHeight: 133,
+        minHeight: showInputNumber ? 133 : 'auto',
         padding: theme.spacing(20, 20, 24),
         borderRadius: 12,
         overflow: 'hidden',
@@ -231,65 +236,66 @@ export function TokenCard({
         />
       </Box>
 
-      {readOnly && inputReadonlyTooltip ? (
-        <TooltipToast title={inputReadonlyTooltip} arrow={false}>
-          <Box>
-            <NumberInput
-              value={amt}
-              readOnly
-              withClear
-              sx={{
-                mt: 12,
-              }}
-            />
-          </Box>
-        </TooltipToast>
-      ) : (
-        <NumberInput
-          value={amt}
-          onFocus={onInputFocus}
-          onChange={
-            onInputChange
-              ? (v) => {
-                  onInputChange(v);
-                  setPercentage(0);
-                }
-              : undefined
-          }
-          readOnly={readOnly}
-          withClear
-          suffix={
-            showBuyTokenBtn ? (
-              <Button
-                variant={Button.Variant.tag}
-                backgroundColor={theme.palette.background.paperDarkContrast}
+      {showInputNumber &&
+        (readOnly && inputReadonlyTooltip ? (
+          <TooltipToast title={inputReadonlyTooltip} arrow={false}>
+            <Box>
+              <NumberInput
+                value={amt}
+                readOnly
+                withClear
                 sx={{
-                  fontSize: 12,
+                  mt: 12,
+                  ...inputSx,
                 }}
-                onClick={(evt) => {
-                  evt.stopPropagation();
-                  gotoBuyToken?.({
-                    token: token as TokenInfo,
-                    account: account as string,
-                  });
-                }}
-              >
-                <Trans>Buy</Trans>
-              </Button>
-            ) : undefined
-          }
-          typography={inputTypography}
-          sx={{
-            mt: 12,
-          }}
-        />
-      )}
+              />
+            </Box>
+          </TooltipToast>
+        ) : (
+          <NumberInput
+            value={amt}
+            onFocus={onInputFocus}
+            onChange={
+              onInputChange
+                ? (v) => {
+                    onInputChange(v);
+                    setPercentage(0);
+                  }
+                : undefined
+            }
+            readOnly={readOnly}
+            withClear
+            suffix={
+              showBuyTokenBtn ? (
+                <Button
+                  variant={Button.Variant.tag}
+                  backgroundColor={theme.palette.background.paperDarkContrast}
+                  sx={{
+                    fontSize: 12,
+                  }}
+                  onClick={(evt) => {
+                    evt.stopPropagation();
+                    gotoBuyToken?.({
+                      token: token as TokenInfo,
+                      account: account as string,
+                    });
+                  }}
+                >
+                  <Trans>Buy</Trans>
+                </Button>
+              ) : undefined
+            }
+            typography={inputTypography}
+            sx={{
+              mt: 12,
+            }}
+          />
+        ))}
 
       {!readOnly && showPercentage ? (
         <PercentageSelectButtonGroup
           sx={{
             mt: 16,
-            mb: 9,
           }}
           value={percentage}
           onChange={
@@ -326,6 +332,7 @@ export function TokenCard({
       {fiatPriceTxt !== undefined ? (
         <Box
           sx={{
+            mt: showPercentage ? 9 : 0,
             typography: 'h6',
             color: theme.palette.text.secondary,
           }}
@@ -358,6 +365,7 @@ export function TokenCard({
             }
           }, transitionTime);
         }}
+        modal={!notTokenPickerModal}
       />
     </Box>
   );

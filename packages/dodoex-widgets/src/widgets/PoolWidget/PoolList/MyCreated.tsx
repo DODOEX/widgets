@@ -32,12 +32,14 @@ import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
 import { getPoolTypeTag } from '../hooks/usePoolTypeTag';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
-import { useGlobalConfig } from '../../../providers/GlobalConfigContext';
 import { FetchMyCreateListLqList } from '../utils';
 import LiquidityTable from './components/LiquidityTable';
 import { ArrowRight } from '@dodoex/icons';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import SkeletonTable from './components/SkeletonTable';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { CardStatus } from '../../../components/CardWidgets';
 
 function CardList({
   account,
@@ -78,9 +80,10 @@ function CardList({
               px: 20,
               pt: 20,
               pb: 12,
-              backgroundColor: 'background.paperContrast',
+              backgroundColor: 'background.paper',
               borderRadius: 16,
             }}
+            className="gradient-card-border"
             onClick={() => {
               useRouterStore.getState().push({
                 type: PageType.PoolDetail,
@@ -299,7 +302,12 @@ function TableList({
           <Box component="th">
             <Trans>Total Fee Revenue</Trans>
           </Box>
-          <Box component="th"></Box>
+          <Box
+            component="th"
+            sx={{
+              width: 160,
+            }}
+          ></Box>
         </Box>
       </Box>
       <Box component="tbody">
@@ -339,9 +347,18 @@ function TableList({
                 break;
             }
           }
+          const hoverBg = theme.palette.background.tag;
 
           return (
-            <Box component="tr" key={pairAddress + chainId}>
+            <Box
+              component="tr"
+              key={pairAddress + chainId}
+              sx={{
+                [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
+                  backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
+                },
+              }}
+            >
               <Box component="td">
                 <Box
                   sx={{
@@ -507,7 +524,7 @@ function TableList({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    textAlign: 'right',
+                    justifyContent: 'flex-end',
                     gap: '8px',
                   }}
                 >
@@ -520,7 +537,6 @@ function TableList({
                     <>
                       {!!account && (
                         <NeedConnectButton
-                          fullWidth
                           variant={Button.Variant.outlined}
                           size={Button.Size.small}
                           onClick={(evt) => {
@@ -575,6 +591,7 @@ export default function MyCreated({
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
 }) {
   const { isMobile } = useWidgetDevice();
+  const { onlyChainId } = useUserOptions();
 
   const defaultQueryFilter = {
     limit: 1000,
@@ -582,7 +599,7 @@ export default function MyCreated({
     owner: account,
   };
 
-  const { graphQLRequests } = useGlobalConfig();
+  const graphQLRequests = useGraphQLRequests();
   const query = graphQLRequests.getQuery(
     PoolApi.graphql.fetchDashboardPairList,
     {
@@ -621,10 +638,12 @@ export default function MyCreated({
               }),
         }}
       >
-        <SelectChain
-          chainId={activeChainId}
-          setChainId={handleChangeActiveChainId}
-        />
+        {!onlyChainId && (
+          <SelectChain
+            chainId={activeChainId}
+            setChainId={handleChangeActiveChainId}
+          />
+        )}
         <Box
           component="label"
           sx={{
@@ -660,7 +679,7 @@ export default function MyCreated({
               sx={{
                 mt: 40,
               }}
-              hasSearch={!!activeChainId}
+              hasSearch={!!activeChainId && !onlyChainId}
             />
           )}
           {!!fetchResult.error && (
@@ -685,23 +704,12 @@ export default function MyCreated({
             operatePool={operatePool}
             setOperatePool={setOperatePool}
           />
-          {fetchResult.isLoading && !list?.length && <SkeletonTable />}
-          {!fetchResult.isLoading && !list?.length && !fetchResult.error && (
-            <EmptyList
-              sx={{
-                my: 40,
-              }}
-              hasSearch={!!activeChainId}
-            />
-          )}
-          {!!fetchResult.error && (
-            <FailedList
-              refresh={fetchResult.refetch}
-              sx={{
-                my: 40,
-              }}
-            />
-          )}
+          <CardStatus
+            loading={fetchResult.isLoading}
+            refetch={fetchResult.error ? fetchResult.refetch : undefined}
+            empty={!list?.length}
+            hasSearch={!!activeChainId && !onlyChainId}
+          />
         </>
       )}
     </>

@@ -15,6 +15,10 @@ import { ReactComponent as MantaLogo } from '../assets/logo/networks/manta.svg';
 import { ReactComponent as MantleLogo } from '../assets/logo/networks/mantle.svg';
 import { ReactComponent as DODOchainLogo } from '../assets/logo/networks/dodochain.svg';
 import { ReactComponent as BartioTestnetLogo } from '../assets/logo/networks/bartio.svg';
+import { ReactComponent as TaikoLogo } from '../assets/logo/networks/taiko.svg';
+import { ReactComponent as PlumeLogo } from '../assets/logo/networks/plume.svg';
+import { ReactComponent as NeoxLogo } from '../assets/logo/networks/neox.svg';
+import { ReactComponent as MorphLogo } from '../assets/logo/networks/morph.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -167,6 +171,44 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.BARTIO_TESTNET,
       logo: BartioTestnetLogo,
       name: 'Berachain bArtio',
+    },
+    ChainId.TAIKO,
+    {
+      chainId: ChainId.TAIKO,
+      logo: TaikoLogo,
+      name: 'Taiko',
+    },
+  ],
+  [
+    ChainId.PLUME,
+    {
+      chainId: ChainId.PLUME,
+      logo: PlumeLogo,
+      name: 'Plume',
+    },
+  ],
+  [
+    ChainId.PLUME_TESTNET,
+    {
+      chainId: ChainId.PLUME_TESTNET,
+      logo: PlumeLogo,
+      name: 'plume testnet',
+    },
+  ],
+  [
+    ChainId.NEOX,
+    {
+      chainId: ChainId.NEOX,
+      logo: NeoxLogo,
+      name: 'Neo X',
+    },
+  ],
+  [
+    ChainId.MORPH,
+    {
+      chainId: ChainId.MORPH,
+      logo: MorphLogo,
+      name: 'Morph',
     },
   ],
 ]);

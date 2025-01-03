@@ -10,7 +10,7 @@ import {
 } from '@dodoex/components';
 import { formatTokenAmountNumber } from '../../utils';
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   Setting,
   SettingCrossChain,
@@ -35,7 +35,6 @@ import {
 } from '../../hooks/Swap';
 import { formatReadableNumber } from '../../utils/formatter';
 import { useWeb3React } from '@web3-react/core';
-import { getDefaultChainId } from '../../store/selectors/wallet';
 import { AppUrl } from '../../constants/api';
 import { ChainId } from '@dodoex/api';
 import { basicTokenMap } from '../../constants/chains';
@@ -49,8 +48,6 @@ import {
   swapReviewBtn,
 } from '../../constants/testId';
 import useInflights from '../../hooks/Submission/useInflights';
-import { getGlobalProps } from '../../store/selectors/globals';
-import { setGlobalProps } from '../../store/actions/globals';
 import { AppThunkDispatch } from '../../store/actions';
 import { useFetchRoutePriceBridge } from '../../hooks/Bridge/useFetchRoutePriceBridge';
 import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
@@ -73,6 +70,9 @@ import {
 import { setFromTokenChainId } from '../../store/actions/wallet';
 import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
 import { useFetchETHBalance } from '../../hooks/contract';
+import { useUserOptions } from '../UserOptionsProvider';
+import { SwapSettingsDialog } from './components/SwapSettingsDialog';
+import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -92,9 +92,8 @@ export function Swap({
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { isReverseRouting, noPowerBy, crossChain } =
-    useSelector(getGlobalProps);
-  const defaultChainId = useSelector(getDefaultChainId);
+  const { defaultChainId, noPowerBy, onlyChainId } = useUserOptions();
+  const [isReverseRouting, setIsReverseRouting] = useState(false);
   const basicTokenAddress = useMemo(
     () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
     [chainId],
@@ -149,6 +148,11 @@ export function Swap({
     toToken,
     getAutoSlippage,
   });
+  const { slippage: slippageSwap, slippageLoading: slippageLoadingSwap } =
+    useSwapSlippage({
+      fromToken,
+      toToken,
+    });
 
   const fromEtherTokenQuery = useFetchETHBalance(fromToken?.chainId);
 
@@ -226,6 +230,9 @@ export function Swap({
     fromAmount: fromAmt,
     toAmount: toAmt,
     estimateGas,
+    isReverseRouting,
+    slippage: slippageSwap,
+    slippageLoading: slippageLoadingSwap,
   });
   const {
     resAmount,
@@ -325,6 +332,7 @@ export function Swap({
     setToToken,
     updateFromAmt,
     updateToAmt,
+    setIsReverseRouting,
   });
 
   const switchTokens = useCallback(() => {
@@ -385,16 +393,18 @@ export function Swap({
     if (isReverseRouting) {
       updateFromAmt('');
     }
-    dispatch(setGlobalProps({ isReverseRouting: false }));
+    setIsReverseRouting(false);
   }, [isReverseRouting, updateFromAmt, dispatch]);
   const onToTokenInputFocus = useCallback(() => {
     if (!isReverseRouting) {
       updateToAmt('');
     }
-    dispatch(setGlobalProps({ isReverseRouting: true }));
+    setIsReverseRouting(true);
   }, [isReverseRouting, updateToAmt, dispatch]);
 
-  const isSlippageExceedLimit = useSlippageLimit(isBridge);
+  const isSlippageExceedLimit = useSlippageLimit(
+    isBridge ? undefined : slippageSwap,
+  );
 
   const displayPriceImpact = useMemo(
     () => (Number(priceImpact) * 100).toFixed(2),
@@ -454,7 +464,7 @@ export function Swap({
         </Box>
       </Box>
     );
-  }, [displayPriceImpact]);
+  }, [displayPriceImpact, theme.palette.error.main]);
 
   const tokenPairPrice = useMemo(() => {
     return (
@@ -833,7 +843,7 @@ export function Swap({
           height={16}
           marginRight={6}
           chainId={fromToken.chainId}
-          noShowChain={!crossChain}
+          noShowChain={!!onlyChainId}
         />
         {`${formatTokenAmountNumber({
           input: isReverseRouting ? resAmount : fromAmt,
@@ -853,7 +863,7 @@ export function Swap({
           height={16}
           marginRight={6}
           chainId={toToken.chainId}
-          noShowChain={!crossChain}
+          noShowChain={!!onlyChainId}
         />
         {`${formatTokenAmountNumber({
           input: isReverseRouting ? toAmt : resAmount,
@@ -861,7 +871,15 @@ export function Swap({
         })} ${toToken?.symbol}`}
       </Box>
     );
-  }, [fromToken, toToken, fromAmt, toAmt, resAmount, isReverseRouting]);
+  }, [
+    fromToken,
+    toToken,
+    fromAmt,
+    toAmt,
+    resAmount,
+    isReverseRouting,
+    onlyChainId,
+  ]);
 
   return (
     <>
@@ -922,16 +940,17 @@ export function Swap({
               disabledFiatPrice
                 ? undefined
                 : displayFromFiatPrice
-                ? `$${formatReadableNumber({
-                    input: displayFromFiatPrice,
-                    showDecimals: 1,
-                  })}`
-                : '-'
+                  ? `$${formatReadableNumber({
+                      input: displayFromFiatPrice,
+                      showDecimals: 1,
+                    })}`
+                  : '-'
             }
             onTokenChange={onFromTokenChange}
             readOnly={isReverseRouting}
-            showChainLogo={crossChain}
-            showChainName={crossChain}
+            showChainLogo={!onlyChainId}
+            showChainName={!onlyChainId}
+            notTokenPickerModal
           />
 
           {/* Switch Icon */}
@@ -950,16 +969,17 @@ export function Swap({
               disabledFiatPrice
                 ? undefined
                 : displayToFiatPrice
-                ? `$${formatReadableNumber({
-                    input: displayToFiatPrice,
-                    showDecimals: 1,
-                  })}(${displayPriceImpact}%)`
-                : '-'
+                  ? `$${formatReadableNumber({
+                      input: displayToFiatPrice,
+                      showDecimals: 1,
+                    })}(${displayPriceImpact}%)`
+                  : '-'
             }
             onTokenChange={onToTokenChange}
             readOnly={isBridge || !isReverseRouting}
-            showChainLogo={crossChain}
-            showChainName={crossChain}
+            showChainLogo={!onlyChainId}
+            showChainName={!onlyChainId}
+            notTokenPickerModal
           />
 
           {/* Price Disp or Warnings  */}
@@ -1031,12 +1051,22 @@ export function Swap({
         onClose={() => setIsReviewDialogOpen(false)}
         loading={resPriceStatus === RoutePriceStatus.Loading}
         disabledFiatPrice={disabledFiatPrice}
+        slippage={slippageSwap}
       />
-      <SettingsDialog
-        open={isSettingsDialogOpen}
-        onClose={() => setIsSettingsDialogOpen(false)}
-        isBridge={isBridge}
-      />
+      {isBridge ? (
+        <SettingsDialog
+          open={isSettingsDialogOpen}
+          onClose={() => setIsSettingsDialogOpen(false)}
+          isBridge
+        />
+      ) : (
+        <SwapSettingsDialog
+          open={isSettingsDialogOpen}
+          onClose={() => setIsSettingsDialogOpen(false)}
+          fromToken={fromToken}
+          toToken={toToken}
+        />
+      )}
       <SelectBridgeDialog
         open={switchBridgeRouteShow}
         onClose={() => setSwitchBridgeRouteShow(false)}

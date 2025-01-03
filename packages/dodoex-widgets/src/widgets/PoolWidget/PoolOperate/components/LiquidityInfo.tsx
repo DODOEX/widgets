@@ -20,9 +20,16 @@ import { useBalanceUpdateLoading } from '../../../../hooks/Submission/useBalance
 import { TokenInfo } from '../../../../hooks/Token';
 import { useRouterStore } from '../../../../router';
 import { PageType } from '../../../../router/types';
-import { formatReadableNumber, getEtherscanPage } from '../../../../utils';
+import {
+  formatPercentageNumber,
+  formatReadableNumber,
+  getEtherscanPage,
+} from '../../../../utils';
 import { usePoolBalanceInfo } from '../../hooks/usePoolBalanceInfo';
 import { OperatePool } from '../types';
+import { useQuery } from '@tanstack/react-query';
+import { poolApi } from '../../utils';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 
 export interface LiquidityInfoProps {
   loading?: boolean;
@@ -59,7 +66,7 @@ function LiquidityBalanceItem({
 }) {
   const symbol = quoteToken
     ? `${token?.symbol}/${quoteToken.symbol}`
-    : token?.symbol ?? '';
+    : (token?.symbol ?? '');
 
   return (
     <Box
@@ -207,7 +214,7 @@ function LiquidityBalanceItem({
           rel="noopener noreferrer"
           href={chainId ? getEtherscanPage(chainId, address, 'address') : ''}
           sx={{
-            display: 'inline-block',
+            display: 'inline-flex',
             height: 14,
           }}
         >
@@ -217,8 +224,6 @@ function LiquidityBalanceItem({
               ml: 4,
               width: 14,
               height: 14,
-              position: 'relative',
-              top: -2,
             }}
           />
         </Box>
@@ -239,6 +244,13 @@ export default function LiquidityInfo({
   const singleSideLp = pool ? PoolApi.utils.singleSideLp(pool.type) : false;
 
   const { isTokenLoading } = useBalanceUpdateLoading();
+  const { account } = useWalletInfo();
+  const feeRateQuery = useQuery(
+    poolApi.getFeeRateQuery(pool?.chainId, pool?.address, pool?.type, account),
+  );
+  const feeRate = feeRateQuery.data?.lpFeeRate?.plus(
+    feeRateQuery.data?.mtFeeRate ?? 0,
+  );
 
   let isBaseLpTokenNeedLoading = false;
   let isQuoteLpTokenNeedLoading = false;
@@ -256,6 +268,7 @@ export default function LiquidityInfo({
       );
     }
   }
+  const isAMMV2 = pool?.type === 'AMMV2';
 
   return (
     <Box
@@ -287,11 +300,69 @@ export default function LiquidityInfo({
                 mb: 4,
               }}
               sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
                 typography: 'body2',
                 fontWeight: 600,
               }}
             >
               {pool?.baseToken?.symbol}/{pool?.quoteToken?.symbol}
+              {pool?.type === 'AMMV2' && (
+                <LoadingSkeleton
+                  loading={feeRateQuery.isLoading}
+                  loadingProps={{
+                    width: 30,
+                  }}
+                  sx={{
+                    typography: 'h6',
+                  }}
+                >
+                  <Tooltip
+                    title={
+                      <Box
+                        sx={{
+                          typography: 'h6',
+                          '& > b': {
+                            fontWeight: 600,
+                            color: 'primary.main',
+                          },
+                        }}
+                      >
+                        🌟
+                        <b>
+                          <Trans>Tips:</Trans>
+                        </b>{' '}
+                        <Trans>
+                          By adding liquidity you’ll earn{' '}
+                          <b>{formatPercentageNumber({ input: feeRate })}</b> of
+                          all trades on this pair proportional to your share of
+                          the pool. Fees are added to the pool, accrue in real
+                          time and can be claimed by withdrawing your liquidity.
+                        </Trans>
+                      </Box>
+                    }
+                    sx={{
+                      maxWidth: 240,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        px: 8,
+                        py: 4,
+                        borderRadius: 4,
+                        typography: 'h6',
+                        backgroundColor: 'background.tag',
+                        color: 'text.disabled',
+                      }}
+                    >
+                      {formatPercentageNumber({
+                        input: feeRate,
+                      })}
+                    </Box>
+                  </Tooltip>
+                </LoadingSkeleton>
+              )}
             </LoadingSkeleton>
             <LoadingSkeleton loading={loading}>
               <AddressWithLinkAndCopy
@@ -307,7 +378,7 @@ export default function LiquidityInfo({
               />
             </LoadingSkeleton>
           </Box>
-          {pool?.address ? (
+          {pool?.address && !isAMMV2 ? (
             <Box
               component={ButtonBase}
               sx={{

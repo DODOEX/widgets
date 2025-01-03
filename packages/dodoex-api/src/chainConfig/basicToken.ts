@@ -119,4 +119,28 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WBERA',
     wrappedTokenAddress: '0x7507c1dc16935B82698e4C63f2746A2fCf994dF8',
   },
+  [ChainId.TAIKO]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0xA51894664A773981C6C112C43ce576f315d5b1B6',
+  },
+  [ChainId.PLUME]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x562723560131C47417dfcD6BB1A089E4D7C7943C',
+  },
+  [ChainId.PLUME_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0xaA6210015fbf0855F0D9fDA3C415c1B12776Ae74',
+  },
+  [ChainId.NEOX]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'GAS',
+    name: 'GAS',
+    showDecimals: 6,
+    wrappedTokenSymbol: 'WGAS10',
+    wrappedTokenAddress: '0xdE41591ED1f8ED1484aC2CD8ca0876428de60EfF',
+  },
+  [ChainId.MORPH]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x5300000000000000000000000000000000000011',
+  },
 };

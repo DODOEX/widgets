@@ -6,7 +6,10 @@ export enum PageType {
   PoolDetail = 'poolDetail',
   CreatePool = 'createPool',
   ModifyPool = 'modifyPool',
+  MiningList = 'miningList',
   MiningDetail = 'miningDetail',
+  createPoolAMMV2 = 'createPoolAMMV2',
+  createPoolAMMV3 = 'createPoolAMMV3',
 }
 
 interface PageTypeParams {
@@ -29,10 +32,22 @@ interface PageTypeParams {
         toAddress?: string;
       }
     | undefined;
-  [PageType.MiningDetail]: {
-    address: string;
-    chainId: ChainId;
+  [PageType.MiningList]: {
+    chainId: number;
   };
+  [PageType.MiningDetail]: {
+    chainId: number;
+    miningContractAddress: string | undefined;
+    stakeTokenAddress: string | undefined;
+  };
+  [PageType.createPoolAMMV2]: undefined;
+  [PageType.createPoolAMMV3]:
+    | {
+        from?: string;
+        to?: string;
+        fee?: string;
+      }
+    | undefined;
 }
 
 export interface Page<T extends PageType = PageType> {

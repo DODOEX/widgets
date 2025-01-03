@@ -1,7 +1,6 @@
 import { PoolType } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import { BigNumber } from 'bignumber.js';
-import { TokenInfo } from '../../../hooks/Token';
 import { poolApi } from '../utils';
 
 type Balance = BigNumber | null | undefined;
@@ -66,21 +65,35 @@ export function getLpToTokenBalance(
 ) {
   const isSpecific = address && isSpecificPool(address);
   let userLpToTokenBalance = undefined;
-  if (userLpBalance && totalLpBalance && reserve && decimals !== undefined) {
-    const lpToTokenProportion = computeLpProportion(totalLpBalance, reserve);
+  let lpToTokenProportion: BigNumber | undefined;
+  const computeProportionReserve = type === 'CLASSICAL' ? target : reserve;
+  if (
+    userLpBalance &&
+    totalLpBalance &&
+    computeProportionReserve &&
+    decimals !== undefined
+  ) {
+    lpToTokenProportion = computeLpProportion(
+      totalLpBalance,
+      computeProportionReserve,
+    );
     userLpToTokenBalance = userLpBalance.times(lpToTokenProportion);
     if (type === 'CLASSICAL' && isSpecific) {
-      if (!target) return null;
-      if (userLpToTokenBalance.gt(reserve)) {
-        const lpToTokenProportion = computeLpProportion(
+      if (!target) return [undefined, undefined];
+      if (userLpToTokenBalance.gt(target) && reserve) {
+        lpToTokenProportion = computeLpProportion(
           totalLpBalance,
           BigNumber.min(target, reserve),
         );
         userLpToTokenBalance = userLpToTokenBalance.times(lpToTokenProportion);
       }
     }
-    return userLpToTokenBalance.dp(Number(decimals), BigNumber.ROUND_DOWN);
+    return [
+      lpToTokenProportion,
+      userLpToTokenBalance.dp(Number(decimals), BigNumber.ROUND_DOWN),
+    ];
   }
+  return [undefined, undefined];
 }
 
 export function usePoolBalanceInfo({
@@ -91,34 +104,54 @@ export function usePoolBalanceInfo({
   pool?: {
     address: string;
     chainId: number;
-    baseToken: TokenInfo;
-    quoteToken: TokenInfo;
+    baseTokenDecimals: number;
+    quoteTokenDecimals: number;
+    baseLpTokenDecimals: number;
+    quoteLpTokenDecimals: number;
     type: PoolType;
   };
 }) {
-  const { chainId, address, type, baseToken, quoteToken } = pool ?? {};
-  const baseDecimals = baseToken?.decimals;
-  const quoteDecimals = quoteToken?.decimals;
+  const {
+    chainId,
+    address,
+    type,
+    baseTokenDecimals,
+    quoteTokenDecimals,
+    baseLpTokenDecimals,
+    quoteLpTokenDecimals,
+  } = pool ?? {};
 
   const totalBaseLpQuery = useQuery(
-    poolApi.getTotalBaseLpQuery(chainId, address, type, baseDecimals),
+    poolApi.getTotalBaseLpQuery(chainId, address, type, baseLpTokenDecimals),
   );
   const totalQuoteLpQuery = useQuery(
-    poolApi.getTotalQuoteLpQuery(chainId, address, type, quoteDecimals),
+    poolApi.getTotalQuoteLpQuery(chainId, address, type, quoteLpTokenDecimals),
   );
   const userBaseLpQuery = useQuery(
-    poolApi.getUserBaseLpQuery(chainId, address, type, baseDecimals, account),
+    poolApi.getUserBaseLpQuery(
+      chainId,
+      address,
+      type,
+      baseLpTokenDecimals,
+      account,
+    ),
   );
   const userQuoteLpQuery = useQuery(
-    poolApi.getUserQuoteLpQuery(chainId, address, type, quoteDecimals, account),
+    poolApi.getUserQuoteLpQuery(
+      chainId,
+      address,
+      type,
+      quoteLpTokenDecimals,
+      account,
+    ),
   );
   const reserveQuery = useQuery(
     poolApi.getReserveLpQuery(
       chainId,
       address,
       type,
-      baseDecimals,
-      quoteDecimals,
+      baseTokenDecimals,
+      quoteTokenDecimals,
     ),
   );
 
@@ -127,8 +160,8 @@ export function usePoolBalanceInfo({
       chainId,
       address,
       type,
-      baseDecimals,
-      quoteDecimals,
+      baseTokenDecimals,
+      quoteTokenDecimals,
     ),
   );
 
@@ -145,7 +178,7 @@ export function usePoolBalanceInfo({
     : getLpBalance(
         userBaseLpQuery.data,
         totalBaseLpBalance,
-        baseDecimals,
+        baseLpTokenDecimals,
         type,
       );
   const userQuoteLpBalance = isPrivate
@@ -153,16 +186,12 @@ export function usePoolBalanceInfo({
     : getLpBalance(
         userQuoteLpQuery.data,
         totalQuoteLpBalance,
-        quoteDecimals,
+        quoteLpTokenDecimals,
         type,
       );
 
-  const baseLpToTokenProportion =
-    totalBaseLpBalance && baseReserve
-      ? computeLpProportion(totalBaseLpBalance, baseReserve)
-      : undefined;
-  const userBaseLpToTokenBalance = isPrivate
-    ? baseReserve
+  const [baseLpToTokenProportion, userBaseLpToTokenBalance] = isPrivate
+    ? [new BigNumber(1), baseReserve]
     : getLpToTokenBalance(
         userBaseLpBalance,
         totalBaseLpBalance,
@@ -170,7 +199,7 @@ export function usePoolBalanceInfo({
         classicalBaseTarget,
         address,
         type,
-        baseDecimals,
+        baseTokenDecimals,
       );
 
   let quoteLpToTokenProportion: BigNumber | undefined;
@@ -187,9 +216,6 @@ export function usePoolBalanceInfo({
       // There is only one supply and there is no quoteSupply
       quoteSupply = totalBaseLpBalance;
     }
-    if (quoteSupply) {
-      quoteLpToTokenProportion = computeLpProportion(quoteSupply, quoteReserve);
-    }
 
     // userQuoteLpQuery returns null after querying. This kind of pool does not distinguish the balance of baseLp or quoteLp. Here, the baseLp balance of the query is directly used for calculation.
     const userLpBalance =
@@ -199,23 +225,26 @@ export function usePoolBalanceInfo({
         ? userBaseLpBalance
         : userQuoteLpBalance;
     if (isPrivate) {
+      quoteLpToTokenProportion = new BigNumber(1);
       userQuoteLpToTokenBalance = quoteReserve;
     } else if (
       !userQuoteLpQuery.isLoading &&
       !userQuoteLpQuery.error &&
+      !classicalTargetQuery.error &&
       !userLpBalance
     ) {
       userQuoteLpToTokenBalance = new BigNumber(0);
     } else {
-      userQuoteLpToTokenBalance = getLpToTokenBalance(
-        userLpBalance,
-        quoteSupply,
-        quoteReserve,
-        classicalQuoteTarget,
-        address,
-        type,
-        quoteDecimals,
-      );
+      [quoteLpToTokenProportion, userQuoteLpToTokenBalance] =
+        getLpToTokenBalance(
+          userLpBalance,
+          quoteSupply,
+          quoteReserve,
+          classicalQuoteTarget,
+          address,
+          type,
+          quoteTokenDecimals,
+        );
     }
   }
 

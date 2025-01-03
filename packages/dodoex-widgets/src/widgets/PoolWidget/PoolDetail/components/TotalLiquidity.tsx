@@ -8,6 +8,8 @@ import { formatShortNumber, formatUnknownTokenSymbol } from '../../../../utils';
 import { usePoolDetail } from '../../hooks/usePoolDetail';
 import { poolApi } from '../../utils';
 import { BaseQuotePie } from './BaseQuotePie';
+import { AddressWithLinkAndCopy } from '../../../../components/AddressWithLinkAndCopy';
+import { useRouterStore } from '../../../../router';
 
 export default function TotalLiquidity({
   poolDetail,
@@ -71,11 +73,13 @@ export default function TotalLiquidity({
           mt: 16,
           backgroundColor: 'background.paper',
           borderRadius: 16,
+          overflowX: 'auto',
         }}
       >
         {/* chart */}
         <Box
           sx={{
+            flex: isMobile ? 1 : undefined,
             padding: isMobile
               ? theme.spacing(20, 30, 20, 20)
               : theme.spacing(20, 30, 16),
@@ -89,9 +93,12 @@ export default function TotalLiquidity({
             quoteAmount={quoteAmount}
             baseTvlRate={basePercentage}
             quoteTvlRate={quotePercentage}
+            chainId={poolDetail?.chainId}
             quoteTokenDecimals={poolDetail?.quoteToken?.decimals || undefined}
             baseTokenSymbol={formatUnknownTokenSymbol(poolDetail?.baseToken)}
             quoteTokenSymbol={formatUnknownTokenSymbol(poolDetail?.quoteToken)}
+            baseTokenAddress={isMobile ? poolDetail?.baseToken?.address : ''}
+            quoteTokenAddress={isMobile ? poolDetail?.quoteToken?.address : ''}
             shortNumber
             disabledRate={!isMobile}
             disabledAmount={!isMobile}
@@ -103,12 +110,7 @@ export default function TotalLiquidity({
                     fontWeight: 600,
                   }
                 : {
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
                     '& .symbol-wrapper': {
-                      ml: 0,
-                      mt: 20,
                       display: 'flex',
                       alignItems: 'center',
                       flexDirection: 'row',
@@ -196,7 +198,21 @@ export default function TotalLiquidity({
                         marginRight={4}
                         chainId={poolDetail.chainId}
                       />
-                      {poolDetail.baseToken.symbol}
+                      <Box>
+                        {poolDetail.baseToken.symbol}
+                        <AddressWithLinkAndCopy
+                          address={poolDetail.baseToken.address}
+                          truncate
+                          showCopy
+                          size="small"
+                          iconSpace={4}
+                          customChainId={poolDetail.chainId}
+                          sx={{
+                            typography: 'h6',
+                            color: 'text.secondary',
+                          }}
+                        />
+                      </Box>
                     </Box>
                   ) : (
                     <Skeleton width={100} height={24} />
@@ -245,7 +261,21 @@ export default function TotalLiquidity({
                         marginRight={4}
                         chainId={poolDetail.chainId}
                       />
-                      {poolDetail.quoteToken.symbol}
+                      <Box>
+                        {poolDetail.quoteToken.symbol}
+                        <AddressWithLinkAndCopy
+                          address={poolDetail.quoteToken.address}
+                          truncate
+                          showCopy
+                          size="small"
+                          iconSpace={4}
+                          customChainId={poolDetail.chainId}
+                          sx={{
+                            typography: 'h6',
+                            color: 'text.secondary',
+                          }}
+                        />
+                      </Box>
                     </Box>
                   ) : (
                     <Skeleton width={100} height={24} />
