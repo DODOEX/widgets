@@ -38,8 +38,11 @@ const StyledBackdrop = styled(Backdrop)`
   z-index: -1;
   position: fixed;
   inset: 0px;
-  background-color: ${({ theme }) => theme.palette.background.backdrop};
+  background-color: ${({ theme }) => {
+    return theme.palette.background.backdrop;
+  }};
   -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(5px);
 `;
 
 export const WIDGET_MODAL_FIXED_CLASS = 'dodo-widget-modal-fixed';
@@ -58,7 +61,8 @@ export default function Modal({ slots, children, ...props }: ModalProps) {
           maxHeight: '85vh',
           backgroundColor: 'background.paper',
           overflowY: 'auto',
-          borderRadius: isMobile ? theme.spacing(16, 16, 0, 0) : 16,
+          borderRadius: isMobile ? theme.spacing(20, 20, 0, 0) : 20,
+          boxShadow: '0px 2px 12px 0px rgba(0, 0, 0, 0.15)',
         }}
       >
         {children}

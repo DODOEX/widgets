@@ -66,12 +66,16 @@ export function SwapSettingsDialog({
       onClose={onClose}
       id="swap-settings"
       title={<Trans>Settings</Trans>}
+      modal
     >
       <Box
         sx={{
           px: 20,
           pb: 34,
           overflowY: 'auto',
+          [theme.breakpoints.up('desktop')]: {
+            width: 343,
+          },
         }}
         ref={scrollRef}
       >

@@ -94,7 +94,7 @@ export function Swap({
   const [isReverseRouting, setIsReverseRouting] = useState(false);
   const basicTokenAddress = useMemo(
     () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
-    [chainId],
+    [chainId, defaultChainId],
   );
 
   const [displayingFromAmt, setDisplayingFromAmt] = useState<string>('');
@@ -874,6 +874,85 @@ export function Swap({
 
   return (
     <>
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'stretch',
+          gap: 12,
+          [theme.breakpoints.up('desktop')]: {
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+          },
+        }}
+      >
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: 28,
+            px: 16,
+            py: 24,
+            borderRadius: 20,
+            backgroundColor: '#C9EB62',
+          }}
+        >
+          <Box>Swap</Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'stretch',
+              gap: 4,
+              [theme.breakpoints.up('desktop')]: {
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 12,
+              },
+            }}
+          >
+            <Box>token a</Box>
+            <Box>token b</Box>
+          </Box>
+          <Box
+            sx={{
+              alignSelf: 'stretch',
+              [theme.breakpoints.up('desktop')]: {
+                alignSelf: 'center',
+              },
+            }}
+          >
+            connect
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 8,
+            [theme.breakpoints.up('desktop')]: {
+              flexDirection: 'column',
+              alignItems: 'stretch',
+              gap: 12,
+              width: 330,
+            },
+          }}
+        >
+          <Box
+            sx={{
+              backgroundColor: theme.palette.background.default,
+            }}
+          >
+            slippage
+          </Box>
+          <Box>rate</Box>
+        </Box>
+      </Box>
       {/* Header */}
       <Box
         sx={{
@@ -939,7 +1018,6 @@ export function Swap({
             readOnly={isReverseRouting}
             showChainLogo={!onlyChainId}
             showChainName={!onlyChainId}
-            notTokenPickerModal
           />
 
           {/* Switch Icon */}
@@ -966,7 +1044,6 @@ export function Swap({
             readOnly={isBridge || !isReverseRouting}
             showChainLogo={!onlyChainId}
             showChainName={!onlyChainId}
-            notTokenPickerModal
           />
 
           {/* Price Disp or Warnings  */}
@@ -988,9 +1065,7 @@ export function Swap({
         {swapButton}
 
         {/*Footer*/}
-        {noPowerBy ? (
-          ''
-        ) : (
+        {noPowerBy ? null : (
           <Box
             sx={{
               mt: 13,

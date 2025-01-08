@@ -1,6 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { SwapWidget } from '@dodoex/widgets';
-import { TokenInfo } from '@dodoex/widgets/dist/src/hooks/Token/type';
+import { TokenInfo } from '@dodoex/widgets';
+import { Box } from '@dodoex/components';
 
 export enum ChainId {
   MAINNET = 1,
@@ -117,113 +118,156 @@ export default {
   },
 } as ComponentMeta<typeof SwapWidget>;
 
-export const Primary = (args) => <SwapWidget {...args} />;
+export const Primary = (args) => (
+  <Box
+    sx={{
+      position: 'relative',
+      overflowY: 'hidden',
+    }}
+  >
+    <SwapWidget {...args} />
+  </Box>
+);
 
 Primary.args = {
   apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
-  theme: {
-    palette: {
-      mode: 'light',
-      primary: {
-        main: '#1A1A1B',
-      },
-      secondary: {
-        main: '#FFE804',
-        contrastText: '#1A1A1B',
-      },
-      error: {
-        main: '#EC5A7D',
-        contrastText: '#FFFFFF',
-      },
-      warning: {
-        main: '#B15600',
-        contrastText: '#1A1A1B',
-      },
-      success: {
-        main: '#2FBA90',
-        contrastText: '#1A1A1B',
-      },
-      purple: {
-        main: '#6851B4',
-        contrastText: '#1A1A1B',
-      },
-      background: {
-        default: '#F9F6E8',
-        paper: '#FFFFFF',
-        paperContrast: '#F6F6F6',
-        paperDarkContrast: 'rgba(26, 26, 27, 0.1)',
-        backdrop: 'rgba(0, 0, 0, 0.9)',
-        input: '#F0F0F0',
-        tag: 'rgba(26, 26, 27, 0.04)',
-      },
-      text: {
-        primary: '#1A1A1B',
-        secondary: 'rgba(26, 26, 27, 0.5)',
-        disabled: 'rgba(26, 26, 27, 0.3)',
-        placeholder: 'rgba(26, 26, 27, 0.3)',
-        link: '#1A1A1B',
-      },
-      border: {
-        main: 'rgba(26, 26, 27, 0.1)',
-        light: 'rgba(26, 26, 27, 0.3)',
-        disabled: 'rgba(26, 26, 27, 0.1)',
-      },
-      hover: {
-        default: 'rgba(26, 26, 27, 0.1)',
-      },
-    },
-  },
   defaultFromToken: {
-    chainId: 1,
+    name: 'GAS',
     address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-    name: 'Ether',
+    symbol: 'GAS',
     decimals: 18,
-    symbol: 'ETH',
-    logoURI:
-      'https://images.dodoex.io/prKmKP8yDTuPMHTCZ_DcxG8BqsuHNO8w5KDmJWmPodg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vOUVaWU1ER2ZVN3g2N3ZBZThqWkUxZzA0RExUaFhaV0JIb09wZFhpeXhHRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNNeVgyTnZhVzV0WVhKclpYUmpZWEJmWTI5dFgzTjBZWFJwWTE5cGJXZGZZMjlwYm5OZk5qUjROalJmTVRBeU4xOHhNekkyTjJGbE5EY3dMbkJ1WncucG5n.webp',
-    // amount: 10,
+    slippage: null,
+    chainId: 47763,
+    logoImg:
+      'https://images.dodoex.io/3TUICHDN70nzD1-YhHxYv4MOsPRURNYCfcNmGhsSD7I/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvNDc3NjMvMHhlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVl.webp',
+    tokenlists: [
+      {
+        name: 'All',
+        status: 'launched',
+      },
+    ],
+    domains: [],
+    funcLabels: [],
+    attributeLabels: [],
   },
   defaultToToken: {
-    chainId: 1,
-    address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-    name: 'USD Coin',
-    decimals: 6,
-    symbol: 'USDC',
-    logoURI:
-      'https://images.dodoex.io/sQ5dF3FkjjQUsmfqFFE5cKq-cthh4u0wUooBE5Epf-k/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTDlEVElLa2dONG5mRkNTSF9GMUdXU3JiZkJDa2JZRTkwbmFDS0dIWnRsby9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMM1Z6WkdOZlpXVTFNbUV4WldReVlpOTFjMlJqWDJWbE5USmhNV1ZrTW1JdWNHNW4ucG5n.webp',
-    amount: 100,
+    name: 'neox2',
+    address: '0x817Ef21419B6E8F2e98cFb3F51fF73E9C3dF8b2e',
+    symbol: 'neox2',
+    decimals: 18,
+    slippage: null,
+    chainId: 47763,
+    logoImg:
+      'https://images.dodoex.io/2bBCVTLPccsdjs9f2wkueMw4KhXso3orQ9xsVm5zYgg/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvNDc3NjMvMHg4MTdlZjIxNDE5YjZlOGYyZTk4Y2ZiM2Y1MWZmNzNlOWMzZGY4YjJl.webp',
+    tokenlists: [
+      {
+        name: 'All',
+        status: 'launched',
+      },
+    ],
+    domains: [],
+    funcLabels: [],
+    attributeLabels: [],
   },
-  popularTokenList: [
+  popularTokenList: [],
+  tokenList: [
     {
-      chainId: 1,
-      address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-      name: 'USD Coin',
-      decimals: 6,
-      symbol: 'USDC',
-      logoURI:
-        'https://images.dodoex.io/sQ5dF3FkjjQUsmfqFFE5cKq-cthh4u0wUooBE5Epf-k/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vTDlEVElLa2dONG5mRkNTSF9GMUdXU3JiZkJDa2JZRTkwbmFDS0dIWnRsby9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMM1Z6WkdOZlpXVTFNbUV4WldReVlpOTFjMlJqWDJWbE5USmhNV1ZrTW1JdWNHNW4ucG5n.webp',
+      name: 'GAS',
+      address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+      symbol: 'GAS',
+      decimals: 18,
+      slippage: null,
+      chainId: 47763,
+      logoImg:
+        'https://images.dodoex.io/3TUICHDN70nzD1-YhHxYv4MOsPRURNYCfcNmGhsSD7I/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvNDc3NjMvMHhlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVl.webp',
+      tokenlists: [
+        {
+          name: 'All',
+          status: 'launched',
+        },
+      ],
+      domains: [],
+      funcLabels: [],
+      attributeLabels: [],
     },
     {
-      chainId: 1,
-      address: '0x4Fabb145d64652a948d72533023f6E7A623C7C53',
-      name: 'Binance USD',
+      name: 'neox2',
+      address: '0x817Ef21419B6E8F2e98cFb3F51fF73E9C3dF8b2e',
+      symbol: 'neox2',
       decimals: 18,
-      symbol: 'BUSD',
-      logoURI:
-        'https://images.dodoex.io/xZmadzpVOnpuq2jNG_5EGKeqMET0LU_gmfnp4VxkcxI/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vSHQwWXZKMGNnU0lGTFM0aHExTV9jOXVITV9fMHpXaHBKSGVOQU5neTBuby9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMkoxYzJSZk4ySTJOalJpWWpReVpDOWlkWE5rWHpkaU5qWTBZbUkwTW1RdWNHNW4ucG5n.webp',
+      slippage: null,
+      chainId: 47763,
+      logoImg:
+        'https://images.dodoex.io/2bBCVTLPccsdjs9f2wkueMw4KhXso3orQ9xsVm5zYgg/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvNDc3NjMvMHg4MTdlZjIxNDE5YjZlOGYyZTk4Y2ZiM2Y1MWZmNzNlOWMzZGY4YjJl.webp',
+      tokenlists: [
+        {
+          name: 'All',
+          status: 'launched',
+        },
+      ],
+      domains: [],
+      funcLabels: [],
+      attributeLabels: [],
     },
     {
-      chainId: 4,
-      symbol: 'DODO',
-      address: '0xeaa70c2a40820dF9D38149C84dd943CFcB562587',
-      name: 'DODO',
+      name: 'neox1',
+      address: '0x93a0CB3ee34aA983db262F904021911eCD199228',
+      symbol: 'neox1',
       decimals: 18,
-      source: 'dodo',
-      logoURI: '',
+      slippage: null,
+      chainId: 47763,
+      logoImg:
+        'https://images.dodoex.io/lcfdqmeaQM9wZUuErdKUWMx8d7emL_TjwG7TJzQmuTk/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvNDc3NjMvMHg5M2EwY2IzZWUzNGFhOTgzZGIyNjJmOTA0MDIxOTExZWNkMTk5MjI4.webp',
+      tokenlists: [
+        {
+          name: 'All',
+          status: 'launched',
+        },
+      ],
+      domains: [],
+      funcLabels: [],
+      attributeLabels: [],
+    },
+    {
+      name: 'neox3',
+      address: '0x153BAA6C0d52d5d8B1D68f8F90D6cE20a595dc4F',
+      symbol: 'neox3',
+      decimals: 18,
+      slippage: null,
+      chainId: 47763,
+      logoImg:
+        'https://images.dodoex.io/PnSWKELh9a7Lj_rkxykc5Xej0V3amzmZiEMUC6PF-4U/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvNDc3NjMvMHgxNTNiYWE2YzBkNTJkNWQ4YjFkNjhmOGY5MGQ2Y2UyMGE1OTVkYzRm.webp',
+      tokenlists: [
+        {
+          name: 'All',
+          status: 'launched',
+        },
+      ],
+      domains: [],
+      funcLabels: [],
+      attributeLabels: [],
+    },
+    {
+      name: 'WGAS',
+      address: '0xdE41591ED1f8ED1484aC2CD8ca0876428de60EfF',
+      symbol: 'WGAS10',
+      decimals: 18,
+      slippage: null,
+      chainId: 47763,
+      logoImg:
+        'https://images.dodoex.io/lyK1GbuQyYIgO7GnqcWvtYpZGk_GVGzqzlqUH_OHs9M/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvNDc3NjMvMHhkZTQxNTkxZWQxZjhlZDE0ODRhYzJjZDhjYTA4NzY0MjhkZTYwZWZm.webp',
+      tokenlists: [
+        {
+          name: 'All',
+          status: 'launched',
+        },
+      ],
+      domains: [],
+      funcLabels: [],
+      attributeLabels: [],
     },
   ],
-  tokenList: 'all',
-  crossChain: true,
+  crossChain: false,
   getAutoSlippage: ({
     fromToken,
     toToken,
@@ -240,4 +284,10 @@ Primary.args = {
       }, 1000);
     });
   },
+  onlyChainId: 47763,
+  defaultChainId: 47763,
+  noPowerBy: true,
+  height: '100%',
+  noUI: true,
+  noSubmissionDialog: true,
 };

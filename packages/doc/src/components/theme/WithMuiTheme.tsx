@@ -16,7 +16,7 @@ export function WithMuiTheme({ children }: { children: React.ReactNode }) {
   const themeVariant = useMemo(() => {
     let mode = colorMode;
     if (colorMode === 'system') {
-      mode = 'dark';
+      mode = 'light';
     }
     return mode as PaletteMode;
   }, [colorMode]);

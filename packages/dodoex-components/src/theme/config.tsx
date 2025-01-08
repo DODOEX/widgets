@@ -152,15 +152,15 @@ export const darkPalette: PaletteOptions = {
 export const lightPalette: PaletteOptions = {
   mode: 'light',
   primary: {
-    main: '#1A1A1B',
+    main: '#34CA50',
     contrastText: '#fff',
   },
   secondary: {
-    main: '#FFE804',
-    contrastText: '#1A1A1B',
+    main: '#34CA50',
+    contrastText: '#FFFFFF',
   },
   error: {
-    main: '#EC5A7D',
+    main: '#FD6057',
     contrastText: '#FFFFFF',
   },
   warning: {
@@ -176,11 +176,11 @@ export const lightPalette: PaletteOptions = {
     contrastText: '#1A1A1B',
   },
   background: {
-    default: '#F9F6E8',
+    default: '#F0EEF0',
     paper: '#FFFFFF',
     paperContrast: '#F6F6F6',
     paperDarkContrast: alpha('#1A1A1B', 0.1),
-    backdrop: alpha('#000', 0.9),
+    backdrop: alpha('#fff', 0.8),
     input: '#F0F0F0',
     tag: alpha('#1A1A1B', 0.04),
   },
@@ -197,11 +197,11 @@ export const lightPalette: PaletteOptions = {
     disabled: alpha('#1A1A1B', 0.1),
   },
   hover: {
-    default: alpha('#1A1A1B', 0.1),
+    default: alpha('#1A1A1B', 0.2),
   },
   tabActive: {
-    main: alpha('#FFE804', 0.2),
-    contrastText: '#1A1A1B',
+    main: 'rgba(52, 202, 80, 0.10)',
+    contrastText: '#34CA50',
   },
 };
 
@@ -226,7 +226,7 @@ export const getDesignTokens = (
         mobile: 0,
         tablet: 768,
         laptop: 1024,
-        desktop: 1200,
+        desktop: 1440,
         largeDesktop: 1536,
       },
     },

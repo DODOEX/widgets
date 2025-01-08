@@ -10,7 +10,7 @@ export type State = {
 
 export const initialState: State = {
   language: 'zhCN',
-  colorMode: 'dark',
+  colorMode: 'light',
 };
 
 export default (state: State = initialState, action: AnyAction): State => {

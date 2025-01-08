@@ -95,6 +95,7 @@ export function ReviewDialog({
       }}
       id="swap-summary"
       title={<Trans>Swap summary</Trans>}
+      modal
     >
       <Box
         sx={{
