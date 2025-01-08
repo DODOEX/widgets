@@ -54,6 +54,10 @@ msgstr "Volume"
 msgid "To"
 msgstr "To"
 
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:411
+msgid "Receive {0}"
+msgstr "Receive {0}"
+
 #: src/components/WithExecutionDialog/index.tsx:113
 msgid "{0} pending"
 msgstr "{0} pending"
@@ -374,12 +378,13 @@ msgstr "Success Rate"
 msgid "Pool Creation"
 msgstr "Pool Creation"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:496
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:494
+#: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:198
 #: src/widgets/PoolWidget/PoolCreate/components/SelectAndInput.tsx:52
 msgid "Custom"
 msgstr "Custom"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:524
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:522
 msgid "Higher than dynamic slippage"
 msgstr "Higher than dynamic slippage"
 
@@ -767,6 +772,14 @@ msgstr "Insufficient market depth to capture the dollar value of [ {{symbols}} ]
 msgid "Invite"
 msgstr "Invite"
 
+#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:40
+msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
+msgstr "The price of this pool is outside of your selected range. Your position is not currently earning fees."
+
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:559
+msgid "{0}"
+msgstr "{0}"
+
 #: src/components/ConnectWallet/NeedConnectButton.tsx:91
 msgid "Connecting..."
 msgstr "Connecting..."
@@ -919,6 +932,11 @@ msgstr "Owner"
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 
+#: src/widgets/PoolWidget/AMMV2Create/index.tsx:278
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:591
+msgid "Deposit amounts"
+msgstr "Deposit amounts"
+
 #: src/components/Swap/components/SwapSettingsDialog/index.tsx:185
 msgid "Disable Indirect Routing"
 msgstr "Disable Indirect Routing"
@@ -946,6 +964,10 @@ msgstr "My Mining"
 msgid "My Pools"
 msgstr "My Pools"
 
+#: src/widgets/PoolWidget/PoolOperate/components/Ratio.tsx:191
+msgid "Share Of Pool"
+msgstr "Share Of Pool"
+
 #: src/components/Swap/index.tsx:902
 msgid "The setting has been switched to swap mode"
 msgstr "The setting has been switched to swap mode"
@@ -955,6 +977,10 @@ msgstr "The setting has been switched to swap mode"
 #: src/components/Swap/index.tsx:764
 msgid "Quote not available"
 msgstr "Quote not available"
+
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:980
+msgid "My pool share"
+msgstr "My pool share"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:205
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:112
@@ -1007,12 +1033,16 @@ msgstr "Set the fee to the same as most other pools"
 msgid "If there are no participants before the end, the rewards cannot be taken out anymore."
 msgstr "If there are no participants before the end, the rewards cannot be taken out anymore."
 
+#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:189
+msgid "Your position will appear here."
+msgstr "Your position will appear here."
+
 #: src/components/Swap/index.tsx:749
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
 #: src/hooks/Token/useGetTokenStatus.ts:60
-#: src/hooks/Token/useTokenStatus.ts:164
+#: src/hooks/Token/useTokenStatus.ts:165
 msgid "Reset"
 msgstr "Reset"
 
@@ -1200,7 +1230,7 @@ msgstr "Standard"
 msgid "Token"
 msgstr "Token"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:536
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:534
 msgid "Lower than dynamic slippage"
 msgstr "Lower than dynamic slippage"
 
@@ -1401,7 +1431,7 @@ msgstr "On"
 
 #: src/components/Swap/index.tsx:732
 #: src/hooks/Token/useGetTokenStatus.ts:60
-#: src/hooks/Token/useTokenStatus.ts:164
+#: src/hooks/Token/useTokenStatus.ts:165
 msgid "Approve"
 msgstr "Approve"
 
@@ -1516,7 +1546,7 @@ msgid "Remove liquidity"
 msgstr "Remove liquidity"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/SlippageSlider.tsx:186
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:370
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:371
 msgid "Dynamic"
 msgstr "Dynamic"
 
@@ -1742,11 +1772,12 @@ msgstr "Disclaimer"
 msgid "Back"
 msgstr "Back"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:525
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:523
 msgid "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 msgstr "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 
 #: src/components/Swap/index.tsx:738
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:534
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
@@ -1755,6 +1786,7 @@ msgid "Ratio"
 msgstr "Ratio"
 
 #: src/components/Swap/index.tsx:732
+#: src/components/TokenPairStatusButton.tsx:45
 #: src/components/TokenStatusButton.tsx:31
 msgid "Approving"
 msgstr "Approving"
@@ -1812,6 +1844,10 @@ msgstr "Receive"
 msgid "Select Network"
 msgstr "Select Network"
 
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:120
+msgid "AMM V2 Position"
+msgstr "AMM V2 Position"
+
 #: src/components/Swap/components/ReviewDialog.tsx:452
 msgid "Confirm swap"
 msgstr "Confirm swap"
@@ -1822,7 +1858,8 @@ msgstr "Once created, the price cannot be changed. This option applies to assets
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:50
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:101
-#: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:92
+#: src/widgets/PoolWidget/AMMV2Create/Setting.tsx:100
+#: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:123
 msgid "Slippage Tolerance"
 msgstr "Slippage Tolerance"
 
@@ -1853,6 +1890,16 @@ msgstr "My Staked"
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
 msgid "Add"
 msgstr "Add"
+
+#: src/components/TokenPairStatusButton.tsx:25
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:546
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:553
+msgid "Insufficient {0} balance"
+msgstr "Insufficient {0} balance"
+
+#: src/widgets/PoolWidget/AMMV3/components/Badge/AMMV3.tsx:21
+msgid "AMM V3"
+msgstr "AMM V3"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:187
 msgid "The dynamic slippage is provided by DODO team through analyzing historical transactions."
@@ -2062,7 +2109,7 @@ msgstr "AMM V3 Position"
 msgid "Slippage Coefficient"
 msgstr "Slippage Coefficient"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:229
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:230
 msgid "Advanced"
 msgstr "Advanced"
 
@@ -2181,7 +2228,7 @@ msgstr "There is risk of being arbitraged if adding this liquidity."
 msgid "address"
 msgstr "address"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:329
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:330
 msgid "This trading pair does not have enough historical data and has used the default dynamic slippage."
 msgstr "This trading pair does not have enough historical data and has used the default dynamic slippage."
 
@@ -2250,7 +2297,11 @@ msgstr "The initial price is different from the current market price, which may 
 msgid "Hours"
 msgstr "Hours"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:537
+#: src/widgets/PoolWidget/PoolList/components/OnlyV3Toggle.tsx:59
+msgid "V3"
+msgstr "V3"
+
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:535
 msgid "Dynamic slippage is {recommendSlippage}% , the current slippage setting may increase the failure rate of transactions."
 msgstr "Dynamic slippage is {recommendSlippage}% , the current slippage setting may increase the failure rate of transactions."
 

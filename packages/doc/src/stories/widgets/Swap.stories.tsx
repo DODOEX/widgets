@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { SwapWidget } from '@dodoex/widgets';
-import { TokenInfo } from '@dodoex/widgets/dist/src/hooks/Token/type';
+import { TokenInfo } from '@dodoex/widgets';
 
 export enum ChainId {
   MAINNET = 1,
@@ -228,7 +228,7 @@ Primary.args = {
       name: 'SOL',
       address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
       symbol: 'SOL',
-      chainId: -1000,
+      chainId: 903,
       side: 'from',
     },
     {
@@ -236,14 +236,14 @@ Primary.args = {
       name: 'WSOL',
       address: 'So11111111111111111111111111111111111111112',
       symbol: 'WSOL',
-      chainId: -1000,
+      chainId: 903,
     },
     {
       decimals: 9,
       name: 'test1',
       address: 'W9qPz1vXFmKago2TsUJeixxh1tSEzeimebJEEf2kY2j',
       symbol: 'test1',
-      chainId: -1000,
+      chainId: 903,
     },
   ],
   crossChain: false,

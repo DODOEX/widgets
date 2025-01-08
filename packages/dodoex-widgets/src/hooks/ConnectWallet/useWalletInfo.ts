@@ -15,7 +15,7 @@ export function useWalletInfo() {
       if (!solanaAccount) {
         return [undefined, undefined];
       }
-      return [solanaAccount, -1000];
+      return [solanaAccount, ChainId.SOON_TESTNET];
     } else {
       return [web3React.account, web3React.chainId];
     }
