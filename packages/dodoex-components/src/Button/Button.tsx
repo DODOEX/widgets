@@ -18,6 +18,7 @@ enum Variant {
   dashed = 'dashed',
   second = 'second',
   tag = 'tag',
+  darken = 'darken',
 }
 
 enum Size {
@@ -149,7 +150,7 @@ const buttonStyles = (
         ...result,
         backgroundColor: danger
           ? 'error.main'
-          : backgroundColor ?? theme.palette.background.tag,
+          : (backgroundColor ?? theme.palette.background.tag),
         border: 'none',
         color: danger ? 'error.contrastText' : 'text.primary',
         '&[disabled]': {
@@ -173,7 +174,7 @@ const buttonStyles = (
         typography: 'body2',
         backgroundColor: danger
           ? 'error.main'
-          : backgroundColor ?? 'background.tag',
+          : (backgroundColor ?? 'background.tag'),
         border: 'none',
         color: danger ? 'error.contrastText' : 'primary.main',
         '&[disabled]': {
@@ -187,12 +188,29 @@ const buttonStyles = (
         },
       };
       break;
+    case Variant.darken:
+      result = {
+        ...result,
+        backgroundColor: '#123329',
+        color: '#C9EB62',
+        '&[disabled]': {
+          backgroundColor: alpha('#123329', 0.5),
+          color: '#C9EB62',
+          pointerEvents: 'none', // Disable link interactions
+          cursor: 'default',
+        },
+        [hoverLabel]: {
+          backgroundColor: '#123329',
+          color: alpha('#C9EB62', 0.5),
+        },
+      };
+      break;
     default:
       result = {
         ...result,
         backgroundColor: danger
           ? 'error.main'
-          : backgroundColor ?? 'secondary.main',
+          : (backgroundColor ?? 'secondary.main'),
         [hoverLabel]: {
           background: `linear-gradient(0deg, rgba(26, 26, 27, 0.1), rgba(26, 26, 27, 0.1)), ${
             danger

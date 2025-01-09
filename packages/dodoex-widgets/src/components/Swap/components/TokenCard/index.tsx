@@ -39,6 +39,7 @@ export interface TokenCardProps {
   occupiedAddrs?: string[];
   occupiedChainId?: TokenPickerProps['occupiedChainId'];
   onMaxClick?: (max: string) => void;
+  title?: React.ReactNode;
   token?: TokenInfo | null;
   onInputChange?: (v: string) => void;
   onInputFocus?: () => void;
@@ -111,6 +112,7 @@ export function TokenCard({
   sx,
   inputSx,
   amt,
+  title,
   token,
   readOnly,
   showMaxBtn,
@@ -193,13 +195,54 @@ export function TokenCard({
       <Box
         sx={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: title ? 'flex-start' : 'center',
           justifyContent: 'space-between',
           gap: 4,
         }}
       >
         {hideToken ? (
           <Box />
+        ) : title ? (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              gap: 12,
+            }}
+          >
+            <Box
+              sx={{
+                typography: 'body1',
+                color: theme.palette.text.primary,
+                fontWeight: 600,
+              }}
+            >
+              {title}
+            </Box>
+            <TokenLogoCollapse
+              token={token}
+              tokenLogoSize={24}
+              showChainLogo={showChainLogo}
+              showChainName={showChainName}
+              symbolSx={{
+                typography: 'h5',
+                gap: 4,
+              }}
+              onClick={() => setTokenPickerVisible(true)}
+              readonly={!onTokenChange}
+              sx={{
+                px: 6,
+                py: 8,
+                borderWidth: 1,
+                borderColor: theme.palette.border.main,
+                borderStyle: 'solid',
+                borderRadius: 24,
+                backgroundColor: '#F4F4F5',
+                gap: 4,
+              }}
+            />
+          </Box>
         ) : (
           <TokenLogoCollapse
             token={token}
@@ -233,6 +276,7 @@ export function TokenCard({
           address={token?.address}
           decimals={token?.decimals}
           loading={balanceLoading}
+          sx={title ? { lineHeight: '22px' } : {}}
         />
       </Box>
 
@@ -288,6 +332,9 @@ export function TokenCard({
             typography={inputTypography}
             sx={{
               mt: 12,
+              ...(title
+                ? { backgroundColor: theme.palette.background.paper }
+                : {}),
             }}
           />
         ))}

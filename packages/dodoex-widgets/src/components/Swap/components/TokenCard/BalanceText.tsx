@@ -1,5 +1,11 @@
 import { formatTokenAmountNumber } from '../../../../utils/formatter';
-import { Box, useTheme, ButtonBase, RotatingIcon } from '@dodoex/components';
+import {
+  Box,
+  useTheme,
+  ButtonBase,
+  RotatingIcon,
+  BoxProps,
+} from '@dodoex/components';
 import BigNumber from 'bignumber.js';
 import { Trans } from '@lingui/macro';
 import React from 'react';
@@ -13,6 +19,7 @@ export function BalanceText({
   canClickBalance: canClickBalanceProps,
   loading,
   balanceText,
+  sx,
 }: {
   onClick?: (max: string) => void;
   balance: BigNumber | null;
@@ -22,6 +29,7 @@ export function BalanceText({
   canClickBalance?: boolean;
   loading?: boolean;
   balanceText?: React.ReactNode;
+  sx?: BoxProps['sx'];
 }) {
   const { palette } = useTheme();
   const canClickBalance = canClickBalanceProps && balance?.gt(0) && onClick;
@@ -42,6 +50,7 @@ export function BalanceText({
               },
             }
           : {}),
+        ...sx,
       }}
       onClick={
         canClickBalance
