@@ -44,12 +44,12 @@ export default function Table({
             position: 'sticky',
             top: 0,
             zIndex: 2,
-            backgroundColor: 'background.paper',
+            backgroundColor: 'transparent',
           },
           '& th:last-child, & td:last-child': {
             position: 'sticky',
             zIndex: 1,
-            backgroundColor: 'background.paper',
+            backgroundColor: 'transparent',
             '&::before': {
               content: '""',
               position: 'absolute',

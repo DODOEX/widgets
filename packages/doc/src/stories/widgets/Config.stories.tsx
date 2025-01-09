@@ -141,16 +141,9 @@ export const Primary = ({
       <Widget {...config} onlyChainId={onlyChainId} apikey={apiKey} noUI>
         <Box
           sx={{
-            width: config.width ?? 375,
-            height: config.height,
-            overflow: 'hidden',
             position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            minWidth: 335,
-            minHeight: 494,
-            borderRadius: 16,
-            backgroundColor: 'background.paper',
+            overflowY: 'hidden',
+            width: 1230,
           }}
         >
           <Swap />
@@ -158,7 +151,7 @@ export const Primary = ({
         <Box
           sx={{
             width: '100%',
-            backgroundColor: 'background.paper',
+            backgroundColor: 'transparent',
           }}
         >
           <SwapOrderHistory />
@@ -173,4 +166,8 @@ Primary.args = {
   apiKey: 'ee53d6b75b12aceed4',
   hasOrder: true,
   onlyChainId: 47763,
+  defaultChainId: 47763,
+  noPowerBy: true,
+  noUI: true,
+  noSubmissionDialog: true,
 };

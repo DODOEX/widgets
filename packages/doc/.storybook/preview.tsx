@@ -53,7 +53,7 @@ const preview = {
                 right: 0,
                 bottom: 0,
                 left: 0,
-                backgroundColor: 'background.paper',
+                backgroundColor: 'background.default',
               }}
             />
             <Box
