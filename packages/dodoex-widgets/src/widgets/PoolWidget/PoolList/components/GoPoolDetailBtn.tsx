@@ -43,7 +43,7 @@ export default function GoPoolDetailBtn({
             }
           : {
               width: 40,
-              backgroundColor: 'transparent',
+              backgroundColor: '#FFFFFF',
               borderWidth: 1,
             }),
       }}

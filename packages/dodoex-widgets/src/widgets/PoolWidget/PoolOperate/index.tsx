@@ -104,8 +104,9 @@ export function PoolOperate({
         <TabsGroup
           tabs={poolOrMiningTabs}
           tabsListSx={{
-            mx: 20,
+            px: 20,
             justifyContent: onClose ? 'space-between' : 'flex-start',
+            backgroundColor: '#C9EB62',
             ...(hasMining && hasLp
               ? {
                   '& button:last-child': {

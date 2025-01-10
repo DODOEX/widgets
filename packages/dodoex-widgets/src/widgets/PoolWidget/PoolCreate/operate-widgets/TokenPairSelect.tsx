@@ -44,7 +44,7 @@ function TokenPickSelect({
           px: 20,
           py: 8,
           borderRadius: 8,
-          backgroundColor: theme.palette.background.input,
+          backgroundColor: theme.palette.background.paper,
           '&:hover': {
             backgroundColor: theme.palette.hover.default,
           },

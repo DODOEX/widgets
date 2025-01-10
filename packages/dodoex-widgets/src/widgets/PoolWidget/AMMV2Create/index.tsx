@@ -36,8 +36,10 @@ import {
   getUniswapV2Router02FixedFeeContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
 import { getIsAMMV2DynamicFeeContractByChainId } from '../utils';
+import { useTheme } from '@dodoex/components';
 
 export default function AMMV2Create() {
+  const theme = useTheme();
   const [fee, setFee] = React.useState(0.003);
   const feeList = [0.0001, 0.0005, 0.003];
   const [baseToken, setBaseToken] = React.useState<TokenInfo>();
@@ -160,53 +162,45 @@ export default function AMMV2Create() {
   });
 
   return (
-    <WidgetContainer>
+    <WidgetContainer
+      sx={{
+        backgroundColor: 'transparent',
+        padding: 0,
+      }}
+    >
       <Box
         sx={{
           mx: 'auto',
-          borderRadius: isMobile ? 0 : 16,
-          backgroundColor: 'background.paper',
+          borderRadius: isMobile ? '16px 16px 0 0' : 16,
+          backgroundColor: 'background.default',
           width: isMobile ? '100%' : 600,
           position: 'relative',
           overflow: 'hidden',
         }}
       >
-        {isMobile ? (
+        <Box
+          sx={{
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            px: 20,
+            py: 24,
+            typography: 'caption',
+            backgroundColor: theme.palette.tabActive.main,
+          }}
+        >
           <Box
+            component={ArrowBack}
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              p: 20,
-              pb: 0,
+              position: 'absolute',
+              left: 20,
+              cursor: 'pointer',
             }}
-          >
-            <GoBack onClick={back} />
-          </Box>
-        ) : (
-          <Box
-            sx={{
-              position: 'relative',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              px: 20,
-              py: 24,
-              typography: 'caption',
-            }}
-          >
-            <Box
-              component={ArrowBack}
-              sx={{
-                position: 'absolute',
-                left: 20,
-                cursor: 'pointer',
-              }}
-              onClick={back}
-            />
-            <Trans>Add liquidity</Trans>
-          </Box>
-        )}
+            onClick={back}
+          />
+          <Trans>Add liquidity</Trans>
+        </Box>
         <Box
           sx={{
             display: 'flex',
@@ -280,7 +274,15 @@ export default function AMMV2Create() {
           >
             <Box>
               <TokenCard
-                sx={{ mb: 4, pb: 28, minHeight: 'auto' }}
+                sx={{
+                  mb: 4,
+                  pb: 28,
+                  minHeight: 'auto',
+                  backgroundColor: theme.palette.background.paper,
+                }}
+                inputSx={{
+                  backgroundColor: 'transparent',
+                }}
                 token={baseToken}
                 amt={baseAmount}
                 defaultLoadBalance
@@ -294,7 +296,14 @@ export default function AMMV2Create() {
               />
               <SwitchBox plus />
               <TokenCard
-                sx={{ pb: 20, minHeight: 'auto' }}
+                sx={{
+                  pb: 20,
+                  minHeight: 'auto',
+                  backgroundColor: theme.palette.background.paper,
+                }}
+                inputSx={{
+                  backgroundColor: 'transparent',
+                }}
                 token={quoteToken}
                 amt={quoteAmount}
                 defaultLoadBalance

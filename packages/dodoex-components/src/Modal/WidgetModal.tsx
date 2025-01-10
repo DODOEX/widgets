@@ -38,6 +38,7 @@ const StyledBackdrop = styled(Backdrop)`
   left: 0;
   background-color: ${({ theme }) => theme.palette.background.backdrop};
   -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(5px);
 `;
 
 export const WIDGET_MODAL_CLASS = 'dodo-widget-modal';

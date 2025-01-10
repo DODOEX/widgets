@@ -1,5 +1,5 @@
 import { PoolApi } from '@dodoex/api';
-import { Box, Button, LoadingSkeleton } from '@dodoex/components';
+import { Box, Button, LoadingSkeleton, useTheme } from '@dodoex/components';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import {
@@ -38,6 +38,7 @@ export function AddPoolOperate({
   pool?: OperatePool;
   balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
 }) {
+  const theme = useTheme();
   const { account } = useWeb3React();
   const {
     baseAmount,
@@ -165,6 +166,12 @@ export function AddPoolOperate({
             showPercentage
             onInputChange={handleChangeBaseAmount}
             readOnly={balanceInfo.loading || !canOperate}
+            sx={{
+              backgroundColor: theme.palette.background.paper,
+            }}
+            inputSx={{
+              backgroundColor: 'transparent',
+            }}
           />
         )}
         {onlyShowSide ? '' : <CardPlus />}
@@ -178,6 +185,12 @@ export function AddPoolOperate({
             showPercentage
             onInputChange={handleChangeQuoteAmount}
             readOnly={balanceInfo.loading || !canOperate || isSinglePool}
+            sx={{
+              backgroundColor: theme.palette.background.paper,
+            }}
+            inputSx={{
+              backgroundColor: 'transparent',
+            }}
           />
         )}
         <LoadingSkeleton
@@ -210,7 +223,7 @@ export function AddPoolOperate({
           borderStyle: 'solid',
           borderWidth: '1px 0 0',
           borderColor: 'border.main',
-          backgroundColor: 'background.paper',
+          backgroundColor: 'background.default',
         }}
       >
         {isShowCompare && (

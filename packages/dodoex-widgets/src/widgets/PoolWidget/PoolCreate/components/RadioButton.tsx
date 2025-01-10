@@ -29,7 +29,7 @@ export default function RadioButton({
         display: 'flex',
         alignItems: 'center',
         p: 20,
-        backgroundColor: theme.palette.background.tag,
+        backgroundColor: theme.palette.background.paper,
         borderWidth: 1,
         borderColor: selected ? theme.palette.primary.main : 'transparent',
         borderStyle: 'solid',

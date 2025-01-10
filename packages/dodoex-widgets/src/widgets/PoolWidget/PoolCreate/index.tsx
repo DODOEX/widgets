@@ -1,4 +1,4 @@
-import { Box } from '@dodoex/components';
+import { Box, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import React from 'react';
@@ -40,10 +40,13 @@ import {
   DEFAULT_SLIPPAGE_COEFFICIENT,
   PEGGED_RATIO_DECIMALS,
 } from './utils';
+import { ArrowBack } from '@dodoex/icons';
+import { PageType, useRouterStore } from '../../../router';
 
 export default function PoolCreate() {
   const { defaultBaseToken, defaultQuoteToken } = useDefaultTokens();
   const { chainId } = useWalletInfo();
+  const theme = useTheme();
 
   const [state, dispatch] = React.useReducer<typeof reducer>(reducer, {
     currentStep: 0,
@@ -158,6 +161,12 @@ export default function PoolCreate() {
                 });
               }
         }
+        sx={{
+          backgroundColor: theme.palette.background.paper,
+        }}
+        inputSx={{
+          backgroundColor: 'transparent',
+        }}
       />
       <CardPlusConnected />
       <TokenCard
@@ -201,12 +210,54 @@ export default function PoolCreate() {
             payload,
           });
         }}
+        sx={{
+          backgroundColor: theme.palette.background.paper,
+        }}
+        inputSx={{
+          backgroundColor: 'transparent',
+        }}
       />
     </Box>
   );
 
+  const back = () => {
+    useRouterStore.getState().push({
+      type: PageType.Pool,
+    });
+  };
+
   return (
-    <WidgetContainer>
+    <WidgetContainer
+      sx={{
+        backgroundColor: 'transparent',
+        padding: 0,
+      }}
+    >
+      <Box
+        sx={{
+          position: 'relative',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          px: 20,
+          py: 24,
+          typography: 'caption',
+          borderRadius: 20,
+          backgroundColor: theme.palette.tabActive.main,
+        }}
+      >
+        <Box
+          component={ArrowBack}
+          sx={{
+            position: 'absolute',
+            left: 20,
+            cursor: 'pointer',
+          }}
+          onClick={back}
+        />
+        <Trans>Pool Setup</Trans>
+      </Box>
+
       <Box
         sx={{
           display: 'flex',
@@ -223,25 +274,17 @@ export default function PoolCreate() {
         {isMobile ? null : (
           <Box
             sx={{
-              mr: 12,
+              mt: 20,
+              mr: 20,
               flexGrow: 1,
               display: 'block',
               overflow: 'hidden',
+              px: 20,
+              pb: 20,
+              borderRadius: 20,
+              backgroundColor: theme.palette.background.default,
             }}
           >
-            <GoBack />
-
-            <Box
-              sx={{
-                mt: 28,
-                typography: 'h4',
-                fontWeight: 600,
-                color: 'text.primary',
-              }}
-            >
-              <Trans>Pool Setup</Trans>
-            </Box>
-
             <SectionTitle
               titleKey={t`Select Pool Version`}
               index={1}
@@ -365,7 +408,7 @@ export default function PoolCreate() {
             flexShrink: 0,
             flexBasis: 375,
             borderRadius: 0,
-            backgroundColor: 'background.paper',
+            backgroundColor: 'background.default',
             minHeight: '100%',
             ...(!isMobile
               ? {
@@ -375,7 +418,7 @@ export default function PoolCreate() {
                   minHeight: 'auto',
                   height: '100%',
                   position: 'sticky',
-                  top: '28px',
+                  top: '20px',
                   overflowY: 'hidden',
                 }
               : {}),

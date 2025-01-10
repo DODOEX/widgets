@@ -1,5 +1,11 @@
 import { basicTokenMap, ChainId, PoolApi } from '@dodoex/api';
-import { Box, Button, LoadingSkeleton, Select } from '@dodoex/components';
+import {
+  Box,
+  Button,
+  LoadingSkeleton,
+  Select,
+  useTheme,
+} from '@dodoex/components';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import {
@@ -46,6 +52,7 @@ export function RemovePoolOperate({
   pool?: OperatePool;
   balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
 }) {
+  const theme = useTheme();
   const { account } = useWeb3React();
   const baseOverride = balanceInfo.userBaseLpToTokenBalance;
   const quoteOverride = balanceInfo.userQuoteLpToTokenBalance;
@@ -346,6 +353,12 @@ export function RemovePoolOperate({
               readOnly={balanceInfo.loading || !canOperate}
               overrideBalance={isBase ? baseOverride : quoteOverride}
               overrideBalanceLoading={overrideBalanceLoading}
+              sx={{
+                backgroundColor: theme.palette.background.paper,
+              }}
+              inputSx={{
+                backgroundColor: 'transparent',
+              }}
             />
           ) : (
             <>
@@ -358,6 +371,12 @@ export function RemovePoolOperate({
                 readOnly={balanceInfo.loading || !canOperate}
                 overrideBalance={baseOverride}
                 overrideBalanceLoading={overrideBalanceLoading}
+                sx={{
+                  backgroundColor: theme.palette.background.paper,
+                }}
+                inputSx={{
+                  backgroundColor: 'transparent',
+                }}
               />
               {onlyShowSide ? '' : <CardPlus />}
               {onlyShowSide === 'base' ? (
@@ -372,6 +391,12 @@ export function RemovePoolOperate({
                   readOnly={balanceInfo.loading || !canOperate || isSinglePool}
                   overrideBalance={quoteOverride}
                   overrideBalanceLoading={overrideBalanceLoading}
+                  sx={{
+                    backgroundColor: theme.palette.background.paper,
+                  }}
+                  inputSx={{
+                    backgroundColor: 'transparent',
+                  }}
                 />
               )}
             </>
@@ -508,7 +533,7 @@ export function RemovePoolOperate({
           borderStyle: 'solid',
           borderWidth: '1px 0 0',
           borderColor: 'border.main',
-          backgroundColor: 'background.paper',
+          backgroundColor: 'background.default',
         }}
       >
         {isShowCompare && (

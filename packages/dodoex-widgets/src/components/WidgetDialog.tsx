@@ -69,6 +69,7 @@ export default function WidgetDialog({
                 minHeight: 200,
                 maxHeight: '80%',
                 borderRadius: 16,
+                boxShadow: '0px 2px 12px 0px rgba(0, 0, 0, 0.15)',
               }),
         }}
         data-testid={testId}

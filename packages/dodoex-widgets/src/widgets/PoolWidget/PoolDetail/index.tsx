@@ -84,7 +84,8 @@ export default function PoolDetail({
               p: theme.spacing(28, 20, canOperate ? 108 : 0),
             }
           : {
-              p: theme.spacing(28, 40, 40),
+              backgroundColor: 'transparent',
+              padding: 0,
             }
       }
     >
@@ -110,6 +111,9 @@ export default function PoolDetail({
           sx={{
             flex: 1,
             overflow: 'hidden',
+            padding: 20,
+            borderRadius: 20,
+            backgroundColor: 'background.default',
           }}
         >
           <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
@@ -129,6 +133,9 @@ export default function PoolDetail({
             onClose={() => {
               setOperateType(undefined);
             }}
+            sx={{
+              backgroundColor: 'background.default',
+            }}
           />
         ) : (
           <PoolOperate
@@ -138,7 +145,7 @@ export default function PoolDetail({
             sx={{
               width: 375,
               height: 'max-content',
-              backgroundColor: 'background.paper',
+              backgroundColor: 'background.default',
               borderRadius: 16,
               overflow: 'hidden',
             }}

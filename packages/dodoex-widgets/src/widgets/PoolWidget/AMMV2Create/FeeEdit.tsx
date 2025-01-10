@@ -45,6 +45,10 @@ export default function FeeEdit({
       sx={{
         opacity: disabled ? 0.3 : undefined,
         fontWeight: 600,
+        borderRadius: isMobile ? 0 : 12,
+        backgroundColor: isMobile
+          ? 'transparent'
+          : theme.palette.background.paper,
       }}
     >
       <Box
@@ -56,6 +60,9 @@ export default function FeeEdit({
           py: 12,
           borderWidth: 1,
           borderRadius: 12,
+          backgroundColor: isMobile
+            ? theme.palette.background.paper
+            : 'transparent',
         }}
       >
         <Trans>
@@ -85,7 +92,9 @@ export default function FeeEdit({
         <>
           <Box
             sx={{
-              mt: 12,
+              mt: isMobile ? 12 : 4,
+              mb: 12,
+              px: isMobile ? 0 : 20,
               ...(isMobile
                 ? {
                     display: 'grid',
@@ -116,9 +125,17 @@ export default function FeeEdit({
                     py: 12,
                     borderWidth: 1,
                     borderRadius: 12,
+                    backgroundColor: isMobile
+                      ? theme.palette.background.paper
+                      : 'rgba(26, 26, 27, 0.10)',
                     cursor: 'pointer',
                     ...(active && {
-                      borderColor: theme.palette.primary.main,
+                      borderColor: isMobile
+                        ? '#34CA50'
+                        : theme.palette.border.main,
+                      backgroundColor: isMobile
+                        ? theme.palette.background.paper
+                        : '#00D555',
                     }),
                   }}
                 >
@@ -146,10 +163,16 @@ export default function FeeEdit({
                   py: 12,
                   borderWidth: 1,
                   borderRadius: 12,
+                  backgroundColor: isMobile
+                    ? theme.palette.background.paper
+                    : 'rgba(26, 26, 27, 0.10)',
                   cursor: 'pointer',
                   color: isLessFee ? theme.palette.error.main : 'text.primary',
                   ...(isCustom && {
-                    borderColor: theme.palette.primary.main,
+                    borderColor: theme.palette.border.main,
+                    backgroundColor: isMobile
+                      ? theme.palette.background.paper
+                      : '#00D555',
                   }),
                 }}
                 onClick={() => {

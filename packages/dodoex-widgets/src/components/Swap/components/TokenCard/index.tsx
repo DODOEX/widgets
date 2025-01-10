@@ -335,6 +335,7 @@ export function TokenCard({
               ...(title
                 ? { backgroundColor: theme.palette.background.paper }
                 : {}),
+              ...inputSx,
             }}
           />
         ))}

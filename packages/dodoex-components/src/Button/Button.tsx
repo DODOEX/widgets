@@ -112,10 +112,8 @@ const buttonStyles = (
     case Variant.outlined:
       result = {
         ...result,
-        border: `solid 1px ${
-          danger ? theme.palette.error.main : theme.palette.primary.main
-        }`,
-        color: danger ? 'error.main' : 'primary.main',
+        border: `solid 1px ${danger ? theme.palette.error.main : '#000'}`,
+        color: danger ? 'error.main' : '#000',
         '&[disabled]': {
           color: 'text.disabled',
           borderColor: 'border.disabled',
@@ -123,7 +121,7 @@ const buttonStyles = (
         [hoverLabel]: {
           background: danger
             ? alpha(theme.palette.error.main, 0.1)
-            : alpha(theme.palette.primary.main, 0.1),
+            : 'background.paper',
         },
       };
       break;

@@ -1,4 +1,4 @@
-import { alpha, Box, useTheme } from '@dodoex/components';
+import { Box, useTheme } from '@dodoex/components';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { SectionStatusT } from '../types';
 
@@ -18,11 +18,11 @@ export function SectionTitle({
     <>
       <Box
         sx={{
-          mt: 28,
+          mt: index === 1 ? 20 : 28,
           mb: 28,
-          borderTopColor: 'divider',
+          borderTopColor: theme.palette.border.main,
           borderTopStyle: 'solid',
-          borderTopWidth: 1,
+          borderTopWidth: index === 1 ? 0 : 1,
           ...(isMobile
             ? {
                 mt: 12,

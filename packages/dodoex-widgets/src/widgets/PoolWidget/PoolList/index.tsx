@@ -252,6 +252,9 @@ export default function PoolList({
             account={account}
             onClose={() => setOperatePool(null)}
             modal={isMobile}
+            sx={{
+              backgroundColor: 'background.default',
+            }}
             {...operatePool}
           />
         ) : (
@@ -263,7 +266,7 @@ export default function PoolList({
               sx={{
                 width: 375,
                 height: 'max-content',
-                backgroundColor: 'background.paper',
+                backgroundColor: 'background.default',
                 borderRadius: 16,
                 overflow: 'hidden',
               }}

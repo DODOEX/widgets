@@ -121,12 +121,12 @@ export const darkPalette: PaletteOptions = {
   },
   background: {
     default: '#252831',
-    paper: '#33363F',
+    paper: '#000',
     paperContrast: '#41454F',
     paperDarkContrast: alpha('#FFF', 0.1),
     backdrop: alpha('#000', 0.9),
     input: '#252831',
-    tag: alpha('#FFF', 0.04),
+    tag: alpha('#FFF', 0.2),
   },
   text: {
     primary: '#FFF',
