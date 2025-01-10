@@ -200,8 +200,8 @@ export const lightPalette: PaletteOptions = {
     default: alpha('#1A1A1B', 0.2),
   },
   tabActive: {
-    main: 'rgba(52, 202, 80, 0.10)',
-    contrastText: '#34CA50',
+    main: '#C9EB62',
+    contrastText: '#000',
   },
 };
 

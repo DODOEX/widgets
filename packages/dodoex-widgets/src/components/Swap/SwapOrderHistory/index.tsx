@@ -1,6 +1,6 @@
 import { ChainId } from '@dodoex/api';
-import { Box, BoxProps, useTheme } from '@dodoex/components';
-import { t, Trans } from '@lingui/macro';
+import { Box, useTheme } from '@dodoex/components';
+import { Trans } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
@@ -19,31 +19,32 @@ export default function SwapOrderHistory({
 }) {
   const theme = useTheme();
   const { onlyChainId } = useUserOptions();
-  const { isMobile } = useWidgetDevice();
+  const { isDesktop } = useWidgetDevice();
   const { account } = useWeb3React();
-  const [filterChainId, setFilterChainId] =
-    React.useState<ChainId | undefined>();
+  const [filterChainId, setFilterChainId] = React.useState<
+    ChainId | undefined
+  >();
   const swapOrderListQueryLocal = useTradeSwapOrderList({
     account: swapOrderListQueryProps ? undefined : account,
     chainId: onlyChainId ?? filterChainId,
-    limit: isMobile ? 10 : 5,
+    limit: isDesktop ? 5 : 10,
   });
   const swapOrderListQuery = swapOrderListQueryProps ?? swapOrderListQueryLocal;
 
   return (
     <CardStatus
-      isMobile={isMobile}
+      isMobile={!isDesktop}
       empty={!swapOrderListQuery.orderList.length}
       loading={swapOrderListQuery.isLoading}
     >
-      {isMobile ? (
+      {!isDesktop ? (
         <Box
           sx={{
-            px: 16,
+            px: 0,
           }}
         >
           {swapOrderListQuery.orderList.map((item) => (
-            <SameOrderCard key={item.hash} data={item} isMobile={isMobile} />
+            <SameOrderCard key={item.hash} data={item} isMobile={!isDesktop} />
           ))}
           <LoadMore
             loading={swapOrderListQuery.isFetchingNextPage}
@@ -119,7 +120,7 @@ export default function SwapOrderHistory({
                 <SameOrderCard
                   key={item.hash}
                   data={item}
-                  isMobile={isMobile}
+                  isMobile={!isDesktop}
                 />
               ))}
             </tbody>

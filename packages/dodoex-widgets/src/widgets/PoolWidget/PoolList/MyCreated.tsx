@@ -80,7 +80,7 @@ function CardList({
               px: 20,
               pt: 20,
               pb: 12,
-              backgroundColor: 'background.paper',
+              backgroundColor: theme.palette.tabActive.main,
               borderRadius: 16,
             }}
             className="gradient-card-border"
@@ -172,12 +172,19 @@ function CardList({
             {/* info */}
             <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                mt: 44,
+                mt: 28,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: 8,
               }}
             >
-              <Box>
+              <Box
+                sx={{
+                  backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                  borderRadius: 8,
+                  p: 12,
+                }}
+              >
                 <Box
                   sx={{
                     typography: 'h5',
@@ -199,16 +206,14 @@ function CardList({
                   <Trans>TVL</Trans>
                 </Box>
               </Box>
+
               <Box
                 sx={{
-                  display: 'inline-block',
-                  mx: 20,
-                  height: 24,
-                  width: '1px',
-                  backgroundColor: 'custom.border.default',
+                  backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                  borderRadius: 8,
+                  p: 12,
                 }}
-              />
-              <Box>
+              >
                 <Box
                   sx={{
                     typography: 'h5',
@@ -257,6 +262,7 @@ function CardList({
               <NeedConnectButton
                 fullWidth
                 size={Button.Size.small}
+                variant={Button.Variant.darken}
                 onClick={(evt) => {
                   evt.stopPropagation();
                   setOperatePool({
@@ -348,22 +354,22 @@ function TableList({
             }
           }
           const hoverBg = theme.palette.background.tag;
-
+          const mt = 6;
+          const mb = 6;
           return (
-            <Box
-              component="tr"
-              key={pairAddress + chainId}
-              sx={{
-                [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
-                  backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
-                },
-              }}
-            >
+            <Box component="tr" key={pairAddress + chainId}>
               <Box component="td">
                 <Box
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    mt,
+                    mb,
+                    py: isDpp ? 18 : 20,
+                    px: 24,
+                    borderTopLeftRadius: 12,
+                    borderBottomLeftRadius: 12,
+                    backgroundColor: 'background.paper',
                   }}
                 >
                   {baseToken && quoteToken ? (
@@ -484,6 +490,14 @@ function TableList({
                 <Box
                   sx={{
                     typography: 'body2',
+                    minHeight: 82,
+                    mt,
+                    mb,
+                    py: 20,
+                    px: 24,
+                    backgroundColor: 'background.paper',
+                    display: 'flex',
+                    alignItems: 'center',
                   }}
                   title={
                     item.tvl
@@ -511,6 +525,14 @@ function TableList({
                   sx={{
                     typography: 'body2',
                     fontWeight: 600,
+                    minHeight: 82,
+                    mt,
+                    mb,
+                    py: 20,
+                    px: 24,
+                    backgroundColor: 'background.paper',
+                    display: 'flex',
+                    alignItems: 'center',
                   }}
                 >
                   $
@@ -526,6 +548,14 @@ function TableList({
                     alignItems: 'center',
                     justifyContent: 'flex-end',
                     gap: '8px',
+                    minHeight: 82,
+                    mt,
+                    mb,
+                    py: 20,
+                    px: 24,
+                    backgroundColor: 'background.paper',
+                    borderTopRightRadius: 12,
+                    borderBottomRightRadius: 12,
                   }}
                 >
                   {operateBtnText ? (
@@ -626,14 +656,15 @@ export default function MyCreated({
     <>
       <Box
         sx={{
-          py: 16,
           display: 'flex',
           justifyContent: 'space-between',
           gap: 8,
           ...(isMobile
-            ? {}
+            ? { pt: 16, pb: 16 }
             : {
-                px: 20,
+                px: 24,
+                pt: 24,
+                pb: 20,
                 borderBottomWidth: 1,
               }),
         }}

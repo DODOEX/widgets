@@ -38,7 +38,8 @@ export default function GoPoolDetailBtn({
         ...(isMobile
           ? {
               width: 64,
-              backgroundColor: 'background.tag',
+              backgroundColor: 'background.paper',
+              borderWidth: 0,
             }
           : {
               width: 40,

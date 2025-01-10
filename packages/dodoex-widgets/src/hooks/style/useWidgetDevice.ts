@@ -34,6 +34,12 @@ export function useWidgetDevice() {
     return typeof width === 'number' && width < theme.breakpoints.values.tablet;
   }, [width, theme.breakpoints.values]);
 
+  const isDesktop = React.useMemo(() => {
+    return (
+      typeof width === 'number' && width > theme.breakpoints.values.desktop
+    );
+  }, [width, theme.breakpoints.values]);
+
   const minDevice = React.useCallback(
     (minWidth: number) => {
       return typeof width === 'number' && width > minWidth;
@@ -51,6 +57,7 @@ export function useWidgetDevice() {
   return {
     isMobile,
     isTablet,
+    isDesktop,
     minDevice,
     maxDevice,
   };

@@ -141,7 +141,7 @@ function CardList({
               px: 20,
               pt: 20,
               pb: 12,
-              backgroundColor: 'background.paper',
+              backgroundColor: theme.palette.tabActive.main,
               borderRadius: 16,
             }}
             className="gradient-card-border"
@@ -220,32 +220,20 @@ function CardList({
             {/* info */}
             <Box
               sx={{
+                mt: 28,
                 display: 'grid',
                 gridTemplateColumns: 'repeat(2, 1fr)',
-                rowGap: 20,
-                mt: 44,
-                '& > div:nth-child(odd)': {
-                  pr: 20,
-                },
-                '& > div:nth-child(even)': {
-                  position: 'relative',
-                  pl: 20,
-                  '&::before': {
-                    position: 'absolute',
-                    left: 0,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    display: 'inline-block',
-                    content: '""',
-                    height: 24,
-                    width: '1px',
-                    backgroundColor: 'border.main',
-                  },
-                },
+                gap: 8,
               }}
             >
               {supportAMM && (
-                <Box>
+                <Box
+                  sx={{
+                    backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                    borderRadius: 8,
+                    p: 12,
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
@@ -292,7 +280,16 @@ function CardList({
 
               {isAMMV3 ? null : (
                 <>
-                  <Box>
+                  <Box
+                    sx={{
+                      backgroundColor: alpha(
+                        theme.palette.background.paper,
+                        0.5,
+                      ),
+                      borderRadius: 8,
+                      p: 12,
+                    }}
+                  >
                     <Box
                       sx={{
                         typography: 'h5',
@@ -326,7 +323,16 @@ function CardList({
                     </Box>
                   </Box>
 
-                  <Box>
+                  <Box
+                    sx={{
+                      backgroundColor: alpha(
+                        theme.palette.background.paper,
+                        0.5,
+                      ),
+                      borderRadius: 8,
+                      p: 12,
+                    }}
+                  >
                     <Box
                       sx={{
                         typography: 'h5',
@@ -347,7 +353,13 @@ function CardList({
               )}
 
               {type === 'AMMV2' && (
-                <Box>
+                <Box
+                  sx={{
+                    backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                    borderRadius: 8,
+                    p: 12,
+                  }}
+                >
                   <Box
                     sx={{
                       typography: 'h5',
@@ -369,7 +381,13 @@ function CardList({
               )}
 
               {/* my liquidity */}
-              <Box>
+              <Box
+                sx={{
+                  backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                  borderRadius: 8,
+                  p: 12,
+                }}
+              >
                 <Box
                   sx={{
                     typography: 'h5',
@@ -454,7 +472,13 @@ function CardList({
               </Box>
 
               {isAMMV3 && (
-                <Box>
+                <Box
+                  sx={{
+                    backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                    borderRadius: 8,
+                    p: 12,
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
@@ -522,7 +546,7 @@ function CardList({
               sx={{
                 mt: 20,
                 display: 'flex',
-                gap: '8px',
+                gap: 4,
               }}
             >
               {isAMMV3
@@ -547,6 +571,7 @@ function CardList({
               <NeedConnectButton
                 fullWidth
                 size={Button.Size.small}
+                variant={Button.Variant.darken}
                 onClick={(evt) => {
                   evt.stopPropagation();
                   setOperatePool({
@@ -719,21 +744,26 @@ function TableList({
           const hasMining = !!item.miningAddress?.[0];
           const hoverBg = theme.palette.background.tag;
 
+          const mt = 6;
+          const mb = 6;
+
           return (
             <Box
               component="tr"
               key={isAMMV3 ? position?.id : item.id + item.chainId}
-              sx={{
-                [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
-                  backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
-                },
-              }}
             >
               <Box component="td">
                 <Box
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    mt,
+                    mb,
+                    py: 20,
+                    px: 24,
+                    borderTopLeftRadius: 12,
+                    borderBottomLeftRadius: 12,
+                    backgroundColor: 'background.paper',
                   }}
                 >
                   {baseToken && quoteToken ? (
@@ -796,6 +826,12 @@ function TableList({
                       display: 'flex',
                       alignItems: 'center',
                       gap: 4,
+                      minHeight: 79,
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      backgroundColor: 'background.paper',
                     }}
                   >
                     <Box
@@ -842,6 +878,14 @@ function TableList({
                   <Box
                     sx={{
                       typography: 'body2',
+                      minHeight: 79,
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      backgroundColor: 'background.paper',
+                      display: 'flex',
+                      alignItems: 'center',
                     }}
                     title={
                       item.tvl
@@ -862,6 +906,12 @@ function TableList({
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
+                      minHeight: 79,
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      backgroundColor: 'background.paper',
                     }}
                   >
                     {hasMining ? (
@@ -912,6 +962,12 @@ function TableList({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    minHeight: 79,
+                    mt,
+                    mb,
+                    py: 20,
+                    px: 24,
+                    backgroundColor: 'background.paper',
                   }}
                 >
                   {isAMMV3 ? (
@@ -1008,6 +1064,12 @@ function TableList({
                       alignItems: 'center',
                       gap: 4,
                       color: 'text.primary',
+                      minHeight: 79,
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      backgroundColor: 'background.paper',
                     }}
                   >
                     <InRangeDot outOfRange={position?.outOfRange ?? false} />
@@ -1061,6 +1123,14 @@ function TableList({
                     alignItems: 'center',
                     justifyContent: 'flex-end',
                     gap: '8px',
+                    minHeight: 79,
+                    mt,
+                    mb,
+                    py: 20,
+                    px: 24,
+                    backgroundColor: 'background.paper',
+                    borderTopRightRadius: 12,
+                    borderBottomRightRadius: 12,
                   }}
                 >
                   {supportAMM && poolType === 'PMM' && (
@@ -1202,7 +1272,6 @@ export default function MyLiquidity({
     <>
       <Box
         sx={{
-          py: 16,
           display: 'flex',
           gap: 8,
           ...(minDevice(filterSmallDeviceWidth)
@@ -1211,9 +1280,11 @@ export default function MyLiquidity({
                 flexDirection: 'column',
               }),
           ...(isMobile
-            ? {}
+            ? { pt: 16, pb: 16 }
             : {
-                px: 20,
+                px: 24,
+                pt: 24,
+                pb: 20,
                 borderBottomWidth: 1,
               }),
         }}

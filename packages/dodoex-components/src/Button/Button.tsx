@@ -55,6 +55,7 @@ const buttonStyles = (
     typography: 'button',
     whiteSpace: 'nowrap',
     fontFamily: 'inherit',
+    fontWeight: 600,
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -201,16 +202,14 @@ const buttonStyles = (
         },
         [hoverLabel]: {
           backgroundColor: '#123329',
-          color: alpha('#C9EB62', 0.5),
+          color: '#C9EB62',
         },
       };
       break;
     default:
       result = {
         ...result,
-        backgroundColor: danger
-          ? 'error.main'
-          : (backgroundColor ?? 'secondary.main'),
+        backgroundColor: danger ? 'error.main' : (backgroundColor ?? '#00D555'),
         [hoverLabel]: {
           background: `linear-gradient(0deg, rgba(26, 26, 27, 0.1), rgba(26, 26, 27, 0.1)), ${
             danger
@@ -219,7 +218,7 @@ const buttonStyles = (
                 sx?.backgroundColor || theme.palette.secondary.main
           }`,
         },
-        color: danger ? 'error.contrastText' : 'secondary.contrastText',
+        color: danger ? 'error.contrastText' : '#1B372F',
         '&[disabled]': {
           backgroundColor: 'border.disabled',
           color: 'text.disabled',

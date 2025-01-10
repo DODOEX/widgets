@@ -129,4 +129,6 @@ Primary.args = {
   supportAMMV2: true,
   supportAMMV3: true,
   // onlyChainId: 1,
+  noUI: true,
+  noSubmissionDialog: true,
 };

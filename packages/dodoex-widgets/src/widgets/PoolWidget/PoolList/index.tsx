@@ -1,4 +1,12 @@
-import { Box, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
+import {
+  Box,
+  Tab,
+  TabPanel,
+  Tabs,
+  TabsGroup,
+  TabsList,
+  useTheme,
+} from '@dodoex/components';
 import { t } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
@@ -22,8 +30,11 @@ import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
 import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
+import backgroundSvg from './assets/bc.svg';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
+  const theme = useTheme();
+
   return (
     <TabPanel
       {...props}
@@ -32,6 +43,16 @@ function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
+        px: 0,
+        py: 0,
+        [theme.breakpoints.up('desktop')]: {
+          borderRadius: 20,
+          backgroundColor: '#C9EB62',
+          backgroundImage: `url(${backgroundSvg})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: '341px 117px',
+          backgroundPosition: 'top right',
+        },
       }}
     />
   );
@@ -43,6 +64,7 @@ export default function PoolList({
   params?: Page<PageType.Pool>['params'];
 }) {
   const { isMobile } = useWidgetDevice();
+  const theme = useTheme();
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
   const scrollParentRef = React.useRef<HTMLDivElement>(null);
   const { account } = useWeb3React();
@@ -59,9 +81,11 @@ export default function PoolList({
   return (
     <WidgetContainer
       sx={{
+        backgroundColor: 'transparent',
+        padding: 0,
         ...(isMobile
           ? {
-              p: 20,
+              p: 0,
             }
           : {
               display: 'flex',
@@ -83,7 +107,7 @@ export default function PoolList({
                 display: 'flex',
                 flexDirection: 'column',
                 borderRadius: 16,
-                backgroundColor: 'background.paper',
+                backgroundColor: 'transparent',
                 flex: 1,
                 overflow: 'hidden',
                 height: 'max-content',
@@ -99,32 +123,49 @@ export default function PoolList({
               : {
                   display: 'flex',
                   justifyContent: 'space-between',
-                  p: 20,
-                  borderBottomWidth: 1,
+                  py: 20,
                 }
           }
         >
-          <TabsGroup
-            tabs={tabs}
-            variant="rounded"
-            tabsListSx={{
+          <TabsList
+            sx={{
               justifyContent: 'space-between',
+              gap: 8,
               ...(isMobile
                 ? {
-                    mb: 16,
+                    mb: 12,
+                    borderBottomWidth: 0,
                   }
                 : {
                     borderBottomWidth: 0,
                   }),
+              [theme.breakpoints.up('tablet')]: {
+                gap: 12,
+              },
             }}
-            tabSx={
-              isMobile
-                ? undefined
-                : {
-                    mb: 0,
-                  }
-            }
-          />
+          >
+            {tabs.map(({ key, value }) => (
+              <Tab
+                key={key}
+                value={key}
+                sx={{
+                  borderRadius: key === PoolTab.addLiquidity ? 40 : 8,
+                  mb: 0,
+                  color: 'text.secondary',
+                  backgroundColor: 'background.default',
+                  pl: 8,
+                  pr: 12,
+                  [theme.breakpoints.up('tablet')]: {
+                    pl: 12,
+                    pr: 24,
+                  },
+                }}
+                variant="rounded"
+              >
+                {value}
+              </Tab>
+            ))}
+          </TabsList>
           <CreatePoolBtn />
         </Box>
         <TabPanelFlexCol

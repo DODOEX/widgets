@@ -5,23 +5,15 @@ import {
   Button,
   ButtonBase,
   RotatingIcon,
-  Tooltip,
   useTheme,
 } from '@dodoex/components';
-import {
-  Dodo,
-  DoubleRight,
-  Setting,
-  SettingCrossChain,
-  Warn,
-} from '@dodoex/icons';
+import { DoubleRight, Warn } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppUrl } from '../../constants/api';
 import { basicTokenMap } from '../../constants/chains';
 import { setLastToken } from '../../constants/localstorage';
 import { PRICE_IMPACT_THRESHOLD } from '../../constants/swap';
@@ -71,18 +63,16 @@ import { QuestionTooltip } from '../Tooltip';
 import { useUserOptions } from '../UserOptionsProvider';
 import { ReactComponent as ArrowRight } from './assets/arrow-right.svg';
 import backgroundSvg from './assets/background.svg';
-import subtractSvg from './assets/subtract.svg';
 import { ReactComponent as SwapIcon } from './assets/swap-icon.svg';
 import { ReviewDialog } from './components/ReviewDialog';
 import { SettingsDialog } from './components/SettingsDialog';
+import SwapInfoCard from './components/SwapInfoCard';
 import { SwapSettingsDialog } from './components/SwapSettingsDialog';
-import { SwitchBox } from './components/SwitchBox';
 import { TokenCard } from './components/TokenCard';
 import {
   TokenPairPriceWithToggle,
   useTokenPairPriceWithToggle,
 } from './components/TokenPairPriceWithToggle';
-import SwapInfoCard from './components/SwapInfoCard';
 
 export interface SwapProps {
   /** Higher priority setting slippage */

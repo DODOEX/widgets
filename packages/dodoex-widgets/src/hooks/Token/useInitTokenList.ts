@@ -21,7 +21,6 @@ export default function useInitTokenList({
   const chainId = useCurrentChainId();
 
   useEffect(() => {
-    console.log(tokenList);
     const computed = async () => {
       let allTokenList = [];
       if (isArray(tokenList)) {

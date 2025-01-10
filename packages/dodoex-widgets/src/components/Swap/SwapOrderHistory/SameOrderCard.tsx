@@ -1,19 +1,15 @@
-import React from 'react';
 import { Box, useTheme } from '@dodoex/components';
-import { MobileRoutingVision, PCRoutingVision } from './RoutingVision';
+import { ArrowTopRightBorder } from '@dodoex/icons';
+import { Trans } from '@lingui/macro';
+import React from 'react';
+import { useSubmissionStatusColor } from '../../../hooks/Submission/useSubmissionStatusColor';
 import { useTradeSwapOrderList } from '../../../hooks/Swap/useTradeSwapOrderList';
 import { useRouteVisionData } from '../../../hooks/useRouteVisionData';
-import { useSubmissionStatusColor } from '../../../hooks/Submission/useSubmissionStatusColor';
-import { getTimeText } from '../../../utils/time';
-import FoldBtn, {
-  ChainName,
-  StatusAndTime,
-  TokenAndAmount,
-} from '../../CardWidgets';
-import { Trans } from '@lingui/macro';
-import { ArrowTopRightBorder } from '@dodoex/icons';
 import { getEtherscanPage } from '../../../utils';
+import { getTimeText } from '../../../utils/time';
+import FoldBtn, { StatusAndTime, TokenAndAmount } from '../../CardWidgets';
 import { PriceWithToggle } from './PriceWithToggle';
+import { MobileRoutingVision, PCRoutingVision } from './RoutingVision';
 
 function Extend({
   showFold,
@@ -38,9 +34,12 @@ function Extend({
         gap: 24,
         p: showFold ? 16 : 0,
         backgroundColor: 'background.paperContrast',
+        borderBottomLeftRadius: 12,
+        borderBottomRightRadius: 12,
         maxHeight: showFold ? 400 : 0,
         transition: 'all 300ms',
         overflow: 'hidden',
+        mb: showFold ? 6 : 0,
       }}
     >
       <Box
@@ -86,14 +85,13 @@ export default function SameOrderCard({
     });
   const [showFold, setShowFold] = React.useState(false);
   const time = getTimeText(new Date(data.createdAt));
-  const theme = useTheme();
   if (isMobile)
     return (
       <Box
         sx={{
-          '&:not(:first-child)': {
-            borderTop: `1px solid ${theme.palette.border.main}`,
-          },
+          backgroundColor: 'background.paper',
+          my: 12,
+          borderRadius: 12,
         }}
       >
         <Box
@@ -160,7 +158,6 @@ export default function SameOrderCard({
                 mt: 8,
               }}
             >
-              <ChainName chainId={data.fromToken.chainId} />
               <StatusAndTime
                 isMobile={false}
                 statusText={statusText}
@@ -177,14 +174,26 @@ export default function SameOrderCard({
         <Extend showFold={showFold} data={data} isMobile />
       </Box>
     );
+
+  const mt = 6;
+  const mb = showFold ? 0 : 6;
   return (
     <>
-      <tr>
+      <Box component="tr" sx={{}}>
         <td>
           <TokenAndAmount
             token={data.fromToken}
             amount={data.fromAmount ?? ''}
             showChain
+            sx={{
+              mt,
+              mb,
+              py: 20,
+              px: 24,
+              borderTopLeftRadius: 12,
+              borderBottomLeftRadius: showFold ? 0 : 12,
+              backgroundColor: 'background.paper',
+            }}
           />
         </td>
         <td>
@@ -193,6 +202,13 @@ export default function SameOrderCard({
             amount={data.toAmount ?? ''}
             showChain
             canAddMetamask
+            sx={{
+              mt,
+              mb,
+              py: 20,
+              px: 24,
+              backgroundColor: 'background.paper',
+            }}
           />
         </td>
         <td>
@@ -202,22 +218,52 @@ export default function SameOrderCard({
             statusColor={statusColor}
             alphaColor={statusAlphaColor}
             time={time}
+            sx={{
+              mt,
+              mb,
+              py: 20,
+              px: 24,
+              backgroundColor: 'background.paper',
+            }}
           />
         </td>
         <td>
-          <PriceWithToggle
-            fromToken={data.fromToken}
-            toToken={data.toToken}
-            fromTokenPrice={data.fromTokenPrice}
-            toTokenPrice={data.toTokenPrice}
-          />
+          <Box
+            sx={{
+              mt,
+              mb,
+              py: 20,
+              px: 24,
+              backgroundColor: 'background.paper',
+              minHeight: 84,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}
+          >
+            <PriceWithToggle
+              fromToken={data.fromToken}
+              toToken={data.toToken}
+              fromTokenPrice={data.fromTokenPrice}
+              toTokenPrice={data.toTokenPrice}
+            />
+          </Box>
         </td>
         <td>
           <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'flex-start',
               gap: 8,
+              mt,
+              mb,
+              py: 20,
+              px: 24,
+              backgroundColor: 'background.paper',
+              minHeight: 84,
+              borderTopRightRadius: 12,
+              borderBottomRightRadius: showFold ? 0 : 12,
             }}
           >
             <Box
@@ -226,8 +272,7 @@ export default function SameOrderCard({
               target="_blank"
               rel="noopener noreferrer"
               sx={{
-                px: 10,
-                py: 12,
+                pr: 10,
                 color: 'primary.main',
               }}
             >
@@ -252,7 +297,7 @@ export default function SameOrderCard({
             />
           </Box>
         </td>
-      </tr>
+      </Box>
       <tr>
         <Box
           component="td"

@@ -1,18 +1,25 @@
-import { alpha, Box, Button, useTheme, Tooltip } from '@dodoex/components';
-import { PoolApi, PoolType } from '@dodoex/api';
+import { ChainId, PoolApi, PoolType } from '@dodoex/api';
+import { alpha, Box, Button, Tooltip, useTheme } from '@dodoex/components';
+import { t, Trans } from '@lingui/macro';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import InfiniteScroll from 'react-infinite-scroller';
-import {
-  convertFetchLiquidityToOperateData,
-  convertLiquidityTokenToTokenInfo,
-  FetchLiquidityListLqList,
-  getPoolAMMOrPMM,
-} from '../utils';
-import { ChainId } from '@dodoex/api';
-import React from 'react';
-import { TokenLogoPair } from '../../../components/TokenLogoPair';
-import { Trans, t } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
+import { debounce } from 'lodash';
+import React from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
+import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
+import { CardStatus } from '../../../components/CardWidgets';
+import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
+import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
+import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
+import { EmptyList } from '../../../components/List/EmptyList';
+import { FailedList } from '../../../components/List/FailedList';
+import SelectChain from '../../../components/SelectChain';
+import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { useRouterStore } from '../../../router';
+import { PageType } from '../../../router/types';
 import {
   byWei,
   formatApy,
@@ -20,34 +27,26 @@ import {
   formatPercentageNumber,
   formatReadableNumber,
 } from '../../../utils';
-import PoolApyTooltip from './components/PoolApyTooltip';
-import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
-import { debounce } from 'lodash';
-import LoadingCard from './components/LoadingCard';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { usePoolListFilterTokenAndPool } from './hooks/usePoolListFilterTokenAndPool';
-import SelectChain from '../../../components/SelectChain';
-import TokenAndPoolFilter from './components/TokenAndPoolFilter';
-import TokenListPoolItem from './components/TokenListPoolItem';
-import { EmptyList } from '../../../components/List/EmptyList';
-import { FailedList } from '../../../components/List/FailedList';
-import FilterAddressTags from './components/FilterAddressTags';
-import FilterTokenTags from './components/FilterTokenTags';
-import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
-import { PoolOperateProps } from '../PoolOperate';
-import { useRouterStore } from '../../../router';
-import { PageType } from '../../../router/types';
-import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
-import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
-import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
-import LiquidityTable from './components/LiquidityTable';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
-import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { CardStatus } from '../../../components/CardWidgets';
-import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
-import GoPoolDetailBtn from './components/GoPoolDetailBtn';
 import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
 import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
+import { PoolOperateProps } from '../PoolOperate';
+import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
+import {
+  convertFetchLiquidityToOperateData,
+  convertLiquidityTokenToTokenInfo,
+  FetchLiquidityListLqList,
+  getPoolAMMOrPMM,
+} from '../utils';
+import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
+import FilterAddressTags from './components/FilterAddressTags';
+import FilterTokenTags from './components/FilterTokenTags';
+import GoPoolDetailBtn from './components/GoPoolDetailBtn';
+import LiquidityTable from './components/LiquidityTable';
+import LoadingCard from './components/LoadingCard';
+import PoolApyTooltip from './components/PoolApyTooltip';
+import TokenAndPoolFilter from './components/TokenAndPoolFilter';
+import TokenListPoolItem from './components/TokenListPoolItem';
+import { usePoolListFilterTokenAndPool } from './hooks/usePoolListFilterTokenAndPool';
 
 function CardList({
   lqList,
@@ -101,7 +100,7 @@ function CardList({
               px: 20,
               pt: 20,
               pb: 12,
-              backgroundColor: 'background.paper',
+              backgroundColor: theme.palette.tabActive.main,
               borderRadius: 16,
             }}
             className="gradient-card-border"
@@ -180,32 +179,20 @@ function CardList({
             {/* info */}
             <Box
               sx={{
+                mt: 28,
                 display: 'grid',
                 gridTemplateColumns: 'repeat(2, 1fr)',
-                rowGap: 20,
-                mt: 44,
-                '& > div:nth-child(odd)': {
-                  pr: 20,
-                },
-                '& > div:nth-child(even)': {
-                  position: 'relative',
-                  pl: 20,
-                  '&::before': {
-                    position: 'absolute',
-                    left: 0,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    display: 'inline-block',
-                    content: '""',
-                    height: 24,
-                    width: '1px',
-                    backgroundColor: 'border.main',
-                  },
-                },
+                gap: 8,
               }}
             >
               {supportAMM && (
-                <Box>
+                <Box
+                  sx={{
+                    backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                    borderRadius: 8,
+                    p: 12,
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
@@ -250,7 +237,13 @@ function CardList({
                 </Box>
               )}
 
-              <Box>
+              <Box
+                sx={{
+                  backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                  borderRadius: 8,
+                  p: 12,
+                }}
+              >
                 <Box
                   sx={{
                     typography: 'h5',
@@ -284,7 +277,13 @@ function CardList({
                 </Box>
               </Box>
 
-              <Box>
+              <Box
+                sx={{
+                  backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                  borderRadius: 8,
+                  p: 12,
+                }}
+              >
                 <Box
                   sx={{
                     typography: 'h5',
@@ -303,12 +302,19 @@ function CardList({
               </Box>
 
               {supportAMM && (
-                <Box>
+                <Box
+                  sx={{
+                    backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                    borderRadius: 8,
+                    p: 12,
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
                       gap: 4,
+                      typography: 'h5',
                     }}
                   >
                     ${formatReadableNumber({ input: item.volume24H || 0 })}
@@ -329,12 +335,13 @@ function CardList({
               sx={{
                 mt: 20,
                 display: 'flex',
-                gap: '8px',
+                gap: 4,
               }}
             >
               <NeedConnectButton
                 fullWidth
                 size={Button.Size.small}
+                variant={Button.Variant.darken}
                 onClick={(evt) => {
                   evt.stopPropagation();
                   setOperatePool({
@@ -373,7 +380,6 @@ function TableList({
   loadMoreLoading?: boolean;
   supportAMM?: boolean;
 }) {
-  const theme = useTheme();
   return (
     <LiquidityTable
       hasMore={hasMore}
@@ -459,22 +465,22 @@ function TableList({
           const isAMMV2 = type === 'AMMV2';
           const isAMMV3 = type === 'AMMV3';
 
-          const hoverBg = theme.palette.background.tag;
+          const mt = 6;
+          const mb = 6;
           return (
-            <Box
-              component="tr"
-              key={item.id + item.chainId}
-              sx={{
-                [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
-                  backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
-                },
-              }}
-            >
+            <Box component="tr" key={item.id + item.chainId}>
               <Box component="td">
                 <Box
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    mt,
+                    mb,
+                    py: 20,
+                    px: 24,
+                    borderTopLeftRadius: 12,
+                    borderBottomLeftRadius: 12,
+                    backgroundColor: 'background.paper',
                   }}
                 >
                   {baseToken && quoteToken ? (
@@ -537,6 +543,12 @@ function TableList({
                       display: 'flex',
                       alignItems: 'center',
                       gap: 4,
+                      minHeight: 79,
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      backgroundColor: 'background.paper',
                     }}
                   >
                     <Box
@@ -582,6 +594,14 @@ function TableList({
                 <Box
                   sx={{
                     typography: 'body2',
+                    minHeight: 79,
+                    mt,
+                    mb,
+                    py: 20,
+                    px: 24,
+                    backgroundColor: 'background.paper',
+                    display: 'flex',
+                    alignItems: 'center',
                   }}
                   title={
                     item.tvl
@@ -599,6 +619,12 @@ function TableList({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    minHeight: 79,
+                    mt,
+                    mb,
+                    py: 20,
+                    px: 24,
+                    backgroundColor: 'background.paper',
                   }}
                 >
                   {hasMining ? (
@@ -644,7 +670,20 @@ function TableList({
               </Box>
               {supportAMM && (
                 <Box component="td">
-                  ${formatReadableNumber({ input: item.volume24H || 0 })}
+                  <Box
+                    sx={{
+                      minHeight: 79,
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      backgroundColor: 'background.paper',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    ${formatReadableNumber({ input: item.volume24H || 0 })}
+                  </Box>
                 </Box>
               )}
               <Box component="td">
@@ -654,6 +693,14 @@ function TableList({
                     alignItems: 'center',
                     justifyContent: 'flex-end',
                     gap: '8px',
+                    mt,
+                    mb,
+                    py: 20,
+                    px: 24,
+                    backgroundColor: 'background.paper',
+                    minHeight: 79,
+                    borderTopRightRadius: 12,
+                    borderBottomRightRadius: 12,
                   }}
                 >
                   {supportAMM && poolType === 'PMM' && (
@@ -788,7 +835,6 @@ export default function AddLiquidityList({
     <>
       <Box
         sx={{
-          py: 16,
           display: 'flex',
           gap: 8,
           ...(minDevice(filterSmallDeviceWidth)
@@ -797,9 +843,14 @@ export default function AddLiquidityList({
                 flexDirection: 'column',
               }),
           ...(isMobile
-            ? {}
+            ? {
+                pt: 16,
+                pb: 16,
+              }
             : {
-                px: 20,
+                px: 24,
+                pt: 24,
+                pb: 20,
                 borderBottomWidth: 1,
               }),
         }}

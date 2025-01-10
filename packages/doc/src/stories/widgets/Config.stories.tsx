@@ -7,7 +7,7 @@ import {
 } from '@dodoex/widgets';
 import { SwapWidgetApi } from '@dodoex/api';
 import React from 'react';
-import { Box } from '@dodoex/components';
+import { Box, useTheme } from '@dodoex/components';
 
 export default {
   title: 'Widgets/Config',
@@ -25,6 +25,8 @@ export const Primary = ({
   hasOrder: boolean;
   onlyChainId?: number;
 }) => {
+  const theme = useTheme();
+
   const [config, setConfig] = React.useState<SwapWidgetProps>({
     tokenList: [
       {
@@ -143,7 +145,10 @@ export const Primary = ({
           sx={{
             position: 'relative',
             overflowY: 'hidden',
-            width: 1230,
+            width: '100%',
+            [theme.breakpoints.up('desktop')]: {
+              width: 1230,
+            },
           }}
         >
           <Swap />
