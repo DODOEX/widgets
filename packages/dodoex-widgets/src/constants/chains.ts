@@ -51,7 +51,9 @@ export const rpcServerMap: {
   [ChainId.DODO_CHAIN_TESTNET]: ['https://dodochain-testnet.alt.technology'],
   [ChainId.TAIKO]: ['https://rpc.mainnet.taiko.xyz'],
   [ChainId.PLUME]: ['https://phoenix-rpc.plumenetwork.xyz'],
+  [ChainId.PLUME_TESTNET]: ['https://test-rpc.plumenetwork.xyz'],
   [ChainId.NEOX]: ['https://mainnet-1.rpc.banelabs.org'],
+  [ChainId.MORPH]: ['https://rpc.morphl2.io'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -94,7 +96,9 @@ export const scanUrlDomainMap: {
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet-explorer.alt.technology',
   [ChainId.TAIKO]: 'taikoscan.io',
   [ChainId.PLUME]: 'phoenix-explorer.plumenetwork.xyz',
+  [ChainId.PLUME_TESTNET]: 'test-explorer.plumenetwork.xyz',
   [ChainId.NEOX]: 'xexplorer.neo.org',
+  [ChainId.MORPH]: 'explorer.morphl2.io',
 };
 
 export const ThegraphKeyMap: {
@@ -119,7 +123,9 @@ export const ThegraphKeyMap: {
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
   [ChainId.TAIKO]: 'taiko',
   [ChainId.PLUME]: 'plume',
+  [ChainId.PLUME_TESTNET]: 'plume-testnet',
   [ChainId.NEOX]: 'neox',
+  [ChainId.MORPH]: 'morph',
 };
 
 export const blockTimeMap: {
@@ -144,7 +150,9 @@ export const blockTimeMap: {
   [ChainId.DODO_CHAIN_TESTNET]: 12000,
   [ChainId.TAIKO]: 48000,
   [ChainId.PLUME]: 12000,
+  [ChainId.PLUME_TESTNET]: 2600,
   [ChainId.NEOX]: 12000,
+  [ChainId.MORPH]: 3200,
 };
 
 export const dexKeysMap: {
@@ -169,5 +177,7 @@ export const dexKeysMap: {
   [ChainId.DODO_CHAIN_TESTNET]: [],
   [ChainId.TAIKO]: [],
   [ChainId.PLUME]: [],
+  [ChainId.PLUME_TESTNET]: [],
   [ChainId.NEOX]: [],
+  [ChainId.MORPH]: [],
 };

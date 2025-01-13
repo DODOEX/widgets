@@ -120,6 +120,10 @@ export const basicTokenMap: {
     ...DEFAULT_BASIC_TOKEN,
     wrappedTokenAddress: '0x562723560131C47417dfcD6BB1A089E4D7C7943C',
   },
+  [ChainId.PLUME_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0xaA6210015fbf0855F0D9fDA3C415c1B12776Ae74',
+  },
   [ChainId.NEOX]: {
     ...DEFAULT_BASIC_TOKEN,
     symbol: 'GAS',
@@ -127,5 +131,9 @@ export const basicTokenMap: {
     showDecimals: 6,
     wrappedTokenSymbol: 'WGAS10',
     wrappedTokenAddress: '0xdE41591ED1f8ED1484aC2CD8ca0876428de60EfF',
+  },
+  [ChainId.MORPH]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x5300000000000000000000000000000000000011',
   },
 };

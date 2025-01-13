@@ -1,7 +1,6 @@
 import { PoolType } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import { BigNumber } from 'bignumber.js';
-import { TokenInfo } from '../../../hooks/Token';
 import { poolApi } from '../utils';
 
 type Balance = BigNumber | null | undefined;
@@ -105,34 +104,54 @@ export function usePoolBalanceInfo({
   pool?: {
     address: string;
     chainId: number;
-    baseToken: TokenInfo;
-    quoteToken: TokenInfo;
+    baseTokenDecimals: number;
+    quoteTokenDecimals: number;
+    baseLpTokenDecimals: number;
+    quoteLpTokenDecimals: number;
     type: PoolType;
   };
 }) {
-  const { chainId, address, type, baseToken, quoteToken } = pool ?? {};
-  const baseDecimals = baseToken?.decimals;
-  const quoteDecimals = quoteToken?.decimals;
+  const {
+    chainId,
+    address,
+    type,
+    baseTokenDecimals,
+    quoteTokenDecimals,
+    baseLpTokenDecimals,
+    quoteLpTokenDecimals,
+  } = pool ?? {};
 
   const totalBaseLpQuery = useQuery(
-    poolApi.getTotalBaseLpQuery(chainId, address, type, baseDecimals),
+    poolApi.getTotalBaseLpQuery(chainId, address, type, baseLpTokenDecimals),
   );
   const totalQuoteLpQuery = useQuery(
-    poolApi.getTotalQuoteLpQuery(chainId, address, type, quoteDecimals),
+    poolApi.getTotalQuoteLpQuery(chainId, address, type, quoteLpTokenDecimals),
   );
   const userBaseLpQuery = useQuery(
-    poolApi.getUserBaseLpQuery(chainId, address, type, baseDecimals, account),
+    poolApi.getUserBaseLpQuery(
+      chainId,
+      address,
+      type,
+      baseLpTokenDecimals,
+      account,
+    ),
   );
   const userQuoteLpQuery = useQuery(
-    poolApi.getUserQuoteLpQuery(chainId, address, type, quoteDecimals, account),
+    poolApi.getUserQuoteLpQuery(
+      chainId,
+      address,
+      type,
+      quoteLpTokenDecimals,
+      account,
+    ),
   );
   const reserveQuery = useQuery(
     poolApi.getReserveLpQuery(
       chainId,
       address,
       type,
-      baseDecimals,
-      quoteDecimals,
+      baseTokenDecimals,
+      quoteTokenDecimals,
     ),
   );
 
@@ -141,8 +160,8 @@ export function usePoolBalanceInfo({
       chainId,
       address,
       type,
-      baseDecimals,
-      quoteDecimals,
+      baseTokenDecimals,
+      quoteTokenDecimals,
     ),
   );
 
@@ -159,7 +178,7 @@ export function usePoolBalanceInfo({
     : getLpBalance(
         userBaseLpQuery.data,
         totalBaseLpBalance,
-        baseDecimals,
+        baseLpTokenDecimals,
         type,
       );
   const userQuoteLpBalance = isPrivate
@@ -167,7 +186,7 @@ export function usePoolBalanceInfo({
     : getLpBalance(
         userQuoteLpQuery.data,
         totalQuoteLpBalance,
-        quoteDecimals,
+        quoteLpTokenDecimals,
         type,
       );
 
@@ -180,7 +199,7 @@ export function usePoolBalanceInfo({
         classicalBaseTarget,
         address,
         type,
-        baseDecimals,
+        baseTokenDecimals,
       );
 
   let quoteLpToTokenProportion: BigNumber | undefined;
@@ -224,7 +243,7 @@ export function usePoolBalanceInfo({
           classicalQuoteTarget,
           address,
           type,
-          quoteDecimals,
+          quoteTokenDecimals,
         );
     }
   }

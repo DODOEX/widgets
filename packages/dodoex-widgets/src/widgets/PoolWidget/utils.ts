@@ -88,9 +88,11 @@ export function convertFetchLiquidityToOperateData(
     creator: pair.creator,
     baseLpToken: {
       id: pair.baseLpToken?.id as string,
+      decimals: Number(pair.baseLpToken?.decimals ?? 18),
     },
     quoteLpToken: {
       id: pair.quoteLpToken?.id as string,
+      decimals: Number(pair.quoteLpToken?.decimals ?? 18),
     },
     lpFeeRate: lqData?.pair?.lpFeeRate,
   };
@@ -130,9 +132,11 @@ export function convertFetchPoolToOperateData(
     creator: pool.creator,
     baseLpToken: {
       id: pool.baseLpToken?.id as string,
+      decimals: Number(pool.baseLpToken?.decimals ?? 18),
     },
     quoteLpToken: {
       id: pool.quoteLpToken?.id as string,
+      decimals: Number(pool.quoteLpToken?.decimals ?? 18),
     },
   };
 }
