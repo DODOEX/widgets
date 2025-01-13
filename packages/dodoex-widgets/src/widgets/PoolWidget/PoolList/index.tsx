@@ -108,7 +108,6 @@ export default function PoolList({
             : {
                 display: 'flex',
                 flexDirection: 'column',
-                borderRadius: 16,
                 backgroundColor: 'transparent',
                 flex: 1,
                 overflow: 'hidden',
@@ -254,9 +253,6 @@ export default function PoolList({
             account={account}
             onClose={() => setOperatePool(null)}
             modal={isMobile}
-            sx={{
-              backgroundColor: 'background.default',
-            }}
             hidePoolInfo
             {...operatePool}
           />

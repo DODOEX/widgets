@@ -1,6 +1,7 @@
 import { ChainId } from '@dodoex/api';
 import {
   Box,
+  BoxProps,
   ButtonBase,
   LoadingSkeleton,
   Tooltip,
@@ -24,6 +25,7 @@ export interface LiquidityInfoProps {
   hidePoolInfo?: boolean;
   pool: OperatePool;
   balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
+  sx?: BoxProps['sx'];
 }
 
 export default function LiquidityInfo({
@@ -31,6 +33,7 @@ export default function LiquidityInfo({
   hidePoolInfo,
   pool,
   balanceInfo,
+  sx,
 }: LiquidityInfoProps) {
   const theme = useTheme();
   const loading = loadingProps || !pool;
@@ -53,6 +56,7 @@ export default function LiquidityInfo({
         border: 'solid 1px',
         borderColor: 'border.main',
         borderRadius: 12,
+        ...sx,
       }}
     >
       {!hidePoolInfo ? (

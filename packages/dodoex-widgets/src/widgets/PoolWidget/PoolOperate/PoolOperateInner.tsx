@@ -1,15 +1,22 @@
-import { Box, TabPanel, Tabs, TabsButtonGroup } from '@dodoex/components';
+import {
+  Box,
+  TabPanel,
+  Tabs,
+  TabsButtonGroup,
+  useTheme,
+} from '@dodoex/components';
 import { useQuery } from '@tanstack/react-query';
 import { useWeb3React } from '@web3-react/core';
 import { FailedList } from '../../../components/List/FailedList';
 import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
 import { poolApi } from '../utils';
 import { AddPoolOperate } from './AddPoolOperate';
-import { RemovePoolOperate } from './RemovePoolOperate';
-import { MyLiquidityInfo } from './components/MyLiquidityInfo';
-import { OperateTab, usePoolOperateTabs } from './hooks/usePoolOperateTabs';
-import { OperatePool } from './types';
 import dashLine from './components/dash-line.svg';
+import { MyLiquidityInfo } from './components/MyLiquidityInfo';
+import { PairTitle } from './components/PairTitle';
+import { OperateTab, usePoolOperateTabs } from './hooks/usePoolOperateTabs';
+import { RemovePoolOperate } from './RemovePoolOperate';
+import { OperatePool } from './types';
 
 export interface PoolOperateInnerProps {
   pool: OperatePool;
@@ -26,6 +33,7 @@ export default function PoolOperateInner({
   errorRefetch,
   submittedBack,
 }: PoolOperateInnerProps) {
+  const theme = useTheme();
   const { operateTab, operateTabs, handleChangeTab } =
     usePoolOperateTabs(operate);
   const { account } = useWeb3React();
@@ -81,12 +89,14 @@ export default function PoolOperateInner({
           handleChangeTab(value as OperateTab);
         }}
         sx={{
-          pt: 28,
+          pt: 24,
           backgroundColor: 'background.default',
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
         }}
       >
+        {pool && <PairTitle pool={pool} />}
+
         <TabsButtonGroup
           tabs={operateTabs}
           variant="inPaper"
@@ -126,8 +136,12 @@ export default function PoolOperateInner({
         pool={pool}
         balanceInfo={balanceInfo}
         sx={{
-          borderRadius: 20,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
           backgroundColor: 'background.default',
+          [theme.breakpoints.up('tablet')]: {
+            borderRadius: 20,
+          },
         }}
       />
     </>

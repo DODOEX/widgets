@@ -91,7 +91,7 @@ export default function ChartInfo({
       sx={{
         mt: {
           mobile: 24,
-          tablet: 52,
+          tablet: 0,
         },
       }}
     >

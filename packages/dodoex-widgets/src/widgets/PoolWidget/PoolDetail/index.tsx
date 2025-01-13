@@ -83,7 +83,8 @@ export default function PoolDetail({
       sx={
         isMobile
           ? {
-              p: theme.spacing(28, 20, canOperate ? 108 : 0),
+              p: theme.spacing(0, 0, canOperate ? 108 : 0),
+              backgroundColor: 'transparent',
             }
           : {
               backgroundColor: 'transparent',
@@ -91,13 +92,34 @@ export default function PoolDetail({
             }
       }
     >
-      <GoBack
-        onClick={() => {
-          router.push({
-            type: PageType.Pool,
-          });
+      <Box
+        sx={{
+          mb: 12,
+          py: 24,
+          px: 20,
+          borderRadius: 20,
+          backgroundColor: 'background.default',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          gap: 12,
+          [theme.breakpoints.up('tablet')]: {
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          },
         }}
-      />
+      >
+        <GoBack
+          onClick={() => {
+            router.push({
+              type: PageType.Pool,
+            });
+          }}
+        />
+        <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
+      </Box>
       <Box
         sx={
           isMobile
@@ -118,7 +140,6 @@ export default function PoolDetail({
             backgroundColor: 'background.default',
           }}
         >
-          <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
           <ChartInfo poolDetail={pool} chart24hDataFirst />
           <Overview poolDetail={pool} />
           <TotalLiquidity poolDetail={pool} />
@@ -135,9 +156,6 @@ export default function PoolDetail({
             onClose={() => {
               setOperateType(undefined);
             }}
-            sx={{
-              backgroundColor: 'background.default',
-            }}
           />
         ) : (
           <PoolOperate
@@ -147,8 +165,6 @@ export default function PoolDetail({
             sx={{
               width: 375,
               height: 'max-content',
-              backgroundColor: 'background.default',
-              borderRadius: 16,
               overflow: 'hidden',
             }}
             pool={operatePool}

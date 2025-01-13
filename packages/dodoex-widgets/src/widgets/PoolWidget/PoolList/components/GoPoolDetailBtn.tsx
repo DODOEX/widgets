@@ -1,4 +1,4 @@
-import { Box } from '@dodoex/components';
+import { Box, BoxProps } from '@dodoex/components';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { PageType, useRouterStore } from '../../../../router';
 import { ChainId } from '@dodoex/api';
@@ -6,9 +6,11 @@ import { ChainId } from '@dodoex/api';
 export default function GoPoolDetailBtn({
   chainId,
   address,
+  sx,
 }: {
   chainId: number;
   address: string;
+  sx?: BoxProps['sx'];
 }) {
   const { isMobile } = useWidgetDevice();
   return (
@@ -46,6 +48,7 @@ export default function GoPoolDetailBtn({
               backgroundColor: '#FFFFFF',
               borderWidth: 1,
             }),
+        ...sx,
       }}
     >
       <svg
