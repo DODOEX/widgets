@@ -1,14 +1,15 @@
-import { Tabs, TabPanel, TabsButtonGroup } from '@dodoex/components';
+import { Box, TabPanel, Tabs, TabsButtonGroup } from '@dodoex/components';
 import { useQuery } from '@tanstack/react-query';
 import { useWeb3React } from '@web3-react/core';
 import { FailedList } from '../../../components/List/FailedList';
 import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
 import { poolApi } from '../utils';
 import { AddPoolOperate } from './AddPoolOperate';
-import { OperateTab, usePoolOperateTabs } from './hooks/usePoolOperateTabs';
-import LiquidityInfo from './components/LiquidityInfo';
-import { OperatePool } from './types';
 import { RemovePoolOperate } from './RemovePoolOperate';
+import { MyLiquidityInfo } from './components/MyLiquidityInfo';
+import { OperateTab, usePoolOperateTabs } from './hooks/usePoolOperateTabs';
+import { OperatePool } from './types';
+import dashLine from './components/dash-line.svg';
 
 export interface PoolOperateInnerProps {
   pool: OperatePool;
@@ -74,23 +75,24 @@ export default function PoolOperateInner({
   }
   return (
     <>
-      <LiquidityInfo
-        pool={pool}
-        balanceInfo={balanceInfo}
-        hidePoolInfo={hidePoolInfo}
-      />
       <Tabs
         value={operateTab}
         onChange={(_, value) => {
           handleChangeTab(value as OperateTab);
+        }}
+        sx={{
+          pt: 28,
+          backgroundColor: 'background.default',
+          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20,
         }}
       >
         <TabsButtonGroup
           tabs={operateTabs}
           variant="inPaper"
           tabsListSx={{
-            mt: 16,
             mx: 20,
+            backgroundColor: 'background.paper',
           }}
         />
         <TabPanel value={OperateTab.Add}>
@@ -108,6 +110,26 @@ export default function PoolOperateInner({
           />
         </TabPanel>
       </Tabs>
+
+      <Box
+        sx={{
+          mx: 20,
+          height: 4,
+          backgroundImage: `url(${dashLine})`,
+          backgroundSize: '100% 100%',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+        }}
+      />
+
+      <MyLiquidityInfo
+        pool={pool}
+        balanceInfo={balanceInfo}
+        sx={{
+          borderRadius: 20,
+          backgroundColor: 'background.default',
+        }}
+      />
     </>
   );
 }

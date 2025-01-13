@@ -1,8 +1,9 @@
-import { Button, Box } from '@dodoex/components';
+import { Box, Button } from '@dodoex/components';
 import { t } from '@lingui/macro';
+import Dialog from '../../../../components/Dialog';
 import TokenLogo from '../../../../components/TokenLogo';
-import WidgetDialog from '../../../../components/WidgetDialog';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
+import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { useCreatePmm } from '../hooks/useCreatePmm';
 import {
   getSubPeggedVersionMap,
@@ -11,8 +12,6 @@ import {
 import { StateProps } from '../reducer';
 import { Version } from '../types';
 import { computeInitPriceText } from '../utils';
-import Dialog from '../../../../components/Dialog';
-import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 
 function Item({
   label,

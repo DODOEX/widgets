@@ -125,7 +125,7 @@ export default function PoolList({
               : {
                   display: 'flex',
                   justifyContent: 'space-between',
-                  py: 20,
+                  pb: 20,
                 }
           }
         >
@@ -257,6 +257,7 @@ export default function PoolList({
             sx={{
               backgroundColor: 'background.default',
             }}
+            hidePoolInfo
             {...operatePool}
           />
         ) : (
@@ -268,10 +269,9 @@ export default function PoolList({
               sx={{
                 width: 375,
                 height: 'max-content',
-                backgroundColor: 'background.default',
-                borderRadius: 16,
                 overflow: 'hidden',
               }}
+              hidePoolInfo
             />
           )
         )}

@@ -6,6 +6,7 @@ import {
   Tabs,
   TabsGroup,
   Modal,
+  useTheme,
 } from '@dodoex/components';
 import Dialog from '../../../components/Dialog';
 import {
@@ -49,6 +50,7 @@ export function PoolOperate({
   hidePoolInfo,
   sx,
 }: PoolOperateProps) {
+  const theme = useTheme();
   const { account } = useWeb3React();
   const chain = chainId ? ThegraphKeyMap[chainId as ChainId] : '';
 
@@ -107,8 +109,6 @@ export function PoolOperate({
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          overflow: 'hidden',
-          height: '100%',
         }}
       >
         <TabsGroup
@@ -116,7 +116,12 @@ export function PoolOperate({
           tabsListSx={{
             px: 20,
             justifyContent: onClose ? 'space-between' : 'flex-start',
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
             backgroundColor: '#C9EB62',
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
             ...(hasMining && hasLp
               ? {
                   '& button:last-child': {
@@ -158,6 +163,8 @@ export function PoolOperate({
                     height: 24,
                     borderRadius: '50%',
                     borderWidth: 1,
+                    borderColor: 'rgba(69, 72, 81, 0.10)',
+                    borderStyle: 'solid',
                     color: 'text.secondary',
                     cursor: 'pointer',
                   }}

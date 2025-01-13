@@ -1,32 +1,32 @@
+import { ChainId } from '@dodoex/api';
 import {
   Box,
   BoxProps,
-  useTheme,
   Button,
   TooltipToast,
+  useTheme,
 } from '@dodoex/components';
 import { Plus } from '@dodoex/icons';
-import { TokenLogoCollapse } from './TokenLogoCollapse';
-import { BalanceText } from './BalanceText';
-import { NumberInput } from './NumberInput';
-import { TokenPickerDialog } from './TokenPickerDialog';
-import { useState, useEffect, useRef } from 'react';
-import { TokenInfo } from '../../../../hooks/Token';
-import { TokenPickerProps } from '../../../TokenPicker';
-import { transitionTime } from '../Dialog';
+import { Trans } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
+import { useEffect, useRef, useState } from 'react';
 import { tokenApi } from '../../../../constants/api';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
-import BigNumber from 'bignumber.js';
-import { PercentageSelectButtonGroup } from './PercentageSelectButtonGroup';
-import { Trans } from '@lingui/macro';
-import { ChainId } from '@dodoex/api';
 import {
   BalanceData,
   useBalanceUpdateLoading,
 } from '../../../../hooks/Submission/useBalanceUpdateLoading';
+import { TokenInfo } from '../../../../hooks/Token';
 import { useFetchTokens } from '../../../../hooks/contract';
+import { TokenPickerProps } from '../../../TokenPicker';
 import { useUserOptions } from '../../../UserOptionsProvider';
+import { transitionTime } from '../Dialog';
+import { BalanceText } from './BalanceText';
+import { NumberInput } from './NumberInput';
+import { PercentageSelectButtonGroup } from './PercentageSelectButtonGroup';
+import { TokenLogoCollapse } from './TokenLogoCollapse';
+import { TokenPickerDialog } from './TokenPickerDialog';
 
 export interface TokenCardProps {
   amt: string;
@@ -59,21 +59,6 @@ export interface TokenCardProps {
   hideToken?: boolean;
   checkLogBalance?: BalanceData;
   notTokenPickerModal?: boolean;
-}
-
-export function CardPlus() {
-  return (
-    <Box
-      sx={{
-        height: 30,
-        textAlign: 'center',
-        fontSize: 32,
-        lineHeight: '30px',
-      }}
-    >
-      +
-    </Box>
-  );
 }
 
 export function CardPlusConnected() {

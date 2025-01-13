@@ -199,7 +199,19 @@ export default function PoolModify({
 
   return (
     <>
-      <WidgetContainer>
+      <WidgetContainer
+        sx={
+          isMobile
+            ? {
+                padding: 0,
+                backgroundColor: 'transparent',
+              }
+            : {
+                backgroundColor: 'transparent',
+                padding: 0,
+              }
+        }
+      >
         <Box
           sx={{
             display: 'flex',
@@ -219,6 +231,9 @@ export default function PoolModify({
                 mr: 12,
                 flexGrow: 1,
                 display: 'block',
+                padding: 20,
+                borderRadius: 20,
+                backgroundColor: 'background.default',
               }}
             >
               <GoBack />
@@ -271,7 +286,7 @@ export default function PoolModify({
               flexGrow: 1,
               flexShrink: 0,
               flexBasis: 375,
-              backgroundColor: 'background.paper',
+              backgroundColor: 'background.default',
               ...(isMobile
                 ? {
                     width: '100%',
@@ -291,7 +306,7 @@ export default function PoolModify({
                 top: 0,
                 py: 20,
                 px: 20,
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: theme.palette.background.default,
                 zIndex: 1,
                 ...(isMobile
                   ? {
@@ -359,6 +374,12 @@ export default function PoolModify({
                   }
                   occupiedChainId={chainId}
                   chainId={chainId}
+                  sx={{
+                    backgroundColor: theme.palette.background.paper,
+                  }}
+                  inputSx={{
+                    backgroundColor: 'transparent',
+                  }}
                 />
                 <CardPlusConnected />
                 <TokenCard
@@ -377,6 +398,12 @@ export default function PoolModify({
                   }
                   occupiedChainId={chainId}
                   chainId={chainId}
+                  sx={{
+                    backgroundColor: theme.palette.background.paper,
+                  }}
+                  inputSx={{
+                    backgroundColor: 'transparent',
+                  }}
                 />
               </Box>
             )}
@@ -413,7 +440,7 @@ export default function PoolModify({
 
             <Box
               sx={{
-                pb: 160,
+                pb: 28,
                 [theme.breakpoints.up('tablet')]: {
                   pb: 28,
                 },
