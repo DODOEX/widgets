@@ -1164,6 +1164,57 @@ export type Block_Height = {
   number_gte?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type Brand_Site_AnnouncementBrandSiteAnnouncement = {
+  brand?: Maybe<Scalars['String']['output']>;
+  endAt?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  lastPublishTime?: Maybe<Scalars['String']['output']>;
+  metadata?: Maybe<Brand_Site_AnnouncementMetadata>;
+  sort?: Maybe<Scalars['Int']['output']>;
+  startAt?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['Int']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export type Brand_Site_AnnouncementBrandSiteAnnouncementList = {
+  lastPublishId?: Maybe<Scalars['Int']['output']>;
+  lastPublishTime?: Maybe<Scalars['String']['output']>;
+  list?: Maybe<Array<Maybe<Brand_Site_AnnouncementBrandSiteAnnouncement>>>;
+};
+
+export type Brand_Site_AnnouncementMetadata = {
+  background?: Maybe<Scalars['String']['output']>;
+  buttonType?: Maybe<Scalars['String']['output']>;
+  icon?: Maybe<Scalars['String']['output']>;
+  landingPageDisplay?: Maybe<Scalars['Boolean']['output']>;
+  theme?: Maybe<Scalars['String']['output']>;
+};
+
+export type Brand_Site_Announcementqueryilter = {
+  brand?: InputMaybe<Scalars['String']['input']>;
+  lang?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Brand_Site_BannerBrandSiteBanner = {
+  bannerImg?: Maybe<Scalars['String']['output']>;
+  brand?: Maybe<Scalars['String']['output']>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  describe?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  position?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export type Brand_Site_Bannerqueryilter = {
+  brand?: InputMaybe<Scalars['String']['input']>;
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  position?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type BrowserChainInput = {
   chains: Array<InputMaybe<Scalars['Int']['input']>>;
 };
@@ -12067,6 +12118,10 @@ export type Query = {
   bidHistory?: Maybe<BidHistory>;
   bidPosition?: Maybe<BidPosition>;
   bidPositions: Array<BidPosition>;
+  brand_site_announcement_list?: Maybe<Brand_Site_AnnouncementBrandSiteAnnouncementList>;
+  brand_site_banner_list?: Maybe<
+    Array<Maybe<Brand_Site_BannerBrandSiteBanner>>
+  >;
   /** 获取 RPC 节点，缓存1分钟，每分钟重新排序；排序规则：可访问 > 响应速度 > 区块高度 */
   browser_getRpc: Scalars['JSON']['output'];
   chart_getOhlcv2Chart: Array<Maybe<Array<Maybe<Scalars['String']['output']>>>>;
@@ -12732,6 +12787,14 @@ export type QueryBidPositionsArgs = {
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<BidPosition_Filter>;
+};
+
+export type QueryBrand_Site_Announcement_ListArgs = {
+  where?: InputMaybe<Brand_Site_Announcementqueryilter>;
+};
+
+export type QueryBrand_Site_Banner_ListArgs = {
+  where?: InputMaybe<Brand_Site_Bannerqueryilter>;
 };
 
 export type QueryBrowser_GetRpcArgs = {
