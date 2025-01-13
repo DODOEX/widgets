@@ -168,7 +168,7 @@ export default function TitleInfo({
               }}
               iconSize={14}
               iconSpace={6}
-              disabledAddress
+              customChainId={poolDetail?.chainId}
             />
           </Box>
         </Box>
