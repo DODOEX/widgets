@@ -877,7 +877,6 @@ export default function AddLiquidityList({
                 px: 24,
                 pt: 24,
                 pb: 20,
-                borderBottomWidth: 1,
               }),
         }}
       >

@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.3-neox.6",
+  "version": "3.0.3-neox.7",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",

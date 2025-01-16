@@ -1632,7 +1632,7 @@ msgstr ""
 msgid "Min"
 msgstr "分钟"
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:713
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:712
 msgid "Hide TVL=0 pools"
 msgstr ""
 
