@@ -1849,36 +1849,6 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@dodoex/api@3.0.3-neox.3":
-  version "3.0.3-neox.3"
-  resolved "https://registry.yarnpkg.com/@dodoex/api/-/api-3.0.3-neox.3.tgz#9c1eeed37df065ce50d02c93570a4e04235f030e"
-  integrity sha512-B9ipgPjVMyYFYhFmhxStmII2poXbGmtvq1dnVGtQIqEcz2rRDFkHEPw0BiWIEfLk5ZwGVTVxswaFL9/qjR3Yvw==
-  dependencies:
-    "@ethersproject/abi" "^5.7.0"
-    "@ethersproject/properties" "^5.7.0"
-    "@ethersproject/providers" "^5.7.2"
-    "@ethersproject/web" "^5.7.1"
-    cross-fetch "^4.0.0"
-    graphql "^16.8.1"
-    graphql-request "^6.1.0"
-    qs "^6.11.2"
-
-"@dodoex/components@3.0.1-beta.1":
-  version "3.0.1-beta.1"
-  resolved "https://registry.yarnpkg.com/@dodoex/components/-/components-3.0.1-beta.1.tgz#327a285483751068958a234a1471429915ac52f6"
-  integrity sha512-pSvkUQwUu63Y/vADZNA7tQCMScT3WizZl/IOSIS4zUCFUa2RC3GN+Jrhks7iCBvuadJn0wp88b71VwIfyOCRTg==
-  dependencies:
-    "@babel/runtime" "^7.17.0"
-    "@dodoex/icons" "^2.0.1"
-    "@emotion/react" "^11.10.0"
-    "@emotion/styled" "^11.10.0"
-    "@mui/base" "5.0.0-beta.58"
-    "@mui/system" "5.8.4"
-    "@szhsin/react-accordion" "^1.2.1"
-    any-touch "^2.2.0"
-    clsx "^1.2.1"
-    lottie-web "^5.12.2"
-
 "@dodoex/contract-request@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@dodoex/contract-request/-/contract-request-1.3.0.tgz#226272dc0460be4a02f2bdde6483d7ad84ce8afa"
@@ -1893,57 +1863,6 @@
   integrity sha512-d56AxxM3K1DiAAWNW1QYnSGlY4WHZ22jkii/tuKtPkawabCE2YEQbRxi/RxSqHTUOBmoHlkg0ioSXgZxnejWwg==
   dependencies:
     typescript "^5"
-
-"@dodoex/widgets@3.0.3-neox.4":
-  version "3.0.3-neox.4"
-  resolved "https://registry.yarnpkg.com/@dodoex/widgets/-/widgets-3.0.3-neox.4.tgz#70468f73c2faebb1c4de9045ec493c1f90f399b2"
-  integrity sha512-RdmBDVs9gkqlmde+387xCFYNXccWfBsrdQdqrZV6765nTUfLG/yhiTfjh/f35TqiERN6mgoM+QnYRkx+P2Ju4A==
-  dependencies:
-    "@babel/runtime" "^7.17.0"
-    "@dodoex/api" "3.0.3-neox.3"
-    "@dodoex/components" "3.0.1-beta.1"
-    "@dodoex/contract-request" "^1.3.0"
-    "@dodoex/dodo-contract-request" "^1.9.0-alpha.3"
-    "@dodoex/icons" "^2.0.2"
-    "@emotion/react" "^11.10.0"
-    "@emotion/styled" "^11.10.0"
-    "@ethersproject/bignumber" "^5.6.2"
-    "@ethersproject/contracts" "^5.7.0"
-    "@lingui/core" "^4.3.0"
-    "@lingui/macro" "^4.3.0"
-    "@lingui/react" "^4.3.0"
-    "@reduxjs/toolkit" "^1.6.1"
-    "@semantic-release/changelog" "^6.0.1"
-    "@semantic-release/git" "^10.0.1"
-    "@tanstack/react-query" "^5.18.1"
-    "@uniswap/sdk-core" "^5.9.0"
-    "@uniswap/v2-sdk" "^4.6.2"
-    "@web3-react/core" "8.2.0"
-    "@web3-react/eip1193" "8.2.0"
-    "@web3-react/metamask" "8.2.1"
-    "@web3-react/types" "8.2.0"
-    "@web3-react/walletconnect-v2" "8.3.6"
-    axios "^0.27.2"
-    bignumber.js "^9.0.2"
-    d3 "7.6.1"
-    dayjs "^1.11.11"
-    identicon.js "^2.3.3"
-    jsbi "^3.1.4"
-    konva "^9.3.6"
-    lodash "^4.17.21"
-    make-plural "^7.0.0"
-    moment "^2.29.4"
-    react-datetime "^3.1.1"
-    react-icons "^5.0.1"
-    react-infinite-scroller "^1.2.6"
-    react-konva "^18.2.10"
-    react-transition-group "^4.4.5"
-    react-window "^1.8.8"
-    recharts "^2.12.7"
-    rmc-date-picker "^6.0.10"
-    semantic-release "^19.0.2"
-    tiny-invariant "^1.1.0"
-    zustand "^4.5.5"
 
 "@emotion/babel-plugin@^11.10.5":
   version "11.10.5"
