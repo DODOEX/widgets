@@ -27,6 +27,7 @@ export default function PoolApyTooltip({
         transactionQuoteApy?: string | null;
         miningBaseApy?: string | null;
         miningQuoteApy?: string | null;
+        metromMiningApy?: string | null;
       }
     | undefined
     | null;
@@ -40,6 +41,7 @@ export default function PoolApyTooltip({
     token?: TokenInfo;
     transactionApy?: string | null;
     miningApy?: string | null;
+    metromMiningApy?: string | null;
   }> = hasQuote
     ? [
         {
@@ -57,6 +59,7 @@ export default function PoolApyTooltip({
         {
           transactionApy: apy?.transactionBaseApy,
           miningApy: apy?.miningBaseApy,
+          metromMiningApy: apy?.metromMiningApy,
         },
       ];
   return (
@@ -173,6 +176,25 @@ export default function PoolApyTooltip({
                 </Box>
               ) : (
                 ''
+              )}
+              {item.metromMiningApy && Number(item.metromMiningApy) > 0 && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    typography: 'h6',
+                    color: 'text.secondary',
+                  }}
+                >
+                  <span>
+                    <Trans>Mining</Trans>
+                  </span>
+                  <span>
+                    {item.metromMiningApy
+                      ? formatApy(new BigNumber(item.metromMiningApy))
+                      : '-'}
+                  </span>
+                </Box>
               )}
             </Box>
           ))}

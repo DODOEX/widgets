@@ -1047,7 +1047,7 @@ msgid "Fresh Mining"
 msgstr "Fresh Mining"
 
 #: src/widgets/PoolWidget/PoolDetail/components/Overview.tsx:98
-#: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:148
+#: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:151
 msgid "LP Fee"
 msgstr "LP Fee"
 
@@ -1974,7 +1974,7 @@ msgid "The closer the provided asset ratio is to the recommended ratio ({recomme
 msgstr "The closer the provided asset ratio is to the recommended ratio ({recommendRatioText}), the smaller the portion burned."
 
 #: src/widgets/PoolWidget/PoolDetail/components/Overview.tsx:112
-#: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:166
+#: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:169
 msgid "MT Fee"
 msgstr "MT Fee"
 

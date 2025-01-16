@@ -6644,6 +6644,7 @@ export type Liquidator_OrderBy =
   | 'updatedAt';
 
 export type LiquidityApyData = {
+  metromMiningApy?: Maybe<Scalars['BigDecimal']['output']>;
   miningBaseApy?: Maybe<Scalars['BigDecimal']['output']>;
   miningQuoteApy?: Maybe<Scalars['BigDecimal']['output']>;
   transactionBaseApy?: Maybe<Scalars['BigDecimal']['output']>;
@@ -8121,6 +8122,17 @@ export type Market_Maker_Pool_ApplypoolApplyData = {
   information?: InputMaybe<Scalars['String']['input']>;
   liaison?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MetromChainInput = {
+  chainId: Scalars['BigDecimal']['input'];
+};
+
+export type MetromPool = {
+  apr: Scalars['BigDecimal']['output'];
+  apy: Scalars['BigDecimal']['output'];
+  chainId: Scalars['BigDecimal']['output'];
+  pool: Scalars['String']['output'];
 };
 
 export type MinePool = {
@@ -12380,6 +12392,8 @@ export type Query = {
   /** data url:post(https://host:port/manage/slippage_tolerance_list).data */
   manage_slippage_tolerance_list?: Maybe<Array<Maybe<ManageSlippageTolerance>>>;
   market_maker_pool_apply_create?: Maybe<Market_Maker_Pool_ApplyData>;
+  /** 获取Metrom的池子列表 */
+  metrom_getPools: Array<Maybe<MetromPool>>;
   minePool?: Maybe<MinePool>;
   minePools: Array<MinePool>;
   miningPool?: Maybe<MiningPool>;
@@ -13754,6 +13768,10 @@ export type QueryManage_Slippage_Tolerance_ListArgs = {
 
 export type QueryMarket_Maker_Pool_Apply_CreateArgs = {
   data?: InputMaybe<Market_Maker_Pool_ApplypoolApplyData>;
+};
+
+export type QueryMetrom_GetPoolsArgs = {
+  where?: InputMaybe<MetromChainInput>;
 };
 
 export type QueryMinePoolArgs = {
@@ -20926,6 +20944,7 @@ export type FetchLiquidityListQuery = {
           miningQuoteApy?: any | null;
           transactionBaseApy?: any | null;
           transactionQuoteApy?: any | null;
+          metromMiningApy?: any | null;
         } | null;
       } | null;
     } | null> | null;
@@ -21002,6 +21021,7 @@ export type FetchMyLiquidityListQuery = {
           miningQuoteApy?: any | null;
           transactionBaseApy?: any | null;
           transactionQuoteApy?: any | null;
+          metromMiningApy?: any | null;
         } | null;
       } | null;
     } | null> | null;
@@ -21090,6 +21110,7 @@ export type FetchPoolQuery = {
           miningQuoteApy?: any | null;
           transactionBaseApy?: any | null;
           transactionQuoteApy?: any | null;
+          metromMiningApy?: any | null;
         } | null;
       } | null;
     } | null> | null;
@@ -21775,6 +21796,7 @@ export const FetchLiquidityListDocument = new TypedDocumentString(`
           miningQuoteApy
           transactionBaseApy
           transactionQuoteApy
+          metromMiningApy
         }
         miningAddress
         volume24H
@@ -21857,6 +21879,7 @@ export const FetchMyLiquidityListDocument = new TypedDocumentString(`
           miningQuoteApy
           transactionBaseApy
           transactionQuoteApy
+          metromMiningApy
         }
         miningAddress
         volume24H
@@ -21949,6 +21972,7 @@ export const FetchPoolDocument = new TypedDocumentString(`
           miningQuoteApy
           transactionBaseApy
           transactionQuoteApy
+          metromMiningApy
         }
         miningAddress
       }

@@ -95,6 +95,8 @@ function CardList({
               )
             : undefined;
         const hasMining = !!item.miningAddress?.[0];
+        const hasMetromMining =
+          !!item.apy?.metromMiningApy && Number(item.apy?.metromMiningApy) > 0;
 
         const type = item.type as PoolType;
         const poolType = getPoolAMMOrPMM(type);
@@ -163,7 +165,7 @@ function CardList({
                   />
                 </Box>
               </Box>
-              {hasMining ? (
+              {hasMining || hasMetromMining ? (
                 <Box
                   sx={{
                     p: 8,
@@ -467,6 +469,9 @@ function TableList({
           }
 
           const hasMining = !!item.miningAddress?.[0];
+          const hasMetromMining =
+            !!item.apy?.metromMiningApy &&
+            Number(item.apy?.metromMiningApy) > 0;
 
           const type = item.type as PoolType;
           const poolType = getPoolAMMOrPMM(type);
@@ -643,7 +648,7 @@ function TableList({
                       backgroundColor: 'background.paper',
                     }}
                   >
-                    {hasMining ? (
+                    {hasMining || hasMetromMining ? (
                       <Tooltip title={t`Mining`}>
                         <Box
                           component="span"

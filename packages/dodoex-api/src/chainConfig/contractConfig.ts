@@ -8,6 +8,7 @@ import { ChainId } from './chain';
 
 const contractMap: {
   [key in ChainId]: {
+    /** MulticallWithValid */
     MULTI_CALL: string;
     DODO_APPROVE: string;
     /** ERC20Helper */
@@ -19,7 +20,7 @@ const contractMap: {
     ROUTE_V1_DATA_FETCH: string;
     /** DODOCalleeHelper */
     CALLEE_HELPER: string;
-
+    /** DODOV2Proxy02 */
     DODO_PROXY: string;
     /** DODODspProxy */
     DODO_DSP_PROXY: string;

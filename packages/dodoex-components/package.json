@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/components",
-  "version": "3.0.1-beta.1",
+  "version": "3.0.2-neox.1",
   "description": "UI component library",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
@@ -40,7 +40,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/icons": "^2.0.1",
+    "@dodoex/icons": "^2.0.2",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/base": "5.0.0-beta.58",
