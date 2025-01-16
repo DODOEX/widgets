@@ -1,10 +1,9 @@
 import {
   Box,
   BoxProps,
-  useTheme,
-  alpha,
   ButtonBase,
   RotatingIcon,
+  useTheme,
 } from '@dodoex/components';
 import { ArrowRight } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
@@ -28,9 +27,6 @@ export default function LiquidityTable({
         position: 'relative',
         flex: 1,
         overflowY: 'auto',
-        borderTopWidth: 1,
-        borderTopStyle: 'solid',
-        borderTopColor: 'border.main',
         mx: 24,
         mb: 24,
         ...sx,

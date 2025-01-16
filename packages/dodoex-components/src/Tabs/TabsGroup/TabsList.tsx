@@ -36,6 +36,7 @@ export const TabsList = React.forwardRef(function TabsList(
       });
     }
   }, []);
+
   return (
     <Box
       component={BaseTabsList}

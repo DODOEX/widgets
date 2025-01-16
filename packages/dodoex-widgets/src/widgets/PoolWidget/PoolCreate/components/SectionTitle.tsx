@@ -52,14 +52,11 @@ export function SectionTitle({
             backgroundColor:
               status === 'waiting'
                 ? theme.palette.background.paperDarkContrast
-                : theme.palette.secondary.main,
+                : '#00D555',
             typography: 'h6',
             fontWeight: 600,
             textAlign: 'center',
-            color:
-              status === 'waiting'
-                ? theme.palette.text.disabled
-                : theme.palette.secondary.contrastText,
+            color: status === 'waiting' ? theme.palette.text.disabled : '##000',
           }}
         >
           {status === 'completed' ? (

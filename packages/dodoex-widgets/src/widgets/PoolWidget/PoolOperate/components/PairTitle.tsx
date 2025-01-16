@@ -135,21 +135,19 @@ export function PairTitle({
               </Tooltip>
             </LoadingSkeleton>
           )}
-          {(supportAMMV2 || supportAMMV3) &&
-            pool &&
-            getPoolAMMOrPMM(pool?.type) === 'PMM' && (
-              <GoPoolDetailBtn
-                chainId={pool.chainId}
-                address={pool.address}
-                sx={{
-                  borderWidth: 0,
-                  backgroundColor: 'transparent',
-                  width: 20,
-                  height: 20,
-                  padding: 0,
-                }}
-              />
-            )}
+          {pool && getPoolAMMOrPMM(pool?.type) === 'PMM' && (
+            <GoPoolDetailBtn
+              chainId={pool.chainId}
+              address={pool.address}
+              sx={{
+                borderWidth: 0,
+                backgroundColor: 'transparent',
+                width: 20,
+                height: 20,
+                padding: 0,
+              }}
+            />
+          )}
         </Box>
         <AddressWithLinkAndCopy
           address={pool?.address ?? ''}

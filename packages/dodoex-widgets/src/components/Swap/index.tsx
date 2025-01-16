@@ -1016,6 +1016,21 @@ export function Swap({
                 borderRadius: 20,
                 padding: theme.spacing(20, 36, 24, 20),
               }}
+              inputSx={{
+                '& input': {
+                  fontSize: 32,
+                  typography: 'h2',
+                  border: 'none',
+                  outline: 'none',
+                  padding: 0,
+                  color: 'text.primary',
+                  '&::placeholder': {
+                    fontSize: 32,
+                    typography: 'h2',
+                    color: 'text.disabled',
+                  },
+                },
+              }}
               title="Sell"
               token={fromToken}
               side="from"
@@ -1103,6 +1118,21 @@ export function Swap({
                 backgroundColor: theme.palette.background.paper,
                 borderRadius: 20,
                 padding: theme.spacing(20, 36, 24, 20),
+              }}
+              inputSx={{
+                '& input': {
+                  fontSize: 32,
+                  typography: 'h2',
+                  border: 'none',
+                  outline: 'none',
+                  padding: 0,
+                  color: 'text.primary',
+                  '&::placeholder': {
+                    fontSize: 32,
+                    typography: 'h2',
+                    color: 'text.disabled',
+                  },
+                },
               }}
               title="Buy"
               token={toToken}

@@ -31,7 +31,7 @@ export default function RadioButton({
         p: 20,
         backgroundColor: theme.palette.background.paper,
         borderWidth: 1,
-        borderColor: selected ? theme.palette.primary.main : 'transparent',
+        borderColor: selected ? '#00D555' : 'transparent',
         borderStyle: 'solid',
         borderRadius: 12,
         flexWrap: 'wrap',

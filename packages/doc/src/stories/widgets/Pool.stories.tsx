@@ -126,9 +126,9 @@ Primary.args = {
   height: '100%',
   noDocumentLink: true,
   routerPage: undefined,
-  supportAMMV2: true,
-  supportAMMV3: true,
-  // onlyChainId: 1,
+  supportAMMV2: false,
+  supportAMMV3: false,
+  onlyChainId: 47763,
   noUI: true,
   noSubmissionDialog: true,
 };

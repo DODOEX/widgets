@@ -1,9 +1,8 @@
-import { t } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import React from 'react';
-import { POOLS_LIST_TAB } from '../../../../constants/sessionStorage';
-import { useUserOptions } from '../../../../components/UserOptionsProvider';
 import { Box, useTheme } from '@dodoex/components';
+import { t } from '@lingui/macro';
+import React from 'react';
+import { useUserOptions } from '../../../../components/UserOptionsProvider';
+import { POOLS_LIST_TAB } from '../../../../constants/sessionStorage';
 import { ReactComponent as AllPoolIcon } from '../assets/all-pool.svg';
 import { ReactComponent as MyLiquidityIcon } from '../assets/my-liquidity.svg';
 import { ReactComponent as MyPoolIcon } from '../assets/my-pool.svg';
@@ -21,7 +20,6 @@ export function usePoolListTabs({
   account?: string;
   paramsTab: PoolTab | undefined;
 }) {
-  const { i18n } = useLingui();
   const theme = useTheme();
   const [poolTab, setPoolTab] = React.useState(PoolTab.addLiquidity);
   const { supportAMMV2, supportAMMV3, notSupportPMM } = useUserOptions();
@@ -30,13 +28,7 @@ export function usePoolListTabs({
       {
         key: PoolTab.addLiquidity,
         value: (
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-            }}
-          >
+          <>
             <Box
               component={AllPoolIcon}
               sx={{
@@ -49,19 +41,13 @@ export function usePoolListTabs({
               }}
             />
             {t`Add Liquidity`}
-          </Box>
+          </>
         ),
       },
       {
         key: PoolTab.myLiquidity,
         value: (
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-            }}
-          >
+          <>
             <Box
               component={MyLiquidityIcon}
               sx={{
@@ -74,7 +60,7 @@ export function usePoolListTabs({
               }}
             />
             {t`My Liquidity`}
-          </Box>
+          </>
         ),
       },
     ];
@@ -82,13 +68,7 @@ export function usePoolListTabs({
       result.push({
         key: PoolTab.myCreated,
         value: (
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-            }}
-          >
+          <>
             <Box
               component={MyPoolIcon}
               sx={{
@@ -101,12 +81,12 @@ export function usePoolListTabs({
               }}
             />
             {supportAMMV2 || supportAMMV3 ? t`My Pools (PMM)` : t`My Pools`}
-          </Box>
+          </>
         ),
       });
     }
     return result;
-  }, [i18n._, supportAMMV2, supportAMMV3, notSupportPMM]);
+  }, [theme.breakpoints, notSupportPMM, supportAMMV2, supportAMMV3]);
 
   const isSetPoolTabCache = React.useRef(false);
   React.useEffect(() => {

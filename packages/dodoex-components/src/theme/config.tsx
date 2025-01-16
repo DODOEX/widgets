@@ -152,12 +152,12 @@ export const darkPalette: PaletteOptions = {
 export const lightPalette: PaletteOptions = {
   mode: 'light',
   primary: {
-    main: '#34CA50',
-    contrastText: '#fff',
+    main: '#00D555',
+    contrastText: '#000000',
   },
   secondary: {
-    main: '#34CA50',
-    contrastText: '#FFFFFF',
+    main: '#00D555',
+    contrastText: '#000000',
   },
   error: {
     main: '#FD6057',

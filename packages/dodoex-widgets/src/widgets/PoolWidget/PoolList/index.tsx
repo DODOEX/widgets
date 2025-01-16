@@ -3,7 +3,6 @@ import {
   Tab,
   TabPanel,
   Tabs,
-  TabsGroup,
   TabsList,
   useTheme,
 } from '@dodoex/components';
@@ -24,13 +23,13 @@ import PoolOperateDialog, {
   PoolOperateProps,
 } from '../PoolOperate';
 import AddLiquidityList from './AddLiquidity';
+import backgroundSvg from './assets/bc.svg';
 import { CreatePoolBtn } from './components/CreatePoolBtn';
 import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
 import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
 import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
-import backgroundSvg from './assets/bc.svg';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   const theme = useTheme();
@@ -150,16 +149,22 @@ export default function PoolList({
                 key={key}
                 value={key}
                 sx={{
-                  borderRadius: key === PoolTab.addLiquidity ? 40 : 8,
+                  borderRadius: key === poolTab ? 40 : 8,
                   mb: 0,
                   color: 'text.secondary',
                   backgroundColor: 'background.default',
-                  pl: 8,
+                  pl: 12,
                   pr: 12,
+                  '&>svg': {
+                    display: isMobile ? 'none' : 'block',
+                  },
                   [theme.breakpoints.up('tablet')]: {
                     pl: 12,
                     pr: 24,
                   },
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
                 }}
                 variant="rounded"
               >

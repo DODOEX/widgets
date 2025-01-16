@@ -109,7 +109,7 @@ export function StepTitle({
                   borderRadius: 12,
                   background:
                     currentStep >= i
-                      ? theme.palette.secondary.main
+                      ? '#00D555'
                       : alpha(theme.palette.primary.main, 0.1),
                 }}
               />

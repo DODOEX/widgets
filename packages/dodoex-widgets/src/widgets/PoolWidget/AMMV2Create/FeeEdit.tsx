@@ -131,7 +131,7 @@ export default function FeeEdit({
                     cursor: 'pointer',
                     ...(active && {
                       borderColor: isMobile
-                        ? '#34CA50'
+                        ? '#00D555'
                         : theme.palette.border.main,
                       backgroundColor: isMobile
                         ? theme.palette.background.paper

@@ -1,8 +1,8 @@
 import { Box, useTheme } from '@dodoex/components';
+import { ArrowBack } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import React from 'react';
-import GoBack from '../../../components/GoBack';
 import {
   CardPlusConnected,
   TokenCard,
@@ -10,6 +10,7 @@ import {
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { PageType, useRouterStore } from '../../../router';
 import { BaseInfoCardList } from './components/BaseInfoCardList';
 import { DepthChartWrapper } from './components/DepthChartWrapper';
 import { FeeRateCard } from './components/FeeRateCard';
@@ -40,8 +41,6 @@ import {
   DEFAULT_SLIPPAGE_COEFFICIENT,
   PEGGED_RATIO_DECIMALS,
 } from './utils';
-import { ArrowBack } from '@dodoex/icons';
-import { PageType, useRouterStore } from '../../../router';
 
 export default function PoolCreate() {
   const { defaultBaseToken, defaultQuoteToken } = useDefaultTokens();
@@ -236,7 +235,7 @@ export default function PoolCreate() {
       <Box
         sx={{
           position: 'relative',
-          display: 'flex',
+          display: 'none',
           justifyContent: 'center',
           alignItems: 'center',
           px: 20,
@@ -244,6 +243,9 @@ export default function PoolCreate() {
           typography: 'caption',
           borderRadius: 20,
           backgroundColor: theme.palette.tabActive.main,
+          [theme.breakpoints.up('desktop')]: {
+            display: 'flex',
+          },
         }}
       >
         <Box
@@ -543,7 +545,7 @@ export default function PoolCreate() {
 
           <Box
             sx={{
-              pb: 160,
+              pb: 28,
               ...(!isMobile
                 ? {
                     pb: 28,

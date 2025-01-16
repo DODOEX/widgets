@@ -216,7 +216,7 @@ const buttonStyles = (
                 sx?.backgroundColor || theme.palette.secondary.main
           }`,
         },
-        color: danger ? 'error.contrastText' : '#1B372F',
+        color: danger ? 'error.contrastText' : '#000000',
         '&[disabled]': {
           backgroundColor: 'border.disabled',
           color: 'text.disabled',

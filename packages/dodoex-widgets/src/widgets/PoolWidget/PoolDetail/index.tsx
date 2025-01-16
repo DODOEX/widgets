@@ -1,7 +1,7 @@
-import { Box, Button, useTheme, Modal } from '@dodoex/components';
+import { Box, Button, useTheme } from '@dodoex/components';
+import { ArrowBack } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import React from 'react';
-import GoBack from '../../../components/GoBack';
 import WidgetConfirm from '../../../components/WidgetConfirm';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
@@ -16,6 +16,7 @@ import MoreDetail from './components/MoreDetail';
 import Overview from './components/Overview';
 import TitleInfo from './components/TitleInfo';
 import TotalLiquidity from './components/TotalLiquidity';
+import GoBack from '../../../components/GoBack';
 
 export default function PoolDetail({
   params,
@@ -83,7 +84,7 @@ export default function PoolDetail({
       sx={
         isMobile
           ? {
-              p: theme.spacing(0, 0, canOperate ? 108 : 0),
+              p: theme.spacing(0, 0, canOperate ? 88 : 0),
               backgroundColor: 'transparent',
             }
           : {
@@ -92,34 +93,59 @@ export default function PoolDetail({
             }
       }
     >
-      <Box
-        sx={{
-          mb: 12,
-          py: 24,
-          px: 20,
-          borderRadius: 20,
-          backgroundColor: 'background.default',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          gap: 12,
-          [theme.breakpoints.up('tablet')]: {
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          },
-        }}
-      >
-        <GoBack
-          onClick={() => {
-            router.push({
-              type: PageType.Pool,
-            });
+      {isMobile ? (
+        <Box
+          sx={{
+            backgroundColor: 'background.default',
           }}
-        />
-        <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
-      </Box>
+        >
+          <GoBack
+            onClick={() => {
+              router.push({
+                type: PageType.Pool,
+              });
+            }}
+            sx={{
+              px: 20,
+              pt: 20,
+            }}
+          />
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            mb: 12,
+            py: 24,
+            px: 20,
+            borderRadius: 20,
+            backgroundColor: 'background.default',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: 12,
+            [theme.breakpoints.up('tablet')]: {
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            },
+          }}
+        >
+          <Box
+            component={ArrowBack}
+            sx={{
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              router.push({
+                type: PageType.Pool,
+              });
+            }}
+          />
+          <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
+        </Box>
+      )}
+
       <Box
         sx={
           isMobile
@@ -136,10 +162,15 @@ export default function PoolDetail({
             flex: 1,
             overflow: 'hidden',
             padding: 20,
-            borderRadius: 20,
             backgroundColor: 'background.default',
+            [theme.breakpoints.up('tablet')]: {
+              borderRadius: 20,
+            },
           }}
         >
+          {isMobile && (
+            <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
+          )}
           <ChartInfo poolDetail={pool} chart24hDataFirst />
           <Overview poolDetail={pool} />
           <TotalLiquidity poolDetail={pool} />

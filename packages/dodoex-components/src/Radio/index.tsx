@@ -37,7 +37,7 @@ export const Radio = React.forwardRef(function Radio(
         position: 'relative',
         borderRadius: '50%',
         border: '1px solid',
-        borderColor: other.checked ? '#34CA50' : 'text.secondary',
+        borderColor: other.checked ? '#00D555' : 'text.secondary',
         cursor: 'pointer',
         ...sx,
         [theme.breakpoints.up('tablet')]: {
@@ -68,7 +68,7 @@ export const Radio = React.forwardRef(function Radio(
             width: checkedIconSize,
             height: checkedIconSize,
             borderRadius: '50%',
-            backgroundColor: '#34CA50',
+            backgroundColor: '#00D555',
             [theme.breakpoints.up('tablet')]: {
               backgroundColor: '#000',
             },
