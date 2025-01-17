@@ -25,7 +25,7 @@ export const basicTheme = (theme: ThemeOptions) => ({
 
 export const body = (theme: ThemeOptions) => ({
   ...basicTheme(theme),
-  backgroundColor: theme.palette?.background.default,
+  // backgroundColor: theme.palette?.background.default,
   '@media print': {
     // Save printer ink.
     backgroundColor: '#FFF',

@@ -1,8 +1,14 @@
-import { neox, plume } from '@dodoex/dodo-contract-request';
+import {
+  morph,
+  neox,
+  plume,
+  plumeTestnet,
+} from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
 const contractMap: {
   [key in ChainId]: {
+    /** MulticallWithValid */
     MULTI_CALL: string;
     DODO_APPROVE: string;
     /** ERC20Helper */
@@ -14,7 +20,7 @@ const contractMap: {
     ROUTE_V1_DATA_FETCH: string;
     /** DODOCalleeHelper */
     CALLEE_HELPER: string;
-
+    /** DODOV2Proxy02 */
     DODO_PROXY: string;
     /** DODODspProxy */
     DODO_DSP_PROXY: string;
@@ -300,6 +306,20 @@ const contractMap: {
     DODO_DPP_PROXY: plume.DODODppProxy,
     DODO_MINEV3_PROXY: plume.DODOMineV3Proxy,
   },
+  [ChainId.PLUME_TESTNET]: {
+    MULTI_CALL: plumeTestnet.MulticallWithValid,
+    DODO_APPROVE: plumeTestnet.DODOApprove,
+    ERC20_HELPER: plumeTestnet.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: plumeTestnet.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: plumeTestnet.DODOV1PmmHelper,
+    CALLEE_HELPER: plumeTestnet.DODOCalleeHelper,
+
+    DODO_PROXY: plumeTestnet.DODOV2Proxy02,
+    DODO_DSP_PROXY: plumeTestnet.DODODspProxy,
+    DODO_DPP_PROXY: plumeTestnet.DODODppProxy,
+    DODO_MINEV3_PROXY: plumeTestnet.DODOMineV3Proxy,
+  },
   [ChainId.NEOX]: {
     MULTI_CALL: neox.MulticallWithValid,
     DODO_APPROVE: neox.DODOApprove,
@@ -313,6 +333,20 @@ const contractMap: {
     DODO_DSP_PROXY: neox.DODODspProxyWithoutGSP,
     DODO_DPP_PROXY: neox.DODODppProxy,
     DODO_MINEV3_PROXY: neox.DODOMineV3Proxy,
+  },
+  [ChainId.MORPH]: {
+    MULTI_CALL: morph.MulticallWithValid,
+    DODO_APPROVE: morph.DODOApprove,
+    ERC20_HELPER: morph.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: morph.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: morph.DODOV1PmmHelper,
+    CALLEE_HELPER: morph.DODOCalleeHelper,
+
+    DODO_PROXY: morph.DODOV2Proxy02,
+    DODO_DSP_PROXY: morph.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: morph.DODODppProxy,
+    DODO_MINEV3_PROXY: morph.DODOMineV3Proxy,
   },
 };
 

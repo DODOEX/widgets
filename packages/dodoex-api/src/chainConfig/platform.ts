@@ -22,5 +22,7 @@ export const platformIdMap: {
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
   [ChainId.TAIKO]: 'taiko',
   [ChainId.PLUME]: 'plume',
+  [ChainId.PLUME_TESTNET]: 'plume-testnet',
   [ChainId.NEOX]: 'neox',
+  [ChainId.MORPH]: 'morph',
 };

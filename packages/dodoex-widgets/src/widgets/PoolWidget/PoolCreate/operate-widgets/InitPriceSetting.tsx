@@ -144,7 +144,7 @@ export function InitPriceSetting({
                 ? 'error.main'
                 : theme.palette.background.input,
             borderRadius: 8,
-            backgroundColor: theme.palette.background.input,
+            backgroundColor: theme.palette.background.paper,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'stretch',
@@ -185,6 +185,7 @@ export function InitPriceSetting({
                     pr: 0,
                     mt: 0,
                     flex: '1 1 auto',
+                    backgroundColor: 'transparent',
                     '& input': {
                       textAlign: 'right',
                       typography: 'h5',

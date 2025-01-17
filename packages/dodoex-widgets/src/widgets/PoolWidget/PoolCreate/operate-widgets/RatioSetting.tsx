@@ -37,7 +37,7 @@ function RatioInput({
         borderStyle: 'solid',
         borderColor: theme.palette.border.main,
         borderRadius: 8,
-        backgroundColor: theme.palette.background.input,
+        backgroundColor: theme.palette.background.paper,
       }}
     >
       <Box
@@ -63,6 +63,7 @@ function RatioInput({
           typography: 'h5',
           lineHeight: '32px',
           color: theme.palette.text.disabled,
+          backgroundColor: 'transparent',
           '& input': {
             textAlign: 'right',
             py: 0,

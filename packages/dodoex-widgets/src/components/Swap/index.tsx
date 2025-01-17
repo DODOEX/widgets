@@ -1,78 +1,78 @@
-import BigNumber from 'bignumber.js';
-import { debounce } from 'lodash';
+import { ChainId } from '@dodoex/api';
 import {
+  alpha,
   Box,
   Button,
   ButtonBase,
-  useTheme,
   RotatingIcon,
-  Tooltip,
+  useTheme,
 } from '@dodoex/components';
-import { formatTokenAmountNumber } from '../../utils';
-import { useMemo, useState, useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import {
-  Setting,
-  SettingCrossChain,
-  Dodo,
-  Warn,
-  DoubleRight,
-} from '@dodoex/icons';
-import { Trans, t } from '@lingui/macro';
-import { TokenCard } from './components/TokenCard';
-import { QuestionTooltip } from '../Tooltip';
-import { SwitchBox } from './components/SwitchBox';
-import { ReviewDialog } from './components/ReviewDialog';
-import { SettingsDialog } from './components/SettingsDialog';
-import { RoutePriceStatus } from '../../hooks/Swap';
-import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
-import ConnectWallet from './components/ConnectWallet';
-import { TokenInfo } from '../../hooks/Token/type';
-import {
-  useMarginAmount,
-  useFetchFiatPrice,
-  useFetchRoutePrice,
-} from '../../hooks/Swap';
-import { formatReadableNumber } from '../../utils/formatter';
+import { DoubleRight, Warn } from '@dodoex/icons';
+import { t, Trans } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
-import { AppUrl } from '../../constants/api';
-import { ChainId } from '@dodoex/api';
+import BigNumber from 'bignumber.js';
+import { debounce } from 'lodash';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { basicTokenMap } from '../../constants/chains';
+import { setLastToken } from '../../constants/localstorage';
 import { PRICE_IMPACT_THRESHOLD } from '../../constants/swap';
-import TokenLogo from '../TokenLogo';
 import {
+  connectWalletBtn,
   swapAlertEnterAmountBtn,
   swapAlertFetchPriceBtn,
   swapAlertInsufficientBalanceBtn,
   swapAlertSelectTokenBtn,
   swapReviewBtn,
 } from '../../constants/testId';
-import useInflights from '../../hooks/Submission/useInflights';
-import { AppThunkDispatch } from '../../store/actions';
 import { useFetchRoutePriceBridge } from '../../hooks/Bridge/useFetchRoutePriceBridge';
-import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
-import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
 import { useSendRoute } from '../../hooks/Bridge/useSendRoute';
-import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
-import ErrorMessageDialog from '../ErrorMessageDialog';
 import { useSwitchBridgeOrSwapSlippage } from '../../hooks/Bridge/useSwitchBridgeOrSwapSlippage';
+import useInflights from '../../hooks/Submission/useInflights';
+import {
+  RoutePriceStatus,
+  useFetchFiatPrice,
+  useFetchRoutePrice,
+  useMarginAmount,
+} from '../../hooks/Swap';
 import { useInitDefaultToken } from '../../hooks/Swap/useInitDefaultToken';
-import { setLastToken } from '../../constants/localstorage';
 import {
   maxSlippageWarning,
   useSlippageLimit,
 } from '../../hooks/Swap/useSlippageLimit';
+import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
+import { TokenInfo } from '../../hooks/Token/type';
 import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch';
+import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
+import { useFetchETHBalance } from '../../hooks/contract';
 import {
   GetAutoSlippage,
   useSetAutoSlippage,
 } from '../../hooks/setting/useSetAutoSlippage';
+import { AppThunkDispatch } from '../../store/actions';
 import { setFromTokenChainId } from '../../store/actions/wallet';
-import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
-import { useFetchETHBalance } from '../../hooks/contract';
+import { formatTokenAmountNumber } from '../../utils';
+import { formatReadableNumber } from '../../utils/formatter';
+import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
+import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
+import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
+import NeedConnectButton from '../ConnectWallet/NeedConnectButton';
+import ErrorMessageDialog from '../ErrorMessageDialog';
+import TokenLogo from '../TokenLogo';
+import { QuestionTooltip } from '../Tooltip';
 import { useUserOptions } from '../UserOptionsProvider';
+import { ReactComponent as ArrowRight } from './assets/arrow-right.svg';
+import backgroundSvg from './assets/background.svg';
+import { ReactComponent as SwapIcon } from './assets/swap-icon.svg';
+import { ReviewDialog } from './components/ReviewDialog';
+import { SettingsDialog } from './components/SettingsDialog';
+import SwapInfoCard from './components/SwapInfoCard';
 import { SwapSettingsDialog } from './components/SwapSettingsDialog';
-import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
+import { TokenCard } from './components/TokenCard';
+import {
+  TokenPairPriceWithToggle,
+  useTokenPairPriceWithToggle,
+} from './components/TokenPairPriceWithToggle';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -91,10 +91,11 @@ export function Swap({
   const { chainId, account } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
   const { defaultChainId, noPowerBy, onlyChainId } = useUserOptions();
+
   const [isReverseRouting, setIsReverseRouting] = useState(false);
   const basicTokenAddress = useMemo(
     () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
-    [chainId],
+    [chainId, defaultChainId],
   );
 
   const [displayingFromAmt, setDisplayingFromAmt] = useState<string>('');
@@ -457,22 +458,29 @@ export function Swap({
     );
   }, [displayPriceImpact, theme.palette.error.main]);
 
+  const priceToggle = useTokenPairPriceWithToggle({
+    toToken,
+    fromToken,
+    pricePerToToken: resPricePerToToken,
+    pricePerFromToken: resPricePerFromToken,
+  });
+
   const tokenPairPrice = useMemo(() => {
     return (
       <TokenPairPriceWithToggle
-        toToken={toToken}
-        fromToken={fromToken}
         priceStatus={resPriceStatus}
-        pricePerToToken={resPricePerToToken}
-        pricePerFromToken={resPricePerFromToken}
+        leftSymbol={priceToggle.leftSymbol}
+        rightSymbol={priceToggle.rightSymbol}
+        rightAmount={priceToggle.rightAmount}
+        handleSwitch={priceToggle.handleSwitch}
       />
     );
   }, [
-    toToken,
-    fromToken,
+    priceToggle.handleSwitch,
+    priceToggle.leftSymbol,
+    priceToggle.rightAmount,
+    priceToggle.rightSymbol,
     resPriceStatus,
-    resPricePerToToken,
-    resPricePerFromToken,
   ]);
 
   const isUnSupportChain = useMemo(() => !ChainId[chainId || 1], [chainId]);
@@ -567,7 +575,7 @@ export function Swap({
           }}
         >
           <>
-            <RotatingIcon sx={{ mr: 5 }} />
+            <RotatingIcon sx={{ mr: 5, width: 19, height: 19 }} />
             <Trans>Fetching best price...</Trans>
           </>
         </Box>
@@ -699,17 +707,37 @@ export function Swap({
 
   const swapButton = useMemo(() => {
     if (!account || (fromToken?.chainId && chainId !== fromToken.chainId))
-      return <ConnectWallet needSwitchChain={fromToken?.chainId} />;
+      return (
+        <NeedConnectButton
+          size={Button.Size.big}
+          variant={Button.Variant.darken}
+          fullWidth
+          data-testid={connectWalletBtn}
+          chainId={fromToken?.chainId}
+        />
+      );
     if (isInflight) {
       return (
-        <Button fullWidth isLoading disabled>
+        <Button
+          fullWidth
+          size={Button.Size.big}
+          variant={Button.Variant.darken}
+          isLoading
+          disabled
+        >
           <Trans>Transaction Pending</Trans>
         </Button>
       );
     }
     if (!fromToken || !toToken)
       return (
-        <Button fullWidth disabled data-testid={swapAlertSelectTokenBtn}>
+        <Button
+          fullWidth
+          size={Button.Size.big}
+          variant={Button.Variant.darken}
+          disabled
+          data-testid={swapAlertSelectTokenBtn}
+        >
           <Trans>Select Tokens</Trans>
         </Button>
       );
@@ -717,6 +745,8 @@ export function Swap({
       return (
         <Button
           fullWidth
+          size={Button.Size.big}
+          variant={Button.Variant.darken}
           disabled={isApproving}
           onClick={() => submitApprove()}
         >
@@ -725,7 +755,13 @@ export function Swap({
       );
     if (!new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0))
       return (
-        <Button fullWidth disabled data-testid={swapAlertEnterAmountBtn}>
+        <Button
+          fullWidth
+          size={Button.Size.big}
+          variant={Button.Variant.darken}
+          disabled
+          data-testid={swapAlertEnterAmountBtn}
+        >
           <Trans>Enter an amount</Trans>
         </Button>
       );
@@ -736,7 +772,13 @@ export function Swap({
         : resPriceStatus === RoutePriceStatus.Loading
     )
       return (
-        <Button fullWidth disabled data-testid={swapAlertFetchPriceBtn}>
+        <Button
+          fullWidth
+          size={Button.Size.big}
+          variant={Button.Variant.darken}
+          disabled
+          data-testid={swapAlertFetchPriceBtn}
+        >
           <Trans>Fetching Price...</Trans>
         </Button>
       );
@@ -751,7 +793,12 @@ export function Swap({
     }
     if (routeFailed)
       return (
-        <Button fullWidth disabled>
+        <Button
+          fullWidth
+          size={Button.Size.big}
+          variant={Button.Variant.darken}
+          disabled
+        >
           <Trans>Quote not available</Trans>
         </Button>
       );
@@ -760,6 +807,8 @@ export function Swap({
       return (
         <Button
           fullWidth
+          size={Button.Size.big}
+          variant={Button.Variant.darken}
           disabled
           data-testid={swapAlertInsufficientBalanceBtn}
         >
@@ -771,6 +820,8 @@ export function Swap({
       return (
         <Button
           fullWidth
+          size={Button.Size.big}
+          variant={Button.Variant.darken}
           onClick={() =>
             handleSendBridgeRoute({
               selectedRoute,
@@ -789,6 +840,8 @@ export function Swap({
     return (
       <Button
         fullWidth
+        size={Button.Size.big}
+        variant={Button.Variant.darken}
         onClick={() => setIsReviewDialogOpen(true)}
         data-testid={swapReviewBtn}
       >
@@ -874,149 +927,321 @@ export function Swap({
 
   return (
     <>
-      {/* Header */}
       <Box
         sx={{
+          width: '100%',
           display: 'flex',
-          justifyContent: 'space-between',
-          typography: 'caption',
-          margin: 20,
+          flexDirection: 'column',
+          alignItems: 'stretch',
+          gap: 12,
+          [theme.breakpoints.up('laptop')]: {
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+          },
         }}
       >
-        <Trans>Swap</Trans>
-        <Tooltip
-          open={showSwitchSlippageTooltip}
-          title={
-            isBridge ? (
-              <Trans>The setting has been switched to cross chain mode</Trans>
-            ) : (
-              <Trans>The setting has been switched to swap mode</Trans>
-            )
-          }
-          placement="bottom-end"
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            gap: 28,
+            px: 16,
+            py: 24,
+            borderRadius: 20,
+            backgroundColor: '#C9EB62',
+            backgroundImage: `url(${backgroundSvg})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain',
+            backgroundPosition: 'top',
+            [theme.breakpoints.up('laptop')]: {
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            },
+          }}
         >
-          <Box component={ButtonBase}>
-            <Box
-              component={isBridge ? SettingCrossChain : Setting}
-              onClick={() => setIsSettingsDialogOpen(true)}
-              sx={{
-                width: 19,
-                height: 19,
-                color: 'text.primary',
-                cursor: 'pointer',
-              }}
-            />
-          </Box>
-        </Tooltip>
-      </Box>
-
-      {/* Scroll Container */}
-      <Box sx={{ flex: 1, padding: '0 16px 12px', overflowY: 'auto' }}>
-        {/* Swap Module */}
-        <Box>
-          {/* First Token Card  */}
-          <TokenCard
-            sx={{ mb: 4 }}
-            token={fromToken}
-            side="from"
-            amt={fromFinalAmt}
-            defaultLoadBalance
-            onMaxClick={handleMaxClick}
-            onInputChange={updateFromAmt}
-            onInputFocus={onFromTokenInputFocus}
-            showMaxBtn={!isReverseRouting && !displayingFromAmt}
-            occupiedAddrs={[toToken?.address ?? '']}
-            occupiedChainId={toToken?.chainId}
-            fiatPriceTxt={
-              displayFromFiatPrice
-                ? `$${formatReadableNumber({
-                    input: displayFromFiatPrice,
-                    showDecimals: 1,
-                  })}`
-                : '-'
-            }
-            onTokenChange={onFromTokenChange}
-            readOnly={isReverseRouting}
-            showChainLogo={!onlyChainId}
-            showChainName={!onlyChainId}
-            notTokenPickerModal
-          />
-
-          {/* Switch Icon */}
-          <SwitchBox onClick={switchTokens} disabled={disabledSwitch} />
-
-          {/* Second Token Card  */}
-          <TokenCard
-            token={toToken}
-            side="to"
-            amt={toFinalAmt}
-            onInputChange={updateToAmt}
-            onInputFocus={onToTokenInputFocus}
-            occupiedAddrs={[fromToken?.address ?? '']}
-            occupiedChainId={fromToken?.chainId}
-            fiatPriceTxt={
-              displayToFiatPrice
-                ? `$${formatReadableNumber({
-                    input: displayToFiatPrice,
-                    showDecimals: 1,
-                  })}(${displayPriceImpact}%)`
-                : '-'
-            }
-            onTokenChange={onToTokenChange}
-            readOnly={isBridge || !isReverseRouting}
-            showChainLogo={!onlyChainId}
-            showChainName={!onlyChainId}
-            notTokenPickerModal
-          />
-
-          {/* Price Disp or Warnings  */}
           <Box
             sx={{
-              py: 12,
+              alignSelf: 'flex-start',
               display: 'flex',
-              typography: 'body2',
+              flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
+              gap: 12,
+              p: 16,
+              borderRadius: 16,
+              backgroundColor: alpha('#000', 0.1),
             }}
           >
-            {priceInfo}
+            <Box
+              sx={{
+                width: 32,
+                height: 32,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 8,
+                backgroundColor: '#000',
+              }}
+            >
+              <SwapIcon />
+            </Box>
+            <Box
+              sx={{
+                typography: 'caption',
+                color: theme.palette.text.primary,
+              }}
+            >
+              Swap
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'stretch',
+              gap: 4,
+              position: 'relative',
+              [theme.breakpoints.up('desktop')]: {
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 12,
+              },
+            }}
+          >
+            <TokenCard
+              sx={{
+                flex: 1,
+                backgroundColor: theme.palette.background.paper,
+                borderRadius: 20,
+                padding: theme.spacing(20, 36, 24, 20),
+              }}
+              inputSx={{
+                '& input': {
+                  fontSize: 32,
+                  typography: 'h2',
+                  border: 'none',
+                  outline: 'none',
+                  padding: 0,
+                  color: 'text.primary',
+                  '&::placeholder': {
+                    fontSize: 32,
+                    typography: 'h2',
+                    color: 'text.disabled',
+                  },
+                },
+              }}
+              title="Sell"
+              token={fromToken}
+              side="from"
+              amt={fromFinalAmt}
+              defaultLoadBalance
+              onMaxClick={handleMaxClick}
+              onInputChange={updateFromAmt}
+              onInputFocus={onFromTokenInputFocus}
+              showMaxBtn={!isReverseRouting && !displayingFromAmt}
+              occupiedAddrs={[toToken?.address ?? '']}
+              occupiedChainId={toToken?.chainId}
+              fiatPriceTxt={
+                displayFromFiatPrice
+                  ? `$${formatReadableNumber({
+                      input: displayFromFiatPrice,
+                      showDecimals: 1,
+                    })}`
+                  : '-'
+              }
+              onTokenChange={onFromTokenChange}
+              readOnly={isReverseRouting}
+              showChainLogo={!onlyChainId}
+              showChainName={!onlyChainId}
+            />
+            <Box
+              component={ButtonBase}
+              sx={{
+                width: 36,
+                height: 36,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%) rotate(90deg)',
+                [theme.breakpoints.up('laptop')]: {
+                  transform: 'translate(-50%, -50%) rotate(0deg)',
+                },
+                color: 'text.secondary',
+                ...(disabledSwitch
+                  ? {
+                      cursor: 'inherit',
+                    }
+                  : {
+                      '&:hover': {
+                        color: 'text.primary',
+                      },
+                      '&:focus-visible': {
+                        '&::before': {
+                          content: '""',
+                          position: 'absolute',
+                          display: 'block',
+                          left: '50%',
+                          top: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          borderRadius: '50%',
+                          width: 36 - 8,
+                          height: 36 - 8,
+                          border: 'solid 1px',
+                          borderColor: 'text.primary',
+                        },
+                      },
+                    }),
+              }}
+              disabled={disabledSwitch}
+              onClick={() => {
+                if (disabledSwitch) return;
+                if (switchTokens) {
+                  switchTokens();
+                }
+              }}
+            >
+              <Box
+                component={ArrowRight}
+                sx={{
+                  width: 36,
+                  height: 36,
+                }}
+              />
+            </Box>
+            <TokenCard
+              sx={{
+                flex: 1,
+                backgroundColor: theme.palette.background.paper,
+                borderRadius: 20,
+                padding: theme.spacing(20, 36, 24, 20),
+              }}
+              inputSx={{
+                '& input': {
+                  fontSize: 32,
+                  typography: 'h2',
+                  border: 'none',
+                  outline: 'none',
+                  padding: 0,
+                  color: 'text.primary',
+                  '&::placeholder': {
+                    fontSize: 32,
+                    typography: 'h2',
+                    color: 'text.disabled',
+                  },
+                },
+              }}
+              title="Buy"
+              token={toToken}
+              side="to"
+              amt={toFinalAmt}
+              onInputChange={updateToAmt}
+              onInputFocus={onToTokenInputFocus}
+              occupiedAddrs={[fromToken?.address ?? '']}
+              occupiedChainId={fromToken?.chainId}
+              fiatPriceTxt={
+                displayToFiatPrice
+                  ? `$${formatReadableNumber({
+                      input: displayToFiatPrice,
+                      showDecimals: 1,
+                    })}(${displayPriceImpact}%)`
+                  : '-'
+              }
+              onTokenChange={onToTokenChange}
+              readOnly={isBridge || !isReverseRouting}
+              showChainLogo={!onlyChainId}
+              showChainName={!onlyChainId}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'stretch',
+              gap: 12,
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                typography: 'body2',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+              }}
+            >
+              {priceInfo}
+            </Box>
+            <Box
+              sx={{
+                alignSelf: 'stretch',
+                [theme.breakpoints.up('laptop')]: {
+                  alignSelf: 'center',
+                  width: '100%',
+                  maxWidth: 480,
+                },
+              }}
+            >
+              {swapButton}
+            </Box>
           </Box>
         </Box>
 
-        {/* Swap Button  */}
-        {swapButton}
-
-        {/*Footer*/}
-        {noPowerBy ? (
-          ''
-        ) : (
-          <Box
-            sx={{
-              mt: 13,
-              display: 'flex',
-              typography: 'h6',
-              cursor: 'pointer',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: theme.palette.text.disabled,
-            }}
-            onClick={() => window.open(AppUrl)}
-          >
-            <Box
-              sx={{
-                width: 18,
-                height: 18,
-                transform: 'translate(1px, 2px)',
-                '& path': {
-                  fill: theme.palette.text.disabled,
-                },
-              }}
-              component={Dodo}
-            />
-            <Trans>Powered by DODO protocol</Trans>
-          </Box>
-        )}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 8,
+            [theme.breakpoints.up('laptop')]: {
+              flexDirection: 'column',
+              alignItems: 'stretch',
+              gap: 12,
+              width: 330,
+              flexShrink: 0,
+            },
+          }}
+        >
+          <SwapInfoCard
+            path={
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12.8002 7.99998C12.8002 8.21998 12.7869 8.42664 12.7602 8.62664L14.1002 9.67998C14.2269 9.77331 14.2602 9.93998 14.1802 10.0866L12.9002 12.3C12.8202 12.4466 12.6536 12.5 12.5069 12.4466L10.9136 11.8066C10.5869 12.06 10.2269 12.2733 9.83357 12.4333L9.59357 14.1266C9.57357 14.2866 9.44024 14.4 9.28024 14.4H6.72024C6.56024 14.4 6.43357 14.2866 6.40024 14.1266L6.16024 12.4333C5.7669 12.2733 5.41357 12.06 5.08024 11.8066L3.4869 12.4466C3.34024 12.4933 3.17357 12.4466 3.09357 12.3L1.81357 10.0866C1.74024 9.95331 1.77357 9.77331 1.89357 9.67998L3.2469 8.62664C3.21357 8.42664 3.20024 8.20664 3.20024 7.99998C3.20024 7.79331 3.2269 7.57331 3.26024 7.37331L1.9069 6.31998C1.77357 6.22664 1.7469 6.05331 1.8269 5.91331L3.10024 3.69998C3.18024 3.55331 3.3469 3.49998 3.49357 3.55331L5.0869 4.19331C5.41357 3.94664 5.77357 3.72664 6.1669 3.56664L6.4069 1.87331C6.43357 1.71331 6.56024 1.59998 6.72024 1.59998H9.28024C9.44024 1.59998 9.57357 1.71331 9.60024 1.87331L9.84024 3.56664C10.2336 3.72664 10.5869 3.93998 10.9202 4.19331L12.5136 3.55331C12.6602 3.50664 12.8269 3.55331 12.9069 3.69998L14.1869 5.91331C14.2602 6.04664 14.2269 6.22664 14.1069 6.31998L12.7536 7.37331C12.7869 7.57331 12.8002 7.78664 12.8002 7.99998ZM5.60034 7.99998C5.60034 9.31998 6.68034 10.4 8.00034 10.4C9.32034 10.4 10.4003 9.31998 10.4003 7.99998C10.4003 6.67998 9.32034 5.59998 8.00034 5.59998C6.68034 5.59998 5.60034 6.67998 5.60034 7.99998Z"
+                fill="currentColor"
+              />
+            }
+            title={'Slippage'}
+            value={`${slippageSwap}%`}
+            description={
+              'The dynamic slippage is provide through analyzing historical transactions'
+            }
+            onClick={() => setIsSettingsDialogOpen(true)}
+          />
+          <SwapInfoCard
+            path={
+              <path
+                d="M8.66667 4.66669H2V6.66669H14L8.66667 1.66669V4.66669ZM7 14.3334V11.3334H14V9.33335H2L7 14.3334Z"
+                fill="currentColor"
+              />
+            }
+            title={'Rate'}
+            value={
+              priceToggle.rightAmount
+                ? formatReadableNumber({
+                    input: priceToggle.rightAmount,
+                    showDecimals: 4,
+                  })
+                : '-'
+            }
+            description={`${priceToggle.leftSymbol}/${priceToggle.rightSymbol}`}
+            descriptionVisibleInMobile
+            onClick={priceToggle.handleSwitch}
+          />
+        </Box>
       </Box>
 
       {/* Dialogs */}

@@ -1,21 +1,26 @@
 import { Box, Button, ButtonBase, Tooltip, useTheme } from '@dodoex/components';
 import { Plus as PlusIcon } from '@dodoex/icons';
-import { t, Trans } from '@lingui/macro';
+import { Trans } from '@lingui/macro';
 import React from 'react';
+import Dialog from '../../../../components/Dialog';
 import { useUserOptions } from '../../../../components/UserOptionsProvider';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../../router';
 import { PageType } from '../../../../router/types';
-import Dialog from '../../../../components/Dialog';
+import { ReactComponent as AmmV2Icon } from '../assets/amm.svg';
+import { ReactComponent as AmmV3Icon } from '../assets/amm.svg';
+import { ReactComponent as PmmIcon } from '../assets/pmm.svg';
 
 function CreateItem({
   onClick,
   title,
   desc,
+  icon,
 }: {
   onClick: () => void;
   title: React.ReactNode;
   desc: React.ReactNode;
+  icon: React.ReactNode;
 }) {
   const theme = useTheme();
 
@@ -39,8 +44,8 @@ function CreateItem({
         sx={{
           width: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          gap: 0,
+          alignItems: 'center',
+          gap: 8,
           p: 0,
           borderRadius: 8,
           '&:hover': {
@@ -53,21 +58,42 @@ function CreateItem({
       >
         <Box
           sx={{
-            typography: 'body1',
-            fontWeight: 600,
-            color: theme.palette.text.primary,
+            width: 32,
+            height: 32,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 8,
+            backgroundColor: '#C9EB62',
           }}
         >
-          {title}
+          {icon}
         </Box>
         <Box
           sx={{
-            typography: 'h6',
-            fontWeight: 500,
-            color: theme.palette.text.secondary,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
           }}
         >
-          {desc}
+          <Box
+            sx={{
+              typography: 'body1',
+              fontWeight: 600,
+              color: theme.palette.text.primary,
+            }}
+          >
+            {title}
+          </Box>
+          <Box
+            sx={{
+              typography: 'h6',
+              fontWeight: 500,
+              color: theme.palette.text.secondary,
+            }}
+          >
+            {desc}
+          </Box>
         </Box>
       </ButtonBase>
     </Box>
@@ -101,6 +127,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
       <>
         {!notSupportPMM && (
           <CreateItem
+            icon={<PmmIcon />}
             onClick={() => {
               useRouterStore.getState().push({
                 type: PageType.CreatePool,
@@ -112,6 +139,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
         )}
         {supportAMMV2 && (
           <CreateItem
+            icon={<AmmV2Icon />}
             onClick={() => {
               useRouterStore.getState().push({
                 type: PageType.createPoolAMMV2,
@@ -123,6 +151,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
         )}
         {supportAMMV3 && (
           <CreateItem
+            icon={<AmmV3Icon />}
             onClick={() => {
               useRouterStore.getState().push({
                 type: PageType.createPoolAMMV3,
@@ -138,7 +167,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
       return (
         <>
           <Button
-            variant={Button.Variant.outlined}
+            variant={Button.Variant.darken}
             fullWidth={isMobile}
             onClick={() => {
               setSelectTypeModalOpen(true);
@@ -175,7 +204,9 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
         placement={isMobile ? 'bottom' : 'bottom-end'}
         sx={{
           p: 0,
+          borderRadius: 16,
           backgroundColor: 'background.paper',
+          boxShadow: '0px 0px 12px 0px rgba(0, 0, 0, 0.10)',
         }}
         title={<Box>{items}</Box>}
       >
@@ -190,14 +221,13 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
             pr: 16,
             py: 7,
             borderRadius: 8,
-            borderWidth: 1,
-            borderColor: theme.palette.text.primary,
             typography: 'body1',
             fontWeight: 600,
-            color: theme.palette.text.primary,
-            cursor: 'pointer',
+            color: '#C9EB62',
+            backgroundColor: '#123329',
             '&:hover': {
-              backgroundColor: theme.palette.background.tag,
+              color: '#C9EB62',
+              backgroundColor: '#123329',
             },
           }}
         >
@@ -210,7 +240,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
 
   return (
     <Button
-      variant={Button.Variant.outlined}
+      variant={Button.Variant.darken}
       fullWidth={isMobile}
       onClick={() => {
         useRouterStore.getState().push({

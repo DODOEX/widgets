@@ -1,4 +1,4 @@
-import { Box, Modal } from '@dodoex/components';
+import { Box, BoxProps, Modal } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
 import { createPortal } from 'react-dom';
 import { useUserOptions } from '../../UserOptionsProvider';
@@ -108,13 +108,17 @@ function ModalDialog({
   children,
   height,
   testId,
-}: DialogProps) {
+  modalContainerSx,
+}: DialogProps & {
+  modalContainerSx?: BoxProps['sx'];
+}) {
   return (
     <Modal
       open={open}
       onClose={onClose}
       data-testid={testId}
       data-active={open ? '1' : '0'}
+      containerSx={modalContainerSx}
     >
       <Box
         sx={{
@@ -169,6 +173,7 @@ export default function Dialog({
   ...props
 }: DialogProps & {
   modal?: boolean;
+  modalContainerSx?: BoxProps['sx'];
 }) {
   const { widgetRef, DialogComponent } = useUserOptions();
 

@@ -1,4 +1,4 @@
-import { Box, useTheme, ButtonBase } from '@dodoex/components';
+import { Box, useTheme, ButtonBase, BoxProps } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import TokenLogo from '../../../TokenLogo';
 import { swapSelectTokenBtn } from '../../../../constants/testId';
@@ -8,15 +8,21 @@ import { chainListMap } from '../../../../constants/chainList';
 export function TokenLogoCollapse({
   token,
   onClick,
+  tokenLogoSize = 30,
   showChainLogo,
   readonly,
   showChainName: showChainNameProps,
+  sx,
+  symbolSx,
 }: {
   token?: TokenInfo | null;
+  tokenLogoSize?: number;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   showChainLogo?: boolean;
   readonly?: boolean;
   showChainName?: boolean;
+  sx?: BoxProps['sx'];
+  symbolSx?: BoxProps['sx'];
 }) {
   const theme = useTheme();
   const chain = token?.chainId ? chainListMap.get(token.chainId) : null;
@@ -34,6 +40,7 @@ export function TokenLogoCollapse({
         '&:focus-visible': {
           opacity: 0.5,
         },
+        ...sx,
       }}
       onClick={(e: any) => {
         if (readonly) return;
@@ -47,15 +54,15 @@ export function TokenLogoCollapse({
           address={token?.address ?? ''}
           chainId={token?.chainId}
           noShowChain={!showChainLogo}
-          width={30}
-          height={30}
+          width={tokenLogoSize}
+          height={tokenLogoSize}
           chainSize={16}
           logoOffset={10}
           marginRight={0}
         />
       )}
       <Box>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', ...symbolSx }}>
           {token?.address ? (
             <>
               <Box>{token?.symbol ?? '-'}</Box>

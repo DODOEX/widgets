@@ -29,7 +29,6 @@ export function CardStatus({
   children,
   refetch,
 }: React.PropsWithChildren<{
-  isMobile?: boolean;
   loading: boolean;
   empty: boolean;
   hasSearch?: boolean;

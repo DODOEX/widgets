@@ -1,7 +1,7 @@
-import { Box, Button, useTheme, Modal } from '@dodoex/components';
+import { Box, Button, useTheme } from '@dodoex/components';
+import { ArrowBack } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import React from 'react';
-import GoBack from '../../../components/GoBack';
 import WidgetConfirm from '../../../components/WidgetConfirm';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
@@ -16,6 +16,7 @@ import MoreDetail from './components/MoreDetail';
 import Overview from './components/Overview';
 import TitleInfo from './components/TitleInfo';
 import TotalLiquidity from './components/TotalLiquidity';
+import GoBack from '../../../components/GoBack';
 
 export default function PoolDetail({
   params,
@@ -67,9 +68,11 @@ export default function PoolDetail({
           ...pool,
           baseLpToken: {
             id: pool.baseLpToken?.id as string,
+            decimals: Number(pool.baseLpToken?.decimals ?? 18),
           },
           quoteLpToken: {
             id: pool.quoteLpToken?.id as string,
+            decimals: Number(pool.quoteLpToken?.decimals ?? 18),
           },
         }
       : undefined;
@@ -81,20 +84,68 @@ export default function PoolDetail({
       sx={
         isMobile
           ? {
-              p: theme.spacing(28, 20, canOperate ? 108 : 0),
+              p: theme.spacing(0, 0, canOperate ? 88 : 0),
+              backgroundColor: 'transparent',
             }
           : {
-              p: theme.spacing(28, 40, 40),
+              backgroundColor: 'transparent',
+              padding: 0,
             }
       }
     >
-      <GoBack
-        onClick={() => {
-          router.push({
-            type: PageType.Pool,
-          });
-        }}
-      />
+      {isMobile ? (
+        <Box
+          sx={{
+            backgroundColor: 'background.default',
+          }}
+        >
+          <GoBack
+            onClick={() => {
+              router.push({
+                type: PageType.Pool,
+              });
+            }}
+            sx={{
+              px: 20,
+              pt: 20,
+            }}
+          />
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            mb: 12,
+            py: 24,
+            px: 20,
+            borderRadius: 20,
+            backgroundColor: 'background.default',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: 12,
+            [theme.breakpoints.up('tablet')]: {
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            },
+          }}
+        >
+          <Box
+            component={ArrowBack}
+            sx={{
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              router.push({
+                type: PageType.Pool,
+              });
+            }}
+          />
+          <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
+        </Box>
+      )}
+
       <Box
         sx={
           isMobile
@@ -110,9 +161,16 @@ export default function PoolDetail({
           sx={{
             flex: 1,
             overflow: 'hidden',
+            padding: 20,
+            backgroundColor: 'background.default',
+            [theme.breakpoints.up('tablet')]: {
+              borderRadius: 20,
+            },
           }}
         >
-          <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
+          {isMobile && (
+            <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
+          )}
           <ChartInfo poolDetail={pool} chart24hDataFirst />
           <Overview poolDetail={pool} />
           <TotalLiquidity poolDetail={pool} />
@@ -138,8 +196,6 @@ export default function PoolDetail({
             sx={{
               width: 375,
               height: 'max-content',
-              backgroundColor: 'background.paper',
-              borderRadius: 16,
               overflow: 'hidden',
             }}
             pool={operatePool}

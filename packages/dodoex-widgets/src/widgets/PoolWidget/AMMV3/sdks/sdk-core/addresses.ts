@@ -3,7 +3,15 @@ import { ChainId, SUPPORTED_CHAINS, SupportedChainsType } from './chains';
 type AddressMap = { [chainId: number]: string };
 
 type ChainAddresses = {
+  /**
+   * UniswapV3Factory
+   * @see https://taikoscan.io/address/0x78172691DD3B8ADa7aEbd9bFfB487FB11D735DB2?tab=contract#code
+   */
   v3CoreFactoryAddress: string;
+  /**
+   * NonfungiblePositionManager
+   * @see https://taikoscan.io/address/0x2623281DdcC34A73a9e8898f2c57A32A860903f1?tab=contract#code
+   */
   nonfungiblePositionManagerAddress?: string;
 };
 
@@ -28,6 +36,12 @@ const SEPOLIA_ADDRESSES: ChainAddresses = {
     '0x483E5c0f309577f79b0a19cE65E332DD388aD7A8',
 };
 
+const TAIKO_ADDRESSES: ChainAddresses = {
+  v3CoreFactoryAddress: '0x78172691DD3B8ADa7aEbd9bFfB487FB11D735DB2',
+  nonfungiblePositionManagerAddress:
+    '0x2623281DdcC34A73a9e8898f2c57A32A860903f1',
+};
+
 export const CHAIN_TO_ADDRESSES_MAP: Record<
   SupportedChainsType,
   ChainAddresses
@@ -35,8 +49,7 @@ export const CHAIN_TO_ADDRESSES_MAP: Record<
   [ChainId.MAINNET]: MAINNET_ADDRESSES,
   [ChainId.ARBITRUM_ONE]: ARBITRUM_ONE_ADDRESSES,
   [ChainId.SEPOLIA]: SEPOLIA_ADDRESSES,
-  // TODO
-  [ChainId.TAIKO]: SEPOLIA_ADDRESSES,
+  [ChainId.TAIKO]: TAIKO_ADDRESSES,
 };
 
 /* V3 Contract Addresses */

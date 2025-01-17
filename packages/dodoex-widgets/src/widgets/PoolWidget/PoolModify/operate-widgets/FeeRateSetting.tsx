@@ -1,7 +1,7 @@
 import { Box, Button, QuestionTooltip, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import React from 'react';
-import Dialog from '../../../../components/WidgetDialog';
+import Dialog from '../../../../components/Swap/components/Dialog';
 import RadioButton from '../../PoolCreate/components/RadioButton';
 import { RadioButtonTag } from '../../PoolCreate/components/RadioButtonTag';
 import { SelectAndInput } from '../../PoolCreate/components/SelectAndInput';
@@ -98,6 +98,7 @@ export function FeeRateSetting({
             />
           </Box>
         }
+        modal
       >
         <Box
           sx={{

@@ -1,18 +1,33 @@
-import { alpha, Box, Button, useTheme, Tooltip } from '@dodoex/components';
-import { PoolApi, PoolType } from '@dodoex/api';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import InfiniteScroll from 'react-infinite-scroller';
+import { ChainId, PoolApi, PoolType } from '@dodoex/api';
 import {
-  convertFetchLiquidityToOperateData,
-  convertLiquidityTokenToTokenInfo,
-  FetchLiquidityListLqList,
-  getPoolAMMOrPMM,
-} from '../utils';
-import { ChainId } from '@dodoex/api';
-import React from 'react';
-import { TokenLogoPair } from '../../../components/TokenLogoPair';
-import { Trans, t } from '@lingui/macro';
+  alpha,
+  Box,
+  Button,
+  createTheme,
+  ThemeProvider,
+  Tooltip,
+  useTheme,
+} from '@dodoex/components';
+import { t, Trans } from '@lingui/macro';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
+import { debounce } from 'lodash';
+import React from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
+import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
+import { CardStatus } from '../../../components/CardWidgets';
+import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
+import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
+import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
+import { EmptyList } from '../../../components/List/EmptyList';
+import { FailedList } from '../../../components/List/FailedList';
+import SelectChain from '../../../components/SelectChain';
+import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { useRouterStore } from '../../../router';
+import { PageType } from '../../../router/types';
 import {
   byWei,
   formatApy,
@@ -20,34 +35,26 @@ import {
   formatPercentageNumber,
   formatReadableNumber,
 } from '../../../utils';
-import PoolApyTooltip from './components/PoolApyTooltip';
-import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
-import { debounce } from 'lodash';
-import LoadingCard from './components/LoadingCard';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { usePoolListFilterTokenAndPool } from './hooks/usePoolListFilterTokenAndPool';
-import SelectChain from '../../../components/SelectChain';
-import TokenAndPoolFilter from './components/TokenAndPoolFilter';
-import TokenListPoolItem from './components/TokenListPoolItem';
-import { EmptyList } from '../../../components/List/EmptyList';
-import { FailedList } from '../../../components/List/FailedList';
-import FilterAddressTags from './components/FilterAddressTags';
-import FilterTokenTags from './components/FilterTokenTags';
-import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
-import { PoolOperateProps } from '../PoolOperate';
-import { useRouterStore } from '../../../router';
-import { PageType } from '../../../router/types';
-import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
-import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
-import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
-import LiquidityTable from './components/LiquidityTable';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
-import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { CardStatus } from '../../../components/CardWidgets';
-import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
-import GoPoolDetailBtn from './components/GoPoolDetailBtn';
 import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
 import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
+import { PoolOperateProps } from '../PoolOperate';
+import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
+import {
+  convertFetchLiquidityToOperateData,
+  convertLiquidityTokenToTokenInfo,
+  FetchLiquidityListLqList,
+  getPoolAMMOrPMM,
+} from '../utils';
+import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
+import FilterAddressTags from './components/FilterAddressTags';
+import FilterTokenTags from './components/FilterTokenTags';
+import GoPoolDetailBtn from './components/GoPoolDetailBtn';
+import LiquidityTable from './components/LiquidityTable';
+import LoadingCard from './components/LoadingCard';
+import PoolApyTooltip from './components/PoolApyTooltip';
+import TokenAndPoolFilter from './components/TokenAndPoolFilter';
+import TokenListPoolItem from './components/TokenListPoolItem';
+import { usePoolListFilterTokenAndPool } from './hooks/usePoolListFilterTokenAndPool';
 
 function CardList({
   lqList,
@@ -88,6 +95,8 @@ function CardList({
               )
             : undefined;
         const hasMining = !!item.miningAddress?.[0];
+        const hasMetromMining =
+          !!item.apy?.metromMiningApy && Number(item.apy?.metromMiningApy) > 0;
 
         const type = item.type as PoolType;
         const poolType = getPoolAMMOrPMM(type);
@@ -101,7 +110,7 @@ function CardList({
               px: 20,
               pt: 20,
               pb: 12,
-              backgroundColor: 'background.paper',
+              backgroundColor: theme.palette.tabActive.main,
               borderRadius: 16,
             }}
             className="gradient-card-border"
@@ -156,7 +165,7 @@ function CardList({
                   />
                 </Box>
               </Box>
-              {hasMining ? (
+              {hasMining || hasMetromMining ? (
                 <Box
                   sx={{
                     p: 8,
@@ -180,32 +189,20 @@ function CardList({
             {/* info */}
             <Box
               sx={{
+                mt: 28,
                 display: 'grid',
                 gridTemplateColumns: 'repeat(2, 1fr)',
-                rowGap: 20,
-                mt: 44,
-                '& > div:nth-child(odd)': {
-                  pr: 20,
-                },
-                '& > div:nth-child(even)': {
-                  position: 'relative',
-                  pl: 20,
-                  '&::before': {
-                    position: 'absolute',
-                    left: 0,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    display: 'inline-block',
-                    content: '""',
-                    height: 24,
-                    width: '1px',
-                    backgroundColor: 'border.main',
-                  },
-                },
+                gap: 8,
               }}
             >
               {supportAMM && (
-                <Box>
+                <Box
+                  sx={{
+                    backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                    borderRadius: 8,
+                    p: 12,
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
@@ -250,7 +247,13 @@ function CardList({
                 </Box>
               )}
 
-              <Box>
+              <Box
+                sx={{
+                  backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                  borderRadius: 8,
+                  p: 12,
+                }}
+              >
                 <Box
                   sx={{
                     typography: 'h5',
@@ -284,7 +287,13 @@ function CardList({
                 </Box>
               </Box>
 
-              <Box>
+              <Box
+                sx={{
+                  backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                  borderRadius: 8,
+                  p: 12,
+                }}
+              >
                 <Box
                   sx={{
                     typography: 'h5',
@@ -303,12 +312,19 @@ function CardList({
               </Box>
 
               {supportAMM && (
-                <Box>
+                <Box
+                  sx={{
+                    backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                    borderRadius: 8,
+                    p: 12,
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
                       gap: 4,
+                      typography: 'h5',
                     }}
                   >
                     ${formatReadableNumber({ input: item.volume24H || 0 })}
@@ -329,12 +345,13 @@ function CardList({
               sx={{
                 mt: 20,
                 display: 'flex',
-                gap: '8px',
+                gap: 4,
               }}
             >
               <NeedConnectButton
                 fullWidth
                 size={Button.Size.small}
+                variant={Button.Variant.darken}
                 onClick={(evt) => {
                   evt.stopPropagation();
                   setOperatePool({
@@ -373,7 +390,6 @@ function TableList({
   loadMoreLoading?: boolean;
   supportAMM?: boolean;
 }) {
-  const theme = useTheme();
   return (
     <LiquidityTable
       hasMore={hasMore}
@@ -453,106 +469,108 @@ function TableList({
           }
 
           const hasMining = !!item.miningAddress?.[0];
+          const hasMetromMining =
+            !!item.apy?.metromMiningApy &&
+            Number(item.apy?.metromMiningApy) > 0;
 
           const type = item.type as PoolType;
           const poolType = getPoolAMMOrPMM(type);
           const isAMMV2 = type === 'AMMV2';
           const isAMMV3 = type === 'AMMV3';
 
-          const hoverBg = theme.palette.background.tag;
+          const mt = 6;
+          const mb = 6;
+          const currentTheme = createTheme({
+            mode: operateBtnText ? 'dark' : 'light',
+            theme: undefined,
+            lang: 'en-US',
+          });
           return (
-            <Box
-              component="tr"
-              key={item.id + item.chainId}
-              sx={{
-                [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
-                  backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
-                },
-              }}
-            >
-              <Box component="td">
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  {baseToken && quoteToken ? (
-                    <TokenLogoPair
-                      tokens={[baseToken, quoteToken]}
-                      width={24}
-                      mr={10}
-                      chainId={item.chainId}
-                      showChainLogo
-                    />
-                  ) : (
-                    ''
-                  )}
-                  <Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 4,
-                        typography: 'body2',
-                        fontWeight: 600,
-                      }}
-                    >
-                      {`${baseToken?.symbol}/${quoteToken?.symbol}`}
-                      <LiquidityLpPartnerReward
-                        address={item.id}
-                        chainId={item.chainId}
-                      />
-                    </Box>
-                    <AddressWithLinkAndCopy
-                      address={item.id}
-                      customChainId={item.chainId}
-                      truncate
-                      showCopy
-                      iconDarkHover
-                      iconSize={14}
-                      iconSpace={4}
-                      sx={{
-                        typography: 'h6',
-                        color: 'text.secondary',
-                      }}
-                      disabledAddress={supportAMM}
-                      onAddressClick={() => {
-                        useRouterStore.getState().push({
-                          type: PageType.PoolDetail,
-                          params: {
-                            chainId: item.chainId as ChainId,
-                            address: item.id as string,
-                          },
-                        });
-                      }}
-                    />
-                  </Box>
-                </Box>
-              </Box>
-              {supportAMM && (
+            <ThemeProvider theme={currentTheme} key={item.id + item.chainId}>
+              <Box component="tr">
                 <Box component="td">
                   <Box
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: 4,
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      borderTopLeftRadius: 12,
+                      borderBottomLeftRadius: 12,
+                      backgroundColor: 'background.paper',
                     }}
                   >
+                    {baseToken && quoteToken ? (
+                      <TokenLogoPair
+                        tokens={[baseToken, quoteToken]}
+                        width={24}
+                        mr={10}
+                        chainId={item.chainId}
+                        showChainLogo
+                      />
+                    ) : (
+                      ''
+                    )}
+                    <Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 4,
+                          typography: 'body2',
+                          fontWeight: 600,
+                          color: 'text.primary',
+                        }}
+                      >
+                        {`${baseToken?.symbol}/${quoteToken?.symbol}`}
+                        <LiquidityLpPartnerReward
+                          address={item.id}
+                          chainId={item.chainId}
+                        />
+                      </Box>
+                      <AddressWithLinkAndCopy
+                        address={item.id}
+                        customChainId={item.chainId}
+                        truncate
+                        showCopy
+                        iconDarkHover
+                        iconSize={14}
+                        iconSpace={4}
+                        sx={{
+                          typography: 'h6',
+                          color: 'text.secondary',
+                        }}
+                        disabledAddress={supportAMM}
+                        onAddressClick={() => {
+                          useRouterStore.getState().push({
+                            type: PageType.PoolDetail,
+                            params: {
+                              chainId: item.chainId as ChainId,
+                              address: item.id as string,
+                            },
+                          });
+                        }}
+                      />
+                    </Box>
+                  </Box>
+                </Box>
+                {supportAMM && (
+                  <Box component="td">
                     <Box
                       sx={{
-                        px: 8,
-                        py: 4,
-                        borderRadius: 4,
-                        typography: 'h6',
-                        backgroundColor: 'background.tag',
-                        color: 'text.secondary',
-                        whiteSpace: 'nowrap',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 4,
+                        minHeight: 79,
+                        mt,
+                        mb,
+                        py: 20,
+                        px: 24,
+                        backgroundColor: 'background.paper',
                       }}
                     >
-                      {poolType}
-                    </Box>
-                    <Tooltip title={<Trans>Fee rate</Trans>}>
                       <Box
                         sx={{
                           px: 8,
@@ -561,125 +579,180 @@ function TableList({
                           typography: 'h6',
                           backgroundColor: 'background.tag',
                           color: 'text.secondary',
+                          whiteSpace: 'nowrap',
                         }}
                       >
-                        {isAMMV3
-                          ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
-                              ?.label ?? '-')
-                          : formatPercentageNumber({
-                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                                item.mtFeeRate
-                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
-                                  : 0,
-                              ),
-                            })}
+                        {poolType}
                       </Box>
-                    </Tooltip>
+                      <Tooltip title={<Trans>Fee rate</Trans>}>
+                        <Box
+                          sx={{
+                            px: 8,
+                            py: 4,
+                            borderRadius: 4,
+                            typography: 'h6',
+                            backgroundColor: 'background.tag',
+                            color: 'text.secondary',
+                          }}
+                        >
+                          {isAMMV3
+                            ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
+                                ?.label ?? '-')
+                            : formatPercentageNumber({
+                                input: new BigNumber(item.lpFeeRate ?? 0).plus(
+                                  item.mtFeeRate
+                                    ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
+                                    : 0,
+                                ),
+                              })}
+                        </Box>
+                      </Tooltip>
+                    </Box>
+                  </Box>
+                )}
+                <Box component="td">
+                  <Box
+                    sx={{
+                      typography: 'body2',
+                      minHeight: 79,
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      backgroundColor: 'background.paper',
+                      display: 'flex',
+                      alignItems: 'center',
+                      color: 'text.primary',
+                    }}
+                    title={
+                      item.tvl
+                        ? `$${formatReadableNumber({
+                            input: item.tvl,
+                          })}`
+                        : undefined
+                    }
+                  >
+                    ${formatExponentialNotation(new BigNumber(item.tvl))}
                   </Box>
                 </Box>
-              )}
-              <Box component="td">
-                <Box
-                  sx={{
-                    typography: 'body2',
-                  }}
-                  title={
-                    item.tvl
-                      ? `$${formatReadableNumber({
-                          input: item.tvl,
-                        })}`
-                      : undefined
-                  }
-                >
-                  ${formatExponentialNotation(new BigNumber(item.tvl))}
-                </Box>
-              </Box>
-              <Box component="td">
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  {hasMining ? (
-                    <Tooltip title={t`Mining`}>
+                <Box component="td">
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      minHeight: 79,
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      backgroundColor: 'background.paper',
+                    }}
+                  >
+                    {hasMining || hasMetromMining ? (
+                      <Tooltip title={t`Mining`}>
+                        <Box
+                          component="span"
+                          sx={{
+                            typography: 'body2',
+                            color: 'success.main',
+                          }}
+                        >
+                          ✨{' '}
+                        </Box>
+                      </Tooltip>
+                    ) : (
+                      ''
+                    )}
+                    <PoolApyTooltip
+                      chainId={item.chainId}
+                      apy={item.apy}
+                      baseToken={baseToken}
+                      quoteToken={quoteToken}
+                      hasQuote={!!quoteApy}
+                      hasMining={hasMining}
+                    >
                       <Box
                         component="span"
                         sx={{
                           typography: 'body2',
+                          fontWeight: 600,
+                          display: 'flex',
+                          alignItems: 'center',
+                          width: 'max-content',
                           color: 'success.main',
+                          cursor: 'auto',
                         }}
                       >
-                        ✨{' '}
+                        {baseApy}
+                        {quoteApy ? `/${quoteApy}` : ''}
                       </Box>
-                    </Tooltip>
-                  ) : (
-                    ''
-                  )}
-                  <PoolApyTooltip
-                    chainId={item.chainId}
-                    apy={item.apy}
-                    baseToken={baseToken}
-                    quoteToken={quoteToken}
-                    hasQuote={!!quoteApy}
-                    hasMining={hasMining}
-                  >
+                    </PoolApyTooltip>
+                  </Box>
+                </Box>
+                {supportAMM && (
+                  <Box component="td">
                     <Box
-                      component="span"
                       sx={{
-                        typography: 'body2',
-                        fontWeight: 600,
+                        minHeight: 79,
+                        mt,
+                        mb,
+                        py: 20,
+                        px: 24,
+                        backgroundColor: 'background.paper',
                         display: 'flex',
                         alignItems: 'center',
-                        width: 'max-content',
-                        color: 'success.main',
-                        cursor: 'auto',
+                        color: 'text.primary',
                       }}
                     >
-                      {baseApy}
-                      {quoteApy ? `/${quoteApy}` : ''}
+                      ${formatReadableNumber({ input: item.volume24H || 0 })}
                     </Box>
-                  </PoolApyTooltip>
-                </Box>
-              </Box>
-              {supportAMM && (
+                  </Box>
+                )}
                 <Box component="td">
-                  ${formatReadableNumber({ input: item.volume24H || 0 })}
-                </Box>
-              )}
-              <Box component="td">
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
-                    gap: '8px',
-                  }}
-                >
-                  {supportAMM && poolType === 'PMM' && (
-                    <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
-                  )}
-                  {operateBtnText ? (
-                    <AddingOrRemovingBtn
-                      text={operateBtnText}
-                      onClick={() => setOperatePool(null)}
-                    />
-                  ) : (
-                    <Button
-                      size={Button.Size.small}
-                      onClick={() => {
-                        setOperatePool({
-                          pool: convertFetchLiquidityToOperateData(lq),
-                          hasMining,
-                        });
-                      }}
-                    >
-                      {t`Add`}
-                    </Button>
-                  )}
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'flex-end',
+                      gap: '8px',
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      backgroundColor: 'background.paper',
+                      minHeight: 79,
+                      borderTopRightRadius: 12,
+                      borderBottomRightRadius: 12,
+                    }}
+                  >
+                    {supportAMM && poolType === 'PMM' && (
+                      <GoPoolDetailBtn
+                        chainId={item.chainId}
+                        address={item.id}
+                      />
+                    )}
+                    {operateBtnText ? (
+                      <AddingOrRemovingBtn
+                        text={operateBtnText}
+                        onClick={() => setOperatePool(null)}
+                      />
+                    ) : (
+                      <Button
+                        size={Button.Size.small}
+                        onClick={() => {
+                          setOperatePool({
+                            pool: convertFetchLiquidityToOperateData(lq),
+                            hasMining,
+                          });
+                        }}
+                      >
+                        {t`Add`}
+                      </Button>
+                    )}
+                  </Box>
                 </Box>
               </Box>
-            </Box>
+            </ThemeProvider>
           );
         })}
       </Box>
@@ -788,7 +861,6 @@ export default function AddLiquidityList({
     <>
       <Box
         sx={{
-          py: 16,
           display: 'flex',
           gap: 8,
           ...(minDevice(filterSmallDeviceWidth)
@@ -797,10 +869,14 @@ export default function AddLiquidityList({
                 flexDirection: 'column',
               }),
           ...(isMobile
-            ? {}
+            ? {
+                pt: 16,
+                pb: 16,
+              }
             : {
-                px: 20,
-                borderBottomWidth: 1,
+                px: 24,
+                pt: 24,
+                pb: 20,
               }),
         }}
       >

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, BoxProps } from '../Box';
+import { useTheme } from '../theme';
 
 type RadioProps = {
   sx?: BoxProps['sx'];
@@ -21,6 +22,7 @@ export const Radio = React.forwardRef(function Radio(
   }: RadioProps,
   ref,
 ) {
+  const theme = useTheme();
   const size = sizeProps ?? 20;
   const checkedIconSize = checkedIconSizeProps ?? size / 2 + 2;
   return (
@@ -35,9 +37,12 @@ export const Radio = React.forwardRef(function Radio(
         position: 'relative',
         borderRadius: '50%',
         border: '1px solid',
-        borderColor: other.checked ? 'primary.main' : 'text.secondary',
+        borderColor: other.checked ? '#00D555' : 'text.secondary',
         cursor: 'pointer',
         ...sx,
+        [theme.breakpoints.up('tablet')]: {
+          borderColor: other.checked ? '#000' : 'text.secondary',
+        },
       }}
     >
       <Box
@@ -63,7 +68,10 @@ export const Radio = React.forwardRef(function Radio(
             width: checkedIconSize,
             height: checkedIconSize,
             borderRadius: '50%',
-            backgroundColor: 'primary.main',
+            backgroundColor: '#00D555',
+            [theme.breakpoints.up('tablet')]: {
+              backgroundColor: '#000',
+            },
           }}
         />
       )}

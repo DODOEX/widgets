@@ -1,23 +1,22 @@
-import { useMutation } from '@tanstack/react-query';
-import { TokenInfo } from '../../../hooks/Token';
 import { basicTokenMap, ChainId } from '@dodoex/api';
-import { toWei } from '../../../utils';
-import BigNumber from 'bignumber.js';
-import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
-import { NumberToHex } from '../../../utils/bytes';
-import { OpCode } from '../../../hooks/Submission/spec';
-import { MetadataFlag } from '../../../hooks/Submission/types';
-import { useSubmission } from '../../../hooks/Submission';
-import { t } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
 import {
-  encodeUniswapV2Router02RemoveLiquidityETH,
+  encodeUniswapV2Router02FixedFeeRemoveLiquidity,
+  encodeUniswapV2Router02FixedFeeRemoveLiquidityETH,
   encodeUniswapV2Router02RemoveLiquidity,
+  encodeUniswapV2Router02RemoveLiquidityETH,
   getUniswapV2Router02ContractAddressByChainId,
   getUniswapV2Router02FixedFeeContractAddressByChainId,
-  encodeUniswapV2Router02FixedFeeRemoveLiquidityETH,
-  encodeUniswapV2Router02FixedFeeRemoveLiquidity,
 } from '@dodoex/dodo-contract-request';
+import { t } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { useMutation } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { useSubmission } from '../../../hooks/Submission';
+import { OpCode } from '../../../hooks/Submission/spec';
+import { MetadataFlag } from '../../../hooks/Submission/types';
+import { TokenInfo } from '../../../hooks/Token';
+import { toWei } from '../../../utils';
 
 export function useAMMV2RemoveLiquidity({
   baseToken,
@@ -81,77 +80,82 @@ export function useAMMV2RemoveLiquidity({
       );
       const feeWei = toWei(fee, 4).toString();
       const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
-      if (baseIsETH) {
-        const tokenAddress = quoteToken.address;
-        const tokenInAmountMin = quoteInAmountMinBg.toString();
-        const ethAmountMin = baseInAmountMinBg.toString();
-        if (isFixedFee) {
-          data = encodeUniswapV2Router02FixedFeeRemoveLiquidityETH(
-            tokenAddress,
-            liquidityAmount,
-            tokenInAmountMin,
-            ethAmountMin,
-            account,
-            deadline,
-          );
+      try {
+        if (baseIsETH) {
+          const tokenAddress = quoteToken.address;
+          const tokenInAmountMin = quoteInAmountMinBg.toString();
+          const ethAmountMin = baseInAmountMinBg.toString();
+          if (isFixedFee) {
+            data = encodeUniswapV2Router02FixedFeeRemoveLiquidityETH(
+              tokenAddress,
+              liquidityAmount,
+              tokenInAmountMin,
+              ethAmountMin,
+              account,
+              deadline,
+            );
+          } else {
+            data = encodeUniswapV2Router02RemoveLiquidityETH(
+              tokenAddress,
+              feeWei,
+              liquidityAmount,
+              tokenInAmountMin,
+              ethAmountMin,
+              account,
+              deadline,
+            );
+          }
+        } else if (quoteIsETH) {
+          const tokenAddress = baseToken.address;
+          const tokenInAmountMin = baseInAmountMinBg.toString();
+          const ethAmountMin = quoteInAmountMinBg.toString();
+          if (isFixedFee) {
+            data = encodeUniswapV2Router02FixedFeeRemoveLiquidityETH(
+              tokenAddress,
+              liquidityAmount,
+              tokenInAmountMin,
+              ethAmountMin,
+              account,
+              deadline,
+            );
+          } else {
+            data = encodeUniswapV2Router02RemoveLiquidityETH(
+              tokenAddress,
+              feeWei,
+              liquidityAmount,
+              tokenInAmountMin,
+              ethAmountMin,
+              account,
+              deadline,
+            );
+          }
         } else {
-          data = encodeUniswapV2Router02RemoveLiquidityETH(
-            tokenAddress,
-            feeWei,
-            liquidityAmount,
-            tokenInAmountMin,
-            ethAmountMin,
-            account,
-            deadline,
-          );
+          if (isFixedFee) {
+            data = encodeUniswapV2Router02FixedFeeRemoveLiquidity(
+              baseToken.address,
+              quoteToken.address,
+              liquidityAmount,
+              baseInAmountMinBg.toString(),
+              quoteInAmountMinBg.toString(),
+              account,
+              deadline,
+            );
+          } else {
+            data = encodeUniswapV2Router02RemoveLiquidity(
+              baseToken.address,
+              quoteToken.address,
+              feeWei,
+              liquidityAmount,
+              baseInAmountMinBg.toString(),
+              quoteInAmountMinBg.toString(),
+              account,
+              deadline,
+            );
+          }
         }
-      } else if (quoteIsETH) {
-        const tokenAddress = baseToken.address;
-        const tokenInAmountMin = baseInAmountMinBg.toString();
-        const ethAmountMin = quoteInAmountMinBg.toString();
-        if (isFixedFee) {
-          data = encodeUniswapV2Router02FixedFeeRemoveLiquidityETH(
-            tokenAddress,
-            liquidityAmount,
-            tokenInAmountMin,
-            ethAmountMin,
-            account,
-            deadline,
-          );
-        } else {
-          data = encodeUniswapV2Router02RemoveLiquidityETH(
-            tokenAddress,
-            feeWei,
-            liquidityAmount,
-            tokenInAmountMin,
-            ethAmountMin,
-            account,
-            deadline,
-          );
-        }
-      } else {
-        if (isFixedFee) {
-          data = encodeUniswapV2Router02FixedFeeRemoveLiquidity(
-            baseToken.address,
-            quoteToken.address,
-            liquidityAmount,
-            baseInAmountMinBg.toString(),
-            quoteInAmountMinBg.toString(),
-            account,
-            deadline,
-          );
-        } else {
-          data = encodeUniswapV2Router02RemoveLiquidity(
-            baseToken.address,
-            quoteToken.address,
-            feeWei,
-            liquidityAmount,
-            baseInAmountMinBg.toString(),
-            quoteInAmountMinBg.toString(),
-            account,
-            deadline,
-          );
-        }
+      } catch (error) {
+        console.error('encodeUniswapV2Router02RemoveLiquidity error', error);
+        throw error;
       }
 
       const txResult = await submission.execute(

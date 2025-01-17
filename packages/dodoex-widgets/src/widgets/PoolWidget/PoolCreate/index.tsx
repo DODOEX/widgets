@@ -1,8 +1,8 @@
-import { Box } from '@dodoex/components';
+import { Box, useTheme } from '@dodoex/components';
+import { ArrowBack } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import React from 'react';
-import GoBack from '../../../components/GoBack';
 import {
   CardPlusConnected,
   TokenCard,
@@ -10,6 +10,7 @@ import {
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { PageType, useRouterStore } from '../../../router';
 import { BaseInfoCardList } from './components/BaseInfoCardList';
 import { DepthChartWrapper } from './components/DepthChartWrapper';
 import { FeeRateCard } from './components/FeeRateCard';
@@ -44,6 +45,7 @@ import {
 export default function PoolCreate() {
   const { defaultBaseToken, defaultQuoteToken } = useDefaultTokens();
   const { chainId } = useWalletInfo();
+  const theme = useTheme();
 
   const [state, dispatch] = React.useReducer<typeof reducer>(reducer, {
     currentStep: 0,
@@ -158,6 +160,12 @@ export default function PoolCreate() {
                 });
               }
         }
+        sx={{
+          backgroundColor: theme.palette.background.paper,
+        }}
+        inputSx={{
+          backgroundColor: 'transparent',
+        }}
       />
       <CardPlusConnected />
       <TokenCard
@@ -201,12 +209,57 @@ export default function PoolCreate() {
             payload,
           });
         }}
+        sx={{
+          backgroundColor: theme.palette.background.paper,
+        }}
+        inputSx={{
+          backgroundColor: 'transparent',
+        }}
       />
     </Box>
   );
 
+  const back = () => {
+    useRouterStore.getState().push({
+      type: PageType.Pool,
+    });
+  };
+
   return (
-    <WidgetContainer>
+    <WidgetContainer
+      sx={{
+        backgroundColor: 'transparent',
+        padding: 0,
+      }}
+    >
+      <Box
+        sx={{
+          position: 'relative',
+          display: 'none',
+          justifyContent: 'center',
+          alignItems: 'center',
+          px: 20,
+          py: 24,
+          typography: 'caption',
+          borderRadius: 20,
+          backgroundColor: theme.palette.tabActive.main,
+          [theme.breakpoints.up('tablet')]: {
+            display: 'flex',
+          },
+        }}
+      >
+        <Box
+          component={ArrowBack}
+          sx={{
+            position: 'absolute',
+            left: 20,
+            cursor: 'pointer',
+          }}
+          onClick={back}
+        />
+        <Trans>Pool Setup</Trans>
+      </Box>
+
       <Box
         sx={{
           display: 'flex',
@@ -223,25 +276,17 @@ export default function PoolCreate() {
         {isMobile ? null : (
           <Box
             sx={{
-              mr: 12,
+              mt: 20,
+              mr: 20,
               flexGrow: 1,
               display: 'block',
               overflow: 'hidden',
+              px: 20,
+              pb: 20,
+              borderRadius: 20,
+              backgroundColor: theme.palette.background.default,
             }}
           >
-            <GoBack />
-
-            <Box
-              sx={{
-                mt: 28,
-                typography: 'h4',
-                fontWeight: 600,
-                color: 'text.primary',
-              }}
-            >
-              <Trans>Pool Setup</Trans>
-            </Box>
-
             <SectionTitle
               titleKey={t`Select Pool Version`}
               index={1}
@@ -365,7 +410,7 @@ export default function PoolCreate() {
             flexShrink: 0,
             flexBasis: 375,
             borderRadius: 0,
-            backgroundColor: 'background.paper',
+            backgroundColor: 'background.default',
             minHeight: '100%',
             ...(!isMobile
               ? {
@@ -375,7 +420,7 @@ export default function PoolCreate() {
                   minHeight: 'auto',
                   height: '100%',
                   position: 'sticky',
-                  top: '28px',
+                  top: '20px',
                   overflowY: 'hidden',
                 }
               : {}),
@@ -500,7 +545,7 @@ export default function PoolCreate() {
 
           <Box
             sx={{
-              pb: 160,
+              pb: 28,
               ...(!isMobile
                 ? {
                     pb: 28,

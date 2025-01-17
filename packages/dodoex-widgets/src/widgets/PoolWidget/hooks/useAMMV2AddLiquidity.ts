@@ -77,89 +77,95 @@ export function useAMMV2AddLiquidity({
       const quoteInAmountBg = toWei(quoteAmount, quoteToken.decimals);
       const baseInAmountMinBg = baseInAmountBg
         .times(1 - slippage)
-        .dp(baseToken.decimals, BigNumber.ROUND_FLOOR);
+        .dp(0, BigNumber.ROUND_FLOOR);
       const quoteInAmountMinBg = quoteInAmountBg
         .times(1 - slippage)
-        .dp(quoteToken.decimals, BigNumber.ROUND_FLOOR);
+        .dp(0, BigNumber.ROUND_FLOOR);
       const feeWei = toWei(fee, 4).toString();
       const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
-      if (baseIsETH) {
-        const tokenAddress = quoteToken.address;
-        const tokenInAmount = quoteInAmountBg.toString();
-        const tokenInAmountMin = quoteInAmountMinBg.toString();
-        const ethAmountMin = baseInAmountMinBg.toString();
-        value = NumberToHex(baseInAmountBg) ?? '';
-        if (isFixedFee) {
-          data = encodeUniswapV2Router02FixedFeeAddLiquidityETH(
-            tokenAddress,
-            tokenInAmount,
-            tokenInAmountMin,
-            ethAmountMin,
-            account,
-            deadline,
-          );
+
+      try {
+        if (baseIsETH) {
+          const tokenAddress = quoteToken.address;
+          const tokenInAmount = quoteInAmountBg.toString();
+          const tokenInAmountMin = quoteInAmountMinBg.toString();
+          const ethAmountMin = baseInAmountMinBg.toString();
+          value = NumberToHex(baseInAmountBg) ?? '';
+          if (isFixedFee) {
+            data = encodeUniswapV2Router02FixedFeeAddLiquidityETH(
+              tokenAddress,
+              tokenInAmount,
+              tokenInAmountMin,
+              ethAmountMin,
+              account,
+              deadline,
+            );
+          } else {
+            data = encodeUniswapV2Router02AddLiquidityETH(
+              tokenAddress,
+              feeWei,
+              tokenInAmount,
+              tokenInAmountMin,
+              ethAmountMin,
+              account,
+              deadline,
+            );
+          }
+        } else if (quoteIsETH) {
+          const tokenAddress = baseToken.address;
+          const tokenInAmount = baseInAmountBg.toString();
+          const tokenInAmountMin = baseInAmountMinBg.toString();
+          const ethAmountMin = quoteInAmountMinBg.toString();
+          value = NumberToHex(quoteInAmountBg) ?? '';
+          if (isFixedFee) {
+            data = encodeUniswapV2Router02FixedFeeAddLiquidityETH(
+              tokenAddress,
+              tokenInAmount,
+              tokenInAmountMin,
+              ethAmountMin,
+              account,
+              deadline,
+            );
+          } else {
+            data = encodeUniswapV2Router02AddLiquidityETH(
+              tokenAddress,
+              feeWei,
+              tokenInAmount,
+              tokenInAmountMin,
+              ethAmountMin,
+              account,
+              deadline,
+            );
+          }
         } else {
-          data = encodeUniswapV2Router02AddLiquidityETH(
-            tokenAddress,
-            feeWei,
-            tokenInAmount,
-            tokenInAmountMin,
-            ethAmountMin,
-            account,
-            deadline,
-          );
+          if (isFixedFee) {
+            data = encodeUniswapV2Router02FixedFeeAddLiquidity(
+              baseToken.address,
+              quoteToken.address,
+              baseInAmountBg.toString(),
+              quoteInAmountBg.toString(),
+              baseInAmountMinBg.toString(),
+              quoteInAmountMinBg.toString(),
+              account,
+              deadline,
+            );
+          } else {
+            data = encodeUniswapV2Router02AddLiquidity(
+              baseToken.address,
+              quoteToken.address,
+              feeWei,
+              baseInAmountBg.toString(),
+              quoteInAmountBg.toString(),
+              baseInAmountMinBg.toString(),
+              quoteInAmountMinBg.toString(),
+              account,
+              deadline,
+            );
+          }
         }
-      } else if (quoteIsETH) {
-        const tokenAddress = baseToken.address;
-        const tokenInAmount = baseInAmountBg.toString();
-        const tokenInAmountMin = baseInAmountMinBg.toString();
-        const ethAmountMin = quoteInAmountMinBg.toString();
-        value = NumberToHex(quoteInAmountBg) ?? '';
-        if (isFixedFee) {
-          data = encodeUniswapV2Router02FixedFeeAddLiquidityETH(
-            tokenAddress,
-            tokenInAmount,
-            tokenInAmountMin,
-            ethAmountMin,
-            account,
-            deadline,
-          );
-        } else {
-          data = encodeUniswapV2Router02AddLiquidityETH(
-            tokenAddress,
-            feeWei,
-            tokenInAmount,
-            tokenInAmountMin,
-            ethAmountMin,
-            account,
-            deadline,
-          );
-        }
-      } else {
-        if (isFixedFee) {
-          data = encodeUniswapV2Router02FixedFeeAddLiquidity(
-            baseToken.address,
-            quoteToken.address,
-            baseInAmountBg.toString(),
-            quoteInAmountBg.toString(),
-            baseInAmountMinBg.toString(),
-            quoteInAmountMinBg.toString(),
-            account,
-            deadline,
-          );
-        } else {
-          data = encodeUniswapV2Router02AddLiquidity(
-            baseToken.address,
-            quoteToken.address,
-            feeWei,
-            baseInAmountBg.toString(),
-            quoteInAmountBg.toString(),
-            baseInAmountMinBg.toString(),
-            quoteInAmountMinBg.toString(),
-            account,
-            deadline,
-          );
-        }
+      } catch (error) {
+        console.error('encodeUniswapV2Router02AddLiquidity error', error);
+        throw error;
       }
 
       const txResult = await submission.execute(

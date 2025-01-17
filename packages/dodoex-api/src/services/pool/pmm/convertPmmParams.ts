@@ -33,7 +33,7 @@ export function convertPmmParams(
   const b = handleUnitConvert(queryResult.B, baseDecimals);
   const q = handleUnitConvert(queryResult.Q, quoteDecimals);
   const b0 = handleUnitConvert(queryResult.B0, baseDecimals);
-  const q0 = handleUnitConvert(queryResult.B0, quoteDecimals);
+  const q0 = handleUnitConvert(queryResult.Q0, quoteDecimals);
   const R = parseInt(queryResult.R.toString());
 
   let lpFeeRate: BigNumber | undefined;

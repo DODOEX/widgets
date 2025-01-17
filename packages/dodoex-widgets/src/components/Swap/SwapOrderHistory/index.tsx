@@ -1,6 +1,6 @@
 import { ChainId } from '@dodoex/api';
-import { Box, BoxProps, useTheme } from '@dodoex/components';
-import { t, Trans } from '@lingui/macro';
+import { Box, useTheme } from '@dodoex/components';
+import { Trans } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
@@ -19,31 +19,31 @@ export default function SwapOrderHistory({
 }) {
   const theme = useTheme();
   const { onlyChainId } = useUserOptions();
-  const { isMobile } = useWidgetDevice();
+  const { isLaptop } = useWidgetDevice();
   const { account } = useWeb3React();
-  const [filterChainId, setFilterChainId] =
-    React.useState<ChainId | undefined>();
+  const [filterChainId, setFilterChainId] = React.useState<
+    ChainId | undefined
+  >();
   const swapOrderListQueryLocal = useTradeSwapOrderList({
     account: swapOrderListQueryProps ? undefined : account,
     chainId: onlyChainId ?? filterChainId,
-    limit: isMobile ? 10 : 5,
+    limit: isLaptop ? 5 : 10,
   });
   const swapOrderListQuery = swapOrderListQueryProps ?? swapOrderListQueryLocal;
 
   return (
     <CardStatus
-      isMobile={isMobile}
       empty={!swapOrderListQuery.orderList.length}
       loading={swapOrderListQuery.isLoading}
     >
-      {isMobile ? (
+      {!isLaptop ? (
         <Box
           sx={{
-            px: 16,
+            px: 0,
           }}
         >
           {swapOrderListQuery.orderList.map((item) => (
-            <SameOrderCard key={item.hash} data={item} isMobile={isMobile} />
+            <SameOrderCard key={item.hash} data={item} isMobile={!isLaptop} />
           ))}
           <LoadMore
             loading={swapOrderListQuery.isFetchingNextPage}
@@ -119,7 +119,7 @@ export default function SwapOrderHistory({
                 <SameOrderCard
                   key={item.hash}
                   data={item}
-                  isMobile={isMobile}
+                  isMobile={!isLaptop}
                 />
               ))}
             </tbody>

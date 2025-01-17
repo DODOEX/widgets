@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/components": "^3.0.0-beta.0",
+    "@dodoex/components": "^3.0.2-neox.3",
+    "@dodoex/widgets": "3.0.3-neox.8",
     "@emotion/styled": "^11.10.0",
     "@storybook/addon-docs": "^8.3.5",
     "@web3modal/ethers5": "^3.5.5",

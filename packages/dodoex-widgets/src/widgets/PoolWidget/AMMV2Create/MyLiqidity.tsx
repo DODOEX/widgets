@@ -11,6 +11,7 @@ import {
   HoverOpacity,
   LoadingSkeleton,
   Tooltip,
+  useTheme,
 } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
@@ -26,6 +27,7 @@ export default function MyLiquidity({
   pair?: Pair | null;
   pairAddress?: string;
 }) {
+  const theme = useTheme();
   const {
     isBalanceLoading,
     isDepositedLoading,
@@ -52,6 +54,8 @@ export default function MyLiquidity({
         px: 20,
         py: 12,
         borderWidth: 1,
+        borderColor: theme.palette.border.main,
+        borderStyle: 'solid',
         borderRadius: 8,
       }}
     >

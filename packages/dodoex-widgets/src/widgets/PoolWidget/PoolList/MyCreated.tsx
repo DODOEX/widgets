@@ -5,7 +5,9 @@ import {
   Checkbox,
   HoverAddBackground,
   HoverAddUnderLine,
+  ThemeProvider,
   alpha,
+  createTheme,
   useTheme,
 } from '@dodoex/components';
 import { PoolApi, PoolType, ChainId } from '@dodoex/api';
@@ -80,7 +82,7 @@ function CardList({
               px: 20,
               pt: 20,
               pb: 12,
-              backgroundColor: 'background.paper',
+              backgroundColor: theme.palette.tabActive.main,
               borderRadius: 16,
             }}
             className="gradient-card-border"
@@ -172,12 +174,19 @@ function CardList({
             {/* info */}
             <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                mt: 44,
+                mt: 28,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: 8,
               }}
             >
-              <Box>
+              <Box
+                sx={{
+                  backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                  borderRadius: 8,
+                  p: 12,
+                }}
+              >
                 <Box
                   sx={{
                     typography: 'h5',
@@ -199,16 +208,14 @@ function CardList({
                   <Trans>TVL</Trans>
                 </Box>
               </Box>
+
               <Box
                 sx={{
-                  display: 'inline-block',
-                  mx: 20,
-                  height: 24,
-                  width: '1px',
-                  backgroundColor: 'custom.border.default',
+                  backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                  borderRadius: 8,
+                  p: 12,
                 }}
-              />
-              <Box>
+              >
                 <Box
                   sx={{
                     typography: 'h5',
@@ -257,6 +264,7 @@ function CardList({
               <NeedConnectButton
                 fullWidth
                 size={Button.Size.small}
+                variant={Button.Variant.darken}
                 onClick={(evt) => {
                   evt.stopPropagation();
                   setOperatePool({
@@ -348,225 +356,260 @@ function TableList({
             }
           }
           const hoverBg = theme.palette.background.tag;
-
+          const mt = 6;
+          const mb = 6;
+          const currentTheme = createTheme({
+            mode: operateBtnText ? 'dark' : 'light',
+            theme: undefined,
+            lang: 'en-US',
+          });
           return (
-            <Box
-              component="tr"
-              key={pairAddress + chainId}
-              sx={{
-                [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
-                  backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
-                },
-              }}
-            >
-              <Box component="td">
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  {baseToken && quoteToken ? (
-                    <TokenLogoPair
-                      tokens={[baseToken, quoteToken]}
-                      width={24}
-                      mr={10}
-                      chainId={chainId}
-                      showChainLogo
-                    />
-                  ) : (
-                    ''
-                  )}
-                  <Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <HoverAddUnderLine
-                        lineSx={{
-                          bottom: -1,
-                        }}
-                        lineColor="primary.main"
-                        hoverSx={{
-                          color: 'primary.main',
-                          '& svg': {
-                            display: 'inline-block',
-                          },
-                        }}
-                        className="truncate-address-link"
+            <ThemeProvider theme={currentTheme} key={pairAddress + chainId}>
+              <Box component="tr">
+                <Box component="td">
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      mt,
+                      mb,
+                      py: isDpp ? 18 : 20,
+                      px: 24,
+                      borderTopLeftRadius: 12,
+                      borderBottomLeftRadius: 12,
+                      backgroundColor: 'background.paper',
+                    }}
+                  >
+                    {baseToken && quoteToken ? (
+                      <TokenLogoPair
+                        tokens={[baseToken, quoteToken]}
+                        width={24}
+                        mr={10}
+                        chainId={chainId}
+                        showChainLogo
+                      />
+                    ) : (
+                      ''
+                    )}
+                    <Box>
+                      <Box
                         sx={{
                           display: 'flex',
                           alignItems: 'center',
+                          color: 'text.primary',
                         }}
                       >
-                        <Box
-                          sx={{
-                            typography: 'body2',
-                            fontWeight: 600,
+                        <HoverAddUnderLine
+                          lineSx={{
+                            bottom: -1,
                           }}
-                          onClick={() => {
-                            router.push({
-                              type: PageType.PoolDetail,
-                              params: {
-                                chainId,
-                                address: pairAddress,
-                              },
-                            });
-                          }}
-                        >
-                          {truncatePoolAddress(pairAddress)}
-                        </Box>
-                        <Box
-                          component={ArrowRight}
-                          sx={{
-                            display: 'none',
-                            width: 14,
-                            height: 14,
-                          }}
-                        />
-                      </HoverAddUnderLine>
-                      {isDpp ? (
-                        <Box
-                          sx={{
-                            typography: 'h6',
-                            px: 8,
-                            py: 2,
-                            ml: 8,
-                            borderStyle: 'solid',
-                            borderWidth: 1,
-                            borderColor: 'text.primary',
-                            borderRadius: 4,
-                            whiteSpace: 'nowrap',
-                            cursor: 'pointer',
-                            '&:hover': {
-                              backgroundColor: alpha(
-                                theme.palette.text.primary,
-                                0.1,
-                              ),
+                          lineColor="primary.main"
+                          hoverSx={{
+                            color: 'primary.main',
+                            '& svg': {
+                              display: 'inline-block',
                             },
                           }}
-                          onClick={() => {
-                            router.push({
-                              type: PageType.ModifyPool,
-                              params: {
-                                chainId,
-                                address: pairAddress,
-                              },
-                            });
+                          className="truncate-address-link"
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
                           }}
                         >
-                          <Trans>Edit</Trans>
-                        </Box>
-                      ) : (
-                        ''
-                      )}
-                    </Box>
-                    <Box
-                      sx={{
-                        typography: 'h6',
-                        width: 'max-content',
-                        mt: 2,
-                        px: 8,
-                        py: 2,
-                        borderRadius: 12,
-                        backgroundColor: typeBgColor,
-                        color: typeColor,
-                      }}
-                    >
-                      {typeLabel}
+                          <Box
+                            sx={{
+                              typography: 'body2',
+                              fontWeight: 600,
+                            }}
+                            onClick={() => {
+                              router.push({
+                                type: PageType.PoolDetail,
+                                params: {
+                                  chainId,
+                                  address: pairAddress,
+                                },
+                              });
+                            }}
+                          >
+                            {truncatePoolAddress(pairAddress)}
+                          </Box>
+                          <Box
+                            component={ArrowRight}
+                            sx={{
+                              display: 'none',
+                              width: 14,
+                              height: 14,
+                            }}
+                          />
+                        </HoverAddUnderLine>
+                        {isDpp ? (
+                          <Box
+                            sx={{
+                              typography: 'h6',
+                              px: 8,
+                              py: 2,
+                              ml: 8,
+                              borderStyle: 'solid',
+                              borderWidth: 1,
+                              borderColor: 'text.primary',
+                              color: 'text.primary',
+                              borderRadius: 4,
+                              whiteSpace: 'nowrap',
+                              cursor: 'pointer',
+                              '&:hover': {
+                                backgroundColor: alpha(
+                                  theme.palette.text.primary,
+                                  0.1,
+                                ),
+                              },
+                            }}
+                            onClick={() => {
+                              router.push({
+                                type: PageType.ModifyPool,
+                                params: {
+                                  chainId,
+                                  address: pairAddress,
+                                },
+                              });
+                            }}
+                          >
+                            <Trans>Edit</Trans>
+                          </Box>
+                        ) : (
+                          ''
+                        )}
+                      </Box>
+                      <Box
+                        sx={{
+                          typography: 'h6',
+                          width: 'max-content',
+                          mt: 2,
+                          px: 8,
+                          py: 2,
+                          borderRadius: 12,
+                          backgroundColor: typeBgColor,
+                          color: typeColor,
+                        }}
+                      >
+                        {typeLabel}
+                      </Box>
                     </Box>
                   </Box>
                 </Box>
-              </Box>
-              <Box component="td">
-                <Box
-                  sx={{
-                    typography: 'body2',
-                  }}
-                  title={
-                    item.tvl
-                      ? `$${formatReadableNumber({
-                          input: item.tvl,
-                        })}`
-                      : undefined
-                  }
-                >
-                  $
-                  {item.tvl
-                    ? formatExponentialNotation(new BigNumber(item.tvl))
-                    : '-'}
+                <Box component="td">
+                  <Box
+                    sx={{
+                      typography: 'body2',
+                      minHeight: 82,
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      backgroundColor: 'background.paper',
+                      display: 'flex',
+                      alignItems: 'center',
+                      color: 'text.primary',
+                    }}
+                    title={
+                      item.tvl
+                        ? `$${formatReadableNumber({
+                            input: item.tvl,
+                          })}`
+                        : undefined
+                    }
+                  >
+                    $
+                    {item.tvl
+                      ? formatExponentialNotation(new BigNumber(item.tvl))
+                      : '-'}
+                  </Box>
                 </Box>
-              </Box>
-              <Box component="td">
-                <Box
-                  title={
-                    item.totalFee
-                      ? `$${formatReadableNumber({
-                          input: item.totalFee,
-                        })}`
-                      : ''
-                  }
-                  sx={{
-                    typography: 'body2',
-                    fontWeight: 600,
-                  }}
-                >
-                  $
-                  {item.totalFee
-                    ? formatExponentialNotation(new BigNumber(item.totalFee))
-                    : '-'}
+                <Box component="td">
+                  <Box
+                    title={
+                      item.totalFee
+                        ? `$${formatReadableNumber({
+                            input: item.totalFee,
+                          })}`
+                        : ''
+                    }
+                    sx={{
+                      typography: 'body2',
+                      fontWeight: 600,
+                      minHeight: 82,
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      backgroundColor: 'background.paper',
+                      display: 'flex',
+                      alignItems: 'center',
+                      color: 'text.primary',
+                    }}
+                  >
+                    $
+                    {item.totalFee
+                      ? formatExponentialNotation(new BigNumber(item.totalFee))
+                      : '-'}
+                  </Box>
                 </Box>
-              </Box>
-              <Box component="td">
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
-                    gap: '8px',
-                  }}
-                >
-                  {operateBtnText ? (
-                    <AddingOrRemovingBtn
-                      text={operateBtnText}
-                      onClick={() => setOperatePool(null)}
-                    />
-                  ) : (
-                    <>
-                      {!!account && (
+                <Box component="td">
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'flex-end',
+                      gap: '8px',
+                      minHeight: 82,
+                      mt,
+                      mb,
+                      py: 20,
+                      px: 24,
+                      backgroundColor: 'background.paper',
+                      borderTopRightRadius: 12,
+                      borderBottomRightRadius: 12,
+                    }}
+                  >
+                    {operateBtnText ? (
+                      <AddingOrRemovingBtn
+                        text={operateBtnText}
+                        onClick={() => setOperatePool(null)}
+                      />
+                    ) : (
+                      <>
+                        {!!account && (
+                          <NeedConnectButton
+                            variant={Button.Variant.outlined}
+                            size={Button.Size.small}
+                            onClick={(evt) => {
+                              evt.stopPropagation();
+                              setOperatePool({
+                                operate: OperateTab.Remove,
+                                chainId,
+                                address: pairAddress,
+                              });
+                            }}
+                          >
+                            <Trans>Remove</Trans>
+                          </NeedConnectButton>
+                        )}
                         <NeedConnectButton
-                          variant={Button.Variant.outlined}
                           size={Button.Size.small}
-                          onClick={(evt) => {
-                            evt.stopPropagation();
+                          onClick={() => {
                             setOperatePool({
-                              operate: OperateTab.Remove,
                               chainId,
                               address: pairAddress,
                             });
                           }}
                         >
-                          <Trans>Remove</Trans>
+                          {t`Add`}
                         </NeedConnectButton>
-                      )}
-                      <NeedConnectButton
-                        size={Button.Size.small}
-                        onClick={() => {
-                          setOperatePool({
-                            chainId,
-                            address: pairAddress,
-                          });
-                        }}
-                      >
-                        {t`Add`}
-                      </NeedConnectButton>
-                    </>
-                  )}
+                      </>
+                    )}
+                  </Box>
                 </Box>
               </Box>
-            </Box>
+            </ThemeProvider>
           );
         })}
       </Box>
@@ -626,15 +669,15 @@ export default function MyCreated({
     <>
       <Box
         sx={{
-          py: 16,
           display: 'flex',
           justifyContent: 'space-between',
           gap: 8,
           ...(isMobile
-            ? {}
+            ? { pt: 16, pb: 16 }
             : {
-                px: 20,
-                borderBottomWidth: 1,
+                px: 24,
+                pt: 24,
+                pb: 20,
               }),
         }}
       >

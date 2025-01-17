@@ -1,39 +1,43 @@
 import { basicTokenMap, ChainId, PoolApi } from '@dodoex/api';
-import { Box, Button, LoadingSkeleton, Select } from '@dodoex/components';
+import {
+  Box,
+  Button,
+  LoadingSkeleton,
+  Select,
+  useTheme,
+} from '@dodoex/components';
+import { t, Trans } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
-import {
-  CardPlus,
-  TokenCard,
-} from '../../../components/Swap/components/TokenCard';
-import { useLiquidityOperateAmount } from './hooks/useLiquidityOperateAmount';
-import Ratio from './components/Ratio';
-import SlippageSetting, { useSlipper } from './components/SlippageSetting';
-import ComparePrice from './components/ComparePrice';
-import { OperatePool } from './types';
-import OperateBtn from './components/OperateBtn';
-import { t, Trans } from '@lingui/macro';
-import { useComparePrice } from './hooks/useComparePrice';
-import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
 import Confirm from '../../../components/Confirm';
-import { useOperateLiquidity } from '../hooks/contract/useOperateLiquidity';
-import { SLIPPAGE_PROTECTION } from '../../../constants/pool';
 import ErrorMessageDialog from '../../../components/ErrorMessageDialog';
-import { useRemoveLiquidityTokenStatus } from './hooks/useRemoveLiquidityTokenStatus';
+import { SwitchBox } from '../../../components/Swap/components/SwitchBox';
+import { TokenCard } from '../../../components/Swap/components/TokenCard';
+import { SLIPPAGE_PROTECTION } from '../../../constants/pool';
+import { TokenInfo } from '../../../hooks/Token';
+import { toWei } from '../../../utils';
+import { useOperateLiquidity } from '../hooks/contract/useOperateLiquidity';
+import { useWithdrawInfo } from '../hooks/contract/useWithdrawInfo';
+import { useAMMV2RemoveLiquidity } from '../hooks/useAMMV2RemoveLiquidity';
+import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
+import { poolApi } from '../utils';
+import ComparePrice from './components/ComparePrice';
+import OperateBtn from './components/OperateBtn';
+import Ratio from './components/Ratio';
+import { SliderPercentageCard } from './components/SliderPercentageCard';
+import SlippageSetting, { useSlipper } from './components/SlippageSetting';
+import TokenList from './components/TokenList';
 import { useCheckToken } from './hooks/useCheckToken';
+import { useComparePrice } from './hooks/useComparePrice';
+import { useLiquidityOperateAmount } from './hooks/useLiquidityOperateAmount';
 import {
   initSliderPercentage,
   RemoveMode,
   usePercentageRemove,
 } from './hooks/usePercentageRemove';
-import { useWithdrawInfo } from '../hooks/contract/useWithdrawInfo';
-import TokenList from './components/TokenList';
-import { SliderPercentageCard } from './components/SliderPercentageCard';
-import { useAMMV2RemoveLiquidity } from '../hooks/useAMMV2RemoveLiquidity';
-import { useQuery } from '@tanstack/react-query';
-import { poolApi } from '../utils';
-import { toWei } from '../../../utils';
-import { TokenInfo } from '../../../hooks/Token';
+import { useRemoveLiquidityTokenStatus } from './hooks/useRemoveLiquidityTokenStatus';
+import { OperatePool } from './types';
 
 export function RemovePoolOperate({
   submittedBack: submittedBackProps,
@@ -46,6 +50,7 @@ export function RemovePoolOperate({
   pool?: OperatePool;
   balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
 }) {
+  const theme = useTheme();
   const { account } = useWeb3React();
   const baseOverride = balanceInfo.userBaseLpToTokenBalance;
   const quoteOverride = balanceInfo.userQuoteLpToTokenBalance;
@@ -346,6 +351,12 @@ export function RemovePoolOperate({
               readOnly={balanceInfo.loading || !canOperate}
               overrideBalance={isBase ? baseOverride : quoteOverride}
               overrideBalanceLoading={overrideBalanceLoading}
+              sx={{
+                backgroundColor: theme.palette.background.paper,
+              }}
+              inputSx={{
+                backgroundColor: 'transparent',
+              }}
             />
           ) : (
             <>
@@ -358,8 +369,15 @@ export function RemovePoolOperate({
                 readOnly={balanceInfo.loading || !canOperate}
                 overrideBalance={baseOverride}
                 overrideBalanceLoading={overrideBalanceLoading}
+                sx={{
+                  mb: 4,
+                  backgroundColor: theme.palette.background.paper,
+                }}
+                inputSx={{
+                  backgroundColor: 'transparent',
+                }}
               />
-              {onlyShowSide ? '' : <CardPlus />}
+              {onlyShowSide ? '' : <SwitchBox plus />}
               {onlyShowSide === 'base' ? (
                 ''
               ) : (
@@ -372,6 +390,12 @@ export function RemovePoolOperate({
                   readOnly={balanceInfo.loading || !canOperate || isSinglePool}
                   overrideBalance={quoteOverride}
                   overrideBalanceLoading={overrideBalanceLoading}
+                  sx={{
+                    backgroundColor: theme.palette.background.paper,
+                  }}
+                  inputSx={{
+                    backgroundColor: 'transparent',
+                  }}
                 />
               )}
             </>
@@ -501,14 +525,9 @@ export function RemovePoolOperate({
       {/* footer */}
       <Box
         sx={{
+          pt: 10,
           px: 20,
-          py: 16,
-          position: 'sticky',
-          bottom: 0,
-          borderStyle: 'solid',
-          borderWidth: '1px 0 0',
-          borderColor: 'border.main',
-          backgroundColor: 'background.paper',
+          pb: 20,
         }}
       >
         {isShowCompare && (

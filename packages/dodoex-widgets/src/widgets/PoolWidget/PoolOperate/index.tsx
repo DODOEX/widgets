@@ -1,3 +1,4 @@
+import { ChainId, PoolApi } from '@dodoex/api';
 import {
   alpha,
   Box,
@@ -5,27 +6,25 @@ import {
   TabPanel,
   Tabs,
   TabsGroup,
-  Modal,
+  useTheme,
 } from '@dodoex/components';
+import { Error } from '@dodoex/icons';
+import { t } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
+import { useWeb3React } from '@web3-react/core';
 import Dialog from '../../../components/Dialog';
+import { ThegraphKeyMap } from '../../../constants/chains';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import LpTokenMiningOperate from '../../MiningWidget/LpTokenMiningOperate';
+import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
+import { convertFetchPoolToOperateData } from '../utils';
+import { GSPPairRiskWarning } from './components/GSPPairRiskWarning';
 import {
   PoolOrMiningTab,
   usePoolOrMiningTabs,
 } from './hooks/usePoolOrMiningTabs';
-import { Error } from '@dodoex/icons';
 import PoolOperateInner, { PoolOperateInnerProps } from './PoolOperateInner';
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { ChainId, PoolApi } from '@dodoex/api';
-import { convertFetchPoolToOperateData } from '../utils';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { ThegraphKeyMap } from '../../../constants/chains';
-import LpTokenMiningOperate from '../../MiningWidget/LpTokenMiningOperate';
-import { useWeb3React } from '@web3-react/core';
-import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
-import { t } from '@lingui/macro';
-import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { GSPPairRiskWarning } from './components/GSPPairRiskWarning';
 
 export interface PoolOperateProps {
   onClose?: () => void;
@@ -49,6 +48,7 @@ export function PoolOperate({
   hidePoolInfo,
   sx,
 }: PoolOperateProps) {
+  const theme = useTheme();
   const { account } = useWeb3React();
   const chain = chainId ? ThegraphKeyMap[chainId as ChainId] : '';
 
@@ -78,7 +78,17 @@ export function PoolOperate({
 
   const balanceInfo = usePoolBalanceInfo({
     account,
-    pool,
+    pool: pool
+      ? {
+          chainId: pool.chainId,
+          address: pool.address,
+          type: pool.type,
+          baseTokenDecimals: pool.baseToken.decimals,
+          quoteTokenDecimals: pool.quoteToken.decimals,
+          baseLpTokenDecimals: pool.baseLpToken?.decimals ?? 18,
+          quoteLpTokenDecimals: pool.quoteLpToken?.decimals ?? 18,
+        }
+      : undefined,
   });
   const hasLp =
     !!balanceInfo.userBaseLpBalance?.gt(0) ||
@@ -97,15 +107,19 @@ export function PoolOperate({
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          overflow: 'hidden',
-          height: '100%',
         }}
       >
         <TabsGroup
           tabs={poolOrMiningTabs}
           tabsListSx={{
-            mx: 20,
+            px: 20,
             justifyContent: onClose ? 'space-between' : 'flex-start',
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            backgroundColor: '#C9EB62',
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
             ...(hasMining && hasLp
               ? {
                   '& button:last-child': {
@@ -147,6 +161,8 @@ export function PoolOperate({
                     height: 24,
                     borderRadius: '50%',
                     borderWidth: 1,
+                    borderColor: 'rgba(69, 72, 81, 0.10)',
+                    borderStyle: 'solid',
                     color: 'text.secondary',
                     cursor: 'pointer',
                   }}
@@ -171,6 +187,7 @@ export function PoolOperate({
           sx={{
             flex: 1,
             overflowY: 'auto',
+            backgroundColor: theme.palette.background.paper,
           }}
         >
           <PoolOperateInner
@@ -190,6 +207,7 @@ export function PoolOperate({
           sx={{
             flex: 1,
             overflowY: 'auto',
+            backgroundColor: theme.palette.background.paper,
           }}
         >
           {poolChainId && poolAddress ? (
@@ -216,6 +234,7 @@ export default function PoolOperateDialog({
 }: PoolOperateProps & {
   modal?: boolean;
 }) {
+  const theme = useTheme();
   const { isMobile } = useWidgetDevice();
 
   return (
@@ -224,6 +243,11 @@ export default function PoolOperateDialog({
       onClose={props.onClose}
       scope={!isMobile}
       modal={modal}
+      modalContainerSx={{
+        backgroundColor: theme.palette.background.default,
+        borderRadius: isMobile ? 0 : 20,
+        overflowX: 'hidden',
+      }}
       id="pool-operate"
     >
       <PoolOperate {...props} />

@@ -1,4 +1,4 @@
-import { Box, ButtonBase, useTheme } from '@dodoex/components';
+import { alpha, Box, ButtonBase, useTheme } from '@dodoex/components';
 import { TokenInfo } from '../hooks/Token/type';
 import { chainListMap } from '../constants/chainList';
 import { selectTokenBtn } from '../constants/testId';
@@ -24,7 +24,7 @@ export default function TokenSelect({
   notTokenPickerModal,
   border,
   px = 20,
-  py = 8,
+  py = 12,
   highlightDefault,
   onTokenClick,
   onTokenChange,
@@ -62,7 +62,7 @@ export default function TokenSelect({
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: 8,
-          color: theme.palette.text.primary,
+          color: '#1A1A1B',
           typography: showChainName ? 'body2' : 'body1',
           fontWeight: 600,
           px,
@@ -71,15 +71,15 @@ export default function TokenSelect({
             opacity: 0.5,
           },
           ...(!!border && {
-            border: `solid 1px ${theme.palette.border.main}`,
-            borderRadius: 8,
+            borderRadius: 12,
+            backgroundColor: theme.palette.background.paper,
             '&:hover': {
-              backgroundColor: theme.palette.hover.default,
+              backgroundColor: alpha(theme.palette.background.paper, 0.8),
             },
           }),
           ...(!!(highlightDefault && !token) && {
-            backgroundColor: theme.palette.primary.main,
-            color: theme.palette.primary.contrastText,
+            backgroundColor: '#00D555',
+            color: '#000',
             '&:hover': {
               opacity: 0.8,
             },

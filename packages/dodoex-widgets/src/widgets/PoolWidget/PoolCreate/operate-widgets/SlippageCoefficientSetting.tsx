@@ -1,21 +1,21 @@
 import {
-  Button,
   Box,
-  useTheme,
-  QuestionTooltip,
+  Button,
   ButtonBase,
+  QuestionTooltip,
+  useTheme,
 } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { Dispatch, useMemo, useState } from 'react';
-import Dialog from '../../../../components/WidgetDialog';
+import Dialog from '../../../../components/Swap/components/Dialog';
 import RadioButton from '../components/RadioButton';
 import { RadioButtonTag } from '../components/RadioButtonTag';
 import { SelectAndInput } from '../components/SelectAndInput';
 import { useSlippageCoefficientList } from '../hooks/useSlippageCoefficientList';
 import { validSlippageCoefficient } from '../hooks/useValidation';
 import { Actions, StateProps, Types } from '../reducer';
-import { SettingItemWrapper } from './widgets';
 import { ReactComponent as Arrow } from './arrow.svg';
+import { SettingItemWrapper } from './widgets';
 
 export function SlippageCoefficientSetting({
   dispatch,
@@ -90,7 +90,7 @@ export function SlippageCoefficientSetting({
             py: 8,
             color: theme.palette.text.primary,
             borderRadius: 8,
-            backgroundColor: theme.palette.background.input,
+            backgroundColor: theme.palette.background.paper,
             '&:hover': {
               backgroundColor: theme.palette.hover.default,
             },
@@ -139,6 +139,7 @@ export function SlippageCoefficientSetting({
             />
           </Box>
         }
+        modal
       >
         <Box
           sx={{

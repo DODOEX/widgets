@@ -38,20 +38,7 @@ export default function TitleInfo({
   const { supportAMMV2 } = useUserOptions();
 
   return (
-    <Box
-      sx={{
-        ...(isMobile
-          ? {
-              pt: 24,
-            }
-          : {
-              pt: 20,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }),
-      }}
-    >
+    <>
       <Box
         sx={{
           display: 'flex',
@@ -168,7 +155,7 @@ export default function TitleInfo({
               }}
               iconSize={14}
               iconSpace={6}
-              disabledAddress
+              customChainId={poolDetail?.chainId}
             />
           </Box>
         </Box>
@@ -180,7 +167,7 @@ export default function TitleInfo({
             ? {
                 display: 'flex',
                 alignItems: 'center',
-                mt: 24,
+                mt: 0,
               }
             : {
                 textAlign: 'right',
@@ -225,6 +212,6 @@ export default function TitleInfo({
           <Trans>APY</Trans>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }

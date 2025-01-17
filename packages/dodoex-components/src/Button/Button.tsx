@@ -18,6 +18,7 @@ enum Variant {
   dashed = 'dashed',
   second = 'second',
   tag = 'tag',
+  darken = 'darken',
 }
 
 enum Size {
@@ -54,6 +55,7 @@ const buttonStyles = (
     typography: 'button',
     whiteSpace: 'nowrap',
     fontFamily: 'inherit',
+    fontWeight: 600,
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -110,10 +112,8 @@ const buttonStyles = (
     case Variant.outlined:
       result = {
         ...result,
-        border: `solid 1px ${
-          danger ? theme.palette.error.main : theme.palette.primary.main
-        }`,
-        color: danger ? 'error.main' : 'primary.main',
+        border: `solid 1px ${danger ? theme.palette.error.main : '#000'}`,
+        color: danger ? 'error.main' : '#000',
         '&[disabled]': {
           color: 'text.disabled',
           borderColor: 'border.disabled',
@@ -121,7 +121,7 @@ const buttonStyles = (
         [hoverLabel]: {
           background: danger
             ? alpha(theme.palette.error.main, 0.1)
-            : alpha(theme.palette.primary.main, 0.1),
+            : 'background.paper',
         },
       };
       break;
@@ -149,7 +149,7 @@ const buttonStyles = (
         ...result,
         backgroundColor: danger
           ? 'error.main'
-          : backgroundColor ?? theme.palette.background.tag,
+          : (backgroundColor ?? theme.palette.background.tag),
         border: 'none',
         color: danger ? 'error.contrastText' : 'text.primary',
         '&[disabled]': {
@@ -173,7 +173,7 @@ const buttonStyles = (
         typography: 'body2',
         backgroundColor: danger
           ? 'error.main'
-          : backgroundColor ?? 'background.tag',
+          : (backgroundColor ?? 'background.tag'),
         border: 'none',
         color: danger ? 'error.contrastText' : 'primary.main',
         '&[disabled]': {
@@ -187,12 +187,27 @@ const buttonStyles = (
         },
       };
       break;
+    case Variant.darken:
+      result = {
+        ...result,
+        backgroundColor: '#123329',
+        color: '#C9EB62',
+        '&[disabled]': {
+          backgroundColor: alpha('#123329', 0.5),
+          color: '#C9EB62',
+          pointerEvents: 'none', // Disable link interactions
+          cursor: 'default',
+        },
+        [hoverLabel]: {
+          backgroundColor: '#123329',
+          color: '#C9EB62',
+        },
+      };
+      break;
     default:
       result = {
         ...result,
-        backgroundColor: danger
-          ? 'error.main'
-          : backgroundColor ?? 'secondary.main',
+        backgroundColor: danger ? 'error.main' : (backgroundColor ?? '#00D555'),
         [hoverLabel]: {
           background: `linear-gradient(0deg, rgba(26, 26, 27, 0.1), rgba(26, 26, 27, 0.1)), ${
             danger
@@ -201,7 +216,7 @@ const buttonStyles = (
                 sx?.backgroundColor || theme.palette.secondary.main
           }`,
         },
-        color: danger ? 'error.contrastText' : 'secondary.contrastText',
+        color: danger ? 'error.contrastText' : '#000000',
         '&[disabled]': {
           backgroundColor: 'border.disabled',
           color: 'text.disabled',

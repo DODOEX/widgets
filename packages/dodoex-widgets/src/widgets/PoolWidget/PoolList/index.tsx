@@ -1,4 +1,11 @@
-import { Box, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
+import {
+  Box,
+  Tab,
+  TabPanel,
+  Tabs,
+  TabsList,
+  useTheme,
+} from '@dodoex/components';
 import { t } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
@@ -16,6 +23,7 @@ import PoolOperateDialog, {
   PoolOperateProps,
 } from '../PoolOperate';
 import AddLiquidityList from './AddLiquidity';
+import backgroundSvg from './assets/bc.svg';
 import { CreatePoolBtn } from './components/CreatePoolBtn';
 import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
 import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
@@ -24,6 +32,9 @@ import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
+  const theme = useTheme();
+  const { isMobile } = useWidgetDevice();
+
   return (
     <TabPanel
       {...props}
@@ -32,6 +43,18 @@ function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
+        px: 0,
+        py: 0,
+        ...(isMobile
+          ? undefined
+          : {
+              borderRadius: 20,
+              backgroundColor: '#C9EB62',
+              backgroundImage: `url(${backgroundSvg})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: '341px 117px',
+              backgroundPosition: 'top right',
+            }),
       }}
     />
   );
@@ -39,10 +62,13 @@ function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
 
 export default function PoolList({
   params,
+  scrollRef: scrollParentRefProps,
 }: {
   params?: Page<PageType.Pool>['params'];
+  scrollRef?: React.RefObject<any>;
 }) {
   const { isMobile } = useWidgetDevice();
+  const theme = useTheme();
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
   const scrollParentRef = React.useRef<HTMLDivElement>(null);
   const { account } = useWeb3React();
@@ -59,9 +85,11 @@ export default function PoolList({
   return (
     <WidgetContainer
       sx={{
+        backgroundColor: 'transparent',
+        padding: 0,
         ...(isMobile
           ? {
-              p: 20,
+              p: 0,
             }
           : {
               display: 'flex',
@@ -82,8 +110,7 @@ export default function PoolList({
             : {
                 display: 'flex',
                 flexDirection: 'column',
-                borderRadius: 16,
-                backgroundColor: 'background.paper',
+                backgroundColor: 'transparent',
                 flex: 1,
                 overflow: 'hidden',
                 height: 'max-content',
@@ -98,33 +125,59 @@ export default function PoolList({
               ? {}
               : {
                   display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'space-between',
-                  p: 20,
-                  borderBottomWidth: 1,
+                  pb: 20,
                 }
           }
         >
-          <TabsGroup
-            tabs={tabs}
-            variant="rounded"
-            tabsListSx={{
-              justifyContent: 'space-between',
+          <TabsList
+            sx={{
+              gap: 8,
               ...(isMobile
                 ? {
-                    mb: 16,
+                    mb: 12,
+                    justifyContent: 'flex-start',
+                    borderBottomWidth: 0,
                   }
                 : {
+                    justifyContent: 'space-between',
                     borderBottomWidth: 0,
                   }),
+              [theme.breakpoints.up('tablet')]: {
+                gap: 12,
+              },
             }}
-            tabSx={
-              isMobile
-                ? undefined
-                : {
-                    mb: 0,
-                  }
-            }
-          />
+          >
+            {tabs.map(({ key, value }) => (
+              <Tab
+                key={key}
+                value={key}
+                sx={{
+                  flexGrow: 1,
+                  borderRadius: key === poolTab ? 40 : 8,
+                  mb: 0,
+                  color: 'text.secondary',
+                  backgroundColor: 'background.default',
+                  pl: 12,
+                  pr: 12,
+                  '&>svg': {
+                    display: isMobile ? 'none' : 'block',
+                  },
+                  [theme.breakpoints.up('tablet')]: {
+                    pl: 12,
+                    pr: 24,
+                  },
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                }}
+                variant="rounded"
+              >
+                {value}
+              </Tab>
+            ))}
+          </TabsList>
           <CreatePoolBtn />
         </Box>
         <TabPanelFlexCol
@@ -138,7 +191,7 @@ export default function PoolList({
           <AddLiquidityList
             account={account}
             filterChainIds={filterChainIds}
-            scrollParentRef={scrollParentRef}
+            scrollParentRef={scrollParentRefProps ?? scrollParentRef}
             activeChainId={activeChainId}
             handleChangeActiveChainId={handleChangeActiveChainId}
             operatePool={operatePool}
@@ -211,6 +264,7 @@ export default function PoolList({
             account={account}
             onClose={() => setOperatePool(null)}
             modal={isMobile}
+            hidePoolInfo
             {...operatePool}
           />
         ) : (
@@ -222,10 +276,9 @@ export default function PoolList({
               sx={{
                 width: 375,
                 height: 'max-content',
-                backgroundColor: 'background.paper',
-                borderRadius: 16,
                 overflow: 'hidden',
               }}
+              hidePoolInfo
             />
           )
         )}

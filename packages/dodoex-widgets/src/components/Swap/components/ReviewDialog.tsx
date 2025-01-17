@@ -95,6 +95,7 @@ export function ReviewDialog({
       }}
       id="swap-summary"
       title={<Trans>Swap summary</Trans>}
+      modal
     >
       <Box
         sx={{
@@ -103,6 +104,9 @@ export function ReviewDialog({
           height: '100%',
           flexDirection: 'column',
           borderTop: `1px solid ${theme.palette.border.main}`,
+          [theme.breakpoints.up('laptop')]: {
+            width: 343,
+          },
         }}
       >
         <Box
@@ -200,7 +204,7 @@ export function ReviewDialog({
               typography: 'h6',
             }}
           >
-            {`1 ${fromToken?.symbol}  = `}
+            1 {fromToken?.symbol}&nbsp;=&nbsp;
             <LoadingSkeleton
               loading={loading}
               loadingProps={{
@@ -213,8 +217,9 @@ export function ReviewDialog({
                 ),
                 decimals: toToken?.decimals,
               })}
-            </LoadingSkeleton>{' '}
-            {`${toToken?.symbol}`}
+            </LoadingSkeleton>
+            &nbsp;
+            {toToken?.symbol}
           </Box>
         </Box>
 

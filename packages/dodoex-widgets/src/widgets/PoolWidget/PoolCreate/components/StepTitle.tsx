@@ -54,7 +54,7 @@ export function StepTitle({
         top: 0,
         py: 20,
         px: 20,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: theme.palette.background.default,
         zIndex: 1,
         ...(!isMobile
           ? {
@@ -109,7 +109,7 @@ export function StepTitle({
                   borderRadius: 12,
                   background:
                     currentStep >= i
-                      ? theme.palette.secondary.main
+                      ? '#00D555'
                       : alpha(theme.palette.primary.main, 0.1),
                 }}
               />

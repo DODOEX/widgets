@@ -116,6 +116,7 @@ export function DepthChartWrapper({
             <QuestionTooltip title={titleQuestion} ml={4} />
           </Box>
         }
+        modal
       >
         <Box
           sx={{

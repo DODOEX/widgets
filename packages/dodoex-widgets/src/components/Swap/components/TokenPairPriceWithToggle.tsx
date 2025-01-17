@@ -7,16 +7,14 @@ import { RoutePriceStatus } from '../../../hooks/Swap';
 import { formatReadableNumber } from '../../../utils/formatter';
 import { Warn } from '@dodoex/icons';
 
-export function TokenPairPriceWithToggle({
+export function useTokenPairPriceWithToggle({
   toToken,
   fromToken,
-  priceStatus,
   pricePerToToken,
   pricePerFromToken,
 }: {
   toToken: TokenInfo | null;
   fromToken: TokenInfo | null;
-  priceStatus: RoutePriceStatus;
   pricePerToToken: number | null;
   pricePerFromToken: number | null;
 }) {
@@ -39,6 +37,22 @@ export function TokenPairPriceWithToggle({
     setRightAmount(leftAmount);
   }, [leftSymbol, leftAmount, rightSymbol, rightAmount]);
 
+  return { leftSymbol, rightSymbol, leftAmount, rightAmount, handleSwitch };
+}
+
+export function TokenPairPriceWithToggle({
+  leftSymbol,
+  rightSymbol,
+  rightAmount,
+  handleSwitch,
+  priceStatus,
+}: {
+  leftSymbol: string | undefined;
+  rightSymbol: string | undefined;
+  rightAmount: number | null;
+  handleSwitch: () => void;
+  priceStatus: RoutePriceStatus;
+}) {
   return (
     <Box
       sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}

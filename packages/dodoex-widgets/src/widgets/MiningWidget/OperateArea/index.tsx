@@ -97,7 +97,26 @@ export default function OperateArea({
       : undefined;
   const balanceInfo = usePoolBalanceInfo({
     account,
-    pool,
+    pool:
+      miningItem &&
+      baseToken &&
+      quoteToken &&
+      miningItem.baseLpToken &&
+      miningItem.quoteLpToken &&
+      ['classical', 'lptoken'].includes(miningItem.type ?? '')
+        ? {
+            chainId,
+            address: poolAddress,
+            /** Because only these two types are currently supported, they are written to death here. To support other types later, you need to modify this */
+            type: (miningItem.type === 'lptoken'
+              ? 'DSP'
+              : 'CLASSICAL') as PoolType,
+            baseTokenDecimals: baseToken.decimals,
+            quoteTokenDecimals: quoteToken.decimals,
+            baseLpTokenDecimals: miningItem.baseLpToken.decimals ?? 18,
+            quoteLpTokenDecimals: miningItem.quoteLpToken.decimals ?? 18,
+          }
+        : undefined,
   });
   const pmmStateQuery = useQuery(
     poolApi.getPMMStateQuery(

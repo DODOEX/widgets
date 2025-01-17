@@ -1,31 +1,31 @@
 import { PoolApi } from '@dodoex/api';
-import { Box, Button, LoadingSkeleton } from '@dodoex/components';
+import { Box, Button, LoadingSkeleton, useTheme } from '@dodoex/components';
+import {
+  getUniswapV2Router02ContractAddressByChainId,
+  getUniswapV2Router02FixedFeeContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
+import { t } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
-import {
-  CardPlus,
-  TokenCard,
-} from '../../../components/Swap/components/TokenCard';
-import { useLiquidityOperateAmount } from './hooks/useLiquidityOperateAmount';
+import Confirm from '../../../components/Confirm';
+import ErrorMessageDialog from '../../../components/ErrorMessageDialog';
+import { SwitchBox } from '../../../components/Swap/components/SwitchBox';
+import { TokenCard } from '../../../components/Swap/components/TokenCard';
+import { SLIPPAGE_PROTECTION } from '../../../constants/pool';
+import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
+import ConfirmDialog from '../AMMV2Create/ConfirmDialog';
+import { useOperateLiquidity } from '../hooks/contract/useOperateLiquidity';
+import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
+import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
+import { poolApi } from '../utils';
+import ComparePrice from './components/ComparePrice';
+import OperateBtn from './components/OperateBtn';
 import Ratio from './components/Ratio';
 import SlippageSetting, { useSlipper } from './components/SlippageSetting';
-import ComparePrice from './components/ComparePrice';
-import { OperatePool } from './types';
-import OperateBtn from './components/OperateBtn';
-import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
-import { t } from '@lingui/macro';
 import { useComparePrice } from './hooks/useComparePrice';
-import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
-import Confirm from '../../../components/Confirm';
-import { useOperateLiquidity } from '../hooks/contract/useOperateLiquidity';
-import { SLIPPAGE_PROTECTION } from '../../../constants/pool';
-import ErrorMessageDialog from '../../../components/ErrorMessageDialog';
-import ConfirmDialog from '../AMMV2Create/ConfirmDialog';
-import { useQuery } from '@tanstack/react-query';
-import { poolApi } from '../utils';
-import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
-import { PageType, useRouterStore } from '../../../router';
-import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
+import { useLiquidityOperateAmount } from './hooks/useLiquidityOperateAmount';
+import { OperatePool } from './types';
 
 export function AddPoolOperate({
   submittedBack: submittedBackProps,
@@ -38,6 +38,7 @@ export function AddPoolOperate({
   pool?: OperatePool;
   balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
 }) {
+  const theme = useTheme();
   const { account } = useWeb3React();
   const {
     baseAmount,
@@ -84,11 +85,19 @@ export function AddPoolOperate({
   const { isShowCompare, lqAndDodoCompareText, isWarnCompare } =
     useComparePrice(pool?.baseToken, pool?.quoteToken, midPrice);
 
+  const proxyContract = isAMMV2
+    ? pool.chainId
+      ? getUniswapV2Router02ContractAddressByChainId(pool.chainId) ||
+        getUniswapV2Router02FixedFeeContractAddressByChainId(pool.chainId)
+      : undefined
+    : undefined;
   const baseTokenStatus = useTokenStatus(pool?.baseToken, {
     amount: baseAmount,
+    contractAddress: proxyContract,
   });
   const quoteTokenStatus = useTokenStatus(pool?.quoteToken, {
     amount: quoteAmount,
+    contractAddress: proxyContract,
   });
 
   const isOverBalance =
@@ -165,12 +174,17 @@ export function AddPoolOperate({
             showPercentage
             onInputChange={handleChangeBaseAmount}
             readOnly={balanceInfo.loading || !canOperate}
+            sx={{
+              mb: 4,
+              backgroundColor: theme.palette.background.paper,
+            }}
+            inputSx={{
+              backgroundColor: 'transparent',
+            }}
           />
         )}
-        {onlyShowSide ? '' : <CardPlus />}
-        {onlyShowSide === 'base' ? (
-          ''
-        ) : (
+        {onlyShowSide ? null : <SwitchBox plus />}
+        {onlyShowSide === 'base' ? null : (
           <TokenCard
             amt={quoteAmount}
             token={pool?.quoteToken}
@@ -178,6 +192,12 @@ export function AddPoolOperate({
             showPercentage
             onInputChange={handleChangeQuoteAmount}
             readOnly={balanceInfo.loading || !canOperate || isSinglePool}
+            sx={{
+              backgroundColor: theme.palette.background.paper,
+            }}
+            inputSx={{
+              backgroundColor: 'transparent',
+            }}
           />
         )}
         <LoadingSkeleton
@@ -203,14 +223,9 @@ export function AddPoolOperate({
       {/* footer */}
       <Box
         sx={{
+          pt: 10,
           px: 20,
-          py: 16,
-          position: 'sticky',
-          bottom: 0,
-          borderStyle: 'solid',
-          borderWidth: '1px 0 0',
-          borderColor: 'border.main',
-          backgroundColor: 'background.paper',
+          pb: 20,
         }}
       >
         {isShowCompare && (

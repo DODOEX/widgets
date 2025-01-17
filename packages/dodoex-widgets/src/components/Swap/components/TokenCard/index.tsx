@@ -1,32 +1,32 @@
+import { ChainId } from '@dodoex/api';
 import {
   Box,
   BoxProps,
-  useTheme,
   Button,
   TooltipToast,
+  useTheme,
 } from '@dodoex/components';
 import { Plus } from '@dodoex/icons';
-import { TokenLogoCollapse } from './TokenLogoCollapse';
-import { BalanceText } from './BalanceText';
-import { NumberInput } from './NumberInput';
-import { TokenPickerDialog } from './TokenPickerDialog';
-import { useState, useEffect, useRef } from 'react';
-import { TokenInfo } from '../../../../hooks/Token';
-import { TokenPickerProps } from '../../../TokenPicker';
-import { transitionTime } from '../Dialog';
+import { Trans } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
+import { useEffect, useRef, useState } from 'react';
 import { tokenApi } from '../../../../constants/api';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
-import BigNumber from 'bignumber.js';
-import { PercentageSelectButtonGroup } from './PercentageSelectButtonGroup';
-import { Trans } from '@lingui/macro';
-import { ChainId } from '@dodoex/api';
 import {
   BalanceData,
   useBalanceUpdateLoading,
 } from '../../../../hooks/Submission/useBalanceUpdateLoading';
+import { TokenInfo } from '../../../../hooks/Token';
 import { useFetchTokens } from '../../../../hooks/contract';
+import { TokenPickerProps } from '../../../TokenPicker';
 import { useUserOptions } from '../../../UserOptionsProvider';
+import { transitionTime } from '../Dialog';
+import { BalanceText } from './BalanceText';
+import { NumberInput } from './NumberInput';
+import { PercentageSelectButtonGroup } from './PercentageSelectButtonGroup';
+import { TokenLogoCollapse } from './TokenLogoCollapse';
+import { TokenPickerDialog } from './TokenPickerDialog';
 
 export interface TokenCardProps {
   amt: string;
@@ -39,6 +39,7 @@ export interface TokenCardProps {
   occupiedAddrs?: string[];
   occupiedChainId?: TokenPickerProps['occupiedChainId'];
   onMaxClick?: (max: string) => void;
+  title?: React.ReactNode;
   token?: TokenInfo | null;
   onInputChange?: (v: string) => void;
   onInputFocus?: () => void;
@@ -58,21 +59,6 @@ export interface TokenCardProps {
   hideToken?: boolean;
   checkLogBalance?: BalanceData;
   notTokenPickerModal?: boolean;
-}
-
-export function CardPlus() {
-  return (
-    <Box
-      sx={{
-        height: 30,
-        textAlign: 'center',
-        fontSize: 32,
-        lineHeight: '30px',
-      }}
-    >
-      +
-    </Box>
-  );
 }
 
 export function CardPlusConnected() {
@@ -111,6 +97,7 @@ export function TokenCard({
   sx,
   inputSx,
   amt,
+  title,
   token,
   readOnly,
   showMaxBtn,
@@ -193,13 +180,54 @@ export function TokenCard({
       <Box
         sx={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: title ? 'flex-start' : 'center',
           justifyContent: 'space-between',
           gap: 4,
         }}
       >
         {hideToken ? (
           <Box />
+        ) : title ? (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              gap: 12,
+            }}
+          >
+            <Box
+              sx={{
+                typography: 'body1',
+                color: theme.palette.text.primary,
+                fontWeight: 600,
+              }}
+            >
+              {title}
+            </Box>
+            <TokenLogoCollapse
+              token={token}
+              tokenLogoSize={24}
+              showChainLogo={showChainLogo}
+              showChainName={showChainName}
+              symbolSx={{
+                typography: 'h5',
+                gap: 4,
+              }}
+              onClick={() => setTokenPickerVisible(true)}
+              readonly={!onTokenChange}
+              sx={{
+                px: 6,
+                py: 8,
+                borderWidth: 1,
+                borderColor: theme.palette.border.main,
+                borderStyle: 'solid',
+                borderRadius: 24,
+                backgroundColor: '#F4F4F5',
+                gap: 4,
+              }}
+            />
+          </Box>
         ) : (
           <TokenLogoCollapse
             token={token}
@@ -233,6 +261,7 @@ export function TokenCard({
           address={token?.address}
           decimals={token?.decimals}
           loading={balanceLoading}
+          sx={title ? { lineHeight: '22px' } : {}}
         />
       </Box>
 
@@ -288,6 +317,10 @@ export function TokenCard({
             typography={inputTypography}
             sx={{
               mt: 12,
+              ...(title
+                ? { backgroundColor: theme.palette.background.paper }
+                : {}),
+              ...inputSx,
             }}
           />
         ))}

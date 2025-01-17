@@ -31,9 +31,6 @@ export default function LoadMore({
         alignItems: 'center',
         height,
         width: '100%',
-        borderStyle: 'solid',
-        borderColor: 'border.main',
-        borderWidth: theme.spacing(1, 0, 0, 0),
         typography: 'body2',
         color: 'text.secondary',
         '&:hover': {
