@@ -6,6 +6,7 @@ import {
   TabPanel,
   Tabs,
   TabsGroup,
+  useTheme,
 } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
 import { t } from '@lingui/macro';
@@ -47,6 +48,7 @@ export function PoolOperate({
   hidePoolInfo,
   sx,
 }: PoolOperateProps) {
+  const theme = useTheme();
   const { account } = useWeb3React();
   const chain = chainId ? ThegraphKeyMap[chainId as ChainId] : '';
 
@@ -185,6 +187,7 @@ export function PoolOperate({
           sx={{
             flex: 1,
             overflowY: 'auto',
+            backgroundColor: theme.palette.background.paper,
           }}
         >
           <PoolOperateInner
@@ -204,6 +207,7 @@ export function PoolOperate({
           sx={{
             flex: 1,
             overflowY: 'auto',
+            backgroundColor: theme.palette.background.paper,
           }}
         >
           {poolChainId && poolAddress ? (
@@ -230,6 +234,7 @@ export default function PoolOperateDialog({
 }: PoolOperateProps & {
   modal?: boolean;
 }) {
+  const theme = useTheme();
   const { isMobile } = useWidgetDevice();
 
   return (
@@ -238,6 +243,11 @@ export default function PoolOperateDialog({
       onClose={props.onClose}
       scope={!isMobile}
       modal={modal}
+      modalContainerSx={{
+        backgroundColor: theme.palette.background.default,
+        borderRadius: isMobile ? 0 : 20,
+        overflowX: 'hidden',
+      }}
       id="pool-operate"
     >
       <PoolOperate {...props} />

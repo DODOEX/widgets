@@ -146,9 +146,6 @@ export const Primary = ({
             position: 'relative',
             overflowY: 'hidden',
             width: '100%',
-            [theme.breakpoints.up('desktop')]: {
-              width: 1230,
-            },
           }}
         >
           <Swap />

@@ -73,7 +73,7 @@ export function SwapSettingsDialog({
           px: 20,
           pb: 34,
           overflowY: 'auto',
-          [theme.breakpoints.up('desktop')]: {
+          [theme.breakpoints.up('laptop')]: {
             width: 343,
           },
         }}

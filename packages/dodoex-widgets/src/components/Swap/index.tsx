@@ -934,7 +934,7 @@ export function Swap({
           flexDirection: 'column',
           alignItems: 'stretch',
           gap: 12,
-          [theme.breakpoints.up('desktop')]: {
+          [theme.breakpoints.up('laptop')]: {
             flexDirection: 'row',
             alignItems: 'flex-start',
           },
@@ -955,7 +955,7 @@ export function Swap({
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain',
             backgroundPosition: 'top',
-            [theme.breakpoints.up('desktop')]: {
+            [theme.breakpoints.up('laptop')]: {
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             },
@@ -1067,7 +1067,7 @@ export function Swap({
                 left: '50%',
                 top: '50%',
                 transform: 'translate(-50%, -50%) rotate(90deg)',
-                [theme.breakpoints.up('desktop')]: {
+                [theme.breakpoints.up('laptop')]: {
                   transform: 'translate(-50%, -50%) rotate(0deg)',
                 },
                 color: 'text.secondary',
@@ -1178,7 +1178,7 @@ export function Swap({
             <Box
               sx={{
                 alignSelf: 'stretch',
-                [theme.breakpoints.up('desktop')]: {
+                [theme.breakpoints.up('laptop')]: {
                   alignSelf: 'center',
                   width: '100%',
                   maxWidth: 480,
@@ -1196,11 +1196,12 @@ export function Swap({
             flexDirection: 'row',
             alignItems: 'center',
             gap: 8,
-            [theme.breakpoints.up('desktop')]: {
+            [theme.breakpoints.up('laptop')]: {
               flexDirection: 'column',
               alignItems: 'stretch',
               gap: 12,
               width: 330,
+              flexShrink: 0,
             },
           }}
         >

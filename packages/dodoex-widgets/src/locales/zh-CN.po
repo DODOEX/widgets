@@ -209,7 +209,7 @@ msgstr ""
 msgid "Rewards"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/index.tsx:73
+#: src/components/Swap/SwapOrderHistory/index.tsx:72
 msgid "Pay"
 msgstr ""
 
@@ -303,7 +303,7 @@ msgid "Pricing Model"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:74
-#: src/widgets/PoolWidget/PoolList/index.tsx:224
+#: src/widgets/PoolWidget/PoolList/index.tsx:230
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:17
 msgid "Liquidity"
 msgstr ""
@@ -1101,7 +1101,7 @@ msgid "Estimated Time"
 msgstr "预计时间"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:19
-#: src/widgets/PoolWidget/PoolList/index.tsx:225
+#: src/widgets/PoolWidget/PoolList/index.tsx:231
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr ""
 
@@ -1232,7 +1232,7 @@ msgstr ""
 msgid "TVL"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolOperate/index.tsx:126
+#: src/widgets/PoolWidget/PoolOperate/index.tsx:128
 msgid "LP Tokens"
 msgstr ""
 
@@ -1266,7 +1266,7 @@ msgstr ""
 msgid "Trader"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/index.tsx:114
+#: src/components/Swap/SwapOrderHistory/index.tsx:113
 #: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:54
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:269
 #: src/widgets/PoolWidget/AMMV3/components/PositionAmountPreview.tsx:195
@@ -1668,7 +1668,7 @@ msgstr ""
 msgid "Approve {0}"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/index.tsx:106
+#: src/components/Swap/SwapOrderHistory/index.tsx:105
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:204
 msgid "Rate"
 msgstr ""
@@ -1827,7 +1827,7 @@ msgstr "秒"
 msgid "Total Swap Volume"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/index.tsx:100
+#: src/components/Swap/SwapOrderHistory/index.tsx:99
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:477
 msgid "Receive"
 msgstr ""
@@ -2153,7 +2153,7 @@ msgstr ""
 msgid "Create One"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/index.tsx:103
+#: src/components/Swap/SwapOrderHistory/index.tsx:102
 msgid "Status"
 msgstr ""
 
@@ -2267,7 +2267,7 @@ msgstr "ForceStop 异常"
 #: src/components/LoadMore.tsx:47
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/LiquidityProvidersTable.tsx:222
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:317
-#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:86
+#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:89
 msgid "Load more"
 msgstr ""
 

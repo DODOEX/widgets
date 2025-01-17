@@ -20944,7 +20944,6 @@ export type FetchLiquidityListQuery = {
           miningQuoteApy?: any | null;
           transactionBaseApy?: any | null;
           transactionQuoteApy?: any | null;
-          metromMiningApy?: any | null;
         } | null;
       } | null;
     } | null> | null;
@@ -21021,7 +21020,6 @@ export type FetchMyLiquidityListQuery = {
           miningQuoteApy?: any | null;
           transactionBaseApy?: any | null;
           transactionQuoteApy?: any | null;
-          metromMiningApy?: any | null;
         } | null;
       } | null;
     } | null> | null;
@@ -21110,7 +21108,6 @@ export type FetchPoolQuery = {
           miningQuoteApy?: any | null;
           transactionBaseApy?: any | null;
           transactionQuoteApy?: any | null;
-          metromMiningApy?: any | null;
         } | null;
       } | null;
     } | null> | null;
@@ -21796,7 +21793,6 @@ export const FetchLiquidityListDocument = new TypedDocumentString(`
           miningQuoteApy
           transactionBaseApy
           transactionQuoteApy
-          metromMiningApy
         }
         miningAddress
         volume24H
@@ -21879,7 +21875,6 @@ export const FetchMyLiquidityListDocument = new TypedDocumentString(`
           miningQuoteApy
           transactionBaseApy
           transactionQuoteApy
-          metromMiningApy
         }
         miningAddress
         volume24H
@@ -21972,7 +21967,6 @@ export const FetchPoolDocument = new TypedDocumentString(`
           miningQuoteApy
           transactionBaseApy
           transactionQuoteApy
-          metromMiningApy
         }
         miningAddress
       }

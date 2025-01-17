@@ -27,7 +27,7 @@ function SwapInfoCard({
         backgroundImage: `url(${subtractSmSvg})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'auto 107px',
-        backgroundPosition: 'top left',
+        backgroundPosition: 'top right',
         height: 107,
         pt: 16,
         pl: 16,
@@ -37,7 +37,7 @@ function SwapInfoCard({
         justifyContent: 'flex-start',
         position: 'relative',
         gap: 8,
-        [theme.breakpoints.up('desktop')]: {
+        [theme.breakpoints.up('laptop')]: {
           flexBasis: 191,
           flexShrink: 0,
           pt: 0,
@@ -52,10 +52,27 @@ function SwapInfoCard({
     >
       <Box
         sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 64,
+          bottom: 0,
+          borderTopLeftRadius: 20,
+          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20,
+          backgroundColor: '#F0EEF0',
+          zIndex: -1,
+          [theme.breakpoints.up('laptop')]: {
+            display: 'none',
+          },
+        }}
+      />
+      <Box
+        sx={{
           typography: 'h6',
           color: theme.palette.text.primary,
           fontWeight: 600,
-          [theme.breakpoints.up('desktop')]: {
+          [theme.breakpoints.up('laptop')]: {
             typography: 'body2',
             fontWeight: 600,
           },
@@ -68,7 +85,7 @@ function SwapInfoCard({
           typography: 'caption',
           color: theme.palette.text.primary,
           fontWeight: 600,
-          [theme.breakpoints.up('desktop')]: {
+          [theme.breakpoints.up('laptop')]: {
             typography: 'h3',
             fontWeight: 600,
           },
@@ -82,7 +99,7 @@ function SwapInfoCard({
           color: theme.palette.text.secondary,
           fontWeight: 500,
           display: descriptionVisibleInMobile ? 'block' : 'none',
-          [theme.breakpoints.up('desktop')]: {
+          [theme.breakpoints.up('laptop')]: {
             mt: 8,
             display: 'block',
           },
@@ -104,7 +121,7 @@ function SwapInfoCard({
           borderRadius: 16,
           backgroundColor: '#000',
           color: theme.palette.background.paper,
-          [theme.breakpoints.up('desktop')]: {
+          [theme.breakpoints.up('laptop')]: {
             width: 48,
             height: 48,
             borderRadius: 24,
@@ -124,7 +141,7 @@ function SwapInfoCard({
           sx={{
             width: 16,
             height: 16,
-            [theme.breakpoints.up('desktop')]: {
+            [theme.breakpoints.up('laptop')]: {
               width: 24,
               height: 24,
             },

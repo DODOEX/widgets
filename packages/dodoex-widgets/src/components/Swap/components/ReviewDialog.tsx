@@ -104,7 +104,7 @@ export function ReviewDialog({
           height: '100%',
           flexDirection: 'column',
           borderTop: `1px solid ${theme.palette.border.main}`,
-          [theme.breakpoints.up('desktop')]: {
+          [theme.breakpoints.up('laptop')]: {
             width: 343,
           },
         }}

@@ -19,7 +19,7 @@ export default function SwapOrderHistory({
 }) {
   const theme = useTheme();
   const { onlyChainId } = useUserOptions();
-  const { isDesktop } = useWidgetDevice();
+  const { isLaptop } = useWidgetDevice();
   const { account } = useWeb3React();
   const [filterChainId, setFilterChainId] = React.useState<
     ChainId | undefined
@@ -27,24 +27,23 @@ export default function SwapOrderHistory({
   const swapOrderListQueryLocal = useTradeSwapOrderList({
     account: swapOrderListQueryProps ? undefined : account,
     chainId: onlyChainId ?? filterChainId,
-    limit: isDesktop ? 5 : 10,
+    limit: isLaptop ? 5 : 10,
   });
   const swapOrderListQuery = swapOrderListQueryProps ?? swapOrderListQueryLocal;
 
   return (
     <CardStatus
-      isMobile={!isDesktop}
       empty={!swapOrderListQuery.orderList.length}
       loading={swapOrderListQuery.isLoading}
     >
-      {!isDesktop ? (
+      {!isLaptop ? (
         <Box
           sx={{
             px: 0,
           }}
         >
           {swapOrderListQuery.orderList.map((item) => (
-            <SameOrderCard key={item.hash} data={item} isMobile={!isDesktop} />
+            <SameOrderCard key={item.hash} data={item} isMobile={!isLaptop} />
           ))}
           <LoadMore
             loading={swapOrderListQuery.isFetchingNextPage}
@@ -120,7 +119,7 @@ export default function SwapOrderHistory({
                 <SameOrderCard
                   key={item.hash}
                   data={item}
-                  isMobile={!isDesktop}
+                  isMobile={!isLaptop}
                 />
               ))}
             </tbody>

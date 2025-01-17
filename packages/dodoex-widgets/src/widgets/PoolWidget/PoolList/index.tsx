@@ -33,6 +33,7 @@ import { ReactComponent as LeftImage } from './pool-left.svg';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   const theme = useTheme();
+  const { isMobile } = useWidgetDevice();
 
   return (
     <TabPanel
@@ -44,14 +45,16 @@ function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
         overflow: 'hidden',
         px: 0,
         py: 0,
-        [theme.breakpoints.up('desktop')]: {
-          borderRadius: 20,
-          backgroundColor: '#C9EB62',
-          backgroundImage: `url(${backgroundSvg})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: '341px 117px',
-          backgroundPosition: 'top right',
-        },
+        ...(isMobile
+          ? undefined
+          : {
+              borderRadius: 20,
+              backgroundColor: '#C9EB62',
+              backgroundImage: `url(${backgroundSvg})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: '341px 117px',
+              backgroundPosition: 'top right',
+            }),
       }}
     />
   );
@@ -122,6 +125,7 @@ export default function PoolList({
               ? {}
               : {
                   display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'space-between',
                   pb: 20,
                 }
@@ -129,14 +133,15 @@ export default function PoolList({
         >
           <TabsList
             sx={{
-              justifyContent: 'space-between',
               gap: 8,
               ...(isMobile
                 ? {
                     mb: 12,
+                    justifyContent: 'flex-start',
                     borderBottomWidth: 0,
                   }
                 : {
+                    justifyContent: 'space-between',
                     borderBottomWidth: 0,
                   }),
               [theme.breakpoints.up('tablet')]: {
@@ -149,6 +154,7 @@ export default function PoolList({
                 key={key}
                 value={key}
                 sx={{
+                  flexGrow: 1,
                   borderRadius: key === poolTab ? 40 : 8,
                   mb: 0,
                   color: 'text.secondary',

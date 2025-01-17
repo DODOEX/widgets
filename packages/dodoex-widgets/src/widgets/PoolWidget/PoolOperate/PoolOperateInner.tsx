@@ -125,6 +125,7 @@ export default function PoolOperateInner({
         sx={{
           mx: 20,
           height: 4,
+          backgroundColor: theme.palette.background.paper,
           backgroundImage: `url(${dashLine})`,
           backgroundSize: '100% 100%',
           backgroundRepeat: 'no-repeat',

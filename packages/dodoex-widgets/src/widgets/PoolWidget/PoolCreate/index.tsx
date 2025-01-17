@@ -243,7 +243,7 @@ export default function PoolCreate() {
           typography: 'caption',
           borderRadius: 20,
           backgroundColor: theme.palette.tabActive.main,
-          [theme.breakpoints.up('desktop')]: {
+          [theme.breakpoints.up('tablet')]: {
             display: 'flex',
           },
         }}

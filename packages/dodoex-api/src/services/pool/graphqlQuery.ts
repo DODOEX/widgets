@@ -91,7 +91,6 @@ export const poolGraphqlQuery = {
               miningQuoteApy
               transactionBaseApy
               transactionQuoteApy
-              metromMiningApy
             }
             miningAddress
             volume24H
@@ -171,7 +170,6 @@ export const poolGraphqlQuery = {
               miningQuoteApy
               transactionBaseApy
               transactionQuoteApy
-              metromMiningApy
             }
             miningAddress
             volume24H
@@ -262,7 +260,6 @@ export const poolGraphqlQuery = {
               miningQuoteApy
               transactionBaseApy
               transactionQuoteApy
-              metromMiningApy
             }
             miningAddress
           }
