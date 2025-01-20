@@ -126,6 +126,8 @@ function CardList({
           });
         }
         const hasMining = !!item.miningAddress?.[0];
+        const hasMetromMining =
+          !!item.apy?.metromMiningApy && Number(item.apy?.metromMiningApy) > 0;
 
         const position = lq.liquidityPositions?.[0];
 
@@ -196,7 +198,7 @@ function CardList({
                   />
                 </Box>
               </Box>
-              {hasMining ? (
+              {hasMining || hasMetromMining ? (
                 <Box
                   sx={{
                     p: 8,
@@ -717,6 +719,9 @@ function TableList({
             }
           }
           const hasMining = !!item.miningAddress?.[0];
+          const hasMetromMining =
+            !!item.apy?.metromMiningApy &&
+            Number(item.apy?.metromMiningApy) > 0;
           const hoverBg = theme.palette.background.tag;
 
           return (
@@ -864,7 +869,7 @@ function TableList({
                       alignItems: 'center',
                     }}
                   >
-                    {hasMining ? (
+                    {hasMining || hasMetromMining ? (
                       <Tooltip title={t`Mining`}>
                         <Box
                           component="span"

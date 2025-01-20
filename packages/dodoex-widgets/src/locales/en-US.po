@@ -63,9 +63,9 @@ msgstr "Receive {0}"
 msgid "{0} pending"
 msgstr "{0} pending"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:447
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:449
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:343
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:711
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:713
 msgid "Removing"
 msgstr "Removing"
 
@@ -131,10 +131,10 @@ msgstr "Start Time"
 msgid "Dismiss"
 msgstr "Dismiss"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:248
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:390
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:288
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:597
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:250
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:392
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:290
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:599
 msgid "Pool Type"
 msgstr "Pool Type"
 
@@ -143,9 +143,9 @@ msgstr "Pool Type"
 msgid "Unstaking"
 msgstr "Unstaking"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:450
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:452
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:346
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:714
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:716
 msgid "Adding"
 msgstr "Adding"
 
@@ -473,9 +473,9 @@ msgstr "Amount of token rewards"
 msgid "No results found"
 msgstr "No results found"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:386
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:388
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:297
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:593
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:595
 msgid "Pair"
 msgstr "Pair"
 
@@ -581,7 +581,7 @@ msgstr "Current price"
 msgid "Swap Rate"
 msgstr "Swap Rate"
 
-#: src/widgets/PoolWidget/PoolDetail/index.tsx:155
+#: src/widgets/PoolWidget/PoolDetail/index.tsx:157
 #: src/widgets/PoolWidget/PoolModify/index.tsx:436
 msgid "Pool not found. Please switch to another network and retry."
 msgstr "Pool not found. Please switch to another network and retry."
@@ -705,13 +705,13 @@ msgstr "More trade settings"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:301
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:394
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:303
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:396
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:77
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:199
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:300
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:343
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:602
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:345
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:604
 msgid "TVL"
 msgstr "TVL"
 
@@ -816,7 +816,7 @@ msgstr "Invite"
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 msgstr "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:559
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:561
 msgid "{0}"
 msgstr "{0}"
 
@@ -1024,7 +1024,7 @@ msgstr "The setting has been switched to swap mode"
 msgid "Quote not available"
 msgstr "Quote not available"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:980
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:985
 msgid "My pool share"
 msgstr "My pool share"
 
@@ -1046,10 +1046,10 @@ msgstr "Stake LP tokens and receive mining rewards."
 msgid "No LP pools match your criteria"
 msgstr "No LP pools match your criteria"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:218
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:555
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:258
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:814
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:220
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:560
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:260
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:819
 msgid "Fee rate"
 msgstr "Fee rate"
 
@@ -1104,7 +1104,7 @@ msgid "Fresh Mining"
 msgstr "Fresh Mining"
 
 #: src/widgets/PoolWidget/PoolDetail/components/Overview.tsx:98
-#: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:148
+#: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:151
 msgid "LP Fee"
 msgstr "LP Fee<<<<<<< HEAD"
 
@@ -1149,8 +1149,8 @@ msgstr "Confirm Cross Chain"
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:322
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:401
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:324
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:403
 msgid "Volume (1D)"
 msgstr "Volume (1D)"
 
@@ -1253,10 +1253,11 @@ msgstr "Staked"
 msgid "Start Time"
 msgstr "Start Time"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:174
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:605
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:214
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:868
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:176
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:610
+#: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:190
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:216
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:873
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:20
 msgid "Mining"
 msgstr "Mining<<<<<<< HEAD"
@@ -1437,8 +1438,8 @@ msgstr "Fee Rate"
 msgid "You are making changes to the liquidity of a private pool. This is a highly discretionary operation that may cause substantial inflows/outflows of funds and changes in market prices. Please make sure you are fully aware of the implications of each parameter modification."
 msgstr "You are making changes to the liquidity of a private pool. This is a highly discretionary operation that may cause substantial inflows/outflows of funds and changes in market prices. Please make sure you are fully aware of the implications of each parameter modification."
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:515
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:616
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:517
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:618
 msgid "Price Range"
 msgstr "Price Range"
 
@@ -1454,8 +1455,8 @@ msgstr "{0} deposited"
 #: src/widgets/PoolWidget/AMMV2Create/MyLiqidity.tsx:64
 #: src/widgets/PoolWidget/AMMV3/components/PositionAmountPreview.tsx:222
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:28
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:452
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:611
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:454
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:613
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:430
 msgid "My Liquidity"
 msgstr "My Liquidity"
@@ -1702,7 +1703,7 @@ msgstr "V2 & PMM"
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:81
 #: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:66
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:146
-#: src/widgets/PoolWidget/PoolDetail/index.tsx:187
+#: src/widgets/PoolWidget/PoolDetail/index.tsx:189
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:460
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:84
 msgid "Edit"
@@ -1773,7 +1774,7 @@ msgstr "Service update, please wait and try again"
 msgid "Gas price is too low, please adjust in your wallet and try again"
 msgstr "Gas price is too low, please adjust in your wallet and try again"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:366
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:368
 msgid "My Pool Share"
 msgstr "My Pool Share"
 
@@ -1964,12 +1965,12 @@ msgstr "My Staked"
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:478
 #: src/widgets/PoolWidget/Algebra/components/ReviewModal.tsx:79
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
-#: src/widgets/PoolWidget/PoolDetail/index.tsx:205
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:346
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:677
+#: src/widgets/PoolWidget/PoolDetail/index.tsx:207
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:348
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:682
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:269
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:563
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1105
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1110
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:118
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
 msgid "Add"
@@ -2052,7 +2053,7 @@ msgstr "Do not select non-standard ERC20 tokens as this may lead to unknown erro
 msgid "Create Pool"
 msgstr "Create Pool"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:702
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:704
 msgid "Managing"
 msgstr "Managing"
 
@@ -2074,7 +2075,7 @@ msgid "The closer the provided asset ratio is to the recommended ratio ({recomme
 msgstr "The closer the provided asset ratio is to the recommended ratio ({recommendRatioText}), the smaller the portion burned."
 
 #: src/widgets/PoolWidget/PoolDetail/components/Overview.tsx:112
-#: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:166
+#: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:169
 msgid "MT Fee"
 msgstr "MT Fee"
 
@@ -2154,12 +2155,12 @@ msgid "Detail"
 msgstr "Detail"
 
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:225
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:271
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:397
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:273
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:399
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:57
 #: src/widgets/PoolWidget/PoolList/components/TokenListPoolItem.tsx:102
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:313
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:607
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:315
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:609
 msgid "APY"
 msgstr "APY"
 
@@ -2223,11 +2224,11 @@ msgstr "Initial Price Alert"
 
 #: src/widgets/PoolWidget/Algebra/components/RemoveButton.tsx:32
 #: src/widgets/PoolWidget/AMMV3/components/RemoveButton.tsx:32
-#: src/widgets/PoolWidget/PoolDetail/index.tsx:198
+#: src/widgets/PoolWidget/PoolDetail/index.tsx:200
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:254
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:551
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:544
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1093
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:546
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1098
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:228
 msgid "Remove"
@@ -2341,7 +2342,7 @@ msgstr "This trading pair does not have enough historical data and has used the 
 
 #: src/widgets/PoolWidget/Algebra/components/PositionViewCard.tsx:248
 #: src/widgets/PoolWidget/AMMV3/components/PositionViewCard.tsx:248
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1105
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1110
 msgid "Manage"
 msgstr "Manage"
 
