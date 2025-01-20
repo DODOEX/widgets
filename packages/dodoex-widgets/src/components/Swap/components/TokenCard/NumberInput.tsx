@@ -14,6 +14,7 @@ export const NumberInput = forwardRef(function NumberInput(
     value,
     decimals,
     onChange,
+    onBlur,
     suffix,
     suffixGap = 0,
     withClear,
@@ -28,6 +29,7 @@ export const NumberInput = forwardRef(function NumberInput(
     decimals?: number;
     onFocus?: () => void;
     onChange?: (v: string) => void;
+    onBlur?: (v: string) => void;
     suffix?: React.ReactNode | string;
     suffixGap?: number;
     withClear?: boolean;
@@ -94,6 +96,14 @@ export const NumberInput = forwardRef(function NumberInput(
             : fixedInputStringToFormattedNumber(inputVal, decimals as number);
         onChange && onChange(input as string);
       }}
+      onBlur={
+        onBlur
+          ? (evt) => {
+              const inputVal = evt.target.value;
+              onBlur(inputVal);
+            }
+          : undefined
+      }
       data-testid={numberInputWrapper}
       suffix={(!readOnly || readonlyShowSuffix) && endAdornment}
       suffixGap={suffixGap}

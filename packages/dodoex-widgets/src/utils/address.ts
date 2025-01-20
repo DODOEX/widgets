@@ -5,6 +5,24 @@ import { keccak256, pack } from '@ethersproject/solidity';
 import { TokenInfo } from '../hooks/Token';
 import { toWei } from './formatter';
 import { getIsAMMV2DynamicFeeContractByChainId } from '../widgets/PoolWidget/utils';
+import { defaultAbiCoder } from '@dodoex/contract-request';
+
+// https://github.com/cryptoalgebra/integral-sdk/blob/master/src/constants/addresses.ts
+// https://github.com/rabbitblood/integral-sdk-hpot/blob/master/src/constants/addresses.ts
+export const ALGEBRA_POOL_DEPLOYER_ADDRESSES: {
+  [chainId in ChainId]?: string;
+} = {
+  // [ChainId.Holesky]: '0x4777378A908A90862AdDedabF9388958Cbd020f1',
+  [ChainId.BARTIO_TESTNET]: '0x5Dc98916bC57A5391F9Df74002f266B6b187C339',
+};
+
+export const ALGEBRA_POOL_INIT_CODE_HASH: {
+  [chainId in ChainId]?: string;
+} = {
+  // [ChainId.Holesky]: '0x4b9e4a8044ce5695e06fce9421a63b6f5c3db8a561eebb30ea4c775469e36eaf',
+  [ChainId.BARTIO_TESTNET]:
+    '0xb3fc09be5eb433d99b1ec89fd8435aaf5ffea75c1879e19028aa2414a14b3c85',
+};
 
 export const isSameAddress = (
   tokenAddress1: string,
@@ -123,6 +141,13 @@ export function sortsBefore(tokenA: TokenInfo, tokenB: TokenInfo): boolean {
   return tokenA.address.toLowerCase() < tokenB.address.toLowerCase();
 }
 
+export function sortsBeforeTokenAddress(
+  tokenA: string,
+  tokenB: string,
+): boolean {
+  return tokenA.toLowerCase() < tokenB.toLowerCase();
+}
+
 // https://github.com/Uniswap/sdks/blob/8b2649bf956f0cae69d58b8e3a4fd4cc8f164756/sdks/v2-sdk/src/entities/pair.ts#L24
 export const computePairAddress = ({
   factoryAddress,
@@ -156,3 +181,72 @@ export const computePairAddress = ({
     getUniInitCodeHash(tokenA.chainId),
   );
 };
+
+/**
+ * Computes a pool address
+ * @param poolDeployer The Algebra Pool Deployer address
+ * @param tokenA The first token of the pair, irrespective of sort order
+ * @param tokenB The second token of the pair, irrespective of sort order
+ * @param initCodeHashManualOverride The initial code hash override
+ * @returns The pool address
+ */
+export function computePoolAddress({
+  tokenA,
+  tokenB,
+  poolDeployer,
+  initCodeHashManualOverride,
+}: {
+  tokenA: TokenInfo;
+  tokenB: TokenInfo;
+  poolDeployer: string;
+  initCodeHashManualOverride: string;
+}): string {
+  const [token0, token1] = sortsBefore(tokenA, tokenB)
+    ? [tokenA, tokenB]
+    : [tokenB, tokenA];
+  return getCreate2Address(
+    poolDeployer,
+    keccak256(
+      ['bytes'],
+      [
+        defaultAbiCoder.encode(
+          ['address', 'address'],
+          [token0.address, token1.address],
+        ),
+      ],
+    ),
+    initCodeHashManualOverride,
+  );
+}
+
+/**
+ * Computes a pool address
+ * @param poolDeployer The Algebra Pool Deployer address
+ * @param tokenA The first token of the pair, irrespective of sort order
+ * @param tokenB The second token of the pair, irrespective of sort order
+ * @param initCodeHashManualOverride The initial code hash override
+ * @returns The pool address
+ */
+export function computePoolAddressByAddress({
+  tokenA,
+  tokenB,
+  initCodeHashManualOverride,
+  poolDeployer,
+}: {
+  tokenA: string;
+  tokenB: string;
+  initCodeHashManualOverride: string;
+  poolDeployer: string;
+}): string {
+  const [token0, token1] = sortsBeforeTokenAddress(tokenA, tokenB)
+    ? [tokenA, tokenB]
+    : [tokenB, tokenA];
+  return getCreate2Address(
+    poolDeployer,
+    keccak256(
+      ['bytes'],
+      [defaultAbiCoder.encode(['address', 'address'], [token0, token1])],
+    ),
+    initCodeHashManualOverride,
+  );
+}

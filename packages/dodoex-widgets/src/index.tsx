@@ -35,6 +35,8 @@ export { usePoolBalanceInfo } from './widgets/PoolWidget/hooks/usePoolBalanceInf
 export { MiningList } from './widgets/MiningWidget/MiningList';
 export { MiningDetail } from './widgets/MiningWidget/MiningDetail';
 export { MiningCreate } from './widgets/MiningWidget/MiningCreate';
+export { default as AlgebraAddLiquidity } from './widgets/PoolWidget/Algebra/AddLiquidity';
+export { AlgebraPositionManage } from './widgets/PoolWidget/Algebra/AlgebraPositionManage';
 export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
 export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
 export { AMMV3PositionManage } from './widgets/PoolWidget/AMMV3/AMMV3PositionManage';

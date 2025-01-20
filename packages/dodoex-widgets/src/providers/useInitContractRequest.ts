@@ -11,17 +11,22 @@ import { useUserOptions } from '../components/UserOptionsProvider';
 import React from 'react';
 import { getRpcSingleUrlMap } from '../constants/chains';
 
-export function useInitContractRequest() {
+export function useInitContractRequest(isSet?: boolean) {
   const { getStaticJsonRpcProviderByChainId } = useUserOptions();
 
-  React.useEffect(() => {
+  const contractRequests = React.useMemo(() => {
     const contractRequests = new ContractRequests({
       multiCallAddressList,
       getProvider:
         getStaticJsonRpcProviderByChainId as ContractRequestsConfig['getProvider'],
       rpc: getRpcSingleUrlMap(),
     });
-    setContractRequests(contractRequests);
-    setContractRequestsApi(contractRequests);
-  }, [getStaticJsonRpcProviderByChainId]);
+    if (isSet) {
+      setContractRequests(contractRequests);
+      setContractRequestsApi(contractRequests);
+    }
+    return contractRequests;
+  }, [getStaticJsonRpcProviderByChainId, isSet]);
+
+  return contractRequests;
 }

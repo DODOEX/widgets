@@ -41,6 +41,7 @@ export interface TokenCardProps {
   onMaxClick?: (max: string) => void;
   token?: TokenInfo | null;
   onInputChange?: (v: string) => void;
+  onInputBlur?: (v: string) => void;
   onInputFocus?: () => void;
   onTokenClick?: () => void;
   onTokenChange?: (token: TokenInfo, isOccupied: boolean) => void;
@@ -75,7 +76,7 @@ export function CardPlus() {
   );
 }
 
-export function CardPlusConnected() {
+export function CardPlusConnected({ sx }: { sx?: BoxProps['sx'] }) {
   return (
     <Box
       sx={{
@@ -99,6 +100,7 @@ export function CardPlusConnected() {
           alignItems: 'center',
           justifyContent: 'center',
           color: 'text.secondary',
+          ...sx,
         }}
       >
         <Box component={Plus} />
@@ -122,6 +124,7 @@ export function TokenCard({
   onInputFocus,
   onTokenClick,
   onInputChange,
+  onInputBlur,
   onTokenChange,
   side,
   showChainLogo,
@@ -263,6 +266,7 @@ export function TokenCard({
                   }
                 : undefined
             }
+            onBlur={onInputBlur}
             readOnly={readOnly}
             withClear
             suffix={
@@ -310,13 +314,15 @@ export function TokenCard({
                       } else if (onInputChange) {
                         onInputChange(maxValue);
                       }
+                      onInputBlur?.(maxValue);
                       percentageSetValue.current = maxValue;
-                    } else if (onInputChange) {
+                    } else if (onInputChange || onInputBlur) {
                       const newValue = balance
                         .multipliedBy(part)
                         .dp(token.decimals)
                         .toString();
-                      onInputChange(newValue);
+                      onInputBlur?.(newValue);
+                      onInputChange?.(newValue);
                       percentageSetValue.current = newValue;
                     }
                   }

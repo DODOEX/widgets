@@ -10,6 +10,7 @@ export enum PageType {
   MiningDetail = 'miningDetail',
   createPoolAMMV2 = 'createPoolAMMV2',
   createPoolAMMV3 = 'createPoolAMMV3',
+  createPoolAlgebra = 'createPoolAlgebra',
 }
 
 interface PageTypeParams {

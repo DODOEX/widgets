@@ -192,7 +192,7 @@ export default function PoolList({
               tokenId={operatePool.pool.liquidityPositions[0].tokenId}
               chainId={operatePool.pool.chainId}
               onClose={() => setOperatePool(null)}
-            />
+            /> 
           ) : (
             <AMMV3PositionsView
               chainId={operatePool.pool.chainId}

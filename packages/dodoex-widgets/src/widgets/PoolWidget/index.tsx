@@ -7,6 +7,7 @@ import PoolDetail from './PoolDetail';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import AMMV2Create from './AMMV2Create';
 import AMMV3Create from './AMMV3/AddLiquidityV3';
+import AlgebraCreate from './Algebra/AddLiquidity';
 
 export { default as AMMV3Create } from './AMMV3/AddLiquidityV3';
 export { AMMV3PositionsView } from './AMMV3/AMMV3PositionsView';
@@ -44,6 +45,8 @@ export function Pool() {
           }}
         />
       );
+    case PageType.createPoolAlgebra:
+      return <AlgebraCreate />;
     default:
       return <PoolList params={(page as Page<PageType.Pool>)?.params} />;
   }

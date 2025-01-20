@@ -22,7 +22,7 @@ export const Primary = (props: any) => {
   }, [projectId, apiKey]);
 
   return (
-    <Widget {...config} {...other} apikey={apiKey}>
+    <Widget {...config} {...other} apikey={apiKey} tokenList={'all'}>
       <AddLiquidityV3
         handleGoBack={() => window.alert('handleGoBack')}
         handleGoToPoolList={() => window.alert('handleGoToPoolList')}

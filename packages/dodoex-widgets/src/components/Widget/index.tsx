@@ -127,7 +127,7 @@ function LangProvider(props: PropsWithChildren<WidgetProps>) {
 function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useInitTokenList(props);
   useFetchBlockNumber();
-  useInitContractRequest();
+  useInitContractRequest(true);
   const { provider, connector, chainId, account } = useWeb3React();
   const dispatch = useDispatch<AppThunkDispatch>();
   const autoConnectLoading = useSelector(getAutoConnectLoading);

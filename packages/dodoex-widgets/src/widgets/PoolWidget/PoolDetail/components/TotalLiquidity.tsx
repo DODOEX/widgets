@@ -51,6 +51,14 @@ export default function TotalLiquidity({
     baseAmount && baseAmount.div(total).multipliedBy(100).toFixed(2);
   const quotePercentage =
     quoteAmount && quoteAmount.div(total).multipliedBy(100).toFixed(2);
+  console.log(
+    'je',
+    baseReserve?.toString(),
+    quoteReserve?.toString(),
+    baseAmount?.toString(),
+    quoteAmount?.toString(),
+    midPrice?.toString(),
+  );
 
   return (
     <Box

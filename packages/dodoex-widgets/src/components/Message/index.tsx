@@ -165,6 +165,7 @@ export default function Message() {
               sx={{
                 display: 'flex',
                 alignItems: 'center',
+                overflow: 'hidden',
               }}
             >
               {/* icon */}
@@ -272,6 +273,7 @@ export default function Message() {
                   : theme.palette.background.paperDarkContrast,
                 cursor: 'pointer',
                 boxSizing: 'border-box',
+                flexShrink: 0,
                 [theme.breakpoints.up('tablet')]: {
                   ml: 28,
                 },
