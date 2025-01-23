@@ -2,15 +2,12 @@ import { Tabs as BaseTabs, TabsProps } from '@mui/base/Tabs';
 import React from 'react';
 import { Box, BoxProps } from '../Box';
 
-export const Tabs = React.forwardRef(function TabsList(
-  {
-    onChange,
-    ...props
-  }: Partial<TabsProps> & {
+export const Tabs = React.forwardRef<
+  HTMLDivElement,
+  Partial<TabsProps> & {
     sx?: BoxProps['sx'];
-  },
-  ref: React.ForwardedRef<HTMLDivElement>,
-) {
+  }
+>(function TabsList({ onChange, ...props }, ref) {
   return (
     <Box
       component={BaseTabs}

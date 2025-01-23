@@ -78,8 +78,8 @@ export interface TabProps extends BaseTabProps {
   sx?: BoxProps['sx'];
   variant?: 'default' | 'rounded';
 }
-export const Tab = React.forwardRef(function TabsList(
-  { sx, variant: variantProps, ...props }: TabProps,
+export const Tab = React.forwardRef<HTMLDivElement, TabProps>(function TabsList(
+  { sx, variant: variantProps, ...props },
   ref,
 ) {
   const variant = variantProps ?? 'default';
