@@ -266,9 +266,6 @@ export function useSetRange({
     pricesAtTicks;
 
   const handleRateToggle = () => {
-    if (!priceUpper || !priceLower) {
-      throw new Error('pricesAtTicks is undefined');
-    }
     if (!ticksAtLimit[Bound.LOWER] && !ticksAtLimit[Bound.UPPER]) {
       setLeftRangeTypedValue(
         (invertPrice ? priceLower : priceLower?.invert())?.toSignificant(6) ??

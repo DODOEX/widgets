@@ -3,6 +3,7 @@ import {
   neox,
   plume,
   plumeTestnet,
+  berachainTestnet,
 } from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
@@ -349,17 +350,18 @@ const contractMap: {
     DODO_MINEV3_PROXY: morph.DODOMineV3Proxy,
   },
   [ChainId.BARTIO_TESTNET]: {
-    MULTI_CALL: '0x1bE661D780631d8CAB4DEafB71CFC3dD071ae3f2',
-    DODO_APPROVE: '0x09da628Df009Ad300e8e299497eebD8694AfBe95',
-    ERC20_HELPER: '0xCA22c3165082c3223Bc350DE4e8880C01Cd80510',
+    MULTI_CALL: berachainTestnet.MulticallWithValid,
+    DODO_APPROVE: berachainTestnet.DODOApprove,
+    ERC20_HELPER: berachainTestnet.ERC20Helper,
 
-    ROUTE_V2_DATA_FETCH: '0x119115D4119a504AD0CccD566904ea055C377dE5',
-    ROUTE_V1_DATA_FETCH: '0x895B2caf85Ae70E8d1b77C8b30B25F07b461Dc45',
-    CALLEE_HELPER: '0x842b59E74Ca9851fF0C35741C5f0923c63825BA8',
+    ROUTE_V2_DATA_FETCH: berachainTestnet.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: berachainTestnet.DODOV1PmmHelper,
+    CALLEE_HELPER: berachainTestnet.DODOCalleeHelper,
 
-    DODO_PROXY: '0x8bCcE4CCEEf7e841A2A8A48F3250B9FB3b25B0C3',
-    DODO_DSP_PROXY: '0x6bbfD968509752518c1e9fBb0918A8AF8615879e',
-    DODO_DPP_PROXY: '0x819829e5CF6e19F9fED92F6b4CC1edF45a2cC4A2',
+    DODO_PROXY: berachainTestnet.DODOV2Proxy02,
+    DODO_DSP_PROXY: berachainTestnet.DODODspProxy,
+    DODO_DPP_PROXY: berachainTestnet.DODODppProxy,
+    DODO_MINEV3_PROXY: berachainTestnet.DODOMineV3Proxy,
   },
 };
 

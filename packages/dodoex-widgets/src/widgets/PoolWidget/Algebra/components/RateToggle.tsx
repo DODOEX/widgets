@@ -1,20 +1,24 @@
 import { Box, BoxProps, ButtonBase, useTheme } from '@dodoex/components';
 import { TokenInfo } from '../../../../hooks/Token';
+import { sortsBefore } from '../../../../utils';
 
 export interface RateToggleProps {
-  token0: TokenInfo | undefined;
-  token1: TokenInfo | undefined;
+  baseToken: TokenInfo | undefined;
+  quoteToken: TokenInfo | undefined;
   handleRateToggle: () => void;
   sx?: BoxProps['sx'];
 }
 
 export const RateToggle = ({
-  token0,
-  token1,
+  baseToken,
+  quoteToken,
   handleRateToggle,
   sx,
 }: RateToggleProps) => {
   const theme = useTheme();
+
+  const isSorted =
+    baseToken && quoteToken && sortsBefore(baseToken, quoteToken);
 
   return (
     <Box
@@ -50,11 +54,18 @@ export const RateToggle = ({
             textAlign: 'center',
             typography: 'h6',
             whiteSpace: 'nowrap',
-            color: theme.palette.text.primary,
-            backgroundColor: theme.palette.background.paper,
+            ...(isSorted
+              ? {
+                  color: theme.palette.text.primary,
+                  backgroundColor: theme.palette.background.paper,
+                }
+              : {
+                  color: theme.palette.text.secondary,
+                  backgroundColor: 'transparent',
+                }),
           }}
         >
-          {token0?.symbol}
+          {isSorted ? baseToken.symbol : quoteToken?.symbol}
         </Box>
         <Box
           sx={{
@@ -67,11 +78,18 @@ export const RateToggle = ({
             textAlign: 'center',
             typography: 'h6',
             whiteSpace: 'nowrap',
-            color: theme.palette.text.secondary,
-            backgroundColor: 'transparent',
+            ...(!isSorted
+              ? {
+                  color: theme.palette.text.primary,
+                  backgroundColor: theme.palette.background.paper,
+                }
+              : {
+                  color: theme.palette.text.secondary,
+                  backgroundColor: 'transparent',
+                }),
           }}
         >
-          {token1?.symbol}
+          {isSorted ? quoteToken.symbol : baseToken?.symbol}
         </Box>
       </Box>
     </Box>

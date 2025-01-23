@@ -1,15 +1,16 @@
+/* eslint-disable no-plusplus */
 import { Ticks } from '@dodoex/api';
 import JSBI from 'jsbi';
 import { TickProcessed } from '../hooks/usePoolTickData';
-import { Token } from '../sdks/sdk-core';
-import { tickToPrice } from '../sdks/v3-sdk';
+import { TokenInfo } from '../../../../hooks/Token';
+import { tickToPrice } from './getTickToPrice';
 
 const PRICE_FIXED_DIGITS = 8;
 
 // Computes the numSurroundingTicks above or below the active tick.
 export default function computeSurroundingTicks(
-  token0: Token,
-  token1: Token,
+  token0: TokenInfo,
+  token1: TokenInfo,
   activeTickProcessed: TickProcessed,
   sortedTickData: Ticks,
   pivot: number,

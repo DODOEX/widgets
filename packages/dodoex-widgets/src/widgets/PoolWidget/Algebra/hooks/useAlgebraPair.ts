@@ -4,6 +4,7 @@ import {
   ALGEBRA_POOL_DEPLOYER_ADDRESSES,
   ALGEBRA_POOL_INIT_CODE_HASH,
   computePoolAddress,
+  toWei,
 } from '../../../../utils';
 import { usePoolTokenSort } from '../../../../hooks/usePoolTokenSort';
 import { useQuery } from '@tanstack/react-query';
@@ -12,7 +13,7 @@ import {
   getFetchAlgebraPoolLiquidityQueryOptions,
   getFetchAlgebraPoolTickSpacingQueryOptions,
 } from '@dodoex/dodo-contract-request';
-import { tickToPrice } from '../utils/getTickToPrice';
+import { priceToClosestTick, tickToPrice } from '../utils/getTickToPrice';
 import { Price } from '../../../../utils/fractions';
 import { TickMath } from '../utils/tickMath';
 
@@ -67,27 +68,26 @@ export function useAlgebraPair({
     currentTick = Number(fetchGlobalState.data.tick);
     currentSqrt = TickMath.getSqrtRatioAtTick(currentTick).toString();
     price =
-      fetchGlobalState.data && tokenSort.token0 && tokenSort.token1
+      fetchGlobalState.data &&
+      tokenSort.token0Wrapped &&
+      tokenSort.token1Wrapped
         ? tickToPrice(
-            tokenSort.token0,
-            tokenSort.token1,
+            tokenSort.token0Wrapped,
+            tokenSort.token1Wrapped,
             fetchGlobalState.data.tick,
           )
         : undefined;
-  } else if (quoteToken && startPriceTypedValue) {
-    // price =
-    //   quoteToken && Number(startPriceTypedValue)
-    //     ? toWei(startPriceTypedValue, quoteToken.decimals).toString()
-    //     : undefined;
-    // reversePrice = baseToken && price ? 10 ** baseToken.decimals : undefined;
-    // if (price && reversePrice) {
-    //   currentTick = priceToClosestTick(
-    //     tokenSort.isRearTokenA,
-    //     price.toString(),
-    //     reversePrice.toString(),
-    //   );
-    //   currentSqrt = TickMath.getSqrtRatioAtTick(currentTick).toString();
-    // }
+  } else if (quoteToken && baseToken && startPriceTypedValue) {
+    const quoteAmount = toWei('1', quoteToken.decimals).toString();
+    const baseAmount = toWei(
+      startPriceTypedValue,
+      baseToken.decimals,
+    ).toString();
+    price = !tokenSort.isRearTokenA
+      ? new Price(baseToken, quoteToken, baseAmount, quoteAmount)
+      : new Price(baseToken, quoteToken, quoteAmount, baseAmount);
+    currentTick = priceToClosestTick(!tokenSort.isRearTokenA, price);
+    currentSqrt = TickMath.getSqrtRatioAtTick(currentTick).toString();
   }
 
   return {

@@ -52,7 +52,7 @@ export default function MyLiquidity({
           textAlign: 'left',
         }}
       >
-        <Trans>`My Liquidity`</Trans>
+        <Trans>My Liquidity</Trans>
       </Box>
       <LightCard
         sx={{

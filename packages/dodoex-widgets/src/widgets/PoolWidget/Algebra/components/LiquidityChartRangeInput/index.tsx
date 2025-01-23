@@ -2,43 +2,20 @@ import { Box, LoadingSkeleton } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { ReactNode, useCallback, useMemo } from 'react';
 import { batch } from 'react-redux';
-import {
-  formatPercentageNumber,
-  formatTokenAmountNumber,
-} from '../../../../../utils';
-import { Currency, Price } from '../../sdks/sdk-core';
-import { FeeAmount } from '../../sdks/v3-sdk';
+import { formatTokenAmountNumber } from '../../../../../utils';
 import { Bound } from '../../types';
 import { AutoColumn, ColumnCenter } from '../widgets';
 import { Chart } from './Chart';
-import { useDensityChartData } from './hooks';
-import { ZoomLevels } from './types';
 import { themeColor } from './utils';
+import { TokenInfo } from '../../../../../hooks/Token';
+import { Price } from '../../../../../utils/fractions';
+import { usePoolActiveLiquidityChartData } from '../../hooks/usePoolActiveLiquidityChartData';
 
 const LOW_ZOOM_LEVEL = {
   initialMin: 0.999,
   initialMax: 1.001,
   min: 0.00001,
   max: 1.5,
-};
-const ZOOM_LEVELS: Record<FeeAmount, ZoomLevels> = {
-  [FeeAmount.LOWEST]: LOW_ZOOM_LEVEL,
-  [FeeAmount.LOW_200]: LOW_ZOOM_LEVEL,
-  [FeeAmount.LOW_300]: LOW_ZOOM_LEVEL,
-  [FeeAmount.LOW_400]: LOW_ZOOM_LEVEL,
-  [FeeAmount.LOW]: LOW_ZOOM_LEVEL,
-  [FeeAmount.MEDIUM]: {
-    initialMin: 0.5,
-    initialMax: 2,
-    min: 0.00001,
-    max: 20,
-  },
-  [FeeAmount.HIGH]: {
-    initialMin: 0.5,
-    initialMax: 2,
-    min: 0.00001,
-    max: 20,
-  },
 };
 
 function InfoBox({ message, icon }: { message?: ReactNode; icon: ReactNode }) {
@@ -68,7 +45,7 @@ function LoadingBars() {
 export default function LiquidityChartRangeInput({
   currencyA,
   currencyB,
-  feeAmount,
+  isSorted,
   ticksAtLimit,
   price,
   priceLower,
@@ -76,28 +53,21 @@ export default function LiquidityChartRangeInput({
   onLeftRangeInput,
   onRightRangeInput,
   interactive,
+  chartData,
 }: {
-  currencyA?: Currency;
-  currencyB?: Currency;
-  feeAmount?: FeeAmount;
+  currencyA?: TokenInfo;
+  currencyB?: TokenInfo;
+  isSorted: boolean;
   ticksAtLimit: { [bound in Bound]?: boolean | undefined };
   price?: number;
-  priceLower?: Price<Currency, Currency>;
-  priceUpper?: Price<Currency, Currency>;
+  priceLower?: Price;
+  priceUpper?: Price;
   onLeftRangeInput: (typedValue: string) => void;
   onRightRangeInput: (typedValue: string) => void;
   interactive: boolean;
+  chartData: ReturnType<typeof usePoolActiveLiquidityChartData>;
 }) {
-  const isSorted =
-    currencyA &&
-    currencyB &&
-    currencyA?.wrapped.sortsBefore(currencyB?.wrapped);
-
-  const { isLoading, error, formattedData } = useDensityChartData({
-    currencyA,
-    currencyB,
-    feeAmount,
-  });
+  const { isLoading, error, formattedData, hidden } = chartData;
 
   const onBrushDomainChangeEnded = useCallback(
     (domain: [number, number], mode: string | undefined) => {
@@ -181,6 +151,8 @@ export default function LiquidityChartRangeInput({
     !currencyA ||
     !currencyB ||
     (formattedData === undefined && !isLoading && !error);
+
+  if (hidden) return null;
 
   return (
     <AutoColumn gap="md" style={{ minHeight: '200px' }}>
@@ -276,7 +248,7 @@ export default function LiquidityChartRangeInput({
             brushLabels={brushLabelValue}
             brushDomain={brushDomain}
             onBrushDomainChange={onBrushDomainChangeEnded}
-            zoomLevels={ZOOM_LEVELS[feeAmount ?? FeeAmount.MEDIUM]}
+            zoomLevels={LOW_ZOOM_LEVEL}
             ticksAtLimit={ticksAtLimit}
           />
         </Box>

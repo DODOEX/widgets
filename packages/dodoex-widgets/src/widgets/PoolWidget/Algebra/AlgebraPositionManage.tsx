@@ -319,6 +319,7 @@ export const AlgebraPositionManage = ({
           token1={token1}
           amount0={existsPoolAmount0?.toString()}
           amount1={existsPoolAmount1?.toString()}
+          border={border}
         />
 
         <Box
@@ -488,6 +489,7 @@ export const AlgebraPositionManage = ({
           token1={token1}
           amount0={existsPoolAmount0?.toString()}
           amount1={existsPoolAmount1?.toString()}
+          border={border}
         />
         <Box
           sx={{
@@ -517,6 +519,14 @@ export const AlgebraPositionManage = ({
               disabled={false}
               value={sliderPercentage}
               onChange={(v) => setSliderPercentage(v)}
+              sx={
+                border
+                  ? {
+                      borderWidth: 3,
+                      borderColor: 'text.primary',
+                    }
+                  : undefined
+              }
             />
           )}
           <SlippageSetting

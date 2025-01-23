@@ -33,10 +33,18 @@ import { RangeSelector } from './components/RangeSelector';
 import { useSetRange } from './hooks/useSetRange';
 import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
 import { TickMath } from './utils/tickMath';
+import LiquidityChartRangeInput from './components/LiquidityChartRangeInput';
+import {
+  FetchTicks,
+  usePoolActiveLiquidityChartData,
+} from './hooks/usePoolActiveLiquidityChartData';
 
 export default function AddLiquidity({
   params,
   border,
+  fetchTicks,
+  onBaseTokenChange,
+  onQuoteTokenChange,
 }: {
   params?: {
     from?: string;
@@ -44,6 +52,10 @@ export default function AddLiquidity({
     fee?: string;
   };
   border?: boolean;
+  fetchTicks?: FetchTicks;
+  ticksErrorRefetch?: () => void;
+  onBaseTokenChange?: (token: TokenInfo | undefined) => void;
+  onQuoteTokenChange?: (token: TokenInfo | undefined) => void;
 }) {
   const { chainId: connectChainId, account } = useWalletInfo();
   const theme = useTheme();
@@ -55,45 +67,15 @@ export default function AddLiquidity({
   const defaultQuoteTokenQuery = useQuery({
     ...tokenApi.getFetchTokenQuery(connectChainId, params?.to, account),
   });
-  const [baseToken, setBaseToken] = React.useState<TokenInfo | undefined>({
-    chainId: 80084,
-    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-    name: 'BERA',
-    decimals: 18,
-    symbol: 'BERA',
-    logoURI:
-      'https://imgproxy-testnet.avascan.com/vR2RHZ04yHbMN2I13_cmz-fbzFYfCI4_e61WV5fbmNs/pr:thumb_32/aHR0cHM6Ly9jbXMtY2RuLmF2YXNjYW4uY29tL2NtczIvQkVSQS45MjBjMGJiZTM1MWEucG5n',
-  });
-  const [quoteToken, setQuoteToken] = React.useState<TokenInfo | undefined>({
-    chainId: 80084,
-    address: '0x163Ca756DE30d64393f8ca8349E0513B1E463aaC',
-    name: 'Bera_test1',
-    decimals: 18,
-    symbol: 'Bera_test1',
-  });
-  const switchTokens = () => {
-    setBaseToken(quoteToken);
-    setQuoteToken(baseToken);
-    // setBaseAmount('');
-    // setQuoteAmount('');
-  };
-  React.useEffect(() => {
-    if (!defaultBaseTokenQuery.data) {
-      return;
-    }
-    setBaseToken(defaultBaseTokenQuery.data);
-  }, [defaultBaseTokenQuery]);
-  React.useEffect(() => {
-    if (!defaultQuoteTokenQuery.data) {
-      return;
-    }
-    setQuoteToken(defaultQuoteTokenQuery.data);
-  }, [defaultQuoteTokenQuery]);
+  const [baseToken, setBaseToken] = React.useState<TokenInfo | undefined>();
+  const [quoteToken, setQuoteToken] = React.useState<TokenInfo | undefined>();
+  const [startPriceTypedValue, setStartPriceTypedValue] = React.useState('');
 
   const chainId = baseToken?.chainId;
   const algebraPair = useAlgebraPair({
     baseToken,
     quoteToken,
+    startPriceTypedValue,
   });
   const {
     isRearTokenA,
@@ -122,9 +104,9 @@ export default function AddLiquidity({
     getDecrementUpper,
     getIncrementUpper,
     handleSetFullRange,
-    handleRateToggle,
     onLeftRangeInput,
     onRightRangeInput,
+    ...range
   } = useSetRange({
     tickCurrent,
     tickSpacing: 60,
@@ -147,7 +129,40 @@ export default function AddLiquidity({
   const addAmount0 = sorted ? amounts.baseAmount : amounts.quoteAmount;
   const addAmount1 = !sorted ? amounts.baseAmount : amounts.quoteAmount;
 
-  const [startPriceTypedValue, setStartPriceTypedValue] = React.useState('');
+  const handleSetBaseToken = (token: TokenInfo | undefined) => {
+    amounts.reset();
+    onBaseTokenChange?.(token);
+    setBaseToken(token);
+  };
+  const handleSetQuoteToken = (token: TokenInfo | undefined) => {
+    amounts.reset();
+    onQuoteTokenChange?.(token);
+    setQuoteToken(token);
+  };
+  React.useEffect(() => {
+    if (!defaultBaseTokenQuery.data) {
+      return;
+    }
+    handleSetBaseToken(defaultBaseTokenQuery.data);
+  }, [defaultBaseTokenQuery.data]);
+  React.useEffect(() => {
+    if (!defaultQuoteTokenQuery.data) {
+      return;
+    }
+    setQuoteToken(defaultQuoteTokenQuery.data);
+  }, [defaultQuoteTokenQuery.data]);
+
+  const switchTokens = () => {
+    handleSetBaseToken(quoteToken);
+    handleSetQuoteToken(baseToken);
+  };
+
+  const handleRateToggle = () => {
+    range.handleRateToggle();
+    handleSetBaseToken(quoteToken);
+    handleSetQuoteToken(baseToken);
+    amounts.reset();
+  };
 
   const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
     address: undefined,
@@ -207,23 +222,19 @@ export default function AddLiquidity({
     }, 100);
   };
 
-  // const priceShowBg = price
-  //   ? sorted
-  //     ? new BigNumber(price)
-  //     : new BigNumber(1).div(price)
-  //   : undefined;
-  // const formattedPrice =
-  //   token1 && priceShowBg
-  //     ? formatTokenAmountNumber({
-  //         input: priceShowBg,
-  //         decimals: token1.decimals,
-  //       })
-  //     : undefined;
   const formattedPrice = price
     ? sorted
       ? price.toSignificant()
       : price.invert().toSignificant()
     : undefined;
+
+  const chartData = usePoolActiveLiquidityChartData({
+    token0,
+    token1,
+    tickCurrent,
+    liquidity,
+    fetchTicks,
+  });
 
   return (
     <>
@@ -257,11 +268,12 @@ export default function AddLiquidity({
             highlightDefault
             chainId={chainId}
             token={baseToken}
+            readonly={!!params?.from}
             onTokenChange={(token, isOccupied) => {
               if (isOccupied) {
                 switchTokens();
               } else {
-                setBaseToken(token);
+                handleSetBaseToken(token);
                 // setBaseAmount('');
               }
             }}
@@ -272,12 +284,12 @@ export default function AddLiquidity({
             highlightDefault
             chainId={chainId}
             token={quoteToken}
+            readonly={!!params?.to}
             onTokenChange={(token, isOccupied) => {
               if (isOccupied) {
                 switchTokens();
               } else {
-                setQuoteToken(token);
-                // setQuoteAmount('');
+                handleSetQuoteToken(token);
               }
             }}
             occupiedToken={baseToken}
@@ -328,6 +340,9 @@ export default function AddLiquidity({
                   height: 26,
                   typography: 'h6',
                   fontWeight: 600,
+                  color: theme.palette.text.primary,
+                  backgroundColor: theme.palette.background.paper,
+                  borderColor: theme.palette.border.main,
                   ...(isMobile
                     ? {
                         flexGrow: 0,
@@ -338,8 +353,8 @@ export default function AddLiquidity({
                 }}
               >{t`Full range`}</Button>
               <RateToggle
-                token0={token0}
-                token1={token1}
+                baseToken={baseToken}
+                quoteToken={quoteToken}
                 handleRateToggle={handleRateToggle}
                 sx={
                   isMobile
@@ -379,7 +394,7 @@ export default function AddLiquidity({
           </YellowCard>
         )}
       </DynamicSection>
-      {!algebraPair.isExists ? (
+      {!algebraPair.isExists && !isInvalidPair ? (
         <DynamicSection>
           <Box
             sx={{
@@ -439,17 +454,25 @@ export default function AddLiquidity({
               {baseToken?.symbol ?? ''}
             </Box>
           </Box>
-          {/* <LiquidityChartRangeInput
+          <LiquidityChartRangeInput
             currencyA={baseToken ?? undefined}
             currencyB={quoteToken ?? undefined}
             ticksAtLimit={ticksAtLimit}
-            price={priceShowBg ? parseFloat(priceShowBg.toFixed(8)) : undefined}
+            isSorted={sorted}
+            price={
+              price
+                ? parseFloat(
+                    (!sorted ? price.invert() : price).toSignificant(8),
+                  )
+                : undefined
+            }
             priceLower={priceLower}
             priceUpper={priceUpper}
             onLeftRangeInput={onLeftRangeInput}
             onRightRangeInput={onRightRangeInput}
             interactive={true}
-          /> */}
+            chartData={chartData}
+          />
         </DynamicSection>
       )}
       <DynamicSection disabled={isInvalidPair}>
