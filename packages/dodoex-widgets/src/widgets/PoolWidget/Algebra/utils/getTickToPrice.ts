@@ -13,36 +13,24 @@ import { Price } from '../../../../utils/fractions';
  * @param price for which to return the closest tick that represents a price less than or equal to the input price,
  * i.e. the price of the returned tick is less than or equal to the input price
  */
-export function priceToClosestTick(
-  sorted: boolean,
-  price: {
-    numerator: JSBI;
-    denominator: JSBI;
-  },
-): number {
+export function priceToClosestTick(price: Price): number {
+  const sorted = sortsBefore(price.baseCurrency, price.quoteCurrency);
   const sqrtRatioX96 = sorted
     ? encodeSqrtRatioX96(price.numerator, price.denominator)
     : encodeSqrtRatioX96(price.denominator, price.numerator);
 
   let tick = TickMath.getTickAtSqrtRatio(sqrtRatioX96);
-  const nextTickPrice = getTickToPriceParams(tick + 1, sorted);
-
+  const nextTickPrice = tickToPrice(
+    price.baseCurrency,
+    price.quoteCurrency,
+    tick + 1,
+  );
   if (sorted) {
-    if (
-      !JSBI.lessThan(
-        JSBI.multiply(price.numerator, nextTickPrice.denominator),
-        JSBI.multiply(nextTickPrice.numerator, price.denominator),
-      )
-    ) {
+    if (!price.lessThan(nextTickPrice)) {
       tick++;
     }
   } else {
-    if (
-      !JSBI.greaterThan(
-        JSBI.multiply(price.numerator, nextTickPrice.denominator),
-        JSBI.multiply(nextTickPrice.numerator, price.denominator),
-      )
-    ) {
+    if (!price.greaterThan(nextTickPrice)) {
       tick++;
     }
   }
@@ -82,16 +70,4 @@ export function getTickToPrice(
         .div(ratioX192.toString())
         .div(decimals)
         .toString();
-}
-
-export function getTickToPriceParams(
-  tickCurrent: number | bigint,
-  sorted: boolean,
-) {
-  const sqrtRatioX96 = TickMath.getSqrtRatioAtTick(Number(tickCurrent));
-  const ratioX192 = JSBI.multiply(sqrtRatioX96, sqrtRatioX96);
-  return {
-    numerator: sorted ? ratioX192 : Q192,
-    denominator: sorted ? Q192 : ratioX192,
-  };
 }

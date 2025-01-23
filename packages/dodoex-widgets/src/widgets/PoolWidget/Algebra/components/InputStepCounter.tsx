@@ -15,6 +15,7 @@ interface StepCounterProps {
   title: ReactNode;
   tokenA?: string;
   tokenB?: string;
+  border?: boolean;
 }
 
 const StepCounter = ({
@@ -28,6 +29,7 @@ const StepCounter = ({
   title,
   tokenA,
   tokenB,
+  border,
 }: StepCounterProps) => {
   const theme = useTheme();
 
@@ -85,6 +87,10 @@ const StepCounter = ({
         px: 20,
         borderRadius: 16,
         backgroundColor: theme.palette.background.input,
+        ...(border && {
+          borderWidth: 3,
+          borderColor: 'text.primary',
+        }),
       }}
     >
       <Box

@@ -31,7 +31,11 @@ export function useAlgebraPair({
     quoteToken,
   });
   let address = undefined as undefined | string;
-  if (tokenSort.token0 && tokenSort.token1) {
+  if (
+    tokenSort.token0 &&
+    tokenSort.token1 &&
+    tokenSort.token0Wrapped.address !== tokenSort.token1Wrapped.address
+  ) {
     address = computePoolAddress({
       tokenA: tokenSort.token0Wrapped,
       tokenB: tokenSort.token1Wrapped,
@@ -77,16 +81,17 @@ export function useAlgebraPair({
             fetchGlobalState.data.tick,
           )
         : undefined;
-  } else if (quoteToken && baseToken && startPriceTypedValue) {
-    const quoteAmount = toWei('1', quoteToken.decimals).toString();
-    const baseAmount = toWei(
-      startPriceTypedValue,
-      baseToken.decimals,
+  } else if (quoteToken && baseToken && Number(startPriceTypedValue)) {
+    const quoteAmount = toWei(
+      startPriceTypedValue as string,
+      quoteToken.decimals,
     ).toString();
-    price = !tokenSort.isRearTokenA
-      ? new Price(baseToken, quoteToken, baseAmount, quoteAmount)
-      : new Price(baseToken, quoteToken, quoteAmount, baseAmount);
-    currentTick = priceToClosestTick(!tokenSort.isRearTokenA, price);
+    const baseAmount = toWei(1, baseToken.decimals).toString();
+    price = new Price(baseToken, quoteToken, baseAmount, quoteAmount);
+    if (tokenSort.isRearTokenA) {
+      price = price.invert();
+    }
+    currentTick = priceToClosestTick(price);
     currentSqrt = TickMath.getSqrtRatioAtTick(currentTick).toString();
   }
 

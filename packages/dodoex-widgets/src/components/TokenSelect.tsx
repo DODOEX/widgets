@@ -23,6 +23,7 @@ export default function TokenSelect({
   defaultLoadBalance,
   notTokenPickerModal,
   border,
+  borderBold,
   px = 20,
   py = 8,
   highlightDefault,
@@ -41,6 +42,7 @@ export default function TokenSelect({
   defaultLoadBalance?: boolean;
   notTokenPickerModal?: boolean;
   border?: boolean;
+  borderBold?: boolean;
   px?: number;
   py?: number;
   highlightDefault?: boolean;
@@ -76,6 +78,10 @@ export default function TokenSelect({
             '&:hover': {
               backgroundColor: theme.palette.hover.default,
             },
+          }),
+          ...(!!borderBold && {
+            border: `solid 3px ${theme.palette.text.primary}`,
+            backgroundColor: 'background.input',
           }),
           ...(!!(highlightDefault && !token) && {
             backgroundColor: theme.palette.primary.main,

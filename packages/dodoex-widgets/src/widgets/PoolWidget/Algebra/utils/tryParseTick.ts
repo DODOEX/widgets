@@ -5,6 +5,7 @@ import { TickMath } from './tickMath';
 import { priceToClosestTick } from './getTickToPrice';
 import { sortsBefore } from '../../../../utils/address';
 import { nearestUsableTick } from './nearestUsableTick';
+import { Price } from '../../../../utils/fractions';
 
 export function tryParsePrice(
   baseToken?: TokenInfo,
@@ -24,16 +25,15 @@ export function tryParsePrice(
   const decimals = fraction?.length ?? 0;
   const withoutDecimals = JSBI.BigInt((whole ?? '') + (fraction ?? ''));
 
-  return {
-    denominator: JSBI.multiply(
+  return new Price(
+    baseToken,
+    quoteToken,
+    JSBI.multiply(
       JSBI.BigInt(10 ** decimals),
       JSBI.BigInt(10 ** baseToken.decimals),
     ),
-    numerator: JSBI.multiply(
-      withoutDecimals,
-      JSBI.BigInt(10 ** quoteToken.decimals),
-    ),
-  };
+    JSBI.multiply(withoutDecimals, JSBI.BigInt(10 ** quoteToken.decimals)),
+  );
 }
 
 export function tryParseTick(
@@ -63,8 +63,7 @@ export function tryParseTick(
     tick = TickMath.MIN_TICK;
   } else {
     // this function is agnostic to the base, will always return the correct tick
-    const sorted = sortsBefore(baseToken, quoteToken);
-    tick = priceToClosestTick(sorted, price);
+    tick = priceToClosestTick(price);
   }
 
   return nearestUsableTick(tick, tickSpacing);

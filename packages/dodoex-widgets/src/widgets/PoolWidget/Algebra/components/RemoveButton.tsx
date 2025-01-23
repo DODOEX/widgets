@@ -10,6 +10,7 @@ export interface ButtonsProps {
   isLoading: boolean;
   error?: React.ReactNode;
   onConfirm: () => void;
+  border?: boolean;
 }
 
 export const RemoveButton = ({
@@ -19,15 +20,38 @@ export const RemoveButton = ({
   isLoading,
   error,
   onConfirm,
+  border,
 }: ButtonsProps) => {
   return (
-    <NeedConnectButton includeButton fullWidth chainId={chainId}>
+    <NeedConnectButton
+      includeButton
+      fullWidth
+      chainId={chainId}
+      sx={
+        border
+          ? {
+              borderWidth: 3,
+              borderStyle: 'solid',
+              borderColor: 'text.primary',
+            }
+          : undefined
+      }
+    >
       <Button
         fullWidth
         size={Button.Size.big}
         onClick={onConfirm}
         disabled={disabled}
         isLoading={isLoading}
+        sx={
+          border && !disabled
+            ? {
+                borderWidth: 3,
+                borderStyle: 'solid',
+                borderColor: 'text.primary',
+              }
+            : undefined
+        }
       >
         {removed ? t`Closed` : (error ?? t`Remove`)}
       </Button>

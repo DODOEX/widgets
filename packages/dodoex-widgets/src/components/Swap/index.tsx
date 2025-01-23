@@ -80,6 +80,7 @@ export interface SwapProps {
   onPayTokenChange?: (token: TokenInfo) => void;
   onReceiveTokenChange?: (token: TokenInfo) => void;
   disabledFiatPrice?: boolean;
+  border?: boolean;
 }
 
 export function Swap({
@@ -87,6 +88,7 @@ export function Swap({
   onPayTokenChange,
   onReceiveTokenChange,
   disabledFiatPrice,
+  border,
 }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
@@ -708,7 +710,9 @@ export function Swap({
 
   const swapButton = useMemo(() => {
     if (!account || (fromToken?.chainId && chainId !== fromToken.chainId))
-      return <ConnectWallet needSwitchChain={fromToken?.chainId} />;
+      return (
+        <ConnectWallet needSwitchChain={fromToken?.chainId} border={border} />
+      );
     if (isInflight) {
       return (
         <Button fullWidth isLoading disabled>
@@ -790,6 +794,15 @@ export function Swap({
           data-testid={swapReviewBtn}
           disabled={!selectedRoute}
           isLoading={sendRouteLoading}
+          sx={
+            border && !!selectedRoute
+              ? {
+                  borderWidth: 3,
+                  borderStyle: 'solid',
+                  borderColor: 'text.primary',
+                }
+              : undefined
+          }
         >
           <Trans>Review Cross Chain</Trans>
         </Button>
@@ -800,6 +813,15 @@ export function Swap({
         fullWidth
         onClick={() => setIsReviewDialogOpen(true)}
         data-testid={swapReviewBtn}
+        sx={
+          border
+            ? {
+                borderWidth: 3,
+                borderStyle: 'solid',
+                borderColor: 'text.primary',
+              }
+            : undefined
+        }
       >
         <Trans>Review Swap</Trans>
       </Button>
@@ -826,6 +848,7 @@ export function Swap({
     isApproving,
     isGetApproveLoading,
     needApprove,
+    border,
   ]);
 
   const subtitle = useMemo(() => {
@@ -925,7 +948,15 @@ export function Swap({
         <Box>
           {/* First Token Card  */}
           <TokenCard
-            sx={{ mb: 4 }}
+            sx={{
+              mb: 4,
+              ...(border
+                ? {
+                    borderWidth: 3,
+                    borderColor: 'text.primary',
+                  }
+                : {}),
+            }}
             token={fromToken}
             side="from"
             amt={fromFinalAmt}
@@ -954,12 +985,24 @@ export function Swap({
           />
 
           {/* Switch Icon */}
-          <SwitchBox onClick={switchTokens} disabled={disabledSwitch} />
+          <SwitchBox
+            onClick={switchTokens}
+            disabled={disabledSwitch}
+            border={border}
+          />
 
           {/* Second Token Card  */}
           <TokenCard
             token={toToken}
             side="to"
+            sx={{
+              ...(border
+                ? {
+                    borderWidth: 3,
+                    borderColor: 'text.primary',
+                  }
+                : {}),
+            }}
             amt={toFinalAmt}
             onInputChange={updateToAmt}
             onInputFocus={onToTokenInputFocus}

@@ -46,7 +46,7 @@ export function Pool() {
         />
       );
     case PageType.createPoolAlgebra:
-      return <AlgebraCreate />;
+      return <AlgebraCreate border />;
     default:
       return <PoolList params={(page as Page<PageType.Pool>)?.params} />;
   }

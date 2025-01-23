@@ -5,9 +5,13 @@ import NeedConnectButton from '../../../ConnectWallet/NeedConnectButton';
 
 export interface ConnectWalletProps {
   needSwitchChain?: ChainId;
+  border?: boolean;
 }
 
-export default function ConnectWallet({ needSwitchChain }: ConnectWalletProps) {
+export default function ConnectWallet({
+  needSwitchChain,
+  border,
+}: ConnectWalletProps) {
   return (
     <>
       <NeedConnectButton
@@ -15,6 +19,15 @@ export default function ConnectWallet({ needSwitchChain }: ConnectWalletProps) {
         fullWidth
         data-testid={connectWalletBtn}
         chainId={needSwitchChain}
+        sx={
+          border
+            ? {
+                borderWidth: 3,
+                borderStyle: 'solid',
+                borderColor: 'text.primary',
+              }
+            : undefined
+        }
       />
     </>
   );

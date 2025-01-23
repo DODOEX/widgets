@@ -5,10 +5,12 @@ export function SwitchBox({
   onClick,
   disabled: disabledProps,
   plus,
+  border,
 }: {
   onClick?: () => void;
   disabled?: boolean;
   plus?: boolean;
+  border?: boolean;
 }) {
   const theme = useTheme();
   const size = 36;
@@ -27,7 +29,9 @@ export function SwitchBox({
           height: size,
           borderRadius: '50%',
           backgroundColor: theme.palette.background.input,
-          border: `4px solid ${theme.palette.background.paper}`,
+          border: border
+            ? `3px solid ${theme.palette.text.primary}`
+            : `4px solid ${theme.palette.background.paper}`,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

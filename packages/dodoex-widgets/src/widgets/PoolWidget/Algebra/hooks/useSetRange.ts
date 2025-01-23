@@ -240,27 +240,27 @@ export function useSetRange({
 
   const handleSetFullRange = React.useCallback(() => {
     getSetFullRange();
-    if (!token0 || !token1) {
-      throw new Error('token is undefined');
-    }
+    // if (!token0 || !token1) {
+    //   throw new Error('token is undefined');
+    // }
 
-    const minPrice = tickToPrice(
-      token0,
-      token1,
-      tickSpaceLimits[Bound.LOWER] as number,
-    );
-    if (minPrice) {
-      setLeftRangeTypedValue(minPrice.toSignificant(5));
-    }
-    const maxPrice = tickToPrice(
-      token0,
-      token1,
-      tickSpaceLimits[Bound.UPPER] as number,
-    );
-    if (maxPrice) {
-      setRightRangeTypedValue(maxPrice.toSignificant(5));
-    }
-  }, [getSetFullRange, tickSpaceLimits, token0, token1]);
+    // const minPrice = tickToPrice(
+    //   token0,
+    //   token1,
+    //   tickSpaceLimits[Bound.LOWER] as number,
+    // );
+    // if (minPrice) {
+    //   setLeftRangeTypedValue(minPrice.toSignificant(5));
+    // }
+    // const maxPrice = tickToPrice(
+    //   token0,
+    //   token1,
+    //   tickSpaceLimits[Bound.UPPER] as number,
+    // );
+    // if (maxPrice) {
+    //   setRightRangeTypedValue(maxPrice.toSignificant(5));
+    // }
+  }, [getSetFullRange]);
 
   const { [Bound.LOWER]: priceLower, [Bound.UPPER]: priceUpper } =
     pricesAtTicks;

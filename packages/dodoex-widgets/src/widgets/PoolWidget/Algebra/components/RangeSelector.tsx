@@ -18,6 +18,7 @@ export interface RangeSelectorProps {
   tokenB?: TokenInfo | null;
   ticksAtLimit: { [bound in Bound]?: boolean | undefined };
   isSorted: boolean;
+  border?: boolean;
 }
 
 export const RangeSelector = ({
@@ -33,6 +34,7 @@ export const RangeSelector = ({
   tokenB,
   ticksAtLimit,
   isSorted,
+  border,
 }: RangeSelectorProps) => {
   const leftPrice = isSorted ? priceLower : priceUpper?.invert();
   const rightPrice = isSorted ? priceUpper : priceLower?.invert();
@@ -67,6 +69,7 @@ export const RangeSelector = ({
         title={<Trans>Low price</Trans>}
         tokenA={tokenA?.symbol}
         tokenB={tokenB?.symbol}
+        border={border}
       />
       <StepCounter
         value={
@@ -89,6 +92,7 @@ export const RangeSelector = ({
         tokenA={tokenA?.symbol}
         tokenB={tokenB?.symbol}
         title={<Trans>High price</Trans>}
+        border={border}
       />
     </Box>
   );

@@ -7,6 +7,7 @@ import {
   Tabs,
   TabsButtonGroup,
   useTheme,
+  tabClasses,
 } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
@@ -291,6 +292,14 @@ export const AlgebraPositionManage = ({
     errorRefetch = algebraPair.fetchLiquidity.refetch;
   }
 
+  const disabledStake =
+    !baseToken ||
+    !quoteToken ||
+    !amounts.baseAmount ||
+    !amounts.quoteAmount ||
+    !!isInvalidPair ||
+    loading;
+
   return (
     <Tabs
       value={operateType}
@@ -298,7 +307,21 @@ export const AlgebraPositionManage = ({
         setOperateType(value as OperateType);
       }}
     >
-      <TabsButtonGroup tabs={operateTypes} variant="inPaper" />
+      <TabsButtonGroup
+        tabs={operateTypes}
+        variant="inPaper"
+        tabSx={
+          border
+            ? {
+                [`&.${tabClasses.selected}`]: {
+                  borderStyle: 'solid',
+                  borderWidth: 3,
+                  borderColor: 'text.primary',
+                },
+              }
+            : undefined
+        }
+      />
       <TabPanel value="stake">
         {!!errorRefetch && <FailedList refresh={errorRefetch} />}
         <Box sx={{ mt: 16 }}>
@@ -406,24 +429,42 @@ export const AlgebraPositionManage = ({
             includeButton
             size={Button.Size.big}
             chainId={chainId}
+            sx={
+              border
+                ? {
+                    borderWidth: 3,
+                    borderStyle: 'solid',
+                    borderColor: 'text.primary',
+                  }
+                : undefined
+            }
           >
             <TokenPairStatusButton
               statuses={[baseTokenStatus, quoteTokenStatus]}
               buttonProps={{
                 size: Button.Size.big,
                 fullWidth: true,
+                sx: border
+                  ? {
+                      borderWidth: 3,
+                      borderStyle: 'solid',
+                      borderColor: 'text.primary',
+                    }
+                  : undefined,
               }}
             >
               <Button
                 fullWidth
                 size={Button.Size.big}
-                disabled={
-                  !baseToken ||
-                  !quoteToken ||
-                  !amounts.baseAmount ||
-                  !amounts.quoteAmount ||
-                  !!isInvalidPair ||
-                  loading
+                disabled={disabledStake}
+                sx={
+                  border && !disabledStake
+                    ? {
+                        borderWidth: 3,
+                        borderStyle: 'solid',
+                        borderColor: 'text.primary',
+                      }
+                    : undefined
                 }
                 onClick={() => setShowConfirm(true)}
               >
@@ -459,10 +500,11 @@ export const AlgebraPositionManage = ({
             const slippageTolerance = toSlippagePercent(slipperValue * 100);
             const minimumAmounts = mintAmountsWithSlippage(
               tickCurrent,
-              sorted,
               slippageTolerance,
               tickLower,
               tickUpper,
+              baseToken,
+              quoteToken,
               addAmount0Wei,
               addAmount1Wei,
             );
@@ -615,6 +657,7 @@ export const AlgebraPositionManage = ({
             chainId={chainId}
             disabled={removed || sliderPercentage === 0 || !removeAmount0Bg}
             removed={removed}
+            border={border}
             onConfirm={() => {
               if (
                 !existingPositionDetails ||
@@ -635,11 +678,12 @@ export const AlgebraPositionManage = ({
               const slippageTolerance = toSlippagePercent(slipperValue * 100);
               const minimumAmounts = burnAmountsWithSlippage(
                 tickCurrent,
-                sorted,
                 slippageTolerance,
                 tickLower,
                 tickUpper,
                 newLiquidity,
+                baseToken,
+                quoteToken,
               );
               onRemoveMutation.mutate({
                 chainId,
@@ -723,6 +767,7 @@ export const AlgebraPositionManage = ({
               !fetchFees.data ||
               (!fetchFees.data.amount0 && !fetchFees.data.amount1)
             }
+            border={border}
             onConfirm={() => {
               if (
                 !existingPositionDetails ||

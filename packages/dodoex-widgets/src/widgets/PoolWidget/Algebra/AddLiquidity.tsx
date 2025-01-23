@@ -236,6 +236,13 @@ export default function AddLiquidity({
     fetchTicks,
   });
 
+  const disabled =
+    !baseToken ||
+    !quoteToken ||
+    !amounts.baseAmount ||
+    !amounts.quoteAmount ||
+    !!isInvalidPair;
+
   return (
     <>
       <Box
@@ -264,6 +271,7 @@ export default function AddLiquidity({
           }}
         >
           <TokenSelect
+            borderBold={border}
             border
             highlightDefault
             chainId={chainId}
@@ -280,6 +288,7 @@ export default function AddLiquidity({
             occupiedToken={quoteToken}
           />
           <TokenSelect
+            borderBold={border}
             border
             highlightDefault
             chainId={chainId}
@@ -382,6 +391,7 @@ export default function AddLiquidity({
           tokenB={tokenB}
           ticksAtLimit={ticksAtLimit}
           isSorted={sorted}
+          border={border}
         />
         {outOfRange && (
           <YellowCard>
@@ -561,25 +571,44 @@ export default function AddLiquidity({
           includeButton
           size={Button.Size.big}
           chainId={chainId}
+          sx={
+            border
+              ? {
+                  borderWidth: 3,
+                  borderStyle: 'solid',
+                  borderColor: 'text.primary',
+                }
+              : undefined
+          }
         >
           <TokenPairStatusButton
             statuses={[baseTokenStatus, quoteTokenStatus]}
             buttonProps={{
               size: Button.Size.big,
               fullWidth: true,
+              sx: border
+                ? {
+                    borderWidth: 3,
+                    borderStyle: 'solid',
+                    borderColor: 'text.primary',
+                  }
+                : undefined,
             }}
           >
             <Button
               fullWidth
               size={Button.Size.big}
-              disabled={
-                !baseToken ||
-                !quoteToken ||
-                !amounts.baseAmount ||
-                !amounts.quoteAmount ||
-                !!isInvalidPair
-              }
+              disabled={disabled}
               onClick={() => setShowConfirm(true)}
+              sx={
+                border && !disabled
+                  ? {
+                      borderWidth: 3,
+                      borderStyle: 'solid',
+                      borderColor: 'text.primary',
+                    }
+                  : undefined
+              }
             >
               {errorMessage ?? <Trans>Preview</Trans>}
             </Button>
@@ -601,7 +630,14 @@ export default function AddLiquidity({
           setShowConfirm(false);
         }}
         onConfirm={() => {
-          if (!tickCurrent || !tickLower || !tickUpper) return;
+          if (
+            !tickCurrent ||
+            !tickLower ||
+            !tickUpper ||
+            !baseToken ||
+            !quoteToken
+          )
+            return;
           const addAmount0Wei = parseUnits(
             addAmount0,
             token0.decimals,
@@ -613,10 +649,11 @@ export default function AddLiquidity({
           const slippageTolerance = toSlippagePercent(slipperValue * 100);
           const minimumAmounts = mintAmountsWithSlippage(
             tickCurrent,
-            sorted,
             slippageTolerance,
             tickLower,
             tickUpper,
+            baseToken,
+            quoteToken,
             addAmount0Wei,
             addAmount1Wei,
           );

@@ -3,8 +3,10 @@ import { TickMath } from './tickMath';
 import { encodeSqrtRatioX96 } from './encodeSqrtRatioX96';
 import { getPositionAmount0, getPositionAmount1 } from './getPositionAmount';
 import { getLiquidityByAmounts } from './maxLiquidityForAmounts';
-import { getTickToPriceParams } from './getTickToPrice';
-import { Percent } from '../../../../utils/fractions';
+import { tickToPrice } from './getTickToPrice';
+import { Percent, Price } from '../../../../utils/fractions';
+import { TokenInfo } from '../../../../hooks/Token';
+import { sortsBefore } from '../../../../utils';
 
 /**
  * Returns the lower and upper sqrt ratios if the price 'slips' up to slippage tolerance percentage
@@ -12,18 +14,19 @@ import { Percent } from '../../../../utils/fractions';
  * @returns The sqrt ratios after slippage
  */
 function ratiosAfterSlippage(
-  priceNumerator: JSBI,
-  priceDenominator: JSBI,
+  price: Price,
   slippageTolerance: Percent,
 ): {
   sqrtRatioX96Lower: JSBI;
   sqrtRatioX96Upper: JSBI;
 } {
-  const price = new Percent(priceNumerator, priceDenominator);
-  const priceLower = price.asFraction.multiply(
+  const token0Price = sortsBefore(price.baseCurrency, price.quoteCurrency)
+    ? price
+    : price.invert();
+  const priceLower = token0Price.asFraction.multiply(
     new Percent(1).subtract(slippageTolerance),
   );
-  const priceUpper = price.asFraction.multiply(slippageTolerance.add(1));
+  const priceUpper = token0Price.asFraction.multiply(slippageTolerance.add(1));
   let sqrtRatioX96Lower = encodeSqrtRatioX96(
     priceLower.numerator,
     priceLower.denominator,
@@ -52,19 +55,19 @@ function ratiosAfterSlippage(
  */
 export function mintAmountsWithSlippage(
   tickCurrent: number,
-  sorted: boolean,
   slippageTolerance: Percent,
   tickLower: number,
   tickUpper: number,
+  baseToken: TokenInfo,
+  quoteToken: TokenInfo,
   amount0: string,
   amount1: string,
 ) {
   const sqrtRatioX96 = TickMath.getSqrtRatioAtTick(Number(tickCurrent));
-  const priceParams = getTickToPriceParams(tickCurrent, sorted);
+  const price = tickToPrice(baseToken, quoteToken, tickCurrent);
   // get lower/upper prices
   const { sqrtRatioX96Upper, sqrtRatioX96Lower } = ratiosAfterSlippage(
-    priceParams.numerator,
-    priceParams.denominator,
+    price,
     slippageTolerance,
   );
 
@@ -102,17 +105,17 @@ export function mintAmountsWithSlippage(
  */
 export function burnAmountsWithSlippage(
   tickCurrent: number,
-  sorted: boolean,
   slippageTolerance: Percent,
   tickLower: number,
   tickUpper: number,
   liquidity: number | bigint | JSBI | string,
+  baseToken: TokenInfo,
+  quoteToken: TokenInfo,
 ): Readonly<{ amount0: JSBI; amount1: JSBI }> {
-  const priceParams = getTickToPriceParams(tickCurrent, sorted);
+  const price = tickToPrice(baseToken, quoteToken, tickCurrent);
   // get lower/upper prices
   const { sqrtRatioX96Upper, sqrtRatioX96Lower } = ratiosAfterSlippage(
-    priceParams.numerator,
-    priceParams.denominator,
+    price,
     slippageTolerance,
   );
 
