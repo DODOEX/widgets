@@ -1,4 +1,4 @@
-import { forwardRef, Ref } from 'react';
+import { forwardRef } from 'react';
 import { Box, BoxProps } from '../Box';
 import { Skeleton, SkeletonProps } from '../Skeleton';
 import { merge } from 'lodash';
@@ -10,20 +10,12 @@ interface LoadingSkeletonProps extends BoxProps {
 }
 
 // eslint-disable-next-line react/display-name
-const LoadingSkeleton = forwardRef(
-  (
-    {
-      loading,
-      loadingSx,
-      loadingProps,
-      children,
-      ...attrs
-    }: LoadingSkeletonProps,
-    ref: Ref<HTMLDivElement>,
-  ) => {
+const LoadingSkeleton = forwardRef<HTMLDivElement, LoadingSkeletonProps>(
+  ({ loading, loadingSx, loadingProps, children, ...attrs }, ref) => {
     return (
       <Box ref={ref} {...attrs}>
         {loading ? (
+          // @ts-ignore
           <Skeleton
             height="fit-content"
             // @ts-ignore

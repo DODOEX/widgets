@@ -4,15 +4,12 @@ import { Box, BoxProps } from '../../Box';
 import React from 'react';
 import AnyTouch from 'any-touch';
 
-export const TabsList = React.forwardRef(function TabsList(
-  {
-    sx,
-    ...props
-  }: TabsListProps & {
+export const TabsList = React.forwardRef<
+  HTMLDivElement,
+  TabsListProps & {
     sx?: BoxProps['sx'];
-  },
-  ref,
-) {
+  }
+>(function TabsList({ sx, ...props }, ref) {
   const tabListRef = React.useRef<HTMLDivElement>();
   const theme = useTheme();
   React.useEffect(() => {

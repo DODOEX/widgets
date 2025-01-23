@@ -4,17 +4,13 @@ import React from 'react';
 import AnyTouch from 'any-touch';
 import { TabProps } from './Tab';
 
-export const TabsList = React.forwardRef(function TabsList(
-  {
-    sx,
-    variant,
-    ...props
-  }: TabsListProps & {
+export const TabsList = React.forwardRef<
+  HTMLDivElement,
+  TabsListProps & {
     sx?: BoxProps['sx'];
     variant?: TabProps['variant'];
-  },
-  ref,
-) {
+  }
+>(function TabsList({ sx, variant, ...props }, ref) {
   const tabListRef = React.useRef<HTMLDivElement>();
   React.useEffect(() => {
     if (
