@@ -433,9 +433,17 @@ export default function AddLiquidity({
               px: 16,
               py: 12,
               borderRadius: 8,
-              borderWidth: 1,
-              borderColor: theme.palette.border.main,
-              borderStyle: 'solid',
+              ...(border
+                ? {
+                    borderWidth: 3,
+                    borderColor: 'text.primary',
+                    borderStyle: 'solid',
+                  }
+                : {
+                    borderWidth: 1,
+                    borderColor: theme.palette.border.main,
+                    borderStyle: 'solid',
+                  }),
             }}
           >
             <NumberInput

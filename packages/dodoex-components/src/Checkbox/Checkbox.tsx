@@ -1,11 +1,9 @@
 import { Box, styled, useTheme } from '@mui/system';
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { CheckboxProps } from './Checkbox.types';
 import { Done as CheckedIcon } from '@dodoex/icons';
 
-const Checkbox = forwardRef(function Checkbox<
-  RootComponentType extends React.ElementType,
->(
+function Checkbox<RootComponentType extends React.ElementType>(
   props: CheckboxProps<RootComponentType>,
   forwardedRef: React.ForwardedRef<Element>,
 ) {
@@ -89,6 +87,9 @@ const Checkbox = forwardRef(function Checkbox<
       </>
     </Box>
   );
-});
+}
 
-export default Checkbox;
+export default forwardRef(Checkbox) as <T extends React.ElementType>(
+  // eslint-disable-next-line no-unused-vars
+  props: CheckboxProps<T> & { ref?: React.ForwardedRef<Element> },
+) => ReturnType<typeof Checkbox>;
