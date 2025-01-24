@@ -38,6 +38,7 @@ export {
   TabsButtonGroup,
   TabButton,
   TabListButton,
+  tabClasses,
 } from './Tabs';
 export { Skeleton } from './Skeleton';
 export type { SkeletonProps } from './Skeleton';

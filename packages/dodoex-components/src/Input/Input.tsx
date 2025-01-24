@@ -125,7 +125,7 @@ const StyledInput = styled(Box)(({ theme }) => {
     `;
 });
 
-export default forwardRef(function Input(
+export default forwardRef<HTMLInputElement, InputProps>(function Input(
   {
     fullWidth,
     error,
@@ -138,8 +138,8 @@ export default forwardRef(function Input(
     dataTestId,
     inputSx,
     ...attrs
-  }: InputProps,
-  ref: React.ForwardedRef<HTMLInputElement>,
+  },
+  ref,
 ) {
   const InputBaseRootMemo = useCallback(
     (props: any) => (

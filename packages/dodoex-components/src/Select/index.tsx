@@ -186,7 +186,8 @@ const Popup = styled('div')`
   z-index: 10;
 `;
 
-interface Props<T extends {} = SelectOption, Multiple extends boolean = false> extends SelectProps<T, Multiple> {
+interface Props<T extends {} = SelectOption, Multiple extends boolean = false>
+  extends SelectProps<T, Multiple> {
   options?: SelectOption[];
   fullWidth?: boolean;
   px?: number;
@@ -196,7 +197,10 @@ interface Props<T extends {} = SelectOption, Multiple extends boolean = false> e
   sx?: BoxProps['sx'];
 }
 
-export function Select<Value = number | string, Multiple extends boolean = false>({
+export function Select<
+  Value = number | string,
+  Multiple extends boolean = false,
+>({
   options,
   fullWidth,
   px = 20,
