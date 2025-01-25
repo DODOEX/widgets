@@ -65,10 +65,13 @@ export enum ExecutionResult {
   Submitted = 'submitted',
 }
 
+type SubmitState = 'loading' | 'submitted';
+
 export interface Showing {
   brief: string;
   subtitle?: string | React.ReactNode;
   spec: StepSpec;
+  submitState?: SubmitState;
 }
 
 export type ExecutionCtx = {

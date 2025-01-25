@@ -28,6 +28,7 @@ export interface ExecutionProps {
   onTxSubmit?: (tx: string, data: any) => void;
   onTxSuccess?: (tx: string, data: any) => void;
   onTxReverted?: (tx: string, data: any) => void;
+  showSubmitLoadingDialog?: boolean;
   executionStatus?: {
     showing?: Showing | null;
     showingDone?: boolean;
@@ -89,6 +90,7 @@ export default function useExecution({
       let nonce: number | undefined;
       let transaction: TransactionResponse | undefined;
       setWaitingSubmit(false);
+      setShowing({ spec, brief, subtitle, submitState: 'loading' });
       try {
         setWaitingSubmit(true);
         if (spec.opcode === OpCode.Approval) {
@@ -162,7 +164,7 @@ export default function useExecution({
         }
         return ExecutionResult.Failed;
       }
-      setShowing({ spec, brief, subtitle });
+      setShowing({ spec, brief, subtitle, submitState: 'submitted' });
       setShowingDone(false);
       setWaitingSubmit(false);
 
@@ -318,6 +320,7 @@ export default function useExecution({
     errorMessage,
     setErrorMessage,
     closeShowing,
+    setShowing,
     ctxVal,
     requests,
   };
