@@ -123,7 +123,7 @@ msgid "Start Time"
 msgstr ""
 
 #: src/components/ErrorMessageDialog.tsx:63
-#: src/components/WithExecutionDialog/index.tsx:444
+#: src/components/WithExecutionDialog/index.tsx:450
 msgid "Dismiss"
 msgstr "忽略"
 
@@ -369,7 +369,7 @@ msgstr ""
 msgid "This token is on"
 msgstr "该代币在"
 
-#: src/components/WithExecutionDialog/index.tsx:349
+#: src/components/WithExecutionDialog/index.tsx:352
 msgid "Please confirm in wallet"
 msgstr ""
 
@@ -1824,7 +1824,7 @@ msgid "The mid price needs to be greater than {min} and less than 100,000,000"
 msgstr ""
 
 #: src/components/ErrorMessageDialog.tsx:39
-#: src/components/WithExecutionDialog/index.tsx:409
+#: src/components/WithExecutionDialog/index.tsx:415
 msgid "Something went wrong."
 msgstr "发生异常错误."
 
@@ -2315,7 +2315,7 @@ msgstr ""
 msgid "High"
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:444
+#: src/components/WithExecutionDialog/index.tsx:450
 msgid "Close"
 msgstr "关闭"
 
@@ -2353,7 +2353,7 @@ msgstr ""
 msgid "Starting price"
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:341
+#: src/components/WithExecutionDialog/index.tsx:344
 msgid "OK"
 msgstr ""
 

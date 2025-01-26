@@ -123,7 +123,7 @@ msgid "Start Time"
 msgstr "Start Time"
 
 #: src/components/ErrorMessageDialog.tsx:63
-#: src/components/WithExecutionDialog/index.tsx:444
+#: src/components/WithExecutionDialog/index.tsx:450
 msgid "Dismiss"
 msgstr "Dismiss"
 
@@ -369,7 +369,7 @@ msgstr "Initial Tokens"
 msgid "This token is on"
 msgstr "This token is on"
 
-#: src/components/WithExecutionDialog/index.tsx:349
+#: src/components/WithExecutionDialog/index.tsx:352
 msgid "Please confirm in wallet"
 msgstr "Please confirm in wallet"
 
@@ -1824,7 +1824,7 @@ msgid "The mid price needs to be greater than {min} and less than 100,000,000"
 msgstr "The mid price needs to be greater than {min} and less than 100,000,000"
 
 #: src/components/ErrorMessageDialog.tsx:39
-#: src/components/WithExecutionDialog/index.tsx:409
+#: src/components/WithExecutionDialog/index.tsx:415
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
@@ -2315,7 +2315,7 @@ msgstr "Dynamic slippage is {recommendSlippage}% , the current slippage setting 
 msgid "High"
 msgstr "High"
 
-#: src/components/WithExecutionDialog/index.tsx:444
+#: src/components/WithExecutionDialog/index.tsx:450
 msgid "Close"
 msgstr "Close"
 
@@ -2353,7 +2353,7 @@ msgstr "My Pools (PMM)"
 msgid "Starting price"
 msgstr "Starting price"
 
-#: src/components/WithExecutionDialog/index.tsx:341
+#: src/components/WithExecutionDialog/index.tsx:344
 msgid "OK"
 msgstr "OK"
 

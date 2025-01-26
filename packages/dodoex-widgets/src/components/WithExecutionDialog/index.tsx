@@ -284,7 +284,7 @@ export default function WithExecutionDialog({
                 gap: 20,
                 p: 20,
                 minHeight: 208,
-                minWidth: isMobile ? '100%' : 340,
+                width: isMobile ? '100%' : 340,
                 textAlign: 'center',
               }}
             >
@@ -321,6 +321,9 @@ export default function WithExecutionDialog({
                     {showing.subtitle && (
                       <Box
                         sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
                           mt: 8,
                           color: 'text.secondary',
                           typography: 'body2',
@@ -351,6 +354,9 @@ export default function WithExecutionDialog({
                     {showing.subtitle && (
                       <Box
                         sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
                           mt: 8,
                           color: 'text.secondary',
                           typography: 'body2',
