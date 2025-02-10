@@ -18,7 +18,7 @@ msgstr ""
 msgid "The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth."
 msgstr "The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth."
 
-#: src/components/WithExecutionDialog/index.tsx:190
+#: src/components/WithExecutionDialog/index.tsx:202
 msgid "Transaction Time:"
 msgstr "Transaction Time:"
 
@@ -58,7 +58,7 @@ msgstr "To"
 msgid "Receive {0}"
 msgstr "Receive {0}"
 
-#: src/components/WithExecutionDialog/index.tsx:112
+#: src/components/WithExecutionDialog/index.tsx:124
 msgid "{0} pending"
 msgstr "{0} pending"
 
@@ -125,7 +125,7 @@ msgid "Start Time"
 msgstr "Start Time"
 
 #: src/components/ErrorMessageDialog.tsx:63
-#: src/components/WithExecutionDialog/index.tsx:318
+#: src/components/WithExecutionDialog/index.tsx:450
 msgid "Dismiss"
 msgstr "Dismiss"
 
@@ -235,7 +235,7 @@ msgstr "Pegged Exchange Rate"
 msgid "Private Pool"
 msgstr "Private Pool"
 
-#: src/components/WithExecutionDialog/index.tsx:111
+#: src/components/WithExecutionDialog/index.tsx:123
 msgid "{0} confirmed"
 msgstr "{0} confirmed"
 
@@ -381,6 +381,10 @@ msgstr "Initial Tokens"
 #: src/components/SwitchChainDialog/index.tsx:91
 msgid "This token is on"
 msgstr "This token is on"
+
+#: src/components/WithExecutionDialog/index.tsx:352
+msgid "Please confirm in wallet"
+msgstr "Please confirm in wallet"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/index.tsx:91
 msgid "Success Rate"
@@ -638,6 +642,10 @@ msgstr "Are you sure swapping to another chain?"
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/index.tsx:25
 msgid "Swaps"
 msgstr "Swaps"
+
+#: src/components/WithExecutionDialog/index.tsx:320
+msgid "{0} Submitted"
+msgstr "{0} Submitted"
 
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/my-created/RewardCard.tsx:170
@@ -1192,7 +1200,7 @@ msgid "LP Balance:"
 msgstr "LP Balance:"
 
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:202
-#: src/components/WithExecutionDialog/index.tsx:205
+#: src/components/WithExecutionDialog/index.tsx:217
 msgid "Tx"
 msgstr "Tx"
 
@@ -1862,7 +1870,7 @@ msgid "The mid price needs to be greater than {min} and less than 100,000,000"
 msgstr "The mid price needs to be greater than {min} and less than 100,000,000"
 
 #: src/components/ErrorMessageDialog.tsx:39
-#: src/components/WithExecutionDialog/index.tsx:283
+#: src/components/WithExecutionDialog/index.tsx:415
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
@@ -2364,7 +2372,7 @@ msgstr "Dynamic slippage is {recommendSlippage}% , the current slippage setting 
 msgid "High"
 msgstr "High"
 
-#: src/components/WithExecutionDialog/index.tsx:318
+#: src/components/WithExecutionDialog/index.tsx:450
 msgid "Close"
 msgstr "Close"
 
@@ -2403,6 +2411,10 @@ msgstr "My Pools (PMM)"
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:508
 msgid "Starting price"
 msgstr "Starting price"
+
+#: src/components/WithExecutionDialog/index.tsx:344
+msgid "OK"
+msgstr "OK"
 
 #: src/widgets/MiningWidget/MiningCreate/components/StepTitle.tsx:90
 msgid "Total Rewards=Daily Rewards*Duration"

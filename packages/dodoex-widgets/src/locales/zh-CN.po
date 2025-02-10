@@ -18,7 +18,7 @@ msgstr ""
 msgid "The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth."
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:190
+#: src/components/WithExecutionDialog/index.tsx:202
 msgid "Transaction Time:"
 msgstr "交易时长:"
 
@@ -58,7 +58,7 @@ msgstr "至"
 msgid "Receive {0}"
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:112
+#: src/components/WithExecutionDialog/index.tsx:124
 msgid "{0} pending"
 msgstr "{0} 等待中"
 
@@ -125,7 +125,7 @@ msgid "Start Time"
 msgstr ""
 
 #: src/components/ErrorMessageDialog.tsx:63
-#: src/components/WithExecutionDialog/index.tsx:318
+#: src/components/WithExecutionDialog/index.tsx:450
 msgid "Dismiss"
 msgstr "忽略"
 
@@ -235,7 +235,7 @@ msgstr ""
 msgid "Private Pool"
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:111
+#: src/components/WithExecutionDialog/index.tsx:123
 msgid "{0} confirmed"
 msgstr "{0} 已确认"
 
@@ -381,6 +381,10 @@ msgstr ""
 #: src/components/SwitchChainDialog/index.tsx:91
 msgid "This token is on"
 msgstr "该代币在"
+
+#: src/components/WithExecutionDialog/index.tsx:352
+msgid "Please confirm in wallet"
+msgstr ""
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/index.tsx:91
 msgid "Success Rate"
@@ -637,6 +641,10 @@ msgstr "是否确认切换到另一个链？"
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/index.tsx:25
 msgid "Swaps"
+msgstr ""
+
+#: src/components/WithExecutionDialog/index.tsx:320
+msgid "{0} Submitted"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -1192,7 +1200,7 @@ msgid "LP Balance:"
 msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:202
-#: src/components/WithExecutionDialog/index.tsx:205
+#: src/components/WithExecutionDialog/index.tsx:217
 msgid "Tx"
 msgstr "交易哈希："
 
@@ -1862,7 +1870,7 @@ msgid "The mid price needs to be greater than {min} and less than 100,000,000"
 msgstr ""
 
 #: src/components/ErrorMessageDialog.tsx:39
-#: src/components/WithExecutionDialog/index.tsx:283
+#: src/components/WithExecutionDialog/index.tsx:415
 msgid "Something went wrong."
 msgstr "发生异常错误."
 
@@ -2364,7 +2372,7 @@ msgstr ""
 msgid "High"
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:318
+#: src/components/WithExecutionDialog/index.tsx:450
 msgid "Close"
 msgstr "关闭"
 
@@ -2402,6 +2410,10 @@ msgstr ""
 #: src/widgets/PoolWidget/Algebra/AddLiquidity.tsx:418
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:508
 msgid "Starting price"
+msgstr ""
+
+#: src/components/WithExecutionDialog/index.tsx:344
+msgid "OK"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/components/StepTitle.tsx:90
