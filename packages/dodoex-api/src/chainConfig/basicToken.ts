@@ -119,6 +119,13 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WBERA',
     wrappedTokenAddress: '0x7507c1dc16935B82698e4C63f2746A2fCf994dF8',
   },
+  [ChainId.BERA_CHAIN]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'BERA',
+    name: 'Wrapped BERA',
+    wrappedTokenSymbol: 'WBERA',
+    wrappedTokenAddress: '0x6969696969696969696969696969696969696969',
+  },
   [ChainId.TAIKO]: {
     ...DEFAULT_BASIC_TOKEN,
     wrappedTokenAddress: '0xA51894664A773981C6C112C43ce576f315d5b1B6',

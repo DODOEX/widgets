@@ -14,7 +14,7 @@ import { ReactComponent as ScrollLogo } from '../assets/logo/networks/scroll.svg
 import { ReactComponent as MantaLogo } from '../assets/logo/networks/manta.svg';
 import { ReactComponent as MantleLogo } from '../assets/logo/networks/mantle.svg';
 import { ReactComponent as DODOchainLogo } from '../assets/logo/networks/dodochain.svg';
-import { ReactComponent as BartioTestnetLogo } from '../assets/logo/networks/bartio.svg';
+import { ReactComponent as BerachainLogo } from '../assets/logo/networks/bartio.svg';
 import { ReactComponent as TaikoLogo } from '../assets/logo/networks/taiko.svg';
 import { ReactComponent as PlumeLogo } from '../assets/logo/networks/plume.svg';
 import { ReactComponent as NeoxLogo } from '../assets/logo/networks/neox.svg';
@@ -166,12 +166,23 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     },
   ],
   [
+    ChainId.BERA_CHAIN,
+    {
+      chainId: ChainId.BERA_CHAIN,
+      logo: BerachainLogo,
+      name: 'Berachain',
+    },
+  ],
+  [
     ChainId.BARTIO_TESTNET,
     {
       chainId: ChainId.BARTIO_TESTNET,
-      logo: BartioTestnetLogo,
+      logo: BerachainLogo,
       name: 'Berachain bArtio',
+      mainnet: ChainId.BERA_CHAIN,
     },
+  ],
+  [
     ChainId.TAIKO,
     {
       chainId: ChainId.TAIKO,

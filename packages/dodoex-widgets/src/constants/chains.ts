@@ -50,6 +50,7 @@ export const rpcServerMap: {
   [ChainId.SEPOLIA]: ['https://ethereum-sepolia-rpc.publicnode.com'],
   [ChainId.DODO_CHAIN_TESTNET]: ['https://dodochain-testnet.alt.technology'],
   [ChainId.BARTIO_TESTNET]: ['https://bartio.rpc.berachain.com'],
+  [ChainId.BERA_CHAIN]: ['https://rpc.berachain.com'],
   [ChainId.TAIKO]: ['https://rpc.mainnet.taiko.xyz'],
   [ChainId.PLUME]: ['https://phoenix-rpc.plumenetwork.xyz'],
   [ChainId.PLUME_TESTNET]: ['https://test-rpc.plumenetwork.xyz'],
@@ -75,29 +76,6 @@ export const getRpcSingleUrlMap = (newRpcServerMap?: {
   };
 };
 
-export const platformIdMap: {
-  [key in ChainId]: string;
-} = {
-  [ChainId.MAINNET]: 'ethereum',
-  [ChainId.GOERLI]: 'goerli',
-  [ChainId.OPTIMISM]: 'optimism',
-  [ChainId.CONFLUX]: 'cfx',
-  [ChainId.BSC]: 'bsc',
-  [ChainId.OKCHAIN]: 'okex-chain',
-  [ChainId.POLYGON]: 'polygon',
-  [ChainId.ARBITRUM_ONE]: 'arbitrum',
-  [ChainId.AURORA]: 'aurora',
-  [ChainId.AVALANCHE]: 'avalanche', // Needs confirm
-  [ChainId.BASE]: 'base',
-  [ChainId.LINEA]: 'linea',
-  [ChainId.SCROLL]: 'scr',
-  [ChainId.MANTA]: 'manta',
-  [ChainId.MANTLE]: 'mantle',
-  [ChainId.SEPOLIA]: 'sepolia',
-  [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
-  [ChainId.BARTIO_TESTNET]: '',
-};
-
 export const scanUrlDomainMap: {
   [key in ChainId]: string;
 } = {
@@ -119,6 +97,7 @@ export const scanUrlDomainMap: {
   [ChainId.SEPOLIA]: 'sepolia.etherscan.io',
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet-explorer.alt.technology',
   [ChainId.BARTIO_TESTNET]: 'bartio.beratrail.io',
+  [ChainId.BERA_CHAIN]: 'berascan.com',
   [ChainId.TAIKO]: 'taikoscan.io',
   [ChainId.PLUME]: 'phoenix-explorer.plumenetwork.xyz',
   [ChainId.PLUME_TESTNET]: 'test-explorer.plumenetwork.xyz',
@@ -146,7 +125,8 @@ export const ThegraphKeyMap: {
   [ChainId.MANTLE]: 'mantle',
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
-  [ChainId.BARTIO_TESTNET]: '',
+  [ChainId.BARTIO_TESTNET]: 'berachain-testnet',
+  [ChainId.BERA_CHAIN]: 'berachain',
   [ChainId.TAIKO]: 'taiko',
   [ChainId.PLUME]: 'plume',
   [ChainId.PLUME_TESTNET]: 'plume-testnet',
@@ -179,6 +159,8 @@ export const blockTimeMap: {
   [ChainId.PLUME_TESTNET]: 2600,
   [ChainId.NEOX]: 12000,
   [ChainId.MORPH]: 3200,
+  [ChainId.BARTIO_TESTNET]: 3000,
+  [ChainId.BERA_CHAIN]: 3000,
 };
 
 export const dexKeysMap: {
@@ -206,4 +188,6 @@ export const dexKeysMap: {
   [ChainId.PLUME_TESTNET]: [],
   [ChainId.NEOX]: [],
   [ChainId.MORPH]: [],
+  [ChainId.BARTIO_TESTNET]: [],
+  [ChainId.BERA_CHAIN]: [],
 };

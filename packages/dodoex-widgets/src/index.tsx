@@ -45,7 +45,11 @@ export { TokenCard } from './components/Swap/components/TokenCard';
 export { default as TokenLogo } from './components/TokenLogo';
 export { FailedList } from './components/List/FailedList';
 export { EmptyList } from './components/List/EmptyList';
-export { getEtherscanPage } from './utils/address';
+export {
+  getEtherscanPage,
+  ALGEBRA_POOL_DEPLOYER_ADDRESSES,
+  ALGEBRA_POOL_INIT_CODE_HASH,
+} from './utils/address';
 export {
   formatReadableNumber,
   formatTokenAmountNumber,

@@ -21,6 +21,7 @@ export const platformIdMap: {
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.DODO_CHAIN_TESTNET]: 'dodochain-testnet',
   [ChainId.BARTIO_TESTNET]: 'berachain-testnet',
+  [ChainId.BERA_CHAIN]: 'berachain',
   [ChainId.TAIKO]: 'taiko',
   [ChainId.PLUME]: 'plume',
   [ChainId.PLUME_TESTNET]: 'plume-testnet',

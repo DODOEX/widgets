@@ -33,6 +33,8 @@ export enum ChainId {
 
   BARTIO_TESTNET = 80084,
 
+  BERA_CHAIN = 80094,
+
   TAIKO = 167000,
 
   PLUME = 98865,

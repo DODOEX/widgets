@@ -4,6 +4,7 @@ import {
   plume,
   plumeTestnet,
   berachainTestnet,
+  berachain,
 } from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
@@ -362,6 +363,20 @@ const contractMap: {
     DODO_DSP_PROXY: berachainTestnet.DODODspProxy,
     DODO_DPP_PROXY: berachainTestnet.DODODppProxy,
     DODO_MINEV3_PROXY: berachainTestnet.DODOMineV3Proxy,
+  },
+  [ChainId.BERA_CHAIN]: {
+    MULTI_CALL: berachain.MulticallWithValid,
+    DODO_APPROVE: berachain.DODOApprove,
+    ERC20_HELPER: berachain.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: berachain.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: berachain.DODOV1PmmHelper,
+    CALLEE_HELPER: berachain.DODOCalleeHelper,
+
+    DODO_PROXY: berachain.DODOV2Proxy02,
+    DODO_DSP_PROXY: berachain.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: berachain.DODODppProxy,
+    DODO_MINEV3_PROXY: berachain.DODOMineV3Proxy,
   },
 };
 
