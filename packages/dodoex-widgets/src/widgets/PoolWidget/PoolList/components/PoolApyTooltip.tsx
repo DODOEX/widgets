@@ -132,9 +132,9 @@ export default function PoolApyTooltip({
                 </Box>
                 <Box>
                   {formatApy(
-                    new BigNumber(item.transactionApy ?? 0).plus(
-                      item.miningApy ?? 0,
-                    ),
+                    new BigNumber(item.transactionApy ?? 0)
+                      .plus(item.miningApy ?? 0)
+                      .plus(item.metromMiningApy ?? 0),
                   )}
                 </Box>
               </Box>
