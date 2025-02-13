@@ -55,6 +55,9 @@ export function getAPIService(
   }
 }
 
+/**
+ * @deprecated
+ */
 export const contractRequests = new ContractRequests({
   rpc: getRpcSingleUrlMap(),
   // debugQuery: process.env.NODE_ENV === 'development',

@@ -18,7 +18,7 @@ msgstr ""
 msgid "The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth."
 msgstr "The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth."
 
-#: src/components/WithExecutionDialog/index.tsx:191
+#: src/components/WithExecutionDialog/index.tsx:190
 msgid "Transaction Time:"
 msgstr "Transaction Time:"
 
@@ -58,7 +58,7 @@ msgstr "To"
 msgid "Receive {0}"
 msgstr "Receive {0}"
 
-#: src/components/WithExecutionDialog/index.tsx:113
+#: src/components/WithExecutionDialog/index.tsx:112
 msgid "{0} pending"
 msgstr "{0} pending"
 
@@ -123,7 +123,7 @@ msgid "Start Time"
 msgstr "Start Time"
 
 #: src/components/ErrorMessageDialog.tsx:63
-#: src/components/WithExecutionDialog/index.tsx:319
+#: src/components/WithExecutionDialog/index.tsx:318
 msgid "Dismiss"
 msgstr "Dismiss"
 
@@ -230,7 +230,7 @@ msgstr "Pegged Exchange Rate"
 msgid "Private Pool"
 msgstr "Private Pool"
 
-#: src/components/WithExecutionDialog/index.tsx:112
+#: src/components/WithExecutionDialog/index.tsx:111
 msgid "{0} confirmed"
 msgstr "{0} confirmed"
 
@@ -1161,7 +1161,7 @@ msgid "LP Balance:"
 msgstr "LP Balance:"
 
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:202
-#: src/components/WithExecutionDialog/index.tsx:206
+#: src/components/WithExecutionDialog/index.tsx:205
 msgid "Tx"
 msgstr "Tx"
 
@@ -1817,7 +1817,7 @@ msgid "The mid price needs to be greater than {min} and less than 100,000,000"
 msgstr "The mid price needs to be greater than {min} and less than 100,000,000"
 
 #: src/components/ErrorMessageDialog.tsx:39
-#: src/components/WithExecutionDialog/index.tsx:284
+#: src/components/WithExecutionDialog/index.tsx:283
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
@@ -2310,7 +2310,7 @@ msgstr "Dynamic slippage is {recommendSlippage}% , the current slippage setting 
 msgid "High"
 msgstr "High"
 
-#: src/components/WithExecutionDialog/index.tsx:319
+#: src/components/WithExecutionDialog/index.tsx:318
 msgid "Close"
 msgstr "Close"
 

@@ -1,24 +1,23 @@
+import { ChainId } from '@dodoex/api';
 import { Box, Button, HoverOpacity, useTheme } from '@dodoex/components';
+import { ArrowTopRightBorder, DoneBorder, ErrorWarn } from '@dodoex/icons';
+import { t, Trans } from '@lingui/macro';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { ReactComponent as LoadingIcon } from '../../assets/approveBorderRight.svg';
+import { scanUrlDomainMap } from '../../constants/chains';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 import {
   ExecutionContext,
-  useExecution,
   ExecutionProps,
+  useExecution,
 } from '../../hooks/Submission';
-import Dialog from '../Swap/components/Dialog';
-import { useDispatch } from 'react-redux';
-import { ContractStatus } from '../../store/reducers/globals';
-import { AppThunkDispatch } from '../../store/actions';
-import { ReactComponent as LoadingIcon } from '../../assets/approveBorderRight.svg';
-import { t, Trans } from '@lingui/macro';
-import { ArrowTopRightBorder, DoneBorder, ErrorWarn } from '@dodoex/icons';
 import { Showing } from '../../hooks/Submission/types';
-import { useWeb3React } from '@web3-react/core';
-import { scanUrlDomainMap } from '../../constants/chains';
-import { ChainId } from '@dodoex/api';
+import { AppThunkDispatch } from '../../store/actions';
 import { setContractStatus } from '../../store/actions/globals';
+import { ContractStatus } from '../../store/reducers/globals';
+import Dialog from '../Swap/components/Dialog';
 import { useUserOptions } from '../UserOptionsProvider';
-import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 
 const strokeWidth = 6;
 

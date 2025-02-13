@@ -1,13 +1,14 @@
 /** https://github.com/anza-xyz/wallet-adapter/blob/master/APP.md */
-import { PropsWithChildren, useMemo } from 'react';
+import { ChainId } from '@dodoex/api';
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import {
   ConnectionProvider,
   WalletProvider,
 } from '@solana/wallet-adapter-react';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { UnsafeBurnerWalletAdapter } from '@solana/wallet-adapter-wallets';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
-import { clusterApiUrl } from '@solana/web3.js';
+import { UnsafeBurnerWalletAdapter } from '@solana/wallet-adapter-wallets';
+import { PropsWithChildren, useMemo } from 'react';
+import { rpcServerMap } from '../constants/chains';
 
 import '@solana/wallet-adapter-react-ui/styles.css';
 
@@ -16,7 +17,7 @@ export function SolanaReactProvider(props: PropsWithChildren) {
 
   // You can also provide a custom RPC endpoint.
   // const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-  const endpoint = 'https://rpc.testnet.soo.network/rpc';
+  const endpoint = rpcServerMap[ChainId.SOON_TESTNET][0];
 
   const wallets = useMemo(
     () => [

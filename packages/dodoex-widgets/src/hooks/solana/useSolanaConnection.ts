@@ -1,10 +1,10 @@
 import { basicTokenMap } from '@dodoex/api';
 import { useConnection } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
+import BigNumber from 'bignumber.js';
+import React from 'react';
 import { byWei } from '../../utils';
 import { useSolanaWallet } from './useSolanaWallet';
-import React from 'react';
-import BigNumber from 'bignumber.js';
 
 export function useSolanaConnection() {
   const wallet = useSolanaWallet();
