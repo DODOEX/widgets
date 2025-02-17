@@ -131,7 +131,18 @@ export const basicTokenMap: {
 
   // solana
   [ChainId.SOON_TESTNET]: {
-    ...DEFAULT_BASIC_TOKEN,
+    address: 'So11111111111111111111111111111111111111112',
+    name: 'WSOL',
+    showDecimals: 4,
+    decimals: 9,
+    symbol: 'SOL',
+    wrappedTokenSymbol: 'WSOL',
+    wrappedTokenAddress: 'So11111111111111111111111111111111111111112',
+  },
+  [ChainId.SOON]: {
+    address: 'So11111111111111111111111111111111111111112',
+    name: 'WSOL',
+    showDecimals: 4,
     decimals: 9,
     symbol: 'SOL',
     wrappedTokenSymbol: 'WSOL',

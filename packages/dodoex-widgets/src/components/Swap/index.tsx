@@ -1,44 +1,22 @@
-import BigNumber from 'bignumber.js';
-import { debounce } from 'lodash';
+import { ChainId } from '@dodoex/api';
 import {
   Box,
   Button,
   ButtonBase,
-  useTheme,
   RotatingIcon,
   Tooltip,
+  useTheme,
 } from '@dodoex/components';
-import { formatTokenAmountNumber } from '../../utils';
-import { useMemo, useState, useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import {
-  Setting,
-  SettingCrossChain,
-  Dodo,
-  Warn,
-  DoubleRight,
-} from '@dodoex/icons';
+import { Dodo, DoubleRight, Setting, Warn } from '@dodoex/icons';
 import { Trans, t } from '@lingui/macro';
-import { TokenCard } from './components/TokenCard';
-import { QuestionTooltip } from '../Tooltip';
-import { SwitchBox } from './components/SwitchBox';
-import { ReviewDialog } from './components/ReviewDialog';
-import { SettingsDialog } from './components/SettingsDialog';
-import { RoutePriceStatus } from '../../hooks/Swap';
-import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
-import ConnectWallet from './components/ConnectWallet';
-import { TokenInfo } from '../../hooks/Token/type';
-import {
-  useMarginAmount,
-  useFetchFiatPrice,
-  useFetchRoutePrice,
-} from '../../hooks/Swap';
-import { formatReadableNumber } from '../../utils/formatter';
+import BigNumber from 'bignumber.js';
+import { debounce } from 'lodash';
+import { useCallback, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { AppUrl } from '../../constants/api';
-import { ChainId } from '@dodoex/api';
 import { basicTokenMap } from '../../constants/chains';
+import { setLastToken } from '../../constants/localstorage';
 import { PRICE_IMPACT_THRESHOLD } from '../../constants/swap';
-import TokenLogo from '../TokenLogo';
 import {
   swapAlertEnterAmountBtn,
   swapAlertFetchPriceBtn,
@@ -46,33 +24,41 @@ import {
   swapAlertSelectTokenBtn,
   swapReviewBtn,
 } from '../../constants/testId';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 import useInflights from '../../hooks/Submission/useInflights';
-import { AppThunkDispatch } from '../../store/actions';
-import { useFetchRoutePriceBridge } from '../../hooks/Bridge/useFetchRoutePriceBridge';
-import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
-import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
-import { useSendRoute } from '../../hooks/Bridge/useSendRoute';
-import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
-import ErrorMessageDialog from '../ErrorMessageDialog';
-import { useSwitchBridgeOrSwapSlippage } from '../../hooks/Bridge/useSwitchBridgeOrSwapSlippage';
+import {
+  RoutePriceStatus,
+  useFetchFiatPrice,
+  useFetchRoutePrice,
+  useMarginAmount,
+} from '../../hooks/Swap';
 import { useInitDefaultToken } from '../../hooks/Swap/useInitDefaultToken';
-import { setLastToken } from '../../constants/localstorage';
 import {
   maxSlippageWarning,
   useSlippageLimit,
 } from '../../hooks/Swap/useSlippageLimit';
+import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
+import { TokenInfo } from '../../hooks/Token/type';
 import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch';
+import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
+import { useFetchETHBalance } from '../../hooks/contract';
 import {
   GetAutoSlippage,
   useSetAutoSlippage,
 } from '../../hooks/setting/useSetAutoSlippage';
+import { AppThunkDispatch } from '../../store/actions';
 import { setFromTokenChainId } from '../../store/actions/wallet';
-import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
-import { useFetchETHBalance } from '../../hooks/contract';
+import { formatTokenAmountNumber } from '../../utils';
+import { formatReadableNumber } from '../../utils/formatter';
+import TokenLogo from '../TokenLogo';
+import { QuestionTooltip } from '../Tooltip';
 import { useUserOptions } from '../UserOptionsProvider';
+import ConnectWallet from './components/ConnectWallet';
+import { ReviewDialog } from './components/ReviewDialog';
 import { SwapSettingsDialog } from './components/SwapSettingsDialog';
-import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
-import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
+import { SwitchBox } from './components/SwitchBox';
+import { TokenCard } from './components/TokenCard';
+import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -95,7 +81,7 @@ export function Swap({
   const [isReverseRouting, setIsReverseRouting] = useState(false);
   const basicTokenAddress = useMemo(
     () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
-    [chainId],
+    [chainId, defaultChainId],
   );
 
   const [displayingFromAmt, setDisplayingFromAmt] = useState<string>('');
@@ -117,14 +103,7 @@ export function Swap({
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState<boolean>(false);
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] =
     useState<boolean>(false);
-  const isBridge = useMemo(() => {
-    if (!fromToken || !toToken) return undefined;
-    return !!(
-      fromToken?.chainId &&
-      toToken?.chainId &&
-      fromToken.chainId !== toToken.chainId
-    );
-  }, [fromToken, toToken]);
+
   const { toFiatPrice, fromFiatPrice } = useFetchFiatPrice({
     toToken,
     fromToken,
@@ -148,34 +127,6 @@ export function Swap({
 
   const fromEtherTokenQuery = useFetchETHBalance(fromToken?.chainId);
 
-  const { bridgeRouteList, status: bridgeRouteStatus } =
-    useFetchRoutePriceBridge({
-      toToken,
-      fromToken,
-      fromAmount: fromAmt,
-    });
-  const [switchBridgeRouteShow, setSwitchBridgeRouteShow] = useState(false);
-  const [selectedRouteIdOrigin, setSelectRouteId] = useState('');
-  const selectedRouteId = useMemo(() => {
-    if (!selectedRouteIdOrigin && bridgeRouteList.length) {
-      return bridgeRouteList[0].id;
-    }
-    return selectedRouteIdOrigin;
-  }, [selectedRouteIdOrigin, bridgeRouteList]);
-  const selectedRoute = useMemo(
-    () =>
-      bridgeRouteList.find(
-        (route) =>
-          route.id === selectedRouteId && route.fromAddress === account,
-      ),
-    [bridgeRouteList, selectedRouteId, account],
-  );
-  useEffect(() => {
-    if (!selectedRoute && selectedRouteIdOrigin) {
-      setSelectRouteId('');
-    }
-  }, [selectedRoute]);
-
   const {
     isApproving,
     isGetApproveLoading,
@@ -185,7 +136,6 @@ export function Swap({
     getMaxBalance,
   } = useTokenStatus(fromToken, {
     amount: fromAmt,
-    contractAddress: selectedRoute?.spenderContractAddress,
   });
   const handleMaxClick = useCallback(() => {
     updateFromAmt(getMaxBalance());
@@ -245,18 +195,6 @@ export function Swap({
       };
     return rawBrief;
   }, [rawBrief]);
-
-  const {
-    sendRouteLoading,
-    sendRouteError,
-    setSendRouteError,
-    bridgeOrderTxRequest,
-
-    handleClickSend: handleSendBridgeRoute,
-  } = useSendRoute();
-  const [bridgeSummaryShow, setBridgeSummaryShow] = useState(false);
-
-  const showSwitchSlippageTooltip = useSwitchBridgeOrSwapSlippage(isBridge);
 
   const updateFromAmt = useCallback(
     (v: string | number) => {
@@ -334,7 +272,6 @@ export function Swap({
     setToToken(fromToken);
     setLastToken('from', toToken);
     setLastToken('to', fromToken);
-    setSelectRouteId('');
   }, [
     setFromToken,
     toToken,
@@ -342,7 +279,6 @@ export function Swap({
     fromToken,
     updateFromAmt,
     updateToAmt,
-    setSelectRouteId,
   ]);
 
   const onFromTokenChange = useCallback(
@@ -351,17 +287,9 @@ export function Swap({
       updateFromAmt('');
       updateToAmt('');
       setFromToken(token);
-      setSelectRouteId('');
       setLastToken('from', token);
     },
-    [
-      switchTokens,
-      updateFromAmt,
-      updateToAmt,
-      setFromToken,
-      setSelectRouteId,
-      setLastToken,
-    ],
+    [switchTokens, updateFromAmt, updateToAmt, setFromToken, setLastToken],
   );
   const onToTokenChange = useCallback(
     (token: TokenInfo, isOccupied: boolean) => {
@@ -369,17 +297,9 @@ export function Swap({
       updateFromAmt('');
       updateToAmt('');
       setToToken(token);
-      setSelectRouteId('');
       setLastToken('to', token);
     },
-    [
-      switchTokens,
-      updateFromAmt,
-      updateToAmt,
-      setFromToken,
-      setSelectRouteId,
-      setLastToken,
-    ],
+    [switchTokens, updateFromAmt, updateToAmt, setFromToken, setLastToken],
   );
   const onFromTokenInputFocus = useCallback(() => {
     if (isReverseRouting) {
@@ -394,9 +314,7 @@ export function Swap({
     setIsReverseRouting(true);
   }, [isReverseRouting, updateToAmt, dispatch]);
 
-  const isSlippageExceedLimit = useSlippageLimit(
-    isBridge ? undefined : slippageSwap,
-  );
+  const isSlippageExceedLimit = useSlippageLimit(slippageSwap);
 
   const displayPriceImpact = useMemo(
     () => (priceImpact ? (Number(priceImpact) * 100).toFixed(2) : null),
@@ -411,22 +329,11 @@ export function Swap({
   }, [fromFiatPrice, fromAmt, isReverseRouting, resAmount]);
 
   const displayToFiatPrice = useMemo(() => {
-    if (!toFiatPrice || isBridge === undefined) return null;
-    if (isBridge) {
-      return selectedRoute?.toTokenAmount?.gt(0)
-        ? selectedRoute.toTokenAmount.multipliedBy(toFiatPrice)
-        : null;
-    }
+    if (!toFiatPrice) return null;
+
     const toAmount = isReverseRouting ? toAmt : resAmount;
     return toAmount ? new BigNumber(toFiatPrice).multipliedBy(toAmount) : null;
-  }, [
-    toFiatPrice,
-    toAmt,
-    isReverseRouting,
-    resAmount,
-    selectedRoute,
-    isBridge,
-  ]);
+  }, [toFiatPrice, toAmt, isReverseRouting, resAmount]);
 
   const priceImpactWarning = useMemo(() => {
     return (
@@ -499,9 +406,7 @@ export function Swap({
       !isSlippageExceedLimit ||
       !new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0) ||
       insufficientBalance ||
-      (isBridge
-        ? bridgeRouteStatus !== RoutePriceStatus.Success
-        : resPriceStatus !== RoutePriceStatus.Success)
+      resPriceStatus !== RoutePriceStatus.Success
     ) {
       return null;
     }
@@ -526,15 +431,7 @@ export function Swap({
         {t`The current slippage protection coefficient set exceeds ${maxSlippageWarning}%, which may result in losses.`}
       </Box>
     );
-  }, [
-    isSlippageExceedLimit,
-    isReverseRouting,
-    fromAmt,
-    toAmt,
-    isBridge,
-    bridgeRouteStatus,
-    resPriceStatus,
-  ]);
+  }, [isSlippageExceedLimit, isReverseRouting, fromAmt, toAmt, resPriceStatus]);
 
   const priceInfo = useMemo(() => {
     if (isNotCurrentChain) {
@@ -562,10 +459,7 @@ export function Swap({
         </Box>
       );
     }
-    if (
-      resPriceStatus === RoutePriceStatus.Loading ||
-      (isBridge && bridgeRouteStatus === RoutePriceStatus.Loading)
-    ) {
+    if (resPriceStatus === RoutePriceStatus.Loading) {
       return (
         <Box
           sx={{
@@ -597,44 +491,11 @@ export function Swap({
       );
     }
     if (
-      !isBridge &&
       displayingFromAmt &&
       displayPriceImpact &&
       new BigNumber(displayPriceImpact).gt(PRICE_IMPACT_THRESHOLD)
     ) {
       return priceImpactWarning;
-    }
-    if (isBridge && bridgeRouteList.length) {
-      {
-        /* Bridge select route */
-      }
-      return (
-        <>
-          {slippageExceedLimit}
-          <BridgeRouteShortCard
-            route={selectedRoute}
-            onClick={() => setSwitchBridgeRouteShow(true)}
-          />
-        </>
-      );
-    }
-
-    if (
-      isBridge &&
-      ((bridgeRouteStatus === RoutePriceStatus.Success &&
-        !bridgeRouteList.length) ||
-        bridgeRouteStatus === RoutePriceStatus.Failed) &&
-      displayingFromAmt
-    ) {
-      return (
-        <>
-          <Box
-            component={Warn}
-            sx={{ width: 15, mr: 5, color: 'warning.main' }}
-          />
-          <Trans>Quote not available</Trans>
-        </>
-      );
     }
 
     return (
@@ -650,10 +511,6 @@ export function Swap({
     priceImpactWarning,
     displayPriceImpact,
     isUnSupportChain,
-    isBridge,
-    bridgeRouteStatus,
-    bridgeRouteList,
-    selectedRoute,
     isNotCurrentChain,
     slippageExceedLimit,
   ]);
@@ -680,15 +537,7 @@ export function Swap({
     if (isReverseRouting) {
       return displayingToAmt;
     }
-    if (isBridge) {
-      return selectedRoute?.toTokenAmount?.gt(0) &&
-        bridgeRouteStatus !== RoutePriceStatus.Loading
-        ? formatTokenAmountNumber({
-            input: selectedRoute.toTokenAmount,
-            decimals: toToken?.decimals,
-          })
-        : '-';
-    }
+
     return new BigNumber(displayingFromAmt).gt(0)
       ? formatTokenAmountNumber({
           input: resAmount as number,
@@ -701,9 +550,6 @@ export function Swap({
     resAmount,
     toToken,
     isReverseRouting,
-    selectedRoute,
-    isBridge,
-    bridgeRouteStatus,
   ]);
 
   const swapButton = useMemo(() => {
@@ -739,25 +585,15 @@ export function Swap({
         </Button>
       );
 
-    if (
-      isBridge
-        ? bridgeRouteStatus === RoutePriceStatus.Loading || isGetApproveLoading
-        : resPriceStatus === RoutePriceStatus.Loading
-    )
+    if (resPriceStatus === RoutePriceStatus.Loading)
       return (
         <Button fullWidth disabled data-testid={swapAlertFetchPriceBtn}>
           <Trans>Fetching Price...</Trans>
         </Button>
       );
 
-    let routeFailed = false;
-    if (isBridge) {
-      routeFailed =
-        !bridgeRouteList.length ||
-        bridgeRouteStatus === RoutePriceStatus.Failed;
-    } else {
-      routeFailed = !resAmount || resPriceStatus === RoutePriceStatus.Failed;
-    }
+    const routeFailed =
+      !resAmount || resPriceStatus === RoutePriceStatus.Failed;
     if (routeFailed)
       return (
         <Button fullWidth disabled>
@@ -776,25 +612,6 @@ export function Swap({
         </Button>
       );
 
-    if (isBridge) {
-      return (
-        <Button
-          fullWidth
-          onClick={() =>
-            handleSendBridgeRoute({
-              selectedRoute,
-              fromEtherTokenBalance: fromEtherTokenQuery.data?.balance ?? null,
-              goNext: () => setBridgeSummaryShow(true),
-            })
-          }
-          data-testid={swapReviewBtn}
-          disabled={!selectedRoute}
-          isLoading={sendRouteLoading}
-        >
-          <Trans>Review Cross Chain</Trans>
-        </Button>
-      );
-    }
     return (
       <Button
         fullWidth
@@ -817,10 +634,6 @@ export function Swap({
     resPriceStatus,
     basicTokenAddress,
     isReverseRouting,
-    isBridge,
-    bridgeRouteStatus,
-    bridgeRouteList,
-    sendRouteLoading,
     fromEtherTokenQuery.data?.balance,
     insufficientBalance,
     isApproving,
@@ -894,19 +707,13 @@ export function Swap({
       >
         <Trans>Swap</Trans>
         <Tooltip
-          open={showSwitchSlippageTooltip}
-          title={
-            isBridge ? (
-              <Trans>The setting has been switched to cross chain mode</Trans>
-            ) : (
-              <Trans>The setting has been switched to swap mode</Trans>
-            )
-          }
+          open={undefined}
+          title={<Trans>The setting has been switched to swap mode</Trans>}
           placement="bottom-end"
         >
           <Box component={ButtonBase}>
             <Box
-              component={isBridge ? SettingCrossChain : Setting}
+              component={Setting}
               onClick={() => setIsSettingsDialogOpen(true)}
               sx={{
                 width: 19,
@@ -972,7 +779,7 @@ export function Swap({
                 : '-'
             }
             onTokenChange={onToTokenChange}
-            readOnly={isBridge || !isReverseRouting}
+            readOnly={!isReverseRouting}
             showChainLogo={!onlyChainId}
             showChainName={!onlyChainId}
             notTokenPickerModal
@@ -1048,38 +855,11 @@ export function Swap({
         loading={resPriceStatus === RoutePriceStatus.Loading}
         slippage={slippageSwap}
       />
-      {isBridge ? (
-        <SettingsDialog
-          open={isSettingsDialogOpen}
-          onClose={() => setIsSettingsDialogOpen(false)}
-          isBridge
-        />
-      ) : (
-        <SwapSettingsDialog
-          open={isSettingsDialogOpen}
-          onClose={() => setIsSettingsDialogOpen(false)}
-          fromToken={fromToken}
-          toToken={toToken}
-        />
-      )}
-      <SelectBridgeDialog
-        open={switchBridgeRouteShow}
-        onClose={() => setSwitchBridgeRouteShow(false)}
-        selectedRouteId={selectedRouteId}
-        setSelectRouteId={setSelectRouteId}
-        bridgeRouteList={bridgeRouteList}
-      />
-      <BridgeSummaryDialog
-        open={bridgeSummaryShow}
-        onClose={() => setBridgeSummaryShow(false)}
-        route={selectedRoute}
-        bridgeOrderTxRequest={bridgeOrderTxRequest}
-        clearFromAmt={() => updateFromAmt('')}
-        clearToAmt={() => updateToAmt('')}
-      />
-      <ErrorMessageDialog
-        message={sendRouteError}
-        onClose={() => setSendRouteError('')}
+      <SwapSettingsDialog
+        open={isSettingsDialogOpen}
+        onClose={() => setIsSettingsDialogOpen(false)}
+        fromToken={fromToken}
+        toToken={toToken}
       />
     </>
   );

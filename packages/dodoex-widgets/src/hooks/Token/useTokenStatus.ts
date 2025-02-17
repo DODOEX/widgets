@@ -57,16 +57,6 @@ export function useTokenStatus(
   }, [token, contractAddress]) as [number | undefined, string | undefined];
 
   const queryClient = useQueryClient();
-  const evmTokenQuery = useQuery({
-    ...tokenApi.getFetchTokenQuery(
-      // skip the query
-      skipQuery || isSolana ? undefined : chainId,
-      token?.address,
-      account,
-      proxyContractAddress,
-    ),
-    refetchInterval: chainId === ChainId.NEOX ? 3000 : undefined,
-  });
 
   const { fetchTokenBalance } = useSolanaConnection();
   const svmTokenQuery = useQuery({
@@ -90,7 +80,7 @@ export function useTokenStatus(
     },
     enabled: !!account && isSolana && !!token,
   });
-  const tokenQuery = isSolana ? svmTokenQuery : evmTokenQuery;
+  const tokenQuery = svmTokenQuery;
   const { runningRequests } = useInflights();
   const { updateBlockNumber } = useFetchBlockNumber();
   const { i18n } = useLingui();

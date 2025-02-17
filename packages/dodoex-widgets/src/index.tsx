@@ -1,6 +1,7 @@
 // import { Swap, SwapProps } from './components/Swap';
 // import { SwapProps } from './components/Swap';
 // import { createRoot } from 'react-dom/client';
+import { Swap, SwapProps } from './components/Swap';
 import { Widget, WidgetProps } from './components/Widget';
 
 // export { useRouterStore, PageType } from './router';
@@ -65,8 +66,16 @@ import { Widget, WidgetProps } from './components/Widget';
 //   );
 // }
 
-export function SoonSwapWidget(props: WidgetProps) {
-  return <Widget {...props}>soon swap</Widget>;
+export function SoonSwapWidget(props: WidgetProps & SwapProps) {
+  return (
+    <Widget {...props}>
+      <Swap
+        getAutoSlippage={props.getAutoSlippage}
+        onPayTokenChange={props.onPayTokenChange}
+        onReceiveTokenChange={props.onReceiveTokenChange}
+      />
+    </Widget>
+  );
 }
 
 // export function PoolWidget(props: SwapWidgetProps) {

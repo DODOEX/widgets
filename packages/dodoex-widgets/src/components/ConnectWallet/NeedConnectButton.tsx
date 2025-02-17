@@ -1,16 +1,10 @@
-import { Button, ButtonProps } from '@dodoex/components';
-import { Trans, t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
-import React from 'react';
-import { useDispatch } from 'react-redux';
 import { ChainId } from '@dodoex/api';
-import { AppThunkDispatch } from '../../store/actions';
-import { setOpenConnectWalletInfo } from '../../store/actions/wallet';
-import { chainListMap } from '../../constants/chainList';
-import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
-import { useUserOptions } from '../UserOptionsProvider';
+import { Button, ButtonProps } from '@dodoex/components';
+import { Trans } from '@lingui/macro';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import React from 'react';
 import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
+import { useUserOptions } from '../UserOptionsProvider';
 
 export default function NeedConnectButton({
   chainId,
@@ -21,18 +15,11 @@ export default function NeedConnectButton({
   chainId?: ChainId;
   includeButton?: boolean;
 }) {
-  const { connector } = useWeb3React();
   const { account, chainId: currentChainId } = useWalletInfo();
-  const dispatch = useDispatch<AppThunkDispatch>();
-  const { onConnectWalletClick, onSwitchChain, onlySolana } = useUserOptions();
+  const { onConnectWalletClick } = useUserOptions();
   const [loading, setLoading] = React.useState(false);
-  const switchChain = useSwitchChain(chainId);
   const { setVisible } = useWalletModal();
-  const needSwitchNetwork =
-    currentChainId !== undefined &&
-    chainId !== undefined &&
-    currentChainId !== chainId &&
-    !onlySolana;
+
   if (
     account &&
     !loading &&
@@ -42,6 +29,7 @@ export default function NeedConnectButton({
     if (includeButton) return <>{props.children ?? null}</>;
     return <Button {...props} />;
   }
+
   return (
     <>
       <Button
@@ -56,41 +44,11 @@ export default function NeedConnectButton({
               return;
             }
           }
-          if (onlySolana) {
-            setVisible(true);
-            return;
-          }
-          // switch chain
-          if (needSwitchNetwork) {
-            if (onSwitchChain) {
-              setLoading(true);
-              await onSwitchChain();
-              setLoading(false);
-              return;
-            }
-            if (switchChain) {
-              setLoading(true);
-              await switchChain();
-              setLoading(false);
-              return;
-            }
-            dispatch(
-              setOpenConnectWalletInfo({
-                chainId,
-              }),
-            );
-            return;
-          }
-          connector.deactivate
-            ? connector.deactivate()
-            : connector.resetState();
-          dispatch(setOpenConnectWalletInfo(true));
+          setVisible(true);
         }}
       >
         {loading ? (
           <Trans>Connecting...</Trans>
-        ) : needSwitchNetwork && chainId ? (
-          t`Switch to ${chainListMap.get(chainId)?.name ?? 'unknown'}`
         ) : (
           <Trans>Connect to a wallet</Trans>
         )}

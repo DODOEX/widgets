@@ -9,7 +9,7 @@
   "private": "false",
   "scripts": {
     "prepare": "husky install",
-    "start": "yarn workspace doc start",
+    "start": "yarn workspace @dodoex/api build && yarn workspace doc start",
     "tsc": "lerna run typescript",
     "test": "lerna run test",
     "test:e2e": "lerna run test:e2e",

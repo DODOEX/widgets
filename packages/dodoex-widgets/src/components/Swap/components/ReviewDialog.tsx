@@ -1,27 +1,28 @@
-import { Trans } from '@lingui/macro';
-import BigNumber from 'bignumber.js';
-import { useEffect, useState, useMemo } from 'react';
-import Dialog, { DialogProps } from './Dialog';
 import {
   Box,
   Button,
   ButtonBase,
-  useTheme,
   LoadingSkeleton,
+  useTheme,
 } from '@dodoex/components';
-import { TokenInfo } from '../../../hooks/Token';
-import { formatTokenAmountNumber } from '../../../utils/formatter';
-import { formatReadableNumber } from '../../../utils/formatter';
-import TokenLogo from '../../TokenLogo';
-import { DetailBorder, Done, CaretUp, DoubleRight } from '@dodoex/icons';
-import { getContractStatus } from '../../../store/selectors/globals';
-import { ContractStatus } from '../../../store/reducers/globals';
+import { CaretUp, DetailBorder, Done, DoubleRight } from '@dodoex/icons';
+import { Trans } from '@lingui/macro';
+import BigNumber from 'bignumber.js';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppThunkDispatch } from '../../../store/actions';
-import useInflights from '../../../hooks/Submission/useInflights';
 import { PRICE_IMPACT_THRESHOLD } from '../../../constants/swap';
-import { QuestionTooltip } from '../../Tooltip';
+import { TokenInfo } from '../../../hooks/Token';
+import { AppThunkDispatch } from '../../../store/actions';
 import { setContractStatus } from '../../../store/actions/globals';
+import { ContractStatus } from '../../../store/reducers/globals';
+import { getContractStatus } from '../../../store/selectors/globals';
+import {
+  formatReadableNumber,
+  formatTokenAmountNumber,
+} from '../../../utils/formatter';
+import TokenLogo from '../../TokenLogo';
+import { QuestionTooltip } from '../../Tooltip';
+import Dialog from './Dialog';
 
 export interface ReviewDialogProps {
   open: boolean;

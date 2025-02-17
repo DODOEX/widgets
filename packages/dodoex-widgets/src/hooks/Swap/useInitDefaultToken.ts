@@ -1,10 +1,10 @@
-import { useWeb3React } from '@web3-react/core';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import { getLastToken } from '../../constants/localstorage';
 import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { getTokenList } from '../../store/selectors/token';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { DefaultTokenInfo, TokenInfo, TokenList } from '../Token';
 
 function getDefaultToken({
@@ -85,13 +85,13 @@ export function useInitDefaultToken({
   const { crossChain, defaultFromToken, defaultToToken, onlyChainId } =
     useUserOptions();
   const autoConnectLoading = useSelector(getAutoConnectLoading);
-  const { chainId, isActivating } = useWeb3React();
+  const { chainId, isActivating } = useWalletInfo();
 
   const initToken = () => {
     let findFromToken: TokenInfo | null = null;
     let setDefaultFromAmount: number | undefined;
     if (!crossChain && autoConnectLoading) return;
-    const findChainId = crossChain ? undefined : onlyChainId ?? chainId;
+    const findChainId = crossChain ? undefined : (onlyChainId ?? chainId);
     if (!fromToken) {
       const result = getDefaultToken({
         side: 'from',

@@ -1,6 +1,5 @@
-import axios from 'axios';
-import { useWeb3React } from '@web3-react/core';
 import { parseFixed } from '@ethersproject/bignumber';
+import axios from 'axios';
 import React, {
   useCallback,
   useEffect,
@@ -8,15 +7,15 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 import { EmptyAddress } from '../../constants/address';
-import { usePriceTimer } from './usePriceTimer';
-import useExecuteSwap from './useExecuteSwap';
+import { APIServiceKey } from '../../constants/api';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { TokenInfo } from '../Token';
 import { useGetAPIService } from '../setting/useGetAPIService';
-import { APIServiceKey } from '../../constants/api';
-import { useUserOptions } from '../../components/UserOptionsProvider';
-import { useSwapSettingStore } from './useSwapSettingStore';
 import { useFetchSolanaRoutePrice } from '../solana/useFetchSolanaRoutePrice';
+import { usePriceTimer } from './usePriceTimer';
+import { useSwapSettingStore } from './useSwapSettingStore';
 
 export enum RoutePriceStatus {
   Initial = 'Initial',
@@ -61,7 +60,7 @@ export function useFetchRoutePrice({
   slippage,
   slippageLoading,
 }: FetchRoutePrice) {
-  const { account, chainId: walletChainId, provider } = useWeb3React();
+  const { account, chainId: walletChainId } = useWalletInfo();
   const { defaultChainId, feeRate, rebateTo, apikey, onlySolana } =
     useUserOptions();
   const chainId = useMemo(
@@ -215,7 +214,6 @@ export function useFetchRoutePrice({
     onlySolana,
   ]);
 
-  const execute = useExecuteSwap();
   const executeSwap = useCallback(
     (subtitle: React.ReactNode) => {
       if (!rawBriefResult) return;
@@ -225,53 +223,8 @@ export function useFetchRoutePrice({
           subtitle,
         });
       }
-
-      const { resAmount, to, data, useSource, duration, value } =
-        rawBriefResult as IRouteResponse;
-      const finalFromAmount = isReverseRouting ? resAmount : fromAmount;
-      const finalToAmount = isReverseRouting ? fromAmount : resAmount;
-      if (!fromToken || !finalFromAmount) return;
-      execute({
-        to,
-        data,
-        useSource,
-        duration,
-        ddl,
-        value,
-        subtitle,
-        mixpanelProps: {
-          from: account,
-          fromTokenAddress: fromToken.address,
-          toTokenAddress: toToken?.address,
-          fromAmount: parseFixed(
-            String(finalFromAmount || 1),
-            fromToken.decimals,
-          ).toString(),
-          resAmount: finalToAmount,
-          resPricePerFromToken: isReverseRouting
-            ? rawBriefResult.resPricePerToToken
-            : rawBriefResult.resPricePerFromToken,
-          resPricePerToToken: isReverseRouting
-            ? rawBriefResult.resPricePerFromToken
-            : rawBriefResult.resPricePerToToken,
-          fromTokenSymbol: fromToken.symbol,
-          toTokenSymbol: toToken?.symbol,
-          fromTokenDecimals: fromToken.decimals,
-          toTokenDecimals: toToken?.decimals,
-        },
-      });
     },
-    [
-      ddl,
-      account,
-      fromToken,
-      fromAmount,
-      toToken,
-      isReverseRouting,
-      rawBriefResult,
-      onlySolana,
-      solanaRoute,
-    ],
+    [onlySolana, rawBriefResult, solanaRoute.execute],
   );
 
   return {

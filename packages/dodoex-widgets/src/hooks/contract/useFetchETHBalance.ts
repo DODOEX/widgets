@@ -1,29 +1,12 @@
-import { useSelector } from 'react-redux';
-import { getLatestBlockNumber } from '../../store/selectors/wallet';
-import { basicTokenMap } from '../../constants/chains';
-import { ChainId, CONTRACT_QUERY_KEY } from '@dodoex/api';
+import { CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
-import { tokenApi } from '../../constants/api';
+import { basicTokenMap } from '../../constants/chains';
+import { BIG_ALLOWANCE } from '../../constants/token';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { useSolanaConnection } from '../solana/useSolanaConnection';
-import BigNumber from 'bignumber.js';
-import { BIG_ALLOWANCE } from '../../constants/token';
-import { byWei } from '../../utils';
 
 export default function useFetchETHBalance(chainId?: number) {
-  const { account, chainId: currentChainId, isSolana } = useWalletInfo();
-  const blockNumber = useSelector(getLatestBlockNumber);
-  const EtherToken = basicTokenMap[(chainId ?? currentChainId) as ChainId];
-  const query = tokenApi.getFetchTokenQuery(
-    isSolana ? undefined : chainId,
-    EtherToken?.address,
-    account,
-  );
-  const evmQuery = useQuery({
-    ...query,
-    queryKey: [...query.queryKey, blockNumber],
-    enabled: !isSolana,
-  });
+  const { account } = useWalletInfo();
 
   const { fetchETHBalance } = useSolanaConnection();
   const svmQuery = useQuery({
@@ -44,8 +27,8 @@ export default function useFetchETHBalance(chainId?: number) {
         allowance: BIG_ALLOWANCE,
       };
     },
-    enabled: !!account && isSolana,
+    enabled: !!account,
   });
 
-  return isSolana ? svmQuery : evmQuery;
+  return svmQuery;
 }

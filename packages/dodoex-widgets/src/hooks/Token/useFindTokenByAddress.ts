@@ -1,11 +1,11 @@
-import { useWeb3React } from '@web3-react/core';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { getTokenList } from '../../store/selectors/token';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 
 export default function useFindTokenByAddress(address?: string) {
   const tokenList = useSelector(getTokenList);
-  const { chainId } = useWeb3React();
+  const { chainId } = useWalletInfo();
 
   const token = useMemo(() => {
     if (!address) return undefined;

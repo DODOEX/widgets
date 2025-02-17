@@ -168,6 +168,13 @@ Primary.args = {
       symbol: 'TEST',
       chainId: ChainId.SOON_TESTNET,
     },
+    {
+      decimals: 9,
+      name: 'test1',
+      address: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
+      symbol: 'TEST1',
+      chainId: ChainId.SOON_TESTNET,
+    },
   ],
   crossChain: false,
   onlySolana: true,

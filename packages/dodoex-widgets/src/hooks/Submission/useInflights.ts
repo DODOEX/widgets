@@ -1,5 +1,5 @@
+import { useSubmission } from '.';
 import { Request, State } from './types';
-import { useSubmission, useExecution } from '.';
 
 export default function useInflights() {
   const { requests } = useSubmission();

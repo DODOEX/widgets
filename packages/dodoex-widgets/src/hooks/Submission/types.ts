@@ -92,34 +92,6 @@ export interface ExecuteCustomHandlerParameters {
 }
 
 export type ExecutionCtx = {
-  /**
-   * Execute an on-chain operation
-   * @param breif: TX title. e.g.: "Swap"
-   * @param spec: TX specification.
-   * @param subtitle: Additional hint text. e.g.: "10 USDT to 10 USDC"
-   * @param early: When given, the returned promise resolves when user confirmed in their wallet.
-   * @param mixpanelProps: mixpanel properties
-   * @param submittedConfirmBack: submittedConfirmBack
-   * @param successBack: successBack
-   * @param metadata: metadata
-   */
-  execute: (
-    brief: string,
-    spec: StepSpec,
-    params?: {
-      subtitle?: string | React.ReactNode | null;
-      early?: boolean;
-      submittedBack?: () => void;
-      mixpanelProps?: Record<string, any>;
-      submittedConfirmBack?: () => void;
-      successBack?: (
-        tx: string,
-        callback?: ExecutionProps['onTxSuccess'],
-      ) => void;
-      metadata?: Metadata;
-    },
-  ) => Promise<ExecutionResult>;
-
   executeCustom: (params: {
     brief: string;
     subtitle?: string | React.ReactNode | null;

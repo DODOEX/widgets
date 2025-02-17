@@ -1,34 +1,33 @@
+import { ChainId, CONTRACT_QUERY_KEY } from '@dodoex/api';
 import {
   Box,
   BoxProps,
-  useTheme,
   Button,
   TooltipToast,
+  useTheme,
 } from '@dodoex/components';
 import { Plus } from '@dodoex/icons';
-import { TokenLogoCollapse } from './TokenLogoCollapse';
-import { BalanceText } from './BalanceText';
-import { NumberInput } from './NumberInput';
-import { TokenPickerDialog } from './TokenPickerDialog';
-import { useState, useEffect, useRef } from 'react';
-import { TokenInfo } from '../../../../hooks/Token';
-import { TokenPickerProps } from '../../../TokenPicker';
-import { transitionTime } from '../Dialog';
-import { useQuery } from '@tanstack/react-query';
-import { tokenApi } from '../../../../constants/api';
-import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
-import BigNumber from 'bignumber.js';
-import { PercentageSelectButtonGroup } from './PercentageSelectButtonGroup';
 import { Trans } from '@lingui/macro';
-import { ChainId, CONTRACT_QUERY_KEY } from '@dodoex/api';
+import { useQuery } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
+import { useEffect, useRef, useState } from 'react';
+import { BIG_ALLOWANCE } from '../../../../constants/token';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import {
   BalanceData,
   useBalanceUpdateLoading,
 } from '../../../../hooks/Submission/useBalanceUpdateLoading';
+import { TokenInfo } from '../../../../hooks/Token';
 import { useFetchTokens } from '../../../../hooks/contract';
-import { useUserOptions } from '../../../UserOptionsProvider';
 import { useSolanaConnection } from '../../../../hooks/solana/useSolanaConnection';
-import { BIG_ALLOWANCE } from '../../../../constants/token';
+import { TokenPickerProps } from '../../../TokenPicker';
+import { useUserOptions } from '../../../UserOptionsProvider';
+import { transitionTime } from '../Dialog';
+import { BalanceText } from './BalanceText';
+import { NumberInput } from './NumberInput';
+import { PercentageSelectButtonGroup } from './PercentageSelectButtonGroup';
+import { TokenLogoCollapse } from './TokenLogoCollapse';
+import { TokenPickerDialog } from './TokenPickerDialog';
 
 export interface TokenCardProps {
   amt: string;
@@ -144,13 +143,7 @@ export function TokenCard({
   const theme = useTheme();
   const { gotoBuyToken } = useUserOptions();
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
-  const evmTokenQuery = useQuery(
-    tokenApi.getFetchTokenQuery(
-      isSolana ? undefined : token?.chainId,
-      token?.address,
-      account,
-    ),
-  );
+
   const { fetchTokenBalance } = useSolanaConnection();
   const svmTokenQuery = useQuery({
     queryKey: [
@@ -173,7 +166,7 @@ export function TokenCard({
     },
     enabled: !!account && isSolana && !!token,
   });
-  const tokenQuery = isSolana ? svmTokenQuery : evmTokenQuery;
+  const tokenQuery = svmTokenQuery;
   const balance = overrideBalance ?? tokenQuery.data?.balance ?? null;
   const { isTokenLoading } = useBalanceUpdateLoading();
   let balanceLoading = overrideBalanceLoading ?? tokenQuery.isLoading;
