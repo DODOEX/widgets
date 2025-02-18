@@ -6,30 +6,16 @@ import {
 } from '@dodoex/api';
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import React from 'react';
-import { tokenApi } from '../../constants/api';
+import { BIG_ALLOWANCE } from '../../constants/token';
 import { getTokenSymbolDisplay } from '../../utils/token';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
-import useFetchBlockNumber from '../contract/useFetchBlockNumber';
-import { useInflights, useSubmission } from '../Submission';
-import { OpCode } from '../Submission/spec';
-import { ExecutionResult, MetadataFlag } from '../Submission/types';
-import { ApprovalState, TokenInfo } from './type';
 import { useSolanaConnection } from '../solana/useSolanaConnection';
-import { BIG_ALLOWANCE } from '../../constants/token';
-
-function getPendingRest(
-  token: TokenInfo | undefined | null,
-  allowance: BigNumber | undefined,
-) {
-  const isUSDT =
-    token?.symbol === 'USDT' ||
-    token?.address?.toLowerCase() ===
-      '0x6426e6017968377529487E0ef0aA4E7759724e05'.toLowerCase();
-  return isUSDT && allowance && allowance.gt(0);
-}
+import { useInflights } from '../Submission';
+import { OpCode } from '../Submission/spec';
+import { ApprovalState, TokenInfo } from './type';
 
 export function useTokenStatus(
   token: TokenInfo | undefined | null,
@@ -56,8 +42,6 @@ export function useTokenStatus(
     ];
   }, [token, contractAddress]) as [number | undefined, string | undefined];
 
-  const queryClient = useQueryClient();
-
   const { fetchTokenBalance } = useSolanaConnection();
   const svmTokenQuery = useQuery({
     queryKey: [
@@ -82,7 +66,7 @@ export function useTokenStatus(
   });
   const tokenQuery = svmTokenQuery;
   const { runningRequests } = useInflights();
-  const { updateBlockNumber } = useFetchBlockNumber();
+
   const { i18n } = useLingui();
   const basicTokenAddress = React.useMemo(
     () => (chainId ? basicTokenMap[chainId as ChainId]?.address : null),
@@ -132,7 +116,7 @@ export function useTokenStatus(
   const { isApproving, isGetApproveLoading, needApprove, needReset } =
     React.useMemo(() => {
       const approvalState = getApprovalState();
-      const pendingReset = getPendingRest(token, tokenQuery.data?.allowance);
+      const pendingReset = false;
       return {
         isApproving: approvalState === ApprovalState.Approving,
         isGetApproveLoading:
@@ -141,14 +125,7 @@ export function useTokenStatus(
           approvalState === ApprovalState.Insufficient && !pendingReset,
         needReset: approvalState === ApprovalState.Insufficient && pendingReset,
       };
-    }, [
-      getApprovalState,
-      token,
-      tokenQuery.data?.allowance,
-      tokenQuery.isLoading,
-    ]);
-
-  const submission = useSubmission();
+    }, [getApprovalState, tokenQuery.isLoading]);
 
   const approveTitle = React.useMemo(() => {
     if (!token) return '';
@@ -156,46 +133,9 @@ export function useTokenStatus(
     return `${prefix} ${getTokenSymbolDisplay(token)}`;
   }, [token, needReset, i18n._]);
 
-  const submitApproveMutation = useMutation({
-    mutationFn: async () => {
-      if (!proxyContractAddress || !account || !token) {
-        return;
-      }
-      const amt = needReset ? new BigNumber(0) : undefined;
-      const result = await submission.execute(
-        approveTitle,
-        {
-          opcode: OpCode.Approval,
-          token,
-          contract: proxyContractAddress,
-          amt,
-        },
-        {
-          metadata: {
-            [needReset ? MetadataFlag.approve : MetadataFlag.approve]: true,
-          },
-        },
-      );
-
-      if (result !== ExecutionResult.Success) {
-        return;
-      }
-      await updateBlockNumber();
-      queryClient.invalidateQueries({
-        queryKey: tokenApi.getFetchTokenQuery(
-          chainId,
-          token?.address,
-          account,
-          proxyContractAddress,
-        ).queryKey,
-        refetchType: 'all',
-      });
-    },
-  });
-
   const submitApprove = React.useCallback(async () => {
-    submitApproveMutation.mutate();
-  }, [submitApproveMutation]);
+    () => {};
+  }, []);
 
   const getMaxBalance = React.useCallback(() => {
     const defaultVal = new BigNumber(0);
@@ -218,8 +158,7 @@ export function useTokenStatus(
     return balance.lt(amount);
   }, [tokenQuery.data?.balance, overrideBalance, amount]);
 
-  const isApprovingOrApproveMutationPending =
-    isApproving || submitApproveMutation.isPending;
+  const isApprovingOrApproveMutationPending = isApproving || false;
   return {
     token,
     isApproving: isApprovingOrApproveMutationPending,

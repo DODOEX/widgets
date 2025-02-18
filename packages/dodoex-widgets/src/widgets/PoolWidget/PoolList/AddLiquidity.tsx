@@ -1,18 +1,25 @@
-import { alpha, Box, Button, useTheme, Tooltip } from '@dodoex/components';
-import { PoolApi, PoolType } from '@dodoex/api';
+import { ChainId, PoolApi, PoolType } from '@dodoex/api';
+import { alpha, Box, Button, Tooltip, useTheme } from '@dodoex/components';
+import { t, Trans } from '@lingui/macro';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import InfiniteScroll from 'react-infinite-scroller';
-import {
-  convertFetchLiquidityToOperateData,
-  convertLiquidityTokenToTokenInfo,
-  FetchLiquidityListLqList,
-  getPoolAMMOrPMM,
-} from '../utils';
-import { ChainId } from '@dodoex/api';
-import React from 'react';
-import { TokenLogoPair } from '../../../components/TokenLogoPair';
-import { Trans, t } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
+import { debounce } from 'lodash';
+import React from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
+import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
+import { CardStatus } from '../../../components/CardWidgets';
+import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
+import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
+import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
+import { EmptyList } from '../../../components/List/EmptyList';
+import { FailedList } from '../../../components/List/FailedList';
+import SelectChain from '../../../components/SelectChain';
+import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { useRouterStore } from '../../../router';
+import { PageType } from '../../../router/types';
 import {
   byWei,
   formatApy,
@@ -20,34 +27,26 @@ import {
   formatPercentageNumber,
   formatReadableNumber,
 } from '../../../utils';
-import PoolApyTooltip from './components/PoolApyTooltip';
-import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
-import { debounce } from 'lodash';
-import LoadingCard from './components/LoadingCard';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { usePoolListFilterTokenAndPool } from './hooks/usePoolListFilterTokenAndPool';
-import SelectChain from '../../../components/SelectChain';
-import TokenAndPoolFilter from './components/TokenAndPoolFilter';
-import TokenListPoolItem from './components/TokenListPoolItem';
-import { EmptyList } from '../../../components/List/EmptyList';
-import { FailedList } from '../../../components/List/FailedList';
-import FilterAddressTags from './components/FilterAddressTags';
-import FilterTokenTags from './components/FilterTokenTags';
-import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
-import { PoolOperateProps } from '../PoolOperate';
-import { useRouterStore } from '../../../router';
-import { PageType } from '../../../router/types';
-import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
-import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
-import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
-import LiquidityTable from './components/LiquidityTable';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
-import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { CardStatus } from '../../../components/CardWidgets';
-import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
-import GoPoolDetailBtn from './components/GoPoolDetailBtn';
 import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
 import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
+import { PoolOperateProps } from '../PoolOperate';
+import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
+import {
+  convertFetchLiquidityToOperateData,
+  convertLiquidityTokenToTokenInfo,
+  FetchLiquidityListLqList,
+  getPoolAMMOrPMM,
+} from '../utils';
+import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
+import FilterAddressTags from './components/FilterAddressTags';
+import FilterTokenTags from './components/FilterTokenTags';
+import GoPoolDetailBtn from './components/GoPoolDetailBtn';
+import LiquidityTable from './components/LiquidityTable';
+import LoadingCard from './components/LoadingCard';
+import PoolApyTooltip from './components/PoolApyTooltip';
+import TokenAndPoolFilter from './components/TokenAndPoolFilter';
+import TokenListPoolItem from './components/TokenListPoolItem';
+import { usePoolListFilterTokenAndPool } from './hooks/usePoolListFilterTokenAndPool';
 
 function CardList({
   lqList,
@@ -721,12 +720,12 @@ export default function AddLiquidityList({
     handleChangeFilterAddress,
   } = usePoolListFilterTokenAndPool();
 
-  const filterTypes = notSupportPMM ? [] : ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
+  const filterTypes: PoolType[] = notSupportPMM ? [] : [];
   if (supportAMMV2) {
-    filterTypes.push('AMMV2');
+    filterTypes.push('SVM_AMMV2');
   }
   if (supportAMMV3) {
-    filterTypes.push('AMMV3');
+    filterTypes.push('SVM_AMMV3');
   }
   const defaultQueryFilter = {
     chainIds: filterChainIds,

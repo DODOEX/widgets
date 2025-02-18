@@ -1,10 +1,10 @@
 import { Box, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { HowItWorks } from '../../../components/HowItWorks';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import WidgetContainer from '../../../components/WidgetContainer';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../router';
 import { Page, PageType } from '../../../router/types';
@@ -19,7 +19,6 @@ import AddLiquidityList from './AddLiquidity';
 import { CreatePoolBtn } from './components/CreatePoolBtn';
 import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
 import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
-import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
 
@@ -45,7 +44,7 @@ export default function PoolList({
   const { isMobile } = useWidgetDevice();
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
   const scrollParentRef = React.useRef<HTMLDivElement>(null);
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const { poolTab, tabs, handleChangePoolTab } = usePoolListTabs({
     account,
     paramsTab: params?.tab,
@@ -147,16 +146,6 @@ export default function PoolList({
         </TabPanelFlexCol>
         <TabPanelFlexCol value={PoolTab.myLiquidity}>
           <MyLiquidity
-            account={account}
-            filterChainIds={filterChainIds}
-            activeChainId={activeChainId}
-            handleChangeActiveChainId={handleChangeActiveChainId}
-            operatePool={operatePool}
-            setOperatePool={setOperatePool}
-          />
-        </TabPanelFlexCol>
-        <TabPanelFlexCol value={PoolTab.myCreated}>
-          <MyCreated
             account={account}
             filterChainIds={filterChainIds}
             activeChainId={activeChainId}

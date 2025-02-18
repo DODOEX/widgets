@@ -1,19 +1,20 @@
-import BigNumber from 'bignumber.js';
 import { alpha, Box, Button, useTheme } from '@dodoex/components';
-import { TokenInfo } from '../../../hooks/Token';
-import Dialog from '../../../components/Dialog';
 import { Trans } from '@lingui/macro';
+import BigNumber from 'bignumber.js';
+import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
+import Dialog from '../../../components/Dialog';
+import SpaceBetweenItem from '../../../components/SpaceBetweenItem';
+import TokenLogo from '../../../components/TokenLogo';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { CREATE_CPMM_CONFIG } from '../../../hooks/raydium-sdk-V2/common/programId';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { TokenInfo } from '../../../hooks/Token';
 import {
   formatPercentageNumber,
   formatTokenAmountNumber,
 } from '../../../utils';
-import SpaceBetweenItem from '../../../components/SpaceBetweenItem';
-import TokenLogo from '../../../components/TokenLogo';
-import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
-import { RatioPrice } from './Ratio';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
+import { RatioPrice } from './Ratio';
 
 export default function ConfirmDialog({
   open,
@@ -21,12 +22,12 @@ export default function ConfirmDialog({
   slippage,
   baseToken,
   quoteToken,
-  baseAmount,
-  quoteAmount,
+  pairMintAAmount,
+  pairMintBAmount,
   lpAmount,
-  fee,
+  feeIndex,
   price,
-  shareOfPool,
+  lpBalancePercentage,
   pairAddress,
   createMutation,
 }: {
@@ -35,12 +36,12 @@ export default function ConfirmDialog({
   slippage: number;
   baseToken?: TokenInfo;
   quoteToken?: TokenInfo;
-  baseAmount: string;
-  quoteAmount: string;
+  pairMintAAmount: string | undefined;
+  pairMintBAmount: string | undefined;
   lpAmount: BigNumber | undefined;
-  fee: number | undefined;
+  feeIndex: number;
   price?: BigNumber | null;
-  shareOfPool?: string;
+  lpBalancePercentage: BigNumber | number | undefined;
   pairAddress?: string;
   createMutation: ReturnType<typeof useAMMV2AddLiquidity>;
 }) {
@@ -166,7 +167,7 @@ export default function ConfirmDialog({
                 token={baseToken}
               />
               {formatTokenAmountNumber({
-                input: baseAmount,
+                input: pairMintAAmount,
                 decimals: baseToken?.decimals,
               })}
             </Box>
@@ -188,16 +189,14 @@ export default function ConfirmDialog({
                 token={quoteToken}
               />
               {formatTokenAmountNumber({
-                input: quoteAmount,
+                input: pairMintBAmount,
                 decimals: quoteToken?.decimals,
               })}
             </Box>
           </SpaceBetweenItem>
 
           <SpaceBetweenItem label={<Trans>Fee tier</Trans>}>
-            {formatPercentageNumber({
-              input: fee,
-            })}
+            {CREATE_CPMM_CONFIG[feeIndex].tradeFeeRate / 10000}%
           </SpaceBetweenItem>
 
           <SpaceBetweenItem label={<Trans>Rate</Trans>}>
@@ -222,7 +221,11 @@ export default function ConfirmDialog({
           </SpaceBetweenItem>
 
           <SpaceBetweenItem label={<Trans>Share of pool</Trans>}>
-            {shareOfPool}
+            {lpBalancePercentage
+              ? `${formatPercentageNumber({
+                  input: lpBalancePercentage,
+                })}`
+              : '-%'}
           </SpaceBetweenItem>
 
           <SpaceBetweenItem label={<Trans>Pool address</Trans>}>

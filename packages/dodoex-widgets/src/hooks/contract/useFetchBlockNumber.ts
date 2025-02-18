@@ -12,7 +12,6 @@ export default function useFetchBlockNumber() {
   const updateBlockNumber = useCallback(async () => {
     try {
       const blockNumber = await fetchBlockNumber();
-      console.log('blockNumber', blockNumber);
       dispatch(setBlockNumber(blockNumber));
     } catch (error) {}
   }, [dispatch, fetchBlockNumber]);

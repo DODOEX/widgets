@@ -1,6 +1,7 @@
-import { SwapWidgetApi } from '@dodoex/api';
+import { ChainId, etherTokenAddress, SwapWidgetApi } from '@dodoex/api';
 import { PoolWidget, SwapWidgetProps } from '@dodoex/widgets';
 import React from 'react';
+import { NATIVE_MINT } from '@solana/spl-token';
 
 export default {
   title: 'Widgets/Pool',
@@ -25,46 +26,32 @@ export const Primary = (props: any) => {
       {...config}
       tokenList={[
         {
-          address: '0x7D381e6a9c23A0E6969658f6B8Eba57A4Dbf93a0',
-          symbol: 'USDT',
-          name: 'USDT',
-          decimals: 18,
-          chainId: 11155111,
+          decimals: 9,
+          name: 'SOONTest_ETH',
+          address: etherTokenAddress,
+          symbol: 'SOONTest_ETH',
+          chainId: ChainId.SOON_TESTNET,
         },
         {
-          address: '0xf86Ed431954d101eaC10F3eBC19E6EaeD1291365',
-          symbol: 'test',
-          name: 'test',
-          decimals: 18,
-          chainId: 11155111,
+          decimals: 9,
+          name: 'Wrapped SOL',
+          address: NATIVE_MINT.toBase58(),
+          symbol: 'WSOL',
+          chainId: ChainId.SOON_TESTNET,
         },
         {
-          address: '0x163D876AF3949f45D934870a1783A040Cf717Bc5',
-          symbol: 'uni_test2',
-          name: 'test',
-          decimals: 18,
-          chainId: 11155111,
+          decimals: 9,
+          name: 'SOON Training Token',
+          address: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
+          symbol: 'TRAINING',
+          chainId: ChainId.SOON_TESTNET,
         },
         {
-          address: '0xac4D957b99482C0309717FDd8fA779f3FEE5c309',
-          symbol: 'uni_test1',
-          name: 'test',
-          decimals: 18,
-          chainId: 11155111,
-        },
-        {
-          address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-          symbol: 'ETH',
-          name: 'ETH',
-          decimals: 18,
-          chainId: 11155111,
-        },
-        {
-          address: '0x7B07164ecFaF0F0D85DFC062Bc205a4674c75Aa0',
-          symbol: 'WETH',
-          name: 'WETH',
-          decimals: 18,
-          chainId: 11155111,
+          decimals: 9,
+          name: 'SOON Training1 Token',
+          address: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
+          symbol: 'TRAINING1',
+          chainId: ChainId.SOON_TESTNET,
         },
       ]}
       {...other}
@@ -80,7 +67,9 @@ Primary.args = {
   height: '100%',
   noDocumentLink: true,
   routerPage: undefined,
+  notSupportPMM: true,
   supportAMMV2: true,
   supportAMMV3: true,
-  // onlyChainId: 1,
+  onlySolana: true,
+  onlyChainId: ChainId.SOON_TESTNET,
 };

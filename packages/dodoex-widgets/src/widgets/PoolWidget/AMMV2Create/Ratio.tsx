@@ -1,17 +1,20 @@
 import {
-  useTheme,
   alpha,
   Box,
+  BoxProps,
   LoadingSkeleton,
   Tooltip,
-  BoxProps,
+  useTheme,
 } from '@dodoex/components';
-import { useState } from 'react';
-import BigNumber from 'bignumber.js';
-import { Trans } from '@lingui/macro';
 import { Switch } from '@dodoex/icons';
+import { Trans } from '@lingui/macro';
+import BigNumber from 'bignumber.js';
+import { useState } from 'react';
 import { TokenInfo } from '../../../hooks/Token';
-import { formatReadableNumber } from '../../../utils/formatter';
+import {
+  formatPercentageNumber,
+  formatReadableNumber,
+} from '../../../utils/formatter';
 
 export function RatioPrice({
   baseToken,
@@ -138,14 +141,14 @@ export default function Ratio({
   quoteToken,
   loading,
   midPrice,
-  shareOfPool,
+  lpBalancePercentage,
   sx,
 }: {
   baseToken?: TokenInfo;
   quoteToken?: TokenInfo;
   loading?: boolean;
   midPrice?: BigNumber | null;
-  shareOfPool?: string;
+  lpBalancePercentage: BigNumber | number | undefined;
   sx?: BoxProps['sx'];
 }) {
   const theme = useTheme();
@@ -234,7 +237,12 @@ export default function Ratio({
               width: 50,
             }}
           >
-            {shareOfPool ? shareOfPool : '-%'}
+            {lpBalancePercentage
+              ? `${formatPercentageNumber({
+                  input: lpBalancePercentage,
+                  roundingMode: BigNumber.ROUND_DOWN,
+                })}`
+              : '-%'}
           </LoadingSkeleton>
         </Box>
       </Box>

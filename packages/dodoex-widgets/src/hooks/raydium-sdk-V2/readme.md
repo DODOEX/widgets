@@ -23,3 +23,76 @@
 > 参考 raydium-sdk-V2-demo
 
 soon 上面创建资金池的 [tx](https://explorer.testnet.soo.network/tx/2Ym4Rsqi3EQyvqm2gK95cTjMzFnKUXh86U2en3bcrgtcaEZV9g5Rngo5AqrfwwJQyRGkqgL12ETE9YZVwT9qxpiE)
+
+[创建成功](https://explorer.testnet.soo.network/tx/62LayoVAuDeqDBpDry5DuHE9Hp9PfCPZo5uBFgQRUkr6C8vFzQQ6EE3vKzSc6td4JsdrosqjvHS5YEBjZBn1wdyt)
+使用如下参数调用`raydium.cpmm.createPool(params)`
+```json
+{
+  programId: PublicKey [PublicKey(7edX7tQeA2wFLPAJGMXaAMgQCFsCucfh8U13uwy5SEfG)] {
+    _bn: <BN: 62c9e76b8f4a11425e3c77ced775947fe0990636e3747e6cba2ae923e431ea27>
+  },
+  poolFeeAccount: PublicKey [PublicKey(H2aUP7F3sby7cGrZoKDn1GiPRsw5TjPoPc6kYYasfLYE)] {
+    _bn: <BN: ee226b2c27525e2db7482670b8fed30b628c50fd88ffdbeb6856f169bca989af>
+  },
+  mintA: {
+    chainId: 101,
+    address: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
+    programId: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',
+    logoURI: '',
+    symbol: '5FLzAR',
+    name: '5FLzAR',
+    decimals: 9,
+    tags: [],
+    extensions: {},
+    priority: 0,
+    type: 'unknown'
+  },
+  mintB: {
+    chainId: 101,
+    address: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
+    programId: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',
+    logoURI: '',
+    symbol: '4wnJ7T',
+    name: '4wnJ7T',
+    decimals: 9,
+    tags: [],
+    extensions: {},
+    priority: 0,
+    type: 'unknown'
+  },
+  mintAAmount: <BN: 3b9aca00>,
+  mintBAmount: <BN: 3b9aca00>,
+  startTime: <BN: 0>,
+  feeConfig: {
+    id: 'CH6Hqtxeo2vdyn5BvXB952sy4e2hiWEPLZFn74wGDMVz',
+    index: 0,
+    protocolFeeRate: 200,
+    tradeFeeRate: 1000,
+    fundFeeRate: 100,
+    createPoolFee: '10000000'
+  },
+  associatedOnly: false,
+  ownerInfo: { useSOLBalance: true },
+  txVersion: 1
+}
+```
+返回如下参数
+```json
+{
+  txId: '62LayoVAuDeqDBpDry5DuHE9Hp9PfCPZo5uBFgQRUkr6C8vFzQQ6EE3vKzSc6td4JsdrosqjvHS5YEBjZBn1wdyt',
+  poolKeys: {
+    poolId: '4EEQHCu1x1nQBgAbMQ9nNfpHSFUcWzT7H2Mjap3Tm2Uh',
+    configId: 'CH6Hqtxeo2vdyn5BvXB952sy4e2hiWEPLZFn74wGDMVz',
+    authority: 'CCNshEd9DrBDuxxDscq6A9q8TN8dhVvLE3rXdA2jjoFn',
+    lpMint: 'HJdGEWtrYaJWcxqygDvDdNy4wiB2hqeHcGV6CFtNjtKZ',
+    vaultA: '7DZukWpYwbmn5RGxbM81NCQEbAWm4J7KhHePCFjr2B14',
+    vaultB: 'BEuNwTYPaKdFMQmw3znmfyU2ezyD7fLwbzzLbR7Grsoi',
+    observationId: '6hmXs7cQN9enR3iofMDWXJVTrMbxcPSEdyMKc3YwXNaf',
+    mintA: '[object Object]',
+    mintB: '[object Object]',
+    programId: '7edX7tQeA2wFLPAJGMXaAMgQCFsCucfh8U13uwy5SEfG',
+    poolFeeAccount: 'H2aUP7F3sby7cGrZoKDn1GiPRsw5TjPoPc6kYYasfLYE',
+    feeConfig: '[object Object]'
+  }
+}
+```

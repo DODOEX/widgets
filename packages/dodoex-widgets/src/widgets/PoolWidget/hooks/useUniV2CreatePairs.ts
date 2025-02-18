@@ -1,109 +1,99 @@
-import { Token } from '@uniswap/sdk-core';
-import { TokenInfo } from '../../../hooks/Token';
+import { getCreatePoolKeys } from '@raydium-io/raydium-sdk-v2';
+import { PublicKey } from '@solana/web3.js';
+import BN from 'bn.js';
 import React from 'react';
-import { basicTokenMap, ChainId } from '@dodoex/api';
-import { computePairAddress } from '../../../utils';
-import { useUniV2Pairs } from './useUniV2Pairs';
 import {
-  getUniswapV2FactoryContractAddressByChainId,
-  getUniswapV2FactoryFixedFeeContractAddressByChainId,
-} from '@dodoex/dodo-contract-request';
+  CREATE_CPMM_CONFIG,
+  CREATE_CPMM_POOL_PROGRAM,
+} from '../../../hooks/raydium-sdk-V2/common/programId';
+import { TokenInfo } from '../../../hooks/Token';
+import { useUniV2Pairs } from './useUniV2Pairs';
+
 export function useUniV2CreatePairs({
   baseToken,
   quoteToken,
   baseAmount,
   quoteAmount,
-  fee,
+  feeIndex,
+  slippage,
 }: {
   baseToken: TokenInfo | undefined;
   quoteToken: TokenInfo | undefined;
   baseAmount: string;
   quoteAmount: string;
-  fee: number;
+  feeIndex: number;
+  slippage: number;
 }) {
-  const [tokenA, tokenB, isInvalidPair] = React.useMemo(() => {
-    if (!baseToken || !quoteToken) return [null, null, false];
-    const etherToken = basicTokenMap[baseToken.chainId as ChainId];
-    const isBaseTokenEther =
-      etherToken.address?.toLowerCase() === baseToken.address.toLowerCase();
-    const isQuoteTokenEther =
-      etherToken.address?.toLowerCase() === quoteToken.address.toLowerCase();
-    const baseTokenAddress = isBaseTokenEther
-      ? etherToken.wrappedTokenAddress
-      : baseToken.address;
-    const quoteTokenAddress = isQuoteTokenEther
-      ? etherToken.wrappedTokenAddress
-      : quoteToken.address;
-
-    const isInvalidPair =
-      baseTokenAddress.toLowerCase() === quoteTokenAddress.toLowerCase();
-    if (isInvalidPair) {
-      return [null, null, true];
+  const [poolKeys, isInvalidPair] = React.useMemo(() => {
+    if (!baseToken || !quoteToken || feeIndex == null) {
+      return [undefined, true];
     }
-    const tokenA = new Token(
-      baseToken.chainId,
-      baseTokenAddress,
-      baseToken.decimals,
-      baseToken.symbol,
-      baseToken.name,
-    );
-    const tokenB = new Token(
-      quoteToken.chainId,
-      quoteTokenAddress,
-      quoteToken.decimals,
-      quoteToken.symbol,
-      quoteToken.name,
-    );
-    return [tokenA, tokenB, isInvalidPair];
-  }, [baseToken, quoteToken]);
 
-  const pairAddress = React.useMemo(() => {
-    if (!tokenA || !tokenB || fee === undefined) return undefined;
-    const chainId = tokenA.chainId;
-    const factoryAddress = chainId
-      ? getUniswapV2FactoryContractAddressByChainId(chainId) ||
-        getUniswapV2FactoryFixedFeeContractAddressByChainId(chainId)
-      : undefined;
-    if (!factoryAddress) return undefined;
-    return computePairAddress({
-      factoryAddress,
-      tokenA: tokenA as TokenInfo,
-      tokenB: tokenB as TokenInfo,
-      fee,
-    });
-  }, [tokenA, tokenB, fee]);
+    const isFront = new BN(new PublicKey(baseToken.address).toBuffer()).lte(
+      new BN(new PublicKey(quoteToken.address).toBuffer()),
+    );
+    const [mintA, mintB] = isFront
+      ? [baseToken, quoteToken]
+      : [quoteToken, baseToken];
+    const [mintAPubkey, mintBPubkey] = [
+      new PublicKey(mintA.address),
+      new PublicKey(mintB.address),
+    ];
+    return [
+      getCreatePoolKeys({
+        poolId: undefined,
+        programId: CREATE_CPMM_POOL_PROGRAM,
+        configId: new PublicKey(CREATE_CPMM_CONFIG[feeIndex].id),
+        mintA: mintAPubkey,
+        mintB: mintBPubkey,
+      }),
+      mintAPubkey.toBase58() === mintBPubkey.toBase58(),
+    ];
+  }, [feeIndex, baseToken, quoteToken]);
 
   const {
-    pair,
     price,
     invertedPrice,
-    reserveQuery,
+    poolInfoQuery,
+    lpBalanceQuery,
+    lpBalance,
+    lpBalancePercentage,
+    lpToAmountA,
+    lpToAmountB,
     liquidityMinted,
-    shareOfPool,
+    pairMintAAmount,
+    pairMintBAmount,
     isExists,
   } = useUniV2Pairs({
     pool:
-      baseToken && quoteToken && pairAddress
+      baseToken && quoteToken && poolKeys
         ? {
             baseToken,
             quoteToken,
-            type: 'AMMV2',
-            address: pairAddress,
+            address: poolKeys.poolId.toBase58(),
           }
         : undefined,
     baseAmount,
     quoteAmount,
+    slippage,
   });
 
   return {
-    pairAddress,
-    pair,
+    poolKeys: poolInfoQuery.data?.poolKeys,
+    poolInfo: poolInfoQuery.data?.poolInfo,
+    pairAddress: poolKeys?.poolId?.toBase58(),
     isInvalidPair,
     price,
     invertedPrice,
-    priceLoading: reserveQuery.isLoading,
+    poolInfoLoading: poolInfoQuery.isLoading,
+    lpBalanceLoading: lpBalanceQuery.isLoading,
+    lpBalance,
+    lpBalancePercentage,
+    lpToAmountA,
+    lpToAmountB,
     liquidityMinted,
-    shareOfPool,
+    pairMintAAmount,
+    pairMintBAmount,
     isExists,
   };
 }

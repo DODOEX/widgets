@@ -1,12 +1,12 @@
-import { useWeb3React } from '@web3-react/core';
-import React from 'react';
-import { isTestNet } from '../../../../constants/chainList';
 import { ChainId } from '@dodoex/api';
-import { POOLS_LIST_FILTER_CHAIN } from '../../../../constants/sessionStorage';
+import React from 'react';
 import { useUserOptions } from '../../../../components/UserOptionsProvider';
+import { isTestNet } from '../../../../constants/chainList';
+import { POOLS_LIST_FILTER_CHAIN } from '../../../../constants/sessionStorage';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 
 export function usePoolListFilterChainId() {
-  const { chainId: currentChainId } = useWeb3React();
+  const { chainId: currentChainId } = useWalletInfo();
   const { onlyChainId } = useUserOptions();
   const [activeChainId, setActiveChainId] =
     React.useState<ChainId | undefined>(onlyChainId);

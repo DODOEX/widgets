@@ -1,5 +1,6 @@
-import { ChainId } from '@dodoex/api';
+import { ChainId, etherTokenAddress } from '@dodoex/api';
 import { SoonSwapWidget, TokenInfo } from '@dodoex/widgets';
+import { NATIVE_MINT } from '@solana/spl-token';
 import { ComponentMeta } from '@storybook/react';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -129,18 +130,18 @@ Primary.args = {
     },
   },
   defaultFromToken: {
-    chainId: ChainId.SOON_TESTNET,
-    address: 'ERFzpDteGNo8LTDKW1WwVGrkRMmA2y9WZHXNHxMA6BSV',
-    name: 'SOL',
     decimals: 9,
-    symbol: 'SOL',
+    name: 'SOONTest_ETH',
+    address: etherTokenAddress,
+    symbol: 'SOONTest_ETH',
+    chainId: ChainId.SOON_TESTNET,
   },
   defaultToToken: {
-    chainId: ChainId.SOON_TESTNET,
-    address: 'W9qPz1vXFmKago2TsUJeixxh1tSEzeimebJEEf2kY2j',
-    name: 'test',
     decimals: 9,
-    symbol: 'TEST',
+    name: 'Wrapped SOL',
+    address: NATIVE_MINT.toBase58(),
+    symbol: 'WSOL',
+    chainId: ChainId.SOON_TESTNET,
   },
   popularTokenList: [],
   // tokenList: 'all',
@@ -148,31 +149,30 @@ Primary.args = {
   tokenList: [
     {
       decimals: 9,
-      name: 'SOL',
-      address: 'ERFzpDteGNo8LTDKW1WwVGrkRMmA2y9WZHXNHxMA6BSV',
-      symbol: 'SOL',
-      chainId: ChainId.SOON_TESTNET,
-      side: 'from',
-    },
-    {
-      decimals: 6,
-      name: 'USDT',
-      address: '742wcXVzkhNuEePAot7L3GvPseh93pvYFPgyHLX8mUy9',
-      symbol: 'USDT',
+      name: 'SOONTest_ETH',
+      address: etherTokenAddress,
+      symbol: 'SOONTest_ETH',
       chainId: ChainId.SOON_TESTNET,
     },
     {
       decimals: 9,
-      name: 'test',
-      address: 'W9qPz1vXFmKago2TsUJeixxh1tSEzeimebJEEf2kY2j',
-      symbol: 'TEST',
+      name: 'Wrapped SOL',
+      address: NATIVE_MINT.toBase58(),
+      symbol: 'WSOL',
       chainId: ChainId.SOON_TESTNET,
     },
     {
       decimals: 9,
-      name: 'test1',
+      name: 'SOON Training Token',
       address: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
-      symbol: 'TEST1',
+      symbol: 'TRAINING',
+      chainId: ChainId.SOON_TESTNET,
+    },
+    {
+      decimals: 9,
+      name: 'SOON Training1 Token',
+      address: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
+      symbol: 'TRAINING1',
       chainId: ChainId.SOON_TESTNET,
     },
   ],

@@ -291,7 +291,7 @@ export function formatPercentageNumber({
   input,
   showDecimals = 2,
   /** The percentage is rounded by default. */
-  roundingMode = BigNumber.ROUND_HALF_UP,
+  roundingMode = BigNumber.ROUND_DOWN,
 }: {
   input?: BigNumber | string | number | null;
   showDecimals?: number;

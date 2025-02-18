@@ -1,45 +1,41 @@
+import { ChainId } from '@dodoex/api';
 import { Box, Button } from '@dodoex/components';
 import { ArrowBack } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
-import WidgetContainer from '../../../components/WidgetContainer';
-import { CreateItem } from './CreateItem';
-import TokenSelect from '../../../components/TokenSelect';
-import FeeEdit from './FeeEdit';
-import React from 'react';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { TokenCard } from '../../../components/Swap/components/TokenCard';
-import { TokenInfo } from '../../../hooks/Token';
-import { SwitchBox } from '../../../components/Swap/components/SwitchBox';
-import Ratio from './Ratio';
-import Setting from './Setting';
-import { useUniV2CreatePairs } from '../hooks/useUniV2CreatePairs';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
-import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
-import { formatPercentageNumber, formatReadableNumber } from '../../../utils';
 import BigNumber from 'bignumber.js';
+import React from 'react';
+import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
+import GoBack from '../../../components/GoBack';
+import { SwitchBox } from '../../../components/Swap/components/SwitchBox';
+import { TokenCard } from '../../../components/Swap/components/TokenCard';
+import TokenPairStatusButton from '../../../components/TokenPairStatusButton';
+import TokenSelect from '../../../components/TokenSelect';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
+import WidgetContainer from '../../../components/WidgetContainer';
 import {
   AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION,
   AUTO_SWAP_SLIPPAGE_PROTECTION,
 } from '../../../constants/pool';
-import ConfirmDialog from './ConfirmDialog';
-import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
+import { CREATE_CPMM_CONFIG } from '../../../hooks/raydium-sdk-V2/common/programId';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { TokenInfo } from '../../../hooks/Token';
 import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
-import TokenPairStatusButton from '../../../components/TokenPairStatusButton';
-import { ChainId } from '@dodoex/api';
-import GoBack from '../../../components/GoBack';
 import { PageType, useRouterStore } from '../../../router';
-import MyLiquidity from './MyLiqidity';
+import { formatPercentageNumber } from '../../../utils';
+import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
 import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
+import { useUniV2CreatePairs } from '../hooks/useUniV2CreatePairs';
 import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
-import {
-  getUniswapV2Router02ContractAddressByChainId,
-  getUniswapV2Router02FixedFeeContractAddressByChainId,
-} from '@dodoex/dodo-contract-request';
-import { getIsAMMV2DynamicFeeContractByChainId } from '../utils';
+import ConfirmDialog from './ConfirmDialog';
+import { CreateItem } from './CreateItem';
+import FeeEdit from './FeeEdit';
+import MyLiquidity from './MyLiqidity';
+import Ratio from './Ratio';
+import Setting from './Setting';
 
 export default function AMMV2Create() {
-  const [fee, setFee] = React.useState(0.003);
-  const feeList = [0.0001, 0.0005, 0.003];
+  const [feeIndex, setFeeIndex] = React.useState(0);
+
   const [baseToken, setBaseToken] = React.useState<TokenInfo>();
   const [quoteToken, setQuoteToken] = React.useState<TokenInfo>();
   const [baseAmount, setBaseAmount] = React.useState('');
@@ -67,22 +63,31 @@ export default function AMMV2Create() {
     [onlyChainId, baseToken, quoteToken],
   );
   const {
+    poolKeys,
+    poolInfo,
     pairAddress,
-    pair,
     price,
     isInvalidPair,
     invertedPrice,
-    priceLoading,
+    poolInfoLoading,
+    lpBalanceLoading,
+    lpBalance,
+    lpBalancePercentage,
+    lpToAmountA,
+    lpToAmountB,
     liquidityMinted,
-    shareOfPool,
+    pairMintAAmount,
+    pairMintBAmount,
     isExists,
   } = useUniV2CreatePairs({
     baseToken,
     quoteToken,
     baseAmount,
     quoteAmount,
-    fee,
+    feeIndex,
+    slippage: slippageNumber,
   });
+
   const lastPrice = usePrevious(price);
   if (price && baseAmount && !price.isEqualTo(lastPrice ?? 0) && isExists) {
     const newQuoteAmount = price
@@ -118,17 +123,12 @@ export default function AMMV2Create() {
       }
     }
   };
-  const proxyContract = chainId
-    ? getUniswapV2Router02ContractAddressByChainId(chainId) ||
-      getUniswapV2Router02FixedFeeContractAddressByChainId(chainId)
-    : undefined;
+
   const baseTokenStatus = useTokenStatus(baseToken, {
     amount: baseAmount,
-    contractAddress: proxyContract,
   });
   const quoteTokenStatus = useTokenStatus(quoteToken, {
     amount: quoteAmount,
-    contractAddress: proxyContract,
   });
 
   const [showConfirm, setShowConfirm] = React.useState(false);
@@ -144,10 +144,11 @@ export default function AMMV2Create() {
   const createMutation = useAMMV2AddLiquidity({
     baseToken,
     quoteToken,
-    baseAmount,
-    quoteAmount,
-    fee,
+    pairMintAAmount,
+    pairMintBAmount,
     isExists,
+    poolKeys,
+    poolInfo,
     slippage: slippageNumber,
     successBack: () => {
       useRouterStore.getState().push({
@@ -218,9 +219,14 @@ export default function AMMV2Create() {
           }}
         >
           <MyLiquidity
-            pair={pair}
-            pairAddress={pairAddress}
             isExists={isExists}
+            poolInfo={poolInfo}
+            poolInfoLoading={poolInfoLoading}
+            lpBalanceLoading={lpBalanceLoading}
+            lpBalance={lpBalance}
+            lpBalancePercentage={lpBalancePercentage}
+            lpToAmountA={lpToAmountA}
+            lpToAmountB={lpToAmountB}
           />
           <CreateItem title={<Trans>Select pair</Trans>}>
             <Box
@@ -264,15 +270,12 @@ export default function AMMV2Create() {
                 occupiedToken={baseToken}
               />
             </Box>
-            {(!chainId || getIsAMMV2DynamicFeeContractByChainId(chainId)) && (
-              <FeeEdit
-                fee={fee}
-                onChange={setFee}
-                feeList={feeList}
-                hasCustom
-                disabled={needToken}
-              />
-            )}
+            <FeeEdit
+              feeIndex={feeIndex}
+              onChange={setFeeIndex}
+              feeList={CREATE_CPMM_CONFIG}
+              disabled={needToken}
+            />
           </CreateItem>
           <CreateItem
             title={<Trans>Deposit amounts</Trans>}
@@ -317,9 +320,9 @@ export default function AMMV2Create() {
               <Ratio
                 baseToken={baseToken}
                 quoteToken={quoteToken}
-                loading={priceLoading}
+                loading={poolInfoLoading}
                 midPrice={price}
-                shareOfPool={shareOfPool}
+                lpBalancePercentage={isExists ? lpBalancePercentage : 100}
               />
               {!!isExists && (
                 <Box
@@ -339,13 +342,19 @@ export default function AMMV2Create() {
                   🌟
                   <b>
                     <Trans>Tips:</Trans>
-                  </b>{' '}
+                  </b>
+                  &nbsp;
                   <Trans>
-                    By adding liquidity you’ll earn{' '}
-                    <b>{formatPercentageNumber({ input: fee })}</b> of all
-                    trades on this pair proportional to your share of the pool.
-                    Fees are added to the pool, accrue in real time and can be
-                    claimed by withdrawing your liquidity.
+                    By adding liquidity you’ll earn&nbsp;
+                    <b>
+                      {formatPercentageNumber({
+                        input:
+                          CREATE_CPMM_CONFIG[feeIndex].tradeFeeRate / 10000,
+                      })}
+                    </b>
+                    &nbsp; of all trades on this pair proportional to your share
+                    of the pool. Fees are added to the pool, accrue in real time
+                    and can be claimed by withdrawing your liquidity.
                   </Trans>
                 </Box>
               )}
@@ -381,7 +390,7 @@ export default function AMMV2Create() {
                   !baseAmount ||
                   !quoteAmount ||
                   !!isInvalidPair ||
-                  !fee
+                  feeIndex == null
                 }
                 onClick={() => setShowConfirm(true)}
               >
@@ -400,13 +409,13 @@ export default function AMMV2Create() {
         onClose={() => setShowConfirm(false)}
         slippage={slippageNumber}
         baseToken={baseToken}
-        baseAmount={baseAmount}
+        pairMintAAmount={pairMintAAmount}
         quoteToken={quoteToken}
-        quoteAmount={quoteAmount}
-        fee={fee}
+        pairMintBAmount={pairMintBAmount}
+        feeIndex={feeIndex}
         price={price}
         lpAmount={liquidityMinted}
-        shareOfPool={shareOfPool}
+        lpBalancePercentage={isExists ? lpBalancePercentage : 100}
         pairAddress={pairAddress}
         createMutation={createMutation}
       />

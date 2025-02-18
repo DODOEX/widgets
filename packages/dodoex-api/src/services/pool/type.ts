@@ -7,4 +7,6 @@ export type PoolType =
   | 'V3CLASSICAL'
   | 'DPP'
   | 'AMMV2'
-  | 'AMMV3';
+  | 'AMMV3'
+  | 'SVM_AMMV2'
+  | 'SVM_AMMV3';

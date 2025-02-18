@@ -67,9 +67,7 @@ export function useLiquidityOperateAmount({
         addPortion = quoteReserve.div(baseReserve);
       }
     } else if (type === 'AMMV2') {
-      midPrice = uniV2Pair.isRearTokenA
-        ? uniV2Pair.invertedPrice
-        : uniV2Pair.price;
+      midPrice = uniV2Pair.isFront ? uniV2Pair.price : uniV2Pair.invertedPrice;
       addPortion = midPrice || new BigNumber(1);
     }
   }

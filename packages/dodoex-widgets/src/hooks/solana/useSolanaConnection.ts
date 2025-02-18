@@ -1,4 +1,4 @@
-import { basicTokenMap } from '@dodoex/api';
+import { basicTokenMap, ChainId } from '@dodoex/api';
 import { useConnection } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
@@ -27,7 +27,7 @@ export function useSolanaConnection() {
   const fetchTokenBalance = async (address: string) => {
     if (
       address.toLocaleLowerCase() ===
-      basicTokenMap[1]?.address?.toLocaleLowerCase()
+      basicTokenMap[ChainId.SOON_TESTNET]?.address?.toLocaleLowerCase()
     ) {
       return fetchETHBalance();
     }

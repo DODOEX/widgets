@@ -1,51 +1,51 @@
-import { Pair } from '@uniswap/v2-sdk';
-import { useAMMV2Balance } from '../hooks/useAMMV2Balance';
-import {
-  formatReadableNumber,
-  formatTokenAmountNumber,
-  getEtherscanPage,
-} from '../../../utils';
-import BigNumber from 'bignumber.js';
 import {
   Box,
   HoverOpacity,
   LoadingSkeleton,
   Tooltip,
 } from '@dodoex/components';
-import { Trans } from '@lingui/macro';
-import { TokenLogoPair } from '../../../components/TokenLogoPair';
-import TokenItem from '../../../components/Token/TokenItem';
 import { ArrowTopRightBorder, DetailBorder } from '@dodoex/icons';
+import { Trans } from '@lingui/macro';
+import { ApiV3PoolInfoStandardItemCpmm } from '@raydium-io/raydium-sdk-v2';
+import BigNumber from 'bignumber.js';
+import TokenItem from '../../../components/Token/TokenItem';
+import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import {
+  formatPercentageNumber,
+  formatTokenAmountNumber,
+  getEtherscanPage,
+} from '../../../utils';
+import { ChainId } from '@dodoex/api';
 
 export default function MyLiquidity({
   isExists,
-  pair,
-  pairAddress,
+  poolInfo,
+  poolInfoLoading,
+  lpBalanceLoading,
+  lpBalance,
+  lpBalancePercentage,
+  lpToAmountA,
+  lpToAmountB,
 }: {
   isExists: boolean;
-  pair?: Pair | null;
-  pairAddress?: string;
+  poolInfo?: ApiV3PoolInfoStandardItemCpmm;
+  poolInfoLoading: boolean;
+  lpBalanceLoading: boolean;
+  lpBalance: BigNumber | undefined;
+  lpBalancePercentage: BigNumber | undefined;
+  lpToAmountA: BigNumber | undefined;
+  lpToAmountB: BigNumber | undefined;
 }) {
-  const {
-    isBalanceLoading,
-    isDepositedLoading,
-    balance,
-    token0Deposited,
-    token1Deposited,
-    poolTokenPercentage: poolTokenPercentageExists,
-  } = useAMMV2Balance({
-    pairAddress,
-    pair,
-  });
-  const shareOfPoolExists = poolTokenPercentageExists
-    ? `${formatReadableNumber({
-        input: poolTokenPercentageExists,
-        showDecimals: 2,
-        roundingMode: BigNumber.ROUND_HALF_UP,
-      })}%`
+  const shareOfPoolExists = lpBalancePercentage
+    ? `${formatPercentageNumber({
+        input: lpBalancePercentage,
+        roundingMode: BigNumber.ROUND_DOWN,
+      })}`
     : undefined;
 
-  if (!isExists || !pair) return null;
+  if (!isExists || !poolInfo) {
+    return null;
+  }
   return (
     <Box
       sx={{
@@ -73,11 +73,11 @@ export default function MyLiquidity({
         <TokenLogoPair
           width={18}
           height={18}
-          tokens={[pair.token0, pair.token1]}
+          tokens={[poolInfo.mintA, poolInfo.mintB]}
           mr={4}
         />
         <LoadingSkeleton
-          loading={isBalanceLoading}
+          loading={lpBalanceLoading}
           loadingProps={{
             width: 50,
           }}
@@ -86,11 +86,11 @@ export default function MyLiquidity({
           }}
         >
           {formatTokenAmountNumber({
-            input: balance,
-            decimals: pair.liquidityToken?.decimals,
+            input: lpBalance,
+            decimals: poolInfo.lpMint.decimals,
           })}
         </LoadingSkeleton>
-        {`${pair.token0.symbol}/${pair.token1.symbol} LP`}
+        {`${poolInfo.mintA.symbol}/${poolInfo.mintB.symbol} LP`}
         <Tooltip
           title={
             <Box
@@ -103,41 +103,41 @@ export default function MyLiquidity({
               }}
             >
               <TokenItem
-                address={pair.token0.address}
-                chainId={pair.token0.chainId}
-                showName={pair.token0.symbol ?? ''}
+                address={poolInfo.mintA.address}
+                chainId={poolInfo.mintA.chainId}
+                showName={poolInfo.mintA.symbol ?? ''}
                 size={14}
                 offset={4}
                 rightContent={
                   <LoadingSkeleton
-                    loading={isDepositedLoading}
+                    loading={poolInfoLoading}
                     loadingProps={{
                       width: 50,
                     }}
                   >
                     {formatTokenAmountNumber({
-                      input: token0Deposited,
-                      decimals: pair.token0.decimals,
+                      input: lpToAmountA,
+                      decimals: poolInfo.mintA.decimals,
                     })}
                   </LoadingSkeleton>
                 }
               />
               <TokenItem
-                address={pair.token1.address}
-                chainId={pair.token1.chainId}
-                showName={pair.token1.symbol ?? ''}
+                address={poolInfo.mintB.address}
+                chainId={poolInfo.mintB.chainId}
+                showName={poolInfo.mintB.symbol ?? ''}
                 size={14}
                 offset={4}
                 rightContent={
                   <LoadingSkeleton
-                    loading={isDepositedLoading}
+                    loading={poolInfoLoading}
                     loadingProps={{
                       width: 50,
                     }}
                   >
                     {formatTokenAmountNumber({
-                      input: token1Deposited,
-                      decimals: pair.token1.decimals,
+                      input: lpToAmountB,
+                      decimals: poolInfo.mintB.decimals,
                     })}
                   </LoadingSkeleton>
                 }
@@ -151,7 +151,7 @@ export default function MyLiquidity({
               >
                 <Trans>Pool share</Trans>
                 <LoadingSkeleton
-                  loading={isDepositedLoading}
+                  loading={poolInfoLoading}
                   loadingProps={{
                     width: 50,
                   }}
@@ -181,8 +181,8 @@ export default function MyLiquidity({
           target="_blank"
           rel="noopener noreferrer"
           href={getEtherscanPage(
-            pair.liquidityToken.chainId,
-            pair.liquidityToken.address,
+            ChainId.SOON_TESTNET,
+            poolInfo.lpMint.address,
             'address',
           )}
           sx={{

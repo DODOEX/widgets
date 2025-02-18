@@ -3,6 +3,7 @@
 // import { createRoot } from 'react-dom/client';
 import { Swap, SwapProps } from './components/Swap';
 import { Widget, WidgetProps } from './components/Widget';
+import { Pool } from './widgets/PoolWidget';
 
 // export { useRouterStore, PageType } from './router';
 // export type { Page } from './router';
@@ -78,13 +79,13 @@ export function SoonSwapWidget(props: WidgetProps & SwapProps) {
   );
 }
 
-// export function PoolWidget(props: SwapWidgetProps) {
-//   return (
-//     <Widget {...props}>
-//       <Pool />
-//     </Widget>
-//   );
-// }
+export function PoolWidget(props: WidgetProps & SwapProps) {
+  return (
+    <Widget {...props}>
+      <Pool />
+    </Widget>
+  );
+}
 
 // // For none-react project!
 // export function InitSwapWidget(props: SwapWidgetProps) {
