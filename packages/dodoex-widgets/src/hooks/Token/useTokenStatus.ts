@@ -1,9 +1,4 @@
-import {
-  basicTokenMap,
-  ChainId,
-  CONTRACT_QUERY_KEY,
-  contractConfig,
-} from '@dodoex/api';
+import { basicTokenMap, ChainId, contractConfig } from '@dodoex/api';
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { useQuery } from '@tanstack/react-query';
@@ -44,17 +39,11 @@ export function useTokenStatus(
 
   const { fetchTokenBalance } = useSolanaConnection();
   const svmTokenQuery = useQuery({
-    queryKey: [
-      CONTRACT_QUERY_KEY,
-      'token',
-      'getFetchTokenQuery',
-      chainId,
-      account?.toLocaleLowerCase(),
-      undefined,
-      token?.address,
-    ],
+    queryKey: ['token', 'balance', chainId, account, token?.address],
     queryFn: async () => {
-      if (!token) return;
+      if (!token) {
+        return undefined;
+      }
       const result = await fetchTokenBalance(token.address);
       return {
         ...token,

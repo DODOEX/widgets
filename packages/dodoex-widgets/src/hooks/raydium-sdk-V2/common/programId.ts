@@ -1,3 +1,4 @@
+import { ApiClmmConfigV3 } from '@raydium-io/raydium-sdk-v2';
 import { PublicKey } from '@solana/web3.js';
 
 /** -----soon testnet----- */
@@ -24,3 +25,25 @@ export const CREATE_CPMM_CONFIG = [
     createPoolFee: '10000000',
   },
 ];
+
+export const CLMM_PROGRAM_ID = new PublicKey(
+  '2cjsT5HYL1qM8KmhdCjjJrXSrnMpbDbDruAT7UYTH8af',
+);
+
+export const CREATE_CLMM_CONFIG: ApiClmmConfigV3[] = [
+  {
+    id: '9vUeSD34ggBLRbqdyUALxwuMqbVCioMp4wQRriQ7ydPw',
+    index: 0,
+    protocolFeeRate: 200,
+    tradeFeeRate: 1000,
+    tickSpacing: 20,
+    fundFeeRate: 0,
+    description: '',
+    defaultRange: 0,
+    defaultRangePoint: [],
+  },
+];
+
+export const TOKEN_METADATA_PROGRAM_ID = new PublicKey(
+  'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s',
+);

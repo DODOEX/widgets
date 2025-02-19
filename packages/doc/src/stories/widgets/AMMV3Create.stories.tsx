@@ -1,6 +1,8 @@
-import { SwapWidgetApi } from '@dodoex/api';
+import { ChainId, SwapWidgetApi } from '@dodoex/api';
 import { AddLiquidityV3, SwapWidgetProps, Widget } from '@dodoex/widgets';
+import { PublicKey } from '@solana/web3.js';
 import React from 'react';
+import { NATIVE_MINT } from '@solana/spl-token';
 
 export default {
   title: 'Widgets/AddLiquidityV3',
@@ -27,9 +29,9 @@ export const Primary = (props: any) => {
         handleGoBack={() => window.alert('handleGoBack')}
         handleGoToPoolList={() => window.alert('handleGoToPoolList')}
         params={{
-          from: '0x8f2a9f23d5d70226491b0c10365de88f64cd4a01',
-          to: '0xd05553bc85fa8c004073d91097b7611cd5e478f5',
-          fee: '100',
+          from: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
+          to: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
+          fee: '1000',
         }}
       />
     </Widget>
@@ -42,5 +44,39 @@ Primary.args = {
   width: '100%',
   height: '100%',
   noDocumentLink: true,
-  // onlyChainId: 1,
+  notSupportPMM: true,
+  supportAMMV2: true,
+  supportAMMV3: true,
+  onlySolana: true,
+  onlyChainId: ChainId.SOON_TESTNET,
+  tokenList: [
+    {
+      decimals: 9,
+      name: 'SOL',
+      address: PublicKey.default.toBase58(),
+      symbol: 'SOL',
+      chainId: ChainId.SOON_TESTNET,
+    },
+    {
+      decimals: 9,
+      name: 'Wrapped SOL',
+      address: NATIVE_MINT.toBase58(),
+      symbol: 'WSOL',
+      chainId: ChainId.SOON_TESTNET,
+    },
+    {
+      decimals: 9,
+      name: 'SOON Training Token',
+      address: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
+      symbol: 'TRAINING',
+      chainId: ChainId.SOON_TESTNET,
+    },
+    {
+      decimals: 9,
+      name: 'SOON Training1 Token',
+      address: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
+      symbol: 'TRAINING1',
+      chainId: ChainId.SOON_TESTNET,
+    },
+  ],
 };

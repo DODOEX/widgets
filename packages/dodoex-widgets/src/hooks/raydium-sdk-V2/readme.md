@@ -1,5 +1,8 @@
 # 背景知识
-我们创建的[合约](https://www.notion.so/dodotopia/soon-testnet-16f080d974e780bc96ffcf5017749dfa) 其中 [univ2]( https://explorer.testnet.soo.network/address/7edX7tQeA2wFLPAJGMXaAMgQCFsCucfh8U13uwy5SEfG/security) 使用 raydium [源码](https://github.com/raydium-io/raydium-cp-swap) 在 soon 链上进行部署, 在 radium 官方称为 cpmm.  在 [radium 官网](https://raydium.io/liquidity/create-pool/) 选择 **Standard AMM** 模式创建
+我们创建的[合约](https://www.notion.so/dodotopia/soon-testnet-16f080d974e780bc96ffcf5017749dfa) 
+  > [univ2]( https://explorer.testnet.soo.network/address/7edX7tQeA2wFLPAJGMXaAMgQCFsCucfh8U13uwy5SEfG/security) 使用 [raydium 源码](https://github.com/raydium-io/raydium-cp-swap) 在 soon 链上进行部署, 在 radium 官方称为 cpmm. 在 [radium 官网](https://raydium.io/liquidity/create-pool/) 选择 **Standard AMM** 模式创建
+
+  > [univ3](https://explorer.testnet.soo.network/address/2cjsT5HYL1qM8KmhdCjjJrXSrnMpbDbDruAT7UYTH8af) 使用 [raydium 源码](https://github.com/raydium-io/raydium-clmm) 在 soon 链上部署，在 raydium 官方被称为 clmm. 在 [raydium 官网](https://raydium.io/clmm/create-pool/)选择 **Concentrated Liquidity** 模式创建 
 
 # raydium 提供的工具
 
@@ -96,3 +99,7 @@ soon 上面创建资金池的 [tx](https://explorer.testnet.soo.network/tx/2Ym4R
   }
 }
 ```
+
+# 创建 clmm 资金池
+
+[创建成功](https://explorer.testnet.soo.network/tx/4PDiA79uryojV4Jabn7ZU5VH2h1g8MpnoXkyvvUYaEDZLoyy61XuiVuwhXcJSToR9eScGGjhuHuxK2sZCWhAfEuk) [clmm 池子](https://explorer.testnet.soo.network/address/6tvyKAe7gF2Qtm2ur94nZa7QsYSATFyZSdm7Be53Fbf1)

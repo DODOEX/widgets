@@ -1,8 +1,7 @@
+import { ChainId } from '@dodoex/api';
 import { t } from '@lingui/macro';
-import { useQuery } from '@tanstack/react-query';
 import JSBI from 'jsbi';
 import { ReactNode, useMemo } from 'react';
-import { tokenApi } from '../../../../constants/api';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { BIG_INT_ZERO } from '../constants/misc';
 import { StateProps } from '../reducer';
@@ -22,6 +21,7 @@ import tryParseCurrencyAmount from '../utils/tryParseCurrencyAmount';
 import { tryParseTick } from '../utils/tryParseTick';
 import { PoolState, usePool } from './usePools';
 import { useSwapTaxes } from './useSwapTaxes';
+import { useTokenBalance } from './useTokenBalance';
 
 export function useV3DerivedMintInfo({
   state,
@@ -97,30 +97,25 @@ export function useV3DerivedMintInfo({
   }, [tokenA, tokenB]);
 
   // balances
-  const currencyATokenQuery = useQuery(
-    tokenApi.getFetchTokenQuery(
-      currencies[Field.CURRENCY_A]?.chainId,
-      currencies[Field.CURRENCY_A]?.address,
-      account,
-    ),
-  );
-  const currencyBTokenQuery = useQuery(
-    tokenApi.getFetchTokenQuery(
-      currencies[Field.CURRENCY_B]?.chainId,
-      currencies[Field.CURRENCY_B]?.address,
-      account,
-    ),
-  );
+  const currencyABalance = useTokenBalance({
+    mint: currencies[Field.CURRENCY_A]?.address,
+    chainId: currencies[Field.CURRENCY_A]?.chainId as ChainId,
+  });
+  const currencyBBalance = useTokenBalance({
+    mint: currencies[Field.CURRENCY_B]?.address,
+    chainId: currencies[Field.CURRENCY_B]?.chainId as ChainId,
+  });
+
   const currencyBalances: { [field in Field]?: CurrencyAmount<Currency> } =
     useMemo(() => {
       return {
         [Field.CURRENCY_A]: !currencies[Field.CURRENCY_A]
           ? undefined
-          : currencyATokenQuery.data?.balance
+          : currencyABalance
             ? CurrencyAmount.fromRawAmount(
                 currencies[Field.CURRENCY_A],
                 JSBI.BigInt(
-                  currencyATokenQuery.data?.balance
+                  currencyABalance
                     .multipliedBy(
                       Math.pow(10, currencies[Field.CURRENCY_A].decimals ?? 18),
                     )
@@ -130,11 +125,11 @@ export function useV3DerivedMintInfo({
             : CurrencyAmount.fromRawAmount(currencies[Field.CURRENCY_A], 0),
         [Field.CURRENCY_B]: !currencies[Field.CURRENCY_B]
           ? undefined
-          : currencyBTokenQuery.data?.balance
+          : currencyBBalance
             ? CurrencyAmount.fromRawAmount(
                 currencies[Field.CURRENCY_B],
                 JSBI.BigInt(
-                  currencyBTokenQuery.data?.balance
+                  currencyBBalance
                     .multipliedBy(
                       Math.pow(10, currencies[Field.CURRENCY_B].decimals ?? 18),
                     )
@@ -143,11 +138,7 @@ export function useV3DerivedMintInfo({
               )
             : CurrencyAmount.fromRawAmount(currencies[Field.CURRENCY_B], 0),
       };
-    }, [
-      currencies,
-      currencyATokenQuery.data?.balance,
-      currencyBTokenQuery.data?.balance,
-    ]);
+    }, [currencies, currencyABalance, currencyBBalance]);
 
   // pool
   const [poolState, pool] = usePool(

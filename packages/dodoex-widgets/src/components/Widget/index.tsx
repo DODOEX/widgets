@@ -38,7 +38,7 @@ export interface WidgetProps extends InitTokenListProps, ExecutionProps {
   apikey?: string;
   theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
-  defaultChainId?: number;
+  defaultChainId?: ChainId;
   width?: string | number;
   height?: string | number;
   feeRate?: number; // Unit: 1e18
@@ -52,7 +52,7 @@ export interface WidgetProps extends InitTokenListProps, ExecutionProps {
   crossChain?: boolean;
   noPowerBy?: boolean;
   noDocumentLink?: boolean;
-  onlyChainId?: number;
+  onlyChainId?: ChainId;
   noUI?: boolean;
   noLangProvider?: boolean;
   noAutoConnect?: boolean;

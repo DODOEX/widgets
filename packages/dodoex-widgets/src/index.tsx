@@ -15,10 +15,10 @@ import { Pool } from './widgets/PoolWidget';
 // export { rpcServerMap, scanUrlDomainMap } from './constants/chains';
 // export { chainListMap } from './constants/chainList';
 // import { Pool } from './widgets/PoolWidget';
-// export { Widget, UnstyleWidget, Message } from './components/Widget';
+export { Widget, UnstyleWidget, Message } from './components/Widget';
 // export { WIDGET_MODULE_CLASS_NAME } from './components/WidgetContainer';
 // export type { WidgetProps } from './components/Widget';
-// export type SwapWidgetProps = WidgetProps & SwapProps;
+export type SwapWidgetProps = WidgetProps & SwapProps;
 // export type { TokenInfo } from './hooks/Token/type';
 // export { useMessageState } from './hooks/useMessageState';
 // export { Swap } from './components/Swap';
@@ -39,9 +39,9 @@ import { Pool } from './widgets/PoolWidget';
 // export { MiningList } from './widgets/MiningWidget/MiningList';
 // export { MiningDetail } from './widgets/MiningWidget/MiningDetail';
 // export { MiningCreate } from './widgets/MiningWidget/MiningCreate';
-// export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
-// export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
-// export { AMMV3PositionManage } from './widgets/PoolWidget/AMMV3/AMMV3PositionManage';
+export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
+export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
+export { AMMV3PositionManage } from './widgets/PoolWidget/AMMV3/AMMV3PositionManage';
 
 // export { TokenCard } from './components/Swap/components/TokenCard';
 // export { default as TokenLogo } from './components/TokenLogo';
@@ -67,7 +67,7 @@ import { Pool } from './widgets/PoolWidget';
 //   );
 // }
 
-export function SoonSwapWidget(props: WidgetProps & SwapProps) {
+export function SoonSwapWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>
       <Swap
@@ -79,7 +79,7 @@ export function SoonSwapWidget(props: WidgetProps & SwapProps) {
   );
 }
 
-export function PoolWidget(props: WidgetProps & SwapProps) {
+export function PoolWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>
       <Pool />

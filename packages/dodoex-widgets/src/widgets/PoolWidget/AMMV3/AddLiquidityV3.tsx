@@ -1,12 +1,11 @@
 import { alpha, Box, Button, ButtonBase, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { CardPlusConnected } from '../../../components/Swap/components/TokenCard';
 import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
 import WidgetContainer from '../../../components/WidgetContainer';
-import { tokenApi } from '../../../constants/api';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useSubmission } from '../../../hooks/Submission';
@@ -26,6 +25,7 @@ import { ReviewModal } from './components/ReviewModal';
 import { TokenPairSelect } from './components/TokenPairSelect';
 import { DynamicSection, YellowCard } from './components/widgets';
 import { useRangeHopCallbacks } from './hooks/useRangeHopCallbacks';
+import { useTokenInfo } from './hooks/useTokenInfo';
 import { useV3DerivedMintInfo } from './hooks/useV3DerivedMintInfo';
 import { useV3MintActionHandlers } from './hooks/useV3MintActionHandlers';
 import { reducer, Types } from './reducer';
@@ -58,11 +58,13 @@ export default function AddLiquidityV3({
   const submission = useSubmission();
   const { isMobile } = useWidgetDevice();
 
-  const defaultBaseTokenQuery = useQuery({
-    ...tokenApi.getFetchTokenQuery(chainId, params?.from, account),
+  const defaultBaseTokenInfo = useTokenInfo({
+    mint: params?.from,
+    chainId,
   });
-  const defaultQuoteTokenQuery = useQuery({
-    ...tokenApi.getFetchTokenQuery(chainId, params?.to, account),
+  const defaultQuoteTokenInfo = useTokenInfo({
+    mint: params?.to,
+    chainId,
   });
 
   const [state, dispatch] = useReducer<typeof reducer>(reducer, {
@@ -77,23 +79,23 @@ export default function AddLiquidityV3({
   });
 
   useEffect(() => {
-    if (!defaultBaseTokenQuery.data) {
+    if (!defaultBaseTokenInfo) {
       return;
     }
     dispatch({
       type: Types.UpdateDefaultBaseToken,
-      payload: defaultBaseTokenQuery.data,
+      payload: defaultBaseTokenInfo,
     });
-  }, [defaultBaseTokenQuery]);
+  }, [defaultBaseTokenInfo]);
   useEffect(() => {
-    if (!defaultQuoteTokenQuery.data) {
+    if (!defaultQuoteTokenInfo) {
       return;
     }
     dispatch({
       type: Types.UpdateDefaultQuoteToken,
-      payload: defaultQuoteTokenQuery.data,
+      payload: defaultQuoteTokenInfo,
     });
-  }, [defaultQuoteTokenQuery]);
+  }, [defaultQuoteTokenInfo]);
 
   const { independentField, typedValue, startPriceTypedValue } = state;
 

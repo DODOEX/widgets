@@ -8,7 +8,7 @@ import { useSolanaConnection } from '../solana/useSolanaConnection';
 export default function useFetchETHBalance(chainId?: number) {
   const { account } = useWalletInfo();
 
-  const { fetchETHBalance } = useSolanaConnection();
+  const { fetchSOLBalance } = useSolanaConnection();
   const svmQuery = useQuery({
     queryKey: [
       CONTRACT_QUERY_KEY,
@@ -20,7 +20,7 @@ export default function useFetchETHBalance(chainId?: number) {
       'basicToken',
     ],
     queryFn: async () => {
-      const result = await fetchETHBalance();
+      const result = await fetchSOLBalance();
       return {
         ...basicTokenMap[1],
         balance: result.amount,

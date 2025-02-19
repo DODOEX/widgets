@@ -5,12 +5,16 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 import { byWei } from '../../utils';
 import { useSolanaWallet } from './useSolanaWallet';
+import { MintLayout } from '@solana/spl-token';
+import { TokenInfo } from '../Token/type';
+import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
+import { TOKEN_METADATA_PROGRAM_ID } from '../raydium-sdk-V2/common/programId';
 
 export function useSolanaConnection() {
   const wallet = useSolanaWallet();
   const { connection } = useConnection();
 
-  const fetchETHBalance = async () => {
+  const fetchSOLBalance = async () => {
     if (!wallet.publicKey) {
       throw new Error('publicKey is undefined');
     }
@@ -29,7 +33,7 @@ export function useSolanaConnection() {
       address.toLocaleLowerCase() ===
       basicTokenMap[ChainId.SOON_TESTNET]?.address?.toLocaleLowerCase()
     ) {
-      return fetchETHBalance();
+      return fetchSOLBalance();
     }
     if (!wallet.publicKey) {
       throw new Error('publicKey is undefined');
@@ -62,9 +66,102 @@ export function useSolanaConnection() {
     return result;
   }, [connection, wallet]);
 
+  const fetchTokenInfo = async ({
+    mint,
+    chainId,
+    symbol,
+  }: {
+    mint: string | PublicKey | undefined;
+    chainId: ChainId;
+    symbol?: string;
+  }): Promise<TokenInfo> => {
+    if (!mint) {
+      throw new Error('please input mint');
+    }
+    const mintStr = mint.toString();
+
+    if (
+      mintStr.toLocaleUpperCase() === 'SOL' ||
+      mintStr.toLowerCase() === basicTokenMap[chainId].address.toLowerCase()
+    ) {
+      return {
+        ...basicTokenMap[chainId],
+        chainId,
+        symbol: symbol ?? basicTokenMap[chainId].symbol,
+      };
+    }
+
+    const onlineInfo = await connection.getAccountInfo(new PublicKey(mintStr));
+    if (!onlineInfo) {
+      throw new Error(`mint address not found: ${mintStr}`);
+    }
+    const data = MintLayout.decode(onlineInfo.data);
+
+    let mintSymbol = symbol ?? mintStr.toString().substring(0, 6);
+    if (!symbol) {
+      const mintPubkey = typeof mint === 'string' ? new PublicKey(mint) : mint;
+      // 计算 metadata PDA
+      const [metadataPDA] = PublicKey.findProgramAddressSync(
+        [
+          Buffer.from('metadata'),
+          new PublicKey(TOKEN_METADATA_PROGRAM_ID).toBuffer(),
+          mintPubkey.toBuffer(),
+        ],
+        new PublicKey(TOKEN_METADATA_PROGRAM_ID),
+      );
+
+      try {
+        // 获取账户数据
+        const accountInfo = await connection.getAccountInfo(metadataPDA);
+        if (!accountInfo) {
+          throw new Error('Metadata account not found');
+        }
+
+        // 跳过 key(1) + updateAuthority(32) + mint(32)
+        let offset = 1 + 32 + 32;
+
+        // 读取名称长度（4字节）
+        const nameLength = accountInfo.data.readUInt32LE(offset);
+        offset += 4;
+
+        // 跳过名称
+        offset += nameLength;
+
+        // 读取 symbol 长度（4字节）
+        const symbolLength = accountInfo.data.readUInt32LE(offset);
+        offset += 4;
+
+        // 读取 symbol
+        const metaSymbol = accountInfo.data
+          .slice(offset, offset + symbolLength)
+          .toString('utf8')
+          .trim();
+        mintSymbol = metaSymbol;
+      } catch (error) {
+        console.error('Error fetching metadata:', error);
+      }
+    }
+
+    const fullInfo = {
+      chainId,
+      address: mintStr,
+      programId: onlineInfo.owner.toBase58(),
+      logoURI: '',
+      symbol: mintSymbol,
+      name: mintSymbol,
+      decimals: data.decimals,
+      tags: [],
+      extensions: {},
+      priority: 0,
+      type: 'unknown',
+    };
+    return fullInfo;
+  };
+
   return {
-    fetchETHBalance,
+    fetchSOLBalance,
     fetchTokenBalance,
     fetchBlockNumber,
+    fetchTokenInfo,
   };
 }

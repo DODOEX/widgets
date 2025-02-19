@@ -41,7 +41,6 @@ import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
 import { TokenInfo } from '../../hooks/Token/type';
 import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch';
 import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
-import { useFetchETHBalance } from '../../hooks/contract';
 import {
   GetAutoSlippage,
   useSetAutoSlippage,
@@ -124,8 +123,6 @@ export function Swap({
       fromToken,
       toToken,
     });
-
-  const fromEtherTokenQuery = useFetchETHBalance(fromToken?.chainId);
 
   const {
     isApproving,
@@ -623,22 +620,19 @@ export function Swap({
     );
   }, [
     account,
+    fromToken,
+    chainId,
+    isInflight,
+    toToken,
+    needApprove,
+    isApproving,
+    isReverseRouting,
     toAmt,
     fromAmt,
-    toToken,
-    resAmount,
-    fromToken,
-    isInflight,
-    executeSwap,
-    submitApprove,
     resPriceStatus,
-    basicTokenAddress,
-    isReverseRouting,
-    fromEtherTokenQuery.data?.balance,
+    resAmount,
     insufficientBalance,
-    isApproving,
-    isGetApproveLoading,
-    needApprove,
+    submitApprove,
   ]);
 
   const subtitle = useMemo(() => {

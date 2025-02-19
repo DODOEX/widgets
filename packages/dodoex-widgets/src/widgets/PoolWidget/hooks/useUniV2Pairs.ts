@@ -12,6 +12,22 @@ import { useSolanaWallet } from '../../../hooks/solana/useSolanaWallet';
 import { TokenInfo } from '../../../hooks/Token';
 import { byWei } from '../../../utils';
 
+interface UniV2PairsResult {
+  isFront: boolean;
+  poolInfoQuery: any;
+  lpBalanceQuery: any;
+  lpBalance: BigNumber | undefined;
+  lpBalancePercentage: BigNumber | undefined;
+  lpToAmountA: BigNumber | undefined;
+  lpToAmountB: BigNumber | undefined;
+  price: BigNumber | undefined;
+  invertedPrice: BigNumber | undefined;
+  liquidityMinted: BigNumber | undefined;
+  pairMintAAmount: string | undefined;
+  pairMintBAmount: string | undefined;
+  isExists: boolean;
+}
+
 export function useUniV2Pairs({
   pool,
   baseAmount,
@@ -26,14 +42,14 @@ export function useUniV2Pairs({
   baseAmount?: string;
   quoteAmount?: string;
   slippage: number;
-}) {
+}): UniV2PairsResult {
   const { connection } = useConnection();
   const wallet = useSolanaWallet();
   const { account } = useWalletInfo();
 
   const [mintA, mintB, mintAAmount, mintBAmount, isFront] = useMemo(() => {
     if (!pool?.baseToken || !pool.quoteToken) {
-      return [undefined, undefined];
+      return [undefined, undefined, undefined, undefined, true];
     }
     const { baseToken, quoteToken } = pool;
 

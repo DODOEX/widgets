@@ -1,4 +1,5 @@
 import { NATIVE_MINT } from '@solana/spl-token';
+import { PublicKey } from '@solana/web3.js';
 import { ChainId } from './chain';
 
 export const etherTokenAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -132,20 +133,20 @@ export const basicTokenMap: {
 
   // solana
   [ChainId.SOON_TESTNET]: {
-    address: etherTokenAddress,
-    name: 'SOONTest_ETH',
+    address: PublicKey.default.toBase58(),
+    name: 'SOL',
     showDecimals: 4,
     decimals: 9,
-    symbol: 'SOONTest_ETH',
+    symbol: 'SOL',
     wrappedTokenSymbol: 'WSOL',
     wrappedTokenAddress: NATIVE_MINT.toBase58(),
   },
   [ChainId.SOON]: {
-    address: etherTokenAddress,
-    name: 'ETH',
+    address: PublicKey.default.toBase58(),
+    name: 'SOL',
     showDecimals: 4,
     decimals: 9,
-    symbol: 'ETH',
+    symbol: 'SOL',
     wrappedTokenSymbol: 'WSOL',
     wrappedTokenAddress: NATIVE_MINT.toBase58(),
   },

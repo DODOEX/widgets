@@ -1,23 +1,22 @@
-import { useMutation } from '@tanstack/react-query';
-import { TokenInfo } from '../../../hooks/Token';
 import { basicTokenMap, ChainId } from '@dodoex/api';
-import { toWei } from '../../../utils';
-import BigNumber from 'bignumber.js';
-import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
-import { NumberToHex } from '../../../utils/bytes';
-import { OpCode } from '../../../hooks/Submission/spec';
-import { MetadataFlag } from '../../../hooks/Submission/types';
-import { useSubmission } from '../../../hooks/Submission';
-import { t } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
 import {
-  encodeUniswapV2Router02RemoveLiquidityETH,
+  encodeUniswapV2Router02FixedFeeRemoveLiquidity,
+  encodeUniswapV2Router02FixedFeeRemoveLiquidityETH,
   encodeUniswapV2Router02RemoveLiquidity,
+  encodeUniswapV2Router02RemoveLiquidityETH,
   getUniswapV2Router02ContractAddressByChainId,
   getUniswapV2Router02FixedFeeContractAddressByChainId,
-  encodeUniswapV2Router02FixedFeeRemoveLiquidityETH,
-  encodeUniswapV2Router02FixedFeeRemoveLiquidity,
 } from '@dodoex/dodo-contract-request';
+import { t } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { useMutation } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { useSubmission } from '../../../hooks/Submission';
+import { OpCode } from '../../../hooks/Submission/spec';
+import { MetadataFlag } from '../../../hooks/Submission/types';
+import { TokenInfo } from '../../../hooks/Token';
+import { toWei } from '../../../utils';
 
 export function useAMMV2RemoveLiquidity({
   baseToken,

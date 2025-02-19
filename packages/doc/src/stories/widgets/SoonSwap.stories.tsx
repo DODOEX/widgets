@@ -1,6 +1,7 @@
-import { ChainId, etherTokenAddress } from '@dodoex/api';
+import { ChainId } from '@dodoex/api';
 import { SoonSwapWidget, TokenInfo } from '@dodoex/widgets';
 import { NATIVE_MINT } from '@solana/spl-token';
+import { PublicKey } from '@solana/web3.js';
 import { ComponentMeta } from '@storybook/react';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -131,9 +132,9 @@ Primary.args = {
   },
   defaultFromToken: {
     decimals: 9,
-    name: 'SOONTest_ETH',
-    address: etherTokenAddress,
-    symbol: 'SOONTest_ETH',
+    name: 'SOL',
+    address: PublicKey.default.toBase58(),
+    symbol: 'SOL',
     chainId: ChainId.SOON_TESTNET,
   },
   defaultToToken: {
@@ -149,9 +150,9 @@ Primary.args = {
   tokenList: [
     {
       decimals: 9,
-      name: 'SOONTest_ETH',
-      address: etherTokenAddress,
-      symbol: 'SOONTest_ETH',
+      name: 'SOL',
+      address: PublicKey.default.toBase58(),
+      symbol: 'SOL',
       chainId: ChainId.SOON_TESTNET,
     },
     {

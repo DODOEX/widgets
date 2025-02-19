@@ -8,6 +8,26 @@ import {
 } from '../../../hooks/raydium-sdk-V2/common/programId';
 import { TokenInfo } from '../../../hooks/Token';
 import { useUniV2Pairs } from './useUniV2Pairs';
+import BigNumber from 'bignumber.js';
+
+interface UniV2CreatePairsResult {
+  poolKeys: any;
+  poolInfo: any;
+  pairAddress: string | undefined;
+  isInvalidPair: boolean;
+  price: BigNumber | undefined;
+  invertedPrice: BigNumber | undefined;
+  poolInfoLoading: boolean;
+  lpBalanceLoading: boolean;
+  lpBalance: BigNumber | undefined;
+  lpBalancePercentage: BigNumber | undefined;
+  lpToAmountA: BigNumber | undefined;
+  lpToAmountB: BigNumber | undefined;
+  liquidityMinted: BigNumber | undefined;
+  pairMintAAmount: string | undefined;
+  pairMintBAmount: string | undefined;
+  isExists: boolean;
+}
 
 export function useUniV2CreatePairs({
   baseToken,
@@ -23,7 +43,7 @@ export function useUniV2CreatePairs({
   quoteAmount: string;
   feeIndex: number;
   slippage: number;
-}) {
+}): UniV2CreatePairsResult {
   const [poolKeys, isInvalidPair] = React.useMemo(() => {
     if (!baseToken || !quoteToken || feeIndex == null) {
       return [undefined, true];

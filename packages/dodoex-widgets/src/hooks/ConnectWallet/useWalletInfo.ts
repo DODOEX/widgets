@@ -18,7 +18,7 @@ export function useWalletInfo() {
   return {
     account,
     chainId: onlySolana
-      ? chainId || onlyChainId || defaultChainId
+      ? chainId || onlyChainId || defaultChainId || ChainId.SOON_TESTNET
       : ((chainId ||
           onlyChainId ||
           defaultChainId ||

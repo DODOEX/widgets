@@ -1,7 +1,8 @@
-import { ChainId, etherTokenAddress, SwapWidgetApi } from '@dodoex/api';
+import { ChainId, SwapWidgetApi } from '@dodoex/api';
 import { PoolWidget, SwapWidgetProps } from '@dodoex/widgets';
-import React from 'react';
 import { NATIVE_MINT } from '@solana/spl-token';
+import { PublicKey } from '@solana/web3.js';
+import React from 'react';
 
 export default {
   title: 'Widgets/Pool',
@@ -27,9 +28,9 @@ export const Primary = (props: any) => {
       tokenList={[
         {
           decimals: 9,
-          name: 'SOONTest_ETH',
-          address: etherTokenAddress,
-          symbol: 'SOONTest_ETH',
+          name: 'SOL',
+          address: PublicKey.default.toBase58(),
+          symbol: 'SOL',
           chainId: ChainId.SOON_TESTNET,
         },
         {
