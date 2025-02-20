@@ -78,6 +78,7 @@ export default {
 export const Primary = (args) => <SoonSwapWidget {...args} />;
 Primary.args = {
   apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
+  apiDomain: process.env.STORYBOOK_API_DOMAIN,
   theme: {
     palette: {
       mode: 'light',
@@ -174,6 +175,20 @@ Primary.args = {
       name: 'SOON Training1 Token',
       address: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
       symbol: 'TRAINING1',
+      chainId: ChainId.SOON_TESTNET,
+    },
+    {
+      decimals: 9,
+      name: '36LzY',
+      address: '36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva',
+      symbol: '36LzY',
+      chainId: ChainId.SOON_TESTNET,
+    },
+    {
+      decimals: 9,
+      name: 'GLfqS',
+      address: 'GLfqSuSUUB6mTA4rfk5BHYbRjQHxYknJu8pSHcMnYgzE',
+      symbol: 'GLfqS',
       chainId: ChainId.SOON_TESTNET,
     },
   ],

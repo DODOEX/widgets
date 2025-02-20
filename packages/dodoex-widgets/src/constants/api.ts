@@ -28,8 +28,6 @@ export const getCGTokenListAPI = (chainId: ChainId) => {
 
 const BridgeUrlPrefix = 'https://api.dodoex.io/cross-chain/widget';
 
-export const RoutePriceAPI = `https://api.dodoex.io/route-service/v2/widget/getdodoroute`;
-export const FiatPriceAPI = `https://api.dodoex.io/frontend-price-api/current/batch`;
 const BridgeRoutePriceAPI = `${BridgeUrlPrefix}/routes`;
 const BridgeEncodeAPI = `${BridgeUrlPrefix}/transaction/encode`;
 const BridgeCreateRouteAPI = `${BridgeUrlPrefix}/order/create`;
@@ -37,12 +35,18 @@ const BridgeCreateRouteAPI = `${BridgeUrlPrefix}/order/create`;
 export function getAPIService(
   key: APIServiceKey,
   serviceProps: Partial<APIServices> = {},
+  apiDomain: string,
 ) {
   switch (key) {
     case APIServiceKey.routePrice:
-      return serviceProps.routePrice ?? RoutePriceAPI;
+      return (
+        serviceProps.routePrice ?? `https://api.${apiDomain}/route/svm/swap`
+      );
     case APIServiceKey.fiatPrice:
-      return serviceProps.fiatPrice ?? FiatPriceAPI;
+      return (
+        serviceProps.fiatPrice ??
+        `https://api.${apiDomain}/frontend-price-api/current/batch`
+      );
     case APIServiceKey.bridgeRoutePrice:
       return serviceProps.bridgeRoutePrice ?? BridgeRoutePriceAPI;
     case APIServiceKey.bridgeEncode:

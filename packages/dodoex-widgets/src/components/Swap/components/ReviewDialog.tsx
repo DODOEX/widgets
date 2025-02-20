@@ -39,7 +39,6 @@ export interface ReviewDialogProps {
   additionalFeeAmount: number | null;
   curToFiatPrice: BigNumber | null;
   curFromFiatPrice: BigNumber | null;
-  pricePerFromToken: number | null;
   loading: boolean;
   slippage: string | number | null;
 }
@@ -57,7 +56,6 @@ export function ReviewDialog({
   baseFeeAmount,
   curToFiatPrice,
   curFromFiatPrice,
-  pricePerFromToken,
   additionalFeeAmount,
   loading,
   slippage,
@@ -206,7 +204,7 @@ export function ReviewDialog({
               typography: 'h6',
             }}
           >
-            {`1 ${fromToken?.symbol}  = `}
+            1{fromToken?.symbol}&nbsp;=&nbsp;
             <LoadingSkeleton
               loading={loading}
               loadingProps={{
@@ -219,8 +217,9 @@ export function ReviewDialog({
                 ),
                 decimals: toToken?.decimals,
               })}
-            </LoadingSkeleton>{' '}
-            {`${toToken?.symbol}`}
+            </LoadingSkeleton>
+            &nbsp;
+            {toToken?.symbol}
           </Box>
         </Box>
 

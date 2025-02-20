@@ -36,6 +36,7 @@ export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps extends InitTokenListProps, ExecutionProps {
   apikey?: string;
+  apiDomain: string;
   theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
   defaultChainId?: ChainId;
@@ -151,6 +152,7 @@ export function UnstyleWidget(props: PropsWithChildren<WidgetProps>) {
         {...{
           ...props,
           widgetRef: props.widgetRef ?? widgetRef,
+          apiDomain: props.apiDomain ?? 'dodoex.io',
         }}
       >
         <SolanaReactProvider>

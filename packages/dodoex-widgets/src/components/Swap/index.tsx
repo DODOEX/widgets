@@ -161,17 +161,11 @@ export function Swap({
     status: resPriceStatus,
     rawBrief,
     executeSwap,
-    reset: resetSwapRoute,
   } = useFetchRoutePrice({
     toToken,
     fromToken,
-    marginAmount,
     fromAmount: fromAmt,
-    toAmount: toAmt,
-    estimateGas,
-    isReverseRouting,
     slippage: slippageSwap,
-    slippageLoading: slippageLoadingSwap,
   });
   const {
     resAmount,
@@ -181,7 +175,7 @@ export function Swap({
     resPricePerToToken,
     resPricePerFromToken,
   } = useMemo(() => {
-    if (!rawBrief)
+    if (!rawBrief) {
       return {
         resAmount: null,
         priceImpact: null,
@@ -190,7 +184,22 @@ export function Swap({
         resPricePerToToken: null,
         resPricePerFromToken: null,
       };
-    return rawBrief;
+    }
+
+    const resPricePerToToken = new BigNumber(rawBrief.inAmount)
+      .dividedBy(rawBrief.outAmount)
+      .toNumber();
+    const resPricePerFromToken = new BigNumber(rawBrief.outAmount)
+      .dividedBy(rawBrief.inAmount)
+      .toNumber();
+    return {
+      resAmount: rawBrief.resAmount,
+      priceImpact: rawBrief.priceImpact,
+      baseFeeAmount: 0,
+      additionalFeeAmount: 0,
+      resPricePerToToken,
+      resPricePerFromToken,
+    };
   }, [rawBrief]);
 
   const updateFromAmt = useCallback(
@@ -198,9 +207,8 @@ export function Swap({
       const val = v.toString();
       setDisplayingFromAmt(val);
       debouncedSetFromAmt(val);
-      resetSwapRoute();
     },
-    [setDisplayingFromAmt, debouncedSetFromAmt, resetSwapRoute],
+    [setDisplayingFromAmt, debouncedSetFromAmt],
   );
 
   const updateToAmt = useCallback(
@@ -208,9 +216,8 @@ export function Swap({
       const val = v.toString();
       setDisplayingToAmt(val);
       debouncedSetToAmt(val);
-      resetSwapRoute();
     },
-    [setDisplayingToAmt, debouncedSetToAmt, resetSwapRoute],
+    [setDisplayingToAmt, debouncedSetToAmt],
   );
 
   const setFromToken: (value: React.SetStateAction<TokenInfo | null>) => void =
@@ -314,7 +321,13 @@ export function Swap({
   const isSlippageExceedLimit = useSlippageLimit(slippageSwap);
 
   const displayPriceImpact = useMemo(
-    () => (priceImpact ? (Number(priceImpact) * 100).toFixed(2) : null),
+    () =>
+      priceImpact
+        ? new BigNumber(priceImpact)
+            .multipliedBy(100)
+            .dp(4, BigNumber.ROUND_DOWN)
+            .toString()
+        : null,
     [priceImpact],
   );
 
@@ -761,7 +774,7 @@ export function Swap({
             side="to"
             amt={toFinalAmt}
             onInputChange={updateToAmt}
-            onInputFocus={onToTokenInputFocus}
+            // onInputFocus={onToTokenInputFocus}
             occupiedAddrs={[fromToken?.address ?? '']}
             occupiedChainId={fromToken?.chainId}
             fiatPriceTxt={
@@ -773,7 +786,7 @@ export function Swap({
                 : '-'
             }
             onTokenChange={onToTokenChange}
-            readOnly={!isReverseRouting}
+            readOnly
             showChainLogo={!onlyChainId}
             showChainName={!onlyChainId}
             notTokenPickerModal
@@ -844,7 +857,6 @@ export function Swap({
         clearFromAmt={() => updateFromAmt('')}
         clearToAmt={() => updateToAmt('')}
         curFromFiatPrice={displayFromFiatPrice}
-        pricePerFromToken={resPricePerFromToken}
         onClose={() => setIsReviewDialogOpen(false)}
         loading={resPriceStatus === RoutePriceStatus.Loading}
         slippage={slippageSwap}

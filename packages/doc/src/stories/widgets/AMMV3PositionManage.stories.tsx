@@ -52,6 +52,7 @@ export const Primary = (props: any) => {
 Primary.args = {
   projectId: 'project2',
   apiKey: 'ee53d6b75b12aceed4',
+  apiDomain: process.env.STORYBOOK_API_DOMAIN,
   width: '100%',
   height: '100%',
   noDocumentLink: true,
