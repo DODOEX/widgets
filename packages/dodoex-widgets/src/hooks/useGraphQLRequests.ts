@@ -12,7 +12,7 @@ export function useGraphQLRequests() {
 
   if (!graphQLRequestsLocal) {
     graphQLRequestsLocal = new GraphQLRequests({
-      url: `https://${apiDomain}/frontend-graphql`,
+      url: `https://api.${apiDomain}/frontend-graphql`,
     });
   }
 
