@@ -425,9 +425,9 @@ function TableList({
           );
           const baseApy = item.apy
             ? formatApy(
-                new BigNumber(item.apy?.transactionBaseApy).plus(
-                  item.apy?.miningBaseApy ?? 0,
-                ),
+                new BigNumber(item.apy?.transactionBaseApy)
+                  .plus(item.apy?.miningBaseApy ?? 0)
+                  .plus(item.apy?.metromMiningApy ?? 0),
               )
             : undefined;
           const quoteApy =
