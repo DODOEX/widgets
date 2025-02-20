@@ -101,7 +101,7 @@ export function Swap({
   const [displayingToAmt, setDisplayingToAmt] = useState<string>('');
   const [fromAmt, setFromAmt] = useState<string>('');
   const [toAmt, setToAmt] = useState<string>('');
-  const debounceTime = 1000;
+  const debounceTime = 300;
   const debouncedSetFromAmt = useMemo(
     () => debounce((amt) => setFromAmt(amt), debounceTime),
     [],
