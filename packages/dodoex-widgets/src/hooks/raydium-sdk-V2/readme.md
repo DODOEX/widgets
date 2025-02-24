@@ -103,3 +103,101 @@ soon 上面创建资金池的 [tx](https://explorer.testnet.soo.network/tx/2Ym4R
 # 创建 clmm 资金池
 
 [创建成功](https://explorer.testnet.soo.network/tx/4PDiA79uryojV4Jabn7ZU5VH2h1g8MpnoXkyvvUYaEDZLoyy61XuiVuwhXcJSToR9eScGGjhuHuxK2sZCWhAfEuk) [clmm 池子](https://explorer.testnet.soo.network/address/6tvyKAe7gF2Qtm2ur94nZa7QsYSATFyZSdm7Be53Fbf1)
+
+mint 参数
+```ts
+const mint1 = {
+  address: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
+  programId: TOKEN_PROGRAM_ID,
+  decimals: 9,
+}
+// USDT
+const mint2 = {
+  address: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
+  programId: TOKEN_PROGRAM_ID,
+  decimals: 9,
+}
+```
+
+调用 返回 
+```json
+clmm pool infos: {
+  '6tvyKAe7gF2Qtm2ur94nZa7QsYSATFyZSdm7Be53Fbf1': {
+    bump: 254,
+    ammConfig: PublicKey [PublicKey(9vUeSD34ggBLRbqdyUALxwuMqbVCioMp4wQRriQ7ydPw)] {
+      _bn: <BN: 8490897d99bd31459b1114d3080a1d378de11da0dbfa4664b8ec08c79ff4c782>
+    },
+    creator: PublicKey [PublicKey(CVVQYs9Pi3t4it4KFpm3hxk97uDA6AVzNVJvGQTPH17n)] {
+      _bn: <BN: aabcf009056ce8756315fdfa8e2ae55bae2395d4b7089b9a68fc2d6e68ced9e9>
+    },
+    mintA: PublicKey [PublicKey(4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz)] {
+      _bn: <BN: 3a9ba3c42e39e10d3e9c02d0eaf74a06be0825b7d111fc9061f7ca37005ac4ed>
+    },
+    mintB: PublicKey [PublicKey(5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ)] {
+      _bn: <BN: 3f1b7a0e0ea5c063fa05ee0f81a6953e75c110b9972e01ebf8c2141782803d82>
+    },
+    vaultA: PublicKey [PublicKey(5jAU7EvY2Xc1LcSuGr3faTbYUeUp9MvkjXzpPEA7PbkK)] {
+      _bn: <BN: 463bd8b2cf6260ade12e99c20c83a1354c15b38dca140045d27781e3545f2248>
+    },
+    vaultB: PublicKey [PublicKey(GGB8JGHmDRMeSgdTzPs7weGKPXNAau6GTU9RFRwEHUft)] {
+      _bn: <BN: e2c27720263408918c54ded6803e1d0769d4444f577be18abe78fb97e88be4ab>
+    },
+    observationId: PublicKey [PublicKey(A3EggYDZB89omHL1ezSVk9eBrqFK95eQS2m9AGxoyJ4n)] {
+      _bn: <BN: 864bd112c1219fa093e1e70fdec19c7a5136632e7ac685aa5e22814006838f7f>
+    },
+    mintDecimalsA: 9,
+    mintDecimalsB: 9,
+    tickSpacing: 20,
+    liquidity: <BN: 0>,
+    sqrtPriceX64: <BN: 10000000000000000>,
+    tickCurrent: 0,
+    feeGrowthGlobalX64A: <BN: 0>,
+    feeGrowthGlobalX64B: <BN: 0>,
+    protocolFeesTokenA: <BN: 0>,
+    protocolFeesTokenB: <BN: 0>,
+    swapInAmountTokenA: <BN: 0>,
+    swapOutAmountTokenB: <BN: 0>,
+    swapInAmountTokenB: <BN: 0>,
+    swapOutAmountTokenA: <BN: 0>,
+    status: 0,
+    '': [
+      0, 0, 0, 0,
+      0, 0, 0
+    ],
+    rewardInfos: [ [Object], [Object], [Object] ],
+    tickArrayBitmap: [
+      <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>
+    ],
+    totalFeesTokenA: <BN: 0>,
+    totalFeesClaimedTokenA: <BN: 0>,
+    totalFeesTokenB: <BN: 0>,
+    totalFeesClaimedTokenB: <BN: 0>,
+    fundFeesTokenA: <BN: 0>,
+    fundFeesTokenB: <BN: 0>,
+    startTime: <BN: 0>,
+    padding: [
+      <BN: 3>, <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>, <BN: 0>,
+      <BN: 0>, <BN: 0>
+    ],
+    currentPrice: 1,
+    programId: PublicKey [PublicKey(2cjsT5HYL1qM8KmhdCjjJrXSrnMpbDbDruAT7UYTH8af)] {
+      _bn: <BN: 18037d017a19cdc21ec7fec45428585871996d8b9e8c2c987b8b00674a8ebbdc>
+    }
+  }
+}
+```

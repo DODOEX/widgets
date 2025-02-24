@@ -16,6 +16,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { APIServices } from '../../constants/api';
 import { defaultLang, SupportedLang } from '../../constants/locales';
 import { useFetchBlockNumber } from '../../hooks/contract';
+import { RaydiumSDKProvider } from '../../hooks/raydium-sdk-V2/RaydiumSDKContext';
 import { ExecutionProps } from '../../hooks/Submission';
 import { DefaultTokenInfo, TokenInfo } from '../../hooks/Token/type';
 import useInitTokenList, {
@@ -156,7 +157,9 @@ export function UnstyleWidget(props: PropsWithChildren<WidgetProps>) {
         }}
       >
         <SolanaReactProvider>
-          <InitStatus {...props} />
+          <RaydiumSDKProvider>
+            <InitStatus {...props} />
+          </RaydiumSDKProvider>
         </SolanaReactProvider>
       </UserOptionsProvider>
     </ReduxProvider>

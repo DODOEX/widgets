@@ -28,5 +28,6 @@ export function useWalletInfo() {
     onlyChainId,
     isSolana: onlySolana,
     isActivating: solanaWallet.connecting,
+    solanaWallet,
   };
 }

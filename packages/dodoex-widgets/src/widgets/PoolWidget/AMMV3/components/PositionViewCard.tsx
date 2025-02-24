@@ -3,7 +3,7 @@ import { t } from '@lingui/macro';
 import { useMemo } from 'react';
 import { formatTokenAmountNumber } from '../../../../utils';
 import useIsTickAtLimit from '../hooks/useIsTickAtLimit';
-import { usePool } from '../hooks/usePools';
+import { usePool } from '../hooks/usePool';
 import { Currency, Price, Token } from '../sdks/sdk-core';
 import { Position as V3Position } from '../sdks/v3-sdk';
 import { Bound } from '../types';

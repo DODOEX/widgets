@@ -1,17 +1,13 @@
-import { CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { Percent } from '@raydium-io/raydium-sdk-v2';
-import { useConnection } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import React, { useMemo } from 'react';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
-import { initSdk } from '../../../hooks/raydium-sdk-V2/config';
-import { useSolanaWallet } from '../../../hooks/solana/useSolanaWallet';
+import { useRaydiumSDKContext } from '../../../hooks/raydium-sdk-V2/RaydiumSDKContext';
 import { TokenInfo } from '../../../hooks/Token';
 import { byWei } from '../../../utils';
-
 interface UniV2PairsResult {
   isFront: boolean;
   poolInfoQuery: any;
@@ -43,9 +39,8 @@ export function useUniV2Pairs({
   quoteAmount?: string;
   slippage: number;
 }): UniV2PairsResult {
-  const { connection } = useConnection();
-  const wallet = useSolanaWallet();
   const { account } = useWalletInfo();
+  const raydium = useRaydiumSDKContext();
 
   const [mintA, mintB, mintAAmount, mintBAmount, isFront] = useMemo(() => {
     if (!pool?.baseToken || !pool.quoteToken) {
@@ -68,17 +63,12 @@ export function useUniV2Pairs({
   }, [baseAmount, pool, quoteAmount]);
 
   const poolInfoQuery = useQuery({
-    queryKey: [CONTRACT_QUERY_KEY, 'pool', 'poolInfo', ...arguments],
+    queryKey: ['cpmm', 'poolInfo', ...arguments],
     enabled: pool?.address != null,
     queryFn: async () => {
-      if (!pool?.address) {
+      if (!pool?.address || !raydium) {
         return null;
       }
-
-      const raydium = await initSdk({
-        connection,
-        wallet,
-      });
 
       const { poolInfo, poolKeys, rpcData } =
         await raydium.cpmm.getPoolInfoFromRpc(pool.address);
@@ -137,7 +127,7 @@ export function useUniV2Pairs({
   });
 
   const lpBalanceQuery = useQuery({
-    queryKey: [CONTRACT_QUERY_KEY, 'pool', 'lpBalance', ...arguments],
+    queryKey: ['cpmm', 'lpBalance', ...arguments],
     enabled: !(
       !account ||
       !poolInfoQuery.data ||
@@ -151,14 +141,12 @@ export function useUniV2Pairs({
         !poolInfoQuery.data ||
         !poolInfoQuery.data?.lpMint ||
         !poolInfoQuery.data?.lpMint?.address ||
-        !poolInfoQuery.data?.lpMint?.decimals
-      )
+        !poolInfoQuery.data?.lpMint?.decimals ||
+        !raydium
+      ) {
         return null;
+      }
 
-      const raydium = await initSdk({
-        connection,
-        wallet,
-      });
       await raydium.account.fetchWalletTokenAccounts();
       const poolId = poolInfoQuery.data.lpMint.address;
       const lpBalance = raydium.account.tokenAccounts.find(
@@ -175,7 +163,7 @@ export function useUniV2Pairs({
   });
 
   const pairAmountQuery = useQuery({
-    queryKey: [CONTRACT_QUERY_KEY, 'pool', 'pairAmount', ...arguments],
+    queryKey: ['cpmm', 'pairAmount', ...arguments],
     enabled: !(
       !poolInfoQuery.data ||
       !poolInfoQuery.data?.poolInfo ||
@@ -185,15 +173,12 @@ export function useUniV2Pairs({
       if (
         !poolInfoQuery.data ||
         !poolInfoQuery.data?.poolInfo ||
-        !mintAAmount
+        !mintAAmount ||
+        !raydium
       ) {
         return null;
       }
 
-      const raydium = await initSdk({
-        connection,
-        wallet,
-      });
       const poolInfo = poolInfoQuery.data.poolInfo;
       const baseIn = true;
       const computeRes = await raydium.cpmm.computePairAmount({

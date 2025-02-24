@@ -1,13 +1,25 @@
 import { ChainId } from '@dodoex/api';
 import { t } from '@lingui/macro';
+import {
+  MAX_SQRT_PRICE_X64,
+  MAX_TICK,
+  MIN_SQRT_PRICE_X64,
+  MIN_TICK,
+  SqrtPriceMath,
+  toApiV3Token,
+} from '@raydium-io/raydium-sdk-v2';
+import { PublicKey } from '@solana/web3.js';
+import BigNumber from 'bignumber.js';
+import BN from 'bn.js';
+import Decimal from 'decimal.js';
 import JSBI from 'jsbi';
 import { ReactNode, useMemo } from 'react';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
+import { TokenInfo } from '../../../../hooks/Token/type';
 import { BIG_INT_ZERO } from '../constants/misc';
 import { StateProps } from '../reducer';
 import { Currency, CurrencyAmount, Price, Token } from '../sdks/sdk-core';
 import {
-  encodeSqrtRatioX96,
   nearestUsableTick,
   Pool,
   Position,
@@ -17,11 +29,15 @@ import {
 } from '../sdks/v3-sdk';
 import { Bound, Field } from '../types';
 import { getTickToPrice } from '../utils/getTickToPrice';
-import tryParseCurrencyAmount from '../utils/tryParseCurrencyAmount';
+import tryParseCurrencyAmount, {
+  transformStrToBN,
+} from '../utils/tryParseCurrencyAmount';
 import { tryParseTick } from '../utils/tryParseTick';
-import { PoolState, usePool } from './usePools';
+import { PoolInfo, PoolState, usePool } from './usePool';
 import { useSwapTaxes } from './useSwapTaxes';
 import { useTokenBalance } from './useTokenBalance';
+import { clmmConfigMap } from '../../../../hooks/raydium-sdk-V2/common/programId';
+import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 
 export function useV3DerivedMintInfo({
   state,
@@ -31,7 +47,7 @@ export function useV3DerivedMintInfo({
   // override for existing position
   existingPosition?: Position;
 }): {
-  pool?: Pool | null;
+  pool?: PoolInfo | null;
   poolState: PoolState;
   ticks: { [bound in Bound]?: number | undefined };
   price?: Price<Token, Token>;
@@ -67,166 +83,217 @@ export function useV3DerivedMintInfo({
     rightRangeTypedValue,
     startPriceTypedValue,
   } = state;
-  const currencyA = state.baseToken ?? undefined;
-  const baseCurrency = state.baseToken ?? undefined;
-  const currencyB = state.quoteToken ?? undefined;
+  // 用户输入的 mint1 和 mint2
+  const { mint1, mint2 } = state;
 
   const dependentField =
-    independentField === Field.CURRENCY_A ? Field.CURRENCY_B : Field.CURRENCY_A;
+    independentField === Field.MINT_1 ? Field.MINT_2 : Field.MINT_1;
 
   // currencies
-  const currencies: { [field in Field]?: Currency } = useMemo(
+  const mints: { [field in Field]: Maybe<TokenInfo> } = useMemo(
     () => ({
-      [Field.CURRENCY_A]: currencyA,
-      [Field.CURRENCY_B]: currencyB,
+      [Field.MINT_1]: mint1,
+      [Field.MINT_2]: mint2,
     }),
-    [currencyA, currencyB],
+    [mint1, mint2],
   );
 
-  // formatted with tokens
-  const [tokenA, tokenB, baseToken] = useMemo(() => {
-    return [currencyA?.wrapped, currencyB?.wrapped, baseCurrency?.wrapped];
-  }, [currencyA, currencyB, baseCurrency]);
-
-  const [token0, token1] = useMemo(() => {
-    return tokenA && tokenB
-      ? tokenA.sortsBefore(tokenB)
-        ? [tokenA, tokenB]
-        : [tokenB, tokenA]
-      : [undefined, undefined];
-  }, [tokenA, tokenB]);
-
   // balances
-  const currencyABalance = useTokenBalance({
-    mint: currencies[Field.CURRENCY_A]?.address,
-    chainId: currencies[Field.CURRENCY_A]?.chainId as ChainId,
+  const mint1Balance = useTokenBalance({
+    mint: mints[Field.MINT_1]?.address,
+    chainId: mints[Field.MINT_1]?.chainId as ChainId,
   });
-  const currencyBBalance = useTokenBalance({
-    mint: currencies[Field.CURRENCY_B]?.address,
-    chainId: currencies[Field.CURRENCY_B]?.chainId as ChainId,
+  const mint2Balance = useTokenBalance({
+    mint: mints[Field.MINT_2]?.address,
+    chainId: mints[Field.MINT_2]?.chainId as ChainId,
   });
 
-  const currencyBalances: { [field in Field]?: CurrencyAmount<Currency> } =
+  const mintBalances: { [field in Field]: BigNumber | undefined } =
     useMemo(() => {
       return {
-        [Field.CURRENCY_A]: !currencies[Field.CURRENCY_A]
-          ? undefined
-          : currencyABalance
-            ? CurrencyAmount.fromRawAmount(
-                currencies[Field.CURRENCY_A],
-                JSBI.BigInt(
-                  currencyABalance
-                    .multipliedBy(
-                      Math.pow(10, currencies[Field.CURRENCY_A].decimals ?? 18),
-                    )
-                    .toString(),
-                ),
-              )
-            : CurrencyAmount.fromRawAmount(currencies[Field.CURRENCY_A], 0),
-        [Field.CURRENCY_B]: !currencies[Field.CURRENCY_B]
-          ? undefined
-          : currencyBBalance
-            ? CurrencyAmount.fromRawAmount(
-                currencies[Field.CURRENCY_B],
-                JSBI.BigInt(
-                  currencyBBalance
-                    .multipliedBy(
-                      Math.pow(10, currencies[Field.CURRENCY_B].decimals ?? 18),
-                    )
-                    .toString(),
-                ),
-              )
-            : CurrencyAmount.fromRawAmount(currencies[Field.CURRENCY_B], 0),
+        [Field.MINT_1]: mint1Balance,
+        [Field.MINT_2]: mint2Balance,
       };
-    }, [currencies, currencyABalance, currencyBBalance]);
+    }, [mint1Balance, mint2Balance]);
 
   // pool
-  const [poolState, pool] = usePool(
-    currencies[Field.CURRENCY_A],
-    currencies[Field.CURRENCY_B],
+  const [poolState, pool, poolId] = usePool(
+    mints[Field.MINT_1]?.address,
+    mints[Field.MINT_2]?.address,
     feeAmount,
+    chainId,
   );
   const noLiquidity = poolState === PoolState.NOT_EXISTS;
 
+  // clmm 中 mint 的实际顺序
+  const [mintA, mintB] = useMemo(() => {
+    if (!mint1 || !mint2) {
+      return [undefined, undefined];
+    }
+
+    return new BN(new PublicKey(mint1.address).toBuffer()).gt(
+      new BN(new PublicKey(mint2.address).toBuffer()),
+    )
+      ? [mint2, mint1]
+      : [mint1, mint2];
+  }, [mint1, mint2]);
+
   // note to parse inputs in reverse
-  const invertPrice = Boolean(baseToken && token0 && !baseToken.equals(token0));
+  // 实际创建的 clmm 中的 mintA 和 mintB 的顺序可能和 mint1 和 mint2 的顺序不一致
+  const invertPrice = Boolean(
+    mint1 &&
+      mintA &&
+      !new PublicKey(mint1.address).equals(new PublicKey(mintA.address)),
+  );
 
   // always returns the price with 0 as base token
-  const price: Price<Token, Token> | undefined = useMemo(() => {
+  const price: BigNumber | undefined = useMemo(() => {
     // if no liquidity use typed value
     if (noLiquidity) {
-      const parsedQuoteAmount = tryParseCurrencyAmount(
-        startPriceTypedValue,
-        invertPrice ? token0 : token1,
-      );
-      if (parsedQuoteAmount && token0 && token1) {
-        const baseAmount = tryParseCurrencyAmount(
-          '1',
-          invertPrice ? token1 : token0,
-        );
+      const parsedQuoteAmount = transformStrToBN(startPriceTypedValue);
+      if (parsedQuoteAmount && mintA && mintB) {
+        const baseAmount = new BigNumber(1);
         const price =
           baseAmount && parsedQuoteAmount
-            ? new Price(
-                baseAmount.currency,
-                parsedQuoteAmount.currency,
-                baseAmount.quotient,
-                parsedQuoteAmount.quotient,
-              )
+            ? parsedQuoteAmount.dividedBy(baseAmount)
             : undefined;
-        return (invertPrice ? price?.invert() : price) ?? undefined;
+        return price
+          ? invertPrice
+            ? new BigNumber(1).div(price)
+            : price
+          : undefined;
       }
       return undefined;
     } else {
       // get the amount of quote currency
-      return pool && token0 ? pool.priceOf(token0) : undefined;
+      return pool ? new BigNumber(pool.poolInfo.price) : undefined;
     }
-  }, [noLiquidity, startPriceTypedValue, invertPrice, token1, token0, pool]);
+  }, [invertPrice, mintA, mintB, noLiquidity, pool, startPriceTypedValue]);
 
   // check for invalid price input (converts to invalid ratio)
   const invalidPrice = useMemo(() => {
-    const sqrtRatioX96 = price
-      ? encodeSqrtRatioX96(price.numerator, price.denominator)
-      : undefined;
-    return (
-      price &&
-      sqrtRatioX96 &&
-      !(
-        JSBI.greaterThanOrEqual(sqrtRatioX96, TickMath.MIN_SQRT_RATIO) &&
-        JSBI.lessThan(sqrtRatioX96, TickMath.MAX_SQRT_RATIO)
-      )
+    if (!price || mintA?.decimals == null || mintB?.decimals == null) {
+      return true;
+    }
+
+    const sqrtPriceX64 = SqrtPriceMath.priceToSqrtPriceX64(
+      new Decimal(price.toString()),
+      mintA?.decimals,
+      mintB?.decimals,
     );
-  }, [price]);
+
+    if (
+      !sqrtPriceX64 ||
+      sqrtPriceX64.gt(MAX_SQRT_PRICE_X64) ||
+      sqrtPriceX64.lt(MIN_SQRT_PRICE_X64)
+    ) {
+      return true;
+    }
+
+    return false;
+  }, [price, mintA, mintB]);
 
   // used for ratio calculation when pool not initialized
-  const mockPool = useMemo(() => {
-    if (tokenA && tokenB && feeAmount && price && !invalidPrice) {
-      const currentTick = priceToClosestTick(price);
-      const currentSqrt = TickMath.getSqrtRatioAtTick(currentTick);
-      return new Pool(
-        tokenA,
-        tokenB,
-        feeAmount,
-        currentSqrt,
-        JSBI.BigInt(0),
-        currentTick,
-        [],
-      );
-    } else {
-      return undefined;
+  const poolForPosition = useMemo<PoolInfo['poolInfo'] | undefined>(() => {
+    // if pool exists use it, if not use the mock pool
+    if (pool) {
+      return pool.poolInfo;
     }
-  }, [feeAmount, invalidPrice, price, tokenA, tokenB]);
+    if (mintA && mintB && feeAmount && price && !invalidPrice && poolId) {
+      const clmmConfig = clmmConfigMap[chainId];
 
-  // if pool exists use it, if not use the mock pool
-  const poolForPosition: Pool | undefined = pool ?? mockPool;
+      if (!clmmConfig) {
+        throw new Error('Invalid config');
+      }
+
+      const feeConfig = clmmConfig.config.find(
+        (config) => config.tradeFeeRate === feeAmount,
+      );
+
+      if (!feeConfig) {
+        throw new Error('Invalid fee');
+      }
+
+      const mockPoolInfo: PoolInfo['poolInfo'] = {
+        type: 'Concentrated',
+        config: feeConfig,
+        programId: clmmConfig.programId.toBase58(),
+        id: poolId,
+        mintA: toApiV3Token({
+          address: mintA.address,
+          decimals: mintA.decimals,
+          programId: TOKEN_PROGRAM_ID.toBase58(),
+          extensions: {
+            feeConfig: undefined,
+          },
+        }),
+        mintB: toApiV3Token({
+          address: mintB.address,
+          decimals: mintB.decimals,
+          programId: TOKEN_PROGRAM_ID.toBase58(),
+          extensions: {
+            feeConfig: undefined,
+          },
+        }),
+        rewardDefaultInfos: [],
+        rewardDefaultPoolInfos: 'Clmm',
+        price: price.toNumber(),
+        mintAmountA: 0,
+        mintAmountB: 0,
+        feeRate: 0,
+        openTime: '',
+        tvl: 0,
+        day: {
+          volume: 0,
+          volumeQuote: 0,
+          volumeFee: 0,
+          feeApr: 0,
+          rewardApr: [0],
+          apr: 0,
+          priceMax: 0,
+          priceMin: 0,
+        },
+        week: {
+          volume: 0,
+          volumeQuote: 0,
+          volumeFee: 0,
+          feeApr: 0,
+          rewardApr: [0],
+          apr: 0,
+          priceMax: 0,
+          priceMin: 0,
+        },
+        month: {
+          volume: 0,
+          volumeQuote: 0,
+          volumeFee: 0,
+          feeApr: 0,
+          rewardApr: [0],
+          apr: 0,
+          priceMax: 0,
+          priceMin: 0,
+        },
+        pooltype: [],
+        farmUpcomingCount: 0,
+        farmOngoingCount: 0,
+        farmFinishedCount: 0,
+        burnPercent: 0,
+      };
+
+      return mockPoolInfo;
+    }
+
+    return undefined;
+  }, [chainId, feeAmount, invalidPrice, mintA, mintB, pool, poolId, price]);
 
   // lower and upper limits in the tick space for `feeAmount`
   const tickSpaceLimits = useMemo(
     () => ({
       [Bound.LOWER]: feeAmount
-        ? nearestUsableTick(TickMath.MIN_TICK, TICK_SPACINGS[feeAmount])
+        ? nearestUsableTick(MIN_TICK, TICK_SPACINGS[feeAmount])
         : undefined,
       [Bound.UPPER]: feeAmount
-        ? nearestUsableTick(TickMath.MAX_TICK, TICK_SPACINGS[feeAmount])
+        ? nearestUsableTick(MAX_TICK, TICK_SPACINGS[feeAmount])
         : undefined,
     }),
     [feeAmount],
@@ -243,18 +310,18 @@ export function useV3DerivedMintInfo({
               (!invertPrice && typeof leftRangeTypedValue === 'boolean')
             ? tickSpaceLimits[Bound.LOWER]
             : invertPrice
-              ? tryParseTick(
-                  token1,
-                  token0,
+              ? tryParseTick({
+                  decimalsA: mintA?.decimals,
+                  decimalsB: mintB?.decimals,
                   feeAmount,
-                  rightRangeTypedValue.toString(),
-                )
-              : tryParseTick(
-                  token0,
-                  token1,
+                  value: rightRangeTypedValue.toString(),
+                })
+              : tryParseTick({
+                  decimalsA: mintB?.decimals,
+                  decimalsB: mintA?.decimals,
                   feeAmount,
-                  leftRangeTypedValue.toString(),
-                ),
+                  value: leftRangeTypedValue.toString(),
+                }),
       [Bound.UPPER]:
         typeof existingPosition?.tickUpper === 'number'
           ? existingPosition.tickUpper
@@ -262,28 +329,29 @@ export function useV3DerivedMintInfo({
               (invertPrice && typeof leftRangeTypedValue === 'boolean')
             ? tickSpaceLimits[Bound.UPPER]
             : invertPrice
-              ? tryParseTick(
-                  token1,
-                  token0,
+              ? tryParseTick({
+                  decimalsA: mintA?.decimals,
+                  decimalsB: mintB?.decimals,
                   feeAmount,
-                  leftRangeTypedValue.toString(),
-                )
-              : tryParseTick(
-                  token0,
-                  token1,
+                  value: leftRangeTypedValue.toString(),
+                })
+              : tryParseTick({
+                  decimalsA: mintB?.decimals,
+                  decimalsB: mintA?.decimals,
                   feeAmount,
-                  rightRangeTypedValue.toString(),
-                ),
+                  value: rightRangeTypedValue.toString(),
+                }),
     };
   }, [
-    existingPosition,
+    existingPosition?.tickLower,
+    existingPosition?.tickUpper,
     feeAmount,
     invertPrice,
     leftRangeTypedValue,
+    mintA?.decimals,
+    mintB?.decimals,
     rightRangeTypedValue,
     tickSpaceLimits,
-    token0,
-    token1,
   ]);
 
   const { [Bound.LOWER]: tickLower, [Bound.UPPER]: tickUpper } = ticks || {};
@@ -305,18 +373,40 @@ export function useV3DerivedMintInfo({
 
   const pricesAtLimit = useMemo(() => {
     return {
-      [Bound.LOWER]: getTickToPrice(token0, token1, tickSpaceLimits.LOWER),
-      [Bound.UPPER]: getTickToPrice(token0, token1, tickSpaceLimits.UPPER),
+      [Bound.LOWER]: getTickToPrice({
+        tick: tickSpaceLimits.LOWER,
+        decimalsA: mintA?.decimals,
+        decimalsB: mintB?.decimals,
+      }),
+      [Bound.UPPER]: getTickToPrice({
+        tick: tickSpaceLimits.UPPER,
+        decimalsA: mintA?.decimals,
+        decimalsB: mintB?.decimals,
+      }),
     };
-  }, [token0, token1, tickSpaceLimits.LOWER, tickSpaceLimits.UPPER]);
+  }, [
+    mintA?.decimals,
+    mintB?.decimals,
+    tickSpaceLimits.LOWER,
+    tickSpaceLimits.UPPER,
+  ]);
 
   // always returns the price with 0 as base token
   const pricesAtTicks = useMemo(() => {
     return {
-      [Bound.LOWER]: getTickToPrice(token0, token1, ticks[Bound.LOWER]),
-      [Bound.UPPER]: getTickToPrice(token0, token1, ticks[Bound.UPPER]),
+      [Bound.LOWER]: getTickToPrice({
+        tick: ticks[Bound.LOWER],
+        decimalsA: mintA?.decimals,
+        decimalsB: mintB?.decimals,
+      }),
+      [Bound.UPPER]: getTickToPrice({
+        tick: ticks[Bound.UPPER],
+        decimalsA: mintA?.decimals,
+        decimalsB: mintB?.decimals,
+      }),
     };
-  }, [token0, token1, ticks]);
+  }, [mintA?.decimals, mintB?.decimals, ticks]);
+
   const { [Bound.LOWER]: lowerPrice, [Bound.UPPER]: upperPrice } =
     pricesAtTicks;
 
@@ -326,21 +416,19 @@ export function useV3DerivedMintInfo({
       price &&
       lowerPrice &&
       upperPrice &&
-      (price.lessThan(lowerPrice) || price.greaterThan(upperPrice)),
+      (price.lt(lowerPrice) || price.gt(upperPrice)),
   );
 
   // amounts
-  const independentAmount: CurrencyAmount<Currency> | undefined =
-    tryParseCurrencyAmount(typedValue, currencies[independentField]);
+  const independentAmount: BigNumber | undefined = transformStrToBN(typedValue);
 
-  const dependentAmount: CurrencyAmount<Currency> | undefined = useMemo(() => {
-    // we wrap the currencies just to get the price in terms of the other token
-    const wrappedIndependentAmount = independentAmount?.wrapped;
-    const dependentCurrency =
-      dependentField === Field.CURRENCY_B ? currencyB : currencyA;
+  const dependentAmount: BigNumber | undefined = useMemo(() => {
+    const [independentMint, dependentMint] =
+      dependentField === Field.MINT_2 ? [mint1, mint2] : [mint2, mint1];
+
     if (
+      independentMint &&
       independentAmount &&
-      wrappedIndependentAmount &&
       typeof tickLower === 'number' &&
       typeof tickUpper === 'number' &&
       poolForPosition
@@ -350,61 +438,48 @@ export function useV3DerivedMintInfo({
         return undefined;
       }
 
-      const position: Position | undefined =
-        wrappedIndependentAmount.currency.equals(poolForPosition.token0)
-          ? Position.fromAmount0({
-              pool: poolForPosition,
-              tickLower,
-              tickUpper,
-              amount0: independentAmount.quotient,
-              useFullPrecision: true, // we want full precision for the theoretical position
-            })
-          : Position.fromAmount1({
-              pool: poolForPosition,
-              tickLower,
-              tickUpper,
-              amount1: independentAmount.quotient,
-            });
+      const isIndependentMintA = new PublicKey(independentMint.address).equals(
+        new PublicKey(poolForPosition.mintA.address),
+      );
 
-      const dependentTokenAmount = wrappedIndependentAmount.currency.equals(
-        poolForPosition.token0,
-      )
+      const position: Position | undefined = isIndependentMintA
+        ? Position.fromAmount0({
+            pool: poolForPosition,
+            tickLower,
+            tickUpper,
+            amount0: independentAmount.quotient,
+            useFullPrecision: true, // we want full precision for the theoretical position
+          })
+        : Position.fromAmount1({
+            pool: poolForPosition,
+            tickLower,
+            tickUpper,
+            amount1: independentAmount.quotient,
+          });
+
+      const dependentTokenAmount = isIndependentMintA
         ? position.amount1
         : position.amount0;
       return (
-        dependentCurrency &&
+        dependentMint &&
         CurrencyAmount.fromRawAmount(
-          dependentCurrency,
+          dependentMint,
           dependentTokenAmount.quotient,
         )
       );
     }
 
     return undefined;
-  }, [
-    independentAmount,
-    outOfRange,
-    dependentField,
-    currencyB,
-    currencyA,
-    tickLower,
-    tickUpper,
-    poolForPosition,
-    invalidRange,
-  ]);
+  }, []);
 
   const parsedAmounts: {
     [field in Field]: CurrencyAmount<Currency> | undefined;
   } = useMemo(() => {
     return {
-      [Field.CURRENCY_A]:
-        independentField === Field.CURRENCY_A
-          ? independentAmount
-          : dependentAmount,
-      [Field.CURRENCY_B]:
-        independentField === Field.CURRENCY_A
-          ? dependentAmount
-          : independentAmount,
+      [Field.MINT_1]:
+        independentField === Field.MINT_1 ? independentAmount : dependentAmount,
+      [Field.MINT_2]:
+        independentField === Field.MINT_1 ? dependentAmount : independentAmount,
     };
   }, [dependentAmount, independentAmount, independentField]);
 
@@ -447,7 +522,7 @@ export function useV3DerivedMintInfo({
     );
 
   const { inputTax: currencyATax, outputTax: currencyBTax } = useSwapTaxes(
-    currencyA?.isToken ? currencyA.address : undefined,
+    mint1?.isToken ? mint1.address : undefined,
     currencyB?.isToken ? currencyB.address : undefined,
     chainId,
   );
@@ -468,16 +543,12 @@ export function useV3DerivedMintInfo({
     // mark as 0 if disabled because out of range
     const amount0 = !deposit0Disabled
       ? parsedAmounts?.[
-          tokenA.equals(poolForPosition.token0)
-            ? Field.CURRENCY_A
-            : Field.CURRENCY_B
+          tokenA.equals(poolForPosition.token0) ? Field.MINT_1 : Field.MINT_2
         ]?.quotient
       : BIG_INT_ZERO;
     const amount1 = !deposit1Disabled
       ? parsedAmounts?.[
-          tokenA.equals(poolForPosition.token0)
-            ? Field.CURRENCY_B
-            : Field.CURRENCY_A
+          tokenA.equals(poolForPosition.token0) ? Field.MINT_2 : Field.MINT_1
         ]?.quotient
       : BIG_INT_ZERO;
 
@@ -519,29 +590,27 @@ export function useV3DerivedMintInfo({
   }
 
   if (
-    (!parsedAmounts[Field.CURRENCY_A] && !depositADisabled) ||
-    (!parsedAmounts[Field.CURRENCY_B] && !depositBDisabled)
+    (!parsedAmounts[Field.MINT_1] && !depositADisabled) ||
+    (!parsedAmounts[Field.MINT_2] && !depositBDisabled)
   ) {
     errorMessage = errorMessage ?? t`Enter an amount`;
   }
 
-  const {
-    [Field.CURRENCY_A]: currencyAAmount,
-    [Field.CURRENCY_B]: currencyBAmount,
-  } = parsedAmounts;
+  const { [Field.MINT_1]: currencyAAmount, [Field.MINT_2]: currencyBAmount } =
+    parsedAmounts;
 
   if (
     currencyAAmount &&
-    currencyBalances?.[Field.CURRENCY_A]?.lessThan(currencyAAmount)
+    mintBalances?.[Field.MINT_1]?.lessThan(currencyAAmount)
   ) {
-    errorMessage = t`Insufficient ${currencies[Field.CURRENCY_A]?.symbol} balance`;
+    errorMessage = t`Insufficient ${mints[Field.MINT_1]?.symbol} balance`;
   }
 
   if (
     currencyBAmount &&
-    currencyBalances?.[Field.CURRENCY_B]?.lessThan(currencyBAmount)
+    mintBalances?.[Field.MINT_2]?.lessThan(currencyBAmount)
   ) {
-    errorMessage = t`Insufficient ${currencies[Field.CURRENCY_B]?.symbol} balance`;
+    errorMessage = t`Insufficient ${mints[Field.MINT_2]?.symbol} balance`;
   }
 
   const isTaxed = currencyATax.greaterThan(0) || currencyBTax.greaterThan(0);
@@ -549,10 +618,10 @@ export function useV3DerivedMintInfo({
 
   return {
     dependentField,
-    currencies,
+    currencies: mints,
     pool,
     poolState,
-    currencyBalances,
+    currencyBalances: mintBalances,
     parsedAmounts,
     ticks,
     price,

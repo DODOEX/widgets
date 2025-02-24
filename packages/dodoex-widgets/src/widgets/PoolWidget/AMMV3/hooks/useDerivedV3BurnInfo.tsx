@@ -4,7 +4,7 @@ import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { Currency, CurrencyAmount, Percent } from '../sdks/sdk-core';
 import { Position } from '../sdks/v3-sdk';
 import { PositionDetails } from '../types/position';
-import { usePool } from './usePools';
+import { usePool } from './usePool';
 
 export function useDerivedV3BurnInfo({
   percent,

@@ -1,6 +1,6 @@
 export enum Field {
-  CURRENCY_A = 'CURRENCY_A',
-  CURRENCY_B = 'CURRENCY_B',
+  MINT_1 = 'MINT_1',
+  MINT_2 = 'MINT_2',
 }
 
 export enum Bound {

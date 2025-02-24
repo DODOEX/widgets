@@ -8,14 +8,13 @@ import {
   Percent,
   TxVersion,
 } from '@raydium-io/raydium-sdk-v2';
-import { useConnection } from '@solana/wallet-adapter-react';
 import { useMutation } from '@tanstack/react-query';
 import BN from 'bn.js';
 import Decimal from 'decimal.js-light';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { CREATE_CPMM_CONFIG } from '../../../hooks/raydium-sdk-V2/common/programId';
-import { initSdk, txVersion } from '../../../hooks/raydium-sdk-V2/config';
-import { useSolanaWallet } from '../../../hooks/solana/useSolanaWallet';
+import { txVersion } from '../../../hooks/raydium-sdk-V2/config';
+import { useRaydiumSDKContext } from '../../../hooks/raydium-sdk-V2/RaydiumSDKContext';
 import { useSubmission } from '../../../hooks/Submission';
 import { MetadataFlag } from '../../../hooks/Submission/types';
 import { TokenInfo } from '../../../hooks/Token';
@@ -44,9 +43,8 @@ export function useAMMV2AddLiquidity({
   submittedBack?: () => void;
 }) {
   const submission = useSubmission();
-  const { connection } = useConnection();
-  const wallet = useSolanaWallet();
   const { account } = useWalletInfo();
+  const raydium = useRaydiumSDKContext();
 
   useLingui();
 
@@ -63,10 +61,9 @@ export function useAMMV2AddLiquidity({
         throw new Error('poolInfo is undefined');
       }
 
-      const raydium = await initSdk({
-        connection,
-        wallet,
-      });
+      if (!raydium) {
+        throw new Error('raydium is undefined');
+      }
 
       const mintAAmount = new BN(
         new Decimal(pairMintAAmount)

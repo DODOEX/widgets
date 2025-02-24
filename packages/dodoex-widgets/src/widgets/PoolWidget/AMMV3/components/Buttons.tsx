@@ -35,10 +35,10 @@ export const Buttons = ({
 }: ButtonsProps) => {
   // we need an existence check on parsed amounts for single-asset deposits
   const showApprovalA =
-    (approvalA.needApprove && !!parsedAmounts[Field.CURRENCY_A]) ||
+    (approvalA.needApprove && !!parsedAmounts[Field.MINT_1]) ||
     approvalA.isApproving;
   const showApprovalB =
-    (approvalB.needApprove && !!parsedAmounts[Field.CURRENCY_B]) ||
+    (approvalB.needApprove && !!parsedAmounts[Field.MINT_2]) ||
     approvalB.isApproving;
 
   return (
@@ -107,8 +107,8 @@ export const Buttons = ({
           }
           danger={
             !isValid &&
-            !!parsedAmounts[Field.CURRENCY_A] &&
-            !!parsedAmounts[Field.CURRENCY_B]
+            !!parsedAmounts[Field.MINT_1] &&
+            !!parsedAmounts[Field.MINT_2]
           }
         >
           {errorMessage ? errorMessage : t`Preview`}

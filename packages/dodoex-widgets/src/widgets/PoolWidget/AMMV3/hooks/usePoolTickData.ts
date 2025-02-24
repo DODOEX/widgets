@@ -13,7 +13,7 @@ import {
 } from '../sdks/sdk-core';
 import { FeeAmount, Pool, TICK_SPACINGS, tickToPrice } from '../sdks/v3-sdk';
 import computeSurroundingTicks from '../utils/computeSurroundingTicks';
-import { PoolState, usePool } from './usePools';
+import { PoolState, usePool } from './usePool';
 
 const PRICE_FIXED_DIGITS = 8;
 

@@ -1,6 +1,7 @@
 import { parseUnits } from '@ethersproject/units';
 import JSBI from 'jsbi';
 import { Currency, CurrencyAmount } from '../sdks/sdk-core';
+import BigNumber from 'bignumber.js';
 
 function truncateValue(value: string, decimals: number): string {
   const parts = value.split(/[.,]/);
@@ -43,4 +44,12 @@ export default function tryParseCurrencyAmount<T extends Currency>(
     );
   }
   return undefined;
+}
+
+export function transformStrToBN(raw: string) {
+  const result = new BigNumber(raw);
+  if (!result.isFinite()) {
+    return undefined;
+  }
+  return result;
 }

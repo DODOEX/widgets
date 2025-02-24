@@ -1,53 +1,59 @@
-import { defaultAbiCoder } from '@ethersproject/abi';
-import { getCreate2Address } from '@ethersproject/address';
-import { keccak256 } from '@ethersproject/solidity';
-import { ChainId } from '../../sdk-core';
-import { Token } from '../../sdk-core/entities/token';
-import { FeeAmount, poolInitCodeHash } from '../constants';
+import { ChainId } from '@dodoex/api';
+import { getPdaPoolId } from '@raydium-io/raydium-sdk-v2';
+import { PublicKey } from '@solana/web3.js';
+import BN from 'bn.js';
+import { clmmConfigMap } from '../../../../../../hooks/raydium-sdk-V2/common/programId';
+import { FeeAmount } from '../constants';
 
 /**
  * Computes a pool address
- * @param factoryAddress The Uniswap V3 factory address
- * @param tokenA The first token of the pair, irrespective of sort order
- * @param tokenB The second token of the pair, irrespective of sort order
+ * @param mint1 The first token of the pair, irrespective of sort order
+ * @param mint2 The second token of the pair, irrespective of sort order
  * @param fee The fee tier of the pool
- * @param initCodeHashManualOverride Override the init code hash used to compute the pool address if necessary
  * @param chainId
  * @returns The pool address
  */
 export function computePoolAddress({
-  factoryAddress,
-  tokenA,
-  tokenB,
-  fee,
-  initCodeHashManualOverride,
   chainId,
+  feeAmount,
+  mint1Address,
+  mint2Address,
 }: {
-  factoryAddress: string;
-  tokenA: Token;
-  tokenB: Token;
-  fee: FeeAmount;
-  initCodeHashManualOverride?: string;
-  chainId?: ChainId;
-}): string {
-  const [token0, token1] = tokenA.sortsBefore(tokenB)
-    ? [tokenA, tokenB]
-    : [tokenB, tokenA]; // does safety checks
-  const salt = keccak256(
-    ['bytes'],
-    [
-      defaultAbiCoder.encode(
-        ['address', 'address', 'uint24'],
-        [token0.address, token1.address, fee],
-      ),
-    ],
-  );
-  const initCodeHash = initCodeHashManualOverride ?? poolInitCodeHash(chainId);
+  chainId: ChainId;
+  feeAmount: FeeAmount;
+  mint1Address: string;
+  mint2Address: string;
+}): PublicKey {
+  const [mintA, mintB] = new BN(new PublicKey(mint1Address).toBuffer()).gt(
+    new BN(new PublicKey(mint2Address).toBuffer()),
+  )
+    ? [mint2Address, mint1Address]
+    : [mint1Address, mint2Address];
+  const [mintAAddress, mintBAddress] = [
+    new PublicKey(mintA),
+    new PublicKey(mintB),
+  ];
 
-  // ZKSync uses a different create2 address computation
-  // Most likely all ZKEVM chains will use the different computation from standard create2
-  switch (chainId) {
-    default:
-      return getCreate2Address(factoryAddress, salt, initCodeHash);
+  const clmmConfig = clmmConfigMap[chainId];
+
+  if (!clmmConfig) {
+    throw new Error('Invalid config');
   }
+
+  const feeConfig = clmmConfig.config.find(
+    (config) => config.tradeFeeRate === feeAmount,
+  );
+
+  if (!feeConfig) {
+    throw new Error('Invalid fee');
+  }
+
+  const { publicKey: poolId } = getPdaPoolId(
+    clmmConfig.programId,
+    new PublicKey(feeConfig.id),
+    mintAAddress,
+    mintBAddress,
+  );
+
+  return poolId;
 }

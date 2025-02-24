@@ -3,44 +3,40 @@ import { Actions, Types } from '../reducer';
 import { Field } from '../types';
 
 export function useV3MintActionHandlers({
-  noLiquidity,
   dispatch,
 }: {
-  noLiquidity: boolean | undefined;
   dispatch: React.Dispatch<Actions>;
 }): {
-  onFieldAInput: (typedValue: string) => void;
-  onFieldBInput: (typedValue: string) => void;
+  onField1Input: (typedValue: string) => void;
+  onField2Input: (typedValue: string) => void;
   onLeftRangeInput: (typedValue: string) => void;
   onRightRangeInput: (typedValue: string) => void;
   onStartPriceInput: (typedValue: string) => void;
 } {
-  const onFieldAInput = useCallback(
+  const onField1Input = useCallback(
     (typedValue: string) => {
       dispatch({
         type: Types.typeInput,
         payload: {
-          field: Field.CURRENCY_A,
+          field: Field.MINT_1,
           typedValue,
-          noLiquidity: noLiquidity === true,
         },
       });
     },
-    [dispatch, noLiquidity],
+    [dispatch],
   );
 
-  const onFieldBInput = useCallback(
+  const onField2Input = useCallback(
     (typedValue: string) => {
       dispatch({
         type: Types.typeInput,
         payload: {
-          field: Field.CURRENCY_B,
+          field: Field.MINT_2,
           typedValue,
-          noLiquidity: noLiquidity === true,
         },
       });
     },
-    [dispatch, noLiquidity],
+    [dispatch],
   );
 
   const onLeftRangeInput = useCallback(
@@ -80,8 +76,8 @@ export function useV3MintActionHandlers({
   );
 
   return {
-    onFieldAInput,
-    onFieldBInput,
+    onField1Input,
+    onField2Input,
     onLeftRangeInput,
     onRightRangeInput,
     onStartPriceInput,

@@ -1,12 +1,23 @@
 import { TokenInfo } from '../../../hooks/Token/type';
-import { Currency } from './sdks/sdk-core';
 import { FeeAmount } from './sdks/v3-sdk';
 import { Field, FullRange } from './types';
-import { buildCurrency } from './utils';
 
 export interface StateProps {
-  baseToken: Maybe<Currency>;
-  quoteToken: Maybe<Currency>;
+  /**
+   * 代币对中第一个代币，与顺序无关
+   *
+   * mint1-mint2 和 mint-2-mint1 创建出来的 clmm 是同一个池子。最终 clmm 中 mintA 和 mintB 是按照从小到大排序的
+   *
+   * 最终创建完的 clmm 中的 mintA 和 mintB 的顺序可能和 mint1 和 mint2 的顺序相反
+   */
+  mint1: Maybe<TokenInfo>;
+  /**
+   * 代币对中第二个代币，与顺序无关；最终创建完的 clmm 中的 mintA 和 mintB 的顺序可能和 mint1 和 mint2 的顺序相反；
+   */
+  mint2: Maybe<TokenInfo>;
+  /**
+   * 手续费率；
+   */
   feeAmount: FeeAmount | undefined;
 
   readonly independentField: Field;
@@ -17,11 +28,11 @@ export interface StateProps {
 }
 
 export enum Types {
-  UpdateBaseToken,
-  UpdateDefaultBaseToken,
-  UpdateQuoteToken,
-  UpdateDefaultQuoteToken,
-  UpdateBaseTokenAndClearQuoteToken,
+  UpdateMint1,
+  UpdateMint2,
+  UpdateDefaultMint1,
+  UpdateDefaultMint2,
+  UpdateMint1AndClearMint2,
   UpdateFeeAmount,
   ToggleRate,
   setFullRange,
@@ -32,68 +43,68 @@ export enum Types {
 }
 
 type Payload = {
-  [Types.UpdateBaseToken]: TokenInfo;
-  [Types.UpdateDefaultBaseToken]: TokenInfo;
-  [Types.UpdateQuoteToken]: TokenInfo;
-  [Types.UpdateDefaultQuoteToken]: TokenInfo;
-  [Types.UpdateBaseTokenAndClearQuoteToken]: TokenInfo;
+  [Types.UpdateMint1]: TokenInfo;
+  [Types.UpdateDefaultMint1]: TokenInfo;
+  [Types.UpdateMint2]: TokenInfo;
+  [Types.UpdateDefaultMint2]: TokenInfo;
+  [Types.UpdateMint1AndClearMint2]: TokenInfo;
   [Types.UpdateFeeAmount]: FeeAmount;
   [Types.ToggleRate]: void;
   [Types.setFullRange]: void;
   [Types.typeStartPriceInput]: { typedValue: string };
   [Types.typeLeftRangeInput]: { typedValue: string };
   [Types.typeRightRangeInput]: { typedValue: string };
-  [Types.typeInput]: { field: Field; typedValue: string; noLiquidity: boolean };
+  [Types.typeInput]: { field: Field; typedValue: string };
 };
 
 export type Actions = ActionMap<Payload>[keyof ActionMap<Payload>];
 
 export function reducer(state: StateProps, action: Actions): StateProps {
   switch (action.type) {
-    case Types.UpdateBaseToken: {
-      const baseToken = action.payload;
+    case Types.UpdateMint1: {
+      const mint1 = action.payload;
       return {
         ...state,
-        baseToken: buildCurrency(baseToken),
+        mint1,
       };
     }
 
-    case Types.UpdateDefaultBaseToken: {
-      const baseToken = action.payload;
-      if (!state.baseToken) {
+    case Types.UpdateDefaultMint1: {
+      const mint1 = action.payload;
+      if (!state.mint1) {
         return {
           ...state,
-          baseToken: buildCurrency(baseToken),
+          mint1,
         };
       }
       return state;
     }
 
-    case Types.UpdateQuoteToken: {
-      const quoteToken = action.payload;
+    case Types.UpdateMint2: {
+      const mint2 = action.payload;
       return {
         ...state,
-        quoteToken: buildCurrency(quoteToken),
+        mint2,
       };
     }
 
-    case Types.UpdateDefaultQuoteToken: {
-      const quoteToken = action.payload;
-      if (!state.quoteToken) {
+    case Types.UpdateDefaultMint2: {
+      const mint2 = action.payload;
+      if (!state.mint2) {
         return {
           ...state,
-          quoteToken: buildCurrency(quoteToken),
+          mint2,
         };
       }
       return state;
     }
 
-    case Types.UpdateBaseTokenAndClearQuoteToken: {
-      const baseToken = action.payload;
+    case Types.UpdateMint1AndClearMint2: {
+      const mint1 = action.payload;
       return {
         ...state,
-        baseToken: buildCurrency(baseToken),
-        quoteToken: null,
+        mint1,
+        mint2: null,
       };
     }
 
@@ -105,11 +116,11 @@ export function reducer(state: StateProps, action: Actions): StateProps {
     }
 
     case Types.ToggleRate: {
-      const { baseToken, quoteToken } = state;
+      const { mint1, mint2 } = state;
       return {
         ...state,
-        baseToken: quoteToken,
-        quoteToken: baseToken,
+        mint1: mint2,
+        mint2: mint1,
       };
     }
 
@@ -144,32 +155,13 @@ export function reducer(state: StateProps, action: Actions): StateProps {
 
     case Types.typeInput: {
       const {
-        payload: { field, typedValue, noLiquidity },
+        payload: { field, typedValue },
       } = action;
-      if (noLiquidity) {
-        // they're typing into the field they've last typed in
-        if (field === state.independentField) {
-          return {
-            ...state,
-            independentField: field,
-            typedValue,
-          };
-        }
-        // they're typing into a new field, store the other value
-        else {
-          return {
-            ...state,
-            independentField: field,
-            typedValue,
-          };
-        }
-      } else {
-        return {
-          ...state,
-          independentField: field,
-          typedValue,
-        };
-      }
+      return {
+        ...state,
+        independentField: field,
+        typedValue,
+      };
     }
 
     default:

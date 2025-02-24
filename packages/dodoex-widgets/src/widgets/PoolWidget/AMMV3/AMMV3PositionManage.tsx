@@ -137,7 +137,7 @@ export const AMMV3PositionManage = ({
     baseToken: buildCurrency(baseToken),
     quoteToken: buildCurrency(quoteToken),
     feeAmount,
-    independentField: Field.CURRENCY_A,
+    independentField: Field.MINT_1,
     typedValue: '',
     startPriceTypedValue: '',
     leftRangeTypedValue: '',
@@ -227,38 +227,35 @@ export const AMMV3PositionManage = ({
   // get the max amounts user can add
   const maxAmounts: { [field in Field]?: CurrencyAmount<Currency> } =
     useMemo(() => {
-      return [Field.CURRENCY_A, Field.CURRENCY_B].reduce(
-        (accumulator, field) => {
-          return {
-            ...accumulator,
-            [field]: maxAmountSpend(currencyBalances[field]),
-          };
-        },
-        {},
-      );
+      return [Field.MINT_1, Field.MINT_2].reduce((accumulator, field) => {
+        return {
+          ...accumulator,
+          [field]: maxAmountSpend(currencyBalances[field]),
+        };
+      }, {});
     }, [currencyBalances]);
 
   const approvalA = useTokenStatus(
-    convertBackToTokenInfo(parsedAmounts[Field.CURRENCY_A]?.currency),
+    convertBackToTokenInfo(parsedAmounts[Field.MINT_1]?.currency),
     {
       contractAddress: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
-      overrideBalance: currencyBalances[Field.CURRENCY_A]
-        ? new BigNumber(currencyBalances[Field.CURRENCY_A].toSignificant())
+      overrideBalance: currencyBalances[Field.MINT_1]
+        ? new BigNumber(currencyBalances[Field.MINT_1].toSignificant())
         : undefined,
-      amount: parsedAmounts[Field.CURRENCY_A]
-        ? new BigNumber(parsedAmounts[Field.CURRENCY_A].toSignificant())
+      amount: parsedAmounts[Field.MINT_1]
+        ? new BigNumber(parsedAmounts[Field.MINT_1].toSignificant())
         : undefined,
     },
   );
   const approvalB = useTokenStatus(
-    convertBackToTokenInfo(parsedAmounts[Field.CURRENCY_B]?.currency),
+    convertBackToTokenInfo(parsedAmounts[Field.MINT_2]?.currency),
     {
       contractAddress: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
-      overrideBalance: currencyBalances[Field.CURRENCY_B]
-        ? new BigNumber(currencyBalances[Field.CURRENCY_B].toSignificant())
+      overrideBalance: currencyBalances[Field.MINT_2]
+        ? new BigNumber(currencyBalances[Field.MINT_2].toSignificant())
         : undefined,
-      amount: parsedAmounts[Field.CURRENCY_B]
-        ? new BigNumber(parsedAmounts[Field.CURRENCY_B].toSignificant())
+      amount: parsedAmounts[Field.MINT_2]
+        ? new BigNumber(parsedAmounts[Field.MINT_2].toSignificant())
         : undefined,
     },
   );
@@ -562,20 +559,20 @@ export const AMMV3PositionManage = ({
               </Box>
               <Box>
                 <CurrencyInputPanel
-                  value={formattedAmounts[Field.CURRENCY_A]}
+                  value={formattedAmounts[Field.MINT_1]}
                   onUserInput={onFieldAInput}
-                  maxAmount={maxAmounts[Field.CURRENCY_A]}
-                  balance={currencyBalances[Field.CURRENCY_A]}
-                  currency={currencies[Field.CURRENCY_A] ?? null}
+                  maxAmount={maxAmounts[Field.MINT_1]}
+                  balance={currencyBalances[Field.MINT_1]}
+                  currency={currencies[Field.MINT_1] ?? null}
                   locked={depositADisabled}
                 />
                 <CardPlusConnected />
                 <CurrencyInputPanel
-                  value={formattedAmounts[Field.CURRENCY_B]}
+                  value={formattedAmounts[Field.MINT_2]}
                   onUserInput={onFieldBInput}
-                  maxAmount={maxAmounts[Field.CURRENCY_B]}
-                  balance={currencyBalances[Field.CURRENCY_B]}
-                  currency={currencies[Field.CURRENCY_B] ?? null}
+                  maxAmount={maxAmounts[Field.MINT_2]}
+                  balance={currencyBalances[Field.MINT_2]}
+                  currency={currencies[Field.MINT_2] ?? null}
                   locked={depositBDisabled}
                 />
               </Box>
