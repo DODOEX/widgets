@@ -1,12 +1,10 @@
 import { Box, LoadingSkeleton } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
+import BigNumber from 'bignumber.js';
 import { ReactNode, useCallback, useMemo } from 'react';
 import { batch } from 'react-redux';
-import {
-  formatPercentageNumber,
-  formatTokenAmountNumber,
-} from '../../../../../utils';
-import { Currency, Price } from '../../sdks/sdk-core';
+import { TokenInfo } from '../../../../../hooks/Token/type';
+import { formatTokenAmountNumber } from '../../../../../utils';
 import { FeeAmount } from '../../sdks/v3-sdk';
 import { Bound } from '../../types';
 import { AutoColumn, ColumnCenter } from '../widgets';
@@ -22,23 +20,23 @@ const LOW_ZOOM_LEVEL = {
   max: 1.5,
 };
 const ZOOM_LEVELS: Record<FeeAmount, ZoomLevels> = {
-  [FeeAmount.LOWEST]: LOW_ZOOM_LEVEL,
-  [FeeAmount.LOW_200]: LOW_ZOOM_LEVEL,
-  [FeeAmount.LOW_300]: LOW_ZOOM_LEVEL,
-  [FeeAmount.LOW_400]: LOW_ZOOM_LEVEL,
+  // [FeeAmount.LOWEST]: LOW_ZOOM_LEVEL,
+  // [FeeAmount.LOW_200]: LOW_ZOOM_LEVEL,
+  // [FeeAmount.LOW_300]: LOW_ZOOM_LEVEL,
+  // [FeeAmount.LOW_400]: LOW_ZOOM_LEVEL,
   [FeeAmount.LOW]: LOW_ZOOM_LEVEL,
-  [FeeAmount.MEDIUM]: {
-    initialMin: 0.5,
-    initialMax: 2,
-    min: 0.00001,
-    max: 20,
-  },
-  [FeeAmount.HIGH]: {
-    initialMin: 0.5,
-    initialMax: 2,
-    min: 0.00001,
-    max: 20,
-  },
+  // [FeeAmount.MEDIUM]: {
+  //   initialMin: 0.5,
+  //   initialMax: 2,
+  //   min: 0.00001,
+  //   max: 20,
+  // },
+  // [FeeAmount.HIGH]: {
+  //   initialMin: 0.5,
+  //   initialMax: 2,
+  //   min: 0.00001,
+  //   max: 20,
+  // },
 };
 
 function InfoBox({ message, icon }: { message?: ReactNode; icon: ReactNode }) {
@@ -66,8 +64,8 @@ function LoadingBars() {
 }
 
 export default function LiquidityChartRangeInput({
-  currencyA,
-  currencyB,
+  mint1,
+  mint2,
   feeAmount,
   ticksAtLimit,
   price,
@@ -77,25 +75,22 @@ export default function LiquidityChartRangeInput({
   onRightRangeInput,
   interactive,
 }: {
-  currencyA?: Currency;
-  currencyB?: Currency;
+  mint1?: Maybe<TokenInfo>;
+  mint2?: Maybe<TokenInfo>;
   feeAmount?: FeeAmount;
   ticksAtLimit: { [bound in Bound]?: boolean | undefined };
-  price?: number;
-  priceLower?: Price<Currency, Currency>;
-  priceUpper?: Price<Currency, Currency>;
+  price: number | undefined;
+  priceLower: BigNumber | undefined;
+  priceUpper: BigNumber | undefined;
   onLeftRangeInput: (typedValue: string) => void;
   onRightRangeInput: (typedValue: string) => void;
   interactive: boolean;
 }) {
-  const isSorted =
-    currencyA &&
-    currencyB &&
-    currencyA?.wrapped.sortsBefore(currencyB?.wrapped);
+  const isSorted = true;
 
   const { isLoading, error, formattedData } = useDensityChartData({
-    currencyA,
-    currencyB,
+    mint1,
+    mint2,
     feeAmount,
   });
 
@@ -138,16 +133,13 @@ export default function LiquidityChartRangeInput({
   interactive = interactive && Boolean(formattedData?.length);
 
   const brushDomain: [number, number] | undefined = useMemo(() => {
-    const leftPrice = isSorted ? priceLower : priceUpper?.invert();
-    const rightPrice = isSorted ? priceUpper : priceLower?.invert();
+    const leftPrice = priceLower;
+    const rightPrice = priceUpper;
 
     return leftPrice && rightPrice
-      ? [
-          parseFloat(leftPrice?.toSignificant(6)),
-          parseFloat(rightPrice?.toSignificant(6)),
-        ]
+      ? [parseFloat(leftPrice?.toString()), parseFloat(rightPrice?.toString())]
       : undefined;
-  }, [isSorted, priceLower, priceUpper]);
+  }, [priceLower, priceUpper]);
 
   const brushLabelValue = useCallback(
     (d: 'w' | 'e', x: number) => {
@@ -178,9 +170,7 @@ export default function LiquidityChartRangeInput({
   );
 
   const isUninitialized =
-    !currencyA ||
-    !currencyB ||
-    (formattedData === undefined && !isLoading && !error);
+    !mint1 || !mint2 || (formattedData === undefined && !isLoading && !error);
 
   return (
     <AutoColumn gap="md" style={{ minHeight: '200px' }}>
@@ -276,7 +266,7 @@ export default function LiquidityChartRangeInput({
             brushLabels={brushLabelValue}
             brushDomain={brushDomain}
             onBrushDomainChange={onBrushDomainChangeEnded}
-            zoomLevels={ZOOM_LEVELS[feeAmount ?? FeeAmount.MEDIUM]}
+            zoomLevels={ZOOM_LEVELS[feeAmount ?? FeeAmount.LOW]}
             ticksAtLimit={ticksAtLimit}
           />
         </Box>

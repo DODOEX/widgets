@@ -1,18 +1,13 @@
-import { AMMV3Api, ChainId, TickData, Ticks } from '@dodoex/api';
+import { AMMV3Api, ChainId, CLMM, TickData, Ticks } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
-import JSBI from 'jsbi';
+import BigNumber from 'bignumber.js';
 import { useEffect, useMemo, useState } from 'react';
 import { ThegraphKeyMap } from '../../../../constants/chains';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
+import { TokenInfo } from '../../../../hooks/Token/type';
 import { useGraphQLRequests } from '../../../../hooks/useGraphQLRequests';
-import {
-  Currency,
-  Price,
-  Token,
-  V3_CORE_FACTORY_ADDRESSES,
-} from '../sdks/sdk-core';
-import { FeeAmount, Pool, TICK_SPACINGS, tickToPrice } from '../sdks/v3-sdk';
-import computeSurroundingTicks from '../utils/computeSurroundingTicks';
+import { FeeAmount, TICK_SPACINGS } from '../sdks/v3-sdk';
+import { tickToPrice } from '../utils/tickToPrice';
 import { PoolState, usePool } from './usePool';
 
 const PRICE_FIXED_DIGITS = 8;
@@ -20,10 +15,10 @@ const PRICE_FIXED_DIGITS = 8;
 // Tick with fields parsed to JSBIs, and active liquidity computed.
 export interface TickProcessed {
   tick: number;
-  liquidityActive: JSBI;
-  liquidityNet: JSBI;
+  liquidityActive: number;
+  liquidityNet: number;
   price0: string;
-  sdkPrice: Price<Token, Token>;
+  sdkPrice: BigNumber | undefined;
 }
 
 const getActiveTick = (
@@ -36,25 +31,13 @@ const getActiveTick = (
     : undefined;
 
 const MAX_TICK_FETCH_VALUE = 1000;
+
 function usePaginatedTickQuery(
-  currencyA: Currency | undefined,
-  currencyB: Currency | undefined,
-  feeAmount: FeeAmount | undefined,
+  poolAddress: string | null,
   skip = 0,
   chainId: ChainId,
 ) {
   const graphQLRequests = useGraphQLRequests();
-
-  const poolAddress =
-    currencyA && currencyB && feeAmount
-      ? Pool.getAddress(
-          currencyA?.wrapped,
-          currencyB?.wrapped,
-          feeAmount,
-          undefined,
-          chainId ? V3_CORE_FACTORY_ADDRESSES[chainId] : undefined,
-        )
-      : undefined;
 
   const query = graphQLRequests.getQuery(AMMV3Api.graphql.AllV3TicksDocument, {
     skip,
@@ -63,7 +46,7 @@ function usePaginatedTickQuery(
       chain: chainId ? ThegraphKeyMap[chainId] : undefined,
       poolAddress: poolAddress?.toLowerCase() ?? undefined,
       refreshNow: true,
-      schemaName: 'ammv3',
+      schemaName: CLMM,
     },
   });
 
@@ -76,9 +59,7 @@ function usePaginatedTickQuery(
 
 // Fetches all ticks for a given pool
 function useAllV3Ticks(
-  currencyA: Currency | undefined,
-  currencyB: Currency | undefined,
-  feeAmount: FeeAmount | undefined,
+  poolAddress: string | null,
   chainId: ChainId,
 ): {
   isLoading: boolean;
@@ -88,9 +69,7 @@ function useAllV3Ticks(
   const [skipNumber, setSkipNumber] = useState(0);
   const [tickData, setTickData] = useState<Ticks>([]);
   const { data, error, isLoading } = usePaginatedTickQuery(
-    currencyA,
-    currencyB,
-    feeAmount,
+    poolAddress,
     skipNumber,
     chainId,
   );
@@ -113,25 +92,24 @@ function useAllV3Ticks(
 }
 
 export function usePoolActiveLiquidity(
-  currencyA: Currency | undefined,
-  currencyB: Currency | undefined,
+  mint1: Maybe<TokenInfo>,
+  mint2: Maybe<TokenInfo>,
   feeAmount: FeeAmount | undefined,
   chainId?: ChainId,
 ): {
   isLoading: boolean;
   error: any;
-  currentTick?: number;
-  activeTick?: number;
-  liquidity?: JSBI;
-  sqrtPriceX96?: JSBI;
   data?: TickProcessed[];
 } {
   const { chainId: defaultChainId } = useWalletInfo();
-  const pool = usePool(currencyA, currencyB, feeAmount);
-  const liquidity = pool[1]?.liquidity;
-  const sqrtPriceX96 = pool[1]?.sqrtRatioX96;
+  const [poolState, poolInfo, poolId] = usePool(
+    mint1?.address,
+    mint2?.address,
+    feeAmount,
+    defaultChainId,
+  );
 
-  const currentTick = pool[1]?.tickCurrent;
+  const currentTick = poolInfo?.computePoolInfo?.tickCurrent;
   // Find nearest valid tick for pool in case tick is not initialized.
   const activeTick = useMemo(
     () => getActiveTick(currentTick, feeAmount),
@@ -139,32 +117,27 @@ export function usePoolActiveLiquidity(
   );
 
   const { isLoading, error, ticks } = useAllV3Ticks(
-    currencyA,
-    currencyB,
-    feeAmount,
+    poolId,
     chainId ?? defaultChainId,
   );
 
   return useMemo(() => {
     if (
-      !currencyA ||
-      !currencyB ||
+      !mint1 ||
+      !mint2 ||
       activeTick === undefined ||
-      pool[0] !== PoolState.EXISTS ||
+      poolState !== PoolState.EXISTS ||
       !ticks ||
       ticks.length === 0 ||
       isLoading
     ) {
       return {
-        isLoading: isLoading || pool[0] === PoolState.LOADING,
+        isLoading: isLoading || poolState === PoolState.LOADING,
         error,
         activeTick,
         data: undefined,
       };
     }
-
-    const token0 = currencyA?.wrapped;
-    const token1 = currencyB?.wrapped;
 
     // find where the active tick would be to partition the array
     // if the active tick is initialized, the pivot will be an element
@@ -181,9 +154,9 @@ export function usePoolActiveLiquidity(
         'usePoolActiveLiquidity',
         'TickData pivot not found',
         {
-          token0: token0.address,
-          token1: token1.address,
-          chainId: token0.chainId,
+          mint1: mint1.address,
+          mint2: mint2.address,
+          chainId: mint1.chainId,
         },
       );
       return {
@@ -194,35 +167,41 @@ export function usePoolActiveLiquidity(
       };
     }
 
-    const sdkPrice = tickToPrice(token0, token1, activeTick);
+    const sdkPrice = tickToPrice({
+      decimalsA: mint1.decimals,
+      decimalsB: mint2.decimals,
+      tick: activeTick,
+    });
     const activeTickProcessed: TickProcessed = {
-      liquidityActive: JSBI.BigInt(pool[1]?.liquidity ?? 0),
+      liquidityActive: poolInfo?.computePoolInfo?.liquidity.toNumber() ?? 0,
       tick: activeTick,
       liquidityNet:
         Number(ticks[pivot]?.tickIdx) === activeTick
-          ? JSBI.BigInt(ticks[pivot]?.liquidityNet ?? 0)
-          : JSBI.BigInt(0),
-      price0: sdkPrice.toFixed(PRICE_FIXED_DIGITS),
+          ? Number(ticks[pivot]?.liquidityNet ?? 0)
+          : 0,
+      price0: sdkPrice?.toFixed(PRICE_FIXED_DIGITS) ?? '',
       sdkPrice,
     };
 
-    const subsequentTicks = computeSurroundingTicks(
-      token0,
-      token1,
-      activeTickProcessed,
-      ticks,
-      pivot,
-      true,
-    );
+    const subsequentTicks: TickProcessed[] = [];
+    // const subsequentTicks = computeSurroundingTicks(
+    //   token0,
+    //   token1,
+    //   activeTickProcessed,
+    //   ticks,
+    //   pivot,
+    //   true,
+    // );
 
-    const previousTicks = computeSurroundingTicks(
-      token0,
-      token1,
-      activeTickProcessed,
-      ticks,
-      pivot,
-      false,
-    );
+    const previousTicks: TickProcessed[] = [];
+    // const previousTicks = computeSurroundingTicks(
+    //   token0,
+    //   token1,
+    //   activeTickProcessed,
+    //   ticks,
+    //   pivot,
+    //   false,
+    // );
 
     const ticksProcessed = previousTicks
       .concat(activeTickProcessed)
@@ -231,22 +210,16 @@ export function usePoolActiveLiquidity(
     return {
       isLoading,
       error,
-      currentTick,
-      activeTick,
-      liquidity,
-      sqrtPriceX96,
       data: ticksProcessed,
     };
   }, [
-    currencyA,
-    currencyB,
     activeTick,
-    pool,
-    ticks,
-    isLoading,
     error,
-    currentTick,
-    liquidity,
-    sqrtPriceX96,
+    isLoading,
+    mint1,
+    mint2,
+    poolInfo?.computePoolInfo?.liquidity,
+    poolState,
+    ticks,
   ]);
 }

@@ -1,3 +1,4 @@
+import { CLMM, CPMM, PoolType } from '@dodoex/api';
 import {
   Box,
   BoxProps,
@@ -17,15 +18,8 @@ import {
   AUTO_LIQUIDITY_SLIPPAGE_PROTECTION,
   AUTO_SWAP_SLIPPAGE_PROTECTION,
 } from '../../../../constants/pool';
-import { PoolType } from '@dodoex/api';
 
-export const useSlipper = ({
-  address,
-  type,
-}: {
-  address?: string;
-  type?: 'AMMV2' | 'AMMV3';
-}) => {
+export const useSlipper = ({ type }: { type: PoolType }) => {
   const [slipper, setSlipper] = useState<
     number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION
   >(AUTO_SWAP_SLIPPAGE_PROTECTION);
@@ -33,11 +27,11 @@ export const useSlipper = ({
   const slipperValue = useMemo(
     () =>
       slipper === AUTO_SWAP_SLIPPAGE_PROTECTION
-        ? type === 'AMMV3'
+        ? type === CLMM
           ? new BigNumber(AUTO_AMM_V3_LIQUIDITY_SLIPPAGE_PROTECTION)
               .div(100)
               .toNumber()
-          : type === 'AMMV2'
+          : type === CPMM
             ? new BigNumber(AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION)
                 .div(100)
                 .toNumber()
@@ -90,9 +84,9 @@ export default function SlippageSetting({
   };
 
   const autoValue =
-    type == 'AMMV3'
+    type === CLMM
       ? AUTO_AMM_V3_LIQUIDITY_SLIPPAGE_PROTECTION
-      : type == 'AMMV2'
+      : type === CPMM
         ? AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION
         : AUTO_LIQUIDITY_SLIPPAGE_PROTECTION;
 

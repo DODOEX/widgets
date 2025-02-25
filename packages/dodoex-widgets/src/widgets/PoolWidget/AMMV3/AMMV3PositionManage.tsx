@@ -563,7 +563,7 @@ export const AMMV3PositionManage = ({
                   onUserInput={onFieldAInput}
                   maxAmount={maxAmounts[Field.MINT_1]}
                   balance={currencyBalances[Field.MINT_1]}
-                  currency={currencies[Field.MINT_1] ?? null}
+                  mint={currencies[Field.MINT_1] ?? null}
                   locked={depositADisabled}
                 />
                 <CardPlusConnected />
@@ -572,7 +572,7 @@ export const AMMV3PositionManage = ({
                   onUserInput={onFieldBInput}
                   maxAmount={maxAmounts[Field.MINT_2]}
                   balance={currencyBalances[Field.MINT_2]}
-                  currency={currencies[Field.MINT_2] ?? null}
+                  mint={currencies[Field.MINT_2] ?? null}
                   locked={depositBDisabled}
                 />
               </Box>

@@ -22,9 +22,9 @@ import { TokenInfo } from '../../../../hooks/Token/type';
 import { StateProps } from '../reducer';
 import { nearestUsableTick, TICK_SPACINGS } from '../sdks/v3-sdk';
 import { Bound, Field, PoolInfoI, PositionI } from '../types';
-import { getTickToPrice } from '../utils/getTickToPrice';
+import { priceToTick } from '../utils/priceToTick';
+import { tickToPrice } from '../utils/tickToPrice';
 import { transformStrToBN } from '../utils/tryParseCurrencyAmount';
-import { tryParseTick } from '../utils/tryParseTick';
 import { PoolState, usePool } from './usePool';
 import { useSwapTaxes } from './useSwapTaxes';
 import { useTokenBalance } from './useTokenBalance';
@@ -192,13 +192,15 @@ export function useV3DerivedMintInfo({
 
     // if pool exists use it, if not use the mock pool
     if (pool) {
-      return {
+      const existedPoolInfo: PoolInfoI = {
         ...pool.poolInfo,
         mintAChainId: mintA.chainId,
         mintASymbol: mintA.symbol,
         mintBChainId: mintB.chainId,
         mintBSymbol: mintB.symbol,
+        tickCurrent: pool.computePoolInfo.tickCurrent,
       };
+      return existedPoolInfo;
     }
 
     if (feeAmount && price && !invalidPrice && poolId) {
@@ -214,6 +216,17 @@ export function useV3DerivedMintInfo({
 
       if (!feeConfig) {
         throw new Error('Invalid fee');
+      }
+
+      const tickCurrent = priceToTick({
+        decimalsA: mintA.decimals,
+        decimalsB: mintB.decimals,
+        feeAmount,
+        price: price.toString(),
+      });
+
+      if (!tickCurrent) {
+        throw new Error('Invalid tick');
       }
 
       const mockPoolInfo: PoolInfoI = {
@@ -244,6 +257,7 @@ export function useV3DerivedMintInfo({
         rewardDefaultInfos: [],
         rewardDefaultPoolInfos: 'Clmm',
         price: price.toNumber(),
+        tickCurrent,
         mintAmountA: 0,
         mintAmountB: 0,
         feeRate: 0,
@@ -305,15 +319,6 @@ export function useV3DerivedMintInfo({
     [feeAmount],
   );
 
-  const tickCurrent = useMemo(() => {
-    return tryParseTick({
-      decimalsA: mintA?.decimals,
-      decimalsB: mintB?.decimals,
-      feeAmount,
-      value: price?.toString(),
-    });
-  }, [feeAmount, mintA, mintB, price]);
-
   // parse typed range values and determine closest ticks
   // lower should always be a smaller tick
   const ticks = useMemo(() => {
@@ -325,17 +330,17 @@ export function useV3DerivedMintInfo({
               (!invertPrice && typeof leftRangeTypedValue === 'boolean')
             ? tickSpaceLimits[Bound.LOWER]
             : invertPrice
-              ? tryParseTick({
+              ? priceToTick({
                   decimalsA: mintA?.decimals,
                   decimalsB: mintB?.decimals,
                   feeAmount,
-                  value: rightRangeTypedValue.toString(),
+                  price: rightRangeTypedValue.toString(),
                 })
-              : tryParseTick({
+              : priceToTick({
                   decimalsA: mintB?.decimals,
                   decimalsB: mintA?.decimals,
                   feeAmount,
-                  value: leftRangeTypedValue.toString(),
+                  price: leftRangeTypedValue.toString(),
                 }),
       [Bound.UPPER]:
         typeof existingPosition?.tickUpper === 'number'
@@ -344,17 +349,17 @@ export function useV3DerivedMintInfo({
               (invertPrice && typeof leftRangeTypedValue === 'boolean')
             ? tickSpaceLimits[Bound.UPPER]
             : invertPrice
-              ? tryParseTick({
+              ? priceToTick({
                   decimalsA: mintA?.decimals,
                   decimalsB: mintB?.decimals,
                   feeAmount,
-                  value: leftRangeTypedValue.toString(),
+                  price: leftRangeTypedValue.toString(),
                 })
-              : tryParseTick({
+              : priceToTick({
                   decimalsA: mintB?.decimals,
                   decimalsB: mintA?.decimals,
                   feeAmount,
-                  value: rightRangeTypedValue.toString(),
+                  price: rightRangeTypedValue.toString(),
                 }),
     };
   }, [
@@ -388,12 +393,12 @@ export function useV3DerivedMintInfo({
 
   const pricesAtLimit = useMemo(() => {
     return {
-      [Bound.LOWER]: getTickToPrice({
+      [Bound.LOWER]: tickToPrice({
         tick: tickSpaceLimits.LOWER,
         decimalsA: mintA?.decimals,
         decimalsB: mintB?.decimals,
       }),
-      [Bound.UPPER]: getTickToPrice({
+      [Bound.UPPER]: tickToPrice({
         tick: tickSpaceLimits.UPPER,
         decimalsA: mintA?.decimals,
         decimalsB: mintB?.decimals,
@@ -409,12 +414,12 @@ export function useV3DerivedMintInfo({
   // always returns the price with 0 as base token
   const pricesAtTicks = useMemo(() => {
     return {
-      [Bound.LOWER]: getTickToPrice({
+      [Bound.LOWER]: tickToPrice({
         tick: ticks[Bound.LOWER],
         decimalsA: mintA?.decimals,
         decimalsB: mintB?.decimals,
       }),
-      [Bound.UPPER]: getTickToPrice({
+      [Bound.UPPER]: tickToPrice({
         tick: ticks[Bound.UPPER],
         decimalsA: mintA?.decimals,
         decimalsB: mintB?.decimals,
@@ -537,15 +542,19 @@ export function useV3DerivedMintInfo({
 
   // single deposit only if price is out of range
   const deposit0Disabled = Boolean(
-    typeof tickUpper === 'number' && tickCurrent && tickCurrent >= tickUpper,
+    typeof tickUpper === 'number' &&
+      poolInfo?.tickCurrent &&
+      poolInfo.tickCurrent >= tickUpper,
   );
   const deposit1Disabled = Boolean(
-    typeof tickLower === 'number' && tickCurrent && tickCurrent <= tickLower,
+    typeof tickLower === 'number' &&
+      poolInfo?.tickCurrent &&
+      poolInfo.tickCurrent <= tickLower,
   );
 
-  const independentMintIsMintA = new PublicKey(independentMint.address).equals(
-    new PublicKey(poolInfo.mintA.address),
-  );
+  // const independentMintIsMintA = new PublicKey(independentMint.address).equals(
+  //   new PublicKey(poolInfo.mintA.address),
+  // );
   // sorted for token order
   const depositADisabled =
     invalidRange ||

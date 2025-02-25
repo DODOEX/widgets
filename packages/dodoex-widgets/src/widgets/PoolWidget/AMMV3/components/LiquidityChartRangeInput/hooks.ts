@@ -1,24 +1,24 @@
 import { useCallback, useMemo } from 'react';
+import { TokenInfo } from '../../../../../hooks/Token/type';
 import {
   TickProcessed,
   usePoolActiveLiquidity,
 } from '../../hooks/usePoolTickData';
-import { Currency } from '../../sdks/sdk-core';
 import { FeeAmount } from '../../sdks/v3-sdk';
 import { ChartEntry } from './types';
 
 export function useDensityChartData({
-  currencyA,
-  currencyB,
+  mint1,
+  mint2,
   feeAmount,
 }: {
-  currencyA?: Currency;
-  currencyB?: Currency;
+  mint1: Maybe<TokenInfo>;
+  mint2: Maybe<TokenInfo>;
   feeAmount?: FeeAmount;
 }) {
   const { isLoading, error, data } = usePoolActiveLiquidity(
-    currencyA,
-    currencyB,
+    mint1,
+    mint2,
     feeAmount,
   );
 

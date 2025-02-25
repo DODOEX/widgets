@@ -1,34 +1,19 @@
-import JSBI from 'jsbi';
-import { Currency, CurrencyAmount } from '../sdks/sdk-core';
+import BigNumber from 'bignumber.js';
 
-const MIN_NATIVE_CURRENCY_FOR_GAS: JSBI = JSBI.exponentiate(
-  JSBI.BigInt(10),
-  JSBI.BigInt(16),
-); // .01 ETH
+const MIN_NATIVE_CURRENCY_FOR_GAS: BigNumber = new BigNumber(0.01); // .01 ETH
+
 /**
  * Given some token amount, return the max that can be spent of it
- * @param currencyAmount to return max of
+ * @param amount to return max of
  */
-export function maxAmountSpend(
-  currencyAmount?: CurrencyAmount<Currency>,
-): CurrencyAmount<Currency> | undefined {
-  if (!currencyAmount) {
+export function maxAmountSpend(amount?: BigNumber): BigNumber | undefined {
+  if (!amount) {
     return undefined;
   }
-  if (currencyAmount.currency.isNative) {
-    if (
-      JSBI.greaterThan(currencyAmount.quotient, MIN_NATIVE_CURRENCY_FOR_GAS)
-    ) {
-      return CurrencyAmount.fromRawAmount(
-        currencyAmount.currency,
-        JSBI.subtract(currencyAmount.quotient, MIN_NATIVE_CURRENCY_FOR_GAS),
-      );
-    } else {
-      return CurrencyAmount.fromRawAmount(
-        currencyAmount.currency,
-        JSBI.BigInt(0),
-      );
-    }
+
+  if (amount.gt(MIN_NATIVE_CURRENCY_FOR_GAS)) {
+    return amount.minus(MIN_NATIVE_CURRENCY_FOR_GAS);
   }
-  return currencyAmount;
+
+  return new BigNumber(0);
 }

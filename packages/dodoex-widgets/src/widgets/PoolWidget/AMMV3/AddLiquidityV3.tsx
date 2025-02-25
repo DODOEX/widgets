@@ -1,17 +1,16 @@
+import { CLMM } from '@dodoex/api';
 import { alpha, Box, Button, ButtonBase, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import { useMutation } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
-import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import { CardPlusConnected } from '../../../components/Swap/components/TokenCard';
 import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useSubmission } from '../../../hooks/Submission';
-import { OpCode } from '../../../hooks/Submission/spec';
-import { ExecutionResult, MetadataFlag } from '../../../hooks/Submission/types';
-import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
+import { formatTokenAmountNumber } from '../../../utils';
 import SlippageSetting, {
   useSlipper,
 } from '../PoolOperate/components/SlippageSetting';
@@ -29,16 +28,8 @@ import { useTokenInfo } from './hooks/useTokenInfo';
 import { useV3DerivedMintInfo } from './hooks/useV3DerivedMintInfo';
 import { useV3MintActionHandlers } from './hooks/useV3MintActionHandlers';
 import { reducer, Types } from './reducer';
-import {
-  Currency,
-  CurrencyAmount,
-  NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
-} from './sdks/sdk-core';
-import { NonfungiblePositionManager } from './sdks/v3-sdk';
 import { Bound, Field } from './types';
-import { convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
-import { toSlippagePercent } from './utils/slippage';
 
 export default function AddLiquidityV3({
   params,
@@ -46,8 +37,8 @@ export default function AddLiquidityV3({
   handleGoToPoolList,
 }: {
   params?: {
-    from?: string;
-    to?: string;
+    mint1?: string;
+    mint2?: string;
     fee?: string;
   };
   handleGoBack: () => void;
@@ -58,18 +49,18 @@ export default function AddLiquidityV3({
   const submission = useSubmission();
   const { isMobile } = useWidgetDevice();
 
-  const defaultBaseTokenInfo = useTokenInfo({
-    mint: params?.from,
+  const defaultMint1 = useTokenInfo({
+    mint: params?.mint1,
     chainId,
   });
-  const defaultQuoteTokenInfo = useTokenInfo({
-    mint: params?.to,
+  const defaultMint2 = useTokenInfo({
+    mint: params?.mint2,
     chainId,
   });
 
   const [state, dispatch] = useReducer<typeof reducer>(reducer, {
-    baseToken: null,
-    quoteToken: null,
+    mint1: null,
+    mint2: null,
     feeAmount: params?.fee ? Number(params?.fee) : undefined,
     independentField: Field.MINT_1,
     typedValue: '',
@@ -79,38 +70,38 @@ export default function AddLiquidityV3({
   });
 
   useEffect(() => {
-    if (!defaultBaseTokenInfo) {
+    if (!defaultMint1) {
       return;
     }
     dispatch({
-      type: Types.UpdateDefaultBaseToken,
-      payload: defaultBaseTokenInfo,
+      type: Types.UpdateDefaultMint1,
+      payload: defaultMint1,
     });
-  }, [defaultBaseTokenInfo]);
+  }, [defaultMint1]);
   useEffect(() => {
-    if (!defaultQuoteTokenInfo) {
+    if (!defaultMint2) {
       return;
     }
     dispatch({
-      type: Types.UpdateDefaultQuoteToken,
-      payload: defaultQuoteTokenInfo,
+      type: Types.UpdateDefaultMint2,
+      payload: defaultMint2,
     });
-  }, [defaultQuoteTokenInfo]);
+  }, [defaultMint2]);
 
   const { independentField, typedValue, startPriceTypedValue } = state;
 
   const {
-    pool,
+    poolInfo,
     ticks,
     dependentField,
     price,
     pricesAtTicks,
     pricesAtLimit,
     parsedAmounts,
-    currencyBalances,
+    mintBalances,
     position,
     noLiquidity,
-    currencies,
+    mints,
     errorMessage,
     invalidPool,
     invalidRange,
@@ -119,12 +110,7 @@ export default function AddLiquidityV3({
     depositBDisabled,
     invertPrice,
     ticksAtLimit,
-    isTaxed,
   } = useV3DerivedMintInfo({ state });
-
-  const formattedPrice = useMemo(() => {
-    return (invertPrice ? price?.invert() : price)?.toSignificant();
-  }, [invertPrice, price]);
 
   const {
     onField1Input,
@@ -132,11 +118,10 @@ export default function AddLiquidityV3({
     onLeftRangeInput,
     onRightRangeInput,
     onStartPriceInput,
-  } = useV3MintActionHandlers({ noLiquidity, dispatch });
+  } = useV3MintActionHandlers({ dispatch });
 
   const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
-    address: undefined,
-    type: 'AMMV3',
+    type: CLMM,
   });
 
   const isValid = !errorMessage && !invalidRange;
@@ -147,44 +132,19 @@ export default function AddLiquidityV3({
   // get formatted amounts
   const formattedAmounts = {
     [independentField]: typedValue,
-    [dependentField]: parsedAmounts[dependentField]?.toSignificant(6) ?? '',
+    [dependentField]: parsedAmounts[dependentField]?.toString() ?? '',
   };
 
   // get the max amounts user can add
-  const maxAmounts: { [field in Field]?: CurrencyAmount<Currency> } = [
+  const maxAmounts: { [field in Field]?: BigNumber } = [
     Field.MINT_1,
     Field.MINT_2,
   ].reduce((accumulator, field) => {
     return {
       ...accumulator,
-      [field]: maxAmountSpend(currencyBalances[field]),
+      [field]: maxAmountSpend(mintBalances[field]),
     };
   }, {});
-
-  const approvalA = useTokenStatus(
-    convertBackToTokenInfo(parsedAmounts[Field.MINT_1]?.currency),
-    {
-      contractAddress: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
-      overrideBalance: currencyBalances[Field.MINT_1]
-        ? new BigNumber(currencyBalances[Field.MINT_1].toSignificant())
-        : undefined,
-      amount: parsedAmounts[Field.MINT_1]
-        ? new BigNumber(parsedAmounts[Field.MINT_1].toSignificant())
-        : undefined,
-    },
-  );
-  const approvalB = useTokenStatus(
-    convertBackToTokenInfo(parsedAmounts[Field.MINT_2]?.currency),
-    {
-      contractAddress: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
-      overrideBalance: currencyBalances[Field.MINT_2]
-        ? new BigNumber(currencyBalances[Field.MINT_2].toSignificant())
-        : undefined,
-      amount: parsedAmounts[Field.MINT_2]
-        ? new BigNumber(parsedAmounts[Field.MINT_2].toSignificant())
-        : undefined,
-    },
-  );
 
   // get value and prices at ticks
   const { [Bound.LOWER]: tickLower, [Bound.UPPER]: tickUpper } = ticks;
@@ -200,7 +160,7 @@ export default function AddLiquidityV3({
   } = useRangeHopCallbacks({
     tickLower,
     tickUpper,
-    pool,
+    poolInfo,
     state,
     dispatch,
   });
@@ -210,11 +170,11 @@ export default function AddLiquidityV3({
 
     const minPrice = pricesAtLimit[Bound.LOWER];
     if (minPrice) {
-      onLeftRangeInput(minPrice.toSignificant(5));
+      onLeftRangeInput(minPrice.dp(5).toString());
     }
     const maxPrice = pricesAtLimit[Bound.UPPER];
     if (maxPrice) {
-      onRightRangeInput(maxPrice.toSignificant(5));
+      onRightRangeInput(maxPrice.dp(5).toString());
     }
   }, [getSetFullRange, onLeftRangeInput, onRightRangeInput, pricesAtLimit]);
 
@@ -224,9 +184,9 @@ export default function AddLiquidityV3({
         return;
       }
 
-      if (!state.baseToken || !state.quoteToken) {
-        return;
-      }
+      // if (!state.baseToken || !state.quoteToken) {
+      //   return;
+      // }
 
       // const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
 
@@ -250,25 +210,24 @@ export default function AddLiquidityV3({
         //   data: calldata,
         //   value,
         // };
-
-        const succ = await submission.executeCustom(
-          t`Pool Creation`,
-          {
-            opcode: OpCode.TX,
-            ...txn,
-          },
-          {
-            early: false,
-            metadata: {
-              [MetadataFlag.createAMMV3Pool]: '1',
-            },
-          },
-        );
-        if (succ === ExecutionResult.Success) {
-          setTimeout(() => {
-            handleGoToPoolList();
-          }, 100);
-        }
+        // const succ = await submission.executeCustom(
+        //   t`Pool Creation`,
+        //   {
+        //     opcode: OpCode.TX,
+        //     ...txn,
+        //   },
+        //   {
+        //     early: false,
+        //     metadata: {
+        //       [MetadataFlag.createAMMV3Pool]: '1',
+        //     },
+        //   },
+        // );
+        // if (succ === ExecutionResult.Success) {
+        //   setTimeout(() => {
+        //     handleGoToPoolList();
+        //   }, 100);
+        // }
       } catch (error) {
         console.error('onAddMutation', error);
       }
@@ -371,12 +330,12 @@ export default function AddLiquidityV3({
               {t`Select pair`}
             </Box>
             <TokenPairSelect
-              baseToken={state.baseToken}
-              quoteToken={state.quoteToken}
+              mint1={state.mint1}
+              mint2={state.mint2}
               dispatch={dispatch}
             />
             <FeeSelector
-              disabled={!state.baseToken || !state.quoteToken}
+              disabled={!state.mint1 || !state.mint2}
               feeAmount={state.feeAmount}
               dispatch={dispatch}
             />
@@ -400,7 +359,7 @@ export default function AddLiquidityV3({
               >
                 {t`Set price range`}
               </Box>
-              {Boolean(state.baseToken && state.quoteToken) && (
+              {Boolean(state.mint1 && state.mint2) && (
                 <Box
                   sx={{
                     display: 'flex',
@@ -433,25 +392,15 @@ export default function AddLiquidityV3({
                     }}
                   >{t`Full range`}</Button>
                   <RateToggle
-                    baseToken={state.baseToken}
-                    quoteToken={state.quoteToken}
+                    mint1={state.mint1}
+                    mint2={state.mint2}
                     handleRateToggle={() => {
                       if (
                         !ticksAtLimit[Bound.LOWER] &&
                         !ticksAtLimit[Bound.UPPER]
                       ) {
-                        onLeftRangeInput(
-                          (invertPrice
-                            ? priceLower
-                            : priceUpper?.invert()
-                          )?.toSignificant(6) ?? '',
-                        );
-                        onRightRangeInput(
-                          (invertPrice
-                            ? priceUpper
-                            : priceLower?.invert()
-                          )?.toSignificant(6) ?? '',
-                        );
+                        onLeftRangeInput(priceLower?.dp(6).toString() ?? '');
+                        onRightRangeInput(priceUpper?.dp(6).toString() ?? '');
                         onField1Input(formattedAmounts[Field.MINT_2] ?? '');
                       }
                       dispatch({
@@ -481,8 +430,8 @@ export default function AddLiquidityV3({
               getIncrementUpper={getIncrementUpper}
               onLeftRangeInput={onLeftRangeInput}
               onRightRangeInput={onRightRangeInput}
-              currencyA={state.baseToken}
-              currencyB={state.quoteToken}
+              mint1={state.mint1}
+              mint2={state.mint2}
               feeAmount={state.feeAmount}
               ticksAtLimit={ticksAtLimit}
             />
@@ -551,22 +500,20 @@ export default function AddLiquidityV3({
               >
                 {t`Current price`}
                 <Box>
-                  {formattedPrice}&nbsp;{t`per`}&nbsp;
-                  {state.baseToken?.symbol ?? ''}
+                  {formatTokenAmountNumber({
+                    input: price?.toString(),
+                    decimals: 9,
+                  })}
+                  &nbsp;{t`per`}&nbsp;
+                  {state.mint1?.symbol ?? ''}
                 </Box>
               </Box>
               <LiquidityChartRangeInput
-                currencyA={state.baseToken ?? undefined}
-                currencyB={state.quoteToken ?? undefined}
+                mint1={state.mint1}
+                mint2={state.mint2}
                 feeAmount={state.feeAmount}
                 ticksAtLimit={ticksAtLimit}
-                price={
-                  price
-                    ? parseFloat(
-                        (invertPrice ? price.invert() : price).toSignificant(8),
-                      )
-                    : undefined
-                }
+                price={price ? price.toNumber() : undefined}
                 priceLower={priceLower}
                 priceUpper={priceUpper}
                 onLeftRangeInput={onLeftRangeInput}
@@ -597,8 +544,8 @@ export default function AddLiquidityV3({
                 value={formattedAmounts[Field.MINT_1]}
                 onUserInput={onField1Input}
                 maxAmount={maxAmounts[Field.MINT_1]}
-                balance={currencyBalances[Field.MINT_1]}
-                currency={currencies[Field.MINT_1] ?? null}
+                balance={mintBalances[Field.MINT_1]}
+                mint={mints[Field.MINT_1] ?? null}
                 locked={depositADisabled}
               />
               <CardPlusConnected />
@@ -606,8 +553,8 @@ export default function AddLiquidityV3({
                 value={formattedAmounts[Field.MINT_2]}
                 onUserInput={onField2Input}
                 maxAmount={maxAmounts[Field.MINT_2]}
-                balance={currencyBalances[Field.MINT_2]}
-                currency={currencies[Field.MINT_2] ?? null}
+                balance={mintBalances[Field.MINT_2]}
+                mint={mints[Field.MINT_2] ?? null}
                 locked={depositBDisabled}
               />
             </Box>
@@ -615,7 +562,7 @@ export default function AddLiquidityV3({
               value={slipper}
               onChange={setSlipper}
               disabled={false}
-              type="AMMV3"
+              type={CLMM}
             />
           </DynamicSection>
         </Box>
@@ -633,12 +580,8 @@ export default function AddLiquidityV3({
         >
           <Buttons
             chainId={chainId}
-            approvalA={approvalA}
-            approvalB={approvalB}
             parsedAmounts={parsedAmounts}
             isValid={isValid}
-            depositADisabled={depositADisabled}
-            depositBDisabled={depositBDisabled}
             errorMessage={errorMessage}
             setShowConfirm={setShowConfirm}
           />

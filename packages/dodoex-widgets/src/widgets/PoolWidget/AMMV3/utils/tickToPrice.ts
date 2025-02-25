@@ -1,7 +1,7 @@
 import { SqrtPriceMath } from '@raydium-io/raydium-sdk-v2';
 import BigNumber from 'bignumber.js';
 
-export function getTickToPrice({
+export function tickToPrice({
   tick,
   decimalsA,
   decimalsB,

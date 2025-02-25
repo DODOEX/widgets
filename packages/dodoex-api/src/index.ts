@@ -21,15 +21,17 @@ export { default as RestApiRequests } from './helper/RestApiRequests';
 
 export { AMMV3Api } from './services/ammv3';
 export type { TickData, Ticks } from './services/ammv3';
-export {
-  getPmmModel,
-  PMMHelper,
-  PMMModel,
-  PMMState,
-  PoolApi,
-  solveQuadraticFunctionForTarget,
-} from './services/pool';
-export type { PmmModelParams, PoolType } from './services/pool';
+// export {
+//   getPmmModel,
+//   PMMHelper,
+//   PMMModel,
+//   PMMState,
+//   PoolApi,
+//   solveQuadraticFunctionForTarget,
+// } from './services/pool';
+// export type { PmmModelParams, PoolType } from './services/pool';
+export { CLMM, CPMM } from './services/pool';
+export type { PoolType } from './services/pool';
 export { SwapWidgetApi } from './services/SwapWidgetApi';
 
 export { MiningApi, MiningStatusE } from './services/mining';

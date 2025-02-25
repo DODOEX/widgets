@@ -8,29 +8,29 @@ import {
 import Decimal from 'decimal.js';
 import { FeeAmount, TICK_SPACINGS, nearestUsableTick } from '../sdks/v3-sdk';
 
-export function tryParseTick({
+export function priceToTick({
   decimalsA,
   decimalsB,
-  value,
+  price,
   feeAmount,
 }: {
   decimalsA: number | undefined;
   decimalsB: number | undefined;
-  value: string | undefined;
+  price: string | undefined;
   feeAmount: FeeAmount | undefined;
 }): number | undefined {
-  if (!value || !decimalsA || !decimalsB || !feeAmount) {
+  if (!price || !decimalsA || !decimalsB || !feeAmount) {
     return undefined;
   }
 
   let tick: number;
-  const price = new Decimal(value);
-  if (!price.isFinite()) {
+  const priceD = new Decimal(price);
+  if (!priceD.isFinite()) {
     return undefined;
   }
 
   const sqrtPriceX64 = SqrtPriceMath.priceToSqrtPriceX64(
-    price,
+    priceD,
     decimalsA,
     decimalsB,
   );

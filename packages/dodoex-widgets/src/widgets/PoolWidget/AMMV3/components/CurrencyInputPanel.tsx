@@ -1,18 +1,19 @@
 import { Box, ButtonBase, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
+import BigNumber from 'bignumber.js';
 import { useCallback, useMemo } from 'react';
 import { NumberInput } from '../../../../components/Swap/components/TokenCard/NumberInput';
 import TokenLogo from '../../../../components/TokenLogo';
+import { TokenInfo } from '../../../../hooks/Token/type';
 import { formatTokenAmountNumber } from '../../../../utils';
 import { PercentageSelectButtonGroup } from '../../../MiningWidget/MiningList/operate-area/PercentageSelectButtonGroup';
-import { Currency, CurrencyAmount } from '../sdks/sdk-core';
 
 export interface CurrencyInputPanelProps {
   value: string;
   onUserInput: (value: string) => void;
-  maxAmount: CurrencyAmount<Currency> | undefined;
-  balance: CurrencyAmount<Currency> | undefined;
-  currency?: Currency | null;
+  maxAmount: BigNumber | undefined;
+  balance: BigNumber | undefined;
+  mint?: TokenInfo | null;
   locked?: boolean;
 }
 
@@ -21,24 +22,20 @@ export const CurrencyInputPanel = ({
   onUserInput,
   maxAmount,
   balance,
-  currency,
+  mint,
   locked,
 }: CurrencyInputPanelProps) => {
   const theme = useTheme();
 
   const handleTokenPartChange = useCallback(
     (part: number) => {
-      if (!maxAmount || !currency) {
+      if (!maxAmount || !mint) {
         return;
       }
-      const amount = maxAmount
-        .toExact()
-        .multipliedBy(part)
-        .dp(currency.decimals)
-        .toString();
+      const amount = maxAmount.multipliedBy(part).dp(mint.decimals).toString();
       onUserInput(amount);
     },
-    [currency, maxAmount, onUserInput],
+    [mint, maxAmount, onUserInput],
   );
 
   const optTokenBalanceStr = useMemo(() => {
@@ -47,10 +44,10 @@ export const CurrencyInputPanel = ({
     }
 
     return formatTokenAmountNumber({
-      input: balance.toExact(),
-      decimals: currency?.decimals,
+      input: balance,
+      decimals: mint?.decimals,
     });
-  }, [currency?.decimals, balance]);
+  }, [mint?.decimals, balance]);
 
   return (
     <Box
@@ -82,10 +79,10 @@ export const CurrencyInputPanel = ({
             typography: 'h5',
           }}
         >
-          {currency?.address && (
+          {mint?.address && (
             <TokenLogo
-              address={currency?.address ?? ''}
-              chainId={currency?.chainId}
+              address={mint?.address ?? ''}
+              chainId={mint?.chainId}
               noShowChain
               width={24}
               height={24}
@@ -93,8 +90,8 @@ export const CurrencyInputPanel = ({
             />
           )}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {currency?.address ? (
-              <Box>{currency?.symbol ?? '-'}</Box>
+            {mint?.address ? (
+              <Box>{mint?.symbol ?? '-'}</Box>
             ) : (
               <Trans>SELECT TOKEN</Trans>
             )}

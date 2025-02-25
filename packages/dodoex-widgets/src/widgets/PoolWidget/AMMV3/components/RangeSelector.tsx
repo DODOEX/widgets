@@ -1,22 +1,21 @@
 import { Box } from '@dodoex/components';
-import { Currency } from '../sdks/sdk-core/entities/currency';
-import { Price } from '../sdks/sdk-core/entities/fractions/price';
-import { Token } from '../sdks/sdk-core/entities/token';
+import { Trans } from '@lingui/macro';
+import BigNumber from 'bignumber.js';
+import { TokenInfo } from '../../../../hooks/Token';
 import { Bound } from '../types';
 import StepCounter from './InputStepCounter';
-import { Trans } from '@lingui/macro';
 
 export interface RangeSelectorProps {
-  priceLower?: Price<Token, Token>;
-  priceUpper?: Price<Token, Token>;
+  priceLower: BigNumber | undefined;
+  priceUpper: BigNumber | undefined;
   getDecrementLower: () => string;
   getIncrementLower: () => string;
   getDecrementUpper: () => string;
   getIncrementUpper: () => string;
   onLeftRangeInput: (typedValue: string) => void;
   onRightRangeInput: (typedValue: string) => void;
-  currencyA?: Currency | null;
-  currencyB?: Currency | null;
+  mint1: Maybe<TokenInfo>;
+  mint2: Maybe<TokenInfo>;
   feeAmount?: number;
   ticksAtLimit: { [bound in Bound]?: boolean | undefined };
 }
@@ -30,17 +29,13 @@ export const RangeSelector = ({
   getIncrementLower,
   getDecrementUpper,
   getIncrementUpper,
-  currencyA,
-  currencyB,
+  mint1,
+  mint2,
   feeAmount,
   ticksAtLimit,
 }: RangeSelectorProps) => {
-  const tokenA = (currencyA ?? undefined)?.wrapped;
-  const tokenB = (currencyB ?? undefined)?.wrapped;
-  const isSorted = tokenA && tokenB && tokenA.sortsBefore(tokenB);
-
-  const leftPrice = isSorted ? priceLower : priceUpper?.invert();
-  const rightPrice = isSorted ? priceUpper : priceLower?.invert();
+  const leftPrice = priceLower;
+  const rightPrice = priceUpper;
 
   return (
     <Box
@@ -53,48 +48,36 @@ export const RangeSelector = ({
     >
       <StepCounter
         value={
-          ticksAtLimit[isSorted ? Bound.LOWER : Bound.UPPER]
-            ? '0'
-            : (leftPrice?.toSignificant(8) ?? '')
+          ticksAtLimit[Bound.LOWER] ? '0' : (leftPrice?.dp(8).toString() ?? '')
         }
         onUserInput={onLeftRangeInput}
-        decrement={isSorted ? getDecrementLower : getIncrementUpper}
-        increment={isSorted ? getIncrementLower : getDecrementUpper}
-        decrementDisabled={
-          leftPrice === undefined ||
-          ticksAtLimit[isSorted ? Bound.LOWER : Bound.UPPER]
-        }
-        incrementDisabled={
-          leftPrice === undefined ||
-          ticksAtLimit[isSorted ? Bound.LOWER : Bound.UPPER]
-        }
+        decrement={getDecrementLower}
+        increment={getIncrementLower}
+        decrementDisabled={leftPrice === undefined || ticksAtLimit[Bound.LOWER]}
+        incrementDisabled={leftPrice === undefined || ticksAtLimit[Bound.LOWER]}
         feeAmount={feeAmount}
-        label={leftPrice ? `${currencyB?.symbol}` : '-'}
+        label={leftPrice ? `${mint2?.symbol}` : '-'}
         title={<Trans>Low price</Trans>}
-        tokenA={currencyA?.symbol}
-        tokenB={currencyB?.symbol}
+        tokenA={mint1?.symbol}
+        tokenB={mint2?.symbol}
       />
       <StepCounter
         value={
-          ticksAtLimit[isSorted ? Bound.UPPER : Bound.LOWER]
-            ? '∞'
-            : (rightPrice?.toSignificant(8) ?? '')
+          ticksAtLimit[Bound.UPPER] ? '∞' : (rightPrice?.dp(8).toString() ?? '')
         }
         onUserInput={onRightRangeInput}
-        decrement={isSorted ? getDecrementUpper : getIncrementLower}
-        increment={isSorted ? getIncrementUpper : getDecrementLower}
+        decrement={getDecrementUpper}
+        increment={getIncrementUpper}
         incrementDisabled={
-          rightPrice === undefined ||
-          ticksAtLimit[isSorted ? Bound.UPPER : Bound.LOWER]
+          rightPrice === undefined || ticksAtLimit[Bound.UPPER]
         }
         decrementDisabled={
-          rightPrice === undefined ||
-          ticksAtLimit[isSorted ? Bound.UPPER : Bound.LOWER]
+          rightPrice === undefined || ticksAtLimit[Bound.UPPER]
         }
         feeAmount={feeAmount}
-        label={rightPrice ? `${currencyB?.symbol}` : '-'}
-        tokenA={currencyA?.symbol}
-        tokenB={currencyB?.symbol}
+        label={rightPrice ? `${mint2?.symbol}` : '-'}
+        tokenA={mint1?.symbol}
+        tokenB={mint2?.symbol}
         title={<Trans>High price</Trans>}
       />
     </Box>

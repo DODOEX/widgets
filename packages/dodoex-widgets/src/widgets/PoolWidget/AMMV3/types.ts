@@ -48,6 +48,7 @@ export interface PoolInfoI extends ApiV3PoolInfoConcentratedItem {
   mintASymbol: string;
   mintBChainId: ChainId;
   mintBSymbol: string;
+  tickCurrent: PoolInfoT['computePoolInfo']['tickCurrent'];
 }
 
 export interface PositionI {

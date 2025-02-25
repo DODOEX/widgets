@@ -1,137 +1,118 @@
-import { useCallback, useMemo } from 'react';
+import BigNumber from 'bignumber.js';
+import { useCallback } from 'react';
 import { Actions, StateProps, Types } from '../reducer';
-import { Rounding } from '../sdks/sdk-core/constants';
-import { Pool, TICK_SPACINGS, tickToPrice } from '../sdks/v3-sdk';
+import { TICK_SPACINGS } from '../sdks/v3-sdk';
+import { PoolInfoI } from '../types';
+import { tickToPrice } from '../utils/tickToPrice';
 
 export function useRangeHopCallbacks({
   tickLower,
   tickUpper,
-  pool,
+  poolInfo,
   state,
   dispatch,
 }: {
   tickLower: number | undefined;
   tickUpper: number | undefined;
-  pool?: Pool | undefined | null;
+  poolInfo: PoolInfoI | undefined;
   state: StateProps;
   dispatch: React.Dispatch<Actions>;
 }) {
-  const {
-    baseToken: baseCurrency,
-    quoteToken: quoteCurrency,
-    feeAmount,
-  } = state;
-
-  const baseToken = useMemo(() => baseCurrency?.wrapped, [baseCurrency]);
-  const quoteToken = useMemo(() => quoteCurrency?.wrapped, [quoteCurrency]);
+  const { feeAmount } = state;
+  const decimalsA = poolInfo?.mintA?.decimals;
+  const decimalsB = poolInfo?.mintB?.decimals;
 
   const getDecrementLower = useCallback(() => {
-    if (baseToken && quoteToken && typeof tickLower === 'number' && feeAmount) {
-      const newPrice = tickToPrice(
-        baseToken,
-        quoteToken,
-        tickLower - TICK_SPACINGS[feeAmount],
-      );
-      return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
+    if (!feeAmount) {
+      return '';
     }
-    // use pool current tick as starting tick if we have pool but no tick input
-    if (
-      !(typeof tickLower === 'number') &&
-      baseToken &&
-      quoteToken &&
-      feeAmount &&
-      pool
-    ) {
-      const newPrice = tickToPrice(
-        baseToken,
-        quoteToken,
-        pool.tickCurrent - TICK_SPACINGS[feeAmount],
-      );
-      return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
+
+    const nextTick =
+      typeof tickLower === 'number' ? tickLower : poolInfo?.tickCurrent;
+    if (!nextTick) {
+      return '';
     }
-    return '';
-  }, [baseToken, quoteToken, tickLower, feeAmount, pool]);
+
+    const newPrice = tickToPrice({
+      decimalsA,
+      decimalsB,
+      tick: nextTick - TICK_SPACINGS[feeAmount],
+    });
+    if (!newPrice) {
+      return '';
+    }
+
+    return newPrice.dp(5, BigNumber.ROUND_UP).toString();
+  }, [decimalsA, decimalsB, feeAmount, poolInfo?.tickCurrent, tickLower]);
 
   const getIncrementLower = useCallback(() => {
-    if (baseToken && quoteToken && typeof tickLower === 'number' && feeAmount) {
-      const newPrice = tickToPrice(
-        baseToken,
-        quoteToken,
-        tickLower + TICK_SPACINGS[feeAmount],
-      );
-      return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
+    if (!feeAmount) {
+      return '';
     }
-    // use pool current tick as starting tick if we have pool but no tick input
-    if (
-      !(typeof tickLower === 'number') &&
-      baseToken &&
-      quoteToken &&
-      feeAmount &&
-      pool
-    ) {
-      const newPrice = tickToPrice(
-        baseToken,
-        quoteToken,
-        pool.tickCurrent + TICK_SPACINGS[feeAmount],
-      );
-      return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
+
+    const nextTick =
+      typeof tickLower === 'number' ? tickLower : poolInfo?.tickCurrent;
+    if (!nextTick) {
+      return '';
     }
-    return '';
-  }, [baseToken, quoteToken, tickLower, feeAmount, pool]);
+
+    const newPrice = tickToPrice({
+      decimalsA,
+      decimalsB,
+      tick: nextTick + TICK_SPACINGS[feeAmount],
+    });
+    if (!newPrice) {
+      return '';
+    }
+
+    return newPrice.dp(5, BigNumber.ROUND_UP).toString();
+  }, [decimalsA, decimalsB, feeAmount, poolInfo?.tickCurrent, tickLower]);
 
   const getDecrementUpper = useCallback(() => {
-    if (baseToken && quoteToken && typeof tickUpper === 'number' && feeAmount) {
-      const newPrice = tickToPrice(
-        baseToken,
-        quoteToken,
-        tickUpper - TICK_SPACINGS[feeAmount],
-      );
-      return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
+    if (!feeAmount) {
+      return '';
     }
-    // use pool current tick as starting tick if we have pool but no tick input
-    if (
-      !(typeof tickUpper === 'number') &&
-      baseToken &&
-      quoteToken &&
-      feeAmount &&
-      pool
-    ) {
-      const newPrice = tickToPrice(
-        baseToken,
-        quoteToken,
-        pool.tickCurrent - TICK_SPACINGS[feeAmount],
-      );
-      return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
+
+    const nextTick =
+      typeof tickUpper === 'number' ? tickUpper : poolInfo?.tickCurrent;
+    if (!nextTick) {
+      return '';
     }
-    return '';
-  }, [baseToken, quoteToken, tickUpper, feeAmount, pool]);
+
+    const newPrice = tickToPrice({
+      decimalsA,
+      decimalsB,
+      tick: nextTick - TICK_SPACINGS[feeAmount],
+    });
+    if (!newPrice) {
+      return '';
+    }
+
+    return newPrice.dp(5, BigNumber.ROUND_UP).toString();
+  }, [decimalsA, decimalsB, feeAmount, poolInfo?.tickCurrent, tickUpper]);
 
   const getIncrementUpper = useCallback(() => {
-    if (baseToken && quoteToken && typeof tickUpper === 'number' && feeAmount) {
-      const newPrice = tickToPrice(
-        baseToken,
-        quoteToken,
-        tickUpper + TICK_SPACINGS[feeAmount],
-      );
-      return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
+    if (!feeAmount) {
+      return '';
     }
-    // use pool current tick as starting tick if we have pool but no tick input
-    if (
-      !(typeof tickUpper === 'number') &&
-      baseToken &&
-      quoteToken &&
-      feeAmount &&
-      pool
-    ) {
-      const newPrice = tickToPrice(
-        baseToken,
-        quoteToken,
-        pool.tickCurrent + TICK_SPACINGS[feeAmount],
-      );
-      return newPrice.toSignificant(5, undefined, Rounding.ROUND_UP);
+
+    const nextTick =
+      typeof tickUpper === 'number' ? tickUpper : poolInfo?.tickCurrent;
+    if (!nextTick) {
+      return '';
     }
-    return '';
-  }, [baseToken, quoteToken, tickUpper, feeAmount, pool]);
+
+    const newPrice = tickToPrice({
+      decimalsA,
+      decimalsB,
+      tick: nextTick + TICK_SPACINGS[feeAmount],
+    });
+    if (!newPrice) {
+      return '';
+    }
+
+    return newPrice.dp(5, BigNumber.ROUND_UP).toString();
+  }, [decimalsA, decimalsB, feeAmount, poolInfo?.tickCurrent, tickUpper]);
 
   const getSetFullRange = useCallback(() => {
     dispatch({

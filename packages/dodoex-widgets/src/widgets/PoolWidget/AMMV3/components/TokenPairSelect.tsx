@@ -5,10 +5,8 @@ import { TokenPickerDialog } from '../../../../components/Swap/components/TokenC
 import TokenLogo from '../../../../components/TokenLogo';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { TokenInfo } from '../../../../hooks/Token';
-import { Actions, StateProps, Types } from '../reducer';
-import { Currency } from '../sdks/sdk-core/entities/currency';
+import { Actions, Types } from '../reducer';
 import { ReactComponent as Arrow } from './arrow.svg';
-import { convertBackToTokenInfo } from '../utils';
 
 function TokenPickSelect({
   token,
@@ -16,7 +14,7 @@ function TokenPickSelect({
   dispatch,
   tokenSelectOnChange,
 }: {
-  token: Maybe<Currency>;
+  token: Maybe<TokenInfo>;
   oppositeTokenAddress: string;
   dispatch: React.Dispatch<Actions>;
   tokenSelectOnChange: (value: TokenInfo) => void;
@@ -113,7 +111,7 @@ function TokenPickSelect({
       </Box>
 
       <TokenPickerDialog
-        value={convertBackToTokenInfo(token)}
+        value={token}
         open={tokenPickerVisible}
         chainId={chainId}
         occupiedAddrs={[oppositeTokenAddress]}
@@ -127,7 +125,7 @@ function TokenPickSelect({
           }
           if (occupied) {
             dispatch({
-              type: Types.UpdateBaseTokenAndClearQuoteToken,
+              type: Types.UpdateMint1AndClearMint2,
               payload: selectedToken,
             });
             setTokenPickerVisible(false);
@@ -143,14 +141,14 @@ function TokenPickSelect({
 }
 
 export interface TokenPairSelectProps {
-  baseToken: StateProps['baseToken'];
-  quoteToken: StateProps['quoteToken'];
+  mint1: Maybe<TokenInfo>;
+  mint2: Maybe<TokenInfo>;
   dispatch: React.Dispatch<Actions>;
 }
 
 export const TokenPairSelect = ({
-  baseToken,
-  quoteToken,
+  mint1,
+  mint2,
   dispatch,
 }: TokenPairSelectProps) => {
   const theme = useTheme();
@@ -168,23 +166,23 @@ export const TokenPairSelect = ({
       }}
     >
       <TokenPickSelect
-        token={baseToken}
-        oppositeTokenAddress={quoteToken?.address ?? ''}
+        token={mint1}
+        oppositeTokenAddress={mint2?.address ?? ''}
         dispatch={dispatch}
         tokenSelectOnChange={(payload: TokenInfo) => {
           dispatch({
-            type: Types.UpdateBaseToken,
+            type: Types.UpdateMint1,
             payload,
           });
         }}
       />
       <TokenPickSelect
-        token={quoteToken}
-        oppositeTokenAddress={baseToken?.address ?? ''}
+        token={mint2}
+        oppositeTokenAddress={mint1?.address ?? ''}
         dispatch={dispatch}
         tokenSelectOnChange={(payload: TokenInfo) => {
           dispatch({
-            type: Types.UpdateQuoteToken,
+            type: Types.UpdateMint2,
             payload,
           });
         }}
