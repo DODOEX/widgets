@@ -220,7 +220,7 @@ export default function AddLiquidityV3({
 
   const onAddMutation = useMutation({
     mutationFn: async () => {
-      if (!account || !chainId || !position) {
+      if (!account || !chainId) {
         return;
       }
 
@@ -228,30 +228,30 @@ export default function AddLiquidityV3({
         return;
       }
 
-      const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
+      // const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
 
-      const useNative = state.baseToken.isNative
-        ? state.baseToken
-        : state.quoteToken.isNative
-          ? state.quoteToken
-          : undefined;
+      // const useNative = state.baseToken.isNative
+      //   ? state.baseToken
+      //   : state.quoteToken.isNative
+      //     ? state.quoteToken
+      //     : undefined;
 
       try {
-        const { calldata, value } =
-          NonfungiblePositionManager.addCallParameters(position, {
-            slippageTolerance: toSlippagePercent(slipperValue * 100),
-            recipient: account,
-            deadline: deadline.toString(),
-            useNative,
-            createPool: noLiquidity,
-          });
-        let txn: { to: string; data: string; value: string } = {
-          to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
-          data: calldata,
-          value,
-        };
+        // const { calldata, value } =
+        //   NonfungiblePositionManager.addCallParameters(position, {
+        //     slippageTolerance: toSlippagePercent(slipperValue * 100),
+        //     recipient: account,
+        //     deadline: deadline.toString(),
+        //     useNative,
+        //     createPool: noLiquidity,
+        //   });
+        // let txn: { to: string; data: string; value: string } = {
+        //   to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
+        //   data: calldata,
+        //   value,
+        // };
 
-        const succ = await submission.execute(
+        const succ = await submission.executeCustom(
           t`Pool Creation`,
           {
             opcode: OpCode.TX,
@@ -645,11 +645,7 @@ export default function AddLiquidityV3({
         </Box>
 
         <ReviewModal
-          parsedAmounts={parsedAmounts}
           position={position}
-          existingPosition={undefined}
-          priceLower={priceLower}
-          priceUpper={priceUpper}
           outOfRange={outOfRange}
           ticksAtLimit={ticksAtLimit}
           on={showConfirm}

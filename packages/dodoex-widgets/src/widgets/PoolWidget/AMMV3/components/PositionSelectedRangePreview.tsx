@@ -1,10 +1,8 @@
 import { Box, useTheme } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
-import { ReactNode, useCallback, useState } from 'react';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { formatTokenAmountNumber } from '../../../../utils';
-import { Currency } from '../sdks/sdk-core';
-import { Position } from '../sdks/v3-sdk';
-import { Bound } from '../types';
+import { Bound, PositionI } from '../types';
 import { formatTickPrice } from '../utils/formatTickPrice';
 import { RateToggle } from './RateToggle';
 import { AutoColumn, LightCard, RowBetween } from './widgets';
@@ -12,47 +10,65 @@ import { AutoColumn, LightCard, RowBetween } from './widgets';
 export const PositionSelectedRangePreview = ({
   position,
   title,
-  baseCurrencyDefault,
   ticksAtLimit,
 }: {
-  position: Position;
+  position: PositionI;
   title?: ReactNode;
-  baseCurrencyDefault?: Currency;
   ticksAtLimit: { [bound: string]: boolean | undefined };
 }) => {
-  const currency0 = position.pool.token0;
-  const currency1 = position.pool.token1;
+  const {
+    poolInfo: {
+      mintA,
+      mintB,
+      feeRate,
+      mintASymbol,
+      mintBSymbol,
+      mintAChainId,
+      mintBChainId,
+      price,
+    },
+    liquidity,
+    amountA,
+    amountB,
+    tickLowerPrice,
+    tickUpperPrice,
+  } = position;
 
   const theme = useTheme();
 
   // track which currency should be base
-  const [baseCurrency, setBaseCurrency] = useState(
-    baseCurrencyDefault
-      ? baseCurrencyDefault === currency0
-        ? currency0
-        : baseCurrencyDefault === currency1
-          ? currency1
-          : currency0
-      : currency0,
-  );
+  const [mint1, setMint1] = useState({
+    ...mintA,
+    chainId: mintAChainId,
+    symbol: mintASymbol,
+  });
 
-  const sorted = baseCurrency === currency0;
-  const quoteCurrency = sorted ? currency1 : currency0;
-
-  const price = sorted
-    ? position.pool.priceOf(position.pool.token0)
-    : position.pool.priceOf(position.pool.token1);
-
-  const priceLower = sorted
-    ? position.token0PriceLower
-    : position.token0PriceUpper.invert();
-  const priceUpper = sorted
-    ? position.token0PriceUpper
-    : position.token0PriceLower.invert();
+  const mint2 = useMemo(() => {
+    const sorted = mint1.address === mintA.address;
+    return sorted
+      ? {
+          ...mintB,
+          chainId: mintBChainId,
+          symbol: mintBSymbol,
+        }
+      : {
+          ...mintA,
+          chainId: mintAChainId,
+          symbol: mintASymbol,
+        };
+  }, [
+    mint1,
+    mintA,
+    mintAChainId,
+    mintASymbol,
+    mintB,
+    mintBChainId,
+    mintBSymbol,
+  ]);
 
   const handleRateChange = useCallback(() => {
-    setBaseCurrency(quoteCurrency);
-  }, [quoteCurrency]);
+    setMint1(mint2);
+  }, [mint2]);
 
   return (
     <AutoColumn gap="md">
@@ -71,8 +87,8 @@ export const PositionSelectedRangePreview = ({
           <div />
         )}
         <RateToggle
-          baseToken={sorted ? currency0 : currency1}
-          quoteToken={sorted ? currency1 : currency0}
+          mint1={mint1}
+          mint2={mint2}
           handleRateToggle={handleRateChange}
         />
       </RowBetween>
@@ -107,7 +123,7 @@ export const PositionSelectedRangePreview = ({
               }}
             >
               <Trans>
-                {quoteCurrency.symbol} per {baseCurrency.symbol}
+                {mint2.symbol} per {mint1.symbol}
               </Trans>
             </Box>
           </Box>
@@ -118,7 +134,7 @@ export const PositionSelectedRangePreview = ({
             }}
           >
             {formatTickPrice({
-              price: priceLower,
+              price: tickLowerPrice,
               atLimit: ticksAtLimit,
               direction: Bound.LOWER,
             })}
@@ -130,8 +146,8 @@ export const PositionSelectedRangePreview = ({
             }}
           >
             <Trans>
-              Your position will be 100% composed of {baseCurrency?.symbol} at
-              this price
+              Your position will be 100% composed of {mint1?.symbol} at this
+              price
             </Trans>
           </Box>
         </LightCard>
@@ -165,7 +181,7 @@ export const PositionSelectedRangePreview = ({
               }}
             >
               <Trans>
-                {quoteCurrency.symbol} per {baseCurrency.symbol}
+                {mint2.symbol} per {mint1.symbol}
               </Trans>
             </Box>
           </Box>
@@ -176,7 +192,7 @@ export const PositionSelectedRangePreview = ({
             }}
           >
             {formatTickPrice({
-              price: priceUpper,
+              price: tickUpperPrice,
               atLimit: ticksAtLimit,
               direction: Bound.UPPER,
             })}
@@ -189,8 +205,8 @@ export const PositionSelectedRangePreview = ({
             }}
           >
             <Trans>
-              Your position will be 100% composed of {quoteCurrency?.symbol} at
-              this price
+              Your position will be 100% composed of {mint2?.symbol} at this
+              price
             </Trans>
           </Box>
         </LightCard>
@@ -219,7 +235,7 @@ export const PositionSelectedRangePreview = ({
             }}
           >
             <Trans>
-              {quoteCurrency.symbol} per {baseCurrency.symbol}
+              {mint2.symbol} per {mint1.symbol}
             </Trans>
           </Box>
         </AutoColumn>
@@ -228,9 +244,11 @@ export const PositionSelectedRangePreview = ({
             color: theme.palette.text.primary,
             typography: 'caption',
           }}
-        >{`${formatTokenAmountNumber({
-          input: price.toSignificant(),
-        })} `}</Box>
+        >
+          {formatTokenAmountNumber({
+            input: price,
+          })}
+        </Box>
       </LightCard>
     </AutoColumn>
   );

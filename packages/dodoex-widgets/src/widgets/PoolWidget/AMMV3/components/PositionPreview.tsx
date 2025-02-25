@@ -1,16 +1,14 @@
 import { Box } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
-import JSBI from 'jsbi';
 import { ReactNode } from 'react';
 import TokenLogo from '../../../../components/TokenLogo';
 import { TokenLogoPair } from '../../../../components/TokenLogoPair';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import {
   formatPercentageNumber,
   formatTokenAmountNumber,
 } from '../../../../utils';
-import { BIPS_BASE } from '../constants/misc';
-import { Currency } from '../sdks/sdk-core';
-import { Position } from '../sdks/v3-sdk';
+import { PositionI } from '../types';
 import { AMMV3 } from './Badge/AMMV3';
 import RangeBadge from './Badge/RangeBadge';
 import { PositionSelectedRangePreview } from './PositionSelectedRangePreview';
@@ -20,30 +18,38 @@ export const PositionPreview = ({
   position,
   title,
   inRange,
-  baseCurrencyDefault,
   ticksAtLimit,
 }: {
-  position: Position;
+  position: PositionI;
   title?: ReactNode;
   inRange: boolean;
-  baseCurrencyDefault?: Currency;
   ticksAtLimit: { [bound: string]: boolean | undefined };
 }) => {
-  const currency0 = position.pool.token0;
-  const currency1 = position.pool.token1;
+  const { chainId } = useWalletInfo();
 
-  const removed =
-    position?.liquidity && JSBI.equal(position?.liquidity, JSBI.BigInt(0));
+  const {
+    poolInfo: {
+      mintA,
+      mintB,
+      feeRate,
+      mintASymbol,
+      mintBSymbol,
+      mintAChainId,
+      mintBChainId,
+    },
+    liquidity,
+    amountA,
+    amountB,
+  } = position;
+
+  const removed = liquidity.isZero();
 
   return (
     <AutoColumn gap="md" style={{ marginTop: '0.5rem' }}>
       <RowBetween style={{ gap: 4 }}>
         <RowFixed>
           <TokenLogoPair
-            tokens={[
-              { address: currency0.address },
-              { address: currency1.address },
-            ]}
+            tokens={[{ address: mintA.address }, { address: mintB.address }]}
             mr={8}
           />
           <Box
@@ -51,7 +57,7 @@ export const PositionPreview = ({
               typography: 'h5',
             }}
           >
-            {currency0?.symbol} / {currency1?.symbol}
+            {mintA.symbol} / {mintB.symbol}
           </Box>
         </RowFixed>
         <AMMV3
@@ -67,8 +73,8 @@ export const PositionPreview = ({
           <RowBetween>
             <RowFixed>
               <TokenLogo
-                address={currency0?.address ?? ''}
-                chainId={currency0?.chainId}
+                address={mintA.address}
+                chainId={mintAChainId}
                 noShowChain
                 width={32}
                 height={32}
@@ -79,7 +85,7 @@ export const PositionPreview = ({
                   ml: 8,
                 }}
               >
-                {currency0?.symbol}
+                {mintA.symbol}
               </Box>
             </RowFixed>
             <RowFixed>
@@ -89,8 +95,8 @@ export const PositionPreview = ({
                 }}
               >
                 {formatTokenAmountNumber({
-                  input: position.amount0.toSignificant(),
-                  decimals: currency0?.decimals,
+                  input: amountA,
+                  decimals: mintA.decimals,
                 })}
               </Box>
             </RowFixed>
@@ -98,20 +104,20 @@ export const PositionPreview = ({
           <RowBetween>
             <RowFixed>
               <TokenLogo
-                address={currency1?.address ?? ''}
-                chainId={currency1?.chainId}
+                address={mintB.address}
+                chainId={chainId}
                 noShowChain
                 width={32}
                 height={32}
                 marginRight={0}
               />
-              <Box ml="8px">{currency1?.symbol}</Box>
+              <Box ml="8px">{mintB.symbol}</Box>
             </RowFixed>
             <RowFixed>
               <Box mr="8px">
                 {formatTokenAmountNumber({
-                  input: position.amount1.toSignificant(),
-                  decimals: currency1?.decimals,
+                  input: amountB,
+                  decimals: mintB.decimals,
                 })}
               </Box>
             </RowFixed>
@@ -123,7 +129,7 @@ export const PositionPreview = ({
           </Box>
           <Box>
             {formatPercentageNumber({
-              input: position?.pool?.fee / (BIPS_BASE * 100),
+              input: (feeRate / 10000) * 100,
             })}
           </Box>
         </RowBetween>
@@ -132,7 +138,6 @@ export const PositionPreview = ({
       <PositionSelectedRangePreview
         position={position}
         title={title}
-        baseCurrencyDefault={baseCurrencyDefault}
         ticksAtLimit={ticksAtLimit}
       />
     </AutoColumn>

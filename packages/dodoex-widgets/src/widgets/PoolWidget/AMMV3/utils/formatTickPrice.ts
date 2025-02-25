@@ -1,5 +1,5 @@
+import BigNumber from 'bignumber.js';
 import { formatTokenAmountNumber } from '../../../../utils';
-import { Currency, Price } from '../sdks/sdk-core';
 import { Bound } from '../types';
 
 export function formatTickPrice({
@@ -7,7 +7,7 @@ export function formatTickPrice({
   atLimit,
   direction,
 }: {
-  price?: Price<Currency, Currency> | string;
+  price?: BigNumber | string;
   atLimit: { [bound in Bound]?: boolean | undefined };
   direction: Bound;
 }) {
@@ -20,6 +20,6 @@ export function formatTickPrice({
   }
 
   return formatTokenAmountNumber({
-    input: typeof price === 'string' ? price : price?.toSignificant(),
+    input: price,
   });
 }

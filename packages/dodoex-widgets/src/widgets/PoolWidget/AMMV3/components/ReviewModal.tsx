@@ -2,17 +2,11 @@ import { Box, Button } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import Dialog from '../../../../components/Dialog';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
-import { Currency, CurrencyAmount, Price } from '../sdks/sdk-core';
-import { Position } from '../sdks/v3-sdk';
-import { Bound, Field } from '../types';
+import { Bound, PositionI } from '../types';
 import { PositionPreview } from './PositionPreview';
 
 export interface ReviewModalProps {
-  position?: Position;
-  existingPosition?: Position;
-  parsedAmounts: { [field in Field]?: CurrencyAmount<Currency> };
-  priceLower?: Price<Currency, Currency>;
-  priceUpper?: Price<Currency, Currency>;
+  position?: PositionI;
   outOfRange: boolean;
   ticksAtLimit: { [bound in Bound]?: boolean | undefined };
   on: boolean;
@@ -22,11 +16,11 @@ export interface ReviewModalProps {
 }
 
 export const ReviewModal = ({
-  on,
-  onClose,
   position,
   outOfRange,
   ticksAtLimit,
+  on,
+  onClose,
   onConfirm,
   loading,
 }: ReviewModalProps) => {

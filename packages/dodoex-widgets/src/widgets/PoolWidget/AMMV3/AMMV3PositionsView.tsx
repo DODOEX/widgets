@@ -12,7 +12,7 @@ import { AMMV3PositionManage } from './AMMV3PositionManage';
 import { PositionViewCard } from './components/PositionViewCard';
 import { useV3Positions } from './hooks/useV3Positions';
 import { FeeAmount } from './sdks/v3-sdk';
-import { PositionDetails } from './types/position';
+import { PositionDetails } from './types';
 import { areAddressesEqual, buildCurrency } from './utils';
 
 export interface AMMV3PositionsViewProps {

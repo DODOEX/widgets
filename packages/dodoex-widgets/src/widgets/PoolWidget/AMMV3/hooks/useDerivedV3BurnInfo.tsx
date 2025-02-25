@@ -3,7 +3,7 @@ import { ReactNode, useMemo } from 'react';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { Currency, CurrencyAmount, Percent } from '../sdks/sdk-core';
 import { Position } from '../sdks/v3-sdk';
-import { PositionDetails } from '../types/position';
+import { PositionDetails } from '../types';
 import { usePool } from './usePool';
 
 export function useDerivedV3BurnInfo({

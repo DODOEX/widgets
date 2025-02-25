@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { TokenInfo } from '../../../../hooks/Token';
 import { usePool } from './usePool';
 import { Pool, Position as V3Position } from '../sdks/v3-sdk';
-import { PositionDetails } from '../types/position';
+import { PositionDetails } from '../types';
 import { buildCurrency } from '../utils';
 
 export function useDerivedPositionInfo(

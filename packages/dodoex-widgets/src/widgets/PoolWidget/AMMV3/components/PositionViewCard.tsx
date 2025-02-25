@@ -7,7 +7,7 @@ import { usePool } from '../hooks/usePool';
 import { Currency, Price, Token } from '../sdks/sdk-core';
 import { Position as V3Position } from '../sdks/v3-sdk';
 import { Bound } from '../types';
-import { PositionDetails } from '../types/position';
+import { PositionDetails } from '../types';
 import { formatTickPrice } from '../utils/formatTickPrice';
 import { InRangeDot } from './InRangeDot';
 

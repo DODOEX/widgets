@@ -609,11 +609,7 @@ export const AMMV3PositionManage = ({
             </Box>
 
             <ReviewModal
-              parsedAmounts={parsedAmounts}
               position={position}
-              existingPosition={undefined}
-              priceLower={priceLower}
-              priceUpper={priceUpper}
               outOfRange={outOfRange}
               ticksAtLimit={ticksAtLimit}
               on={showConfirm}

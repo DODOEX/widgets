@@ -1,9 +1,9 @@
 import { ChainId } from '@dodoex/api';
-import { Clmm } from '@raydium-io/raydium-sdk-v2';
 import { useQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
 import { useRaydiumSDKContext } from '../../../../hooks/raydium-sdk-V2/RaydiumSDKContext';
 import { FeeAmount, computePoolAddress } from '../sdks/v3-sdk';
-import { useMemo } from 'react';
+import { PoolInfoT } from '../types';
 
 export enum PoolState {
   LOADING,
@@ -12,14 +12,12 @@ export enum PoolState {
   INVALID,
 }
 
-export type PoolInfo = Awaited<ReturnType<Clmm['getPoolInfoFromRpc']>>;
-
 export function usePool(
   mint1Address: string | undefined,
   mint2Address: string | undefined,
   feeAmount: FeeAmount | undefined,
   chainId: ChainId,
-): [PoolState, PoolInfo | null, id: string | null] {
+): [PoolState, PoolInfoT | null, id: string | null] {
   const raydium = useRaydiumSDKContext();
 
   const id = useMemo(() => {

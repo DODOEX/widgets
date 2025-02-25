@@ -1,15 +1,12 @@
 import {
   MAX_SQRT_PRICE_X64,
+  MAX_TICK,
   MIN_SQRT_PRICE_X64,
+  MIN_TICK,
   SqrtPriceMath,
 } from '@raydium-io/raydium-sdk-v2';
 import Decimal from 'decimal.js';
-import {
-  FeeAmount,
-  TICK_SPACINGS,
-  TickMath,
-  nearestUsableTick,
-} from '../sdks/v3-sdk';
+import { FeeAmount, TICK_SPACINGS, nearestUsableTick } from '../sdks/v3-sdk';
 
 export function tryParseTick({
   decimalsA,
@@ -19,7 +16,7 @@ export function tryParseTick({
 }: {
   decimalsA: number | undefined;
   decimalsB: number | undefined;
-  value: string;
+  value: string | undefined;
   feeAmount: FeeAmount | undefined;
 }): number | undefined {
   if (!value || !decimalsA || !decimalsB || !feeAmount) {
@@ -39,9 +36,9 @@ export function tryParseTick({
   );
 
   if (sqrtPriceX64.gt(MAX_SQRT_PRICE_X64)) {
-    tick = TickMath.MAX_TICK;
+    tick = MAX_TICK;
   } else if (sqrtPriceX64.lt(MIN_SQRT_PRICE_X64)) {
-    tick = TickMath.MIN_TICK;
+    tick = MIN_TICK;
   } else {
     // this function is agnostic to the base, will always return the correct tick
     tick = SqrtPriceMath.getTickFromSqrtPriceX64(sqrtPriceX64);

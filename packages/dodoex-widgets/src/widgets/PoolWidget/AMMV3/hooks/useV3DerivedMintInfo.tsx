@@ -5,39 +5,29 @@ import {
   MAX_TICK,
   MIN_SQRT_PRICE_X64,
   MIN_TICK,
+  PoolUtils,
   SqrtPriceMath,
   toApiV3Token,
 } from '@raydium-io/raydium-sdk-v2';
+import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { PublicKey } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import Decimal from 'decimal.js';
-import JSBI from 'jsbi';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
+import { clmmConfigMap } from '../../../../hooks/raydium-sdk-V2/common/programId';
+import { useRaydiumSDKContext } from '../../../../hooks/raydium-sdk-V2/RaydiumSDKContext';
 import { TokenInfo } from '../../../../hooks/Token/type';
-import { BIG_INT_ZERO } from '../constants/misc';
 import { StateProps } from '../reducer';
-import { Currency, CurrencyAmount, Price, Token } from '../sdks/sdk-core';
-import {
-  nearestUsableTick,
-  Pool,
-  Position,
-  priceToClosestTick,
-  TICK_SPACINGS,
-  TickMath,
-} from '../sdks/v3-sdk';
-import { Bound, Field } from '../types';
+import { nearestUsableTick, TICK_SPACINGS } from '../sdks/v3-sdk';
+import { Bound, Field, PoolInfoI, PositionI } from '../types';
 import { getTickToPrice } from '../utils/getTickToPrice';
-import tryParseCurrencyAmount, {
-  transformStrToBN,
-} from '../utils/tryParseCurrencyAmount';
+import { transformStrToBN } from '../utils/tryParseCurrencyAmount';
 import { tryParseTick } from '../utils/tryParseTick';
-import { PoolInfo, PoolState, usePool } from './usePool';
+import { PoolState, usePool } from './usePool';
 import { useSwapTaxes } from './useSwapTaxes';
 import { useTokenBalance } from './useTokenBalance';
-import { clmmConfigMap } from '../../../../hooks/raydium-sdk-V2/common/programId';
-import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 
 export function useV3DerivedMintInfo({
   state,
@@ -45,23 +35,23 @@ export function useV3DerivedMintInfo({
 }: {
   state: StateProps;
   // override for existing position
-  existingPosition?: Position;
+  existingPosition?: PositionI;
 }): {
-  pool?: PoolInfo | null;
+  poolInfo: PoolInfoI | undefined;
   poolState: PoolState;
   ticks: { [bound in Bound]?: number | undefined };
-  price?: Price<Token, Token>;
+  price: BigNumber | undefined;
   pricesAtTicks: {
-    [bound in Bound]?: Price<Token, Token> | undefined;
+    [bound in Bound]?: BigNumber | undefined;
   };
   pricesAtLimit: {
-    [bound in Bound]?: Price<Token, Token> | undefined;
+    [bound in Bound]?: BigNumber | undefined;
   };
-  currencies: { [field in Field]?: Currency };
-  currencyBalances: { [field in Field]?: CurrencyAmount<Currency> };
+  mints: { [field in Field]?: Maybe<TokenInfo> };
+  mintBalances: { [field in Field]?: BigNumber | undefined };
   dependentField: Field;
-  parsedAmounts: { [field in Field]?: CurrencyAmount<Currency> };
-  position?: Position;
+  parsedAmounts: { [field in Field]?: BigNumber | undefined };
+  position?: PositionI;
   noLiquidity?: boolean;
   errorMessage?: ReactNode;
   invalidPool: boolean;
@@ -74,6 +64,7 @@ export function useV3DerivedMintInfo({
   isTaxed: boolean;
 } {
   const { account, chainId } = useWalletInfo();
+  const raydium = useRaydiumSDKContext();
 
   const {
     feeAmount,
@@ -194,12 +185,23 @@ export function useV3DerivedMintInfo({
   }, [price, mintA, mintB]);
 
   // used for ratio calculation when pool not initialized
-  const poolForPosition = useMemo<PoolInfo['poolInfo'] | undefined>(() => {
+  const poolInfo = useMemo<PoolInfoI | undefined>(() => {
+    if (!mintA || !mintB) {
+      return undefined;
+    }
+
     // if pool exists use it, if not use the mock pool
     if (pool) {
-      return pool.poolInfo;
+      return {
+        ...pool.poolInfo,
+        mintAChainId: mintA.chainId,
+        mintASymbol: mintA.symbol,
+        mintBChainId: mintB.chainId,
+        mintBSymbol: mintB.symbol,
+      };
     }
-    if (mintA && mintB && feeAmount && price && !invalidPrice && poolId) {
+
+    if (feeAmount && price && !invalidPrice && poolId) {
       const clmmConfig = clmmConfigMap[chainId];
 
       if (!clmmConfig) {
@@ -214,7 +216,7 @@ export function useV3DerivedMintInfo({
         throw new Error('Invalid fee');
       }
 
-      const mockPoolInfo: PoolInfo['poolInfo'] = {
+      const mockPoolInfo: PoolInfoI = {
         type: 'Concentrated',
         config: feeConfig,
         programId: clmmConfig.programId.toBase58(),
@@ -227,6 +229,8 @@ export function useV3DerivedMintInfo({
             feeConfig: undefined,
           },
         }),
+        mintAChainId: mintA.chainId,
+        mintASymbol: mintA.symbol,
         mintB: toApiV3Token({
           address: mintB.address,
           decimals: mintB.decimals,
@@ -235,6 +239,8 @@ export function useV3DerivedMintInfo({
             feeConfig: undefined,
           },
         }),
+        mintBChainId: mintB.chainId,
+        mintBSymbol: mintB.symbol,
         rewardDefaultInfos: [],
         rewardDefaultPoolInfos: 'Clmm',
         price: price.toNumber(),
@@ -298,6 +304,15 @@ export function useV3DerivedMintInfo({
     }),
     [feeAmount],
   );
+
+  const tickCurrent = useMemo(() => {
+    return tryParseTick({
+      decimalsA: mintA?.decimals,
+      decimalsB: mintB?.decimals,
+      feeAmount,
+      value: price?.toString(),
+    });
+  }, [feeAmount, mintA, mintB, price]);
 
   // parse typed range values and determine closest ticks
   // lower should always be a smaller tick
@@ -420,60 +435,97 @@ export function useV3DerivedMintInfo({
   );
 
   // amounts
-  const independentAmount: BigNumber | undefined = transformStrToBN(typedValue);
+  const independentAmount: BigNumber | undefined = useMemo(() => {
+    return transformStrToBN(typedValue);
+  }, [typedValue]);
+  const [dependentAmount, setDependentAmount] = useState<BigNumber | undefined>(
+    undefined,
+  );
+  useEffect(() => {
+    let mounted = true;
+    // const [independentMint, dependentMint] =
+    //   dependentField === Field.MINT_2 ? [mint1, mint2] : [mint2, mint1];
 
-  const dependentAmount: BigNumber | undefined = useMemo(() => {
-    const [independentMint, dependentMint] =
-      dependentField === Field.MINT_2 ? [mint1, mint2] : [mint2, mint1];
-
-    if (
-      independentMint &&
-      independentAmount &&
-      typeof tickLower === 'number' &&
-      typeof tickUpper === 'number' &&
-      poolForPosition
-    ) {
-      // if price is out of range or invalid range - return 0 (single deposit will be independent)
-      if (outOfRange || invalidRange) {
-        return undefined;
+    async function computeDependentAmount() {
+      if (!raydium || !poolInfo || tickLower == null || tickUpper == null) {
+        return;
       }
 
-      const isIndependentMintA = new PublicKey(independentMint.address).equals(
-        new PublicKey(poolForPosition.mintA.address),
-      );
+      const epochInfo = await raydium.fetchEpochInfo();
+      const res = await PoolUtils.getLiquidityAmountOutFromAmountIn({
+        poolInfo: poolInfo,
+        slippage: 0,
+        inputA: true,
+        tickUpper: Math.max(tickLower, tickUpper),
+        tickLower: Math.min(tickLower, tickUpper),
+        amount: new BN(
+          new Decimal(typedValue || '0')
+            .mul(10 ** poolInfo.mintA.decimals)
+            .toFixed(0),
+        ),
+        add: true,
+        amountHasFee: true,
+        epochInfo: epochInfo,
+      });
 
-      const position: Position | undefined = isIndependentMintA
-        ? Position.fromAmount0({
-            pool: poolForPosition,
-            tickLower,
-            tickUpper,
-            amount0: independentAmount.quotient,
-            useFullPrecision: true, // we want full precision for the theoretical position
-          })
-        : Position.fromAmount1({
-            pool: poolForPosition,
-            tickLower,
-            tickUpper,
-            amount1: independentAmount.quotient,
-          });
-
-      const dependentTokenAmount = isIndependentMintA
-        ? position.amount1
-        : position.amount0;
-      return (
-        dependentMint &&
-        CurrencyAmount.fromRawAmount(
-          dependentMint,
-          dependentTokenAmount.quotient,
-        )
-      );
+      if (mounted) {
+        console.log('res', res);
+      }
     }
 
-    return undefined;
-  }, []);
+    computeDependentAmount();
+
+    // if (
+    //   independentMint &&
+    //   independentAmount &&
+    //   typeof tickLower === 'number' &&
+    //   typeof tickUpper === 'number' &&
+    //   poolForPosition
+    // ) {
+    //   // if price is out of range or invalid range - return 0 (single deposit will be independent)
+    //   if (outOfRange || invalidRange) {
+    //     return undefined;
+    //   }
+
+    //   const independentMintIsMintA = new PublicKey(
+    //     independentMint.address,
+    //   ).equals(new PublicKey(poolForPosition.mintA.address));
+
+    //   const position: Position | undefined = independentMintIsMintA
+    //     ? Position.fromAmount0({
+    //         pool: poolForPosition,
+    //         tickLower,
+    //         tickUpper,
+    //         amount0: independentAmount.quotient,
+    //         useFullPrecision: true, // we want full precision for the theoretical position
+    //       })
+    //     : Position.fromAmount1({
+    //         pool: poolForPosition,
+    //         tickLower,
+    //         tickUpper,
+    //         amount1: independentAmount.quotient,
+    //       });
+
+    //   const dependentTokenAmount = independentMintIsMintA
+    //     ? position.amount1
+    //     : position.amount0;
+
+    //   setDependentAmount(
+    //     dependentMint &&
+    //       CurrencyAmount.fromRawAmount(
+    //         dependentMint,
+    //         dependentTokenAmount.quotient,
+    //       ),
+    //   );
+    // }
+
+    return () => {
+      mounted = false;
+    };
+  }, [poolInfo, raydium, tickLower, tickUpper, typedValue]);
 
   const parsedAmounts: {
-    [field in Field]: CurrencyAmount<Currency> | undefined;
+    [field in Field]: BigNumber | undefined;
   } = useMemo(() => {
     return {
       [Field.MINT_1]:
@@ -485,96 +537,156 @@ export function useV3DerivedMintInfo({
 
   // single deposit only if price is out of range
   const deposit0Disabled = Boolean(
-    typeof tickUpper === 'number' &&
-      poolForPosition &&
-      poolForPosition.tickCurrent >= tickUpper,
+    typeof tickUpper === 'number' && tickCurrent && tickCurrent >= tickUpper,
   );
   const deposit1Disabled = Boolean(
-    typeof tickLower === 'number' &&
-      poolForPosition &&
-      poolForPosition.tickCurrent <= tickLower,
+    typeof tickLower === 'number' && tickCurrent && tickCurrent <= tickLower,
   );
 
+  const independentMintIsMintA = new PublicKey(independentMint.address).equals(
+    new PublicKey(poolInfo.mintA.address),
+  );
   // sorted for token order
   const depositADisabled =
     invalidRange ||
     Boolean(
       (deposit0Disabled &&
-        poolForPosition &&
-        tokenA &&
-        poolForPosition.token0.equals(tokenA)) ||
+        poolInfo &&
+        mint1 &&
+        new PublicKey(poolInfo.mintA.address).equals(
+          new PublicKey(mint1.address),
+        )) ||
         (deposit1Disabled &&
-          poolForPosition &&
-          tokenA &&
-          poolForPosition.token1.equals(tokenA)),
+          poolInfo &&
+          mint2 &&
+          new PublicKey(poolInfo.mintA.address).equals(
+            new PublicKey(mint2.address),
+          )),
     );
   const depositBDisabled =
     invalidRange ||
     Boolean(
       (deposit0Disabled &&
-        poolForPosition &&
-        tokenB &&
-        poolForPosition.token0.equals(tokenB)) ||
+        poolInfo &&
+        mint2 &&
+        new PublicKey(poolInfo.mintA.address).equals(
+          new PublicKey(mint2.address),
+        )) ||
         (deposit1Disabled &&
-          poolForPosition &&
-          tokenB &&
-          poolForPosition.token1.equals(tokenB)),
+          poolInfo &&
+          mint1 &&
+          new PublicKey(poolInfo.mintB.address).equals(
+            new PublicKey(mint1.address),
+          )),
     );
 
-  const { inputTax: currencyATax, outputTax: currencyBTax } = useSwapTaxes(
-    mint1?.isToken ? mint1.address : undefined,
-    currencyB?.isToken ? currencyB.address : undefined,
-    chainId,
-  );
+  const { inputTax: currencyATax, outputTax: currencyBTax } = useSwapTaxes();
 
   // create position entity based on users selection
-  const position: Position | undefined = useMemo(() => {
-    if (
-      !poolForPosition ||
-      !tokenA ||
-      !tokenB ||
-      typeof tickLower !== 'number' ||
-      typeof tickUpper !== 'number' ||
-      invalidRange
-    ) {
-      return undefined;
-    }
+  const [position, setPosition] = useState<PositionI>();
+  useEffect(() => {
+    let mounted = true;
+    async function computeDependentAmount() {
+      if (!raydium || !poolInfo || tickLower == null || tickUpper == null) {
+        return;
+      }
 
-    // mark as 0 if disabled because out of range
-    const amount0 = !deposit0Disabled
-      ? parsedAmounts?.[
-          tokenA.equals(poolForPosition.token0) ? Field.MINT_1 : Field.MINT_2
-        ]?.quotient
-      : BIG_INT_ZERO;
-    const amount1 = !deposit1Disabled
-      ? parsedAmounts?.[
-          tokenA.equals(poolForPosition.token0) ? Field.MINT_2 : Field.MINT_1
-        ]?.quotient
-      : BIG_INT_ZERO;
-
-    if (amount0 !== undefined && amount1 !== undefined) {
-      return Position.fromAmounts({
-        pool: poolForPosition,
-        tickLower,
-        tickUpper,
-        amount0,
-        amount1,
-        useFullPrecision: true, // we want full precision for the theoretical position
+      const epochInfo = await raydium.fetchEpochInfo();
+      const res = await PoolUtils.getLiquidityAmountOutFromAmountIn({
+        poolInfo: poolInfo,
+        slippage: 0,
+        inputA: true,
+        tickUpper: Math.max(tickLower, tickUpper),
+        tickLower: Math.min(tickLower, tickUpper),
+        amount: new BN(
+          new Decimal(typedValue || '0')
+            .mul(10 ** poolInfo.mintA.decimals)
+            .toFixed(0),
+        ),
+        add: true,
+        amountHasFee: true,
+        epochInfo: epochInfo,
       });
-    } else {
-      return undefined;
+
+      if (mounted) {
+        console.log('res', res);
+        pricesAtTicks;
+        setPosition({
+          poolInfo,
+          tickLower,
+          tickUpper,
+          tickLowerPrice: lowerPrice,
+          tickUpperPrice: upperPrice,
+          liquidity: new BigNumber(res.liquidity.toString()),
+          amountA: new BigNumber(res.amountA.toString()),
+          amountB: new BigNumber(res.amountB.toString()),
+        });
+      }
     }
+
+    computeDependentAmount();
+
+    return () => {
+      mounted = false;
+    };
   }, [
-    parsedAmounts,
-    poolForPosition,
-    tokenA,
-    tokenB,
-    deposit0Disabled,
-    deposit1Disabled,
-    invalidRange,
+    lowerPrice,
+    poolInfo,
+    pricesAtTicks,
+    raydium,
     tickLower,
     tickUpper,
+    typedValue,
+    upperPrice,
   ]);
+
+  // const position: Position | undefined = useMemo(() => {
+  //   if (
+  //     !poolInfo ||
+  //     !tokenA ||
+  //     !tokenB ||
+  //     typeof tickLower !== 'number' ||
+  //     typeof tickUpper !== 'number' ||
+  //     invalidRange
+  //   ) {
+  //     return undefined;
+  //   }
+
+  //   // mark as 0 if disabled because out of range
+  //   const amount0 = !deposit0Disabled
+  //     ? parsedAmounts?.[
+  //         tokenA.equals(poolInfo.token0) ? Field.MINT_1 : Field.MINT_2
+  //       ]?.quotient
+  //     : BIG_INT_ZERO;
+  //   const amount1 = !deposit1Disabled
+  //     ? parsedAmounts?.[
+  //         tokenA.equals(poolInfo.token0) ? Field.MINT_2 : Field.MINT_1
+  //       ]?.quotient
+  //     : BIG_INT_ZERO;
+
+  //   if (amount0 !== undefined && amount1 !== undefined) {
+  //     return Position.fromAmounts({
+  //       pool: poolInfo,
+  //       tickLower,
+  //       tickUpper,
+  //       amount0,
+  //       amount1,
+  //       useFullPrecision: true, // we want full precision for the theoretical position
+  //     });
+  //   } else {
+  //     return undefined;
+  //   }
+  // }, [
+  //   parsedAmounts,
+  //   poolInfo,
+  //   tokenA,
+  //   tokenB,
+  //   deposit0Disabled,
+  //   deposit1Disabled,
+  //   invalidRange,
+  //   tickLower,
+  //   tickUpper,
+  // ]);
 
   let errorMessage: ReactNode | undefined;
   if (!account) {
@@ -596,20 +708,14 @@ export function useV3DerivedMintInfo({
     errorMessage = errorMessage ?? t`Enter an amount`;
   }
 
-  const { [Field.MINT_1]: currencyAAmount, [Field.MINT_2]: currencyBAmount } =
+  const { [Field.MINT_1]: mint1Amount, [Field.MINT_2]: mint2Amount } =
     parsedAmounts;
 
-  if (
-    currencyAAmount &&
-    mintBalances?.[Field.MINT_1]?.lessThan(currencyAAmount)
-  ) {
+  if (mint1Amount && mintBalances?.[Field.MINT_1]?.lt(mint1Amount)) {
     errorMessage = t`Insufficient ${mints[Field.MINT_1]?.symbol} balance`;
   }
 
-  if (
-    currencyBAmount &&
-    mintBalances?.[Field.MINT_2]?.lessThan(currencyBAmount)
-  ) {
+  if (mint2Amount && mintBalances?.[Field.MINT_2]?.lt(mint2Amount)) {
     errorMessage = t`Insufficient ${mints[Field.MINT_2]?.symbol} balance`;
   }
 
@@ -618,10 +724,10 @@ export function useV3DerivedMintInfo({
 
   return {
     dependentField,
-    currencies: mints,
-    pool,
+    mints,
+    poolInfo,
     poolState,
-    currencyBalances: mintBalances,
+    mintBalances,
     parsedAmounts,
     ticks,
     price,
