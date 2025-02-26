@@ -16,8 +16,9 @@ export const poolUtils = {
     account?: string,
   ): boolean {
     const actuallyOwner = owner ?? creator;
-    if (!type || !actuallyOwner || !account) return false;
-    if (type !== 'DPP') return true;
-    return actuallyOwner.toLocaleLowerCase() === account.toLocaleLowerCase();
+    if (!type || !actuallyOwner || !account) {
+      return false;
+    }
+    return true;
   },
 };

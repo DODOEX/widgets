@@ -1,4 +1,4 @@
-export { setContractRequests } from '@dodoex/dodo-contract-request';
+// export { setContractRequests } from '@dodoex/dodo-contract-request';
 export {
   basicTokenMap,
   ChainId,
@@ -10,12 +10,12 @@ export {
   WSOL_MINT_ADDRESS,
 } from './chainConfig';
 
-export {
-  ABIName,
-  CONTRACT_QUERY_KEY,
-  default as ContractRequests,
-} from './helper/ContractRequests';
-export type { ContractRequestsConfig, Query } from './helper/ContractRequests';
+// export {
+//   ABIName,
+//   CONTRACT_QUERY_KEY,
+//   default as ContractRequests,
+// } from './helper/ContractRequests';
+// export type { ContractRequestsConfig, Query } from './helper/ContractRequests';
 export { default as GraphQLRequests } from './helper/GraphQLRequests';
 export { default as RestApiRequests } from './helper/RestApiRequests';
 
@@ -30,16 +30,16 @@ export type { TickData, Ticks } from './services/ammv3';
 //   solveQuadraticFunctionForTarget,
 // } from './services/pool';
 // export type { PmmModelParams, PoolType } from './services/pool';
-export { CLMM, CPMM } from './services/pool';
+export { CLMM, CPMM, PoolApi } from './services/pool';
 export type { PoolType } from './services/pool';
 export { SwapWidgetApi } from './services/SwapWidgetApi';
 
-export { MiningApi, MiningStatusE } from './services/mining';
-export type { MiningMiningInfo } from './services/mining';
+// export { MiningApi, MiningStatusE } from './services/mining';
+// export type { MiningMiningInfo } from './services/mining';
 
-export { TokenApi } from './services/TokenApi';
+// export { TokenApi } from './services/TokenApi';
 
-export { SwapApi } from './services/swap/SwapApi';
-export { SystemApi } from './services/system/SystemApi';
+// export { SwapApi } from './services/swap/SwapApi';
+// export { SystemApi } from './services/system/SystemApi';
 
 export type ExcludeNone<T> = NonNullable<T>;

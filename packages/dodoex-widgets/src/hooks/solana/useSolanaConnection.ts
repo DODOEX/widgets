@@ -1,14 +1,13 @@
 import { basicTokenMap, ChainId } from '@dodoex/api';
+import { MintLayout } from '@solana/spl-token';
 import { useConnection } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
 import React from 'react';
-import { byWei } from '../../utils';
-import { useSolanaWallet } from './useSolanaWallet';
-import { MintLayout } from '@solana/spl-token';
-import { TokenInfo } from '../Token/type';
-import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
+import { byWei } from '../../utils/formatter';
 import { TOKEN_METADATA_PROGRAM_ID } from '../raydium-sdk-V2/common/programId';
+import { TokenInfo } from '../Token/type';
+import { useSolanaWallet } from './useSolanaWallet';
 
 export function useSolanaConnection() {
   const wallet = useSolanaWallet();

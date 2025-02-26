@@ -1,66 +1,65 @@
-import { getAddress, getCreate2Address } from '@ethersproject/address';
 import { ChainId } from '@dodoex/api';
+import { PublicKey } from '@solana/web3.js';
 import { scanUrlDomainMap } from '../constants/chains';
-import { keccak256, pack } from '@ethersproject/solidity';
-import { TokenInfo } from '../hooks/Token';
-import { toWei } from './formatter';
-import { getIsAMMV2DynamicFeeContractByChainId } from '../widgets/PoolWidget/utils';
 
 export const isSameAddress = (
   tokenAddress1: string,
   tokenAddress2: string,
 ): boolean => {
-  if (tokenAddress1.length === 0 || tokenAddress2.length === 0) {
+  try {
+    // 对于 Solana 地址，使用 PublicKey 进行比较
+    const pubKey1 = new PublicKey(tokenAddress1);
+    const pubKey2 = new PublicKey(tokenAddress2);
+    return pubKey1.equals(pubKey2);
+  } catch {
+    // 如果不是有效的 Solana 地址，返回 false
     return false;
   }
-  if (tokenAddress2.length === tokenAddress1.length) {
-    return tokenAddress1.toLowerCase() === tokenAddress2.toLowerCase();
-  }
-  const trimAddress1 = tokenAddress1
-    .substring(2, tokenAddress1.length)
-    .toLowerCase();
-  const trimAddress2 = tokenAddress2
-    .substring(2, tokenAddress2.length)
-    .toLowerCase();
-  if (trimAddress1.length > trimAddress2.length) {
-    return trimAddress1.endsWith(trimAddress2);
-  }
-  return trimAddress2.endsWith(trimAddress1);
 };
 
 export function isAddress(value: any): boolean {
   try {
-    return !!getAddress(value);
+    // 尝试创建 PublicKey 实例来验证地址
+    new PublicKey(value);
+    return true;
   } catch {
     return false;
   }
 }
 
-export function isETHAddress(addr: string): boolean {
-  const ETHAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
-  return addr.toLocaleLowerCase() === ETHAddress.toLocaleLowerCase();
-}
-
 /**
- * Returns true if the string value is zero in hex
- * @param hexNumberString
+ * 检查 Solana 地址是否为零地址
+ * @param address Solana 地址字符串
+ * @returns 如果是零地址则返回 true
  */
-export default function isZero(hexNumberString: string) {
-  return /^0x0*$/.test(hexNumberString);
+export default function isZero(address: string): boolean {
+  if (!address) return false;
+  try {
+    const pubKey = new PublicKey(address);
+    return pubKey.equals(PublicKey.default);
+  } catch {
+    return false;
+  }
 }
-
 /**
- * truncate pool address: 0xeBa959390016dd81419A189e5ef6F3B6720e5A90 => 0xeBa9...5A90
- * @param address pool address
+ * truncate address:
+ * - Solana: HN7cABqLq46Es1jh92dQQisAq662SmxGkXPnB4LZFN3 => HN7c...ZFN3
+ * - EVM: 0xeBa959390016dd81419A189e5ef6F3B6720e5A90 => 0xeBa9...5A90
+ * @param address wallet or token address
  */
 export function truncatePoolAddress(address: string): string {
   if (address.length <= 10) {
     return address;
   }
-  return `${address.slice(0, 6)}...${address.slice(
-    address.length - 4,
-    address.length,
-  )}`;
+  try {
+    // 验证是否为 Solana 地址
+    new PublicKey(address);
+    // Solana 地址通常是 32-44 个字符
+    return `${address.slice(0, 4)}...${address.slice(-4)}`;
+  } catch {
+    // 如果不是 Solana 地址，保持原有的 EVM 地址截断逻辑
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  }
 }
 
 export function sortsAddress(address0: string, address1: string): boolean {
@@ -89,61 +88,3 @@ export async function openEtherscanPage(
     'noopener,noreferrer',
   );
 }
-
-const UNI_DYNAMIC_FEE_INIT_CODE_HASH =
-  '0x67a372377cf6d7f78cfdcc9df0bc21e1139bd49e5a47c33ee0de5389a4396410';
-const UNI_FIXED_FEE_INIT_CODE_HASH =
-  '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
-export const getUniInitCodeHash = (chainId: number) => {
-  if (chainId === ChainId.PLUME) {
-    return '0x593ac4223f084467e0d81c9091be3e5fc936d3674e385bae66ee8ec3b54e07dd';
-  }
-  if (chainId === ChainId.NEOX) {
-    return '0x007722521498f3d29a63d1eb6ab35e202874706c77ce73d45c1ad9da88174a3f';
-  }
-  const isDynamic = getIsAMMV2DynamicFeeContractByChainId(chainId);
-  return isDynamic
-    ? UNI_DYNAMIC_FEE_INIT_CODE_HASH
-    : UNI_FIXED_FEE_INIT_CODE_HASH;
-};
-
-export function sortsBefore(tokenA: TokenInfo, tokenB: TokenInfo): boolean {
-  if (tokenA.chainId !== tokenB.chainId) {
-    throw new Error('token is not in the same chain');
-  }
-  return tokenA.address.toLowerCase() < tokenB.address.toLowerCase();
-}
-
-// https://github.com/Uniswap/sdks/blob/8b2649bf956f0cae69d58b8e3a4fd4cc8f164756/sdks/v2-sdk/src/entities/pair.ts#L24
-export const computePairAddress = ({
-  factoryAddress,
-  tokenA,
-  tokenB,
-  fee,
-}: {
-  factoryAddress: string;
-  tokenA: TokenInfo;
-  tokenB: TokenInfo;
-  fee: number;
-}): string => {
-  const [token0, token1] = sortsBefore(tokenA, tokenB)
-    ? [tokenA, tokenB]
-    : [tokenB, tokenA]; // does safety checks
-
-  if (tokenA.chainId !== tokenB.chainId) {
-    throw new Error('token is not valid.');
-  }
-  return getCreate2Address(
-    factoryAddress,
-    keccak256(
-      ['bytes'],
-      [
-        pack(
-          ['address', 'address', 'uint256'],
-          [token0.address, token1.address, toWei(fee, 4).toString()],
-        ),
-      ],
-    ),
-    getUniInitCodeHash(tokenA.chainId),
-  );
-};

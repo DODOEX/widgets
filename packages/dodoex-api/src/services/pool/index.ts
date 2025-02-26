@@ -1,4 +1,4 @@
-// export { PoolApi } from './PoolApi';
+export { PoolApi } from './PoolApi';
 export { CLMM, CPMM } from './type';
 export type { PoolType } from './type';
 

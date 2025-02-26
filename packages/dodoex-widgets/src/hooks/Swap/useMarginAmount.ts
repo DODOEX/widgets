@@ -1,14 +1,13 @@
-import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
+import { useMemo } from 'react';
+import { toWei } from '../../utils/formatter';
 import { TokenInfo } from '../Token';
-import { toWei } from '../../utils';
 
 export interface MarginAmountProps {
-  token: TokenInfo | null,
-  fiatPrice: string,
+  token: TokenInfo | null;
+  fiatPrice: string;
 }
 export function useMarginAmount({ token, fiatPrice }: MarginAmountProps) {
-
   const marginAmt = useMemo(() => {
     const decimals = token?.decimals ?? 6;
     const marginAmount =
@@ -26,4 +25,3 @@ export function useMarginAmount({ token, fiatPrice }: MarginAmountProps) {
     marginAmount: marginAmt,
   };
 }
-

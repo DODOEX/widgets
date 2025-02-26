@@ -47,8 +47,10 @@ import {
 } from '../../hooks/setting/useSetAutoSlippage';
 import { AppThunkDispatch } from '../../store/actions';
 import { setFromTokenChainId } from '../../store/actions/wallet';
-import { formatTokenAmountNumber } from '../../utils';
-import { formatReadableNumber } from '../../utils/formatter';
+import {
+  formatReadableNumber,
+  formatTokenAmountNumber,
+} from '../../utils/formatter';
 import TokenLogo from '../TokenLogo';
 import { QuestionTooltip } from '../Tooltip';
 import { useUserOptions } from '../UserOptionsProvider';

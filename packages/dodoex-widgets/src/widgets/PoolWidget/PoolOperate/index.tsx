@@ -1,3 +1,4 @@
+import { ChainId, PoolApi } from '@dodoex/api';
 import {
   alpha,
   Box,
@@ -5,27 +6,23 @@ import {
   TabPanel,
   Tabs,
   TabsGroup,
-  Modal,
 } from '@dodoex/components';
+import { Error } from '@dodoex/icons';
+import { t } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
+import { useWeb3React } from '@web3-react/core';
 import Dialog from '../../../components/Dialog';
+import { ThegraphKeyMap } from '../../../constants/chains';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
+import { convertFetchPoolToOperateData } from '../utils';
+import { GSPPairRiskWarning } from './components/GSPPairRiskWarning';
 import {
   PoolOrMiningTab,
   usePoolOrMiningTabs,
 } from './hooks/usePoolOrMiningTabs';
-import { Error } from '@dodoex/icons';
 import PoolOperateInner, { PoolOperateInnerProps } from './PoolOperateInner';
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { ChainId, PoolApi } from '@dodoex/api';
-import { convertFetchPoolToOperateData } from '../utils';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { ThegraphKeyMap } from '../../../constants/chains';
-import LpTokenMiningOperate from '../../MiningWidget/LpTokenMiningOperate';
-import { useWeb3React } from '@web3-react/core';
-import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
-import { t } from '@lingui/macro';
-import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { GSPPairRiskWarning } from './components/GSPPairRiskWarning';
 
 export interface PoolOperateProps {
   onClose?: () => void;
@@ -185,7 +182,7 @@ export function PoolOperate({
             }}
           />
         </TabPanel>
-        <TabPanel
+        {/* <TabPanel
           value={PoolOrMiningTab.Mining}
           sx={{
             flex: 1,
@@ -204,7 +201,7 @@ export function PoolOperate({
           ) : (
             ''
           )}
-        </TabPanel>
+        </TabPanel> */}
       </Tabs>
     </Box>
   );

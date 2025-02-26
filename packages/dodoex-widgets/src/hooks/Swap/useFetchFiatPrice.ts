@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useCallback, useState } from 'react';
-import { getPlatformId } from '../../utils';
+import { getPlatformId } from '../../utils/chains';
 import { usePriceTimer } from './usePriceTimer';
 import { TokenInfo } from '../Token';
 import { useGetAPIService } from '../setting/useGetAPIService';

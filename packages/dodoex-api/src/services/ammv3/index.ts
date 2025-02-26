@@ -1,4 +1,4 @@
-import { TicksQuery } from '../../gql/graphql';
+import type { TicksQuery } from '../../gql/graphql';
 
 export { AMMV3Api } from './AMMV3Api';
 

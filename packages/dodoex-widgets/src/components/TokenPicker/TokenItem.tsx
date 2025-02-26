@@ -1,14 +1,12 @@
-import { Box } from '@dodoex/components';
+import { Box, useTheme } from '@dodoex/components';
+import { Loading } from '@dodoex/icons';
+import BigNumber from 'bignumber.js';
 import { CSSProperties } from 'react';
-import { formatReadableNumber } from '../../utils';
+import { tokenPickerItem } from '../../constants/testId';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
+import { formatReadableNumber } from '../../utils/formatter';
 import TokenLogo from '../TokenLogo';
 import { TokenInfo } from './../../hooks/Token';
-import { Loading } from '@dodoex/icons';
-import { tokenPickerItem } from '../../constants/testId';
-import { useTheme } from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
-import BigNumber from 'bignumber.js';
-import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 
 export default function TokenItem({
   token,

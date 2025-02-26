@@ -15,7 +15,7 @@ import SelectChainItem from './SelectChainItem';
 import { useSelectChainList } from '../../hooks/Token/useSelectChainList';
 import { ChainId } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
-import { isAddress } from '../../utils';
+import { isAddress } from '../../utils/address';
 import { TokenSearchLoadingSkelton } from './TokenSearchLoadingSkelton';
 
 export interface TokenPickerProps {

@@ -11,7 +11,7 @@ import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 import { APIServiceKey } from '../../constants/api';
-import { toWei } from '../../utils';
+import { toWei } from '../../utils/formatter';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { useSubmission } from '../Submission';

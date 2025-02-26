@@ -5,9 +5,9 @@ import AMMV2Create from './AMMV2Create';
 import AMMV3Create from './AMMV3/AddLiquidityV3';
 import PoolList from './PoolList';
 
-export { default as AMMV3Create } from './AMMV3/AddLiquidityV3';
-export { AMMV3PositionManage } from './AMMV3/AMMV3PositionManage';
-export { AMMV3PositionsView } from './AMMV3/AMMV3PositionsView';
+// export { default as AMMV3Create } from './AMMV3/AddLiquidityV3';
+// export { AMMV3PositionManage } from './AMMV3/AMMV3PositionManage';
+// export { AMMV3PositionsView } from './AMMV3/AMMV3PositionsView';
 
 export function Pool() {
   const { routerPage } = useUserOptions();
