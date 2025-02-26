@@ -59,12 +59,12 @@ export default function AddLiquidityV3({
   });
 
   const [state, dispatch] = useReducer<typeof reducer>(reducer, {
-    mint1: null,
-    mint2: null,
+    mint1: undefined,
+    mint2: undefined,
     feeAmount: params?.fee ? Number(params?.fee) : undefined,
     independentField: Field.MINT_1,
     typedValue: '',
-    startPriceTypedValue: '',
+    startPriceTypedValue: '1',
     leftRangeTypedValue: '',
     rightRangeTypedValue: '',
   });
@@ -91,6 +91,8 @@ export default function AddLiquidityV3({
   const { independentField, typedValue, startPriceTypedValue } = state;
 
   const {
+    mintA,
+    mintB,
     poolInfo,
     ticks,
     dependentField,
@@ -359,7 +361,7 @@ export default function AddLiquidityV3({
               >
                 {t`Set price range`}
               </Box>
-              {Boolean(state.mint1 && state.mint2) && (
+              {mintA && mintB && (
                 <Box
                   sx={{
                     display: 'flex',
@@ -391,9 +393,10 @@ export default function AddLiquidityV3({
                         : undefined),
                     }}
                   >{t`Full range`}</Button>
+
                   <RateToggle
-                    mint1={state.mint1}
-                    mint2={state.mint2}
+                    mintA={mintA}
+                    mintB={mintB}
                     handleRateToggle={() => {
                       if (
                         !ticksAtLimit[Bound.LOWER] &&
@@ -446,6 +449,7 @@ export default function AddLiquidityV3({
               </YellowCard>
             )}
           </DynamicSection>
+
           {noLiquidity ? (
             <DynamicSection>
               <Box
@@ -522,6 +526,7 @@ export default function AddLiquidityV3({
               />
             </DynamicSection>
           )}
+
           <DynamicSection
             disabled={
               invalidPool ||

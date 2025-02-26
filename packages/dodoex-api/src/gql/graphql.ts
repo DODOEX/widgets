@@ -258,6 +258,32 @@ export type All_Filter = {
 
 export type All_OrderBy = 'chain' | 'id';
 
+export type AmmTick = {
+  id: Scalars['String']['output'];
+  liquidityGross: Scalars['BigDecimal']['output'];
+  liquidityNet: Scalars['BigDecimal']['output'];
+  poolAddress: Scalars['String']['output'];
+  price0: Scalars['BigDecimal']['output'];
+  price1: Scalars['BigDecimal']['output'];
+  protocolPosition?: Maybe<Scalars['String']['output']>;
+  tickArrayLower?: Maybe<Scalars['String']['output']>;
+  tickArrayUpper?: Maybe<Scalars['String']['output']>;
+  tickIdx: Scalars['BigDecimal']['output'];
+};
+
+export type AmmTicksDataResult = {
+  chain: Scalars['String']['output'];
+  pairType: Scalars['String']['output'];
+  poolAddress: Scalars['String']['output'];
+  ticks: Array<Maybe<AmmTick>>;
+};
+
+export type AmmgetTicksDataInput = {
+  chain: Scalars['String']['input'];
+  pairType: Scalars['String']['input'];
+  poolAddress: Scalars['String']['input'];
+};
+
 export type AnnouncementAnnouncement = {
   endAt?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
@@ -1164,6 +1190,57 @@ export type Block_Height = {
   number_gte?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type Brand_Site_AnnouncementBrandSiteAnnouncement = {
+  brand?: Maybe<Scalars['String']['output']>;
+  endAt?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  lastPublishTime?: Maybe<Scalars['String']['output']>;
+  metadata?: Maybe<Brand_Site_AnnouncementMetadata>;
+  sort?: Maybe<Scalars['Int']['output']>;
+  startAt?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['Int']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export type Brand_Site_AnnouncementBrandSiteAnnouncementList = {
+  lastPublishId?: Maybe<Scalars['Int']['output']>;
+  lastPublishTime?: Maybe<Scalars['String']['output']>;
+  list?: Maybe<Array<Maybe<Brand_Site_AnnouncementBrandSiteAnnouncement>>>;
+};
+
+export type Brand_Site_AnnouncementMetadata = {
+  background?: Maybe<Scalars['String']['output']>;
+  buttonType?: Maybe<Scalars['String']['output']>;
+  icon?: Maybe<Scalars['String']['output']>;
+  landingPageDisplay?: Maybe<Scalars['Boolean']['output']>;
+  theme?: Maybe<Scalars['String']['output']>;
+};
+
+export type Brand_Site_Announcementqueryilter = {
+  brand?: InputMaybe<Scalars['String']['input']>;
+  lang?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Brand_Site_BannerBrandSiteBanner = {
+  bannerImg?: Maybe<Scalars['String']['output']>;
+  brand?: Maybe<Scalars['String']['output']>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  describe?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  position?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export type Brand_Site_Bannerqueryilter = {
+  brand?: InputMaybe<Scalars['String']['input']>;
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  position?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type BrowserChainInput = {
   chains: Array<InputMaybe<Scalars['Int']['input']>>;
 };
@@ -1897,6 +1974,7 @@ export type Cross_Chain_SwaporderCreateDataExtendRoute = {
   feeUSD?: InputMaybe<Scalars['String']['input']>;
   step?: InputMaybe<Scalars['JSON']['input']>;
   toAmount?: InputMaybe<Scalars['String']['input']>;
+  toAmountMin?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Cross_Chain_SwaporderDetailData = {
@@ -1909,6 +1987,7 @@ export type Cross_Chain_SwaporderListData = {
   chainId?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
+  product?: InputMaybe<Scalars['String']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
   source?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<Scalars['String']['input']>;
@@ -5408,6 +5487,119 @@ export type DodochainuserTwigsMineInput = {
   user: Scalars['String']['input'];
 };
 
+export type DodopointsChainOptionalUserInput = {
+  chainId: Scalars['BigDecimal']['input'];
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DodopointsChainUserInput = {
+  chainId: Scalars['BigDecimal']['input'];
+  user: Scalars['String']['input'];
+};
+
+export type DodopointsChainUserPaginationInput = {
+  chainId: Scalars['BigDecimal']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
+  user: Scalars['String']['input'];
+};
+
+export type DodopointsClaimedRecord = {
+  amount: Scalars['BigDecimal']['output'];
+  symbol: Scalars['String']['output'];
+  timestamp: Scalars['BigDecimal']['output'];
+  token: Scalars['String']['output'];
+};
+
+export type DodopointsClaimedRecordPaginationResult = {
+  count: Scalars['Int']['output'];
+  list: Array<Maybe<DodopointsClaimedRecord>>;
+  page: Scalars['Int']['output'];
+  size: Scalars['Int']['output'];
+};
+
+export type DodopointsDodoPointsActivityInfo = {
+  describe: Scalars['String']['output'];
+  fulfilledPeriodsCoefficient: Scalars['BigDecimal']['output'];
+  fulfilledPeriodsNumber: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  periods: Array<Maybe<DodopointsPeriodInfo>>;
+  totalPoints: Scalars['BigDecimal']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type DodopointsDodoPointsActivityRewardInfo = {
+  endAt: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  periods: Array<Maybe<DodopointsDodoPointsPeriodRewardInfo>>;
+  startAt: Scalars['Int']['output'];
+  totalPoints: Scalars['BigDecimal']['output'];
+};
+
+export type DodopointsDodoPointsPeriodRewardInfo = {
+  contractAddress: Scalars['String']['output'];
+  decimals: Scalars['Int']['output'];
+  num: Scalars['Int']['output'];
+  points: Scalars['BigDecimal']['output'];
+  shareAmount: Scalars['Int']['output'];
+  symbol: Scalars['String']['output'];
+  token: Scalars['String']['output'];
+};
+
+export type DodopointsPairPoints = {
+  baseSymbol: Scalars['String']['output'];
+  baseToken: Scalars['String']['output'];
+  points: Scalars['BigDecimal']['output'];
+  quoteSymbol: Scalars['String']['output'];
+  quoteToken: Scalars['String']['output'];
+};
+
+export type DodopointsPeriodInfo = {
+  decimals: Scalars['Int']['output'];
+  endAt: Scalars['Int']['output'];
+  fulfilled: Scalars['Boolean']['output'];
+  num: Scalars['Int']['output'];
+  points: Scalars['BigDecimal']['output'];
+  rules: Array<Maybe<DodopointsRuleInfo>>;
+  shareAmount: Scalars['BigDecimal']['output'];
+  startAt: Scalars['Int']['output'];
+  symbol: Scalars['String']['output'];
+  token: Scalars['String']['output'];
+  tradePairs: Array<Maybe<DodopointsTradePairInfo>>;
+};
+
+export type DodopointsPointRecord = {
+  points: Scalars['BigDecimal']['output'];
+  timestamp: Scalars['BigDecimal']['output'];
+};
+
+export type DodopointsPointRecordPaginationResult = {
+  count: Scalars['Int']['output'];
+  list: Array<Maybe<DodopointsPointRecord>>;
+  page: Scalars['Int']['output'];
+  size: Scalars['Int']['output'];
+  totalPoints: Scalars['BigDecimal']['output'];
+};
+
+export type DodopointsRuleInfo = {
+  num: Scalars['Int']['output'];
+  points: Scalars['BigDecimal']['output'];
+  swapUsd: Scalars['BigDecimal']['output'];
+};
+
+export type DodopointsToken = {
+  address: Scalars['String']['output'];
+  decimals: Scalars['Int']['output'];
+  logoImg: Scalars['String']['output'];
+  symbol: Scalars['String']['output'];
+};
+
+export type DodopointsTradePairInfo = {
+  coefficient?: Maybe<Scalars['BigDecimal']['output']>;
+  fromToken: DodopointsToken;
+  toToken: DodopointsToken;
+};
+
 export type DonateHistory = {
   /** block */
   blockNumber: Scalars['BigInt']['output'];
@@ -5748,6 +5940,7 @@ export type Erc20listV2Filter = {
   chainIds?: InputMaybe<Scalars['String']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
+  productName?: InputMaybe<Scalars['String']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -6480,6 +6673,7 @@ export type Liquidator_OrderBy =
   | 'updatedAt';
 
 export type LiquidityApyData = {
+  metromMiningApy?: Maybe<Scalars['BigDecimal']['output']>;
   miningBaseApy?: Maybe<Scalars['BigDecimal']['output']>;
   miningQuoteApy?: Maybe<Scalars['BigDecimal']['output']>;
   transactionBaseApy?: Maybe<Scalars['BigDecimal']['output']>;
@@ -7957,6 +8151,17 @@ export type Market_Maker_Pool_ApplypoolApplyData = {
   information?: InputMaybe<Scalars['String']['input']>;
   liaison?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MetromChainInput = {
+  chainId: Scalars['BigDecimal']['input'];
+};
+
+export type MetromPool = {
+  apr: Scalars['BigDecimal']['output'];
+  apy: Scalars['BigDecimal']['output'];
+  chainId: Scalars['BigDecimal']['output'];
+  pool: Scalars['String']['output'];
 };
 
 export type MinePool = {
@@ -11930,6 +12135,8 @@ export type Query = {
   aggregateFragments: Array<AggregateFragment>;
   all?: Maybe<All>;
   alls: Array<All>;
+  /** 获取amm ticks */
+  amm_getTicksData: AmmTicksDataResult;
   announcement_getAnnouncement?: Maybe<AnnouncementAnnouncementList>;
   approval?: Maybe<Approval>;
   approvals: Array<Approval>;
@@ -11954,6 +12161,10 @@ export type Query = {
   bidHistory?: Maybe<BidHistory>;
   bidPosition?: Maybe<BidPosition>;
   bidPositions: Array<BidPosition>;
+  brand_site_announcement_list?: Maybe<Brand_Site_AnnouncementBrandSiteAnnouncementList>;
+  brand_site_banner_list?: Maybe<
+    Array<Maybe<Brand_Site_BannerBrandSiteBanner>>
+  >;
   /** 获取 RPC 节点，缓存1分钟，每分钟重新排序；排序规则：可访问 > 响应速度 > 区块高度 */
   browser_getRpc: Scalars['JSON']['output'];
   chart_getOhlcv2Chart: Array<Maybe<Array<Maybe<Scalars['String']['output']>>>>;
@@ -12131,6 +12342,12 @@ export type Query = {
   dodochain_getUserStakedListJourneyOne: DodochainUserStakedPaginationResult;
   /** 获取用户参与的twigs挖矿列表 */
   dodochain_getUserTwigsMineList: DodochainUserTwigsMinePaginationResult;
+  /** 活动相关信息 */
+  dodopoints_getActivityInfo?: Maybe<DodopointsDodoPointsActivityInfo>;
+  /** Lp交易对积分记录 */
+  dodopoints_getUserLpPairsPoints: Array<Maybe<DodopointsPairPoints>>;
+  /** 交易积分发放记录 */
+  dodopoints_getUserSwapPointsList: DodopointsPointRecordPaginationResult;
   donateHistories: Array<DonateHistory>;
   donateHistory?: Maybe<DonateHistory>;
   /** 活动相关信息 */
@@ -12206,6 +12423,8 @@ export type Query = {
   /** data url:post(https://host:port/manage/slippage_tolerance_list).data */
   manage_slippage_tolerance_list?: Maybe<Array<Maybe<ManageSlippageTolerance>>>;
   market_maker_pool_apply_create?: Maybe<Market_Maker_Pool_ApplyData>;
+  /** 获取Metrom的池子列表 */
+  metrom_getPools: Array<Maybe<MetromPool>>;
   minePool?: Maybe<MinePool>;
   minePools: Array<MinePool>;
   miningPool?: Maybe<MiningPool>;
@@ -12456,6 +12675,10 @@ export type QueryAllsArgs = {
   where?: InputMaybe<All_Filter>;
 };
 
+export type QueryAmm_GetTicksDataArgs = {
+  where?: InputMaybe<AmmgetTicksDataInput>;
+};
+
 export type QueryAnnouncement_GetAnnouncementArgs = {
   lang?: InputMaybe<Scalars['String']['input']>;
 };
@@ -12613,6 +12836,14 @@ export type QueryBidPositionsArgs = {
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<BidPosition_Filter>;
+};
+
+export type QueryBrand_Site_Announcement_ListArgs = {
+  where?: InputMaybe<Brand_Site_Announcementqueryilter>;
+};
+
+export type QueryBrand_Site_Banner_ListArgs = {
+  where?: InputMaybe<Brand_Site_Bannerqueryilter>;
 };
 
 export type QueryBrowser_GetRpcArgs = {
@@ -13209,6 +13440,18 @@ export type QueryDodochain_GetUserTwigsMineListArgs = {
   where?: InputMaybe<DodochainuserTwigsMineInput>;
 };
 
+export type QueryDodopoints_GetActivityInfoArgs = {
+  where?: InputMaybe<DodopointsChainOptionalUserInput>;
+};
+
+export type QueryDodopoints_GetUserLpPairsPointsArgs = {
+  where?: InputMaybe<DodopointsChainOptionalUserInput>;
+};
+
+export type QueryDodopoints_GetUserSwapPointsListArgs = {
+  where?: InputMaybe<DodopointsChainUserPaginationInput>;
+};
+
 export type QueryDonateHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -13560,6 +13803,10 @@ export type QueryManage_Slippage_Tolerance_ListArgs = {
 
 export type QueryMarket_Maker_Pool_Apply_CreateArgs = {
   data?: InputMaybe<Market_Maker_Pool_ApplypoolApplyData>;
+};
+
+export type QueryMetrom_GetPoolsArgs = {
+  where?: InputMaybe<MetromChainInput>;
 };
 
 export type QueryMinePoolArgs = {
@@ -20397,21 +20644,28 @@ export type FetchErc20ForecastSlippageQuery = {
   } | null;
 };
 
-export type TicksQueryVariables = Exact<{
-  where?: InputMaybe<Tick_Filter>;
-  skip?: InputMaybe<Scalars['Int']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
+export type Amm_GetTicksDataQueryVariables = Exact<{
+  where?: InputMaybe<AmmgetTicksDataInput>;
 }>;
 
-export type TicksQuery = {
-  ticks: Array<{
-    id: string;
-    poolAddress?: string | null;
-    tickIdx: any;
-    liquidityNet: any;
-    price0: any;
-    price1: any;
-  }>;
+export type Amm_GetTicksDataQuery = {
+  amm_getTicksData: {
+    chain: string;
+    poolAddress: string;
+    pairType: string;
+    ticks: Array<{
+      id: string;
+      poolAddress: string;
+      tickIdx: any;
+      price0: any;
+      price1: any;
+      liquidityGross: any;
+      liquidityNet: any;
+      protocolPosition?: string | null;
+      tickArrayLower?: string | null;
+      tickArrayUpper?: string | null;
+    } | null>;
+  };
 };
 
 export type FetchMiningListQueryVariables = Exact<{
@@ -21226,18 +21480,30 @@ export const FetchErc20ForecastSlippageDocument = new TypedDocumentString(`
   FetchErc20ForecastSlippageQuery,
   FetchErc20ForecastSlippageQueryVariables
 >;
-export const TicksDocument = new TypedDocumentString(`
-    query Ticks($where: Tick_filter, $skip: Int, $first: Int) {
-  ticks(where: $where, skip: $skip, first: $first) {
-    id
+export const Amm_GetTicksDataDocument = new TypedDocumentString(`
+    query Amm_getTicksData($where: AmmgetTicksDataInput) {
+  amm_getTicksData(where: $where) {
+    chain
     poolAddress
-    tickIdx
-    liquidityNet
-    price0
-    price1
+    pairType
+    ticks {
+      id
+      poolAddress
+      tickIdx
+      price0
+      price1
+      liquidityGross
+      liquidityNet
+      protocolPosition
+      tickArrayLower
+      tickArrayUpper
+    }
   }
 }
-    `) as unknown as TypedDocumentString<TicksQuery, TicksQueryVariables>;
+    `) as unknown as TypedDocumentString<
+  Amm_GetTicksDataQuery,
+  Amm_GetTicksDataQueryVariables
+>;
 export const FetchMiningListDocument = new TypedDocumentString(`
     query FetchMiningList($where: Miningmining_list_filter) {
   mining_list(where: $where) {

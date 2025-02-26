@@ -4,7 +4,6 @@ import {
 } from '@raydium-io/raydium-sdk-v2';
 import BigNumber from 'bignumber.js';
 import { FeeAmount } from './sdks/v3-sdk';
-import { ChainId } from '@dodoex/api';
 
 export enum Field {
   MINT_1 = 'MINT_1',
@@ -44,10 +43,6 @@ export enum PositionField {
 export type PoolInfoT = Awaited<ReturnType<Clmm['getPoolInfoFromRpc']>>;
 
 export interface PoolInfoI extends ApiV3PoolInfoConcentratedItem {
-  mintAChainId: ChainId;
-  mintASymbol: string;
-  mintBChainId: ChainId;
-  mintBSymbol: string;
   tickCurrent: PoolInfoT['computePoolInfo']['tickCurrent'];
 }
 

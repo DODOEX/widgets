@@ -29,8 +29,8 @@ export const Primary = (props: any) => {
         handleGoBack={() => window.alert('handleGoBack')}
         handleGoToPoolList={() => window.alert('handleGoToPoolList')}
         params={{
-          from: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
-          to: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
+          mint1: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
+          mint2: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
           fee: '1000',
         }}
       />

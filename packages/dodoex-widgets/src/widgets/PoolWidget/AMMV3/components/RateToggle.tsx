@@ -1,16 +1,16 @@
 import { Box, BoxProps, ButtonBase, useTheme } from '@dodoex/components';
-import { StateProps } from '../reducer';
+import { TokenInfo } from '../../../../hooks/Token/type';
 
 export interface RateToggleProps {
-  mint1: StateProps['mint1'];
-  mint2: StateProps['mint2'];
+  mintA: TokenInfo;
+  mintB: TokenInfo;
   handleRateToggle: () => void;
   sx?: BoxProps['sx'];
 }
 
 export const RateToggle = ({
-  mint1,
-  mint2,
+  mintA,
+  mintB,
   handleRateToggle,
   sx,
 }: RateToggleProps) => {
@@ -63,7 +63,7 @@ export const RateToggle = ({
                 }),
           }}
         >
-          {isSorted ? mint1?.symbol : mint2?.symbol}
+          {mintA.symbol}
         </Box>
         <Box
           sx={{
@@ -87,7 +87,7 @@ export const RateToggle = ({
                 }),
           }}
         >
-          {isSorted ? mint2?.symbol : mint1?.symbol}
+          {mintB.symbol}
         </Box>
       </Box>
     </Box>

@@ -28,15 +28,7 @@ export const PositionPreview = ({
   const { chainId } = useWalletInfo();
 
   const {
-    poolInfo: {
-      mintA,
-      mintB,
-      feeRate,
-      mintASymbol,
-      mintBSymbol,
-      mintAChainId,
-      mintBChainId,
-    },
+    poolInfo: { mintA, mintB, feeRate },
     liquidity,
     amountA,
     amountB,

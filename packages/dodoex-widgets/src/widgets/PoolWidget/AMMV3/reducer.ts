@@ -10,11 +10,11 @@ export interface StateProps {
    *
    * 最终创建完的 clmm 中的 mintA 和 mintB 的顺序可能和 mint1 和 mint2 的顺序相反
    */
-  mint1: Maybe<TokenInfo>;
+  mint1: TokenInfo | undefined;
   /**
    * 代币对中第二个代币，与顺序无关；最终创建完的 clmm 中的 mintA 和 mintB 的顺序可能和 mint1 和 mint2 的顺序相反；
    */
-  mint2: Maybe<TokenInfo>;
+  mint2: TokenInfo | undefined;
   /**
    * 手续费率；
    */
@@ -104,7 +104,7 @@ export function reducer(state: StateProps, action: Actions): StateProps {
       return {
         ...state,
         mint1,
-        mint2: null,
+        mint2: undefined,
       };
     }
 

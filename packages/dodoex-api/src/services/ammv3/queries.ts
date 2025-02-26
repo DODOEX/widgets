@@ -1,14 +1,23 @@
 import { graphql } from '../../gql';
 
 export const AllV3TicksDocument = graphql(/* GraphQL */ `
-  query Ticks($where: Tick_filter, $skip: Int, $first: Int) {
-    ticks(where: $where, skip: $skip, first: $first) {
-      id
+  query Amm_getTicksData($where: AmmgetTicksDataInput) {
+    amm_getTicksData(where: $where) {
+      chain
       poolAddress
-      tickIdx
-      liquidityNet
-      price0
-      price1
+      pairType
+      ticks {
+        id
+        poolAddress
+        tickIdx
+        price0
+        price1
+        liquidityGross
+        liquidityNet
+        protocolPosition
+        tickArrayLower
+        tickArrayUpper
+      }
     }
   }
 `);

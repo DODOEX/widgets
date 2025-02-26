@@ -84,10 +84,10 @@ export const FeeSelector = ({
           }}
         >
           {[
-            FeeAmount.LOWEST,
+            // FeeAmount.LOWEST,
             FeeAmount.LOW,
-            FeeAmount.MEDIUM,
-            FeeAmount.HIGH,
+            // FeeAmount.MEDIUM,
+            // FeeAmount.HIGH,
           ].map((fee) => {
             const isSelected = feeAmount === fee;
             return (

@@ -17,16 +17,7 @@ export const PositionSelectedRangePreview = ({
   ticksAtLimit: { [bound: string]: boolean | undefined };
 }) => {
   const {
-    poolInfo: {
-      mintA,
-      mintB,
-      feeRate,
-      mintASymbol,
-      mintBSymbol,
-      mintAChainId,
-      mintBChainId,
-      price,
-    },
+    poolInfo: { mintA, mintB, feeRate, price },
     liquidity,
     amountA,
     amountB,
@@ -37,34 +28,12 @@ export const PositionSelectedRangePreview = ({
   const theme = useTheme();
 
   // track which currency should be base
-  const [mint1, setMint1] = useState({
-    ...mintA,
-    chainId: mintAChainId,
-    symbol: mintASymbol,
-  });
+  const [mint1, setMint1] = useState(mintA);
 
   const mint2 = useMemo(() => {
     const sorted = mint1.address === mintA.address;
-    return sorted
-      ? {
-          ...mintB,
-          chainId: mintBChainId,
-          symbol: mintBSymbol,
-        }
-      : {
-          ...mintA,
-          chainId: mintAChainId,
-          symbol: mintASymbol,
-        };
-  }, [
-    mint1,
-    mintA,
-    mintAChainId,
-    mintASymbol,
-    mintB,
-    mintBChainId,
-    mintBSymbol,
-  ]);
+    return sorted ? mintB : mintA;
+  }, [mint1.address, mintA, mintB]);
 
   const handleRateChange = useCallback(() => {
     setMint1(mint2);
@@ -87,8 +56,8 @@ export const PositionSelectedRangePreview = ({
           <div />
         )}
         <RateToggle
-          mint1={mint1}
-          mint2={mint2}
+          mintA={mintA}
+          mintB={mintB}
           handleRateToggle={handleRateChange}
         />
       </RowBetween>

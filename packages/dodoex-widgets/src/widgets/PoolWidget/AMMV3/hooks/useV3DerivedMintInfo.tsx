@@ -37,6 +37,8 @@ export function useV3DerivedMintInfo({
   // override for existing position
   existingPosition?: PositionI;
 }): {
+  mintA: TokenInfo | undefined;
+  mintB: TokenInfo | undefined;
   poolInfo: PoolInfoI | undefined;
   poolState: PoolState;
   ticks: { [bound in Bound]?: number | undefined };
@@ -194,10 +196,16 @@ export function useV3DerivedMintInfo({
     if (pool) {
       const existedPoolInfo: PoolInfoI = {
         ...pool.poolInfo,
-        mintAChainId: mintA.chainId,
-        mintASymbol: mintA.symbol,
-        mintBChainId: mintB.chainId,
-        mintBSymbol: mintB.symbol,
+        mintA: {
+          ...pool.poolInfo.mintA,
+          chainId: mintA.chainId,
+          symbol: mintA.symbol,
+        },
+        mintB: {
+          ...pool.poolInfo.mintB,
+          chainId: mintB.chainId,
+          symbol: mintB.symbol,
+        },
         tickCurrent: pool.computePoolInfo.tickCurrent,
       };
       return existedPoolInfo;
@@ -234,26 +242,30 @@ export function useV3DerivedMintInfo({
         config: feeConfig,
         programId: clmmConfig.programId.toBase58(),
         id: poolId,
-        mintA: toApiV3Token({
-          address: mintA.address,
-          decimals: mintA.decimals,
-          programId: TOKEN_PROGRAM_ID.toBase58(),
-          extensions: {
-            feeConfig: undefined,
-          },
-        }),
-        mintAChainId: mintA.chainId,
-        mintASymbol: mintA.symbol,
-        mintB: toApiV3Token({
-          address: mintB.address,
-          decimals: mintB.decimals,
-          programId: TOKEN_PROGRAM_ID.toBase58(),
-          extensions: {
-            feeConfig: undefined,
-          },
-        }),
-        mintBChainId: mintB.chainId,
-        mintBSymbol: mintB.symbol,
+        mintA: {
+          ...toApiV3Token({
+            address: mintA.address,
+            decimals: mintA.decimals,
+            programId: TOKEN_PROGRAM_ID.toBase58(),
+            extensions: {
+              feeConfig: undefined,
+            },
+          }),
+          chainId: mintA.chainId,
+          symbol: mintA.symbol,
+        },
+        mintB: {
+          ...toApiV3Token({
+            address: mintB.address,
+            decimals: mintB.decimals,
+            programId: TOKEN_PROGRAM_ID.toBase58(),
+            extensions: {
+              feeConfig: undefined,
+            },
+          }),
+          chainId: mintB.chainId,
+          symbol: mintB.symbol,
+        },
         rewardDefaultInfos: [],
         rewardDefaultPoolInfos: 'Clmm',
         price: price.toNumber(),
@@ -732,6 +744,8 @@ export function useV3DerivedMintInfo({
   const invalidPool = poolState === PoolState.INVALID || isTaxed;
 
   return {
+    mintA,
+    mintB,
     dependentField,
     mints,
     poolInfo,

@@ -1,8 +1,15 @@
-import { AMMV3Api, ChainId, CLMM, TickData, Ticks } from '@dodoex/api';
+import {
+  AMMV3Api,
+  ChainId,
+  chainIdShortNameEnum,
+  chainIdToShortName,
+  CLMM,
+  TickData,
+  Ticks,
+} from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useEffect, useMemo, useState } from 'react';
-import { ThegraphKeyMap } from '../../../../constants/chains';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { TokenInfo } from '../../../../hooks/Token/type';
 import { useGraphQLRequests } from '../../../../hooks/useGraphQLRequests';
@@ -43,16 +50,17 @@ function usePaginatedTickQuery(
     skip,
     first: MAX_TICK_FETCH_VALUE,
     where: {
-      chain: chainId ? ThegraphKeyMap[chainId] : undefined,
-      poolAddress: poolAddress?.toLowerCase() ?? undefined,
-      refreshNow: true,
-      schemaName: CLMM,
+      chain: chainId
+        ? chainIdToShortName[chainId]
+        : chainIdShortNameEnum.SOON_TESTNET,
+      poolAddress: poolAddress ?? '',
+      pairType: CLMM,
     },
   });
 
   const result = useQuery({
     ...query,
-    enabled: true,
+    enabled: !!poolAddress,
   });
   return result;
 }
@@ -73,7 +81,7 @@ function useAllV3Ticks(
     skipNumber,
     chainId,
   );
-  const ticks: Ticks = data?.ticks as Ticks;
+  const ticks: Ticks = data?.amm_getTicksData.ticks as Ticks;
 
   useEffect(() => {
     if (ticks?.length) {
