@@ -1,10 +1,8 @@
-import { JsonRpcProvider } from '@ethersproject/providers';
 import type { TransactionRequest } from '@ethersproject/abstract-provider';
 import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber';
-import BigNumber from 'bignumber.js';
-import isZero from '../../utils/address';
+import { JsonRpcProvider } from '@ethersproject/providers';
 import { t } from '@lingui/macro';
-import { TokenApi } from '@dodoex/api';
+import isZero from '../../utils/address';
 import { TokenInfo } from '../Token';
 
 export type Deferrable<T> = {
@@ -88,29 +86,6 @@ export const sendTransaction = async (
       throw error;
     }
   }
-};
-
-export const approve = async (
-  tokenAddress: string,
-  accountAddress: string,
-  contractAddress: string,
-  allowance: BigNumber,
-  provider: JsonRpcProvider,
-) => {
-  const data = await TokenApi.encode.approveABI(contractAddress, allowance);
-  const params = {
-    from: accountAddress,
-    to: tokenAddress,
-    data,
-    value: '0x0',
-    gasLimit: undefined as EthersBigNumber | undefined,
-  };
-
-  const gasLimit = await getEstimateGas(params, provider);
-  if (gasLimit) {
-    params.gasLimit = gasLimit;
-  }
-  return await sendTransaction(params, provider);
 };
 
 /**

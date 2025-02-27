@@ -1,14 +1,11 @@
-import { Box, useTheme, Tooltip } from '@dodoex/components';
+import { Box, Tooltip, useTheme } from '@dodoex/components';
+import { Trans } from '@lingui/macro';
 import React from 'react';
-import { TokenApi } from '@dodoex/api';
-import { MidPathType } from '../../../hooks/useRouteVisionData';
 import { TokenInfo } from '../../../hooks/Token';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { Trans } from '@lingui/macro';
-import { getEtherscanPage } from '../../../utils';
+import { MidPathType } from '../../../hooks/useRouteVisionData';
+import { getEtherscanPage, isSameAddress } from '../../../utils';
 import TokenLogo from '../../TokenLogo';
-
-const { isSameAddress } = TokenApi.utils;
 
 function useTokenInfo({
   routing,

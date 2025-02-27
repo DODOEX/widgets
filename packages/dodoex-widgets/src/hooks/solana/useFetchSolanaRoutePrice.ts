@@ -19,46 +19,48 @@ import { MetadataFlag } from '../Submission/types';
 import { TokenInfo } from '../Token/type';
 
 const routeApiResponseDataExample = {
+  resAmount: 1.254571586,
+  priceImpact: 0.0009264805074319024,
+  useSource: 'DODORoute',
+  resPricePerToToken: 0.7970848464600887,
+  resPricePerFromToken: 1.254571586,
   inputMint: '36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva',
-  inAmount: '1000000',
+  inAmount: '1000000000',
   inputMintDecimal: 9,
   outputMint: 'GLfqSuSUUB6mTA4rfk5BHYbRjQHxYknJu8pSHcMnYgzE',
-  outAmount: '5898322',
+  outAmount: '1254571586',
   outputMintDecimal: 9,
-  minOutAmount: '5868831',
+  minOutAmount: '1251435157',
   inAmountWithOutDecimals: 1,
-  outAmountWithOutDecimals: 0.005898322,
-  slippageBps: 50,
+  outAmountWithOutDecimals: 1.254571586,
+  slippageBps: 25,
   routePlan: [
     {
       swapInfo: {
-        ammKey: '83v8iPyZihDEjDdY8RdZddyZNyUtXngz69Lgo9Kt5d6d',
+        ammKey: 'B3TmxwexWbYnEMiBpsoBs5vbZkKYWKiP5CjbSSdGGgHe',
         label: 'RaydiumCp',
         inputMint: '36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva',
         outputMint: 'GLfqSuSUUB6mTA4rfk5BHYbRjQHxYknJu8pSHcMnYgzE',
-        inAmount: '1000000',
-        outAmount: '5898322',
-        feeAmount: '13',
-        feeMint: '36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva',
+        inAmount: '1000000000',
+        outAmount: '1254571586',
+        feeAmount: '0',
+        feeMint: '',
       },
       percent: 100,
     },
   ],
-  resAmount: 0.005898322,
-  priceImpact: 0.00008281330617418546,
-  useSource: 'DODO',
-  data: 'AIABAAULuydQRcXU37XeaJa5h85M36w0Ie7/oNQLDewqgUx7z/iPg7v3hY0apuzdtJg7FQPmAazPCgjtqZznAL44q5iItA1lk/FWGfnV3E5/Bei7+5nfAOOK8jg6wUf+dWq20bI2UH7YCPOr8hHisO0wLtjecFxaY78Rl7pnO9QY6tgdR6X1+h97kIigK9hi+gaz8ElnFEbCmfVTBFvl3MagA5twSg+qbrJWWPBwc17ojOJB4BNOD4XaIV+ts2R3uzZ/6CzCjJclj04kifG7PRApFI4NgwtaE5na/xCEBI572Nvp+FkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR51VvyMcBu7nTFbs5oFQf9sbLeo/SOUQKxzaJWvBOPtD/6J/XX9kp0wJsfKVh53ksJqzbfyd1RSzIap7OM5ehynzuLbKQ30Ca3pj/0Wq5lWzvmdbFt2OddEbICsJmWX5oMR6KiUGPCAEEfcQha8z+zjKvOCficaRTwSroyyOD+AQohAA8QAgERBgcRAAIBCBAICQgSERETAAsQDwEMAg0DBAUOSeGvNUnULzTtQEIPAAAAAABSAFoAAAAAAB+NWQAAAAAAJQAAAOUXy5d6460qAQAAAC8AAGQAAUBCDwAAAAAAUgBaAAAAAAAyAAABeWUSc/alLjcLiYWttW7ElnjgwKUHBiufBJJdlBG4VVAEkGltbAVqEhUAEA==',
-  lastValidBlockHeight: 300085127,
+  data: 'AAEAChSuXV09eQi5aHNhWEW1jFv4lDcahmpramrXhtbQTnas4kvWXPWG6Vbxf/7q70hi0s8DDWusnKeAXu90htwFOA8OvnoPe+TUBp5lvnXY9y0yMD31eXg794Yg90em44X28tDKSW1py+24aIFgVQ9a9XrctHUb6/NJmrqg3oyn1V+ZroUvQIBGTxik6sB74VvnfvcammtP9ceYIoHVN6MehteoSaT9rMtgHNg7Ie9LrrVSMh+CMrQ+cicOzg0+Nnlq1PGVNk5F4bURcl3AiWo8Qr5DYu4GOVOg77z5Vorbd/rPyQUznmWVtrvlWmaL1b7JGvN4GOM7tn+GXMcADjaUSt+ycCcJyfK/xs90vGGpM1m9E0iwTQAbNDSnxyrvvof9n8vSE/Lm85RnFwaIr5jr/IEahuI6+aJaCvp4mreIAmdnXh8V4gdKzcSFCVQAieAc3mg9Q7q/lTDHwXKzcDemu4dH4+lAHo6TPQk9tjLV6S/fsWhkRwrNS/HycJkGtZkfAlsG3fbh12Whk9nL4UbO63msHLSF7V9bN5E6jPWFfv8AqYyXJY9OJInxuz0QKRSODYMLWhOZ2v8QhASOe9jb6fhZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABiyedrj0oRQl48d87XdZR/4JkGNuN0fmy6Kukj5DHqJ6ZarZoprWqOL40g90xCJe6Uz+PmiDfiqqufmr9+Ai7hp4/UvNGy9E7ywCHgAB4UHLaZdDegVfOxDEMlFbRGXbFynzuLbKQ30Ca3pj/0Wq5lWzvmdbFt2OddEbICsJmWXwMGRm/lIRcy/+ytunLDm+e8jOW7xfcSayxDmzpAAAAAq9rG8Y6kKJejJQyUmvIihA9hnWR1OmTRgu1jZfB2klACEwAFApxAEAASGgAKCwECAwQFDA0ODwMQEQYEBQcIDAwKCwkSKNCFXXgQcCFCAMqaOwAAAABCPsdKAAAAAJVil0oAAAAAAQAAAABkAAE=',
+  lastValidBlockHeight: 2378132,
 };
 
 const routeApiResponseExample = {
-  status: 200,
+  status: 200 | -1,
   data: routeApiResponseDataExample,
 };
 
 export type IRouteResponseData = typeof routeApiResponseExample;
 
-export type IRouteResponse = typeof routeApiResponseDataExample | undefined;
+export type IRouteResponse = typeof routeApiResponseDataExample | null;
 
 export function useFetchSolanaRoutePrice({
   toToken,
@@ -86,7 +88,7 @@ export function useFetchSolanaRoutePrice({
     refetchInterval: 60000,
     queryFn: async () => {
       if (!fromToken || !toToken || !fromAmount) {
-        return undefined;
+        return null;
       }
 
       const swapAmount = toWei(fromAmount, fromToken.decimals);
@@ -141,7 +143,7 @@ export function useFetchSolanaRoutePrice({
             inputMint: baseTokenPublicKey.toBase58(),
             outputMint: quoteTokenPublicKey.toBase58(),
             amount: swapAmount.toString(),
-            userAddr: account || 'CjeWeg7Pfyq5VcakxaUwBHCZoEePKYuZTYgfkXaaiCw3',
+            user: account || 'CjeWeg7Pfyq5VcakxaUwBHCZoEePKYuZTYgfkXaaiCw3',
             chainId:
               chainIdToShortName[
                 fromToken.chainId as keyof typeof chainIdToShortName
@@ -197,7 +199,7 @@ export function useFetchSolanaRoutePrice({
       } catch (e) {
         console.error('querySwap:', e);
       }
-      return undefined;
+      return null;
     },
   });
 
