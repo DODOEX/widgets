@@ -30,7 +30,7 @@ export const useCreatePoolSubmit = ({
   slippageCoefficient: string;
 }) => {
   const { chainId, account } = useWalletInfo();
-  const { deadLine: deadLineDefault } = useUserOptions();
+  const { deadLine: ddl } = useUserOptions();
 
   const EtherToken = basicTokenMap[chainId as ChainId];
 
@@ -88,8 +88,7 @@ export const useCreatePoolSubmit = ({
     // k is the volatility
     const k = Number(slippageCoefficient || (isDsp ? '0.1' : '1'));
     // Transaction Deadline
-    const deadLine =
-      Math.ceil(Date.now() / 1000) + (deadLineDefault ?? 60 * 60);
+    const deadLine = Math.ceil(Date.now() / 1000) + (ddl ?? 60 * 60);
 
     let result: any;
     const createPrams: Parameters<typeof PoolApi.encode.createDVMPoolABI> = [

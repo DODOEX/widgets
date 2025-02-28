@@ -84,6 +84,7 @@ export const getModifyDPPPoolParams = async ({
   feeRate,
   initPrice,
   slippageCoefficient,
+  ddl,
   SLIPPAGE_PROTECTION,
 }: {
   chainId?: number;
@@ -96,6 +97,7 @@ export const getModifyDPPPoolParams = async ({
   feeRate: string;
   initPrice: string;
   slippageCoefficient: string;
+  ddl: number | undefined;
   SLIPPAGE_PROTECTION: number;
 }) => {
   const EtherToken = chainId ? basicTokenMap[chainId as ChainId] : undefined;
@@ -240,7 +242,7 @@ export const getModifyDPPPoolParams = async ({
         0,
         baseDecimals,
         quoteDecimals,
-        Math.ceil(Date.now() / 1000) + 10 * 60,
+        Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60),
       ];
       result = await PoolApi.encode.resetDPPPoolABI(...resetParams);
     }

@@ -18,6 +18,7 @@ import {
   getUniswapV2Router02ContractAddressByChainId,
   getUniswapV2Router02FixedFeeContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
 
 export function useAMMV2AddLiquidity({
   baseToken,
@@ -44,6 +45,7 @@ export function useAMMV2AddLiquidity({
   const { account } = useWalletInfo();
   useLingui();
 
+  const { deadLine: ddl } = useUserOptions();
   return useMutation({
     mutationFn: async () => {
       if (!baseToken || !quoteToken) {
@@ -82,7 +84,7 @@ export function useAMMV2AddLiquidity({
         .times(1 - slippage)
         .dp(0, BigNumber.ROUND_FLOOR);
       const feeWei = toWei(fee, 4).toString();
-      const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
+      const deadline = Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60);
 
       try {
         if (baseIsETH) {
