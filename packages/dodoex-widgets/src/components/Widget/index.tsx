@@ -107,6 +107,8 @@ export interface WidgetProps
   graphQLRequests?: GraphQLRequests;
   ConfirmComponent?: React.FunctionComponent<ConfirmProps>;
   DialogComponent?: React.FunctionComponent<DialogProps>;
+  /** Default deadLine when it cannot be set. Unit: seconds */
+  deadLine?: number;
 }
 
 function LangProvider(props: PropsWithChildren<WidgetProps>) {

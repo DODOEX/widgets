@@ -6,6 +6,7 @@ import { TokenInfo } from '../../../../../hooks/Token';
 import { getEthersValue } from '../../../../../utils/bytes';
 import { SubPeggedVersionE, Version as PoolVersionE } from '../../types';
 import { DEFAULT_INIT_PRICE_STANDARD } from '../../utils';
+import { useUserOptions } from '../../../../../components/UserOptionsProvider';
 
 export const useCreatePoolSubmit = ({
   selectedVersion,
@@ -29,6 +30,7 @@ export const useCreatePoolSubmit = ({
   slippageCoefficient: string;
 }) => {
   const { chainId, account } = useWalletInfo();
+  const { deadLine: deadLineDefault } = useUserOptions();
 
   const EtherToken = basicTokenMap[chainId as ChainId];
 
@@ -86,7 +88,8 @@ export const useCreatePoolSubmit = ({
     // k is the volatility
     const k = Number(slippageCoefficient || (isDsp ? '0.1' : '1'));
     // Transaction Deadline
-    const deadLine = Math.ceil(Date.now() / 1000) + 60 * 60;
+    const deadLine =
+      Math.ceil(Date.now() / 1000) + (deadLineDefault ?? 60 * 60);
 
     let result: any;
     const createPrams: Parameters<typeof PoolApi.encode.createDVMPoolABI> = [
