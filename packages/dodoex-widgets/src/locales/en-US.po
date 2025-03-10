@@ -316,7 +316,7 @@ msgstr "APR"
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
-#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:211
+#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:208
 msgid "Liquidity data not available."
 msgstr "Liquidity data not available."
 
@@ -1040,7 +1040,7 @@ msgstr "Set the fee to the same as most other pools"
 msgid "If there are no participants before the end, the rewards cannot be taken out anymore."
 msgstr "If there are no participants before the end, the rewards cannot be taken out anymore."
 
-#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:189
+#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:186
 msgid "Your position will appear here."
 msgstr "Your position will appear here."
 
@@ -2051,7 +2051,7 @@ msgstr "Connect to a wallet"
 msgid "End Time"
 msgstr "End Time"
 
-#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:231
+#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:228
 msgid "There is no liquidity data."
 msgstr "There is no liquidity data."
 

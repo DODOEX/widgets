@@ -1,4 +1,4 @@
-import { alpha, Box, BoxProps, Tooltip, useTheme } from '@dodoex/components';
+import { alpha, Box, BoxProps, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
 
 export interface AMMV3Props {

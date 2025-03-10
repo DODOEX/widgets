@@ -2,10 +2,7 @@ import { Box, LoadingSkeleton } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { ReactNode, useCallback, useMemo } from 'react';
 import { batch } from 'react-redux';
-import {
-  formatPercentageNumber,
-  formatTokenAmountNumber,
-} from '../../../../../utils';
+import { formatTokenAmountNumber } from '../../../../../utils';
 import { Currency, Price } from '../../sdks/sdk-core';
 import { FeeAmount } from '../../sdks/v3-sdk';
 import { Bound } from '../../types';
