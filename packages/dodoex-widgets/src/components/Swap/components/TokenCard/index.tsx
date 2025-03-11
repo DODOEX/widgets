@@ -1,4 +1,4 @@
-import { ChainId, CONTRACT_QUERY_KEY } from '@dodoex/api';
+import { ChainId } from '@dodoex/api';
 import {
   Box,
   BoxProps,
@@ -147,7 +147,6 @@ export function TokenCard({
   const { fetchTokenBalance } = useSolanaConnection();
   const svmTokenQuery = useQuery({
     queryKey: [
-      CONTRACT_QUERY_KEY,
       'token',
       'getFetchTokenQuery',
       chainId,

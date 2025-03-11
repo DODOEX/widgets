@@ -1,4 +1,3 @@
-import { CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { useQueries } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { isEqual } from 'lodash';
@@ -36,7 +35,6 @@ export default function useFetchTokens({
     queries:
       tokenList?.map((token) => ({
         queryKey: [
-          CONTRACT_QUERY_KEY,
           'token',
           'getFetchTokenQuery',
           chainId,

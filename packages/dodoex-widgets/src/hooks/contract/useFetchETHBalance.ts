@@ -1,4 +1,3 @@
-import { CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import { basicTokenMap } from '../../constants/chains';
 import { BIG_ALLOWANCE } from '../../constants/token';
@@ -11,7 +10,6 @@ export default function useFetchETHBalance(chainId?: number) {
   const { fetchSOLBalance } = useSolanaConnection();
   const svmQuery = useQuery({
     queryKey: [
-      CONTRACT_QUERY_KEY,
       'token',
       'getFetchTokenQuery',
       chainId,

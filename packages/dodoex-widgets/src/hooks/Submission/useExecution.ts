@@ -1,4 +1,4 @@
-import { ChainId, CONTRACT_QUERY_KEY } from '@dodoex/api';
+import { ChainId } from '@dodoex/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useMemo, useState } from 'react';
 import { setContractStatus } from '../../store/actions/globals';
@@ -165,7 +165,7 @@ export default function useExecution({
           }
           await updateBlockNumber(); // update blockNumber once after tx
           queryClient.invalidateQueries({
-            queryKey: [CONTRACT_QUERY_KEY],
+            queryKey: ['cpmm'],
           });
           if (!notShowingDone) {
             setShowingDone(true);

@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.1-solana.6",
+  "version": "3.0.1-solana.8",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",

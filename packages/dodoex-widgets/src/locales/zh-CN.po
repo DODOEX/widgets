@@ -1959,7 +1959,7 @@ msgstr ""
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "在冷静期无法进行清算"
 
-#: src/components/Swap/components/TokenCard/index.tsx:306
+#: src/components/Swap/components/TokenCard/index.tsx:305
 msgid "Buy"
 msgstr ""
 
