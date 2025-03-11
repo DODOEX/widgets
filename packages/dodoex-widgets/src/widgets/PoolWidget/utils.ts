@@ -1,6 +1,9 @@
 import { AMMV3Api, ChainId, ExcludeNone, PoolApi, PoolType } from '@dodoex/api';
-// import { contractRequests } from '../../constants/api';
+import BigNumber from 'bignumber.js';
 import { TokenInfo } from '../../hooks/Token';
+import { formatTokenAmountNumber } from '../../utils';
+import { FEE_AMOUNT_DETAIL } from './AMMV3/components/shared';
+import { FeeAmount } from './AMMV3/sdks/v3-sdk';
 import { OperatePool } from './PoolOperate/types';
 
 export const poolApi = new PoolApi();
@@ -85,6 +88,7 @@ export function convertFetchLiquidityToOperateData(
       id: pair.quoteLpToken?.id as string,
     },
     lpFeeRate: lqData?.pair?.lpFeeRate,
+    mtFeeRate: lqData?.pair?.mtFeeRate,
   };
 }
 
@@ -138,4 +142,22 @@ export function getPoolAMMOrPMM(type: PoolType) {
     default:
       return 'PMM';
   }
+}
+
+export function getPoolFeeRate({
+  type,
+  lpFeeRate,
+  mtFeeRate,
+}: {
+  type: PoolType;
+  lpFeeRate: string;
+  mtFeeRate: string;
+}) {
+  const isAMMV3 = type === 'SVM_AMMV3';
+  return isAMMV3
+    ? (FEE_AMOUNT_DETAIL[lpFeeRate as unknown as FeeAmount]?.label ?? '-')
+    : `${formatTokenAmountNumber({
+        input: new BigNumber(lpFeeRate ?? 0).plus(mtFeeRate ?? 0).div(10000),
+        decimals: 4,
+      })}%`;
 }

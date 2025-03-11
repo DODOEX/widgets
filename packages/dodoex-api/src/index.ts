@@ -40,6 +40,6 @@ export { SwapWidgetApi } from './services/SwapWidgetApi';
 export { TokenApi } from './services/TokenApi';
 
 // export { SwapApi } from './services/swap/SwapApi';
-// export { SystemApi } from './services/system/SystemApi';
+export { SystemApi } from './services/system/SystemApi';
 
 export type ExcludeNone<T> = NonNullable<T>;

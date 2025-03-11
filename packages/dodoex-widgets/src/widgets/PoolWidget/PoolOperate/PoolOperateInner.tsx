@@ -1,20 +1,17 @@
-import { Tabs, TabPanel, TabsButtonGroup } from '@dodoex/components';
-import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
-import { FailedList } from '../../../components/List/FailedList';
-import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
-import { poolApi } from '../utils';
+import { TabPanel, Tabs, TabsButtonGroup } from '@dodoex/components';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import MyLiquidity from '../AMMV2Create/MyLiqidity';
+import { useUniV2Pairs } from '../hooks/useUniV2Pairs';
 import { AddPoolOperate } from './AddPoolOperate';
-import { OperateTab, usePoolOperateTabs } from './hooks/usePoolOperateTabs';
 import LiquidityInfo from './components/LiquidityInfo';
-import { OperatePool } from './types';
+import { OperateTab, usePoolOperateTabs } from './hooks/usePoolOperateTabs';
 import { RemovePoolOperate } from './RemovePoolOperate';
+import { OperatePool } from './types';
 
 export interface PoolOperateInnerProps {
   pool: OperatePool;
   operate?: OperateTab;
   hidePoolInfo?: boolean;
-  errorRefetch?: () => void;
   submittedBack?: () => void;
 }
 
@@ -22,53 +19,59 @@ export default function PoolOperateInner({
   pool,
   operate,
   hidePoolInfo,
-  errorRefetch,
   submittedBack,
 }: PoolOperateInnerProps) {
   const { operateTab, operateTabs, handleChangeTab } =
     usePoolOperateTabs(operate);
-  const { account } = useWeb3React();
-  const balanceInfo = usePoolBalanceInfo({
-    account,
-    pool,
+  const { account } = useWalletInfo();
+
+  const {
+    price,
+    invertedPrice,
+    poolInfoQuery,
+    lpBalanceQuery,
+    lpBalance,
+    lpBalancePercentage,
+    lpToAmountA,
+    lpToAmountB,
+    liquidityMinted,
+    pairMintAAmount,
+    pairMintBAmount,
+    isExists,
+  } = useUniV2Pairs({
+    pool:
+      pool?.baseToken && pool.quoteToken
+        ? {
+            baseToken: pool.baseToken,
+            quoteToken: pool.quoteToken,
+            address: pool.address,
+          }
+        : undefined,
+    baseAmount: undefined,
+    quoteAmount: undefined,
+    slippage: 0,
   });
-  const pmmStateQuery = useQuery(
-    poolApi.getPMMStateQuery(
-      pool?.chainId as number,
-      pool?.address,
-      pool?.type,
-      pool?.baseToken?.decimals,
-      pool?.quoteToken?.decimals,
-    ),
-  );
-  if (balanceInfo.error || pmmStateQuery.error || errorRefetch) {
-    return (
-      <FailedList
-        refresh={() => {
-          if (balanceInfo.error) {
-            balanceInfo.refetch();
-          }
-          if (pmmStateQuery.error) {
-            pmmStateQuery.refetch();
-          }
-          if (errorRefetch) {
-            errorRefetch();
-          }
-        }}
-        sx={{
-          my: 40,
-          height: '100%',
-        }}
-      />
-    );
-  }
+
   return (
     <>
-      <LiquidityInfo
-        pool={pool}
-        balanceInfo={balanceInfo}
-        hidePoolInfo={hidePoolInfo}
-      />
+      <LiquidityInfo pool={pool} hidePoolInfo={hidePoolInfo}>
+        <MyLiquidity
+          isExists={isExists}
+          poolInfo={poolInfoQuery.data?.poolInfo}
+          poolInfoLoading={poolInfoQuery.isLoading}
+          lpBalanceLoading={lpBalanceQuery.isLoading}
+          lpBalance={lpBalance}
+          lpBalancePercentage={lpBalancePercentage}
+          lpToAmountA={lpToAmountA}
+          lpToAmountB={lpToAmountB}
+          sx={{
+            px: 0,
+            py: 0,
+            border: 'none',
+          }}
+        />
+      </LiquidityInfo>
+
       <Tabs
         value={operateTab}
         onChange={(_, value) => {
@@ -84,18 +87,10 @@ export default function PoolOperateInner({
           }}
         />
         <TabPanel value={OperateTab.Add}>
-          <AddPoolOperate
-            pool={pool}
-            balanceInfo={balanceInfo}
-            submittedBack={submittedBack}
-          />
+          <AddPoolOperate pool={pool} submittedBack={submittedBack} />
         </TabPanel>
         <TabPanel value={OperateTab.Remove}>
-          <RemovePoolOperate
-            pool={pool}
-            balanceInfo={balanceInfo}
-            submittedBack={submittedBack}
-          />
+          <RemovePoolOperate pool={pool} submittedBack={submittedBack} />
         </TabPanel>
       </Tabs>
     </>

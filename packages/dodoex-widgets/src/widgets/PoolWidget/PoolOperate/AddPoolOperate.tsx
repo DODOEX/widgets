@@ -1,88 +1,49 @@
-import { PoolApi } from '@dodoex/api';
-import { Box, Button, LoadingSkeleton } from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
-import React from 'react';
-import {
-  CardPlus,
-  TokenCard,
-} from '../../../components/Swap/components/TokenCard';
-import { useLiquidityOperateAmount } from './hooks/useLiquidityOperateAmount';
-import Ratio from './components/Ratio';
-import SlippageSetting, { useSlipper } from './components/SlippageSetting';
-import ComparePrice from './components/ComparePrice';
-import { OperatePool } from './types';
-import OperateBtn from './components/OperateBtn';
-import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
+import { Box, Button } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import { useComparePrice } from './hooks/useComparePrice';
-import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
-import Confirm from '../../../components/Confirm';
-import { useOperateLiquidity } from '../hooks/contract/useOperateLiquidity';
-import { SLIPPAGE_PROTECTION } from '../../../constants/pool';
+import React from 'react';
 import ErrorMessageDialog from '../../../components/ErrorMessageDialog';
+import { SwitchBox } from '../../../components/Swap/components/SwitchBox';
+import { TokenCard } from '../../../components/Swap/components/TokenCard';
+import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
 import ConfirmDialog from '../AMMV2Create/ConfirmDialog';
-import { useQuery } from '@tanstack/react-query';
-import { poolApi } from '../utils';
+import Ratio from '../AMMV2Create/Ratio';
+import Setting from '../AMMV2Create/Setting';
 import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
-import { PageType, useRouterStore } from '../../../router';
-import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
+import OperateBtn from './components/OperateBtn';
+import { useLiquidityOperateAmount } from './hooks/useLiquidityOperateAmount';
+import { OperatePool } from './types';
 
 export function AddPoolOperate({
   submittedBack: submittedBackProps,
-  onlyShowSide,
   pool,
-  balanceInfo,
 }: {
   submittedBack?: () => void;
-  onlyShowSide?: 'base' | 'quote';
   pool?: OperatePool;
-  balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
 }) {
-  const { account } = useWeb3React();
+  const isAMMV2 = pool?.type === 'SVM_AMMV2';
+
+  const [showConfirmAMMV2, setShowConfirmAMMV2] = React.useState(false);
+
   const {
     baseAmount,
     quoteAmount,
-    handleChangeBaseAmount,
-    handleChangeQuoteAmount,
-
-    addPortion,
     midPrice,
-    amountLoading,
     amountCheckedDisabled,
     uniV2Pair,
-
+    handleChangeBaseAmount,
+    handleChangeQuoteAmount,
     reset,
+    slippage,
+    slippageNumber,
+    setSlippage,
   } = useLiquidityOperateAmount({
     pool,
-  });
-  const feeRateQuery = useQuery(
-    poolApi.getFeeRateQuery(pool?.chainId, pool?.address, pool?.type, account),
-  );
-  const feeNumber = feeRateQuery.data?.mtFeeRate
-    ?.plus(feeRateQuery.data?.lpFeeRate ?? 0)
-    ?.toNumber();
-  const isAMMV2 = pool?.type === 'AMMV2';
-  const [showConfirmAMMV2, setShowConfirmAMMV2] = React.useState(false);
-  const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
-    address: pool?.address,
-    type: pool?.type,
   });
 
   React.useEffect(() => {
     reset();
-    resetSlipper();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pool]);
-
-  const canOperate = PoolApi.utils.canOperateLiquidity(
-    pool?.type,
-    undefined,
-    pool?.creator,
-    account,
-  );
-
-  const [showCompareConfirm, setShowCompareConfirm] = React.useState(false);
-  const { isShowCompare, lqAndDodoCompareText, isWarnCompare } =
-    useComparePrice(pool?.baseToken, pool?.quoteToken, midPrice);
 
   const baseTokenStatus = useTokenStatus(pool?.baseToken, {
     amount: baseAmount,
@@ -93,59 +54,40 @@ export function AddPoolOperate({
 
   const isOverBalance =
     baseTokenStatus.insufficientBalance || quoteTokenStatus.insufficientBalance;
-  const { isSinglePool } = balanceInfo;
+
   const disabled =
     !pool ||
     isOverBalance ||
     !midPrice ||
-    !!balanceInfo.loading ||
-    !!balanceInfo.error ||
+    !!uniV2Pair.poolInfoQuery.isLoading ||
+    !!uniV2Pair.poolInfoQuery.error ||
     amountCheckedDisabled ||
-    feeRateQuery.isLoading;
+    uniV2Pair.poolInfoQuery.isLoading;
 
   let submitBtnText = isAMMV2 ? t`Supply` : t`Add`;
   if (isOverBalance) {
     submitBtnText = t`Insufficient balance`;
   }
-  const submittedBack = () => {
-    reset();
-    resetSlipper();
-    if (submittedBackProps) {
-      submittedBackProps();
-    }
-  };
-  const { operateLiquidityMutation } = useOperateLiquidity(pool);
-  const submitLq = () => {
-    if (isAMMV2) {
-      setShowConfirmAMMV2(true);
-      return;
-    }
-    operateLiquidityMutation.mutate({
-      txTitle: t`Add Liquidity`,
-      isRemove: false,
-      baseAmount,
-      quoteAmount,
-      slippageProtection: slipperValue,
-      balanceInfo,
-      SLIPPAGE_PROTECTION,
-      submittedBack,
-    });
-  };
 
   const operateAMMV2LiquidityMutation = useAMMV2AddLiquidity({
     baseToken: pool?.baseToken,
     quoteToken: pool?.quoteToken,
-    baseAmount,
-    quoteAmount,
-    fee: feeNumber,
-    isExists: true,
-    slippage: slipperValue,
+    pairMintAAmount: uniV2Pair.pairMintAAmount,
+    pairMintBAmount: uniV2Pair.pairMintBAmount,
+    isExists: uniV2Pair.isExists,
+    poolKeys: uniV2Pair.poolInfoQuery.data?.poolKeys,
+    poolInfo: uniV2Pair.poolInfoQuery.data?.poolInfo,
+    slippage: slippageNumber,
     submittedBack: () => {
-      submittedBack();
+      reset();
+      if (submittedBackProps) {
+        submittedBackProps();
+      }
       setShowConfirmAMMV2(false);
     },
   });
 
+  const needToken = !pool?.baseToken || !pool?.quoteToken;
   return (
     <>
       <Box
@@ -155,50 +97,45 @@ export function AddPoolOperate({
           px: 20,
         }}
       >
-        {onlyShowSide === 'quote' ? (
-          ''
-        ) : (
-          <TokenCard
-            amt={baseAmount}
-            token={pool?.baseToken}
-            canClickBalance
-            showPercentage
-            onInputChange={handleChangeBaseAmount}
-            readOnly={balanceInfo.loading || !canOperate}
-          />
-        )}
-        {onlyShowSide ? '' : <CardPlus />}
-        {onlyShowSide === 'base' ? (
-          ''
-        ) : (
-          <TokenCard
-            amt={quoteAmount}
-            token={pool?.quoteToken}
-            canClickBalance
-            showPercentage
-            onInputChange={handleChangeQuoteAmount}
-            readOnly={balanceInfo.loading || !canOperate || isSinglePool}
-          />
-        )}
-        <LoadingSkeleton
-          loading={balanceInfo.loading || amountLoading}
+        <TokenCard
+          sx={{ mb: 4, pb: 28, minHeight: 'auto' }}
+          amt={baseAmount}
+          token={pool?.baseToken}
+          canClickBalance
+          showPercentage
+          onInputChange={handleChangeBaseAmount}
+          readOnly={uniV2Pair.poolInfoQuery.isLoading}
+        />
+
+        <SwitchBox plus />
+
+        <TokenCard
+          sx={{ pb: 20, minHeight: 'auto' }}
+          amt={quoteAmount}
+          token={pool?.quoteToken}
+          canClickBalance
+          showPercentage
+          onInputChange={handleChangeQuoteAmount}
+          readOnly={uniV2Pair.poolInfoQuery.isLoading}
+        />
+
+        <Setting
+          slippage={slippage}
+          onChangeSlippage={setSlippage}
+          disabled={needToken}
           sx={{
             mt: 8,
           }}
-        >
-          <SlippageSetting
-            value={slipper}
-            onChange={setSlipper}
-            disabled={!canOperate}
-            type={pool?.type}
-          />
-          <Ratio
-            pool={pool as OperatePool}
-            addPortion={addPortion}
-            midPrice={midPrice}
-            shareOfPool={uniV2Pair?.shareOfPool}
-          />
-        </LoadingSkeleton>
+        />
+        <Ratio
+          baseToken={pool?.baseToken}
+          quoteToken={pool?.quoteToken}
+          loading={uniV2Pair.poolInfoQuery.isLoading}
+          midPrice={midPrice}
+          lpBalancePercentage={
+            uniV2Pair.isExists ? uniV2Pair.lpBalancePercentage : 100
+          }
+        />
       </Box>
       {/* footer */}
       <Box
@@ -213,14 +150,6 @@ export function AddPoolOperate({
           backgroundColor: 'background.paper',
         }}
       >
-        {isShowCompare && (
-          <ComparePrice
-            baseToken={pool?.baseToken}
-            quoteToken={pool?.quoteToken}
-            lqAndDodoCompareText={lqAndDodoCompareText}
-            midPrice={midPrice}
-          />
-        )}
         {pool ? (
           <OperateBtn
             chainId={pool.chainId}
@@ -230,18 +159,10 @@ export function AddPoolOperate({
             <Button
               fullWidth
               disabled={disabled}
-              danger={isWarnCompare}
-              isLoading={
-                operateLiquidityMutation.isPending ||
-                operateAMMV2LiquidityMutation.isPending
-              }
+              isLoading={operateAMMV2LiquidityMutation.isPending}
               onClick={() => {
                 if (disabled) return;
-                if (isWarnCompare) {
-                  setShowCompareConfirm(true);
-                  return;
-                }
-                submitLq();
+                setShowConfirmAMMV2(true);
               }}
             >
               {submitBtnText}
@@ -253,39 +174,27 @@ export function AddPoolOperate({
           </Button>
         )}
       </Box>
-      <Confirm
-        open={showCompareConfirm}
-        onClose={() => setShowCompareConfirm(false)}
-        title={t`Confirm submission`}
-        onConfirm={submitLq}
-        modal
-      >
-        <Box>
-          <Box>
-            {t`Price discrepancy ${lqAndDodoCompareText} between liquidity pool and the quote price on DODO.`}
-          </Box>
-          <Box>
-            {t`There is risk of being arbitraged if adding this liquidity.`}
-          </Box>
-        </Box>
-      </Confirm>
+
       <ErrorMessageDialog
-        message={operateLiquidityMutation.error?.message}
-        onClose={() => operateLiquidityMutation.reset()}
+        message={operateAMMV2LiquidityMutation.error?.message}
+        onClose={() => operateAMMV2LiquidityMutation.reset()}
       />
+
       {isAMMV2 && !!pool && (
         <ConfirmDialog
           open={showConfirmAMMV2}
           onClose={() => setShowConfirmAMMV2(false)}
-          slippage={slipperValue}
+          slippage={slippageNumber}
           baseToken={pool.baseToken}
-          baseAmount={baseAmount}
           quoteToken={pool.quoteToken}
-          quoteAmount={quoteAmount}
-          fee={feeNumber}
+          pairMintAAmount={uniV2Pair.pairMintAAmount}
+          pairMintBAmount={uniV2Pair.pairMintBAmount}
+          feeRate={pool.lpFeeRate}
           price={uniV2Pair?.price}
           lpAmount={uniV2Pair?.liquidityMinted}
-          shareOfPool={uniV2Pair?.shareOfPool}
+          lpBalancePercentage={
+            uniV2Pair.isExists ? uniV2Pair.lpBalancePercentage : 100
+          }
           pairAddress={pool.address}
           createMutation={operateAMMV2LiquidityMutation}
         />

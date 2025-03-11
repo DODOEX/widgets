@@ -6,7 +6,6 @@ import Dialog from '../../../components/Dialog';
 import SpaceBetweenItem from '../../../components/SpaceBetweenItem';
 import TokenLogo from '../../../components/TokenLogo';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
-import { CREATE_CPMM_CONFIG } from '../../../hooks/raydium-sdk-V2/common/programId';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { TokenInfo } from '../../../hooks/Token';
 import {
@@ -25,7 +24,7 @@ export default function ConfirmDialog({
   pairMintAAmount,
   pairMintBAmount,
   lpAmount,
-  feeIndex,
+  feeRate,
   price,
   lpBalancePercentage,
   pairAddress,
@@ -39,7 +38,7 @@ export default function ConfirmDialog({
   pairMintAAmount: string | undefined;
   pairMintBAmount: string | undefined;
   lpAmount: BigNumber | undefined;
-  feeIndex: number;
+  feeRate: string | number | undefined;
   price?: BigNumber | null;
   lpBalancePercentage: BigNumber | number | undefined;
   pairAddress?: string;
@@ -196,7 +195,7 @@ export default function ConfirmDialog({
           </SpaceBetweenItem>
 
           <SpaceBetweenItem label={<Trans>Fee tier</Trans>}>
-            {CREATE_CPMM_CONFIG[feeIndex].tradeFeeRate / 10000}%
+            {feeRate != null ? `${Number(feeRate) / 10000}%` : '-'}
           </SpaceBetweenItem>
 
           <SpaceBetweenItem label={<Trans>Rate</Trans>}>

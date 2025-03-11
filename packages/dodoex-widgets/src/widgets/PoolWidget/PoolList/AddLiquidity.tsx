@@ -21,14 +21,10 @@ import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
 import {
-  byWei,
   formatApy,
   formatExponentialNotation,
-  formatPercentageNumber,
   formatReadableNumber,
 } from '../../../utils';
-import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
-import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
 import { PoolOperateProps } from '../PoolOperate';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import {
@@ -36,6 +32,7 @@ import {
   convertLiquidityTokenToTokenInfo,
   FetchLiquidityListLqList,
   getPoolAMMOrPMM,
+  getPoolFeeRate,
 } from '../utils';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import FilterAddressTags from './components/FilterAddressTags';
@@ -90,227 +87,215 @@ function CardList({
 
         const type = item.type as PoolType;
         const poolType = getPoolAMMOrPMM(type);
-        const isAMMV2 = type === 'AMMV2';
-        const isAMMV3 = type === 'AMMV3';
+        const isAMMV2 = type === 'SVM_AMMV2';
+        const isAMMV3 = type === 'SVM_AMMV3';
 
         return (
           <Box
             key={item.id + item.chainId}
             sx={{
-              px: 20,
-              pt: 20,
-              pb: 12,
-              backgroundColor: 'background.paper',
-              borderRadius: 16,
-            }}
-            className="gradient-card-border"
-            onClick={() => {
-              if (supportAMM) return;
-              useRouterStore.getState().push({
-                type: PageType.PoolDetail,
-                params: {
-                  chainId: item.chainId as ChainId,
-                  address: item.id as string,
-                },
-              });
+              p: 8,
+              borderRadius: 20,
+              borderWidth: 1,
+              borderStyle: 'solid',
+              borderColor: 'border.main',
+              backgroundColor: 'border.disabled',
+              backdropFilter: 'blur(5px)',
             }}
           >
-            {/* title */}
             <Box
               sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexWrap: 'wrap',
+                px: 20,
+                pt: 20,
+                pb: 12,
+                backgroundColor: 'background.paper',
+                borderRadius: 16,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                borderColor: 'border.main',
+              }}
+              className="gradient-card-border"
+              onClick={() => {
+                if (supportAMM) return;
+                useRouterStore.getState().push({
+                  type: PageType.PoolDetail,
+                  params: {
+                    chainId: item.chainId as ChainId,
+                    address: item.id as string,
+                  },
+                });
               }}
             >
+              {/* title */}
               <Box
                 sx={{
                   display: 'flex',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  gap: 8,
+                  flexWrap: 'wrap',
                 }}
               >
-                {baseToken && quoteToken ? (
-                  <TokenLogoPair
-                    tokens={[baseToken, quoteToken]}
-                    width={24}
-                    mr={6}
-                    chainId={item.chainId}
-                    showChainLogo
-                  />
-                ) : (
-                  ''
-                )}
                 <Box
                   sx={{
-                    typography: 'body2',
-                    fontWeight: 600,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
                   }}
                 >
-                  {`${baseToken?.symbol}/${quoteToken?.symbol}`}
-                  <LiquidityLpPartnerReward
-                    address={item.id}
-                    chainId={item.chainId}
-                  />
-                </Box>
-              </Box>
-              {hasMining ? (
-                <Box
-                  sx={{
-                    p: 8,
-                    typography: 'h6',
-                    fontWeight: 'bold',
-                    background: `linear-gradient(180deg, ${alpha(
-                      theme.palette.secondary.main,
-                      0.3,
-                    )} 0%, ${alpha(theme.palette.purple.main, 0.3)} 100%)`,
-                    borderRadius: 8,
-                    color: 'purple.main',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  ✨ <Trans>Mining</Trans>
-                </Box>
-              ) : (
-                ''
-              )}
-            </Box>
-            {/* info */}
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                rowGap: 20,
-                mt: 44,
-                '& > div:nth-child(odd)': {
-                  pr: 20,
-                },
-                '& > div:nth-child(even)': {
-                  position: 'relative',
-                  pl: 20,
-                  '&::before': {
-                    position: 'absolute',
-                    left: 0,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    display: 'inline-block',
-                    content: '""',
-                    height: 24,
-                    width: '1px',
-                    backgroundColor: 'border.main',
-                  },
-                },
-              }}
-            >
-              {supportAMM && (
-                <Box>
+                  {baseToken && quoteToken ? (
+                    <TokenLogoPair
+                      tokens={[baseToken, quoteToken]}
+                      width={24}
+                      mr={6}
+                      chainId={item.chainId}
+                      showChainLogo
+                    />
+                  ) : (
+                    ''
+                  )}
                   <Box
                     sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 4,
+                      typography: 'body2',
+                      fontWeight: 600,
+                    }}
+                  >
+                    {`${baseToken?.symbol}/${quoteToken?.symbol}`}
+                    <LiquidityLpPartnerReward
+                      address={item.id}
+                      chainId={item.chainId}
+                    />
+                  </Box>
+                </Box>
+                {hasMining ? (
+                  <Box
+                    sx={{
+                      p: 8,
+                      typography: 'h6',
+                      fontWeight: 'bold',
+                      background: `linear-gradient(180deg, ${alpha(
+                        theme.palette.secondary.main,
+                        0.3,
+                      )} 0%, ${alpha(theme.palette.purple.main, 0.3)} 100%)`,
+                      borderRadius: 8,
+                      color: 'purple.main',
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {poolType}
-                    <Tooltip title={<Trans>Fee rate</Trans>}>
-                      <Box
-                        sx={{
-                          px: 8,
-                          py: 4,
-                          borderRadius: 4,
-                          typography: 'h6',
-                          backgroundColor: 'background.tag',
-                          color: 'text.secondary',
-                        }}
-                      >
-                        {isAMMV3
-                          ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
-                              ?.label ?? '-')
-                          : formatPercentageNumber({
-                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                                item.mtFeeRate
-                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
-                                  : 0,
-                              ),
-                            })}
-                      </Box>
-                    </Tooltip>
+                    ✨ <Trans>Mining</Trans>
                   </Box>
-                  <Box
-                    sx={{
-                      typography: 'h6',
-                      color: 'text.secondary',
-                    }}
-                  >
-                    <Trans>Pool Type</Trans>
+                ) : (
+                  ''
+                )}
+              </Box>
+              {/* info */}
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  rowGap: 20,
+                  mt: 44,
+                  '& > div:nth-child(odd)': {
+                    pr: 20,
+                  },
+                  '& > div:nth-child(even)': {
+                    position: 'relative',
+                    pl: 20,
+                    '&::before': {
+                      position: 'absolute',
+                      left: 0,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      display: 'inline-block',
+                      content: '""',
+                      height: 24,
+                      width: '1px',
+                      backgroundColor: 'border.main',
+                    },
+                  },
+                }}
+              >
+                {supportAMM && (
+                  <Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 4,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {poolType}
+                      <Tooltip title={<Trans>Fee rate</Trans>}>
+                        <Box
+                          sx={{
+                            px: 8,
+                            py: 4,
+                            borderRadius: 4,
+                            typography: 'h6',
+                            backgroundColor: 'background.tag',
+                            color: 'text.secondary',
+                          }}
+                        >
+                          {getPoolFeeRate({
+                            type: item.type as PoolType,
+                            lpFeeRate: item.lpFeeRate ?? 0,
+                            mtFeeRate: item.mtFeeRate ?? 0,
+                          })}
+                        </Box>
+                      </Tooltip>
+                    </Box>
+                    <Box
+                      sx={{
+                        typography: 'h6',
+                        color: 'text.secondary',
+                      }}
+                    >
+                      <Trans>Pool Type</Trans>
+                    </Box>
                   </Box>
-                </Box>
-              )}
+                )}
 
-              <Box>
-                <Box
-                  sx={{
-                    typography: 'h5',
-                    color: 'success.main',
-                  }}
-                >
-                  {baseApy}
-                  {quoteApy ? `/${quoteApy}` : ''}
-                </Box>
-                <Box
-                  sx={{
-                    typography: 'h6',
-                    display: 'flex',
-                    alignItems: 'center',
-                    color: 'text.secondary',
-                  }}
-                >
-                  <Trans>APY</Trans>
-                  <PoolApyTooltip
-                    chainId={item.chainId}
-                    apy={item.apy}
-                    baseToken={baseToken}
-                    quoteToken={quoteToken}
-                    hasQuote={!!quoteApy}
-                    hasMining={hasMining}
-                    sx={{
-                      width: 14,
-                      height: 14,
-                    }}
-                  />
-                </Box>
-              </Box>
-
-              <Box>
-                <Box
-                  sx={{
-                    typography: 'h5',
-                  }}
-                >
-                  ${formatExponentialNotation(new BigNumber(item.tvl))}
-                </Box>
-                <Box
-                  sx={{
-                    typography: 'h6',
-                    color: 'text.secondary',
-                  }}
-                >
-                  <Trans>TVL</Trans>
-                </Box>
-              </Box>
-
-              {supportAMM && (
                 <Box>
                   <Box
                     sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 4,
+                      typography: 'h5',
+                      color: 'success.main',
                     }}
                   >
-                    ${formatReadableNumber({ input: item.volume24H || 0 })}
+                    {baseApy}
+                    {quoteApy ? `/${quoteApy}` : ''}
+                  </Box>
+                  <Box
+                    sx={{
+                      typography: 'h6',
+                      display: 'flex',
+                      alignItems: 'center',
+                      color: 'text.secondary',
+                    }}
+                  >
+                    <Trans>APY</Trans>
+                    <PoolApyTooltip
+                      chainId={item.chainId}
+                      apy={item.apy}
+                      baseToken={baseToken}
+                      quoteToken={quoteToken}
+                      hasQuote={!!quoteApy}
+                      hasMining={hasMining}
+                      sx={{
+                        width: 14,
+                        height: 14,
+                      }}
+                    />
+                  </Box>
+                </Box>
+
+                <Box>
+                  <Box
+                    sx={{
+                      typography: 'h5',
+                    }}
+                  >
+                    ${formatExponentialNotation(new BigNumber(item.tvl))}
                   </Box>
                   <Box
                     sx={{
@@ -318,35 +303,57 @@ function CardList({
                       color: 'text.secondary',
                     }}
                   >
-                    <Trans>Volume (1D)</Trans>
+                    <Trans>TVL</Trans>
                   </Box>
                 </Box>
-              )}
-            </Box>
-            {/* operate */}
-            <Box
-              sx={{
-                mt: 20,
-                display: 'flex',
-                gap: '8px',
-              }}
-            >
-              <NeedConnectButton
-                fullWidth
-                size={Button.Size.small}
-                onClick={(evt) => {
-                  evt.stopPropagation();
-                  setOperatePool({
-                    pool: convertFetchLiquidityToOperateData(lq),
-                    hasMining,
-                  });
+
+                {supportAMM && (
+                  <Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 4,
+                      }}
+                    >
+                      ${formatReadableNumber({ input: item.volume24H || 0 })}
+                    </Box>
+                    <Box
+                      sx={{
+                        typography: 'h6',
+                        color: 'text.secondary',
+                      }}
+                    >
+                      <Trans>Volume (1D)</Trans>
+                    </Box>
+                  </Box>
+                )}
+              </Box>
+              {/* operate */}
+              <Box
+                sx={{
+                  mt: 20,
+                  display: 'flex',
+                  gap: '8px',
                 }}
               >
-                <Trans>Add</Trans>
-              </NeedConnectButton>
-              {supportAMM && poolType === 'PMM' && (
-                <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
-              )}
+                <NeedConnectButton
+                  fullWidth
+                  size={Button.Size.small}
+                  onClick={(evt) => {
+                    evt.stopPropagation();
+                    setOperatePool({
+                      pool: convertFetchLiquidityToOperateData(lq),
+                      hasMining,
+                    });
+                  }}
+                >
+                  <Trans>Add</Trans>
+                </NeedConnectButton>
+                {supportAMM && poolType === 'PMM' && (
+                  <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
+                )}
+              </Box>
             </Box>
           </Box>
         );
@@ -455,8 +462,8 @@ function TableList({
 
           const type = item.type as PoolType;
           const poolType = getPoolAMMOrPMM(type);
-          const isAMMV2 = type === 'AMMV2';
-          const isAMMV3 = type === 'AMMV3';
+          const isAMMV2 = type === 'SVM_AMMV2';
+          const isAMMV3 = type === 'SVM_AMMV3';
 
           const hoverBg = theme.palette.background.tag;
           return (
@@ -562,16 +569,11 @@ function TableList({
                           color: 'text.secondary',
                         }}
                       >
-                        {isAMMV3
-                          ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
-                              ?.label ?? '-')
-                          : formatPercentageNumber({
-                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                                item.mtFeeRate
-                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
-                                  : 0,
-                              ),
-                            })}
+                        {getPoolFeeRate({
+                          type: item.type as PoolType,
+                          lpFeeRate: item.lpFeeRate ?? 0,
+                          mtFeeRate: item.mtFeeRate ?? 0,
+                        })}
                       </Box>
                     </Tooltip>
                   </Box>
@@ -703,7 +705,6 @@ export default function AddLiquidityList({
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
 }) {
-  const theme = useTheme();
   const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
     useUserOptions();
   const { minDevice, isMobile } = useWidgetDevice();
@@ -902,7 +903,7 @@ export default function AddLiquidityList({
             />
           }
         >
-          <DataCardGroup>
+          <DataCardGroup gap={12}>
             {fetchResult.isLoading ? <LoadingCard /> : ''}
             {!fetchResult.isLoading &&
               !lqList?.length &&

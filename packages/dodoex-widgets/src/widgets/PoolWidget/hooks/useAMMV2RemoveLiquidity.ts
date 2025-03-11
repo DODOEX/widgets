@@ -1,173 +1,75 @@
-import { basicTokenMap, ChainId } from '@dodoex/api';
-import {
-  encodeUniswapV2Router02FixedFeeRemoveLiquidity,
-  encodeUniswapV2Router02FixedFeeRemoveLiquidityETH,
-  encodeUniswapV2Router02RemoveLiquidity,
-  encodeUniswapV2Router02RemoveLiquidityETH,
-  getUniswapV2Router02ContractAddressByChainId,
-  getUniswapV2Router02FixedFeeContractAddressByChainId,
-} from '@dodoex/dodo-contract-request';
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
+import {
+  ApiV3PoolInfoStandardItemCpmm,
+  CpmmKeys,
+  Percent,
+  TxVersion,
+} from '@raydium-io/raydium-sdk-v2';
 import { useMutation } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
-import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import BN from 'bn.js';
+import Decimal from 'decimal.js';
+import { useRaydiumSDKContext } from '../../../hooks/raydium-sdk-V2/RaydiumSDKContext';
 import { useSubmission } from '../../../hooks/Submission';
-import { OpCode } from '../../../hooks/Submission/spec';
 import { MetadataFlag } from '../../../hooks/Submission/types';
-import { TokenInfo } from '../../../hooks/Token';
-import { toWei } from '../../../utils';
 
 export function useAMMV2RemoveLiquidity({
-  baseToken,
-  quoteToken,
-  baseAmount,
-  quoteAmount,
   liquidityAmount,
   slippage,
-  fee,
+  poolInfo,
+  poolKeys,
   submittedBack,
 }: {
-  baseToken: TokenInfo | undefined;
-  quoteToken: TokenInfo | undefined;
-  baseAmount: string;
-  quoteAmount: string;
-  liquidityAmount: string;
+  liquidityAmount: BigNumber | undefined;
   slippage: number;
-  fee: number | undefined;
+  poolInfo?: ApiV3PoolInfoStandardItemCpmm;
+  poolKeys?: CpmmKeys;
   submittedBack?: () => void;
 }) {
   const submission = useSubmission();
-  const { account } = useWalletInfo();
+
+  const raydium = useRaydiumSDKContext();
   useLingui();
 
   return useMutation({
     mutationFn: async () => {
-      if (!baseToken || !quoteToken) {
-        throw new Error('token is undefined');
+      if (!raydium) {
+        throw new Error('raydium is undefined');
       }
-      if (!account) {
-        throw new Error('account is undefined');
+      if (!poolInfo || !poolKeys) {
+        throw new Error('poolInfo or poolKeys is undefined');
       }
-      if (!fee) {
-        throw new Error('fee is undefined');
-      }
-      const chainId = baseToken.chainId as ChainId;
-      const basicToken = basicTokenMap[chainId];
-      const basicTokenAddressLow = basicToken.address.toLowerCase();
-      const dynamicFeeContractAddress =
-        getUniswapV2Router02ContractAddressByChainId(chainId);
-      const fixedFeeContractAddress =
-        getUniswapV2Router02FixedFeeContractAddressByChainId(chainId);
-      const isFixedFee = !dynamicFeeContractAddress;
-      const to = dynamicFeeContractAddress || fixedFeeContractAddress;
-      if (!to) {
-        throw new Error('AMMV2 contract address is not valid.');
-      }
-      let data = '';
-      const value = '0x0';
-      const baseIsETH =
-        baseToken.address.toLowerCase() === basicTokenAddressLow;
-      const quoteIsETH =
-        quoteToken.address.toLowerCase() === basicTokenAddressLow;
-      const baseInAmountMinBg = toWei(
-        new BigNumber(baseAmount).times(1 - slippage),
-        baseToken.decimals,
-      );
-      const quoteInAmountMinBg = toWei(
-        new BigNumber(quoteAmount).times(1 - slippage),
-        quoteToken.decimals,
-      );
-      const feeWei = toWei(fee, 4).toString();
-      const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
-      if (baseIsETH) {
-        const tokenAddress = quoteToken.address;
-        const tokenInAmountMin = quoteInAmountMinBg.toString();
-        const ethAmountMin = baseInAmountMinBg.toString();
-        if (isFixedFee) {
-          data = encodeUniswapV2Router02FixedFeeRemoveLiquidityETH(
-            tokenAddress,
-            liquidityAmount,
-            tokenInAmountMin,
-            ethAmountMin,
-            account,
-            deadline,
-          );
-        } else {
-          data = encodeUniswapV2Router02RemoveLiquidityETH(
-            tokenAddress,
-            feeWei,
-            liquidityAmount,
-            tokenInAmountMin,
-            ethAmountMin,
-            account,
-            deadline,
-          );
-        }
-      } else if (quoteIsETH) {
-        const tokenAddress = baseToken.address;
-        const tokenInAmountMin = baseInAmountMinBg.toString();
-        const ethAmountMin = quoteInAmountMinBg.toString();
-        if (isFixedFee) {
-          data = encodeUniswapV2Router02FixedFeeRemoveLiquidityETH(
-            tokenAddress,
-            liquidityAmount,
-            tokenInAmountMin,
-            ethAmountMin,
-            account,
-            deadline,
-          );
-        } else {
-          data = encodeUniswapV2Router02RemoveLiquidityETH(
-            tokenAddress,
-            feeWei,
-            liquidityAmount,
-            tokenInAmountMin,
-            ethAmountMin,
-            account,
-            deadline,
-          );
-        }
-      } else {
-        if (isFixedFee) {
-          data = encodeUniswapV2Router02FixedFeeRemoveLiquidity(
-            baseToken.address,
-            quoteToken.address,
-            liquidityAmount,
-            baseInAmountMinBg.toString(),
-            quoteInAmountMinBg.toString(),
-            account,
-            deadline,
-          );
-        } else {
-          data = encodeUniswapV2Router02RemoveLiquidity(
-            baseToken.address,
-            quoteToken.address,
-            feeWei,
-            liquidityAmount,
-            baseInAmountMinBg.toString(),
-            quoteInAmountMinBg.toString(),
-            account,
-            deadline,
-          );
-        }
+      if (!liquidityAmount) {
+        throw new Error('liquidityAmount is undefined');
       }
 
-      const txResult = await submission.execute(
-        t`Remove liquidity`,
-        {
-          opcode: OpCode.TX,
-          to,
-          data,
-          value,
-        },
-        {
-          metadata: {
-            [MetadataFlag.removeLiqidityAMMV2Position]: true,
-          },
-          submittedBack,
-        },
+      const lpAmount = new BN(
+        new Decimal(liquidityAmount.toString())
+          .mul(10 ** poolInfo.lpMint.decimals)
+          .toFixed(0, Decimal.ROUND_DOWN),
       );
+      const slippagePercent = new Percent(slippage * 100 * 100, 100 * 100);
+
+      const { execute } = await raydium.cpmm.withdrawLiquidity({
+        poolInfo,
+        poolKeys,
+        lpAmount,
+        txVersion: TxVersion.LEGACY,
+        slippage: slippagePercent,
+      });
+
+      const txResult = await submission.executeCustom({
+        brief: t`Remove liquidity`,
+        metadata: {
+          [MetadataFlag.removeLiqidityAMMV2Position]: true,
+        },
+        handler: async (params) => {
+          const { txId } = await execute({ sendAndConfirm: true });
+          params.onSuccess(txId);
+        },
+        submittedBack,
+      });
       return txResult;
     },
   });

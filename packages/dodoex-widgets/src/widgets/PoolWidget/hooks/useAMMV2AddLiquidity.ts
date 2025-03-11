@@ -3,8 +3,6 @@ import { useLingui } from '@lingui/react';
 import {
   ApiV3PoolInfoStandardItemCpmm,
   CpmmKeys,
-  CREATE_CPMM_POOL_FEE_ACC,
-  CREATE_CPMM_POOL_PROGRAM,
   Percent,
   TxVersion,
 } from '@raydium-io/raydium-sdk-v2';
@@ -12,7 +10,11 @@ import { useMutation } from '@tanstack/react-query';
 import BN from 'bn.js';
 import Decimal from 'decimal.js-light';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
-import { CREATE_CPMM_CONFIG } from '../../../hooks/raydium-sdk-V2/common/programId';
+import {
+  CREATE_CPMM_CONFIG,
+  CREATE_CPMM_POOL_FEE_ACC,
+  CREATE_CPMM_POOL_PROGRAM,
+} from '../../../hooks/raydium-sdk-V2/common/programId';
 import { txVersion } from '../../../hooks/raydium-sdk-V2/config';
 import { useRaydiumSDKContext } from '../../../hooks/raydium-sdk-V2/RaydiumSDKContext';
 import { useSubmission } from '../../../hooks/Submission';

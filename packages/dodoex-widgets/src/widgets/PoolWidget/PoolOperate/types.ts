@@ -18,6 +18,7 @@ export type OperatePool =
       owner?: string;
       creator: string;
       lpFeeRate?: string;
+      mtFeeRate?: string;
       liquidityPositions?: ExcludeNone<
         ExcludeNone<FetchMyLiquidityListLqList>[0]
       >['liquidityPositions'];

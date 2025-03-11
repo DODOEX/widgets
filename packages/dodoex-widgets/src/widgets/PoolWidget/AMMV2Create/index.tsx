@@ -412,7 +412,7 @@ export default function AMMV2Create() {
         pairMintAAmount={pairMintAAmount}
         quoteToken={quoteToken}
         pairMintBAmount={pairMintBAmount}
-        feeIndex={feeIndex}
+        feeRate={CREATE_CPMM_CONFIG[feeIndex].tradeFeeRate}
         price={price}
         lpAmount={liquidityMinted}
         lpBalancePercentage={isExists ? lpBalancePercentage : 100}

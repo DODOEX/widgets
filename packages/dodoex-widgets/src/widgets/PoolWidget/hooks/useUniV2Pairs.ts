@@ -8,21 +8,6 @@ import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useRaydiumSDKContext } from '../../../hooks/raydium-sdk-V2/RaydiumSDKContext';
 import { TokenInfo } from '../../../hooks/Token';
 import { byWei } from '../../../utils';
-interface UniV2PairsResult {
-  isFront: boolean;
-  poolInfoQuery: any;
-  lpBalanceQuery: any;
-  lpBalance: BigNumber | undefined;
-  lpBalancePercentage: BigNumber | undefined;
-  lpToAmountA: BigNumber | undefined;
-  lpToAmountB: BigNumber | undefined;
-  price: BigNumber | undefined;
-  invertedPrice: BigNumber | undefined;
-  liquidityMinted: BigNumber | undefined;
-  pairMintAAmount: string | undefined;
-  pairMintBAmount: string | undefined;
-  isExists: boolean;
-}
 
 export function useUniV2Pairs({
   pool,
@@ -38,7 +23,7 @@ export function useUniV2Pairs({
   baseAmount?: string;
   quoteAmount?: string;
   slippage: number;
-}): UniV2PairsResult {
+}) {
   const { account } = useWalletInfo();
   const raydium = useRaydiumSDKContext();
 
@@ -63,7 +48,7 @@ export function useUniV2Pairs({
   }, [baseAmount, pool, quoteAmount]);
 
   const poolInfoQuery = useQuery({
-    queryKey: ['cpmm', 'poolInfo', ...arguments],
+    queryKey: ['cpmm', 'poolInfo', pool?.address],
     enabled: pool?.address != null,
     queryFn: async () => {
       if (!pool?.address || !raydium) {
@@ -127,7 +112,7 @@ export function useUniV2Pairs({
   });
 
   const lpBalanceQuery = useQuery({
-    queryKey: ['cpmm', 'lpBalance', ...arguments],
+    queryKey: ['cpmm', 'lpBalance', poolInfoQuery.data?.lpMint?.address],
     enabled: !(
       !account ||
       !poolInfoQuery.data ||
@@ -163,7 +148,7 @@ export function useUniV2Pairs({
   });
 
   const pairAmountQuery = useQuery({
-    queryKey: ['cpmm', 'pairAmount', ...arguments],
+    queryKey: ['cpmm', 'pairAmount', mintAAmount, poolInfoQuery.data?.poolInfo],
     enabled: !(
       !poolInfoQuery.data ||
       !poolInfoQuery.data?.poolInfo ||

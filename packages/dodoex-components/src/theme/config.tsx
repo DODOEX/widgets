@@ -96,23 +96,23 @@ export const getNormalFontWeight = (lang: string) => {
 export const darkPalette: PaletteOptions = {
   mode: 'dark',
   primary: {
-    main: '#FFE804',
-    contrastText: '#1A1A1B',
-  },
-  secondary: {
-    main: '#FFE804',
-    contrastText: '#1A1A1B',
-  },
-  error: {
-    main: '#FF6187',
+    main: '#EA4D4D',
     contrastText: '#FFFFFF',
   },
-  warning: {
-    main: '#EB8D27',
+  secondary: {
+    main: '#EA4D4D',
+    contrastText: '#FFFFFF',
+  },
+  error: {
+    main: '#EC5A7D',
     contrastText: '#1A1A1B',
   },
+  warning: {
+    main: '#F47226',
+    contrastText: '#FFFFFF',
+  },
   success: {
-    main: '#55F9C7',
+    main: '#47D1A7',
     contrastText: '#1A1A1B',
   },
   purple: {
@@ -120,12 +120,12 @@ export const darkPalette: PaletteOptions = {
     contrastText: '#1A1A1B',
   },
   background: {
-    default: '#252831',
-    paper: '#33363F',
-    paperContrast: '#41454F',
+    default: '#171A20',
+    paper: '#23252B',
+    paperContrast: '#2E3036',
     paperDarkContrast: alpha('#FFF', 0.1),
-    backdrop: alpha('#000', 0.9),
-    input: '#252831',
+    backdrop: alpha('#000', 0.7),
+    input: '#35363C',
     tag: alpha('#FFF', 0.04),
   },
   text: {
@@ -133,19 +133,19 @@ export const darkPalette: PaletteOptions = {
     secondary: alpha('#FFF', 0.5),
     disabled: alpha('#FFF', 0.3),
     placeholder: alpha('#FFF', 0.3),
-    link: '#FFE804',
+    link: '#EA4D4D',
   },
   border: {
-    main: '#454851',
-    light: alpha('#FFF', 0.3),
+    main: alpha('#FFF', 0.1),
+    light: alpha('#FFF', 0.1),
     disabled: alpha('#FFF', 0.1),
   },
   hover: {
-    default: alpha('#FFF', 0.1),
+    default: alpha('#FFF', 0.04),
   },
   tabActive: {
-    main: alpha('#FFE804', 0.2),
-    contrastText: '#FFE804',
+    main: alpha('#EA4D4D', 0.2),
+    contrastText: '#EA4D4D',
   },
 };
 

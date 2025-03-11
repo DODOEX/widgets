@@ -1,4 +1,3 @@
-import { ChainId, PoolApi } from '@dodoex/api';
 import {
   alpha,
   Box,
@@ -9,15 +8,8 @@ import {
 } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
 import { t } from '@lingui/macro';
-import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import Dialog from '../../../components/Dialog';
-import { ThegraphKeyMap } from '../../../constants/chains';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
-import { convertFetchPoolToOperateData } from '../utils';
-import { GSPPairRiskWarning } from './components/GSPPairRiskWarning';
 import {
   PoolOrMiningTab,
   usePoolOrMiningTabs,
@@ -25,64 +17,29 @@ import {
 import PoolOperateInner, { PoolOperateInnerProps } from './PoolOperateInner';
 
 export interface PoolOperateProps {
-  onClose?: () => void;
+  onClose: (() => void) | undefined;
   account: string | undefined;
-  pool?: PoolOperateInnerProps['pool'];
-  address?: string;
-  operate?: PoolOperateInnerProps['operate'];
-  chainId?: number;
-  hasMining?: boolean;
-  hidePoolInfo?: boolean;
+  pool: PoolOperateInnerProps['pool'];
+  operate: PoolOperateInnerProps['operate'];
+  hasMining: boolean;
+  hidePoolInfo: boolean;
   sx?: BoxProps['sx'];
 }
 
 export function PoolOperate({
   onClose,
-  pool: poolProps,
-  address,
+  pool,
   operate,
-  chainId,
   hasMining,
   hidePoolInfo,
   sx,
 }: PoolOperateProps) {
-  const { account } = useWeb3React();
-  const chain = chainId ? ThegraphKeyMap[chainId as ChainId] : '';
-
-  const graphQLRequests = useGraphQLRequests();
-  const fetchResult = useQuery({
-    ...graphQLRequests.getQuery(PoolApi.graphql.fetchPoolList, {
-      where: {
-        id: address?.toLocaleLowerCase() ?? '',
-        chain,
-      },
-    }),
-    enabled: !!address && !!chainId,
-  });
-  const fetchPool = fetchResult.data?.pairs?.[0];
-  const convertFetchPool =
-    fetchPool && chainId
-      ? convertFetchPoolToOperateData(fetchPool, chainId)
-      : undefined;
-  const pool = address && chainId ? convertFetchPool : poolProps;
-
-  const poolErrorRefetch = fetchResult.error ? fetchResult.refetch : undefined;
-
   const { poolOrMiningTab, poolOrMiningTabs, handleChangeTab } =
     usePoolOrMiningTabs({
       hasMining,
     });
 
-  const balanceInfo = usePoolBalanceInfo({
-    account,
-    pool,
-  });
-  const hasLp =
-    !!balanceInfo.userBaseLpBalance?.gt(0) ||
-    !!balanceInfo.userQuoteLpBalance?.gt(0);
-
-  const poolChainId = chainId ?? pool?.chainId;
-  const poolAddress = address ?? pool?.address;
+  const hasLp = false;
 
   return (
     <Box sx={sx}>
@@ -133,7 +90,6 @@ export function PoolOperate({
                 gap: 12,
               }}
             >
-              {pool?.type === 'GSP' && <GSPPairRiskWarning />}
               {onClose ? (
                 <Box
                   sx={{
@@ -174,7 +130,6 @@ export function PoolOperate({
             pool={pool}
             operate={operate}
             hidePoolInfo={hidePoolInfo}
-            errorRefetch={poolErrorRefetch}
             submittedBack={() => {
               if (hasMining) {
                 handleChangeTab(PoolOrMiningTab.Mining);
@@ -217,7 +172,7 @@ export default function PoolOperateDialog({
 
   return (
     <Dialog
-      open={!!props.pool || !!props.address}
+      open={!!props.pool}
       onClose={props.onClose}
       scope={!isMobile}
       modal={modal}

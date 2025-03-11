@@ -56,6 +56,7 @@ function CreateItem({
             typography: 'body1',
             fontWeight: 600,
             color: theme.palette.text.primary,
+            textAlign: 'left',
           }}
         >
           {title}
@@ -65,6 +66,7 @@ function CreateItem({
             typography: 'h6',
             fontWeight: 500,
             color: theme.palette.text.secondary,
+            textAlign: 'left',
           }}
         >
           {desc}

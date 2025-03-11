@@ -1,12 +1,10 @@
-import { PoolApi, PoolType } from '@dodoex/api';
-import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import React from 'react';
+import { AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION } from '../../../../constants/pool';
+import { AUTO_SWAP_SLIPPAGE_PROTECTION } from '../../../../constants/swap';
 import { fixedInputStringToFormattedNumber } from '../../../../utils/formatter';
-import { poolApi } from '../../utils';
-import { OperatePool } from '../types';
 import { useUniV2Pairs } from '../../hooks/useUniV2Pairs';
-import { usePoolBalanceInfo } from '../../hooks/usePoolBalanceInfo';
+import { OperatePool } from '../types';
 
 export function useLiquidityOperateAmount({
   pool,
@@ -18,59 +16,42 @@ export function useLiquidityOperateAmount({
   maxBaseAmount?: BigNumber | null;
   maxQuoteAmount?: BigNumber | null;
   isRemove?: boolean;
-  balanceInfo?: ReturnType<typeof usePoolBalanceInfo>;
 }) {
   const [baseAmount, setBaseAmount] = React.useState('');
   const [quoteAmount, setQuoteAmount] = React.useState('');
-  const needQueryPmmState =
-    !pool || (pool.type !== 'AMMV2' && pool.type !== 'AMMV3');
-  const pmmStateQuery = useQuery(
-    poolApi.getPMMStateQuery(
-      pool?.chainId as number,
-      pool?.address,
-      pool?.type,
-      pool?.baseToken?.decimals,
-      pool?.quoteToken?.decimals,
-    ),
-  );
+  const [slippage, setSlippage] = React.useState<
+    number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION
+  >(AUTO_SWAP_SLIPPAGE_PROTECTION);
+  const slippageNumber =
+    slippage === AUTO_SWAP_SLIPPAGE_PROTECTION
+      ? new BigNumber(AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION)
+          .div(100)
+          .toNumber()
+      : slippage;
 
   const reset = () => {
     setBaseAmount('');
     setQuoteAmount('');
   };
-  const type = pool?.type as PoolType | undefined;
+
   const uniV2Pair = useUniV2Pairs({
-    pool,
+    pool:
+      pool?.baseToken && pool.quoteToken
+        ? {
+            baseToken: pool.baseToken,
+            quoteToken: pool.quoteToken,
+            address: pool.address,
+          }
+        : undefined,
     baseAmount,
     quoteAmount,
+    slippage: slippageNumber,
   });
 
-  let midPrice = pmmStateQuery.data?.midPrice;
-  let addPortion = new BigNumber(NaN);
-  let isSinglePool = false;
-  let isEmptyDspPool = false;
-  const pmm = pmmStateQuery.data;
-  if (pool) {
-    if (pmm) {
-      const i = pmm.pmmParamsBG.i;
-      const baseReserve = pmm.pmmParamsBG.b;
-      const quoteReserve = pmm.pmmParamsBG.q;
-      isEmptyDspPool =
-        (pool.type === 'DSP' || pool.type === 'GSP') &&
-        (quoteReserve.eq(0) || baseReserve.eq(0));
-      isSinglePool = pool.type === 'DVM' && new BigNumber(quoteReserve).eq(0);
-      if (isEmptyDspPool) {
-        addPortion = i;
-      } else if (isSinglePool) {
-        addPortion = BigNumber(1);
-      } else {
-        addPortion = quoteReserve.div(baseReserve);
-      }
-    } else if (type === 'AMMV2') {
-      midPrice = uniV2Pair.isFront ? uniV2Pair.price : uniV2Pair.invertedPrice;
-      addPortion = midPrice || new BigNumber(1);
-    }
-  }
+  const midPrice: BigNumber | undefined = uniV2Pair.isFront
+    ? uniV2Pair.price
+    : uniV2Pair.invertedPrice;
+  const addPortion = midPrice || new BigNumber(1);
 
   const prevAddPortion = React.useRef(addPortion);
 
@@ -81,10 +62,12 @@ export function useLiquidityOperateAmount({
       handleChangeBaseAmount: () => {},
       handleChangeQuoteAmount: () => {},
       reset,
+      uniV2Pair,
+      slippage,
+      slippageNumber,
+      setSlippage,
     };
 
-  const needBindAmountChange =
-    !isSinglePool && !PoolApi.utils.singleSideLp(pool.type);
   const baseDecimals = pool.baseToken.decimals;
   const quoteDecimals = pool.quoteToken.decimals;
 
@@ -128,8 +111,8 @@ export function useLiquidityOperateAmount({
 
   // After the data on the chain changes, change quoteAmount
   if (
-    needBindAmountChange &&
-    (!prevAddPortion.current || !addPortion.isEqualTo(prevAddPortion.current))
+    !prevAddPortion.current ||
+    !addPortion.isEqualTo(prevAddPortion.current)
   ) {
     prevAddPortion.current = addPortion;
     changeQuoteByBaseAmount(baseAmount);
@@ -141,9 +124,7 @@ export function useLiquidityOperateAmount({
       amount = baseAmount;
     }
     setBaseAmount(amount);
-    if (needBindAmountChange) {
-      changeQuoteByBaseAmount(amount);
-    }
+    changeQuoteByBaseAmount(amount);
   };
 
   const handleChangeQuoteAmount = (newValue: string) => {
@@ -152,24 +133,10 @@ export function useLiquidityOperateAmount({
       amount = quoteAmount;
     }
     setQuoteAmount(amount);
-    if (needBindAmountChange) {
-      changeBaseByQuoteAmount(amount);
-    }
+    changeBaseByQuoteAmount(amount);
   };
 
-  const isSingleSideLp = !!pool && PoolApi.utils.singleSideLp(pool.type);
-  let amountCheckedDisabled = false;
-  if (isSingleSideLp) {
-    amountCheckedDisabled = !baseAmount && !quoteAmount;
-  } else if (isSinglePool) {
-    amountCheckedDisabled = !baseAmount;
-  } else {
-    amountCheckedDisabled = !baseAmount || !quoteAmount;
-  }
-
-  const amountStatusQuery = needQueryPmmState
-    ? pmmStateQuery
-    : uniV2Pair.reserveQuery;
+  const amountCheckedDisabled = !baseAmount || !quoteAmount;
 
   return {
     baseAmount,
@@ -178,13 +145,13 @@ export function useLiquidityOperateAmount({
     handleChangeQuoteAmount,
     reset,
 
+    midPrice,
     addPortion,
-    amountLoading: amountStatusQuery.isLoading,
-    amountError: amountStatusQuery.isError,
-    amountRefetch: amountStatusQuery.refetch,
     amountCheckedDisabled,
 
-    midPrice,
     uniV2Pair,
+    slippage,
+    slippageNumber,
+    setSlippage,
   };
 }

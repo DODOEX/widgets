@@ -17,7 +17,7 @@ export function usePool(
   mint2Address: string | undefined,
   feeAmount: FeeAmount | undefined,
   chainId: ChainId,
-): [PoolState, PoolInfoT | null, id: string | null] {
+): [PoolState, PoolInfoT | null, string | null] {
   const raydium = useRaydiumSDKContext();
 
   const id = useMemo(() => {
@@ -35,8 +35,8 @@ export function usePool(
     return poolAddress;
   }, [chainId, feeAmount, mint1Address, mint2Address]);
 
-  const poolInfoQuery = useQuery({
-    queryKey: ['clmm', 'poolInfo', ...arguments],
+  const poolInfoQuery = useQuery<PoolInfoT | null>({
+    queryKey: ['clmm', 'getPoolInfoFromRpc', id],
     enabled: id != null && raydium != null,
     queryFn: async () => {
       if (!raydium || !id) {

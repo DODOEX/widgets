@@ -1,275 +1,42 @@
-import { PoolApi } from '@dodoex/api';
+import { ChainId } from '@dodoex/api';
 import {
   Box,
-  useTheme,
+  ButtonBase,
   LoadingSkeleton,
   Tooltip,
-  HoverOpacity,
-  ButtonBase,
-  RotatingIcon,
-  Skeleton,
+  useTheme,
 } from '@dodoex/components';
-import { ArrowRight, DetailBorder, ArrowTopRightBorder } from '@dodoex/icons';
+import { ArrowRight } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
-import BigNumber from 'bignumber.js';
 import { AddressWithLinkAndCopy } from '../../../../components/AddressWithLinkAndCopy';
-import TokenLogo from '../../../../components/TokenLogo';
-import { TokenLogoPair } from '../../../../components/TokenLogoPair';
-import { ChainId } from '@dodoex/api';
-import { useBalanceUpdateLoading } from '../../../../hooks/Submission/useBalanceUpdateLoading';
-import { TokenInfo } from '../../../../hooks/Token';
 import { useRouterStore } from '../../../../router';
 import { PageType } from '../../../../router/types';
-import {
-  formatPercentageNumber,
-  formatReadableNumber,
-  getEtherscanPage,
-} from '../../../../utils';
-import { usePoolBalanceInfo } from '../../hooks/usePoolBalanceInfo';
+import { getPoolFeeRate } from '../../utils';
 import { OperatePool } from '../types';
-import { useQuery } from '@tanstack/react-query';
-import { poolApi } from '../../utils';
-import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 
 export interface LiquidityInfoProps {
-  loading?: boolean;
   hidePoolInfo?: boolean;
   pool: OperatePool;
-  balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
-}
-
-function LiquidityBalanceItem({
-  chainId,
-  address,
-  token,
-  quoteToken,
-  lpBalance,
-  lpBalanceLoading,
-  balanceNeedUpdateLoading,
-  tokenBalanceList,
-}: {
-  chainId: number | undefined;
-  address?: string;
-  token?: TokenInfo;
-  quoteToken?: TokenInfo;
-  lpBalance?: BigNumber | null;
-  lpBalanceLoading?: boolean;
-  balanceNeedUpdateLoading?: boolean;
-  /**
-   * The balance converted from lp to token
-   */
-  tokenBalanceList?: Array<{
-    token: TokenInfo;
-    balance: BigNumber | null | undefined;
-    loading: boolean;
-  }>;
-}) {
-  const symbol = quoteToken
-    ? `${token?.symbol}/${quoteToken.symbol}`
-    : (token?.symbol ?? '');
-
-  return (
-    <Box
-      key={address}
-      sx={{
-        display: 'flex',
-      }}
-    >
-      {token ? (
-        <Box
-          sx={{
-            position: 'relative',
-            top: 2,
-          }}
-        >
-          {quoteToken ? (
-            <TokenLogoPair
-              tokens={[token, quoteToken]}
-              chainId={chainId}
-              width={18}
-              mr={4}
-            />
-          ) : (
-            <TokenLogo
-              address={token.address}
-              width={18}
-              height={18}
-              chainId={chainId}
-              url={token.logoURI}
-              marginRight={4}
-              noShowChain
-            />
-          )}
-        </Box>
-      ) : (
-        <Skeleton
-          width={32}
-          height={32}
-          sx={{
-            mr: 4,
-          }}
-        />
-      )}
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          wordBreak: 'break-all',
-        }}
-      >
-        <LoadingSkeleton
-          loading={lpBalanceLoading}
-          loadingProps={{
-            width: 30,
-          }}
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            mr: 2,
-          }}
-        >
-          {balanceNeedUpdateLoading ? (
-            <RotatingIcon />
-          ) : (
-            formatReadableNumber({
-              input: lpBalance || '-',
-            })
-          )}
-        </LoadingSkeleton>
-        {`${symbol} LP`}
-        {!!tokenBalanceList?.length && (
-          <Tooltip
-            title={
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 8,
-                }}
-              >
-                {tokenBalanceList.map((son) => (
-                  <Box
-                    key={son.token.address}
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      typography: 'body2',
-                      fontWeight: 600,
-                      color: 'text.primary',
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <TokenLogo
-                        address={son.token.address}
-                        chainId={son.token.chainId}
-                        width={14}
-                        height={14}
-                        url={son.token.logoURI}
-                        marginRight={4}
-                        noShowChain
-                      />
-                      {son.token.symbol}
-                    </Box>
-                    <LoadingSkeleton loading={son.loading}>
-                      {son.balance &&
-                      !son.balance.isZero() &&
-                      !son.balance.isNaN()
-                        ? '~'
-                        : ''}
-                      {son.balance
-                        ? formatReadableNumber({
-                            input: son.balance,
-                          })
-                        : ''}
-                    </LoadingSkeleton>
-                  </Box>
-                ))}
-              </Box>
-            }
-            sx={{
-              padding: 20,
-              width: 256,
-            }}
-          >
-            <HoverOpacity
-              component={DetailBorder}
-              sx={{
-                ml: 4,
-                width: 16,
-                height: 16,
-              }}
-            />
-          </Tooltip>
-        )}
-        <Box
-          component="a"
-          target="_blank"
-          rel="noopener noreferrer"
-          href={chainId ? getEtherscanPage(chainId, address, 'address') : ''}
-          sx={{
-            display: 'inline-flex',
-            height: 14,
-          }}
-        >
-          <HoverOpacity
-            component={ArrowTopRightBorder}
-            sx={{
-              ml: 4,
-              width: 14,
-              height: 14,
-            }}
-          />
-        </Box>
-      </Box>
-    </Box>
-  );
+  children: React.ReactNode;
 }
 
 export default function LiquidityInfo({
-  loading: loadingProps,
   hidePoolInfo,
   pool,
-  balanceInfo,
+  children,
 }: LiquidityInfoProps) {
   const theme = useTheme();
-  const loading = loadingProps || !pool;
+  const loading = !pool;
 
-  const singleSideLp = pool ? PoolApi.utils.singleSideLp(pool.type) : false;
+  const isAMMV2 = pool?.type === 'SVM_AMMV2';
 
-  const { isTokenLoading } = useBalanceUpdateLoading();
-  const { account } = useWalletInfo();
-  const feeRateQuery = useQuery(
-    poolApi.getFeeRateQuery(pool?.chainId, pool?.address, pool?.type, account),
-  );
-  const feeRate = feeRateQuery.data?.lpFeeRate?.plus(
-    feeRateQuery.data?.mtFeeRate ?? 0,
-  );
-
-  let isBaseLpTokenNeedLoading = false;
-  let isQuoteLpTokenNeedLoading = false;
-  if (pool) {
-    if (balanceInfo.userBaseLpBalance && pool.baseLpToken) {
-      isBaseLpTokenNeedLoading = isTokenLoading(
-        pool.baseLpToken.id,
-        balanceInfo.userBaseLpBalance,
-      );
-    }
-    if (balanceInfo.userQuoteLpBalance && pool.quoteLpToken) {
-      isQuoteLpTokenNeedLoading = isTokenLoading(
-        pool.quoteLpToken.id,
-        balanceInfo.userQuoteLpBalance,
-      );
-    }
-  }
-  const isAMMV2 = pool?.type === 'AMMV2';
-
+  const feeRate = pool
+    ? getPoolFeeRate({
+        type: pool.type,
+        lpFeeRate: pool.lpFeeRate ?? '0',
+        mtFeeRate: pool.mtFeeRate ?? '0',
+      })
+    : '-';
   return (
     <Box
       sx={{
@@ -308,60 +75,47 @@ export default function LiquidityInfo({
               }}
             >
               {pool?.baseToken?.symbol}/{pool?.quoteToken?.symbol}
-              {pool?.type === 'AMMV2' && (
-                <LoadingSkeleton
-                  loading={feeRateQuery.isLoading}
-                  loadingProps={{
-                    width: 30,
-                  }}
-                  sx={{
-                    typography: 'h6',
-                  }}
-                >
-                  <Tooltip
-                    title={
-                      <Box
-                        sx={{
-                          typography: 'h6',
-                          '& > b': {
-                            fontWeight: 600,
-                            color: 'primary.main',
-                          },
-                        }}
-                      >
-                        🌟
-                        <b>
-                          <Trans>Tips:</Trans>
-                        </b>{' '}
-                        <Trans>
-                          By adding liquidity you’ll earn{' '}
-                          <b>{formatPercentageNumber({ input: feeRate })}</b> of
-                          all trades on this pair proportional to your share of
-                          the pool. Fees are added to the pool, accrue in real
-                          time and can be claimed by withdrawing your liquidity.
-                        </Trans>
-                      </Box>
-                    }
-                    sx={{
-                      maxWidth: 240,
-                    }}
-                  >
+              {isAMMV2 && (
+                <Tooltip
+                  title={
                     <Box
                       sx={{
-                        px: 8,
-                        py: 4,
-                        borderRadius: 4,
                         typography: 'h6',
-                        backgroundColor: 'background.tag',
-                        color: 'text.disabled',
+                        '& > b': {
+                          fontWeight: 600,
+                          color: 'primary.main',
+                        },
                       }}
                     >
-                      {formatPercentageNumber({
-                        input: feeRate,
-                      })}
+                      🌟
+                      <b>
+                        <Trans>Tips:</Trans>
+                      </b>{' '}
+                      <Trans>
+                        By adding liquidity you’ll earn <b>{feeRate}</b> of all
+                        trades on this pair proportional to your share of the
+                        pool. Fees are added to the pool, accrue in real time
+                        and can be claimed by withdrawing your liquidity.
+                      </Trans>
                     </Box>
-                  </Tooltip>
-                </LoadingSkeleton>
+                  }
+                  sx={{
+                    maxWidth: 240,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      px: 8,
+                      py: 4,
+                      borderRadius: 4,
+                      typography: 'h6',
+                      backgroundColor: 'background.tag',
+                      color: 'text.disabled',
+                    }}
+                  >
+                    {feeRate}
+                  </Box>
+                </Tooltip>
               )}
             </LoadingSkeleton>
             <LoadingSkeleton loading={loading}>
@@ -421,99 +175,7 @@ export default function LiquidityInfo({
           p: theme.spacing(12, 20),
         }}
       >
-        <Box
-          sx={{
-            typography: 'h6',
-            color: 'text.secondary',
-          }}
-        >
-          <Trans>My Liquidity</Trans>
-        </Box>
-        <Box
-          sx={{
-            mt: 12,
-          }}
-        >
-          <LoadingSkeleton
-            loading={loading}
-            loadingSx={{
-              width: 100,
-            }}
-          >
-            {singleSideLp ? (
-              <>
-                <LiquidityBalanceItem
-                  chainId={pool?.chainId}
-                  address={pool?.address}
-                  token={pool?.baseToken}
-                  lpBalance={balanceInfo?.userBaseLpBalance}
-                  lpBalanceLoading={balanceInfo.userLpBalanceLoading}
-                  balanceNeedUpdateLoading={isBaseLpTokenNeedLoading}
-                  tokenBalanceList={
-                    pool
-                      ? [
-                          {
-                            token: pool.baseToken,
-                            balance: balanceInfo?.userBaseLpToTokenBalance,
-                            loading: balanceInfo.userLpToTokenBalanceLoading,
-                          },
-                        ]
-                      : undefined
-                  }
-                />
-                <LiquidityBalanceItem
-                  chainId={pool?.chainId}
-                  address={pool?.address}
-                  token={pool?.quoteToken}
-                  lpBalance={balanceInfo?.userQuoteLpBalance}
-                  lpBalanceLoading={balanceInfo.userLpBalanceLoading}
-                  balanceNeedUpdateLoading={isQuoteLpTokenNeedLoading}
-                  tokenBalanceList={
-                    pool
-                      ? [
-                          {
-                            token: pool.quoteToken,
-                            balance: balanceInfo?.userQuoteLpToTokenBalance,
-                            loading: balanceInfo.userLpToTokenBalanceLoading,
-                          },
-                        ]
-                      : undefined
-                  }
-                />
-              </>
-            ) : (
-              <LiquidityBalanceItem
-                chainId={pool?.chainId}
-                address={pool?.address}
-                token={pool?.baseToken}
-                quoteToken={pool?.quoteToken}
-                lpBalance={balanceInfo.userBaseLpBalance}
-                lpBalanceLoading={balanceInfo.userLpBalanceLoading}
-                balanceNeedUpdateLoading={isBaseLpTokenNeedLoading}
-                tokenBalanceList={
-                  pool
-                    ? [
-                        {
-                          token: pool.baseToken,
-                          balance:
-                            balanceInfo.userBaseLpToTokenBalance ||
-                            new BigNumber(0),
-                          loading: balanceInfo.userLpToTokenBalanceLoading,
-                        },
-                        {
-                          token: pool.quoteToken,
-                          balance:
-                            balanceInfo.userQuoteLpToTokenBalance ||
-                            new BigNumber(0),
-                          loading: balanceInfo.userLpToTokenBalanceLoading,
-                        },
-                      ]
-                    : undefined
-                }
-              />
-            )}
-          </LoadingSkeleton>
-        </Box>
+        {children}
       </Box>
     </Box>
   );

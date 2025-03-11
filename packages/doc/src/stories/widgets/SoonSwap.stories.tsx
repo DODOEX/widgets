@@ -79,58 +79,7 @@ export const Primary = (args) => <SoonSwapWidget {...args} />;
 Primary.args = {
   apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
   apiDomain: process.env.STORYBOOK_API_DOMAIN,
-  theme: {
-    palette: {
-      mode: 'light',
-      primary: {
-        main: '#1A1A1B',
-      },
-      secondary: {
-        main: '#FFE804',
-        contrastText: '#1A1A1B',
-      },
-      error: {
-        main: '#EC5A7D',
-        contrastText: '#FFFFFF',
-      },
-      warning: {
-        main: '#B15600',
-        contrastText: '#1A1A1B',
-      },
-      success: {
-        main: '#2FBA90',
-        contrastText: '#1A1A1B',
-      },
-      purple: {
-        main: '#6851B4',
-        contrastText: '#1A1A1B',
-      },
-      background: {
-        default: '#F9F6E8',
-        paper: '#FFFFFF',
-        paperContrast: '#F6F6F6',
-        paperDarkContrast: 'rgba(26, 26, 27, 0.1)',
-        backdrop: 'rgba(0, 0, 0, 0.9)',
-        input: '#F0F0F0',
-        tag: 'rgba(26, 26, 27, 0.04)',
-      },
-      text: {
-        primary: '#1A1A1B',
-        secondary: 'rgba(26, 26, 27, 0.5)',
-        disabled: 'rgba(26, 26, 27, 0.3)',
-        placeholder: 'rgba(26, 26, 27, 0.3)',
-        link: '#1A1A1B',
-      },
-      border: {
-        main: 'rgba(26, 26, 27, 0.1)',
-        light: 'rgba(26, 26, 27, 0.3)',
-        disabled: 'rgba(26, 26, 27, 0.1)',
-      },
-      hover: {
-        default: 'rgba(26, 26, 27, 0.1)',
-      },
-    },
-  },
+  colorMode: 'dark',
   defaultFromToken: {
     decimals: 9,
     name: 'SOL',

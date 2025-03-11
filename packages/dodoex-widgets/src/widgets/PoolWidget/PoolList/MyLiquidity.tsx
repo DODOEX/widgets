@@ -1,57 +1,54 @@
-import { alpha, Box, Button, useTheme, Tooltip } from '@dodoex/components';
-import { PoolApi, PoolType } from '@dodoex/api';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  convertFetchMyLiquidityToOperateData,
-  convertLiquidityTokenToTokenInfo,
-  FetchMyLiquidityListLqList,
-  getPoolAMMOrPMM,
-} from '../utils';
-import { ChainId } from '@dodoex/api';
-import React from 'react';
-import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { ChainId, PoolApi, PoolType } from '@dodoex/api';
+import { alpha, Box, Button, Tooltip, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
+import React from 'react';
+import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
+import { CardStatus } from '../../../components/CardWidgets';
+import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
+import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
+import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
+import { EmptyList } from '../../../components/List/EmptyList';
+import { FailedList } from '../../../components/List/FailedList';
+import SelectChain from '../../../components/SelectChain';
+import TokenLogo from '../../../components/TokenLogo';
+import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { useRouterStore } from '../../../router';
+import { PageType } from '../../../router/types';
 import {
-  byWei,
   formatApy,
   formatExponentialNotation,
   formatPercentageNumber,
   formatReadableNumber,
   formatTokenAmountNumber,
 } from '../../../utils';
-import PoolApyTooltip from './components/PoolApyTooltip';
-import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
-import LoadingCard from './components/LoadingCard';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { usePoolListFilterTokenAndPool } from './hooks/usePoolListFilterTokenAndPool';
-import SelectChain from '../../../components/SelectChain';
-import TokenAndPoolFilter from './components/TokenAndPoolFilter';
-import TokenListPoolItem from './components/TokenListPoolItem';
-import { EmptyList } from '../../../components/List/EmptyList';
-import { FailedList } from '../../../components/List/FailedList';
+import { InRangeDot } from '../AMMV3/components/InRangeDot';
+import { Bound } from '../AMMV3/types';
+import { formatTickPrice } from '../AMMV3/utils/formatTickPrice';
+import { PoolOperateProps } from '../PoolOperate';
+import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
+import {
+  convertFetchMyLiquidityToOperateData,
+  convertLiquidityTokenToTokenInfo,
+  FetchMyLiquidityListLqList,
+  getPoolAMMOrPMM,
+  getPoolFeeRate,
+} from '../utils';
+import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import FilterAddressTags from './components/FilterAddressTags';
 import FilterTokenTags from './components/FilterTokenTags';
-import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
-import { PoolOperateProps } from '../PoolOperate';
-import { useRouterStore } from '../../../router';
-import { PageType } from '../../../router/types';
-import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
-import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
-import TokenLogo from '../../../components/TokenLogo';
-import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
-import LiquidityTable from './components/LiquidityTable';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
-import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { CardStatus } from '../../../components/CardWidgets';
-import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
 import GoPoolDetailBtn from './components/GoPoolDetailBtn';
+import LiquidityTable from './components/LiquidityTable';
+import LoadingCard from './components/LoadingCard';
 import { OnlyV3Toggle } from './components/OnlyV3Toggle';
-import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
-import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
-import { InRangeDot } from '../AMMV3/components/InRangeDot';
-import { formatTickPrice } from '../AMMV3/utils/formatTickPrice';
-import { Bound } from '../AMMV3/types';
+import PoolApyTooltip from './components/PoolApyTooltip';
+import TokenAndPoolFilter from './components/TokenAndPoolFilter';
+import TokenListPoolItem from './components/TokenListPoolItem';
+import { usePoolListFilterTokenAndPool } from './hooks/usePoolListFilterTokenAndPool';
 
 function CardList({
   account,
@@ -131,176 +128,390 @@ function CardList({
 
         const type = item.type as PoolType;
         const poolType = getPoolAMMOrPMM(type);
-        const isAMMV2 = type === 'AMMV2';
-        const isAMMV3 = type === 'AMMV3';
+        const isAMMV2 = type === 'SVM_AMMV2';
+        const isAMMV3 = type === 'SVM_AMMV3';
 
         return (
           <Box
             key={isAMMV3 ? position?.id : item.id + item.chainId}
             sx={{
-              px: 20,
-              pt: 20,
-              pb: 12,
-              backgroundColor: 'background.paper',
-              borderRadius: 16,
-            }}
-            className="gradient-card-border"
-            onClick={() => {
-              if (supportAMM) return;
-              useRouterStore.getState().push({
-                type: PageType.PoolDetail,
-                params: {
-                  chainId: item.chainId as ChainId,
-                  address: item.id as string,
-                },
-              });
+              p: 8,
+              borderRadius: 20,
+              borderWidth: 1,
+              borderStyle: 'solid',
+              borderColor: 'border.main',
+              backgroundColor: 'border.disabled',
+              backdropFilter: 'blur(5px)',
             }}
           >
-            {/* title */}
             <Box
               sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexWrap: 'wrap',
+                px: 20,
+                pt: 20,
+                pb: 12,
+                backgroundColor: 'background.paper',
+                borderRadius: 16,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                borderColor: 'border.main',
+              }}
+              className="gradient-card-border"
+              onClick={() => {
+                if (supportAMM) return;
+                useRouterStore.getState().push({
+                  type: PageType.PoolDetail,
+                  params: {
+                    chainId: item.chainId as ChainId,
+                    address: item.id as string,
+                  },
+                });
               }}
             >
+              {/* title */}
               <Box
                 sx={{
                   display: 'flex',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  gap: 8,
+                  flexWrap: 'wrap',
                 }}
               >
-                {baseToken && quoteToken ? (
-                  <TokenLogoPair
-                    tokens={[baseToken, quoteToken]}
-                    width={24}
-                    mr={6}
-                    chainId={item.chainId}
-                    showChainLogo
-                  />
-                ) : (
-                  ''
-                )}
                 <Box
                   sx={{
-                    typography: 'body2',
-                    fontWeight: 600,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
                   }}
                 >
-                  {`${baseToken?.symbol}/${quoteToken?.symbol}`}
-                  <LiquidityLpPartnerReward
-                    address={item.id}
-                    chainId={item.chainId}
-                  />
-                </Box>
-              </Box>
-              {hasMining ? (
-                <Box
-                  sx={{
-                    p: 8,
-                    typography: 'h6',
-                    fontWeight: 'bold',
-                    background: `linear-gradient(180deg, ${alpha(
-                      theme.palette.secondary.main,
-                      0.3,
-                    )} 0%, ${alpha(theme.palette.purple.main, 0.3)} 100%)`,
-                    borderRadius: 8,
-                    color: 'purple.main',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  ✨ <Trans>Mining</Trans>
-                </Box>
-              ) : (
-                ''
-              )}
-            </Box>
-            {/* info */}
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                rowGap: 20,
-                mt: 44,
-                '& > div:nth-child(odd)': {
-                  pr: 20,
-                },
-                '& > div:nth-child(even)': {
-                  position: 'relative',
-                  pl: 20,
-                  '&::before': {
-                    position: 'absolute',
-                    left: 0,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    display: 'inline-block',
-                    content: '""',
-                    height: 24,
-                    width: '1px',
-                    backgroundColor: 'border.main',
-                  },
-                },
-              }}
-            >
-              {supportAMM && (
-                <Box>
+                  {baseToken && quoteToken ? (
+                    <TokenLogoPair
+                      tokens={[baseToken, quoteToken]}
+                      width={24}
+                      mr={6}
+                      chainId={item.chainId}
+                      showChainLogo
+                    />
+                  ) : (
+                    ''
+                  )}
                   <Box
                     sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 4,
+                      typography: 'body2',
+                      fontWeight: 600,
+                    }}
+                  >
+                    {`${baseToken?.symbol}/${quoteToken?.symbol}`}
+                    <LiquidityLpPartnerReward
+                      address={item.id}
+                      chainId={item.chainId}
+                    />
+                  </Box>
+                </Box>
+                {hasMining ? (
+                  <Box
+                    sx={{
+                      p: 8,
+                      typography: 'h6',
+                      fontWeight: 'bold',
+                      background: `linear-gradient(180deg, ${alpha(
+                        theme.palette.secondary.main,
+                        0.3,
+                      )} 0%, ${alpha(theme.palette.purple.main, 0.3)} 100%)`,
+                      borderRadius: 8,
+                      color: 'purple.main',
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {poolType}
-                    <Tooltip title={<Trans>Fee rate</Trans>}>
+                    ✨ <Trans>Mining</Trans>
+                  </Box>
+                ) : (
+                  ''
+                )}
+              </Box>
+              {/* info */}
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  rowGap: 20,
+                  mt: 44,
+                  '& > div:nth-child(odd)': {
+                    pr: 20,
+                  },
+                  '& > div:nth-child(even)': {
+                    position: 'relative',
+                    pl: 20,
+                    '&::before': {
+                      position: 'absolute',
+                      left: 0,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      display: 'inline-block',
+                      content: '""',
+                      height: 24,
+                      width: '1px',
+                      backgroundColor: 'border.main',
+                    },
+                  },
+                }}
+              >
+                {supportAMM && (
+                  <Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 4,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {poolType}
+                      <Tooltip title={<Trans>Fee rate</Trans>}>
+                        <Box
+                          sx={{
+                            px: 8,
+                            py: 4,
+                            borderRadius: 4,
+                            typography: 'h6',
+                            backgroundColor: 'background.tag',
+                            color: 'text.secondary',
+                          }}
+                        >
+                          {getPoolFeeRate({
+                            type: item.type as PoolType,
+                            lpFeeRate: item.lpFeeRate ?? 0,
+                            mtFeeRate: item.mtFeeRate ?? 0,
+                          })}
+                        </Box>
+                      </Tooltip>
+                    </Box>
+                    <Box
+                      sx={{
+                        typography: 'h6',
+                        color: 'text.secondary',
+                      }}
+                    >
+                      <Trans>Pool Type</Trans>
+                    </Box>
+                  </Box>
+                )}
+
+                {isAMMV3 ? null : (
+                  <>
+                    <Box>
                       <Box
                         sx={{
-                          px: 8,
-                          py: 4,
-                          borderRadius: 4,
+                          typography: 'h5',
+                          color: 'success.main',
+                        }}
+                      >
+                        {baseApy}
+                        {quoteApy ? `/${quoteApy}` : ''}
+                      </Box>
+                      <Box
+                        sx={{
                           typography: 'h6',
-                          backgroundColor: 'background.tag',
+                          display: 'flex',
+                          alignItems: 'center',
                           color: 'text.secondary',
                         }}
                       >
-                        {isAMMV3
-                          ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
-                              ?.label ?? '-')
-                          : formatPercentageNumber({
-                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                                item.mtFeeRate
-                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
-                                  : 0,
-                              ),
-                            })}
+                        <Trans>APY</Trans>
+                        <PoolApyTooltip
+                          chainId={item.chainId}
+                          apy={item.apy}
+                          baseToken={baseToken}
+                          quoteToken={quoteToken}
+                          hasQuote={!!quoteApy}
+                          hasMining={hasMining}
+                          sx={{
+                            width: 14,
+                            height: 14,
+                          }}
+                        />
                       </Box>
-                    </Tooltip>
-                  </Box>
-                  <Box
-                    sx={{
-                      typography: 'h6',
-                      color: 'text.secondary',
-                    }}
-                  >
-                    <Trans>Pool Type</Trans>
-                  </Box>
-                </Box>
-              )}
+                    </Box>
 
-              {isAMMV3 ? null : (
-                <>
+                    <Box>
+                      <Box
+                        sx={{
+                          typography: 'h5',
+                        }}
+                      >
+                        $
+                        {formatExponentialNotation(
+                          new BigNumber(item.tvl || 0),
+                        )}
+                      </Box>
+                      <Box
+                        sx={{
+                          typography: 'h6',
+                          color: 'text.secondary',
+                        }}
+                      >
+                        <Trans>TVL</Trans>
+                      </Box>
+                    </Box>
+                  </>
+                )}
+
+                {isAMMV2 && (
                   <Box>
                     <Box
                       sx={{
                         typography: 'h5',
-                        color: 'success.main',
                       }}
                     >
-                      {baseApy}
-                      {quoteApy ? `/${quoteApy}` : ''}
+                      {formatPercentageNumber({
+                        input: lq.liquidityPositions?.[0]?.poolShare,
+                      })}
+                    </Box>
+                    <Box
+                      sx={{
+                        typography: 'h6',
+                        color: 'text.secondary',
+                      }}
+                    >
+                      <Trans>My Pool Share</Trans>
+                    </Box>
+                  </Box>
+                )}
+
+                {/* my liquidity */}
+                <Box>
+                  <Box
+                    sx={{
+                      typography: 'h5',
+                      display: 'flex',
+                      alignItems: 'center',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {isAMMV3 ? (
+                      position?.liquidityUSD ? (
+                        `$${formatTokenAmountNumber({
+                          input: position.liquidityUSD,
+                          decimals: 2,
+                        })}`
+                      ) : (
+                        '-'
+                      )
+                    ) : (
+                      <>
+                        {singleSideLp ? (
+                          <TokenLogo
+                            address={baseToken?.address}
+                            chainId={item.chainId}
+                            url={baseToken?.logoURI}
+                            width={18}
+                            height={18}
+                            sx={{
+                              mr: 4,
+                            }}
+                          />
+                        ) : (
+                          <TokenLogoPair
+                            tokens={
+                              baseToken && quoteToken
+                                ? [baseToken, quoteToken]
+                                : []
+                            }
+                            width={18}
+                            mr={4}
+                            showChainLogo={false}
+                            chainId={item.chainId}
+                          />
+                        )}
+                        {baseLpTokenBalance
+                          ? formatReadableNumber({
+                              input: baseLpTokenBalance,
+                            })
+                          : ''}
+                        {singleSideLp && (
+                          <>
+                            {' / '}
+                            <TokenLogo
+                              address={quoteToken?.address}
+                              chainId={item.chainId}
+                              url={quoteToken?.logoURI}
+                              width={18}
+                              height={18}
+                              sx={{
+                                mx: 4,
+                              }}
+                            />
+                            {quoteLpTokenBalance
+                              ? formatReadableNumber({
+                                  input: quoteLpTokenBalance,
+                                })
+                              : '0'}
+                          </>
+                        )}
+                      </>
+                    )}
+                  </Box>
+                  <Box
+                    sx={{
+                      typography: 'h6',
+                      display: 'flex',
+                      alignItems: 'center',
+                      color: 'text.secondary',
+                    }}
+                  >
+                    <Trans>My Liquidity</Trans>
+                  </Box>
+                </Box>
+
+                {isAMMV3 && (
+                  <Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 4,
+                        color: 'text.primary',
+                      }}
+                    >
+                      <InRangeDot outOfRange={position?.outOfRange ?? false} />
+                      <Box>
+                        <>
+                          <span>
+                            {formatTickPrice({
+                              price: position?.priceRange?.token0LowerPrice,
+                              atLimit: {},
+                              direction: Bound.LOWER,
+                            })}
+                            &nbsp;
+                          </span>
+                          {baseToken?.symbol}
+                        </>
+                      </Box>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="19"
+                        viewBox="0 0 18 19"
+                        fill="none"
+                      >
+                        <path
+                          d="M15.75 9.50293L12.75 12.5029L11.7 11.4529L12.8813 10.2529L5.11875 10.2529L6.3 11.4529L5.25 12.5029L2.25 9.50293L5.25 6.50293L6.31875 7.55293L5.11875 8.75293L12.8813 8.75293L11.7 7.55293L12.75 6.50293L15.75 9.50293Z"
+                          fill="currentColor"
+                          fillOpacity="0.5"
+                        />
+                      </svg>
+                      <Box>
+                        <>
+                          <span>
+                            {formatTickPrice({
+                              price: position?.priceRange?.token1LowerPrice,
+                              atLimit: {},
+                              direction: Bound.UPPER,
+                            })}
+                            &nbsp;
+                          </span>
+                          {baseToken?.symbol}
+                        </>
+                      </Box>
                     </Box>
                     <Box
                       sx={{
@@ -310,257 +521,56 @@ function CardList({
                         color: 'text.secondary',
                       }}
                     >
-                      <Trans>APY</Trans>
-                      <PoolApyTooltip
-                        chainId={item.chainId}
-                        apy={item.apy}
-                        baseToken={baseToken}
-                        quoteToken={quoteToken}
-                        hasQuote={!!quoteApy}
-                        hasMining={hasMining}
-                        sx={{
-                          width: 14,
-                          height: 14,
-                        }}
-                      />
+                      <Trans>Price Range</Trans>
                     </Box>
                   </Box>
-
-                  <Box>
-                    <Box
-                      sx={{
-                        typography: 'h5',
-                      }}
-                    >
-                      ${formatExponentialNotation(new BigNumber(item.tvl || 0))}
-                    </Box>
-                    <Box
-                      sx={{
-                        typography: 'h6',
-                        color: 'text.secondary',
-                      }}
-                    >
-                      <Trans>TVL</Trans>
-                    </Box>
-                  </Box>
-                </>
-              )}
-
-              {type === 'AMMV2' && (
-                <Box>
-                  <Box
-                    sx={{
-                      typography: 'h5',
-                    }}
-                  >
-                    {formatPercentageNumber({
-                      input: lq.liquidityPositions?.[0]?.poolShare,
-                    })}
-                  </Box>
-                  <Box
-                    sx={{
-                      typography: 'h6',
-                      color: 'text.secondary',
-                    }}
-                  >
-                    <Trans>My Pool Share</Trans>
-                  </Box>
-                </Box>
-              )}
-
-              {/* my liquidity */}
-              <Box>
-                <Box
-                  sx={{
-                    typography: 'h5',
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {isAMMV3 ? (
-                    position?.liquidityUSD ? (
-                      `$${formatTokenAmountNumber({
-                        input: position.liquidityUSD,
-                        decimals: 2,
-                      })}`
-                    ) : (
-                      '-'
-                    )
-                  ) : (
-                    <>
-                      {singleSideLp ? (
-                        <TokenLogo
-                          address={baseToken?.address}
-                          chainId={item.chainId}
-                          url={baseToken?.logoURI}
-                          width={18}
-                          height={18}
-                          sx={{
-                            mr: 4,
-                          }}
-                        />
-                      ) : (
-                        <TokenLogoPair
-                          tokens={
-                            baseToken && quoteToken
-                              ? [baseToken, quoteToken]
-                              : []
-                          }
-                          width={18}
-                          mr={4}
-                          showChainLogo={false}
-                          chainId={item.chainId}
-                        />
-                      )}
-                      {baseLpTokenBalance
-                        ? formatReadableNumber({
-                            input: baseLpTokenBalance,
-                          })
-                        : ''}
-                      {singleSideLp && (
-                        <>
-                          {' / '}
-                          <TokenLogo
-                            address={quoteToken?.address}
-                            chainId={item.chainId}
-                            url={quoteToken?.logoURI}
-                            width={18}
-                            height={18}
-                            sx={{
-                              mx: 4,
-                            }}
-                          />
-                          {quoteLpTokenBalance
-                            ? formatReadableNumber({
-                                input: quoteLpTokenBalance,
-                              })
-                            : '0'}
-                        </>
-                      )}
-                    </>
-                  )}
-                </Box>
-                <Box
-                  sx={{
-                    typography: 'h6',
-                    display: 'flex',
-                    alignItems: 'center',
-                    color: 'text.secondary',
-                  }}
-                >
-                  <Trans>My Liquidity</Trans>
-                </Box>
+                )}
               </Box>
-
-              {isAMMV3 && (
-                <Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 4,
-                      color: 'text.primary',
-                    }}
-                  >
-                    <InRangeDot outOfRange={position?.outOfRange ?? false} />
-                    <Box>
-                      <>
-                        <span>
-                          {formatTickPrice({
-                            price: position?.priceRange?.token0LowerPrice,
-                            atLimit: {},
-                            direction: Bound.LOWER,
-                          })}
-                          &nbsp;
-                        </span>
-                        {baseToken?.symbol}
-                      </>
-                    </Box>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="19"
-                      viewBox="0 0 18 19"
-                      fill="none"
-                    >
-                      <path
-                        d="M15.75 9.50293L12.75 12.5029L11.7 11.4529L12.8813 10.2529L5.11875 10.2529L6.3 11.4529L5.25 12.5029L2.25 9.50293L5.25 6.50293L6.31875 7.55293L5.11875 8.75293L12.8813 8.75293L11.7 7.55293L12.75 6.50293L15.75 9.50293Z"
-                        fill="currentColor"
-                        fillOpacity="0.5"
-                      />
-                    </svg>
-                    <Box>
-                      <>
-                        <span>
-                          {formatTickPrice({
-                            price: position?.priceRange?.token1LowerPrice,
-                            atLimit: {},
-                            direction: Bound.UPPER,
-                          })}
-                          &nbsp;
-                        </span>
-                        {baseToken?.symbol}
-                      </>
-                    </Box>
-                  </Box>
-                  <Box
-                    sx={{
-                      typography: 'h6',
-                      display: 'flex',
-                      alignItems: 'center',
-                      color: 'text.secondary',
-                    }}
-                  >
-                    <Trans>Price Range</Trans>
-                  </Box>
-                </Box>
-              )}
-            </Box>
-            {/* operate */}
-            <Box
-              sx={{
-                mt: 20,
-                display: 'flex',
-                gap: '8px',
-              }}
-            >
-              {isAMMV3
-                ? null
-                : !!account && (
-                    <NeedConnectButton
-                      fullWidth
-                      variant={Button.Variant.outlined}
-                      size={Button.Size.small}
-                      onClick={(evt) => {
-                        evt.stopPropagation();
-                        setOperatePool({
-                          operate: OperateTab.Remove,
-                          pool: convertFetchMyLiquidityToOperateData(lq),
-                          hasMining,
-                        });
-                      }}
-                    >
-                      <Trans>Remove</Trans>
-                    </NeedConnectButton>
-                  )}
-              <NeedConnectButton
-                fullWidth
-                size={Button.Size.small}
-                onClick={(evt) => {
-                  evt.stopPropagation();
-                  setOperatePool({
-                    operate: OperateTab.Add,
-                    pool: convertFetchMyLiquidityToOperateData(lq),
-                    hasMining,
-                  });
+              {/* operate */}
+              <Box
+                sx={{
+                  mt: 20,
+                  display: 'flex',
+                  gap: '8px',
                 }}
               >
-                <Trans>{isAMMV3 ? 'Manage' : 'Add'}</Trans>
-              </NeedConnectButton>
-              {supportAMM && poolType === 'PMM' && (
-                <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
-              )}
+                {isAMMV3
+                  ? null
+                  : !!account && (
+                      <NeedConnectButton
+                        fullWidth
+                        variant={Button.Variant.outlined}
+                        size={Button.Size.small}
+                        onClick={(evt) => {
+                          evt.stopPropagation();
+                          setOperatePool({
+                            operate: OperateTab.Remove,
+                            pool: convertFetchMyLiquidityToOperateData(lq),
+                            hasMining,
+                          });
+                        }}
+                      >
+                        <Trans>Remove</Trans>
+                      </NeedConnectButton>
+                    )}
+                <NeedConnectButton
+                  fullWidth
+                  size={Button.Size.small}
+                  onClick={(evt) => {
+                    evt.stopPropagation();
+                    setOperatePool({
+                      operate: OperateTab.Add,
+                      pool: convertFetchMyLiquidityToOperateData(lq),
+                      hasMining,
+                    });
+                  }}
+                >
+                  <Trans>{isAMMV3 ? 'Manage' : 'Add'}</Trans>
+                </NeedConnectButton>
+                {supportAMM && poolType === 'PMM' && (
+                  <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
+                )}
+              </Box>
             </Box>
           </Box>
         );
@@ -691,8 +701,8 @@ function TableList({
 
           const type = item.type as PoolType;
           const poolType = getPoolAMMOrPMM(type);
-          const isAMMV2 = type === 'AMMV2';
-          const isAMMV3 = type === 'AMMV3';
+          const isAMMV2 = type === 'SVM_AMMV2';
+          const isAMMV3 = type === 'SVM_AMMV3';
 
           let operateBtnText = '';
           if (isAMMV3) {
@@ -822,16 +832,11 @@ function TableList({
                           color: 'text.secondary',
                         }}
                       >
-                        {isAMMV3
-                          ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
-                              ?.label ?? '-')
-                          : formatPercentageNumber({
-                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                                item.mtFeeRate
-                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
-                                  : 0,
-                              ),
-                            })}
+                        {getPoolFeeRate({
+                          type: item.type as PoolType,
+                          lpFeeRate: item.lpFeeRate ?? 0,
+                          mtFeeRate: item.mtFeeRate ?? 0,
+                        })}
                       </Box>
                     </Tooltip>
                   </Box>
@@ -1150,9 +1155,7 @@ export default function MyLiquidity({
     handleChangeFilterAddress,
   } = usePoolListFilterTokenAndPool();
 
-  let filterTypes: PoolType[] = notSupportPMM
-    ? []
-    : [];
+  let filterTypes: PoolType[] = notSupportPMM ? [] : [];
   if (supportAMMV2) {
     filterTypes.push('SVM_AMMV2');
   }
@@ -1318,7 +1321,7 @@ export default function MyLiquidity({
 
       {/* list */}
       {isMobile ? (
-        <DataCardGroup>
+        <DataCardGroup gap={12}>
           {fetchResult.isLoading ? <LoadingCard /> : ''}
           {!fetchResult.isLoading && !lqList?.length && !fetchResult.error && (
             <EmptyList

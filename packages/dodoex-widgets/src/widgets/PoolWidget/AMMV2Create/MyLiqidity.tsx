@@ -1,5 +1,6 @@
 import {
   Box,
+  BoxProps,
   HoverOpacity,
   LoadingSkeleton,
   Tooltip,
@@ -26,6 +27,7 @@ export default function MyLiquidity({
   lpBalancePercentage,
   lpToAmountA,
   lpToAmountB,
+  sx,
 }: {
   isExists: boolean;
   poolInfo?: ApiV3PoolInfoStandardItemCpmm;
@@ -35,6 +37,7 @@ export default function MyLiquidity({
   lpBalancePercentage: BigNumber | undefined;
   lpToAmountA: BigNumber | undefined;
   lpToAmountB: BigNumber | undefined;
+  sx?: BoxProps['sx'];
 }) {
   const shareOfPoolExists = lpBalancePercentage
     ? `${formatPercentageNumber({
@@ -46,6 +49,7 @@ export default function MyLiquidity({
   if (!isExists || !poolInfo) {
     return null;
   }
+
   return (
     <Box
       sx={{
@@ -53,6 +57,7 @@ export default function MyLiquidity({
         py: 12,
         borderWidth: 1,
         borderRadius: 8,
+        ...sx,
       }}
     >
       <Box
@@ -68,6 +73,7 @@ export default function MyLiquidity({
           mt: 12,
           display: 'flex',
           alignItems: 'center',
+          flexWrap: 'wrap',
         }}
       >
         <TokenLogoPair

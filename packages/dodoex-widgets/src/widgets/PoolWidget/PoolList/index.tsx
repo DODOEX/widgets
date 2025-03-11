@@ -6,11 +6,11 @@ import { useUserOptions } from '../../../components/UserOptionsProvider';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { useRouterStore } from '../../../router';
+// import { useRouterStore } from '../../../router';
 import { Page, PageType } from '../../../router/types';
-import { AMMV3PositionManage } from '../AMMV3/AMMV3PositionManage';
-import { AMMV3PositionsView } from '../AMMV3/AMMV3PositionsView';
-import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
+// import { AMMV3PositionManage } from '../AMMV3/AMMV3PositionManage';
+// import { AMMV3PositionsView } from '../AMMV3/AMMV3PositionsView';
+// import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
 import PoolOperateDialog, {
   PoolOperate,
   PoolOperateProps,
@@ -70,91 +70,110 @@ export default function PoolList({
       }}
       ref={scrollParentRef}
     >
-      <Tabs
-        value={poolTab}
-        onChange={(_, value) => {
-          handleChangePoolTab(value as PoolTab);
-        }}
+      <Box
         sx={
           isMobile
             ? {}
             : {
-                display: 'flex',
-                flexDirection: 'column',
-                borderRadius: 16,
-                backgroundColor: 'background.paper',
+                p: 8,
+                borderRadius: 20,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                borderColor: 'border.main',
+                backgroundColor: 'border.disabled',
+                backdropFilter: 'blur(5px)',
                 flex: 1,
                 overflow: 'hidden',
                 height: 'max-content',
                 maxHeight: '100%',
               }
         }
-        className={isMobile ? undefined : 'gradient-card-border'}
       >
-        <Box
+        <Tabs
+          value={poolTab}
+          onChange={(_, value) => {
+            handleChangePoolTab(value as PoolTab);
+          }}
           sx={
             isMobile
               ? {}
               : {
                   display: 'flex',
-                  justifyContent: 'space-between',
-                  p: 20,
-                  borderBottomWidth: 1,
+                  flexDirection: 'column',
+                  borderRadius: 16,
+                  borderWidth: 1,
+                  borderStyle: 'solid',
+                  borderColor: 'border.main',
+                  backgroundColor: 'background.paper',
                 }
           }
+          className={isMobile ? undefined : 'gradient-card-border'}
         >
-          <TabsGroup
-            tabs={tabs}
-            variant="rounded"
-            tabsListSx={{
-              justifyContent: 'space-between',
-              ...(isMobile
-                ? {
-                    mb: 16,
-                  }
-                : {
-                    borderBottomWidth: 0,
-                  }),
-            }}
-            tabSx={
+          <Box
+            sx={
               isMobile
-                ? undefined
+                ? {}
                 : {
-                    mb: 0,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    p: 20,
+                    borderBottomWidth: 1,
                   }
             }
-          />
-          <CreatePoolBtn />
-        </Box>
-        <TabPanelFlexCol
-          value={PoolTab.addLiquidity}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-          }}
-        >
-          <AddLiquidityList
-            account={account}
-            filterChainIds={filterChainIds}
-            scrollParentRef={scrollParentRef}
-            activeChainId={activeChainId}
-            handleChangeActiveChainId={handleChangeActiveChainId}
-            operatePool={operatePool}
-            setOperatePool={setOperatePool}
-          />
-        </TabPanelFlexCol>
-        <TabPanelFlexCol value={PoolTab.myLiquidity}>
-          <MyLiquidity
-            account={account}
-            filterChainIds={filterChainIds}
-            activeChainId={activeChainId}
-            handleChangeActiveChainId={handleChangeActiveChainId}
-            operatePool={operatePool}
-            setOperatePool={setOperatePool}
-          />
-        </TabPanelFlexCol>
-      </Tabs>
+          >
+            <TabsGroup
+              tabs={tabs}
+              variant="rounded"
+              tabsListSx={{
+                ...(isMobile
+                  ? {
+                      mb: 16,
+                    }
+                  : {
+                      borderBottomWidth: 0,
+                      justifyContent: 'space-between',
+                    }),
+              }}
+              tabSx={
+                isMobile
+                  ? undefined
+                  : {
+                      mb: 0,
+                    }
+              }
+            />
+            <CreatePoolBtn />
+          </Box>
+          <TabPanelFlexCol
+            value={PoolTab.addLiquidity}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
+            <AddLiquidityList
+              account={account}
+              filterChainIds={filterChainIds}
+              scrollParentRef={scrollParentRef}
+              activeChainId={activeChainId}
+              handleChangeActiveChainId={handleChangeActiveChainId}
+              operatePool={operatePool}
+              setOperatePool={setOperatePool}
+            />
+          </TabPanelFlexCol>
+          <TabPanelFlexCol value={PoolTab.myLiquidity}>
+            <MyLiquidity
+              account={account}
+              filterChainIds={filterChainIds}
+              activeChainId={activeChainId}
+              handleChangeActiveChainId={handleChangeActiveChainId}
+              operatePool={operatePool}
+              setOperatePool={setOperatePool}
+            />
+          </TabPanelFlexCol>
+        </Tabs>
+      </Box>
       <Box
         sx={{
           position: 'relative',
@@ -169,45 +188,48 @@ export default function PoolList({
             LeftImage={LeftImage}
           />
         )}
-        {operatePool?.pool?.type === 'AMMV3' && operatePool.pool.chainId ? (
-          poolTab === PoolTab.myLiquidity &&
-          operatePool.pool.liquidityPositions?.[0]?.tokenId ? (
-            <AMMV3PositionManage
-              baseToken={operatePool.pool.baseToken}
-              quoteToken={operatePool.pool.quoteToken}
-              feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
-              tokenId={operatePool.pool.liquidityPositions[0].tokenId}
-              chainId={operatePool.pool.chainId}
-              onClose={() => setOperatePool(null)}
-            />
-          ) : (
-            <AMMV3PositionsView
-              chainId={operatePool.pool.chainId}
-              baseToken={operatePool.pool.baseToken}
-              quoteToken={operatePool.pool.quoteToken}
-              feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
-              onClose={() => setOperatePool(null)}
-              handleGoToAddLiquidityV3={(params) => {
-                useRouterStore.getState().push({
-                  type: PageType.createPoolAMMV3,
-                  params,
-                });
-              }}
-            />
-          )
-        ) : isMobile ? (
+        {operatePool?.pool?.type === 'SVM_AMMV3' &&
+        operatePool.pool.chainId ? //     baseToken={operatePool.pool.baseToken} //   <AMMV3PositionManage // operatePool.pool.liquidityPositions?.[0]?.tokenId ? ( // poolTab === PoolTab.myLiquidity &&
+        //     quoteToken={operatePool.pool.quoteToken}
+        //     feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
+        //     tokenId={operatePool.pool.liquidityPositions[0].tokenId}
+        //     chainId={operatePool.pool.chainId}
+        //     onClose={() => setOperatePool(null)}
+        //   />
+        // ) : (
+        //   <AMMV3PositionsView
+        //     chainId={operatePool.pool.chainId}
+        //     baseToken={operatePool.pool.baseToken}
+        //     quoteToken={operatePool.pool.quoteToken}
+        //     feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
+        //     onClose={() => setOperatePool(null)}
+        //     handleGoToAddLiquidityV3={(params) => {
+        //       useRouterStore.getState().push({
+        //         type: PageType.createPoolAMMV3,
+        //         params,
+        //       });
+        //     }}
+        //   />
+        // )
+        null : isMobile ? (
           <PoolOperateDialog
             account={account}
             onClose={() => setOperatePool(null)}
             modal={isMobile}
-            {...operatePool}
+            pool={operatePool?.pool}
+            operate={operatePool?.operate}
+            hasMining={false}
+            hidePoolInfo={false}
           />
         ) : (
           !!operatePool && (
             <PoolOperate
               account={account}
               onClose={() => setOperatePool(null)}
-              {...operatePool}
+              pool={operatePool?.pool}
+              operate={operatePool?.operate}
+              hasMining={false}
+              hidePoolInfo={false}
               sx={{
                 width: 375,
                 height: 'max-content',

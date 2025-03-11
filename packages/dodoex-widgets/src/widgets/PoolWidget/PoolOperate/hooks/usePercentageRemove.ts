@@ -24,13 +24,14 @@ export function usePercentageRemove({
   pool: OperatePool | undefined;
   baseOverride: BigNumber | undefined | null;
   quoteOverride: BigNumber | undefined | null;
-  resetAmount: () => void;
-  handleChangeBaseAmount: (val: string) => void;
-  handleChangeQuoteAmount: (val: string) => void;
+  resetAmount?: () => void;
+  handleChangeBaseAmount?: (val: string) => void;
+  handleChangeQuoteAmount?: (val: string) => void;
 }) {
   const [mode, setMode] = React.useState(RemoveMode.percentage);
   const [sliderPercentage, setSliderPercentage] =
     React.useState(initSliderPercentage);
+
   const changeSliderPercentageTime = React.useRef<NodeJS.Timeout | null>(null);
   const clearPercentageChangeTimer = () => {
     if (changeSliderPercentageTime.current) {
@@ -56,7 +57,7 @@ export function usePercentageRemove({
               pool.baseToken.decimals,
             );
           }
-          handleChangeBaseAmount(raw);
+          handleChangeBaseAmount?.(raw);
         }
       } else if (quoteOverride) {
         let raw = quoteOverride.toString();
@@ -67,7 +68,7 @@ export function usePercentageRemove({
             pool.quoteToken.decimals,
           );
         }
-        handleChangeQuoteAmount(raw);
+        handleChangeQuoteAmount?.(raw);
       }
     };
     if (max) {
@@ -88,15 +89,15 @@ export function usePercentageRemove({
 
   const handleChangeMode = (mode: RemoveMode) => {
     setMode(mode);
-    resetAmount();
+    resetAmount?.();
     resetPercentage();
   };
 
   const modeOptions = [
-    {
-      key: RemoveMode.quantity,
-      value: t`Quantity model`,
-    },
+    // {
+    //   key: RemoveMode.quantity,
+    //   value: t`Quantity model`,
+    // },
     {
       key: RemoveMode.percentage,
       value: t`Percentage to remove`,
