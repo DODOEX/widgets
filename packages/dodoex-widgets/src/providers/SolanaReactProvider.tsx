@@ -6,7 +6,7 @@ import {
   WalletProvider,
 } from '@solana/wallet-adapter-react';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
-import { UnsafeBurnerWalletAdapter } from '@solana/wallet-adapter-wallets';
+// import { UnsafeBurnerWalletAdapter } from '@solana/wallet-adapter-wallets';
 import { PropsWithChildren, useMemo } from 'react';
 import { rpcServerMap } from '../constants/chains';
 
@@ -33,7 +33,7 @@ export function SolanaReactProvider(props: PropsWithChildren) {
        * instantiate its legacy wallet adapter here. Common legacy adapters can be found
        * in the npm package `@solana/wallet-adapter-wallets`.
        */
-      new UnsafeBurnerWalletAdapter(),
+      // new UnsafeBurnerWalletAdapter(),
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [network],

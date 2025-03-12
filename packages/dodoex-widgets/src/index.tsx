@@ -2,33 +2,31 @@
 // import { SwapProps } from './components/Swap';
 // import { createRoot } from 'react-dom/client';
 
-import { Swap, SwapProps } from './components/Swap';
-import { Widget, WidgetProps } from './components/Widget';
-import { Pool } from './widgets/PoolWidget';
+import type { SwapProps } from './components/Swap';
+import type { WidgetProps } from './components/Widget';
 
 export type SwapWidgetProps = WidgetProps & SwapProps;
+export type { WidgetProps } from './components/Widget';
+export type { TokenInfo } from './hooks/Token/type';
+export type { Page } from './router';
+
 export { Swap } from './components/Swap';
-export { Message, UnstyleWidget, Widget } from './components/Widget';
+export { UnstyleWidget } from './components/Widget';
+export { MetadataFlag } from './hooks/Submission/types';
+export { PageType, useRouterStore } from './router';
 export { default as AMMV2Create } from './widgets/PoolWidget/AMMV2Create';
 export { default as PoolList } from './widgets/PoolWidget/PoolList';
 
 // export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
 
-export { useRouterStore, PageType } from './router';
-export type { Page } from './router';
-
 // export { WIDGET_CLASS_NAME } from './components/Widget';
-
-export { MetadataFlag } from './hooks/Submission/types';
 
 // export { rpcServerMap, scanUrlDomainMap } from './constants/chains';
 // export { chainListMap } from './constants/chainList';
 // import { Pool } from './widgets/PoolWidget';
 
 // export { WIDGET_MODULE_CLASS_NAME } from './components/WidgetContainer';
-export type { WidgetProps } from './components/Widget';
 
-export type { TokenInfo } from './hooks/Token/type';
 // export { useMessageState } from './hooks/useMessageState';
 // export { Swap } from './components/Swap';
 // export { default as SwapOrderHistory } from './components/Swap/SwapOrderHistory';
@@ -76,25 +74,25 @@ export type { TokenInfo } from './hooks/Token/type';
 //   );
 // }
 
-export function SoonSwapWidget(props: SwapWidgetProps) {
-  return (
-    <Widget {...props}>
-      <Swap
-        getAutoSlippage={props.getAutoSlippage}
-        onPayTokenChange={props.onPayTokenChange}
-        onReceiveTokenChange={props.onReceiveTokenChange}
-      />
-    </Widget>
-  );
-}
+// export function SoonSwapWidget(props: SwapWidgetProps) {
+//   return (
+//     <Widget {...props}>
+//       <Swap
+//         getAutoSlippage={props.getAutoSlippage}
+//         onPayTokenChange={props.onPayTokenChange}
+//         onReceiveTokenChange={props.onReceiveTokenChange}
+//       />
+//     </Widget>
+//   );
+// }
 
-export function PoolWidget(props: SwapWidgetProps) {
-  return (
-    <Widget {...props}>
-      <Pool />
-    </Widget>
-  );
-}
+// export function PoolWidget(props: SwapWidgetProps) {
+//   return (
+//     <Widget {...props}>
+//       <Pool />
+//     </Widget>
+//   );
+// }
 
 // // For none-react project!
 // export function InitSwapWidget(props: SwapWidgetProps) {
