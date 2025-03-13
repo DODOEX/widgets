@@ -1,13 +1,12 @@
+import { CLMM } from '@dodoex/api';
 import { Box } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { ReactNode } from 'react';
 import TokenLogo from '../../../../components/TokenLogo';
 import { TokenLogoPair } from '../../../../components/TokenLogoPair';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
-import {
-  formatPercentageNumber,
-  formatTokenAmountNumber,
-} from '../../../../utils';
+import { formatTokenAmountNumber } from '../../../../utils';
+import { getPoolFeeRate } from '../../utils';
 import { PositionI } from '../types';
 import { AMMV3 } from './Badge/AMMV3';
 import RangeBadge from './Badge/RangeBadge';
@@ -120,8 +119,10 @@ export const PositionPreview = ({
             <Trans>Fee tier</Trans>
           </Box>
           <Box>
-            {formatPercentageNumber({
-              input: (feeRate / 10000) * 100,
+            {getPoolFeeRate({
+              type: CLMM,
+              lpFeeRate: feeRate,
+              mtFeeRate: 0,
             })}
           </Box>
         </RowBetween>

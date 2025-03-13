@@ -1,13 +1,19 @@
 import { CLMM } from '@dodoex/api';
 import { alpha, Box, Button, ButtonBase, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
+import { TxVersion } from '@raydium-io/raydium-sdk-v2';
+import { PublicKey } from '@solana/web3.js';
 import { useMutation } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
+import BN from 'bn.js';
+import Decimal from 'decimal.js';
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { CardPlusConnected } from '../../../components/Swap/components/TokenCard';
 import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { clmmConfigMap } from '../../../hooks/raydium-sdk-V2/common/programId';
+import { useRaydiumSDKContext } from '../../../hooks/raydium-sdk-V2/RaydiumSDKContext';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useSubmission } from '../../../hooks/Submission';
 import { formatTokenAmountNumber } from '../../../utils';
@@ -30,6 +36,7 @@ import { useV3MintActionHandlers } from './hooks/useV3MintActionHandlers';
 import { reducer, Types } from './reducer';
 import { Bound, Field } from './types';
 import { maxAmountSpend } from './utils/maxAmountSpend';
+import { MetadataFlag } from '../../../hooks/Submission/types';
 
 export default function AddLiquidityV3({
   params,
@@ -45,6 +52,7 @@ export default function AddLiquidityV3({
   handleGoToPoolList: () => void;
 }) {
   const { chainId, account } = useWalletInfo();
+  const raydium = useRaydiumSDKContext();
   const theme = useTheme();
   const submission = useSubmission();
   const { isMobile } = useWidgetDevice();
@@ -91,10 +99,15 @@ export default function AddLiquidityV3({
 
   const { independentField, typedValue, startPriceTypedValue } = state;
 
+  const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
+    type: CLMM,
+  });
+
   const {
     mintA,
     mintB,
     poolInfo,
+    poolKeys,
     ticks,
     dependentField,
     price,
@@ -112,7 +125,7 @@ export default function AddLiquidityV3({
     depositADisabled,
     depositBDisabled,
     ticksAtLimit,
-  } = useV3DerivedMintInfo({ state });
+  } = useV3DerivedMintInfo({ state, slipperValue });
 
   const {
     onField1Input,
@@ -121,10 +134,6 @@ export default function AddLiquidityV3({
     onRightRangeInput,
     onStartPriceInput,
   } = useV3MintActionHandlers({ dispatch });
-
-  const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
-    type: CLMM,
-  });
 
   const isValid = !errorMessage && !invalidRange;
 
@@ -186,57 +195,122 @@ export default function AddLiquidityV3({
         return;
       }
 
-      // if (!state.baseToken || !state.quoteToken) {
-      //   return;
-      // }
-
-      // const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
-
-      // const useNative = state.baseToken.isNative
-      //   ? state.baseToken
-      //   : state.quoteToken.isNative
-      //     ? state.quoteToken
-      //     : undefined;
-
-      try {
-        // const { calldata, value } =
-        //   NonfungiblePositionManager.addCallParameters(position, {
-        //     slippageTolerance: toSlippagePercent(slipperValue * 100),
-        //     recipient: account,
-        //     deadline: deadline.toString(),
-        //     useNative,
-        //     createPool: noLiquidity,
-        //   });
-        // let txn: { to: string; data: string; value: string } = {
-        //   to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
-        //   data: calldata,
-        //   value,
-        // };
-        // const succ = await submission.executeCustom(
-        //   t`Pool Creation`,
-        //   {
-        //     opcode: OpCode.TX,
-        //     ...txn,
-        //   },
-        //   {
-        //     early: false,
-        //     metadata: {
-        //       [MetadataFlag.createAMMV3Pool]: '1',
-        //     },
-        //   },
-        // );
-        // if (succ === ExecutionResult.Success) {
-        //   setTimeout(() => {
-        //     handleGoToPoolList();
-        //   }, 100);
-        // }
-      } catch (error) {
-        console.error('onAddMutation', error);
+      if (!poolInfo) {
+        throw new Error('poolInfo is undefined');
       }
+
+      if (!price) {
+        throw new Error('price is undefined');
+      }
+
+      if (!raydium) {
+        throw new Error('raydium is undefined');
+      }
+
+      const clmmConfig = clmmConfigMap[chainId];
+
+      if (!clmmConfig) {
+        throw new Error('Invalid config');
+      }
+
+      const createPoolBuildData = await raydium.clmm.createPool({
+        programId: clmmConfig.programId,
+        mint1: poolInfo.mintA,
+        mint2: poolInfo.mintB,
+        ammConfig: {
+          ...poolInfo.config,
+          id: new PublicKey(poolInfo.config.id),
+          fundOwner: '',
+          description: '',
+        },
+        initialPrice: new Decimal(price.toString()),
+        // startTime: new BN(0),
+        txVersion: TxVersion.LEGACY,
+        // optional: set up priority fee here
+        // computeBudgetConfig: {
+        //   units: 600000,
+        //   microLamports: 46591500,
+        // },
+      });
+
+      if (!position) {
+        throw new Error('position is undefined');
+      }
+
+      const openPositionFromBaseBuildData =
+        await raydium.clmm.openPositionFromBase({
+          poolInfo,
+          poolKeys: poolKeys ?? createPoolBuildData.extInfo.address,
+          tickUpper: Math.max(position.tickLower, position.tickUpper),
+          tickLower: Math.min(position.tickLower, position.tickUpper),
+          base: 'MintA',
+          ownerInfo: {
+            useSOLBalance: true,
+          },
+          baseAmount: new BN(
+            new Decimal(typedValue || '0')
+              .mul(10 ** poolInfo.mintA.decimals)
+              .toFixed(0),
+          ),
+          otherAmountMax: new BN(
+            position.amountB
+              .multipliedBy(new BigNumber(10 ** poolInfo.mintB.decimals))
+              .toFixed(0),
+          ),
+          nft2022: true,
+          txVersion: TxVersion.LEGACY,
+          // optional: set up priority fee here
+          // computeBudgetConfig: {
+          //   units: 600000,
+          //   microLamports: 100000,
+          // },
+        });
+
+      const instructions =
+        openPositionFromBaseBuildData.builder.allInstructions.map(
+          (instruction) => {
+            createPoolBuildData.builder.addInstruction(instruction);
+          },
+        );
+
+      const { execute, extInfo } =
+        await createPoolBuildData.builder.versionMultiBuild({
+          extraPreBuildData: poolIsNoExisted
+            ? [createPoolBuildData, openPositionFromBaseBuildData]
+            : [openPositionFromBaseBuildData],
+          txVersion: TxVersion.LEGACY,
+        });
+
+      const txResult = await submission.executeCustom({
+        brief: poolIsNoExisted ? t`Pool Creation` : t`Add Liquidity`,
+        metadata: {
+          [poolIsNoExisted
+            ? MetadataFlag.createAMMV3Pool
+            : MetadataFlag.addAMMV3Pool]: true,
+        },
+        handler: async (params) => {
+          const { txIds } = await execute({
+            sequentially: true,
+            sendAndConfirm: true,
+          });
+          params.onSuccess(txIds[0]);
+        },
+        successBack: () => {
+          handleGoBack();
+        },
+        submittedBack: () => {
+          handleGoBack();
+        },
+      });
+
+      return txResult;
+    },
+    onError: (error) => {
+      console.error(error);
     },
   });
 
-  const priceText =
+  const perPriceText =
     mintA && mintB
       ? state.selectedMintIndex === 0
         ? `${mintB?.symbol} per ${mintA?.symbol}`
@@ -441,10 +515,8 @@ export default function AddLiquidityV3({
               getIncrementUpper={getIncrementUpper}
               onLeftRangeInput={onLeftRangeInput}
               onRightRangeInput={onRightRangeInput}
-              mint1={state.mint1}
-              mint2={state.mint2}
-              feeAmount={state.feeAmount}
               ticksAtLimit={ticksAtLimit}
+              perPriceText={perPriceText}
             />
 
             {outOfRange && (
@@ -505,7 +577,7 @@ export default function AddLiquidityV3({
                         color: theme.palette.text.secondary,
                       }}
                     >
-                      {priceText}
+                      {perPriceText}
                     </Box>
                   }
                 />

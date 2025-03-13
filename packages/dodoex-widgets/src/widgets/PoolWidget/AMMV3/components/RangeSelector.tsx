@@ -1,7 +1,6 @@
 import { Box } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
-import { TokenInfo } from '../../../../hooks/Token';
 import { Bound } from '../types';
 import StepCounter from './InputStepCounter';
 
@@ -14,9 +13,7 @@ export interface RangeSelectorProps {
   getIncrementUpper: () => string;
   onLeftRangeInput: (typedValue: string) => void;
   onRightRangeInput: (typedValue: string) => void;
-  mint1: Maybe<TokenInfo>;
-  mint2: Maybe<TokenInfo>;
-  feeAmount?: number;
+  perPriceText: string;
   ticksAtLimit: { [bound in Bound]?: boolean | undefined };
 }
 
@@ -29,9 +26,7 @@ export const RangeSelector = ({
   getIncrementLower,
   getDecrementUpper,
   getIncrementUpper,
-  mint1,
-  mint2,
-  feeAmount,
+  perPriceText,
   ticksAtLimit,
 }: RangeSelectorProps) => {
   const leftPrice = priceLower;
@@ -55,11 +50,8 @@ export const RangeSelector = ({
         increment={getIncrementLower}
         decrementDisabled={leftPrice === undefined || ticksAtLimit[Bound.LOWER]}
         incrementDisabled={leftPrice === undefined || ticksAtLimit[Bound.LOWER]}
-        feeAmount={feeAmount}
-        label={leftPrice ? `${mint2?.symbol}` : '-'}
         title={<Trans>Low price</Trans>}
-        tokenA={mint1?.symbol}
-        tokenB={mint2?.symbol}
+        perPriceText={perPriceText}
       />
 
       <StepCounter
@@ -75,11 +67,8 @@ export const RangeSelector = ({
         decrementDisabled={
           rightPrice === undefined || ticksAtLimit[Bound.UPPER]
         }
-        feeAmount={feeAmount}
-        label={rightPrice ? `${mint2?.symbol}` : '-'}
-        tokenA={mint1?.symbol}
-        tokenB={mint2?.symbol}
         title={<Trans>High price</Trans>}
+        perPriceText={perPriceText}
       />
     </Box>
   );

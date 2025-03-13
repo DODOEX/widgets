@@ -150,8 +150,8 @@ export function getPoolFeeRate({
   mtFeeRate,
 }: {
   type: PoolType;
-  lpFeeRate: string;
-  mtFeeRate: string;
+  lpFeeRate: string | number;
+  mtFeeRate: string | number;
 }) {
   const isAMMV3 = type === 'SVM_AMMV3';
   return isAMMV3

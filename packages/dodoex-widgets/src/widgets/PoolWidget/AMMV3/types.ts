@@ -48,8 +48,8 @@ export interface PoolInfoI extends ApiV3PoolInfoConcentratedItem {
 
 export interface PositionI {
   poolInfo: PoolInfoI;
-  tickUpper: number;
   tickLower: number;
+  tickUpper: number;
   tickLowerPrice: BigNumber | undefined;
   tickUpperPrice: BigNumber | undefined;
   liquidity: BigNumber;

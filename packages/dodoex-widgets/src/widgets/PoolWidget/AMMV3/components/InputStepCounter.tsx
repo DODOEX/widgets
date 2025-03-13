@@ -1,8 +1,6 @@
 import { Box, Button, useTheme } from '@dodoex/components';
-import { Trans } from '@lingui/macro';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { NumberInput } from '../../../../components/Swap/components/TokenCard/NumberInput';
-import { FeeAmount } from '../sdks/v3-sdk/constants';
 
 interface StepCounterProps {
   value: string;
@@ -11,12 +9,9 @@ interface StepCounterProps {
   increment: () => string;
   decrementDisabled?: boolean;
   incrementDisabled?: boolean;
-  feeAmount?: FeeAmount;
-  label?: string;
   locked?: boolean; // disable input
   title: ReactNode;
-  tokenA?: string;
-  tokenB?: string;
+  perPriceText: string;
 }
 
 const StepCounter = ({
@@ -28,29 +23,20 @@ const StepCounter = ({
   locked,
   onUserInput,
   title,
-  tokenA,
-  tokenB,
+  perPriceText,
 }: StepCounterProps) => {
   const theme = useTheme();
-
-  //  for focus state, styled components doesnt let you select input parent container
-  const [active, setActive] = useState(false);
 
   // let user type value and only update parent value on blur
   const [localValue, setLocalValue] = useState('');
   const [useLocalValue, setUseLocalValue] = useState(false);
 
-  // animation if parent value updates local value
-  const [pulsing, setPulsing] = useState<boolean>(false);
-
   const handleOnFocus = () => {
     setUseLocalValue(true);
-    setActive(true);
   };
 
   const handleOnBlur = useCallback(() => {
     setUseLocalValue(false);
-    setActive(false);
     onUserInput(localValue); // trigger update on parent value
   }, [localValue, onUserInput]);
 
@@ -69,10 +55,6 @@ const StepCounter = ({
     if (localValue !== value && !useLocalValue) {
       setTimeout(() => {
         setLocalValue(value); // reset local value to match parent
-        setPulsing(true); // trigger animation
-        setTimeout(function () {
-          setPulsing(false);
-        }, 1800);
       }, 0);
     }
   }, [localValue, useLocalValue, value]);
@@ -121,9 +103,7 @@ const StepCounter = ({
               color: theme.palette.text.secondary,
             }}
           >
-            <Trans>
-              {tokenB} per {tokenA}
-            </Trans>
+            {perPriceText}
           </Box>
           <NumberInput
             sx={{

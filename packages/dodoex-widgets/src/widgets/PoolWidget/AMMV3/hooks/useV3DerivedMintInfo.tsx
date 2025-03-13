@@ -5,6 +5,7 @@ import {
   MAX_TICK,
   MIN_SQRT_PRICE_X64,
   MIN_TICK,
+  Percent,
   PoolUtils,
   SqrtPriceMath,
   toApiV3Token,
@@ -32,10 +33,12 @@ import { useTokenBalance } from './useTokenBalance';
 export function useV3DerivedMintInfo({
   state,
   existingPosition,
+  slipperValue,
 }: {
   state: StateProps;
   // override for existing position
   existingPosition?: PositionI;
+  slipperValue: number;
 }) {
   const { account, chainId } = useWalletInfo();
   const raydium = useRaydiumSDKContext();
@@ -64,6 +67,9 @@ export function useV3DerivedMintInfo({
       ? [mint2, mint1]
       : [mint1, mint2];
   }, [mint1, mint2]);
+
+  const dependentField =
+    independentField === Field.DEPOSIT_1 ? Field.DEPOSIT_2 : Field.DEPOSIT_1;
 
   const [deposit1, deposit2] = useMemo(() => {
     if (!mintA || !mintB) {
@@ -242,7 +248,7 @@ export function useV3DerivedMintInfo({
         tickCurrent,
         mintAmountA: 0,
         mintAmountB: 0,
-        feeRate: 0,
+        feeRate: feeConfig.tradeFeeRate,
         openTime: '',
         tvl: 0,
         day: {
@@ -356,15 +362,18 @@ export function useV3DerivedMintInfo({
                 baseIn,
               }).tick
             : undefined,
-      [Bound.UPPER]: rightRangeTypedValueBN
-        ? getPriceAndTick({
-            mintDecimalsA: mintA.decimals,
-            mintDecimalsB: mintB.decimals,
-            feeAmount,
-            price: rightRangeTypedValueBN,
-            baseIn,
-          }).tick
-        : undefined,
+      [Bound.UPPER]:
+        typeof rightRangeTypedValue === 'boolean'
+          ? tickSpaceLimits[Bound.UPPER]
+          : rightRangeTypedValueBN
+            ? getPriceAndTick({
+                mintDecimalsA: mintA.decimals,
+                mintDecimalsB: mintB.decimals,
+                feeAmount,
+                price: rightRangeTypedValueBN,
+                baseIn,
+              }).tick
+            : undefined,
     };
   }, [
     existingPosition,
@@ -456,29 +465,57 @@ export function useV3DerivedMintInfo({
     //   dependentField === Field.MINT_2 ? [mint1, mint2] : [mint2, mint1];
 
     async function computeDependentAmount() {
-      if (!raydium || !poolInfo || tickLower == null || tickUpper == null) {
-        return;
-      }
+      try {
+        if (!raydium || !poolInfo || tickLower == null || tickUpper == null) {
+          return;
+        }
 
-      const epochInfo = await raydium.fetchEpochInfo();
-      const res = await PoolUtils.getLiquidityAmountOutFromAmountIn({
-        poolInfo: poolInfo,
-        slippage: 0,
-        inputA: true,
-        tickUpper: Math.max(tickLower, tickUpper),
-        tickLower: Math.min(tickLower, tickUpper),
-        amount: new BN(
-          new Decimal(typedValue || '0')
-            .mul(10 ** poolInfo.mintA.decimals)
-            .toFixed(0),
-        ),
-        add: true,
-        amountHasFee: true,
-        epochInfo: epochInfo,
-      });
+        console.log('tickLower', tickLower);
+        console.log('tickUpper', tickUpper);
+        console.log('typedValue', typedValue);
+        console.log('slipperValue', slipperValue);
+        console.log('poolInfo', poolInfo);
+        const epochInfo = await raydium.fetchEpochInfo();
+        const res = await PoolUtils.getLiquidityAmountOutFromAmountIn({
+          poolInfo: poolInfo,
+          slippage: slipperValue,
+          inputA: true,
+          tickLower: Math.min(tickLower, tickUpper),
+          tickUpper: Math.max(tickLower, tickUpper),
+          amount: new BN(
+            new Decimal(typedValue || '0')
+              .mul(10 ** poolInfo.mintA.decimals)
+              .toFixed(0),
+          ),
+          add: true,
+          amountHasFee: true,
+          epochInfo: epochInfo,
+        });
 
-      if (mounted) {
-        console.log('res', res);
+        if (mounted) {
+          console.log(
+            'res getLiquidityAmountOutFromAmountIn',
+            JSON.stringify(res),
+          );
+          console.log(
+            'res amountSlippageA',
+            res.amountSlippageA.amount.toString(),
+          );
+          console.log(
+            'res amountSlippageB',
+            res.amountSlippageB.amount.toString(),
+          );
+          if (!res.amountSlippageB.amount) {
+            return;
+          }
+          setDependentAmount(
+            new BigNumber(res.amountSlippageB.amount.toString())
+              .div(new BigNumber(10 ** poolInfo.mintB.decimals))
+              .dp(poolInfo.mintB.decimals, BigNumber.ROUND_UP),
+          );
+        }
+      } catch (error) {
+        console.log('error', error);
       }
     }
 
@@ -487,7 +524,7 @@ export function useV3DerivedMintInfo({
     return () => {
       mounted = false;
     };
-  }, [poolInfo, raydium, tickLower, tickUpper, typedValue]);
+  }, [poolInfo, raydium, slipperValue, tickLower, tickUpper, typedValue]);
 
   const parsedAmounts: {
     [field in Field]: BigNumber | undefined;
@@ -560,40 +597,48 @@ export function useV3DerivedMintInfo({
   useEffect(() => {
     let mounted = true;
     async function computeDependentAmount() {
-      if (!raydium || !poolInfo || tickLower == null || tickUpper == null) {
-        return;
-      }
+      try {
+        if (!raydium || !poolInfo || tickLower == null || tickUpper == null) {
+          return;
+        }
 
-      const epochInfo = await raydium.fetchEpochInfo();
-      const res = await PoolUtils.getLiquidityAmountOutFromAmountIn({
-        poolInfo: poolInfo,
-        slippage: 0,
-        inputA: true,
-        tickUpper: Math.max(tickLower, tickUpper),
-        tickLower: Math.min(tickLower, tickUpper),
-        amount: new BN(
-          new Decimal(typedValue || '0')
-            .mul(10 ** poolInfo.mintA.decimals)
-            .toFixed(0),
-        ),
-        add: true,
-        amountHasFee: true,
-        epochInfo: epochInfo,
-      });
-
-      if (mounted) {
-        console.log('res', res);
-        pricesAtTicks;
-        setPosition({
-          poolInfo,
-          tickLower,
-          tickUpper,
-          tickLowerPrice: lowerPrice,
-          tickUpperPrice: upperPrice,
-          liquidity: new BigNumber(res.liquidity.toString()),
-          amountA: new BigNumber(res.amountA.toString()),
-          amountB: new BigNumber(res.amountB.toString()),
+        const epochInfo = await raydium.fetchEpochInfo();
+        const res = await PoolUtils.getLiquidityAmountOutFromAmountIn({
+          poolInfo: poolInfo,
+          slippage: slipperValue,
+          inputA: true,
+          tickLower: Math.min(tickLower, tickUpper),
+          tickUpper: Math.max(tickLower, tickUpper),
+          amount: new BN(
+            new Decimal(typedValue || '0')
+              .mul(10 ** poolInfo.mintA.decimals)
+              .toFixed(0),
+          ),
+          add: true,
+          amountHasFee: true,
+          epochInfo: epochInfo,
         });
+
+        if (mounted) {
+          console.log('res getLiquidityAmountOutFromAmountIn', res);
+          pricesAtTicks;
+          setPosition({
+            poolInfo,
+            tickLower,
+            tickUpper,
+            tickLowerPrice: lowerPrice,
+            tickUpperPrice: upperPrice,
+            liquidity: new BigNumber(res.liquidity.toString()),
+            amountA: new BigNumber(res.amountSlippageA.amount.toString())
+              .div(new BigNumber(10 ** poolInfo.mintA.decimals))
+              .dp(poolInfo.mintA.decimals, BigNumber.ROUND_UP),
+            amountB: new BigNumber(res.amountSlippageB.amount.toString())
+              .div(new BigNumber(10 ** poolInfo.mintB.decimals))
+              .dp(poolInfo.mintB.decimals, BigNumber.ROUND_UP),
+          });
+        }
+      } catch (error) {
+        console.log('error', error);
       }
     }
 
@@ -607,6 +652,7 @@ export function useV3DerivedMintInfo({
     poolInfo,
     pricesAtTicks,
     raydium,
+    slipperValue,
     tickLower,
     tickUpper,
     typedValue,
@@ -652,7 +698,7 @@ export function useV3DerivedMintInfo({
   return {
     mintA,
     mintB,
-    dependentField: independentField,
+    dependentField,
     mints: {
       [Field.DEPOSIT_1]: deposit1,
       [Field.DEPOSIT_2]: deposit2,
@@ -675,5 +721,6 @@ export function useV3DerivedMintInfo({
     depositBDisabled,
     ticksAtLimit,
     isTaxed,
+    poolKeys: poolIsNoExisted ? undefined : pool?.poolKeys,
   };
 }

@@ -58,6 +58,7 @@ export const PositionSelectedRangePreview = ({
         <RateToggle
           mintA={mintA}
           mintB={mintB}
+          selectedMintIndex={0}
           handleRateToggle={handleRateChange}
         />
       </RowBetween>
