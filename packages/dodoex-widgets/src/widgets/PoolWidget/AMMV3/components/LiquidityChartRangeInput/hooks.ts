@@ -4,7 +4,7 @@ import {
   TickProcessed,
   usePoolActiveLiquidity,
 } from '../../hooks/usePoolTickData';
-import { FeeAmount } from '../../sdks/v3-sdk';
+import { FeeAmount } from '../../sdks/v3-sdk/constants';
 import { ChartEntry } from './types';
 
 export function useDensityChartData({

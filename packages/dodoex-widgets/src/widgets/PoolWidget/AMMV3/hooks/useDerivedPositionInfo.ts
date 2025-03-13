@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import { TokenInfo } from '../../../../hooks/Token';
 import { usePool } from './usePool';
-import { Pool, Position as V3Position } from '../sdks/v3-sdk';
+import { Pool } from '../sdks/v3-sdk/entities/pool';
+import { Position as V3Position } from '../sdks/v3-sdk/entities/position';
 import { PositionDetails } from '../types';
 import { buildCurrency } from '../utils';
 

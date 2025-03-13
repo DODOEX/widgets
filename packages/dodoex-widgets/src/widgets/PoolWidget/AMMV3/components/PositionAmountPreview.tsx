@@ -14,7 +14,8 @@ import {
   Token,
   V3_CORE_FACTORY_ADDRESSES,
 } from '../sdks/sdk-core';
-import { Pool, Position } from '../sdks/v3-sdk';
+import { Pool } from '../sdks/v3-sdk/entities/pool';
+import { Position } from '../sdks/v3-sdk/entities/position';
 import RangeBadge from './Badge/RangeBadge';
 
 const BalanceItem = ({

@@ -3,11 +3,11 @@ import {
   Clmm,
 } from '@raydium-io/raydium-sdk-v2';
 import BigNumber from 'bignumber.js';
-import { FeeAmount } from './sdks/v3-sdk';
+import { FeeAmount } from './sdks/v3-sdk/constants';
 
 export enum Field {
-  MINT_1 = 'MINT_1',
-  MINT_2 = 'MINT_2',
+  DEPOSIT_1 = 'DEPOSIT_1',
+  DEPOSIT_2 = 'DEPOSIT_2',
 }
 
 export enum Bound {

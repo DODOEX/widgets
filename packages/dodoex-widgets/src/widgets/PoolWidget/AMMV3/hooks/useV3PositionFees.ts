@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { useQuery } from '@tanstack/react-query';
 import { ammV3Api } from '../../utils';
 import { ChainId, Currency, CurrencyAmount } from '../sdks/sdk-core';
-import { Pool } from '../sdks/v3-sdk';
+import { Pool } from '../sdks/v3-sdk/entities/pool';
 import { useV3NFTPositionManagerContract } from './useContract';
 
 // compute current + counterfactual fees for a v3 position

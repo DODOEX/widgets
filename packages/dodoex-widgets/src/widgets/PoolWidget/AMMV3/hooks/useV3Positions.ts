@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { ammV3Api } from '../../utils';
 import { PositionDetails } from '../types';
 import { useV3NFTPositionManagerContract } from './useContract';
-import { FeeAmount } from '../sdks/v3-sdk';
+import { FeeAmount } from '../sdks/v3-sdk/constants';
 
 interface UseV3PositionsResults {
   loading: boolean;

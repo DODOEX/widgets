@@ -2,7 +2,7 @@ import { Box, Button, useTheme } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { NumberInput } from '../../../../components/Swap/components/TokenCard/NumberInput';
-import { FeeAmount } from '../sdks/v3-sdk';
+import { FeeAmount } from '../sdks/v3-sdk/constants';
 
 interface StepCounterProps {
   value: string;

@@ -1,5 +1,5 @@
 import { ChainId } from '@dodoex/api';
-import { SoonSwapWidget, TokenInfo } from '@dodoex/widgets';
+import { Swap, TokenInfo, Widget } from '@dodoex/widgets';
 import { NATIVE_MINT } from '@solana/spl-token';
 import { PublicKey } from '@solana/web3.js';
 import { ComponentMeta } from '@storybook/react';
@@ -7,7 +7,7 @@ import { ComponentMeta } from '@storybook/react';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Widgets/SoonSwap',
-  component: SoonSwapWidget,
+  component: Swap,
   argTypes: {
     defaultChainId: ChainId.SOON_TESTNET,
     colorMode: {
@@ -73,9 +73,18 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof SoonSwapWidget>;
+} as ComponentMeta<typeof Swap>;
 
-export const Primary = (args) => <SoonSwapWidget {...args} />;
+export const Primary = (props: any) => {
+  const { apiKey, ...other } = props;
+
+  return (
+    <Widget {...other} apikey={apiKey}>
+      <Swap />
+    </Widget>
+  );
+};
+
 Primary.args = {
   apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
   apiDomain: process.env.STORYBOOK_API_DOMAIN,

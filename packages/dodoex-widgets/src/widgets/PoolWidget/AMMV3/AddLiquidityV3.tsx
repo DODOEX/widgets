@@ -62,7 +62,8 @@ export default function AddLiquidityV3({
     mint1: undefined,
     mint2: undefined,
     feeAmount: params?.fee ? Number(params?.fee) : undefined,
-    independentField: Field.MINT_1,
+    selectedMintIndex: 0,
+    independentField: Field.DEPOSIT_1,
     typedValue: '',
     startPriceTypedValue: '1',
     leftRangeTypedValue: '',
@@ -100,9 +101,9 @@ export default function AddLiquidityV3({
     pricesAtTicks,
     pricesAtLimit,
     parsedAmounts,
-    mintBalances,
+    depositBalances,
     position,
-    noLiquidity,
+    poolIsNoExisted,
     mints,
     errorMessage,
     invalidPool,
@@ -110,7 +111,6 @@ export default function AddLiquidityV3({
     outOfRange,
     depositADisabled,
     depositBDisabled,
-    invertPrice,
     ticksAtLimit,
   } = useV3DerivedMintInfo({ state });
 
@@ -139,12 +139,12 @@ export default function AddLiquidityV3({
 
   // get the max amounts user can add
   const maxAmounts: { [field in Field]?: BigNumber } = [
-    Field.MINT_1,
-    Field.MINT_2,
+    Field.DEPOSIT_1,
+    Field.DEPOSIT_2,
   ].reduce((accumulator, field) => {
     return {
       ...accumulator,
-      [field]: maxAmountSpend(mintBalances[field]),
+      [field]: maxAmountSpend(depositBalances[field]),
     };
   }, {});
 
@@ -170,14 +170,14 @@ export default function AddLiquidityV3({
   const handleSetFullRange = useCallback(() => {
     getSetFullRange();
 
-    const minPrice = pricesAtLimit[Bound.LOWER];
-    if (minPrice) {
-      onLeftRangeInput(minPrice.dp(5).toString());
-    }
-    const maxPrice = pricesAtLimit[Bound.UPPER];
-    if (maxPrice) {
-      onRightRangeInput(maxPrice.dp(5).toString());
-    }
+    // const minPrice = pricesAtLimit[Bound.LOWER];
+    // if (minPrice) {
+    //   onLeftRangeInput(minPrice.dp(5).toString());
+    // }
+    // const maxPrice = pricesAtLimit[Bound.UPPER];
+    // if (maxPrice) {
+    //   onRightRangeInput(maxPrice.dp(5).toString());
+    // }
   }, [getSetFullRange, onLeftRangeInput, onRightRangeInput, pricesAtLimit]);
 
   const onAddMutation = useMutation({
@@ -236,6 +236,12 @@ export default function AddLiquidityV3({
     },
   });
 
+  const priceText =
+    mintA && mintB
+      ? state.selectedMintIndex === 0
+        ? `${mintB?.symbol} per ${mintA?.symbol}`
+        : `${mintA?.symbol} per ${mintB?.symbol}`
+      : '-';
   return (
     <WidgetContainer>
       <Box
@@ -397,19 +403,21 @@ export default function AddLiquidityV3({
                   <RateToggle
                     mintA={mintA}
                     mintB={mintB}
+                    selectedMintIndex={state.selectedMintIndex}
                     handleRateToggle={() => {
-                      if (
-                        !ticksAtLimit[Bound.LOWER] &&
-                        !ticksAtLimit[Bound.UPPER]
-                      ) {
-                        onLeftRangeInput(priceLower?.dp(6).toString() ?? '');
-                        onRightRangeInput(priceUpper?.dp(6).toString() ?? '');
-                        onField1Input(formattedAmounts[Field.MINT_2] ?? '');
-                      }
                       dispatch({
-                        type: Types.ToggleRate,
-                        payload: undefined,
+                        type: Types.UpdateSelectedMintIndex,
+                        payload: state.selectedMintIndex === 0 ? 1 : 0,
                       });
+
+                      // if (
+                      //   !ticksAtLimit[Bound.LOWER] &&
+                      //   !ticksAtLimit[Bound.UPPER]
+                      // ) {
+                      //   onLeftRangeInput(priceLower?.dp(6).toString() ?? '');
+                      //   onRightRangeInput(priceUpper?.dp(6).toString() ?? '');
+                      //   onField1Input(formattedAmounts[Field.MINT_2] ?? '');
+                      // }
                     }}
                     sx={
                       isMobile
@@ -438,6 +446,7 @@ export default function AddLiquidityV3({
               feeAmount={state.feeAmount}
               ticksAtLimit={ticksAtLimit}
             />
+
             {outOfRange && (
               <YellowCard>
                 {t`Your position will not earn fees or be used in trades until the market price moves into your range.`}
@@ -450,7 +459,7 @@ export default function AddLiquidityV3({
             )}
           </DynamicSection>
 
-          {noLiquidity ? (
+          {poolIsNoExisted ? (
             <DynamicSection>
               <Box
                 sx={{
@@ -489,6 +498,16 @@ export default function AddLiquidityV3({
                   }}
                   value={startPriceTypedValue}
                   onChange={onStartPriceInput}
+                  suffix={
+                    <Box
+                      sx={{
+                        typography: 'h6',
+                        color: theme.palette.text.secondary,
+                      }}
+                    >
+                      {priceText}
+                    </Box>
+                  }
                 />
               </Box>
             </DynamicSection>
@@ -531,7 +550,7 @@ export default function AddLiquidityV3({
             disabled={
               invalidPool ||
               invalidRange ||
-              (noLiquidity && !startPriceTypedValue)
+              (poolIsNoExisted && !startPriceTypedValue)
             }
           >
             <Box
@@ -546,20 +565,20 @@ export default function AddLiquidityV3({
             </Box>
             <Box>
               <CurrencyInputPanel
-                value={formattedAmounts[Field.MINT_1]}
+                value={formattedAmounts[Field.DEPOSIT_1]}
                 onUserInput={onField1Input}
-                maxAmount={maxAmounts[Field.MINT_1]}
-                balance={mintBalances[Field.MINT_1]}
-                mint={mints[Field.MINT_1] ?? null}
+                maxAmount={maxAmounts[Field.DEPOSIT_1]}
+                balance={depositBalances[Field.DEPOSIT_1]}
+                mint={mints[Field.DEPOSIT_1] ?? null}
                 locked={depositADisabled}
               />
               <CardPlusConnected />
               <CurrencyInputPanel
-                value={formattedAmounts[Field.MINT_2]}
+                value={formattedAmounts[Field.DEPOSIT_2]}
                 onUserInput={onField2Input}
-                maxAmount={maxAmounts[Field.MINT_2]}
-                balance={mintBalances[Field.MINT_2]}
-                mint={mints[Field.MINT_2] ?? null}
+                maxAmount={maxAmounts[Field.DEPOSIT_2]}
+                balance={depositBalances[Field.DEPOSIT_2]}
+                mint={mints[Field.DEPOSIT_2] ?? null}
                 locked={depositBDisabled}
               />
             </Box>
@@ -585,7 +604,6 @@ export default function AddLiquidityV3({
         >
           <Buttons
             chainId={chainId}
-            parsedAmounts={parsedAmounts}
             isValid={isValid}
             errorMessage={errorMessage}
             setShowConfirm={setShowConfirm}

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { TokenInfo } from '../../hooks/Token';
 import { formatTokenAmountNumber } from '../../utils';
 import { FEE_AMOUNT_DETAIL } from './AMMV3/components/shared';
-import { FeeAmount } from './AMMV3/sdks/v3-sdk';
+import { FeeAmount } from './AMMV3/sdks/v3-sdk/constants';
 import { OperatePool } from './PoolOperate/types';
 
 export const poolApi = new PoolApi();

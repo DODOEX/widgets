@@ -5,7 +5,7 @@ import { formatTokenAmountNumber } from '../../../../utils';
 import useIsTickAtLimit from '../hooks/useIsTickAtLimit';
 import { usePool } from '../hooks/usePool';
 import { Currency, Price, Token } from '../sdks/sdk-core';
-import { Position as V3Position } from '../sdks/v3-sdk';
+import { Position as V3Position } from '../sdks/v3-sdk/entities/position';
 import { Bound } from '../types';
 import { PositionDetails } from '../types';
 import { formatTickPrice } from '../utils/formatTickPrice';

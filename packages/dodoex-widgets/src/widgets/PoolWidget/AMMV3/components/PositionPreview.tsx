@@ -66,7 +66,7 @@ export const PositionPreview = ({
             <RowFixed>
               <TokenLogo
                 address={mintA.address}
-                chainId={mintAChainId}
+                chainId={mintA.chainId}
                 noShowChain
                 width={32}
                 height={32}
@@ -97,7 +97,7 @@ export const PositionPreview = ({
             <RowFixed>
               <TokenLogo
                 address={mintB.address}
-                chainId={chainId}
+                chainId={mintB.chainId}
                 noShowChain
                 width={32}
                 height={32}

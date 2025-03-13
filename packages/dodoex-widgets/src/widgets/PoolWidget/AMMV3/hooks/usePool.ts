@@ -2,7 +2,8 @@ import { ChainId } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useRaydiumSDKContext } from '../../../../hooks/raydium-sdk-V2/RaydiumSDKContext';
-import { FeeAmount, computePoolAddress } from '../sdks/v3-sdk';
+import { FeeAmount } from '../sdks/v3-sdk/constants';
+import { computePoolAddress } from '../sdks/v3-sdk/utils/computePoolAddress';
 import { PoolInfoT } from '../types';
 
 export enum PoolState {
@@ -43,20 +44,27 @@ export function usePool(
         return null;
       }
 
-      const { poolInfo, poolKeys, computePoolInfo, tickData } =
-        await raydium.clmm.getPoolInfoFromRpc(id);
+      try {
+        console.log('getPoolInfoFromRpc id', id);
+        const { poolInfo, poolKeys, computePoolInfo, tickData } =
+          await raydium.clmm.getPoolInfoFromRpc(id);
 
-      console.log('poolInfo', poolInfo);
-      console.log('poolKeys', poolKeys);
-      console.log('computePoolInfo', computePoolInfo);
-      console.log('tickData', tickData);
+        console.log('getPoolInfoFromRpc poolInfo', poolInfo);
+        console.log('getPoolInfoFromRpc poolKeys', poolKeys);
+        console.log('getPoolInfoFromRpc computePoolInfo', computePoolInfo);
+        console.log('getPoolInfoFromRpc tickData', tickData);
 
-      return {
-        poolInfo,
-        poolKeys,
-        computePoolInfo,
-        tickData,
-      };
+        return {
+          poolInfo,
+          poolKeys,
+          computePoolInfo,
+          tickData,
+        };
+      } catch (error) {
+        // 如果 pool 不存在，getPoolInfoFromRpc api 会报错
+        console.error('getPoolInfoFromRpc error', error);
+        return null;
+      }
     },
   });
 

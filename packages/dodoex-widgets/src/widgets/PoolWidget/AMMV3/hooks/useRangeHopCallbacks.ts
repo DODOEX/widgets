@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js';
 import { useCallback } from 'react';
 import { Actions, StateProps, Types } from '../reducer';
-import { TICK_SPACINGS } from '../sdks/v3-sdk';
+import { TICK_SPACINGS } from '../sdks/v3-sdk/constants';
 import { PoolInfoI } from '../types';
-import { tickToPrice } from '../utils/tickToPrice';
+import { getTickPrice } from '../utils/getTickPrice';
 
 export function useRangeHopCallbacks({
   tickLower,
@@ -33,7 +33,7 @@ export function useRangeHopCallbacks({
       return '';
     }
 
-    const newPrice = tickToPrice({
+    const newPrice = getTickPrice({
       decimalsA,
       decimalsB,
       tick: nextTick - TICK_SPACINGS[feeAmount],
@@ -56,7 +56,7 @@ export function useRangeHopCallbacks({
       return '';
     }
 
-    const newPrice = tickToPrice({
+    const newPrice = getTickPrice({
       decimalsA,
       decimalsB,
       tick: nextTick + TICK_SPACINGS[feeAmount],
@@ -79,7 +79,7 @@ export function useRangeHopCallbacks({
       return '';
     }
 
-    const newPrice = tickToPrice({
+    const newPrice = getTickPrice({
       decimalsA,
       decimalsB,
       tick: nextTick - TICK_SPACINGS[feeAmount],
@@ -102,7 +102,7 @@ export function useRangeHopCallbacks({
       return '';
     }
 
-    const newPrice = tickToPrice({
+    const newPrice = getTickPrice({
       decimalsA,
       decimalsB,
       tick: nextTick + TICK_SPACINGS[feeAmount],

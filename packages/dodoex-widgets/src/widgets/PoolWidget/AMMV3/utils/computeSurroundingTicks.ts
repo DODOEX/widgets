@@ -1,9 +1,8 @@
 import { Ticks } from '@dodoex/api';
 import JSBI from 'jsbi';
-import { TickProcessed } from '../hooks/usePoolTickData';
-import { Token } from '../sdks/sdk-core';
-import { tickToPrice } from '../sdks/v3-sdk';
 import { TokenInfo } from '../../../../hooks/Token';
+import { TickProcessed } from '../hooks/usePoolTickData';
+import { tickToPrice } from '../sdks/v3-sdk/utils/priceTickConversions';
 
 const PRICE_FIXED_DIGITS = 8;
 

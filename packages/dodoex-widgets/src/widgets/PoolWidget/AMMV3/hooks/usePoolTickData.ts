@@ -13,8 +13,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { TokenInfo } from '../../../../hooks/Token/type';
 import { useGraphQLRequests } from '../../../../hooks/useGraphQLRequests';
-import { FeeAmount, TICK_SPACINGS } from '../sdks/v3-sdk';
-import { tickToPrice } from '../utils/tickToPrice';
+import { FeeAmount, TICK_SPACINGS } from '../sdks/v3-sdk/constants';
+import { getTickPrice } from '../utils/getTickPrice';
 import { PoolState, usePool } from './usePool';
 
 const PRICE_FIXED_DIGITS = 8;
@@ -175,7 +175,7 @@ export function usePoolActiveLiquidity(
       };
     }
 
-    const sdkPrice = tickToPrice({
+    const sdkPrice = getTickPrice({
       decimalsA: mint1.decimals,
       decimalsB: mint2.decimals,
       tick: activeTick,

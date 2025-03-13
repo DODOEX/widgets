@@ -1,5 +1,5 @@
 import { TokenInfo } from '../../../hooks/Token/type';
-import { FeeAmount } from './sdks/v3-sdk';
+import { FeeAmount } from './sdks/v3-sdk/constants';
 import { Field, FullRange } from './types';
 
 export interface StateProps {
@@ -20,9 +20,16 @@ export interface StateProps {
    */
   feeAmount: FeeAmount | undefined;
 
+  // 0: mintA, 1: mintB
+  selectedMintIndex: 0 | 1;
+
+  // Starting price: the number of Quote Tokens needed to purchase 1 Base Token.
+  // selectedMintIndex = 0 => the number of mintBs needed to purchase 1 mintA.
+  // selectedMintIndex = 1 => the number of mintAs needed to purchase 1 mintB.
+  readonly startPriceTypedValue: string; // for the case when there's no liquidity
+
   readonly independentField: Field;
   readonly typedValue: string;
-  readonly startPriceTypedValue: string; // for the case when there's no liquidity
   readonly leftRangeTypedValue: string | FullRange;
   readonly rightRangeTypedValue: string | FullRange;
 }
@@ -34,7 +41,7 @@ export enum Types {
   UpdateDefaultMint2,
   UpdateMint1AndClearMint2,
   UpdateFeeAmount,
-  ToggleRate,
+  UpdateSelectedMintIndex,
   setFullRange,
   typeStartPriceInput,
   typeLeftRangeInput,
@@ -49,7 +56,7 @@ type Payload = {
   [Types.UpdateDefaultMint2]: TokenInfo;
   [Types.UpdateMint1AndClearMint2]: TokenInfo;
   [Types.UpdateFeeAmount]: FeeAmount;
-  [Types.ToggleRate]: void;
+  [Types.UpdateSelectedMintIndex]: 0 | 1;
   [Types.setFullRange]: void;
   [Types.typeStartPriceInput]: { typedValue: string };
   [Types.typeLeftRangeInput]: { typedValue: string };
@@ -115,12 +122,10 @@ export function reducer(state: StateProps, action: Actions): StateProps {
       };
     }
 
-    case Types.ToggleRate: {
-      const { mint1, mint2 } = state;
+    case Types.UpdateSelectedMintIndex: {
       return {
         ...state,
-        mint1: mint2,
-        mint2: mint1,
+        selectedMintIndex: action.payload,
       };
     }
 

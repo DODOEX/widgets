@@ -11,13 +11,15 @@ export type { TokenInfo } from './hooks/Token/type';
 export type { Page } from './router';
 
 export { Swap } from './components/Swap';
-export { UnstyleWidget } from './components/Widget';
+export { UnstyleWidget, Widget } from './components/Widget';
 export { MetadataFlag } from './hooks/Submission/types';
 export { PageType, useRouterStore } from './router';
 export { default as AMMV2Create } from './widgets/PoolWidget/AMMV2Create';
 export { default as PoolList } from './widgets/PoolWidget/PoolList';
 
-// export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
+export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
+export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
+export { AMMV3PositionManage } from './widgets/PoolWidget/AMMV3/AMMV3PositionManage';
 
 // export { WIDGET_CLASS_NAME } from './components/Widget';
 
@@ -46,9 +48,6 @@ export { default as PoolList } from './widgets/PoolWidget/PoolList';
 // export { MiningList } from './widgets/MiningWidget/MiningList';
 // export { MiningDetail } from './widgets/MiningWidget/MiningDetail';
 // export { MiningCreate } from './widgets/MiningWidget/MiningCreate';
-
-// export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
-// export { AMMV3PositionManage } from './widgets/PoolWidget/AMMV3/AMMV3PositionManage';
 
 // export { TokenCard } from './components/Swap/components/TokenCard';
 // export { default as TokenLogo } from './components/TokenLogo';

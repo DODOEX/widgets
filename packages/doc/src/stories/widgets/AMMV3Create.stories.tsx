@@ -1,8 +1,7 @@
-import { ChainId, SwapWidgetApi } from '@dodoex/api';
-import { AddLiquidityV3, SwapWidgetProps, Widget } from '@dodoex/widgets';
-import { PublicKey } from '@solana/web3.js';
-import React from 'react';
+import { ChainId } from '@dodoex/api';
+import { AddLiquidityV3, Widget } from '@dodoex/widgets';
 import { NATIVE_MINT } from '@solana/spl-token';
+import { PublicKey } from '@solana/web3.js';
 
 export default {
   title: 'Widgets/AddLiquidityV3',
@@ -10,27 +9,18 @@ export default {
 };
 
 export const Primary = (props: any) => {
-  const [config, setConfig] = React.useState<SwapWidgetProps>({});
-  const { projectId, apiKey, ...other } = props;
-  React.useEffect(() => {
-    if (projectId && apiKey) {
-      const dodoService = new SwapWidgetApi();
-      dodoService
-        .getConfigSwapWidgetProps(projectId, apiKey)
-        .then(({ swapWidgetProps }) => {
-          setConfig(swapWidgetProps);
-        });
-    }
-  }, [projectId, apiKey]);
+  const { apiKey, ...other } = props;
 
   return (
-    <Widget {...config} {...other} apikey={apiKey}>
+    <Widget {...other} apikey={apiKey}>
       <AddLiquidityV3
         handleGoBack={() => window.alert('handleGoBack')}
         handleGoToPoolList={() => window.alert('handleGoToPoolList')}
         params={{
-          mint1: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
-          mint2: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
+          // mint1: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
+          // mint2: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
+          mint1: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
+          mint2: '36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva',
           fee: '1000',
         }}
       />
@@ -42,6 +32,7 @@ Primary.args = {
   projectId: 'project2',
   apiKey: 'ee53d6b75b12aceed4',
   apiDomain: process.env.STORYBOOK_API_DOMAIN,
+  colorMode: 'dark',
   width: '100%',
   height: '100%',
   noDocumentLink: true,
@@ -68,7 +59,7 @@ Primary.args = {
     {
       decimals: 9,
       name: 'SOON Training Token',
-      address: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
+      address: '',
       symbol: 'TRAINING',
       chainId: ChainId.SOON_TESTNET,
     },
@@ -77,6 +68,20 @@ Primary.args = {
       name: 'SOON Training1 Token',
       address: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
       symbol: 'TRAINING1',
+      chainId: ChainId.SOON_TESTNET,
+    },
+    {
+      decimals: 9,
+      name: '36LzY',
+      address: '36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva',
+      symbol: '36LzY',
+      chainId: ChainId.SOON_TESTNET,
+    },
+    {
+      decimals: 9,
+      name: 'GLfqS',
+      address: 'GLfqSuSUUB6mTA4rfk5BHYbRjQHxYknJu8pSHcMnYgzE',
+      symbol: 'GLfqS',
       chainId: ChainId.SOON_TESTNET,
     },
   ],

@@ -61,6 +61,7 @@ export const RangeSelector = ({
         tokenA={mint1?.symbol}
         tokenB={mint2?.symbol}
       />
+
       <StepCounter
         value={
           ticksAtLimit[Bound.UPPER] ? '∞' : (rightPrice?.dp(8).toString() ?? '')

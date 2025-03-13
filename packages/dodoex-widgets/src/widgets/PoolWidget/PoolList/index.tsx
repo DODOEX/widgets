@@ -6,11 +6,11 @@ import { useUserOptions } from '../../../components/UserOptionsProvider';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-// import { useRouterStore } from '../../../router';
+import { useRouterStore } from '../../../router';
 import { Page, PageType } from '../../../router/types';
-// import { AMMV3PositionManage } from '../AMMV3/AMMV3PositionManage';
-// import { AMMV3PositionsView } from '../AMMV3/AMMV3PositionsView';
-// import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
+import { AMMV3PositionManage } from '../AMMV3/AMMV3PositionManage';
+import { AMMV3PositionsView } from '../AMMV3/AMMV3PositionsView';
+import { FeeAmount } from '../AMMV3/sdks/v3-sdk/constants';
 import PoolOperateDialog, {
   PoolOperate,
   PoolOperateProps,
@@ -188,30 +188,33 @@ export default function PoolList({
             LeftImage={LeftImage}
           />
         )}
-        {operatePool?.pool?.type === 'SVM_AMMV3' &&
-        operatePool.pool.chainId ? //     baseToken={operatePool.pool.baseToken} //   <AMMV3PositionManage // operatePool.pool.liquidityPositions?.[0]?.tokenId ? ( // poolTab === PoolTab.myLiquidity &&
-        //     quoteToken={operatePool.pool.quoteToken}
-        //     feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
-        //     tokenId={operatePool.pool.liquidityPositions[0].tokenId}
-        //     chainId={operatePool.pool.chainId}
-        //     onClose={() => setOperatePool(null)}
-        //   />
-        // ) : (
-        //   <AMMV3PositionsView
-        //     chainId={operatePool.pool.chainId}
-        //     baseToken={operatePool.pool.baseToken}
-        //     quoteToken={operatePool.pool.quoteToken}
-        //     feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
-        //     onClose={() => setOperatePool(null)}
-        //     handleGoToAddLiquidityV3={(params) => {
-        //       useRouterStore.getState().push({
-        //         type: PageType.createPoolAMMV3,
-        //         params,
-        //       });
-        //     }}
-        //   />
-        // )
-        null : isMobile ? (
+        {operatePool?.pool?.type === 'SVM_AMMV3' && operatePool.pool.chainId ? (
+          poolTab === PoolTab.myLiquidity &&
+          operatePool.pool.liquidityPositions?.[0]?.tokenId ? (
+            <AMMV3PositionManage
+              baseToken={operatePool.pool.baseToken}
+              quoteToken={operatePool.pool.quoteToken}
+              feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
+              tokenId={operatePool.pool.liquidityPositions[0].tokenId}
+              chainId={operatePool.pool.chainId}
+              onClose={() => setOperatePool(null)}
+            />
+          ) : (
+            <AMMV3PositionsView
+              chainId={operatePool.pool.chainId}
+              baseToken={operatePool.pool.baseToken}
+              quoteToken={operatePool.pool.quoteToken}
+              feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
+              onClose={() => setOperatePool(null)}
+              handleGoToAddLiquidityV3={(params) => {
+                useRouterStore.getState().push({
+                  type: PageType.createPoolAMMV3,
+                  params,
+                });
+              }}
+            />
+          )
+        ) : isMobile ? (
           <PoolOperateDialog
             account={account}
             onClose={() => setOperatePool(null)}

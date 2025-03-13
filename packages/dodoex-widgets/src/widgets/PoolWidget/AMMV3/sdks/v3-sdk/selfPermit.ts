@@ -1,7 +1,7 @@
 import { Interface } from '@ethersproject/abi';
 import { BigintIsh, Token } from '../sdk-core';
 import ISelfPermit from '../v3-periphery/artifacts/contracts/ISelfPermit.json';
-import { toHex } from './utils';
+import { toHex } from './utils/calldata';
 
 export interface StandardPermitArguments {
   v: 0 | 1 | 27 | 28;

@@ -18,7 +18,7 @@ export function useV3MintActionHandlers({
       dispatch({
         type: Types.typeInput,
         payload: {
-          field: Field.MINT_1,
+          field: Field.DEPOSIT_1,
           typedValue,
         },
       });
@@ -31,7 +31,7 @@ export function useV3MintActionHandlers({
       dispatch({
         type: Types.typeInput,
         payload: {
-          field: Field.MINT_2,
+          field: Field.DEPOSIT_2,
           typedValue,
         },
       });

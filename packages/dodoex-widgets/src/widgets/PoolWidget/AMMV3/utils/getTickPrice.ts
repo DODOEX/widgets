@@ -1,7 +1,12 @@
 import { SqrtPriceMath } from '@raydium-io/raydium-sdk-v2';
 import BigNumber from 'bignumber.js';
 
-export function tickToPrice({
+/**
+ * @see @raydium-io/raydium-sdk-v2 TickUtils.getTickPrice
+ * @param param0
+ * @returns
+ */
+export function getTickPrice({
   tick,
   decimalsA,
   decimalsB,
@@ -13,10 +18,10 @@ export function tickToPrice({
   if (!decimalsA || !decimalsB || typeof tick !== 'number') {
     return undefined;
   }
-  const sqrtPriceX64 = SqrtPriceMath.getSqrtPriceX64FromTick(tick);
+  const tickSqrtPriceX64 = SqrtPriceMath.getSqrtPriceX64FromTick(tick);
   return new BigNumber(
     SqrtPriceMath.sqrtPriceX64ToPrice(
-      sqrtPriceX64,
+      tickSqrtPriceX64,
       decimalsA,
       decimalsB,
     ).toString(),

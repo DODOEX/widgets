@@ -1,10 +1,7 @@
-import {
-  FeeAmount,
-  TICK_SPACINGS,
-  TickMath,
-  nearestUsableTick,
-} from '../sdks/v3-sdk';
 import { useMemo } from 'react';
+import { FeeAmount, TICK_SPACINGS } from '../sdks/v3-sdk/constants';
+import { nearestUsableTick } from '../sdks/v3-sdk/utils/nearestUsableTick';
+import { TickMath } from '../sdks/v3-sdk/utils/tickMath';
 import { Bound } from '../types';
 
 export default function useIsTickAtLimit(

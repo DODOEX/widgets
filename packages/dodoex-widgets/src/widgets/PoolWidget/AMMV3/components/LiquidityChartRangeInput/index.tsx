@@ -5,7 +5,7 @@ import { ReactNode, useCallback, useMemo } from 'react';
 import { batch } from 'react-redux';
 import { TokenInfo } from '../../../../../hooks/Token/type';
 import { formatTokenAmountNumber } from '../../../../../utils';
-import { FeeAmount } from '../../sdks/v3-sdk';
+import { FeeAmount } from '../../sdks/v3-sdk/constants';
 import { Bound } from '../../types';
 import { AutoColumn, ColumnCenter } from '../widgets';
 import { Chart } from './Chart';

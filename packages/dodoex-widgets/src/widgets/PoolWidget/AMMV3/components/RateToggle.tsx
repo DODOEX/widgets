@@ -4,6 +4,7 @@ import { TokenInfo } from '../../../../hooks/Token/type';
 export interface RateToggleProps {
   mintA: TokenInfo;
   mintB: TokenInfo;
+  selectedMintIndex: 0 | 1;
   handleRateToggle: () => void;
   sx?: BoxProps['sx'];
 }
@@ -11,12 +12,11 @@ export interface RateToggleProps {
 export const RateToggle = ({
   mintA,
   mintB,
+  selectedMintIndex,
   handleRateToggle,
   sx,
 }: RateToggleProps) => {
   const theme = useTheme();
-
-  const isSorted = true;
 
   return (
     <Box
@@ -41,54 +41,36 @@ export const RateToggle = ({
           },
         }}
       >
-        <Box
-          sx={{
-            flexGrow: 1,
-            flexShrink: 1,
-            flexBasis: '50%',
-            px: 12,
-            py: 4,
-            borderRadius: 7,
-            textAlign: 'center',
-            typography: 'h6',
-            whiteSpace: 'nowrap',
-            ...(isSorted
-              ? {
-                  color: theme.palette.text.primary,
-                  backgroundColor: theme.palette.background.paper,
-                }
-              : {
-                  color: theme.palette.text.secondary,
-                  backgroundColor: 'transparent',
-                }),
-          }}
-        >
-          {mintA.symbol}
-        </Box>
-        <Box
-          sx={{
-            flexGrow: 1,
-            flexShrink: 1,
-            flexBasis: '50%',
-            px: 12,
-            py: 4,
-            borderRadius: 7,
-            textAlign: 'center',
-            typography: 'h6',
-            whiteSpace: 'nowrap',
-            ...(!isSorted
-              ? {
-                  color: theme.palette.text.primary,
-                  backgroundColor: theme.palette.background.paper,
-                }
-              : {
-                  color: theme.palette.text.secondary,
-                  backgroundColor: 'transparent',
-                }),
-          }}
-        >
-          {mintB.symbol}
-        </Box>
+        {[mintA, mintB].map((mint, index) => {
+          const isSelected = selectedMintIndex === index;
+          return (
+            <Box
+              key={mint.address}
+              sx={{
+                flexGrow: 1,
+                flexShrink: 1,
+                flexBasis: '50%',
+                px: 12,
+                py: 4,
+                borderRadius: 7,
+                textAlign: 'center',
+                typography: 'h6',
+                whiteSpace: 'nowrap',
+                ...(isSelected
+                  ? {
+                      color: theme.palette.text.primary,
+                      backgroundColor: theme.palette.background.paper,
+                    }
+                  : {
+                      color: theme.palette.text.secondary,
+                      backgroundColor: 'transparent',
+                    }),
+              }}
+            >
+              {mint.symbol}
+            </Box>
+          );
+        })}
       </Box>
     </Box>
   );
