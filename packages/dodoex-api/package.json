@@ -63,7 +63,7 @@
     "@ethersproject/properties": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@ethersproject/web": "^5.7.1",
-    "@solana/spl-token": "^0.4.9",
+    "@solana/spl-token": "^0.4.13",
     "cross-fetch": "^4.0.0",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",

@@ -1,8 +1,13 @@
 import { CLMM } from '@dodoex/api';
 import { alpha, Box, Button, ButtonBase, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import { TxVersion } from '@raydium-io/raydium-sdk-v2';
-import { PublicKey } from '@solana/web3.js';
+import {
+  getRecentBlockHash,
+  OpenPositionFromBaseExtInfo,
+  TxBuilder,
+  TxVersion,
+} from '@raydium-io/raydium-sdk-v2';
+import { PublicKey, Signer, Transaction } from '@solana/web3.js';
 import { useMutation } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
@@ -16,6 +21,7 @@ import { clmmConfigMap } from '../../../hooks/raydium-sdk-V2/common/programId';
 import { useRaydiumSDKContext } from '../../../hooks/raydium-sdk-V2/RaydiumSDKContext';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useSubmission } from '../../../hooks/Submission';
+import { MetadataFlag } from '../../../hooks/Submission/types';
 import { formatTokenAmountNumber } from '../../../utils';
 import SlippageSetting, {
   useSlipper,
@@ -36,7 +42,7 @@ import { useV3MintActionHandlers } from './hooks/useV3MintActionHandlers';
 import { reducer, Types } from './reducer';
 import { Bound, Field } from './types';
 import { maxAmountSpend } from './utils/maxAmountSpend';
-import { MetadataFlag } from '../../../hooks/Submission/types';
+import { createPool, openPositionFromBase } from './utils/openPositionFromBase';
 
 export default function AddLiquidityV3({
   params,
@@ -213,73 +219,131 @@ export default function AddLiquidityV3({
         throw new Error('Invalid config');
       }
 
-      const createPoolBuildData = await raydium.clmm.createPool({
-        programId: clmmConfig.programId,
-        mint1: poolInfo.mintA,
-        mint2: poolInfo.mintB,
-        ammConfig: {
-          ...poolInfo.config,
-          id: new PublicKey(poolInfo.config.id),
-          fundOwner: '',
-          description: '',
-        },
-        initialPrice: new Decimal(price.toString()),
-        // startTime: new BN(0),
-        txVersion: TxVersion.LEGACY,
-        // optional: set up priority fee here
-        // computeBudgetConfig: {
-        //   units: 600000,
-        //   microLamports: 46591500,
-        // },
+      const clmm = raydium.clmm;
+
+      raydium.clmm.scope.checkOwner();
+      const txBuilder = new TxBuilder({
+        connection: clmm.scope.connection,
+        feePayer: clmm.scope.ownerPubKey,
+        cluster: clmm.scope.cluster,
+        owner: clmm.scope.owner,
+        blockhashCommitment: clmm.scope.blockhashCommitment,
+        loopMultiTxStatus: clmm.scope.loopMultiTxStatus,
+        api: clmm.scope.api,
+        signAllTransactions: clmm.scope.signAllTransactions,
       });
+
+      const createPoolExtInfo = poolIsNoExisted
+        ? await createPool({
+            programId: clmmConfig.programId,
+            mint1: poolInfo.mintA,
+            mint2: poolInfo.mintB,
+            ammConfig: {
+              ...poolInfo.config,
+              id: new PublicKey(poolInfo.config.id),
+              fundOwner: '',
+              description: '',
+            },
+            initialPrice: new Decimal(price.toString()),
+            // startTime: new BN(0),
+            // txVersion: TxVersion.LEGACY,
+            // optional: set up priority fee here
+            // computeBudgetConfig: {
+            //   units: 600000,
+            //   microLamports: 46591500,
+            // },
+            clmm,
+            txBuilder,
+          })
+        : undefined;
 
       if (!position) {
         throw new Error('position is undefined');
       }
 
-      const openPositionFromBaseBuildData =
-        await raydium.clmm.openPositionFromBase({
-          poolInfo,
-          poolKeys: poolKeys ?? createPoolBuildData.extInfo.address,
-          tickUpper: Math.max(position.tickLower, position.tickUpper),
-          tickLower: Math.min(position.tickLower, position.tickUpper),
-          base: 'MintA',
-          ownerInfo: {
-            useSOLBalance: true,
-          },
-          baseAmount: new BN(
-            new Decimal(typedValue || '0')
-              .mul(10 ** poolInfo.mintA.decimals)
-              .toFixed(0),
-          ),
-          otherAmountMax: new BN(
-            position.amountB
-              .multipliedBy(new BigNumber(10 ** poolInfo.mintB.decimals))
-              .toFixed(0),
-          ),
-          nft2022: true,
+      const openPositionFromBaseExtInfo = await openPositionFromBase({
+        poolInfo,
+        poolKeys: poolKeys ?? createPoolExtInfo?.address,
+        tickUpper: Math.max(position.tickLower, position.tickUpper),
+        tickLower: Math.min(position.tickLower, position.tickUpper),
+        base: 'MintA',
+        ownerInfo: {
+          useSOLBalance: true,
+        },
+        baseAmount: new BN(
+          new Decimal(typedValue || '0')
+            .mul(10 ** poolInfo.mintA.decimals)
+            .toFixed(0),
+        ),
+        otherAmountMax: new BN(
+          position.amountB
+            .multipliedBy(new BigNumber(10 ** poolInfo.mintB.decimals))
+            .toFixed(0),
+        ),
+        // nft2022: true,
+        // txVersion: TxVersion.V0,
+        // optional: set up priority fee here
+        // computeBudgetConfig: {
+        //   units: 600000,
+        //   microLamports: 100000,
+        // },
+        clmm,
+        txBuilder,
+      });
+
+      // 恢复并调整计算预算和小费指令
+      txBuilder.addCustomComputeBudget({
+        units: 600000,
+        microLamports: 1000,
+      });
+
+      const { transaction, signers } =
+        await txBuilder.versionBuild<OpenPositionFromBaseExtInfo>({
           txVersion: TxVersion.LEGACY,
-          // optional: set up priority fee here
-          // computeBudgetConfig: {
-          //   units: 600000,
-          //   microLamports: 100000,
-          // },
+          extInfo: openPositionFromBaseExtInfo,
+          // addLookupTableInfo: false,
         });
 
-      const instructions =
-        openPositionFromBaseBuildData.builder.allInstructions.map(
-          (instruction) => {
-            createPoolBuildData.builder.addInstruction(instruction);
-          },
+      // 参考 @raydium-io/raydium-sdk-v2 src/common/txTool/txTool.ts
+      async function execute() {
+        if (!raydium) {
+          throw new Error('raydium is undefined');
+        }
+        const recentBlockHash = await getRecentBlockHash(
+          raydium.connection,
+          raydium.blockhashCommitment,
         );
-
-      const { execute, extInfo } =
-        await createPoolBuildData.builder.versionMultiBuild({
-          extraPreBuildData: poolIsNoExisted
-            ? [createPoolBuildData, openPositionFromBaseBuildData]
-            : [openPositionFromBaseBuildData],
-          txVersion: TxVersion.LEGACY,
-        });
+        transaction.recentBlockhash = recentBlockHash;
+        if (clmm.scope.owner?.signer) {
+          signers.push(clmm.scope.owner?.signer);
+        }
+        // { pubkey: positionNftMint, isSigner: true, isWritable: true },
+        if (signers.length) {
+          transaction.sign(...signers);
+        }
+        const txs = await clmm.scope.signAllTransactions?.([transaction]);
+        if (signers.length) {
+          for (const item of txs) {
+            try {
+              // 注释掉，否则报错：Signature verification failed. Missing signature for public key [`CVVQYs9Pi3t4it4KFpm3hxk97uDA6AVzNVJvGQTPH17n`]
+              // CVVQYs9Pi3t4it4KFpm3hxk97uDA6AVzNVJvGQTPH17n 是钱包地址，应该会自动签名，非常奇怪
+              // item.sign(...signers);
+            } catch (e) {
+              //
+            }
+          }
+        }
+        const rawTransaction = txs?.[0]?.serialize();
+        if (!rawTransaction) {
+          throw new Error('rawTransaction is undefined');
+        }
+        return {
+          txId: await clmm.scope.connection.sendRawTransaction(rawTransaction, {
+            skipPreflight: true,
+          }),
+          signedTx: txs?.[0],
+        };
+      }
 
       const txResult = await submission.executeCustom({
         brief: poolIsNoExisted ? t`Pool Creation` : t`Add Liquidity`,
@@ -289,11 +353,8 @@ export default function AddLiquidityV3({
             : MetadataFlag.addAMMV3Pool]: true,
         },
         handler: async (params) => {
-          const { txIds } = await execute({
-            sequentially: true,
-            sendAndConfirm: true,
-          });
-          params.onSuccess(txIds[0]);
+          const { txId } = await execute();
+          params.onSuccess(txId);
         },
         successBack: () => {
           handleGoBack();

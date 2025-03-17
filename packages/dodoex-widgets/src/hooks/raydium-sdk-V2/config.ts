@@ -39,7 +39,7 @@ export const initSdk = async ({
       cluster,
       disableFeatureCheck: true,
       disableLoadToken: true,
-      blockhashCommitment: 'finalized',
+      blockhashCommitment: 'confirmed',
       // urlConfigs: {
       //   BASE_HOST: '<API_HOST>', // api url configs, currently api doesn't support devnet
       // },

@@ -130,7 +130,7 @@ export function useV3DerivedMintInfo({
 
     // 如果池子存在，则返回池子的价格
     // 池子中的价格是按照 ? mintB per mintA 计算的，即 selectedMintIndex === 0
-    if (!pool || pool.poolInfo.price != null) {
+    if (!pool || pool.poolInfo.price == null) {
       return undefined;
     }
     const numMintBPerMintA = new BigNumber(pool.poolInfo.price);
@@ -200,7 +200,6 @@ export function useV3DerivedMintInfo({
         throw new Error('Invalid fee');
       }
 
-      console.log('price', price);
       const { tick: tickCurrent } = getPriceAndTick({
         mintDecimalsA: mintA.decimals,
         mintDecimalsB: mintB.decimals,
