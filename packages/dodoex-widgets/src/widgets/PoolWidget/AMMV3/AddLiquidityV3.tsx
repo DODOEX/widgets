@@ -304,7 +304,7 @@ export default function AddLiquidityV3({
           // addLookupTableInfo: false,
         });
 
-      // 参考 @raydium-io/raydium-sdk-v2 src/common/txTool/txTool.ts
+      // 参考 @raydium-io/raydium-sdk-v2 src/common/txTool/txTool.ts build 方法
       async function execute() {
         if (!raydium) {
           throw new Error('raydium is undefined');
@@ -314,13 +314,13 @@ export default function AddLiquidityV3({
           raydium.blockhashCommitment,
         );
         transaction.recentBlockhash = recentBlockHash;
-        if (clmm.scope.owner?.signer) {
-          signers.push(clmm.scope.owner?.signer);
-        }
+
+        // 对 positionNftMint 签名
         // { pubkey: positionNftMint, isSigner: true, isWritable: true },
         if (signers.length) {
           transaction.sign(...signers);
         }
+
         const txs = await clmm.scope.signAllTransactions?.([transaction]);
         if (signers.length) {
           for (const item of txs) {
