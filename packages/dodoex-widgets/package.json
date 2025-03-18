@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.1-solana.9",
+  "version": "3.0.1-solana.10",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -23,7 +23,7 @@
     "release": "semantic-release",
     "release:local": "np --any-branch --no-cleanup --no-tests",
     "release.npm-publish": "npm publish --access public",
-    "release.npm-publish-beta": "npm publish --tag beta",
+    "release.npm-publish-beta": "yarn run build && npm publish --tag beta",
     "test": "jest src",
     "test:e2e": "jest e2e"
   },

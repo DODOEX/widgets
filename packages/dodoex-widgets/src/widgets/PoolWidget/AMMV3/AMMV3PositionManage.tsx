@@ -320,17 +320,12 @@ export const AMMV3PositionManage = ({
       if (!pool?.poolInfo) {
         throw new Error('poolInfo is undefined');
       }
-      const newLiquidity = existingPosition.liquidity.mul(
-        new BN(1).sub(new BN(sliderPercentage).div(new BN(100))),
+
+      const newLiquidity = new BN(
+        new Decimal(existingPosition.liquidity.toString())
+          .mul(1 - sliderPercentage / 100)
+          .toFixed(0),
       );
-      console.log(
-        'v2 newLiquidity',
-        existingPosition.liquidity.toString(),
-        sliderPercentage,
-        new BN(1).sub(new BN(sliderPercentage).div(new BN(100))).toString(),
-        newLiquidity.toString(),
-      );
-      const closePosition = newLiquidity.lte(new BN(0));
       const { execute } = await raydium.clmm.decreaseLiquidity({
         poolInfo: pool.poolInfo,
         poolKeys: pool.poolKeys,
@@ -338,7 +333,7 @@ export const AMMV3PositionManage = ({
         ownerInfo: {
           useSOLBalance: true,
           // if liquidity wants to decrease doesn't equal to position liquidity, set closePosition to false
-          closePosition,
+          closePosition: false,
         },
         liquidity: newLiquidity,
         amountMinA: new BN(0),

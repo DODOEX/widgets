@@ -14,12 +14,13 @@ export { Swap } from './components/Swap';
 export { UnstyleWidget, Widget } from './components/Widget';
 export { MetadataFlag } from './hooks/Submission/types';
 export { PageType, useRouterStore } from './router';
+export { Pool } from './widgets/PoolWidget';
 export { default as AMMV2Create } from './widgets/PoolWidget/AMMV2Create';
 export { default as PoolList } from './widgets/PoolWidget/PoolList';
 
 export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
-export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
 export { AMMV3PositionManage } from './widgets/PoolWidget/AMMV3/AMMV3PositionManage';
+export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
 
 // export { WIDGET_CLASS_NAME } from './components/Widget';
 

@@ -22,8 +22,8 @@ export interface AMMV3PositionsViewProps {
   poolId: string;
   onClose: (() => void) | undefined;
   handleGoToAddLiquidityV3: (params: {
-    from?: string;
-    to?: string;
+    mint1?: string;
+    mint2?: string;
     fee?: string;
   }) => void;
 }
@@ -154,8 +154,8 @@ export const AMMV3PositionsView = ({
               variant={Button.Variant.second}
               onClick={() => {
                 handleGoToAddLiquidityV3({
-                  from: mintA?.address,
-                  to: mintB?.address,
+                  mint1: mintA?.address,
+                  mint2: mintB?.address,
                   fee: String(feeAmount),
                 });
               }}
@@ -215,8 +215,8 @@ export const AMMV3PositionsView = ({
                   size={Button.Size.small}
                   onClick={() => {
                     handleGoToAddLiquidityV3({
-                      from: mintA?.address,
-                      to: mintB?.address,
+                      mint1: mintA?.address,
+                      mint2: mintB?.address,
                       fee: String(feeAmount),
                     });
                   }}

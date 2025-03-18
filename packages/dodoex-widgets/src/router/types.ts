@@ -43,8 +43,8 @@ interface PageTypeParams {
   [PageType.createPoolAMMV2]: undefined;
   [PageType.createPoolAMMV3]:
     | {
-        from?: string;
-        to?: string;
+        mint1?: string;
+        mint2?: string;
         fee?: string;
       }
     | undefined;

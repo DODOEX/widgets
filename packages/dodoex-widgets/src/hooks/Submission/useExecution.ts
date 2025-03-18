@@ -54,7 +54,7 @@ export default function useExecution({
     useState<() => void>();
   const { updateBlockNumber } = useFetchBlockNumber();
 
-  const handlerCustom: ExecutionCtx['executeCustom'] = useCallback(
+  const executeCustom: ExecutionCtx['executeCustom'] = useCallback(
     async ({
       brief,
       subtitle,
@@ -165,6 +165,12 @@ export default function useExecution({
           }
           await updateBlockNumber(); // update blockNumber once after tx
           queryClient.invalidateQueries({
+            queryKey: ['token'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['clmm'],
+          });
+          queryClient.invalidateQueries({
             queryKey: ['cpmm'],
           });
           if (!notShowingDone) {
@@ -177,6 +183,7 @@ export default function useExecution({
                 }) as Showing,
             );
           }
+          resolve(ExecutionResult.Success);
         };
 
         const onError = (e: any) => {
@@ -262,14 +269,14 @@ export default function useExecution({
 
   const ctxVal = useMemo<ExecutionCtx>(
     () => ({
-      executeCustom: handlerCustom,
+      executeCustom,
       requests,
       updateText,
       setShowing,
       waitingSubmit,
       errorMessage,
     }),
-    [handlerCustom, requests, updateText, waitingSubmit, errorMessage],
+    [executeCustom, requests, updateText, waitingSubmit, errorMessage],
   );
 
   const closeShowing = useCallback(() => {

@@ -1,5 +1,5 @@
 import { ChainId } from '@dodoex/api';
-import { PoolList, Widget } from '@dodoex/widgets';
+import { Pool, Widget } from '@dodoex/widgets';
 import { NATIVE_MINT } from '@solana/spl-token';
 import { PublicKey } from '@solana/web3.js';
 
@@ -13,7 +13,7 @@ export const Primary = (props: any) => {
 
   return (
     <Widget {...other} apikey={apiKey}>
-      <PoolList />
+      <Pool />
     </Widget>
   );
 };
@@ -29,7 +29,7 @@ Primary.args = {
   routerPage: undefined,
   notSupportPMM: true,
   supportAMMV2: true,
-  supportAMMV3: false,
+  supportAMMV3: true,
   onlySolana: true,
   onlyChainId: ChainId.SOON_TESTNET,
   tokenList: [

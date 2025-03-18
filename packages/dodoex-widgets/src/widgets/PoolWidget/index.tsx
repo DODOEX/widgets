@@ -2,7 +2,7 @@ import { useUserOptions } from '../../components/UserOptionsProvider';
 import { useRouterStore } from '../../router';
 import { Page, PageType } from '../../router/types';
 import AMMV2Create from './AMMV2Create';
-import AMMV3Create from './AMMV3/AddLiquidityV3';
+import AddLiquidityV3 from './AMMV3/AddLiquidityV3';
 import PoolList from './PoolList';
 
 export function Pool() {
@@ -17,7 +17,7 @@ export function Pool() {
       return <AMMV2Create />;
     case PageType.createPoolAMMV3:
       return (
-        <AMMV3Create
+        <AddLiquidityV3
           params={(page as Page<PageType.createPoolAMMV3>).params}
           handleGoBack={() => {
             useRouterStore.getState().push({
