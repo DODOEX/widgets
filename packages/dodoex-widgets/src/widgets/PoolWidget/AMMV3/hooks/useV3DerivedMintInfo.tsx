@@ -5,8 +5,8 @@ import {
   MAX_TICK,
   MIN_SQRT_PRICE_X64,
   MIN_TICK,
-  Percent,
   PoolUtils,
+  PositionInfoLayout,
   SqrtPriceMath,
   toApiV3Token,
 } from '@raydium-io/raydium-sdk-v2';
@@ -37,7 +37,7 @@ export function useV3DerivedMintInfo({
 }: {
   state: StateProps;
   // override for existing position
-  existingPosition?: PositionI;
+  existingPosition: ReturnType<typeof PositionInfoLayout.decode> | undefined;
   slipperValue: number;
 }) {
   const { account, chainId } = useWalletInfo();
@@ -469,11 +469,11 @@ export function useV3DerivedMintInfo({
           return;
         }
 
-        console.log('tickLower', tickLower);
-        console.log('tickUpper', tickUpper);
-        console.log('typedValue', typedValue);
-        console.log('slipperValue', slipperValue);
-        console.log('poolInfo', poolInfo);
+        // console.log('tickLower', tickLower);
+        // console.log('tickUpper', tickUpper);
+        // console.log('typedValue', typedValue);
+        // console.log('slipperValue', slipperValue);
+        // console.log('poolInfo', poolInfo);
         const epochInfo = await raydium.fetchEpochInfo();
         const res = await PoolUtils.getLiquidityAmountOutFromAmountIn({
           poolInfo: poolInfo,
@@ -492,18 +492,18 @@ export function useV3DerivedMintInfo({
         });
 
         if (mounted) {
-          console.log(
-            'res getLiquidityAmountOutFromAmountIn',
-            JSON.stringify(res),
-          );
-          console.log(
-            'res amountSlippageA',
-            res.amountSlippageA.amount.toString(),
-          );
-          console.log(
-            'res amountSlippageB',
-            res.amountSlippageB.amount.toString(),
-          );
+          // console.log(
+          //   'res getLiquidityAmountOutFromAmountIn',
+          //   JSON.stringify(res),
+          // );
+          // console.log(
+          //   'res amountSlippageA',
+          //   res.amountSlippageA.amount.toString(),
+          // );
+          // console.log(
+          //   'res amountSlippageB',
+          //   res.amountSlippageB.amount.toString(),
+          // );
           if (!res.amountSlippageB.amount) {
             return;
           }
@@ -514,7 +514,7 @@ export function useV3DerivedMintInfo({
           );
         }
       } catch (error) {
-        console.log('error', error);
+        console.error('error', error);
       }
     }
 
@@ -619,7 +619,7 @@ export function useV3DerivedMintInfo({
         });
 
         if (mounted) {
-          console.log('res getLiquidityAmountOutFromAmountIn', res);
+          // console.log('res getLiquidityAmountOutFromAmountIn', res);
           pricesAtTicks;
           setPosition({
             poolInfo,
@@ -637,7 +637,7 @@ export function useV3DerivedMintInfo({
           });
         }
       } catch (error) {
-        console.log('error', error);
+        console.error('error', error);
       }
     }
 

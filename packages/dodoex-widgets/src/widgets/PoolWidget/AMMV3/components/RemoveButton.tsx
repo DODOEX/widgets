@@ -8,7 +8,6 @@ export interface ButtonsProps {
   disabled: boolean;
   removed: boolean | undefined;
   isLoading: boolean;
-  error: React.ReactNode;
   onConfirm: () => void;
 }
 
@@ -17,7 +16,6 @@ export const RemoveButton = ({
   disabled,
   removed,
   isLoading,
-  error,
   onConfirm,
 }: ButtonsProps) => {
   return (
@@ -29,7 +27,7 @@ export const RemoveButton = ({
         disabled={disabled}
         isLoading={isLoading}
       >
-        {removed ? t`Closed` : (error ?? t`Remove`)}
+        {removed ? t`Closed` : t`Remove`}
       </Button>
     </NeedConnectButton>
   );

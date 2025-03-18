@@ -14,22 +14,10 @@ export const Primary = (props: any) => {
   return (
     <Widget {...other} apikey={apiKey}>
       <AMMV3PositionsView
-        chainId={11155111}
-        baseToken={{
-          address: '0x163D876AF3949f45D934870a1783A040Cf717Bc5',
-          decimals: 18,
-          symbol: 'uni_test2',
-          name: 'uni_test2',
-          chainId: 11155111,
-        }}
-        quoteToken={{
-          address: '0x444d30Eeb001Dc8B7B96cEF088381418B82f9441',
-          decimals: 6,
-          symbol: 'uni_test3',
-          name: 'uni_test3',
-          chainId: 11155111,
-        }}
-        feeAmount={500}
+        mint1Address="4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz"
+        mint2Address="36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva"
+        feeAmount={1000}
+        poolId="GNHrfEqtYW11gNntydFBm7UEzcYGvG7Rf9ZEo5Q8b9FH"
         onClose={() => window.alert('onClose')}
         handleGoToAddLiquidityV3={() =>
           window.alert('handleGoToAddLiquidityV3')

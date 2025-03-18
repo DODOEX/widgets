@@ -1,6 +1,7 @@
 import {
   ApiV3PoolInfoConcentratedItem,
   Clmm,
+  PositionInfoLayout,
 } from '@raydium-io/raydium-sdk-v2';
 import BigNumber from 'bignumber.js';
 import { FeeAmount } from './sdks/v3-sdk/constants';
@@ -19,6 +20,9 @@ export type FullRange = true;
 
 export type OperateType = null | 'stake' | 'unstake' | 'claim';
 
+/**
+ * @deprecated
+ */
 export interface PositionDetails {
   nonce: string;
   tokenId: string;

@@ -13,28 +13,10 @@ export enum PoolState {
   INVALID,
 }
 
-export function usePool(
-  mint1Address: string | undefined,
-  mint2Address: string | undefined,
-  feeAmount: FeeAmount | undefined,
-  chainId: ChainId,
+export function usePoolFromPoolId(
+  id: string | null,
 ): [PoolState, PoolInfoT | null, string | null] {
   const raydium = useRaydiumSDKContext();
-
-  const id = useMemo(() => {
-    if (!mint1Address || !mint2Address || !feeAmount) {
-      return null;
-    }
-
-    const poolAddress = computePoolAddress({
-      mint1Address,
-      mint2Address,
-      feeAmount,
-      chainId,
-    }).toBase58();
-
-    return poolAddress;
-  }, [chainId, feeAmount, mint1Address, mint2Address]);
 
   const poolInfoQuery = useQuery<PoolInfoT | null>({
     queryKey: ['clmm', 'getPoolInfoFromRpc', id],
@@ -45,14 +27,14 @@ export function usePool(
       }
 
       try {
-        console.log('getPoolInfoFromRpc id', id);
+        // console.log('getPoolInfoFromRpc id', id);
         const { poolInfo, poolKeys, computePoolInfo, tickData } =
           await raydium.clmm.getPoolInfoFromRpc(id);
 
-        console.log('getPoolInfoFromRpc poolInfo', poolInfo);
-        console.log('getPoolInfoFromRpc poolKeys', poolKeys);
-        console.log('getPoolInfoFromRpc computePoolInfo', computePoolInfo);
-        console.log('getPoolInfoFromRpc tickData', tickData);
+        // console.log('getPoolInfoFromRpc poolInfo', poolInfo);
+        // console.log('getPoolInfoFromRpc poolKeys', poolKeys);
+        // console.log('getPoolInfoFromRpc computePoolInfo', computePoolInfo);
+        // console.log('getPoolInfoFromRpc tickData', tickData);
 
         return {
           poolInfo,
@@ -81,4 +63,30 @@ export function usePool(
   }
 
   return [PoolState.EXISTS, poolInfoQuery.data, id];
+}
+
+export function usePool(
+  mint1Address: string | undefined,
+  mint2Address: string | undefined,
+  feeAmount: FeeAmount | undefined,
+  chainId: ChainId,
+): [PoolState, PoolInfoT | null, string | null] {
+  const id = useMemo(() => {
+    if (!mint1Address || !mint2Address || !feeAmount) {
+      return null;
+    }
+
+    const poolAddress = computePoolAddress({
+      mint1Address,
+      mint2Address,
+      feeAmount,
+      chainId,
+    }).toBase58();
+
+    return poolAddress;
+  }, [chainId, feeAmount, mint1Address, mint2Address]);
+
+  const result = usePoolFromPoolId(id);
+
+  return result;
 }

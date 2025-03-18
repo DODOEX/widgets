@@ -1,130 +1,52 @@
 import { Box, Button, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import { useMemo } from 'react';
+import { PositionInfoLayout } from '@raydium-io/raydium-sdk-v2';
+import { TokenInfo } from '../../../../hooks/Token/type';
 import { formatTokenAmountNumber } from '../../../../utils';
+import { useDerivedPositionInfo } from '../hooks/useDerivedPositionInfo';
 import useIsTickAtLimit from '../hooks/useIsTickAtLimit';
-import { usePool } from '../hooks/usePool';
-import { Currency, Price, Token } from '../sdks/sdk-core';
-import { Position as V3Position } from '../sdks/v3-sdk/entities/position';
+import { FeeAmount } from '../sdks/v3-sdk/constants';
 import { Bound } from '../types';
-import { PositionDetails } from '../types';
 import { formatTickPrice } from '../utils/formatTickPrice';
 import { InRangeDot } from './InRangeDot';
 
-export interface PriceOrdering {
-  priceLower?: Price<Currency, Currency>;
-  priceUpper?: Price<Currency, Currency>;
-  quote?: Currency;
-  base?: Currency;
-}
-
-export function getPriceOrderingFromPositionForUI(
-  position?: V3Position,
-): PriceOrdering {
-  if (!position) {
-    return {};
-  }
-
-  const token0 = position.amount0.currency;
-  const token1 = position.amount1.currency;
-
-  // if token0 is a dollar-stable asset, set it as the quote token
-  const stables: Token[] = [];
-  if (stables.some((stable) => stable.equals(token0))) {
-    return {
-      priceLower: position.token0PriceUpper.invert(),
-      priceUpper: position.token0PriceLower.invert(),
-      quote: token0,
-      base: token1,
-    };
-  }
-
-  // if token1 is an ETH-/BTC-stable asset, set it as the base token
-  const bases: Token[] = [];
-  if (bases.some((base) => base && base.equals(token1))) {
-    return {
-      priceLower: position.token0PriceUpper.invert(),
-      priceUpper: position.token0PriceLower.invert(),
-      quote: token0,
-      base: token1,
-    };
-  }
-
-  // if both prices are below 1, invert
-  if (position.token0PriceUpper.lessThan(1)) {
-    return {
-      priceLower: position.token0PriceUpper.invert(),
-      priceUpper: position.token0PriceLower.invert(),
-      quote: token0,
-      base: token1,
-    };
-  }
-
-  // otherwise, just return the default
-  return {
-    priceLower: position.token0PriceLower,
-    priceUpper: position.token0PriceUpper,
-    quote: token1,
-    base: token0,
-  };
-}
-
 export interface PositionViewCardProps {
-  p: PositionDetails;
-  currency0: Currency | undefined;
-  currency1: Currency | undefined;
+  position: ReturnType<typeof PositionInfoLayout.decode>;
+  mintA: TokenInfo | undefined;
+  mintB: TokenInfo | undefined;
+  feeAmount: FeeAmount;
   onClickManage: () => void;
 }
 
 export const PositionViewCard = ({
-  p,
-  currency0,
-  currency1,
+  position,
+  mintA,
+  mintB,
+  feeAmount,
   onClickManage,
 }: PositionViewCardProps) => {
   const theme = useTheme();
 
-  // construct Position from details returned
-  const [, pool] = usePool(
-    currency0 ?? undefined,
-    currency1 ?? undefined,
-    p.fee,
+  const { positionInfo, pool } = useDerivedPositionInfo({
+    position,
+  });
+
+  const tickAtLimit = useIsTickAtLimit(
+    feeAmount,
+    position.tickLower,
+    position.tickUpper,
   );
 
-  const position = useMemo(() => {
-    if (pool) {
-      return new V3Position({
-        pool,
-        liquidity: p.liquidity.toString(),
-        tickLower: p.tickLower,
-        tickUpper: p.tickUpper,
-      });
-    }
-    return undefined;
-  }, [p.liquidity, p.tickLower, p.tickUpper, pool]);
-
-  const tickAtLimit = useIsTickAtLimit(p.fee, p.tickLower, p.tickUpper);
-
-  // prices
-  // const { priceLower, priceUpper, quote, base } =
-  //   getPriceOrderingFromPositionForUI(position);
-  const priceLower = position?.token0PriceLower;
-  const priceUpper = position?.token0PriceUpper;
-  const quote = position?.amount1.currency;
-  const base = position?.amount0.currency;
-
-  const currencyQuote = quote;
-  const currencyBase = base;
+  const priceLower = positionInfo?.priceLower;
+  const priceUpper = positionInfo?.priceUpper;
 
   // check if price is within range
-  const outOfRange: boolean = pool
-    ? pool.tickCurrent < p.tickLower || pool.tickCurrent >= p.tickUpper
+  const outOfRange: boolean = pool?.computePoolInfo
+    ? pool.computePoolInfo.tickCurrent < position.tickLower ||
+      pool.computePoolInfo.tickCurrent >= position.tickUpper
     : false;
 
-  const sorted = currency0 === currency0;
-  const price = sorted
-    ? position?.pool.priceOf(position?.pool.token0)
-    : position?.pool.priceOf(position?.pool.token1);
+  const price = pool?.poolInfo.price;
 
   return (
     <Box
@@ -167,7 +89,7 @@ export const PositionViewCard = ({
                 })}
                 &nbsp;
               </span>
-              {currencyQuote?.symbol}
+              {mintB?.symbol}
             </>
           </Box>
           <svg
@@ -193,7 +115,7 @@ export const PositionViewCard = ({
                 })}
                 &nbsp;
               </span>
-              {currencyQuote?.symbol}
+              {mintB?.symbol}
             </>
           </Box>
           {/* <Box
@@ -230,12 +152,12 @@ export const PositionViewCard = ({
               color: theme.palette.text.secondary,
             }}
           >
-            {t`Current price`}:&nbsp;
-            {`${formatTokenAmountNumber({
-              input: price?.toSignificant(),
-            })}`}
-            &nbsp;{currencyQuote?.symbol}&nbsp;per&nbsp;
-            {currencyBase?.symbol}
+            Current price:&nbsp;
+            {formatTokenAmountNumber({
+              input: price,
+            })}
+            &nbsp;{mintB?.symbol}&nbsp;per&nbsp;
+            {mintA?.symbol}
           </Box>
         </Box>
       </Box>

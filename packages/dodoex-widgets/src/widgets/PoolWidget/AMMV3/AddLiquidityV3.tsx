@@ -74,8 +74,8 @@ export default function AddLiquidityV3({
   });
 
   const [state, dispatch] = useReducer<typeof reducer>(reducer, {
-    mint1: undefined,
-    mint2: undefined,
+    mint1: defaultMint1,
+    mint2: defaultMint2,
     feeAmount: params?.fee ? Number(params?.fee) : undefined,
     selectedMintIndex: 0,
     independentField: Field.DEPOSIT_1,
@@ -132,7 +132,11 @@ export default function AddLiquidityV3({
     depositADisabled,
     depositBDisabled,
     ticksAtLimit,
-  } = useV3DerivedMintInfo({ state, slipperValue });
+  } = useV3DerivedMintInfo({
+    state,
+    slipperValue,
+    existingPosition: undefined,
+  });
 
   const {
     onField1Input,
@@ -658,7 +662,7 @@ export default function AddLiquidityV3({
                 {t`Current price`}
                 <Box>
                   {formatTokenAmountNumber({
-                    input: price?.toString(),
+                    input: price,
                     decimals: 9,
                   })}
                   &nbsp;{t`per`}&nbsp;

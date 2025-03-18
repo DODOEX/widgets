@@ -18,16 +18,7 @@ export function useDerivedV3BurnInfo({
   asWETH?: boolean;
   baseToken: Maybe<Currency>;
   quoteToken: Maybe<Currency>;
-}): {
-  position?: Position;
-  liquidityPercentage?: Percent;
-  liquidityValue0?: CurrencyAmount<Currency>;
-  liquidityValue1?: CurrencyAmount<Currency>;
-  feeValue0?: CurrencyAmount<Currency>;
-  feeValue1?: CurrencyAmount<Currency>;
-  outOfRange: boolean;
-  error?: ReactNode;
-} {
+}) {
   const { account, chainId } = useWalletInfo();
 
   const [tokenA, tokenB] = useMemo(
@@ -85,12 +76,6 @@ export function useDerivedV3BurnInfo({
       ? CurrencyAmount.fromRawAmount(token1, discountedAmount1)
       : undefined;
 
-  const outOfRange =
-    pool && position
-      ? pool.tickCurrent < position.tickLower ||
-        pool.tickCurrent > position.tickUpper
-      : false;
-
   let error: ReactNode | undefined;
   if (!account) {
     error = t`Connect to a wallet`;
@@ -105,7 +90,6 @@ export function useDerivedV3BurnInfo({
     liquidityValue1,
     feeValue0: undefined,
     feeValue1: undefined,
-    outOfRange,
     error,
   };
 }

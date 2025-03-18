@@ -1,25 +1,25 @@
-import { ChainId } from '@dodoex/api';
 import { Box, Button, EmptyDataIcon, useTheme } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
 import { t } from '@lingui/macro';
+import { PositionInfoLayout } from '@raydium-io/raydium-sdk-v2';
+import { PublicKey } from '@solana/web3.js';
 import { useMemo, useState } from 'react';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import Dialog from '../../../components/Dialog';
+import { LoadingRotation } from '../../../components/LoadingRotation';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { TokenInfo } from '../../../hooks/Token/type';
 import { AMMV3PositionManage } from './AMMV3PositionManage';
 import { PositionViewCard } from './components/PositionViewCard';
+import { useMintAAndMintB } from './hooks/useMintAAndMintB';
 import { useV3Positions } from './hooks/useV3Positions';
 import { FeeAmount } from './sdks/v3-sdk/constants';
-import { PositionDetails } from './types';
-import { areAddressesEqual, buildCurrency } from './utils';
 
 export interface AMMV3PositionsViewProps {
-  chainId: ChainId;
-  baseToken: TokenInfo;
-  quoteToken: TokenInfo;
+  mint1Address: string;
+  mint2Address: string;
   feeAmount: FeeAmount;
+  poolId: string;
   onClose: (() => void) | undefined;
   handleGoToAddLiquidityV3: (params: {
     from?: string;
@@ -29,57 +29,35 @@ export interface AMMV3PositionsViewProps {
 }
 
 export const AMMV3PositionsView = ({
-  chainId,
-  baseToken,
-  quoteToken,
+  mint1Address,
+  mint2Address,
   feeAmount,
+  poolId,
   onClose,
   handleGoToAddLiquidityV3,
 }: AMMV3PositionsViewProps) => {
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
 
-  const { account } = useWalletInfo();
+  const { chainId, account } = useWalletInfo();
 
-  const { positions, loading } = useV3Positions(account, chainId);
+  const { positions, loading } = useV3Positions(chainId);
 
-  const currencyA = useMemo(
-    () => (baseToken ? buildCurrency(baseToken) : undefined),
-    [baseToken],
-  );
-  const currencyB = useMemo(
-    () => (quoteToken ? buildCurrency(quoteToken) : undefined),
-    [quoteToken],
-  );
+  const { mintA, mintB } = useMintAAndMintB({
+    mint1Address,
+    mint2Address,
+  });
 
-  const [tokenA, tokenB] = useMemo(
-    () => [currencyA?.wrapped, currencyB?.wrapped],
-    [currencyA, currencyB],
-  );
-
-  const [token0, token1] = useMemo(
-    () =>
-      tokenA && tokenB
-        ? tokenA.sortsBefore(tokenB)
-          ? [tokenA, tokenB]
-          : [tokenB, tokenA]
-        : [undefined, undefined],
-    [tokenA, tokenB],
-  );
-
-  const currentPairPositions = useMemo<PositionDetails[] | undefined>(() => {
+  const currentPairPositions = useMemo(() => {
     if (positions === undefined) {
       return undefined;
     }
-    return positions.filter(
-      (p) =>
-        areAddressesEqual(token0?.address, p.token0) &&
-        areAddressesEqual(token1?.address, p.token1) &&
-        p.fee === feeAmount,
-    );
-  }, [feeAmount, positions, token0?.address, token1?.address]);
+    return positions.filter((p) => p.poolId.equals(new PublicKey(poolId)));
+  }, [positions, poolId]);
 
-  const [manageItem, setManageItem] = useState<PositionDetails | null>(null);
+  const [manageItem, setManageItem] = useState<ReturnType<
+    typeof PositionInfoLayout.decode
+  > | null>(null);
 
   const content = useMemo(() => {
     return (
@@ -143,15 +121,28 @@ export const AMMV3PositionsView = ({
           ) : undefined}
         </Box>
 
-        {currentPairPositions && currentPairPositions.length > 0 ? (
+        {loading || !currentPairPositions ? (
+          <>
+            <Box
+              sx={{
+                mt: 100,
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <LoadingRotation />
+            </Box>
+          </>
+        ) : currentPairPositions.length > 0 ? (
           <>
             {currentPairPositions?.map((p) => {
               return (
                 <PositionViewCard
-                  key={p.tokenId}
-                  p={p}
-                  currency0={currencyA}
-                  currency1={currencyB}
+                  key={p.nftMint.toBase58()}
+                  position={p}
+                  mintA={mintA}
+                  mintB={mintB}
+                  feeAmount={feeAmount}
                   onClickManage={() => {
                     setManageItem(p);
                   }}
@@ -163,8 +154,8 @@ export const AMMV3PositionsView = ({
               variant={Button.Variant.second}
               onClick={() => {
                 handleGoToAddLiquidityV3({
-                  from: baseToken.address,
-                  to: quoteToken.address,
+                  from: mintA?.address,
+                  to: mintB?.address,
                   fee: String(feeAmount),
                 });
               }}
@@ -181,7 +172,7 @@ export const AMMV3PositionsView = ({
               >
                 <path
                   d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z"
-                  fill="#1A1A1B"
+                  fill="currentColor"
                 />
               </svg>
               {t`Add Position`}
@@ -219,49 +210,45 @@ export const AMMV3PositionsView = ({
                 alignItems: 'center',
               }}
             >
-              {currentPairPositions !== undefined &&
-              currentPairPositions.length === 0 ? (
+              <NeedConnectButton size={Button.Size.small} includeButton>
                 <Button
                   size={Button.Size.small}
                   onClick={() => {
                     handleGoToAddLiquidityV3({
-                      from: baseToken.address,
-                      to: quoteToken.address,
+                      from: mintA?.address,
+                      to: mintB?.address,
                       fee: String(feeAmount),
                     });
                   }}
                 >{t`Add Position`}</Button>
-              ) : (
-                <NeedConnectButton size={Button.Size.small} />
-              )}
+              </NeedConnectButton>
             </Box>
           </>
         )}
       </Box>
     );
   }, [
+    currentPairPositions,
+    feeAmount,
+    handleGoToAddLiquidityV3,
+    loading,
+    mintA,
+    mintB,
+    onClose,
     theme.palette.background.paper,
     theme.palette.border.main,
     theme.palette.text.primary,
     theme.palette.text.secondary,
-    currentPairPositions,
-    onClose,
-    currencyA,
-    currencyB,
-    handleGoToAddLiquidityV3,
-    baseToken.address,
-    quoteToken.address,
-    feeAmount,
   ]);
 
   if (manageItem !== null) {
     return (
       <AMMV3PositionManage
-        baseToken={baseToken}
-        quoteToken={quoteToken}
+        mint1Address={mint1Address}
+        mint2Address={mint2Address}
         feeAmount={feeAmount}
-        tokenId={manageItem.tokenId}
-        chainId={chainId}
+        poolId={manageItem.poolId.toBase58()}
+        nftMint={manageItem.nftMint.toBase58()}
         onClose={() => {
           setManageItem(null);
         }}
@@ -272,7 +259,7 @@ export const AMMV3PositionsView = ({
   if (isMobile) {
     return (
       <Dialog
-        open={baseToken != null && quoteToken != null}
+        open={mintA != null && mintB != null}
         onClose={onClose}
         scope={!isMobile}
         modal={undefined}

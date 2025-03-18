@@ -1,7 +1,7 @@
+import { MAX_TICK, MIN_TICK } from '@raydium-io/raydium-sdk-v2';
 import { useMemo } from 'react';
 import { FeeAmount, TICK_SPACINGS } from '../sdks/v3-sdk/constants';
 import { nearestUsableTick } from '../sdks/v3-sdk/utils/nearestUsableTick';
-import { TickMath } from '../sdks/v3-sdk/utils/tickMath';
 import { Bound } from '../types';
 
 export default function useIsTickAtLimit(
@@ -14,18 +14,12 @@ export default function useIsTickAtLimit(
       [Bound.LOWER]:
         feeAmount && tickLower
           ? tickLower ===
-            nearestUsableTick(
-              TickMath.MIN_TICK,
-              TICK_SPACINGS[feeAmount as FeeAmount],
-            )
+            nearestUsableTick(MIN_TICK, TICK_SPACINGS[feeAmount as FeeAmount])
           : undefined,
       [Bound.UPPER]:
         feeAmount && tickUpper
           ? tickUpper ===
-            nearestUsableTick(
-              TickMath.MAX_TICK,
-              TICK_SPACINGS[feeAmount as FeeAmount],
-            )
+            nearestUsableTick(MAX_TICK, TICK_SPACINGS[feeAmount as FeeAmount])
           : undefined,
     }),
     [feeAmount, tickLower, tickUpper],

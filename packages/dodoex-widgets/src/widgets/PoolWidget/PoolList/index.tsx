@@ -192,19 +192,19 @@ export default function PoolList({
           poolTab === PoolTab.myLiquidity &&
           operatePool.pool.liquidityPositions?.[0]?.tokenId ? (
             <AMMV3PositionManage
-              baseToken={operatePool.pool.baseToken}
-              quoteToken={operatePool.pool.quoteToken}
+              mint1Address={operatePool.pool.baseToken.address}
+              mint2Address={operatePool.pool.quoteToken.address}
               feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
-              tokenId={operatePool.pool.liquidityPositions[0].tokenId}
-              chainId={operatePool.pool.chainId}
+              poolId={operatePool.pool.address}
+              nftMint={operatePool.pool.liquidityPositions[0].tokenId}
               onClose={() => setOperatePool(null)}
             />
           ) : (
             <AMMV3PositionsView
-              chainId={operatePool.pool.chainId}
-              baseToken={operatePool.pool.baseToken}
-              quoteToken={operatePool.pool.quoteToken}
+              mint1Address={operatePool.pool.baseToken.address}
+              mint2Address={operatePool.pool.quoteToken.address}
               feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
+              poolId={operatePool.pool.address}
               onClose={() => setOperatePool(null)}
               handleGoToAddLiquidityV3={(params) => {
                 useRouterStore.getState().push({

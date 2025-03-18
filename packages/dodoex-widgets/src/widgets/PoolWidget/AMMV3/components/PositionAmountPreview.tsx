@@ -1,29 +1,21 @@
+import { CLMM } from '@dodoex/api';
 import { alpha, Box, ButtonBase, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
-import JSBI from 'jsbi';
-import { useMemo } from 'react';
+import { PositionInfoLayout } from '@raydium-io/raydium-sdk-v2';
+import BigNumber from 'bignumber.js';
 import TokenLogo from '../../../../components/TokenLogo';
-import {
-  formatPercentageNumber,
-  formatTokenAmountNumber,
-  getEtherscanPage,
-} from '../../../../utils';
-import { BIPS_BASE } from '../constants/misc';
-import {
-  CurrencyAmount,
-  Token,
-  V3_CORE_FACTORY_ADDRESSES,
-} from '../sdks/sdk-core';
-import { Pool } from '../sdks/v3-sdk/entities/pool';
-import { Position } from '../sdks/v3-sdk/entities/position';
+import { TokenInfo } from '../../../../hooks/Token/type';
+import { formatTokenAmountNumber, getEtherscanPage } from '../../../../utils';
+import { getPoolFeeRate } from '../../utils';
+import { FeeAmount } from '../sdks/v3-sdk/constants';
 import RangeBadge from './Badge/RangeBadge';
 
 const BalanceItem = ({
-  token,
-  amount,
+  mint,
+  pooledAmount,
 }: {
-  token: Token;
-  amount: CurrencyAmount<Token>;
+  mint: TokenInfo | undefined;
+  pooledAmount: BigNumber | undefined;
 }) => {
   const theme = useTheme();
   return (
@@ -35,8 +27,8 @@ const BalanceItem = ({
       }}
     >
       <TokenLogo
-        address={token?.address ?? ''}
-        chainId={token?.chainId}
+        address={mint?.address ?? ''}
+        chainId={mint?.chainId}
         noShowChain
         width={18}
         height={18}
@@ -49,10 +41,10 @@ const BalanceItem = ({
         }}
       >
         {formatTokenAmountNumber({
-          input: amount.toSignificant(),
-          decimals: token?.decimals,
+          input: pooledAmount,
+          decimals: mint?.decimals,
         })}
-        &nbsp;{token?.symbol}
+        &nbsp;{mint?.symbol}
       </Box>
       <ButtonBase
         sx={{
@@ -64,9 +56,10 @@ const BalanceItem = ({
           },
         }}
         onClick={() => {
-          window.open(
-            getEtherscanPage(token.chainId, token?.address, 'address'),
-          );
+          if (!mint) {
+            return;
+          }
+          window.open(getEtherscanPage(mint.chainId, mint.address, 'address'));
         }}
       >
         <svg
@@ -90,34 +83,30 @@ const BalanceItem = ({
 };
 
 export interface PositionAmountPreviewProps {
-  position: Position;
+  mintA: TokenInfo | undefined;
+  mintB: TokenInfo | undefined;
+  feeAmount: FeeAmount;
+  existingPosition: ReturnType<typeof PositionInfoLayout.decode> | undefined;
+  positionInfo: {
+    pooledAmountA: BigNumber;
+    pooledAmountB: BigNumber;
+    priceLower: BigNumber;
+    priceUpper: BigNumber;
+  } | null;
   inRange: boolean;
+  removed: boolean | undefined;
 }
 
 export const PositionAmountPreview = ({
-  position,
+  mintA,
+  mintB,
+  feeAmount,
+  existingPosition,
+  positionInfo,
   inRange,
+  removed,
 }: PositionAmountPreviewProps) => {
   const theme = useTheme();
-
-  const currency0 = position.pool.token0;
-  const currency1 = position.pool.token1;
-  const chainId = position.pool.chainId;
-
-  const removed =
-    position?.liquidity && JSBI.equal(position?.liquidity, JSBI.BigInt(0));
-
-  const poolAddress = useMemo(
-    () =>
-      Pool.getAddress(
-        position.pool.token0,
-        position.pool.token1,
-        position.pool.fee,
-        undefined,
-        chainId ? V3_CORE_FACTORY_ADDRESSES[chainId] : undefined,
-      ),
-    [chainId, position.pool.fee, position.pool.token0, position.pool.token1],
-  );
 
   return (
     <Box
@@ -152,7 +141,7 @@ export const PositionAmountPreview = ({
               color: theme.palette.text.primary,
             }}
           >
-            {t`Position on`}&nbsp;{currency0?.symbol}/{currency1?.symbol}
+            {t`Position on`}&nbsp;{mintA?.symbol}/{mintB?.symbol}
           </Box>
           <Box
             sx={{
@@ -172,8 +161,10 @@ export const PositionAmountPreview = ({
                 typography: 'h6',
               }}
             >
-              {formatPercentageNumber({
-                input: position?.pool?.fee / (BIPS_BASE * 100),
+              {getPoolFeeRate({
+                type: CLMM,
+                lpFeeRate: feeAmount,
+                mtFeeRate: 0,
               })}
             </Box>
           </Box>
@@ -190,7 +181,16 @@ export const PositionAmountPreview = ({
             },
           }}
           onClick={() => {
-            window.open(getEtherscanPage(chainId, poolAddress, 'address'));
+            if (!mintA?.chainId) {
+              return;
+            }
+            window.open(
+              getEtherscanPage(
+                mintA.chainId,
+                existingPosition?.poolId.toBase58(),
+                'address',
+              ),
+            );
           }}
         >
           {t`Details`}
@@ -227,8 +227,14 @@ export const PositionAmountPreview = ({
             mt: 12,
           }}
         >
-          <BalanceItem token={currency0} amount={position.amount0} />
-          <BalanceItem token={currency1} amount={position.amount1} />
+          <BalanceItem
+            mint={mintA}
+            pooledAmount={positionInfo?.pooledAmountA}
+          />
+          <BalanceItem
+            mint={mintB}
+            pooledAmount={positionInfo?.pooledAmountB}
+          />
         </Box>
       </Box>
     </Box>

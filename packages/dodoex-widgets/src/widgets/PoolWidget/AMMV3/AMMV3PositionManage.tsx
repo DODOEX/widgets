@@ -1,3 +1,4 @@
+import { CLMM } from '@dodoex/api';
 import {
   Box,
   TabPanel,
@@ -5,21 +6,22 @@ import {
   TabsButtonGroup,
   useTheme,
 } from '@dodoex/components';
-import { Error } from '@dodoex/icons';
 import { t } from '@lingui/macro';
+import { ApiV3Token, TxVersion } from '@raydium-io/raydium-sdk-v2';
+import { PublicKey } from '@solana/web3.js';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
-import { useMemo, useReducer, useState } from 'react';
+import BN from 'bn.js';
+import Decimal from 'decimal.js';
+import { useEffect, useMemo, useReducer, useState } from 'react';
 import Dialog from '../../../components/Dialog';
 import { CardPlusConnected } from '../../../components/Swap/components/TokenCard';
 import TokenLogo from '../../../components/TokenLogo';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { useRaydiumSDKContext } from '../../../hooks/raydium-sdk-V2/RaydiumSDKContext';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useSubmission } from '../../../hooks/Submission';
-import { OpCode } from '../../../hooks/Submission/spec';
 import { ExecutionResult, MetadataFlag } from '../../../hooks/Submission/types';
-import { TokenInfo } from '../../../hooks/Token';
-import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
 import { formatTokenAmountNumber } from '../../../utils';
 import { SliderPercentageCard } from '../PoolOperate/components/SliderPercentageCard';
 import SlippageSetting, {
@@ -34,31 +36,22 @@ import { PositionSelectedRangePreview } from './components/PositionSelectedRange
 import { RemoveButton } from './components/RemoveButton';
 import { ReviewModal } from './components/ReviewModal';
 import { useDerivedPositionInfo } from './hooks/useDerivedPositionInfo';
-import { useDerivedV3BurnInfo } from './hooks/useDerivedV3BurnInfo';
+import { useTokenInfo } from './hooks/useTokenInfo';
 import { useV3DerivedMintInfo } from './hooks/useV3DerivedMintInfo';
 import { useV3MintActionHandlers } from './hooks/useV3MintActionHandlers';
-import { useV3PositionFees } from './hooks/useV3PositionFees';
-import { useV3PositionFromTokenId } from './hooks/useV3Positions';
-import { reducer } from './reducer';
-import {
-  ChainId,
-  Currency,
-  CurrencyAmount,
-  NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
-} from './sdks/sdk-core';
+import { useV3PositionFromNFTMint } from './hooks/useV3PositionFromNFTMint';
+import { reducer, Types } from './reducer';
 import { FeeAmount } from './sdks/v3-sdk/constants';
-import { NonfungiblePositionManager } from './sdks/v3-sdk/nonfungiblePositionManager';
-import { Bound, Field, OperateType } from './types';
-import { buildCurrency, convertBackToTokenInfo } from './utils';
+import { Field, OperateType } from './types';
 import { maxAmountSpend } from './utils/maxAmountSpend';
-import { toSlippagePercent } from './utils/slippage';
+import { Error as ErrorIcon } from '@dodoex/icons';
 
 const RewardItem = ({
-  token,
-  amount,
+  mint,
+  rewardAmountOwed,
 }: {
-  token: Currency | undefined;
-  amount: CurrencyAmount<Currency> | undefined;
+  mint: ApiV3Token | undefined;
+  rewardAmountOwed: BN | undefined;
 }) => {
   const theme = useTheme();
   return (
@@ -73,22 +66,22 @@ const RewardItem = ({
       }}
     >
       <TokenLogo
-        address={token?.address ?? ''}
-        chainId={token?.chainId}
+        address={mint?.address ?? ''}
+        chainId={mint?.chainId}
         noShowChain
         width={24}
         height={24}
         marginRight={0}
       />
-      <Box>{token?.symbol}</Box>
+      <Box>{mint?.symbol}</Box>
       <Box
         sx={{
           ml: 'auto',
         }}
       >
         {formatTokenAmountNumber({
-          input: amount?.toSignificant(),
-          decimals: token?.decimals,
+          input: rewardAmountOwed?.toString(),
+          decimals: mint?.decimals,
         })}
       </Box>
     </Box>
@@ -96,20 +89,20 @@ const RewardItem = ({
 };
 
 export interface AMMV3PositionManageProps {
-  chainId: ChainId;
-  baseToken: TokenInfo;
-  quoteToken: TokenInfo;
+  mint1Address: string;
+  mint2Address: string;
   feeAmount: FeeAmount;
-  tokenId: string;
+  poolId: string;
+  nftMint: string;
   onClose: (() => void) | undefined;
 }
 
 export const AMMV3PositionManage = ({
-  chainId,
-  baseToken,
-  quoteToken,
+  mint1Address,
+  mint2Address,
   feeAmount,
-  tokenId,
+  poolId,
+  nftMint,
   onClose,
 }: AMMV3PositionManageProps) => {
   const { isMobile } = useWidgetDevice();
@@ -117,101 +110,90 @@ export const AMMV3PositionManage = ({
   const submission = useSubmission();
   const queryClient = useQueryClient();
 
-  const { account } = useWalletInfo();
+  const { account, chainId } = useWalletInfo();
+  const raydium = useRaydiumSDKContext();
 
-  const { position: existingPositionDetails, loading: positionLoading } =
-    useV3PositionFromTokenId(tokenId, chainId);
-  const hasExistingPosition = !!existingPositionDetails && !positionLoading;
-  const { position: existingPosition } = useDerivedPositionInfo(
-    existingPositionDetails,
-    baseToken,
-    quoteToken,
-  );
+  const { position: existingPosition } = useV3PositionFromNFTMint({
+    chainId,
+    nftMint,
+    poolId,
+  });
+
+  const { positionInfo, pool } = useDerivedPositionInfo({
+    position: existingPosition,
+  });
 
   const [operateType, setOperateType] = useState<OperateType>('stake');
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
   const [sliderPercentage, setSliderPercentage] =
     useState(initSliderPercentage);
 
+  const defaultMint1 = useTokenInfo({
+    mint: mint1Address,
+    chainId,
+  });
+  const defaultMint2 = useTokenInfo({
+    mint: mint2Address,
+    chainId,
+  });
+
   const [state, dispatch] = useReducer<typeof reducer>(reducer, {
-    baseToken: buildCurrency(baseToken),
-    quoteToken: buildCurrency(quoteToken),
+    mint1: defaultMint1,
+    mint2: defaultMint2,
     feeAmount,
+    selectedMintIndex: 0,
     independentField: Field.DEPOSIT_1,
     typedValue: '',
     startPriceTypedValue: '',
     leftRangeTypedValue: '',
     rightRangeTypedValue: '',
   });
+  useEffect(() => {
+    if (!defaultMint1) {
+      return;
+    }
+    dispatch({
+      type: Types.UpdateDefaultMint1,
+      payload: defaultMint1,
+    });
+  }, [defaultMint1]);
+  useEffect(() => {
+    if (!defaultMint2) {
+      return;
+    }
+    dispatch({
+      type: Types.UpdateDefaultMint2,
+      payload: defaultMint2,
+    });
+  }, [defaultMint2]);
 
-  const { independentField, typedValue, startPriceTypedValue } = state;
+  const { independentField, typedValue } = state;
+
+  const { slipper, setSlipper, slipperValue } = useSlipper({
+    type: CLMM,
+  });
 
   const {
-    pool,
-    ticks,
+    mintA,
+    mintB,
     dependentField,
-    price,
-    pricesAtTicks,
-    pricesAtLimit,
     parsedAmounts,
-    currencyBalances,
+    depositBalances,
     position,
-    noLiquidity,
-    currencies,
+    mints,
     errorMessage,
-    invalidPool,
     invalidRange,
     outOfRange,
     depositADisabled,
     depositBDisabled,
-    invertPrice,
     ticksAtLimit,
-    isTaxed,
-  } = useV3DerivedMintInfo({ state, existingPosition });
+  } = useV3DerivedMintInfo({ state, existingPosition, slipperValue });
 
-  const {
-    position: positionSDK,
-    liquidityPercentage,
-    liquidityValue0,
-    liquidityValue1,
-    feeValue0: feeValue0Remove,
-    feeValue1: feeValue1Remove,
-    error,
-  } = useDerivedV3BurnInfo({
-    position: existingPositionDetails,
-    asWETH: undefined,
-    percent: sliderPercentage,
-    baseToken: state.baseToken,
-    quoteToken: state.quoteToken,
-  });
-  const removed = existingPositionDetails?.liquidity === '0';
+  const removed =
+    existingPosition?.liquidity && existingPosition.liquidity.eq(new BN(0));
 
-  // fees
-  const [feeValue0, feeValue1] = useV3PositionFees({
-    pool: pool ?? undefined,
-    tokenId,
-    asWETH: false,
-    chainId,
-  });
-  const inverted = false;
-  const feeValueUpper = inverted ? feeValue0 : feeValue1;
-  const feeValueLower = inverted ? feeValue1 : feeValue0;
-
-  const formattedPrice = useMemo(() => {
-    return (invertPrice ? price?.invert() : price)?.toSignificant();
-  }, [invertPrice, price]);
-
-  const {
-    onFieldAInput,
-    onFieldBInput,
-    onLeftRangeInput,
-    onRightRangeInput,
-    onStartPriceInput,
-  } = useV3MintActionHandlers({ noLiquidity, dispatch });
-
-  const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
-    address: undefined,
-    type: 'AMMV3',
+  const { onField1Input, onField2Input } = useV3MintActionHandlers({
+    dispatch,
   });
 
   const isValid = !errorMessage && !invalidRange;
@@ -220,224 +202,233 @@ export const AMMV3PositionManage = ({
   const formattedAmounts = useMemo(() => {
     return {
       [independentField]: typedValue,
-      [dependentField]: parsedAmounts[dependentField]?.toSignificant(6) ?? '',
+      [dependentField]: parsedAmounts[dependentField]?.toString() ?? '',
     };
   }, [dependentField, independentField, parsedAmounts, typedValue]);
 
   // get the max amounts user can add
-  const maxAmounts: { [field in Field]?: CurrencyAmount<Currency> } =
-    useMemo(() => {
-      return [Field.DEPOSIT_1, Field.DEPOSIT_2].reduce((accumulator, field) => {
-        return {
-          ...accumulator,
-          [field]: maxAmountSpend(currencyBalances[field]),
-        };
-      }, {});
-    }, [currencyBalances]);
-
-  const approvalA = useTokenStatus(
-    convertBackToTokenInfo(parsedAmounts[Field.DEPOSIT_1]?.currency),
-    {
-      contractAddress: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
-      overrideBalance: currencyBalances[Field.DEPOSIT_1]
-        ? new BigNumber(currencyBalances[Field.DEPOSIT_1].toSignificant())
-        : undefined,
-      amount: parsedAmounts[Field.DEPOSIT_1]
-        ? new BigNumber(parsedAmounts[Field.DEPOSIT_1].toSignificant())
-        : undefined,
-    },
-  );
-  const approvalB = useTokenStatus(
-    convertBackToTokenInfo(parsedAmounts[Field.DEPOSIT_2]?.currency),
-    {
-      contractAddress: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
-      overrideBalance: currencyBalances[Field.DEPOSIT_2]
-        ? new BigNumber(currencyBalances[Field.DEPOSIT_2].toSignificant())
-        : undefined,
-      amount: parsedAmounts[Field.DEPOSIT_2]
-        ? new BigNumber(parsedAmounts[Field.DEPOSIT_2].toSignificant())
-        : undefined,
-    },
-  );
-
-  const { [Bound.LOWER]: tickLower, [Bound.UPPER]: tickUpper } = ticks;
-  const { [Bound.LOWER]: priceLower, [Bound.UPPER]: priceUpper } =
-    pricesAtTicks;
+  const maxAmounts: { [field in Field]?: BigNumber } = [
+    Field.DEPOSIT_1,
+    Field.DEPOSIT_2,
+  ].reduce((accumulator, field) => {
+    return {
+      ...accumulator,
+      [field]: maxAmountSpend(depositBalances[field]),
+    };
+  }, {});
 
   const onAddMutation = useMutation({
     mutationFn: async () => {
-      if (!account || !chainId || !position) {
-        return;
+      if (!account) {
+        throw new Error('account is undefined');
       }
 
-      if (!state.baseToken || !state.quoteToken) {
-        return;
+      if (!raydium) {
+        throw new Error('raydium is undefined');
       }
 
-      const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
-
-      const useNative = state.baseToken.isNative
-        ? state.baseToken
-        : state.quoteToken.isNative
-          ? state.quoteToken
-          : undefined;
-
-      try {
-        const { calldata, value } =
-          NonfungiblePositionManager.addCallParameters(position, {
-            tokenId,
-            slippageTolerance: toSlippagePercent(slipperValue * 100),
-            deadline: deadline.toString(),
-            useNative,
-          });
-        let txn: { to: string; data: string; value: string } = {
-          to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
-          data: calldata,
-          value,
-        };
-
-        const succ = await submission.execute(
-          t`Add Liquidity`,
-          {
-            opcode: OpCode.TX,
-            ...txn,
-          },
-          {
-            early: false,
-            metadata: {
-              [MetadataFlag.addAMMV3Pool]: '1',
-            },
-          },
-        );
-        if (succ === ExecutionResult.Success) {
-          setShowConfirm(false);
-          setTimeout(() => {
-            onClose?.();
-          }, 100);
-        }
-        queryClient.invalidateQueries({
-          queryKey: ['ammv3'],
-          refetchType: 'all',
-        });
-      } catch (error) {
-        console.error('onAddMutation', error);
+      if (!existingPosition) {
+        throw new Error('existingPosition is undefined');
       }
+
+      if (!pool?.poolInfo) {
+        throw new Error('poolInfo is undefined');
+      }
+
+      if (!position) {
+        throw new Error('position is undefined');
+      }
+
+      const { execute } = await raydium.clmm.increasePositionFromLiquidity({
+        poolInfo: pool.poolInfo,
+        poolKeys: pool.poolKeys,
+        ownerPosition: existingPosition,
+        ownerInfo: {
+          useSOLBalance: true,
+        },
+        liquidity: new BN(
+          new Decimal(position.liquidity.toString())
+            .mul(1 - slipperValue)
+            .toFixed(0),
+        ),
+        amountMaxA: new BN(
+          new Decimal(typedValue || '0')
+            .mul(10 ** pool.poolInfo.mintA.decimals)
+            .toFixed(0),
+        ),
+        amountMaxB: new BN(
+          position.amountB
+            .multipliedBy(1 + slipperValue)
+            .multipliedBy(new BigNumber(10 ** pool.poolInfo.mintB.decimals))
+            .toFixed(0),
+        ),
+        checkCreateATAOwner: true,
+        txVersion: TxVersion.LEGACY,
+        // optional: set up priority fee here
+        // computeBudgetConfig: {
+        //   units: 600000,
+        //   microLamports: 46591500,
+        // },
+
+        // optional: add transfer sol to tip account instruction. e.g sent tip to jito
+        // txTipConfig: {
+        //   address: new PublicKey('96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5'),
+        //   amount: new BN(10000000), // 0.01 sol
+        // },
+      });
+
+      const txResult = await submission.executeCustom({
+        brief: t`Add Liquidity`,
+        metadata: {
+          [MetadataFlag.addAMMV3Pool]: true,
+        },
+        handler: async (params) => {
+          const { txId } = await execute({ sendAndConfirm: true });
+          params.onSuccess(txId);
+        },
+      });
+      if (txResult === ExecutionResult.Success) {
+        setShowConfirm(false);
+        setTimeout(() => {
+          onClose?.();
+        }, 100);
+      }
+      queryClient.invalidateQueries({
+        queryKey: ['clmm'],
+        refetchType: 'all',
+      });
+    },
+    onError: (error) => {
+      console.error(error);
     },
   });
 
   const onRemoveMutation = useMutation({
     mutationFn: async () => {
-      if (
-        !account ||
-        !chainId ||
-        !positionSDK ||
-        !liquidityPercentage ||
-        !liquidityValue0 ||
-        !liquidityValue1
-      ) {
-        return;
+      if (!account) {
+        throw new Error('account is undefined');
       }
 
-      const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
-
-      try {
-        const { calldata, value } =
-          NonfungiblePositionManager.removeCallParameters(positionSDK, {
-            tokenId: tokenId.toString(),
-            liquidityPercentage,
-            slippageTolerance: toSlippagePercent(slipperValue * 100),
-            deadline: deadline.toString(),
-            collectOptions: {
-              expectedCurrencyOwed0:
-                feeValue0Remove ??
-                CurrencyAmount.fromRawAmount(liquidityValue0.currency, 0),
-              expectedCurrencyOwed1:
-                feeValue1Remove ??
-                CurrencyAmount.fromRawAmount(liquidityValue1.currency, 0),
-              recipient: account,
-            },
-          });
-        let txn: { to: string; data: string; value: string } = {
-          to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
-          data: calldata,
-          value,
-        };
-
-        const succ = await submission.execute(
-          t`Remove Liquidity`,
-          {
-            opcode: OpCode.TX,
-            ...txn,
-          },
-          {
-            early: false,
-            metadata: {
-              [MetadataFlag.removeAMMV3Pool]: '1',
-            },
-          },
-        );
-        if (succ === ExecutionResult.Success) {
-          setTimeout(() => {
-            onClose?.();
-          }, 100);
-        }
-        queryClient.invalidateQueries({
-          queryKey: ['ammv3'],
-          refetchType: 'all',
-        });
-      } catch (error) {
-        console.error('onRemoveMutation', error);
+      if (!raydium) {
+        throw new Error('raydium is undefined');
       }
+
+      if (!existingPosition) {
+        throw new Error('existingPosition is undefined');
+      }
+
+      if (!pool?.poolInfo) {
+        throw new Error('poolInfo is undefined');
+      }
+      const newLiquidity = existingPosition.liquidity.mul(
+        new BN(1).sub(new BN(sliderPercentage).div(new BN(100))),
+      );
+      console.log(
+        'v2 newLiquidity',
+        existingPosition.liquidity.toString(),
+        sliderPercentage,
+        new BN(1).sub(new BN(sliderPercentage).div(new BN(100))).toString(),
+        newLiquidity.toString(),
+      );
+      const closePosition = newLiquidity.lte(new BN(0));
+      const { execute } = await raydium.clmm.decreaseLiquidity({
+        poolInfo: pool.poolInfo,
+        poolKeys: pool.poolKeys,
+        ownerPosition: existingPosition,
+        ownerInfo: {
+          useSOLBalance: true,
+          // if liquidity wants to decrease doesn't equal to position liquidity, set closePosition to false
+          closePosition,
+        },
+        liquidity: newLiquidity,
+        amountMinA: new BN(0),
+        amountMinB: new BN(0),
+        txVersion: TxVersion.LEGACY,
+        // optional: set up priority fee here
+        // computeBudgetConfig: {
+        //   units: 600000,
+        //   microLamports: 46591500,
+        // },
+        // optional: add transfer sol to tip account instruction. e.g sent tip to jito
+        // txTipConfig: {
+        //   address: new PublicKey('96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5'),
+        //   amount: new BN(10000000), // 0.01 sol
+        // },
+      });
+
+      const txResult = await submission.executeCustom({
+        brief: t`Remove Liquidity`,
+        metadata: {
+          [MetadataFlag.removeAMMV3Pool]: true,
+        },
+        handler: async (params) => {
+          const { txId } = await execute({ sendAndConfirm: true });
+          params.onSuccess(txId);
+        },
+      });
+
+      if (txResult === ExecutionResult.Success) {
+        setTimeout(() => {
+          onClose?.();
+        }, 100);
+      }
+      queryClient.invalidateQueries({
+        queryKey: ['clmm'],
+        refetchType: 'all',
+      });
+    },
+    onError: (error) => {
+      console.error('onRemoveMutation', error);
     },
   });
 
   const onClaimMutation = useMutation({
     mutationFn: async () => {
-      if (!account || !chainId || !pool) {
-        return;
+      if (!raydium) {
+        throw new Error('raydium is undefined');
       }
 
-      try {
-        const { calldata, value } =
-          NonfungiblePositionManager.collectCallParameters({
-            tokenId: tokenId.toString(),
-            expectedCurrencyOwed0:
-              feeValue0 ?? CurrencyAmount.fromRawAmount(pool.token0, 0),
-            expectedCurrencyOwed1:
-              feeValue1 ?? CurrencyAmount.fromRawAmount(pool.token1, 0),
-            recipient: account,
-          });
-        let txn: { to: string; data: string; value: string } = {
-          to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
-          data: calldata,
-          value,
-        };
-
-        const succ = await submission.execute(
-          t`Claim Rewards`,
-          {
-            opcode: OpCode.TX,
-            ...txn,
-          },
-          {
-            early: false,
-            metadata: {
-              [MetadataFlag.claimAMMV3Pool]: '1',
-            },
-          },
-        );
-        if (succ === ExecutionResult.Success) {
-          setTimeout(() => {
-            onClose?.();
-          }, 100);
-        }
-        queryClient.invalidateQueries({
-          queryKey: ['ammv3'],
-          refetchType: 'all',
-        });
-      } catch (error) {
-        console.error('onClaimMutation', error);
+      if (!pool?.poolInfo) {
+        throw new Error('poolInfo is undefined');
       }
+
+      const { execute } = await raydium.clmm.collectRewards({
+        poolInfo: pool.poolInfo,
+        ownerInfo: {
+          useSOLBalance: true,
+        },
+        rewardMints: pool.poolInfo.rewardDefaultInfos.map(
+          (info) => new PublicKey(info.mint.address),
+        ),
+        associatedOnly: true,
+        checkCreateATAOwner: true,
+        computeBudgetConfig: undefined,
+        txTipConfig: undefined,
+      });
+
+      const txResult = await submission.executeCustom({
+        brief: t`Claim Rewards`,
+        metadata: {
+          [MetadataFlag.claimAMMV3Pool]: true,
+        },
+        handler: async (params) => {
+          const { txId } = await execute();
+          params.onSuccess(txId);
+        },
+      });
+
+      if (txResult === ExecutionResult.Success) {
+        setTimeout(() => {
+          onClose?.();
+        }, 100);
+      }
+      queryClient.invalidateQueries({
+        queryKey: ['clmm'],
+        refetchType: 'all',
+      });
+    },
+    onError: (error) => {
+      console.error('onClaimMutation', error);
     },
   });
 
@@ -491,7 +482,7 @@ export const AMMV3PositionManage = ({
               }}
             >
               <Box
-                component={Error}
+                component={ErrorIcon}
                 sx={{
                   width: 16,
                   height: 16,
@@ -504,14 +495,17 @@ export const AMMV3PositionManage = ({
           ) : undefined}
         </Box>
 
-        {hasExistingPosition && existingPosition && (
-          <Box sx={{ mx: 20, mb: 16 }}>
-            <PositionAmountPreview
-              position={existingPosition}
-              inRange={!outOfRange}
-            />
-          </Box>
-        )}
+        <Box sx={{ mx: 20, mb: 16 }}>
+          <PositionAmountPreview
+            existingPosition={existingPosition}
+            positionInfo={positionInfo}
+            inRange={!outOfRange}
+            removed={removed}
+            mintA={mintA}
+            mintB={mintB}
+            feeAmount={feeAmount}
+          />
+        </Box>
 
         <Tabs
           value={operateType}
@@ -527,10 +521,10 @@ export const AMMV3PositionManage = ({
             }}
           />
           <TabPanel value="stake">
-            {hasExistingPosition && existingPosition && (
+            {position && (
               <Box sx={{ mt: 16, mx: 20 }}>
                 <PositionSelectedRangePreview
-                  position={existingPosition}
+                  position={position}
                   title={t`Selected Range`}
                   ticksAtLimit={ticksAtLimit}
                 />
@@ -560,19 +554,19 @@ export const AMMV3PositionManage = ({
               <Box>
                 <CurrencyInputPanel
                   value={formattedAmounts[Field.DEPOSIT_1]}
-                  onUserInput={onFieldAInput}
+                  onUserInput={onField1Input}
                   maxAmount={maxAmounts[Field.DEPOSIT_1]}
-                  balance={currencyBalances[Field.DEPOSIT_1]}
-                  mint={currencies[Field.DEPOSIT_1] ?? null}
+                  balance={depositBalances[Field.DEPOSIT_1]}
+                  mint={mints[Field.DEPOSIT_1] ?? null}
                   locked={depositADisabled}
                 />
                 <CardPlusConnected />
                 <CurrencyInputPanel
                   value={formattedAmounts[Field.DEPOSIT_2]}
-                  onUserInput={onFieldBInput}
+                  onUserInput={onField2Input}
                   maxAmount={maxAmounts[Field.DEPOSIT_2]}
-                  balance={currencyBalances[Field.DEPOSIT_2]}
-                  mint={currencies[Field.DEPOSIT_2] ?? null}
+                  balance={depositBalances[Field.DEPOSIT_2]}
+                  mint={mints[Field.DEPOSIT_2] ?? null}
                   locked={depositBDisabled}
                 />
               </Box>
@@ -580,7 +574,7 @@ export const AMMV3PositionManage = ({
                 value={slipper}
                 onChange={setSlipper}
                 disabled={false}
-                type="AMMV3"
+                type={CLMM}
               />
             </Box>
 
@@ -597,12 +591,7 @@ export const AMMV3PositionManage = ({
             >
               <Buttons
                 chainId={chainId}
-                approvalA={approvalA}
-                approvalB={approvalB}
-                parsedAmounts={parsedAmounts}
                 isValid={isValid}
-                depositADisabled={depositADisabled}
-                depositBDisabled={depositBDisabled}
                 errorMessage={errorMessage}
                 setShowConfirm={setShowConfirm}
               />
@@ -640,7 +629,7 @@ export const AMMV3PositionManage = ({
                 value={slipper}
                 onChange={setSlipper}
                 disabled={false}
-                type="AMMV3"
+                type={CLMM}
               />
             </Box>
             <Box
@@ -681,14 +670,16 @@ export const AMMV3PositionManage = ({
                       color: theme.palette.primary.main,
                     }}
                   >
-                    {liquidityValue0
+                    {positionInfo?.pooledAmountA
                       ? formatTokenAmountNumber({
-                          input: liquidityValue0.toExact(),
-                          decimals: liquidityValue0.currency.decimals,
+                          input: positionInfo.pooledAmountA.multipliedBy(
+                            sliderPercentage / 100,
+                          ),
+                          decimals: mintA?.decimals,
                         })
                       : '-'}
                   </Box>
-                  &nbsp;{liquidityValue0?.currency?.symbol}
+                  &nbsp;{mintA?.symbol}
                 </Box>
                 <Box
                   sx={{
@@ -703,14 +694,16 @@ export const AMMV3PositionManage = ({
                       color: theme.palette.primary.main,
                     }}
                   >
-                    {liquidityValue1
+                    {positionInfo?.pooledAmountB
                       ? formatTokenAmountNumber({
-                          input: liquidityValue1.toExact(),
-                          decimals: liquidityValue1.currency.decimals,
+                          input: positionInfo.pooledAmountB.multipliedBy(
+                            sliderPercentage / 100,
+                          ),
+                          decimals: mintB?.decimals,
                         })
                       : '-'}
                   </Box>
-                  &nbsp;{liquidityValue1?.currency?.symbol}
+                  &nbsp;{mintB?.symbol}
                 </Box>
               </Box>
             </Box>
@@ -728,9 +721,8 @@ export const AMMV3PositionManage = ({
             >
               <RemoveButton
                 chainId={chainId}
-                disabled={removed || sliderPercentage === 0 || !liquidityValue0}
+                disabled={removed || sliderPercentage === 0}
                 removed={removed}
-                error={error}
                 onConfirm={onRemoveMutation.mutate}
                 isLoading={onRemoveMutation.isPending}
               />
@@ -765,14 +757,17 @@ export const AMMV3PositionManage = ({
                   p: 20,
                 }}
               >
-                <RewardItem
-                  token={feeValueUpper?.currency}
-                  amount={feeValueUpper}
-                />
-                <RewardItem
-                  token={feeValueLower?.currency}
-                  amount={feeValueLower}
-                />
+                {pool?.poolInfo.rewardDefaultInfos.map((r, i) => {
+                  const rewardAmountOwed =
+                    existingPosition?.rewardInfos[i].rewardAmountOwed;
+                  return (
+                    <RewardItem
+                      key={r.mint.address}
+                      mint={r.mint}
+                      rewardAmountOwed={rewardAmountOwed}
+                    />
+                  );
+                })}
               </Box>
             </Box>
             <Box
@@ -799,7 +794,11 @@ export const AMMV3PositionManage = ({
             >
               <ClaimButton
                 chainId={chainId}
-                disabled={onClaimMutation.isPending}
+                disabled={
+                  onClaimMutation.isPending ||
+                  !pool?.poolInfo ||
+                  pool?.poolInfo.rewardDefaultInfos.length === 0
+                }
                 onConfirm={onClaimMutation.mutate}
                 isLoading={onClaimMutation.isPending}
               />
@@ -809,39 +808,33 @@ export const AMMV3PositionManage = ({
       </Box>
     );
   }, [
-    approvalA,
-    approvalB,
     chainId,
-    currencies,
-    currencyBalances,
     depositADisabled,
     depositBDisabled,
-    error,
+    depositBalances,
     errorMessage,
     existingPosition,
-    feeValueLower,
-    feeValueUpper,
+    feeAmount,
     formattedAmounts,
-    hasExistingPosition,
     isValid,
-    liquidityValue0,
-    liquidityValue1,
     maxAmounts,
+    mintA,
+    mintB,
+    mints,
     onAddMutation.isPending,
     onAddMutation.mutate,
     onClaimMutation.isPending,
     onClaimMutation.mutate,
     onClose,
-    onFieldAInput,
-    onFieldBInput,
+    onField1Input,
+    onField2Input,
     onRemoveMutation.isPending,
     onRemoveMutation.mutate,
     operateType,
     outOfRange,
-    parsedAmounts,
+    pool?.poolInfo,
     position,
-    priceLower,
-    priceUpper,
+    positionInfo,
     removed,
     setSlipper,
     showConfirm,
@@ -858,7 +851,7 @@ export const AMMV3PositionManage = ({
   if (isMobile) {
     return (
       <Dialog
-        open={baseToken != null && quoteToken != null}
+        open={mintA != null && mintB != null}
         onClose={onClose}
         scope={!isMobile}
         modal={undefined}
