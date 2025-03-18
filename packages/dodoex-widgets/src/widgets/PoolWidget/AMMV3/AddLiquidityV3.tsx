@@ -4,10 +4,11 @@ import { t } from '@lingui/macro';
 import {
   getRecentBlockHash,
   OpenPositionFromBaseExtInfo,
+  printSimulate,
   TxBuilder,
   TxVersion,
 } from '@raydium-io/raydium-sdk-v2';
-import { PublicKey, Signer, Transaction } from '@solana/web3.js';
+import { PublicKey } from '@solana/web3.js';
 import { useMutation } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
@@ -320,7 +321,7 @@ export default function AddLiquidityV3({
         if (signers.length) {
           transaction.sign(...signers);
         }
-
+        printSimulate([transaction]);
         const txs = await clmm.scope.signAllTransactions?.([transaction]);
         if (signers.length) {
           for (const item of txs) {
