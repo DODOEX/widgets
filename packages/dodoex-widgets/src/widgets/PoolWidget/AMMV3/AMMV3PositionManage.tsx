@@ -52,6 +52,7 @@ import { buildCurrency, convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
 import { toSlippagePercent } from './utils/slippage';
 import { CONTRACT_QUERY_KEY } from '@dodoex/api';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
 
 const RewardItem = ({
   token,
@@ -267,6 +268,7 @@ export const AMMV3PositionManage = ({
   const { [Bound.LOWER]: priceLower, [Bound.UPPER]: priceUpper } =
     pricesAtTicks;
 
+  const { deadLine: ddl } = useUserOptions();
   const onAddMutation = useMutation({
     mutationFn: async () => {
       if (!account || !chainId || !position) {
@@ -277,7 +279,7 @@ export const AMMV3PositionManage = ({
         return;
       }
 
-      const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
+      const deadline = Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60);
 
       const useNative = state.baseToken.isNative
         ? state.baseToken
@@ -341,7 +343,7 @@ export const AMMV3PositionManage = ({
         return;
       }
 
-      const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
+      const deadline = Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60);
 
       try {
         const { calldata, value } =

@@ -17,6 +17,7 @@ import { OpCode } from '../../../hooks/Submission/spec';
 import { MetadataFlag } from '../../../hooks/Submission/types';
 import { TokenInfo } from '../../../hooks/Token';
 import { toWei } from '../../../utils';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
 
 export function useAMMV2RemoveLiquidity({
   baseToken,
@@ -41,6 +42,7 @@ export function useAMMV2RemoveLiquidity({
   const { account } = useWalletInfo();
   useLingui();
 
+  const { deadLine: ddl } = useUserOptions();
   return useMutation({
     mutationFn: async () => {
       if (!baseToken || !quoteToken) {
@@ -79,7 +81,7 @@ export function useAMMV2RemoveLiquidity({
         quoteToken.decimals,
       );
       const feeWei = toWei(fee, 4).toString();
-      const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
+      const deadline = Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60);
       try {
         if (baseIsETH) {
           const tokenAddress = quoteToken.address;
