@@ -65,6 +65,7 @@ export function SwapWidget(props: SwapWidgetProps) {
         onPayTokenChange={props.onPayTokenChange}
         onReceiveTokenChange={props.onReceiveTokenChange}
         disabledFiatPrice={props.disabledFiatPrice}
+        powered={props.powered}
       />
     </Widget>
   );

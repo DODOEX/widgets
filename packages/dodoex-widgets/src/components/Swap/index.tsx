@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from '@dodoex/components';
 import { formatTokenAmountNumber } from '../../utils';
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useMemo, useState, useEffect, useCallback, ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   Setting,
@@ -81,6 +81,7 @@ export interface SwapProps {
   onReceiveTokenChange?: (token: TokenInfo) => void;
   disabledFiatPrice?: boolean;
   border?: boolean;
+  powered?: ReactNode;
 }
 
 export function Swap({
@@ -89,6 +90,7 @@ export function Swap({
   onReceiveTokenChange,
   disabledFiatPrice,
   border,
+  powered,
 }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
@@ -1044,7 +1046,8 @@ export function Swap({
         {swapButton}
 
         {/*Footer*/}
-        {noPowerBy ? (
+        {powered}
+        {noPowerBy || !!powered ? (
           ''
         ) : (
           <Box
