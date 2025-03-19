@@ -59,7 +59,7 @@ Primary.args = {
     {
       decimals: 9,
       name: 'SOON Training Token',
-      address: '',
+      address: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
       symbol: 'TRAINING',
       chainId: ChainId.SOON_TESTNET,
     },

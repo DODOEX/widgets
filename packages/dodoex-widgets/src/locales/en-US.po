@@ -716,7 +716,7 @@ msgstr "minutes"
 msgid "You can set the minimum selling price for single-token pools."
 msgstr "You can set the minimum selling price for single-token pools."
 
-#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:671
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:669
 msgid "Invalid price input"
 msgstr "Invalid price input"
 
@@ -1081,7 +1081,7 @@ msgid "The creator of the liquidity pool can adjust the liquidity distribution b
 msgstr "The creator of the liquidity pool can adjust the liquidity distribution by modifying the market-making price parameters. <0>Learn more</0>"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:398
-#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:667
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:665
 msgid "Invalid pair"
 msgstr "Invalid pair"
 
@@ -1717,7 +1717,7 @@ msgid "Back"
 msgstr "Back"
 
 #: src/components/Swap/index.tsx:596
-#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:678
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:676
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
@@ -1835,8 +1835,8 @@ msgid "Add"
 msgstr "Add"
 
 #: src/components/TokenPairStatusButton.tsx:25
-#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:687
-#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:691
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:685
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:689
 msgid "Insufficient {0} balance"
 msgstr "Insufficient {0} balance"
 
@@ -1956,7 +1956,7 @@ msgstr "Traders"
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "Unable to SETTLE during the cooling-off period"
 
-#: src/components/Swap/components/TokenCard/index.tsx:305
+#: src/components/Swap/components/TokenCard/index.tsx:294
 msgid "Buy"
 msgstr "Buy"
 
@@ -1969,7 +1969,7 @@ msgstr "Total Rewards"
 #: src/components/ConnectWallet/NeedConnectButton.tsx:53
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:55
 #: src/widgets/PoolWidget/AMMV3/hooks/useDerivedV3BurnInfo.tsx:81
-#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:663
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:661
 msgid "Connect to a wallet"
 msgstr "Connect to a wallet"
 

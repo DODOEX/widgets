@@ -82,11 +82,9 @@ export function useV3DerivedMintInfo({
   // balances
   const deposit1Balance = useTokenBalance({
     mint: deposit1?.address,
-    chainId: deposit1?.chainId as ChainId,
   });
   const deposit2Balance = useTokenBalance({
     mint: deposit2?.address,
-    chainId: deposit2?.chainId as ChainId,
   });
 
   const depositBalances: { [field in Field]: BigNumber | undefined } =

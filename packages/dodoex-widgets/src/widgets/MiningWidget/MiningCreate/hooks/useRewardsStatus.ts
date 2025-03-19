@@ -25,7 +25,6 @@ export function useRewardsStatus({
 
   const tokenInfoMap = useFetchTokens({
     tokenList: needQueryTokens,
-    chainId,
   });
 
   const rewardsStatus: RewardStatus[] = useMemo(

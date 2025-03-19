@@ -716,7 +716,7 @@ msgstr ""
 msgid "You can set the minimum selling price for single-token pools."
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:671
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:669
 msgid "Invalid price input"
 msgstr ""
 
@@ -1081,7 +1081,7 @@ msgid "The creator of the liquidity pool can adjust the liquidity distribution b
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:398
-#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:667
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:665
 msgid "Invalid pair"
 msgstr ""
 
@@ -1717,7 +1717,7 @@ msgid "Back"
 msgstr ""
 
 #: src/components/Swap/index.tsx:596
-#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:678
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:676
 msgid "Enter an amount"
 msgstr "输入代币数量"
 
@@ -1835,8 +1835,8 @@ msgid "Add"
 msgstr ""
 
 #: src/components/TokenPairStatusButton.tsx:25
-#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:687
-#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:691
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:685
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:689
 msgid "Insufficient {0} balance"
 msgstr ""
 
@@ -1956,7 +1956,7 @@ msgstr ""
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "在冷静期无法进行清算"
 
-#: src/components/Swap/components/TokenCard/index.tsx:305
+#: src/components/Swap/components/TokenCard/index.tsx:294
 msgid "Buy"
 msgstr ""
 
@@ -1969,7 +1969,7 @@ msgstr ""
 #: src/components/ConnectWallet/NeedConnectButton.tsx:53
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:55
 #: src/widgets/PoolWidget/AMMV3/hooks/useDerivedV3BurnInfo.tsx:81
-#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:663
+#: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:661
 msgid "Connect to a wallet"
 msgstr "连接钱包"
 

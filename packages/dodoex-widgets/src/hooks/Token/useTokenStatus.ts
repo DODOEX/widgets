@@ -28,7 +28,7 @@ export function useTokenStatus(
     skipQuery?: boolean;
   } = {},
 ) {
-  const { account, isSolana } = useWalletInfo();
+  const { account } = useWalletInfo();
   const [chainId, proxyContractAddress] = React.useMemo(() => {
     if (!token) return [undefined, contractAddress];
     return [
@@ -39,7 +39,7 @@ export function useTokenStatus(
 
   const { fetchTokenBalance } = useSolanaConnection();
   const svmTokenQuery = useQuery({
-    queryKey: ['token', 'balance', chainId, account, token?.address],
+    queryKey: ['token', 'balance-allowance', token?.address],
     queryFn: async () => {
       if (!token) {
         return undefined;
@@ -51,7 +51,7 @@ export function useTokenStatus(
         allowance: BIG_ALLOWANCE,
       };
     },
-    enabled: !!account && isSolana && !!token,
+    enabled: !!token,
   });
   const tokenQuery = svmTokenQuery;
   const { runningRequests } = useInflights();

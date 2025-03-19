@@ -29,8 +29,8 @@ export function useSolanaConnection() {
 
   const fetchTokenBalance = async (address: string) => {
     if (
-      address.toLocaleLowerCase() ===
-      basicTokenMap[ChainId.SOON_TESTNET]?.address?.toLocaleLowerCase()
+      address.toLowerCase() ===
+      basicTokenMap[ChainId.SOON_TESTNET]?.address?.toLowerCase()
     ) {
       return fetchSOLBalance();
     }

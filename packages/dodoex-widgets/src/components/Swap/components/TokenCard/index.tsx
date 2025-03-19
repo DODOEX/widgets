@@ -18,7 +18,6 @@ import {
   useBalanceUpdateLoading,
 } from '../../../../hooks/Submission/useBalanceUpdateLoading';
 import { TokenInfo } from '../../../../hooks/Token';
-import { useFetchTokens } from '../../../../hooks/contract';
 import { useSolanaConnection } from '../../../../hooks/solana/useSolanaConnection';
 import { TokenPickerProps } from '../../../TokenPicker';
 import { useUserOptions } from '../../../UserOptionsProvider';
@@ -139,21 +138,14 @@ export function TokenCard({
   checkLogBalance,
   notTokenPickerModal,
 }: TokenCardProps) {
-  const { account, isSolana } = useWalletInfo();
+  const { account } = useWalletInfo();
   const theme = useTheme();
   const { gotoBuyToken } = useUserOptions();
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
 
   const { fetchTokenBalance } = useSolanaConnection();
   const svmTokenQuery = useQuery({
-    queryKey: [
-      'token',
-      'getFetchTokenQuery',
-      chainId,
-      account?.toLocaleLowerCase(),
-      undefined,
-      token?.address,
-    ],
+    queryKey: ['token', 'balance-allowance', token?.address],
     queryFn: async () => {
       if (!token) return;
       const result = await fetchTokenBalance(token.address);
@@ -163,8 +155,9 @@ export function TokenCard({
         allowance: BIG_ALLOWANCE,
       };
     },
-    enabled: !!account && isSolana && !!token,
+    enabled: !!token,
   });
+
   const tokenQuery = svmTokenQuery;
   const balance = overrideBalance ?? tokenQuery.data?.balance ?? null;
   const { isTokenLoading } = useBalanceUpdateLoading();
@@ -178,10 +171,6 @@ export function TokenCard({
       balanceLoading = isTokenLoading(token.address, balance);
     }
   }
-  useFetchTokens({
-    tokenList: token ? [token] : [],
-    chainId: token?.chainId,
-  });
 
   const [percentage, setPercentage] = useState(0);
   const percentageSetValue = useRef('');

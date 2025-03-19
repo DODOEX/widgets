@@ -2,9 +2,7 @@ import { useQueries } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { isEqual } from 'lodash';
 import { useEffect, useState } from 'react';
-import { tokenApi } from '../../constants/api';
 import { BIG_ALLOWANCE } from '../../constants/token';
-import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { useSolanaConnection } from '../solana/useSolanaConnection';
 import { TokenList } from '../Token';
 
@@ -18,31 +16,18 @@ type TokenInfoMap = Map<
 
 export default function useFetchTokens({
   tokenList,
-  blockNumber,
-  chainId,
-  skip,
 }: {
   tokenList?: TokenList;
-  blockNumber?: number;
-  chainId?: number;
-  skip?: boolean;
 }) {
-  const { account } = useWalletInfo();
   const [tokenInfoMap, setTokenInfoMap] = useState<TokenInfoMap>(new Map());
 
   const { fetchTokenBalance } = useSolanaConnection();
+
   const tokensQueries = useQueries({
     queries:
       tokenList?.map((token) => ({
-        queryKey: [
-          'token',
-          'getFetchTokenQuery',
-          chainId,
-          account?.toLocaleLowerCase(),
-          undefined,
-          token.address,
-        ],
-        queryFn: (async () => {
+        queryKey: ['token', 'balance-allowance', token.address],
+        queryFn: async () => {
           const result = await fetchTokenBalance(token.address);
           return {
             ...token,
@@ -50,7 +35,7 @@ export default function useFetchTokens({
             balance: result.amount,
             allowance: BIG_ALLOWANCE,
           };
-        }) as ReturnType<typeof tokenApi.getFetchTokenQuery>['queryFn'],
+        },
       })) ?? [],
     combine: (results) => {
       return {
@@ -70,7 +55,7 @@ export default function useFetchTokens({
     if (!isEqual(result, tokenInfoMap)) {
       setTokenInfoMap(result);
     }
-  }, [JSON.stringify(tokensQueries.data)]);
+  }, [tokenInfoMap, tokensQueries.data]);
 
   return tokenInfoMap;
 }
