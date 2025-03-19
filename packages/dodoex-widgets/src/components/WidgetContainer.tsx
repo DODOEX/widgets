@@ -17,7 +17,6 @@ const WidgetContainer = React.forwardRef(function WidgetContainer(
       sx={{
         flex: 1,
         overflowY: 'auto',
-        backgroundColor: 'background.default',
         ...(isMobile
           ? {
               padding: 0,
