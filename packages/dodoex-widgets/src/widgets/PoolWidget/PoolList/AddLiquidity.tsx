@@ -804,7 +804,7 @@ export default function AddLiquidityList({
           ...(isMobile
             ? {}
             : {
-                px: 20,
+                mx: 20,
                 borderBottomWidth: 1,
               }),
         }}

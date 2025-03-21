@@ -145,7 +145,7 @@ export default function Overview({
           sx={{
             borderRadius: 8,
             p: 16,
-            backgroundColor: 'background.paper',
+            backgroundColor: '#F4F0EC',
           }}
         >
           <Box

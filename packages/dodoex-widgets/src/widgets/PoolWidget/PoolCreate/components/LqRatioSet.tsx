@@ -54,8 +54,8 @@ export function LqRatioSet({
           mt: isWaiting ? 0 : 20,
           padding: 16,
           borderRadius: 8,
-          backgroundColor: theme.palette.background.paper,
           width: '50%',
+          backgroundColor: '#F4F0EC',
           opacity: isWaiting ? 0.5 : 1,
         }}
       >

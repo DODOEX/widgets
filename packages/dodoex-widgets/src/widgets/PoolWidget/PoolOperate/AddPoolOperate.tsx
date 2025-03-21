@@ -30,6 +30,7 @@ import {
   getUniswapV2Router02ContractAddressByChainId,
   getUniswapV2Router02FixedFeeContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
+import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
 
 export function AddPoolOperate({
   submittedBack: submittedBackProps,
@@ -72,9 +73,12 @@ export function AddPoolOperate({
     type: pool?.type,
   });
 
+  const prevPool = usePrevious(pool);
   React.useEffect(() => {
-    reset();
-    resetSlipper();
+    if (pool?.address !== prevPool?.address) {
+      reset();
+      resetSlipper();
+    }
   }, [pool]);
 
   const canOperate = PoolApi.utils.canOperateLiquidity(

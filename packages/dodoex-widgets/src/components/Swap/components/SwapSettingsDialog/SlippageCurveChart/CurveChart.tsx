@@ -59,7 +59,7 @@ function CurveChart({
           sx={{
             typography: 'h6',
             '& .recharts-cartesian-axis text': {
-              fill: theme.palette.background.paperContrast,
+              fill: 'transparent',
             },
           }}
         >

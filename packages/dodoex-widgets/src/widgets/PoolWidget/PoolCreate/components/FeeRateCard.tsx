@@ -18,8 +18,8 @@ export function FeeRateCard({
       sx={{
         padding: 16,
         borderRadius: 8,
-        backgroundColor: theme.palette.background.paper,
         width: '50%',
+        backgroundColor: '#F4F0EC',
         opacity: !isWaiting ? 1 : 0.5,
       }}
     >

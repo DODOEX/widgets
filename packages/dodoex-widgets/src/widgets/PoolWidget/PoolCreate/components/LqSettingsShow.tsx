@@ -24,7 +24,7 @@ function Card({
       sx={{
         padding: 16,
         borderRadius: 8,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: '#F4F0EC',
         flexGrow: 1,
         flexBasis: '100%',
       }}

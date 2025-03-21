@@ -30,13 +30,13 @@ export function SelectAndInput({
         sx={{
           py: 12,
           px: 20,
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: '#F4F0EC',
           borderColor:
             (isCustomized && errorMsg) || errorInput
               ? theme.palette.error.main
               : isCustomized
-              ? theme.palette.primary.main
-              : theme.palette.border.main,
+                ? theme.palette.primary.main
+                : theme.palette.border.main,
           borderWidth: 1,
           borderStyle: 'solid',
           borderRadius: 12,

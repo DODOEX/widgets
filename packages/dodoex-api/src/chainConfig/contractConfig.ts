@@ -1,4 +1,5 @@
 import {
+  monadTestnet,
   morph,
   neox,
   plume,
@@ -347,6 +348,20 @@ const contractMap: {
     DODO_DSP_PROXY: morph.DODODspProxyWithoutGSP,
     DODO_DPP_PROXY: morph.DODODppProxy,
     DODO_MINEV3_PROXY: morph.DODOMineV3Proxy,
+  },
+  [ChainId.MONAD_TESTNET]: {
+    MULTI_CALL: monadTestnet.MulticallWithValid,
+    DODO_APPROVE: monadTestnet.DODOApprove,
+    ERC20_HELPER: monadTestnet.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: monadTestnet.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: monadTestnet.DODOV1PmmHelper,
+    CALLEE_HELPER: monadTestnet.DODOCalleeHelper,
+
+    DODO_PROXY: monadTestnet.DODOV2Proxy02,
+    DODO_DSP_PROXY: monadTestnet.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: monadTestnet.DODODppProxy,
+    DODO_MINEV3_PROXY: monadTestnet.DODOMineV3Proxy,
   },
 };
 

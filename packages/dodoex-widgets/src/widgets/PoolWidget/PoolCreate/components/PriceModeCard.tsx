@@ -18,7 +18,7 @@ export function PriceModeCard({
       sx={{
         padding: 16,
         borderRadius: 8,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: '#F4F0EC',
         width: '50%',
         opacity: isWaiting ? 0.5 : 1,
       }}
@@ -34,8 +34,8 @@ export function PriceModeCard({
         {isWaiting
           ? '-'
           : selectedSubPeggedVersion
-          ? subPeggedVersionMap[selectedSubPeggedVersion]?.title ?? '-'
-          : '-'}
+            ? (subPeggedVersionMap[selectedSubPeggedVersion]?.title ?? '-')
+            : '-'}
       </Box>
       <Box
         sx={{

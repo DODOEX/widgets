@@ -35,7 +35,8 @@ export default function MoreDetail({
     <Box
       sx={{
         mt: 24,
-        backgroundColor: 'background.paper',
+        mb: 24,
+        backgroundColor: '#F4F0EC',
         borderRadius: 16,
         overflow: 'hidden',
         ...(isMobile

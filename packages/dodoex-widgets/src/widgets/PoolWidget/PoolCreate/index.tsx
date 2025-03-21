@@ -234,38 +234,35 @@ export default function PoolCreate() {
             <Box
               sx={{
                 mt: 28,
-                typography: 'h4',
-                fontWeight: 600,
-                color: 'text.primary',
+                p: 20,
+                backgroundColor: 'background.paper',
+                borderRadius: 24,
               }}
             >
-              <Trans>Pool Setup</Trans>
-            </Box>
+              <Box
+                sx={{
+                  typography: 'h4',
+                  fontWeight: 600,
+                  color: 'text.primary',
+                }}
+              >
+                <Trans>Pool Setup</Trans>
+              </Box>
 
-            <SectionTitle
-              titleKey={t`Select Pool Version`}
-              index={1}
-              status={state.currentStep === 0 ? 'running' : 'completed'}
-            />
-            <VersionChartExample
-              key={versionItem.version}
-              versionItem={versionItem}
-              status={state.currentStep === 0 ? 'running' : 'completed'}
-            />
+              <SectionTitle
+                titleKey={t`Select Pool Version`}
+                index={1}
+                status={state.currentStep === 0 ? 'running' : 'completed'}
+              />
+              <VersionChartExample
+                key={versionItem.version}
+                versionItem={versionItem}
+                status={state.currentStep === 0 ? 'running' : 'completed'}
+              />
 
-            <SectionTitle
-              titleKey={t`Parameter Settings`}
-              index={2}
-              status={
-                state.currentStep === 0
-                  ? 'waiting'
-                  : state.currentStep === 1
-                    ? 'running'
-                    : 'completed'
-              }
-            />
-            {isPeggedVersion ? (
-              <BaseInfoCardList
+              <SectionTitle
+                titleKey={t`Parameter Settings`}
+                index={2}
                 status={
                   state.currentStep === 0
                     ? 'waiting'
@@ -273,77 +270,32 @@ export default function PoolCreate() {
                       ? 'running'
                       : 'completed'
                 }
-                baseToken={state.baseToken}
-                quoteToken={state.quoteToken}
-                initPrice={state.initPrice}
-                slippageCoefficient={state.slippageCoefficient}
-                selectedVersion={state.selectedVersion}
-                midPrice={undefined}
               />
-            ) : (
-              <LqSettingsShow
-                status={
-                  state.currentStep === 0
-                    ? 'waiting'
-                    : state.currentStep === 1
-                      ? 'running'
-                      : 'completed'
-                }
-                baseToken={state.baseToken}
-                quoteToken={state.quoteToken}
-                initPrice={state.initPrice}
-                slippageCoefficient={state.slippageCoefficient}
-                selectedVersion={state.selectedVersion}
-                baseAmount={state.baseAmount}
-                quoteAmount={state.quoteAmount}
-              />
-            )}
-
-            {isPeggedVersion && (
-              <>
-                <SectionTitle
-                  titleKey={t`Pricing Model`}
-                  index={3}
+              {isPeggedVersion ? (
+                <BaseInfoCardList
                   status={
-                    state.currentStep > 2
-                      ? 'completed'
-                      : state.currentStep === 2
+                    state.currentStep === 0
+                      ? 'waiting'
+                      : state.currentStep === 1
                         ? 'running'
-                        : 'waiting'
+                        : 'completed'
                   }
+                  baseToken={state.baseToken}
+                  quoteToken={state.quoteToken}
+                  initPrice={state.initPrice}
+                  slippageCoefficient={state.slippageCoefficient}
+                  selectedVersion={state.selectedVersion}
+                  midPrice={undefined}
                 />
-                <PriceModeCard
-                  isWaiting={state.currentStep < 2}
-                  selectedSubPeggedVersion={state.selectedSubPeggedVersion}
-                />
-              </>
-            )}
-
-            <SectionTitle
-              titleKey={t`Fee Rate`}
-              index={3}
-              status={state.currentStep === 2 ? 'running' : 'waiting'}
-            />
-            <FeeRateCard
-              isWaiting={state.currentStep < (isPeggedVersion ? 3 : 2)}
-              feeRate={state.feeRate}
-            />
-
-            {isPeggedVersion && (
-              <>
-                <SectionTitle
-                  titleKey={t`Asset ratio within the pool`}
-                  index={5}
+              ) : (
+                <LqSettingsShow
                   status={
-                    state.currentStep > 4
-                      ? 'completed'
-                      : state.currentStep === 4
+                    state.currentStep === 0
+                      ? 'waiting'
+                      : state.currentStep === 1
                         ? 'running'
-                        : 'waiting'
+                        : 'completed'
                   }
-                />
-                <LqRatioSet
-                  isWaiting={state.currentStep < 4}
                   baseToken={state.baseToken}
                   quoteToken={state.quoteToken}
                   initPrice={state.initPrice}
@@ -351,11 +303,67 @@ export default function PoolCreate() {
                   selectedVersion={state.selectedVersion}
                   baseAmount={state.baseAmount}
                   quoteAmount={state.quoteAmount}
-                  peggedBaseTokenRatio={state.peggedBaseTokenRatio}
-                  peggedQuoteTokenRatio={state.peggedQuoteTokenRatio}
                 />
-              </>
-            )}
+              )}
+
+              {isPeggedVersion && (
+                <>
+                  <SectionTitle
+                    titleKey={t`Pricing Model`}
+                    index={3}
+                    status={
+                      state.currentStep > 2
+                        ? 'completed'
+                        : state.currentStep === 2
+                          ? 'running'
+                          : 'waiting'
+                    }
+                  />
+                  <PriceModeCard
+                    isWaiting={state.currentStep < 2}
+                    selectedSubPeggedVersion={state.selectedSubPeggedVersion}
+                  />
+                </>
+              )}
+
+              <SectionTitle
+                titleKey={t`Fee Rate`}
+                index={3}
+                status={state.currentStep === 2 ? 'running' : 'waiting'}
+              />
+              <FeeRateCard
+                isWaiting={state.currentStep < (isPeggedVersion ? 3 : 2)}
+                feeRate={state.feeRate}
+              />
+
+              {isPeggedVersion && (
+                <>
+                  <SectionTitle
+                    titleKey={t`Asset ratio within the pool`}
+                    index={5}
+                    status={
+                      state.currentStep > 4
+                        ? 'completed'
+                        : state.currentStep === 4
+                          ? 'running'
+                          : 'waiting'
+                    }
+                  />
+                  <LqRatioSet
+                    isWaiting={state.currentStep < 4}
+                    baseToken={state.baseToken}
+                    quoteToken={state.quoteToken}
+                    initPrice={state.initPrice}
+                    slippageCoefficient={state.slippageCoefficient}
+                    selectedVersion={state.selectedVersion}
+                    baseAmount={state.baseAmount}
+                    quoteAmount={state.quoteAmount}
+                    peggedBaseTokenRatio={state.peggedBaseTokenRatio}
+                    peggedQuoteTokenRatio={state.peggedQuoteTokenRatio}
+                  />
+                </>
+              )}
+            </Box>
           </Box>
         )}
 
@@ -375,7 +383,7 @@ export default function PoolCreate() {
                   minHeight: 'auto',
                   height: '100%',
                   position: 'sticky',
-                  top: '28px',
+                  top: '56px',
                   overflowY: 'hidden',
                 }
               : {}),

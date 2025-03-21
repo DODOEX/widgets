@@ -98,20 +98,24 @@ export default function PoolDetail({
         }}
       />
       <Box
-        sx={
-          isMobile
+        sx={{
+          mt: 28,
+          ...(isMobile
             ? {}
             : {
                 display: 'flex',
                 gap: 12,
                 overflow: 'hidden',
-              }
-        }
+              }),
+        }}
       >
         <Box
           sx={{
             flex: 1,
             overflow: 'hidden',
+            backgroundColor: 'background.paper',
+            borderRadius: 24,
+            px: 20,
           }}
         >
           <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />

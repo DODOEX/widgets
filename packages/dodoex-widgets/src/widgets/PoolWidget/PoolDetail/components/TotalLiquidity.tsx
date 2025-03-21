@@ -71,7 +71,7 @@ export default function TotalLiquidity({
         sx={{
           display: 'flex',
           mt: 16,
-          backgroundColor: 'background.paper',
+          backgroundColor: '#F4F0EC',
           borderRadius: 16,
           overflowX: 'auto',
         }}

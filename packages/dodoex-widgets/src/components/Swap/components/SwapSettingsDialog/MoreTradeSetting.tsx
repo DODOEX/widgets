@@ -23,7 +23,7 @@ export default function MoreTradeSetting({
         fontWeight: 600,
         borderRadius: 20,
         border: `solid 1px ${theme.palette.border.main}`,
-        backgroundColor: 'background.paperContrast',
+        backgroundColor: '#743B2E',
         boxShadow: `0px 8px 16px 0px ${alpha(
           theme.palette.mode === 'light' ? '#FFF' : '#000',
           0.1,

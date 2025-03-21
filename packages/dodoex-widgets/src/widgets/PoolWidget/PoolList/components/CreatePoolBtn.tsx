@@ -1,4 +1,11 @@
-import { Box, Button, ButtonBase, Tooltip, useTheme } from '@dodoex/components';
+import {
+  alpha,
+  Box,
+  Button,
+  ButtonBase,
+  Tooltip,
+  useTheme,
+} from '@dodoex/components';
 import { Plus as PlusIcon } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import React from 'react';
@@ -7,6 +14,7 @@ import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../../router';
 import { PageType } from '../../../../router/types';
 import Dialog from '../../../../components/Dialog';
+import { ReactComponent as PoolTabRadiusIcon } from '../../../../assets/pool-tab-radius.svg';
 
 function CreateItem({
   onClick,
@@ -40,6 +48,7 @@ function CreateItem({
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
+          alignItems: 'flex-start',
           gap: 0,
           p: 0,
           borderRadius: 8,
@@ -136,7 +145,21 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
     );
     if (isMobile) {
       return (
-        <>
+        <Box
+          sx={{
+            pt: 16,
+            px: 20,
+            backgroundColor: '#F4E8D0',
+            '&::after': {
+              content: '""',
+              display: 'block',
+              mt: 20,
+              height: '1px',
+              width: 1,
+              backgroundColor: 'border.main',
+            },
+          }}
+        >
           <Button
             variant={Button.Variant.outlined}
             fullWidth={isMobile}
@@ -144,7 +167,10 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
               setSelectTypeModalOpen(true);
             }}
             sx={{
+              width: '100%',
               height: 40,
+              backgroundColor: '#833F2D',
+              color: '#FFF',
             }}
           >
             <Box
@@ -165,46 +191,57 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
           >
             <Box sx={{ mb: 0 }}>{items}</Box>
           </Dialog>
-        </>
+        </Box>
       );
     }
     return (
-      <Tooltip
-        arrow={false}
-        leaveDelay={300}
-        placement={isMobile ? 'bottom' : 'bottom-end'}
-        sx={{
-          p: 0,
-          backgroundColor: 'background.paper',
-        }}
-        title={<Box>{items}</Box>}
-      >
-        <Box
+      <>
+        <Tooltip
+          arrow={false}
+          leaveDelay={300}
+          placement={isMobile ? 'bottom' : 'bottom-end'}
           sx={{
-            width: isMobile ? '100%' : 'auto',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 10,
-            pl: 8,
-            pr: 16,
-            py: 7,
-            borderRadius: 8,
-            borderWidth: 1,
-            borderColor: theme.palette.text.primary,
-            typography: 'body1',
-            fontWeight: 600,
-            color: theme.palette.text.primary,
-            cursor: 'pointer',
-            '&:hover': {
-              backgroundColor: theme.palette.background.tag,
-            },
+            p: 0,
+            backgroundColor: 'background.paper',
           }}
+          title={<Box>{items}</Box>}
         >
-          <Box component={PlusIcon} />
-          <Trans>Create Pool</Trans>
-        </Box>
-      </Tooltip>
+          <Box
+            sx={{
+              position: 'relative',
+              width: isMobile ? '100%' : 'auto',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 10,
+              pl: 29,
+              pr: 54,
+              height: 40,
+              borderRadius: theme.spacing(0, 24, 0, 0),
+              typography: 'body1',
+              fontWeight: 600,
+              color: '#FFF',
+              cursor: 'pointer',
+              backgroundColor: '#833F2D',
+              '&:hover': {
+                color: alpha('#FFF', 0.5),
+              },
+            }}
+          >
+            <Box
+              component={PoolTabRadiusIcon}
+              sx={{
+                position: 'absolute',
+                left: 0,
+                transform: 'rotateY(180deg) translateX(100%)',
+                color: '#833F2D',
+              }}
+            />
+            <Box component={PlusIcon} />
+            <Trans>Create</Trans>
+          </Box>
+        </Tooltip>
+      </>
     );
   }
 

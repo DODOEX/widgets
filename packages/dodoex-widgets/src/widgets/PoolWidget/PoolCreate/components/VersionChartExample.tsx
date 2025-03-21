@@ -18,7 +18,7 @@ export function VersionChartExample({
     return (
       <Box
         sx={{
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: '#F4F0EC',
           borderRadius: 8,
           width: '50%',
           padding: 16,

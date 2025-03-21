@@ -25,4 +25,5 @@ export const platformIdMap: {
   [ChainId.PLUME_TESTNET]: 'plume-testnet',
   [ChainId.NEOX]: 'neox',
   [ChainId.MORPH]: 'morph',
+  [ChainId.MONAD_TESTNET]: 'monad-testnet',
 };

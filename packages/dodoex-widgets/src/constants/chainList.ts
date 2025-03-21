@@ -18,6 +18,7 @@ import { ReactComponent as TaikoLogo } from '../assets/logo/networks/taiko.svg';
 import { ReactComponent as PlumeLogo } from '../assets/logo/networks/plume.svg';
 import { ReactComponent as NeoxLogo } from '../assets/logo/networks/neox.svg';
 import { ReactComponent as MorphLogo } from '../assets/logo/networks/morph.svg';
+import { ReactComponent as MonadLogo } from '../assets/logo/networks/monad.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -202,6 +203,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.MORPH,
       logo: MorphLogo,
       name: 'Morph',
+    },
+  ],
+  [
+    ChainId.MONAD_TESTNET,
+    {
+      chainId: ChainId.MONAD_TESTNET,
+      logo: MonadLogo,
+      name: 'Monad testnet',
     },
   ],
 ]);
