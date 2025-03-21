@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.1-solana.14",
+  "version": "3.0.1-solana.15",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -59,7 +59,7 @@
   "dependencies": {
     "@babel/runtime": "^7.17.0",
     "@coral-xyz/anchor": "^0.30.1",
-    "@dodoex/api": "3.0.2-solana.1",
+    "@dodoex/api": "3.0.2-solana.2",
     "@dodoex/components": "3.0.2-solana.1",
     "@dodoex/contract-request": "^1.3.0",
     "@dodoex/dodo-contract-request": "^1.8.0",

@@ -1902,6 +1902,7 @@ export type Cross_Chain_SwapExtend = {
   encodeId?: Maybe<Scalars['String']['output']>;
   fromToken?: Maybe<Scalars['JSON']['output']>;
   lifiBridge?: Maybe<Scalars['String']['output']>;
+  productStateInfo?: Maybe<Scalars['JSON']['output']>;
   refunded?: Maybe<Scalars['JSON']['output']>;
   route?: Maybe<Scalars['JSON']['output']>;
   toToken?: Maybe<Scalars['JSON']['output']>;
@@ -1990,6 +1991,7 @@ export type Cross_Chain_SwaporderListData = {
   product?: InputMaybe<Scalars['String']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
   source?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2001,6 +2003,7 @@ export type Cross_Chain_SwaporderNewStatusData = {
 export type Cross_Chain_SwaporderRefundCountData = {
   chainId?: InputMaybe<Scalars['Int']['input']>;
   from?: InputMaybe<Scalars['String']['input']>;
+  product?: InputMaybe<Scalars['String']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
   source?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<Scalars['String']['input']>;
@@ -7020,6 +7023,7 @@ export type LiquidityLp = {
   liquidityTokenInMining?: Maybe<Scalars['String']['output']>;
   /** my liquidity usd */
   liquidityUSD?: Maybe<Scalars['String']['output']>;
+  nftMint?: Maybe<Scalars['String']['output']>;
   outOfRange?: Maybe<Scalars['Boolean']['output']>;
   /** Share in the pool */
   poolShare?: Maybe<Scalars['String']['output']>;
@@ -21007,6 +21011,7 @@ export type FetchMyLiquidityListQuery = {
         poolShare?: string | null;
         liquidityUSD?: string | null;
         tokenId?: string | null;
+        nftMint?: string | null;
         outOfRange?: boolean | null;
         priceRange?: {
           token0LowerPrice: string;
@@ -21856,6 +21861,7 @@ export const FetchMyLiquidityListDocument = new TypedDocumentString(`
         poolShare
         liquidityUSD
         tokenId
+        nftMint
         outOfRange
         priceRange {
           token0LowerPrice

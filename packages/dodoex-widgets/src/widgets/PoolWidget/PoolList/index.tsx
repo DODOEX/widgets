@@ -190,13 +190,13 @@ export default function PoolList({
         )}
         {operatePool?.pool?.type === 'SVM_AMMV3' && operatePool.pool.chainId ? (
           poolTab === PoolTab.myLiquidity &&
-          operatePool.pool.liquidityPositions?.[0]?.tokenId ? (
+          operatePool.pool.liquidityPositions?.[0]?.nftMint ? (
             <AMMV3PositionManage
               mint1Address={operatePool.pool.baseToken.address}
               mint2Address={operatePool.pool.quoteToken.address}
               feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
               poolId={operatePool.pool.address}
-              nftMint={operatePool.pool.liquidityPositions[0].tokenId}
+              nftMint={operatePool.pool.liquidityPositions[0].nftMint}
               onClose={() => setOperatePool(null)}
             />
           ) : (

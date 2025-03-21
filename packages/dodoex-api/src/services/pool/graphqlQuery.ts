@@ -107,6 +107,7 @@ export const poolGraphqlQuery = {
             poolShare
             liquidityUSD
             tokenId
+            nftMint
             outOfRange
             priceRange {
               token0LowerPrice
