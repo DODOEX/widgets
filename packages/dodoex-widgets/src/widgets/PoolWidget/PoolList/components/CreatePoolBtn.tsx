@@ -40,6 +40,7 @@ function CreateItem({
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
+          alignItems: 'flex-start',
           gap: 0,
           p: 0,
           borderRadius: 8,
