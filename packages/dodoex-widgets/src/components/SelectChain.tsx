@@ -207,6 +207,9 @@ export default function SelectChain({
       <Select<ChainId | typeof allChainKey>
         value={chainId ?? allChainKey}
         onChange={(v) => {
+          // If a new value is passed, the key does not yet exist in options. There is no need to call onChange and return null.
+          if (!options.some((item) => String(item.key) === String(v))) return;
+
           if (v === allChainKey) {
             setChainId(undefined);
           } else {
@@ -220,6 +223,8 @@ export default function SelectChain({
           height: 32,
           fontWeight: 600,
           typography: 'body2',
+          backgroundColor: 'background.tag',
+          color: 'text.primary',
           ...sx,
         }}
       />
@@ -235,6 +240,7 @@ export default function SelectChain({
           display: 'flex',
           alignItems: 'center',
           backgroundColor: 'background.tag',
+          color: 'text.primary',
           borderRadius: 8,
           border: 'none',
           px: 8,

@@ -23,6 +23,7 @@ export const Primary = (props: any) => {
   return (
     <PoolWidget
       {...config}
+      colorMode="dark"
       tokenList={[
         {
           address: '0x7D381e6a9c23A0E6969658f6B8Eba57A4Dbf93a0',

@@ -1,14 +1,11 @@
 import BigNumber from 'bignumber.js';
 import { useCallback, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { getTokenList } from '../../store/selectors/token';
 import { TokenInfo, TokenList } from './type';
 import { useCurrentChainId } from '../ConnectWallet';
 import defaultTokens from '../../constants/tokenList';
-import { RootState } from '../../store/reducers';
-import { getPopularTokenList } from '../../store/selectors/token';
 import useTokenListFetchBalance from './useTokenListFetchBalance';
 import { ChainId } from '@dodoex/api';
+import { useTokenState } from '../useTokenState';
 
 enum MatchLevel {
   fully = 1,
@@ -107,7 +104,7 @@ export default function useTokenList({
   multiple?: boolean;
 }) {
   const [filter, setFilter] = useState('');
-  const preloadedOrigin = useSelector(getTokenList);
+  const { tokenList: preloadedOrigin } = useTokenState();
   const currentChainId = useCurrentChainId();
   const chainId = useMemo(
     () => chainIdProps ?? currentChainId,
@@ -119,12 +116,12 @@ export default function useTokenList({
     );
     return preloadedResult;
   }, [preloadedOrigin, chainId]);
-  const popularTokenListOrigin = useSelector((state: RootState) =>
-    getPopularTokenList(chainId, state),
+  const popularTokenListOrigin = useTokenState((state) =>
+    state.popularTokenList.filter((token) => token.chainId === chainId),
   );
   const defaultTokenList = useMemo(() => {
     return defaultTokens?.filter((token) => token.chainId === chainId) || [];
-  }, [defaultTokens, chainId]);
+  }, [chainId]);
 
   const hiddenSet = useMemo(
     () =>

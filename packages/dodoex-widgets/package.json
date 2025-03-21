@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.2-beta.14",
+  "version": "3.0.2-pool.6",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -106,9 +106,7 @@
   "peerDependencies": {
     "@babel/runtime": ">=7.17.0",
     "react": ">=17.0.1",
-    "react-dom": ">=17.0.1",
-    "react-redux": ">=7.2.2",
-    "redux": ">=4.1.2"
+    "react-dom": ">=17.0.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",

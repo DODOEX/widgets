@@ -1,20 +1,18 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppThunkDispatch } from '../../store/actions';
-import { setOpenConnectWalletInfo } from '../../store/actions/wallet';
-import { getOpenConnectWalletInfo } from '../../store/selectors/wallet';
 import SwitchChainDialog from '../SwitchChainDialog';
 import ConnectWalletDialog from './ConnectWalletDialog';
+import { useGlobalState } from '../../hooks/useGlobalState';
 
 export default function OpenConnectWalletInfo() {
-  const openConnectInfo = useSelector(getOpenConnectWalletInfo);
-  const dispatch = useDispatch<AppThunkDispatch>();
+  const { openConnectWalletInfo: openConnectInfo } = useGlobalState();
   const switchChainId =
     typeof openConnectInfo === 'object' ? openConnectInfo?.chainId : undefined;
   const openSwitchChainDialog = !!switchChainId;
   const open = openConnectInfo === true;
   const handleClose = () => {
-    dispatch(setOpenConnectWalletInfo(false));
+    useGlobalState.setState({
+      openConnectWalletInfo: false,
+    });
   };
 
   return (

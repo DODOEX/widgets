@@ -299,6 +299,7 @@ export function RemovePoolOperate({
                 py: 12,
                 width: '100%',
                 backgroundColor: 'transparent',
+                color: 'text.primary',
               }}
             />
             {!!pool && PoolApi.utils.singleSideLp(pool.type) && (

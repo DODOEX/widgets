@@ -1,12 +1,8 @@
-import { useWeb3React } from '@web3-react/core';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { unionBy, isArray } from 'lodash';
-import { AppThunkDispatch } from '../../store/actions';
-import { setPopularTokenList, setTokenList } from '../../store/actions/token';
 import { TokenList, TokenListType } from './type';
-import { useCurrentChainId } from '../ConnectWallet';
 import defaultTokens from '../../constants/tokenList';
+import { setPopularTokenList, setTokenList } from '../useTokenState';
 
 export interface InitTokenListProps {
   tokenList?: TokenList | TokenListType;
@@ -16,10 +12,6 @@ export default function useInitTokenList({
   tokenList,
   popularTokenList,
 }: InitTokenListProps) {
-  const dispatch = useDispatch<AppThunkDispatch>();
-  const { account } = useWeb3React();
-  const chainId = useCurrentChainId();
-
   useEffect(() => {
     const computed = async () => {
       let allTokenList = [];
@@ -32,12 +24,12 @@ export default function useInitTokenList({
           (token) => token.address.toLowerCase() + token.chainId + token.side,
         );
       }
-      dispatch(setTokenList(allTokenList));
+      setTokenList(allTokenList);
     };
     computed();
-  }, [tokenList, dispatch, popularTokenList]);
+  }, [tokenList, popularTokenList]);
 
   useEffect(() => {
-    dispatch(setPopularTokenList(popularTokenList ?? []));
-  }, [popularTokenList, dispatch]);
+    setPopularTokenList(popularTokenList ?? []);
+  }, [popularTokenList]);
 }

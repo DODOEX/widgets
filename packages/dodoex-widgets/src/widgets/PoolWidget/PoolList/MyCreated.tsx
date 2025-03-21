@@ -279,18 +279,20 @@ function CardList({
 function TableList({
   account,
   list,
+  loading,
   operatePool,
   setOperatePool,
 }: {
   account?: string;
   list: FetchMyCreateListLqList;
+  loading: boolean;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
 }) {
   const theme = useTheme();
   const router = useRouterStore();
   return (
-    <LiquidityTable>
+    <LiquidityTable empty={!list?.length} loading={loading}>
       <Box component="thead">
         <Box component="tr">
           <Box component="th">
@@ -701,6 +703,7 @@ export default function MyCreated({
           <TableList
             account={account}
             list={list}
+            loading={fetchResult.isLoading}
             operatePool={operatePool}
             setOperatePool={setOperatePool}
           />

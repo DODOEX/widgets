@@ -7,7 +7,6 @@ import {
   scanUrlDomainMap,
 } from '../../constants/chains';
 import { ChainId } from '@dodoex/api';
-import { store } from '../../store';
 
 interface AddChainParameter {
   chainId: string; // A 0x-prefixed hexadecimal string

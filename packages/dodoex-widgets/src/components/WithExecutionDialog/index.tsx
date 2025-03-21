@@ -6,9 +6,6 @@ import {
   ExecutionProps,
 } from '../../hooks/Submission';
 import Dialog from '../Swap/components/Dialog';
-import { useDispatch } from 'react-redux';
-import { ContractStatus } from '../../store/reducers/globals';
-import { AppThunkDispatch } from '../../store/actions';
 import { ReactComponent as Loading } from '../../assets/approveBorderRight.svg';
 import { t, Trans } from '@lingui/macro';
 import {
@@ -22,9 +19,9 @@ import { Showing } from '../../hooks/Submission/types';
 import { useWeb3React } from '@web3-react/core';
 import { scanUrlDomainMap } from '../../constants/chains';
 import { ChainId } from '@dodoex/api';
-import { setContractStatus } from '../../store/actions/globals';
 import { useUserOptions } from '../UserOptionsProvider';
 import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
+import { ContractStatus, setContractStatus } from '../../hooks/useGlobalState';
 
 const strokeWidth = 6;
 
@@ -249,7 +246,6 @@ export default function WithExecutionDialog({
     ...execution,
     ...executionStatus,
   };
-  const dispatch = useDispatch<AppThunkDispatch>();
   const { isMobile } = useWidgetDevice();
 
   const noSubmissionDialog = useUserOptions(
@@ -440,7 +436,7 @@ export default function WithExecutionDialog({
             fullWidth
             size={Button.Size.big}
             onClick={() => {
-              dispatch(setContractStatus(ContractStatus.Initial));
+              setContractStatus(ContractStatus.Initial);
               closeShowing();
             }}
             sx={{

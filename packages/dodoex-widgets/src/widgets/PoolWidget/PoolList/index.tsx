@@ -22,6 +22,9 @@ import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
 import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
+import { transitionTime } from '../../../components/Swap/components/Dialog';
+import { TokenInfo } from '../../../hooks/Token';
+import { TokenAndPoolFilterUserOptions } from './hooks/usePoolListFilterTokenAndPool';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -40,9 +43,17 @@ function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
 export default function PoolList({
   params,
   scrollRef: scrollParentRefProps,
+  tokenAndPoolFilter,
+  operatePMMPoolElement,
+  onOperatePool,
+  getMigrationPairAndMining,
 }: {
   params?: Page<PageType.Pool>['params'];
   scrollRef?: React.RefObject<any>;
+  tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
+  operatePMMPoolElement?: React.ReactElement;
+  onOperatePool?: (pool: Partial<PoolOperateProps> | null) => void;
+  getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
 }) {
   const { isMobile } = useWidgetDevice();
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
@@ -55,8 +66,14 @@ export default function PoolList({
   const { activeChainId, filterChainIds, handleChangeActiveChainId } =
     usePoolListFilterChainId();
 
-  const [operatePool, setOperatePool] =
+  const [operatePool, setOperatePoolOrigin] =
     React.useState<Partial<PoolOperateProps> | null>(null);
+  const setOperatePool = (pool: Partial<PoolOperateProps> | null) => {
+    if (onOperatePool) {
+      onOperatePool(pool);
+    }
+    setOperatePoolOrigin(pool);
+  };
 
   return (
     <WidgetContainer
@@ -145,6 +162,8 @@ export default function PoolList({
             handleChangeActiveChainId={handleChangeActiveChainId}
             operatePool={operatePool}
             setOperatePool={setOperatePool}
+            tokenAndPoolFilter={tokenAndPoolFilter}
+            getMigrationPairAndMining={getMigrationPairAndMining}
           />
         </TabPanelFlexCol>
         <TabPanelFlexCol value={PoolTab.myLiquidity}>
@@ -155,6 +174,8 @@ export default function PoolList({
             handleChangeActiveChainId={handleChangeActiveChainId}
             operatePool={operatePool}
             setOperatePool={setOperatePool}
+            tokenAndPoolFilter={tokenAndPoolFilter}
+            getMigrationPairAndMining={getMigrationPairAndMining}
           />
         </TabPanelFlexCol>
         <TabPanelFlexCol value={PoolTab.myCreated}>
@@ -171,7 +192,11 @@ export default function PoolList({
       <Box
         sx={{
           position: 'relative',
-          width: noDocumentLink && !operatePool ? 'auto' : 375,
+          width: isMobile
+            ? '100%'
+            : noDocumentLink && !operatePool
+              ? 'auto'
+              : 375,
         }}
       >
         {!noDocumentLink && (
@@ -180,6 +205,14 @@ export default function PoolList({
             desc={t`Classical AMM-like pool. Suitable for most assets.`}
             linkTo="https://docs.dodoex.io/product/tutorial/how-to-provide-liquidity"
             LeftImage={LeftImage}
+            sx={{
+              ...(isMobile && {
+                mt: 20,
+              }),
+              ...(!!operatePool && {
+                display: 'none',
+              }),
+            }}
           />
         )}
         {operatePool?.pool?.type === 'AMMV3' && operatePool.pool.chainId ? (
@@ -208,6 +241,8 @@ export default function PoolList({
               }}
             />
           )
+        ) : operatePMMPoolElement ? (
+          operatePMMPoolElement
         ) : isMobile ? (
           <PoolOperateDialog
             account={account}
@@ -216,7 +251,23 @@ export default function PoolList({
             {...operatePool}
           />
         ) : (
-          !!operatePool && (
+          <Box
+            sx={{
+              position: 'absolute',
+              top: operatePool ? 0 : '100%',
+              height: operatePool ? 'max-content' : 0,
+              transition: `all ${transitionTime}ms`,
+              zIndex: 20,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              backgroundColor: 'background.paper',
+              borderRadius: 16,
+              maxHeight: 'max-content',
+            }}
+          >
             <PoolOperate
               account={account}
               onClose={() => setOperatePool(null)}
@@ -229,7 +280,7 @@ export default function PoolList({
                 overflow: 'hidden',
               }}
             />
-          )
+          </Box>
         )}
       </Box>
     </WidgetContainer>

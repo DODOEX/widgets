@@ -18,6 +18,7 @@ import { PageType } from '../../../../router/types';
 import { usePoolDetail } from '../../hooks/usePoolDetail';
 import LiquidityLpPartnerReward from '../../../../components/LiquidityLpPartnerReward';
 import { useUserOptions } from '../../../../components/UserOptionsProvider';
+import { PoolApi } from '@dodoex/api';
 
 export default function TitleInfo({
   poolDetail,
@@ -35,7 +36,7 @@ export default function TitleInfo({
     account &&
     poolDetail?.type === 'DPP' &&
     poolDetail?.owner?.toLocaleLowerCase() === account.toLocaleLowerCase();
-  const { supportAMMV2 } = useUserOptions();
+  const { supportAMMV2, onSharePool } = useUserOptions();
 
   return (
     <Box
@@ -169,6 +170,19 @@ export default function TitleInfo({
               iconSize={14}
               iconSpace={6}
               customChainId={poolDetail?.chainId}
+              onShareClick={
+                onSharePool && poolDetail
+                  ? () =>
+                      onSharePool({
+                        chainId: poolDetail.chainId,
+                        baseToken: poolDetail.baseToken,
+                        quoteToken: poolDetail.quoteToken,
+                        poolId: address,
+                        apy: poolDetail.apy,
+                        isSingle: PoolApi.utils.singleSideLp(poolDetail.type),
+                      })
+                  : undefined
+              }
             />
           </Box>
         </Box>
