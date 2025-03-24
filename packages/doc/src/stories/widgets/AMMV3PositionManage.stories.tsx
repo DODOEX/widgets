@@ -14,11 +14,16 @@ export const Primary = (props: any) => {
   return (
     <Widget {...other} apikey={apiKey}>
       <AMMV3PositionManage
+        // mint1Address="4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz"
+        // mint2Address="36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva"
+        // feeAmount={1000}
+        // poolId="GNHrfEqtYW11gNntydFBm7UEzcYGvG7Rf9ZEo5Q8b9FH"
+        // nftMint="58qBN1NptvUR6PG78KjxFqSyPCYdGpqBLkq6EJsPSA2C"
         mint1Address="4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz"
-        mint2Address="36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva"
+        mint2Address="5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ"
         feeAmount={1000}
-        poolId="GNHrfEqtYW11gNntydFBm7UEzcYGvG7Rf9ZEo5Q8b9FH"
-        nftMint="58qBN1NptvUR6PG78KjxFqSyPCYdGpqBLkq6EJsPSA2C"
+        poolId="6tvyKAe7gF2Qtm2ur94nZa7QsYSATFyZSdm7Be53Fbf1"
+        nftMint="5GYbLuwfpeees1aguGk1ggMLKk8NUPUJeAQ9SHGXipWg"
         onClose={() => window.alert('onClose')}
       />
     </Widget>

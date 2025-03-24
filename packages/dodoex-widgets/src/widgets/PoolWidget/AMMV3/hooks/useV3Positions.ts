@@ -28,6 +28,9 @@ export function useV3Positions(chainId: ChainId) {
           console.log(
             'getOwnerPositionInfo p',
             p.poolId.toBase58(),
+            p.rewardInfos,
+            p.tokenFeesOwedA.toString(),
+            p.tokenFeesOwedB.toString(),
             p.nftMint.toBase58(),
             p.liquidity.toString(),
             p.tickLower,

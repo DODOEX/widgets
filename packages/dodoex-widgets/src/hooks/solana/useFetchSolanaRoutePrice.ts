@@ -5,6 +5,7 @@ import {
   PublicKey,
   VersionedMessage,
   VersionedTransaction,
+  Transaction,
 } from '@solana/web3.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -335,57 +336,107 @@ export function useFetchSolanaRoutePrice({
       //   context: { slot: minContextSlot },
       //   value: { blockhash, lastValidBlockHeight },
       // } = await connection.getLatestBlockhashAndContext();
+      // 解码 base64 数据
       try {
-        // 解码 base64 数据
+        // Ensure rawBrief.data is a valid string
+        if (!rawBrief?.data || typeof rawBrief.data !== 'string') {
+          throw new Error('Invalid transaction data');
+        }
+
+        // Create buffer from base64 string
         const serializedTransaction = Buffer.from(rawBrief.data, 'base64');
 
-        // 使用 VersionedMessage 反序列化
-        const message = VersionedMessage.deserialize(serializedTransaction);
-        const transaction = new VersionedTransaction(message);
+        // Debug logging
+        console.log('Transaction data length:', serializedTransaction.length);
+        console.log('First few bytes:', serializedTransaction.slice(0, 10));
 
-        // Remove transaction.sign() since wallet adapter handles signing
+        // Validate buffer length
+        if (serializedTransaction.length === 0) {
+          throw new Error('Empty transaction buffer');
+        }
 
-        return submission.executeCustom({
-          brief: t`Swap`,
-          subtitle,
-          metadata: {
-            [MetadataFlag.swap]: true,
-          },
-          handler: async (params) => {
-            // const signature = await wallet.sendTransaction(
-            //   swapTransaction,
-            //   connection,
-            //   { minContextSlot },
-            // );
-            try {
-              // 发送交易
-              const signature = await wallet.sendTransaction(
-                transaction,
-                connection,
-              );
-              params.onSubmit(signature);
+        // Validate minimum transaction size
+        if (serializedTransaction.length < 3) {
+          throw new Error('Transaction buffer too small');
+        }
 
-              // 等待交易确认
-              const latestBlockhash = await connection.getLatestBlockhash();
-              const confirmResult = await connection.confirmTransaction({
-                signature,
-                blockhash: latestBlockhash.blockhash,
-                lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
-              });
+        try {
+          // Try to detect if this is a versioned transaction by checking the second byte
+          const firstByte = serializedTransaction[0];
+          const secondByte = serializedTransaction[1];
 
-              if (confirmResult.value.err) {
-                params.onError(confirmResult.value.err);
-                return;
-              }
-              params.onSuccess(signature);
-            } catch (error) {
-              console.error('execute:', error);
-              params.onError(error);
+          let transaction;
+          if (secondByte === 128) {
+            // Versioned transaction starts with 0x80 as second byte
+            // Skip the first byte (0) and deserialize the rest as a versioned transaction
+            const message = VersionedMessage.deserialize(
+              serializedTransaction.slice(1),
+            );
+            transaction = new VersionedTransaction(message);
+          } else {
+            // This is a legacy transaction
+            transaction = Transaction.from(serializedTransaction);
+          }
+
+          // Validate the transaction
+          if (!transaction) {
+            throw new Error('Failed to create transaction');
+          }
+
+          // Additional validation based on transaction type
+          if (transaction instanceof VersionedTransaction) {
+            if (!transaction.message || !transaction.message.header) {
+              throw new Error('Invalid versioned transaction structure');
             }
-          },
-        });
+          } else {
+            if (!transaction.recentBlockhash) {
+              throw new Error('Invalid legacy transaction structure');
+            }
+          }
+
+          return submission.executeCustom({
+            brief: t`Swap`,
+            subtitle,
+            metadata: {
+              [MetadataFlag.swap]: true,
+            },
+            handler: async (params) => {
+              try {
+                const signature = await wallet.sendTransaction(
+                  transaction,
+                  connection,
+                );
+                params.onSubmit(signature);
+
+                const latestBlockhash = await connection.getLatestBlockhash();
+                const confirmResult = await connection.confirmTransaction({
+                  signature,
+                  blockhash: latestBlockhash.blockhash,
+                  lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+                });
+
+                if (confirmResult.value.err) {
+                  params.onError(confirmResult.value.err);
+                  return;
+                }
+                params.onSuccess(signature);
+              } catch (error) {
+                console.error('wallet.sendTransaction execute:', error);
+                params.onError(error);
+              }
+            },
+          });
+        } catch (error) {
+          console.error('Transaction deserialization error:', error);
+          console.error('Error details:', {
+            dataLength: rawBrief.data.length,
+            bufferLength: serializedTransaction.length,
+            firstBytes: serializedTransaction.slice(0, 10),
+          });
+          throw error;
+        }
       } catch (error) {
-        console.error('execute:', error);
+        console.error('Buffer.from execute:', error);
       }
     },
   });

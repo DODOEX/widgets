@@ -14,10 +14,20 @@ export const Primary = (props: any) => {
   return (
     <Widget {...other} apikey={apiKey}>
       <AMMV3PositionsView
-        mint1Address="4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz"
-        mint2Address="36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva"
+        // mint1Address="4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz"
+        // mint2Address="36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva"
+        // feeAmount={1000}
+        // poolId="GNHrfEqtYW11gNntydFBm7UEzcYGvG7Rf9ZEo5Q8b9FH"
+
+        // mint1Address="4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz"
+        // mint2Address="5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ"
+        // feeAmount={1000}
+        // poolId="6tvyKAe7gF2Qtm2ur94nZa7QsYSATFyZSdm7Be53Fbf1"
+
+        mint1Address="36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva"
+        mint2Address="GLfqSuSUUB6mTA4rfk5BHYbRjQHxYknJu8pSHcMnYgzE"
         feeAmount={1000}
-        poolId="GNHrfEqtYW11gNntydFBm7UEzcYGvG7Rf9ZEo5Q8b9FH"
+        poolId="HfNMFZ2vncCcG6qVD9KuRYtdnjsSagr7SmjAa9TkrD3D"
         onClose={() => window.alert('onClose')}
         handleGoToAddLiquidityV3={() =>
           window.alert('handleGoToAddLiquidityV3')

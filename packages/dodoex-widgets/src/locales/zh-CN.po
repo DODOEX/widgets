@@ -160,7 +160,7 @@ msgstr ""
 msgid "he slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1."
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:523
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:554
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:59
 msgid "Selected Range"
 msgstr ""
@@ -169,7 +169,7 @@ msgstr ""
 msgid "Do not remind again"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:355
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:358
 msgid "Remove Liquidity"
 msgstr ""
 
@@ -449,7 +449,7 @@ msgstr ""
 msgid "Add liquidity to obtain LP tokens for mining"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:547
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:578
 msgid "Add more liquidity"
 msgstr ""
 
@@ -560,7 +560,7 @@ msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:208
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:442
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:462
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:493
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:34
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:119
 msgid "Add liquidity"
@@ -779,7 +779,7 @@ msgstr ""
 #: src/widgets/MiningWidget/MiningList/operate-area/StakeButton.tsx:105
 #: src/widgets/MiningWidget/OperateArea/index.tsx:72
 #: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:80
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:432
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:463
 msgid "Stake"
 msgstr ""
 
@@ -796,7 +796,7 @@ msgstr ""
 msgid "Liquidity Provider"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:776
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:805
 msgid "*Collecting fees will withdraw currently available fees for you."
 msgstr ""
 
@@ -967,7 +967,7 @@ msgid "Fee rate"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:354
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:281
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:284
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:25
 msgid "Add Liquidity"
 msgstr ""
@@ -979,7 +979,7 @@ msgstr ""
 #: src/widgets/MiningWidget/MiningList/operate-area/UnstakeButton.tsx:85
 #: src/widgets/MiningWidget/OperateArea/index.tsx:73
 #: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:70
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:433
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:464
 msgid "Unstake"
 msgstr ""
 
@@ -1698,7 +1698,7 @@ msgstr ""
 #: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:465
 #: src/widgets/MiningWidget/MiningList/operate-area/index.tsx:204
 #: src/widgets/MiningWidget/OperateArea/index.tsx:74
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:434
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:465
 msgid "Claim"
 msgstr ""
 
@@ -2084,7 +2084,7 @@ msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
 msgid "Pool Creation Confirmation"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:748
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:779
 msgid "Claim fees"
 msgstr ""
 
@@ -2135,7 +2135,7 @@ msgid "Failed to add"
 msgstr ""
 
 #: src/components/Swap/index.tsx:717
-#: src/hooks/solana/useFetchSolanaRoutePrice.ts:349
+#: src/hooks/solana/useFetchSolanaRoutePrice.ts:398
 #: src/hooks/Swap/useExecuteSwap.ts:56
 msgid "Swap"
 msgstr "交易"
@@ -2246,7 +2246,7 @@ msgid "Transaction Deadline"
 msgstr "交易截止时间"
 
 #: src/widgets/MiningWidget/MiningList/hooks/useDepositOrWithdrawOrClaim.ts:190
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:405
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:436
 msgid "Claim Rewards"
 msgstr ""
 

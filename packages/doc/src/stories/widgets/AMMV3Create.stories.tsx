@@ -19,8 +19,15 @@ export const Primary = (props: any) => {
         params={{
           // mint1: '5FLzARYothWbBDeiJAqwzusz4hM2ah4QrGxXW6X4RRWZ',
           // mint2: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
-          mint1: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
-          mint2: '36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva',
+
+          // mint1: '4wnJ7T4w92YM3Taet7DtTUMquDv8HDkktQbpbAH5itHz',
+          // mint2: '36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva',
+          // fee: '1000',
+
+          // 36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva
+          // GLfqSuSUUB6mTA4rfk5BHYbRjQHxYknJu8pSHcMnYgzE
+          mint1: '36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva',
+          mint2: 'GLfqSuSUUB6mTA4rfk5BHYbRjQHxYknJu8pSHcMnYgzE',
           fee: '1000',
         }}
       />

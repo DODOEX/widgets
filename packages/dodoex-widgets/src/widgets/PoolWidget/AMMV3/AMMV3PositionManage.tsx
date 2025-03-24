@@ -6,9 +6,9 @@ import {
   TabsButtonGroup,
   useTheme,
 } from '@dodoex/components';
+import { Error as ErrorIcon } from '@dodoex/icons';
 import { t } from '@lingui/macro';
 import { ApiV3Token, TxVersion } from '@raydium-io/raydium-sdk-v2';
-import { PublicKey } from '@solana/web3.js';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
@@ -44,16 +44,22 @@ import { reducer, Types } from './reducer';
 import { FeeAmount } from './sdks/v3-sdk/constants';
 import { Field, OperateType } from './types';
 import { maxAmountSpend } from './utils/maxAmountSpend';
-import { Error as ErrorIcon } from '@dodoex/icons';
 
 const RewardItem = ({
   mint,
-  rewardAmountOwed,
+  amount,
 }: {
   mint: ApiV3Token | undefined;
-  rewardAmountOwed: BN | undefined;
+  amount: string | undefined;
 }) => {
   const theme = useTheme();
+  const { chainId } = useWalletInfo();
+
+  const tokenInfo = useTokenInfo({
+    mint: mint?.address,
+    chainId,
+  });
+
   return (
     <Box
       sx={{
@@ -66,23 +72,20 @@ const RewardItem = ({
       }}
     >
       <TokenLogo
-        address={mint?.address ?? ''}
-        chainId={mint?.chainId}
+        address={tokenInfo?.address ?? ''}
+        chainId={tokenInfo?.chainId}
         noShowChain
         width={24}
         height={24}
         marginRight={0}
       />
-      <Box>{mint?.symbol}</Box>
+      <Box>{tokenInfo?.symbol}</Box>
       <Box
         sx={{
           ml: 'auto',
         }}
       >
-        {formatTokenAmountNumber({
-          input: rewardAmountOwed?.toString(),
-          decimals: mint?.decimals,
-        })}
+        {amount}
       </Box>
     </Box>
   );
@@ -323,7 +326,7 @@ export const AMMV3PositionManage = ({
 
       const newLiquidity = new BN(
         new Decimal(existingPosition.liquidity.toString())
-          .mul(1 - sliderPercentage / 100)
+          .mul(sliderPercentage / 100)
           .toFixed(0),
       );
       const { execute } = await raydium.clmm.decreaseLiquidity({
@@ -383,22 +386,50 @@ export const AMMV3PositionManage = ({
         throw new Error('raydium is undefined');
       }
 
+      if (!existingPosition) {
+        throw new Error('existingPosition is undefined');
+      }
+
       if (!pool?.poolInfo) {
         throw new Error('poolInfo is undefined');
       }
 
-      const { execute } = await raydium.clmm.collectRewards({
+      // const { execute } = await raydium.clmm.collectRewards({
+      //   poolInfo: pool.poolInfo,
+      //   ownerInfo: {
+      //     useSOLBalance: true,
+      //   },
+      //   rewardMints: pool.poolInfo.rewardDefaultInfos.map(
+      //     (info) => new PublicKey(info.mint.address),
+      //   ),
+      //   associatedOnly: true,
+      //   checkCreateATAOwner: true,
+      //   computeBudgetConfig: undefined,
+      //   txTipConfig: undefined,
+      // });
+      const { execute } = await raydium.clmm.decreaseLiquidity({
         poolInfo: pool.poolInfo,
+        poolKeys: pool.poolKeys,
+        ownerPosition: existingPosition,
         ownerInfo: {
           useSOLBalance: true,
+          // if liquidity wants to decrease doesn't equal to position liquidity, set closePosition to false
+          closePosition: false,
         },
-        rewardMints: pool.poolInfo.rewardDefaultInfos.map(
-          (info) => new PublicKey(info.mint.address),
-        ),
-        associatedOnly: true,
-        checkCreateATAOwner: true,
-        computeBudgetConfig: undefined,
-        txTipConfig: undefined,
+        liquidity: new BN(0),
+        amountMinA: new BN(0),
+        amountMinB: new BN(0),
+        txVersion: TxVersion.LEGACY,
+        // optional: set up priority fee here
+        // computeBudgetConfig: {
+        //   units: 600000,
+        //   microLamports: 46591500,
+        // },
+        // optional: add transfer sol to tip account instruction. e.g sent tip to jito
+        // txTipConfig: {
+        //   address: new PublicKey('96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5'),
+        //   amount: new BN(10000000), // 0.01 sol
+        // },
       });
 
       const txResult = await submission.executeCustom({
@@ -752,14 +783,12 @@ export const AMMV3PositionManage = ({
                   p: 20,
                 }}
               >
-                {pool?.poolInfo.rewardDefaultInfos.map((r, i) => {
-                  const rewardAmountOwed =
-                    existingPosition?.rewardInfos[i].rewardAmountOwed;
+                {positionInfo?.rewardInfos.map((r) => {
                   return (
                     <RewardItem
                       key={r.mint.address}
                       mint={r.mint}
-                      rewardAmountOwed={rewardAmountOwed}
+                      amount={r.amount}
                     />
                   );
                 })}
@@ -789,11 +818,7 @@ export const AMMV3PositionManage = ({
             >
               <ClaimButton
                 chainId={chainId}
-                disabled={
-                  onClaimMutation.isPending ||
-                  !pool?.poolInfo ||
-                  pool?.poolInfo.rewardDefaultInfos.length === 0
-                }
+                disabled={onClaimMutation.isPending || !positionInfo}
                 onConfirm={onClaimMutation.mutate}
                 isLoading={onClaimMutation.isPending}
               />
@@ -827,7 +852,6 @@ export const AMMV3PositionManage = ({
     onRemoveMutation.mutate,
     operateType,
     outOfRange,
-    pool?.poolInfo,
     position,
     positionInfo,
     removed,
