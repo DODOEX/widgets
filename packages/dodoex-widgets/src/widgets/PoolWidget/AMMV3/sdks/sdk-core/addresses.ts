@@ -1,3 +1,7 @@
+import {
+  getNonfungiblePositionManagerAlgebraContractAddressByChainId,
+  getUniswapV3FactoryContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
 import { ChainId, SUPPORTED_CHAINS, SupportedChainsType } from './chains';
 
 type AddressMap = { [chainId: number]: string };
@@ -42,16 +46,27 @@ const TAIKO_ADDRESSES: ChainAddresses = {
     '0x2623281DdcC34A73a9e8898f2c57A32A860903f1',
 };
 
-export const CHAIN_TO_ADDRESSES_MAP: Record<
-  SupportedChainsType,
-  ChainAddresses
-> = {
+export const CHAIN_TO_ADDRESSES_MAP: Record<number, ChainAddresses> = {
   [ChainId.MAINNET]: MAINNET_ADDRESSES,
   [ChainId.ARBITRUM_ONE]: ARBITRUM_ONE_ADDRESSES,
   [ChainId.SEPOLIA]: SEPOLIA_ADDRESSES,
   [ChainId.TAIKO]: TAIKO_ADDRESSES,
 };
-
+const chainIds = Object.values(ChainId).filter((v) => typeof v === 'number');
+chainIds.map((id) => {
+  if (!CHAIN_TO_ADDRESSES_MAP[id as ChainId]) {
+    const v3CoreFactoryAddress =
+      getUniswapV3FactoryContractAddressByChainId(id);
+    const nonfungiblePositionManagerAddress =
+      getNonfungiblePositionManagerAlgebraContractAddressByChainId(id);
+    if (v3CoreFactoryAddress && nonfungiblePositionManagerAddress) {
+      CHAIN_TO_ADDRESSES_MAP[id] = {
+        v3CoreFactoryAddress,
+        nonfungiblePositionManagerAddress,
+      };
+    }
+  }
+});
 /* V3 Contract Addresses */
 export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   ...SUPPORTED_CHAINS.reduce<AddressMap>((memo, chainId) => {
