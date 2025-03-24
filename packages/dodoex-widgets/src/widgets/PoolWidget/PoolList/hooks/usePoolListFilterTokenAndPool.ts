@@ -3,7 +3,8 @@ import { TokenInfo } from '../../../../hooks/Token';
 import { FetchLiquidityListLqList } from '../../utils';
 
 export interface TokenAndPoolFilterUserOptions {
-  value: Array<TokenInfo>;
+  tokens: Array<TokenInfo>;
+  lqList: FetchLiquidityListLqList;
   element: React.ReactNode;
 }
 
@@ -11,16 +12,17 @@ export function usePoolListFilterTokenAndPool(
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions,
 ) {
   const [filterTokens, setFilterTokens] = React.useState<Array<TokenInfo>>(
-    tokenAndPoolFilter?.value ?? [],
+    tokenAndPoolFilter?.tokens ?? [],
   );
   const [filterAddressLqList, setFilterAddressLqList] =
     React.useState<FetchLiquidityListLqList>([]);
 
   React.useEffect(() => {
     if (tokenAndPoolFilter) {
-      setFilterTokens(tokenAndPoolFilter.value);
+      setFilterTokens(tokenAndPoolFilter.tokens);
+      setFilterAddressLqList(tokenAndPoolFilter.lqList);
     }
-  }, [tokenAndPoolFilter?.value]);
+  }, [tokenAndPoolFilter]);
 
   const [filterASymbol, filterBSymbol] = React.useMemo(() => {
     const [filterAToken, filterBToken] = filterTokens;
