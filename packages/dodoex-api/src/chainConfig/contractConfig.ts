@@ -3,6 +3,7 @@ import {
   neox,
   plume,
   plumeTestnet,
+  arbsepolia,
 } from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
@@ -123,6 +124,20 @@ const contractMap: {
     DODO_DPP_PROXY: '0xE8C9A78725D0451FA19878D5f8A3dC0D55FECF25',
     DODO_V1_PAIR_PROXY: '0x49186E32fEd50fd6B5604A2618c7B0b03Cd41414',
     DODO_MINEV3_PROXY: '0x7E820457780Ac99B9A042Cd5f875b274855A1eE9',
+  },
+  [ChainId.ARBITRUM_SEPOLIA]: {
+    MULTI_CALL: arbsepolia.MulticallWithValid,
+    DODO_APPROVE: arbsepolia.DODOApprove,
+    ERC20_HELPER: arbsepolia.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: arbsepolia.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: arbsepolia.DODOV1PmmHelper,
+    CALLEE_HELPER: arbsepolia.DODOCalleeHelper,
+
+    DODO_PROXY: arbsepolia.DODOV2Proxy02,
+    DODO_DSP_PROXY: arbsepolia.DODODspProxy,
+    DODO_DPP_PROXY: arbsepolia.DODODppProxy,
+    DODO_MINEV3_PROXY: arbsepolia.DODOMineV3ProxyWithoutPlatform,
   },
   [ChainId.AURORA]: {
     MULTI_CALL: '0x989DcAA95801C527C5B73AA65d3962dF9aCe1b0C',
