@@ -61,6 +61,15 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     },
   ],
   [
+    ChainId.ARBITRUM_SEPOLIA,
+    {
+      chainId: ChainId.ARBITRUM_SEPOLIA,
+      logo: ArbitrumLogo,
+      name: 'Arbitrum Sepolia',
+      mainnet: ChainId.ARBITRUM_ONE,
+    },
+  ],
+  [
     ChainId.POLYGON,
     {
       chainId: ChainId.POLYGON,

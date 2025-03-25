@@ -9,6 +9,8 @@ export enum ChainId {
 
   ARBITRUM_ONE = 42161,
 
+  ARBITRUM_SEPOLIA = 421614,
+
   AURORA = 1313161554,
 
   OKCHAIN = 66,

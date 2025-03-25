@@ -11,6 +11,7 @@ export const platformIdMap: {
   [ChainId.OKCHAIN]: 'okex-chain',
   [ChainId.POLYGON]: 'polygon',
   [ChainId.ARBITRUM_ONE]: 'arbitrum',
+  [ChainId.ARBITRUM_SEPOLIA]: 'arb-sep',
   [ChainId.AURORA]: 'aurora',
   [ChainId.AVALANCHE]: 'avalanche', // Needs confirm
   [ChainId.BASE]: 'base',

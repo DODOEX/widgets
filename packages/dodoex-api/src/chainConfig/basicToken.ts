@@ -66,6 +66,12 @@ export const basicTokenMap: {
     showDecimals: 6,
     wrappedTokenAddress: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
   },
+  [ChainId.ARBITRUM_SEPOLIA]: {
+    ...DEFAULT_BASIC_TOKEN,
+    name: 'Ethereum',
+    showDecimals: 6,
+    wrappedTokenAddress: '0xfd6fFee92D25158b29315C71b0Bb4dE727530FaF',
+  },
   [ChainId.AURORA]: {
     ...DEFAULT_BASIC_TOKEN,
     name: 'Ethereum',
