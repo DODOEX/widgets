@@ -24,10 +24,12 @@ export const Primary = (props: any) => {
           // mint2: '36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva',
           // fee: '1000',
 
-          // 36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva
-          // GLfqSuSUUB6mTA4rfk5BHYbRjQHxYknJu8pSHcMnYgzE
-          mint1: '36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva',
-          mint2: 'GLfqSuSUUB6mTA4rfk5BHYbRjQHxYknJu8pSHcMnYgzE',
+          // mint1: '36LzY5yGXRvySE7safeHuLejhsg8mPjmPiitAQr3Axva',
+          // mint2: 'GLfqSuSUUB6mTA4rfk5BHYbRjQHxYknJu8pSHcMnYgzE',
+          // fee: '1000',
+
+          mint1: PublicKey.default.toBase58(),
+          mint2: NATIVE_MINT.toBase58(),
           fee: '1000',
         }}
       />

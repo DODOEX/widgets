@@ -84,9 +84,25 @@ export function useSolanaConnection() {
       mintStr.toLowerCase() === basicTokenMap[chainId].address.toLowerCase()
     ) {
       return {
-        ...basicTokenMap[chainId],
         chainId,
+        address: basicTokenMap[chainId].address,
+        name: basicTokenMap[chainId].name,
+        decimals: basicTokenMap[chainId].decimals,
         symbol: symbol ?? basicTokenMap[chainId].symbol,
+      };
+    }
+
+    if (
+      mintStr.toLocaleUpperCase() === 'WSOL' ||
+      mintStr.toLowerCase() ===
+        basicTokenMap[chainId].wrappedTokenAddress.toLowerCase()
+    ) {
+      return {
+        chainId,
+        address: basicTokenMap[chainId].wrappedTokenAddress,
+        name: basicTokenMap[chainId].name,
+        decimals: basicTokenMap[chainId].decimals,
+        symbol: symbol ?? basicTokenMap[chainId].wrappedTokenSymbol,
       };
     }
 
@@ -137,7 +153,7 @@ export function useSolanaConnection() {
           .trim();
         mintSymbol = metaSymbol;
       } catch (error) {
-        console.error('Error fetching metadata:', error);
+        console.error('Error fetching metadata:', mint, error);
       }
     }
 

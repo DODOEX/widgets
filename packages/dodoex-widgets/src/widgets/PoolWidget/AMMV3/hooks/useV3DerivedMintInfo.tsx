@@ -661,7 +661,10 @@ export function useV3DerivedMintInfo({
     errorMessage = t`Connect to a wallet`;
   }
 
-  if (poolState === PoolState.INVALID) {
+  if (
+    poolState === PoolState.INVALID ||
+    poolInfo?.mintA.address === poolInfo?.mintB.address
+  ) {
     errorMessage = errorMessage ?? t`Invalid pair`;
   }
 
