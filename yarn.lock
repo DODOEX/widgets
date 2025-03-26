@@ -1857,10 +1857,10 @@
     ethers "^6.13.2"
     https-proxy-agent "^7.0.5"
 
-"@dodoex/dodo-contract-request@1.10.0-alpha.2":
-  version "1.10.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@dodoex/dodo-contract-request/-/dodo-contract-request-1.10.0-alpha.2.tgz#cdae34daf17f6a56948518ebfc45f42109380305"
-  integrity sha512-cJS6igibh4dkAZ3ktqGmRqn6mvoiAACKfZTWh4zSP3UJ0TJ+5auz6FqKde+T2mTG+sCw4VpSTqWvMYgHiSeTAQ==
+"@dodoex/dodo-contract-request@1.10.0-alpha.3":
+  version "1.10.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@dodoex/dodo-contract-request/-/dodo-contract-request-1.10.0-alpha.3.tgz#eaaf64ba2d39d35f805fafa364ba653b6529ae13"
+  integrity sha512-GfbD1vDIHDz1WkYgKJ+ewc4yz78wZBSDz78HXvKUHe8v0659aTEcjQefkWdaNiX31dI8vHHV8MDH8rVAyhOKgw==
   dependencies:
     typescript "^5"
 
