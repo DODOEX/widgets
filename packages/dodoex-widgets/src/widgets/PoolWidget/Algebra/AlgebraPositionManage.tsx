@@ -488,7 +488,12 @@ export const AlgebraPositionManage = ({
             setShowConfirm(false);
           }}
           onConfirm={() => {
-            if (!tickCurrent || !tickLower || !tickUpper) return;
+            if (
+              tickCurrent === undefined ||
+              tickLower === undefined ||
+              tickUpper === undefined
+            )
+              return;
             const addAmount0Wei = parseUnits(
               addAmount0,
               token0.decimals,
@@ -661,9 +666,9 @@ export const AlgebraPositionManage = ({
             onConfirm={() => {
               if (
                 !existingPositionDetails ||
-                !tickCurrent ||
-                !tickLower ||
-                !tickUpper ||
+                tickCurrent === undefined ||
+                tickLower === undefined ||
+                tickUpper === undefined ||
                 !removeAmount0Bg ||
                 !removeAmount1Bg ||
                 !account
@@ -771,9 +776,9 @@ export const AlgebraPositionManage = ({
             onConfirm={() => {
               if (
                 !existingPositionDetails ||
-                !tickCurrent ||
-                !tickLower ||
-                !tickUpper ||
+                tickCurrent === undefined ||
+                tickLower === undefined ||
+                tickUpper === undefined ||
                 !fetchFees.data ||
                 !account
               )

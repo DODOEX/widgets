@@ -639,9 +639,9 @@ export default function AddLiquidity({
         }}
         onConfirm={() => {
           if (
-            !tickCurrent ||
-            !tickLower ||
-            !tickUpper ||
+            tickCurrent === undefined ||
+            tickLower === undefined ||
+            tickUpper === undefined ||
             !baseToken ||
             !quoteToken
           )

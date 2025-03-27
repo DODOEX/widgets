@@ -863,7 +863,7 @@ msgstr "Invalid range selected. The min price must be lower than the max price."
 msgid "Liquidity Provider"
 msgstr "Liquidity Provider"
 
-#: src/widgets/PoolWidget/Algebra/AlgebraPositionManage.tsx:756
+#: src/widgets/PoolWidget/Algebra/AlgebraPositionManage.tsx:761
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:795
 msgid "*Collecting fees will withdraw currently available fees for you."
 msgstr "*Collecting fees will withdraw currently available fees for you."
@@ -2212,7 +2212,7 @@ msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
 msgid "Pool Creation Confirmation"
 msgstr "Pool Creation Confirmation"
 
-#: src/widgets/PoolWidget/Algebra/AlgebraPositionManage.tsx:727
+#: src/widgets/PoolWidget/Algebra/AlgebraPositionManage.tsx:732
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:770
 msgid "Claim fees"
 msgstr "Claim fees"

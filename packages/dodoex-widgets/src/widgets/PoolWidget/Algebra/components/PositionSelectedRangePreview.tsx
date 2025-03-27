@@ -45,7 +45,7 @@ export const PositionSelectedRangePreview = ({
     : undefined;
   const priceLower = getTickToPrice(token0, token1, tickLower);
   const priceUpper = getTickToPrice(token0, token1, tickUpper);
-  const loading = !tickLower || !tickUpper;
+  const loading = tickLower === undefined || tickUpper === undefined;
 
   const handleRateChange = useCallback(() => {
     setBaseCurrency(quoteCurrency);

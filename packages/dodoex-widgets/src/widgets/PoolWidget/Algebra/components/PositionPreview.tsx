@@ -38,6 +38,7 @@ export const PositionPreview = ({
       <RowBetween style={{ gap: 4 }}>
         <RowFixed>
           <TokenLogoPair
+            chainId={token0?.chainId}
             tokens={
               token0 && token1
                 ? [{ address: token0.address }, { address: token1.address }]
@@ -123,16 +124,20 @@ export const PositionPreview = ({
         </RowBetween> */}
       </LightCard>
 
-      {!!token0 && !!token1 && !!price && !!tickLower && !!tickUpper && (
-        <PositionSelectedRangePreview
-          title={title}
-          token0={token0}
-          token1={token1}
-          token0Price={price}
-          tickLower={tickLower}
-          tickUpper={tickUpper}
-        />
-      )}
+      {!!token0 &&
+        !!token1 &&
+        !!price &&
+        tickLower !== undefined &&
+        tickUpper !== undefined && (
+          <PositionSelectedRangePreview
+            title={title}
+            token0={token0}
+            token1={token1}
+            token0Price={price}
+            tickLower={tickLower}
+            tickUpper={tickUpper}
+          />
+        )}
     </AutoColumn>
   );
 };

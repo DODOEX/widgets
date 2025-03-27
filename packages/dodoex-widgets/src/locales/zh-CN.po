@@ -863,7 +863,7 @@ msgstr ""
 msgid "Liquidity Provider"
 msgstr ""
 
-#: src/widgets/PoolWidget/Algebra/AlgebraPositionManage.tsx:756
+#: src/widgets/PoolWidget/Algebra/AlgebraPositionManage.tsx:761
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:795
 msgid "*Collecting fees will withdraw currently available fees for you."
 msgstr ""
@@ -2212,7 +2212,7 @@ msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
 msgid "Pool Creation Confirmation"
 msgstr ""
 
-#: src/widgets/PoolWidget/Algebra/AlgebraPositionManage.tsx:727
+#: src/widgets/PoolWidget/Algebra/AlgebraPositionManage.tsx:732
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:770
 msgid "Claim fees"
 msgstr ""
