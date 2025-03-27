@@ -302,7 +302,7 @@ msgid "Pricing Model"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:74
-#: src/widgets/PoolWidget/PoolList/index.tsx:204
+#: src/widgets/PoolWidget/PoolList/index.tsx:207
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:17
 msgid "Liquidity"
 msgstr ""
@@ -1116,7 +1116,7 @@ msgid "Estimated Time"
 msgstr "预计时间"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:19
-#: src/widgets/PoolWidget/PoolList/index.tsx:205
+#: src/widgets/PoolWidget/PoolList/index.tsx:208
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr ""
 

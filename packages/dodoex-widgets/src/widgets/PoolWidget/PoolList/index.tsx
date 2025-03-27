@@ -52,7 +52,7 @@ export default function PoolList({
   scrollRef?: React.RefObject<any>;
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
   operatePMMPoolElement?: React.ReactElement;
-  onOperatePool?: (pool: Partial<PoolOperateProps> | null) => void;
+  onOperatePool?: (pool: Partial<PoolOperateProps> | null) => boolean;
   getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
 }) {
   const { isMobile } = useWidgetDevice();
@@ -70,7 +70,10 @@ export default function PoolList({
     React.useState<Partial<PoolOperateProps> | null>(null);
   const setOperatePool = (pool: Partial<PoolOperateProps> | null) => {
     if (onOperatePool) {
-      onOperatePool(pool);
+      const parentOperate = onOperatePool(pool);
+      if (parentOperate) {
+        return;
+      }
     }
     setOperatePoolOrigin(pool);
   };
@@ -241,46 +244,49 @@ export default function PoolList({
               }}
             />
           )
-        ) : operatePMMPoolElement ? (
-          operatePMMPoolElement
-        ) : isMobile ? (
-          <PoolOperateDialog
-            account={account}
-            onClose={() => setOperatePool(null)}
-            modal={isMobile}
-            {...operatePool}
-          />
         ) : (
-          <Box
-            sx={{
-              position: 'absolute',
-              top: operatePool ? 0 : '100%',
-              height: operatePool ? 'max-content' : 0,
-              transition: `all ${transitionTime}ms`,
-              zIndex: 20,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              backgroundColor: 'background.paper',
-              borderRadius: 16,
-              maxHeight: 'max-content',
-            }}
-          >
-            <PoolOperate
-              account={account}
-              onClose={() => setOperatePool(null)}
-              {...operatePool}
-              sx={{
-                width: 375,
-                height: 'max-content',
-                backgroundColor: 'background.paper',
-                borderRadius: 16,
-                overflow: 'hidden',
-              }}
-            />
-          </Box>
+          <>
+            {operatePMMPoolElement}
+            {isMobile ? (
+              <PoolOperateDialog
+                account={account}
+                onClose={() => setOperatePool(null)}
+                modal={isMobile}
+                {...operatePool}
+              />
+            ) : (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: operatePool ? 0 : '100%',
+                  height: operatePool ? 'max-content' : 0,
+                  transition: `all ${transitionTime}ms`,
+                  zIndex: 20,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  backgroundColor: 'background.paper',
+                  borderRadius: 16,
+                  maxHeight: 'max-content',
+                }}
+              >
+                <PoolOperate
+                  account={account}
+                  onClose={() => setOperatePool(null)}
+                  {...operatePool}
+                  sx={{
+                    width: 375,
+                    height: 'max-content',
+                    backgroundColor: 'background.paper',
+                    borderRadius: 16,
+                    overflow: 'hidden',
+                  }}
+                />
+              </Box>
+            )}
+          </>
         )}
       </Box>
     </WidgetContainer>
