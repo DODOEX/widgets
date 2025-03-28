@@ -92,5 +92,5 @@ Primary.args = {
   routerPage: undefined,
   supportAMMV2: true,
   supportAMMV3: true,
-  // onlyChainId: 1,
+  onlyChainId: 10143,
 };

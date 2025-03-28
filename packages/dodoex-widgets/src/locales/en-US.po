@@ -34,7 +34,7 @@ msgstr "99% Default"
 msgid "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 msgstr "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:213
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:221
 msgid "Your position is  empty"
 msgstr "Your position is  empty"
 
@@ -181,7 +181,7 @@ msgstr "Select Pool"
 msgid "he slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1."
 msgstr "he slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1."
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:539
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:548
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:65
 msgid "Selected Range"
 msgstr "Selected Range"
@@ -480,7 +480,7 @@ msgstr "Yes, I am sure"
 msgid "Add liquidity to obtain LP tokens for mining"
 msgstr "Add liquidity to obtain LP tokens for mining"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:563
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:572
 msgid "Add more liquidity"
 msgstr "Add more liquidity"
 
@@ -597,7 +597,7 @@ msgstr "Add Initial Liquidity"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:207
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:335
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:481
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:485
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:174
 msgid "Add liquidity"
@@ -691,8 +691,8 @@ msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 msgid "TVL"
 msgstr "TVL"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:187
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:233
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:195
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:241
 msgid "Add Position"
 msgstr "Add Position"
 
@@ -842,7 +842,7 @@ msgstr "Invalid range selected. The min price must be lower than the max price."
 msgid "Liquidity Provider"
 msgstr "Liquidity Provider"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:795
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:810
 msgid "*Collecting fees will withdraw currently available fees for you."
 msgstr "*Collecting fees will withdraw currently available fees for you."
 
@@ -2160,7 +2160,7 @@ msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
 msgid "Pool Creation Confirmation"
 msgstr "Pool Creation Confirmation"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:770
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:785
 msgid "Claim fees"
 msgstr "Claim fees"
 
