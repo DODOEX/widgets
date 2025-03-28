@@ -248,6 +248,7 @@ export default function WithExecutionDialog({
         open={!!showing && !noSubmissionDialog}
         onClose={closeShowing}
         id="submission"
+        modal
       >
         <Box
           sx={{
