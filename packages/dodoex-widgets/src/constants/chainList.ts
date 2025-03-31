@@ -213,6 +213,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       name: 'Morph',
     },
   ],
+  [
+    ChainId.MORPH_HOLESKY_TESTNET,
+    {
+      chainId: ChainId.MORPH_HOLESKY_TESTNET,
+      logo: MorphLogo,
+      name: 'Morph Holesky Testnet',
+    },
+  ],
 ]);
 
 export const isTestNet = (chainId: ChainId) => {

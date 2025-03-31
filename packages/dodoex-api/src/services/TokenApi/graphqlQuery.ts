@@ -40,4 +40,18 @@ export const tokenGraphqlQuery = {
       }
     }
   `),
+  fetchVe33TokenList: graphql(`
+    query Ve33_token_list($where: Ve33_tokenlistFilter) {
+      ve33_token_list(where: $where) {
+        name
+        address
+        symbol
+        decimals
+        slippage
+        position
+        chainId
+        logo
+      }
+    }
+  `),
 };

@@ -1,7 +1,6 @@
-import BigNumber from 'bignumber.js';
 import { AppThunkAction } from '.';
-import { TokenList, TokenInfo } from '../../hooks/Token';
-import { AccountBalances, SlippageWithToken } from '../reducers/token';
+import { TokenInfo, TokenList } from '../../hooks/Token';
+import { SlippageWithToken } from '../reducers/token';
 
 export const setTokenList = (tokenList: TokenList): AppThunkAction => {
   return async (dispatch) => {

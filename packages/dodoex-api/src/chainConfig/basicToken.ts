@@ -145,4 +145,8 @@ export const basicTokenMap: {
     ...DEFAULT_BASIC_TOKEN,
     wrappedTokenAddress: '0x5300000000000000000000000000000000000011',
   },
+  [ChainId.MORPH_HOLESKY_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x5300000000000000000000000000000000000011',
+  },
 };

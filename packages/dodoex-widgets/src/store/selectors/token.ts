@@ -1,9 +1,7 @@
-import BigNumber from 'bignumber.js';
 import { ChainId } from '@dodoex/api';
-import type { DefaultTokenInfo } from '../../hooks/Token';
+import { unionBy } from 'lodash';
 import { store } from '..';
 import { RootState } from '../reducers';
-import { unionBy } from 'lodash';
 
 export const getTokenList = (state?: RootState) => {
   return (state ?? store.getState()).token.tokenList;

@@ -1,12 +1,10 @@
-import { useWeb3React } from '@web3-react/core';
+import { isArray, unionBy } from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { unionBy, isArray } from 'lodash';
+import defaultTokens from '../../constants/tokenList';
 import { AppThunkDispatch } from '../../store/actions';
 import { setPopularTokenList, setTokenList } from '../../store/actions/token';
 import { TokenList, TokenListType } from './type';
-import { useCurrentChainId } from '../ConnectWallet';
-import defaultTokens from '../../constants/tokenList';
 
 export interface InitTokenListProps {
   tokenList?: TokenList | TokenListType;
@@ -17,8 +15,6 @@ export default function useInitTokenList({
   popularTokenList,
 }: InitTokenListProps) {
   const dispatch = useDispatch<AppThunkDispatch>();
-  const { account } = useWeb3React();
-  const chainId = useCurrentChainId();
 
   useEffect(() => {
     const computed = async () => {

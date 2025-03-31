@@ -16,6 +16,8 @@ const documents = {
     types.FetchErc20SwapCrossChainListDocument,
   '\n    query FetchErc20ForecastSlippage($where: Erc20_extenderc20ExtendV2Filter) {\n      erc20_extend_erc20ExtendV2(where: $where) {\n        forecastSlippageList {\n          forecastSlippage\n          forecastValue\n          confidenceRatio\n          confidenceIntervalUpper\n          confidenceIntervalLower\n        }\n      }\n    }\n  ':
     types.FetchErc20ForecastSlippageDocument,
+  '\n    query Ve33_token_list($where: Ve33_tokenlistFilter) {\n      ve33_token_list(where: $where) {\n        name\n        address\n        symbol\n        decimals\n        slippage\n        position\n        chainId\n        logo\n      }\n    }\n  ':
+    types.Ve33_Token_ListDocument,
   '\n  query Ticks($where: Tick_filter, $skip: Int, $first: Int) {\n    ticks(where: $where, skip: $skip, first: $first) {\n      id\n      poolAddress\n      tickIdx\n      liquidityNet\n      price0\n      price1\n    }\n  }\n':
     types.TicksDocument,
   '\n    query FetchMiningList($where: Miningmining_list_filter) {\n      mining_list(where: $where) {\n        list {\n          chainId\n          type\n          version\n          address\n          baseApy\n          baseLpToken {\n            decimals\n            address: id\n            symbol\n          }\n          baseToken {\n            decimals\n            address: id\n            price\n            symbol\n            logoImg\n          }\n          endBlock\n          miningContractAddress\n          miningTotalDollar\n          baseLpTokenMining\n          quoteLpTokenMining\n          quoteApy\n          quoteLpToken {\n            decimals\n            address: id\n            symbol\n          }\n          quoteToken {\n            decimals\n            address: id\n            price\n            symbol\n            logoImg\n          }\n          rewardTokenInfos {\n            apy\n            decimals\n            address: id\n            price\n            logoImg\n            rewardNumIndex\n            rewardPerBlock\n            startBlock\n            endBlock\n            startTime\n            endTime\n            symbol\n          }\n          rewardQuoteTokenInfos {\n            apy\n            decimals\n            address: id\n            price\n            logoImg\n            rewardNumIndex\n            rewardPerBlock\n            startBlock\n            endBlock\n            startTime\n            endTime\n            symbol\n          }\n          startBlock\n          title\n          platform\n          startTime\n          endTime\n        }\n        totalCount\n        chains\n      }\n    }\n  ':
@@ -66,6 +68,12 @@ export function graphql(
 export function graphql(
   source: '\n    query FetchErc20ForecastSlippage($where: Erc20_extenderc20ExtendV2Filter) {\n      erc20_extend_erc20ExtendV2(where: $where) {\n        forecastSlippageList {\n          forecastSlippage\n          forecastValue\n          confidenceRatio\n          confidenceIntervalUpper\n          confidenceIntervalLower\n        }\n      }\n    }\n  ',
 ): typeof import('./graphql').FetchErc20ForecastSlippageDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query Ve33_token_list($where: Ve33_tokenlistFilter) {\n      ve33_token_list(where: $where) {\n        name\n        address\n        symbol\n        decimals\n        slippage\n        position\n        chainId\n        logo\n      }\n    }\n  ',
+): typeof import('./graphql').Ve33_Token_ListDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

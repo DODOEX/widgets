@@ -363,6 +363,20 @@ const contractMap: {
     DODO_DPP_PROXY: morph.DODODppProxy,
     DODO_MINEV3_PROXY: morph.DODOMineV3Proxy,
   },
+  [ChainId.MORPH_HOLESKY_TESTNET]: {
+    MULTI_CALL: '0xC81BEA01Ab9add22D734fd008B5400Fe273D05Df',
+    DODO_APPROVE: '0x5Da9A0Cb4202164DF40d171011f7752298E735De',
+    ERC20_HELPER: '0xdbb14F2460bdCFe3918B360d54298fd483a7Ad12',
+
+    ROUTE_V2_DATA_FETCH: '',
+    ROUTE_V1_DATA_FETCH: '',
+    CALLEE_HELPER: '',
+
+    DODO_PROXY: '',
+    DODO_DSP_PROXY: '',
+    DODO_DPP_PROXY: '',
+    DODO_MINEV3_PROXY: '',
+  },
 };
 
 export default contractMap;

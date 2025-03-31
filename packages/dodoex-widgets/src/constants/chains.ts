@@ -55,6 +55,10 @@ export const rpcServerMap: {
   [ChainId.PLUME_TESTNET]: ['https://test-rpc.plumenetwork.xyz'],
   [ChainId.NEOX]: ['https://mainnet-1.rpc.banelabs.org'],
   [ChainId.MORPH]: ['https://rpc.morphl2.io'],
+  [ChainId.MORPH_HOLESKY_TESTNET]: [
+    'https://rpc-quicknode-holesky.morphl2.io',
+    'https://rpc-holesky.morphl2.io',
+  ],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -101,6 +105,7 @@ export const scanUrlDomainMap: {
   [ChainId.PLUME_TESTNET]: 'test-explorer.plumenetwork.xyz',
   [ChainId.NEOX]: 'xexplorer.neo.org',
   [ChainId.MORPH]: 'explorer.morphl2.io',
+  [ChainId.MORPH_HOLESKY_TESTNET]: 'explorer-holesky.morphl2.io',
 };
 
 export const ThegraphKeyMap: {
@@ -129,6 +134,7 @@ export const ThegraphKeyMap: {
   [ChainId.PLUME_TESTNET]: 'plume-testnet',
   [ChainId.NEOX]: 'neox',
   [ChainId.MORPH]: 'morph',
+  [ChainId.MORPH_HOLESKY_TESTNET]: 'morph-testnet',
 };
 
 export const blockTimeMap: {
@@ -157,6 +163,7 @@ export const blockTimeMap: {
   [ChainId.PLUME_TESTNET]: 2600,
   [ChainId.NEOX]: 12000,
   [ChainId.MORPH]: 3200,
+  [ChainId.MORPH_HOLESKY_TESTNET]: 4200,
 };
 
 export const dexKeysMap: {
@@ -185,4 +192,5 @@ export const dexKeysMap: {
   [ChainId.PLUME_TESTNET]: [],
   [ChainId.NEOX]: [],
   [ChainId.MORPH]: [],
+  [ChainId.MORPH_HOLESKY_TESTNET]: [],
 };

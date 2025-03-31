@@ -258,6 +258,32 @@ export type All_Filter = {
 
 export type All_OrderBy = 'chain' | 'id';
 
+export type AmmTick = {
+  id: Scalars['String']['output'];
+  liquidityGross: Scalars['BigDecimal']['output'];
+  liquidityNet: Scalars['BigDecimal']['output'];
+  poolAddress: Scalars['String']['output'];
+  price0: Scalars['BigDecimal']['output'];
+  price1: Scalars['BigDecimal']['output'];
+  protocolPosition?: Maybe<Scalars['String']['output']>;
+  tickArrayLower?: Maybe<Scalars['String']['output']>;
+  tickArrayUpper?: Maybe<Scalars['String']['output']>;
+  tickIdx: Scalars['BigDecimal']['output'];
+};
+
+export type AmmTicksDataResult = {
+  chain: Scalars['String']['output'];
+  pairType: Scalars['String']['output'];
+  poolAddress: Scalars['String']['output'];
+  ticks: Array<Maybe<AmmTick>>;
+};
+
+export type AmmgetTicksDataInput = {
+  chain: Scalars['String']['input'];
+  pairType: Scalars['String']['input'];
+  poolAddress: Scalars['String']['input'];
+};
+
 export type AnnouncementAnnouncement = {
   endAt?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
@@ -1876,6 +1902,7 @@ export type Cross_Chain_SwapExtend = {
   encodeId?: Maybe<Scalars['String']['output']>;
   fromToken?: Maybe<Scalars['JSON']['output']>;
   lifiBridge?: Maybe<Scalars['String']['output']>;
+  productStateInfo?: Maybe<Scalars['JSON']['output']>;
   refunded?: Maybe<Scalars['JSON']['output']>;
   route?: Maybe<Scalars['JSON']['output']>;
   toToken?: Maybe<Scalars['JSON']['output']>;
@@ -1948,6 +1975,7 @@ export type Cross_Chain_SwaporderCreateDataExtendRoute = {
   feeUSD?: InputMaybe<Scalars['String']['input']>;
   step?: InputMaybe<Scalars['JSON']['input']>;
   toAmount?: InputMaybe<Scalars['String']['input']>;
+  toAmountMin?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Cross_Chain_SwaporderDetailData = {
@@ -1960,8 +1988,10 @@ export type Cross_Chain_SwaporderListData = {
   chainId?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
+  product?: InputMaybe<Scalars['String']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
   source?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1973,6 +2003,7 @@ export type Cross_Chain_SwaporderNewStatusData = {
 export type Cross_Chain_SwaporderRefundCountData = {
   chainId?: InputMaybe<Scalars['Int']['input']>;
   from?: InputMaybe<Scalars['String']['input']>;
+  product?: InputMaybe<Scalars['String']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
   source?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<Scalars['String']['input']>;
@@ -5912,6 +5943,7 @@ export type Erc20listV2Filter = {
   chainIds?: InputMaybe<Scalars['String']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
+  productName?: InputMaybe<Scalars['String']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -6991,6 +7023,7 @@ export type LiquidityLp = {
   liquidityTokenInMining?: Maybe<Scalars['String']['output']>;
   /** my liquidity usd */
   liquidityUSD?: Maybe<Scalars['String']['output']>;
+  nftMint?: Maybe<Scalars['String']['output']>;
   outOfRange?: Maybe<Scalars['Boolean']['output']>;
   /** Share in the pool */
   poolShare?: Maybe<Scalars['String']['output']>;
@@ -12106,6 +12139,8 @@ export type Query = {
   aggregateFragments: Array<AggregateFragment>;
   all?: Maybe<All>;
   alls: Array<All>;
+  /** 获取amm ticks */
+  amm_getTicksData: AmmTicksDataResult;
   announcement_getAnnouncement?: Maybe<AnnouncementAnnouncementList>;
   approval?: Maybe<Approval>;
   approvals: Array<Approval>;
@@ -12577,6 +12612,7 @@ export type Query = {
   /** get service charges for vdodo */
   vdodo_getServiceCharges: VdodoVdodoServiceChargesResult;
   vdodo_getStats: VdodoStatsResult;
+  ve33_token_list?: Maybe<Array<Maybe<Ve33_TokenVe33Token>>>;
   withdrawFundHistories: Array<WithdrawFundHistory>;
   withdrawFundHistory?: Maybe<WithdrawFundHistory>;
   withdrawReserve?: Maybe<WithdrawReserve>;
@@ -12642,6 +12678,10 @@ export type QueryAllsArgs = {
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<All_Filter>;
+};
+
+export type QueryAmm_GetTicksDataArgs = {
+  where?: InputMaybe<AmmgetTicksDataInput>;
 };
 
 export type QueryAnnouncement_GetAnnouncementArgs = {
@@ -14776,6 +14816,10 @@ export type QueryVdodo_GetServiceChargesArgs = {
 
 export type QueryVdodo_GetStatsArgs = {
   where?: InputMaybe<VdodoChainsInput>;
+};
+
+export type QueryVe33_Token_ListArgs = {
+  where?: InputMaybe<Ve33_TokenlistFilter>;
 };
 
 export type QueryWithdrawFundHistoriesArgs = {
@@ -20144,6 +20188,23 @@ export type VdodoVdodoServiceChargesResult = {
   pool_fees_total: Scalars['String']['output'];
 };
 
+export type Ve33_TokenVe33Token = {
+  address?: Maybe<Scalars['String']['output']>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  decimals?: Maybe<Scalars['Int']['output']>;
+  logo?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  position?: Maybe<Scalars['Int']['output']>;
+  slippage?: Maybe<Scalars['String']['output']>;
+  symbol?: Maybe<Scalars['String']['output']>;
+};
+
+export type Ve33_TokenlistFilter = {
+  chainId?: InputMaybe<Scalars['String']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type WithdrawFundHistory = {
   chain: Scalars['String']['output'];
   /** id hash-logindex */
@@ -20607,6 +20668,23 @@ export type FetchErc20ForecastSlippageQuery = {
       confidenceIntervalLower?: any | null;
     } | null> | null;
   } | null;
+};
+
+export type Ve33_Token_ListQueryVariables = Exact<{
+  where?: InputMaybe<Ve33_TokenlistFilter>;
+}>;
+
+export type Ve33_Token_ListQuery = {
+  ve33_token_list?: Array<{
+    name?: string | null;
+    address?: string | null;
+    symbol?: string | null;
+    decimals?: number | null;
+    slippage?: string | null;
+    position?: number | null;
+    chainId?: number | null;
+    logo?: string | null;
+  } | null> | null;
 };
 
 export type TicksQueryVariables = Exact<{
@@ -21450,6 +21528,23 @@ export const FetchErc20ForecastSlippageDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   FetchErc20ForecastSlippageQuery,
   FetchErc20ForecastSlippageQueryVariables
+>;
+export const Ve33_Token_ListDocument = new TypedDocumentString(`
+    query Ve33_token_list($where: Ve33_tokenlistFilter) {
+  ve33_token_list(where: $where) {
+    name
+    address
+    symbol
+    decimals
+    slippage
+    position
+    chainId
+    logo
+  }
+}
+    `) as unknown as TypedDocumentString<
+  Ve33_Token_ListQuery,
+  Ve33_Token_ListQueryVariables
 >;
 export const TicksDocument = new TypedDocumentString(`
     query Ticks($where: Tick_filter, $skip: Int, $first: Int) {
