@@ -138,6 +138,9 @@ export const basicTokenMap: {
   },
   [ChainId.MONAD_TESTNET]: {
     ...DEFAULT_BASIC_TOKEN,
+    symbol: 'MON',
+    name: 'MON',
+    wrappedTokenSymbol: 'WMON',
     wrappedTokenAddress: '0x0246DffDa649e877CFd0951837332B4690fAD1EB',
   },
 };

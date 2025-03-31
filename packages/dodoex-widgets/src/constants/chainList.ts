@@ -210,7 +210,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     {
       chainId: ChainId.MONAD_TESTNET,
       logo: MonadLogo,
-      name: 'Monad testnet',
+      name: 'Monad Testnet',
     },
   ],
 ]);
