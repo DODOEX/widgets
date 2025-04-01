@@ -1,17 +1,19 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { SwapWidget } from '@dodoex/widgets';
-import { TokenInfo } from '@dodoex/widgets/dist/src/hooks/Token/type';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Widgets/Swap',
-  component: SwapWidget,
+  component: 'div',
 };
 
-export const Primary = (args) => <SwapWidget {...args} />;
+export const Primary = (props: any) => {
+  const { projectId, apiKey, ...other } = props;
+
+  return <SwapWidget {...other} apikey={apiKey} />;
+};
 
 Primary.args = {
-  apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
+  apiKey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
   popularTokenList: [],
   tokenList: [
     {
@@ -31,20 +33,4 @@ Primary.args = {
   ],
   crossChain: false,
   onlyChainId: 2810,
-  getAutoSlippage: ({
-    fromToken,
-    toToken,
-  }: {
-    fromToken: TokenInfo | null;
-    toToken: TokenInfo | null;
-  }) => {
-    if (!fromToken || !toToken || fromToken.chainId !== toToken.chainId) {
-      return undefined;
-    }
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(0.9);
-      }, 1000);
-    });
-  },
 };

@@ -1,45 +1,29 @@
-import BigNumber from 'bignumber.js';
-import { debounce } from 'lodash';
+import { ChainId } from '@dodoex/api';
 import {
   Box,
   Button,
   ButtonBase,
-  useTheme,
   RotatingIcon,
   Tooltip,
+  useTheme,
 } from '@dodoex/components';
-import { formatTokenAmountNumber } from '../../utils';
-import { useMemo, useState, useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import {
+  Dodo,
+  DoubleRight,
   Setting,
   SettingCrossChain,
-  Dodo,
   Warn,
-  DoubleRight,
 } from '@dodoex/icons';
 import { Trans, t } from '@lingui/macro';
-import { TokenCard } from './components/TokenCard';
-import { QuestionTooltip } from '../Tooltip';
-import { SwitchBox } from './components/SwitchBox';
-import { ReviewDialog } from './components/ReviewDialog';
-import { SettingsDialog } from './components/SettingsDialog';
-import { RoutePriceStatus } from '../../hooks/Swap';
-import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
-import ConnectWallet from './components/ConnectWallet';
-import { TokenInfo } from '../../hooks/Token/type';
-import {
-  useMarginAmount,
-  useFetchFiatPrice,
-  useFetchRoutePrice,
-} from '../../hooks/Swap';
-import { formatReadableNumber } from '../../utils/formatter';
 import { useWeb3React } from '@web3-react/core';
+import BigNumber from 'bignumber.js';
+import { debounce } from 'lodash';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { AppUrl } from '../../constants/api';
-import { ChainId } from '@dodoex/api';
 import { basicTokenMap } from '../../constants/chains';
+import { setLastToken } from '../../constants/localstorage';
 import { PRICE_IMPACT_THRESHOLD } from '../../constants/swap';
-import TokenLogo from '../TokenLogo';
 import {
   swapAlertEnterAmountBtn,
   swapAlertFetchPriceBtn,
@@ -47,42 +31,50 @@ import {
   swapAlertSelectTokenBtn,
   swapReviewBtn,
 } from '../../constants/testId';
-import useInflights from '../../hooks/Submission/useInflights';
-import { AppThunkDispatch } from '../../store/actions';
 import { useFetchRoutePriceBridge } from '../../hooks/Bridge/useFetchRoutePriceBridge';
-import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
-import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
 import { useSendRoute } from '../../hooks/Bridge/useSendRoute';
-import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
-import ErrorMessageDialog from '../ErrorMessageDialog';
 import { useSwitchBridgeOrSwapSlippage } from '../../hooks/Bridge/useSwitchBridgeOrSwapSlippage';
+import useInflights from '../../hooks/Submission/useInflights';
+import {
+  RoutePriceStatus,
+  useFetchFiatPrice,
+  useFetchRoutePrice,
+  useMarginAmount,
+} from '../../hooks/Swap';
 import { useInitDefaultToken } from '../../hooks/Swap/useInitDefaultToken';
-import { setLastToken } from '../../constants/localstorage';
 import {
   maxSlippageWarning,
   useSlippageLimit,
 } from '../../hooks/Swap/useSlippageLimit';
+import { TokenInfo } from '../../hooks/Token/type';
 import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch';
-import {
-  GetAutoSlippage,
-  useSetAutoSlippage,
-} from '../../hooks/setting/useSetAutoSlippage';
-import { setFromTokenChainId } from '../../store/actions/wallet';
 import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
 import { useFetchETHBalance } from '../../hooks/contract';
+import { AppThunkDispatch } from '../../store/actions';
+import { setFromTokenChainId } from '../../store/actions/wallet';
+import { formatTokenAmountNumber } from '../../utils';
+import { formatReadableNumber } from '../../utils/formatter';
+import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
+import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
+import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
+import ErrorMessageDialog from '../ErrorMessageDialog';
+import TokenLogo from '../TokenLogo';
+import { QuestionTooltip } from '../Tooltip';
 import { useUserOptions } from '../UserOptionsProvider';
+import ConnectWallet from './components/ConnectWallet';
+import { ReviewDialog } from './components/ReviewDialog';
+import { SettingsDialog } from './components/SettingsDialog';
 import { SwapSettingsDialog } from './components/SwapSettingsDialog';
-import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
+import { SwitchBox } from './components/SwitchBox';
+import { TokenCard } from './components/TokenCard';
+import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
 
 export interface SwapProps {
-  /** Higher priority setting slippage */
-  getAutoSlippage?: GetAutoSlippage;
   onPayTokenChange?: (token: TokenInfo) => void;
   onReceiveTokenChange?: (token: TokenInfo) => void;
 }
 
 export function Swap({
-  getAutoSlippage,
   onPayTokenChange,
   onReceiveTokenChange,
 }: SwapProps = {}) {
@@ -133,17 +125,6 @@ export function Swap({
     token: isReverseRouting ? toToken : fromToken,
     fiatPrice: isReverseRouting ? toFiatPrice : fromFiatPrice,
   });
-
-  useSetAutoSlippage({
-    fromToken,
-    toToken,
-    getAutoSlippage,
-  });
-  const { slippage: slippageSwap, slippageLoading: slippageLoadingSwap } =
-    useSwapSlippage({
-      fromToken,
-      toToken,
-    });
 
   const fromEtherTokenQuery = useFetchETHBalance(fromToken?.chainId);
 
@@ -222,8 +203,6 @@ export function Swap({
     toAmount: toAmt,
     estimateGas,
     isReverseRouting,
-    slippage: slippageSwap,
-    slippageLoading: slippageLoadingSwap,
   });
   const {
     resAmount,
@@ -393,9 +372,7 @@ export function Swap({
     setIsReverseRouting(true);
   }, [isReverseRouting, updateToAmt, dispatch]);
 
-  const isSlippageExceedLimit = useSlippageLimit(
-    isBridge ? undefined : slippageSwap,
-  );
+  const isSlippageExceedLimit = useSlippageLimit();
 
   const displayPriceImpact = useMemo(
     () => (Number(priceImpact) * 100).toFixed(2),
@@ -1037,7 +1014,6 @@ export function Swap({
         pricePerFromToken={resPricePerFromToken}
         onClose={() => setIsReviewDialogOpen(false)}
         loading={resPriceStatus === RoutePriceStatus.Loading}
-        slippage={slippageSwap}
       />
       {isBridge ? (
         <SettingsDialog
@@ -1049,8 +1025,6 @@ export function Swap({
         <SwapSettingsDialog
           open={isSettingsDialogOpen}
           onClose={() => setIsSettingsDialogOpen(false)}
-          fromToken={fromToken}
-          toToken={toToken}
         />
       )}
       <SelectBridgeDialog

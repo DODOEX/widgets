@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { useWeb3React } from '@web3-react/core';
 import { parseFixed } from '@ethersproject/bignumber';
+import { useWeb3React } from '@web3-react/core';
+import axios from 'axios';
 import React, {
   useCallback,
   useEffect,
@@ -8,13 +8,13 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 import { EmptyAddress } from '../../constants/address';
-import { usePriceTimer } from './usePriceTimer';
-import useExecuteSwap from './useExecuteSwap';
+import { APIServiceKey } from '../../constants/api';
 import { TokenInfo } from '../Token';
 import { useGetAPIService } from '../setting/useGetAPIService';
-import { APIServiceKey } from '../../constants/api';
-import { useUserOptions } from '../../components/UserOptionsProvider';
+import useExecuteSwap from './useExecuteSwap';
+import { usePriceTimer } from './usePriceTimer';
 import { useSwapSettingStore } from './useSwapSettingStore';
 
 export enum RoutePriceStatus {
@@ -31,8 +31,6 @@ export interface FetchRoutePrice {
   toAmount: string;
   estimateGas?: boolean;
   isReverseRouting?: boolean;
-  slippage?: number;
-  slippageLoading?: boolean;
 }
 
 interface IRouteResponse {
@@ -57,8 +55,6 @@ export function useFetchRoutePrice({
   marginAmount,
   estimateGas,
   isReverseRouting,
-  slippage,
-  slippageLoading,
 }: FetchRoutePrice) {
   const { account, chainId: walletChainId, provider } = useWeb3React();
   const { defaultChainId, feeRate, rebateTo, apikey } = useUserOptions();
@@ -67,6 +63,7 @@ export function useFetchRoutePrice({
     [walletChainId, fromToken, defaultChainId],
   );
   const ddl = useSwapSettingStore((state) => Number(state.ddl));
+  const slippage = useSwapSettingStore((state) => Number(state.slippage));
   const disableIndirectRouting = useSwapSettingStore((state) =>
     Number(state.disableIndirectRouting),
   );
@@ -105,6 +102,7 @@ export function useFetchRoutePrice({
       chainId,
       deadLine: apiDdl,
       apikey,
+      // 3% 传 3
       slippage,
       source: disableIndirectRouting ? 'noMaxHops' : 'dodoV2AndMixWasm',
       toTokenAddress: toToken.address,

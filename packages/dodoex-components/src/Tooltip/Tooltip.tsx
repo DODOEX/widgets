@@ -91,7 +91,7 @@ export default function Tooltip({
   /** This prop won't impact the enter click delay  */
   enterDelay = 100,
   /** This prop won't impact the enter click delay  */
-  leaveDelay = 0,
+  leaveDelay = 300,
   arrow = true,
   PopperProps,
   open: openProps,

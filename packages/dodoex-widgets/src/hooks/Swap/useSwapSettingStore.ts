@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { DEFAULT_SWAP_DDL } from '../../constants/swap';
+import { DEFAULT_SWAP_DDL, DEFAULT_SWAP_SLIPPAGE } from '../../constants/swap';
 
 export interface CustomSwapPairSlippage {
   account: string;
@@ -30,6 +30,7 @@ interface SwapSettingState {
   ddl: string;
   expertMode: boolean;
   disableIndirectRouting: boolean;
+  slippage: string;
 }
 
 export const useSwapSettingStore = create(
@@ -42,6 +43,7 @@ export const useSwapSettingStore = create(
       ddl: String(DEFAULT_SWAP_DDL),
       expertMode: false,
       disableIndirectRouting: false,
+      slippage: String(DEFAULT_SWAP_SLIPPAGE),
     }),
     {
       name: 'swap-setting-storage',

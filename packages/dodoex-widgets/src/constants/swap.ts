@@ -7,3 +7,21 @@ export const DEFAULT_SWAP_DDL = 20; // minutes
 export const MIN_GAS_LIMIT = 30000;
 
 export const DEFAULT_BRIDGE_SLIPPAGE = 0.5;
+
+export const SWAP_SLIPPAGE_LIST = [
+  {
+    value: '0.01',
+  },
+  {
+    value: '0.1',
+  },
+  {
+    value: '0.5',
+  },
+  {
+    value: '1.0',
+  },
+  {
+    value: '5.0',
+  },
+];
