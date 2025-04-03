@@ -45,5 +45,6 @@ export type { SkeletonProps } from './Skeleton';
 export { EmptyDataIcon, FailedIcon } from './Lottie';
 export { Select } from './Select';
 export { Radio } from './Radio';
+export { Switch } from './Switch';
 export { Slider } from './Slider';
 export type { SliderProps } from './Slider';

@@ -152,31 +152,31 @@ export const darkPalette: PaletteOptions = {
 export const lightPalette: PaletteOptions = {
   mode: 'light',
   primary: {
-    main: '#1A1A1B',
-    contrastText: '#fff',
+    main: '#513E2B',
+    contrastText: '#FFFFFF',
   },
   secondary: {
-    main: '#FFE804',
-    contrastText: '#1A1A1B',
+    main: '#FFEA02',
+    contrastText: '#513E2B',
   },
   error: {
-    main: '#EC5A7D',
+    main: '#FD6057',
     contrastText: '#FFFFFF',
   },
   warning: {
     main: '#B15600',
-    contrastText: '#1A1A1B',
+    contrastText: '#513E2B',
   },
   success: {
     main: '#2FBA90',
-    contrastText: '#1A1A1B',
+    contrastText: '#513E2B',
   },
   purple: {
-    main: '#6851B4',
-    contrastText: '#1A1A1B',
+    main: '#BC9CFF',
+    contrastText: '#513E2B',
   },
   background: {
-    default: '#F9F6E8',
+    default: '#F7F4ED',
     paper: '#FFFFFF',
     paperContrast: '#F6F6F6',
     paperDarkContrast: alpha('#1A1A1B', 0.1),
@@ -185,11 +185,11 @@ export const lightPalette: PaletteOptions = {
     tag: alpha('#1A1A1B', 0.04),
   },
   text: {
-    primary: '#1A1A1B',
-    secondary: alpha('#1A1A1B', 0.5),
-    disabled: alpha('#1A1A1B', 0.3),
-    placeholder: alpha('#1A1A1B', 0.3),
-    link: '#1A1A1B',
+    primary: '#513E2B',
+    secondary: alpha('#513E2B', 0.5),
+    disabled: alpha('#513E2B', 0.3),
+    placeholder: alpha('#513E2B', 0.3),
+    link: '#513E2B',
   },
   border: {
     main: alpha('#454851', 0.1),
@@ -200,8 +200,8 @@ export const lightPalette: PaletteOptions = {
     default: alpha('#1A1A1B', 0.1),
   },
   tabActive: {
-    main: alpha('#FFE804', 0.2),
-    contrastText: '#1A1A1B',
+    main: 'rgba(255, 234, 2, 0.10)',
+    contrastText: '#513E2B',
   },
 };
 

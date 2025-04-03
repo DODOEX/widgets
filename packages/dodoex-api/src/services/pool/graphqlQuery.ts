@@ -492,4 +492,32 @@ export const poolGraphqlQuery = {
       }
     }
   `),
+  fetchVe33PoolList: graphql(`
+    query Ve33_getPoolList($where: Ve33TokenFilterPaginationInput) {
+      ve33_getPoolList(where: $where) {
+        id
+        title
+        totalValueLockedUSD
+        totalValueLockedToken0
+        totalValueLockedToken1
+        volumeUSD
+        volumeToken0
+        volumeToken1
+        feesUSD
+        feesToken0
+        feesToken1
+        token0Address
+        token0Name
+        token0Symbol
+        token0Decimals
+        token1Address
+        token1Name
+        token1Symbol
+        token1Decimals
+        gaugeAddress
+        feeRate
+        apr
+      }
+    }
+  `),
 };

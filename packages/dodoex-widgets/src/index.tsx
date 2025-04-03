@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import { Swap, SwapProps } from './components/Swap';
 import { Widget, WidgetProps } from './components/Widget';
 import { Pool } from './widgets/PoolWidget';
-import { Ve33PoolList } from './widgets/Ve33PoolList';
+import { Ve33PoolList } from './widgets/ve33/Ve33PoolList';
 export { PageType, useRouterStore } from './router';
 export type { Page } from './router';
 
@@ -37,7 +37,7 @@ export {
   PoolOperate,
   default as PoolOperateDialog,
 } from './widgets/PoolWidget/PoolOperate';
-export { Ve33PoolList } from './widgets/Ve33PoolList';
+export { Ve33PoolList } from './widgets/ve33/Ve33PoolList';
 export type { PoolOperateProps } from './widgets/PoolWidget/PoolOperate';
 export type SwapWidgetProps = WidgetProps & SwapProps;
 

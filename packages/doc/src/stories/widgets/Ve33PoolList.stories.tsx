@@ -1,6 +1,5 @@
-import { SwapWidgetApi } from '@dodoex/api';
-import { PoolWidget, SwapWidgetProps } from '@dodoex/widgets';
-import React from 'react';
+/* eslint-disable import/no-extraneous-dependencies */
+import { Ve33PoolListWidget } from '@dodoex/widgets';
 
 export default {
   title: 'Widgets/Ve33PoolList',
@@ -8,22 +7,10 @@ export default {
 };
 
 export const Primary = (props: any) => {
-  const [config, setConfig] = React.useState<SwapWidgetProps>({});
   const { projectId, apiKey, ...other } = props;
-  React.useEffect(() => {
-    if (projectId && apiKey) {
-      const dodoService = new SwapWidgetApi();
-      dodoService
-        .getConfigSwapWidgetProps(projectId, apiKey)
-        .then(({ swapWidgetProps }) => {
-          setConfig(swapWidgetProps);
-        });
-    }
-  }, [projectId, apiKey]);
 
   return (
-    <PoolWidget
-      {...config}
+    <Ve33PoolListWidget
       tokenList={[
         {
           address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',

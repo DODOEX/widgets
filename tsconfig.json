@@ -15,7 +15,15 @@
     "jsx": "react-jsx",
     "downlevelIteration": true,
     "newLine": "CRLF",
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "@dodoex/api": ["./packages/dodoex-api/src"],
+      "@dodoex/api/*": ["./packages/dodoex-api/src/*"],
+      "@dodoex/components": ["./packages/dodoex-components/src"],
+      "@dodoex/components/*": ["./packages/dodoex-components/src/*"],
+      "@dodoex/icons": ["./packages/dodoex-icons/src"],
+      "@dodoex/icons/*": ["./packages/dodoex-icons/src/*"]
+    }
   },
   "exclude": ["node_modules"],
   "include": ["custom.d.ts"]

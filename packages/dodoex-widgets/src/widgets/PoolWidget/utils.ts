@@ -45,6 +45,12 @@ export type FetchPoolList = ExcludeNone<
   >['pairs']
 >;
 
+export type FetchVe33PoolList = ExcludeNone<
+  ReturnType<
+    Exclude<(typeof PoolApi.graphql.fetchVe33PoolList)['__apiType'], undefined>
+  >['ve33_getPoolList']
+>;
+
 export function convertLiquidityTokenToTokenInfo(
   token:
     | {

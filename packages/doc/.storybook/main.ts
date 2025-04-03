@@ -50,6 +50,7 @@ const config: StorybookConfig = {
             '../../dodoex-components',
             'src/',
           ),
+          '@dodoex/api': path.resolve(__dirname, '../../dodoex-api', 'src/'),
           '@dodoex/widgets': path.resolve(
             __dirname,
             '../../dodoex-widgets',

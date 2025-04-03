@@ -26,7 +26,7 @@ const WidgetContainer = React.forwardRef(function WidgetContainer(
               overflowX: 'hidden',
             }
           : {
-              padding: theme.spacing(28, 20, 40, 40),
+              padding: 0,
               height: 'auto',
             }),
         ...sx,

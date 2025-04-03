@@ -12612,6 +12612,18 @@ export type Query = {
   /** get service charges for vdodo */
   vdodo_getServiceCharges: VdodoVdodoServiceChargesResult;
   vdodo_getStats: VdodoStatsResult;
+  /** 池子详情 */
+  ve33_getPool?: Maybe<Ve33Pool>;
+  /** 池子列表 */
+  ve33_getPoolList: Array<Maybe<Ve33Pool>>;
+  /** 锁仓信息 */
+  ve33_getUserLock: Array<Maybe<Ve33Lock>>;
+  /** 用户投资列表 */
+  ve33_getUserPortfolioList: Array<Maybe<Ve33Portfolio>>;
+  /** 用户veMOMO信息 */
+  ve33_getUserVeMOMOInfo: Ve33UserVeMomoInfo;
+  /** 投票池列表 */
+  ve33_getVotePoolList: Array<Maybe<Ve33VotePool>>;
   ve33_token_list?: Maybe<Array<Maybe<Ve33_TokenVe33Token>>>;
   withdrawFundHistories: Array<WithdrawFundHistory>;
   withdrawFundHistory?: Maybe<WithdrawFundHistory>;
@@ -14816,6 +14828,30 @@ export type QueryVdodo_GetServiceChargesArgs = {
 
 export type QueryVdodo_GetStatsArgs = {
   where?: InputMaybe<VdodoChainsInput>;
+};
+
+export type QueryVe33_GetPoolArgs = {
+  where?: InputMaybe<Ve33PoolInput>;
+};
+
+export type QueryVe33_GetPoolListArgs = {
+  where?: InputMaybe<Ve33TokenFilterPaginationInput>;
+};
+
+export type QueryVe33_GetUserLockArgs = {
+  where: Ve33UserInput;
+};
+
+export type QueryVe33_GetUserPortfolioListArgs = {
+  where: Ve33PortfolioInput;
+};
+
+export type QueryVe33_GetUserVeMomoInfoArgs = {
+  where: Ve33UserInput;
+};
+
+export type QueryVe33_GetVotePoolListArgs = {
+  where?: InputMaybe<Ve33VotePoolInput>;
 };
 
 export type QueryVe33_Token_ListArgs = {
@@ -20188,6 +20224,160 @@ export type VdodoVdodoServiceChargesResult = {
   pool_fees_total: Scalars['String']['output'];
 };
 
+export type Ve33Incentive = {
+  amount: Scalars['BigInt']['output'];
+  token: Scalars['String']['output'];
+};
+
+export type Ve33Lock = {
+  id: Scalars['String']['output'];
+  isPermanent: Scalars['Boolean']['output'];
+  isVoted: Scalars['Boolean']['output'];
+  lockedEnd: Scalars['BigInt']['output'];
+  userAddress: Scalars['String']['output'];
+  value: Scalars['BigDecimal']['output'];
+  votingPower: Scalars['BigDecimal']['output'];
+};
+
+export type Ve33Pool = {
+  apr: Scalars['BigDecimal']['output'];
+  feeRate: Scalars['BigDecimal']['output'];
+  feesToken0: Scalars['BigDecimal']['output'];
+  feesToken1: Scalars['BigDecimal']['output'];
+  feesUSD: Scalars['BigDecimal']['output'];
+  gaugeAddress: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  token0Address: Scalars['String']['output'];
+  token0Decimals: Scalars['Int']['output'];
+  token0Name: Scalars['String']['output'];
+  token0Symbol: Scalars['String']['output'];
+  token1Address: Scalars['String']['output'];
+  token1Decimals: Scalars['Int']['output'];
+  token1Name: Scalars['String']['output'];
+  token1Symbol: Scalars['String']['output'];
+  totalValueLockedToken0: Scalars['BigDecimal']['output'];
+  totalValueLockedToken1: Scalars['BigDecimal']['output'];
+  totalValueLockedUSD: Scalars['BigDecimal']['output'];
+  volumeToken0: Scalars['BigDecimal']['output'];
+  volumeToken1: Scalars['BigDecimal']['output'];
+  volumeUSD: Scalars['BigDecimal']['output'];
+};
+
+export type Ve33PoolInput = {
+  pool?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Ve33PoolTotalVoted = {
+  token: Scalars['String']['output'];
+  weight: Scalars['String']['output'];
+};
+
+export type Ve33Portfolio = {
+  apr: Scalars['BigDecimal']['output'];
+  feeRate: Scalars['BigDecimal']['output'];
+  feesToken0: Scalars['BigDecimal']['output'];
+  feesToken1: Scalars['BigDecimal']['output'];
+  feesUSD: Scalars['BigDecimal']['output'];
+  gaugeAddress: Scalars['String']['output'];
+  /** liquidity position id */
+  id: Scalars['String']['output'];
+  incentives: Array<Maybe<Ve33Incentive>>;
+  liquidityTokenBalance: Scalars['String']['output'];
+  liquidityTokenBalanceUSD: Scalars['String']['output'];
+  liquidityTokenInMining: Scalars['String']['output'];
+  liquidityTokenInMiningUSD: Scalars['String']['output'];
+  liquidityUSD: Scalars['String']['output'];
+  locks: Array<Maybe<Ve33PortfolioLock>>;
+  poolAddress: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  token0Address: Scalars['String']['output'];
+  token0Amount: Scalars['String']['output'];
+  token0Decimals: Scalars['Int']['output'];
+  token0LowerPrice: Scalars['String']['output'];
+  token0Name: Scalars['String']['output'];
+  token0Piece: Scalars['String']['output'];
+  token0Symbol: Scalars['String']['output'];
+  token0UpperPrice: Scalars['String']['output'];
+  token1Address: Scalars['String']['output'];
+  token1Amount: Scalars['String']['output'];
+  token1Decimals: Scalars['Int']['output'];
+  token1LowerPrice: Scalars['String']['output'];
+  token1Name: Scalars['String']['output'];
+  token1Piece: Scalars['String']['output'];
+  token1Symbol: Scalars['String']['output'];
+  token1UpperPrice: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+};
+
+export type Ve33PortfolioInput = {
+  page?: InputMaybe<Scalars['Int']['input']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
+  token_starts_with?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Ve33VotePoolType>;
+  user: Scalars['String']['input'];
+};
+
+export type Ve33PortfolioLock = {
+  id: Scalars['String']['output'];
+  lockedEnd: Scalars['BigInt']['output'];
+  totalWeight: Scalars['BigDecimal']['output'];
+  usd: Scalars['BigDecimal']['output'];
+  userAddress: Scalars['String']['output'];
+  value: Scalars['BigInt']['output'];
+  votingPower: Scalars['BigInt']['output'];
+  weight: Scalars['BigDecimal']['output'];
+};
+
+export type Ve33TokenFilterPaginationInput = {
+  page?: InputMaybe<Scalars['Int']['input']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
+  token_starts_with?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Ve33UserInput = {
+  user: Scalars['String']['input'];
+};
+
+export type Ve33UserVeMomoInfo = {
+  totalVeMOMOCount: Scalars['Int']['output'];
+  votedVeMOMOCount: Scalars['Int']['output'];
+};
+
+export type Ve33VotePool = {
+  apr: Scalars['BigDecimal']['output'];
+  feeRate: Scalars['BigDecimal']['output'];
+  feesToken0: Scalars['BigDecimal']['output'];
+  feesToken1: Scalars['BigDecimal']['output'];
+  feesUSD: Scalars['BigDecimal']['output'];
+  gaugeAddress: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  incentives: Array<Maybe<Ve33Incentive>>;
+  title: Scalars['String']['output'];
+  token0Address: Scalars['String']['output'];
+  token0Decimals: Scalars['Int']['output'];
+  token0Name: Scalars['String']['output'];
+  token0Symbol: Scalars['String']['output'];
+  token1Address: Scalars['String']['output'];
+  token1Decimals: Scalars['Int']['output'];
+  token1Name: Scalars['String']['output'];
+  token1Symbol: Scalars['String']['output'];
+  totalValueLockedToken0: Scalars['BigDecimal']['output'];
+  totalValueLockedToken1: Scalars['BigDecimal']['output'];
+  totalValueLockedUSD: Scalars['BigDecimal']['output'];
+  votes: Array<Maybe<Ve33PoolTotalVoted>>;
+};
+
+export type Ve33VotePoolInput = {
+  page?: InputMaybe<Scalars['Int']['input']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
+  token_starts_with?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Ve33VotePoolType>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Ve33VotePoolType = 'All' | 'V2' | 'V3';
+
 export type Ve33_TokenVe33Token = {
   address?: Maybe<Scalars['String']['output']>;
   chainId?: Maybe<Scalars['Int']['output']>;
@@ -21366,6 +21556,37 @@ export type FetchPoolPairListQuery = {
   }>;
 };
 
+export type Ve33_GetPoolListQueryVariables = Exact<{
+  where?: InputMaybe<Ve33TokenFilterPaginationInput>;
+}>;
+
+export type Ve33_GetPoolListQuery = {
+  ve33_getPoolList: Array<{
+    id: string;
+    title: string;
+    totalValueLockedUSD: any;
+    totalValueLockedToken0: any;
+    totalValueLockedToken1: any;
+    volumeUSD: any;
+    volumeToken0: any;
+    volumeToken1: any;
+    feesUSD: any;
+    feesToken0: any;
+    feesToken1: any;
+    token0Address: string;
+    token0Name: string;
+    token0Symbol: string;
+    token0Decimals: number;
+    token1Address: string;
+    token1Name: string;
+    token1Symbol: string;
+    token1Decimals: number;
+    gaugeAddress: string;
+    feeRate: any;
+    apr: any;
+  } | null>;
+};
+
 export type FetchUserSwapOrderHistoriesQueryVariables = Exact<{
   where?: InputMaybe<User_SwapswapFilter>;
 }>;
@@ -22294,6 +22515,37 @@ export const FetchPoolPairListDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   FetchPoolPairListQuery,
   FetchPoolPairListQueryVariables
+>;
+export const Ve33_GetPoolListDocument = new TypedDocumentString(`
+    query Ve33_getPoolList($where: Ve33TokenFilterPaginationInput) {
+  ve33_getPoolList(where: $where) {
+    id
+    title
+    totalValueLockedUSD
+    totalValueLockedToken0
+    totalValueLockedToken1
+    volumeUSD
+    volumeToken0
+    volumeToken1
+    feesUSD
+    feesToken0
+    feesToken1
+    token0Address
+    token0Name
+    token0Symbol
+    token0Decimals
+    token1Address
+    token1Name
+    token1Symbol
+    token1Decimals
+    gaugeAddress
+    feeRate
+    apr
+  }
+}
+    `) as unknown as TypedDocumentString<
+  Ve33_GetPoolListQuery,
+  Ve33_GetPoolListQueryVariables
 >;
 export const FetchUserSwapOrderHistoriesDocument = new TypedDocumentString(`
     query FetchUserSwapOrderHistories($where: User_swapswapFilter) {
