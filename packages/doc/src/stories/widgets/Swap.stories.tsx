@@ -17,9 +17,9 @@ Primary.args = {
   popularTokenList: [],
   tokenList: [
     {
-      address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-      symbol: 'ETH',
-      name: 'ETH',
+      address: '0x42EDf453F8483c7168c158d28D610A58308517D1',
+      symbol: 'MOMO',
+      name: 'Momodrome',
       decimals: 18,
       chainId: 2810,
     },
@@ -27,6 +27,13 @@ Primary.args = {
       address: '0x5300000000000000000000000000000000000011',
       symbol: 'WETH',
       name: 'WETH',
+      decimals: 18,
+      chainId: 2810,
+    },
+    {
+      address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+      symbol: 'ETH',
+      name: 'ETH',
       decimals: 18,
       chainId: 2810,
     },

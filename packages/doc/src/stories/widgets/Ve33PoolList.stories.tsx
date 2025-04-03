@@ -3,7 +3,7 @@ import { PoolWidget, SwapWidgetProps } from '@dodoex/widgets';
 import React from 'react';
 
 export default {
-  title: 'Widgets/Pool',
+  title: 'Widgets/Ve33PoolList',
   component: 'div',
 };
 
@@ -26,9 +26,9 @@ export const Primary = (props: any) => {
       {...config}
       tokenList={[
         {
-          address: '0x42EDf453F8483c7168c158d28D610A58308517D1',
-          symbol: 'MOMO',
-          name: 'Momodrome',
+          address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+          symbol: 'ETH',
+          name: 'ETH',
           decimals: 18,
           chainId: 2810,
         },
@@ -36,13 +36,6 @@ export const Primary = (props: any) => {
           address: '0x5300000000000000000000000000000000000011',
           symbol: 'WETH',
           name: 'WETH',
-          decimals: 18,
-          chainId: 2810,
-        },
-        {
-          address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-          symbol: 'ETH',
-          name: 'ETH',
           decimals: 18,
           chainId: 2810,
         },
@@ -58,9 +51,6 @@ Primary.args = {
   apiKey: 'ee53d6b75b12aceed4',
   width: '100%',
   height: '100%',
-  noDocumentLink: true,
   routerPage: undefined,
-  supportAMMV2: true,
-  supportAMMV3: true,
   onlyChainId: 2810,
 };

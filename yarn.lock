@@ -7911,48 +7911,48 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
-"@web3-react/core@8.2.0":
-  version "8.2.0"
-  resolved "https://registry.npmjs.org/@web3-react/core/-/core-8.2.0.tgz"
-  integrity sha512-r7dmK2E8Jrpvm/DF93hGMB+8lECHSI3Oo0NrHbhxkisK6in6rdgAXeYFhZtM48LBAm9py6fQvLzjCM6Qx9q0oQ==
+"@web3-react/core@^8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@web3-react/core/-/core-8.2.3.tgz#142899e74401bfd3a481a1b9578b2fd8f9dfde81"
+  integrity sha512-0ezmRKhqQpoa9ct2/3erg60zBXfC/f/liYR1mfSGKtIroRkLnPARigZSV6pI+fi8bhfGJ0RKtFWyTCCWZzdq1w==
   dependencies:
-    "@web3-react/store" "^8.2.0"
-    "@web3-react/types" "^8.2.0"
-    zustand "^4.3.5"
+    "@web3-react/store" "^8.2.3"
+    "@web3-react/types" "^8.2.3"
+    zustand "4.4.0"
   optionalDependencies:
     "@ethersproject/providers" "^5"
 
-"@web3-react/eip1193@8.2.0":
-  version "8.2.0"
-  resolved "https://registry.npmjs.org/@web3-react/eip1193/-/eip1193-8.2.0.tgz"
-  integrity sha512-Ugbt+FisHO8aLD5o5B4AZdtgSVpjrbmtC5MgHrOEBw+IwFqr20EJreh052u8ExI2OrPjARIVOkNcp50Xxs7oUw==
+"@web3-react/eip1193@^8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@web3-react/eip1193/-/eip1193-8.2.3.tgz#d09d5a5ea98719010eb7dd845631acb1f15c51e5"
+  integrity sha512-PdL8PCv3zgQrnowRlBK7PIO8G7v/nc31PYgarACo8mX+l5Y4+l7+ma/kpkULXp5yLtc4qlQYlCalmXpcbtl2FA==
   dependencies:
-    "@web3-react/types" "^8.2.0"
+    "@web3-react/types" "^8.2.3"
     eventemitter3 "^4.0.7"
 
-"@web3-react/metamask@8.2.1":
-  version "8.2.1"
-  resolved "https://registry.npmjs.org/@web3-react/metamask/-/metamask-8.2.1.tgz"
-  integrity sha512-JysxkAImIygkD95Bimrj7HwcTq79tq4ZSlphZt24LBMrEVY5K8k+e5mCAuJuDZ7Fu+aBxqpS0lgPjaBGKdNu/A==
+"@web3-react/metamask@^8.2.4":
+  version "8.2.4"
+  resolved "https://registry.yarnpkg.com/@web3-react/metamask/-/metamask-8.2.4.tgz#26438222c4b17964c011ea359058ba6feb6a2330"
+  integrity sha512-4yoqDgvcB0QKUGSk00/fUipA3z5rOXcQYAwE0CABPa5lbTRAIm5i8F0Gj8UW7QO0pQus4UtjX0+JxWdclB7UrA==
   dependencies:
     "@metamask/detect-provider" "^1.2.0"
-    "@web3-react/types" "^8.2.0"
+    "@web3-react/types" "^8.2.3"
 
-"@web3-react/store@^8.2.0":
-  version "8.2.0"
-  resolved "https://registry.npmjs.org/@web3-react/store/-/store-8.2.0.tgz"
-  integrity sha512-cG8nb+tBeRUJu+98ko6YZuAWmoipGMEbR3bhineCNd4x2mXv3GbWSPtE17GeWVshZgDbZu2/Du0okTx+22VWCg==
+"@web3-react/store@^8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@web3-react/store/-/store-8.2.3.tgz#64a0ddaf49f85c120e07f5089dd4d7df9346f881"
+  integrity sha512-qUJQ5pDsYYDra+/+glq2BmIS43HYAiEZ22sLLVh6E75WiZKRNOOqUxBDPe33KTIn718DLt51j+wd2FT+oT/kJQ==
   dependencies:
     "@ethersproject/address" "^5"
-    "@web3-react/types" "^8.2.0"
-    zustand "^4.3.5"
+    "@web3-react/types" "^8.2.3"
+    zustand "4.4.0"
 
-"@web3-react/types@8.2.0", "@web3-react/types@^8.2.0":
-  version "8.2.0"
-  resolved "https://registry.npmjs.org/@web3-react/types/-/types-8.2.0.tgz"
-  integrity sha512-TBYTFlqJZaEpVbuAAKRJFX5PZc3lI1TqDZzY94zwCrCh4GBepwwK7+PxmRAppMFuNa5x0vFX/ghLEC44e6TCFg==
+"@web3-react/types@^8.2.0", "@web3-react/types@^8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@web3-react/types/-/types-8.2.3.tgz#e2ac1eaaa7f96b518a5535fee048bf73470f5c21"
+  integrity sha512-kSG90QkN+n7IOtp10nQ44oS8J7jzfH9EmqnruwBpCGybh1FM/ohyRvUKWYZNfNE4wsjTSpKsINR0/VdDsZMHyg==
   dependencies:
-    zustand "^4.3.5"
+    zustand "4.4.0"
 
 "@web3-react/walletconnect-v2@8.3.6":
   version "8.3.6"
@@ -20984,11 +20984,6 @@ use-sync-external-store@1.2.0, use-sync-external-store@^1.0.0:
   resolved "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz"
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
 
-use-sync-external-store@1.2.2:
-  version "1.2.2"
-  resolved "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.2.2.tgz"
-  integrity sha512-PElTlVMwpblvbNqQ82d2n6RjStvdSoNe9FG28kNfz3WiXilJm4DdNkEzRhCZuIDwY8U08WVihhGR5iRqAwfDiw==
-
 utf-8-validate@^5.0.2:
   version "5.0.10"
   resolved "https://registry.npmjs.org/utf-8-validate/-/utf-8-validate-5.0.10.tgz"
@@ -21740,16 +21735,9 @@ zod@3.22.4:
   resolved "https://registry.npmjs.org/zod/-/zod-3.22.4.tgz"
   integrity sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==
 
-zustand@^4.3.5:
-  version "4.3.8"
-  resolved "https://registry.npmjs.org/zustand/-/zustand-4.3.8.tgz"
-  integrity sha512-4h28KCkHg5ii/wcFFJ5Fp+k1J3gJoasaIbppdgZFO4BPJnsNxL0mQXBSFgOgAdCdBj35aDTPvdAJReTMntFPGg==
+zustand@4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-4.4.0.tgz#13b3e8ca959dd53d536034440aec382ff91b65c3"
+  integrity sha512-2dq6wq4dSxbiPTamGar0NlIG/av0wpyWZJGeQYtUOLegIUvhM2Bf86ekPlmgpUtS5uR7HyetSiktYrGsdsyZgQ==
   dependencies:
     use-sync-external-store "1.2.0"
-
-zustand@^4.5.5:
-  version "4.5.5"
-  resolved "https://registry.npmjs.org/zustand/-/zustand-4.5.5.tgz"
-  integrity sha512-+0PALYNJNgK6hldkgDq2vLrw5f6g/jCInz52n9RTpropGgeAf/ioFUCdtsjCqu4gNhW9D01rUQBROoRjdzyn2Q==
-  dependencies:
-    use-sync-external-store "1.2.2"
