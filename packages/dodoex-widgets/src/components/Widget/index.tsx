@@ -3,6 +3,7 @@ import {
   Box,
   createTheme,
   CssBaseline,
+  EmptyDataIcon,
   PaletteMode,
   ThemeOptions,
   ThemeProvider,
@@ -39,6 +40,8 @@ import {
   setAutoConnectLoading,
   useGlobalState,
 } from '../../hooks/useGlobalState';
+import { ExecutionCtx } from '../../hooks/Submission/types';
+import { TokenPickerDialogProps } from '../Swap/components/TokenCard/TokenPickerDialog';
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
@@ -120,8 +123,11 @@ export interface WidgetProps
   graphQLRequests?: GraphQLRequests;
   ConfirmComponent?: React.FunctionComponent<ConfirmProps>;
   DialogComponent?: React.FunctionComponent<DialogProps>;
+  EmptyDataIcon?: React.FunctionComponent<Parameters<typeof EmptyDataIcon>[0]>;
+  TokenPickerDialog?: React.FunctionComponent<TokenPickerDialogProps>;
   /** Default deadLine when it cannot be set. Unit: seconds */
   deadLine?: number;
+  submission?: ExecutionCtx;
 }
 
 function LangProvider(props: PropsWithChildren<WidgetProps>) {

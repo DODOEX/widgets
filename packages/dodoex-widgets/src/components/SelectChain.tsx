@@ -220,6 +220,7 @@ export default function SelectChain({
         options={options}
         valueOnlyIcon={valueOnlyIcon}
         sx={{
+          px: 8,
           height: 32,
           fontWeight: 600,
           typography: 'body2',

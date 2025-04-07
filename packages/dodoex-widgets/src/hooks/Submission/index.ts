@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import { ExecutionCtx, ExecutionResult } from './types';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export { default as useExecution } from './useExecution';
 export type { ExecutionProps } from './useExecution';
@@ -19,5 +20,8 @@ export const ExecutionContext = createContext<ExecutionCtx>({
  * Get the submission context
  */
 export function useSubmission() {
-  return useContext(ExecutionContext);
+  const { submission: submissionProps } = useUserOptions();
+  const submission = useContext(ExecutionContext);
+  if (submissionProps) return submissionProps;
+  return submission;
 }

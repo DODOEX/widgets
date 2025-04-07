@@ -35,7 +35,6 @@ import { EmptyList } from '../../../components/List/EmptyList';
 import { FailedList } from '../../../components/List/FailedList';
 import FilterAddressTags from './components/FilterAddressTags';
 import FilterTokenTags from './components/FilterTokenTags';
-import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import { PoolOperateProps } from '../PoolOperate';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
@@ -370,7 +369,7 @@ function CardList({
                 gap: '8px',
               }}
             >
-              <NeedConnectButton
+              <Button
                 fullWidth
                 size={Button.Size.small}
                 onClick={(evt) => {
@@ -382,7 +381,7 @@ function CardList({
                 }}
               >
                 <Trans>Add</Trans>
-              </NeedConnectButton>
+              </Button>
               {supportAMM && poolType === 'PMM' && (
                 <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
               )}

@@ -1,4 +1,5 @@
-import { Box, EmptyDataIcon } from '@dodoex/components';
+import { Box } from '@dodoex/components';
+import { EmptyDataIcon } from '../../../../components/List/EmptyList';
 
 export function MiningListEmpty({
   notFoundText,

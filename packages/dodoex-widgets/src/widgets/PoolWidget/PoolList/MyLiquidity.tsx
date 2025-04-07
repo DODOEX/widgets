@@ -35,7 +35,6 @@ import { EmptyList } from '../../../components/List/EmptyList';
 import { FailedList } from '../../../components/List/FailedList';
 import FilterAddressTags from './components/FilterAddressTags';
 import FilterTokenTags from './components/FilterTokenTags';
-import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import { PoolOperateProps } from '../PoolOperate';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
@@ -542,7 +541,7 @@ function CardList({
               {isAMMV3
                 ? null
                 : !!account && (
-                    <NeedConnectButton
+                    <Button
                       fullWidth
                       variant={Button.Variant.outlined}
                       size={Button.Size.small}
@@ -556,9 +555,9 @@ function CardList({
                       }}
                     >
                       <Trans>Remove</Trans>
-                    </NeedConnectButton>
+                    </Button>
                   )}
-              <NeedConnectButton
+              <Button
                 fullWidth
                 size={Button.Size.small}
                 onClick={(evt) => {
@@ -571,7 +570,7 @@ function CardList({
                 }}
               >
                 <Trans>{isAMMV3 ? 'Manage' : 'Add'}</Trans>
-              </NeedConnectButton>
+              </Button>
               {supportAMM && poolType === 'PMM' && (
                 <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
               )}
@@ -1103,7 +1102,7 @@ function TableList({
                       {isAMMV3
                         ? null
                         : !!account && (
-                            <NeedConnectButton
+                            <Button
                               variant={Button.Variant.outlined}
                               size={Button.Size.small}
                               onClick={(evt) => {
@@ -1119,9 +1118,9 @@ function TableList({
                             >
                               <Trans>Remove</Trans>
                               {!!migrationItem && <MigrationTag isRightTop />}
-                            </NeedConnectButton>
+                            </Button>
                           )}
-                      <NeedConnectButton
+                      <Button
                         size={Button.Size.small}
                         onClick={() => {
                           setOperatePool({
@@ -1131,7 +1130,7 @@ function TableList({
                         }}
                       >
                         {isAMMV3 ? t`Manage` : t`Add`}
-                      </NeedConnectButton>
+                      </Button>
                     </>
                   )}
                 </Box>
@@ -1274,6 +1273,9 @@ export default function MyLiquidity({
             <SelectChain
               chainId={activeChainId}
               setChainId={handleChangeActiveChainId}
+              sx={{
+                justifyContent: 'space-between',
+              }}
             />
           )}
           {supportAMMV3 && (

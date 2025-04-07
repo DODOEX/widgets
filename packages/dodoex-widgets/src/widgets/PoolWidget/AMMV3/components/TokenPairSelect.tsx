@@ -41,13 +41,18 @@ function TokenPickSelect({
           borderRadius: 12,
           borderWidth: 1,
           borderStyle: 'solid',
-          borderColor: token ? theme.palette.border.main : '#ED5AD5',
+          borderColor: token
+            ? theme.palette.border.main
+            : theme.palette.primary.main,
           color: token
             ? theme.palette.text.primary
             : theme.palette.primary.contrastText,
-          backgroundColor: token ? 'transparent' : '#ED5AD5',
+          backgroundColor: token ? 'transparent' : theme.palette.primary.main,
           '&:hover': {
-            borderColor: token ? theme.palette.border.main : '#ED5AD5',
+            borderColor: token
+              ? theme.palette.border.main
+              : theme.palette.primary.main,
+            opacity: 0.8,
           },
           [theme.breakpoints.up('tablet')]: {
             flexBasis: '50%',

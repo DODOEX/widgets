@@ -1,5 +1,5 @@
 import { ChainId } from '@dodoex/api';
-import { Box, Button, EmptyDataIcon, useTheme } from '@dodoex/components';
+import { Box, Button, useTheme } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
 import { t } from '@lingui/macro';
 import { useMemo, useState } from 'react';
@@ -14,6 +14,7 @@ import { useV3Positions } from './hooks/useV3Positions';
 import { FeeAmount } from './sdks/v3-sdk';
 import { PositionDetails } from './types/position';
 import { areAddressesEqual, buildCurrency } from './utils';
+import { EmptyDataIcon } from '../../../components/List/EmptyList';
 
 export interface AMMV3PositionsViewProps {
   chainId: ChainId;
@@ -181,7 +182,7 @@ export const AMMV3PositionsView = ({
               >
                 <path
                   d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z"
-                  fill="#1A1A1B"
+                  fill="currentColor"
                 />
               </svg>
               {t`Add Position`}
@@ -275,7 +276,7 @@ export const AMMV3PositionsView = ({
         open={baseToken != null && quoteToken != null}
         onClose={onClose}
         scope={!isMobile}
-        modal={undefined}
+        modal={isMobile}
         id="pool-operate"
       >
         {content}

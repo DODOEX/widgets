@@ -1,4 +1,4 @@
-import { Box, BoxProps, useTheme } from '@dodoex/components';
+import { Box, BoxProps, Skeleton, useTheme } from '@dodoex/components';
 import { chainListMap } from '../constants/chainList';
 import { ChainId } from '@dodoex/api';
 import TokenLogo from './TokenLogo';
@@ -36,11 +36,57 @@ export function TokenLogoPair({
   const { onlyChainId } = useUserOptions();
   const showChainLogo = showChainLogoProps && !onlyChainId;
 
-  if (!tokens || tokens.length <= 0) {
-    return null;
-  }
-
   const chainLogoSize = width / 2;
+
+  if (!tokens || tokens.length <= 0) {
+    return (
+      <Box
+        sx={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          mr,
+          position: 'relative',
+          zIndex: 0,
+          ...sx,
+        }}
+      >
+        <Skeleton
+          variant="circular"
+          height={width}
+          width={width}
+          sx={{
+            display: 'inline-flex',
+            ml: 0,
+            borderRadius: '50%',
+          }}
+        />
+        <Skeleton
+          variant="circular"
+          height={width}
+          width={width}
+          sx={{
+            display: 'inline-flex',
+            ml: gap,
+            borderRadius: '50%',
+          }}
+        />
+        {showChainLogo && (
+          <Skeleton
+            variant="circular"
+            height={chainLogoSize}
+            width={chainLogoSize}
+            sx={{
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              zIndex: tokens.length + 1,
+              transform: 'translateX(50%)',
+            }}
+          />
+        )}
+      </Box>
+    );
+  }
 
   return (
     <Box

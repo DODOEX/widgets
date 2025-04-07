@@ -2,7 +2,6 @@ import { ChainId } from '@dodoex/api';
 import { useQueries } from '@tanstack/react-query';
 import JSBI from 'jsbi';
 import { useMemo } from 'react';
-import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { ammV3Api } from '../../utils';
 import {
   BigintIsh,
@@ -94,14 +93,13 @@ export enum PoolState {
 }
 
 export function usePools(
+  chainId: number | undefined,
   poolKeys: [
     Currency | undefined,
     Currency | undefined,
     FeeAmount | undefined,
   ][],
 ): [PoolState, Pool | null][] {
-  const { chainId } = useWalletInfo();
-
   const poolTokens: ([Token, Token, FeeAmount] | undefined)[] = useMemo(() => {
     if (!chainId) {
       return new Array(poolKeys.length);
@@ -227,5 +225,5 @@ export function usePool(
     [currencyA, currencyB, feeAmount],
   );
 
-  return usePools(poolKeys)[0];
+  return usePools(currencyA?.chainId, poolKeys)[0];
 }
