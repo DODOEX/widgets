@@ -124,7 +124,10 @@ export const basicTokenMap: {
   },
   [ChainId.PLUME]: {
     ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenAddress: '0x562723560131C47417dfcD6BB1A089E4D7C7943C',
+    symbol: 'PLUME',
+    name: 'PLUME',
+    wrappedTokenSymbol: 'WPLUME',
+    wrappedTokenAddress: '0xEa237441c92CAe6FC17Caaf9a7acB3f953be4bd1',
   },
   [ChainId.PLUME_TESTNET]: {
     ...DEFAULT_BASIC_TOKEN,

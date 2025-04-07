@@ -137,9 +137,13 @@ export const useCreatePoolSubmit = ({
 
     if (result && result.data) {
       try {
-        if (baseAmount && baseToken.symbol === EtherToken.symbol) {
+        const etherAddressLow = EtherToken.address.toLocaleLowerCase();
+        if (
+          baseAmount &&
+          baseToken.address.toLocaleUpperCase() === etherAddressLow
+        ) {
           result.value = getEthersValue(baseAmount);
-        } else if (quoteAmount && quoteToken.symbol === EtherToken.symbol) {
+        } else if (quoteAmount && quoteToken.address === etherAddressLow) {
           result.value = getEthersValue(quoteAmount);
         } else {
           result.value = 0;

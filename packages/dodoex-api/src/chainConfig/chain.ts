@@ -35,7 +35,7 @@ export enum ChainId {
 
   TAIKO = 167000,
 
-  PLUME = 98865,
+  PLUME = 98866,
 
   PLUME_TESTNET = 98864,
 
