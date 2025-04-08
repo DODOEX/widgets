@@ -35,6 +35,7 @@ function CreateItem({
         py: 14,
         borderTop: `1px solid ${theme.palette.border.main}`,
         [theme.breakpoints.up('tablet')]: {
+          maxWidth: 236,
           borderTop: 'none',
           mx: 0,
           px: 16,
@@ -52,6 +53,7 @@ function CreateItem({
           gap: 0,
           p: 0,
           borderRadius: 8,
+          textAlign: 'left',
           '&:hover': {
             backgroundColor: theme.palette.background.tag,
           },

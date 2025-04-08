@@ -632,11 +632,11 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:119
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:121
 msgid "PMM Pool"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:146
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:148
 msgid "Concentrated liquidity, higher efficiency"
 msgstr ""
 
@@ -1264,7 +1264,7 @@ msgstr ""
 msgid "Wallet incompatibility"
 msgstr "钱包不兼容"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:121
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:123
 msgid "Fexible customization, take full control of liquidity"
 msgstr ""
 
@@ -1860,11 +1860,11 @@ msgstr ""
 msgid "Select Network"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:135
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:137
 msgid "Simple, full-range liquidity"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:134
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:136
 msgid "AMM V2 Position"
 msgstr ""
 
@@ -1974,10 +1974,10 @@ msgstr ""
 msgid "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:170
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:174
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:219
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:244
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:172
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:176
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:221
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:246
 msgid "Create Pool"
 msgstr ""
 
@@ -2116,7 +2116,7 @@ msgstr ""
 msgid "Total Liquidity"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:145
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:147
 msgid "AMM V3 Position"
 msgstr ""
 
