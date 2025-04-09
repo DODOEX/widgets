@@ -14,6 +14,7 @@ export default function useFetchBlockNumber() {
       useGlobalState.setState({
         latestBlockNumber: blockNumber,
       });
+      return blockNumber;
     } catch (error) {
       console.error('Failed to fetch block number', error);
     }

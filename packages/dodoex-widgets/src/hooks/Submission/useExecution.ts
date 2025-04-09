@@ -204,6 +204,7 @@ export default function useExecution({
         reportInfo.receipt = receipt;
         setShowingDone(true);
         if (receipt.status === WatchResult.Success) {
+          await waitBlockNumber(updateBlockNumber, receipt.blockNumber); // update blockNumber once after tx
           if (reportInfo.opcode === 'TX') {
             setContractStatus(ContractStatus.TxSuccess);
           }
@@ -211,7 +212,6 @@ export default function useExecution({
             setContractStatus(ContractStatus.ApproveSuccess);
           }
 
-          await updateBlockNumber(); // update blockNumber once after tx
           if (successBack) {
             successBack(tx, onTxSuccess);
           }
@@ -320,4 +320,29 @@ export default function useExecution({
     ctxVal,
     requests,
   };
+}
+
+let timeout = 0;
+function waitBlockNumber(
+  updateBlockNumber: () => Promise<number | undefined>,
+  target: number,
+  interval = 800,
+) {
+  clearTimeout(timeout);
+  return new Promise((resolve) => {
+    timeout = window.setTimeout(async () => {
+      const blockNumber = await updateBlockNumber();
+      if (blockNumber && blockNumber >= target) {
+        resolve(blockNumber);
+        return;
+      } else {
+        const result = await waitBlockNumber(
+          updateBlockNumber,
+          target,
+          interval,
+        );
+        resolve(result);
+      }
+    }, interval);
+  });
 }

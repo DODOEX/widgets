@@ -110,6 +110,7 @@ export function DepthChartWrapper({
       <Dialog
         open={depthChartModalVisible}
         onClose={() => setDepthChartModalVisible(false)}
+        modal
         title={
           <Box>
             {title}
