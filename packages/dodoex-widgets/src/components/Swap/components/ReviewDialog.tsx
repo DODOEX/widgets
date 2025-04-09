@@ -403,7 +403,10 @@ export function ReviewDialog({
                     backgroundColor: 'secondary.main',
                   }}
                 >
-                  <Box component={Done} sx={{ width: 14, color: '#1a1a1b' }} />
+                  <Box
+                    component={Done}
+                    sx={{ width: 14, color: 'secondary.contrastText' }}
+                  />
                 </Box>
               ) : (
                 <Box

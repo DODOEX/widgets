@@ -4,6 +4,7 @@ import {
   plume,
   plumeTestnet,
   arbsepolia,
+  riseTestnet,
 } from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
@@ -362,6 +363,20 @@ const contractMap: {
     DODO_DSP_PROXY: morph.DODODspProxyWithoutGSP,
     DODO_DPP_PROXY: morph.DODODppProxy,
     DODO_MINEV3_PROXY: morph.DODOMineV3Proxy,
+  },
+  [ChainId.RISE_TESTNET]: {
+    MULTI_CALL: riseTestnet.MulticallWithValid,
+    DODO_APPROVE: riseTestnet.DODOApprove,
+    ERC20_HELPER: riseTestnet.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: riseTestnet.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: riseTestnet.DODOV1PmmHelper,
+    CALLEE_HELPER: riseTestnet.DODOCalleeHelper,
+
+    DODO_PROXY: riseTestnet.DODOV2Proxy02,
+    DODO_DSP_PROXY: riseTestnet.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: riseTestnet.DODODppProxy,
+    DODO_MINEV3_PROXY: riseTestnet.DODOMineV3Proxy,
   },
 };
 

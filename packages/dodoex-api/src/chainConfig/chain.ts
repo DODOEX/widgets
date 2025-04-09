@@ -42,4 +42,6 @@ export enum ChainId {
   NEOX = 47763,
 
   MORPH = 2818,
+
+  RISE_TESTNET = 11155931,
 }
