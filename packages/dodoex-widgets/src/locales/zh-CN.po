@@ -1075,7 +1075,7 @@ msgid "Ratio Settings"
 msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:146
-#: src/components/Swap/components/ReviewDialog.tsx:442
+#: src/components/Swap/components/ReviewDialog.tsx:445
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:367
 msgid "Confirming"
 msgstr "确认中"
@@ -1106,7 +1106,7 @@ msgid "Confirm Cross Chain"
 msgstr "确认跨链交易"
 
 #. js-lingui-explicit-id
-#: src/components/Swap/components/ReviewDialog.tsx:420
+#: src/components/Swap/components/ReviewDialog.tsx:423
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 
@@ -1868,7 +1868,7 @@ msgstr ""
 msgid "AMM V2 Position"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:444
+#: src/components/Swap/components/ReviewDialog.tsx:447
 msgid "Confirm swap"
 msgstr "确认交易"
 

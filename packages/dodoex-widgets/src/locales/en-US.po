@@ -1075,7 +1075,7 @@ msgid "Ratio Settings"
 msgstr "Ratio Settings"
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:146
-#: src/components/Swap/components/ReviewDialog.tsx:442
+#: src/components/Swap/components/ReviewDialog.tsx:445
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:367
 msgid "Confirming"
 msgstr "Confirming"
@@ -1106,7 +1106,7 @@ msgid "Confirm Cross Chain"
 msgstr "Confirm Cross Chain"
 
 #. js-lingui-explicit-id
-#: src/components/Swap/components/ReviewDialog.tsx:420
+#: src/components/Swap/components/ReviewDialog.tsx:423
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 
@@ -1868,7 +1868,7 @@ msgstr "Simple, full-range liquidity"
 msgid "AMM V2 Position"
 msgstr "AMM V2 Position"
 
-#: src/components/Swap/components/ReviewDialog.tsx:444
+#: src/components/Swap/components/ReviewDialog.tsx:447
 msgid "Confirm swap"
 msgstr "Confirm swap"
 
