@@ -40,14 +40,5 @@ jest.mock('lodash', () => ({
   ...jest.requireActual('lodash'),
   debounce: (fn: () => void) => fn,
 }));
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: (fn: () => any) => {
-    if (typeof fn === 'function') {
-      return fn();
-    }
-    return [];
-  },
-}));
 
 export {};

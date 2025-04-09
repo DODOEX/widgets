@@ -1,11 +1,10 @@
 import { useWeb3React } from '@web3-react/core';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import { getLastToken } from '../../constants/localstorage';
-import { getAutoConnectLoading } from '../../store/selectors/globals';
-import { getTokenList } from '../../store/selectors/token';
 import { DefaultTokenInfo, TokenInfo, TokenList } from '../Token';
+import { useGlobalState } from '../useGlobalState';
+import { useTokenState } from '../useTokenState';
 
 function getDefaultToken({
   side,
@@ -81,17 +80,17 @@ export function useInitDefaultToken({
   updateToAmt: (v: string | number) => void;
   setIsReverseRouting: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const tokenList = useSelector(getTokenList);
+  const { tokenList } = useTokenState();
   const { crossChain, defaultFromToken, defaultToToken, onlyChainId } =
     useUserOptions();
-  const autoConnectLoading = useSelector(getAutoConnectLoading);
+  const { autoConnectLoading } = useGlobalState();
   const { chainId, isActivating } = useWeb3React();
 
   const initToken = () => {
     let findFromToken: TokenInfo | null = null;
     let setDefaultFromAmount: number | undefined;
     if (!crossChain && autoConnectLoading) return;
-    const findChainId = crossChain ? undefined : onlyChainId ?? chainId;
+    const findChainId = crossChain ? undefined : (onlyChainId ?? chainId);
     if (!fromToken) {
       const result = getDefaultToken({
         side: 'from',

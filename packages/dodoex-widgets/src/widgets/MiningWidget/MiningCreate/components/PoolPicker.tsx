@@ -2,7 +2,6 @@ import {
   alpha,
   Box,
   ButtonBase,
-  EmptyDataIcon,
   HoverOpacity,
   Input,
   SearchInput,
@@ -26,6 +25,7 @@ import { getOtherDexPool, getWrappedTokenAddress } from '../utils';
 import PoolCard from './PoolCard';
 import { ReactComponent as SelectTokenIcon } from './select-token.svg';
 import { DexKey, useDexList } from '../hooks/useDexList';
+import { EmptyDataIcon } from '../../../../components/List/EmptyList';
 
 export interface PoolInfo {
   id: string;

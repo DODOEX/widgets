@@ -2,16 +2,6 @@ import { useMarginAmount } from './useMarginAmount';
 import tokenList from '../../constants/tokenList';
 import { renderHook } from '@testing-library/react-hooks';
 
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useDispatch: () => jest.fn(),
-  useSelector: (fn: () => any) => {
-    if (typeof fn === 'function') {
-      return fn();
-    }
-    return [];
-  },
-}));
 jest.mock('@web3-react/core', () => ({
   useWeb3React: () => ({
     account: '0x2Ba1633338dDD2Ab37fbc95ea615BA98f0445380',

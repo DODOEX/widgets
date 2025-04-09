@@ -1,13 +1,9 @@
 import { useWeb3React } from '@web3-react/core';
 import { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppThunkDispatch } from '../../store/actions';
-import { setBlockNumber } from '../../store/actions/wallet';
+import { useGlobalState } from '../useGlobalState';
 
 export default function useFetchBlockNumber() {
   const { provider, chainId } = useWeb3React();
-
-  const dispatch = useDispatch<AppThunkDispatch>();
 
   const updateBlockNumber = useCallback(async () => {
     if (!provider || !chainId) {
@@ -15,11 +11,14 @@ export default function useFetchBlockNumber() {
     }
     try {
       const blockNumber = await provider.getBlockNumber();
-      dispatch(setBlockNumber(blockNumber));
+      useGlobalState.setState({
+        latestBlockNumber: blockNumber,
+      });
+      return blockNumber;
     } catch (error) {
       console.error('Failed to fetch block number', error);
     }
-  }, [provider, chainId, dispatch]);
+  }, [provider, chainId]);
 
   useEffect(() => {
     updateBlockNumber();

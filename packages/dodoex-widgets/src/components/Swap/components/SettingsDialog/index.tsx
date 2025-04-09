@@ -5,13 +5,9 @@ import { QuestionTooltip } from '../../../Tooltip';
 import { Box, useTheme } from '@dodoex/components';
 import { NumberInput } from './NumberInput';
 import { MAX_SWAP_SLIPPAGE } from '../../../../constants/swap';
-import { useSelector } from 'react-redux';
-import { getSlippage } from '../../../../store/selectors/settings';
-import { useDispatch } from 'react-redux';
-import { AppThunkDispatch } from '../../../../store/actions';
-import { setSlippage } from '../../../../store/actions/settings';
 import { setLastSlippage } from '../../../../constants/localstorage';
 import { useDefaultSlippage } from '../../../../hooks/setting/useDefaultSlippage';
+import { setSlippage, useGlobalState } from '../../../../hooks/useGlobalState';
 
 export interface SettingsDialogProps {
   open: boolean;
@@ -24,8 +20,7 @@ export function SettingsDialog({
   isBridge,
 }: SettingsDialogProps) {
   const theme = useTheme();
-  const dispatch = useDispatch<AppThunkDispatch>();
-  const slippage = useSelector(getSlippage);
+  const { slippage } = useGlobalState();
   const isSlippageGTMax = useMemo(
     () => Number(slippage) >= MAX_SWAP_SLIPPAGE,
     [slippage],
@@ -66,7 +61,7 @@ export function SettingsDialog({
               placeholder={defaultSlippage.toString()}
               onInputChange={(v: string | null) => {
                 setLastSlippage(!!isBridge, v);
-                dispatch(setSlippage(v));
+                setSlippage(v);
               }}
               suffix={<Box sx={{ color: 'text.disabled' }}>%</Box>}
               height={36}

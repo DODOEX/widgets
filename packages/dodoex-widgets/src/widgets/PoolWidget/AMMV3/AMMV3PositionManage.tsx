@@ -448,8 +448,8 @@ export const AMMV3PositionManage = ({
 
   const content = useMemo(() => {
     const operateTypes = [
-      { key: 'stake', value: t`Stake` },
-      { key: 'unstake', value: t`Unstake` },
+      { key: 'stake', value: t`Add` },
+      { key: 'unstake', value: t`Remove` },
       { key: 'claim', value: t`Claim` },
     ];
     return (
@@ -870,7 +870,7 @@ export const AMMV3PositionManage = ({
         open={baseToken != null && quoteToken != null}
         onClose={onClose}
         scope={!isMobile}
-        modal={undefined}
+        modal={isMobile}
         id="pool-operate"
       >
         {content}

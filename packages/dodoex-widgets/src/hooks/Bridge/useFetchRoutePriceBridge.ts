@@ -2,8 +2,6 @@ import axios from 'axios';
 import { useWeb3React } from '@web3-react/core';
 import { parseFixed } from '@ethersproject/bignumber';
 import { useCallback, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { getSlippage } from '../../store/selectors/settings';
 import { EmptyAddress } from '../../constants/address';
 import { usePriceTimer } from '../Swap/usePriceTimer';
 import { TokenInfo } from '../Token';
@@ -12,6 +10,7 @@ import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { useGetAPIService } from '../setting/useGetAPIService';
 import { APIServiceKey } from '../../constants/api';
 import { useUserOptions } from '../../components/UserOptionsProvider';
+import { useGlobalState } from '../useGlobalState';
 
 export interface BridgeRouteI {
   /** update */
@@ -149,7 +148,7 @@ export function useFetchRoutePriceBridge({
   const { account, provider } = useWeb3React();
   const { defaultSlippage, loading: slippageLoading } =
     useDefaultSlippage(true);
-  const slippage = useSelector(getSlippage) || defaultSlippage;
+  const slippage = useGlobalState((state) => state.slippage || defaultSlippage);
   const { apikey } = useUserOptions();
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,

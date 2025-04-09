@@ -18,7 +18,7 @@ msgstr ""
 msgid "The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth."
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:202
+#: src/components/WithExecutionDialog/index.tsx:199
 msgid "Transaction Time:"
 msgstr "交易时长:"
 
@@ -30,11 +30,11 @@ msgstr "跨链桥"
 msgid "99% Default"
 msgstr ""
 
-#: src/components/Swap/index.tsx:518
+#: src/components/Swap/index.tsx:515
 msgid "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 msgstr "当前滑点保护系数设置超过{maxSlippageWarning}%，可能会造成损失。"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:213
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:214
 msgid "Your position is  empty"
 msgstr ""
 
@@ -54,17 +54,17 @@ msgstr ""
 msgid "To"
 msgstr "至"
 
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:416
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:417
 msgid "Receive {0}"
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:124
+#: src/components/WithExecutionDialog/index.tsx:121
 msgid "{0} pending"
 msgstr "{0} 等待中"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:449
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:343
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:713
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:491
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:344
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:728
 msgid "Removing"
 msgstr ""
 
@@ -77,7 +77,7 @@ msgstr ""
 msgid "Balance:"
 msgstr "余额:"
 
-#: src/widgets/PoolWidget/AMMV3/components/TokenPairSelect.tsx:100
+#: src/widgets/PoolWidget/AMMV3/components/TokenPairSelect.tsx:105
 msgid "Select token"
 msgstr ""
 
@@ -98,7 +98,7 @@ msgstr ""
 msgid "* Please note that the Fee Rate cannot be modified after the pool is created"
 msgstr ""
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:85
+#: src/components/ConnectWallet/NeedConnectButton.tsx:84
 msgid "Switch to {0}"
 msgstr ""
 
@@ -123,14 +123,15 @@ msgid "Start Time"
 msgstr ""
 
 #: src/components/ErrorMessageDialog.tsx:63
-#: src/components/WithExecutionDialog/index.tsx:450
+#: src/components/WithExecutionDialog/index.tsx:446
 msgid "Dismiss"
 msgstr "忽略"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:250
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:392
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:290
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:599
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:285
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:434
+#: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:85
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:301
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:614
 msgid "Pool Type"
 msgstr ""
 
@@ -139,9 +140,9 @@ msgstr ""
 msgid "Unstaking"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:452
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:346
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:716
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:494
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:347
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:731
 msgid "Adding"
 msgstr ""
 
@@ -212,8 +213,8 @@ msgstr ""
 msgid "Pay"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:337
-#: src/components/Swap/index.tsx:443
+#: src/components/Swap/components/ReviewDialog.tsx:336
+#: src/components/Swap/index.tsx:440
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
 
@@ -230,7 +231,7 @@ msgstr ""
 msgid "Private Pool"
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:123
+#: src/components/WithExecutionDialog/index.tsx:120
 msgid "{0} confirmed"
 msgstr "{0} 已确认"
 
@@ -238,7 +239,7 @@ msgstr "{0} 已确认"
 msgid "Creation Time"
 msgstr ""
 
-#: src/components/Swap/index.tsx:550
+#: src/components/Swap/index.tsx:547
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
@@ -275,7 +276,7 @@ msgstr ""
 msgid "Staked Tokens"
 msgstr ""
 
-#: src/components/Swap/index.tsx:451
+#: src/components/Swap/index.tsx:448
 msgid "Current price impact"
 msgstr "当前价格冲击"
 
@@ -302,7 +303,7 @@ msgid "Pricing Model"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:74
-#: src/widgets/PoolWidget/PoolList/index.tsx:179
+#: src/widgets/PoolWidget/PoolList/index.tsx:266
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:17
 msgid "Liquidity"
 msgstr ""
@@ -316,7 +317,7 @@ msgstr ""
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
-#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:211
+#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:208
 msgid "Liquidity data not available."
 msgstr ""
 
@@ -336,7 +337,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 #: src/components/Confirm.tsx:126
 #: src/components/DateTimePickerInput/components/MobileDateTimePicker.tsx:257
 #: src/components/RiskDialog.tsx:122
-#: src/components/SwitchChainDialog/index.tsx:139
+#: src/components/SwitchChainDialog/index.tsx:138
 #: src/components/WidgetConfirm.tsx:130
 #: src/widgets/MiningWidget/MiningCreate/components/StepTitle.tsx:50
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:257
@@ -347,7 +348,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 msgid "Confirm"
 msgstr "确认"
 
-#: src/components/Swap/index.tsx:1017
+#: src/components/Swap/index.tsx:1014
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -365,11 +366,11 @@ msgstr ""
 msgid "Initial Tokens"
 msgstr ""
 
-#: src/components/SwitchChainDialog/index.tsx:91
+#: src/components/SwitchChainDialog/index.tsx:90
 msgid "This token is on"
 msgstr "该代币在"
 
-#: src/components/WithExecutionDialog/index.tsx:352
+#: src/components/WithExecutionDialog/index.tsx:348
 msgid "Please confirm in wallet"
 msgstr ""
 
@@ -392,11 +393,11 @@ msgstr ""
 msgid "Higher than dynamic slippage"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:272
+#: src/components/Swap/components/ReviewDialog.tsx:271
 msgid "Estimated service provider fees"
 msgstr "预计服务供应商费用"
 
-#: src/components/Swap/components/ReviewDialog.tsx:270
+#: src/components/Swap/components/ReviewDialog.tsx:269
 msgid "Basic Fee"
 msgstr "基础手续费"
 
@@ -455,13 +456,13 @@ msgstr ""
 msgid "Amount of token rewards"
 msgstr ""
 
-#: src/components/List/EmptyList.tsx:37
+#: src/components/List/EmptyList.tsx:54
 msgid "No results found"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:388
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:297
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:595
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:430
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:298
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:610
 msgid "Pair"
 msgstr ""
 
@@ -473,7 +474,7 @@ msgstr "秒"
 msgid "Yes, I am sure"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:199
+#: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:213
 msgid "Add liquidity to obtain LP tokens for mining"
 msgstr ""
 
@@ -498,7 +499,7 @@ msgid "Go back"
 msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:276
-#: src/components/Swap/components/ReviewDialog.tsx:357
+#: src/components/Swap/components/ReviewDialog.tsx:356
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/index.tsx:123
 msgid "Slippage"
 msgstr "滑点"
@@ -530,7 +531,7 @@ msgstr ""
 msgid "The pool’s market-making price is fixed"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:30
+#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:33
 #: src/widgets/PoolWidget/AMMV3/components/RemoveButton.tsx:32
 msgid "Closed"
 msgstr ""
@@ -614,7 +615,7 @@ msgstr ""
 msgid "Fee tier"
 msgstr ""
 
-#: src/components/SwitchChainDialog/index.tsx:94
+#: src/components/SwitchChainDialog/index.tsx:93
 msgid "Are you sure swapping to another chain?"
 msgstr "是否确认切换到另一个链？"
 
@@ -622,7 +623,7 @@ msgstr "是否确认切换到另一个链？"
 msgid "Swaps"
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:320
+#: src/components/WithExecutionDialog/index.tsx:316
 msgid "{0} Submitted"
 msgstr ""
 
@@ -631,8 +632,12 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:110
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:121
 msgid "PMM Pool"
+msgstr ""
+
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:148
+msgid "Concentrated liquidity, higher efficiency"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -678,18 +683,18 @@ msgstr ""
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:303
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:396
-#: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:77
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:199
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:300
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:345
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:604
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:338
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:438
+#: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:112
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:198
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:301
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:356
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:619
 msgid "TVL"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:187
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:233
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:188
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:234
 msgid "Add Position"
 msgstr ""
 
@@ -698,7 +703,7 @@ msgstr ""
 msgid "Emulator"
 msgstr ""
 
-#: src/components/Swap/index.tsx:706
+#: src/components/Swap/index.tsx:703
 msgid "Transaction Pending"
 msgstr "交易进行中"
 
@@ -713,7 +718,7 @@ msgstr "在"
 msgid "Suitable for stablecoins with price fluctuations within 2%"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:360
+#: src/components/Swap/components/ReviewDialog.tsx:359
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
@@ -738,7 +743,7 @@ msgstr ""
 msgid "Traders (24H)"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:115
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:116
 msgid "My Positions"
 msgstr ""
 
@@ -780,19 +785,19 @@ msgstr ""
 msgid "Invite"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:40
+#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:44
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:561
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:572
 msgid "{0}"
 msgstr ""
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:83
+#: src/components/ConnectWallet/NeedConnectButton.tsx:82
 msgid "Connecting..."
 msgstr "连接中..."
 
-#: src/components/Swap/components/ReviewDialog.tsx:300
+#: src/components/Swap/components/ReviewDialog.tsx:299
 msgid "Additional Fee"
 msgstr "额外手续费"
 
@@ -817,17 +822,16 @@ msgstr ""
 #: src/widgets/MiningWidget/MiningList/operate-area/StakeButton.tsx:105
 #: src/widgets/MiningWidget/OperateArea/index.tsx:72
 #: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:80
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:451
 msgid "Stake"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:281
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:568
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:569
 msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 msgstr ""
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:571
+#: src/components/Swap/index.tsx:568
 msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
@@ -847,7 +851,7 @@ msgstr ""
 msgid "Related CrowdPooling"
 msgstr ""
 
-#: src/components/Swap/index.tsx:795
+#: src/components/Swap/index.tsx:792
 msgid "Review Swap"
 msgstr "预览交易"
 
@@ -868,7 +872,7 @@ msgid "Succeeded"
 msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:280
-#: src/components/Swap/components/SettingsDialog/index.tsx:53
+#: src/components/Swap/components/SettingsDialog/index.tsx:48
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
@@ -884,7 +888,7 @@ msgstr ""
 msgid "Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes."
 msgstr ""
 
-#: src/components/Swap/index.tsx:713
+#: src/components/Swap/index.tsx:710
 msgid "Select Tokens"
 msgstr "选择代币"
 
@@ -948,7 +952,7 @@ msgstr ""
 msgid "Disable Indirect Routing"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:23
+#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:24
 msgid "Your position has 0 liquidity, and is not earning fees."
 msgstr ""
 
@@ -975,17 +979,17 @@ msgstr ""
 msgid "Share Of Pool"
 msgstr ""
 
-#: src/components/Swap/index.tsx:893
+#: src/components/Swap/index.tsx:890
 msgid "The setting has been switched to swap mode"
 msgstr "设置已切换至闪兑模式"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:626
-#: src/components/Swap/index.tsx:755
+#: src/components/Swap/index.tsx:623
+#: src/components/Swap/index.tsx:752
 msgid "Quote not available"
 msgstr "没有报价"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:985
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1006
 msgid "My pool share"
 msgstr ""
 
@@ -1007,15 +1011,16 @@ msgstr ""
 msgid "No LP pools match your criteria"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:220
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:560
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:260
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:819
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:255
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:623
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:271
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:840
 msgid "Fee rate"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:305
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:25
+#: src/widgets/PoolWidget/PoolList/index.tsx:206
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:140
 msgid "Add Liquidity"
 msgstr ""
@@ -1027,7 +1032,6 @@ msgstr ""
 #: src/widgets/MiningWidget/MiningList/operate-area/UnstakeButton.tsx:85
 #: src/widgets/MiningWidget/OperateArea/index.tsx:73
 #: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:70
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:452
 msgid "Unstake"
 msgstr ""
 
@@ -1040,11 +1044,11 @@ msgstr ""
 msgid "If there are no participants before the end, the rewards cannot be taken out anymore."
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:189
+#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:186
 msgid "Your position will appear here."
 msgstr ""
 
-#: src/components/Swap/index.tsx:740
+#: src/components/Swap/index.tsx:737
 msgid "Fetching Price..."
 msgstr "获取价格中..."
 
@@ -1070,8 +1074,8 @@ msgstr ""
 msgid "Ratio Settings"
 msgstr ""
 
-#: src/components/Bridge/BridgeSummaryDialog/index.tsx:147
-#: src/components/Swap/components/ReviewDialog.tsx:443
+#: src/components/Bridge/BridgeSummaryDialog/index.tsx:146
+#: src/components/Swap/components/ReviewDialog.tsx:442
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:367
 msgid "Confirming"
 msgstr "确认中"
@@ -1097,17 +1101,18 @@ msgstr ""
 msgid "Position on"
 msgstr ""
 
-#: src/components/Bridge/BridgeSummaryDialog/index.tsx:149
+#: src/components/Bridge/BridgeSummaryDialog/index.tsx:148
 msgid "Confirm Cross Chain"
 msgstr "确认跨链交易"
 
 #. js-lingui-explicit-id
-#: src/components/Swap/components/ReviewDialog.tsx:421
+#: src/components/Swap/components/ReviewDialog.tsx:420
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:324
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:403
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:359
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:445
+#: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:125
 msgid "Volume (1D)"
 msgstr ""
 
@@ -1116,11 +1121,11 @@ msgid "Estimated Time"
 msgstr "预计时间"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:19
-#: src/widgets/PoolWidget/PoolList/index.tsx:180
+#: src/widgets/PoolWidget/PoolList/index.tsx:267
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:97
+#: src/components/Swap/components/ReviewDialog.tsx:96
 msgid "Swap summary"
 msgstr "交易预览"
 
@@ -1168,7 +1173,7 @@ msgid "LP Balance:"
 msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/SwapStep.tsx:202
-#: src/components/WithExecutionDialog/index.tsx:217
+#: src/components/WithExecutionDialog/index.tsx:214
 msgid "Tx"
 msgstr "交易哈希："
 
@@ -1176,7 +1181,7 @@ msgstr "交易哈希："
 msgid "Single"
 msgstr ""
 
-#: src/components/Swap/index.tsx:785
+#: src/components/Swap/index.tsx:782
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
@@ -1204,20 +1209,20 @@ msgstr ""
 msgid "Start Time"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:176
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:610
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:211
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:673
 #: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:190
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:216
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:873
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:227
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:894
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:20
 msgid "Mining"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:334
+#: src/components/Swap/components/ReviewDialog.tsx:333
 msgid "Price Impact"
 msgstr "价格冲击"
 
-#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:49
+#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:53
 msgid "Select a token"
 msgstr "选择代币"
 
@@ -1259,11 +1264,15 @@ msgstr ""
 msgid "Wallet incompatibility"
 msgstr "钱包不兼容"
 
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:123
+msgid "Fexible customization, take full control of liquidity"
+msgstr ""
+
 #: src/components/chart/i18n.ts:29
 msgid "Bought {0} {1}, price in the pool decreased to {2}"
 msgstr ""
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:39
+#: src/components/Swap/components/SettingsDialog/index.tsx:34
 #: src/components/Swap/components/SwapSettingsDialog/index.tsx:68
 msgid "Settings"
 msgstr "设置"
@@ -1356,7 +1365,7 @@ msgstr ""
 msgid "Can the pool price be adjusted?"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:243
+#: src/components/Swap/components/ReviewDialog.tsx:242
 msgid "Swap Detail"
 msgstr "交易详情"
 
@@ -1385,8 +1394,8 @@ msgstr ""
 msgid "You are making changes to the liquidity of a private pool. This is a highly discretionary operation that may cause substantial inflows/outflows of funds and changes in market prices. Please make sure you are fully aware of the implications of each parameter modification."
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:517
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:618
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:528
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:633
 msgid "Price Range"
 msgstr ""
 
@@ -1398,8 +1407,8 @@ msgstr ""
 #: src/widgets/PoolWidget/AMMV2Create/MyLiqidity.tsx:64
 #: src/widgets/PoolWidget/AMMV3/components/PositionAmountPreview.tsx:222
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:28
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:454
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:613
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:465
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:628
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:430
 msgid "My Liquidity"
 msgstr ""
@@ -1437,7 +1446,7 @@ msgstr ""
 msgid "On"
 msgstr "在"
 
-#: src/components/Swap/index.tsx:723
+#: src/components/Swap/index.tsx:720
 #: src/hooks/Token/useGetTokenStatus.ts:60
 #: src/hooks/Token/useTokenStatus.ts:134
 msgid "Approve"
@@ -1447,7 +1456,7 @@ msgstr "代币授权"
 msgid "Share"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:303
+#: src/components/Swap/components/ReviewDialog.tsx:302
 msgid "Additional routing fees set by the Widget user"
 msgstr "由 Widget 设置的额外路由费用"
 
@@ -1468,7 +1477,7 @@ msgstr ""
 msgid "<0>{lostRatio}</0> of the initial liquidity you provide will be burned. <1/>The closer the provided asset ratio is to the recommended ratio ({recommendRatioText}), the smaller the portion burned."
 msgstr ""
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:85
+#: src/components/Swap/components/SettingsDialog/index.tsx:80
 msgid "Maximum slippage do not exceed 50%"
 msgstr "最大滑点不能超过50%"
 
@@ -1480,7 +1489,7 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:34
+#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:37
 msgid "The price of this pool is within your selected range. Your position is currently earning fees."
 msgstr ""
 
@@ -1518,7 +1527,7 @@ msgid "Suitable for stablecoins with price fluctuations within 10%"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:275
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:562
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:563
 msgid "Confirm submission"
 msgstr ""
 
@@ -1580,7 +1589,7 @@ msgstr ""
 
 #: src/components/Confirm.tsx:108
 #: src/components/DateTimePickerInput/components/MobileDateTimePicker.tsx:203
-#: src/components/SwitchChainDialog/index.tsx:128
+#: src/components/SwitchChainDialog/index.tsx:127
 #: src/components/WidgetConfirm.tsx:112
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:238
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:414
@@ -1588,7 +1597,7 @@ msgstr ""
 msgid "Cancel"
 msgstr "取消"
 
-#: src/components/SwitchChainDialog/index.tsx:117
+#: src/components/SwitchChainDialog/index.tsx:116
 msgid "Auto switch network"
 msgstr "自动切换网络"
 
@@ -1635,9 +1644,9 @@ msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:81
 #: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:66
-#: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:146
+#: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:147
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:189
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:460
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:461
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:84
 msgid "Edit"
 msgstr ""
@@ -1646,7 +1655,7 @@ msgstr ""
 msgid "Min"
 msgstr "分钟"
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:669
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:670
 msgid "Hide TVL=0 pools"
 msgstr ""
 
@@ -1704,7 +1713,7 @@ msgstr "服务升级中, 请等待或重试"
 msgid "Gas price is too low, please adjust in your wallet and try again"
 msgstr "Gas 价格过低, 请调整后重试"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:368
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:379
 msgid "My Pool Share"
 msgstr ""
 
@@ -1725,8 +1734,8 @@ msgstr ""
 msgid "Connect to your wallet"
 msgstr "连接钱包"
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:228
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:303
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:227
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:304
 msgid "Total Fee Revenue"
 msgstr ""
 
@@ -1765,7 +1774,7 @@ msgstr ""
 msgid "Claim"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:48
+#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:53
 #: src/widgets/PoolWidget/AMMV3/components/InRangeDot.tsx:12
 msgid "Out of range"
 msgstr ""
@@ -1783,7 +1792,7 @@ msgstr ""
 msgid "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 msgstr ""
 
-#: src/components/Swap/index.tsx:729
+#: src/components/Swap/index.tsx:726
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:534
 msgid "Enter an amount"
 msgstr "输入代币数量"
@@ -1792,7 +1801,7 @@ msgstr "输入代币数量"
 msgid "Ratio"
 msgstr ""
 
-#: src/components/Swap/index.tsx:723
+#: src/components/Swap/index.tsx:720
 #: src/components/TokenPairStatusButton.tsx:45
 #: src/components/TokenStatusButton.tsx:31
 msgid "Approving"
@@ -1824,7 +1833,7 @@ msgid "The mid price needs to be greater than {min} and less than 100,000,000"
 msgstr ""
 
 #: src/components/ErrorMessageDialog.tsx:39
-#: src/components/WithExecutionDialog/index.tsx:415
+#: src/components/WithExecutionDialog/index.tsx:411
 msgid "Something went wrong."
 msgstr "发生异常错误."
 
@@ -1842,20 +1851,24 @@ msgid "Total Swap Volume"
 msgstr ""
 
 #: src/components/Swap/SwapOrderHistory/index.tsx:99
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:458
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:459
 msgid "Receive"
 msgstr ""
 
-#: src/components/SelectChain.tsx:216
-#: src/components/SelectChain.tsx:259
+#: src/components/SelectChain.tsx:219
+#: src/components/SelectChain.tsx:266
 msgid "Select Network"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:121
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:137
+msgid "Simple, full-range liquidity"
+msgstr ""
+
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:136
 msgid "AMM V2 Position"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:445
+#: src/components/Swap/components/ReviewDialog.tsx:444
 msgid "Confirm swap"
 msgstr "确认交易"
 
@@ -1863,7 +1876,7 @@ msgstr "确认交易"
 msgid "Once created, the price cannot be changed. This option applies to assets like ETH-WETH."
 msgstr ""
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:50
+#: src/components/Swap/components/SettingsDialog/index.tsx:45
 #: src/widgets/PoolWidget/AMMV2Create/Setting.tsx:100
 #: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:123
 msgid "Slippage Tolerance"
@@ -1885,13 +1898,14 @@ msgid "My Staked"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:478
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:451
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:207
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:348
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:682
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:269
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:563
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1110
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:383
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:745
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:268
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:564
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1132
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:122
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
 msgid "Add"
@@ -1960,14 +1974,14 @@ msgstr ""
 msgid "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:157
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:161
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:206
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:231
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:172
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:176
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:221
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:246
 msgid "Create Pool"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:704
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:719
 msgid "Managing"
 msgstr ""
 
@@ -2023,7 +2037,7 @@ msgstr ""
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "在冷静期无法进行清算"
 
-#: src/components/Swap/index.tsx:891
+#: src/components/Swap/index.tsx:888
 msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
@@ -2037,7 +2051,7 @@ msgstr ""
 msgid "Total Rewards"
 msgstr ""
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:87
+#: src/components/ConnectWallet/NeedConnectButton.tsx:86
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:55
 #: src/widgets/PoolWidget/AMMV3/hooks/useDerivedV3BurnInfo.tsx:96
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:519
@@ -2051,7 +2065,7 @@ msgstr "连接钱包"
 msgid "End Time"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:231
+#: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:228
 msgid "There is no liquidity data."
 msgstr ""
 
@@ -2063,13 +2077,13 @@ msgstr ""
 msgid "Detail"
 msgstr "详情"
 
-#: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:225
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:273
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:399
-#: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:57
+#: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:239
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:308
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:441
+#: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:100
 #: src/widgets/PoolWidget/PoolList/components/TokenListPoolItem.tsx:102
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:315
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:609
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:326
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:624
 msgid "APY"
 msgstr ""
 
@@ -2102,7 +2116,7 @@ msgstr ""
 msgid "Total Liquidity"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:132
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:147
 msgid "AMM V3 Position"
 msgstr ""
 
@@ -2127,12 +2141,13 @@ msgstr ""
 msgid "Initial Price Alert"
 msgstr ""
 
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:452
 #: src/widgets/PoolWidget/AMMV3/components/RemoveButton.tsx:32
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:200
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:254
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:551
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:546
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1098
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:253
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:552
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:557
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1119
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:233
 msgid "Remove"
@@ -2143,7 +2158,7 @@ msgstr ""
 msgid "ratio is 0"
 msgstr ""
 
-#: src/components/Bridge/BridgeSummaryDialog/index.tsx:62
+#: src/components/Bridge/BridgeSummaryDialog/index.tsx:61
 msgid "Cross Chain Summary"
 msgstr "跨链桥概览"
 
@@ -2187,18 +2202,12 @@ msgstr ""
 msgid "Real Time"
 msgstr ""
 
-#: src/components/Swap/index.tsx:587
+#: src/components/Swap/index.tsx:584
 msgid "Unsupported network - switch to trade"
 msgstr "未支持网络 - 请切换后进行交易"
 
 #: src/widgets/PoolWidget/PoolCreate/components/EmptyChart.tsx:20
 msgid "Enter parameters to view the yield curve"
-msgstr ""
-
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:111
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:122
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:133
-msgid "Description of this type of pool"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:171
@@ -2209,7 +2218,7 @@ msgstr ""
 msgid "Failed to add"
 msgstr ""
 
-#: src/components/Swap/index.tsx:886
+#: src/components/Swap/index.tsx:883
 #: src/hooks/Swap/useExecuteSwap.ts:60
 msgid "Swap"
 msgstr "交易"
@@ -2219,13 +2228,13 @@ msgstr "交易"
 msgid "Hide"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:36
+#: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:40
 #: src/widgets/PoolWidget/AMMV3/components/InRangeDot.tsx:12
 msgid "In range"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:284
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:571
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:572
 msgid "There is risk of being arbitraged if adding this liquidity."
 msgstr ""
 
@@ -2238,7 +2247,7 @@ msgid "This trading pair does not have enough historical data and has used the d
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/PositionViewCard.tsx:248
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1110
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1132
 msgid "Manage"
 msgstr ""
 
@@ -2279,6 +2288,10 @@ msgstr ""
 msgid "WARNING"
 msgstr ""
 
+#: src/widgets/PoolWidget/PoolList/components/migationWidget.tsx:53
+msgid "Migrate"
+msgstr ""
+
 #: src/hooks/Submission/getExecutionErrorMsg.ts:36
 msgid "ForceStop exception"
 msgstr "ForceStop 异常"
@@ -2286,7 +2299,7 @@ msgstr "ForceStop 异常"
 #: src/components/LoadMore.tsx:50
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/LiquidityProvidersTable.tsx:222
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:317
-#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:101
+#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:105
 msgid "Load more"
 msgstr ""
 
@@ -2315,7 +2328,7 @@ msgstr ""
 msgid "High"
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:450
+#: src/components/WithExecutionDialog/index.tsx:446
 msgid "Close"
 msgstr "关闭"
 
@@ -2353,7 +2366,7 @@ msgstr ""
 msgid "Starting price"
 msgstr ""
 
-#: src/components/WithExecutionDialog/index.tsx:344
+#: src/components/WithExecutionDialog/index.tsx:340
 msgid "OK"
 msgstr ""
 
@@ -2361,7 +2374,7 @@ msgstr ""
 msgid "Total Rewards=Daily Rewards*Duration"
 msgstr ""
 
-#: src/components/Swap/index.tsx:766
+#: src/components/Swap/index.tsx:763
 #: src/components/TokenStatusButton.tsx:18
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:124
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:233

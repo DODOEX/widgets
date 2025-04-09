@@ -3,13 +3,12 @@ import { t, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { useWeb3React } from '@web3-react/core';
 import { useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { WalletMap, WalletType } from '../../constants/wallet';
 import { connectToWallet } from '../../hooks/ConnectWallet';
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
-import { getFromTokenChainId } from '../../store/selectors/wallet';
 import { useUserOptions } from '../UserOptionsProvider';
 import Dialog from '../Dialog';
+import { useGlobalState } from '../../hooks/useGlobalState';
 
 export default function ConnectWalletDialog({
   open,
@@ -20,13 +19,14 @@ export default function ConnectWalletDialog({
 }) {
   useLingui();
   const { defaultChainId } = useUserOptions();
-  const fromTokenChainId = useSelector(getFromTokenChainId);
+  const { fromTokenChainId } = useGlobalState();
   const chainId = useMemo(
     () => fromTokenChainId ?? defaultChainId,
     [fromTokenChainId, defaultChainId],
   );
-  const [connectingType, setConnectingType] =
-    useState<keyof typeof WalletMap | null>(null);
+  const [connectingType, setConnectingType] = useState<
+    keyof typeof WalletMap | null
+  >(null);
   const connectingWallet = connectingType
     ? WalletMap[connectingType]
     : undefined;
