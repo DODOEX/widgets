@@ -37,6 +37,7 @@ const BridgeCreateRouteAPI = `${BridgeUrlPrefix}/order/create`;
 export function getAPIService(
   key: APIServiceKey,
   serviceProps: Partial<APIServices> = {},
+  apiDomain: string,
 ) {
   switch (key) {
     case APIServiceKey.routePrice:

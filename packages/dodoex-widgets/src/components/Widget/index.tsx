@@ -53,6 +53,7 @@ export interface WidgetProps
     InitTokenListProps,
     ExecutionProps {
   apikey?: string;
+  apiDomain: string;
   theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
   defaultChainId?: ChainId;
@@ -265,6 +266,7 @@ export function UnstyleWidget(props: PropsWithChildren<WidgetProps>) {
         {...{
           ...props,
           widgetRef: props.widgetRef ?? widgetRef,
+          apiDomain: props.apiDomain ?? 'dodoex.io',
         }}
       >
         <Web3Provider {...props} />

@@ -3,7 +3,10 @@ import { useUserOptions } from '../../components/UserOptionsProvider';
 import { APIServiceKey, getAPIService } from '../../constants/api';
 
 export function useGetAPIService(key: APIServiceKey) {
-  const { apiServices } = useUserOptions();
+  const { apiServices, apiDomain } = useUserOptions();
 
-  return useMemo(() => getAPIService(key, apiServices), [apiServices, key]);
+  return useMemo(
+    () => getAPIService(key, apiServices, apiDomain),
+    [apiServices, apiDomain, key],
+  );
 }

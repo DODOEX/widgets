@@ -14,6 +14,7 @@ export const Primary = (props: any) => {
 
 Primary.args = {
   apiKey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
+  apiDomain: process.env.STORYBOOK_API_DOMAIN,
   popularTokenList: [],
   tokenList: [
     {
