@@ -38,26 +38,31 @@ export default function LiquidityTable({
           width: '100%',
           borderCollapse: 'collapse',
           '& th': {
-            p: 24,
-            typography: 'body1',
+            px: 24,
+            py: 12,
+            typography: 'h6',
+            lineHeight: '20px',
+            fontWeight: 600,
             textAlign: 'left',
             color: 'text.secondary',
           },
           '& td': {
             px: 24,
-            py: 20,
+            height: 72,
           },
           '& thead': {
             position: 'sticky',
             top: 0,
             zIndex: 2,
+            backgroundColor: 'background.paperDarkContrast',
+          },
+          '& tbody': {
             backgroundColor: 'background.paper',
           },
           '& th:last-child, & td:last-child': {
             position: 'sticky',
             right: 0,
             zIndex: 1,
-            backgroundColor: 'background.paper',
             '&::before': {
               content: '""',
               position: 'absolute',
@@ -70,6 +75,21 @@ export default function LiquidityTable({
                 0.1,
               )} -2px 0px 4px 0px`,
             },
+          },
+          '& td:last-child': {
+            backgroundColor: 'background.paper',
+          },
+          '& th:first-child': {
+            borderTopLeftRadius: 24,
+          },
+          '& th:last-child': {
+            borderTopRightRadius: 24,
+          },
+          '& tbody tr:last-child td:first-child': {
+            borderBottomLeftRadius: 24,
+          },
+          '& tbody tr:last-child td:last-child': {
+            borderBottomRightRadius: 24,
           },
         }}
       >

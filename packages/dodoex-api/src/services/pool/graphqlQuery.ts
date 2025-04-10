@@ -497,6 +497,14 @@ export const poolGraphqlQuery = {
       ve33_getPoolList(where: $where) {
         id
         title
+        version
+        gaugeAddress
+        feeRate
+        apr {
+          fees
+          incentives
+        }
+        tvl
         totalValueLockedUSD
         totalValueLockedToken0
         totalValueLockedToken1
@@ -514,9 +522,6 @@ export const poolGraphqlQuery = {
         token1Name
         token1Symbol
         token1Decimals
-        gaugeAddress
-        feeRate
-        apr
       }
     }
   `),

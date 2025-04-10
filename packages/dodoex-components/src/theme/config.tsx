@@ -179,10 +179,10 @@ export const lightPalette: PaletteOptions = {
     default: '#F7F4ED',
     paper: '#FFFFFF',
     paperContrast: '#F6F6F6',
-    paperDarkContrast: alpha('#1A1A1B', 0.1),
+    paperDarkContrast: alpha('#513E2B', 0.1),
     backdrop: alpha('#000', 0.9),
     input: '#F0F0F0',
-    tag: alpha('#1A1A1B', 0.04),
+    tag: alpha('#513E2B', 0.04),
   },
   text: {
     primary: '#513E2B',
@@ -193,11 +193,11 @@ export const lightPalette: PaletteOptions = {
   },
   border: {
     main: alpha('#454851', 0.1),
-    light: alpha('#1A1A1B', 0.3),
-    disabled: alpha('#1A1A1B', 0.1),
+    light: alpha('#513E2B', 0.3),
+    disabled: alpha('#513E2B', 0.1),
   },
   hover: {
-    default: alpha('#1A1A1B', 0.1),
+    default: alpha('#513E2B', 0.1),
   },
   tabActive: {
     main: 'rgba(255, 234, 2, 0.10)',

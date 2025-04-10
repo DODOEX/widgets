@@ -20227,6 +20227,7 @@ export type VdodoVdodoServiceChargesResult = {
 export type Ve33Incentive = {
   amount: Scalars['BigInt']['output'];
   token: Scalars['String']['output'];
+  usd: Scalars['BigDecimal']['output'];
 };
 
 export type Ve33Lock = {
@@ -20240,7 +20241,7 @@ export type Ve33Lock = {
 };
 
 export type Ve33Pool = {
-  apr: Scalars['BigDecimal']['output'];
+  apr: Ve33PoolApr;
   feeRate: Scalars['BigDecimal']['output'];
   feesToken0: Scalars['BigDecimal']['output'];
   feesToken1: Scalars['BigDecimal']['output'];
@@ -20259,9 +20260,17 @@ export type Ve33Pool = {
   totalValueLockedToken0: Scalars['BigDecimal']['output'];
   totalValueLockedToken1: Scalars['BigDecimal']['output'];
   totalValueLockedUSD: Scalars['BigDecimal']['output'];
+  tvl: Scalars['BigDecimal']['output'];
+  /** v2 or v3 */
+  version: Scalars['String']['output'];
   volumeToken0: Scalars['BigDecimal']['output'];
   volumeToken1: Scalars['BigDecimal']['output'];
   volumeUSD: Scalars['BigDecimal']['output'];
+};
+
+export type Ve33PoolApr = {
+  fees: Scalars['BigDecimal']['output'];
+  incentives: Scalars['BigDecimal']['output'];
 };
 
 export type Ve33PoolInput = {
@@ -20274,13 +20283,15 @@ export type Ve33PoolTotalVoted = {
 };
 
 export type Ve33Portfolio = {
-  apr: Scalars['BigDecimal']['output'];
+  apr: Ve33PortfolioApr;
+  emissions: Scalars['BigDecimal']['output'];
+  emissionsUSD: Scalars['BigDecimal']['output'];
   feeRate: Scalars['BigDecimal']['output'];
   feesToken0: Scalars['BigDecimal']['output'];
   feesToken1: Scalars['BigDecimal']['output'];
   feesUSD: Scalars['BigDecimal']['output'];
   gaugeAddress: Scalars['String']['output'];
-  /** liquidity position id */
+  /** liquidity position id, 'Position #1000' */
   id: Scalars['String']['output'];
   incentives: Array<Maybe<Ve33Incentive>>;
   liquidityTokenBalance: Scalars['String']['output'];
@@ -20307,7 +20318,17 @@ export type Ve33Portfolio = {
   token1Piece: Scalars['String']['output'];
   token1Symbol: Scalars['String']['output'];
   token1UpperPrice: Scalars['String']['output'];
+  tvl: Scalars['BigDecimal']['output'];
+  /** voting=Voting Rewards, liquidity=LP Rewards */
   type: Scalars['String']['output'];
+  /** v2 or v3 */
+  version: Scalars['String']['output'];
+};
+
+export type Ve33PortfolioApr = {
+  fees: Scalars['BigDecimal']['output'];
+  incentives: Scalars['BigDecimal']['output'];
+  rewards: Scalars['BigDecimal']['output'];
 };
 
 export type Ve33PortfolioInput = {
@@ -20345,7 +20366,7 @@ export type Ve33UserVeMomoInfo = {
 };
 
 export type Ve33VotePool = {
-  apr: Scalars['BigDecimal']['output'];
+  apr: Ve33PoolApr;
   feeRate: Scalars['BigDecimal']['output'];
   feesToken0: Scalars['BigDecimal']['output'];
   feesToken1: Scalars['BigDecimal']['output'];
@@ -20365,6 +20386,9 @@ export type Ve33VotePool = {
   totalValueLockedToken0: Scalars['BigDecimal']['output'];
   totalValueLockedToken1: Scalars['BigDecimal']['output'];
   totalValueLockedUSD: Scalars['BigDecimal']['output'];
+  tvl: Scalars['BigDecimal']['output'];
+  /** v2 or v3 */
+  version: Scalars['String']['output'];
   votes: Array<Maybe<Ve33PoolTotalVoted>>;
 };
 
@@ -21564,6 +21588,10 @@ export type Ve33_GetPoolListQuery = {
   ve33_getPoolList: Array<{
     id: string;
     title: string;
+    version: string;
+    gaugeAddress: string;
+    feeRate: any;
+    tvl: any;
     totalValueLockedUSD: any;
     totalValueLockedToken0: any;
     totalValueLockedToken1: any;
@@ -21581,9 +21609,7 @@ export type Ve33_GetPoolListQuery = {
     token1Name: string;
     token1Symbol: string;
     token1Decimals: number;
-    gaugeAddress: string;
-    feeRate: any;
-    apr: any;
+    apr: { fees: any; incentives: any };
   } | null>;
 };
 
@@ -22521,6 +22547,14 @@ export const Ve33_GetPoolListDocument = new TypedDocumentString(`
   ve33_getPoolList(where: $where) {
     id
     title
+    version
+    gaugeAddress
+    feeRate
+    apr {
+      fees
+      incentives
+    }
+    tvl
     totalValueLockedUSD
     totalValueLockedToken0
     totalValueLockedToken1
@@ -22538,9 +22572,6 @@ export const Ve33_GetPoolListDocument = new TypedDocumentString(`
     token1Name
     token1Symbol
     token1Decimals
-    gaugeAddress
-    feeRate
-    apr
   }
 }
     `) as unknown as TypedDocumentString<

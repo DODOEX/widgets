@@ -47,6 +47,7 @@ msgid "Total Number of Traders"
 msgstr "Total Number of Traders"
 
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:43
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:60
 msgid "Volume"
 msgstr "Volume"
 
@@ -58,6 +59,10 @@ msgstr "To"
 msgid "Receive {0}"
 msgstr "Receive {0}"
 
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:63
+msgid "Fees"
+msgstr "Fees"
+
 #: src/components/WithExecutionDialog/index.tsx:124
 msgid "{0} pending"
 msgstr "{0} pending"
@@ -65,6 +70,7 @@ msgstr "{0} pending"
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:449
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:343
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:713
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:101
 msgid "Removing"
 msgstr "Removing"
 
@@ -142,6 +148,7 @@ msgstr "Unstaking"
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:452
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:346
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:716
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:104
 msgid "Adding"
 msgstr "Adding"
 
@@ -309,6 +316,7 @@ msgstr "Liquidity"
 
 #: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:146
 #: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:213
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:54
 msgid "APR"
 msgstr "APR"
 
@@ -462,6 +470,7 @@ msgstr "No results found"
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:388
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:297
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:595
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:51
 msgid "Pair"
 msgstr "Pair"
 
@@ -689,6 +698,7 @@ msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:300
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:345
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:604
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:57
 msgid "TVL"
 msgstr "TVL"
 
@@ -2291,7 +2301,7 @@ msgstr "ForceStop exception"
 #: src/components/LoadMore.tsx:50
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/LiquidityProvidersTable.tsx:222
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:317
-#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:101
+#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:121
 msgid "Load more"
 msgstr "Load more"
 

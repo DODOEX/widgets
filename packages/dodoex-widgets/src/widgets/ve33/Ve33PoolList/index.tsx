@@ -1,29 +1,28 @@
 import { PoolApi } from '@dodoex/api';
-import { alpha, Box, SearchInput, Switch, useTheme } from '@dodoex/components';
+import { Box, SearchInput, Switch, useTheme } from '@dodoex/components';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
-import { useRef, useState } from 'react';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useMemo, useRef, useState } from 'react';
+import { CardStatus } from '../../../components/CardWidgets';
 import WidgetContainer from '../../../components/WidgetContainer';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { Ve33PoolOperateProps } from '../types';
-import { CardStatus } from '../../../components/CardWidgets';
+import { PoolTypeE, Ve33PoolInfoI, Ve33PoolOperateProps } from '../types';
 import { TableList } from './TableList';
 
 export interface Ve33PoolListProps {}
 
 export const Ve33PoolList = (props: Ve33PoolListProps) => {
-  const { account, chainId: currentChainId } = useWeb3React();
-  const { onlyChainId: chainId } = useUserOptions();
+  const { chainId } = useWalletInfo();
   const { isMobile } = useWidgetDevice();
   const graphQLRequests = useGraphQLRequests();
   const theme = useTheme();
 
   const [filterToken, setFilterToken] = useState<string>('');
   const [usdValueChecked, setUsdValueChecked] = useState(false);
-  const [operatePool, setOperatePool] =
-    useState<Partial<Ve33PoolOperateProps> | null>(null);
+  const [operatePool, setOperatePool] = useState<Ve33PoolOperateProps | null>(
+    null,
+  );
 
   const scrollParentRef = useRef<HTMLDivElement>(null);
 
@@ -57,6 +56,22 @@ export const Ve33PoolList = (props: Ve33PoolListProps) => {
   });
 
   const hasMore = fetchResult.hasNextPage;
+  const poolList = useMemo(() => {
+    const list = [] as Ve33PoolInfoI[];
+    fetchResult.data?.pages.forEach((page) => {
+      page.ve33_getPoolList?.forEach((pool) => {
+        if (pool) {
+          list.push({
+            ...pool,
+            stable: false,
+            fee: pool.feeRate,
+            type: pool.version === 'v2' ? PoolTypeE.Pool : PoolTypeE.CLPool,
+          });
+        }
+      });
+    });
+    return list;
+  }, [fetchResult.data?.pages]);
 
   return (
     <WidgetContainer
@@ -88,7 +103,7 @@ export const Ve33PoolList = (props: Ve33PoolListProps) => {
           <SearchInput
             placeholder="Select by token"
             sx={{
-              backgroundColor: alpha(theme.palette.text.primary, 0.1),
+              backgroundColor: theme.palette.background.paperDarkContrast,
               borderRadius: 24,
             }}
             height={40}
@@ -130,7 +145,9 @@ export const Ve33PoolList = (props: Ve33PoolListProps) => {
         </Box>
 
         <TableList
-          lqList={lqList}
+          chainId={chainId}
+          poolList={poolList}
+          usdValueChecked={usdValueChecked}
           operatePool={operatePool}
           setOperatePool={setOperatePool}
           hasMore={hasMore}
@@ -140,14 +157,13 @@ export const Ve33PoolList = (props: Ve33PoolListProps) => {
               fetchResult.fetchNextPage();
             }
           }}
-          supportAMM={supportAMMV2 || supportAMMV3}
         />
 
         <CardStatus
           loading={fetchResult.isLoading}
           refetch={fetchResult.error ? fetchResult.refetch : undefined}
-          empty
-          hasSearch
+          empty={!poolList?.length}
+          hasSearch={!!filterToken}
         />
       </Box>
       {operatePool && (

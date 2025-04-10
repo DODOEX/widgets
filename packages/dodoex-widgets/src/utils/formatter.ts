@@ -237,27 +237,34 @@ function getNegative(num: number) {
  * format to short number, like: -0.12 -> 0, 0.0000123->0.000012, 123.234 -> 123.23, 1234.12 -> 1.23K, 1000000.123->1.00M
  * @param n
  */
-export function formatShortNumber(n?: BigNumber, showDecimals = 4): string {
-  if (!n || n.isNaN()) {
+export function formatShortNumber(
+  n?: number | string | BigNumber | null,
+  showDecimals = 4,
+): string {
+  if (!n || n === null || n === undefined) {
     return '-';
   }
-  if (n.eq(0)) {
+  const N = new BigNumber(n);
+  if (!N.isFinite()) {
+    return '-';
+  }
+  if (N.eq(0)) {
     return '0';
   }
-  if (n.lte(0.000001) && n.gte(-0.000001)) {
-    return n.toExponential(2);
+  if (N.lte(0.000001) && N.gte(-0.000001)) {
+    return N.toExponential(2);
   }
-  if (n.lt(1) && n.gt(-1)) {
-    return formatReadableNumber({ input: n, showDecimals });
+  if (N.lt(1) && N.gt(-1)) {
+    return formatReadableNumber({ input: N, showDecimals });
   }
-  if (n.lt(kilo) && n.gt(getNegative(kilo))) {
-    return formatReadableNumber({ input: n, showDecimals });
+  if (N.lt(kilo) && N.gt(getNegative(kilo))) {
+    return formatReadableNumber({ input: N, showDecimals });
   }
-  if (n.lt(million) && n.gt(getNegative(million))) {
-    return `${formatReadableNumber({ input: n.div(kilo), showDecimals: 2 })}K`;
+  if (N.lt(million) && N.gt(getNegative(million))) {
+    return `${formatReadableNumber({ input: N.div(kilo), showDecimals: 2 })}K`;
   }
   return `${formatReadableNumber({
-    input: n.div(million),
+    input: N.div(million),
     showDecimals: 2,
   })}M`;
 }
@@ -307,7 +314,10 @@ export function formatPercentageNumber({
   })}%`;
 }
 
-export const formatApy = (amount: BigNumber, showDecimals = 2): string => {
+export const formatApy = (
+  amount: BigNumber | string | number | null,
+  showDecimals = 2,
+): string => {
   return formatPercentageNumber({
     input: amount,
     showDecimals,
