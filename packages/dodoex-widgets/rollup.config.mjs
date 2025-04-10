@@ -33,7 +33,11 @@ const baseConfig = {
       },
     }),
     json(),
-    typescript(),
+    typescript({
+      compilerOptions: {
+        paths: undefined,
+      },
+    }),
     commonjs(),
     resolve(),
     babel({

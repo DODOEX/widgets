@@ -1,9 +1,7 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "declarationDir": "./dist/types",
-    "jsx": "preserve",
-    "target": "es2016"
+    "declarationDir": "./dist/types"
   },
   "exclude": ["node_modules", "types", "src/gql/graphql.ts"],
   "include": ["src/**/*.ts"]

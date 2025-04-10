@@ -24,7 +24,11 @@ const config = {
     }),
     url(),
     json(),
-    typescript(),
+    typescript({
+      compilerOptions: {
+        paths: undefined,
+      },
+    }),
     commonjs({
       sourceMap: false,
     }),
