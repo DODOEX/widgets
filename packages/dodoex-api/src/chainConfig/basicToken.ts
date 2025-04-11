@@ -147,6 +147,6 @@ export const basicTokenMap: {
   },
   [ChainId.RISE_TESTNET]: {
     ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenAddress: '0x701855ae3a8b2A989DC8ACCf02Dd2b96f8B21671',
+    wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
   },
 };
