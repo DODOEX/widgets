@@ -1,6 +1,6 @@
-import { Box, BoxProps, useTheme } from '@dodoex/components';
-import { useWidgetDevice } from '../hooks/style/useWidgetDevice';
+import { Box, BoxProps } from '@dodoex/components';
 import React from 'react';
+import { useWidgetDevice } from '../hooks/style/useWidgetDevice';
 
 export const WIDGET_MODULE_CLASS_NAME = 'widget-module-container';
 
@@ -9,7 +9,7 @@ const WidgetContainer = React.forwardRef(function WidgetContainer(
   ref: React.ForwardedRef<HTMLDivElement>,
 ) {
   const { isMobile } = useWidgetDevice();
-  const theme = useTheme();
+
   return (
     <Box
       className={WIDGET_MODULE_CLASS_NAME}

@@ -11,11 +11,10 @@ import { t, Trans } from '@lingui/macro';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { WIDGET_CLASS_NAME } from '../../../components/Widget';
-import { TokenInfo } from '../../../hooks/Token/type';
 import { formatApy, formatShortNumber } from '../../../utils';
 import LiquidityTable from '../../PoolWidget/PoolList/components/LiquidityTable';
+import { PoolTypeTag } from '../components/PoolTypeTag';
 import { OperateTypeE, Ve33PoolInfoI, Ve33PoolOperateProps } from '../types';
-import { PoolTypeTag } from './components/PoolTypeTag';
 
 export interface TableListProps {
   chainId: ChainId;
@@ -26,6 +25,7 @@ export interface TableListProps {
   hasMore?: boolean;
   loadMore?: () => void;
   loadMoreLoading?: boolean;
+  onClickPoolListRow: (id: string, chainId: ChainId) => void;
 }
 
 export const TableList = ({
@@ -37,6 +37,7 @@ export const TableList = ({
   hasMore,
   loadMore,
   loadMoreLoading,
+  onClickPoolListRow,
 }: TableListProps) => {
   const theme = useTheme();
   return (
@@ -76,22 +77,8 @@ export const TableList = ({
           if (!item) {
             return null;
           }
-          const baseToken: TokenInfo = {
-            chainId,
-            address: item.token0Address,
-            name: item.token0Name,
-            decimals: item.token0Decimals,
-            symbol: item.token0Symbol,
-            logoURI: undefined,
-          };
-          const quoteToken: TokenInfo = {
-            chainId,
-            address: item.token1Address,
-            name: item.token1Name,
-            decimals: item.token1Decimals,
-            symbol: item.token1Symbol,
-            logoURI: undefined,
-          };
+          const { baseToken, quoteToken } = item;
+
           const aprText = item.apr ? formatApy(item.apr.fees) : undefined;
 
           let operateBtnText = '';
@@ -115,6 +102,12 @@ export const TableList = ({
                 [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
                   backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
                 },
+                cursor: 'pointer',
+              }}
+              onClick={(e) => {
+                if (!(e.target as HTMLElement).closest('button')) {
+                  onClickPoolListRow(item.id, chainId);
+                }
               }}
             >
               <Box component="td">

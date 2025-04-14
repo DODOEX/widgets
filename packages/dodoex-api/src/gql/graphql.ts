@@ -21613,6 +21613,39 @@ export type Ve33_GetPoolListQuery = {
   } | null>;
 };
 
+export type Ve33_GetPoolQueryVariables = Exact<{
+  where?: InputMaybe<Ve33PoolInput>;
+}>;
+
+export type Ve33_GetPoolQuery = {
+  ve33_getPool?: {
+    id: string;
+    title: string;
+    version: string;
+    gaugeAddress: string;
+    feeRate: any;
+    tvl: any;
+    totalValueLockedUSD: any;
+    totalValueLockedToken0: any;
+    totalValueLockedToken1: any;
+    volumeUSD: any;
+    volumeToken0: any;
+    volumeToken1: any;
+    feesUSD: any;
+    feesToken0: any;
+    feesToken1: any;
+    token0Address: string;
+    token0Name: string;
+    token0Symbol: string;
+    token0Decimals: number;
+    token1Address: string;
+    token1Name: string;
+    token1Symbol: string;
+    token1Decimals: number;
+    apr: { fees: any; incentives: any };
+  } | null;
+};
+
 export type FetchUserSwapOrderHistoriesQueryVariables = Exact<{
   where?: InputMaybe<User_SwapswapFilter>;
 }>;
@@ -22577,6 +22610,42 @@ export const Ve33_GetPoolListDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   Ve33_GetPoolListQuery,
   Ve33_GetPoolListQueryVariables
+>;
+export const Ve33_GetPoolDocument = new TypedDocumentString(`
+    query Ve33_getPool($where: Ve33PoolInput) {
+  ve33_getPool(where: $where) {
+    id
+    title
+    version
+    gaugeAddress
+    feeRate
+    apr {
+      fees
+      incentives
+    }
+    tvl
+    totalValueLockedUSD
+    totalValueLockedToken0
+    totalValueLockedToken1
+    volumeUSD
+    volumeToken0
+    volumeToken1
+    feesUSD
+    feesToken0
+    feesToken1
+    token0Address
+    token0Name
+    token0Symbol
+    token0Decimals
+    token1Address
+    token1Name
+    token1Symbol
+    token1Decimals
+  }
+}
+    `) as unknown as TypedDocumentString<
+  Ve33_GetPoolQuery,
+  Ve33_GetPoolQueryVariables
 >;
 export const FetchUserSwapOrderHistoriesDocument = new TypedDocumentString(`
     query FetchUserSwapOrderHistories($where: User_swapswapFilter) {

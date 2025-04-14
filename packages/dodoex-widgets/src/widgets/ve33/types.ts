@@ -1,3 +1,4 @@
+import { TokenInfo } from '../../hooks/Token/type';
 import { FetchVe33PoolList } from '../PoolWidget/utils';
 
 export enum OperateTypeE {
@@ -15,12 +16,14 @@ export enum FeeE {
   Volatile = 30,
 }
 
-type FetchVe33PoolItem = FetchVe33PoolList[0];
+export type FetchVe33PoolItem = FetchVe33PoolList[0];
 
 export type Ve33PoolInfoI = FetchVe33PoolItem & {
   stable: boolean;
   fee: FeeE | 0 | number;
   type: PoolTypeE;
+  baseToken: TokenInfo;
+  quoteToken: TokenInfo;
 };
 
 export interface Ve33PoolOperateProps {

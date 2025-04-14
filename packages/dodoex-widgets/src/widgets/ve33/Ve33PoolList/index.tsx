@@ -1,4 +1,4 @@
-import { PoolApi } from '@dodoex/api';
+import { ChainId, PoolApi } from '@dodoex/api';
 import { Box, SearchInput, Switch, useTheme } from '@dodoex/components';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useMemo, useRef, useState } from 'react';
@@ -7,12 +7,15 @@ import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { PoolTypeE, Ve33PoolInfoI, Ve33PoolOperateProps } from '../types';
+import { Ve33PoolInfoI, Ve33PoolOperateProps } from '../types';
+import { compositePoolInfo } from '../utils';
 import { TableList } from './TableList';
 
-export interface Ve33PoolListProps {}
+export interface Ve33PoolListProps {
+  onClickPoolListRow: (id: string, chainId: ChainId) => void;
+}
 
-export const Ve33PoolList = (props: Ve33PoolListProps) => {
+export const Ve33PoolList = ({ onClickPoolListRow }: Ve33PoolListProps) => {
   const { chainId } = useWalletInfo();
   const { isMobile } = useWidgetDevice();
   const graphQLRequests = useGraphQLRequests();
@@ -61,23 +64,18 @@ export const Ve33PoolList = (props: Ve33PoolListProps) => {
     fetchResult.data?.pages.forEach((page) => {
       page.ve33_getPoolList?.forEach((pool) => {
         if (pool) {
-          list.push({
-            ...pool,
-            stable: false,
-            fee: pool.feeRate,
-            type: pool.version === 'v2' ? PoolTypeE.Pool : PoolTypeE.CLPool,
-          });
+          list.push(compositePoolInfo(pool, chainId));
         }
       });
     });
     return list;
-  }, [fetchResult.data?.pages]);
+  }, [chainId, fetchResult.data?.pages]);
 
   return (
     <WidgetContainer
       sx={{
         display: 'flex',
-        gap: 12,
+        gap: 20,
         flex: 1,
       }}
       ref={scrollParentRef}
@@ -157,6 +155,7 @@ export const Ve33PoolList = (props: Ve33PoolListProps) => {
               fetchResult.fetchNextPage();
             }
           }}
+          onClickPoolListRow={onClickPoolListRow}
         />
 
         <CardStatus

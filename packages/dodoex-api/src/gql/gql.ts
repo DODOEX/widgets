@@ -48,6 +48,8 @@ const documents = {
     types.FetchPoolPairListDocument,
   '\n    query Ve33_getPoolList($where: Ve33TokenFilterPaginationInput) {\n      ve33_getPoolList(where: $where) {\n        id\n        title\n        version\n        gaugeAddress\n        feeRate\n        apr {\n          fees\n          incentives\n        }\n        tvl\n        totalValueLockedUSD\n        totalValueLockedToken0\n        totalValueLockedToken1\n        volumeUSD\n        volumeToken0\n        volumeToken1\n        feesUSD\n        feesToken0\n        feesToken1\n        token0Address\n        token0Name\n        token0Symbol\n        token0Decimals\n        token1Address\n        token1Name\n        token1Symbol\n        token1Decimals\n      }\n    }\n  ':
     types.Ve33_GetPoolListDocument,
+  '\n    query Ve33_getPool($where: Ve33PoolInput) {\n      ve33_getPool(where: $where) {\n        id\n        title\n        version\n        gaugeAddress\n        feeRate\n        apr {\n          fees\n          incentives\n        }\n        tvl\n        totalValueLockedUSD\n        totalValueLockedToken0\n        totalValueLockedToken1\n        volumeUSD\n        volumeToken0\n        volumeToken1\n        feesUSD\n        feesToken0\n        feesToken1\n        token0Address\n        token0Name\n        token0Symbol\n        token0Decimals\n        token1Address\n        token1Name\n        token1Symbol\n        token1Decimals\n      }\n    }\n  ':
+    types.Ve33_GetPoolDocument,
   '\n    query FetchUserSwapOrderHistories($where: User_swapswapFilter) {\n      user_swap_orderHistories(where: $where) {\n        count\n        page\n        list {\n          chainId\n          createdAt\n          fromAmount\n          fromTokenDecimals\n          fromTokenPrice\n          fromTokenSymbol\n          fromTokenAddress\n          fromTokenLogoImg\n          hash\n          status\n          toAmount\n          toTokenDecimals\n          toTokenPrice\n          toTokenSymbol\n          toTokenAddress\n          toTokenLogoImg\n          minAmount\n          nonce\n          extra\n          user\n        }\n      }\n    }\n  ':
     types.FetchUserSwapOrderHistoriesDocument,
   '\n    query FetchNoticeCenterTransactionList(\n      $where: Notice_centertransactionListFilter\n    ) {\n      notice_center_transactionList(where: $where) {\n        list {\n          chainId\n          createTime\n          extend\n          from\n          id\n          key\n          type\n        }\n        count\n        limit\n        page\n      }\n    }\n  ':
@@ -166,6 +168,12 @@ export function graphql(
 export function graphql(
   source: '\n    query Ve33_getPoolList($where: Ve33TokenFilterPaginationInput) {\n      ve33_getPoolList(where: $where) {\n        id\n        title\n        version\n        gaugeAddress\n        feeRate\n        apr {\n          fees\n          incentives\n        }\n        tvl\n        totalValueLockedUSD\n        totalValueLockedToken0\n        totalValueLockedToken1\n        volumeUSD\n        volumeToken0\n        volumeToken1\n        feesUSD\n        feesToken0\n        feesToken1\n        token0Address\n        token0Name\n        token0Symbol\n        token0Decimals\n        token1Address\n        token1Name\n        token1Symbol\n        token1Decimals\n      }\n    }\n  ',
 ): typeof import('./graphql').Ve33_GetPoolListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query Ve33_getPool($where: Ve33PoolInput) {\n      ve33_getPool(where: $where) {\n        id\n        title\n        version\n        gaugeAddress\n        feeRate\n        apr {\n          fees\n          incentives\n        }\n        tvl\n        totalValueLockedUSD\n        totalValueLockedToken0\n        totalValueLockedToken1\n        volumeUSD\n        volumeToken0\n        volumeToken1\n        feesUSD\n        feesToken0\n        feesToken1\n        token0Address\n        token0Name\n        token0Symbol\n        token0Decimals\n        token1Address\n        token1Name\n        token1Symbol\n        token1Decimals\n      }\n    }\n  ',
+): typeof import('./graphql').Ve33_GetPoolDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

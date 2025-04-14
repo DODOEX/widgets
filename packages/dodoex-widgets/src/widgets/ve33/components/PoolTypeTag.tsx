@@ -1,7 +1,7 @@
 import { Box, useTheme } from '@dodoex/components';
-import { PoolTypeE } from '../../types';
-import { usePoolColors } from '../../hooks/usePoolColors';
-import { formatFee } from '../../utils';
+import { usePoolColors } from '../hooks/usePoolColors';
+import { PoolTypeE } from '../types';
+import { formatFee } from '../utils';
 
 export interface PoolTypeTagProps {
   type: PoolTypeE;
