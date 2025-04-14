@@ -8,7 +8,6 @@ import {
 import { Trans } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { chainListMap } from '../../constants/chainList';
 import { ChainId } from '@dodoex/api';
 import {
@@ -16,8 +15,8 @@ import {
   setAuthSwitchCache,
 } from '../../constants/localstorage';
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
-import { getAutoConnectLoading } from '../../store/selectors/globals';
 import { WIDGET_CLASS_NAME } from '../Widget';
+import { useGlobalState } from '../../hooks/useGlobalState';
 
 export default function SwitchChainDialog({
   chainId,
@@ -33,7 +32,7 @@ export default function SwitchChainDialog({
   const { chainId: currentChainId } = useWeb3React();
   const [autoSwitch, setAutoSwitch] = useState(getAuthSwitchCache());
   const switchChain = useSwitchChain(chainId);
-  const autoConnectLoading = useSelector(getAutoConnectLoading);
+  const { autoConnectLoading } = useGlobalState();
   useEffect(() => {
     const computed = async () => {
       if (open) {
@@ -60,7 +59,7 @@ export default function SwitchChainDialog({
       computed();
     }
   }, [open, currentChainId, autoConnectLoading]);
-  const network = chainId ? chainListMap.get(chainId)?.name ?? '' : '';
+  const network = chainId ? (chainListMap.get(chainId)?.name ?? '') : '';
   return (
     <WidgetModal
       open={openTarget}

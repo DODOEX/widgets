@@ -2,13 +2,11 @@ import { Button, ButtonProps } from '@dodoex/components';
 import { Trans, t } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { ChainId } from '@dodoex/api';
-import { AppThunkDispatch } from '../../store/actions';
-import { setOpenConnectWalletInfo } from '../../store/actions/wallet';
 import { chainListMap } from '../../constants/chainList';
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
 import { useUserOptions } from '../UserOptionsProvider';
+import { useGlobalState } from '../../hooks/useGlobalState';
 
 export default function NeedConnectButton({
   chainId,
@@ -20,7 +18,6 @@ export default function NeedConnectButton({
   includeButton?: boolean;
 }) {
   const { account, chainId: currentChainId, connector } = useWeb3React();
-  const dispatch = useDispatch<AppThunkDispatch>();
   const { onConnectWalletClick, onSwitchChain } = useUserOptions();
   const [loading, setLoading] = React.useState(false);
   const switchChain = useSwitchChain(chainId);
@@ -57,11 +54,11 @@ export default function NeedConnectButton({
               setLoading(false);
               return;
             }
-            dispatch(
-              setOpenConnectWalletInfo({
+            useGlobalState.setState({
+              openConnectWalletInfo: {
                 chainId,
-              }),
-            );
+              },
+            });
             return;
           }
 
@@ -76,7 +73,9 @@ export default function NeedConnectButton({
           connector.deactivate
             ? connector.deactivate()
             : connector.resetState();
-          dispatch(setOpenConnectWalletInfo(true));
+          useGlobalState.setState({
+            openConnectWalletInfo: true,
+          });
         }}
       >
         {loading ? (

@@ -5,16 +5,6 @@ import BigNumber from 'bignumber.js';
 import axios from 'axios';
 
 jest.mock('axios');
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useDispatch: () => jest.fn(),
-  useSelector: (fn: () => any) => {
-    if (typeof fn === 'function') {
-      return fn();
-    }
-    return [];
-  },
-}));
 jest.mock('../../components/UserOptionsProvider', () => ({
   useUserOptions: () => ({
     apikey: '',

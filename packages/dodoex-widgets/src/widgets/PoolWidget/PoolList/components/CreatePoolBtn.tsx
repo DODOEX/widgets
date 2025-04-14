@@ -1,4 +1,11 @@
-import { Box, Button, ButtonBase, Tooltip, useTheme } from '@dodoex/components';
+import {
+  alpha,
+  Box,
+  Button,
+  ButtonBase,
+  Tooltip,
+  useTheme,
+} from '@dodoex/components';
 import { Plus as PlusIcon } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import React from 'react';
@@ -7,6 +14,7 @@ import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../../router';
 import { PageType } from '../../../../router/types';
 import Dialog from '../../../../components/Dialog';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 
 function CreateItem({
   onClick,
@@ -27,6 +35,7 @@ function CreateItem({
         py: 14,
         borderTop: `1px solid ${theme.palette.border.main}`,
         [theme.breakpoints.up('tablet')]: {
+          maxWidth: 236,
           borderTop: 'none',
           mx: 0,
           px: 16,
@@ -40,9 +49,11 @@ function CreateItem({
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
+          alignItems: 'flex-start',
           gap: 0,
           p: 0,
           borderRadius: 8,
+          textAlign: 'left',
           '&:hover': {
             backgroundColor: theme.palette.background.tag,
           },
@@ -79,6 +90,7 @@ export interface CreatePoolBtnProps {}
 export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
+  const { account } = useWalletInfo();
   const { supportAMMV2, supportAMMV3, notSupportPMM } = useUserOptions();
 
   const [selectTypeModalOpen, setSelectTypeModalOpen] = React.useState(false);
@@ -107,7 +119,11 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
               });
             }}
             title={<Trans>PMM Pool</Trans>}
-            desc={<Trans>Description of this type of pool</Trans>}
+            desc={
+              <Trans>
+                Fexible customization, take full control of liquidity
+              </Trans>
+            }
           />
         )}
         {supportAMMV2 && (
@@ -118,7 +134,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
               });
             }}
             title={<Trans>AMM V2 Position</Trans>}
-            desc={<Trans>Description of this type of pool</Trans>}
+            desc={<Trans>Simple, full-range liquidity</Trans>}
           />
         )}
         {supportAMMV3 && (
@@ -129,7 +145,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
               });
             }}
             title={<Trans>AMM V3 Position</Trans>}
-            desc={<Trans>Description of this type of pool</Trans>}
+            desc={<Trans>Concentrated liquidity, higher efficiency</Trans>}
           />
         )}
       </>
@@ -139,7 +155,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
         <>
           <Button
             variant={Button.Variant.outlined}
-            fullWidth={isMobile}
+            fullWidth={isMobile && !!account}
             onClick={() => {
               setSelectTypeModalOpen(true);
             }}
@@ -191,13 +207,13 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
             py: 7,
             borderRadius: 8,
             borderWidth: 1,
-            borderColor: theme.palette.text.primary,
+            borderColor: theme.palette.primary.main,
             typography: 'body1',
             fontWeight: 600,
-            color: theme.palette.text.primary,
+            color: theme.palette.primary.main,
             cursor: 'pointer',
             '&:hover': {
-              backgroundColor: theme.palette.background.tag,
+              backgroundColor: alpha(theme.palette.primary.main, 0.1),
             },
           }}
         >

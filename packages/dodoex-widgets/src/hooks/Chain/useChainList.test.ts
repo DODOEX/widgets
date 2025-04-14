@@ -12,16 +12,6 @@ jest.mock('@web3-react/core', () => ({
   })),
 }));
 
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: (fn: () => any) => {
-    if (typeof fn === 'function') {
-      return fn();
-    }
-    return [];
-  },
-}));
-
 describe('useChainList:default', () => {
   it('default', () => {
     const { result } = renderHook(() => useChainList());

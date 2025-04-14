@@ -13,18 +13,9 @@ jest.mock('@web3-react/core', () => ({
   })),
 }));
 
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: (fn: () => any) => {
-    if (typeof fn === 'function') {
-      return fn();
-    }
-    return [];
-  },
-}));
-
-jest.mock('../../store/selectors/token', () => ({
+jest.mock('../useTokenState', () => ({
   getAllTokenList: jest.fn(() => tokenList),
+  useTokenState: (fn: any) => fn(),
 }));
 
 jest.mock('../../components/UserOptionsProvider', () => ({

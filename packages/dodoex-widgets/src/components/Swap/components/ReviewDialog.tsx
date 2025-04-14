@@ -14,14 +14,14 @@ import { formatTokenAmountNumber } from '../../../utils/formatter';
 import { formatReadableNumber } from '../../../utils/formatter';
 import TokenLogo from '../../TokenLogo';
 import { DetailBorder, Done, CaretUp, DoubleRight } from '@dodoex/icons';
-import { getContractStatus } from '../../../store/selectors/globals';
-import { ContractStatus } from '../../../store/reducers/globals';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppThunkDispatch } from '../../../store/actions';
 import useInflights from '../../../hooks/Submission/useInflights';
 import { PRICE_IMPACT_THRESHOLD } from '../../../constants/swap';
 import { QuestionTooltip } from '../../Tooltip';
-import { setContractStatus } from '../../../store/actions/globals';
+import {
+  ContractStatus,
+  setContractStatus,
+  useGlobalState,
+} from '../../../hooks/useGlobalState';
 
 export interface ReviewDialogProps {
   open: boolean;
@@ -64,8 +64,7 @@ export function ReviewDialog({
   slippage,
 }: ReviewDialogProps) {
   const theme = useTheme();
-  const dispatch = useDispatch<AppThunkDispatch>();
-  const contractStatus = useSelector(getContractStatus);
+  const { contractStatus } = useGlobalState();
   const isPriceWaningShown = useMemo(
     () =>
       !disabledFiatPrice &&
@@ -94,7 +93,7 @@ export function ReviewDialog({
     <Dialog
       open={open}
       onClose={() => {
-        dispatch(setContractStatus(ContractStatus.Initial));
+        setContractStatus(ContractStatus.Initial);
         onClose();
       }}
       id="swap-summary"
@@ -414,7 +413,10 @@ export function ReviewDialog({
                     backgroundColor: 'secondary.main',
                   }}
                 >
-                  <Box component={Done} sx={{ width: 14, color: '#1a1a1b' }} />
+                  <Box
+                    component={Done}
+                    sx={{ width: 14, color: 'secondary.contrastText' }}
+                  />
                 </Box>
               ) : (
                 <Box
@@ -446,7 +448,7 @@ export function ReviewDialog({
           fullWidth
           onClick={() => {
             execute();
-            dispatch(setContractStatus(ContractStatus.Pending));
+            setContractStatus(ContractStatus.Pending);
           }}
         >
           {contractStatus == ContractStatus.Pending ? (

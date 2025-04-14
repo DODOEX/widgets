@@ -19,6 +19,7 @@ import { ReactComponent as TaikoLogo } from '../assets/logo/networks/taiko.svg';
 import { ReactComponent as PlumeLogo } from '../assets/logo/networks/plume.svg';
 import { ReactComponent as NeoxLogo } from '../assets/logo/networks/neox.svg';
 import { ReactComponent as MorphLogo } from '../assets/logo/networks/morph.svg';
+import { ReactComponent as RiseLogo } from '../assets/logo/networks/rise.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -59,6 +60,15 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.ARBITRUM_ONE,
       logo: ArbitrumLogo,
       name: 'Arbitrum',
+    },
+  ],
+  [
+    ChainId.ARBITRUM_SEPOLIA,
+    {
+      chainId: ChainId.ARBITRUM_SEPOLIA,
+      logo: ArbitrumLogo,
+      name: 'Arbitrum Sepolia',
+      mainnet: ChainId.ARBITRUM_ONE,
     },
   ],
   [
@@ -220,6 +230,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.MORPH,
       logo: MorphLogo,
       name: 'Morph',
+    },
+  ],
+  [
+    ChainId.RISE_TESTNET,
+    {
+      chainId: ChainId.RISE_TESTNET,
+      logo: RiseLogo,
+      name: 'Rise-Sepolia',
     },
   ],
 ]);

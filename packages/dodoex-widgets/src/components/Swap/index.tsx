@@ -10,7 +10,6 @@ import {
 } from '@dodoex/components';
 import { formatTokenAmountNumber } from '../../utils';
 import { useMemo, useState, useEffect, useCallback, ReactNode } from 'react';
-import { useDispatch } from 'react-redux';
 import {
   Setting,
   SettingCrossChain,
@@ -48,7 +47,6 @@ import {
   swapReviewBtn,
 } from '../../constants/testId';
 import useInflights from '../../hooks/Submission/useInflights';
-import { AppThunkDispatch } from '../../store/actions';
 import { useFetchRoutePriceBridge } from '../../hooks/Bridge/useFetchRoutePriceBridge';
 import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
 import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
@@ -67,12 +65,12 @@ import {
   GetAutoSlippage,
   useSetAutoSlippage,
 } from '../../hooks/setting/useSetAutoSlippage';
-import { setFromTokenChainId } from '../../store/actions/wallet';
 import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
 import { useFetchETHBalance } from '../../hooks/contract';
 import { useUserOptions } from '../UserOptionsProvider';
 import { SwapSettingsDialog } from './components/SwapSettingsDialog';
 import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
+import { useGlobalState } from '../../hooks/useGlobalState';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -95,7 +93,6 @@ export function Swap({
   const theme = useTheme();
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
-  const dispatch = useDispatch<AppThunkDispatch>();
   const { defaultChainId, noPowerBy, onlyChainId } = useUserOptions();
   const [isReverseRouting, setIsReverseRouting] = useState(false);
   const basicTokenAddress = useMemo(
@@ -298,11 +295,11 @@ export function Swap({
           // sync redux
           if (!chainId) {
             // The chainId is only modified when the wallet is not connected, and the chain is specified when the wallet is connected.
-            dispatch(
-              setFromTokenChainId(
-                (newValue?.chainId ?? undefined) as ChainId | undefined,
-              ),
-            );
+            useGlobalState.setState({
+              fromTokenChainId: (newValue?.chainId ?? undefined) as
+                | ChainId
+                | undefined,
+            });
           }
           // callback
           if (onPayTokenChange && newValue && newValue !== prev) {
@@ -312,7 +309,7 @@ export function Swap({
           return newValue;
         });
       },
-      [dispatch, setFromTokenChainId, onPayTokenChange, chainId],
+      [onPayTokenChange, chainId],
     );
 
   const setToToken: (value: React.SetStateAction<TokenInfo | null>) => void =
@@ -398,13 +395,13 @@ export function Swap({
       updateFromAmt('');
     }
     setIsReverseRouting(false);
-  }, [isReverseRouting, updateFromAmt, dispatch]);
+  }, [isReverseRouting, updateFromAmt]);
   const onToTokenInputFocus = useCallback(() => {
     if (!isReverseRouting) {
       updateToAmt('');
     }
     setIsReverseRouting(true);
-  }, [isReverseRouting, updateToAmt, dispatch]);
+  }, [isReverseRouting, updateToAmt]);
 
   const isSlippageExceedLimit = useSlippageLimit(
     isBridge ? undefined : slippageSwap,

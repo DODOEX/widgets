@@ -3,6 +3,7 @@ import {
   Box,
   createTheme,
   CssBaseline,
+  EmptyDataIcon,
   PaletteMode,
   ThemeOptions,
   ThemeProvider,
@@ -12,11 +13,6 @@ import {
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
 import { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
-import {
-  Provider as ReduxProvider,
-  useDispatch,
-  useSelector,
-} from 'react-redux';
 import { APIServices, contractRequests } from '../../constants/api';
 import { getRpcSingleUrlMap } from '../../constants/chains';
 import { defaultLang, SupportedLang } from '../../constants/locales';
@@ -32,20 +28,20 @@ import useInitTokenList, {
 } from '../../hooks/Token/useInitTokenList';
 import { LangProvider as LangProviderBase } from '../../providers/i18n';
 import { queryClient } from '../../providers/queryClient';
-import { store } from '../../store';
-import { AppThunkDispatch } from '../../store/actions';
-import { setAutoConnectLoading } from '../../store/actions/globals';
-import { getAutoConnectLoading } from '../../store/selectors/globals';
-import { getFromTokenChainId } from '../../store/selectors/wallet';
 import { ConfirmProps } from '../Confirm';
 import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
-import { setOpenConnectWalletInfo } from '../../store/actions/wallet';
 import Message from '../Message';
 import { DialogProps } from '../Swap/components/Dialog';
 import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
 import WithExecutionDialog from '../WithExecutionDialog';
 import { Page } from '../../router';
 import { useInitContractRequest } from '../../providers/useInitContractRequest';
+import {
+  setAutoConnectLoading,
+  useGlobalState,
+} from '../../hooks/useGlobalState';
+import { ExecutionCtx } from '../../hooks/Submission/types';
+import { TokenPickerDialogProps } from '../Swap/components/TokenCard/TokenPickerDialog';
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
@@ -108,11 +104,33 @@ export interface WidgetProps
     url?: string;
     chainId?: number;
   }) => string;
+  onSharePool?: (share: {
+    chainId: number;
+    baseToken?: {
+      address: string;
+      symbol: string;
+    };
+    quoteToken?: {
+      address: string;
+      symbol: string;
+    };
+    poolId: string;
+    apy?: {
+      miningBaseApy?: any;
+      miningQuoteApy?: any;
+      transactionBaseApy?: any;
+      transactionQuoteApy?: any;
+    } | null;
+    isSingle?: boolean;
+  }) => void;
   graphQLRequests?: GraphQLRequests;
   ConfirmComponent?: React.FunctionComponent<ConfirmProps>;
   DialogComponent?: React.FunctionComponent<DialogProps>;
+  EmptyDataIcon?: React.FunctionComponent<Parameters<typeof EmptyDataIcon>[0]>;
+  TokenPickerDialog?: React.FunctionComponent<TokenPickerDialogProps>;
   /** Default deadLine when it cannot be set. Unit: seconds */
   deadLine?: number;
+  submission?: ExecutionCtx;
 }
 
 function LangProvider(props: PropsWithChildren<WidgetProps>) {
@@ -131,14 +149,13 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useFetchBlockNumber();
   useInitContractRequest(true);
   const { provider, connector, chainId, account } = useWeb3React();
-  const dispatch = useDispatch<AppThunkDispatch>();
-  const autoConnectLoading = useSelector(getAutoConnectLoading);
+  const { autoConnectLoading } = useGlobalState();
   useEffect(() => {
     if (autoConnectLoading === undefined) {
       if (props.noAutoConnect) {
-        dispatch(setAutoConnectLoading(false));
+        setAutoConnectLoading(false);
       } else {
-        dispatch(setAutoConnectLoading(true));
+        setAutoConnectLoading(true);
         const connectWallet = async () => {
           const defaultChainId = props.defaultChainId;
           try {
@@ -148,21 +165,13 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
               await connector.activate(defaultChainId);
             }
           } finally {
-            dispatch(setAutoConnectLoading(false));
+            setAutoConnectLoading(false);
           }
         };
         connectWallet();
       }
     }
   }, [connector, props.noAutoConnect]);
-
-  useEffect(() => {
-    if (props.setOpenConnectWalletFC) {
-      props.setOpenConnectWalletFC(() => {
-        dispatch(setOpenConnectWalletInfo(true));
-      });
-    }
-  }, [props.setOpenConnectWalletFC]);
 
   useEffect(() => {
     if (props.setDisconnectConnectFC) {
@@ -200,7 +209,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     }
     const _provider = provider?.provider as any;
     const handleChainChanged = async () => {
-      dispatch(setAutoConnectLoading(true));
+      setAutoConnectLoading(true);
       try {
         if (connector?.connectEagerly) {
           await connector.connectEagerly();
@@ -208,7 +217,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
           await connector.activate();
         }
       } finally {
-        dispatch(setAutoConnectLoading(false));
+        setAutoConnectLoading(false);
       }
     };
     if (_provider?.on) {
@@ -256,7 +265,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
 }
 
 function Web3Provider(props: PropsWithChildren<WidgetProps>) {
-  const fromTokenChainId = useSelector(getFromTokenChainId);
+  const { fromTokenChainId } = useGlobalState();
   const defaultChainId = useMemo(
     () => fromTokenChainId ?? props.defaultChainId ?? 1,
     [props.defaultChainId, fromTokenChainId],
@@ -286,16 +295,14 @@ export function UnstyleWidget(props: PropsWithChildren<WidgetProps>) {
   }
 
   return (
-    <ReduxProvider store={store}>
-      <UserOptionsProvider
-        {...{
-          ...props,
-          widgetRef: props.widgetRef ?? widgetRef,
-        }}
-      >
-        <Web3Provider {...props} />
-      </UserOptionsProvider>
-    </ReduxProvider>
+    <UserOptionsProvider
+      {...{
+        ...props,
+        widgetRef: props.widgetRef ?? widgetRef,
+      }}
+    >
+      <Web3Provider {...props} />
+    </UserOptionsProvider>
   );
 }
 

@@ -9,6 +9,8 @@ export enum ChainId {
 
   ARBITRUM_ONE = 42161,
 
+  ARBITRUM_SEPOLIA = 421614,
+
   AURORA = 1313161554,
 
   OKCHAIN = 66,
@@ -37,11 +39,13 @@ export enum ChainId {
 
   TAIKO = 167000,
 
-  PLUME = 98865,
+  PLUME = 98866,
 
   PLUME_TESTNET = 98864,
 
   NEOX = 47763,
 
   MORPH = 2818,
+
+  RISE_TESTNET = 11155931,
 }

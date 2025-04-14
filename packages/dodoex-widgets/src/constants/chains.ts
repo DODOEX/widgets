@@ -27,6 +27,7 @@ export const rpcServerMap: {
     'https://arb1.arbitrum.io/rpc',
     'https://rpc.ankr.com/arbitrum',
   ],
+  [ChainId.ARBITRUM_SEPOLIA]: ['https://sepolia-rollup.arbitrum.io/rpc'],
   [ChainId.AURORA]: ['https://mainnet.aurora.dev/'],
   [ChainId.OKCHAIN]: [
     'https://exchainrpc.okex.org',
@@ -56,6 +57,7 @@ export const rpcServerMap: {
   [ChainId.PLUME_TESTNET]: ['https://test-rpc.plumenetwork.xyz'],
   [ChainId.NEOX]: ['https://mainnet-1.rpc.banelabs.org'],
   [ChainId.MORPH]: ['https://rpc.morphl2.io'],
+  [ChainId.RISE_TESTNET]: ['https://testnet.riselabs.xyz'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -87,6 +89,7 @@ export const scanUrlDomainMap: {
   [ChainId.OKCHAIN]: 'www.oklink.com/okexchain',
   [ChainId.POLYGON]: 'polygonscan.com',
   [ChainId.ARBITRUM_ONE]: 'arbiscan.io',
+  [ChainId.ARBITRUM_SEPOLIA]: 'sepolia.arbiscan.io',
   [ChainId.AURORA]: 'aurorascan.dev',
   [ChainId.AVALANCHE]: 'snowtrace.io',
   [ChainId.BASE]: 'basescan.org',
@@ -103,6 +106,7 @@ export const scanUrlDomainMap: {
   [ChainId.PLUME_TESTNET]: 'test-explorer.plumenetwork.xyz',
   [ChainId.NEOX]: 'xexplorer.neo.org',
   [ChainId.MORPH]: 'explorer.morphl2.io',
+  [ChainId.RISE_TESTNET]: 'explorer.testnet.riselabs.xyz',
 };
 
 export const ThegraphKeyMap: {
@@ -112,6 +116,7 @@ export const ThegraphKeyMap: {
   [ChainId.MAINNET]: 'ethereum-mainnet',
   [ChainId.POLYGON]: 'polygon',
   [ChainId.ARBITRUM_ONE]: 'arbitrum',
+  [ChainId.ARBITRUM_SEPOLIA]: 'arb-sep',
   [ChainId.OKCHAIN]: 'okchain',
   [ChainId.OPTIMISM]: 'optimism',
   [ChainId.AURORA]: 'aurora',
@@ -132,6 +137,7 @@ export const ThegraphKeyMap: {
   [ChainId.PLUME_TESTNET]: 'plume-testnet',
   [ChainId.NEOX]: 'neox',
   [ChainId.MORPH]: 'morph',
+  [ChainId.RISE_TESTNET]: 'rise-testnet',
 };
 
 export const blockTimeMap: {
@@ -145,6 +151,7 @@ export const blockTimeMap: {
   [ChainId.OKCHAIN]: 4000,
   [ChainId.POLYGON]: 2200,
   [ChainId.ARBITRUM_ONE]: 12000,
+  [ChainId.ARBITRUM_SEPOLIA]: 12000,
   [ChainId.AURORA]: 1000,
   [ChainId.AVALANCHE]: 1000,
   [ChainId.BASE]: 2000,
@@ -161,6 +168,7 @@ export const blockTimeMap: {
   [ChainId.MORPH]: 3200,
   [ChainId.BARTIO_TESTNET]: 3000,
   [ChainId.BERA_CHAIN]: 3000,
+  [ChainId.RISE_TESTNET]: 0,
 };
 
 export const dexKeysMap: {
@@ -174,6 +182,7 @@ export const dexKeysMap: {
   [ChainId.OKCHAIN]: [],
   [ChainId.POLYGON]: [],
   [ChainId.ARBITRUM_ONE]: [],
+  [ChainId.ARBITRUM_SEPOLIA]: [],
   [ChainId.AURORA]: [],
   [ChainId.AVALANCHE]: [],
   [ChainId.BASE]: [],
@@ -190,4 +199,5 @@ export const dexKeysMap: {
   [ChainId.MORPH]: [],
   [ChainId.BARTIO_TESTNET]: [],
   [ChainId.BERA_CHAIN]: [],
+  [ChainId.RISE_TESTNET]: [],
 };

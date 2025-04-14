@@ -1857,10 +1857,10 @@
     ethers "^6.13.2"
     https-proxy-agent "^7.0.5"
 
-"@dodoex/dodo-contract-request@1.10.0-alpha.3":
-  version "1.10.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@dodoex/dodo-contract-request/-/dodo-contract-request-1.10.0-alpha.3.tgz#eaaf64ba2d39d35f805fafa364ba653b6529ae13"
-  integrity sha512-GfbD1vDIHDz1WkYgKJ+ewc4yz78wZBSDz78HXvKUHe8v0659aTEcjQefkWdaNiX31dI8vHHV8MDH8rVAyhOKgw==
+"@dodoex/dodo-contract-request@1.12.0-alpha.2":
+  version "1.12.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@dodoex/dodo-contract-request/-/dodo-contract-request-1.12.0-alpha.2.tgz#cc02f440ebc7612f22c005a03677669b0c3f6efd"
+  integrity sha512-jXoiMjVbnSyHE3Axf6b4337Xyn8jPNCYNIITQrm7yDqZliTemxQByvvZ1F20SzdB0gQ7u1+8gmwkItTI5AiXiw==
   dependencies:
     typescript "^5"
 
@@ -20647,7 +20647,12 @@ typedarray@^0.0.6:
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
-typescript@^5, typescript@^5.6.3:
+typescript@^5:
+  version "5.8.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.8.2.tgz#8170b3702f74b79db2e5a96207c15e65807999e4"
+  integrity sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==
+
+typescript@^5.6.3:
   version "5.6.3"
   resolved "https://registry.npmjs.org/typescript/-/typescript-5.6.3.tgz"
   integrity sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==

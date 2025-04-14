@@ -6,23 +6,7 @@ import { DialogProps } from '../Dialog';
 import { useUserOptions } from '../../../UserOptionsProvider';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 
-export function TokenPickerDialog({
-  open,
-  title,
-  value,
-  onClose,
-  occupiedAddrs,
-  hiddenAddrs,
-  occupiedChainId,
-  onTokenChange,
-  side,
-  defaultLoadBalance,
-  multiple,
-  searchPlaceholder,
-  searchOtherAddress,
-  chainId,
-  modal,
-}: {
+export interface TokenPickerDialogProps {
   open: boolean;
   title?: React.ReactNode | string;
   occupiedAddrs?: string[];
@@ -38,9 +22,29 @@ export function TokenPickerDialog({
   searchOtherAddress?: TokenPickerProps['searchOtherAddress'];
   chainId?: TokenPickerProps['chainId'];
   modal?: boolean;
-}) {
-  const { height } = useUserOptions();
+}
+export function TokenPickerDialog(props: TokenPickerDialogProps) {
+  const { height, TokenPickerDialog } = useUserOptions();
   const { isMobile } = useWidgetDevice();
+  if (TokenPickerDialog) return <TokenPickerDialog {...props} />;
+  const {
+    open,
+    title,
+    value,
+    onClose,
+    occupiedAddrs,
+    hiddenAddrs,
+    occupiedChainId,
+    onTokenChange,
+    side,
+    defaultLoadBalance,
+    multiple,
+    searchPlaceholder,
+    searchOtherAddress,
+    chainId,
+    modal,
+  } = props;
+
   return (
     <Dialog
       height={modal ? '80vh' : height}

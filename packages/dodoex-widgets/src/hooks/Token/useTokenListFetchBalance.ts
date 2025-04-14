@@ -1,9 +1,7 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { getAutoConnectLoading } from '../../store/selectors/globals';
-import { getLatestBlockNumber } from '../../store/selectors/wallet';
 import { useFetchTokens } from '../contract';
 import { TokenInfo, TokenList } from './type';
+import { useGlobalState } from '../useGlobalState';
 
 export default function useTokenListFetchBalance({
   chainId,
@@ -20,8 +18,8 @@ export default function useTokenListFetchBalance({
   visible?: boolean;
   defaultLoadBalance?: boolean;
 }) {
-  const autoConnectLoading = useSelector(getAutoConnectLoading);
-  const blockNumber = useSelector(getLatestBlockNumber);
+  const { latestBlockNumber: blockNumber, autoConnectLoading } =
+    useGlobalState();
   const checkTokenAddresses = useMemo(() => {
     if (autoConnectLoading === undefined || autoConnectLoading) {
       return [];

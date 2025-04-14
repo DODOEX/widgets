@@ -111,10 +111,6 @@ export async function openEtherscanPage(
   );
 }
 
-const UNI_DYNAMIC_FEE_INIT_CODE_HASH =
-  '0x67a372377cf6d7f78cfdcc9df0bc21e1139bd49e5a47c33ee0de5389a4396410';
-const UNI_FIXED_FEE_INIT_CODE_HASH =
-  '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
 /**
  * UniswapV2Router02
  * contracts > v2-periphery-contracts > contracts > libraries > UniswapV2Library.sol -> pairFor
@@ -130,10 +126,12 @@ export const getUniInitCodeHash = (chainId: number) => {
       return '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
     case ChainId.NEOX:
       return '0x007722521498f3d29a63d1eb6ab35e202874706c77ce73d45c1ad9da88174a3f';
-    default:
+    case ChainId.SEPOLIA:
       return isDynamic
-        ? UNI_DYNAMIC_FEE_INIT_CODE_HASH
-        : UNI_FIXED_FEE_INIT_CODE_HASH;
+        ? '0x67a372377cf6d7f78cfdcc9df0bc21e1139bd49e5a47c33ee0de5389a4396410'
+        : '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
+    default:
+      return '0x2ebf1082215ab683deab4ee8ff50d42205db2059829b641717ab3f61f18d481a';
   }
 };
 

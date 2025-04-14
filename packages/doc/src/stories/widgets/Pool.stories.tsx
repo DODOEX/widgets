@@ -29,6 +29,7 @@ export const Primary = (props: any) => {
   return (
     <Widget
       {...config}
+      colorMode="dark"
       tokenList={[
         {
           name: 'Wrapped Bera',

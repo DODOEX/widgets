@@ -56,6 +56,7 @@ export function usePoolDetail({
               chainId,
             ) as TokenInfo,
             miningAddress: liquidityPair?.miningAddress?.[0] ?? '',
+            apy: liquidityPair?.apy,
             baseApy: liquidityPair?.apy
               ? formatApy(
                   new BigNumber(liquidityPair.apy.transactionBaseApy ?? 0).plus(

@@ -12,11 +12,15 @@ import { Trans } from '@lingui/macro';
 export default function LiquidityTable({
   sx,
   children,
+  empty,
+  loading,
   hasMore,
   loadMore,
   loadMoreLoading,
   ...props
 }: BoxProps & {
+  empty?: boolean;
+  loading?: boolean;
   hasMore?: boolean;
   loadMore?: () => void;
   loadMoreLoading?: boolean;
@@ -53,24 +57,24 @@ export default function LiquidityTable({
             zIndex: 2,
             backgroundColor: 'background.paper',
           },
-          '& th:last-child, & td:last-child': {
-            position: 'sticky',
-            right: 0,
-            zIndex: 1,
-            backgroundColor: 'background.paper',
-            '&::before': {
-              content: '""',
-              position: 'absolute',
-              top: 0,
-              bottom: 0,
-              left: 1,
-              width: '1px',
-              boxShadow: `${alpha(
-                theme.palette.text.primary,
-                0.1,
-              )} -2px 0px 4px 0px`,
-            },
-          },
+          ...(!empty &&
+            !loading && {
+              '& th:last-child, & td:last-child': {
+                position: 'sticky',
+                right: 0,
+                zIndex: 1,
+                backgroundColor: 'background.paper',
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  top: 0,
+                  bottom: 0,
+                  left: 1,
+                  width: '1px',
+                  boxShadow: `${theme.palette.mode === 'dark' ? '#1A1A1B' : alpha('#1A1A1B', 0.1)} -2px 0px 4px 0px`,
+                },
+              },
+            }),
         }}
       >
         {children}

@@ -34,6 +34,7 @@ import { useQuery } from '@tanstack/react-query';
 import { poolApi } from '../utils';
 import { toWei } from '../../../utils';
 import { TokenInfo } from '../../../hooks/Token';
+import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
 
 export function RemovePoolOperate({
   submittedBack: submittedBackProps,
@@ -174,11 +175,15 @@ export function RemovePoolOperate({
     reset();
     resetPercentage();
   }, [checkTokenType]);
+
+  const prevPool = usePrevious(pool);
   React.useEffect(() => {
-    reset();
-    resetSlipper();
-    handleChangeMode(RemoveMode.percentage);
-    handleChangeSliderPercentage(initSliderPercentage);
+    if (pool?.address !== prevPool?.address) {
+      reset();
+      resetSlipper();
+      handleChangeMode(RemoveMode.percentage);
+      handleChangeSliderPercentage(initSliderPercentage);
+    }
   }, [pool]);
   React.useEffect(() => {
     if (mode === RemoveMode.percentage) {
@@ -299,6 +304,7 @@ export function RemovePoolOperate({
                 py: 12,
                 width: '100%',
                 backgroundColor: 'transparent',
+                color: 'text.primary',
               }}
             />
             {!!pool && PoolApi.utils.singleSideLp(pool.type) && (

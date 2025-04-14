@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { getAllTokenList } from '../../store/selectors/token';
 import { TokenInfo } from './type';
+import { getAllTokenList, useTokenState } from '../useTokenState';
 
 export function useDisabledTokenSwitch({
   fromToken,
@@ -10,7 +9,7 @@ export function useDisabledTokenSwitch({
   fromToken: TokenInfo | undefined | null;
   toToken: TokenInfo | undefined | null;
 }) {
-  const tokenList = useSelector(getAllTokenList);
+  const tokenList = useTokenState(getAllTokenList);
   return useMemo(() => {
     if (
       fromToken &&

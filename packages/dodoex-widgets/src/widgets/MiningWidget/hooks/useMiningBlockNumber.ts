@@ -2,17 +2,16 @@ import { ChainId } from '@dodoex/api';
 import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { blockTimeMap } from '../../../constants/chains';
-import { getLatestBlockNumber } from '../../../store/selectors/wallet';
 import useFetchBlockNumber from '../../../hooks/contract/useFetchBlockNumber';
+import { useGlobalState } from '../../../hooks/useGlobalState';
 
 export function useMiningBlockNumber(
   chainId: ChainId,
   otherChainBlockNumber: BigNumber | undefined,
 ) {
   const { chainId: currentChainId } = useWeb3React();
-  const currentChainBlockNumber = useSelector(getLatestBlockNumber);
+  const { latestBlockNumber: currentChainBlockNumber } = useGlobalState();
 
   const { updateBlockNumber } = useFetchBlockNumber();
 

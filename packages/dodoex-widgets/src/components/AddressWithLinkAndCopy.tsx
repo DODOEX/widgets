@@ -7,7 +7,7 @@ import {
   useTheme,
   ButtonBase,
 } from '@dodoex/components';
-import { ArrowRight, ArrowTopRightBorder } from '@dodoex/icons';
+import { ArrowRight, ArrowTopRightBorder, Share } from '@dodoex/icons';
 import { useWeb3React } from '@web3-react/core';
 import { ChainId } from '@dodoex/api';
 import { getEtherscanPage, truncatePoolAddress } from '../utils';
@@ -37,6 +37,7 @@ interface Props extends AddressTextProps {
   onAddressClick?: (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => void;
+  onShareClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 function AddressText({
@@ -102,7 +103,7 @@ export function AddressWithLinkAndCopy({
   truncate,
   showCopy,
   size = 'medium',
-  iconSize,
+  iconSize: iconSizeProps,
   iconSpace: iconSpaceProps,
   sx,
   iconDarkHover,
@@ -112,6 +113,7 @@ export function AddressWithLinkAndCopy({
   customChainId,
   handleOpen,
   onAddressClick,
+  onShareClick,
 }: Props) {
   const theme = useTheme();
 
@@ -144,6 +146,8 @@ export function AddressWithLinkAndCopy({
       window.open(getEtherscanPage(chainId as ChainId, address, 'address'));
     }
   };
+
+  const iconSize = iconSizeProps || (isMedium ? 16 : 14);
 
   return (
     <Box
@@ -180,15 +184,15 @@ export function AddressWithLinkAndCopy({
         <Box
           component={ArrowTopRightBorder}
           sx={{
-            width: iconSize || (isMedium ? 16 : 14),
-            height: iconSize || (isMedium ? 16 : 14),
+            width: iconSize,
+            height: iconSize,
           }}
         />
       </IconHoverBox>
 
       {showCopy ? (
         <CopyTooltipToast
-          size={iconSize || (isMedium ? 16 : 14)}
+          size={iconSize}
           copyText={address}
           componentProps={{
             component: IconHoverBox,
@@ -198,6 +202,27 @@ export function AddressWithLinkAndCopy({
           }}
         />
       ) : null}
+      {!!onShareClick && (
+        <IconHoverBox
+          sx={{
+            display: 'inline-flex',
+            ml: getIconSpace(isMedium),
+            cursor: 'pointer',
+          }}
+          onClick={(evt) => {
+            onShareClick(evt);
+          }}
+        >
+          <Box
+            component={Share}
+            sx={{
+              width: iconSize,
+              height: iconSize,
+              ml: getIconSpace(isMedium),
+            }}
+          />
+        </IconHoverBox>
+      )}
     </Box>
   );
 }
