@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.2-nero.0",
+  "version": "3.0.2-nero.1",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/api": "3.0.3-nero.0",
+    "@dodoex/api": "3.0.3-nero.1",
     "@dodoex/components": "3.0.3",
     "@dodoex/contract-request": "^1.3.0",
     "@dodoex/dodo-contract-request": "1.12.0-alpha.3",
