@@ -149,4 +149,11 @@ export const basicTokenMap: {
     ...DEFAULT_BASIC_TOKEN,
     wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
   },
+  [ChainId.NEROCHAIN]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'NERO',
+    name: 'NERO',
+    wrappedTokenSymbol: 'WNERO',
+    wrappedTokenAddress: '0x252ba4a6efb0d91bd7108d91a067c14592a56f17',
+  },
 };

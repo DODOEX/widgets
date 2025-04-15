@@ -1,5 +1,6 @@
 import {
   morph,
+  nero,
   neox,
   plume,
   plumeTestnet,
@@ -377,6 +378,20 @@ const contractMap: {
     DODO_DSP_PROXY: riseTestnet.DODODspProxyWithoutGSP,
     DODO_DPP_PROXY: riseTestnet.DODODppProxy,
     DODO_MINEV3_PROXY: riseTestnet.DODOMineV3Proxy,
+  },
+  [ChainId.NEROCHAIN]: {
+    MULTI_CALL: nero.MulticallWithValid,
+    DODO_APPROVE: nero.DODOApprove,
+    ERC20_HELPER: nero.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: nero.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: nero.DODOV1PmmHelper,
+    CALLEE_HELPER: nero.DODOCalleeHelper,
+
+    DODO_PROXY: nero.DODOV2Proxy02,
+    DODO_DSP_PROXY: nero.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: nero.DODODppProxy,
+    DODO_MINEV3_PROXY: nero.DODOMineV3Proxy,
   },
 };
 

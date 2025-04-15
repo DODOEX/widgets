@@ -56,6 +56,7 @@ export const rpcServerMap: {
   [ChainId.NEOX]: ['https://mainnet-1.rpc.banelabs.org'],
   [ChainId.MORPH]: ['https://rpc.morphl2.io'],
   [ChainId.RISE_TESTNET]: ['https://testnet.riselabs.xyz'],
+  [ChainId.NEROCHAIN]: ['https://rpc.nerochain.io'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -103,6 +104,7 @@ export const scanUrlDomainMap: {
   [ChainId.NEOX]: 'xexplorer.neo.org',
   [ChainId.MORPH]: 'explorer.morphl2.io',
   [ChainId.RISE_TESTNET]: 'explorer.testnet.riselabs.xyz',
+  [ChainId.NEROCHAIN]: 'www.neroscan.io',
 };
 
 export const ThegraphKeyMap: {
@@ -132,6 +134,7 @@ export const ThegraphKeyMap: {
   [ChainId.NEOX]: 'neox',
   [ChainId.MORPH]: 'morph',
   [ChainId.RISE_TESTNET]: 'rise-testnet',
+  [ChainId.NEROCHAIN]: 'nero',
 };
 
 export const blockTimeMap: {
@@ -161,6 +164,7 @@ export const blockTimeMap: {
   [ChainId.NEOX]: 12000,
   [ChainId.MORPH]: 3200,
   [ChainId.RISE_TESTNET]: 0,
+  [ChainId.NEROCHAIN]: 3000,
 };
 
 export const dexKeysMap: {
@@ -190,4 +194,5 @@ export const dexKeysMap: {
   [ChainId.NEOX]: [],
   [ChainId.MORPH]: [],
   [ChainId.RISE_TESTNET]: [],
+  [ChainId.NEROCHAIN]: [],
 };

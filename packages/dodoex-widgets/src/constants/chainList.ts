@@ -19,6 +19,7 @@ import { ReactComponent as PlumeLogo } from '../assets/logo/networks/plume.svg';
 import { ReactComponent as NeoxLogo } from '../assets/logo/networks/neox.svg';
 import { ReactComponent as MorphLogo } from '../assets/logo/networks/morph.svg';
 import { ReactComponent as RiseLogo } from '../assets/logo/networks/rise.svg';
+import { ReactComponent as NeroLogo } from '../assets/logo/networks/rise.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -220,6 +221,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.RISE_TESTNET,
       logo: RiseLogo,
       name: 'Rise-Sepolia',
+    },
+  ],
+  [
+    ChainId.NEROCHAIN,
+    {
+      chainId: ChainId.NEROCHAIN,
+      logo: NeroLogo,
+      name: 'NERO Chain',
     },
   ],
 ]);

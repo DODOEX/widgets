@@ -27,4 +27,5 @@ export const platformIdMap: {
   [ChainId.NEOX]: 'neox',
   [ChainId.MORPH]: 'morph',
   [ChainId.RISE_TESTNET]: 'rise-testnet',
+  [ChainId.NEROCHAIN]: 'nero',
 };
