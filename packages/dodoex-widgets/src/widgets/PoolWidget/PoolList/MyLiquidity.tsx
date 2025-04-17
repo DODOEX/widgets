@@ -1278,7 +1278,7 @@ export default function MyLiquidity({
               }}
             />
           )}
-          {supportAMMV3 && (
+          {supportAMMV2 && supportAMMV3 && (
             <OnlyV3Toggle
               onlyV3={onlyV3}
               setOnlyV3={setOnlyV3}
