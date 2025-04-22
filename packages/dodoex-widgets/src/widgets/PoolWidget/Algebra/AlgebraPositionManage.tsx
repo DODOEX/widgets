@@ -221,8 +221,8 @@ export const AlgebraPositionManage = ({
 
   const [operateType, setOperateType] = React.useState<OperateType>('stake');
   const operateTypes = [
-    { key: 'stake', value: t`Stake` },
-    { key: 'unstake', value: t`Unstake` },
+    { key: 'stake', value: t`Add` },
+    { key: 'unstake', value: t`Remove` },
     { key: 'claim', value: t`Claim` },
   ];
 

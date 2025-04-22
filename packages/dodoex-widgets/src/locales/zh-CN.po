@@ -844,7 +844,6 @@ msgstr ""
 #: src/widgets/MiningWidget/MiningList/operate-area/StakeButton.tsx:105
 #: src/widgets/MiningWidget/OperateArea/index.tsx:72
 #: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:80
-#: src/widgets/PoolWidget/Algebra/AlgebraPositionManage.tsx:224
 msgid "Stake"
 msgstr ""
 
@@ -1060,7 +1059,6 @@ msgstr ""
 #: src/widgets/MiningWidget/MiningList/operate-area/UnstakeButton.tsx:85
 #: src/widgets/MiningWidget/OperateArea/index.tsx:73
 #: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:70
-#: src/widgets/PoolWidget/Algebra/AlgebraPositionManage.tsx:225
 msgid "Unstake"
 msgstr ""
 
@@ -1944,6 +1942,7 @@ msgid "My Staked"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:478
+#: src/widgets/PoolWidget/Algebra/AlgebraPositionManage.tsx:224
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:451
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:207
@@ -2193,6 +2192,7 @@ msgstr ""
 msgid "Initial Price Alert"
 msgstr ""
 
+#: src/widgets/PoolWidget/Algebra/AlgebraPositionManage.tsx:225
 #: src/widgets/PoolWidget/Algebra/components/RemoveButton.tsx:56
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:452
 #: src/widgets/PoolWidget/AMMV3/components/RemoveButton.tsx:32
