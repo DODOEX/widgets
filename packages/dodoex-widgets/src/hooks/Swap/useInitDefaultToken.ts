@@ -33,7 +33,7 @@ function getDefaultToken({
   }
   if (tokenListTarget.length) {
     let needFindToken = getLastToken(side);
-    if (!needFindToken && defaultToken) {
+    if (defaultToken) {
       needFindToken = { ...defaultToken };
       setDefaultAmount = defaultToken.amount;
     }
