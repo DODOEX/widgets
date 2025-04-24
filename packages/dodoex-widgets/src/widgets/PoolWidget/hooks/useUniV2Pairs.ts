@@ -1,13 +1,13 @@
-import React from 'react';
-import { TokenInfo } from '../../../hooks/Token';
-import { CurrencyAmount, Percent, Price, Token } from '@uniswap/sdk-core';
 import { basicTokenMap, ChainId, PoolType } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
-import { poolApi } from '../utils';
+import { CurrencyAmount, Price, Token } from '@uniswap/sdk-core';
 import { Pair } from '@uniswap/v2-sdk';
 import BigNumber from 'bignumber.js';
-import { byWei, formatReadableNumber, toWei } from '../../../utils';
+import React from 'react';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { TokenInfo } from '../../../hooks/Token';
+import { byWei, formatReadableNumber, toWei } from '../../../utils';
+import { poolApi } from '../utils';
 
 export function useUniV2Pairs({
   pool,

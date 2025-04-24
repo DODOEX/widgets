@@ -1,9 +1,9 @@
-import { basicTokenMap, CONTRACT_QUERY_KEY } from '@dodoex/api';
+import { basicTokenMap } from '@dodoex/api';
+import { Interface } from '@ethersproject/abi';
 import { parseFixed } from '@ethersproject/bignumber';
 import { t } from '@lingui/macro';
 import { useMutation } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
-import { Interface } from 'ethers/lib/utils';
 import { useMemo } from 'react';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { useSubmission } from '../../../../hooks/Submission';
