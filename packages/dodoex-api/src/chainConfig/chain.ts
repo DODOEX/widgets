@@ -44,4 +44,8 @@ export enum ChainId {
   MORPH = 2818,
 
   RISE_TESTNET = 11155931,
+
+  ZETACHAIN = 7000,
+
+  ZETACHAIN_TESTNET = 7001,
 }

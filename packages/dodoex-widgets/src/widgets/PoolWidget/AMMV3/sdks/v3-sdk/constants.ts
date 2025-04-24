@@ -21,6 +21,10 @@ export function poolInitCodeHash(chainId?: ChainId): string {
   switch (chainId) {
     case ChainId.TAIKO:
       return '0x5ccd5621c1bb9e44ce98cef8b90d31eb2423dec3793b6239232cefae976936ea';
+    case ChainId.ZETACHAIN:
+      return '0x5ccd5621c1bb9e44ce98cef8b90d31eb2423dec3793b6239232cefae976936ea';
+    case ChainId.ZETACHAIN_TESTNET:
+      return '0x5ccd5621c1bb9e44ce98cef8b90d31eb2423dec3793b6239232cefae976936ea';
     default:
       return POOL_INIT_CODE_HASH;
   }

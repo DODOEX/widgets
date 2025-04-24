@@ -5,6 +5,7 @@ import {
   plumeTestnet,
   arbsepolia,
   riseTestnet,
+  zetachainTestnet,
 } from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
@@ -377,6 +378,34 @@ const contractMap: {
     DODO_DSP_PROXY: riseTestnet.DODODspProxyWithoutGSP,
     DODO_DPP_PROXY: riseTestnet.DODODppProxy,
     DODO_MINEV3_PROXY: riseTestnet.DODOMineV3Proxy,
+  },
+  [ChainId.ZETACHAIN]: {
+    MULTI_CALL: zetachainTestnet.MulticallWithValid,
+    DODO_APPROVE: zetachainTestnet.DODOApprove,
+    ERC20_HELPER: zetachainTestnet.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: zetachainTestnet.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: zetachainTestnet.DODOV1PmmHelper,
+    CALLEE_HELPER: zetachainTestnet.DODOCalleeHelper,
+
+    DODO_PROXY: zetachainTestnet.DODOV2Proxy02,
+    DODO_DSP_PROXY: zetachainTestnet.DODODspProxy,
+    DODO_DPP_PROXY: zetachainTestnet.DODODppProxy,
+    DODO_MINEV3_PROXY: zetachainTestnet.DODOMineV3Proxy,
+  },
+  [ChainId.ZETACHAIN_TESTNET]: {
+    MULTI_CALL: zetachainTestnet.MulticallWithValid,
+    DODO_APPROVE: zetachainTestnet.DODOApprove,
+    ERC20_HELPER: zetachainTestnet.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: zetachainTestnet.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: zetachainTestnet.DODOV1PmmHelper,
+    CALLEE_HELPER: zetachainTestnet.DODOCalleeHelper,
+
+    DODO_PROXY: zetachainTestnet.DODOV2Proxy02,
+    DODO_DSP_PROXY: zetachainTestnet.DODODspProxy,
+    DODO_DPP_PROXY: zetachainTestnet.DODODppProxy,
+    DODO_MINEV3_PROXY: zetachainTestnet.DODOMineV3Proxy,
   },
 };
 

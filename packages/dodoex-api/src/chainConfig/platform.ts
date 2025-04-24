@@ -27,4 +27,6 @@ export const platformIdMap: {
   [ChainId.NEOX]: 'neox',
   [ChainId.MORPH]: 'morph',
   [ChainId.RISE_TESTNET]: 'rise-testnet',
+  [ChainId.ZETACHAIN]: 'zetachain',
+  [ChainId.ZETACHAIN_TESTNET]: 'zetachain-testnet',
 };

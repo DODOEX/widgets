@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.2-beta.19",
+  "version": "3.0.2-zetachain.1",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -23,7 +23,7 @@
     "release": "semantic-release",
     "release:local": "np --any-branch --no-cleanup --no-tests",
     "release.npm-publish": "npm publish --access public",
-    "release.npm-publish-beta": "npm publish --tag beta",
+    "release.npm-publish-beta": "yarn run build && npm publish --tag beta",
     "test": "jest src",
     "test:e2e": "jest e2e"
   },
@@ -58,10 +58,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/api": "3.0.3-beta.4",
+    "@dodoex/api": "3.0.3-zetachain.1",
     "@dodoex/components": "3.0.3",
     "@dodoex/contract-request": "^1.3.0",
-    "@dodoex/dodo-contract-request": "1.11.0-alpha.1",
+    "@dodoex/dodo-contract-request": "1.12.0-alpha.4",
     "@dodoex/icons": "^2.0.2",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",

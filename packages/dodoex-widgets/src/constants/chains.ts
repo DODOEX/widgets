@@ -56,6 +56,10 @@ export const rpcServerMap: {
   [ChainId.NEOX]: ['https://mainnet-1.rpc.banelabs.org'],
   [ChainId.MORPH]: ['https://rpc.morphl2.io'],
   [ChainId.RISE_TESTNET]: ['https://testnet.riselabs.xyz'],
+  [ChainId.ZETACHAIN]: ['https://zetachain-evm.blockpi.network/v1/rpc/public'],
+  [ChainId.ZETACHAIN_TESTNET]: [
+    'https://zetachain-athens-evm.blockpi.network/v1/rpc/public',
+  ],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -103,6 +107,8 @@ export const scanUrlDomainMap: {
   [ChainId.NEOX]: 'xexplorer.neo.org',
   [ChainId.MORPH]: 'explorer.morphl2.io',
   [ChainId.RISE_TESTNET]: 'explorer.testnet.riselabs.xyz',
+  [ChainId.ZETACHAIN]: 'explorer.zetachain.com',
+  [ChainId.ZETACHAIN_TESTNET]: 'zetachain-testnet.blockscout.com',
 };
 
 export const ThegraphKeyMap: {
@@ -132,6 +138,8 @@ export const ThegraphKeyMap: {
   [ChainId.NEOX]: 'neox',
   [ChainId.MORPH]: 'morph',
   [ChainId.RISE_TESTNET]: 'rise-testnet',
+  [ChainId.ZETACHAIN]: 'zetachain',
+  [ChainId.ZETACHAIN_TESTNET]: 'zetachain-testnet',
 };
 
 export const blockTimeMap: {
@@ -161,6 +169,8 @@ export const blockTimeMap: {
   [ChainId.NEOX]: 12000,
   [ChainId.MORPH]: 3200,
   [ChainId.RISE_TESTNET]: 0,
+  [ChainId.ZETACHAIN]: 6000,
+  [ChainId.ZETACHAIN_TESTNET]: 6000,
 };
 
 export const dexKeysMap: {
@@ -190,4 +200,6 @@ export const dexKeysMap: {
   [ChainId.NEOX]: [],
   [ChainId.MORPH]: [],
   [ChainId.RISE_TESTNET]: [],
+  [ChainId.ZETACHAIN]: [],
+  [ChainId.ZETACHAIN_TESTNET]: [],
 };

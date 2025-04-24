@@ -149,4 +149,18 @@ export const basicTokenMap: {
     ...DEFAULT_BASIC_TOKEN,
     wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
   },
+  [ChainId.ZETACHAIN]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'ZETA',
+    name: 'Zeta',
+    wrappedTokenSymbol: 'WZETA',
+    wrappedTokenAddress: '0x0246DffDa649e877CFd0951837332B4690fAD1EB',
+  },
+  [ChainId.ZETACHAIN_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'ZETA',
+    name: 'Zeta',
+    wrappedTokenSymbol: 'WZETA',
+    wrappedTokenAddress: '0x0246DffDa649e877CFd0951837332B4690fAD1EB',
+  },
 };

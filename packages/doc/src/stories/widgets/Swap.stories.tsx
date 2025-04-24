@@ -29,6 +29,10 @@ export enum ChainId {
   AVALANCHE = 43114,
 
   CRONOS = 25,
+
+  // ZETACHAIN = 7000,
+
+  ZETACHAIN_TESTNET = 7001,
 }
 const ChainIdObj: {
   [key in ChainId]?: keyof typeof ChainId;

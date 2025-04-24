@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/api",
-  "version": "3.0.3-beta.4",
+  "version": "3.0.3-zetachain.1",
   "description": "DODO API Kit",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
@@ -21,7 +21,7 @@
     "release": "semantic-release",
     "release:local": "np --any-branch --no-cleanup --no-tests",
     "release.npm-publish": "npm publish --access public",
-    "release.npm-publish-beta": "npm publish --tag beta"
+    "release.npm-publish-beta": "yarn run build && npm publish --tag beta"
   },
   "author": "",
   "publishConfig": {

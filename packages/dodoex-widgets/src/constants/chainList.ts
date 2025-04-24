@@ -19,7 +19,7 @@ import { ReactComponent as PlumeLogo } from '../assets/logo/networks/plume.svg';
 import { ReactComponent as NeoxLogo } from '../assets/logo/networks/neox.svg';
 import { ReactComponent as MorphLogo } from '../assets/logo/networks/morph.svg';
 import { ReactComponent as RiseLogo } from '../assets/logo/networks/rise.svg';
-
+import { ReactComponent as ZetachainLogo } from '../assets/logo/networks/zetachain.svg';
 export interface ChainListItem {
   chainId: ChainId;
   logo: typeof ETHereumLogo;
@@ -35,41 +35,41 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       name: 'Ethereum',
     },
   ],
-  [
-    ChainId.GOERLI,
-    {
-      chainId: ChainId.GOERLI,
-      logo: ETHereumLogo,
-      name: 'Goerli',
-      mainnet: ChainId.MAINNET,
-    },
-  ],
-  [
-    ChainId.SEPOLIA,
-    {
-      chainId: ChainId.SEPOLIA,
-      logo: ETHereumLogo,
-      name: 'Sepolia',
-      mainnet: ChainId.MAINNET,
-    },
-  ],
-  [
-    ChainId.ARBITRUM_ONE,
-    {
-      chainId: ChainId.ARBITRUM_ONE,
-      logo: ArbitrumLogo,
-      name: 'Arbitrum',
-    },
-  ],
-  [
-    ChainId.ARBITRUM_SEPOLIA,
-    {
-      chainId: ChainId.ARBITRUM_SEPOLIA,
-      logo: ArbitrumLogo,
-      name: 'Arbitrum Sepolia',
-      mainnet: ChainId.ARBITRUM_ONE,
-    },
-  ],
+  // [
+  //   ChainId.GOERLI,
+  //   {
+  //     chainId: ChainId.GOERLI,
+  //     logo: ETHereumLogo,
+  //     name: 'Goerli',
+  //     mainnet: ChainId.MAINNET,
+  //   },
+  // ],
+  // [
+  //   ChainId.SEPOLIA,
+  //   {
+  //     chainId: ChainId.SEPOLIA,
+  //     logo: ETHereumLogo,
+  //     name: 'Sepolia',
+  //     mainnet: ChainId.MAINNET,
+  //   },
+  // ],
+  // [
+  //   ChainId.ARBITRUM_ONE,
+  //   {
+  //     chainId: ChainId.ARBITRUM_ONE,
+  //     logo: ArbitrumLogo,
+  //     name: 'Arbitrum',
+  //   },
+  // ],
+  // [
+  //   ChainId.ARBITRUM_SEPOLIA,
+  //   {
+  //     chainId: ChainId.ARBITRUM_SEPOLIA,
+  //     logo: ArbitrumLogo,
+  //     name: 'Arbitrum Sepolia',
+  //     mainnet: ChainId.ARBITRUM_ONE,
+  //   },
+  // ],
   [
     ChainId.POLYGON,
     {
@@ -86,46 +86,46 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       name: 'BNBChain',
     },
   ],
-  [
-    ChainId.OPTIMISM,
-    {
-      chainId: ChainId.OPTIMISM,
-      logo: OptimismLogo,
-      name: 'Optimism',
-    },
-  ],
-  [
-    ChainId.AVALANCHE,
-    {
-      chainId: ChainId.AVALANCHE,
-      logo: AvalancheLogo,
-      name: 'Avalanche',
-    },
-  ],
-  [
-    ChainId.AURORA,
-    {
-      chainId: ChainId.AURORA,
-      logo: AuroraLogo,
-      name: 'Aurora',
-    },
-  ],
-  [
-    ChainId.OKCHAIN,
-    {
-      chainId: ChainId.OKCHAIN,
-      logo: OKChainLogo,
-      name: 'OKTC',
-    },
-  ],
-  [
-    ChainId.CONFLUX,
-    {
-      chainId: ChainId.CONFLUX,
-      logo: CFXLogo,
-      name: 'Conflux eSpace',
-    },
-  ],
+  // [
+  //   ChainId.OPTIMISM,
+  //   {
+  //     chainId: ChainId.OPTIMISM,
+  //     logo: OptimismLogo,
+  //     name: 'Optimism',
+  //   },
+  // ],
+  // [
+  //   ChainId.AVALANCHE,
+  //   {
+  //     chainId: ChainId.AVALANCHE,
+  //     logo: AvalancheLogo,
+  //     name: 'Avalanche',
+  //   },
+  // ],
+  // [
+  //   ChainId.AURORA,
+  //   {
+  //     chainId: ChainId.AURORA,
+  //     logo: AuroraLogo,
+  //     name: 'Aurora',
+  //   },
+  // ],
+  // [
+  //   ChainId.OKCHAIN,
+  //   {
+  //     chainId: ChainId.OKCHAIN,
+  //     logo: OKChainLogo,
+  //     name: 'OKTC',
+  //   },
+  // ],
+  // [
+  //   ChainId.CONFLUX,
+  //   {
+  //     chainId: ChainId.CONFLUX,
+  //     logo: CFXLogo,
+  //     name: 'Conflux eSpace',
+  //   },
+  // ],
   [
     ChainId.BASE,
     {
@@ -134,96 +134,112 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       name: 'Base',
     },
   ],
+  // [
+  //   ChainId.LINEA,
+  //   {
+  //     chainId: ChainId.LINEA,
+  //     logo: LINEALogo,
+  //     name: 'Linea',
+  //   },
+  // ],
+  // [
+  //   ChainId.SCROLL,
+  //   {
+  //     chainId: ChainId.SCROLL,
+  //     logo: ScrollLogo,
+  //     name: 'Scroll',
+  //   },
+  // ],
+  // [
+  //   ChainId.MANTA,
+  //   {
+  //     chainId: ChainId.MANTA,
+  //     logo: MantaLogo,
+  //     name: 'Manta',
+  //   },
+  // ],
+  // [
+  //   ChainId.MANTLE,
+  //   {
+  //     chainId: ChainId.MANTLE,
+  //     logo: MantleLogo,
+  //     name: 'Mantle',
+  //   },
+  // ],
+  // [
+  //   ChainId.DODO_CHAIN_TESTNET,
+  //   {
+  //     chainId: ChainId.DODO_CHAIN_TESTNET,
+  //     logo: DODOchainLogo,
+  //     name: 'DODOchain testnet',
+  //   },
+  // ],
+  // [
+  //   ChainId.TAIKO,
+  //   {
+  //     chainId: ChainId.TAIKO,
+  //     logo: TaikoLogo,
+  //     name: 'Taiko',
+  //   },
+  // ],
+  // [
+  //   ChainId.PLUME,
+  //   {
+  //     chainId: ChainId.PLUME,
+  //     logo: PlumeLogo,
+  //     name: 'Plume',
+  //   },
+  // ],
+  // [
+  //   ChainId.PLUME_TESTNET,
+  //   {
+  //     chainId: ChainId.PLUME_TESTNET,
+  //     logo: PlumeLogo,
+  //     name: 'plume testnet',
+  //   },
+  // ],
+  // [
+  //   ChainId.NEOX,
+  //   {
+  //     chainId: ChainId.NEOX,
+  //     logo: NeoxLogo,
+  //     name: 'Neo X',
+  //   },
+  // ],
+  // [
+  //   ChainId.MORPH,
+  //   {
+  //     chainId: ChainId.MORPH,
+  //     logo: MorphLogo,
+  //     name: 'Morph',
+  //   },
+  // ],
+  // [
+  //   ChainId.RISE_TESTNET,
+  //   {
+  //     chainId: ChainId.RISE_TESTNET,
+  //     logo: RiseLogo,
+  //     name: 'Rise-Sepolia',
+  //   },
+  // ],
   [
-    ChainId.LINEA,
+    ChainId.ZETACHAIN,
     {
-      chainId: ChainId.LINEA,
-      logo: LINEALogo,
-      name: 'Linea',
+      chainId: ChainId.ZETACHAIN,
+      logo: ZetachainLogo,
+      name: 'Zetachain',
     },
   ],
   [
-    ChainId.SCROLL,
+    ChainId.ZETACHAIN_TESTNET,
     {
-      chainId: ChainId.SCROLL,
-      logo: ScrollLogo,
-      name: 'Scroll',
-    },
-  ],
-  [
-    ChainId.MANTA,
-    {
-      chainId: ChainId.MANTA,
-      logo: MantaLogo,
-      name: 'Manta',
-    },
-  ],
-  [
-    ChainId.MANTLE,
-    {
-      chainId: ChainId.MANTLE,
-      logo: MantleLogo,
-      name: 'Mantle',
-    },
-  ],
-  [
-    ChainId.DODO_CHAIN_TESTNET,
-    {
-      chainId: ChainId.DODO_CHAIN_TESTNET,
-      logo: DODOchainLogo,
-      name: 'DODOchain testnet',
-    },
-  ],
-  [
-    ChainId.TAIKO,
-    {
-      chainId: ChainId.TAIKO,
-      logo: TaikoLogo,
-      name: 'Taiko',
-    },
-  ],
-  [
-    ChainId.PLUME,
-    {
-      chainId: ChainId.PLUME,
-      logo: PlumeLogo,
-      name: 'Plume',
-    },
-  ],
-  [
-    ChainId.PLUME_TESTNET,
-    {
-      chainId: ChainId.PLUME_TESTNET,
-      logo: PlumeLogo,
-      name: 'plume testnet',
-    },
-  ],
-  [
-    ChainId.NEOX,
-    {
-      chainId: ChainId.NEOX,
-      logo: NeoxLogo,
-      name: 'Neo X',
-    },
-  ],
-  [
-    ChainId.MORPH,
-    {
-      chainId: ChainId.MORPH,
-      logo: MorphLogo,
-      name: 'Morph',
-    },
-  ],
-  [
-    ChainId.RISE_TESTNET,
-    {
-      chainId: ChainId.RISE_TESTNET,
-      logo: RiseLogo,
-      name: 'Rise-Sepolia',
+      chainId: ChainId.ZETACHAIN_TESTNET,
+      logo: ZetachainLogo,
+      name: 'Zetachain Testnet',
+      mainnet: ChainId.ZETACHAIN,
     },
   ],
 ]);
-
 export const isTestNet = (chainId: ChainId) => {
   return !!chainListMap.get(chainId)?.mainnet;
 };
