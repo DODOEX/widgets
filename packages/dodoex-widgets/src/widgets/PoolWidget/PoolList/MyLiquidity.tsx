@@ -1168,7 +1168,7 @@ export default function MyLiquidity({
   const queryClient = useQueryClient();
   const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
     useUserOptions();
-  const [onlyV3, setOnlyV3] = React.useState(false);
+  const [onlyV3Checked, setOnlyV3] = React.useState(false);
 
   const {
     filterTokens,
@@ -1187,6 +1187,10 @@ export default function MyLiquidity({
   if (supportAMMV2) {
     filterTypes.push('AMMV2');
   }
+
+  const showOnlyV3Checked = supportAMMV3 && (!notSupportPMM || supportAMMV2);
+  const onlyV3 = onlyV3Checked || !showOnlyV3Checked;
+
   if (supportAMMV3 && onlyV3) {
     filterTypes = ['AMMV3'];
   }
@@ -1278,7 +1282,7 @@ export default function MyLiquidity({
               }}
             />
           )}
-          {supportAMMV2 && supportAMMV3 && (
+          {showOnlyV3Checked && (
             <OnlyV3Toggle
               onlyV3={onlyV3}
               setOnlyV3={setOnlyV3}
