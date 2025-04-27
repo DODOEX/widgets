@@ -19,7 +19,7 @@ export function TextSwitch({
 }) {
   const theme = useTheme();
 
-  let bgColor = theme.palette.background.paper;
+  let bgColor = theme.palette.background.tag;
   if (checked) {
     bgColor = theme.palette.secondary.main;
   }
@@ -31,7 +31,7 @@ export function TextSwitch({
         alignItems: 'center',
         position: 'relative',
         borderRadius: 8,
-        backgroundColor: theme.palette.background.input,
+        backgroundColor: '#050504',
         opacity: disabled ? 0.5 : 1,
         ...sx,
       }}

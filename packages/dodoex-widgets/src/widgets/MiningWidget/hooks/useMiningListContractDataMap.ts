@@ -10,7 +10,7 @@ import {
   TabMiningI,
 } from '../types';
 import { transformStrToBN } from './helper';
-import { useRefetch } from './useRefetch';
+import { useRefetch } from '../../../hooks/useRefetch';
 import { MINING_POOL_REFETCH_INTERVAL } from './utils';
 
 function compositeQueryList({

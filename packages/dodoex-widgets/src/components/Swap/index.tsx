@@ -1,44 +1,22 @@
-import BigNumber from 'bignumber.js';
-import { debounce } from 'lodash';
+import { ChainId } from '@dodoex/api';
 import {
   Box,
   Button,
   ButtonBase,
-  useTheme,
   RotatingIcon,
   Tooltip,
+  useTheme,
 } from '@dodoex/components';
-import { formatTokenAmountNumber } from '../../utils';
-import { useMemo, useState, useEffect, useCallback } from 'react';
-import {
-  Setting,
-  SettingCrossChain,
-  Dodo,
-  Warn,
-  DoubleRight,
-} from '@dodoex/icons';
+import { Dodo, DoubleRight, Setting, Warn } from '@dodoex/icons';
 import { Trans, t } from '@lingui/macro';
-import { TokenCard } from './components/TokenCard';
-import { QuestionTooltip } from '../Tooltip';
-import { SwitchBox } from './components/SwitchBox';
-import { ReviewDialog } from './components/ReviewDialog';
-import { SettingsDialog } from './components/SettingsDialog';
-import { RoutePriceStatus } from '../../hooks/Swap';
-import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
-import ConnectWallet from './components/ConnectWallet';
-import { TokenInfo } from '../../hooks/Token/type';
-import {
-  useMarginAmount,
-  useFetchFiatPrice,
-  useFetchRoutePrice,
-} from '../../hooks/Swap';
-import { formatReadableNumber } from '../../utils/formatter';
 import { useWeb3React } from '@web3-react/core';
+import BigNumber from 'bignumber.js';
+import { debounce } from 'lodash';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AppUrl } from '../../constants/api';
-import { ChainId } from '@dodoex/api';
 import { basicTokenMap } from '../../constants/chains';
+import { setLastToken } from '../../constants/localstorage';
 import { PRICE_IMPACT_THRESHOLD } from '../../constants/swap';
-import TokenLogo from '../TokenLogo';
 import {
   swapAlertEnterAmountBtn,
   swapAlertFetchPriceBtn,
@@ -46,31 +24,48 @@ import {
   swapAlertSelectTokenBtn,
   swapReviewBtn,
 } from '../../constants/testId';
-import useInflights from '../../hooks/Submission/useInflights';
 import { useFetchRoutePriceBridge } from '../../hooks/Bridge/useFetchRoutePriceBridge';
-import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
-import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
 import { useSendRoute } from '../../hooks/Bridge/useSendRoute';
-import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
-import ErrorMessageDialog from '../ErrorMessageDialog';
 import { useSwitchBridgeOrSwapSlippage } from '../../hooks/Bridge/useSwitchBridgeOrSwapSlippage';
+import useInflights from '../../hooks/Submission/useInflights';
+import {
+  RoutePriceStatus,
+  useFetchFiatPrice,
+  useFetchRoutePrice,
+  useMarginAmount,
+} from '../../hooks/Swap';
 import { useInitDefaultToken } from '../../hooks/Swap/useInitDefaultToken';
-import { setLastToken } from '../../constants/localstorage';
+import { usePrivacySwapStatus } from '../../hooks/Swap/usePrivacySwapStatus';
 import {
   maxSlippageWarning,
   useSlippageLimit,
 } from '../../hooks/Swap/useSlippageLimit';
+import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
+import { TokenInfo } from '../../hooks/Token/type';
 import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch';
+import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
+import { useFetchETHBalance } from '../../hooks/contract';
 import {
   GetAutoSlippage,
   useSetAutoSlippage,
 } from '../../hooks/setting/useSetAutoSlippage';
-import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
-import { useFetchETHBalance } from '../../hooks/contract';
-import { useUserOptions } from '../UserOptionsProvider';
-import { SwapSettingsDialog } from './components/SwapSettingsDialog';
-import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
 import { useGlobalState } from '../../hooks/useGlobalState';
+import { formatTokenAmountNumber } from '../../utils';
+import { formatReadableNumber } from '../../utils/formatter';
+import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
+import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
+import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
+import ErrorMessageDialog from '../ErrorMessageDialog';
+import TokenLogo from '../TokenLogo';
+import { QuestionTooltip } from '../Tooltip';
+import { useUserOptions } from '../UserOptionsProvider';
+import ConnectWallet from './components/ConnectWallet';
+import { ReviewDialog } from './components/ReviewDialog';
+import { SettingsDialog } from './components/SettingsDialog';
+import { SwapSettingsDialog } from './components/SwapSettingsDialog';
+import { SwitchBox } from './components/SwitchBox';
+import { TokenCard } from './components/TokenCard';
+import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -141,6 +136,14 @@ export function Swap({
       fromToken,
       toToken,
     });
+
+  const {
+    privacySwapSupplierEndpoints,
+    privacySwapEnable,
+    privacySwapEnableAble,
+    endpointStatusMap,
+    refetchEndpointStatus,
+  } = usePrivacySwapStatus({ chainId, account });
 
   const fromEtherTokenQuery = useFetchETHBalance(fromToken?.chainId);
 
@@ -870,7 +873,21 @@ export function Swap({
   ]);
 
   return (
-    <>
+    <Box
+      sx={{
+        width: 450,
+        height: 571,
+        overflow: 'hidden',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        borderRadius: 16,
+        backgroundColor: theme.palette.background.default,
+        borderWidth: 2,
+        borderStyle: 'solid',
+        borderColor: theme.palette.border.main,
+      }}
+    >
       {/* Header */}
       <Box
         sx={{
@@ -880,31 +897,64 @@ export function Swap({
           margin: 20,
         }}
       >
-        <Trans>Swap</Trans>
-        <Tooltip
-          open={showSwitchSlippageTooltip}
-          title={
-            isBridge ? (
-              <Trans>The setting has been switched to cross chain mode</Trans>
-            ) : (
-              <Trans>The setting has been switched to swap mode</Trans>
-            )
-          }
-          placement="bottom-end"
+        <Trans>Universal Swap</Trans>
+
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            borderRadius: 4,
+            p: 1,
+            backgroundColor: theme.palette.background.paperContrast,
+          }}
         >
-          <Box component={ButtonBase}>
+          <Box
+            sx={{
+              color: theme.palette.text.secondary,
+              typography: 'h6',
+              px: 6,
+              py: 4,
+            }}
+          >
+            {isBridge
+              ? selectedRoute?.slippage
+                ? selectedRoute.slippage * 100
+                : '-'
+              : slippageSwap}
+            %
+          </Box>
+          <Tooltip
+            open={showSwitchSlippageTooltip}
+            title={
+              isBridge ? (
+                <Trans>The setting has been switched to cross chain mode</Trans>
+              ) : (
+                <Trans>The setting has been switched to swap mode</Trans>
+              )
+            }
+            placement="bottom-end"
+          >
             <Box
-              component={isBridge ? SettingCrossChain : Setting}
+              component={ButtonBase}
               onClick={() => setIsSettingsDialogOpen(true)}
               sx={{
-                width: 19,
-                height: 19,
-                color: 'text.primary',
-                cursor: 'pointer',
+                p: 4,
+                backgroundColor: theme.palette.background.default,
+                borderRadius: 4,
               }}
-            />
-          </Box>
-        </Tooltip>
+            >
+              <Box
+                component={Setting}
+                sx={{
+                  width: 20,
+                  height: 20,
+                  color: 'text.primary',
+                  cursor: 'pointer',
+                }}
+              />
+            </Box>
+          </Tooltip>
+        </Box>
       </Box>
 
       {/* Scroll Container */}
@@ -1048,6 +1098,11 @@ export function Swap({
           onClose={() => setIsSettingsDialogOpen(false)}
           fromToken={fromToken}
           toToken={toToken}
+          privacySwapEnableAble={privacySwapEnableAble}
+          privacySwapEnable={privacySwapEnable}
+          privacySwapSupplierEndpoints={privacySwapSupplierEndpoints}
+          endpointStatusMap={endpointStatusMap}
+          refetchEndpointStatus={refetchEndpointStatus}
         />
       )}
       <SelectBridgeDialog
@@ -1069,6 +1124,6 @@ export function Swap({
         message={sendRouteError}
         onClose={() => setSendRouteError('')}
       />
-    </>
+    </Box>
   );
 }

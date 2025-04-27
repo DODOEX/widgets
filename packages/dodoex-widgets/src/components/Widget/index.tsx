@@ -235,7 +235,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
           minWidth: 335,
           minHeight: 494,
           borderRadius: 16,
-          backgroundColor: 'background.paper',
+          backgroundColor: 'background.default',
         }}
         className={WIDGET_CLASS_NAME}
         ref={widgetRef}

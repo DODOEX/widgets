@@ -203,3 +203,93 @@ export const dexKeysMap: {
   [ChainId.ZETACHAIN]: [],
   [ChainId.ZETACHAIN_TESTNET]: [],
 };
+
+export interface PrivacySwapSupplierEndpointI {
+  key: string;
+  name: string;
+  logo: string;
+  docUrl: string;
+  /** 添加链的配置 */
+  addChainParameters: AddChainParameter;
+  /** 是否在该节点的检查方法 */
+  isPrivacyEndpoint: {
+    contract: string;
+    rpcMethod: string;
+  } | null;
+}
+
+export const privacySwapSupplierEndpointsMap: {
+  [key in ChainId]: PrivacySwapSupplierEndpointI[];
+} = {
+  [ChainId.MAINNET]: [
+    {
+      key: 'Flashbots',
+      name: 'Flashbots',
+      logo: 'https://docs.flashbots.net/img/logo.png',
+      docUrl: 'https://docs.flashbots.net/new-to-mev',
+      addChainParameters: {
+        chainId: '0x1',
+        chainName: 'Flashbots Protect',
+        rpcUrls: ['https://rpc.flashbots.net/fast'],
+        nativeCurrency: {
+          name: 'ETH',
+          symbol: 'ETH',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://etherscan.io/'],
+      },
+      isPrivacyEndpoint: {
+        // FlashbotsRPC https://etherscan.io/address/0xf1a54b0759b58661cea17cff19dd37940a9b5f1a#code
+        contract: '0xf1a54b0759b58661cEa17CfF19dd37940a9b5f1A',
+        rpcMethod: 'isFlashRPC',
+      },
+    },
+    {
+      key: 'Blocknative',
+      name: 'Blocknative',
+      logo: 'https://docs.blocknative.com/~gitbook/image?url=https%3A%2F%2F3295439492-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252F-LmQ_1MIOGRk17Wz50Bx%252Ficon%252Fi7MyzIYm9BywxU73iEwF%252FBlocknative-Favicon.png%3Falt%3Dmedia%26token%3Dcd2df16c-3180-4ed4-b5f3-f8be6bd13767&width=32&dpr=2&quality=100&sign=c6dab474&sv=2',
+      docUrl: 'https://docs.blocknative.com/',
+      addChainParameters: {
+        chainId: '0x1',
+        chainName: 'Blocknative',
+        rpcUrls: ['https://rpc.blocknative.com/boost'],
+        nativeCurrency: {
+          name: 'ETH',
+          symbol: 'ETH',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://etherscan.io/'],
+      },
+      isPrivacyEndpoint: {
+        // https://etherscan.io/address/0x76838FdE3Aeb876dC10E6e3bB2a1757dEA58a25C#code
+        contract: '0x76838FdE3Aeb876dC10E6e3bB2a1757dEA58a25C',
+        rpcMethod: 'isBlocknativeRPC',
+      },
+    },
+  ],
+  [ChainId.GOERLI]: [],
+  [ChainId.OPTIMISM]: [],
+  [ChainId.CONFLUX]: [],
+  [ChainId.BSC]: [],
+  [ChainId.OKCHAIN]: [],
+  [ChainId.POLYGON]: [],
+  [ChainId.ARBITRUM_ONE]: [],
+  [ChainId.ARBITRUM_SEPOLIA]: [],
+  [ChainId.AURORA]: [],
+  [ChainId.AVALANCHE]: [],
+  [ChainId.BASE]: [],
+  [ChainId.LINEA]: [],
+  [ChainId.SCROLL]: [],
+  [ChainId.MANTA]: [],
+  [ChainId.MANTLE]: [],
+  [ChainId.SEPOLIA]: [],
+  [ChainId.DODO_CHAIN_TESTNET]: [],
+  [ChainId.TAIKO]: [],
+  [ChainId.PLUME]: [],
+  [ChainId.PLUME_TESTNET]: [],
+  [ChainId.NEOX]: [],
+  [ChainId.MORPH]: [],
+  [ChainId.RISE_TESTNET]: [],
+  [ChainId.ZETACHAIN]: [],
+  [ChainId.ZETACHAIN_TESTNET]: [],
+};

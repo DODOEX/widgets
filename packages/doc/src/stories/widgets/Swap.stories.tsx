@@ -1,6 +1,41 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { SwapWidget } from '@dodoex/widgets';
+import { alpha } from '@dodoex/components';
+import { SwapWidget, SwapWidgetProps } from '@dodoex/widgets';
 import { TokenInfo } from '@dodoex/widgets/dist/src/hooks/Token/type';
+import { Web3Provider } from '@ethersproject/providers';
+import { ComponentMeta } from '@storybook/react';
+import {
+  createWeb3Modal,
+  defaultConfig,
+  useWeb3Modal,
+  useWeb3ModalProvider,
+} from '@web3modal/ethers5/react';
+import { useMemo } from 'react';
+
+// 1. Get projectId
+const projectId = '3c0b09fae76fbc7d8d8c04221441d6fd';
+
+// 2. Set chains
+const mainnet = {
+  chainId: 1,
+  name: 'Ethereum',
+  currency: 'ETH',
+  explorerUrl: 'https://etherscan.io',
+  rpcUrl: 'https://cloudflare-eth.com',
+};
+
+// 3. Create modal
+const metadata = {
+  name: 'My Website',
+  description: 'My Website description',
+  url: 'https://mywebsite.com',
+  icons: ['https://avatars.mywebsite.com/'],
+};
+
+createWeb3Modal({
+  ethersConfig: defaultConfig({ metadata }),
+  chains: [mainnet],
+  projectId,
+});
 
 export enum ChainId {
   MAINNET = 1,
@@ -47,136 +82,90 @@ Object.keys(ChainId).forEach((key: any) => {
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Widgets/Swap',
-  component: SwapWidget,
-  argTypes: {
-    defaultChainId: {
-      options: Object.keys(ChainIdObj).map((key) => Number(key)),
-      control: {
-        type: 'select',
-        labels: ChainIdObj,
-      },
-    },
-    colorMode: {
-      options: ['light', 'dark'],
-      control: { type: 'radio' },
-    },
-    apikey: {
-      control: {
-        type: 'text',
-      },
-    },
-    width: {
-      control: {
-        type: 'text',
-      },
-    },
-    height: {
-      control: {
-        type: 'text',
-      },
-    },
-    locale: {
-      options: ['en-US', 'zh-CN'],
-      control: { type: 'radio' },
-    },
-    feeRate: {
-      control: {
-        type: 'number',
-      },
-    },
-    rebateTo: {
-      control: {
-        type: 'text',
-      },
-    },
-    onProviderChanged: {
-      action: 'providerChanged',
-    },
-    onTxFail: {
-      action: 'txFail',
-    },
-    onTxSubmit: {
-      action: 'txSubmit',
-    },
-    onTxSuccess: {
-      action: 'txSuccess',
-    },
-    onTxReverted: {
-      action: 'txReverted',
-    },
-    onPayTokenChange: {
-      action: 'payTokenChange',
-    },
-    onReceiveTokenChange: {
-      action: 'receiveTokenChange',
-    },
-    onConnectWalletClick: {
-      action: 'connectWalletClick',
-    },
-    noPowerBy: {
-      control: {
-        type: 'boolean',
-      },
-    },
-  },
-} as ComponentMeta<typeof SwapWidget>;
+  component: 'div',
+};
 
-export const Primary = (args) => <SwapWidget {...args} />;
+export const Primary = (args) => {
+  const { open } = useWeb3Modal();
+  const { walletProvider } = useWeb3ModalProvider();
+  const ethersProvider = useMemo(() => {
+    if (!walletProvider) return undefined;
+    return new Web3Provider(walletProvider);
+  }, [walletProvider]);
+
+  return (
+    <SwapWidget
+      {...args}
+      provider={ethersProvider}
+      onConnectWalletClick={() => {
+        open();
+        return true;
+      }}
+    />
+  );
+};
 
 Primary.args = {
   apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
   theme: {
     palette: {
-      mode: 'light',
+      mode: 'dark',
       primary: {
-        main: '#1A1A1B',
+        main: '#7BF179',
+        contrastText: '#323227',
       },
       secondary: {
-        main: '#FFE804',
-        contrastText: '#1A1A1B',
+        main: '#7BF179',
+        contrastText: '#323227',
       },
       error: {
-        main: '#EC5A7D',
+        main: '#FF4646',
         contrastText: '#FFFFFF',
       },
       warning: {
         main: '#B15600',
-        contrastText: '#1A1A1B',
+        contrastText: '#323227',
       },
       success: {
-        main: '#2FBA90',
-        contrastText: '#1A1A1B',
+        main: '#42FF3F',
+        contrastText: '#323227',
       },
       purple: {
-        main: '#6851B4',
-        contrastText: '#1A1A1B',
+        main: '#BC9CFF',
+        contrastText: '#323227',
       },
       background: {
-        default: '#F9F6E8',
-        paper: '#FFFFFF',
-        paperContrast: '#F6F6F6',
-        paperDarkContrast: 'rgba(26, 26, 27, 0.1)',
-        backdrop: 'rgba(0, 0, 0, 0.9)',
-        input: '#F0F0F0',
-        tag: 'rgba(26, 26, 27, 0.04)',
+        default: '#0C0C0C',
+        paper: '#171717',
+        paperContrast: '#212221',
+        paperDarkContrast: 'rgba(255, 255, 255, 0.04)',
+        backdrop: 'rgba(0, 0, 0, 0.6)',
+        input: '#171717',
+        tag: 'rgba(255, 255, 255, 0.1)',
       },
       text: {
-        primary: '#1A1A1B',
-        secondary: 'rgba(26, 26, 27, 0.5)',
-        disabled: 'rgba(26, 26, 27, 0.3)',
-        placeholder: 'rgba(26, 26, 27, 0.3)',
-        link: '#1A1A1B',
+        primary: '#FFFFFF',
+        secondary: alpha('#FFF', 0.5),
+        disabled: alpha('#FFF', 0.3),
+        placeholder: alpha('#FFF', 0.3),
+        link: '#7BF179',
       },
       border: {
-        main: 'rgba(26, 26, 27, 0.1)',
-        light: 'rgba(26, 26, 27, 0.3)',
-        disabled: 'rgba(26, 26, 27, 0.1)',
+        main: '#292929',
+        light: alpha('#FFF', 0.3),
+        disabled: alpha('#FFF', 0.1),
       },
       hover: {
-        default: 'rgba(26, 26, 27, 0.1)',
+        default: 'rgba(255, 255, 255, 0.04)',
+      },
+      tabActive: {
+        main: '#7BF179',
+        contrastText: '#323227',
       },
     },
   },
+  colorMode: 'dark',
+  noUI: true,
   defaultFromToken: {
     chainId: 1,
     address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
