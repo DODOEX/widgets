@@ -53,7 +53,7 @@ const preview = {
                 right: 0,
                 bottom: 0,
                 left: 0,
-                backgroundColor: '#0c0c0c',
+                backgroundColor: 'transparent',
               }}
             />
             <Box

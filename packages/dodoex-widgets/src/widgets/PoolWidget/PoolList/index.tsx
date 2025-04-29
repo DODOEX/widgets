@@ -119,7 +119,7 @@ export default function PoolList({
                 display: 'flex',
                 flexDirection: 'column',
                 borderRadius: 16,
-                backgroundColor: 'background.paper',
+                backgroundColor: 'transparent',
                 flex: 1,
                 overflow: 'hidden',
                 height: 'max-content',
@@ -143,15 +143,18 @@ export default function PoolList({
               : {
                   display: 'flex',
                   justifyContent: 'space-between',
-                  p: 20,
+                  alignItems: 'flex-start',
+                  p: 0,
                   borderBottomWidth: 1,
+                  borderBottomColor: 'border.main',
+                  borderBottomStyle: 'solid',
                 }),
           }}
         >
           {account ? (
             <TabsGroup
               tabs={tabs}
-              variant="rounded"
+              variant="default"
               tabsListSx={{
                 justifyContent: 'space-between',
                 ...(isMobile
@@ -167,6 +170,13 @@ export default function PoolList({
                   ? undefined
                   : {
                       mb: 0,
+                      pl: 0,
+                      pr: 0,
+                      pt: 0,
+                      pb: 16,
+                      mr: 48,
+                      typography: 'h5',
+                      lineHeight: '25px',
                     }
               }
             />

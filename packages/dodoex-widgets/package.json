@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.2-zetachain.6",
+  "version": "3.0.2-zetachain.7",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -59,7 +59,7 @@
   "dependencies": {
     "@babel/runtime": "^7.17.0",
     "@dodoex/api": "3.0.3-zetachain.2",
-    "@dodoex/components": "3.0.3",
+    "@dodoex/components": "3.0.3-zetachain.1",
     "@dodoex/contract-request": "^1.3.0",
     "@dodoex/dodo-contract-request": "1.12.0-alpha.4",
     "@dodoex/icons": "^2.0.2",

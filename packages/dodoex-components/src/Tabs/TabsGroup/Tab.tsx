@@ -13,7 +13,7 @@ const TabStyle = styled(BaseTab)`
   padding: 20px 16px;
   margin: 0;
   border-radius: 8px;
-  color: ${({ theme }) => theme.palette.text.secondary};
+  color: ${({ theme }) => theme.palette.text.primary};
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -33,15 +33,15 @@ const TabStyle = styled(BaseTab)`
   &.${tabClasses.selected} {
     position: relative;
     background-color: transparent;
-    color: ${({ theme }) => theme.palette.text.primary};
+    color: ${({ theme }) => theme.palette.text.link};
     &::after {
       content: '';
       display: block;
       position: absolute;
       bottom: 0;
-      width: 28px;
+      width: 100%;
       height: 2px;
-      background-color: ${({ theme }) => theme.palette.text.primary};
+      background-color: ${({ theme }) => theme.palette.text.link};
     }
   }
 `;

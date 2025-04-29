@@ -107,63 +107,6 @@ export const Primary = (args) => {
 
 Primary.args = {
   apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
-  theme: {
-    palette: {
-      mode: 'dark',
-      primary: {
-        main: '#7BF179',
-        contrastText: '#323227',
-      },
-      secondary: {
-        main: '#7BF179',
-        contrastText: '#323227',
-      },
-      error: {
-        main: '#FF4646',
-        contrastText: '#FFFFFF',
-      },
-      warning: {
-        main: '#B15600',
-        contrastText: '#323227',
-      },
-      success: {
-        main: '#42FF3F',
-        contrastText: '#323227',
-      },
-      purple: {
-        main: '#BC9CFF',
-        contrastText: '#323227',
-      },
-      background: {
-        default: '#0C0C0C',
-        paper: '#171717',
-        paperContrast: '#212221',
-        paperDarkContrast: 'rgba(255, 255, 255, 0.04)',
-        backdrop: 'rgba(0, 0, 0, 0.6)',
-        input: '#171717',
-        tag: 'rgba(255, 255, 255, 0.1)',
-      },
-      text: {
-        primary: '#FFFFFF',
-        secondary: alpha('#FFF', 0.5),
-        disabled: alpha('#FFF', 0.3),
-        placeholder: alpha('#FFF', 0.3),
-        link: '#7BF179',
-      },
-      border: {
-        main: '#292929',
-        light: alpha('#FFF', 0.3),
-        disabled: alpha('#FFF', 0.1),
-      },
-      hover: {
-        default: 'rgba(255, 255, 255, 0.04)',
-      },
-      tabActive: {
-        main: '#7BF179',
-        contrastText: '#323227',
-      },
-    },
-  },
   colorMode: 'dark',
   noUI: true,
   defaultFromToken: {

@@ -1,18 +1,25 @@
-import { alpha, Box, Button, useTheme, Tooltip } from '@dodoex/components';
-import { PoolApi, PoolType } from '@dodoex/api';
+import { ChainId, PoolApi, PoolType } from '@dodoex/api';
+import { alpha, Box, Button, Tooltip, useTheme } from '@dodoex/components';
+import { Share } from '@dodoex/icons';
+import { t, Trans } from '@lingui/macro';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import InfiniteScroll from 'react-infinite-scroller';
-import {
-  convertFetchLiquidityToOperateData,
-  convertLiquidityTokenToTokenInfo,
-  FetchLiquidityListLqList,
-  getPoolAMMOrPMM,
-} from '../utils';
-import { ChainId } from '@dodoex/api';
-import React from 'react';
-import { TokenLogoPair } from '../../../components/TokenLogoPair';
-import { Trans, t } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
+import { debounce } from 'lodash';
+import React, { useMemo } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
+import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
+import { CardStatus } from '../../../components/CardWidgets';
+import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
+import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
+import { EmptyList } from '../../../components/List/EmptyList';
+import { FailedList } from '../../../components/List/FailedList';
+import SelectChain from '../../../components/SelectChain';
+import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { useRouterStore } from '../../../router';
+import { PageType } from '../../../router/types';
 import {
   byWei,
   formatApy,
@@ -20,38 +27,31 @@ import {
   formatPercentageNumber,
   formatReadableNumber,
 } from '../../../utils';
-import PoolApyTooltip from './components/PoolApyTooltip';
-import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
-import { debounce } from 'lodash';
+import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
+import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
+import { PoolOperateProps } from '../PoolOperate';
+import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
+import {
+  convertFetchLiquidityToOperateData,
+  convertLiquidityTokenToTokenInfo,
+  FetchLiquidityListLqList,
+  getPoolAMMOrPMM,
+} from '../utils';
+import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
+import FilterAddressTags from './components/FilterAddressTags';
+import { FilterGroup } from './components/FilterGroup';
+import FilterTokenTags from './components/FilterTokenTags';
+import GoPoolDetailBtn from './components/GoPoolDetailBtn';
+import LiquidityTable from './components/LiquidityTable';
 import LoadingCard from './components/LoadingCard';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { MigrationTag } from './components/migationWidget';
+import PoolApyTooltip from './components/PoolApyTooltip';
+import TokenAndPoolFilter from './components/TokenAndPoolFilter';
+import TokenListPoolItem from './components/TokenListPoolItem';
 import {
   TokenAndPoolFilterUserOptions,
   usePoolListFilterTokenAndPool,
 } from './hooks/usePoolListFilterTokenAndPool';
-import SelectChain from '../../../components/SelectChain';
-import TokenListPoolItem from './components/TokenListPoolItem';
-import { EmptyList } from '../../../components/List/EmptyList';
-import { FailedList } from '../../../components/List/FailedList';
-import FilterAddressTags from './components/FilterAddressTags';
-import FilterTokenTags from './components/FilterTokenTags';
-import { PoolOperateProps } from '../PoolOperate';
-import { useRouterStore } from '../../../router';
-import { PageType } from '../../../router/types';
-import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
-import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
-import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
-import LiquidityTable from './components/LiquidityTable';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
-import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { CardStatus } from '../../../components/CardWidgets';
-import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
-import GoPoolDetailBtn from './components/GoPoolDetailBtn';
-import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
-import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
-import { Share } from '@dodoex/icons';
-import { MigrationTag } from './components/migationWidget';
-import TokenAndPoolFilter from './components/TokenAndPoolFilter';
 
 function CardList({
   lqList,
@@ -782,6 +782,11 @@ export default function AddLiquidityList({
   const { minDevice, isMobile } = useWidgetDevice();
   const queryClient = useQueryClient();
 
+  const [poolType, setPoolType] = React.useState<'all' | 'pmm' | 'v2' | 'v3'>(
+    'all',
+  );
+  const [duration, setDuration] = React.useState<'1' | '7' | '14' | '30'>('1');
+
   const {
     filterTokens,
     filterASymbol,
@@ -793,21 +798,37 @@ export default function AddLiquidityList({
     handleChangeFilterAddress,
   } = usePoolListFilterTokenAndPool(tokenAndPoolFilter);
 
-  const filterTypes = notSupportPMM ? [] : ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
-  if (supportAMMV2) {
-    filterTypes.push('AMMV2');
-  }
-  if (supportAMMV3) {
-    filterTypes.push('AMMV3');
-  }
-  const defaultQueryFilter = {
-    chainIds: filterChainIds,
-    pageSize: isMobile ? 4 : 8,
-    filterState: {
-      viewOnlyOwn: false,
-      filterTypes,
-    },
-  };
+  const filterTypes = useMemo(() => {
+    if (supportAMMV3 && poolType === 'v3') {
+      return ['AMMV3'];
+    }
+    if (supportAMMV2 && poolType === 'v2') {
+      return ['AMMV2'];
+    }
+    if (!notSupportPMM && poolType === 'pmm') {
+      return ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
+    }
+
+    let filterTypes = notSupportPMM ? [] : ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
+    if (supportAMMV2) {
+      filterTypes.push('AMMV2');
+    }
+    if (supportAMMV3) {
+      filterTypes.push('AMMV3');
+    }
+    return filterTypes;
+  }, [notSupportPMM, supportAMMV2, supportAMMV3, poolType]);
+
+  const defaultQueryFilter = useMemo(() => {
+    return {
+      chainIds: filterChainIds,
+      pageSize: isMobile ? 4 : 8,
+      filterState: {
+        viewOnlyOwn: false,
+        filterTypes,
+      },
+    };
+  }, [filterChainIds, filterTypes, isMobile]);
 
   const graphQLRequests = useGraphQLRequests();
 
@@ -871,8 +892,8 @@ export default function AddLiquidityList({
           ...(isMobile
             ? {}
             : {
-                px: 20,
-                borderBottomWidth: 1,
+                px: 0,
+                justifyContent: 'space-between',
               }),
         }}
       >
@@ -881,13 +902,6 @@ export default function AddLiquidityList({
             display: 'flex',
             alignItems: 'center',
             gap: 8,
-            ...(minDevice(filterSmallDeviceWidth)
-              ? {}
-              : {
-                  '& > button': {
-                    flex: 1,
-                  },
-                }),
           }}
         >
           {!onlyChainId && (
@@ -896,64 +910,154 @@ export default function AddLiquidityList({
               setChainId={handleChangeActiveChainId}
             />
           )}
-          {tokenAndPoolFilter?.element ?? (
-            <TokenAndPoolFilter
-              value={filterTokens}
-              onChange={handleChangeFilterTokens}
-              searchAddress={async (address, onClose) => {
-                const query = graphQLRequests.getInfiniteQuery(
-                  PoolApi.graphql.fetchLiquidityList,
-                  'currentPage',
-                  {
-                    where: {
-                      ...defaultQueryFilter,
-                      filterState: {
-                        address,
-                        ...defaultQueryFilter.filterState,
-                      },
-                    },
-                  },
-                );
-                const result = await queryClient.fetchQuery(query);
-                const lqList = result.liquidity_list?.lqList;
-                if (lqList?.length) {
-                  return (
-                    <TokenListPoolItem
-                      list={lqList}
-                      onClick={() => {
-                        handleChangeFilterAddress(lqList);
-                        onClose();
-                      }}
-                    />
-                  );
-                }
-                return null;
-              }}
+          {(supportAMMV2 || supportAMMV3) && (
+            <FilterGroup
+              filterList={[
+                {
+                  label: 'All',
+                  value: 'all',
+                },
+              ]
+                .concat(
+                  notSupportPMM
+                    ? []
+                    : [
+                        {
+                          label: 'PMM',
+                          value: 'pmm',
+                        },
+                      ],
+                )
+                .concat(
+                  supportAMMV2
+                    ? [
+                        {
+                          label: 'V2',
+                          value: 'v2',
+                        },
+                      ]
+                    : [],
+                )
+                .concat(
+                  supportAMMV3
+                    ? [
+                        {
+                          label: 'V3',
+                          value: 'v3',
+                        },
+                      ]
+                    : [],
+                )}
+              value={poolType}
+              onChange={(value) =>
+                setPoolType(value as 'all' | 'pmm' | 'v2' | 'v3')
+              }
             />
           )}
-        </Box>
 
-        {/* filter tag */}
-        {(hasFilterAddress || !!filterTokens.length) && (
+          <FilterGroup
+            filterList={[
+              {
+                label: '1d',
+                value: '1',
+              },
+              {
+                label: '7d',
+                value: '7',
+              },
+              {
+                label: '14d',
+                value: '14',
+              },
+              {
+                label: '30d',
+                value: '30',
+              },
+            ]}
+            value={duration}
+            onChange={(value) => setDuration(value)}
+          />
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
           <Box
             sx={{
-              my: 0,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              ...(minDevice(filterSmallDeviceWidth)
+                ? {}
+                : {
+                    '& > button': {
+                      flex: 1,
+                    },
+                  }),
             }}
           >
-            {hasFilterAddress ? (
-              <FilterAddressTags
-                lqList={filterAddressLqList}
-                onDeleteTag={() => handleChangeFilterAddress([])}
+            {tokenAndPoolFilter?.element ?? (
+              <TokenAndPoolFilter
+                value={filterTokens}
+                onChange={handleChangeFilterTokens}
+                searchAddress={async (address, onClose) => {
+                  const query = graphQLRequests.getInfiniteQuery(
+                    PoolApi.graphql.fetchLiquidityList,
+                    'currentPage',
+                    {
+                      where: {
+                        ...defaultQueryFilter,
+                        filterState: {
+                          address,
+                          ...defaultQueryFilter.filterState,
+                        },
+                      },
+                    },
+                  );
+                  const result = await queryClient.fetchQuery(query);
+                  const lqList = result.liquidity_list?.lqList;
+                  if (lqList?.length) {
+                    return (
+                      <TokenListPoolItem
+                        list={lqList}
+                        onClick={() => {
+                          handleChangeFilterAddress(lqList);
+                          onClose();
+                        }}
+                      />
+                    );
+                  }
+                  return null;
+                }}
               />
-            ) : (
-              ''
             )}
-            <FilterTokenTags
-              tags={filterTokens}
-              onDeleteTag={handleDeleteToken}
-            />
           </Box>
-        )}
+
+          {/* filter tag */}
+          {(hasFilterAddress || !!filterTokens.length) && (
+            <Box
+              sx={{
+                my: 0,
+              }}
+            >
+              {hasFilterAddress ? (
+                <FilterAddressTags
+                  lqList={filterAddressLqList}
+                  onDeleteTag={() => handleChangeFilterAddress([])}
+                />
+              ) : (
+                ''
+              )}
+              <FilterTokenTags
+                tags={filterTokens}
+                onDeleteTag={handleDeleteToken}
+              />
+            </Box>
+          )}
+        </Box>
       </Box>
 
       {/* list */}

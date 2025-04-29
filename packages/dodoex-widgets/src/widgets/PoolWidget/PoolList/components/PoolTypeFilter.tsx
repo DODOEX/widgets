@@ -8,7 +8,11 @@ export interface OnlyV3ToggleProps {
   sx?: BoxProps['sx'];
 }
 
-export const OnlyV3Toggle = ({ onlyV3, setOnlyV3, sx }: OnlyV3ToggleProps) => {
+export const PoolTypeFilter = ({
+  onlyV3,
+  setOnlyV3,
+  sx,
+}: OnlyV3ToggleProps) => {
   const theme = useTheme();
   const { notSupportPMM } = useUserOptions();
 

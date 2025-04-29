@@ -1,17 +1,23 @@
-import { alpha, Box, Button, useTheme, Tooltip } from '@dodoex/components';
-import { PoolApi, PoolType } from '@dodoex/api';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  convertFetchMyLiquidityToOperateData,
-  convertLiquidityTokenToTokenInfo,
-  FetchMyLiquidityListLqList,
-  getPoolAMMOrPMM,
-} from '../utils';
-import { ChainId } from '@dodoex/api';
-import React from 'react';
-import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { ChainId, PoolApi, PoolType } from '@dodoex/api';
+import { alpha, Box, Button, Tooltip, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
+import React from 'react';
+import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
+import { CardStatus } from '../../../components/CardWidgets';
+import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
+import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
+import { EmptyList } from '../../../components/List/EmptyList';
+import { FailedList } from '../../../components/List/FailedList';
+import SelectChain from '../../../components/SelectChain';
+import TokenLogo from '../../../components/TokenLogo';
+import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { useRouterStore } from '../../../router';
+import { PageType } from '../../../router/types';
 import {
   byWei,
   formatApy,
@@ -20,41 +26,34 @@ import {
   formatReadableNumber,
   formatTokenAmountNumber,
 } from '../../../utils';
-import PoolApyTooltip from './components/PoolApyTooltip';
-import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
+import { InRangeDot } from '../AMMV3/components/InRangeDot';
+import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
+import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
+import { Bound } from '../AMMV3/types';
+import { formatTickPrice } from '../AMMV3/utils/formatTickPrice';
+import { PoolOperateProps } from '../PoolOperate';
+import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
+import {
+  convertFetchMyLiquidityToOperateData,
+  convertLiquidityTokenToTokenInfo,
+  FetchMyLiquidityListLqList,
+  getPoolAMMOrPMM,
+} from '../utils';
+import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
+import FilterAddressTags from './components/FilterAddressTags';
+import { FilterGroup } from './components/FilterGroup';
+import FilterTokenTags from './components/FilterTokenTags';
+import GoPoolDetailBtn from './components/GoPoolDetailBtn';
+import LiquidityTable from './components/LiquidityTable';
 import LoadingCard from './components/LoadingCard';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { MigrationTag } from './components/migationWidget';
+import PoolApyTooltip from './components/PoolApyTooltip';
+import TokenAndPoolFilter from './components/TokenAndPoolFilter';
+import TokenListPoolItem from './components/TokenListPoolItem';
 import {
   TokenAndPoolFilterUserOptions,
   usePoolListFilterTokenAndPool,
 } from './hooks/usePoolListFilterTokenAndPool';
-import SelectChain from '../../../components/SelectChain';
-import TokenAndPoolFilter from './components/TokenAndPoolFilter';
-import TokenListPoolItem from './components/TokenListPoolItem';
-import { EmptyList } from '../../../components/List/EmptyList';
-import { FailedList } from '../../../components/List/FailedList';
-import FilterAddressTags from './components/FilterAddressTags';
-import FilterTokenTags from './components/FilterTokenTags';
-import { PoolOperateProps } from '../PoolOperate';
-import { useRouterStore } from '../../../router';
-import { PageType } from '../../../router/types';
-import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
-import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
-import TokenLogo from '../../../components/TokenLogo';
-import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
-import LiquidityTable from './components/LiquidityTable';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
-import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { CardStatus } from '../../../components/CardWidgets';
-import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
-import GoPoolDetailBtn from './components/GoPoolDetailBtn';
-import { OnlyV3Toggle } from './components/OnlyV3Toggle';
-import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
-import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
-import { InRangeDot } from '../AMMV3/components/InRangeDot';
-import { formatTickPrice } from '../AMMV3/utils/formatTickPrice';
-import { Bound } from '../AMMV3/types';
-import { MigrationTag } from './components/migationWidget';
 
 function CardList({
   account,
@@ -1168,7 +1167,9 @@ export default function MyLiquidity({
   const queryClient = useQueryClient();
   const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
     useUserOptions();
-  const [onlyV3, setOnlyV3] = React.useState(false);
+
+  const [poolType, setPoolType] = React.useState<'v3' | 'pmm&v2'>('pmm&v2');
+  const [duration, setDuration] = React.useState<'1' | '7' | '14' | '30'>('1');
 
   const {
     filterTokens,
@@ -1187,7 +1188,7 @@ export default function MyLiquidity({
   if (supportAMMV2) {
     filterTypes.push('AMMV2');
   }
-  if (supportAMMV3 && onlyV3) {
+  if (supportAMMV3 && poolType === 'v3') {
     filterTypes = ['AMMV3'];
   }
 
@@ -1244,8 +1245,8 @@ export default function MyLiquidity({
           ...(isMobile
             ? {}
             : {
-                px: 20,
-                borderBottomWidth: 1,
+                px: 0,
+                justifyContent: 'space-between',
               }),
         }}
       >
@@ -1254,102 +1255,141 @@ export default function MyLiquidity({
             display: 'flex',
             alignItems: 'center',
             gap: 8,
-            ...(minDevice(filterSmallDeviceWidth)
-              ? {}
-              : {
-                  '& > button': {
-                    flex: 1,
-                    flexBasis: '100%',
-                  },
-                }),
-            ...(isMobile
-              ? {
-                  flexWrap: 'wrap',
-                }
-              : {}),
           }}
         >
           {!onlyChainId && (
             <SelectChain
               chainId={activeChainId}
               setChainId={handleChangeActiveChainId}
-              sx={{
-                justifyContent: 'space-between',
-              }}
             />
           )}
           {supportAMMV3 && (
-            <OnlyV3Toggle
-              onlyV3={onlyV3}
-              setOnlyV3={setOnlyV3}
-              sx={
-                isMobile
-                  ? {
-                      flexGrow: 1,
-                      flexBasis: '100%',
-                    }
-                  : undefined
-              }
+            <FilterGroup
+              filterList={[
+                {
+                  label: 'V3',
+                  value: 'v3',
+                },
+                {
+                  label: 'V2 & PMM',
+                  value: 'pmm&v2',
+                },
+              ]}
+              value={poolType}
+              onChange={(value) => setPoolType(value)}
             />
           )}
-          {tokenAndPoolFilter?.element ?? (
-            <TokenAndPoolFilter
-              value={filterTokens}
-              onChange={handleChangeFilterTokens}
-              searchAddress={async (address, onClose) => {
-                const query = graphQLRequests.getInfiniteQuery(
-                  PoolApi.graphql.fetchLiquidityList,
-                  'currentPage',
-                  {
-                    where: {
-                      ...defaultQueryFilter,
-                      filterState: {
-                        address,
-                        ...defaultQueryFilter.filterState,
-                      },
-                    },
-                  },
-                );
-                const result = await queryClient.fetchQuery(query);
-                const lqList = result.liquidity_list?.lqList;
-                if (lqList?.length) {
-                  return (
-                    <TokenListPoolItem
-                      list={lqList}
-                      onClick={() => {
-                        handleChangeFilterAddress(lqList);
-                        onClose();
-                      }}
-                    />
-                  );
-                }
-                return null;
-              }}
-            />
-          )}
+
+          <FilterGroup
+            filterList={[
+              {
+                label: '1d',
+                value: '1',
+              },
+              {
+                label: '7d',
+                value: '7',
+              },
+              {
+                label: '14d',
+                value: '14',
+              },
+              {
+                label: '30d',
+                value: '30',
+              },
+            ]}
+            value={duration}
+            onChange={(value) => setDuration(value)}
+          />
         </Box>
 
-        {/* filter tag */}
-        {(hasFilterAddress || !!filterTokens.length) && (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
           <Box
             sx={{
-              my: 0,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              ...(minDevice(filterSmallDeviceWidth)
+                ? {}
+                : {
+                    '& > button': {
+                      flex: 1,
+                      flexBasis: '100%',
+                    },
+                  }),
+              ...(isMobile
+                ? {
+                    flexWrap: 'wrap',
+                  }
+                : {}),
             }}
           >
-            {hasFilterAddress ? (
-              <FilterAddressTags
-                lqList={filterAddressLqList}
-                onDeleteTag={() => handleChangeFilterAddress([])}
+            {tokenAndPoolFilter?.element ?? (
+              <TokenAndPoolFilter
+                value={filterTokens}
+                onChange={handleChangeFilterTokens}
+                searchAddress={async (address, onClose) => {
+                  const query = graphQLRequests.getInfiniteQuery(
+                    PoolApi.graphql.fetchLiquidityList,
+                    'currentPage',
+                    {
+                      where: {
+                        ...defaultQueryFilter,
+                        filterState: {
+                          address,
+                          ...defaultQueryFilter.filterState,
+                        },
+                      },
+                    },
+                  );
+                  const result = await queryClient.fetchQuery(query);
+                  const lqList = result.liquidity_list?.lqList;
+                  if (lqList?.length) {
+                    return (
+                      <TokenListPoolItem
+                        list={lqList}
+                        onClick={() => {
+                          handleChangeFilterAddress(lqList);
+                          onClose();
+                        }}
+                      />
+                    );
+                  }
+                  return null;
+                }}
               />
-            ) : (
-              ''
             )}
-            <FilterTokenTags
-              tags={filterTokens}
-              onDeleteTag={handleDeleteToken}
-            />
           </Box>
-        )}
+
+          {/* filter tag */}
+          {(hasFilterAddress || !!filterTokens.length) && (
+            <Box
+              sx={{
+                my: 0,
+              }}
+            >
+              {hasFilterAddress ? (
+                <FilterAddressTags
+                  lqList={filterAddressLqList}
+                  onDeleteTag={() => handleChangeFilterAddress([])}
+                />
+              ) : (
+                ''
+              )}
+              <FilterTokenTags
+                tags={filterTokens}
+                onDeleteTag={handleDeleteToken}
+              />
+            </Box>
+          )}
+        </Box>
       </Box>
 
       {/* list */}
@@ -1395,7 +1435,7 @@ export default function MyLiquidity({
             operatePool={operatePool}
             setOperatePool={setOperatePool}
             supportAMM={supportAMMV2 || supportAMMV3}
-            onlyV3={onlyV3}
+            onlyV3={poolType === 'v3'}
             getMigrationPairAndMining={getMigrationPairAndMining}
           />
 
