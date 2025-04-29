@@ -67,6 +67,7 @@ export interface WidgetProps
   noPowerBy?: boolean;
   noDocumentLink?: boolean;
   onlyChainId?: ChainId;
+  supportChainIds?: number[];
   noUI?: boolean;
   noLangProvider?: boolean;
   noAutoConnect?: boolean;

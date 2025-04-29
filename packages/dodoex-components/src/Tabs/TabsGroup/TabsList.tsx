@@ -1,4 +1,4 @@
-import { TabsList as BaseTabsList, TabsListProps } from '@mui/base/TabsList';
+import { TabsList as BaseTabsList, TabsListOwnProps } from '@mui/base/TabsList';
 import { useTheme } from '@mui/system';
 import { Box, BoxProps } from '../../Box';
 import React from 'react';
@@ -6,9 +6,10 @@ import AnyTouch from 'any-touch';
 
 export const TabsList = React.forwardRef<
   HTMLDivElement,
-  TabsListProps & {
-    sx?: BoxProps['sx'];
-  }
+  TabsListOwnProps &
+    React.RefAttributes<HTMLDivElement> & {
+      sx?: BoxProps['sx'];
+    }
 >(function TabsList({ sx, ...props }, ref) {
   const tabListRef = React.useRef<HTMLDivElement>();
   const theme = useTheme();

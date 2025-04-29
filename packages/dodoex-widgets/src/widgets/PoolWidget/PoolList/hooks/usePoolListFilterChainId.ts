@@ -7,7 +7,7 @@ import { useUserOptions } from '../../../../components/UserOptionsProvider';
 
 export function usePoolListFilterChainId() {
   const { chainId: currentChainId } = useWeb3React();
-  const { onlyChainId, defaultChainId } = useUserOptions();
+  const { onlyChainId, defaultChainId, supportChainIds } = useUserOptions();
   const [activeChainId, setActiveChainId] = React.useState<ChainId | undefined>(
     onlyChainId,
   );
@@ -18,10 +18,11 @@ export function usePoolListFilterChainId() {
     if (isTestNet(currentChainId as ChainId)) {
       return undefined;
     }
+    if (supportChainIds?.length) return supportChainIds as ChainId[];
     return Object.values(ChainId).filter(
       (chainId) => !!Number(chainId),
     ) as ChainId[];
-  }, [currentChainId, activeChainId]);
+  }, [currentChainId, activeChainId, supportChainIds]);
 
   React.useEffect(() => {
     const activeChainIdCache = Number(
