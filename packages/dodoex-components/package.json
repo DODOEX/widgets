@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/components",
-  "version": "3.0.4-beta.1",
+  "version": "3.0.4",
   "description": "UI component library",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
@@ -72,4 +72,3 @@
     "typescript": "^5.6.3"
   }
 }
-
