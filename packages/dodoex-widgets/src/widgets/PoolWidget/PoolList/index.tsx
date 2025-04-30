@@ -6,10 +6,12 @@ import {
   TabsGroup,
   useTheme,
 } from '@dodoex/components';
-import { t, Trans } from '@lingui/macro';
+import { Fee } from '@dodoex/icons';
+import { Trans } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { HowItWorks } from '../../../components/HowItWorks';
+import { transitionTime } from '../../../components/Swap/components/Dialog';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
@@ -25,14 +27,10 @@ import PoolOperateDialog, {
 import AddLiquidityList from './AddLiquidity';
 import { CreatePoolBtn } from './components/CreatePoolBtn';
 import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
+import { TokenAndPoolFilterUserOptions } from './hooks/usePoolListFilterTokenAndPool';
 import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
 import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
-import { ReactComponent as LeftImage } from './pool-left.svg';
-import { transitionTime } from '../../../components/Swap/components/Dialog';
-import { TokenInfo } from '../../../hooks/Token';
-import { TokenAndPoolFilterUserOptions } from './hooks/usePoolListFilterTokenAndPool';
-import { Fee } from '@dodoex/icons';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -118,8 +116,6 @@ export default function PoolList({
             : {
                 display: 'flex',
                 flexDirection: 'column',
-                borderRadius: 16,
-                backgroundColor: 'transparent',
                 flex: 1,
                 overflow: 'hidden',
                 height: 'max-content',
@@ -260,33 +256,40 @@ export default function PoolList({
             setOperatePool={setOperatePool}
           />
         </TabPanelFlexCol>
-      </Tabs>
-      <Box
-        sx={{
-          position: 'relative',
-          width: isMobile
-            ? '100%'
-            : noDocumentLink && !operatePool
-              ? 'auto'
-              : 375,
-        }}
-      >
+
         {!noDocumentLink && (
           <HowItWorks
-            title={t`Liquidity`}
-            desc={t`Classical AMM-like pool. Suitable for most assets.`}
+            title="How does Liquidity Pools work?"
+            descList={[
+              {
+                title: 'Deposit Liquidity',
+                desc: "Select a liquidity pool that suits your preferences and supply a pair of assets in our AMM pools or any supported assets in StableSwap pools. In return, you'll receive LP tokens, representing your share of the liquidity provided.",
+              },
+              {
+                title: 'Earn Fees',
+                desc: "As transactions occur within the pool, fees are collected and added to your LP tokens' value. This accrues daily, giving you real-time APY as your token holdings grow.",
+              },
+              {
+                title: 'Delegate & Change Pool Fees',
+                desc: "Boosted pool rewards are distributed every Sunday. If you've contributed liquidity to these pools, simply visit the rewards page, select the relevant week, and claim your earnings with ease.",
+              },
+            ]}
             linkTo="https://docs.dodoex.io/product/tutorial/how-to-provide-liquidity"
-            LeftImage={LeftImage}
             sx={{
+              mt: 16,
               ...(isMobile && {
                 mt: 20,
-              }),
-              ...(!!operatePool && {
-                display: 'none',
               }),
             }}
           />
         )}
+      </Tabs>
+      <Box
+        sx={{
+          position: 'relative',
+          width: isMobile ? '100%' : !operatePool ? 'auto' : 375,
+        }}
+      >
         {operatePool?.pool?.type === 'AMMV3' && operatePool.pool.chainId ? (
           poolTab === PoolTab.myLiquidity &&
           operatePool.pool.liquidityPositions?.[0]?.tokenId ? (

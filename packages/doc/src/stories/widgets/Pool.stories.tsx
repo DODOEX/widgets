@@ -124,7 +124,7 @@ Primary.args = {
   apiKey: 'ee53d6b75b12aceed4',
   width: '100%',
   height: '100%',
-  noDocumentLink: true,
+  noDocumentLink: false,
   routerPage: undefined,
   supportAMMV2: true,
   supportAMMV3: true,
