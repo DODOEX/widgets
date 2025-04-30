@@ -1,11 +1,4 @@
-import {
-  alpha,
-  Box,
-  TabPanel,
-  Tabs,
-  TabsGroup,
-  useTheme,
-} from '@dodoex/components';
+import { Box, TabPanel, Tabs, TabsGroup, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
@@ -30,9 +23,7 @@ import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
 import { transitionTime } from '../../../components/Swap/components/Dialog';
-import { TokenInfo } from '../../../hooks/Token';
 import { TokenAndPoolFilterUserOptions } from './hooks/usePoolListFilterTokenAndPool';
-import { Fee } from '@dodoex/icons';
 import {
   GetMigrationPairAndMining,
   ShowMigrationPairAndMining,
@@ -166,31 +157,6 @@ export default function PoolList({
                 fontWeight: 600,
               }}
             >
-              {isMobile ? (
-                ''
-              ) : (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 24,
-                    height: 24,
-                    backgroundColor: alpha(theme.palette.secondary.main, 0.3),
-                    borderRadius: 6,
-                    mr: 4,
-                    color: 'warning.main',
-                  }}
-                >
-                  <Box
-                    component={Fee}
-                    sx={{
-                      width: 16,
-                      height: 16,
-                    }}
-                  />
-                </Box>
-              )}
               <Trans>Add Liquidity</Trans>
             </Box>
           )}

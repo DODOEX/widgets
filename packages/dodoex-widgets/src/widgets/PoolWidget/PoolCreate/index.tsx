@@ -1,4 +1,4 @@
-import { Box } from '@dodoex/components';
+import { Box, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import React from 'react';
@@ -41,9 +41,13 @@ import {
   PEGGED_RATIO_DECIMALS,
 } from './utils';
 
-export default function PoolCreate() {
+export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
   const { defaultBaseToken, defaultQuoteToken } = useDefaultTokens();
   const { chainId } = useWalletInfo();
+  const theme = useTheme();
+  const cardBg = cardMode
+    ? theme.palette.background.tag
+    : theme.palette.background.paper;
 
   const [state, dispatch] = React.useReducer<typeof reducer>(reducer, {
     currentStep: 0,
@@ -227,6 +231,11 @@ export default function PoolCreate() {
               flexGrow: 1,
               display: 'block',
               overflow: 'hidden',
+              ...(cardMode && {
+                backgroundColor: theme.palette.background.paper,
+                p: 20,
+                borderRadius: 16,
+              }),
             }}
           >
             <GoBack />
@@ -251,6 +260,7 @@ export default function PoolCreate() {
               key={versionItem.version}
               versionItem={versionItem}
               status={state.currentStep === 0 ? 'running' : 'completed'}
+              cardBg={cardBg}
             />
 
             <SectionTitle
@@ -279,6 +289,7 @@ export default function PoolCreate() {
                 slippageCoefficient={state.slippageCoefficient}
                 selectedVersion={state.selectedVersion}
                 midPrice={undefined}
+                cardBg={cardBg}
               />
             ) : (
               <LqSettingsShow
@@ -296,6 +307,7 @@ export default function PoolCreate() {
                 selectedVersion={state.selectedVersion}
                 baseAmount={state.baseAmount}
                 quoteAmount={state.quoteAmount}
+                cardBg={cardBg}
               />
             )}
 
@@ -315,6 +327,7 @@ export default function PoolCreate() {
                 <PriceModeCard
                   isWaiting={state.currentStep < 2}
                   selectedSubPeggedVersion={state.selectedSubPeggedVersion}
+                  cardBg={cardBg}
                 />
               </>
             )}
@@ -327,6 +340,7 @@ export default function PoolCreate() {
             <FeeRateCard
               isWaiting={state.currentStep < (isPeggedVersion ? 3 : 2)}
               feeRate={state.feeRate}
+              cardBg={cardBg}
             />
 
             {isPeggedVersion && (
@@ -353,6 +367,7 @@ export default function PoolCreate() {
                   quoteAmount={state.quoteAmount}
                   peggedBaseTokenRatio={state.peggedBaseTokenRatio}
                   peggedQuoteTokenRatio={state.peggedQuoteTokenRatio}
+                  cardBg={cardBg}
                 />
               </>
             )}
@@ -375,7 +390,7 @@ export default function PoolCreate() {
                   minHeight: 'auto',
                   height: '100%',
                   position: 'sticky',
-                  top: '28px',
+                  top: cardMode ? 0 : '28px',
                   overflowY: 'hidden',
                 }
               : {}),

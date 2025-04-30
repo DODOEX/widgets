@@ -19,13 +19,18 @@ import TotalLiquidity from './components/TotalLiquidity';
 
 export default function PoolDetail({
   params,
+  cardMode,
 }: {
   params: Page<PageType.PoolDetail>['params'];
+  cardMode?: boolean;
 }) {
   const router = useRouterStore();
   const { isMobile } = useWidgetDevice();
   const { account } = useWalletInfo();
   const theme = useTheme();
+  const cardBg = cardMode
+    ? theme.palette.background.tag
+    : theme.palette.background.paper;
 
   const { poolDetail: pool, ...fetchPoolQuery } = usePoolDetail({
     id: params?.address,
@@ -90,13 +95,6 @@ export default function PoolDetail({
             }
       }
     >
-      <GoBack
-        onClick={() => {
-          router.push({
-            type: PageType.Pool,
-          });
-        }}
-      />
       <Box
         sx={
           isMobile
@@ -112,13 +110,25 @@ export default function PoolDetail({
           sx={{
             flex: 1,
             overflow: 'hidden',
+            ...(cardMode && {
+              p: 20,
+              backgroundColor: theme.palette.background.paper,
+              borderRadius: 16,
+            }),
           }}
         >
+          <GoBack
+            onClick={() => {
+              router.push({
+                type: PageType.Pool,
+              });
+            }}
+          />
           <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
           <ChartInfo poolDetail={pool} chart24hDataFirst />
-          <Overview poolDetail={pool} />
-          <TotalLiquidity poolDetail={pool} />
-          <MoreDetail poolDetail={pool} />
+          <Overview poolDetail={pool} cardBg={cardBg} />
+          <TotalLiquidity poolDetail={pool} cardBg={cardBg} />
+          <MoreDetail poolDetail={pool} cardBg={cardBg} />
         </Box>
 
         {isMobile ? (
@@ -143,6 +153,8 @@ export default function PoolDetail({
               backgroundColor: 'background.paper',
               borderRadius: 16,
               overflow: 'hidden',
+              position: 'relative',
+              top: cardMode ? 0 : 44,
             }}
             pool={operatePool}
             hidePoolInfo

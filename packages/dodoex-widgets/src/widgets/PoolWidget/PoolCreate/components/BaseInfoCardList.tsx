@@ -17,6 +17,7 @@ export function BaseInfoCardList({
   slippageCoefficient,
   midPrice,
   sx,
+  cardBg,
 }: {
   status: SectionStatusT;
   selectedVersion: StateProps['selectedVersion'];
@@ -26,6 +27,7 @@ export function BaseInfoCardList({
   slippageCoefficient: StateProps['slippageCoefficient'];
   midPrice: BigNumber | undefined;
   sx?: BoxProps['sx'];
+  cardBg: string;
 }) {
   const { versionMap } = useVersionList();
 
@@ -44,7 +46,11 @@ export function BaseInfoCardList({
           ...sx,
         }}
       >
-        <Card title={<Trans>Token Pair</Trans>} isWaiting={isWaiting}>
+        <Card
+          backgroundColor={cardBg}
+          title={<Trans>Token Pair</Trans>}
+          isWaiting={isWaiting}
+        >
           <TokenLogoPair
             width={24}
             height={24}
@@ -52,10 +58,18 @@ export function BaseInfoCardList({
           />
           {baseToken.symbol}-{quoteToken.symbol}
         </Card>
-        <Card title={<Trans>Slippage Coefficient</Trans>} isWaiting={isWaiting}>
+        <Card
+          backgroundColor={cardBg}
+          title={<Trans>Slippage Coefficient</Trans>}
+          isWaiting={isWaiting}
+        >
           {slippageCoefficient}
         </Card>
-        <Card title={initPriceLabel} isWaiting={isWaiting}>
+        <Card
+          backgroundColor={cardBg}
+          title={initPriceLabel}
+          isWaiting={isWaiting}
+        >
           1&nbsp;{baseToken.symbol}&nbsp;=&nbsp;
           {computeInitPriceText({
             midPrice,

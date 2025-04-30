@@ -6,9 +6,11 @@ import { SectionStatusT, VersionItem } from '../types';
 export function VersionChartExample({
   versionItem,
   status,
+  cardBg,
 }: {
   versionItem: VersionItem;
   status: SectionStatusT;
+  cardBg: string;
 }) {
   const theme = useTheme();
   const { noDocumentLink } = useUserOptions();
@@ -18,7 +20,7 @@ export function VersionChartExample({
     return (
       <Box
         sx={{
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: cardBg,
           borderRadius: 8,
           width: '50%',
           padding: 16,

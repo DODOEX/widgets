@@ -5,10 +5,12 @@ export function Card({
   title,
   children,
   isWaiting,
+  backgroundColor,
 }: {
   title: React.ReactNode;
   children: React.ReactNode;
   isWaiting: boolean;
+  backgroundColor: string;
 }) {
   const theme = useTheme();
 
@@ -17,7 +19,7 @@ export function Card({
       sx={{
         padding: 16,
         borderRadius: 8,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor,
         flexGrow: 1,
         flexBasis: '100%',
       }}

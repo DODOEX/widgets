@@ -13,8 +13,10 @@ import { useRouterStore } from '../../../../router';
 
 export default function TotalLiquidity({
   poolDetail,
+  cardBg,
 }: {
   poolDetail: ReturnType<typeof usePoolDetail>['poolDetail'];
+  cardBg: string;
 }) {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
@@ -71,7 +73,7 @@ export default function TotalLiquidity({
         sx={{
           display: 'flex',
           mt: 16,
-          backgroundColor: 'background.paper',
+          backgroundColor: cardBg,
           borderRadius: 16,
           overflowX: 'auto',
         }}

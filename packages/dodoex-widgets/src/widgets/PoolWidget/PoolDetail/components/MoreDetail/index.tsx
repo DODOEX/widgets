@@ -15,8 +15,10 @@ enum MoreTab {
 
 export default function MoreDetail({
   poolDetail,
+  cardBg,
 }: {
   poolDetail: ReturnType<typeof usePoolDetail>['poolDetail'];
+  cardBg: string;
 }) {
   const { isMobile } = useWidgetDevice();
   const [moreTab, setMoreTab] = React.useState(MoreTab.parameters);
@@ -35,7 +37,7 @@ export default function MoreDetail({
     <Box
       sx={{
         mt: 24,
-        backgroundColor: 'background.paper',
+        backgroundColor: cardBg,
         borderRadius: 16,
         overflow: 'hidden',
         ...(isMobile

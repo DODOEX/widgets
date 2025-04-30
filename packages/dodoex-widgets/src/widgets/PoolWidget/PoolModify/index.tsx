@@ -43,12 +43,17 @@ import { usePriceInit } from '../PoolCreate/hooks/usePriceInit';
 
 export default function PoolModify({
   params,
+  cardMode,
 }: {
   params: Page<PageType.PoolDetail>['params'];
+  cardMode?: boolean;
 }) {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
   const { chainId } = useWalletInfo();
+  const cardBg = cardMode
+    ? theme.palette.background.tag
+    : theme.palette.background.paper;
 
   const [showRiskDialog, setShowRiskDialog] = React.useState(false);
 
@@ -219,6 +224,11 @@ export default function PoolModify({
                 mr: 12,
                 flexGrow: 1,
                 display: 'block',
+                ...(cardMode && {
+                  padding: 20,
+                  backgroundColor: theme.palette.background.paper,
+                  borderRadius: 16,
+                }),
               }}
             >
               <GoBack />
@@ -239,6 +249,7 @@ export default function PoolModify({
                 key={versionItem.version}
                 versionItem={versionItem}
                 status={'completed'}
+                cardBg={cardBg}
               />
 
               <SectionTitle titleKey={t`Parameter Settings`} />
@@ -254,6 +265,7 @@ export default function PoolModify({
                   selectedVersion={state.selectedVersion}
                   baseAmount={state.baseAmount}
                   quoteAmount={state.quoteAmount}
+                  cardBg={cardBg}
                 />
               )}
 
@@ -261,7 +273,11 @@ export default function PoolModify({
               {poolDetailLoading ? (
                 loadingEle
               ) : (
-                <FeeRateCard isWaiting={false} feeRate={state.feeRate} />
+                <FeeRateCard
+                  isWaiting={false}
+                  feeRate={state.feeRate}
+                  cardBg={cardBg}
+                />
               )}
             </Box>
           )}
