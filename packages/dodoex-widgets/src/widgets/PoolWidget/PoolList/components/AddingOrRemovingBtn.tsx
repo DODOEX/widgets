@@ -19,6 +19,7 @@ export default function AddingOrRemovingBtn({
         width: 'max-content',
         height: 32,
         backgroundColor: 'hover.default',
+        color: 'primary.main',
         borderWidth: 1,
         borderRadius: 8,
         cursor: 'pointer',

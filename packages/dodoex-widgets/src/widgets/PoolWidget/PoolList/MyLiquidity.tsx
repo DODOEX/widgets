@@ -48,6 +48,7 @@ import LiquidityTable from './components/LiquidityTable';
 import LoadingCard from './components/LoadingCard';
 import { MigrationTag } from './components/migationWidget';
 import PoolApyTooltip from './components/PoolApyTooltip';
+import { PoolFeeRateTag, PoolTypeTag } from './components/tags';
 import TokenAndPoolFilter from './components/TokenAndPoolFilter';
 import TokenListPoolItem from './components/TokenListPoolItem';
 import {
@@ -736,7 +737,7 @@ function TableList({
           const hasMetromMining =
             !!item.apy?.metromMiningApy &&
             Number(item.apy?.metromMiningApy) > 0;
-          const hoverBg = theme.palette.background.tag;
+          const hoverBg = '#182317';
 
           const migrationItem = getMigrationPairAndMining?.({
             address: item.id,
@@ -764,7 +765,7 @@ function TableList({
                     <TokenLogoPair
                       tokens={[baseToken, quoteToken]}
                       width={24}
-                      mr={10}
+                      mr={8}
                       chainId={item.chainId}
                       showChainLogo
                     />
@@ -823,42 +824,13 @@ function TableList({
                       gap: 4,
                     }}
                   >
-                    <Box
-                      sx={{
-                        px: 8,
-                        py: 4,
-                        borderRadius: 4,
-                        typography: 'h6',
-                        backgroundColor: 'background.tag',
-                        color: 'text.secondary',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {poolType}
-                    </Box>
-                    <Tooltip title={<Trans>Fee rate</Trans>}>
-                      <Box
-                        sx={{
-                          px: 8,
-                          py: 4,
-                          borderRadius: 4,
-                          typography: 'h6',
-                          backgroundColor: 'background.tag',
-                          color: 'text.secondary',
-                        }}
-                      >
-                        {isAMMV3
-                          ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
-                              ?.label ?? '-')
-                          : formatPercentageNumber({
-                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                                item.mtFeeRate
-                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
-                                  : 0,
-                              ),
-                            })}
-                      </Box>
-                    </Tooltip>
+                    <PoolTypeTag poolType={poolType} />
+                    <PoolFeeRateTag
+                      isAMMV2={isAMMV2}
+                      isAMMV3={isAMMV3}
+                      lpFeeRate={item.lpFeeRate}
+                      mtFeeRate={item.mtFeeRate}
+                    />
                   </Box>
                 </Box>
               )}
@@ -937,6 +909,7 @@ function TableList({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    typography: 'body2',
                   }}
                 >
                   {isAMMV3 ? (
@@ -1102,7 +1075,7 @@ function TableList({
                         ? null
                         : !!account && (
                             <Button
-                              variant={Button.Variant.outlined}
+                              variant={Button.Variant.second}
                               size={Button.Size.small}
                               onClick={(evt) => {
                                 evt.stopPropagation();
@@ -1113,6 +1086,10 @@ function TableList({
                                   ),
                                   hasMining,
                                 });
+                              }}
+                              sx={{
+                                py: 0,
+                                height: 32,
                               }}
                             >
                               <Trans>Remove</Trans>
@@ -1126,6 +1103,10 @@ function TableList({
                             pool: convertFetchMyLiquidityToOperateData(lq),
                             hasMining,
                           });
+                        }}
+                        sx={{
+                          py: 0,
+                          height: 32,
                         }}
                       >
                         {isAMMV3 ? t`Manage` : t`Add`}

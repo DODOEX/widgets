@@ -39,7 +39,7 @@ export function SliderPercentageCard({
     <Box
       sx={{
         p: 20,
-        backgroundColor: 'background.input',
+        backgroundColor: '#050504',
         borderRadius: 12,
         ...sx,
       }}
@@ -60,6 +60,7 @@ export function SliderPercentageCard({
         }
         sx={{
           mt: 12,
+          backgroundColor: '#050504',
           '& input': {
             pl: 0,
             typography: 'h1',

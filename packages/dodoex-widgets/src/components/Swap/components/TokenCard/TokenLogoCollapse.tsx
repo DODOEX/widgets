@@ -27,7 +27,7 @@ export function TokenLogoCollapse({
       sx={{
         display: 'flex',
         alignItems: 'center',
-        gap: 8,
+        gap: 4,
         color: theme.palette.text.primary,
         typography: showChainName ? 'body2' : 'body1',
         fontWeight: 600,
@@ -47,8 +47,8 @@ export function TokenLogoCollapse({
           address={token?.address ?? ''}
           chainId={token?.chainId}
           noShowChain={!showChainLogo}
-          width={30}
-          height={30}
+          width={24}
+          height={24}
           chainSize={16}
           logoOffset={10}
           marginRight={0}

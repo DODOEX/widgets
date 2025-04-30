@@ -32,6 +32,11 @@ export default function LiquidityTable({
         position: 'relative',
         flex: 1,
         overflowY: 'auto',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'border.main',
+        borderRadius: 16,
+        // overflow: 'hidden',
         ...sx,
       }}
       {...props}
@@ -42,14 +47,15 @@ export default function LiquidityTable({
           width: '100%',
           borderCollapse: 'collapse',
           '& th': {
-            p: 24,
-            typography: 'body1',
+            px: 24,
+            py: 12,
+            typography: 'h6',
             textAlign: 'left',
             color: 'text.secondary',
           },
           '& td': {
             px: 24,
-            py: 20,
+            py: 12,
           },
           '& thead': {
             position: 'sticky',
@@ -57,13 +63,18 @@ export default function LiquidityTable({
             zIndex: 2,
             backgroundColor: 'background.paper',
           },
+          '& tbody tr': {
+            borderWidth: '1px 0px 1px 0px',
+            borderStyle: 'solid',
+            borderColor: 'border.main',
+          },
           ...(!empty &&
             !loading && {
               '& th:last-child, & td:last-child': {
                 position: 'sticky',
                 right: 0,
                 zIndex: 1,
-                backgroundColor: 'background.paper',
+                // backgroundColor: 'background.paper',
                 '&::before': {
                   content: '""',
                   position: 'absolute',
@@ -87,9 +98,9 @@ export default function LiquidityTable({
             alignItems: 'center',
             height: 64,
             width: '100%',
-            borderStyle: 'solid',
-            borderColor: 'border.main',
-            borderWidth: theme.spacing(1, 0, 0, 0),
+            // borderStyle: 'solid',
+            // borderColor: 'border.main',
+            // borderWidth: theme.spacing(1, 0, 0, 0),
             typography: 'body2',
             color: 'text.secondary',
             '&:hover': {

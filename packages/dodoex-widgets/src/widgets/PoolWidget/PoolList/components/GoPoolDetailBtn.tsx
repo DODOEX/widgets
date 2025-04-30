@@ -31,7 +31,7 @@ export default function GoPoolDetailBtn({
         borderRadius: 8,
         cursor: 'pointer',
         flexShrink: 0,
-        height: 36,
+        height: 32,
         color: 'text.primary',
         '&:hover': {
           opacity: 0.5,
@@ -45,6 +45,8 @@ export default function GoPoolDetailBtn({
               width: 40,
               backgroundColor: 'transparent',
               borderWidth: 1,
+              borderStyle: 'solid',
+              borderColor: 'border.main',
             }),
       }}
     >

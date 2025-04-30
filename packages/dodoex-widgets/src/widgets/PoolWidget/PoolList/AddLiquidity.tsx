@@ -52,6 +52,7 @@ import {
   TokenAndPoolFilterUserOptions,
   usePoolListFilterTokenAndPool,
 } from './hooks/usePoolListFilterTokenAndPool';
+import { PoolFeeRateTag, PoolTypeTag } from './components/tags';
 
 function CardList({
   lqList,
@@ -403,6 +404,7 @@ function TableList({
   loadMore,
   loadMoreLoading,
   supportAMM,
+  duration,
 }: {
   lqList: FetchLiquidityListLqList;
   loading: boolean;
@@ -413,6 +415,7 @@ function TableList({
   loadMore?: () => void;
   loadMoreLoading?: boolean;
   supportAMM?: boolean;
+  duration: '1' | '7' | '14' | '30';
 }) {
   const theme = useTheme();
   const { onSharePool } = useUserOptions();
@@ -438,11 +441,11 @@ function TableList({
             <Trans>TVL</Trans>
           </Box>
           <Box component="th">
-            <Trans>APY</Trans>
+            {duration}d&nbsp;<Trans>APY</Trans>
           </Box>
           {supportAMM && (
             <th>
-              <Trans>Volume (1D)</Trans>
+              {duration}d&nbsp;<Trans>Volume</Trans>
             </th>
           )}
           <Box
@@ -506,7 +509,7 @@ function TableList({
           const isAMMV2 = type === 'AMMV2';
           const isAMMV3 = type === 'AMMV3';
 
-          const hoverBg = theme.palette.background.tag;
+          const hoverBg = '#182317';
 
           const migrationItem = getMigrationPairAndMining?.({
             address: item.id,
@@ -533,7 +536,7 @@ function TableList({
                     <TokenLogoPair
                       tokens={[baseToken, quoteToken]}
                       width={24}
-                      mr={10}
+                      mr={8}
                       chainId={item.chainId}
                       showChainLogo
                     />
@@ -607,42 +610,13 @@ function TableList({
                       gap: 4,
                     }}
                   >
-                    <Box
-                      sx={{
-                        px: 8,
-                        py: 4,
-                        borderRadius: 4,
-                        typography: 'h6',
-                        backgroundColor: 'background.tag',
-                        color: 'text.secondary',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {poolType}
-                    </Box>
-                    <Tooltip title={<Trans>Fee rate</Trans>}>
-                      <Box
-                        sx={{
-                          px: 8,
-                          py: 4,
-                          borderRadius: 4,
-                          typography: 'h6',
-                          backgroundColor: 'background.tag',
-                          color: 'text.secondary',
-                        }}
-                      >
-                        {isAMMV3
-                          ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
-                              ?.label ?? '-')
-                          : formatPercentageNumber({
-                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                                item.mtFeeRate
-                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
-                                  : 0,
-                              ),
-                            })}
-                      </Box>
-                    </Tooltip>
+                    <PoolTypeTag poolType={poolType} />
+                    <PoolFeeRateTag
+                      isAMMV2={isAMMV2}
+                      isAMMV3={isAMMV3}
+                      lpFeeRate={item.lpFeeRate}
+                      mtFeeRate={item.mtFeeRate}
+                    />
                   </Box>
                 </Box>
               )}
@@ -711,7 +685,12 @@ function TableList({
                 </Box>
               </Box>
               {supportAMM && (
-                <Box component="td">
+                <Box
+                  component="td"
+                  sx={{
+                    typography: 'body2',
+                  }}
+                >
                   ${formatReadableNumber({ input: item.volume24H || 0 })}
                 </Box>
               )}
@@ -740,6 +719,10 @@ function TableList({
                           pool: convertFetchLiquidityToOperateData(lq),
                           hasMining,
                         });
+                      }}
+                      sx={{
+                        py: 0,
+                        height: 32,
                       }}
                     >
                       {t`Add`}
@@ -1130,6 +1113,7 @@ export default function AddLiquidityList({
               }
             }}
             supportAMM={supportAMMV2 || supportAMMV3}
+            duration={duration}
             getMigrationPairAndMining={getMigrationPairAndMining}
           />
           <CardStatus

@@ -64,13 +64,43 @@ export function CardPlus() {
   return (
     <Box
       sx={{
-        height: 30,
-        textAlign: 'center',
-        fontSize: 32,
-        lineHeight: '30px',
+        height: 4,
+        position: 'relative',
+        color: 'text.secondary',
       }}
     >
-      +
+      <Box
+        sx={{
+          width: 44,
+          height: 44,
+          backgroundColor: '#050504',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderWidth: 4,
+          borderStyle: 'solid',
+          borderColor: 'background.paper',
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%,-50%)',
+        }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 25 24"
+          fill="none"
+        >
+          <path
+            d="M19.0142 13H13.0142V19H11.0142V13H5.01416V11H11.0142V5H13.0142V11H19.0142V13Z"
+            fill="white"
+            fill-opacity="0.5"
+          />
+        </svg>
+      </Box>
     </Box>
   );
 }
@@ -181,7 +211,7 @@ export function TokenCard({
       sx={{
         minHeight: showInputNumber ? 133 : 'auto',
         padding: theme.spacing(20, 20, 24),
-        borderRadius: 12,
+        borderRadius: 16,
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
@@ -288,6 +318,7 @@ export function TokenCard({
             typography={inputTypography}
             sx={{
               mt: 12,
+              ...inputSx,
             }}
           />
         ))}

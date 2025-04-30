@@ -348,7 +348,7 @@ function TableList({
                 break;
             }
           }
-          const hoverBg = theme.palette.background.tag;
+          const hoverBg = '#182317';
 
           return (
             <Box
@@ -538,7 +538,7 @@ function TableList({
                     <>
                       {!!account && (
                         <Button
-                          variant={Button.Variant.outlined}
+                          variant={Button.Variant.second}
                           size={Button.Size.small}
                           onClick={(evt) => {
                             evt.stopPropagation();
@@ -547,6 +547,10 @@ function TableList({
                               chainId,
                               address: pairAddress,
                             });
+                          }}
+                          sx={{
+                            py: 0,
+                            height: 32,
                           }}
                         >
                           <Trans>Remove</Trans>
@@ -559,6 +563,10 @@ function TableList({
                             chainId,
                             address: pairAddress,
                           });
+                        }}
+                        sx={{
+                          py: 0,
+                          height: 32,
                         }}
                       >
                         {t`Add`}
@@ -634,8 +642,7 @@ export default function MyCreated({
           ...(isMobile
             ? {}
             : {
-                px: 20,
-                borderBottomWidth: 1,
+                px: 0,
               }),
         }}
       >
