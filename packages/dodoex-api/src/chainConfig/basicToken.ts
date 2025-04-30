@@ -156,4 +156,37 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WNERO',
     wrappedTokenAddress: '0x252ba4a6efb0d91bd7108d91a067c14592a56f17',
   },
+  [ChainId.BITLAYER]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'BTC',
+    name: 'BTC',
+    wrappedTokenSymbol: 'WBTC',
+    wrappedTokenAddress: '0xff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f',
+  },
+  [ChainId.ZIRCUIT]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
+  },
+  [ChainId.X_LAYER]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'OKB',
+    name: 'OKB',
+    wrappedTokenSymbol: 'WOKB',
+    wrappedTokenAddress: '0xe538905cf8410324e03a5a23c1c177a474d59b2b',
+  },
+  [ChainId.ZERO]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0xAc98B49576B1C892ba6BFae08fE1BB0d80Cf599c',
+  },
+  [ChainId.HASHKEY]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'HSK',
+    name: 'HSK',
+    wrappedTokenSymbol: 'WHSK',
+    wrappedTokenAddress: '0xB210D2120d57b758EE163cFfb43e73728c471Cf1',
+  },
+  [ChainId.HEMI]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
+  },
 };

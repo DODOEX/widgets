@@ -57,6 +57,12 @@ export const rpcServerMap: {
   [ChainId.MORPH]: ['https://rpc.morphl2.io'],
   [ChainId.RISE_TESTNET]: ['https://testnet.riselabs.xyz'],
   [ChainId.NEROCHAIN]: ['https://rpc.nerochain.io'],
+  [ChainId.BITLAYER]: ['https://rpc.bitlayer.org'],
+  [ChainId.ZIRCUIT]: ['https://zircuit1-mainnet.liquify.com'],
+  [ChainId.X_LAYER]: ['https://rpc.xlayer.tech'],
+  [ChainId.ZERO]: ['https://zero-network.calderachain.xyz/http'],
+  [ChainId.HASHKEY]: ['https://mainnet.hsk.xyz'],
+  [ChainId.HEMI]: ['https://rpc.hemi.network/rpc'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -105,6 +111,12 @@ export const scanUrlDomainMap: {
   [ChainId.MORPH]: 'explorer.morphl2.io',
   [ChainId.RISE_TESTNET]: 'explorer.testnet.riselabs.xyz',
   [ChainId.NEROCHAIN]: 'www.neroscan.io',
+  [ChainId.BITLAYER]: 'www.btrscan.com',
+  [ChainId.ZIRCUIT]: 'explorer.zircuit.com',
+  [ChainId.X_LAYER]: 'www.okx.com/web3/explorer/xlayer',
+  [ChainId.ZERO]: 'zerion-explorer.vercel.app',
+  [ChainId.HASHKEY]: 'explorer.hsk.xyz',
+  [ChainId.HEMI]: 'explorer.hemi.xyz',
 };
 
 export const ThegraphKeyMap: {
@@ -135,6 +147,12 @@ export const ThegraphKeyMap: {
   [ChainId.MORPH]: 'morph',
   [ChainId.RISE_TESTNET]: 'rise-testnet',
   [ChainId.NEROCHAIN]: 'nero',
+  [ChainId.BITLAYER]: 'btr',
+  [ChainId.ZIRCUIT]: 'zircuit-mainnet',
+  [ChainId.X_LAYER]: 'okb',
+  [ChainId.ZERO]: 'zero-mainnet',
+  [ChainId.HASHKEY]: 'hashkey',
+  [ChainId.HEMI]: 'hemi',
 };
 
 export const blockTimeMap: {
@@ -165,6 +183,12 @@ export const blockTimeMap: {
   [ChainId.MORPH]: 3200,
   [ChainId.RISE_TESTNET]: 0,
   [ChainId.NEROCHAIN]: 3000,
+  [ChainId.BITLAYER]: 3000,
+  [ChainId.ZIRCUIT]: 2000,
+  [ChainId.X_LAYER]: 3000,
+  [ChainId.ZERO]: 3000,
+  [ChainId.HASHKEY]: 2000,
+  [ChainId.HEMI]: 12000,
 };
 
 export const dexKeysMap: {
@@ -195,4 +219,10 @@ export const dexKeysMap: {
   [ChainId.MORPH]: [],
   [ChainId.RISE_TESTNET]: [],
   [ChainId.NEROCHAIN]: [],
+  [ChainId.BITLAYER]: [],
+  [ChainId.ZIRCUIT]: [],
+  [ChainId.X_LAYER]: [],
+  [ChainId.ZERO]: [],
+  [ChainId.HASHKEY]: [],
+  [ChainId.HEMI]: [],
 };

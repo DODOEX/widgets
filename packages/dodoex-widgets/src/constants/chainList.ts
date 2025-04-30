@@ -20,6 +20,12 @@ import { ReactComponent as NeoxLogo } from '../assets/logo/networks/neox.svg';
 import { ReactComponent as MorphLogo } from '../assets/logo/networks/morph.svg';
 import { ReactComponent as RiseLogo } from '../assets/logo/networks/rise.svg';
 import { ReactComponent as NeroLogo } from '../assets/logo/networks/rise.svg';
+import { ReactComponent as BitlayerLogo } from '../assets/logo/networks/bitlayer.svg';
+import { ReactComponent as ZircuitLogo } from '../assets/logo/networks/zircuit.svg';
+import { ReactComponent as XLayerLogo } from '../assets/logo/networks/x-layer.svg';
+import { ReactComponent as ZeroLogo } from '../assets/logo/networks/zero.svg';
+import { ReactComponent as HashKeyLogo } from '../assets/logo/networks/haskey.svg';
+import { ReactComponent as HemiLogo } from '../assets/logo/networks/hemi.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -229,6 +235,54 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.NEROCHAIN,
       logo: NeroLogo,
       name: 'NERO Chain',
+    },
+  ],
+  [
+    ChainId.BITLAYER,
+    {
+      chainId: ChainId.BITLAYER,
+      logo: BitlayerLogo,
+      name: 'Bitlayer Mainnet',
+    },
+  ],
+  [
+    ChainId.ZIRCUIT,
+    {
+      chainId: ChainId.ZIRCUIT,
+      logo: ZircuitLogo,
+      name: 'Zircuit Mainnet',
+    },
+  ],
+  [
+    ChainId.X_LAYER,
+    {
+      chainId: ChainId.X_LAYER,
+      logo: XLayerLogo,
+      name: 'X Layer Mainnet',
+    },
+  ],
+  [
+    ChainId.ZERO,
+    {
+      chainId: ChainId.ZERO,
+      logo: ZeroLogo,
+      name: 'Zero Network',
+    },
+  ],
+  [
+    ChainId.HASHKEY,
+    {
+      chainId: ChainId.HASHKEY,
+      logo: HashKeyLogo,
+      name: 'HashKey Chain',
+    },
+  ],
+  [
+    ChainId.HEMI,
+    {
+      chainId: ChainId.HEMI,
+      logo: HemiLogo,
+      name: 'Hemi',
     },
   ],
 ]);

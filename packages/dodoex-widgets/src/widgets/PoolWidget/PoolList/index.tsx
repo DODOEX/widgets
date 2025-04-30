@@ -33,6 +33,10 @@ import { transitionTime } from '../../../components/Swap/components/Dialog';
 import { TokenInfo } from '../../../hooks/Token';
 import { TokenAndPoolFilterUserOptions } from './hooks/usePoolListFilterTokenAndPool';
 import { Fee } from '@dodoex/icons';
+import {
+  GetMigrationPairAndMining,
+  ShowMigrationPairAndMining,
+} from '../PoolOperate/types';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -52,18 +56,14 @@ export default function PoolList({
   params,
   scrollRef: scrollParentRefProps,
   tokenAndPoolFilter,
-  operatePMMPoolElement,
-  operatePool: operatePoolProps,
-  onOperatePool,
   getMigrationPairAndMining,
+  showMigrationPairAndMining,
 }: {
   params?: Page<PageType.Pool>['params'];
   scrollRef?: React.RefObject<any>;
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
-  operatePMMPoolElement?: React.ReactElement;
-  operatePool?: Partial<PoolOperateProps> | null;
-  onOperatePool?: (pool: Partial<PoolOperateProps> | null) => boolean;
-  getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
+  showMigrationPairAndMining?: ShowMigrationPairAndMining;
 }) {
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
@@ -77,20 +77,8 @@ export default function PoolList({
   const { activeChainId, filterChainIds, handleChangeActiveChainId } =
     usePoolListFilterChainId();
 
-  const [operatePool, setOperatePoolOrigin] =
-    React.useState<Partial<PoolOperateProps> | null>(operatePoolProps || null);
-  const setOperatePool = (pool: Partial<PoolOperateProps> | null) => {
-    if (onOperatePool) {
-      const parentOperate = onOperatePool(pool);
-      if (parentOperate) {
-        return;
-      }
-    }
-    setOperatePoolOrigin(pool);
-  };
-  React.useEffect(() => {
-    setOperatePoolOrigin(operatePoolProps || null);
-  }, [operatePoolProps]);
+  const [operatePool, setOperatePool] =
+    React.useState<Partial<PoolOperateProps> | null>(null);
 
   return (
     <WidgetContainer
@@ -305,48 +293,48 @@ export default function PoolList({
           )
         ) : (
           <>
-            {operatePMMPoolElement ?? (
-              <>
-                {isMobile ? (
-                  <PoolOperateDialog
-                    account={account}
-                    onClose={() => setOperatePool(null)}
-                    modal={isMobile}
-                    {...operatePool}
-                  />
-                ) : (
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: operatePool ? 0 : '100%',
-                      height: operatePool ? 'max-content' : 0,
-                      transition: `all ${transitionTime}ms`,
-                      zIndex: 20,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      backgroundColor: 'background.paper',
-                      borderRadius: 16,
-                      maxHeight: 'max-content',
-                    }}
-                  >
-                    <PoolOperate
-                      account={account}
-                      onClose={() => setOperatePool(null)}
-                      {...operatePool}
-                      sx={{
-                        width: 375,
-                        height: 'max-content',
-                        backgroundColor: 'background.paper',
-                        borderRadius: 16,
-                        overflow: 'hidden',
-                      }}
-                    />
-                  </Box>
-                )}
-              </>
+            {isMobile ? (
+              <PoolOperateDialog
+                account={account}
+                onClose={() => setOperatePool(null)}
+                modal={isMobile}
+                getMigrationPairAndMining={getMigrationPairAndMining}
+                showMigrationPairAndMining={showMigrationPairAndMining}
+                {...operatePool}
+              />
+            ) : (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: operatePool ? 0 : '100%',
+                  height: operatePool ? 'max-content' : 0,
+                  transition: `all ${transitionTime}ms`,
+                  zIndex: 20,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  backgroundColor: 'background.paper',
+                  borderRadius: 16,
+                  maxHeight: 'max-content',
+                }}
+              >
+                <PoolOperate
+                  account={account}
+                  onClose={() => setOperatePool(null)}
+                  getMigrationPairAndMining={getMigrationPairAndMining}
+                  showMigrationPairAndMining={showMigrationPairAndMining}
+                  {...operatePool}
+                  sx={{
+                    width: 375,
+                    height: 'max-content',
+                    backgroundColor: 'background.paper',
+                    borderRadius: 16,
+                    overflow: 'hidden',
+                  }}
+                />
+              </Box>
             )}
           </>
         )}

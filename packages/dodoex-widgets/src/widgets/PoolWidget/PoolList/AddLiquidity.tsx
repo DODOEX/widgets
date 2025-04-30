@@ -52,6 +52,7 @@ import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
 import { Share } from '@dodoex/icons';
 import { MigrationTag } from './components/migationWidget';
 import TokenAndPoolFilter from './components/TokenAndPoolFilter';
+import { GetMigrationPairAndMining } from '../PoolOperate/types';
 
 function CardList({
   lqList,
@@ -61,7 +62,7 @@ function CardList({
 }: {
   lqList: FetchLiquidityListLqList;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
-  getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
   supportAMM?: boolean;
 }) {
   const theme = useTheme();
@@ -408,7 +409,7 @@ function TableList({
   loading: boolean;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
-  getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
   hasMore?: boolean;
   loadMore?: () => void;
   loadMoreLoading?: boolean;
@@ -774,7 +775,7 @@ export default function AddLiquidityList({
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
-  getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
 }) {
   const theme = useTheme();
   const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =

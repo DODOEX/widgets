@@ -3,12 +3,18 @@ import { isEqual } from 'lodash';
 import { chainListMap } from '../../constants/chainList';
 import { useChainList } from './useChainList';
 import { useWeb3React } from '@web3-react/core';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 
 const allChainList = Array.from(chainListMap.values());
 
 jest.mock('@web3-react/core', () => ({
   useWeb3React: jest.fn(() => ({
     chainId: 1,
+  })),
+}));
+jest.mock('../../components/UserOptionsProvider', () => ({
+  useUserOptions: jest.fn(() => ({
+    supportChainIds: undefined,
   })),
 }));
 

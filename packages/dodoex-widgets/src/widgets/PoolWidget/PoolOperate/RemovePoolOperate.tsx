@@ -10,7 +10,11 @@ import { useLiquidityOperateAmount } from './hooks/useLiquidityOperateAmount';
 import Ratio from './components/Ratio';
 import SlippageSetting, { useSlipper } from './components/SlippageSetting';
 import ComparePrice from './components/ComparePrice';
-import { OperatePool } from './types';
+import {
+  GetMigrationPairAndMining,
+  OperatePool,
+  ShowMigrationPairAndMining,
+} from './types';
 import OperateBtn from './components/OperateBtn';
 import { t, Trans } from '@lingui/macro';
 import { useComparePrice } from './hooks/useComparePrice';
@@ -41,11 +45,15 @@ export function RemovePoolOperate({
   onlyShowSide,
   pool,
   balanceInfo,
+  getMigrationPairAndMining,
+  showMigrationPairAndMining,
 }: {
   submittedBack?: () => void;
   onlyShowSide?: 'base' | 'quote';
   pool?: OperatePool;
   balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
+  showMigrationPairAndMining?: ShowMigrationPairAndMining;
 }) {
   const { account } = useWeb3React();
   const baseOverride = balanceInfo.userBaseLpToTokenBalance;
@@ -208,6 +216,13 @@ export function RemovePoolOperate({
   const feeRate = feeRateQuery.data?.mtFeeRate
     ?.plus(feeRateQuery.data?.lpFeeRate ?? 0)
     ?.toNumber();
+
+  const migrationItem = pool
+    ? getMigrationPairAndMining?.({
+        address: pool.address,
+        chainId: pool.chainId,
+      })
+    : undefined;
 
   const { baseTokenStatus, quoteTokenStatus } = useRemoveLiquidityTokenStatus({
     pool,
@@ -525,37 +540,61 @@ export function RemovePoolOperate({
             midPrice={midPrice}
           />
         )}
-        {pool ? (
-          <OperateBtn
-            chainId={pool.chainId}
-            baseTokenStatus={baseTokenStatus}
-            quoteTokenStatus={quoteTokenStatus}
-          >
-            <Button
-              fullWidth
-              disabled={disabled}
-              danger={isWarnCompare}
-              isLoading={
-                operateLiquidityMutation.isPending ||
-                removeAMMV2LiquidityMutataion.isPending
-              }
-              onClick={() => {
-                if (disabled) return;
-                if (isWarnCompare) {
-                  setShowCompareConfirm(true);
-                  return;
-                }
-                submitLq();
-              }}
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 12,
+            alignItems: 'center',
+            '& > *': {
+              flex: 1,
+            },
+          }}
+        >
+          {!!migrationItem && !!showMigrationPairAndMining && (
+            <>
+              <Button
+                fullWidth
+                variant={Button.Variant.outlined}
+                onClick={() => {
+                  showMigrationPairAndMining(migrationItem);
+                }}
+              >
+                <Trans>Migrate</Trans>
+              </Button>
+            </>
+          )}
+          {pool ? (
+            <OperateBtn
+              chainId={pool.chainId}
+              baseTokenStatus={baseTokenStatus}
+              quoteTokenStatus={quoteTokenStatus}
             >
+              <Button
+                fullWidth
+                disabled={disabled}
+                danger={isWarnCompare}
+                isLoading={
+                  operateLiquidityMutation.isPending ||
+                  removeAMMV2LiquidityMutataion.isPending
+                }
+                onClick={() => {
+                  if (disabled) return;
+                  if (isWarnCompare) {
+                    setShowCompareConfirm(true);
+                    return;
+                  }
+                  submitLq();
+                }}
+              >
+                {submitBtnText}
+              </Button>
+            </OperateBtn>
+          ) : (
+            <Button fullWidth disabled>
               {submitBtnText}
             </Button>
-          </OperateBtn>
-        ) : (
-          <Button fullWidth disabled>
-            {submitBtnText}
-          </Button>
-        )}
+          )}
+        </Box>
       </Box>
       <Confirm
         open={showCompareConfirm}

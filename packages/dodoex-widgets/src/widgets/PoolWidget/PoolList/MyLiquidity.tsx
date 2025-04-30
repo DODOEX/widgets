@@ -55,6 +55,7 @@ import { InRangeDot } from '../AMMV3/components/InRangeDot';
 import { formatTickPrice } from '../AMMV3/utils/formatTickPrice';
 import { Bound } from '../AMMV3/types';
 import { MigrationTag } from './components/migationWidget';
+import { GetMigrationPairAndMining } from '../PoolOperate/types';
 
 function CardList({
   account,
@@ -66,7 +67,7 @@ function CardList({
   account?: string;
   lqList: FetchMyLiquidityListLqList;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
-  getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
   supportAMM?: boolean;
 }) {
   const theme = useTheme();
@@ -599,7 +600,7 @@ function TableList({
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
   supportAMM?: boolean;
   onlyV3?: boolean;
-  getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
 }) {
   const theme = useTheme();
   return (
@@ -624,7 +625,12 @@ function TableList({
               <Trans>APY</Trans>
             </Box>
           )}
-          <Box component="th">
+          <Box
+            component="th"
+            sx={{
+              whiteSpace: 'nowrap',
+            }}
+          >
             <Trans>My Liquidity</Trans>
           </Box>
 
@@ -938,6 +944,7 @@ function TableList({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    whiteSpace: 'nowrap',
                   }}
                 >
                   {isAMMV3 ? (
@@ -1160,7 +1167,7 @@ export default function MyLiquidity({
   handleChangeActiveChainId: (chainId: number | undefined) => void;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
-  getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
 }) {
   const theme = useTheme();

@@ -46,4 +46,16 @@ export enum ChainId {
   RISE_TESTNET = 11155931,
 
   NEROCHAIN = 1689,
+
+  BITLAYER = 200901,
+
+  ZIRCUIT = 48900,
+
+  X_LAYER = 196,
+
+  ZERO = 543210,
+
+  HASHKEY = 177,
+
+  HEMI = 43111,
 }

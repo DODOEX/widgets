@@ -28,4 +28,10 @@ export const platformIdMap: {
   [ChainId.MORPH]: 'morph',
   [ChainId.RISE_TESTNET]: 'rise-testnet',
   [ChainId.NEROCHAIN]: 'nero',
+  [ChainId.BITLAYER]: 'btr',
+  [ChainId.ZIRCUIT]: 'zircuit-mainnet',
+  [ChainId.X_LAYER]: 'okb',
+  [ChainId.ZERO]: 'zero-mainnet',
+  [ChainId.HASHKEY]: 'hashkey',
+  [ChainId.HEMI]: 'hemi',
 };
