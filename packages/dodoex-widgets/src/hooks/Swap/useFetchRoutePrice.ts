@@ -91,7 +91,7 @@ export function useFetchRoutePrice({
       !fromToken ||
       !toToken ||
       fromToken.chainId !== toToken.chainId ||
-      (!isReverseRouting && !fromAmount) ||
+      (!isReverseRouting && !Number(fromAmount)) ||
       (isReverseRouting && !toAmount)
     ) {
       setStatus(RoutePriceStatus.Initial);
