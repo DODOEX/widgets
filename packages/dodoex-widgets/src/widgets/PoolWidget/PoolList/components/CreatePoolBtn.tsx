@@ -15,15 +15,48 @@ import { useRouterStore } from '../../../../router';
 import { PageType } from '../../../../router/types';
 import Dialog from '../../../../components/Dialog';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
+import {
+  getUniswapV2FactoryContractAddressByChainId,
+  getUniswapV2FactoryFixedFeeContractAddressByChainId,
+  getUniswapV3FactoryContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
+
+function CreateItemTooltip({
+  disabled,
+  children,
+}: React.propsWithChildren<{
+  disabled?: boolean;
+}>) {
+  if (disabled) {
+    return (
+      <Tooltip
+        sx={{
+          maxWidth: 240,
+        }}
+        title={
+          <Trans>
+            This pool type isn't supported on your current network. You can
+            switch networks in your wallet to create it
+          </Trans>
+        }
+      >
+        {children}
+      </Tooltip>
+    );
+  }
+  return children;
+}
 
 function CreateItem({
   onClick,
   title,
   desc,
+  disabled,
 }: {
   onClick: () => void;
   title: React.ReactNode;
   desc: React.ReactNode;
+  disabled?: boolean;
 }) {
   const theme = useTheme();
 
@@ -43,44 +76,51 @@ function CreateItem({
         },
       }}
     >
-      <ButtonBase
-        onClick={onClick}
-        sx={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          gap: 0,
-          p: 0,
-          borderRadius: 8,
-          textAlign: 'left',
-          '&:hover': {
-            backgroundColor: theme.palette.background.tag,
-          },
-          [theme.breakpoints.up('tablet')]: {
-            p: 8,
-          },
-        }}
-      >
-        <Box
+      <CreateItemTooltip disabled={disabled}>
+        <ButtonBase
+          onClick={onClick}
+          disabled={disabled}
           sx={{
-            typography: 'body1',
-            fontWeight: 600,
-            color: theme.palette.text.primary,
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: 0,
+            p: 0,
+            borderRadius: 8,
+            textAlign: 'left',
+            '&:not(:disabled):hover': {
+              backgroundColor: theme.palette.background.tag,
+            },
+            [theme.breakpoints.up('tablet')]: {
+              p: 8,
+            },
           }}
         >
-          {title}
-        </Box>
-        <Box
-          sx={{
-            typography: 'h6',
-            fontWeight: 500,
-            color: theme.palette.text.secondary,
-          }}
-        >
-          {desc}
-        </Box>
-      </ButtonBase>
+          <Box
+            sx={{
+              typography: 'body1',
+              fontWeight: 600,
+              color: disabled
+                ? theme.palette.text.disabled
+                : theme.palette.text.primary,
+            }}
+          >
+            {title}
+          </Box>
+          <Box
+            sx={{
+              typography: 'h6',
+              fontWeight: 500,
+              color: disabled
+                ? theme.palette.text.disabled
+                : theme.palette.text.secondary,
+            }}
+          >
+            {desc}
+          </Box>
+        </ButtonBase>
+      </CreateItemTooltip>
     </Box>
   );
 }
@@ -90,7 +130,7 @@ export interface CreatePoolBtnProps {}
 export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
-  const { account } = useWalletInfo();
+  const { account, chainId } = useWalletInfo();
   const { supportAMMV2, supportAMMV3, notSupportPMM } = useUserOptions();
 
   const [selectTypeModalOpen, setSelectTypeModalOpen] = React.useState(false);
@@ -135,6 +175,10 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
             }}
             title={<Trans>AMM V2 Position</Trans>}
             desc={<Trans>Simple, full-range liquidity</Trans>}
+            disabled={
+              !getUniswapV2FactoryContractAddressByChainId(chainId) &&
+              !getUniswapV2FactoryFixedFeeContractAddressByChainId(chainId)
+            }
           />
         )}
         {supportAMMV3 && (
@@ -146,6 +190,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
             }}
             title={<Trans>AMM V3 Position</Trans>}
             desc={<Trans>Concentrated liquidity, higher efficiency</Trans>}
+            disabled={!getUniswapV3FactoryContractAddressByChainId(chainId)}
           />
         )}
       </>
