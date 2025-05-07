@@ -137,6 +137,13 @@ export function PoolOperate({
                 }
               : {}),
           }}
+          // tabSx={{
+          //   mb: 0,
+          //   pl: 0,
+          //   pr: 0,
+          //   // pt: 0,
+          //   pb: 16,
+          // }}
           rightSlot={
             <Box
               sx={{

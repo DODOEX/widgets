@@ -10,8 +10,8 @@ import { Box, BoxProps } from '../../Box';
 
 const TabStyle = styled(BaseTab)`
   min-height: 38px;
-  padding: 20px 16px;
-  margin: 0;
+  padding: 16px 0px 16px 0px;
+  margin: 0px 32px 0px 0px;
   border-radius: 8px;
   color: ${({ theme }) => theme.palette.text.primary};
   border: none;

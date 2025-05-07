@@ -165,11 +165,7 @@ export default function PoolList({
                 isMobile
                   ? undefined
                   : {
-                      mb: 0,
-                      pl: 0,
-                      pr: 0,
                       pt: 0,
-                      pb: 16,
                       mr: 48,
                       typography: 'h5',
                       lineHeight: '25px',
@@ -182,6 +178,9 @@ export default function PoolList({
                 display: 'flex',
                 alignItems: 'center',
                 fontWeight: 600,
+                typography: 'h5',
+                lineHeight: '25px',
+                pb: 16,
               }}
             >
               {isMobile ? (
@@ -197,7 +196,7 @@ export default function PoolList({
                     backgroundColor: alpha(theme.palette.secondary.main, 0.3),
                     borderRadius: 6,
                     mr: 4,
-                    color: 'warning.main',
+                    color: 'primary.main',
                   }}
                 >
                   <Box
