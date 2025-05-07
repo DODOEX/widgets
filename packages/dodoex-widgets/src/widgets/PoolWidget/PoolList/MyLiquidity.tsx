@@ -1159,6 +1159,7 @@ export default function MyLiquidity({
   setOperatePool,
   getMigrationPairAndMining,
   tokenAndPoolFilter,
+  supportAMMIcon,
 }: {
   account?: string;
   filterChainIds?: ChainId[];
@@ -1169,6 +1170,7 @@ export default function MyLiquidity({
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
   getMigrationPairAndMining?: GetMigrationPairAndMining;
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
+  supportAMMIcon?: boolean;
 }) {
   const theme = useTheme();
   const { minDevice, isMobile } = useWidgetDevice();
@@ -1287,6 +1289,7 @@ export default function MyLiquidity({
               sx={{
                 justifyContent: 'space-between',
               }}
+              showNewIcon={supportAMMIcon}
             />
           )}
           {showOnlyV3Checked && (

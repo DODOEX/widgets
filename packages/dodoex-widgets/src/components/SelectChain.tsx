@@ -1,15 +1,27 @@
-import { ButtonBase, Box, BoxProps, useTheme } from '@dodoex/components';
+import {
+  ButtonBase,
+  Box,
+  BoxProps,
+  useTheme,
+  Tooltip,
+} from '@dodoex/components';
 import { CaretUp } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import React from 'react';
 import { useChainList } from '../hooks/Chain/useChainList';
 import Dialog from './Swap/components/Dialog';
 import { ReactComponent as IconAllChains } from '../assets/icon-all-chains.svg';
+import { ReactComponent as NewIcon } from '../assets/new.svg';
 import { useLingui } from '@lingui/react';
 import { ChainListItem } from '../constants/chainList';
 import { useWidgetDevice } from '../hooks/style/useWidgetDevice';
 import Select from './Select';
 import { ChainId } from '@dodoex/api';
+import {
+  getUniswapV2FactoryContractAddressByChainId,
+  getUniswapV2FactoryFixedFeeContractAddressByChainId,
+  getUniswapV3FactoryContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
 
 function ChainItem({
   isMobileStyle,
@@ -18,6 +30,7 @@ function ChainItem({
   logoWidth,
   mobileLogoWidth,
   sx,
+  showNewIcon,
 }: {
   chain?: Omit<ChainListItem, 'chainId'> & {
     chainId: number;
@@ -27,8 +40,17 @@ function ChainItem({
   logoWidth?: number;
   mobileLogoWidth?: number;
   sx?: BoxProps['sx'];
+  showNewIcon?: boolean;
 }) {
   const theme = useTheme();
+  const chainId = chain?.chainId;
+  const hasAMMContract =
+    chainId !== undefined
+      ? getUniswapV2FactoryContractAddressByChainId(chainId) ||
+        getUniswapV2FactoryFixedFeeContractAddressByChainId(chainId) ||
+        getUniswapV3FactoryContractAddressByChainId(chainId)
+      : false;
+
   return isMobileStyle ? (
     <Box
       sx={{
@@ -58,6 +80,20 @@ function ChainItem({
       >
         {chain?.name}
       </Box>
+      {showNewIcon && hasAMMContract && (
+        <Tooltip
+          title={<Trans>The current network supports new pool types</Trans>}
+        >
+          <Box>
+            <Box
+              component={NewIcon}
+              sx={{
+                ml: 8,
+              }}
+            />
+          </Box>
+        </Tooltip>
+      )}
     </Box>
   ) : (
     <Box
@@ -82,6 +118,20 @@ function ChainItem({
       >
         {chain?.name}
       </Box>
+      {showNewIcon && (
+        <Tooltip
+          title={<Trans>The current network supports new pool types</Trans>}
+        >
+          <Box>
+            <Box
+              component={NewIcon}
+              sx={{
+                ml: 8,
+              }}
+            />
+          </Box>
+        </Tooltip>
+      )}
     </Box>
   );
 }
@@ -98,6 +148,7 @@ export default function SelectChain({
   notShowAllChain,
   valueOnlyIcon,
   sx,
+  showNewIcon,
 }: {
   chainId: number | undefined;
   setChainId: (chainId: number | undefined) => void;
@@ -108,6 +159,7 @@ export default function SelectChain({
   notShowAllChain?: boolean;
   valueOnlyIcon?: boolean;
   sx?: BoxProps['sx'];
+  showNewIcon?: boolean;
 }) {
   const chainList = useChainList();
   const [isDialogVisible, setIsDialogVisible] = React.useState<boolean>(false);
@@ -195,12 +247,20 @@ export default function SelectChain({
             chain={chain}
             logoWidth={logoWidth}
             mobileLogoWidth={mobileLogoWidth}
+            showNewIcon={showNewIcon}
           />
         ),
       });
     });
     return res;
-  }, [isMobile, logoWidth, mobileLogoWidth, chainList, notShowAllChain]);
+  }, [
+    isMobile,
+    logoWidth,
+    mobileLogoWidth,
+    chainList,
+    notShowAllChain,
+    showNewIcon,
+  ]);
 
   if (!isMobile) {
     return (

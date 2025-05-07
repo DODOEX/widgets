@@ -174,10 +174,6 @@ msgstr "Single-Token"
 msgid "Select Pool"
 msgstr "Select Pool"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:43
-msgid "he slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1."
-msgstr "he slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1."
-
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:539
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:65
 msgid "Selected Range"
@@ -303,7 +299,7 @@ msgid "Pricing Model"
 msgstr "Pricing Model"
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:74
-#: src/widgets/PoolWidget/PoolList/index.tsx:220
+#: src/widgets/PoolWidget/PoolList/index.tsx:225
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:17
 msgid "Liquidity"
 msgstr "Liquidity"
@@ -410,10 +406,6 @@ msgstr "LP Balance"
 msgid "The liquidity of DODO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only."
 msgstr "The liquidity of DODO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only."
 
-#: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:44
-msgid "FeeRevenue"
-msgstr "FeeRevenue"
-
 #: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:58
 msgid "Search"
 msgstr "Search"
@@ -503,6 +495,10 @@ msgstr "Go back"
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/index.tsx:123
 msgid "Slippage"
 msgstr "Slippage"
+
+#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:43
+msgid "The slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1."
+msgstr "The slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1."
 
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/components/widgets.tsx:143
@@ -1020,7 +1016,7 @@ msgstr "Fee rate"
 
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:305
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:25
-#: src/widgets/PoolWidget/PoolList/index.tsx:160
+#: src/widgets/PoolWidget/PoolList/index.tsx:162
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:140
 msgid "Add Liquidity"
 msgstr "Add Liquidity"
@@ -1121,7 +1117,7 @@ msgid "Estimated Time"
 msgstr "Estimated Time"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:19
-#: src/widgets/PoolWidget/PoolList/index.tsx:221
+#: src/widgets/PoolWidget/PoolList/index.tsx:226
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr "Classical AMM-like pool. Suitable for most assets."
 
@@ -1489,6 +1485,11 @@ msgstr "For those who are looking to sell tokens and only need ask-side liquidit
 msgid "Price"
 msgstr "Price"
 
+#: src/components/SelectChain.tsx:85
+#: src/components/SelectChain.tsx:123
+msgid "The current network supports new pool types"
+msgstr "The current network supports new pool types"
+
 #: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:37
 msgid "The price of this pool is within your selected range. Your position is currently earning fees."
 msgstr "The price of this pool is within your selected range. Your position is currently earning fees."
@@ -1538,6 +1539,10 @@ msgstr "Select pool by tokens"
 #: src/widgets/PoolWidget/PoolDetail/components/TotalLiquidity.tsx:176
 msgid "Asset"
 msgstr "Asset"
+
+#: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:44
+msgid "Fee Revenue"
+msgstr "Fee Revenue"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:391
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:122
@@ -1655,7 +1660,7 @@ msgstr "Edit"
 msgid "Min"
 msgstr "Min"
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:670
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:673
 msgid "Hide TVL=0 pools"
 msgstr "Hide TVL=0 pools"
 
@@ -1855,8 +1860,8 @@ msgstr "Total Swap Volume"
 msgid "Receive"
 msgstr "Receive"
 
-#: src/components/SelectChain.tsx:219
-#: src/components/SelectChain.tsx:266
+#: src/components/SelectChain.tsx:279
+#: src/components/SelectChain.tsx:326
 msgid "Select Network"
 msgstr "Select Network"
 
@@ -2007,8 +2012,8 @@ msgstr "The closer the provided asset ratio is to the recommended ratio ({recomm
 msgid "MT Fee"
 msgstr "MT Fee"
 
-#: src/components/SelectChain.tsx:145
-#: src/components/SelectChain.tsx:180
+#: src/components/SelectChain.tsx:197
+#: src/components/SelectChain.tsx:232
 msgid "All chains"
 msgstr "All chains"
 

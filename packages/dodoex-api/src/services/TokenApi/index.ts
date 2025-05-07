@@ -133,9 +133,9 @@ export class TokenApi {
     if (chainId !== undefined) {
       const config = contractConfig[chainId as ChainId];
       if (!proxyContractAddress) {
-        proxyContractAddress = config.DODO_APPROVE;
+        proxyContractAddress = config?.DODO_APPROVE;
       }
-      erc20HelperAddress = config.ERC20_HELPER;
+      erc20HelperAddress = config?.ERC20_HELPER;
     }
     return {
       // Unify the upper and lower case formats of queryKey into one to facilitate the use of cache

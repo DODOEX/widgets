@@ -582,6 +582,7 @@ export default function MyCreated({
   handleChangeActiveChainId,
   operatePool,
   setOperatePool,
+  supportAMMIcon,
 }: {
   account?: string;
   filterChainIds?: ChainId[];
@@ -590,6 +591,7 @@ export default function MyCreated({
   handleChangeActiveChainId: (chainId: number | undefined) => void;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  supportAMMIcon?: boolean;
 }) {
   const { isMobile } = useWidgetDevice();
   const { onlyChainId } = useUserOptions();
@@ -643,6 +645,7 @@ export default function MyCreated({
           <SelectChain
             chainId={activeChainId}
             setChainId={handleChangeActiveChainId}
+            showNewIcon={supportAMMIcon}
           />
         )}
         <Box

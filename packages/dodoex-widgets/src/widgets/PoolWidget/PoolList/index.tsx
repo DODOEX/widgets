@@ -49,12 +49,14 @@ export default function PoolList({
   tokenAndPoolFilter,
   getMigrationPairAndMining,
   showMigrationPairAndMining,
+  supportAMMIcon,
 }: {
   params?: Page<PageType.Pool>['params'];
   scrollRef?: React.RefObject<any>;
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
   getMigrationPairAndMining?: GetMigrationPairAndMining;
   showMigrationPairAndMining?: ShowMigrationPairAndMining;
+  supportAMMIcon?: boolean;
 }) {
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
@@ -180,6 +182,7 @@ export default function PoolList({
             setOperatePool={setOperatePool}
             tokenAndPoolFilter={tokenAndPoolFilter}
             getMigrationPairAndMining={getMigrationPairAndMining}
+            supportAMMIcon={supportAMMIcon}
           />
         </TabPanelFlexCol>
         <TabPanelFlexCol value={PoolTab.myLiquidity}>
@@ -192,6 +195,7 @@ export default function PoolList({
             setOperatePool={setOperatePool}
             tokenAndPoolFilter={tokenAndPoolFilter}
             getMigrationPairAndMining={getMigrationPairAndMining}
+            supportAMMIcon={supportAMMIcon}
           />
         </TabPanelFlexCol>
         <TabPanelFlexCol value={PoolTab.myCreated}>
@@ -202,6 +206,7 @@ export default function PoolList({
             handleChangeActiveChainId={handleChangeActiveChainId}
             operatePool={operatePool}
             setOperatePool={setOperatePool}
+            supportAMMIcon={supportAMMIcon}
           />
         </TabPanelFlexCol>
       </Tabs>

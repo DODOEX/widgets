@@ -765,6 +765,7 @@ export default function AddLiquidityList({
   setOperatePool,
   tokenAndPoolFilter,
   getMigrationPairAndMining,
+  supportAMMIcon,
 }: {
   scrollParentRef: React.MutableRefObject<HTMLDivElement | null>;
   account?: string;
@@ -776,6 +777,7 @@ export default function AddLiquidityList({
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
   getMigrationPairAndMining?: GetMigrationPairAndMining;
+  supportAMMIcon?: boolean;
 }) {
   const theme = useTheme();
   const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
@@ -895,6 +897,7 @@ export default function AddLiquidityList({
             <SelectChain
               chainId={activeChainId}
               setChainId={handleChangeActiveChainId}
+              showNewIcon={supportAMMIcon}
             />
           )}
           {tokenAndPoolFilter?.element ?? (
