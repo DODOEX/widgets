@@ -2,14 +2,13 @@ import { Box, Skeleton, useTheme } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
+import { AddressWithLinkAndCopy } from '../../../../components/AddressWithLinkAndCopy';
 import TokenLogo from '../../../../components/TokenLogo';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { formatShortNumber, formatUnknownTokenSymbol } from '../../../../utils';
 import { usePoolDetail } from '../../hooks/usePoolDetail';
 import { poolApi } from '../../utils';
 import { BaseQuotePie } from './BaseQuotePie';
-import { AddressWithLinkAndCopy } from '../../../../components/AddressWithLinkAndCopy';
-import { useRouterStore } from '../../../../router';
 
 export default function TotalLiquidity({
   poolDetail,
@@ -55,7 +54,7 @@ export default function TotalLiquidity({
   return (
     <Box
       sx={{
-        mt: isMobile ? 24 : 32,
+        mt: isMobile ? 24 : 28,
       }}
     >
       {/* title */}
@@ -74,6 +73,7 @@ export default function TotalLiquidity({
           backgroundColor: 'background.paper',
           borderRadius: 16,
           overflowX: 'auto',
+          border: `1px solid ${theme.palette.border.main}`,
         }}
       >
         {/* chart */}
@@ -86,7 +86,7 @@ export default function TotalLiquidity({
           }}
         >
           <BaseQuotePie
-            pieRadius={36}
+            pieRadius={44}
             baseReserve={baseReserve}
             baseAmount={baseAmount}
             baseTokenDecimals={poolDetail?.baseToken?.decimals}

@@ -5,20 +5,20 @@ import {
   TabPanel,
   Tabs,
   TabsGroup,
+  useTheme,
 } from '@dodoex/components';
+import { Switch } from '@dodoex/icons';
 import { t } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
 import React from 'react';
+import { TokenInfo } from '../../../../hooks/Token';
+import { formatReadableNumber } from '../../../../utils/formatter';
 import { usePoolDetail } from '../../hooks/usePoolDetail';
 import DepthAndLiquidityChart from '../../PoolCreate/components/DepthAndLiquidityChart';
 import { poolApi } from '../../utils';
 import { usePoolDayData } from '../hooks/usePoolDayData';
 import StatBarChart from './StatBarChart';
-import { TokenInfo } from '../../../../hooks/Token';
-import BigNumber from 'bignumber.js';
-import { TokenLogoPair } from '../../../../components/TokenLogoPair';
-import { formatReadableNumber } from '../../../../utils/formatter';
-import { Switch } from '@dodoex/icons';
 
 enum ChartTab {
   depth = 1,
@@ -34,6 +34,8 @@ export default function ChartInfo({
   poolDetail?: ReturnType<typeof usePoolDetail>['poolDetail'];
   chart24hDataFirst?: boolean;
 }) {
+  const theme = useTheme();
+
   const [chartTab, setChartTab] = React.useState(
     chart24hDataFirst ? ChartTab.volume : ChartTab.depth,
   );
@@ -89,9 +91,11 @@ export default function ChartInfo({
   return (
     <Box
       sx={{
-        mt: {
-          mobile: 24,
-          tablet: 52,
+        mt: 24,
+        [theme.breakpoints.up('tablet')]: {
+          mt: 20,
+          pt: 28,
+          borderTop: `1px solid ${theme.palette.border.main}`,
         },
       }}
     >
@@ -104,6 +108,8 @@ export default function ChartInfo({
           variant="rounded"
           tabsListSx={{
             borderWidth: 0,
+            gap: 4,
+            mb: 24,
           }}
         />
         {chartTab === ChartTab.depth &&

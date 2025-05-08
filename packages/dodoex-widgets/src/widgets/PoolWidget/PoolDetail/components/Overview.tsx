@@ -146,14 +146,14 @@ export default function Overview({
             borderRadius: 8,
             p: 16,
             backgroundColor: 'background.paper',
+            border: `1px solid ${theme.palette.border.main}`,
           }}
         >
           <Box
             sx={{
               typography: 'caption',
               fontWeight: 600,
-              lineHeight: 1,
-              mb: 2,
+              lineHeight: '27px',
             }}
           >
             {item.text}

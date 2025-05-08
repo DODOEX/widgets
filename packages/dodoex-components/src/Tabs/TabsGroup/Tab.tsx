@@ -47,16 +47,15 @@ const TabStyle = styled(BaseTab)`
 `;
 
 const TabRoundedStyle = styled(BaseTab)`
-  min-height: 38px;
-  padding: 8px 16px;
-  margin-bottom: 16px;
+  min-height: 32px;
+  padding: 6px 8px;
   border-radius: 8px;
   color: ${({ theme }) => theme.palette.text.primary};
   border: none;
   background-color: transparent;
   cursor: pointer;
+  font-size: 14px;
   font-weight: 600;
-  font-size: 1rem;
   white-space: nowrap;
 
   &:not(.${tabClasses.selected}):hover {

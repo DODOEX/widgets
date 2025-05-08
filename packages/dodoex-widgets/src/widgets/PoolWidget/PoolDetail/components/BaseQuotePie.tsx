@@ -141,16 +141,16 @@ export function BaseQuotePie({
           flexDirection: 'column',
           justifyContent: 'center',
           ml: 0,
-          mt: 20,
+          mt: 16,
           width: '100%',
 
           '& > div': {
-            paddingLeft: '16px',
+            paddingLeft: '12px',
             position: 'relative',
             '&::before': {
               content: '""',
-              width: '6px',
-              height: '6px',
+              width: '8px',
+              height: '8px',
               position: 'absolute',
               left: '0',
               top: '50%',
@@ -184,9 +184,15 @@ export function BaseQuotePie({
             }}
           >
             <Box>
-              <div className="symbol" title={baseTokenSymbol}>
+              <Box
+                className="symbol"
+                title={baseTokenSymbol}
+                sx={{
+                  typography: 'h6',
+                }}
+              >
                 {baseTokenSymbol}
-              </div>
+              </Box>
               {baseTokenAddress ? (
                 <AddressWithLinkAndCopy
                   address={baseTokenAddress}
@@ -241,9 +247,15 @@ export function BaseQuotePie({
             }}
           >
             <Box>
-              <span className="symbol" title={quoteTokenSymbol}>
+              <Box
+                className="symbol"
+                title={quoteTokenSymbol}
+                sx={{
+                  typography: 'h6',
+                }}
+              >
                 {quoteTokenSymbol}
-              </span>
+              </Box>
               {quoteTokenAddress ? (
                 <AddressWithLinkAndCopy
                   address={quoteTokenAddress}

@@ -1,4 +1,4 @@
-import { Box, Button, useTheme, Modal } from '@dodoex/components';
+import { Box, Button, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import React from 'react';
 import GoBack from '../../../components/GoBack';

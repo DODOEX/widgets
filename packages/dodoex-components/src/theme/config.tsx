@@ -116,7 +116,7 @@ export const darkPalette: PaletteOptions = {
     contrastText: '#323227',
   },
   purple: {
-    main: '#BC9CFF',
+    main: '#FC72FF',
     contrastText: '#323227',
   },
   background: {
@@ -144,8 +144,8 @@ export const darkPalette: PaletteOptions = {
     default: 'rgba(255, 255, 255, 0.04)',
   },
   tabActive: {
-    main: '#7BF179',
-    contrastText: '#323227',
+    main: 'rgba(123, 241, 121, 0.10)',
+    contrastText: '#7BF179',
   },
 };
 
