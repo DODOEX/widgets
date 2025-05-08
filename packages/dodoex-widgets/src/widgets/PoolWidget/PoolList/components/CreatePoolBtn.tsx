@@ -24,9 +24,10 @@ import {
 function CreateItemTooltip({
   disabled,
   children,
-}: React.propsWithChildren<{
+}: {
   disabled?: boolean;
-}>) {
+  children: any;
+}) {
   if (disabled) {
     return (
       <Tooltip
@@ -161,7 +162,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
             title={<Trans>PMM Pool</Trans>}
             desc={
               <Trans>
-                Fexible customization, take full control of liquidity
+                Flexible customization, take full control of liquidity
               </Trans>
             }
           />

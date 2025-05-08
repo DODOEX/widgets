@@ -410,6 +410,10 @@ msgstr "The liquidity of DODO is continuous, which is different from the discret
 msgid "Search"
 msgstr "Search"
 
+#: src/components/LiquidityLpPartnerReward.tsx:105
+msgid "Points for staking LP tokens."
+msgstr "Points for staking LP tokens."
+
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:21
 msgid "DODO provides a variety of pool versions to suit your needs."
 msgstr "DODO provides a variety of pool versions to suit your needs."
@@ -628,11 +632,11 @@ msgstr "{0} Submitted"
 msgid "Edit"
 msgstr "Edit"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:121
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:162
 msgid "PMM Pool"
 msgstr "PMM Pool"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:148
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:193
 msgid "Concentrated liquidity, higher efficiency"
 msgstr "Concentrated liquidity, higher efficiency"
 
@@ -758,6 +762,10 @@ msgstr "You can set the minimum selling price for single-token pools."
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:527
 msgid "Invalid price input"
 msgstr "Invalid price input"
+
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:38
+msgid "This pool type isn't supported on your current network. You can switch networks in your wallet to create it"
+msgstr "This pool type isn't supported on your current network. You can switch networks in your wallet to create it"
 
 #: src/utils/time.ts:27
 msgid "Days"
@@ -913,6 +921,10 @@ msgstr "The slippage coefficient needs to be greater than 0, and less than 0.1."
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:233
 msgid "The fee tier should greater than {0}%"
 msgstr "The fee tier should greater than {0}%"
+
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:164
+msgid "Flexible customization, take full control of liquidity"
+msgstr "Flexible customization, take full control of liquidity"
 
 #: src/components/RiskDialog.tsx:19
 msgid "Risk Disclaimer"
@@ -1222,6 +1234,10 @@ msgstr "Price Impact"
 msgid "Select a token"
 msgstr "Select a token"
 
+#: src/components/LiquidityLpPartnerReward.tsx:106
+msgid "Points for LP token holders."
+msgstr "Points for LP token holders."
+
 #: src/utils/time.ts:15
 msgid "Mins"
 msgstr "Mins"
@@ -1259,10 +1275,6 @@ msgstr "Users sell {0} amount:"
 #: src/hooks/Submission/getExecutionErrorMsg.ts:58
 msgid "Wallet incompatibility"
 msgstr "Wallet incompatibility"
-
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:123
-msgid "Fexible customization, take full control of liquidity"
-msgstr "Fexible customization, take full control of liquidity"
 
 #: src/components/chart/i18n.ts:29
 msgid "Bought {0} {1}, price in the pool decreased to {2}"
@@ -1485,8 +1497,8 @@ msgstr "For those who are looking to sell tokens and only need ask-side liquidit
 msgid "Price"
 msgstr "Price"
 
-#: src/components/SelectChain.tsx:85
-#: src/components/SelectChain.tsx:123
+#: src/components/SelectChain.tsx:87
+#: src/components/SelectChain.tsx:128
 msgid "The current network supports new pool types"
 msgstr "The current network supports new pool types"
 
@@ -1860,16 +1872,16 @@ msgstr "Total Swap Volume"
 msgid "Receive"
 msgstr "Receive"
 
-#: src/components/SelectChain.tsx:279
-#: src/components/SelectChain.tsx:326
+#: src/components/SelectChain.tsx:284
+#: src/components/SelectChain.tsx:331
 msgid "Select Network"
 msgstr "Select Network"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:137
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:178
 msgid "Simple, full-range liquidity"
 msgstr "Simple, full-range liquidity"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:136
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:177
 msgid "AMM V2 Position"
 msgstr "AMM V2 Position"
 
@@ -1979,10 +1991,10 @@ msgstr "Select a liquidity pool"
 msgid "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
 msgstr "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:172
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:176
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:221
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:246
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:218
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:222
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:267
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:292
 msgid "Create Pool"
 msgstr "Create Pool"
 
@@ -2012,8 +2024,8 @@ msgstr "The closer the provided asset ratio is to the recommended ratio ({recomm
 msgid "MT Fee"
 msgstr "MT Fee"
 
-#: src/components/SelectChain.tsx:197
-#: src/components/SelectChain.tsx:232
+#: src/components/SelectChain.tsx:202
+#: src/components/SelectChain.tsx:237
 msgid "All chains"
 msgstr "All chains"
 
@@ -2121,7 +2133,7 @@ msgstr "Add Token"
 msgid "Total Liquidity"
 msgstr "Total Liquidity"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:147
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:192
 msgid "AMM V3 Position"
 msgstr "AMM V3 Position"
 
@@ -2305,7 +2317,7 @@ msgstr "ForceStop exception"
 #: src/components/LoadMore.tsx:50
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/LiquidityProvidersTable.tsx:222
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:317
-#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:105
+#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:107
 msgid "Load more"
 msgstr "Load more"
 
@@ -2391,6 +2403,7 @@ msgstr "Insufficient balance"
 msgid "Private"
 msgstr "Private"
 
-#: src/components/LiquidityLpPartnerReward.tsx:134
+#: src/components/LiquidityLpPartnerReward.tsx:221
+#: src/components/LiquidityLpPartnerReward.tsx:339
 msgid "Learn more"
 msgstr "Learn more"

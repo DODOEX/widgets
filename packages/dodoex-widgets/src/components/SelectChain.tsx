@@ -30,7 +30,7 @@ function ChainItem({
   logoWidth,
   mobileLogoWidth,
   sx,
-  showNewIcon,
+  showNewIcon: showNewIconProps,
 }: {
   chain?: Omit<ChainListItem, 'chainId'> & {
     chainId: number;
@@ -50,6 +50,8 @@ function ChainItem({
         getUniswapV2FactoryFixedFeeContractAddressByChainId(chainId) ||
         getUniswapV3FactoryContractAddressByChainId(chainId)
       : false;
+
+  const showNewIcon = showNewIconProps && hasAMMContract;
 
   return isMobileStyle ? (
     <Box
@@ -80,9 +82,12 @@ function ChainItem({
       >
         {chain?.name}
       </Box>
-      {showNewIcon && hasAMMContract && (
+      {showNewIcon && (
         <Tooltip
           title={<Trans>The current network supports new pool types</Trans>}
+          sx={{
+            maxWidth: 240,
+          }}
         >
           <Box>
             <Box

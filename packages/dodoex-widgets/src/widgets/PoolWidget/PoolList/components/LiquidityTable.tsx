@@ -82,6 +82,8 @@ export default function LiquidityTable({
       {hasMore && (
         <ButtonBase
           sx={{
+            position: 'sticky',
+            left: 0,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
