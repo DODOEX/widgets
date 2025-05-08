@@ -189,4 +189,8 @@ export const basicTokenMap: {
     ...DEFAULT_BASIC_TOKEN,
     wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
   },
+  [ChainId.PHAROS_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0xb056a6b9f61b2c0ebf4906aac341bd118a1763fe',
+  },
 };

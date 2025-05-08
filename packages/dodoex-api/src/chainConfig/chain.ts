@@ -58,4 +58,6 @@ export enum ChainId {
   HASHKEY = 177,
 
   HEMI = 43111,
+
+  PHAROS_TESTNET = 688688,
 }

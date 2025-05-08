@@ -34,4 +34,5 @@ export const platformIdMap: {
   [ChainId.ZERO]: 'zero-mainnet',
   [ChainId.HASHKEY]: 'hashkey',
   [ChainId.HEMI]: 'hemi',
+  [ChainId.PHAROS_TESTNET]: 'pharos-testnet',
 };

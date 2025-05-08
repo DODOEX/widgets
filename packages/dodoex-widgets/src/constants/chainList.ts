@@ -26,6 +26,7 @@ import { ReactComponent as XLayerLogo } from '../assets/logo/networks/x-layer.sv
 import { ReactComponent as ZeroLogo } from '../assets/logo/networks/zero.svg';
 import { ReactComponent as HashKeyLogo } from '../assets/logo/networks/haskey.svg';
 import { ReactComponent as HemiLogo } from '../assets/logo/networks/hemi.svg';
+import { ReactComponent as PharosLogo } from '../assets/logo/networks/pharos.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -283,6 +284,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.HEMI,
       logo: HemiLogo,
       name: 'Hemi',
+    },
+  ],
+  [
+    ChainId.PHAROS_TESTNET,
+    {
+      chainId: ChainId.PHAROS_TESTNET,
+      logo: PharosLogo,
+      name: 'Pharos Testnet',
     },
   ],
 ]);
