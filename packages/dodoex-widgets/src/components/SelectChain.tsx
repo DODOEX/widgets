@@ -127,13 +127,14 @@ function ChainItem({
         <Tooltip
           title={<Trans>The current network supports new pool types</Trans>}
         >
-          <Box>
-            <Box
-              component={NewIcon}
-              sx={{
-                ml: 8,
-              }}
-            />
+          <Box
+            sx={{
+              ml: 8,
+              width: 24,
+              height: 24,
+            }}
+          >
+            <Box component={NewIcon} />
           </Box>
         </Tooltip>
       )}

@@ -1870,8 +1870,8 @@ msgstr "累计交易量"
 msgid "Receive"
 msgstr "接收"
 
-#: src/components/SelectChain.tsx:284
-#: src/components/SelectChain.tsx:331
+#: src/components/SelectChain.tsx:285
+#: src/components/SelectChain.tsx:332
 msgid "Select Network"
 msgstr "选择网络"
 
@@ -2022,8 +2022,8 @@ msgstr "提供的资产比例越接近推荐比例（{phumensratiotext}），燃
 msgid "MT Fee"
 msgstr "MT 手续费"
 
-#: src/components/SelectChain.tsx:202
-#: src/components/SelectChain.tsx:237
+#: src/components/SelectChain.tsx:203
+#: src/components/SelectChain.tsx:238
 msgid "All chains"
 msgstr "所有链"
 

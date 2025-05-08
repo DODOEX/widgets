@@ -180,6 +180,7 @@ export default function Tooltip({
       childrenProps.onMouseLeave = onMouseLeave;
     } else {
       childrenProps.onClick = (evt: any) => {
+        evt.stopPropagation();
         if (typeof children === 'object' && children.props.onClick) {
           children.props.onClick(evt);
         }

@@ -45,6 +45,11 @@ export function Pool() {
         />
       );
     default:
-      return <PoolList params={(page as Page<PageType.Pool>)?.params} />;
+      return (
+        <PoolList
+          params={(page as Page<PageType.Pool>)?.params}
+          supportAMMIcon
+        />
+      );
   }
 }

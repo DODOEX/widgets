@@ -1872,8 +1872,8 @@ msgstr "Total Swap Volume"
 msgid "Receive"
 msgstr "Receive"
 
-#: src/components/SelectChain.tsx:284
-#: src/components/SelectChain.tsx:331
+#: src/components/SelectChain.tsx:285
+#: src/components/SelectChain.tsx:332
 msgid "Select Network"
 msgstr "Select Network"
 
@@ -2024,8 +2024,8 @@ msgstr "The closer the provided asset ratio is to the recommended ratio ({recomm
 msgid "MT Fee"
 msgstr "MT Fee"
 
-#: src/components/SelectChain.tsx:202
-#: src/components/SelectChain.tsx:237
+#: src/components/SelectChain.tsx:203
+#: src/components/SelectChain.tsx:238
 msgid "All chains"
 msgstr "All chains"
 
