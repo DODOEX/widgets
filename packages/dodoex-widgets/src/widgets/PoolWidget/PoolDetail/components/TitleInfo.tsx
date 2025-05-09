@@ -177,7 +177,7 @@ export default function TitleInfo({
                         chainId: poolDetail.chainId,
                         baseToken: poolDetail.baseToken,
                         quoteToken: poolDetail.quoteToken,
-                        poolId: address,
+                        poolId: address ?? '',
                         apy: poolDetail.apy,
                         isSingle: PoolApi.utils.singleSideLp(poolDetail.type),
                       })
