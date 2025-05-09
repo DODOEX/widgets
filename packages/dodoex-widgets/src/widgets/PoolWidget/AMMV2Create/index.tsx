@@ -1,4 +1,4 @@
-import { Box, Button } from '@dodoex/components';
+import { Box, Button, useTheme } from '@dodoex/components';
 import { ArrowBack } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
 import WidgetContainer from '../../../components/WidgetContainer';
@@ -7,7 +7,10 @@ import TokenSelect from '../../../components/TokenSelect';
 import FeeEdit from './FeeEdit';
 import React from 'react';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { TokenCard } from '../../../components/Swap/components/TokenCard';
+import {
+  CardPlus,
+  TokenCard,
+} from '../../../components/Swap/components/TokenCard';
 import { TokenInfo } from '../../../hooks/Token';
 import { SwitchBox } from '../../../components/Swap/components/SwitchBox';
 import Ratio from './Ratio';
@@ -36,8 +39,12 @@ import {
   getUniswapV2Router02FixedFeeContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
 import { getIsAMMV2DynamicFeeContractByChainId } from '../utils';
+import SquaredGoBack from '../../../components/SquaredGoBack';
+import { PoolTypeTag } from '../PoolList/components/tags';
 
 export default function AMMV2Create() {
+  const theme = useTheme();
+
   const [fee, setFee] = React.useState(0.003);
   const feeList = [0.0001, 0.0005, 0.003];
   const [baseToken, setBaseToken] = React.useState<TokenInfo>();
@@ -163,58 +170,61 @@ export default function AMMV2Create() {
     <WidgetContainer>
       <Box
         sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 20,
           mx: 'auto',
-          borderRadius: isMobile ? 0 : 16,
-          backgroundColor: 'background.paper',
           width: isMobile ? '100%' : 600,
-          position: 'relative',
-          overflow: 'hidden',
+          pb: 20,
+          borderBottomWidth: 1,
+          borderBottomStyle: 'solid',
+          borderBottomColor: 'border.main',
+          mb: 20,
         }}
       >
-        {isMobile ? (
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              p: 20,
-              pb: 0,
-            }}
-          >
-            <GoBack onClick={back} />
-          </Box>
-        ) : (
-          <Box
-            sx={{
-              position: 'relative',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              px: 20,
-              py: 24,
-              typography: 'caption',
-            }}
-          >
-            <Box
-              component={ArrowBack}
-              sx={{
-                position: 'absolute',
-                left: 20,
-                cursor: 'pointer',
-              }}
-              onClick={back}
-            />
-            <Trans>Add liquidity</Trans>
-          </Box>
-        )}
+        <SquaredGoBack onClick={back} />
+
+        <Box
+          sx={{
+            typography: 'caption',
+            fontWeight: 600,
+            color: 'text.primary',
+            mr: 'auto',
+          }}
+        >
+          <Trans>Add liquidity</Trans>
+        </Box>
+
+        <PoolTypeTag poolType="AMM V2" />
+      </Box>
+
+      <Box
+        sx={{
+          mx: 'auto',
+          borderRadius: 0,
+          width: '100%',
+          position: 'relative',
+          overflow: 'hidden',
+          [theme.breakpoints.up('tablet')]: {
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor: 'border.main',
+            width: 600,
+            borderRadius: 16,
+            backgroundColor: 'background.paper',
+          },
+        }}
+      >
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             gap: 20,
-            pt: 24,
-            px: 20,
-            pb: 20,
+            [theme.breakpoints.up('tablet')]: {
+              pt: 20,
+              px: 20,
+              pb: 20,
+            },
           }}
         >
           <MyLiquidity
@@ -280,7 +290,16 @@ export default function AMMV2Create() {
           >
             <Box>
               <TokenCard
-                sx={{ mb: 4, pb: 28, minHeight: 'auto' }}
+                sx={{
+                  mb: 4,
+                  pb: 28,
+                  minHeight: 'auto',
+                  backgroundColor: 'background.cardInput',
+                  padding: theme.spacing(20, 20, 28),
+                }}
+                inputSx={{
+                  backgroundColor: 'background.cardInput',
+                }}
                 token={baseToken}
                 amt={baseAmount}
                 defaultLoadBalance
@@ -292,9 +311,17 @@ export default function AMMV2Create() {
                 showPercentage
                 readOnly={needToken}
               />
-              <SwitchBox plus />
+              <CardPlus />
               <TokenCard
-                sx={{ pb: 20, minHeight: 'auto' }}
+                sx={{
+                  pb: 20,
+                  minHeight: 'auto',
+                  backgroundColor: 'background.cardInput',
+                  padding: theme.spacing(20, 20, 20),
+                }}
+                inputSx={{
+                  backgroundColor: 'background.cardInput',
+                }}
                 token={quoteToken}
                 amt={quoteAmount}
                 defaultLoadBalance
@@ -355,8 +382,9 @@ export default function AMMV2Create() {
         <Box
           sx={{
             py: 16,
-            px: 20,
-            borderTopWidth: 1,
+            [theme.breakpoints.up('tablet')]: {
+              px: 20,
+            },
           }}
         >
           <NeedConnectButton

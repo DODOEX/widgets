@@ -349,11 +349,17 @@ export default function LiquidityInfo({
                     <Box
                       sx={{
                         px: 8,
-                        py: 4,
-                        borderRadius: 4,
+                        height: 24,
                         typography: 'h6',
-                        backgroundColor: 'background.tag',
-                        color: 'text.disabled',
+                        lineHeight: '24px',
+                        borderRadius: 4,
+                        borderWidth: 1,
+                        borderColor: 'text.secondary',
+                        borderStyle: 'solid',
+                        background:
+                          'linear-gradient(105deg, rgba(88, 88, 88, 0.50) -76.37%, #121212 97.95%), linear-gradient(90deg, #FFF -61.94%, rgba(255, 255, 255, 0.00) 246.32%), #1E1E1E',
+                        color: 'text.primary',
+                        whiteSpace: 'nowrap',
                       }}
                     >
                       {formatPercentageNumber({

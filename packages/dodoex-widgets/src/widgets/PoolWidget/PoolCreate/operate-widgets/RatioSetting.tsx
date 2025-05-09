@@ -37,7 +37,7 @@ function RatioInput({
         borderStyle: 'solid',
         borderColor: theme.palette.border.main,
         borderRadius: 8,
-        backgroundColor: theme.palette.background.input,
+        backgroundColor: theme.palette.background.cardInput,
       }}
     >
       <Box
@@ -56,6 +56,7 @@ function RatioInput({
         suffix="%"
         placeholder="0"
         sx={{
+          backgroundColor: 'background.cardInput',
           mt: 0,
           display: 'flex',
           alignItems: 'center',

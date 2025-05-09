@@ -20,7 +20,7 @@ export function SectionTitle({
         sx={{
           mt: 28,
           mb: 28,
-          borderTopColor: 'divider',
+          borderTopColor: 'border.main',
           borderTopStyle: 'solid',
           borderTopWidth: 1,
           ...(isMobile

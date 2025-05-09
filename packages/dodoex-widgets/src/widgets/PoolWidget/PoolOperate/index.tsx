@@ -115,7 +115,7 @@ export function PoolOperate({
           tabs={poolOrMiningTabs}
           tabsListSx={{
             mx: 20,
-            justifyContent: onClose ? 'space-between' : 'flex-start',
+            justifyContent: 'space-between',
             ...(hasMining && hasLp
               ? {
                   '& button:last-child': {

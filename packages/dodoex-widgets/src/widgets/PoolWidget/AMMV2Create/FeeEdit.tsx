@@ -56,6 +56,8 @@ export default function FeeEdit({
           py: 12,
           borderWidth: 1,
           borderRadius: 12,
+          borderStyle: 'solid',
+          borderColor: 'border.main',
         }}
       >
         <Trans>
@@ -116,8 +118,11 @@ export default function FeeEdit({
                     py: 12,
                     borderWidth: 1,
                     borderRadius: 12,
+                    borderStyle: 'solid',
+                    borderColor: 'border.main',
                     cursor: 'pointer',
                     ...(active && {
+                      color: theme.palette.primary.main,
                       borderColor: theme.palette.primary.main,
                     }),
                   }}
@@ -146,9 +151,12 @@ export default function FeeEdit({
                   py: 12,
                   borderWidth: 1,
                   borderRadius: 12,
+                  borderStyle: 'solid',
+                  borderColor: 'border.main',
                   cursor: 'pointer',
                   color: isLessFee ? theme.palette.error.main : 'text.primary',
                   ...(isCustom && {
+                    color: theme.palette.primary.main,
                     borderColor: theme.palette.primary.main,
                   }),
                 }}

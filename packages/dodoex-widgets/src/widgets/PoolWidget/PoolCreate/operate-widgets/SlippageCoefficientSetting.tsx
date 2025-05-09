@@ -90,7 +90,7 @@ export function SlippageCoefficientSetting({
             py: 8,
             color: theme.palette.text.primary,
             borderRadius: 8,
-            backgroundColor: theme.palette.background.input,
+            backgroundColor: theme.palette.background.cardInput,
             '&:hover': {
               backgroundColor: theme.palette.hover.default,
             },

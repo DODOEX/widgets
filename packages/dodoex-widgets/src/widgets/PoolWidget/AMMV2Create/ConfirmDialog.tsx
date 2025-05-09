@@ -14,6 +14,7 @@ import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCo
 import { RatioPrice } from './Ratio';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
+import { PoolTypeTag } from '../PoolList/components/tags';
 
 export default function ConfirmDialog({
   open,
@@ -107,19 +108,7 @@ export default function ConfirmDialog({
             <Trans>
               {baseToken?.symbol}/{quoteToken?.symbol} Pool Tokens
             </Trans>
-            <Box
-              sx={{
-                px: 4,
-                py: 2,
-                fontSize: 10,
-                lineHeight: 1,
-                backgroundColor: alpha(theme.palette.purple.main, 0.1),
-                color: theme.palette.purple.main,
-                borderRadius: 4,
-              }}
-            >
-              <Trans>AMM V2</Trans>
-            </Box>
+            <PoolTypeTag poolType="AMM V2" />
           </Box>
         </Box>
 

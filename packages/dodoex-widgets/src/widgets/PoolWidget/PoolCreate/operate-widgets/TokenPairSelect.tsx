@@ -44,7 +44,7 @@ function TokenPickSelect({
           px: 20,
           py: 8,
           borderRadius: 8,
-          backgroundColor: theme.palette.background.input,
+          backgroundColor: theme.palette.background.cardInput,
           '&:hover': {
             backgroundColor: theme.palette.hover.default,
           },
@@ -112,6 +112,7 @@ function TokenPickSelect({
             ml: 'auto',
             width: 18,
             height: 18,
+            color: theme.palette.text.secondary,
           }}
         />
       </Box>

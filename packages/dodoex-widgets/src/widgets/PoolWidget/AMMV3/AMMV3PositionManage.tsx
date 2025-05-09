@@ -1,3 +1,4 @@
+import { CONTRACT_QUERY_KEY } from '@dodoex/api';
 import {
   Box,
   TabPanel,
@@ -11,8 +12,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useMemo, useReducer, useState } from 'react';
 import Dialog from '../../../components/Dialog';
-import { CardPlusConnected } from '../../../components/Swap/components/TokenCard';
+import { CardPlus } from '../../../components/Swap/components/TokenCard';
 import TokenLogo from '../../../components/TokenLogo';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useSubmission } from '../../../hooks/Submission';
@@ -51,8 +53,6 @@ import { Bound, Field, OperateType } from './types';
 import { buildCurrency, convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
 import { toSlippagePercent } from './utils/slippage';
-import { CONTRACT_QUERY_KEY } from '@dodoex/api';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
 
 const RewardItem = ({
   token,
@@ -571,7 +571,7 @@ export const AMMV3PositionManage = ({
                   currency={currencies[Field.CURRENCY_A] ?? null}
                   locked={depositADisabled}
                 />
-                <CardPlusConnected />
+                <CardPlus />
                 <CurrencyInputPanel
                   value={formattedAmounts[Field.CURRENCY_B]}
                   onUserInput={onFieldBInput}

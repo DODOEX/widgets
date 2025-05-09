@@ -363,11 +363,11 @@ export function RemovePoolOperate({
               overrideBalance={isBase ? baseOverride : quoteOverride}
               overrideBalanceLoading={overrideBalanceLoading}
               sx={{
-                backgroundColor: '#050504',
+                backgroundColor: 'background.cardInput',
                 padding: theme.spacing(20, 20, 20),
               }}
               inputSx={{
-                backgroundColor: '#050504',
+                backgroundColor: 'background.cardInput',
               }}
             />
           ) : (
@@ -382,11 +382,11 @@ export function RemovePoolOperate({
                 overrideBalance={baseOverride}
                 overrideBalanceLoading={overrideBalanceLoading}
                 sx={{
-                  backgroundColor: '#050504',
+                  backgroundColor: 'background.cardInput',
                   padding: theme.spacing(20, 20, 28),
                 }}
                 inputSx={{
-                  backgroundColor: '#050504',
+                  backgroundColor: 'background.cardInput',
                 }}
               />
               {onlyShowSide ? '' : <CardPlus />}
@@ -403,11 +403,11 @@ export function RemovePoolOperate({
                   overrideBalance={quoteOverride}
                   overrideBalanceLoading={overrideBalanceLoading}
                   sx={{
-                    backgroundColor: '#050504',
+                    backgroundColor: 'background.cardInput',
                     padding: theme.spacing(20, 20, 20),
                   }}
                   inputSx={{
-                    backgroundColor: '#050504',
+                    backgroundColor: 'background.cardInput',
                   }}
                 />
               )}

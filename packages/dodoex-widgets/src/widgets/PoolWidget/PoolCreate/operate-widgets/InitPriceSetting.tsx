@@ -142,9 +142,9 @@ export function InitPriceSetting({
             borderColor:
               errorMsg || errorInput
                 ? 'error.main'
-                : theme.palette.background.input,
+                : theme.palette.background.cardInput,
             borderRadius: 8,
-            backgroundColor: theme.palette.background.input,
+            backgroundColor: theme.palette.background.cardInput,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'stretch',
@@ -181,6 +181,7 @@ export function InitPriceSetting({
                   }}
                   readOnly={isFixedRatio}
                   sx={{
+                    backgroundColor: 'background.cardInput',
                     pl: 0,
                     pr: 0,
                     mt: 0,

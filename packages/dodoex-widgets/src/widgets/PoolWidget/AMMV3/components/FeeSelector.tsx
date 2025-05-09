@@ -108,7 +108,9 @@ export const FeeSelector = ({
                   flexGrow: 1,
                   justifyContent: 'space-between',
                   px: 20,
-                  color: theme.palette.text.primary,
+                  color: isSelected
+                    ? theme.palette.primary.main
+                    : theme.palette.text.primary,
                   borderRadius: 12,
                   borderColor: isSelected
                     ? theme.palette.primary.main

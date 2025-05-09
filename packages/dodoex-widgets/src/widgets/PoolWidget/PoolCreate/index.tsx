@@ -1,15 +1,16 @@
-import { Box } from '@dodoex/components';
+import { Box, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import React from 'react';
-import GoBack from '../../../components/GoBack';
+import SquaredGoBack from '../../../components/SquaredGoBack';
 import {
-  CardPlusConnected,
+  CardPlus,
   TokenCard,
 } from '../../../components/Swap/components/TokenCard';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { PoolTypeTag } from '../PoolList/components/tags';
 import { BaseInfoCardList } from './components/BaseInfoCardList';
 import { DepthChartWrapper } from './components/DepthChartWrapper';
 import { FeeRateCard } from './components/FeeRateCard';
@@ -42,6 +43,7 @@ import {
 } from './utils';
 
 export default function PoolCreate() {
+  const theme = useTheme();
   const { defaultBaseToken, defaultQuoteToken } = useDefaultTokens();
   const { chainId } = useWalletInfo();
 
@@ -133,6 +135,13 @@ export default function PoolCreate() {
               }
         }
         readOnly={isSingleTokenVersion || peggedBaseTokenRatioBNLte0}
+        sx={{
+          backgroundColor: 'background.cardInput',
+          padding: theme.spacing(20, 20, 28),
+        }}
+        inputSx={{
+          backgroundColor: 'background.cardInput',
+        }}
         inputReadonlyTooltip={
           peggedBaseTokenRatioBNLte0 ? t`ratio is 0` : undefined
         }
@@ -159,7 +168,7 @@ export default function PoolCreate() {
               }
         }
       />
-      <CardPlusConnected />
+      <CardPlus />
       <TokenCard
         canClickBalance
         showPercentage
@@ -178,6 +187,13 @@ export default function PoolCreate() {
             !!state.fixedRatioPrice) ||
           peggedQuoteTokenRatioBNLte0
         }
+        sx={{
+          backgroundColor: 'background.cardInput',
+          padding: theme.spacing(20, 20, 20),
+        }}
+        inputSx={{
+          backgroundColor: 'background.cardInput',
+        }}
         inputReadonlyTooltip={
           peggedQuoteTokenRatioBNLte0
             ? t`ratio is 0`
@@ -229,17 +245,27 @@ export default function PoolCreate() {
               overflow: 'hidden',
             }}
           >
-            <GoBack />
-
             <Box
               sx={{
-                mt: 28,
-                typography: 'h4',
-                fontWeight: 600,
-                color: 'text.primary',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 20,
               }}
             >
-              <Trans>Pool Setup</Trans>
+              <SquaredGoBack />
+
+              <Box
+                sx={{
+                  typography: 'caption',
+                  fontWeight: 600,
+                  color: 'text.primary',
+                  mr: 'auto',
+                }}
+              >
+                <Trans>Pool Setup</Trans>
+              </Box>
+
+              <PoolTypeTag poolType="PMM" />
             </Box>
 
             <SectionTitle
@@ -319,15 +345,37 @@ export default function PoolCreate() {
               </>
             )}
 
-            <SectionTitle
-              titleKey={t`Fee Rate`}
-              index={3}
-              status={state.currentStep === 2 ? 'running' : 'waiting'}
-            />
-            <FeeRateCard
-              isWaiting={state.currentStep < (isPeggedVersion ? 3 : 2)}
-              feeRate={state.feeRate}
-            />
+            {isPeggedVersion ? (
+              <>
+                <SectionTitle
+                  titleKey={t`Fee Rate`}
+                  index={4}
+                  status={
+                    state.currentStep > 3
+                      ? 'completed'
+                      : state.currentStep === 3
+                        ? 'running'
+                        : 'waiting'
+                  }
+                />
+                <FeeRateCard
+                  isWaiting={state.currentStep < 3}
+                  feeRate={state.feeRate}
+                />
+              </>
+            ) : (
+              <>
+                <SectionTitle
+                  titleKey={t`Fee Rate`}
+                  index={3}
+                  status={state.currentStep === 2 ? 'running' : 'waiting'}
+                />
+                <FeeRateCard
+                  isWaiting={state.currentStep < 2}
+                  feeRate={state.feeRate}
+                />
+              </>
+            )}
 
             {isPeggedVersion && (
               <>
@@ -375,7 +423,7 @@ export default function PoolCreate() {
                   minHeight: 'auto',
                   height: '100%',
                   position: 'sticky',
-                  top: '28px',
+                  top: '0px',
                   overflowY: 'hidden',
                 }
               : {}),

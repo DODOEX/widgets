@@ -80,7 +80,7 @@ export default function DepthAndLiquidityChart({
       sx={{
         mt: 2,
         '& input': {
-          backgroundColor: 'background.input',
+          backgroundColor: 'background.cardInput',
           borderStyle: 'solid',
           borderWidth: '1px',
           borderColor: 'border.main',

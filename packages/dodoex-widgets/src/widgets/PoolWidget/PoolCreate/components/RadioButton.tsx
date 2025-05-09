@@ -56,7 +56,7 @@ export default function RadioButton({
           color: selected
             ? isLight
               ? theme.palette.text.primary
-              : theme.palette.primary.main
+              : theme.palette.text.primary
             : theme.palette.text.primary,
           ...titleSx,
         }}
@@ -75,7 +75,7 @@ export default function RadioButton({
           color: selected
             ? isLight
               ? theme.palette.text.primary
-              : theme.palette.primary.main
+              : theme.palette.text.primary
             : theme.palette.text.secondary,
         }}
       >

@@ -182,11 +182,11 @@ export function AddPoolOperate({
             onInputChange={handleChangeBaseAmount}
             readOnly={balanceInfo.loading || !canOperate}
             sx={{
-              backgroundColor: '#050504',
+              backgroundColor: 'background.cardInput',
               padding: theme.spacing(20, 20, 28),
             }}
             inputSx={{
-              backgroundColor: '#050504',
+              backgroundColor: 'background.cardInput',
             }}
           />
         )}
@@ -202,11 +202,11 @@ export function AddPoolOperate({
             onInputChange={handleChangeQuoteAmount}
             readOnly={balanceInfo.loading || !canOperate || isSinglePool}
             sx={{
-              backgroundColor: '#050504',
+              backgroundColor: 'background.cardInput',
               padding: theme.spacing(20, 20, 20),
             }}
             inputSx={{
-              backgroundColor: '#050504',
+              backgroundColor: 'background.cardInput',
             }}
           />
         )}

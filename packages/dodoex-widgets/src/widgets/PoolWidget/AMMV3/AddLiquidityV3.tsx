@@ -1,9 +1,12 @@
 import { alpha, Box, Button, ButtonBase, useTheme } from '@dodoex/components';
-import { t } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
-import { CardPlusConnected } from '../../../components/Swap/components/TokenCard';
+import {
+  CardPlus,
+  CardPlusConnected,
+} from '../../../components/Swap/components/TokenCard';
 import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { tokenApi } from '../../../constants/api';
@@ -40,6 +43,8 @@ import { convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
 import { toSlippagePercent } from './utils/slippage';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
+import SquaredGoBack from '../../../components/SquaredGoBack';
+import { PoolTypeTag } from '../PoolList/components/tags';
 
 export default function AddLiquidityV3({
   params,
@@ -279,77 +284,62 @@ export default function AddLiquidityV3({
     <WidgetContainer>
       <Box
         sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 20,
           mx: 'auto',
-          borderRadius: isMobile ? 0 : 16,
-          backgroundColor: 'background.paper',
           width: isMobile ? '100%' : 600,
+          pb: 20,
+          borderBottomWidth: 1,
+          borderBottomStyle: 'solid',
+          borderBottomColor: 'border.main',
+          mb: 20,
+        }}
+      >
+        <SquaredGoBack />
+
+        <Box
+          sx={{
+            typography: 'caption',
+            fontWeight: 600,
+            color: 'text.primary',
+            mr: 'auto',
+          }}
+        >
+          <Trans>Add liquidity</Trans>
+        </Box>
+
+        <PoolTypeTag poolType="AMM V3" />
+      </Box>
+
+      <Box
+        sx={{
+          mx: 'auto',
+          borderRadius: 0,
+          width: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'stretch',
+          [theme.breakpoints.up('tablet')]: {
+            borderColor: theme.palette.border.main,
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderRadius: 16,
+            width: 600,
+            backgroundColor: theme.palette.background.paper,
+          },
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            px: 20,
-            py: 24,
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-            backgroundColor: theme.palette.background.paper,
-          }}
-        >
-          <Box
-            component={ButtonBase}
-            onClick={handleGoBack}
-            sx={{
-              flexGrow: 0,
-              flexShrink: 0,
-              display: 'flex',
-              alignItems: 'center',
-              color: theme.palette.text.primary,
-              width: 24,
-              height: 24,
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="25"
-              viewBox="0 0 24 25"
-              fill="none"
-            >
-              <path
-                d="M20 11.5H7.83L13.42 5.91L12 4.5L4 12.5L12 20.5L13.41 19.09L7.83 13.5H20V11.5Z"
-                fill="currentColor"
-              />
-            </svg>
-          </Box>
-          <Box
-            sx={{
-              flexGrow: 1,
-              textAlign: 'center',
-              typography: 'caption',
-              color: theme.palette.text.primary,
-            }}
-          >{t`Add liquidity`}</Box>
-          <Box
-            sx={{
-              flexGrow: 0,
-              flexShrink: 0,
-              width: 24,
-              height: 24,
-            }}
-          />
-        </Box>
-
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'stretch',
             gap: 20,
-            p: 20,
+            py: 20,
+            [theme.breakpoints.up('tablet')]: {
+              px: 20,
+            },
           }}
         >
           <Box
@@ -601,7 +591,7 @@ export default function AddLiquidityV3({
                 currency={currencies[Field.CURRENCY_A] ?? null}
                 locked={depositADisabled}
               />
-              <CardPlusConnected />
+              <CardPlus />
               <CurrencyInputPanel
                 value={formattedAmounts[Field.CURRENCY_B]}
                 onUserInput={onFieldBInput}
@@ -624,11 +614,13 @@ export default function AddLiquidityV3({
           sx={{
             display: 'flex',
             alignItems: 'center',
-            px: 20,
             py: 16,
-            borderBottomLeftRadius: 16,
-            borderBottomRightRadius: 16,
-            backgroundColor: theme.palette.background.paper,
+            [theme.breakpoints.up('tablet')]: {
+              px: 20,
+              borderBottomLeftRadius: 16,
+              borderBottomRightRadius: 16,
+              backgroundColor: theme.palette.background.paper,
+            },
           }}
         >
           <Buttons

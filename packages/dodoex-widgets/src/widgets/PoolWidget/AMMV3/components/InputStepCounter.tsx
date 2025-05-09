@@ -86,7 +86,7 @@ const StepCounter = ({
         py: 12,
         px: 20,
         borderRadius: 16,
-        backgroundColor: theme.palette.background.input,
+        backgroundColor: theme.palette.background.cardInput,
       }}
     >
       <Box
@@ -128,6 +128,7 @@ const StepCounter = ({
           <NumberInput
             sx={{
               mt: 12,
+              backgroundColor: theme.palette.background.cardInput,
             }}
             value={localValue}
             onChange={(val) => {

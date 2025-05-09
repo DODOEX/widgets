@@ -53,6 +53,8 @@ export default function MyLiquidity({
         py: 12,
         borderWidth: 1,
         borderRadius: 8,
+        borderStyle: 'solid',
+        borderColor: 'border.main',
       }}
     >
       <Box

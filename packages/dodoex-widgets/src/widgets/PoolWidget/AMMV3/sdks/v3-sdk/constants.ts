@@ -25,6 +25,8 @@ export function poolInitCodeHash(chainId?: ChainId): string {
       return '0x5ccd5621c1bb9e44ce98cef8b90d31eb2423dec3793b6239232cefae976936ea';
     case ChainId.ZETACHAIN_TESTNET:
       return '0x5ccd5621c1bb9e44ce98cef8b90d31eb2423dec3793b6239232cefae976936ea';
+    case ChainId.SEPOLIA:
+      return '0x4509fa1e2d1989ac1632a56fe87c53e8d1e9d05847694e00f62b23e28cec98c4';
     default:
       return POOL_INIT_CODE_HASH;
   }

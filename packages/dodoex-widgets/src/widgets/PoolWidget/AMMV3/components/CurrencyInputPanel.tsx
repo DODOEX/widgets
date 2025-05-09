@@ -58,11 +58,8 @@ export const CurrencyInputPanel = ({
         pt: 12,
         pb: 20,
         px: 20,
-        borderWidth: 1,
-        borderStyle: 'solid',
-        borderColor: 'border.main',
-        borderRadius: 12,
-        backgroundColor: theme.palette.background.input,
+        borderRadius: 16,
+        backgroundColor: theme.palette.background.cardInput,
       }}
     >
       <Box
@@ -141,6 +138,7 @@ export const CurrencyInputPanel = ({
       <NumberInput
         sx={{
           mt: 4,
+          backgroundColor: theme.palette.background.cardInput,
         }}
         suffix={undefined}
         value={value}
