@@ -26,8 +26,10 @@ function OverviewSkeleton() {
 
 export default function Overview({
   poolDetail,
+  cardBg,
 }: {
   poolDetail: ReturnType<typeof usePoolDetail>['poolDetail'];
+  cardBg: string;
 }) {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
@@ -145,7 +147,7 @@ export default function Overview({
           sx={{
             borderRadius: 8,
             p: 16,
-            backgroundColor: 'background.paper',
+            backgroundColor: cardBg,
           }}
         >
           <Box

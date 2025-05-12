@@ -40,7 +40,7 @@ export const validSlippageCoefficient = (
       case Version.standard:
       case Version.singleToken:
       case Version.marketMakerPool:
-        return t`he slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1.`;
+        return t`The slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1.`;
       case Version.pegged:
         return t`The slippage coefficient needs to be greater than 0, and less than 0.1. `;
     }

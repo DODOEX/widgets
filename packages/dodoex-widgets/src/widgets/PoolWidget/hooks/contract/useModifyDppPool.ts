@@ -9,6 +9,7 @@ import { MetadataFlag } from '../../../../hooks/Submission/types';
 import { TokenInfo } from '../../../../hooks/Token';
 import { poolApi } from '../../utils';
 import { getModifyDPPPoolParams } from './getModifyDPPPoolParams';
+import { useUserOptions } from '../../../../components/UserOptionsProvider';
 
 const computeAmount = (
   newAmount: string,
@@ -50,6 +51,7 @@ export function useModifyDppPool({
   const feeRateQuery = useQuery(
     poolApi.getLPFeeRateQuery(pool?.chainId, pool?.address, pool?.type),
   );
+  const { deadLine: ddl } = useUserOptions();
   const modifyDPPMutation = useMutation({
     mutationFn: async ({
       baseAmount,
@@ -110,6 +112,7 @@ export function useModifyDppPool({
         feeRate: feeRate ?? lpFeeRate.times(100).toString(),
         initPrice: initPrice ?? String(i),
         slippageCoefficient: slippageCoefficient ?? String(k),
+        ddl,
       });
       if (!params) {
         throw new Error(`modify pool failed: ${pool.address}`);

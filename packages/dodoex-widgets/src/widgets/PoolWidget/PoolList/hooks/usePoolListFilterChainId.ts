@@ -7,9 +7,10 @@ import { useUserOptions } from '../../../../components/UserOptionsProvider';
 
 export function usePoolListFilterChainId() {
   const { chainId: currentChainId } = useWeb3React();
-  const { onlyChainId } = useUserOptions();
-  const [activeChainId, setActiveChainId] =
-    React.useState<ChainId | undefined>(onlyChainId);
+  const { onlyChainId, defaultChainId, supportChainIds } = useUserOptions();
+  const [activeChainId, setActiveChainId] = React.useState<ChainId | undefined>(
+    onlyChainId,
+  );
 
   const filterChainIds = React.useMemo(() => {
     if (activeChainId !== undefined) return [activeChainId];
@@ -17,17 +18,26 @@ export function usePoolListFilterChainId() {
     if (isTestNet(currentChainId as ChainId)) {
       return undefined;
     }
+    if (supportChainIds?.length) return supportChainIds as ChainId[];
     return Object.values(ChainId).filter(
       (chainId) => !!Number(chainId),
     ) as ChainId[];
-  }, [currentChainId, activeChainId]);
+  }, [currentChainId, activeChainId, supportChainIds]);
 
   React.useEffect(() => {
-    const activeChainIdCache = sessionStorage.getItem(POOLS_LIST_FILTER_CHAIN);
+    const activeChainIdCache = Number(
+      sessionStorage.getItem(POOLS_LIST_FILTER_CHAIN),
+    );
     if (activeChainIdCache) {
-      setActiveChainId(Number(activeChainIdCache));
+      setActiveChainId(activeChainIdCache);
     }
   }, []);
+  React.useEffect(() => {
+    const activeChainIdCache = sessionStorage.getItem(POOLS_LIST_FILTER_CHAIN);
+    if (!activeChainIdCache && defaultChainId) {
+      setActiveChainId(defaultChainId);
+    }
+  }, [defaultChainId]);
 
   const handleChangeActiveChainId = (chainId: number | undefined) => {
     if (chainId === undefined) {

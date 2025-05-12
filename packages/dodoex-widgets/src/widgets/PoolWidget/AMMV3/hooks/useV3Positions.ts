@@ -29,7 +29,7 @@ function useV3PositionsFromTokenIds(
 
   const positions = useMemo<PositionDetails[] | undefined>(() => {
     if (!loading && !error && tokenIds) {
-      return results.data.map(
+      return results.data?.map(
         (
           result: {
             fee: FeeAmount;

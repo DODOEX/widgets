@@ -10,9 +10,11 @@ export type OperatePool =
       quoteToken: TokenInfo;
       baseLpToken?: {
         id: string;
+        decimals: number;
       };
       quoteLpToken?: {
         id: string;
+        decimals: number;
       };
       type: PoolType;
       owner?: string;
@@ -23,3 +25,18 @@ export type OperatePool =
       >['liquidityPositions'];
     }
   | undefined;
+
+export interface LiquidityMigrationInfo {
+  chainId: number;
+  miningContractAddress: string;
+  stakeTokenAddress: string;
+  newMiningContractAddress: string;
+  newStakeTokenAddress: string;
+}
+
+export type GetMigrationPairAndMining = (p: {
+  address: string;
+  chainId: number;
+}) => LiquidityMigrationInfo | undefined;
+
+export type ShowMigrationPairAndMining = (p: LiquidityMigrationInfo) => void;

@@ -41,7 +41,7 @@ export default function ChartInfo({
   const depthTab = { key: ChartTab.depth, value: t`Depth` };
   const tabList = [
     { key: ChartTab.volume, value: t`Volume` },
-    { key: ChartTab.feeRevenue, value: t`FeeRevenue` },
+    { key: ChartTab.feeRevenue, value: t`Fee Revenue` },
     { key: ChartTab.traders, value: t`Traders` },
   ];
   if (chart24hDataFirst) {

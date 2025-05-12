@@ -1,15 +1,14 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import {
   DEFAULT_BRIDGE_SLIPPAGE,
   DEFAULT_SWAP_SLIPPAGE,
 } from '../../constants/swap';
-import { getAutoSlippage } from '../../store/selectors/globals';
+import { useGlobalState } from '../useGlobalState';
 
 export function useDefaultSlippage(isBridge: boolean | undefined) {
   const { bridgeSlippage, swapSlippage } = useUserOptions();
-  const autoSlippage = useSelector(getAutoSlippage);
+  const { autoSlippage } = useGlobalState();
 
   const defaultSlippage = useMemo(() => {
     if (!autoSlippage?.loading && autoSlippage?.value)

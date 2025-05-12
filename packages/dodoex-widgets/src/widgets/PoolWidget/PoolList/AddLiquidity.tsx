@@ -25,15 +25,16 @@ import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
 import { debounce } from 'lodash';
 import LoadingCard from './components/LoadingCard';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { usePoolListFilterTokenAndPool } from './hooks/usePoolListFilterTokenAndPool';
+import {
+  TokenAndPoolFilterUserOptions,
+  usePoolListFilterTokenAndPool,
+} from './hooks/usePoolListFilterTokenAndPool';
 import SelectChain from '../../../components/SelectChain';
-import TokenAndPoolFilter from './components/TokenAndPoolFilter';
 import TokenListPoolItem from './components/TokenListPoolItem';
 import { EmptyList } from '../../../components/List/EmptyList';
 import { FailedList } from '../../../components/List/FailedList';
 import FilterAddressTags from './components/FilterAddressTags';
 import FilterTokenTags from './components/FilterTokenTags';
-import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import { PoolOperateProps } from '../PoolOperate';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
@@ -48,17 +49,24 @@ import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerRewa
 import GoPoolDetailBtn from './components/GoPoolDetailBtn';
 import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
 import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
+import { Share } from '@dodoex/icons';
+import { MigrationTag } from './components/migationWidget';
+import TokenAndPoolFilter from './components/TokenAndPoolFilter';
+import { GetMigrationPairAndMining } from '../PoolOperate/types';
 
 function CardList({
   lqList,
   setOperatePool,
+  getMigrationPairAndMining,
   supportAMM,
 }: {
   lqList: FetchLiquidityListLqList;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
   supportAMM?: boolean;
 }) {
   const theme = useTheme();
+  const { onSharePool } = useUserOptions();
   return (
     <>
       {lqList?.map((lq) => {
@@ -88,11 +96,18 @@ function CardList({
               )
             : undefined;
         const hasMining = !!item.miningAddress?.[0];
+        const hasMetromMining =
+          !!item.apy?.metromMiningApy && Number(item.apy?.metromMiningApy) > 0;
 
         const type = item.type as PoolType;
         const poolType = getPoolAMMOrPMM(type);
         const isAMMV2 = type === 'AMMV2';
         const isAMMV3 = type === 'AMMV3';
+
+        const migrationItem = getMigrationPairAndMining?.({
+          address: item.id,
+          chainId: item.chainId,
+        });
 
         return (
           <Box
@@ -150,13 +165,36 @@ function CardList({
                   }}
                 >
                   {`${baseToken?.symbol}/${quoteToken?.symbol}`}
+                  {!!onSharePool && (
+                    <Box
+                      component={Share}
+                      sx={{
+                        ml: 2,
+                        width: 12,
+                        height: 12,
+                      }}
+                      onClick={() =>
+                        onSharePool({
+                          chainId: item.chainId,
+                          baseToken,
+                          quoteToken,
+                          poolId: item.id,
+                          apy: item.apy,
+                          isSingle: PoolApi.utils.singleSideLp(
+                            item.type as PoolType,
+                          ),
+                        })
+                      }
+                    />
+                  )}
                   <LiquidityLpPartnerReward
                     address={item.id}
                     chainId={item.chainId}
                   />
                 </Box>
+                {!!migrationItem && <MigrationTag />}
               </Box>
-              {hasMining ? (
+              {hasMining || hasMetromMining ? (
                 <Box
                   sx={{
                     p: 8,
@@ -332,7 +370,7 @@ function CardList({
                 gap: '8px',
               }}
             >
-              <NeedConnectButton
+              <Button
                 fullWidth
                 size={Button.Size.small}
                 onClick={(evt) => {
@@ -344,7 +382,7 @@ function CardList({
                 }}
               >
                 <Trans>Add</Trans>
-              </NeedConnectButton>
+              </Button>
               {supportAMM && poolType === 'PMM' && (
                 <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
               )}
@@ -358,27 +396,34 @@ function CardList({
 
 function TableList({
   lqList,
+  loading,
   operatePool,
   setOperatePool,
+  getMigrationPairAndMining,
   hasMore,
   loadMore,
   loadMoreLoading,
   supportAMM,
 }: {
   lqList: FetchLiquidityListLqList;
+  loading: boolean;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
   hasMore?: boolean;
   loadMore?: () => void;
   loadMoreLoading?: boolean;
   supportAMM?: boolean;
 }) {
   const theme = useTheme();
+  const { onSharePool } = useUserOptions();
   return (
     <LiquidityTable
       hasMore={hasMore}
       loadMore={loadMore}
       loadMoreLoading={loadMoreLoading}
+      empty={!lqList?.length}
+      loading={loading}
     >
       <Box component="thead">
         <Box component="tr">
@@ -423,9 +468,9 @@ function TableList({
           );
           const baseApy = item.apy
             ? formatApy(
-                new BigNumber(item.apy?.transactionBaseApy).plus(
-                  item.apy?.miningBaseApy ?? 0,
-                ),
+                new BigNumber(item.apy?.transactionBaseApy)
+                  .plus(item.apy?.miningBaseApy ?? 0)
+                  .plus(item.apy?.metromMiningApy ?? 0),
               )
             : undefined;
           const quoteApy =
@@ -453,6 +498,9 @@ function TableList({
           }
 
           const hasMining = !!item.miningAddress?.[0];
+          const hasMetromMining =
+            !!item.apy?.metromMiningApy &&
+            Number(item.apy?.metromMiningApy) > 0;
 
           const type = item.type as PoolType;
           const poolType = getPoolAMMOrPMM(type);
@@ -460,6 +508,11 @@ function TableList({
           const isAMMV3 = type === 'AMMV3';
 
           const hoverBg = theme.palette.background.tag;
+
+          const migrationItem = getMigrationPairAndMining?.({
+            address: item.id,
+            chainId: item.chainId,
+          });
           return (
             <Box
               component="tr"
@@ -503,6 +556,7 @@ function TableList({
                         address={item.id}
                         chainId={item.chainId}
                       />
+                      {!!migrationItem && <MigrationTag />}
                     </Box>
                     <AddressWithLinkAndCopy
                       address={item.id}
@@ -512,6 +566,21 @@ function TableList({
                       iconDarkHover
                       iconSize={14}
                       iconSpace={4}
+                      onShareClick={
+                        onSharePool
+                          ? () =>
+                              onSharePool({
+                                chainId: item.chainId,
+                                baseToken,
+                                quoteToken,
+                                poolId: item.id,
+                                apy: item.apy,
+                                isSingle: PoolApi.utils.singleSideLp(
+                                  item.type as PoolType,
+                                ),
+                              })
+                          : undefined
+                      }
                       sx={{
                         typography: 'h6',
                         color: 'text.secondary',
@@ -601,7 +670,7 @@ function TableList({
                     alignItems: 'center',
                   }}
                 >
-                  {hasMining ? (
+                  {hasMining || hasMetromMining ? (
                     <Tooltip title={t`Mining`}>
                       <Box
                         component="span"
@@ -694,6 +763,9 @@ export default function AddLiquidityList({
   handleChangeActiveChainId,
   operatePool,
   setOperatePool,
+  tokenAndPoolFilter,
+  getMigrationPairAndMining,
+  supportAMMIcon,
 }: {
   scrollParentRef: React.MutableRefObject<HTMLDivElement | null>;
   account?: string;
@@ -703,6 +775,9 @@ export default function AddLiquidityList({
   handleChangeActiveChainId: (chainId: number | undefined) => void;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
+  supportAMMIcon?: boolean;
 }) {
   const theme = useTheme();
   const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
@@ -719,7 +794,7 @@ export default function AddLiquidityList({
     handleDeleteToken,
     handleChangeFilterTokens,
     handleChangeFilterAddress,
-  } = usePoolListFilterTokenAndPool();
+  } = usePoolListFilterTokenAndPool(tokenAndPoolFilter);
 
   const filterTypes = notSupportPMM ? [] : ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
   if (supportAMMV2) {
@@ -822,41 +897,44 @@ export default function AddLiquidityList({
             <SelectChain
               chainId={activeChainId}
               setChainId={handleChangeActiveChainId}
+              showNewIcon={supportAMMIcon}
             />
           )}
-          <TokenAndPoolFilter
-            value={filterTokens}
-            onChange={handleChangeFilterTokens}
-            searchAddress={async (address, onClose) => {
-              const query = graphQLRequests.getInfiniteQuery(
-                PoolApi.graphql.fetchLiquidityList,
-                'currentPage',
-                {
-                  where: {
-                    ...defaultQueryFilter,
-                    filterState: {
-                      address,
-                      ...defaultQueryFilter.filterState,
+          {tokenAndPoolFilter?.element ?? (
+            <TokenAndPoolFilter
+              value={filterTokens}
+              onChange={handleChangeFilterTokens}
+              searchAddress={async (address, onClose) => {
+                const query = graphQLRequests.getInfiniteQuery(
+                  PoolApi.graphql.fetchLiquidityList,
+                  'currentPage',
+                  {
+                    where: {
+                      ...defaultQueryFilter,
+                      filterState: {
+                        address,
+                        ...defaultQueryFilter.filterState,
+                      },
                     },
                   },
-                },
-              );
-              const result = await queryClient.fetchQuery(query);
-              const lqList = result.liquidity_list?.lqList;
-              if (lqList?.length) {
-                return (
-                  <TokenListPoolItem
-                    list={lqList}
-                    onClick={() => {
-                      handleChangeFilterAddress(lqList);
-                      onClose();
-                    }}
-                  />
                 );
-              }
-              return null;
-            }}
-          />
+                const result = await queryClient.fetchQuery(query);
+                const lqList = result.liquidity_list?.lqList;
+                if (lqList?.length) {
+                  return (
+                    <TokenListPoolItem
+                      list={lqList}
+                      onClick={() => {
+                        handleChangeFilterAddress(lqList);
+                        onClose();
+                      }}
+                    />
+                  );
+                }
+                return null;
+              }}
+            />
+          )}
         </Box>
 
         {/* filter tag */}
@@ -933,6 +1011,7 @@ export default function AddLiquidityList({
               lqList={lqList}
               setOperatePool={setOperatePool}
               supportAMM={supportAMMV2 || supportAMMV3}
+              getMigrationPairAndMining={getMigrationPairAndMining}
             />
           </DataCardGroup>
         </InfiniteScroll>
@@ -940,6 +1019,7 @@ export default function AddLiquidityList({
         <>
           <TableList
             lqList={lqList}
+            loading={fetchResult.isLoading}
             operatePool={operatePool}
             setOperatePool={setOperatePool}
             hasMore={hasMore}
@@ -950,6 +1030,7 @@ export default function AddLiquidityList({
               }
             }}
             supportAMM={supportAMMV2 || supportAMMV3}
+            getMigrationPairAndMining={getMigrationPairAndMining}
           />
           <CardStatus
             loading={fetchResult.isLoading}

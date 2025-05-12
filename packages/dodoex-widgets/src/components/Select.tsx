@@ -35,7 +35,7 @@ export default function Select<V extends string | number = string>({
     <SelectBase<V | typeof defaultValue>
       value={value ?? defaultValue}
       onChange={(_, v) => {
-        const newValue = (typeof value === 'number' ? Number(v) : v) as
+        const newValue = (typeof value === 'number' && !!v ? Number(v) : v) as
           | V
           | typeof defaultValue;
         onChange(newValue === defaultValue ? undefined : newValue);

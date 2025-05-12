@@ -6,20 +6,59 @@ import {
   ExecutionProps,
 } from '../../hooks/Submission';
 import Dialog from '../Swap/components/Dialog';
-import { useDispatch } from 'react-redux';
-import { ContractStatus } from '../../store/reducers/globals';
-import { AppThunkDispatch } from '../../store/actions';
-import { ReactComponent as LoadingIcon } from '../../assets/approveBorderRight.svg';
+import { ReactComponent as Loading } from '../../assets/approveBorderRight.svg';
 import { t, Trans } from '@lingui/macro';
-import { ArrowTopRightBorder, DoneBorder, ErrorWarn } from '@dodoex/icons';
+import {
+  ArrowTopRightBorder,
+  DoneBorder,
+  ErrorWarn,
+  Error,
+  ArrowSubmit,
+} from '@dodoex/icons';
 import { Showing } from '../../hooks/Submission/types';
 import { useWeb3React } from '@web3-react/core';
 import { scanUrlDomainMap } from '../../constants/chains';
 import { ChainId } from '@dodoex/api';
-import { setContractStatus } from '../../store/actions/globals';
 import { useUserOptions } from '../UserOptionsProvider';
+import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
+import { ContractStatus, setContractStatus } from '../../hooks/useGlobalState';
 
 const strokeWidth = 6;
+
+function LoadingIcon() {
+  const theme = useTheme();
+  return (
+    <Box
+      sx={{
+        mx: 'auto',
+        border: `${strokeWidth}px solid ${theme.palette?.background.input}`,
+        borderRadius: '50%',
+        width: '64px',
+        height: '64px',
+        position: 'relative',
+        animation: 'loadingRotate 1.1s infinite linear',
+        '@keyframes loadingRotate': {
+          '0%': {
+            transform: 'rotate(0deg)',
+          },
+          '100%': {
+            transform: 'rotate(359deg)',
+          },
+        },
+      }}
+    >
+      <Box
+        component={Loading}
+        sx={{
+          position: 'absolute',
+          top: `-${strokeWidth}px`,
+          right: `-${strokeWidth}px`,
+          color: 'primary.main',
+        }}
+      />
+    </Box>
+  );
+}
 
 function ExecuteIcon({
   showingDone,
@@ -54,37 +93,7 @@ function ExecuteIcon({
     );
   }
 
-  return (
-    <Box
-      sx={{
-        mx: 'auto',
-        border: `${strokeWidth}px solid ${theme.palette?.background.input}`,
-        borderRadius: '50%',
-        width: '64px',
-        height: '64px',
-        position: 'relative',
-        animation: 'loadingRotate 1.1s infinite linear',
-        '@keyframes loadingRotate': {
-          '0%': {
-            transform: 'rotate(0deg)',
-          },
-          '100%': {
-            transform: 'rotate(359deg)',
-          },
-        },
-      }}
-    >
-      <Box
-        component={LoadingIcon}
-        sx={{
-          position: 'absolute',
-          top: `-${strokeWidth}px`,
-          right: `-${strokeWidth}px`,
-          color: 'primary.main',
-        }}
-      />
-    </Box>
-  );
+  return <LoadingIcon />;
 }
 
 function ExecutionInfo({
@@ -219,6 +228,7 @@ function TransactionTime({
 export default function WithExecutionDialog({
   children,
   executionStatus,
+  showSubmitLoadingDialog,
   ...props
 }: {
   children: React.ReactNode;
@@ -228,6 +238,7 @@ export default function WithExecutionDialog({
     ctxVal,
     showing,
     closeShowing,
+    setShowing,
     showingDone,
     errorMessage,
     transactionTx,
@@ -235,17 +246,134 @@ export default function WithExecutionDialog({
     ...execution,
     ...executionStatus,
   };
-  const dispatch = useDispatch<AppThunkDispatch>();
+  const { isMobile } = useWidgetDevice();
 
   const noSubmissionDialog = useUserOptions(
     (state) => state.noSubmissionDialog,
   );
 
+  const handleCloseSubmitLoadingDialog = () => {
+    setShowing((prev) => {
+      if (!prev) return prev;
+      const newShowing = { ...prev };
+      delete newShowing.submitState;
+      return newShowing;
+    });
+  };
+
   return (
     <ExecutionContext.Provider value={ctxVal}>
       {children}
+      {showSubmitLoadingDialog && (
+        <Dialog
+          modal
+          open={!!showing?.submitState}
+          onClose={handleCloseSubmitLoadingDialog}
+        >
+          {!!showing && (
+            <Box
+              sx={{
+                position: 'relative',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 20,
+                p: 20,
+                minHeight: 208,
+                width: isMobile ? '100%' : 340,
+                textAlign: 'center',
+              }}
+            >
+              <Box
+                sx={{
+                  textAlign: 'center',
+                  color: 'text.secondary',
+                }}
+              >
+                {showing.brief}
+                <Box
+                  component={Error}
+                  sx={{
+                    position: 'absolute',
+                    top: 20,
+                    right: 20,
+                    color: 'text.secondary',
+                    cursor: 'pointer',
+                  }}
+                  onClick={handleCloseSubmitLoadingDialog}
+                />
+              </Box>
+              {showing.submitState === 'submitted' ? (
+                <>
+                  <Box
+                    component={ArrowSubmit}
+                    sx={{
+                      width: 64,
+                      height: 64,
+                    }}
+                  />
+                  <div>
+                    <div>{t`${showing.brief} Submitted`}</div>
+                    {showing.subtitle && (
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          mt: 8,
+                          color: 'text.secondary',
+                          typography: 'body2',
+                        }}
+                      >
+                        {showing.subtitle}
+                      </Box>
+                    )}
+                  </div>
+                  <Button
+                    variant={Button.Variant.outlined}
+                    fullWidth
+                    onClick={handleCloseSubmitLoadingDialog}
+                    sx={{
+                      mt: 4,
+                    }}
+                  >
+                    <Trans>OK</Trans>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <LoadingIcon />
+                  <div>
+                    <Box>
+                      <Trans>Please confirm in wallet</Trans>
+                    </Box>
+                    {showing.subtitle && (
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          mt: 8,
+                          color: 'text.secondary',
+                          typography: 'body2',
+                        }}
+                      >
+                        {showing.subtitle}
+                      </Box>
+                    )}
+                  </div>
+                </>
+              )}
+            </Box>
+          )}
+        </Dialog>
+      )}
+
+      {/* widget dialog */}
       <Dialog
-        open={!!showing && !noSubmissionDialog}
+        open={
+          !!showing && showing.submitState !== 'loading' && !noSubmissionDialog
+        }
         onClose={closeShowing}
         id="submission"
       >
@@ -308,7 +436,7 @@ export default function WithExecutionDialog({
             fullWidth
             size={Button.Size.big}
             onClick={() => {
-              dispatch(setContractStatus(ContractStatus.Initial));
+              setContractStatus(ContractStatus.Initial);
               closeShowing();
             }}
             sx={{

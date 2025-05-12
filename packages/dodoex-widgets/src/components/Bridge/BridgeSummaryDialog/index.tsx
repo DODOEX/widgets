@@ -8,11 +8,11 @@ import { BridgeLogo } from '../SelectBridgeDialog/BridgeLogo';
 import { DirectionLine } from '../SelectBridgeDialog/DirectionLine';
 import { TokenWithChain } from '../SelectBridgeDialog/TokenWithChain';
 import BridgeSummaryDetail from './BridgeSummaryDetail';
-import { useDispatch, useSelector } from 'react-redux';
-import { setContractStatus } from '../../../store/actions/globals';
-import { ContractStatus } from '../../../store/reducers/globals';
-import { AppThunkDispatch } from '../../../store/actions';
-import { getContractStatus } from '../../../store/selectors/globals';
+import {
+  ContractStatus,
+  setContractStatus,
+  useGlobalState,
+} from '../../../hooks/useGlobalState';
 
 export interface BridgeTXRequest {
   data: string;
@@ -39,9 +39,8 @@ export default function BridgeSummaryDialog({
   clearFromAmt: () => void;
 }) {
   const theme = useTheme();
-  const contractStatus = useSelector(getContractStatus);
+  const { contractStatus } = useGlobalState();
 
-  const dispatch = useDispatch<AppThunkDispatch>();
   const handleExecuteRoute = useExecuteBridgeRoute({
     route,
     bridgeOrderTxRequest,
@@ -63,7 +62,7 @@ export default function BridgeSummaryDialog({
       open={open}
       id="cross-chain-summary"
       onClose={() => {
-        dispatch(setContractStatus(ContractStatus.Initial));
+        setContractStatus(ContractStatus.Initial);
         onClose();
       }}
     >
@@ -140,7 +139,7 @@ export default function BridgeSummaryDialog({
             disabled={!route}
             onClick={() => {
               handleExecuteRoute();
-              dispatch(setContractStatus(ContractStatus.Pending));
+              setContractStatus(ContractStatus.Pending);
             }}
           >
             {contractStatus == ContractStatus.Pending ? (

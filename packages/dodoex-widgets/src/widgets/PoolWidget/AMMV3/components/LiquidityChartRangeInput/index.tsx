@@ -1,7 +1,6 @@
 import { Box, LoadingSkeleton } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { ReactNode, useCallback, useMemo } from 'react';
-import { batch } from 'react-redux';
 import {
   formatPercentageNumber,
   formatTokenAmountNumber,
@@ -108,29 +107,27 @@ export default function LiquidityChartRangeInput({
         leftRangeValue = 1 / 10 ** 6;
       }
 
-      batch(() => {
-        // simulate user input for auto-formatting and other validations
-        if (
-          (!ticksAtLimit[isSorted ? Bound.LOWER : Bound.UPPER] ||
-            mode === 'handle' ||
-            mode === 'reset') &&
-          leftRangeValue > 0
-        ) {
-          onLeftRangeInput(leftRangeValue.toFixed(6));
-        }
+      // simulate user input for auto-formatting and other validations
+      if (
+        (!ticksAtLimit[isSorted ? Bound.LOWER : Bound.UPPER] ||
+          mode === 'handle' ||
+          mode === 'reset') &&
+        leftRangeValue > 0
+      ) {
+        onLeftRangeInput(leftRangeValue.toFixed(6));
+      }
 
-        if (
-          (!ticksAtLimit[isSorted ? Bound.UPPER : Bound.LOWER] ||
-            mode === 'reset') &&
-          rightRangeValue > 0
-        ) {
-          // todo: remove this check. Upper bound for large numbers
-          // sometimes fails to parse to tick.
-          if (rightRangeValue < 1e35) {
-            onRightRangeInput(rightRangeValue.toFixed(6));
-          }
+      if (
+        (!ticksAtLimit[isSorted ? Bound.UPPER : Bound.LOWER] ||
+          mode === 'reset') &&
+        rightRangeValue > 0
+      ) {
+        // todo: remove this check. Upper bound for large numbers
+        // sometimes fails to parse to tick.
+        if (rightRangeValue < 1e35) {
+          onRightRangeInput(rightRangeValue.toFixed(6));
         }
-      });
+      }
     },
     [isSorted, onLeftRangeInput, onRightRangeInput, ticksAtLimit],
   );

@@ -1,8 +1,23 @@
-import { neox, plume } from '@dodoex/dodo-contract-request';
+import {
+  morph,
+  nero,
+  neox,
+  plume,
+  plumeTestnet,
+  arbsepolia,
+  riseTestnet,
+  bitlayer,
+  zircuitMainnet,
+  xLayer,
+  zeroMainnet,
+  hashkey,
+  hemi,
+} from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
 const contractMap: {
   [key in ChainId]: {
+    /** MulticallWithValid */
     MULTI_CALL: string;
     DODO_APPROVE: string;
     /** ERC20Helper */
@@ -14,7 +29,7 @@ const contractMap: {
     ROUTE_V1_DATA_FETCH: string;
     /** DODOCalleeHelper */
     CALLEE_HELPER: string;
-
+    /** DODOV2Proxy02 */
     DODO_PROXY: string;
     /** DODODspProxy */
     DODO_DSP_PROXY: string;
@@ -117,6 +132,20 @@ const contractMap: {
     DODO_DPP_PROXY: '0xE8C9A78725D0451FA19878D5f8A3dC0D55FECF25',
     DODO_V1_PAIR_PROXY: '0x49186E32fEd50fd6B5604A2618c7B0b03Cd41414',
     DODO_MINEV3_PROXY: '0x7E820457780Ac99B9A042Cd5f875b274855A1eE9',
+  },
+  [ChainId.ARBITRUM_SEPOLIA]: {
+    MULTI_CALL: arbsepolia.MulticallWithValid,
+    DODO_APPROVE: arbsepolia.DODOApprove,
+    ERC20_HELPER: arbsepolia.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: arbsepolia.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: arbsepolia.DODOV1PmmHelper,
+    CALLEE_HELPER: arbsepolia.DODOCalleeHelper,
+
+    DODO_PROXY: arbsepolia.DODOV2Proxy02,
+    DODO_DSP_PROXY: arbsepolia.DODODspProxy,
+    DODO_DPP_PROXY: arbsepolia.DODODppProxy,
+    DODO_MINEV3_PROXY: arbsepolia.DODOMineV3ProxyWithoutPlatform,
   },
   [ChainId.AURORA]: {
     MULTI_CALL: '0x989DcAA95801C527C5B73AA65d3962dF9aCe1b0C',
@@ -300,6 +329,20 @@ const contractMap: {
     DODO_DPP_PROXY: plume.DODODppProxy,
     DODO_MINEV3_PROXY: plume.DODOMineV3Proxy,
   },
+  [ChainId.PLUME_TESTNET]: {
+    MULTI_CALL: plumeTestnet.MulticallWithValid,
+    DODO_APPROVE: plumeTestnet.DODOApprove,
+    ERC20_HELPER: plumeTestnet.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: plumeTestnet.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: plumeTestnet.DODOV1PmmHelper,
+    CALLEE_HELPER: plumeTestnet.DODOCalleeHelper,
+
+    DODO_PROXY: plumeTestnet.DODOV2Proxy02,
+    DODO_DSP_PROXY: plumeTestnet.DODODspProxy,
+    DODO_DPP_PROXY: plumeTestnet.DODODppProxy,
+    DODO_MINEV3_PROXY: plumeTestnet.DODOMineV3Proxy,
+  },
   [ChainId.NEOX]: {
     MULTI_CALL: neox.MulticallWithValid,
     DODO_APPROVE: neox.DODOApprove,
@@ -313,6 +356,132 @@ const contractMap: {
     DODO_DSP_PROXY: neox.DODODspProxyWithoutGSP,
     DODO_DPP_PROXY: neox.DODODppProxy,
     DODO_MINEV3_PROXY: neox.DODOMineV3Proxy,
+  },
+  [ChainId.MORPH]: {
+    MULTI_CALL: morph.MulticallWithValid,
+    DODO_APPROVE: morph.DODOApprove,
+    ERC20_HELPER: morph.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: morph.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: morph.DODOV1PmmHelper,
+    CALLEE_HELPER: morph.DODOCalleeHelper,
+
+    DODO_PROXY: morph.DODOV2Proxy02,
+    DODO_DSP_PROXY: morph.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: morph.DODODppProxy,
+    DODO_MINEV3_PROXY: morph.DODOMineV3Proxy,
+  },
+  [ChainId.RISE_TESTNET]: {
+    MULTI_CALL: riseTestnet.MulticallWithValid,
+    DODO_APPROVE: riseTestnet.DODOApprove,
+    ERC20_HELPER: riseTestnet.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: riseTestnet.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: riseTestnet.DODOV1PmmHelper,
+    CALLEE_HELPER: riseTestnet.DODOCalleeHelper,
+
+    DODO_PROXY: riseTestnet.DODOV2Proxy02,
+    DODO_DSP_PROXY: riseTestnet.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: riseTestnet.DODODppProxy,
+    DODO_MINEV3_PROXY: riseTestnet.DODOMineV3Proxy,
+  },
+  [ChainId.NEROCHAIN]: {
+    MULTI_CALL: nero.MulticallWithValid,
+    DODO_APPROVE: nero.DODOApprove,
+    ERC20_HELPER: nero.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: nero.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: nero.DODOV1PmmHelper,
+    CALLEE_HELPER: nero.DODOCalleeHelper,
+
+    DODO_PROXY: nero.DODOV2Proxy02,
+    DODO_DSP_PROXY: nero.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: nero.DODODppProxy,
+    DODO_MINEV3_PROXY: nero.DODOMineV3Proxy,
+  },
+  [ChainId.BITLAYER]: {
+    MULTI_CALL: bitlayer.MulticallWithValid,
+    DODO_APPROVE: bitlayer.DODOApprove,
+    ERC20_HELPER: bitlayer.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: bitlayer.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: bitlayer.DODOV1PmmHelper,
+    CALLEE_HELPER: bitlayer.DODOCalleeHelper,
+
+    DODO_PROXY: bitlayer.DODOV2Proxy02,
+    DODO_DSP_PROXY: bitlayer.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: bitlayer.DODODppProxy,
+    DODO_MINEV3_PROXY: bitlayer.DODOMineV3Proxy,
+  },
+  [ChainId.ZIRCUIT]: {
+    MULTI_CALL: zircuitMainnet.MulticallWithValid,
+    DODO_APPROVE: zircuitMainnet.DODOApprove,
+    ERC20_HELPER: zircuitMainnet.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: zircuitMainnet.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: zircuitMainnet.DODOV1PmmHelper,
+    CALLEE_HELPER: zircuitMainnet.DODOCalleeHelper,
+
+    DODO_PROXY: zircuitMainnet.DODOV2Proxy02,
+    DODO_DSP_PROXY: zircuitMainnet.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: zircuitMainnet.DODODppProxy,
+    DODO_MINEV3_PROXY: zircuitMainnet.DODOMineV3Proxy,
+  },
+  [ChainId.X_LAYER]: {
+    MULTI_CALL: xLayer.MulticallWithValid,
+    DODO_APPROVE: xLayer.DODOApprove,
+    ERC20_HELPER: xLayer.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: xLayer.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: xLayer.DODOV1PmmHelper,
+    CALLEE_HELPER: xLayer.DODOCalleeHelper,
+
+    DODO_PROXY: xLayer.DODOV2Proxy02,
+    DODO_DSP_PROXY: xLayer.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: xLayer.DODODppProxy,
+    DODO_MINEV3_PROXY: xLayer.DODOMineV3Proxy,
+  },
+  [ChainId.ZERO]: {
+    MULTI_CALL: zeroMainnet.MulticallWithValid,
+    DODO_APPROVE: zeroMainnet.DODOApprove,
+    ERC20_HELPER: zeroMainnet.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: zeroMainnet.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: zeroMainnet.DODOV1PmmHelper,
+    CALLEE_HELPER: zeroMainnet.DODOCalleeHelper,
+
+    DODO_PROXY: zeroMainnet.DODOV2Proxy02,
+    DODO_DSP_PROXY: zeroMainnet.DODODspProxy,
+    DODO_DPP_PROXY: zeroMainnet.DODODppProxy,
+    DODO_MINEV3_PROXY: zeroMainnet.DODOMineV3Proxy,
+  },
+  [ChainId.HASHKEY]: {
+    MULTI_CALL: hashkey.MulticallWithValid,
+    DODO_APPROVE: hashkey.DODOApprove,
+    ERC20_HELPER: hashkey.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: hashkey.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: hashkey.DODOV1PmmHelper,
+    CALLEE_HELPER: hashkey.DODOCalleeHelper,
+
+    DODO_PROXY: hashkey.DODOV2Proxy02,
+    DODO_DSP_PROXY: hashkey.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: hashkey.DODODppProxy,
+    DODO_MINEV3_PROXY: hashkey.DODOMineV3Proxy,
+  },
+  [ChainId.HEMI]: {
+    MULTI_CALL: hemi.MulticallWithValid,
+    DODO_APPROVE: hemi.DODOApprove,
+    ERC20_HELPER: hemi.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: hemi.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: hemi.DODOV1PmmHelper,
+    CALLEE_HELPER: hemi.DODOCalleeHelper,
+
+    DODO_PROXY: hemi.DODOV2Proxy02,
+    DODO_DSP_PROXY: hemi.DODODspProxyWithoutGSP,
+    DODO_DPP_PROXY: hemi.DODODppProxy,
+    DODO_MINEV3_PROXY: hemi.DODOMineV3Proxy,
   },
 };
 

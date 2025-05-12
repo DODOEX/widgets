@@ -1,5 +1,5 @@
-import { Box, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
-import { t } from '@lingui/macro';
+import { Box, TabPanel, Tabs, TabsGroup, useTheme } from '@dodoex/components';
+import { t, Trans } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { HowItWorks } from '../../../components/HowItWorks';
@@ -22,6 +22,12 @@ import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
 import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
+import { transitionTime } from '../../../components/Swap/components/Dialog';
+import { TokenAndPoolFilterUserOptions } from './hooks/usePoolListFilterTokenAndPool';
+import {
+  GetMigrationPairAndMining,
+  ShowMigrationPairAndMining,
+} from '../PoolOperate/types';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -39,10 +45,21 @@ function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
 
 export default function PoolList({
   params,
+  scrollRef: scrollParentRefProps,
+  tokenAndPoolFilter,
+  getMigrationPairAndMining,
+  showMigrationPairAndMining,
+  supportAMMIcon,
 }: {
   params?: Page<PageType.Pool>['params'];
+  scrollRef?: React.RefObject<any>;
+  tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
+  showMigrationPairAndMining?: ShowMigrationPairAndMining;
+  supportAMMIcon?: boolean;
 }) {
   const { isMobile } = useWidgetDevice();
+  const theme = useTheme();
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
   const scrollParentRef = React.useRef<HTMLDivElement>(null);
   const { account } = useWeb3React();
@@ -93,38 +110,58 @@ export default function PoolList({
         className={isMobile ? undefined : 'gradient-card-border'}
       >
         <Box
-          sx={
-            isMobile
-              ? {}
+          sx={{
+            ...(isMobile
+              ? {
+                  ...(!account && {
+                    pb: 20,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    borderStyle: 'solid',
+                    borderWidth: '0 0 1px',
+                  }),
+                }
               : {
                   display: 'flex',
                   justifyContent: 'space-between',
                   p: 20,
                   borderBottomWidth: 1,
-                }
-          }
+                }),
+          }}
         >
-          <TabsGroup
-            tabs={tabs}
-            variant="rounded"
-            tabsListSx={{
-              justifyContent: 'space-between',
-              ...(isMobile
-                ? {
-                    mb: 16,
-                  }
-                : {
-                    borderBottomWidth: 0,
-                  }),
-            }}
-            tabSx={
-              isMobile
-                ? undefined
-                : {
-                    mb: 0,
-                  }
-            }
-          />
+          {account ? (
+            <TabsGroup
+              tabs={tabs}
+              variant="rounded"
+              tabsListSx={{
+                justifyContent: 'space-between',
+                ...(isMobile
+                  ? {
+                      mb: 16,
+                    }
+                  : {
+                      borderBottomWidth: 0,
+                    }),
+              }}
+              tabSx={
+                isMobile
+                  ? undefined
+                  : {
+                      mb: 0,
+                    }
+              }
+            />
+          ) : (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                fontWeight: 600,
+              }}
+            >
+              <Trans>Add Liquidity</Trans>
+            </Box>
+          )}
           <CreatePoolBtn />
         </Box>
         <TabPanelFlexCol
@@ -138,11 +175,14 @@ export default function PoolList({
           <AddLiquidityList
             account={account}
             filterChainIds={filterChainIds}
-            scrollParentRef={scrollParentRef}
+            scrollParentRef={scrollParentRefProps ?? scrollParentRef}
             activeChainId={activeChainId}
             handleChangeActiveChainId={handleChangeActiveChainId}
             operatePool={operatePool}
             setOperatePool={setOperatePool}
+            tokenAndPoolFilter={tokenAndPoolFilter}
+            getMigrationPairAndMining={getMigrationPairAndMining}
+            supportAMMIcon={supportAMMIcon}
           />
         </TabPanelFlexCol>
         <TabPanelFlexCol value={PoolTab.myLiquidity}>
@@ -153,6 +193,9 @@ export default function PoolList({
             handleChangeActiveChainId={handleChangeActiveChainId}
             operatePool={operatePool}
             setOperatePool={setOperatePool}
+            tokenAndPoolFilter={tokenAndPoolFilter}
+            getMigrationPairAndMining={getMigrationPairAndMining}
+            supportAMMIcon={supportAMMIcon}
           />
         </TabPanelFlexCol>
         <TabPanelFlexCol value={PoolTab.myCreated}>
@@ -163,13 +206,18 @@ export default function PoolList({
             handleChangeActiveChainId={handleChangeActiveChainId}
             operatePool={operatePool}
             setOperatePool={setOperatePool}
+            supportAMMIcon={supportAMMIcon}
           />
         </TabPanelFlexCol>
       </Tabs>
       <Box
         sx={{
           position: 'relative',
-          width: noDocumentLink && !operatePool ? 'auto' : 375,
+          width: isMobile
+            ? '100%'
+            : noDocumentLink && !operatePool
+              ? 'auto'
+              : 375,
         }}
       >
         {!noDocumentLink && (
@@ -178,6 +226,14 @@ export default function PoolList({
             desc={t`Classical AMM-like pool. Suitable for most assets.`}
             linkTo="https://docs.dodoex.io/product/tutorial/how-to-provide-liquidity"
             LeftImage={LeftImage}
+            sx={{
+              ...(isMobile && {
+                mt: 20,
+              }),
+              ...(!!operatePool && {
+                display: 'none',
+              }),
+            }}
           />
         )}
         {operatePool?.pool?.type === 'AMMV3' && operatePool.pool.chainId ? (
@@ -206,28 +262,52 @@ export default function PoolList({
               }}
             />
           )
-        ) : isMobile ? (
-          <PoolOperateDialog
-            account={account}
-            onClose={() => setOperatePool(null)}
-            modal={isMobile}
-            {...operatePool}
-          />
         ) : (
-          !!operatePool && (
-            <PoolOperate
-              account={account}
-              onClose={() => setOperatePool(null)}
-              {...operatePool}
-              sx={{
-                width: 375,
-                height: 'max-content',
-                backgroundColor: 'background.paper',
-                borderRadius: 16,
-                overflow: 'hidden',
-              }}
-            />
-          )
+          <>
+            {isMobile ? (
+              <PoolOperateDialog
+                account={account}
+                onClose={() => setOperatePool(null)}
+                modal={isMobile}
+                getMigrationPairAndMining={getMigrationPairAndMining}
+                showMigrationPairAndMining={showMigrationPairAndMining}
+                {...operatePool}
+              />
+            ) : (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: operatePool ? 0 : '100%',
+                  height: operatePool ? 'max-content' : 0,
+                  transition: `all ${transitionTime}ms`,
+                  zIndex: 20,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  backgroundColor: 'background.paper',
+                  borderRadius: 16,
+                  maxHeight: 'max-content',
+                }}
+              >
+                <PoolOperate
+                  account={account}
+                  onClose={() => setOperatePool(null)}
+                  getMigrationPairAndMining={getMigrationPairAndMining}
+                  showMigrationPairAndMining={showMigrationPairAndMining}
+                  {...operatePool}
+                  sx={{
+                    width: 375,
+                    height: 'max-content',
+                    backgroundColor: 'background.paper',
+                    borderRadius: 16,
+                    overflow: 'hidden',
+                  }}
+                />
+              </Box>
+            )}
+          </>
         )}
       </Box>
     </WidgetContainer>

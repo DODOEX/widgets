@@ -1,6 +1,23 @@
-import { Box, BoxProps, EmptyDataIcon } from '@dodoex/components';
+import {
+  Box,
+  BoxProps,
+  EmptyDataIcon as EmptyDataIconOrigin,
+} from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import React from 'react';
+import { useUserOptions } from '../UserOptionsProvider';
+
+export function EmptyDataIcon(
+  props: Parameters<typeof EmptyDataIconOrigin>[0],
+) {
+  const { EmptyDataIcon } = useUserOptions();
+
+  return EmptyDataIcon ? (
+    <EmptyDataIcon {...props} />
+  ) : (
+    <EmptyDataIconOrigin {...props} />
+  );
+}
 
 export function EmptyList({
   sx,

@@ -1,11 +1,9 @@
 import { ChainId } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import { useSelector } from 'react-redux';
 import { tokenApi } from '../../constants/api';
-import { getAutoConnectLoading } from '../../store/selectors/globals';
-import { getTokenList } from '../../store/selectors/token';
 import { TokenInfo, TokenList } from './type';
+import { useGlobalState } from '../useGlobalState';
+import { useTokenState } from '../useTokenState';
 
 interface SimpleToken {
   chainId: ChainId;
@@ -70,8 +68,8 @@ export function useTokenListDefaultToken({
   /** Must exist in tokenList */
   tokenListInclude?: boolean;
 } = {}) {
-  const autoConnectLoading = useSelector(getAutoConnectLoading);
-  const tokenList = useSelector(getTokenList);
+  const { autoConnectLoading } = useGlobalState();
+  const { tokenList } = useTokenState();
   const baseInTokenListToken = getDefaultToken({
     side: 'from',
     needFindToken: defaultBaseSimpleToken,

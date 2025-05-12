@@ -1,12 +1,13 @@
-import { TabPanel as BaseTabPanel, TabPanelProps } from '@mui/base/TabPanel';
+import { TabPanel as BaseTabPanel, TabPanelOwnProps } from '@mui/base/TabPanel';
 import { Box, BoxProps } from '../Box';
 import React from 'react';
 
-export const TabPanel = React.forwardRef(function TabPanel(
-  props: Partial<TabPanelProps> & {
-    sx?: BoxProps['sx'];
-  },
-  ref,
-) {
+export const TabPanel = React.forwardRef<
+  HTMLDivElement,
+  TabPanelOwnProps &
+    React.RefAttributes<HTMLDivElement> & {
+      sx?: BoxProps['sx'];
+    }
+>(function TabPanel(props, ref) {
   return <Box component={BaseTabPanel} {...props} ref={ref} />;
 });

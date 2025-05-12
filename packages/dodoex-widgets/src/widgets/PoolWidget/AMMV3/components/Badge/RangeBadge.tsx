@@ -20,7 +20,10 @@ export default function RangeBadge({
   };
 
   return removed ? (
-    <Tooltip title={t`Your position has 0 liquidity, and is not earning fees.`}>
+    <Tooltip
+      title={t`Your position has 0 liquidity, and is not earning fees.`}
+      maxWidth={240}
+    >
       <Box
         sx={{
           ...sx,
@@ -32,12 +35,14 @@ export default function RangeBadge({
   ) : inRange ? (
     <Tooltip
       title={t`The price of this pool is within your selected range. Your position is currently earning fees.`}
+      maxWidth={240}
     >
       <Box sx={sx}>{t`In range`}</Box>
     </Tooltip>
   ) : (
     <Tooltip
       title={t`The price of this pool is outside of your selected range. Your position is not currently earning fees.`}
+      maxWidth={240}
     >
       <Box
         sx={{

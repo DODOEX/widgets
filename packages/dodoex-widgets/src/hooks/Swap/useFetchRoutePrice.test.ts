@@ -17,16 +17,6 @@ jest.mock('../../components/UserOptionsProvider', () => ({
     defaultChainId: 1,
   }),
 }));
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useDispatch: () => jest.fn(),
-  useSelector: (fn: () => any) => {
-    if (typeof fn === 'function') {
-      return fn();
-    }
-    return [];
-  },
-}));
 jest.mock('@web3-react/core', () => ({
   useWeb3React: () => ({
     account: '0x2Ba1633338dDD2Ab37fbc95ea615BA98f0445380',

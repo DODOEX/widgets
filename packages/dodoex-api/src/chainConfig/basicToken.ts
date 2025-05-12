@@ -66,6 +66,12 @@ export const basicTokenMap: {
     showDecimals: 6,
     wrappedTokenAddress: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
   },
+  [ChainId.ARBITRUM_SEPOLIA]: {
+    ...DEFAULT_BASIC_TOKEN,
+    name: 'Ethereum',
+    showDecimals: 6,
+    wrappedTokenAddress: '0xfd6fFee92D25158b29315C71b0Bb4dE727530FaF',
+  },
   [ChainId.AURORA]: {
     ...DEFAULT_BASIC_TOKEN,
     name: 'Ethereum',
@@ -118,7 +124,14 @@ export const basicTokenMap: {
   },
   [ChainId.PLUME]: {
     ...DEFAULT_BASIC_TOKEN,
-    wrappedTokenAddress: '0x562723560131C47417dfcD6BB1A089E4D7C7943C',
+    symbol: 'PLUME',
+    name: 'PLUME',
+    wrappedTokenSymbol: 'WPLUME',
+    wrappedTokenAddress: '0xEa237441c92CAe6FC17Caaf9a7acB3f953be4bd1',
+  },
+  [ChainId.PLUME_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0xaA6210015fbf0855F0D9fDA3C415c1B12776Ae74',
   },
   [ChainId.NEOX]: {
     ...DEFAULT_BASIC_TOKEN,
@@ -127,5 +140,53 @@ export const basicTokenMap: {
     showDecimals: 6,
     wrappedTokenSymbol: 'WGAS10',
     wrappedTokenAddress: '0xdE41591ED1f8ED1484aC2CD8ca0876428de60EfF',
+  },
+  [ChainId.MORPH]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x5300000000000000000000000000000000000011',
+  },
+  [ChainId.RISE_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
+  },
+  [ChainId.NEROCHAIN]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'NERO',
+    name: 'NERO',
+    wrappedTokenSymbol: 'WNERO',
+    wrappedTokenAddress: '0x252ba4a6efb0d91bd7108d91a067c14592a56f17',
+  },
+  [ChainId.BITLAYER]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'BTC',
+    name: 'BTC',
+    wrappedTokenSymbol: 'WBTC',
+    wrappedTokenAddress: '0xff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f',
+  },
+  [ChainId.ZIRCUIT]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
+  },
+  [ChainId.X_LAYER]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'OKB',
+    name: 'OKB',
+    wrappedTokenSymbol: 'WOKB',
+    wrappedTokenAddress: '0xe538905cf8410324e03a5a23c1c177a474d59b2b',
+  },
+  [ChainId.ZERO]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0xAc98B49576B1C892ba6BFae08fE1BB0d80Cf599c',
+  },
+  [ChainId.HASHKEY]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'HSK',
+    name: 'HSK',
+    wrappedTokenSymbol: 'WHSK',
+    wrappedTokenAddress: '0xB210D2120d57b758EE163cFfb43e73728c471Cf1',
+  },
+  [ChainId.HEMI]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
   },
 };

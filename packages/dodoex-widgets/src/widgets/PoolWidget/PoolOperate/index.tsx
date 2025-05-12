@@ -26,6 +26,7 @@ import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
 import { t } from '@lingui/macro';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { GSPPairRiskWarning } from './components/GSPPairRiskWarning';
+import { GetMigrationPairAndMining, ShowMigrationPairAndMining } from './types';
 
 export interface PoolOperateProps {
   onClose?: () => void;
@@ -37,6 +38,8 @@ export interface PoolOperateProps {
   hasMining?: boolean;
   hidePoolInfo?: boolean;
   sx?: BoxProps['sx'];
+  getMigrationPairAndMining?: GetMigrationPairAndMining;
+  showMigrationPairAndMining?: ShowMigrationPairAndMining;
 }
 
 export function PoolOperate({
@@ -48,6 +51,8 @@ export function PoolOperate({
   hasMining,
   hidePoolInfo,
   sx,
+  getMigrationPairAndMining,
+  showMigrationPairAndMining,
 }: PoolOperateProps) {
   const { account } = useWeb3React();
   const chain = chainId ? ThegraphKeyMap[chainId as ChainId] : '';
@@ -78,7 +83,17 @@ export function PoolOperate({
 
   const balanceInfo = usePoolBalanceInfo({
     account,
-    pool,
+    pool: pool
+      ? {
+          chainId: pool.chainId,
+          address: pool.address,
+          type: pool.type,
+          baseTokenDecimals: pool.baseToken.decimals,
+          quoteTokenDecimals: pool.quoteToken.decimals,
+          baseLpTokenDecimals: pool.baseLpToken?.decimals ?? 18,
+          quoteLpTokenDecimals: pool.quoteLpToken?.decimals ?? 18,
+        }
+      : undefined,
   });
   const hasLp =
     !!balanceInfo.userBaseLpBalance?.gt(0) ||
@@ -183,6 +198,8 @@ export function PoolOperate({
                 handleChangeTab(PoolOrMiningTab.Mining);
               }
             }}
+            getMigrationPairAndMining={getMigrationPairAndMining}
+            showMigrationPairAndMining={showMigrationPairAndMining}
           />
         </TabPanel>
         <TabPanel

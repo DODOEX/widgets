@@ -39,9 +39,11 @@ export const poolGraphqlQuery = {
         }
         baseLpToken {
           id
+          decimals
         }
         quoteLpToken {
           id
+          decimals
         }
       }
     }
@@ -63,9 +65,11 @@ export const poolGraphqlQuery = {
             creator
             baseLpToken {
               id
+              decimals
             }
             quoteLpToken {
               id
+              decimals
             }
             baseToken {
               id
@@ -87,6 +91,7 @@ export const poolGraphqlQuery = {
               miningQuoteApy
               transactionBaseApy
               transactionQuoteApy
+              metromMiningApy
             }
             miningAddress
             volume24H
@@ -140,9 +145,11 @@ export const poolGraphqlQuery = {
             creator
             baseLpToken {
               id
+              decimals
             }
             quoteLpToken {
               id
+              decimals
             }
             baseToken {
               id
@@ -164,6 +171,7 @@ export const poolGraphqlQuery = {
               miningQuoteApy
               transactionBaseApy
               transactionQuoteApy
+              metromMiningApy
             }
             miningAddress
             volume24H
@@ -237,11 +245,13 @@ export const poolGraphqlQuery = {
           id
           symbol
           name
+          decimals
         }
         quoteLpToken {
           id
           symbol
           name
+          decimals
         }
       }
       liquidity_list(where: $liquidityWhere) {
@@ -252,6 +262,7 @@ export const poolGraphqlQuery = {
               miningQuoteApy
               transactionBaseApy
               transactionQuoteApy
+              metromMiningApy
             }
             miningAddress
           }

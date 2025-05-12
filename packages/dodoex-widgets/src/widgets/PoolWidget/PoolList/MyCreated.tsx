@@ -26,7 +26,6 @@ import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import SelectChain from '../../../components/SelectChain';
 import { EmptyList } from '../../../components/List/EmptyList';
 import { FailedList } from '../../../components/List/FailedList';
-import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import { PoolOperateProps } from '../PoolOperate';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
@@ -238,7 +237,7 @@ function CardList({
               }}
             >
               {!!account && (
-                <NeedConnectButton
+                <Button
                   fullWidth
                   variant={Button.Variant.outlined}
                   size={Button.Size.small}
@@ -252,9 +251,9 @@ function CardList({
                   }}
                 >
                   <Trans>Remove</Trans>
-                </NeedConnectButton>
+                </Button>
               )}
-              <NeedConnectButton
+              <Button
                 fullWidth
                 size={Button.Size.small}
                 onClick={(evt) => {
@@ -267,7 +266,7 @@ function CardList({
                 }}
               >
                 <Trans>Add</Trans>
-              </NeedConnectButton>
+              </Button>
             </Box>
           </Box>
         );
@@ -279,18 +278,20 @@ function CardList({
 function TableList({
   account,
   list,
+  loading,
   operatePool,
   setOperatePool,
 }: {
   account?: string;
   list: FetchMyCreateListLqList;
+  loading: boolean;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
 }) {
   const theme = useTheme();
   const router = useRouterStore();
   return (
-    <LiquidityTable>
+    <LiquidityTable empty={!list?.length} loading={loading}>
       <Box component="thead">
         <Box component="tr">
           <Box component="th">
@@ -536,7 +537,7 @@ function TableList({
                   ) : (
                     <>
                       {!!account && (
-                        <NeedConnectButton
+                        <Button
                           variant={Button.Variant.outlined}
                           size={Button.Size.small}
                           onClick={(evt) => {
@@ -549,9 +550,9 @@ function TableList({
                           }}
                         >
                           <Trans>Remove</Trans>
-                        </NeedConnectButton>
+                        </Button>
                       )}
-                      <NeedConnectButton
+                      <Button
                         size={Button.Size.small}
                         onClick={() => {
                           setOperatePool({
@@ -561,7 +562,7 @@ function TableList({
                         }}
                       >
                         {t`Add`}
-                      </NeedConnectButton>
+                      </Button>
                     </>
                   )}
                 </Box>
@@ -581,6 +582,7 @@ export default function MyCreated({
   handleChangeActiveChainId,
   operatePool,
   setOperatePool,
+  supportAMMIcon,
 }: {
   account?: string;
   filterChainIds?: ChainId[];
@@ -589,6 +591,7 @@ export default function MyCreated({
   handleChangeActiveChainId: (chainId: number | undefined) => void;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  supportAMMIcon?: boolean;
 }) {
   const { isMobile } = useWidgetDevice();
   const { onlyChainId } = useUserOptions();
@@ -642,6 +645,7 @@ export default function MyCreated({
           <SelectChain
             chainId={activeChainId}
             setChainId={handleChangeActiveChainId}
+            showNewIcon={supportAMMIcon}
           />
         )}
         <Box
@@ -701,6 +705,7 @@ export default function MyCreated({
           <TableList
             account={account}
             list={list}
+            loading={fetchResult.isLoading}
             operatePool={operatePool}
             setOperatePool={setOperatePool}
           />

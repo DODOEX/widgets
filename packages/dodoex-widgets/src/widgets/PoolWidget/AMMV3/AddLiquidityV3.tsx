@@ -39,6 +39,7 @@ import { Bound, Field } from './types';
 import { convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
 import { toSlippagePercent } from './utils/slippage';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
 
 export default function AddLiquidityV3({
   params,
@@ -216,6 +217,7 @@ export default function AddLiquidityV3({
     }
   }, [getSetFullRange, onLeftRangeInput, onRightRangeInput, pricesAtLimit]);
 
+  const { deadLine: ddl } = useUserOptions();
   const onAddMutation = useMutation({
     mutationFn: async () => {
       if (!account || !chainId || !position) {
@@ -226,7 +228,7 @@ export default function AddLiquidityV3({
         return;
       }
 
-      const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
+      const deadline = Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60);
 
       const useNative = state.baseToken.isNative
         ? state.baseToken

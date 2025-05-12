@@ -1,11 +1,6 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppThunkDispatch } from '../../store/actions';
-import {
-  setAutoSlippage,
-  setAutoSlippageLoading,
-} from '../../store/actions/globals';
 import { TokenInfo } from '../Token';
+import { setAutoSlippage, setAutoSlippageLoading } from '../useGlobalState';
 
 export type GetAutoSlippage = (options: {
   fromToken: TokenInfo | null;
@@ -24,7 +19,6 @@ export function useSetAutoSlippage({
   toToken: TokenInfo | null;
   getAutoSlippage?: GetAutoSlippage;
 }) {
-  const dispatch = useDispatch<AppThunkDispatch>();
   useEffect(() => {
     const computed = async () => {
       if (!getAutoSlippage) {
@@ -38,31 +32,26 @@ export function useSetAutoSlippage({
         typeof getAutoSlippageResult === 'undefined' ||
         typeof getAutoSlippageResult === 'number'
       ) {
-        dispatch(
-          setAutoSlippage({
-            loading: false,
-            value: null,
-          }),
-        );
+        setAutoSlippage({
+          loading: false,
+          value: null,
+        });
         return;
       }
-      dispatch(setAutoSlippageLoading(true));
+
+      setAutoSlippageLoading(true);
       try {
         const result = await getAutoSlippageResult;
-        dispatch(
-          setAutoSlippage({
-            loading: false,
-            value: result ?? null,
-          }),
-        );
+        setAutoSlippage({
+          loading: false,
+          value: result ?? null,
+        });
       } catch (error) {
         console.error(error);
-        dispatch(
-          setAutoSlippage({
-            loading: false,
-            value: null,
-          }),
-        );
+        setAutoSlippage({
+          loading: false,
+          value: null,
+        });
       }
     };
     computed();

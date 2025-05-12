@@ -12,10 +12,12 @@ function Card({
   title,
   children,
   isWaiting,
+  backgroundColor,
 }: {
   title: string;
   children: React.ReactNode;
   isWaiting: boolean;
+  backgroundColor: string;
 }) {
   const theme = useTheme();
 
@@ -24,7 +26,7 @@ function Card({
       sx={{
         padding: 16,
         borderRadius: 8,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor,
         flexGrow: 1,
         flexBasis: '100%',
       }}
@@ -62,6 +64,7 @@ export function LqSettingsShow({
   slippageCoefficient,
   baseAmount,
   quoteAmount,
+  cardBg,
 }: {
   status: SectionStatusT;
   selectedVersion: StateProps['selectedVersion'];
@@ -71,6 +74,7 @@ export function LqSettingsShow({
   slippageCoefficient: StateProps['slippageCoefficient'];
   baseAmount: StateProps['baseAmount'];
   quoteAmount: StateProps['quoteAmount'];
+  cardBg: string;
 }) {
   const { pmmParams, pmmModel, midPrice } = useCreatePmm({
     selectedVersion,
@@ -105,7 +109,11 @@ export function LqSettingsShow({
           opacity: isWaiting ? 0.5 : 1,
         }}
       >
-        <Card title={t`Token Pair`} isWaiting={isWaiting}>
+        <Card
+          backgroundColor={cardBg}
+          title={t`Token Pair`}
+          isWaiting={isWaiting}
+        >
           {baseToken && quoteToken ? (
             <>
               <TokenLogoPair
@@ -119,7 +127,11 @@ export function LqSettingsShow({
             ''
           )}
         </Card>
-        <Card title={initPriceLabel} isWaiting={isWaiting}>
+        <Card
+          backgroundColor={cardBg}
+          title={initPriceLabel}
+          isWaiting={isWaiting}
+        >
           {baseToken && quoteToken ? (
             <>
               1&nbsp;{baseToken.symbol}=
@@ -136,7 +148,11 @@ export function LqSettingsShow({
             ''
           )}
         </Card>
-        <Card title={t`Slippage Coefficient`} isWaiting={isWaiting}>
+        <Card
+          backgroundColor={cardBg}
+          title={t`Slippage Coefficient`}
+          isWaiting={isWaiting}
+        >
           {slippageCoefficient}
         </Card>
       </Box>

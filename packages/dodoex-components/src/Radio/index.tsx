@@ -11,62 +11,64 @@ type RadioProps = {
     checked: boolean,
   ) => void;
 };
-export const Radio = React.forwardRef(function Radio(
-  {
-    sx,
-    onChange,
-    size: sizeProps,
-    checkedIconSize: checkedIconSizeProps,
-    ...other
-  }: RadioProps,
-  ref,
-) {
-  const size = sizeProps ?? 20;
-  const checkedIconSize = checkedIconSizeProps ?? size / 2 + 2;
-  return (
-    <Box
-      component="span"
-      sx={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: size,
-        height: size,
-        position: 'relative',
-        borderRadius: '50%',
-        border: '1px solid',
-        borderColor: other.checked ? 'primary.main' : 'text.secondary',
-        cursor: 'pointer',
-        ...sx,
-      }}
-    >
+export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
+  function Radio(
+    {
+      sx,
+      onChange,
+      size: sizeProps,
+      checkedIconSize: checkedIconSizeProps,
+      ...other
+    },
+    ref,
+  ) {
+    const size = sizeProps ?? 20;
+    const checkedIconSize = checkedIconSizeProps ?? size / 2 + 2;
+    return (
       <Box
-        component="input"
-        type="radio"
-        {...other}
-        ref={ref}
-        onChange={(evt) => {
-          onChange?.(evt, evt.target.checked);
-        }}
+        component="span"
         sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           width: size,
           height: size,
-          opacity: 0,
+          position: 'relative',
+          borderRadius: '50%',
+          border: '1px solid',
+          borderColor: other.checked ? 'primary.main' : 'text.secondary',
+          cursor: 'pointer',
+          ...sx,
         }}
-      />
-      {other.checked && (
+      >
         <Box
+          component="input"
+          type="radio"
+          {...other}
+          ref={ref}
+          onChange={(evt) => {
+            onChange?.(evt, evt.target.checked);
+          }}
           sx={{
-            width: checkedIconSize,
-            height: checkedIconSize,
-            borderRadius: '50%',
-            backgroundColor: 'primary.main',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: size,
+            height: size,
+            opacity: 0,
           }}
         />
-      )}
-    </Box>
-  );
-});
+        {other.checked && (
+          <Box
+            sx={{
+              width: checkedIconSize,
+              height: checkedIconSize,
+              borderRadius: '50%',
+              backgroundColor: 'primary.main',
+            }}
+          />
+        )}
+      </Box>
+    );
+  },
+);

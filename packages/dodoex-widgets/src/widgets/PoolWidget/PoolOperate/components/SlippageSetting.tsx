@@ -24,7 +24,7 @@ export const useSlipper = ({
   type,
 }: {
   address?: string;
-  type?: 'AMMV2' | 'AMMV3';
+  type?: PoolType;
 }) => {
   const [slipper, setSlipper] = useState<
     number | typeof AUTO_SWAP_SLIPPAGE_PROTECTION

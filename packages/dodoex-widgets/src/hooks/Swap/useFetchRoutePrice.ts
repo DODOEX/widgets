@@ -91,7 +91,7 @@ export function useFetchRoutePrice({
       !fromToken ||
       !toToken ||
       fromToken.chainId !== toToken.chainId ||
-      (!isReverseRouting && !fromAmount) ||
+      (!isReverseRouting && !Number(fromAmount)) ||
       (isReverseRouting && !toAmount)
     ) {
       setStatus(RoutePriceStatus.Initial);
@@ -100,8 +100,6 @@ export function useFetchRoutePrice({
     lastId.current = lastId.current + 1;
     const currentId = lastId.current;
     setStatus(RoutePriceStatus.Loading);
-    // waiting for set auto slippage
-    if (slippageLoading) return;
     const apiDdl = Math.floor(Date.now() / 1000) + ddl * 60;
     const params: any = {
       chainId,
@@ -164,7 +162,6 @@ export function useFetchRoutePrice({
     apikey,
     isReverseRouting,
     routePriceAPI,
-    slippageLoading,
     estimateGas,
     disableIndirectRouting,
   ]);

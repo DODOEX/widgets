@@ -63,7 +63,7 @@ export function MiningList({
   const { noDocumentLink, onlyChainId } = useUserOptions();
   const { requests, updateText } = useSubmission();
 
-  const scrollParentRef = React.useRef<HTMLDivElement>();
+  const scrollParentRef = React.useRef<HTMLDivElement>(null);
 
   const [activeTopTab, setActiveTopTab] = useState<MiningTopTabType>('all');
   const [activeTab, setActiveTab] = useState<MiningTabType>('active');

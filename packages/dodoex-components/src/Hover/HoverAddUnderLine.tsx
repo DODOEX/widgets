@@ -9,62 +9,55 @@ interface HoverAddUnderLineProps extends BoxProps {
   hoverSx?: BoxProps['sx'];
 }
 
-const HoverAddUnderLine = React.forwardRef(
-  (
-    {
-      children,
-      sx,
-      lineColor,
-      lineSx,
-      hoverSx,
-      ...attrs
-    }: HoverAddUnderLineProps,
-    ref: any,
-  ) => {
-    const theme = useTheme();
-    const { isMobile } = useDevices();
+const HoverAddUnderLine = React.forwardRef<
+  HTMLDivElement,
+  HoverAddUnderLineProps
+>(({ children, sx, lineColor, lineSx, hoverSx, ...attrs }, ref: any) => {
+  const theme = useTheme();
+  const { isMobile } = useDevices();
 
-    const hoverCss = isMobile
-      ? {}
-      : {
-          '&:hover': {
-            '.hover-under-line': {
-              display: 'block',
-            },
-            ...hoverSx,
-          },
-        };
-
-    return (
-      <Box
-        ref={ref}
-        sx={{
-          position: 'relative',
+  const hoverCss = isMobile
+    ? {}
+    : {
+        '&:hover': {
           '.hover-under-line': {
-            display: 'none',
+            display: 'block',
           },
-          ...hoverCss,
-          ...sx,
+          ...hoverSx,
+        },
+      };
+
+  return (
+    <Box
+      ref={ref}
+      sx={{
+        position: 'relative',
+        '.hover-under-line': {
+          display: 'none',
+        },
+        ...hoverCss,
+        ...sx,
+      }}
+      {...attrs}
+    >
+      {children}
+      <Box
+        className="hover-under-line"
+        sx={{
+          width: '100%',
+          height: '1px',
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: -3,
+          backgroundColor: lineColor || theme.palette.text.primary,
+          ...lineSx,
         }}
-        {...attrs}
-      >
-        {children}
-        <Box
-          className="hover-under-line"
-          sx={{
-            width: '100%',
-            height: '1px',
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: -3,
-            backgroundColor: lineColor || theme.palette.text.primary,
-            ...lineSx,
-          }}
-        />
-      </Box>
-    );
-  },
-);
+      />
+    </Box>
+  );
+});
+
+HoverAddUnderLine.displayName = 'HoverAddUnderLine';
 
 export default HoverAddUnderLine;

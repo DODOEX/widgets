@@ -1,15 +1,27 @@
-import { ButtonBase, Box, BoxProps, useTheme } from '@dodoex/components';
+import {
+  ButtonBase,
+  Box,
+  BoxProps,
+  useTheme,
+  Tooltip,
+} from '@dodoex/components';
 import { CaretUp } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import React from 'react';
 import { useChainList } from '../hooks/Chain/useChainList';
 import Dialog from './Swap/components/Dialog';
 import { ReactComponent as IconAllChains } from '../assets/icon-all-chains.svg';
+import { ReactComponent as NewIcon } from '../assets/new.svg';
 import { useLingui } from '@lingui/react';
 import { ChainListItem } from '../constants/chainList';
 import { useWidgetDevice } from '../hooks/style/useWidgetDevice';
 import Select from './Select';
 import { ChainId } from '@dodoex/api';
+import {
+  getUniswapV2FactoryContractAddressByChainId,
+  getUniswapV2FactoryFixedFeeContractAddressByChainId,
+  getUniswapV3FactoryContractAddressByChainId,
+} from '@dodoex/dodo-contract-request';
 
 function ChainItem({
   isMobileStyle,
@@ -18,6 +30,7 @@ function ChainItem({
   logoWidth,
   mobileLogoWidth,
   sx,
+  showNewIcon: showNewIconProps,
 }: {
   chain?: Omit<ChainListItem, 'chainId'> & {
     chainId: number;
@@ -27,8 +40,19 @@ function ChainItem({
   logoWidth?: number;
   mobileLogoWidth?: number;
   sx?: BoxProps['sx'];
+  showNewIcon?: boolean;
 }) {
   const theme = useTheme();
+  const chainId = chain?.chainId;
+  const hasAMMContract =
+    chainId !== undefined
+      ? getUniswapV2FactoryContractAddressByChainId(chainId) ||
+        getUniswapV2FactoryFixedFeeContractAddressByChainId(chainId) ||
+        getUniswapV3FactoryContractAddressByChainId(chainId)
+      : false;
+
+  const showNewIcon = showNewIconProps && hasAMMContract;
+
   return isMobileStyle ? (
     <Box
       sx={{
@@ -58,6 +82,23 @@ function ChainItem({
       >
         {chain?.name}
       </Box>
+      {showNewIcon && (
+        <Tooltip
+          title={<Trans>The current network supports new pool types</Trans>}
+          sx={{
+            maxWidth: 240,
+          }}
+        >
+          <Box>
+            <Box
+              component={NewIcon}
+              sx={{
+                ml: 8,
+              }}
+            />
+          </Box>
+        </Tooltip>
+      )}
     </Box>
   ) : (
     <Box
@@ -82,6 +123,21 @@ function ChainItem({
       >
         {chain?.name}
       </Box>
+      {showNewIcon && (
+        <Tooltip
+          title={<Trans>The current network supports new pool types</Trans>}
+        >
+          <Box
+            sx={{
+              ml: 8,
+              width: 24,
+              height: 24,
+            }}
+          >
+            <Box component={NewIcon} />
+          </Box>
+        </Tooltip>
+      )}
     </Box>
   );
 }
@@ -98,6 +154,7 @@ export default function SelectChain({
   notShowAllChain,
   valueOnlyIcon,
   sx,
+  showNewIcon,
 }: {
   chainId: number | undefined;
   setChainId: (chainId: number | undefined) => void;
@@ -108,6 +165,7 @@ export default function SelectChain({
   notShowAllChain?: boolean;
   valueOnlyIcon?: boolean;
   sx?: BoxProps['sx'];
+  showNewIcon?: boolean;
 }) {
   const chainList = useChainList();
   const [isDialogVisible, setIsDialogVisible] = React.useState<boolean>(false);
@@ -195,18 +253,29 @@ export default function SelectChain({
             chain={chain}
             logoWidth={logoWidth}
             mobileLogoWidth={mobileLogoWidth}
+            showNewIcon={showNewIcon}
           />
         ),
       });
     });
     return res;
-  }, [isMobile, logoWidth, mobileLogoWidth, chainList, notShowAllChain]);
+  }, [
+    isMobile,
+    logoWidth,
+    mobileLogoWidth,
+    chainList,
+    notShowAllChain,
+    showNewIcon,
+  ]);
 
   if (!isMobile) {
     return (
       <Select<ChainId | typeof allChainKey>
         value={chainId ?? allChainKey}
         onChange={(v) => {
+          // If a new value is passed, the key does not yet exist in options. There is no need to call onChange and return null.
+          if (!options.some((item) => String(item.key) === String(v))) return;
+
           if (v === allChainKey) {
             setChainId(undefined);
           } else {
@@ -217,9 +286,12 @@ export default function SelectChain({
         options={options}
         valueOnlyIcon={valueOnlyIcon}
         sx={{
+          px: 8,
           height: 32,
           fontWeight: 600,
           typography: 'body2',
+          backgroundColor: 'background.tag',
+          color: 'text.primary',
           ...sx,
         }}
       />
@@ -235,6 +307,7 @@ export default function SelectChain({
           display: 'flex',
           alignItems: 'center',
           backgroundColor: 'background.tag',
+          color: 'text.primary',
           borderRadius: 8,
           border: 'none',
           px: 8,

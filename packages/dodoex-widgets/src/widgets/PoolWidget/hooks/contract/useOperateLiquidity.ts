@@ -15,6 +15,7 @@ import { TokenInfo } from '../../../../hooks/Token';
 import { getEthersValue } from '../../../../utils/bytes';
 import { usePoolBalanceInfo } from '../usePoolBalanceInfo';
 import { useModifyDppPool } from './useModifyDppPool';
+import { useUserOptions } from '../../../../components/UserOptionsProvider';
 
 export interface SubmitLiquidityParams {
   balanceInfo?: ReturnType<typeof usePoolBalanceInfo>;
@@ -50,6 +51,7 @@ export const useOperateLiquidity = (pool?: {
   const { account, chainId } = useWalletInfo();
   const submission = useSubmission();
   const queryClient = useQueryClient();
+  const { deadLine: ddl } = useUserOptions();
 
   const { modifyDPPMutation } = useModifyDppPool({
     pool,
@@ -175,7 +177,7 @@ export const useOperateLiquidity = (pool?: {
               classicalBaseMinAmount,
               classicalQuoteMinAmount,
               pairAIsUnWrapped ? 1 : pairBIsUnWrapped ? 2 : 0,
-              Math.ceil(Date.now() / 1000) + 10 * 60,
+              Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60),
             ];
             result = await PoolApi.encode.addClassicalLiquidityABI(
               ...addClassicalParams,
@@ -205,7 +207,7 @@ export const useOperateLiquidity = (pool?: {
               baseMinAmount,
               quoteMinAmount,
               pairAIsUnWrapped ? 1 : pairBIsUnWrapped ? 2 : 0,
-              Math.ceil(Date.now() / 1000) + 10 * 60,
+              Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60),
             ];
             if (isDsp) {
               result = await PoolApi.encode.addDSPLiquidityABI(...addParams);
@@ -389,7 +391,7 @@ if (totalSupply == 0) {
             baseMinAmount,
             quoteMinAmount,
             isUnWrap,
-            Math.ceil(Date.now() / 1000) + 10 * 60,
+            Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60),
           ];
           if (isDsp) {
             result = await PoolApi.encode.removeDSPLiquidityABI(

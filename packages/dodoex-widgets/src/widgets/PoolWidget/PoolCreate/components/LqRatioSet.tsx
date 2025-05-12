@@ -15,6 +15,7 @@ export function LqRatioSet({
   quoteAmount,
   peggedBaseTokenRatio,
   peggedQuoteTokenRatio,
+  cardBg,
 }: {
   isWaiting: boolean;
   selectedVersion: StateProps['selectedVersion'];
@@ -26,6 +27,7 @@ export function LqRatioSet({
   quoteAmount: StateProps['quoteAmount'];
   peggedBaseTokenRatio: StateProps['peggedBaseTokenRatio'];
   peggedQuoteTokenRatio: StateProps['peggedQuoteTokenRatio'];
+  cardBg: string;
 }) {
   const theme = useTheme();
 
@@ -54,7 +56,7 @@ export function LqRatioSet({
           mt: isWaiting ? 0 : 20,
           padding: 16,
           borderRadius: 8,
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: cardBg,
           width: '50%',
           opacity: isWaiting ? 0.5 : 1,
         }}

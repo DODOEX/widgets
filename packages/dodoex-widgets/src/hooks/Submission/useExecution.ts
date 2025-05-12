@@ -17,17 +17,15 @@ import {
 } from './types';
 import { BIG_ALLOWANCE } from '../../constants/token';
 import { useCurrentChainId } from '../ConnectWallet';
-import { useDispatch } from 'react-redux';
-import { setContractStatus } from '../../store/actions/globals';
-import { ContractStatus } from '../../store/reducers/globals';
-import { AppThunkDispatch } from '../../store/actions';
 import { useQueryClient } from '@tanstack/react-query';
+import { ContractStatus, setContractStatus } from '../useGlobalState';
 
 export interface ExecutionProps {
   onTxFail?: (error: Error, data: any) => void;
   onTxSubmit?: (tx: string, data: any) => void;
   onTxSuccess?: (tx: string, data: any) => void;
   onTxReverted?: (tx: string, data: any) => void;
+  showSubmitLoadingDialog?: boolean;
   executionStatus?: {
     showing?: Showing | null;
     showingDone?: boolean;
@@ -51,7 +49,6 @@ export default function useExecution({
   const [requests, setRequests] = useState<Map<string, [Request, State]>>(
     new Map(),
   );
-  const dispatch = useDispatch<AppThunkDispatch>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Dialog status
@@ -89,6 +86,7 @@ export default function useExecution({
       let nonce: number | undefined;
       let transaction: TransactionResponse | undefined;
       setWaitingSubmit(false);
+      setShowing({ spec, brief, subtitle, submitState: 'loading' });
       try {
         setWaitingSubmit(true);
         if (spec.opcode === OpCode.Approval) {
@@ -151,7 +149,7 @@ export default function useExecution({
         setShowing({ spec, brief, subtitle });
         console.error(e);
         if (e.message) {
-          dispatch(setContractStatus(ContractStatus.Failed));
+          setContractStatus(ContractStatus.Failed);
           const options = { error: e.message, brief };
           if (mixpanelProps) Object.assign(options, mixpanelProps);
           if (onTxFail) {
@@ -162,7 +160,7 @@ export default function useExecution({
         }
         return ExecutionResult.Failed;
       }
-      setShowing({ spec, brief, subtitle });
+      setShowing({ spec, brief, subtitle, submitState: 'submitted' });
       setShowingDone(false);
       setWaitingSubmit(false);
 
@@ -176,7 +174,7 @@ export default function useExecution({
         nonce,
         ...mixpanelProps,
       };
-      dispatch(setContractStatus(ContractStatus.Pending));
+      setContractStatus(ContractStatus.Pending);
       if (onTxSubmit) {
         onTxSubmit(tx, reportInfo);
       }
@@ -206,14 +204,14 @@ export default function useExecution({
         reportInfo.receipt = receipt;
         setShowingDone(true);
         if (receipt.status === WatchResult.Success) {
+          await waitBlockNumber(updateBlockNumber, receipt.blockNumber); // update blockNumber once after tx
           if (reportInfo.opcode === 'TX') {
-            dispatch(setContractStatus(ContractStatus.TxSuccess));
+            setContractStatus(ContractStatus.TxSuccess);
           }
           if (reportInfo.opcode === 'APPROVAL') {
-            dispatch(setContractStatus(ContractStatus.ApproveSuccess));
+            setContractStatus(ContractStatus.ApproveSuccess);
           }
 
-          await updateBlockNumber(); // update blockNumber once after tx
           if (successBack) {
             successBack(tx, onTxSuccess);
           }
@@ -318,7 +316,33 @@ export default function useExecution({
     errorMessage,
     setErrorMessage,
     closeShowing,
+    setShowing,
     ctxVal,
     requests,
   };
+}
+
+let timeout = 0;
+function waitBlockNumber(
+  updateBlockNumber: () => Promise<number | undefined>,
+  target: number,
+  interval = 800,
+) {
+  clearTimeout(timeout);
+  return new Promise((resolve) => {
+    timeout = window.setTimeout(async () => {
+      const blockNumber = await updateBlockNumber();
+      if (blockNumber && blockNumber >= target) {
+        resolve(blockNumber);
+        return;
+      } else {
+        const result = await waitBlockNumber(
+          updateBlockNumber,
+          target,
+          interval,
+        );
+        resolve(result);
+      }
+    }, interval);
+  });
 }

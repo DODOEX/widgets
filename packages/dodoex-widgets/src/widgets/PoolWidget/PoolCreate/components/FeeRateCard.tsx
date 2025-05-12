@@ -7,9 +7,11 @@ import { RadioButtonTag } from './RadioButtonTag';
 export function FeeRateCard({
   isWaiting,
   feeRate,
+  cardBg,
 }: {
   isWaiting: boolean;
   feeRate: StateProps['feeRate'];
+  cardBg: string;
 }) {
   const theme = useTheme();
 
@@ -18,7 +20,7 @@ export function FeeRateCard({
       sx={{
         padding: 16,
         borderRadius: 8,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: cardBg,
         width: '50%',
         opacity: !isWaiting ? 1 : 0.5,
       }}

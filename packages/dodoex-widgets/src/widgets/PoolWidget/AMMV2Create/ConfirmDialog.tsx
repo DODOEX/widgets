@@ -86,11 +86,12 @@ export default function ConfirmDialog({
               width={24}
               height={24}
               tokens={baseToken && quoteToken ? [baseToken, quoteToken] : []}
+              chainId={baseToken?.chainId}
             />
             {lpAmount
               ? formatTokenAmountNumber({
                   input: lpAmount,
-                  decimals: baseToken?.decimals,
+                  decimals: 18,
                 })
               : ''}
           </Box>

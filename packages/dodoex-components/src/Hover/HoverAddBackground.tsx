@@ -7,8 +7,8 @@ interface Prop extends BoxProps {
   hoverColor?: string;
 }
 
-const HoverAddBackground = forwardRef(
-  ({ sx, hoverColor, ...other }: Prop, ref: any) => {
+const HoverAddBackground = forwardRef<HTMLDivElement, Prop>(
+  ({ sx, hoverColor, ...other }, ref) => {
     const theme = useTheme();
     const { isMobile } = useDevices();
     const isLight = theme.palette.mode === 'light';
@@ -39,5 +39,7 @@ const HoverAddBackground = forwardRef(
     );
   },
 );
+
+HoverAddBackground.displayName = 'HoverAddBackground';
 
 export default HoverAddBackground;
