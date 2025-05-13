@@ -10,13 +10,16 @@ import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { Ve33PoolInfoI, Ve33PoolOperateProps } from '../types';
 import { compositePoolInfo } from '../utils';
 import { TableList } from './TableList';
+import PoolOperateDialog, { PoolOperate } from '../Ve33PoolOperate';
 
 export interface Ve33PoolListProps {
   onClickPoolListRow: (id: string, chainId: ChainId) => void;
 }
 
 export const Ve33PoolList = ({ onClickPoolListRow }: Ve33PoolListProps) => {
-  const { chainId } = useWalletInfo();
+  // TODO: need replace
+  const chainId = ChainId.MORPH_HOLESKY_TESTNET;
+  const { account } = useWalletInfo();
   const { isMobile } = useWidgetDevice();
   const graphQLRequests = useGraphQLRequests();
   const theme = useTheme();
@@ -24,7 +27,57 @@ export const Ve33PoolList = ({ onClickPoolListRow }: Ve33PoolListProps) => {
   const [filterToken, setFilterToken] = useState<string>('');
   const [usdValueChecked, setUsdValueChecked] = useState(false);
   const [operatePool, setOperatePool] = useState<Ve33PoolOperateProps | null>(
-    null,
+    // null,
+    {
+      poolInfo: {
+        id: '0x98ecc0d3f774a7bda38918bf5830a476dd5a606c',
+        title: 'V2.Volatile',
+        version: 'v2',
+        gaugeAddress: '0x7b156830fdbc76d327a48a19b0143663e16a95ba',
+        feeRate: '30',
+        apr: {
+          fees: '0',
+          incentives: '0',
+        },
+        tvl: '0',
+        totalValueLockedUSD: '0',
+        totalValueLockedToken0: '0',
+        totalValueLockedToken1: '0',
+        volumeUSD: '0',
+        volumeToken0: '0',
+        volumeToken1: '0',
+        feesUSD: '0',
+        feesToken0: '0',
+        feesToken1: '0',
+        token0Address: '0x42edf453f8483c7168c158d28d610a58308517d1',
+        token0Name: 'Momodrome',
+        token0Symbol: 'MOMO',
+        token0Decimals: 18,
+        token1Address: '0x5300000000000000000000000000000000000011',
+        token1Name: 'Wrapped Ether',
+        token1Symbol: 'WETH',
+        token1Decimals: 18,
+        chainId: 2810,
+        stable: false,
+        fee: '30',
+        type: 1,
+        baseToken: {
+          chainId: 2810,
+          address: '0x42edf453f8483c7168c158d28d610a58308517d1',
+          name: 'Momodrome',
+          decimals: 18,
+          symbol: 'MOMO',
+        },
+        quoteToken: {
+          chainId: 2810,
+          address: '0x5300000000000000000000000000000000000011',
+          name: 'Wrapped Ether',
+          decimals: 18,
+          symbol: 'WETH',
+        },
+      },
+      operateType: 1,
+    },
   );
 
   const scrollParentRef = useRef<HTMLDivElement>(null);
@@ -43,18 +96,19 @@ export const Ve33PoolList = ({ onClickPoolListRow }: Ve33PoolListProps) => {
     ...query,
     initialPageParam: 1,
     getNextPageParam: (item) => {
-      const { currentPage, totalCount, pageSize } = item.ve33_getPoolList ?? {};
-      if (!currentPage || !totalCount || !pageSize) {
-        return null;
-      }
-      let totalPage = Math.floor(totalCount / pageSize);
-      if (totalCount % pageSize) {
-        totalPage += 1;
-      }
-      if (currentPage >= totalPage) {
-        return null;
-      }
-      return currentPage + 1;
+      return null;
+      // const { currentPage, totalCount, pageSize } = item.ve33_getPoolList ?? {};
+      // if (!currentPage || !totalCount || !pageSize) {
+      //   return null;
+      // }
+      // let totalPage = Math.floor(totalCount / pageSize);
+      // if (totalCount % pageSize) {
+      //   totalPage += 1;
+      // }
+      // if (currentPage >= totalPage) {
+      //   return null;
+      // }
+      // return currentPage + 1;
     },
   });
 
@@ -172,7 +226,30 @@ export const Ve33PoolList = ({ onClickPoolListRow }: Ve33PoolListProps) => {
             width: 375,
           }}
         >
-          {operatePool.poolInfo?.title ?? '-'}
+          {isMobile ? (
+            <PoolOperateDialog
+              account={account}
+              onClose={() => setOperatePool(null)}
+              modal={isMobile}
+              pool={operatePool?.poolInfo}
+              operate={operatePool.operateType}
+            />
+          ) : (
+            <PoolOperate
+              account={account}
+              onClose={() => setOperatePool(null)}
+              modal={isMobile}
+              pool={operatePool?.poolInfo}
+              operate={operatePool.operateType}
+              sx={{
+                width: 375,
+                height: 'max-content',
+                backgroundColor: 'background.paper',
+                borderRadius: 16,
+                overflow: 'hidden',
+              }}
+            />
+          )}
         </Box>
       )}
     </WidgetContainer>

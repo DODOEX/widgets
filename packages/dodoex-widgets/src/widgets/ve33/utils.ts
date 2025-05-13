@@ -16,6 +16,7 @@ export function compositePoolInfo(
 ): Ve33PoolInfoI {
   return {
     ...pool,
+    chainId,
     stable: pool.title !== 'V2.Volatile',
     fee: pool.feeRate,
     type: pool.version === 'v2' ? PoolTypeE.Pool : PoolTypeE.CLPool,

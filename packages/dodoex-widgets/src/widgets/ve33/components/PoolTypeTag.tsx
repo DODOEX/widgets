@@ -7,10 +7,11 @@ export interface PoolTypeTagProps {
   type: PoolTypeE;
   stable: boolean;
   fee: number;
+  hideFee?: boolean;
 }
 
 export const PoolTypeTag = (props: PoolTypeTagProps) => {
-  const { type, stable, fee } = props;
+  const { type, stable, fee, hideFee } = props;
   const theme = useTheme();
 
   const { color, backgroundColor, name } = usePoolColors({ type, stable, fee });
@@ -37,20 +38,22 @@ export const PoolTypeTag = (props: PoolTypeTagProps) => {
       >
         {name}
       </Box>
-      <Box
-        sx={{
-          borderRadius: 4,
-          backgroundColor: theme.palette.background.paperDarkContrast,
-          color: theme.palette.text.secondary,
-          px: 8,
-          py: 2,
-          typography: 'h6',
-          lineHeight: '16px',
-          fontWeight: 500,
-        }}
-      >
-        {formatFee({ type, fee })}
-      </Box>
+      {!hideFee && (
+        <Box
+          sx={{
+            borderRadius: 4,
+            backgroundColor: theme.palette.background.paperDarkContrast,
+            color: theme.palette.text.secondary,
+            px: 8,
+            py: 2,
+            typography: 'h6',
+            lineHeight: '16px',
+            fontWeight: 500,
+          }}
+        >
+          {formatFee({ type, fee })}
+        </Box>
+      )}
     </Box>
   );
 };

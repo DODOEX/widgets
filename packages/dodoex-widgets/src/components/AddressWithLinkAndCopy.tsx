@@ -34,6 +34,8 @@ interface Props extends AddressTextProps {
   iconSpace?: number;
   iconDarkHover?: boolean;
   customChainId?: number;
+  disabledAddressIcon?: boolean;
+  children?: React.ReactNode;
   onAddressClick?: (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => void;
@@ -109,7 +111,9 @@ export function AddressWithLinkAndCopy({
   disabledAddress,
   addressHoverColor,
   addressHoverShowIcon,
+  disabledAddressIcon,
   customChainId,
+  children,
   handleOpen,
   onAddressClick,
 }: Props) {
@@ -167,24 +171,26 @@ export function AddressWithLinkAndCopy({
         addressHoverShowIcon={addressHoverShowIcon}
       />
 
-      <IconHoverBox
-        sx={{
-          display: 'inline-flex',
-          ml: getIconSpace(isMedium),
-          cursor: 'pointer',
-        }}
-        onClick={(evt) => {
-          handleOpenResult(evt, 'icon');
-        }}
-      >
-        <Box
-          component={ArrowTopRightBorder}
+      {!disabledAddressIcon && (
+        <IconHoverBox
           sx={{
-            width: iconSize || (isMedium ? 16 : 14),
-            height: iconSize || (isMedium ? 16 : 14),
+            display: 'inline-flex',
+            ml: getIconSpace(isMedium),
+            cursor: 'pointer',
           }}
-        />
-      </IconHoverBox>
+          onClick={(evt) => {
+            handleOpenResult(evt, 'icon');
+          }}
+        >
+          <Box
+            component={ArrowTopRightBorder}
+            sx={{
+              width: iconSize || (isMedium ? 16 : 14),
+              height: iconSize || (isMedium ? 16 : 14),
+            }}
+          />
+        </IconHoverBox>
+      )}
 
       {showCopy ? (
         <CopyTooltipToast
@@ -200,6 +206,7 @@ export function AddressWithLinkAndCopy({
           }}
         />
       ) : null}
+      {children}
     </Box>
   );
 }

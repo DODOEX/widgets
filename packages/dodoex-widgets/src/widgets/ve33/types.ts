@@ -1,3 +1,4 @@
+import { ChainId } from '@dodoex/api';
 import { TokenInfo } from '../../hooks/Token/type';
 import { FetchVe33PoolList } from '../PoolWidget/utils';
 
@@ -22,6 +23,7 @@ export type Ve33PoolInfoI = FetchVe33PoolItem & {
   stable: boolean;
   fee: FeeE | 0 | number;
   type: PoolTypeE;
+  chainId: ChainId;
   baseToken: TokenInfo;
   quoteToken: TokenInfo;
 };
@@ -29,4 +31,5 @@ export type Ve33PoolInfoI = FetchVe33PoolItem & {
 export interface Ve33PoolOperateProps {
   poolInfo: Ve33PoolInfoI;
   operateType: OperateTypeE;
+  chainId: ChainId;
 }

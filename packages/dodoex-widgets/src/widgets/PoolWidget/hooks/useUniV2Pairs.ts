@@ -8,6 +8,7 @@ import { Pair } from '@uniswap/v2-sdk';
 import BigNumber from 'bignumber.js';
 import { byWei, formatReadableNumber, toWei } from '../../../utils';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import JSBI from 'jsbi';
 
 export function useUniV2Pairs({
   pool,
@@ -147,7 +148,15 @@ export function useUniV2Pairs({
     }
     const pair = new Pair(currencyAAmount, currencyBAmount);
     if (currencyAAmount.equalTo(0) || currencyBAmount.equalTo(0))
-      return [pair, null];
+      return [
+        pair,
+        new Price(
+          currencyAAmount.currency,
+          currencyBAmount.currency,
+          JSBI.BigInt(1),
+          JSBI.BigInt(1),
+        ),
+      ];
     const value = currencyBAmount.divide(currencyAAmount);
     const price = new Price(
       currencyAAmount.currency,
