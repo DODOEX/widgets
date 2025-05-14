@@ -44,6 +44,7 @@ export type { PoolOperateProps } from './widgets/PoolWidget/PoolOperate';
 
 export { Ve33PoolDetail } from './widgets/ve33/Ve33PoolDetail';
 export { Ve33PoolList } from './widgets/ve33/Ve33PoolList';
+export { VotePoolList } from './widgets/ve33/VotePoolList';
 
 export type SwapWidgetProps = WidgetProps & SwapProps;
 

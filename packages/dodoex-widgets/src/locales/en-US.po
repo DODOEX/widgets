@@ -61,6 +61,7 @@ msgid "Receive {0}"
 msgstr "Receive {0}"
 
 #: src/widgets/ve33/Ve33PoolList/TableList.tsx:64
+#: src/widgets/ve33/VotePoolList/TableList.tsx:56
 msgid "Fees"
 msgstr "Fees"
 
@@ -479,6 +480,7 @@ msgstr "No results found"
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:297
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:595
 #: src/widgets/ve33/Ve33PoolList/TableList.tsx:52
+#: src/widgets/ve33/VotePoolList/TableList.tsx:47
 msgid "Pair"
 msgstr "Pair"
 
@@ -585,6 +587,10 @@ msgstr "Pool not found. Please switch to another network and retry."
 #: src/widgets/MiningWidget/MiningList/components/widgets.tsx:135
 msgid "Daily Rewards"
 msgstr "Daily Rewards"
+
+#: src/widgets/ve33/VotePoolList/TableList.tsx:59
+msgid "Incentives"
+msgstr "Incentives"
 
 #: src/widgets/MiningWidget/MiningCreate/hooks/useCreateMiningTypeList.ts:14
 msgid "Token Pair Mining"
@@ -710,6 +716,7 @@ msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:345
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:604
 #: src/widgets/ve33/Ve33PoolList/TableList.tsx:58
+#: src/widgets/ve33/VotePoolList/TableList.tsx:53
 msgid "TVL"
 msgstr "TVL"
 
@@ -753,6 +760,10 @@ msgstr "Canceled"
 #: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:19
 msgid "The fee rate must be between 0.01% to 10%"
 msgstr "The fee rate must be between 0.01% to 10%"
+
+#: src/widgets/ve33/VotePoolList/TableList.tsx:62
+msgid "Total Vote"
+msgstr "Total Vote"
 
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/components/GoBack.tsx:49
@@ -1449,6 +1460,10 @@ msgstr "For"
 #: src/widgets/ve33/Ve33PoolOperate/components/ComparePrice.tsx:52
 msgid "{lqAndDodoCompareText} Price Difference"
 msgstr "{lqAndDodoCompareText} Price Difference"
+
+#: src/widgets/ve33/VotePoolList/TableList.tsx:50
+msgid "vAPR"
+msgstr "vAPR"
 
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/index.tsx:176

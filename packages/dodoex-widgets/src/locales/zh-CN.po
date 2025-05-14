@@ -61,6 +61,7 @@ msgid "Receive {0}"
 msgstr ""
 
 #: src/widgets/ve33/Ve33PoolList/TableList.tsx:64
+#: src/widgets/ve33/VotePoolList/TableList.tsx:56
 msgid "Fees"
 msgstr ""
 
@@ -479,6 +480,7 @@ msgstr ""
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:297
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:595
 #: src/widgets/ve33/Ve33PoolList/TableList.tsx:52
+#: src/widgets/ve33/VotePoolList/TableList.tsx:47
 msgid "Pair"
 msgstr ""
 
@@ -584,6 +586,10 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/components/widgets.tsx:135
 msgid "Daily Rewards"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/TableList.tsx:59
+msgid "Incentives"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/hooks/useCreateMiningTypeList.ts:14
@@ -710,6 +716,7 @@ msgstr "跨链费用不足，至少需要 {0} {1} "
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:345
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:604
 #: src/widgets/ve33/Ve33PoolList/TableList.tsx:58
+#: src/widgets/ve33/VotePoolList/TableList.tsx:53
 msgid "TVL"
 msgstr ""
 
@@ -752,6 +759,10 @@ msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:19
 msgid "The fee rate must be between 0.01% to 10%"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/TableList.tsx:62
+msgid "Total Vote"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -1448,6 +1459,10 @@ msgstr "对于"
 #: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:52
 #: src/widgets/ve33/Ve33PoolOperate/components/ComparePrice.tsx:52
 msgid "{lqAndDodoCompareText} Price Difference"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/TableList.tsx:50
+msgid "vAPR"
 msgstr ""
 
 #. js-lingui-explicit-id
