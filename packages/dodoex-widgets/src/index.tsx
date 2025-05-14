@@ -5,6 +5,7 @@ import { Widget, WidgetProps } from './components/Widget';
 import { Pool } from './widgets/PoolWidget';
 import { Ve33PoolDetail } from './widgets/ve33/Ve33PoolDetail';
 import { Ve33PoolList } from './widgets/ve33/Ve33PoolList';
+import { VotePoolList } from './widgets/ve33/VotePoolList';
 export { PageType, useRouterStore } from './router';
 export type { Page } from './router';
 
@@ -86,6 +87,15 @@ export function Ve33PoolListWidget(
   return (
     <Widget {...rest}>
       <Ve33PoolList onClickPoolListRow={onClickPoolListRow} />
+    </Widget>
+  );
+}
+
+export function VotePoolListWidget(props: WidgetProps) {
+  const { ...rest } = props;
+  return (
+    <Widget {...rest}>
+      <VotePoolList />
     </Widget>
   );
 }

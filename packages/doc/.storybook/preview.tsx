@@ -60,6 +60,7 @@ const preview = {
               sx={{
                 position: 'relative',
                 zIndex: 1,
+                height: '100%',
               }}
             >
               <Story />

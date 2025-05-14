@@ -558,4 +558,49 @@ export const poolGraphqlQuery = {
       }
     }
   `),
+  fetchVotePoolList: graphql(`
+    query Ve33_getVotePoolList($where: Ve33VotePoolInput) {
+      ve33_getVotePoolList(where: $where) {
+        id
+        title
+        version
+
+        gaugeAddress
+        feeRate
+        apr {
+          fees
+          incentives
+        }
+        tvl
+
+        token0Address
+        token0Name
+        token0Symbol
+        token0Decimals
+
+        token1Address
+        token1Name
+        token1Symbol
+        token1Decimals
+
+        totalValueLockedUSD
+        totalValueLockedToken0
+        totalValueLockedToken1
+
+        feesUSD
+        feesToken0
+        feesToken1
+
+        incentives {
+          amount
+          token
+          usd
+        }
+        votes {
+          token
+          weight
+        }
+      }
+    }
+  `),
 };

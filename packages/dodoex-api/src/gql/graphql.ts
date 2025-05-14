@@ -873,6 +873,73 @@ export type Balance_Filter = {
 
 export type Balance_OrderBy = 'chain' | 'id';
 
+export type Berachain_AlmPool = {
+  id?: Maybe<Scalars['String']['output']>;
+  poolDayData?: Maybe<Array<Maybe<Berachain_AlmPoolDayData>>>;
+  token0?: Maybe<Berachain_AlmToken>;
+  token0Price?: Maybe<Scalars['String']['output']>;
+  token1?: Maybe<Berachain_AlmToken>;
+  token1Price?: Maybe<Scalars['String']['output']>;
+  totalValueLockedUSD?: Maybe<Scalars['String']['output']>;
+};
+
+export type Berachain_AlmPoolDayData = {
+  date?: Maybe<Scalars['Int']['output']>;
+  feesUSD?: Maybe<Scalars['String']['output']>;
+  tvlUSD?: Maybe<Scalars['String']['output']>;
+  volumeUSD?: Maybe<Scalars['String']['output']>;
+};
+
+export type Berachain_AlmToken = {
+  decimals?: Maybe<Scalars['String']['output']>;
+  derivedUSD?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  initialUSD?: Maybe<Scalars['String']['output']>;
+  liquidityUSD?: Maybe<Scalars['String']['output']>;
+  marketCap?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  priceChange24h?: Maybe<Scalars['String']['output']>;
+  priceChange24hPercentage?: Maybe<Scalars['String']['output']>;
+  symbol?: Maybe<Scalars['String']['output']>;
+  totalSupply?: Maybe<Scalars['String']['output']>;
+};
+
+export type Berachain_AlmVault = {
+  allowTokenA?: Maybe<Scalars['Boolean']['output']>;
+  allowTokenB?: Maybe<Scalars['Boolean']['output']>;
+  count?: Maybe<Scalars['String']['output']>;
+  createdAtTimestamp?: Maybe<Scalars['String']['output']>;
+  feeApr_1d?: Maybe<Scalars['String']['output']>;
+  feeApr_3d?: Maybe<Scalars['String']['output']>;
+  feeApr_7d?: Maybe<Scalars['String']['output']>;
+  feeApr_30d?: Maybe<Scalars['String']['output']>;
+  holdersCount?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  pool?: Maybe<Berachain_AlmPool>;
+  protocol?: Maybe<Scalars['String']['output']>;
+  sender?: Maybe<Scalars['String']['output']>;
+  tokenA?: Maybe<Scalars['String']['output']>;
+  tokenB?: Maybe<Scalars['String']['output']>;
+  totalAmount0?: Maybe<Scalars['String']['output']>;
+  totalAmount1?: Maybe<Scalars['String']['output']>;
+  totalShares?: Maybe<Scalars['String']['output']>;
+  totalSupply?: Maybe<Scalars['String']['output']>;
+};
+
+export type Berachain_AlmVaultShares = {
+  id?: Maybe<Scalars['String']['output']>;
+  vault?: Maybe<Berachain_AlmVault>;
+  vaultShareBalance?: Maybe<Scalars['String']['output']>;
+};
+
+export type Berachain_AlmallVaultsSearch = {
+  search?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Berachain_AlmmyVaultsSearch = {
+  address?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type BidHistory = {
   /** action ：bid、cancle */
   action: Scalars['String']['output'];
@@ -1936,6 +2003,117 @@ export type Cross_Chain_SwapToolDetail = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
+export type Cross_Chain_Swap_ZetachainCrossChainOrderCreate = {
+  createdAt?: Maybe<Scalars['String']['output']>;
+  fromAddress?: Maybe<Scalars['String']['output']>;
+  fromAmount?: Maybe<Scalars['String']['output']>;
+  fromChainId?: Maybe<Scalars['Int']['output']>;
+  fromHash?: Maybe<Scalars['String']['output']>;
+  fromTokenAddress?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  toAddress?: Maybe<Scalars['String']['output']>;
+  toAmount?: Maybe<Scalars['String']['output']>;
+  toChainId?: Maybe<Scalars['Int']['output']>;
+  toHash?: Maybe<Scalars['String']['output']>;
+  toTokenAddress?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_Swap_ZetachainCrossChainOrderList = {
+  createdAt?: Maybe<Scalars['String']['output']>;
+  extend?: Maybe<Scalars['JSON']['output']>;
+  externalId?: Maybe<Scalars['String']['output']>;
+  fromAddress?: Maybe<Scalars['String']['output']>;
+  fromAmount?: Maybe<Scalars['String']['output']>;
+  fromChainId?: Maybe<Scalars['Int']['output']>;
+  fromHash?: Maybe<Scalars['String']['output']>;
+  fromTokenAddress?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  toAddress?: Maybe<Scalars['String']['output']>;
+  toAmount?: Maybe<Scalars['String']['output']>;
+  toChainId?: Maybe<Scalars['Int']['output']>;
+  toHash?: Maybe<Scalars['String']['output']>;
+  toTokenAddress?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_Swap_ZetachainCrossChainOrderResult = {
+  count?: Maybe<Scalars['Int']['output']>;
+  list?: Maybe<Array<Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderList>>>;
+  page?: Maybe<Scalars['Int']['output']>;
+  pageSize?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Cross_Chain_Swap_ZetachainCrossChainRoute = {
+  approveTarget?: Maybe<Scalars['String']['output']>;
+  asset?: Maybe<Scalars['JSON']['output']>;
+  encodeParams?: Maybe<Scalars['JSON']['output']>;
+  fees?: Maybe<Scalars['JSON']['output']>;
+  fromAmount?: Maybe<Scalars['String']['output']>;
+  fromChainId?: Maybe<Scalars['Int']['output']>;
+  fromTokenAddress?: Maybe<Scalars['String']['output']>;
+  step?: Maybe<Scalars['JSON']['output']>;
+  toAmount?: Maybe<Scalars['String']['output']>;
+  toChainId?: Maybe<Scalars['Int']['output']>;
+  toTokenAddress?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_Swap_ZetachainCrossChainTransactionEncode = {
+  chainId?: Maybe<Scalars['Int']['output']>;
+  data?: Maybe<Scalars['String']['output']>;
+  from?: Maybe<Scalars['String']['output']>;
+  to?: Maybe<Scalars['String']['output']>;
+  value?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_Swap_ZetachainorderCreateData = {
+  extend?: InputMaybe<Cross_Chain_Swap_ZetachainorderCreateDataExtend>;
+  fromAddress?: InputMaybe<Scalars['String']['input']>;
+  fromAmount?: InputMaybe<Scalars['String']['input']>;
+  fromChainId?: InputMaybe<Scalars['Int']['input']>;
+  fromTokenAddress?: InputMaybe<Scalars['String']['input']>;
+  hash?: InputMaybe<Scalars['String']['input']>;
+  slippage?: InputMaybe<Scalars['Float']['input']>;
+  toAddress?: InputMaybe<Scalars['String']['input']>;
+  toAmount?: InputMaybe<Scalars['String']['input']>;
+  toChainId?: InputMaybe<Scalars['Int']['input']>;
+  toTokenAddress?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Cross_Chain_Swap_ZetachainorderCreateDataExtend = {
+  asset?: InputMaybe<Scalars['JSON']['input']>;
+  step?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type Cross_Chain_Swap_ZetachainorderListData = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  product?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  source?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Cross_Chain_Swap_ZetachainrouteParams = {
+  fromAddress?: InputMaybe<Scalars['String']['input']>;
+  fromAmount?: InputMaybe<Scalars['String']['input']>;
+  fromChainId?: InputMaybe<Scalars['Int']['input']>;
+  fromTokenAddress?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  slippage?: InputMaybe<Scalars['Float']['input']>;
+  toAddress?: InputMaybe<Scalars['String']['input']>;
+  toChainId?: InputMaybe<Scalars['Int']['input']>;
+  toTokenAddress?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Cross_Chain_Swap_ZetachaintransactionEncodeParams = {
+  interfaceParams?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Cross_Chain_SwapdodoOrderListData = {
   from?: InputMaybe<Scalars['String']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -2102,6 +2280,23 @@ export type Cross_Chain_TokentokenPairFilter = {
 
 export type Cross_Chain_TokentokenlistFilter = {
   isEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Cross_Chain_Zetachain_TokenCrossChainTokenlist = {
+  address?: Maybe<Scalars['String']['output']>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  decimals?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  logo?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  position?: Maybe<Scalars['Int']['output']>;
+  slippage?: Maybe<Scalars['String']['output']>;
+  symbol?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_Zetachain_TokentokenlistFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -6679,6 +6874,8 @@ export type LiquidityApyData = {
   metromMiningApy?: Maybe<Scalars['BigDecimal']['output']>;
   miningBaseApy?: Maybe<Scalars['BigDecimal']['output']>;
   miningQuoteApy?: Maybe<Scalars['BigDecimal']['output']>;
+  /** 1D 7D 14D 30D */
+  timeRange?: Maybe<Scalars['String']['output']>;
   transactionBaseApy?: Maybe<Scalars['BigDecimal']['output']>;
   transactionQuoteApy?: Maybe<Scalars['BigDecimal']['output']>;
 };
@@ -7023,7 +7220,6 @@ export type LiquidityLp = {
   liquidityTokenInMining?: Maybe<Scalars['String']['output']>;
   /** my liquidity usd */
   liquidityUSD?: Maybe<Scalars['String']['output']>;
-  nftMint?: Maybe<Scalars['String']['output']>;
   outOfRange?: Maybe<Scalars['Boolean']['output']>;
   /** Share in the pool */
   poolShare?: Maybe<Scalars['String']['output']>;
@@ -7110,6 +7306,7 @@ export type LiquidityOrder = {
 
 export type LiquidityPair = {
   apy?: Maybe<LiquidityApyData>;
+  apyList?: Maybe<Array<Maybe<LiquidityApyData>>>;
   /** base LP token, for DPP is null, for dodo v1 lpToken is different */
   baseLpToken?: Maybe<LiquidityLpToken>;
   /** base token reserve */
@@ -7191,6 +7388,7 @@ export type LiquidityPair = {
   volume24H?: Maybe<Scalars['BigDecimal']['output']>;
   /** trade volume of basetoken */
   volumeBaseToken: Scalars['BigDecimal']['output'];
+  volumeList?: Maybe<Array<Maybe<LiquidityVolumeData>>>;
   /** trade volume of quotetoken */
   volumeQuoteToken: Scalars['BigDecimal']['output'];
   /** traded volume of USD */
@@ -7600,6 +7798,11 @@ export type LiquidityToken = {
   volumeUSD: Scalars['BigDecimal']['output'];
   /** traded volume of USD for bridge */
   volumeUSDBridge: Scalars['BigDecimal']['output'];
+};
+
+export type LiquidityVolumeData = {
+  timeRange?: Maybe<Scalars['String']['output']>;
+  volume?: Maybe<Scalars['BigDecimal']['output']>;
 };
 
 export type Liquiditycount_Data_Query = {
@@ -12161,6 +12364,8 @@ export type Query = {
   avatars: Array<Avatar>;
   balance?: Maybe<Balance>;
   balances: Array<Balance>;
+  berachain_alm_allVaults?: Maybe<Array<Maybe<Berachain_AlmVault>>>;
+  berachain_alm_myVaults?: Maybe<Array<Maybe<Berachain_AlmVaultShares>>>;
   bidHistories: Array<BidHistory>;
   bidHistory?: Maybe<BidHistory>;
   bidPosition?: Maybe<BidPosition>;
@@ -12200,8 +12405,15 @@ export type Query = {
   cross_chain_swap_orderRefundCount?: Maybe<Cross_Chain_SwapOrderRefundCountResult>;
   cross_chain_swap_routesV2?: Maybe<Cross_Chain_SwapCrossChainRouteV2>;
   cross_chain_swap_transactionEncode?: Maybe<Cross_Chain_SwapCrossChainTransactionEncode>;
+  cross_chain_swap_zetachain_orderCreate?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderCreate>;
+  cross_chain_swap_zetachain_orderList?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderResult>;
+  cross_chain_swap_zetachain_routes?: Maybe<Cross_Chain_Swap_ZetachainCrossChainRoute>;
+  cross_chain_swap_zetachain_transactionEncode?: Maybe<Cross_Chain_Swap_ZetachainCrossChainTransactionEncode>;
   cross_chain_token_list?: Maybe<Cross_Chain_TokenCrossChainTokenlist>;
   cross_chain_token_tokenPair?: Maybe<Cross_Chain_TokenCrossChainTokenPair>;
+  cross_chain_zetachain_token_list?: Maybe<
+    Array<Maybe<Cross_Chain_Zetachain_TokenCrossChainTokenlist>>
+  >;
   crowdPooling?: Maybe<CrowdPooling>;
   crowdPoolingDayData?: Maybe<CrowdPoolingDayData>;
   crowdPoolingDayDatas: Array<CrowdPoolingDayData>;
@@ -12825,6 +13037,14 @@ export type QueryBalancesArgs = {
   where?: InputMaybe<Balance_Filter>;
 };
 
+export type QueryBerachain_Alm_AllVaultsArgs = {
+  where?: InputMaybe<Berachain_AlmallVaultsSearch>;
+};
+
+export type QueryBerachain_Alm_MyVaultsArgs = {
+  where?: InputMaybe<Berachain_AlmmyVaultsSearch>;
+};
+
 export type QueryBidHistoriesArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -13016,12 +13236,32 @@ export type QueryCross_Chain_Swap_TransactionEncodeArgs = {
   data?: InputMaybe<Cross_Chain_SwaptransactionEncodeData>;
 };
 
+export type QueryCross_Chain_Swap_Zetachain_OrderCreateArgs = {
+  data?: InputMaybe<Cross_Chain_Swap_ZetachainorderCreateData>;
+};
+
+export type QueryCross_Chain_Swap_Zetachain_OrderListArgs = {
+  where?: InputMaybe<Cross_Chain_Swap_ZetachainorderListData>;
+};
+
+export type QueryCross_Chain_Swap_Zetachain_RoutesArgs = {
+  where?: InputMaybe<Cross_Chain_Swap_ZetachainrouteParams>;
+};
+
+export type QueryCross_Chain_Swap_Zetachain_TransactionEncodeArgs = {
+  data?: InputMaybe<Cross_Chain_Swap_ZetachaintransactionEncodeParams>;
+};
+
 export type QueryCross_Chain_Token_ListArgs = {
   where?: InputMaybe<Cross_Chain_TokentokenlistFilter>;
 };
 
 export type QueryCross_Chain_Token_TokenPairArgs = {
   where?: InputMaybe<Cross_Chain_TokentokenPairFilter>;
+};
+
+export type QueryCross_Chain_Zetachain_Token_ListArgs = {
+  where?: InputMaybe<Cross_Chain_Zetachain_TokentokenlistFilter>;
 };
 
 export type QueryCrowdPoolingArgs = {
@@ -20248,6 +20488,7 @@ export type Ve33Pool = {
   feesUSD: Scalars['BigDecimal']['output'];
   gaugeAddress: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  tickSpacing: Scalars['Int']['output'];
   title: Scalars['String']['output'];
   token0Address: Scalars['String']['output'];
   token0Decimals: Scalars['Int']['output'];
@@ -20301,6 +20542,8 @@ export type Ve33Portfolio = {
   liquidityUSD: Scalars['String']['output'];
   locks: Array<Maybe<Ve33PortfolioLock>>;
   poolAddress: Scalars['String']['output'];
+  /** Stable, Volatile, CL */
+  tickSpacing: Scalars['Int']['output'];
   title: Scalars['String']['output'];
   token0Address: Scalars['String']['output'];
   token0Amount: Scalars['String']['output'];
@@ -20374,6 +20617,7 @@ export type Ve33VotePool = {
   gaugeAddress: Scalars['String']['output'];
   id: Scalars['String']['output'];
   incentives: Array<Maybe<Ve33Incentive>>;
+  tickSpacing: Scalars['Int']['output'];
   title: Scalars['String']['output'];
   token0Address: Scalars['String']['output'];
   token0Decimals: Scalars['Int']['output'];
@@ -21646,6 +21890,38 @@ export type Ve33_GetPoolQuery = {
   } | null;
 };
 
+export type Ve33_GetVotePoolListQueryVariables = Exact<{
+  where?: InputMaybe<Ve33VotePoolInput>;
+}>;
+
+export type Ve33_GetVotePoolListQuery = {
+  ve33_getVotePoolList: Array<{
+    id: string;
+    title: string;
+    version: string;
+    gaugeAddress: string;
+    feeRate: any;
+    tvl: any;
+    token0Address: string;
+    token0Name: string;
+    token0Symbol: string;
+    token0Decimals: number;
+    token1Address: string;
+    token1Name: string;
+    token1Symbol: string;
+    token1Decimals: number;
+    totalValueLockedUSD: any;
+    totalValueLockedToken0: any;
+    totalValueLockedToken1: any;
+    feesUSD: any;
+    feesToken0: any;
+    feesToken1: any;
+    apr: { fees: any; incentives: any };
+    incentives: Array<{ amount: any; token: string; usd: any } | null>;
+    votes: Array<{ token: string; weight: string } | null>;
+  } | null>;
+};
+
 export type FetchUserSwapOrderHistoriesQueryVariables = Exact<{
   where?: InputMaybe<User_SwapswapFilter>;
 }>;
@@ -22646,6 +22922,48 @@ export const Ve33_GetPoolDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   Ve33_GetPoolQuery,
   Ve33_GetPoolQueryVariables
+>;
+export const Ve33_GetVotePoolListDocument = new TypedDocumentString(`
+    query Ve33_getVotePoolList($where: Ve33VotePoolInput) {
+  ve33_getVotePoolList(where: $where) {
+    id
+    title
+    version
+    gaugeAddress
+    feeRate
+    apr {
+      fees
+      incentives
+    }
+    tvl
+    token0Address
+    token0Name
+    token0Symbol
+    token0Decimals
+    token1Address
+    token1Name
+    token1Symbol
+    token1Decimals
+    totalValueLockedUSD
+    totalValueLockedToken0
+    totalValueLockedToken1
+    feesUSD
+    feesToken0
+    feesToken1
+    incentives {
+      amount
+      token
+      usd
+    }
+    votes {
+      token
+      weight
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  Ve33_GetVotePoolListQuery,
+  Ve33_GetVotePoolListQueryVariables
 >;
 export const FetchUserSwapOrderHistoriesDocument = new TypedDocumentString(`
     query FetchUserSwapOrderHistories($where: User_swapswapFilter) {

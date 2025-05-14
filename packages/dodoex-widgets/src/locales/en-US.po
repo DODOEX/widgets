@@ -47,7 +47,7 @@ msgid "Total Number of Traders"
 msgstr "Total Number of Traders"
 
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:43
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:60
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:61
 msgid "Volume"
 msgstr "Volume"
 
@@ -56,10 +56,11 @@ msgid "To"
 msgstr "To"
 
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:416
+#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:287
 msgid "Receive {0}"
 msgstr "Receive {0}"
 
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:63
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:64
 msgid "Fees"
 msgstr "Fees"
 
@@ -70,7 +71,7 @@ msgstr "{0} pending"
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:449
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:343
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:713
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:101
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:88
 msgid "Removing"
 msgstr "Removing"
 
@@ -97,6 +98,7 @@ msgid "Staking Rules"
 msgstr "Staking Rules"
 
 #: src/widgets/PoolWidget/PoolOperate/components/OperateBtn.tsx:76
+#: src/widgets/ve33/Ve33PoolOperate/components/OperateBtn.tsx:76
 msgid "Loading info..."
 msgstr "Loading info..."
 
@@ -148,7 +150,7 @@ msgstr "Unstaking"
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:452
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:346
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:716
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:104
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:91
 msgid "Adding"
 msgstr "Adding"
 
@@ -308,6 +310,10 @@ msgstr "Hour"
 msgid "Pricing Model"
 msgstr "Pricing Model"
 
+#: src/widgets/ve33/Ve33PoolOperate/index.tsx:198
+msgid "Gauge Adress"
+msgstr "Gauge Adress"
+
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:74
 #: src/widgets/PoolWidget/PoolList/index.tsx:179
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:17
@@ -316,7 +322,7 @@ msgstr "Liquidity"
 
 #: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:146
 #: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:213
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:54
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:55
 msgid "APR"
 msgstr "APR"
 
@@ -352,6 +358,7 @@ msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:240
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:74
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:197
+#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:251
 msgid "Confirm"
 msgstr "Confirm"
 
@@ -446,6 +453,7 @@ msgid "Active"
 msgstr "Active"
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:56
+#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:60
 msgid "You will receive"
 msgstr "You will receive"
 
@@ -470,7 +478,7 @@ msgstr "No results found"
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:388
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:297
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:595
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:51
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:52
 msgid "Pair"
 msgstr "Pair"
 
@@ -610,6 +618,7 @@ msgstr "Add Initial Liquidity"
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:481
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:174
+#: src/widgets/ve33/Ve33PoolOperate/hooks/useVe33V2AddLiquidity.ts:140
 msgid "Add liquidity"
 msgstr "Add liquidity"
 
@@ -618,12 +627,14 @@ msgid "Min price"
 msgstr "Min price"
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:229
+#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:223
 msgid "Pool address"
 msgstr "Pool address"
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:198
 #: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:54
 #: src/widgets/PoolWidget/AMMV3/components/PositionPreview.tsx:122
+#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:192
 msgid "Fee tier"
 msgstr "Fee tier"
 
@@ -698,7 +709,7 @@ msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:300
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:345
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:604
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:57
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:58
 msgid "TVL"
 msgstr "TVL"
 
@@ -772,6 +783,10 @@ msgstr "You can set the minimum selling price for single-token pools."
 msgid "Invalid price input"
 msgstr "Invalid price input"
 
+#: src/widgets/ve33/Ve33PoolOperate/hooks/useVe33V2RemoveLiquidity.ts:137
+msgid "Failed to remove"
+msgstr "Failed to remove"
+
 #: src/utils/time.ts:27
 msgid "Days"
 msgstr "Days"
@@ -837,6 +852,8 @@ msgstr "Stake"
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:281
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:568
+#: src/widgets/ve33/Ve33PoolOperate/AddPoolOperate.tsx:233
+#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:425
 msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 msgstr "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 
@@ -1095,6 +1112,7 @@ msgid "The initial price needs to be greater than {min} and less than 100,000,00
 msgstr "The initial price needs to be greater than {min} and less than 100,000,000"
 
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePercentageRemove.ts:98
+#: src/widgets/ve33/Ve33PoolOperate/hooks/usePercentageRemove.ts:95
 msgid "Quantity model"
 msgstr "Quantity model"
 
@@ -1196,6 +1214,7 @@ msgstr "Review Cross Chain"
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:225
 #: src/widgets/PoolWidget/AMMV2Create/Ratio.tsx:213
+#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:219
 msgid "Share of pool"
 msgstr "Share of pool"
 
@@ -1304,6 +1323,7 @@ msgid "Details"
 msgstr "Details"
 
 #: src/widgets/PoolWidget/PoolOperate/components/OperateBtn.tsx:69
+#: src/widgets/ve33/Ve33PoolOperate/components/OperateBtn.tsx:69
 msgid "Pending"
 msgstr "Pending"
 
@@ -1406,6 +1426,8 @@ msgstr "Price Range"
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:154
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:177
+#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:148
+#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:171
 msgid "{0} deposited"
 msgstr "{0} deposited"
 
@@ -1415,6 +1437,7 @@ msgstr "{0} deposited"
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:454
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:613
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:430
+#: src/widgets/ve33/Ve33PoolOperate/index.tsx:277
 msgid "My Liquidity"
 msgstr "My Liquidity"
 
@@ -1423,6 +1446,7 @@ msgid "For"
 msgstr "For"
 
 #: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:52
+#: src/widgets/ve33/Ve33PoolOperate/components/ComparePrice.tsx:52
 msgid "{lqAndDodoCompareText} Price Difference"
 msgstr "{lqAndDodoCompareText} Price Difference"
 
@@ -1435,6 +1459,10 @@ msgstr "You are not currently providing liquidity for any LP pools."
 #: src/widgets/MiningWidget/MiningList/my-created/index.tsx:35
 msgid "You have not create any mining"
 msgstr "You have not create any mining"
+
+#: src/widgets/ve33/Ve33PoolOperate/index.tsx:177
+msgid "Pool Adress"
+msgstr "Pool Adress"
 
 #: src/components/chart/i18n.ts:27
 msgid "The area of the chart indicates the buy/sell volume of {0} that can be carried by the market when the current price changes to the hover price."
@@ -1470,6 +1498,7 @@ msgid "The start time is too soon, please set a later time"
 msgstr "The start time is too soon, please set a later time"
 
 #: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:61
+#: src/widgets/ve33/Ve33PoolOperate/components/ComparePrice.tsx:61
 msgid "Current liquidity pool token price"
 msgstr "Current liquidity pool token price"
 
@@ -1499,6 +1528,7 @@ msgid "The price of this pool is within your selected range. Your position is cu
 msgstr "The price of this pool is within your selected range. Your position is currently earning fees."
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:58
+#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:62
 msgid "You are creating a pool"
 msgstr "You are creating a pool"
 
@@ -1533,6 +1563,8 @@ msgstr "Suitable for stablecoins with price fluctuations within 10%"
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:275
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:562
+#: src/widgets/ve33/Ve33PoolOperate/AddPoolOperate.tsx:227
+#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:419
 msgid "Confirm submission"
 msgstr "Confirm submission"
 
@@ -1563,6 +1595,7 @@ msgid "Settler"
 msgstr "Settler"
 
 #: src/widgets/PoolWidget/hooks/useAMMV2RemoveLiquidity.ts:164
+#: src/widgets/ve33/Ve33PoolOperate/hooks/useVe33V2RemoveLiquidity.ts:144
 msgid "Remove liquidity"
 msgstr "Remove liquidity"
 
@@ -1698,6 +1731,7 @@ msgstr "Approve {0}"
 
 #: src/components/Swap/SwapOrderHistory/index.tsx:105
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:204
+#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:198
 msgid "Rate"
 msgstr "Rate"
 
@@ -1857,6 +1891,7 @@ msgstr "Total Swap Volume"
 
 #: src/components/Swap/SwapOrderHistory/index.tsx:99
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:458
+#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:323
 msgid "Receive"
 msgstr "Receive"
 
@@ -1881,6 +1916,7 @@ msgstr "Once created, the price cannot be changed. This option applies to assets
 #: src/components/Swap/components/SwapSettingsDialog/index.tsx:87
 #: src/widgets/PoolWidget/AMMV2Create/Setting.tsx:100
 #: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:123
+#: src/widgets/ve33/Ve33PoolOperate/components/SlippageSetting.tsx:111
 msgid "Slippage Tolerance"
 msgstr "Slippage Tolerance"
 
@@ -1909,6 +1945,9 @@ msgstr "My Staked"
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1110
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:122
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
+#: src/widgets/ve33/Ve33PoolOperate/AddPoolOperate.tsx:91
+#: src/widgets/ve33/Ve33PoolOperate/hooks/usePoolOperateTabs.ts:15
+#: src/widgets/ve33/Ve33PoolOperate/index.tsx:401
 msgid "Add"
 msgstr "Add"
 
@@ -2022,6 +2061,7 @@ msgid "{0}-{1} is not supported. Please select another pair."
 msgstr "{0}-{1} is not supported. Please select another pair."
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:255
+#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:249
 msgid "Confirming..."
 msgstr "Confirming..."
 
@@ -2071,6 +2111,7 @@ msgid "There is no liquidity data."
 msgstr "There is no liquidity data."
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:134
+#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:128
 msgid "Output is estimated. If the price changes by more than {0} your transaction will revert."
 msgstr "Output is estimated. If the price changes by more than {0} your transaction will revert."
 
@@ -2135,6 +2176,7 @@ msgid "Advanced"
 msgstr "Advanced"
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:107
+#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:111
 msgid "{0}/{1} Pool Tokens"
 msgstr "{0}/{1} Pool Tokens"
 
@@ -2150,6 +2192,9 @@ msgstr "Initial Price Alert"
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1098
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:233
+#: src/widgets/ve33/Ve33PoolOperate/hooks/usePoolOperateTabs.ts:16
+#: src/widgets/ve33/Ve33PoolOperate/index.tsx:402
+#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:205
 msgid "Remove"
 msgstr "Remove"
 
@@ -2195,6 +2240,7 @@ msgid "Low price"
 msgstr "Low price"
 
 #: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:64
+#: src/widgets/ve33/Ve33PoolOperate/components/ComparePrice.tsx:64
 msgid "differs from the price quoted by DODO by {lqAndDodoCompareText}"
 msgstr "differs from the price quoted by DODO by {lqAndDodoCompareText}"
 
@@ -2221,6 +2267,7 @@ msgid "Paid"
 msgstr "Paid"
 
 #: src/components/AddTokenToMetamask.tsx:54
+#: src/widgets/ve33/Ve33PoolOperate/hooks/useVe33V2AddLiquidity.ts:133
 msgid "Failed to add"
 msgstr "Failed to add"
 
@@ -2241,6 +2288,8 @@ msgstr "In range"
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:284
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:571
+#: src/widgets/ve33/Ve33PoolOperate/AddPoolOperate.tsx:236
+#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:428
 msgid "There is risk of being arbitraged if adding this liquidity."
 msgstr "There is risk of being arbitraged if adding this liquidity."
 
@@ -2274,6 +2323,7 @@ msgid "Liquidity Burn Ratio"
 msgstr "Liquidity Burn Ratio"
 
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePercentageRemove.ts:102
+#: src/widgets/ve33/Ve33PoolOperate/hooks/usePercentageRemove.ts:99
 msgid "Percentage to remove"
 msgstr "Percentage to remove"
 
@@ -2380,6 +2430,8 @@ msgstr "Total Rewards=Daily Rewards*Duration"
 #: src/components/TokenStatusButton.tsx:18
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:124
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:233
+#: src/widgets/ve33/Ve33PoolOperate/AddPoolOperate.tsx:93
+#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:205
 msgid "Insufficient balance"
 msgstr "Insufficient balance"
 

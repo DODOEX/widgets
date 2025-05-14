@@ -1,6 +1,6 @@
 import { ChainId } from '@dodoex/api';
 import { TokenInfo } from '../../hooks/Token/type';
-import { FetchVe33PoolList } from '../PoolWidget/utils';
+import { FetchVe33PoolList, FetchVotePoolList } from '../PoolWidget/utils';
 
 export enum OperateTypeE {
   Add = 1,
@@ -18,8 +18,18 @@ export enum FeeE {
 }
 
 export type FetchVe33PoolItem = FetchVe33PoolList[0];
+export type FetchVotePoolItem = FetchVotePoolList[0];
 
 export type Ve33PoolInfoI = FetchVe33PoolItem & {
+  stable: boolean;
+  fee: FeeE | 0 | number;
+  type: PoolTypeE;
+  chainId: ChainId;
+  baseToken: TokenInfo;
+  quoteToken: TokenInfo;
+};
+
+export type VotePoolInfoI = FetchVotePoolItem & {
   stable: boolean;
   fee: FeeE | 0 | number;
   type: PoolTypeE;
