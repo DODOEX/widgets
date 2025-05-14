@@ -2,7 +2,7 @@ import { ChainId } from '@dodoex/api';
 import { VotePoolListWidget, WidgetProps } from '@dodoex/widgets';
 
 export default {
-  title: 'Widgets/Ve33PoolList',
+  title: 'Widgets/VotePoolList',
   component: 'div',
 };
 

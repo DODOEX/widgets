@@ -127,7 +127,6 @@ export const VotePoolList = () => {
             display: 'flex',
             flexDirection: 'column',
             borderRadius: 16,
-            backgroundColor: 'background.paper',
             flex: 1,
             overflow: 'hidden',
             height: 'max-content',
@@ -143,7 +142,6 @@ export const VotePoolList = () => {
               display: 'flex',
               justifyContent: 'space-between',
               padding: 20,
-              borderBottomWidth: 1,
             }}
           >
             <Box sx={{ display: 'flex' }}>
