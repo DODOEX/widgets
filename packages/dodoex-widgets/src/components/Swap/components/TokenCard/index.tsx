@@ -42,6 +42,7 @@ export interface TokenCardProps {
   token?: TokenInfo | null;
   onInputChange?: (v: string) => void;
   onInputFocus?: () => void;
+  onInputBlur?: (v: string) => void;
   onTokenClick?: () => void;
   onTokenChange?: (token: TokenInfo, isOccupied: boolean) => void;
   side?: TokenPickerProps['side'];
@@ -120,6 +121,7 @@ export function TokenCard({
   occupiedAddrs,
   occupiedChainId,
   onInputFocus,
+  onInputBlur,
   onTokenClick,
   onInputChange,
   onTokenChange,
@@ -255,6 +257,7 @@ export function TokenCard({
           <NumberInput
             value={amt}
             onFocus={onInputFocus}
+            onBlur={onInputBlur}
             onChange={
               onInputChange
                 ? (v) => {

@@ -18,6 +18,7 @@ export const NumberInput = forwardRef(function NumberInput(
     suffixGap = 0,
     withClear,
     onFocus,
+    onBlur,
     placeholder,
     readonlyShowSuffix,
     typography,
@@ -27,6 +28,7 @@ export const NumberInput = forwardRef(function NumberInput(
     value?: string;
     decimals?: number;
     onFocus?: () => void;
+    onBlur?: (v: string) => void;
     onChange?: (v: string) => void;
     suffix?: React.ReactNode | string;
     suffixGap?: number;
@@ -86,6 +88,14 @@ export const NumberInput = forwardRef(function NumberInput(
       readOnly={readOnly}
       placeholder={placeholder || '0.00'}
       onFocus={onFocus}
+      onBlur={
+        onBlur
+          ? (evt) => {
+              const inputVal = evt.target.value;
+              onBlur(inputVal);
+            }
+          : undefined
+      }
       onChange={(evt: any) => {
         const inputVal = evt.target.value;
         const input =

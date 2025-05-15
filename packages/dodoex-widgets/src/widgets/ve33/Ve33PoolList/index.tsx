@@ -10,7 +10,7 @@ import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { Ve33PoolInfoI, Ve33PoolOperateProps } from '../types';
 import { compositePoolInfo } from '../utils';
 import { TableList } from './TableList';
-import PoolOperateDialog, { PoolOperate } from '../Ve33PoolOperate';
+import PoolOperateDialog from '../Ve33PoolOperate';
 
 export interface Ve33PoolListProps {
   onClickPoolListRow: (id: string, chainId: ChainId) => void;
@@ -30,11 +30,11 @@ export const Ve33PoolList = ({ onClickPoolListRow }: Ve33PoolListProps) => {
     // null,
     {
       poolInfo: {
-        id: '0x98ecc0d3f774a7bda38918bf5830a476dd5a606c',
-        title: 'V2.Volatile',
-        version: 'v2',
-        gaugeAddress: '0x7b156830fdbc76d327a48a19b0143663e16a95ba',
-        feeRate: '30',
+        id: '0x2f63a87bf42dc4c021af8be085cece16269e3b67',
+        title: 'V3.CL=200',
+        version: 'v3',
+        gaugeAddress: '0x640be2253a65740152dc933fab757606e9c7bd52',
+        feeRate: '3000',
         apr: {
           fees: '0',
           incentives: '0',
@@ -58,9 +58,9 @@ export const Ve33PoolList = ({ onClickPoolListRow }: Ve33PoolListProps) => {
         token1Symbol: 'WETH',
         token1Decimals: 18,
         chainId: 2810,
-        stable: false,
-        fee: '30',
-        type: 1,
+        stable: true,
+        fee: '3000',
+        type: 2,
         baseToken: {
           chainId: 2810,
           address: '0x42edf453f8483c7168c158d28d610a58308517d1',
@@ -220,37 +220,12 @@ export const Ve33PoolList = ({ onClickPoolListRow }: Ve33PoolListProps) => {
         />
       </Box>
       {operatePool && (
-        <Box
-          sx={{
-            position: 'relative',
-            width: 375,
-          }}
-        >
-          {isMobile ? (
-            <PoolOperateDialog
-              account={account}
-              onClose={() => setOperatePool(null)}
-              modal={isMobile}
-              pool={operatePool?.poolInfo}
-              operate={operatePool.operateType}
-            />
-          ) : (
-            <PoolOperate
-              account={account}
-              onClose={() => setOperatePool(null)}
-              modal={isMobile}
-              pool={operatePool?.poolInfo}
-              operate={operatePool.operateType}
-              sx={{
-                width: 375,
-                height: 'max-content',
-                backgroundColor: 'background.paper',
-                borderRadius: 16,
-                overflow: 'hidden',
-              }}
-            />
-          )}
-        </Box>
+        <PoolOperateDialog
+          account={account}
+          onClose={() => setOperatePool(null)}
+          pool={operatePool?.poolInfo}
+          operate={operatePool.operateType}
+        />
       )}
     </WidgetContainer>
   );

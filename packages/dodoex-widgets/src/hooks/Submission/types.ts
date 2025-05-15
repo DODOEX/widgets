@@ -32,6 +32,7 @@ export enum MetadataFlag {
   reset = 'reset',
   addLiquidityVe33V2Position = 'addLiquidityVe33V2Position',
   removeLiquidityVe33V2Position = 'removeLiquidityVe33V2Position',
+  addLiquidityVe33V3Position = 'addLiquidityVe33V3Position',
 }
 
 export type Metadata = Record<string, any>;

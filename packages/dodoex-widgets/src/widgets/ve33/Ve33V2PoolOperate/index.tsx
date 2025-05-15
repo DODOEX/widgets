@@ -35,7 +35,7 @@ export interface PoolOperateProps {
   onClose?: () => void;
 }
 
-export default function PoolOperateDialog({
+export default function Ve33V2PoolOperateDialog({
   modal,
   ...props
 }: PoolOperateProps & {
@@ -51,12 +51,12 @@ export default function PoolOperateDialog({
       modal={modal}
       id="pool-operate"
     >
-      <PoolOperate {...props} />
+      <Ve33V2PoolOperate {...props} />
     </Dialog>
   );
 }
 
-export function PoolOperate({
+export function Ve33V2PoolOperate({
   sx,
   pool,
   operate,
@@ -393,7 +393,7 @@ export function PoolOperate({
   );
 }
 
-export function usePoolOperateTabs(defaultValue = OperateTypeE.Add) {
+function usePoolOperateTabs(defaultValue = OperateTypeE.Add) {
   const { i18n } = useLingui();
   const [operateTab, setOperateTab] = React.useState(defaultValue);
   const operateTabs = React.useMemo(
