@@ -16,7 +16,6 @@ export function useWalletInfo() {
   const appKitNetwork = useAppKitNetwork();
 
   const chainId = useMemo<ChainId>(() => {
-    console.log('appKitNetwork', appKitNetwork);
     if (!appKitNetwork || !appKitNetwork.caipNetwork) {
       return onlyChainId || defaultChainId || ChainId.MAINNET;
     }

@@ -14,6 +14,8 @@ import * as types from './graphql';
 const documents = {
   '\n    query FetchErc20SwapCrossChainList($where: Erc20listV2Filter) {\n      erc20_swapCrossChainList(where: $where) {\n        name\n        address\n        symbol\n        decimals\n        slippage\n        chainId\n        logoImg\n        tokenlists {\n          name\n          status\n        }\n        domains {\n          name\n        }\n        funcLabels {\n          key\n        }\n        attributeLabels {\n          key\n        }\n      }\n    }\n  ':
     types.FetchErc20SwapCrossChainListDocument,
+  '\n    query Cross_chain_zetachain_token_list(\n      $where: Cross_chain_zetachain_tokentokenlistFilter\n    ) {\n      cross_chain_zetachain_token_list(where: $where) {\n        id\n        name\n        address\n        symbol\n        decimals\n        logo\n        chainId\n        position\n        slippage\n      }\n    }\n  ':
+    types.Cross_Chain_Zetachain_Token_ListDocument,
   '\n    query FetchErc20ForecastSlippage($where: Erc20_extenderc20ExtendV2Filter) {\n      erc20_extend_erc20ExtendV2(where: $where) {\n        forecastSlippageList {\n          forecastSlippage\n          forecastValue\n          confidenceRatio\n          confidenceIntervalUpper\n          confidenceIntervalLower\n        }\n      }\n    }\n  ':
     types.FetchErc20ForecastSlippageDocument,
   '\n  query Ticks($where: Tick_filter, $skip: Int, $first: Int) {\n    ticks(where: $where, skip: $skip, first: $first) {\n      id\n      poolAddress\n      tickIdx\n      liquidityNet\n      price0\n      price1\n    }\n  }\n':
@@ -60,6 +62,12 @@ const documents = {
 export function graphql(
   source: '\n    query FetchErc20SwapCrossChainList($where: Erc20listV2Filter) {\n      erc20_swapCrossChainList(where: $where) {\n        name\n        address\n        symbol\n        decimals\n        slippage\n        chainId\n        logoImg\n        tokenlists {\n          name\n          status\n        }\n        domains {\n          name\n        }\n        funcLabels {\n          key\n        }\n        attributeLabels {\n          key\n        }\n      }\n    }\n  ',
 ): typeof import('./graphql').FetchErc20SwapCrossChainListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query Cross_chain_zetachain_token_list(\n      $where: Cross_chain_zetachain_tokentokenlistFilter\n    ) {\n      cross_chain_zetachain_token_list(where: $where) {\n        id\n        name\n        address\n        symbol\n        decimals\n        logo\n        chainId\n        position\n        slippage\n      }\n    }\n  ',
+): typeof import('./graphql').Cross_Chain_Zetachain_Token_ListDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

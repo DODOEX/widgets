@@ -17,7 +17,6 @@
     "@reown/appkit-common": "^1.7.5",
     "@reown/appkit-experimental": "^1.7.5",
     "@reown/appkit-utils": "^1.7.5",
-    "@solana/wallet-adapter-wallets": "^0.19.36",
     "@storybook/addon-docs": "^8.3.5",
     "ethers": "5.8.0",
     "lodash": "^4.17.21",

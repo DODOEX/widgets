@@ -1,16 +1,16 @@
 import { babel } from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
-import typescript from '@rollup/plugin-typescript';
-import terser from '@rollup/plugin-terser';
-import url from '@rollup/plugin-url';
-import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import terser from '@rollup/plugin-terser';
+import typescript from '@rollup/plugin-typescript';
+import url from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
-import pkg from './package.json' with { type: 'json' };
 import globby from 'globby';
-import css from 'rollup-plugin-import-css';
 import clear from 'rollup-plugin-clear';
+import css from 'rollup-plugin-import-css';
+import pkg from './package.json' with { type: 'json' };
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const baseConfig = {
@@ -53,6 +53,9 @@ const baseConfig = {
       (key) => !['@dodoex/icons'].includes(key),
     ),
     ...Object.keys(pkg.peerDependencies || {}),
+    '@reown/appkit',
+    '@reown/appkit/networks',
+    '@reown/appkit/react',
   ],
 };
 

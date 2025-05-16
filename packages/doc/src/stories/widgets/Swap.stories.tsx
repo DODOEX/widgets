@@ -23,10 +23,6 @@ import {
   useAppKitAccount,
   useAppKitProvider,
 } from '@reown/appkit/react';
-import {
-  PhantomWalletAdapter,
-  SolflareWalletAdapter,
-} from '@solana/wallet-adapter-wallets';
 
 // 1. Get projectId
 const projectId = 'bc32cb5c4e5f0d1d9a3313ae139b30e9';
@@ -41,7 +37,7 @@ const metadata = {
 
 // 0. Set up Solana Adapter
 const solanaWeb3JsAdapter = new SolanaAdapter({
-  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
+  wallets: [],
 });
 
 // 3. Set up Bitcoin Adapter
