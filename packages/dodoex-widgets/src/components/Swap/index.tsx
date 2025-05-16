@@ -8,7 +8,7 @@ import {
   useTheme,
 } from '@dodoex/components';
 import { Dodo, DoubleRight, Setting, Warn } from '@dodoex/icons';
-import { Trans, t } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash';
@@ -64,7 +64,7 @@ import { ReviewDialog } from './components/ReviewDialog';
 import { SettingsDialog } from './components/SettingsDialog';
 import { SwapSettingsDialog } from './components/SwapSettingsDialog';
 import { SwitchBox } from './components/SwitchBox';
-import { TokenCard } from './components/TokenCard';
+import { TokenCardSwap } from './components/TokenCard/TokenCardSwap';
 import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
 
 export interface SwapProps {
@@ -698,8 +698,10 @@ export function Swap({
   ]);
 
   const swapButton = useMemo(() => {
-    if (!account || (fromToken?.chainId && chainId !== fromToken.chainId))
+    if (!account || (fromToken?.chainId && chainId !== fromToken.chainId)) {
       return <ConnectWallet needSwitchChain={fromToken?.chainId} />;
+    }
+
     if (isInflight) {
       return (
         <Button fullWidth isLoading disabled>
@@ -707,6 +709,7 @@ export function Swap({
         </Button>
       );
     }
+
     if (!fromToken || !toToken)
       return (
         <Button fullWidth disabled data-testid={swapAlertSelectTokenBtn}>
@@ -962,7 +965,7 @@ export function Swap({
         {/* Swap Module */}
         <Box>
           {/* First Token Card  */}
-          <TokenCard
+          <TokenCardSwap
             sx={{ mb: 4 }}
             token={fromToken}
             side="from"
@@ -993,7 +996,7 @@ export function Swap({
           <SwitchBox onClick={switchTokens} disabled={disabledSwitch} />
 
           {/* Second Token Card  */}
-          <TokenCard
+          <TokenCardSwap
             token={toToken}
             side="to"
             amt={toFinalAmt}

@@ -52,7 +52,7 @@ export interface WidgetProps
   apikey?: string;
   theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
-  defaultChainId?: ChainId;
+  defaultChainId: ChainId;
   width?: string | number;
   height?: string | number;
   feeRate?: number; // Unit: 1e18
@@ -145,6 +145,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useInitTokenList(props);
   useFetchBlockNumber();
   useInitContractRequest();
+
   const { provider, connector, chainId } = useWeb3React();
   const { autoConnectLoading } = useGlobalState();
   useEffect(() => {

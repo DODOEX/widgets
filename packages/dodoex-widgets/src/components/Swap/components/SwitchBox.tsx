@@ -27,7 +27,7 @@ export function SwitchBox({
           height: size,
           borderRadius: '50%',
           backgroundColor: theme.palette.background.input,
-          border: `4px solid ${theme.palette.background.paper}`,
+          border: `4px solid ${theme.palette.background.default}`,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

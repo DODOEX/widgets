@@ -163,4 +163,25 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WZETA',
     wrappedTokenAddress: '0x0246DffDa649e877CFd0951837332B4690fAD1EB',
   },
+  [ChainId.SOLANA]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'SOL',
+    name: 'Solana',
+    wrappedTokenSymbol: 'WETH',
+    wrappedTokenAddress: '',
+  },
+  [ChainId.SOLANA_DEVNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'SOL',
+    name: 'Solana',
+    wrappedTokenSymbol: 'WETH',
+    wrappedTokenAddress: '',
+  },
+  [ChainId.BTC]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'BTC',
+    name: 'Bitcoin',
+    wrappedTokenSymbol: 'WBTC',
+    wrappedTokenAddress: '',
+  },
 };

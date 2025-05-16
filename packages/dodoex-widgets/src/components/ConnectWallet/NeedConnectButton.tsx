@@ -1,12 +1,12 @@
-import { Button, ButtonProps } from '@dodoex/components';
-import { Trans, t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
-import React from 'react';
 import { ChainId } from '@dodoex/api';
+import { Button, ButtonProps } from '@dodoex/components';
+import { CaipNetworksUtil } from '@reown/appkit-utils';
+import { useAppKit } from '@reown/appkit/react';
+import React from 'react';
 import { chainListMap } from '../../constants/chainList';
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 import { useUserOptions } from '../UserOptionsProvider';
-import { useGlobalState } from '../../hooks/useGlobalState';
 
 export default function NeedConnectButton({
   chainId,
@@ -17,14 +17,19 @@ export default function NeedConnectButton({
   chainId?: ChainId;
   includeButton?: boolean;
 }) {
-  const { account, chainId: currentChainId, connector } = useWeb3React();
+  const { open } = useAppKit();
+  const { account, chainId: currentChainId } = useWalletInfo();
+
   const { onConnectWalletClick, onSwitchChain } = useUserOptions();
   const [loading, setLoading] = React.useState(false);
+
   const switchChain = useSwitchChain(chainId);
+
   const needSwitchNetwork =
     currentChainId !== undefined &&
     chainId !== undefined &&
     currentChainId !== chainId;
+
   if (
     account &&
     !loading &&
@@ -34,6 +39,7 @@ export default function NeedConnectButton({
     if (includeButton) return <>{props.children ?? null}</>;
     return <Button {...props} />;
   }
+
   return (
     <>
       <Button
@@ -54,11 +60,6 @@ export default function NeedConnectButton({
               setLoading(false);
               return;
             }
-            useGlobalState.setState({
-              openConnectWalletInfo: {
-                chainId,
-              },
-            });
             return;
           }
 
@@ -70,21 +71,25 @@ export default function NeedConnectButton({
               return;
             }
           }
-          connector.deactivate
-            ? connector.deactivate()
-            : connector.resetState();
-          useGlobalState.setState({
-            openConnectWalletInfo: true,
+
+          if (!chainId) {
+            return;
+          }
+          const caipNetwork = chainListMap.get(chainId)?.caipNetwork;
+          if (!caipNetwork) {
+            return;
+          }
+          const namespace = CaipNetworksUtil.getChainNamespace(caipNetwork);
+          open({
+            namespace,
           });
         }}
       >
-        {loading ? (
-          <Trans>Connecting...</Trans>
-        ) : needSwitchNetwork && chainId ? (
-          t`Switch to ${chainListMap.get(chainId)?.name ?? 'unknown'}`
-        ) : (
-          <Trans>Connect to a wallet</Trans>
-        )}
+        {loading
+          ? 'Connecting...'
+          : needSwitchNetwork && chainId
+            ? `Switch to ${chainListMap.get(chainId)?.name ?? 'unknown'}`
+            : 'Connect to a wallet'}
       </Button>
     </>
   );

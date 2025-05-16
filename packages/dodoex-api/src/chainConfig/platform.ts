@@ -29,4 +29,7 @@ export const platformIdMap: {
   [ChainId.RISE_TESTNET]: 'rise-testnet',
   [ChainId.ZETACHAIN]: 'zetachain',
   [ChainId.ZETACHAIN_TESTNET]: 'zetachain-testnet',
+  [ChainId.SOLANA]: 'solana',
+  [ChainId.SOLANA_DEVNET]: 'solana-devnet',
+  [ChainId.BTC]: 'btc',
 };

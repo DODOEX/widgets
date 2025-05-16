@@ -58,6 +58,7 @@ export default function TokenPicker({
 }: TokenPickerProps) {
   const { chainList, selectChainId, setSelectChainId } =
     useSelectChainList(side);
+
   const {
     showTokenList,
     filter,

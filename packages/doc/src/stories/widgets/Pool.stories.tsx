@@ -1,39 +1,6 @@
 import { SwapWidgetApi } from '@dodoex/api';
 import { PoolWidget, SwapWidgetProps } from '@dodoex/widgets';
-import { Web3Provider } from '@ethersproject/providers';
-import {
-  createWeb3Modal,
-  defaultConfig,
-  useWeb3Modal,
-  useWeb3ModalProvider,
-} from '@web3modal/ethers5/react';
-import React, { useMemo } from 'react';
-
-// 1. Get projectId
-const projectId = '3c0b09fae76fbc7d8d8c04221441d6fd';
-
-// 2. Set chains
-const mainnet = {
-  chainId: 1,
-  name: 'Ethereum',
-  currency: 'ETH',
-  explorerUrl: 'https://etherscan.io',
-  rpcUrl: 'https://cloudflare-eth.com',
-};
-
-// 3. Create modal
-const metadata = {
-  name: 'My Website',
-  description: 'My Website description',
-  url: 'https://mywebsite.com',
-  icons: ['https://avatars.mywebsite.com/'],
-};
-
-createWeb3Modal({
-  ethersConfig: defaultConfig({ metadata }),
-  chains: [mainnet],
-  projectId,
-});
+import React from 'react';
 
 export default {
   title: 'Widgets/Pool',
@@ -53,12 +20,6 @@ export const Primary = (props: any) => {
         });
     }
   }, [projectId, apiKey]);
-  const { open } = useWeb3Modal();
-  const { walletProvider } = useWeb3ModalProvider();
-  const ethersProvider = useMemo(() => {
-    if (!walletProvider) return undefined;
-    return new Web3Provider(walletProvider);
-  }, [walletProvider]);
 
   return (
     <PoolWidget
@@ -110,11 +71,6 @@ export const Primary = (props: any) => {
       ]}
       {...other}
       apikey={apiKey}
-      provider={ethersProvider}
-      onConnectWalletClick={() => {
-        open();
-        return true;
-      }}
     />
   );
 };

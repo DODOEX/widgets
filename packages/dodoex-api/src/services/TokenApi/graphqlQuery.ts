@@ -27,6 +27,23 @@ export const tokenGraphqlQuery = {
       }
     }
   `),
+  cross_chain_zetachain_token_list: graphql(`
+    query Cross_chain_zetachain_token_list(
+      $where: Cross_chain_zetachain_tokentokenlistFilter
+    ) {
+      cross_chain_zetachain_token_list(where: $where) {
+        id
+        name
+        address
+        symbol
+        decimals
+        logo
+        chainId
+        position
+        slippage
+      }
+    }
+  `),
   fetchErc20ForecastSlippage: graphql(`
     query FetchErc20ForecastSlippage($where: Erc20_extenderc20ExtendV2Filter) {
       erc20_extend_erc20ExtendV2(where: $where) {

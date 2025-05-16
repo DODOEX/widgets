@@ -1,31 +1,64 @@
 import { ChainId } from '@dodoex/api';
-import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg';
-import { ReactComponent as ArbitrumLogo } from '../assets/logo/networks/arbitrum.svg';
-import { ReactComponent as PolygonLogo } from '../assets/logo/networks/polygon.svg';
-import { ReactComponent as BSCLogo } from '../assets/logo/networks/bsc.svg';
-import { ReactComponent as OptimismLogo } from '../assets/logo/networks/optimism.svg';
-import { ReactComponent as AvalancheLogo } from '../assets/logo/networks/avalanche.svg';
-import { ReactComponent as AuroraLogo } from '../assets/logo/networks/aurora.svg';
-import { ReactComponent as OKChainLogo } from '../assets/logo/networks/okchain.svg';
-import { ReactComponent as CFXLogo } from '../assets/logo/networks/cfx.svg';
+import {
+  AppKitNetwork,
+  base,
+  bitcoin,
+  bsc,
+  defineChain,
+  mainnet,
+  polygon,
+  sepolia,
+  solana,
+  solanaDevnet,
+  zetachain,
+} from '@reown/appkit/networks';
+
 import { ReactComponent as BaseLogo } from '../assets/logo/networks/base.svg';
-import { ReactComponent as LINEALogo } from '../assets/logo/networks/linea.svg';
-import { ReactComponent as ScrollLogo } from '../assets/logo/networks/scroll.svg';
-import { ReactComponent as MantaLogo } from '../assets/logo/networks/manta.svg';
-import { ReactComponent as MantleLogo } from '../assets/logo/networks/mantle.svg';
-import { ReactComponent as DODOchainLogo } from '../assets/logo/networks/dodochain.svg';
-import { ReactComponent as TaikoLogo } from '../assets/logo/networks/taiko.svg';
-import { ReactComponent as PlumeLogo } from '../assets/logo/networks/plume.svg';
-import { ReactComponent as NeoxLogo } from '../assets/logo/networks/neox.svg';
-import { ReactComponent as MorphLogo } from '../assets/logo/networks/morph.svg';
-import { ReactComponent as RiseLogo } from '../assets/logo/networks/rise.svg';
+import { ReactComponent as BSCLogo } from '../assets/logo/networks/bsc.svg';
+import { ReactComponent as BtcLogo } from '../assets/logo/networks/btc.svg';
+import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg';
+import { ReactComponent as PolygonLogo } from '../assets/logo/networks/polygon.svg';
+import { ReactComponent as SolanaLogo } from '../assets/logo/networks/solana.svg';
 import { ReactComponent as ZetachainLogo } from '../assets/logo/networks/zetachain.svg';
+
+export const zetachainTestnet = defineChain({
+  id: 7001,
+  name: 'ZetaChain testnet',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'tZETA',
+    symbol: 'tZETA',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://zetachain-athens-evm.blockpi.network/v1/rpc/public'],
+    },
+  },
+  contracts: {
+    multicall3: {
+      address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+      blockCreated: 2715217,
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'ZetaScan',
+      url: 'https://zetachain-testnet.blockscout.com',
+    },
+  },
+  testnet: true,
+  chainNamespace: 'eip155',
+  caipNetworkId: 'eip155:7001',
+});
+
 export interface ChainListItem {
   chainId: ChainId;
   logo: typeof ETHereumLogo;
   name: string;
   mainnet?: ChainId;
+  caipNetwork: AppKitNetwork;
 }
+
 export const chainListMap: Map<ChainId, ChainListItem> = new Map([
   [
     ChainId.MAINNET,
@@ -33,49 +66,25 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.MAINNET,
       logo: ETHereumLogo,
       name: 'Ethereum',
+      caipNetwork: mainnet,
     },
   ],
-  // [
-  //   ChainId.GOERLI,
-  //   {
-  //     chainId: ChainId.GOERLI,
-  //     logo: ETHereumLogo,
-  //     name: 'Goerli',
-  //     mainnet: ChainId.MAINNET,
-  //   },
-  // ],
-  // [
-  //   ChainId.SEPOLIA,
-  //   {
-  //     chainId: ChainId.SEPOLIA,
-  //     logo: ETHereumLogo,
-  //     name: 'Sepolia',
-  //     mainnet: ChainId.MAINNET,
-  //   },
-  // ],
-  // [
-  //   ChainId.ARBITRUM_ONE,
-  //   {
-  //     chainId: ChainId.ARBITRUM_ONE,
-  //     logo: ArbitrumLogo,
-  //     name: 'Arbitrum',
-  //   },
-  // ],
-  // [
-  //   ChainId.ARBITRUM_SEPOLIA,
-  //   {
-  //     chainId: ChainId.ARBITRUM_SEPOLIA,
-  //     logo: ArbitrumLogo,
-  //     name: 'Arbitrum Sepolia',
-  //     mainnet: ChainId.ARBITRUM_ONE,
-  //   },
-  // ],
+  [
+    ChainId.SEPOLIA,
+    {
+      chainId: ChainId.SEPOLIA,
+      logo: ETHereumLogo,
+      name: 'Ethereum Sepolia',
+      caipNetwork: sepolia,
+    },
+  ],
   [
     ChainId.POLYGON,
     {
       chainId: ChainId.POLYGON,
       logo: PolygonLogo,
       name: 'Polygon',
+      caipNetwork: polygon,
     },
   ],
   [
@@ -84,150 +93,25 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.BSC,
       logo: BSCLogo,
       name: 'BNBChain',
+      caipNetwork: bsc,
     },
   ],
-  // [
-  //   ChainId.OPTIMISM,
-  //   {
-  //     chainId: ChainId.OPTIMISM,
-  //     logo: OptimismLogo,
-  //     name: 'Optimism',
-  //   },
-  // ],
-  // [
-  //   ChainId.AVALANCHE,
-  //   {
-  //     chainId: ChainId.AVALANCHE,
-  //     logo: AvalancheLogo,
-  //     name: 'Avalanche',
-  //   },
-  // ],
-  // [
-  //   ChainId.AURORA,
-  //   {
-  //     chainId: ChainId.AURORA,
-  //     logo: AuroraLogo,
-  //     name: 'Aurora',
-  //   },
-  // ],
-  // [
-  //   ChainId.OKCHAIN,
-  //   {
-  //     chainId: ChainId.OKCHAIN,
-  //     logo: OKChainLogo,
-  //     name: 'OKTC',
-  //   },
-  // ],
-  // [
-  //   ChainId.CONFLUX,
-  //   {
-  //     chainId: ChainId.CONFLUX,
-  //     logo: CFXLogo,
-  //     name: 'Conflux eSpace',
-  //   },
-  // ],
   [
     ChainId.BASE,
     {
       chainId: ChainId.BASE,
       logo: BaseLogo,
       name: 'Base',
+      caipNetwork: base,
     },
   ],
-  // [
-  //   ChainId.LINEA,
-  //   {
-  //     chainId: ChainId.LINEA,
-  //     logo: LINEALogo,
-  //     name: 'Linea',
-  //   },
-  // ],
-  // [
-  //   ChainId.SCROLL,
-  //   {
-  //     chainId: ChainId.SCROLL,
-  //     logo: ScrollLogo,
-  //     name: 'Scroll',
-  //   },
-  // ],
-  // [
-  //   ChainId.MANTA,
-  //   {
-  //     chainId: ChainId.MANTA,
-  //     logo: MantaLogo,
-  //     name: 'Manta',
-  //   },
-  // ],
-  // [
-  //   ChainId.MANTLE,
-  //   {
-  //     chainId: ChainId.MANTLE,
-  //     logo: MantleLogo,
-  //     name: 'Mantle',
-  //   },
-  // ],
-  // [
-  //   ChainId.DODO_CHAIN_TESTNET,
-  //   {
-  //     chainId: ChainId.DODO_CHAIN_TESTNET,
-  //     logo: DODOchainLogo,
-  //     name: 'DODOchain testnet',
-  //   },
-  // ],
-  // [
-  //   ChainId.TAIKO,
-  //   {
-  //     chainId: ChainId.TAIKO,
-  //     logo: TaikoLogo,
-  //     name: 'Taiko',
-  //   },
-  // ],
-  // [
-  //   ChainId.PLUME,
-  //   {
-  //     chainId: ChainId.PLUME,
-  //     logo: PlumeLogo,
-  //     name: 'Plume',
-  //   },
-  // ],
-  // [
-  //   ChainId.PLUME_TESTNET,
-  //   {
-  //     chainId: ChainId.PLUME_TESTNET,
-  //     logo: PlumeLogo,
-  //     name: 'plume testnet',
-  //   },
-  // ],
-  // [
-  //   ChainId.NEOX,
-  //   {
-  //     chainId: ChainId.NEOX,
-  //     logo: NeoxLogo,
-  //     name: 'Neo X',
-  //   },
-  // ],
-  // [
-  //   ChainId.MORPH,
-  //   {
-  //     chainId: ChainId.MORPH,
-  //     logo: MorphLogo,
-  //     name: 'Morph',
-  //   },
-  // ],
-  // [
-  //   ChainId.RISE_TESTNET,
-  //   {
-  //     chainId: ChainId.RISE_TESTNET,
-  //     logo: RiseLogo,
-  //     name: 'Rise-Sepolia',
-  //   },
-  // ],
   [
     ChainId.ZETACHAIN,
     {
       chainId: ChainId.ZETACHAIN,
       logo: ZetachainLogo,
       name: 'Zetachain',
+      caipNetwork: zetachain,
     },
   ],
   [
@@ -237,9 +121,38 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       logo: ZetachainLogo,
       name: 'Zetachain Testnet',
       mainnet: ChainId.ZETACHAIN,
+      caipNetwork: zetachainTestnet,
+    },
+  ],
+  [
+    ChainId.SOLANA,
+    {
+      chainId: ChainId.SOLANA,
+      logo: SolanaLogo,
+      name: 'Solana',
+      caipNetwork: solana,
+    },
+  ],
+  [
+    ChainId.SOLANA_DEVNET,
+    {
+      chainId: ChainId.SOLANA_DEVNET,
+      logo: SolanaLogo,
+      name: 'Solana Devnet',
+      caipNetwork: solanaDevnet,
+    },
+  ],
+  [
+    ChainId.BTC,
+    {
+      chainId: ChainId.BTC,
+      logo: BtcLogo,
+      name: 'Bitcoin',
+      caipNetwork: bitcoin,
     },
   ],
 ]);
+
 export const isTestNet = (chainId: ChainId) => {
   return !!chainListMap.get(chainId)?.mainnet;
 };

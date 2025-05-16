@@ -60,6 +60,9 @@ export const rpcServerMap: {
   [ChainId.ZETACHAIN_TESTNET]: [
     'https://zetachain-athens-evm.blockpi.network/v1/rpc/public',
   ],
+  [ChainId.SOLANA]: ['https://rpc.walletconnect.org/v1'],
+  [ChainId.SOLANA_DEVNET]: ['https://rpc.walletconnect.org/v1'],
+  [ChainId.BTC]: ['https://rpc.walletconnect.org/v1'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -109,6 +112,9 @@ export const scanUrlDomainMap: {
   [ChainId.RISE_TESTNET]: 'explorer.testnet.riselabs.xyz',
   [ChainId.ZETACHAIN]: 'explorer.zetachain.com',
   [ChainId.ZETACHAIN_TESTNET]: 'zetachain-testnet.blockscout.com',
+  [ChainId.SOLANA]: 'solscan.io',
+  [ChainId.SOLANA_DEVNET]: 'solscan.io',
+  [ChainId.BTC]: '',
 };
 
 export const ThegraphKeyMap: {
@@ -140,6 +146,9 @@ export const ThegraphKeyMap: {
   [ChainId.RISE_TESTNET]: 'rise-testnet',
   [ChainId.ZETACHAIN]: 'zetachain',
   [ChainId.ZETACHAIN_TESTNET]: 'zetachain-testnet',
+  [ChainId.SOLANA]: 'solana',
+  [ChainId.SOLANA_DEVNET]: 'solana-devnet',
+  [ChainId.BTC]: 'btc',
 };
 
 export const blockTimeMap: {
@@ -171,6 +180,9 @@ export const blockTimeMap: {
   [ChainId.RISE_TESTNET]: 0,
   [ChainId.ZETACHAIN]: 6000,
   [ChainId.ZETACHAIN_TESTNET]: 6000,
+  [ChainId.SOLANA]: 1000,
+  [ChainId.SOLANA_DEVNET]: 1000,
+  [ChainId.BTC]: 1000,
 };
 
 export const dexKeysMap: {
@@ -202,6 +214,9 @@ export const dexKeysMap: {
   [ChainId.RISE_TESTNET]: [],
   [ChainId.ZETACHAIN]: [],
   [ChainId.ZETACHAIN_TESTNET]: [],
+  [ChainId.SOLANA]: [],
+  [ChainId.SOLANA_DEVNET]: [],
+  [ChainId.BTC]: [],
 };
 
 export interface PrivacySwapSupplierEndpointI {
@@ -292,4 +307,7 @@ export const privacySwapSupplierEndpointsMap: {
   [ChainId.RISE_TESTNET]: [],
   [ChainId.ZETACHAIN]: [],
   [ChainId.ZETACHAIN_TESTNET]: [],
+  [ChainId.SOLANA]: [],
+  [ChainId.SOLANA_DEVNET]: [],
+  [ChainId.BTC]: [],
 };

@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/components",
-  "version": "3.0.3-zetachain.2",
+  "version": "3.0.3-zetachain.3",
   "description": "UI component library",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
@@ -40,7 +40,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/icons": "^2.0.2",
+    "@dodoex/icons": "^2.0.3-zetachain.1",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/base": "5.0.0-beta.58",
@@ -48,12 +48,12 @@
     "@szhsin/react-accordion": "^1.2.1",
     "any-touch": "^2.2.0",
     "clsx": "^1.2.1",
-    "lottie-web": "^5.12.2"
+    "lottie-web": "^5.12.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "peerDependencies": {
-    "lodash": "^4.17.21",
-    "react": ">=17.0.1",
-    "react-dom": ">=17.0.1"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@rollup/plugin-babel": "^6.0.4",

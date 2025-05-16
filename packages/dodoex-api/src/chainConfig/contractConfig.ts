@@ -407,6 +407,48 @@ const contractMap: {
     DODO_DPP_PROXY: zetachainTestnet.DODODppProxy,
     DODO_MINEV3_PROXY: zetachainTestnet.DODOMineV3Proxy,
   },
+  [ChainId.SOLANA]: {
+    MULTI_CALL: '',
+    DODO_APPROVE: '',
+    ERC20_HELPER: '',
+
+    ROUTE_V2_DATA_FETCH: '',
+    ROUTE_V1_DATA_FETCH: '',
+    CALLEE_HELPER: '',
+
+    DODO_PROXY: '',
+    DODO_DSP_PROXY: '',
+    DODO_DPP_PROXY: '',
+    DODO_MINEV3_PROXY: '',
+  },
+  [ChainId.SOLANA_DEVNET]: {
+    MULTI_CALL: '',
+    DODO_APPROVE: '',
+    ERC20_HELPER: '',
+
+    ROUTE_V2_DATA_FETCH: '',
+    ROUTE_V1_DATA_FETCH: '',
+    CALLEE_HELPER: '',
+
+    DODO_PROXY: '',
+    DODO_DSP_PROXY: '',
+    DODO_DPP_PROXY: '',
+    DODO_MINEV3_PROXY: '',
+  },
+  [ChainId.BTC]: {
+    MULTI_CALL: '',
+    DODO_APPROVE: '',
+    ERC20_HELPER: '',
+
+    ROUTE_V2_DATA_FETCH: '',
+    ROUTE_V1_DATA_FETCH: '',
+    CALLEE_HELPER: '',
+
+    DODO_PROXY: '',
+    DODO_DSP_PROXY: '',
+    DODO_DPP_PROXY: '',
+    DODO_MINEV3_PROXY: '',
+  },
 };
 
 export default contractMap;
