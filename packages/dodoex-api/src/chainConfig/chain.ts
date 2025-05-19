@@ -53,5 +53,9 @@ export enum ChainId {
 
   SOLANA_DEVNET = 1399811151,
 
-  BTC = 18333,
+  // https://signet25.bublina.eu.org/
+  // https://mempool.space/signet/address/tb1psrnnfc3s0kxuunw0rz3czd0vs7js7elufwahrxcpea632s0pgxvsum3hdy
+  BTC_SIGNET = 18333,
+
+  BTC = 183333,
 }

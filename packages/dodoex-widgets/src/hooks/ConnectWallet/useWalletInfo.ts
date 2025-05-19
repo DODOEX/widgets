@@ -1,12 +1,20 @@
 import { ChainId } from '@dodoex/api';
 import { CaipNetworksUtil } from '@reown/appkit-utils';
 import { bitcoin, solana, solanaDevnet } from '@reown/appkit/networks';
-import { useAppKitAccount, useAppKitNetwork } from '@reown/appkit/react';
+import {
+  useAppKit,
+  useAppKitAccount,
+  useAppKitNetwork,
+  useDisconnect,
+} from '@reown/appkit/react';
 import { useCallback, useMemo } from 'react';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import { chainListMap } from '../../constants/chainList';
 
 export function useWalletInfo() {
+  const { open, close } = useAppKit();
+  const { disconnect } = useDisconnect();
+
   const { onlyChainId, defaultChainId } = useUserOptions();
 
   const evmAccount = useAppKitAccount({ namespace: 'eip155' }); // for EVM chains
@@ -49,11 +57,14 @@ export function useWalletInfo() {
         : evmAccount;
   }, [bitcoinAccount, chainIdToCaipNetwork, evmAccount, solanaAccount]);
 
-  const getAccountByChainId = useCallback(
-    (targetChainId: ChainId) => {
+  const getAppKitAccountByChainId = useCallback(
+    (targetChainId: ChainId | undefined) => {
+      if (!targetChainId) {
+        return undefined;
+      }
       const targetCaipNetwork = chainListMap.get(targetChainId)?.caipNetwork;
       if (!targetCaipNetwork) {
-        return;
+        return undefined;
       }
       const namespace = CaipNetworksUtil.getChainNamespace(targetCaipNetwork);
 
@@ -67,6 +78,10 @@ export function useWalletInfo() {
   );
 
   return {
+    open,
+    close,
+    disconnect,
+
     chainId,
     chainIdToCaipNetwork,
     connectedChainId: chainId,
@@ -78,6 +93,6 @@ export function useWalletInfo() {
     solanaAccount,
     bitcoinAccount,
 
-    getAccountByChainId,
+    getAppKitAccountByChainId,
   };
 }

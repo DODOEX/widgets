@@ -9,11 +9,13 @@ import {
 } from '@dodoex/components';
 import { Dodo, DoubleRight, Setting, Warn } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
+import { CaipNetworksUtil } from '@reown/appkit-utils';
 import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AppUrl } from '../../constants/api';
+import { chainListMap } from '../../constants/chainList';
 import { basicTokenMap } from '../../constants/chains';
 import { setLastToken } from '../../constants/localstorage';
 import { PRICE_IMPACT_THRESHOLD } from '../../constants/swap';
@@ -27,6 +29,7 @@ import {
 import { useFetchRoutePriceBridge } from '../../hooks/Bridge/useFetchRoutePriceBridge';
 import { useSendRoute } from '../../hooks/Bridge/useSendRoute';
 import { useSwitchBridgeOrSwapSlippage } from '../../hooks/Bridge/useSwitchBridgeOrSwapSlippage';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 import useInflights from '../../hooks/Submission/useInflights';
 import {
   RoutePriceStatus,
@@ -50,7 +53,7 @@ import {
   useSetAutoSlippage,
 } from '../../hooks/setting/useSetAutoSlippage';
 import { useGlobalState } from '../../hooks/useGlobalState';
-import { formatTokenAmountNumber } from '../../utils';
+import { formatTokenAmountNumber, namespaceToTitle } from '../../utils';
 import { formatReadableNumber } from '../../utils/formatter';
 import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
 import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
@@ -59,13 +62,14 @@ import ErrorMessageDialog from '../ErrorMessageDialog';
 import TokenLogo from '../TokenLogo';
 import { QuestionTooltip } from '../Tooltip';
 import { useUserOptions } from '../UserOptionsProvider';
-import ConnectWallet from './components/ConnectWallet';
 import { ReviewDialog } from './components/ReviewDialog';
 import { SettingsDialog } from './components/SettingsDialog';
 import { SwapSettingsDialog } from './components/SwapSettingsDialog';
 import { SwitchBox } from './components/SwitchBox';
 import { TokenCardSwap } from './components/TokenCard/TokenCardSwap';
 import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
+
+const debounceTime = 300;
 
 export interface SwapProps {
   /** Higher priority setting slippage */
@@ -83,17 +87,37 @@ export function Swap({
   const { isInflight } = useInflights();
   const { chainId, account } = useWeb3React();
   const { defaultChainId, noPowerBy, onlyChainId } = useUserOptions();
+  const { open, close, disconnect, getAppKitAccountByChainId } =
+    useWalletInfo();
+
   const [isReverseRouting, setIsReverseRouting] = useState(false);
+  const [displayingFromAmt, setDisplayingFromAmt] = useState<string>('');
+  const [displayingToAmt, setDisplayingToAmt] = useState<string>('');
+  const [fromAmt, setFromAmt] = useState<string>('');
+  const [toAmt, setToAmt] = useState<string>('');
+
+  const [fromToken, setFromTokenOrigin] = useState<TokenInfo | null>(null);
+  const [toToken, setToTokenOrigin] = useState<TokenInfo | null>(null);
+  const [isReviewDialogOpen, setIsReviewDialogOpen] = useState<boolean>(false);
+  const [isSettingsDialogOpen, setIsSettingsDialogOpen] =
+    useState<boolean>(false);
+  const [switchBridgeRouteShow, setSwitchBridgeRouteShow] = useState(false);
+  const [selectedRouteIdOrigin, setSelectRouteId] = useState('');
+  const [bridgeSummaryShow, setBridgeSummaryShow] = useState(false);
+
+  const fromAccount = useMemo(() => {
+    return getAppKitAccountByChainId(fromToken?.chainId);
+  }, [fromToken?.chainId, getAppKitAccountByChainId]);
+
+  const toAccount = useMemo(() => {
+    return getAppKitAccountByChainId(toToken?.chainId);
+  }, [toToken?.chainId, getAppKitAccountByChainId]);
+
   const basicTokenAddress = useMemo(
     () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
     [chainId],
   );
 
-  const [displayingFromAmt, setDisplayingFromAmt] = useState<string>('');
-  const [displayingToAmt, setDisplayingToAmt] = useState<string>('');
-  const [fromAmt, setFromAmt] = useState<string>('');
-  const [toAmt, setToAmt] = useState<string>('');
-  const debounceTime = 300;
   const debouncedSetFromAmt = useMemo(
     () => debounce((amt) => setFromAmt(amt), debounceTime),
     [],
@@ -103,11 +127,6 @@ export function Swap({
     [],
   );
 
-  const [fromToken, setFromTokenOrigin] = useState<TokenInfo | null>(null);
-  const [toToken, setToTokenOrigin] = useState<TokenInfo | null>(null);
-  const [isReviewDialogOpen, setIsReviewDialogOpen] = useState<boolean>(false);
-  const [isSettingsDialogOpen, setIsSettingsDialogOpen] =
-    useState<boolean>(false);
   const isBridge = useMemo(() => {
     if (!fromToken || !toToken) return undefined;
     return !!(
@@ -153,8 +172,7 @@ export function Swap({
       fromToken,
       fromAmount: fromAmt,
     });
-  const [switchBridgeRouteShow, setSwitchBridgeRouteShow] = useState(false);
-  const [selectedRouteIdOrigin, setSelectRouteId] = useState('');
+
   const selectedRouteId = useMemo(() => {
     if (!selectedRouteIdOrigin && bridgeRouteList.length) {
       return bridgeRouteList[0].id;
@@ -253,7 +271,6 @@ export function Swap({
 
     handleClickSend: handleSendBridgeRoute,
   } = useSendRoute();
-  const [bridgeSummaryShow, setBridgeSummaryShow] = useState(false);
 
   const showSwitchSlippageTooltip = useSwitchBridgeOrSwapSlippage(isBridge);
 
@@ -698,8 +715,63 @@ export function Swap({
   ]);
 
   const swapButton = useMemo(() => {
-    if (!account || (fromToken?.chainId && chainId !== fromToken.chainId)) {
-      return <ConnectWallet needSwitchChain={fromToken?.chainId} />;
+    console.log('fromAccount', fromAccount);
+    console.log('toAccount', toAccount);
+
+    if (!fromAccount?.isConnected) {
+      return (
+        <Button
+          fullWidth
+          onClick={() => {
+            if (!fromToken?.chainId) {
+              return;
+            }
+            const caipNetwork = chainListMap.get(
+              fromToken.chainId,
+            )?.caipNetwork;
+            if (!caipNetwork) {
+              return;
+            }
+            const namespace = CaipNetworksUtil.getChainNamespace(caipNetwork);
+            disconnect({
+              namespace,
+            });
+            open({
+              namespace,
+            });
+          }}
+        >
+          <Trans>
+            Connect to {namespaceToTitle(fromToken?.chainId)} wallet
+          </Trans>
+        </Button>
+      );
+    }
+
+    if (!toAccount?.isConnected) {
+      return (
+        <Button
+          fullWidth
+          onClick={() => {
+            if (!toToken?.chainId) {
+              return;
+            }
+            const caipNetwork = chainListMap.get(toToken.chainId)?.caipNetwork;
+            if (!caipNetwork) {
+              return;
+            }
+            const namespace = CaipNetworksUtil.getChainNamespace(caipNetwork);
+            disconnect({
+              namespace,
+            });
+            open({
+              namespace,
+            });
+          }}
+        >
+          <Trans>Connect to {namespaceToTitle(toToken?.chainId)} wallet</Trans>
+        </Button>
+      );
     }
 
     if (isInflight) {
@@ -716,6 +788,7 @@ export function Swap({
           <Trans>Select Tokens</Trans>
         </Button>
       );
+
     if (needApprove)
       return (
         <Button
@@ -726,6 +799,7 @@ export function Swap({
           {isApproving ? <Trans>Approving</Trans> : <Trans>Approve</Trans>}
         </Button>
       );
+
     if (!new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0))
       return (
         <Button fullWidth disabled data-testid={swapAlertEnterAmountBtn}>
@@ -799,27 +873,29 @@ export function Swap({
       </Button>
     );
   }, [
-    account,
+    fromAccount,
+    toAccount,
+    isInflight,
+    fromToken,
+    toToken,
+    needApprove,
+    isApproving,
+    isReverseRouting,
     toAmt,
     fromAmt,
-    toToken,
-    resAmount,
-    fromToken,
-    isInflight,
-    executeSwap,
-    submitApprove,
-    resPriceStatus,
-    basicTokenAddress,
-    isReverseRouting,
     isBridge,
     bridgeRouteStatus,
-    bridgeRouteList,
-    sendRouteLoading,
-    fromEtherTokenQuery.data?.balance,
-    insufficientBalance,
-    isApproving,
     isGetApproveLoading,
-    needApprove,
+    resPriceStatus,
+    insufficientBalance,
+    open,
+    submitApprove,
+    bridgeRouteList.length,
+    resAmount,
+    selectedRoute,
+    sendRouteLoading,
+    handleSendBridgeRoute,
+    fromEtherTokenQuery.data?.balance,
   ]);
 
   const subtitle = useMemo(() => {

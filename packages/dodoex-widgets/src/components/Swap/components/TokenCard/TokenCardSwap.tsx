@@ -11,21 +11,20 @@ import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useEffect, useRef, useState } from 'react';
 import { tokenApi } from '../../../../constants/api';
-import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
+import { useAppKitAccountByChainId } from '../../../../hooks/ConnectWallet/useAccountByChainId';
 import {
   BalanceData,
   useBalanceUpdateLoading,
 } from '../../../../hooks/Submission/useBalanceUpdateLoading';
 import { TokenInfo } from '../../../../hooks/Token';
 import { useFetchTokens } from '../../../../hooks/contract';
-import { truncatePoolAddress } from '../../../../utils';
 import { TokenPickerProps } from '../../../TokenPicker';
 import { useUserOptions } from '../../../UserOptionsProvider';
 import { transitionTime } from '../Dialog';
+import { BalanceText } from './BalanceText';
 import { NumberInput } from './NumberInput';
 import { TokenLogoCollapse } from './TokenLogoCollapse';
 import { TokenPickerDialog } from './TokenPickerDialog';
-import { BalanceText } from './BalanceText';
 import { WalletConnectBtn } from './WalletConnectBtn';
 
 export interface TokenCardProps {
@@ -91,7 +90,8 @@ export function TokenCardSwap({
   checkLogBalance,
   notTokenPickerModal,
 }: TokenCardProps) {
-  const { account } = useWalletInfo();
+  const { account } = useAppKitAccountByChainId(chainId);
+
   const theme = useTheme();
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
   const tokenQuery = useQuery(

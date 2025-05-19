@@ -15,6 +15,7 @@ export function useSwitchChain(chainId?: ChainId) {
       return undefined;
     }
     return () => {
+      console.log('switchNetwork', caipNetwork);
       return switchNetwork(caipNetwork);
     };
   }, [chainId, switchNetwork]);

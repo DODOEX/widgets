@@ -1,10 +1,12 @@
 export { setContractRequests } from '@dodoex/dodo-contract-request';
 export {
-  ChainId,
   basicTokenMap,
+  btcSignet,
+  ChainId,
   contractConfig,
   etherTokenAddress,
   platformIdMap,
+  zetachainTestnet,
 } from './chainConfig';
 
 export {
@@ -19,11 +21,11 @@ export { default as RestApiRequests } from './helper/RestApiRequests';
 export { AMMV3Api } from './services/ammv3';
 export type { TickData, Ticks } from './services/ammv3';
 export {
+  getPmmModel,
   PMMHelper,
   PMMModel,
   PMMState,
   PoolApi,
-  getPmmModel,
   solveQuadraticFunctionForTarget,
 } from './services/pool';
 export type { PmmModelParams, PoolType } from './services/pool';

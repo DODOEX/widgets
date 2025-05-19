@@ -1,4 +1,5 @@
+export { basicTokenMap, etherTokenAddress } from './basicToken';
 export { ChainId } from './chain';
-export { etherTokenAddress, basicTokenMap } from './basicToken';
 export { default as contractConfig } from './contractConfig';
+export { btcSignet, zetachainTestnet } from './defineChain';
 export { platformIdMap } from './platform';

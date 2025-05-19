@@ -97,7 +97,7 @@ export function CardPlus() {
           <path
             d="M19.0142 13H13.0142V19H11.0142V13H5.01416V11H11.0142V5H13.0142V11H19.0142V13Z"
             fill="white"
-            fill-opacity="0.5"
+            fillOpacity="0.5"
           />
         </svg>
       </Box>

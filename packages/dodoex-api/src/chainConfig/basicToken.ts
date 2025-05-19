@@ -184,4 +184,11 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WBTC',
     wrappedTokenAddress: '',
   },
+  [ChainId.BTC_SIGNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'sBTC',
+    name: 'sBitcoin',
+    wrappedTokenSymbol: 'sWBTC',
+    wrappedTokenAddress: '',
+  },
 };

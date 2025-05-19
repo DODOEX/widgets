@@ -1,6 +1,5 @@
 import { Box, Tooltip } from '@dodoex/components';
-import { useMemo } from 'react';
-import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
+import { useAppKitAccountByChainId } from '../../../../hooks/ConnectWallet/useAccountByChainId';
 import { TokenInfo } from '../../../../hooks/Token/type';
 
 export interface Props {
@@ -10,11 +9,7 @@ export interface Props {
 export const WalletConnectBtn = ({ token }: Props) => {
   const targetChainId = token.chainId;
 
-  const { getAccountByChainId } = useWalletInfo();
-
-  const currentAccount = useMemo(() => {
-    return getAccountByChainId(targetChainId);
-  }, [getAccountByChainId, targetChainId]);
+  const { account } = useAppKitAccountByChainId(targetChainId);
 
   return (
     <Tooltip
@@ -48,7 +43,7 @@ export const WalletConnectBtn = ({ token }: Props) => {
           <path
             d="M12.667 6.93016L11.5703 5.8335L8.00033 9.39572L4.43033 5.8335L3.33366 6.93016L8.00033 11.5968L12.667 6.93016Z"
             fill="currentColor"
-            fill-opacity="0.5"
+            fillOpacity="0.5"
           />
         </svg>
         <svg
@@ -61,7 +56,7 @@ export const WalletConnectBtn = ({ token }: Props) => {
           <path
             d="M3.33301 10.0698L4.42967 11.1665L7.99967 7.60428L11.5697 11.1665L12.6663 10.0698L7.99967 5.40317L3.33301 10.0698Z"
             fill="currentColor"
-            fill-opacity="0.5"
+            fillOpacity="0.5"
           />
         </svg>
       </Box>

@@ -29,6 +29,7 @@ export default function useFetchTokens({
 }) {
   const { account } = useWeb3React();
   const [tokenInfoMap, setTokenInfoMap] = useState<TokenInfoMap>(new Map());
+
   const addresses = useMemo(() => {
     return [
       ...(tokenList?.map((token) => token.address) || []),

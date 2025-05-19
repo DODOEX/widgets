@@ -1,4 +1,4 @@
-import { ChainId } from '@dodoex/api';
+import { ChainId, btcSignet, zetachainTestnet } from '@dodoex/api';
 import { SwapWidget } from '@dodoex/widgets';
 import { TokenInfo } from '@dodoex/widgets/dist/src/hooks/Token/type';
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin';
@@ -9,7 +9,6 @@ import {
   bitcoin,
   bitcoinTestnet,
   bsc,
-  defineChain,
   mainnet,
   polygon,
   sepolia,
@@ -43,40 +42,11 @@ const solanaWeb3JsAdapter = new SolanaAdapter({
 // 3. Set up Bitcoin Adapter
 const bitcoinAdapter = new BitcoinAdapter({
   projectId,
-});
-
-export const zetachainTestnet = defineChain({
-  id: 7001,
-  name: 'ZetaChain testnet',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'tZETA',
-    symbol: 'tZETA',
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://zetachain-athens-evm.blockpi.network/v1/rpc/public'],
-    },
-  },
-  contracts: {
-    multicall3: {
-      address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-      blockCreated: 2715217,
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: 'ZetaScan',
-      url: 'https://zetachain-testnet.blockscout.com',
-    },
-  },
-  testnet: true,
-  chainNamespace: 'eip155',
-  caipNetworkId: 'eip155:7001',
+  networks: [bitcoin, btcSignet],
 });
 
 // 3. Create the AppKit instance
-createAppKit({
+const appKit = createAppKit({
   adapters: [new Ethers5Adapter(), solanaWeb3JsAdapter, bitcoinAdapter],
   metadata: metadata,
   networks: [
@@ -90,7 +60,7 @@ createAppKit({
     solana,
     solanaDevnet,
     bitcoin,
-    bitcoinTestnet,
+    btcSignet,
   ],
   projectId,
   features: {

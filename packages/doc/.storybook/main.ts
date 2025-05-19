@@ -45,6 +45,7 @@ const config: StorybookConfig = {
       resolve: {
         ...config.resolve,
         alias: {
+          '@dodoex/api': path.resolve(__dirname, '../../dodoex-api', 'src/'),
           '@dodoex/components': path.resolve(
             __dirname,
             '../../dodoex-components',

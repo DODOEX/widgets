@@ -1,5 +1,7 @@
+import { ChainId } from '@dodoex/api';
+
 export interface TokenInfo {
-  readonly chainId: number;
+  readonly chainId: ChainId;
   readonly address: string;
   readonly name: string;
   readonly decimals: number;

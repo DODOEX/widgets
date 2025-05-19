@@ -32,4 +32,5 @@ export const platformIdMap: {
   [ChainId.SOLANA]: 'solana',
   [ChainId.SOLANA_DEVNET]: 'solana-devnet',
   [ChainId.BTC]: 'btc',
+  [ChainId.BTC_SIGNET]: 'btc-signet',
 };

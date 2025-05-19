@@ -1,5 +1,7 @@
 import { ChainId } from '@dodoex/api';
-export { etherTokenAddress, basicTokenMap } from '@dodoex/api';
+import { clusterApiUrl } from '@solana/web3.js';
+
+export { basicTokenMap, etherTokenAddress } from '@dodoex/api';
 
 export const rpcServerMap: {
   [key in ChainId]: Array<string>;
@@ -60,9 +62,10 @@ export const rpcServerMap: {
   [ChainId.ZETACHAIN_TESTNET]: [
     'https://zetachain-athens-evm.blockpi.network/v1/rpc/public',
   ],
-  [ChainId.SOLANA]: ['https://rpc.walletconnect.org/v1'],
-  [ChainId.SOLANA_DEVNET]: ['https://rpc.walletconnect.org/v1'],
+  [ChainId.SOLANA]: [clusterApiUrl('mainnet-beta')],
+  [ChainId.SOLANA_DEVNET]: [clusterApiUrl('devnet')],
   [ChainId.BTC]: ['https://rpc.walletconnect.org/v1'],
+  [ChainId.BTC_SIGNET]: ['https://rpc.walletconnect.org/v1'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -114,7 +117,8 @@ export const scanUrlDomainMap: {
   [ChainId.ZETACHAIN_TESTNET]: 'zetachain-testnet.blockscout.com',
   [ChainId.SOLANA]: 'solscan.io',
   [ChainId.SOLANA_DEVNET]: 'solscan.io',
-  [ChainId.BTC]: '',
+  [ChainId.BTC]: 'mempool.space',
+  [ChainId.BTC_SIGNET]: 'mempool.space/signet',
 };
 
 export const ThegraphKeyMap: {
@@ -149,6 +153,7 @@ export const ThegraphKeyMap: {
   [ChainId.SOLANA]: 'solana',
   [ChainId.SOLANA_DEVNET]: 'solana-devnet',
   [ChainId.BTC]: 'btc',
+  [ChainId.BTC_SIGNET]: 'btc-signet',
 };
 
 export const blockTimeMap: {
@@ -183,6 +188,7 @@ export const blockTimeMap: {
   [ChainId.SOLANA]: 1000,
   [ChainId.SOLANA_DEVNET]: 1000,
   [ChainId.BTC]: 1000,
+  [ChainId.BTC_SIGNET]: 1000,
 };
 
 export const dexKeysMap: {
@@ -217,6 +223,7 @@ export const dexKeysMap: {
   [ChainId.SOLANA]: [],
   [ChainId.SOLANA_DEVNET]: [],
   [ChainId.BTC]: [],
+  [ChainId.BTC_SIGNET]: [],
 };
 
 export interface PrivacySwapSupplierEndpointI {
@@ -310,4 +317,5 @@ export const privacySwapSupplierEndpointsMap: {
   [ChainId.SOLANA]: [],
   [ChainId.SOLANA_DEVNET]: [],
   [ChainId.BTC]: [],
+  [ChainId.BTC_SIGNET]: [],
 };

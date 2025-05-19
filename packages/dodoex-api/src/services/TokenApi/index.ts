@@ -150,6 +150,11 @@ export class TokenApi {
       ],
       enabled: !!chainId && !!address && !!account,
       queryFn: async () => {
+        console.log('chainId', chainId);
+        console.log('address', address);
+        console.log('account', account);
+        console.log('proxyContractAddress', proxyContractAddress);
+
         if (!chainId || !address || !account || !proxyContractAddress)
           return null;
         const blackList = await getTokenBlackList(chainId);
