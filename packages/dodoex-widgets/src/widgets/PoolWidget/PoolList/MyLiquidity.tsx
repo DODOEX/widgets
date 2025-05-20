@@ -1208,6 +1208,7 @@ export default function MyLiquidity({
     currentPage: 1,
     pageSize: 1000,
     user: account,
+    chainIds: filterChainIds,
     filterState: {
       viewOnlyOwn: true,
       filterTypes,
