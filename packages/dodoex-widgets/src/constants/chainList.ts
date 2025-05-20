@@ -1,26 +1,26 @@
 import { ChainId, btcSignet, zetachainTestnet } from '@dodoex/api';
 import {
   AppKitNetwork,
+  sepolia,
+  solanaDevnet,
   base,
   bitcoin,
   bitcoinTestnet,
   bsc,
   mainnet,
   polygon,
-  sepolia,
   solana,
-  solanaDevnet,
   zetachain,
 } from '@reown/appkit/networks';
 
 import { ReactComponent as BaseLogo } from '../assets/logo/networks/base.svg';
 import { ReactComponent as BSCLogo } from '../assets/logo/networks/bsc.svg';
-import { ReactComponent as BtcSignetLogo } from '../assets/logo/networks/btc-signet.svg';
 import { ReactComponent as BtcLogo } from '../assets/logo/networks/btc.svg';
-import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg';
 import { ReactComponent as PolygonLogo } from '../assets/logo/networks/polygon.svg';
+import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg';
 import { ReactComponent as SolanaLogo } from '../assets/logo/networks/solana.svg';
 import { ReactComponent as ZetachainLogo } from '../assets/logo/networks/zetachain.svg';
+import { ReactComponent as BtcSignetLogo } from '../assets/logo/networks/btc-signet.svg';
 
 export interface ChainListItem {
   chainId: ChainId;

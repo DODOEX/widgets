@@ -715,10 +715,7 @@ export function Swap({
   ]);
 
   const swapButton = useMemo(() => {
-    console.log('fromAccount', fromAccount);
-    console.log('toAccount', toAccount);
-
-    if (!fromAccount?.isConnected) {
+    if (!fromAccount?.appKitAccount?.isConnected) {
       return (
         <Button
           fullWidth
@@ -748,7 +745,7 @@ export function Swap({
       );
     }
 
-    if (!toAccount?.isConnected) {
+    if (!toAccount?.appKitAccount?.isConnected) {
       return (
         <Button
           fullWidth
@@ -888,6 +885,7 @@ export function Swap({
     isGetApproveLoading,
     resPriceStatus,
     insufficientBalance,
+    disconnect,
     open,
     submitApprove,
     bridgeRouteList.length,

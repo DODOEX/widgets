@@ -10,7 +10,9 @@ export function useAppKitAccountByChainId(chainId: ChainId | undefined) {
   }, [getAppKitAccountByChainId, chainId]);
 
   return {
-    appKitAccount,
-    account: appKitAccount?.address,
+    appKitAccount: appKitAccount?.appKitAccount,
+    namespace: appKitAccount?.namespace,
+    targetCaipNetwork: appKitAccount?.targetCaipNetwork,
+    account: appKitAccount?.appKitAccount?.address,
   };
 }

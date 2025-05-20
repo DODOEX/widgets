@@ -1,26 +1,11 @@
 import { ChainId } from '@dodoex/api';
-
-export interface ConnectWalletProps {
-  fromChainId?: ChainId;
-  toChainId?: ChainId;
-}
-
-export default function ConnectWallet({
-  fromChainId,
-  toChainId,
-}: ConnectWalletProps) {
-  return <></>;
-}
-
-import { ChainId } from '@dodoex/api';
 import { Button, ButtonProps } from '@dodoex/components';
 import { CaipNetworksUtil } from '@reown/appkit-utils';
 import { useAppKit } from '@reown/appkit/react';
 import React from 'react';
-import { chainListMap } from '../../constants/chainList';
-import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
-import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
-import { useUserOptions } from '../UserOptionsProvider';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
+import { useUserOptions } from '../../../UserOptionsProvider';
+import { useSwitchChain } from '../../../../hooks/ConnectWallet/useSwitchChain';
 
 export default function NeedConnectButton({
   chainId,

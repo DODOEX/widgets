@@ -1,4 +1,3 @@
-import { ChainId } from '@dodoex/api';
 import {
   Box,
   BoxProps,
@@ -53,7 +52,6 @@ export interface TokenCardProps {
   showPercentage?: boolean;
   inputReadonlyTooltip?: React.ReactNode;
   inputTypography?: string;
-  chainId?: ChainId;
   hideToken?: boolean;
   checkLogBalance?: BalanceData;
   notTokenPickerModal?: boolean;
@@ -85,19 +83,21 @@ export function TokenCardSwap({
   showPercentage,
   inputReadonlyTooltip,
   inputTypography,
-  chainId,
   hideToken,
   checkLogBalance,
   notTokenPickerModal,
 }: TokenCardProps) {
-  const { account } = useAppKitAccountByChainId(chainId);
+  const { account } = useAppKitAccountByChainId(token?.chainId);
 
   const theme = useTheme();
+
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
+
   const tokenQuery = useQuery(
     tokenApi.getFetchTokenQuery(token?.chainId, token?.address, account),
   );
   const balance = overrideBalance ?? tokenQuery.data?.balance ?? null;
+
   const { isTokenLoading } = useBalanceUpdateLoading();
   let balanceLoading = overrideBalanceLoading ?? tokenQuery.isLoading;
   if (!balanceLoading && balance) {
@@ -109,6 +109,7 @@ export function TokenCardSwap({
       balanceLoading = isTokenLoading(token.address, balance);
     }
   }
+
   useFetchTokens({
     addresses: token ? [token.address] : [],
     chainId: token?.chainId,
@@ -163,7 +164,9 @@ export function TokenCardSwap({
           />
         )}
 
-        {token && <WalletConnectBtn token={token} />}
+        {token && (
+          <WalletConnectBtn token={token} enterAddressEnabled={side === 'to'} />
+        )}
       </Box>
 
       {showInputNumber &&
@@ -270,7 +273,7 @@ export function TokenCardSwap({
         value={token}
         open={tokenPickerVisible}
         side={side}
-        chainId={chainId}
+        chainId={undefined}
         occupiedAddrs={occupiedAddrs}
         occupiedChainId={occupiedChainId}
         defaultLoadBalance={defaultLoadBalance}

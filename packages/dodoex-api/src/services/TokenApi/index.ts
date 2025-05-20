@@ -1,20 +1,23 @@
-import ContractRequests, {
-  ContractRequestsConfig,
-  CONTRACT_QUERY_KEY,
-} from '../../helper/ContractRequests';
-import { ABIName } from '../../helper/ContractRequests';
 import BigNumber from 'bignumber.js';
+import { BitcoinApi } from '../../adapters/bitcoin/utils/BitcoinApi';
 import {
-  contractConfig,
   ChainId,
   basicTokenMap,
+  contractConfig,
   platformIdMap,
 } from '../../chainConfig';
-import { getTokenBlackList } from './tokenBlackList';
-import { isSameAddress } from './utils';
+import { getCaipNetworkByChainId } from '../../chainConfig/utils';
+import ContractRequests, {
+  ABIName,
+  CONTRACT_QUERY_KEY,
+  ContractRequestsConfig,
+} from '../../helper/ContractRequests';
 import { encodeFunctionData } from '../../helper/ContractRequests/encode';
 import RestApiRequest from '../../helper/RestApiRequests';
 import { tokenGraphqlQuery } from './graphqlQuery';
+import { getTokenBlackList } from './tokenBlackList';
+import { isSameAddress } from './utils';
+import { UnitsUtil } from '../../adapters/bitcoin/utils/UnitsUtil';
 
 const BIG_ALLOWANCE = new BigNumber(2).pow(256).minus(1);
 
@@ -128,35 +131,62 @@ export class TokenApi {
     account: string | undefined,
     spender?: string,
   ) {
-    let proxyContractAddress = spender;
-    let erc20HelperAddress = '';
-    if (chainId !== undefined) {
-      const config = contractConfig[chainId as ChainId];
-      if (!proxyContractAddress) {
-        proxyContractAddress = config.DODO_APPROVE;
-      }
-      erc20HelperAddress = config.ERC20_HELPER;
-    }
     return {
       // Unify the upper and lower case formats of queryKey into one to facilitate the use of cache
       queryKey: [
         CONTRACT_QUERY_KEY,
         'token',
         'getFetchTokenQuery',
-        chainId ?? '',
-        account?.toLocaleLowerCase(),
-        proxyContractAddress?.toLocaleLowerCase(),
-        address?.toLocaleLowerCase(),
+        chainId,
+        account,
+        address,
       ],
       enabled: !!chainId && !!address && !!account,
       queryFn: async () => {
-        console.log('chainId', chainId);
-        console.log('address', address);
-        console.log('account', account);
-        console.log('proxyContractAddress', proxyContractAddress);
-
-        if (!chainId || !address || !account || !proxyContractAddress)
+        if (!chainId || !address || !account) {
           return null;
+        }
+
+        if (chainId === ChainId.BTC || chainId === ChainId.BTC_SIGNET) {
+          const caipNetwork = getCaipNetworkByChainId(chainId);
+          const utxos = await BitcoinApi.getUTXOs({
+            network: caipNetwork,
+            address: account,
+          });
+
+          const balance = utxos.reduce((acc, utxo) => acc + utxo.value, 0);
+          const formattedBalance = UnitsUtil.parseSatoshis(
+            balance.toString(),
+            caipNetwork,
+          );
+
+          return {
+            symbol: caipNetwork.nativeCurrency.symbol,
+            address,
+            name: caipNetwork.nativeCurrency.name,
+            decimals: caipNetwork.nativeCurrency.decimals,
+            balance: new BigNumber(formattedBalance),
+            allowance: BIG_ALLOWANCE,
+            account,
+            spender,
+            chainId,
+          };
+        }
+
+        let proxyContractAddress = spender;
+        let erc20HelperAddress = '';
+        if (chainId !== undefined) {
+          const config = contractConfig[chainId as ChainId];
+          if (!proxyContractAddress) {
+            proxyContractAddress = config.DODO_APPROVE;
+          }
+          erc20HelperAddress = config.ERC20_HELPER;
+        }
+
+        if (!proxyContractAddress) {
+          return null;
+        }
+
         const blackList = await getTokenBlackList(chainId);
         if (blackList.includes(address)) {
           return null;
@@ -195,6 +225,7 @@ export class TokenApi {
             divisor,
           );
           const balance = new BigNumber(detail.balance.toString()).div(divisor);
+
           return {
             address,
             decimals,

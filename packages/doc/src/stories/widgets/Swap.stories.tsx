@@ -85,7 +85,7 @@ export const Primary = (args) => {
 };
 
 Primary.args = {
-  apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
+  apikey: 'd5f476a6fd58e5e989',
   colorMode: 'dark',
   noUI: true,
   defaultChainId: ChainId.ZETACHAIN_TESTNET,

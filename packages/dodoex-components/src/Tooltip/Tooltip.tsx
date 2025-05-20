@@ -244,7 +244,7 @@ export default function Tooltip({
             padding: 12,
             maxWidth,
             fontWeight: 500,
-            backgroundColor: 'background.paperContrast',
+            backgroundColor: 'background.paper',
             borderRadius: 8,
             color: 'text.secondary',
             borderColor: 'border.main',

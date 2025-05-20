@@ -1,4 +1,4 @@
-import { ChainId } from '@dodoex/api';
+import { btcSignet, ChainId } from '@dodoex/api';
 import { CaipNetworksUtil } from '@reown/appkit-utils';
 import { bitcoin, solana, solanaDevnet } from '@reown/appkit/networks';
 import {
@@ -21,24 +21,27 @@ export function useWalletInfo() {
   const solanaAccount = useAppKitAccount({ namespace: 'solana' });
   const bitcoinAccount = useAppKitAccount({ namespace: 'bip122' }); // for bitcoin
 
-  const appKitNetwork = useAppKitNetwork();
+  const appKitActiveNetwork = useAppKitNetwork();
 
   const chainId = useMemo<ChainId>(() => {
-    if (!appKitNetwork || !appKitNetwork.caipNetwork) {
+    if (!appKitActiveNetwork || !appKitActiveNetwork.caipNetwork) {
       return onlyChainId || defaultChainId || ChainId.MAINNET;
     }
-    const appKitChainId = appKitNetwork.chainId;
+    const appKitChainId = appKitActiveNetwork.chainId;
     if (appKitChainId === solana.id) {
       return ChainId.SOLANA;
     }
     if (appKitChainId === solanaDevnet.id) {
       return ChainId.SOLANA_DEVNET;
     }
+    if (appKitChainId === btcSignet.id) {
+      return ChainId.BTC_SIGNET;
+    }
     if (appKitChainId === bitcoin.id) {
       return ChainId.BTC;
     }
     return Number(appKitChainId) as ChainId;
-  }, [appKitNetwork, defaultChainId, onlyChainId]);
+  }, [appKitActiveNetwork, defaultChainId, onlyChainId]);
 
   const chainIdToCaipNetwork = useMemo(() => {
     return chainListMap.get(chainId)?.caipNetwork;
@@ -68,11 +71,14 @@ export function useWalletInfo() {
       }
       const namespace = CaipNetworksUtil.getChainNamespace(targetCaipNetwork);
 
-      return namespace === 'bip122'
-        ? bitcoinAccount
-        : namespace === 'solana'
-          ? solanaAccount
-          : evmAccount;
+      const appKitAccount =
+        namespace === 'bip122'
+          ? bitcoinAccount
+          : namespace === 'solana'
+            ? solanaAccount
+            : evmAccount;
+
+      return { appKitAccount, namespace, targetCaipNetwork };
     },
     [bitcoinAccount, evmAccount, solanaAccount],
   );
@@ -89,6 +95,9 @@ export function useWalletInfo() {
     onlyChainId,
     account: currentAccount?.address,
     currentAccount,
+
+    appKitActiveNetwork,
+
     evmAccount,
     solanaAccount,
     bitcoinAccount,

@@ -53,7 +53,10 @@ export default function isZero(hexNumberString: string) {
  * truncate pool address: 0xeBa959390016dd81419A189e5ef6F3B6720e5A90 => 0xeBa9...5A90
  * @param address pool address
  */
-export function truncatePoolAddress(address: string): string {
+export function truncatePoolAddress(address: string | undefined): string {
+  if (!address) {
+    return '-';
+  }
   if (address.length <= 10) {
     return address;
   }
