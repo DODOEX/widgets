@@ -1,4 +1,4 @@
-export default [
+const tokenList = [
   {
     id: 9,
     name: 'USDC.ARBSEP',
@@ -142,4 +142,28 @@ export default [
     position: 1,
     slippage: null,
   },
+  {
+    id: 14,
+    name: 'SOON Training1 Token',
+    address: 'aiy9XpdqsABsLnBvvDwefTLfcZjokNFqLDeD3gGhCRc',
+    symbol: 'TRAINING1',
+    decimals: 6,
+    logo: 'https://images.dodoex.io/ulpQWoOvkwpqjJgbDKZHOjbC5JaqdRPvwake0n4wBJw/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvMTM5OTgxMTE1MS9zbzExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTEx.webp',
+    chainId: 1399811151,
+    position: 1,
+    slippage: null,
+  },
+  {
+    id: 15,
+    name: 'WSOL',
+    address: 'So11111111111111111111111111111111111111112',
+    symbol: 'WSOL',
+    decimals: 9,
+    logo: 'https://images.dodoex.io/ulpQWoOvkwpqjJgbDKZHOjbC5JaqdRPvwake0n4wBJw/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvMTM5OTgxMTE1MS9zbzExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTEx.webp',
+    chainId: 1399811151,
+    position: 1,
+    slippage: null,
+  },
 ];
+
+export default tokenList;

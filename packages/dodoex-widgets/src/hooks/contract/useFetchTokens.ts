@@ -1,9 +1,9 @@
 import { useQueries } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { isEqual } from 'lodash';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { tokenApi } from '../../constants/api';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { TokenList } from '../Token';
 
 type TokenInfoMap = Map<
@@ -16,30 +16,26 @@ type TokenInfoMap = Map<
 
 export default function useFetchTokens({
   tokenList,
-  addresses: addressesProps,
   blockNumber,
-  chainId,
   skip,
 }: {
-  tokenList?: TokenList;
-  addresses?: string[];
+  tokenList: TokenList;
   blockNumber?: number;
-  chainId?: number;
   skip?: boolean;
 }) {
-  const { account } = useWeb3React();
+  const { getAppKitAccountByChainId } = useWalletInfo();
+
   const [tokenInfoMap, setTokenInfoMap] = useState<TokenInfoMap>(new Map());
 
-  const addresses = useMemo(() => {
-    return [
-      ...(tokenList?.map((token) => token.address) || []),
-      ...(addressesProps || []),
-    ].map((address) => address);
-  }, [tokenList, JSON.stringify(addressesProps)]);
-
   const tokensQueries = useQueries({
-    queries: addresses.map((address) => {
-      const query = tokenApi.getFetchTokenQuery(chainId, address, account);
+    queries: tokenList.map((token) => {
+      const account = getAppKitAccountByChainId(token.chainId);
+
+      const query = tokenApi.getFetchTokenQuery(
+        token.chainId,
+        token.address,
+        account?.appKitAccount.address,
+      );
 
       return {
         queryKey: blockNumber
@@ -64,10 +60,14 @@ export default function useFetchTokens({
         result.set(`${data.chainId}-${data.address}`, data);
       }
     });
-    if (!isEqual(result, tokenInfoMap)) {
-      setTokenInfoMap(result);
-    }
-  }, [JSON.stringify(tokensQueries.data)]);
+
+    setTokenInfoMap((prev) => {
+      if (isEqual(prev, result)) {
+        return prev;
+      }
+      return result;
+    });
+  }, [tokensQueries.data]);
 
   return tokenInfoMap;
 }

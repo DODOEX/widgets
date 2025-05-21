@@ -2040,8 +2040,8 @@ msgstr "在冷静期无法进行清算"
 msgid "The setting has been switched to cross chain mode"
 msgstr ""
 
-#: src/components/Swap/components/TokenCard/index.tsx:314
-#: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:217
+#: src/components/Swap/components/TokenCard/index.tsx:313
+#: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:216
 msgid "Buy"
 msgstr ""
 

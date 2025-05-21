@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/api",
-  "version": "3.0.3-zetachain.5",
+  "version": "3.0.3-zetachain.6",
   "description": "DODO API Kit",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
@@ -57,7 +57,9 @@
     "@dodoex/dodo-contract-request": "1.x",
     "bignumber.js": "^9.3.0",
     "lodash": "^4.17.21",
-    "@reown/appkit": "^1.7.5"
+    "@reown/appkit": "^1.7.5",
+    "@solana/web3.js": "1.98.2",
+    "@solana/spl-token": "^0.4.13"
   },
   "dependencies": {
     "@ethersproject/abi": "^5.8.0",

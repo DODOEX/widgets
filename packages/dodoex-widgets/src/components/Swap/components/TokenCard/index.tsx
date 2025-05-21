@@ -187,8 +187,7 @@ export function TokenCard({
     }
   }
   useFetchTokens({
-    addresses: token ? [token.address] : [],
-    chainId: token?.chainId,
+    tokenList: token ? [token] : [],
   });
 
   const [percentage, setPercentage] = useState(0);

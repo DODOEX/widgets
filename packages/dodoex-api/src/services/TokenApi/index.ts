@@ -1,10 +1,13 @@
+import { clusterApiUrl, Connection, PublicKey } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
 import { BitcoinApi } from '../../adapters/bitcoin/utils/BitcoinApi';
+import { UnitsUtil } from '../../adapters/bitcoin/utils/UnitsUtil';
 import {
-  ChainId,
   basicTokenMap,
+  ChainId,
   contractConfig,
   platformIdMap,
+  SOL_NATIVE_MINT,
 } from '../../chainConfig';
 import { getCaipNetworkByChainId } from '../../chainConfig/utils';
 import ContractRequests, {
@@ -17,7 +20,6 @@ import RestApiRequest from '../../helper/RestApiRequests';
 import { tokenGraphqlQuery } from './graphqlQuery';
 import { getTokenBlackList } from './tokenBlackList';
 import { isSameAddress } from './utils';
-import { UnitsUtil } from '../../adapters/bitcoin/utils/UnitsUtil';
 
 const BIG_ALLOWANCE = new BigNumber(2).pow(256).minus(1);
 
@@ -167,6 +169,88 @@ export class TokenApi {
             decimals: caipNetwork.nativeCurrency.decimals,
             balance: new BigNumber(formattedBalance),
             allowance: BIG_ALLOWANCE,
+            account,
+            spender,
+            chainId,
+          };
+        }
+
+        if (chainId === ChainId.SOLANA || chainId === ChainId.SOLANA_DEVNET) {
+          // 连接主网或devnet
+          const endpoint =
+            chainId === ChainId.SOLANA
+              ? clusterApiUrl('mainnet-beta')
+              : clusterApiUrl('devnet');
+          const connection = new Connection(endpoint, 'confirmed');
+          const owner = new PublicKey(account);
+          const mint = new PublicKey(address);
+
+          // Solana native mint地址
+          // if (NATIVE_MINT.equals(new PublicKey(address))) {
+          if (mint.equals(SOL_NATIVE_MINT)) {
+            // 查询SOL余额
+            const lamports = await connection.getBalance(owner);
+            const decimals = 9;
+            const divisor = new BigNumber(10).pow(decimals);
+            const balance = new BigNumber(lamports).div(divisor);
+            return {
+              symbol: 'SOL',
+              address,
+              name: 'Solana',
+              decimals,
+              balance,
+              allowance: BIG_ALLOWANCE, // 结构保持一致
+              account,
+              spender,
+              chainId,
+            };
+          }
+
+          // 查找该owner下所有该mint的token账户
+          const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
+            owner,
+            { mint },
+          );
+          let amount = '0';
+          let decimals = 0;
+          let symbol = 'SPL';
+          let name = 'SPL Token';
+          if (tokenAccounts.value.length > 0) {
+            // 累加所有账户余额
+            amount = tokenAccounts.value.reduce((acc, { account }) => {
+              const info = account.data.parsed.info;
+              decimals = account.data.parsed.info.tokenAmount.decimals;
+              symbol = account.data.parsed.info.mint;
+              return (BigInt(acc) + BigInt(info.tokenAmount.amount)).toString();
+            }, '0');
+            // 取第一个账户的decimals
+            decimals =
+              tokenAccounts.value[0].account.data.parsed.info.tokenAmount
+                .decimals;
+          } else {
+            // 没有账户，尝试获取mint信息
+            try {
+              const mintInfo = await connection.getParsedAccountInfo(mint);
+              if (
+                mintInfo.value &&
+                mintInfo.value.data &&
+                typeof mintInfo.value.data === 'object' &&
+                'parsed' in mintInfo.value.data &&
+                mintInfo.value.data.parsed?.info?.decimals !== undefined
+              ) {
+                decimals = mintInfo.value.data.parsed.info.decimals;
+              }
+            } catch {}
+          }
+          const divisor = new BigNumber(10).pow(decimals);
+          const balance = new BigNumber(amount).div(divisor);
+          return {
+            symbol,
+            address,
+            name,
+            decimals,
+            balance,
+            allowance: BIG_ALLOWANCE, // SPL Token 没有 allowance 概念，这里保持结构一致
             account,
             spender,
             chainId,

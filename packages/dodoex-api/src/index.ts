@@ -6,6 +6,8 @@ export {
   contractConfig,
   etherTokenAddress,
   platformIdMap,
+  SOL_NATIVE_MINT,
+  WSOL_NATIVE_MINT,
   zetachainTestnet,
 } from './chainConfig';
 

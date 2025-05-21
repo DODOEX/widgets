@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useFetchTokens } from '../contract';
-import { TokenInfo, TokenList } from './type';
 import { useGlobalState } from '../useGlobalState';
+import { TokenInfo, TokenList } from './type';
 
 export default function useTokenListFetchBalance({
   chainId,
@@ -20,44 +20,38 @@ export default function useTokenListFetchBalance({
 }) {
   const { latestBlockNumber: blockNumber, autoConnectLoading } =
     useGlobalState();
-  const checkTokenAddresses = useMemo(() => {
+
+  const checkTokenList = useMemo(() => {
     if (autoConnectLoading === undefined || autoConnectLoading) {
       return [];
     }
-    const addressSet = new Set<string>();
+    const addressSet = new Set<TokenInfo>();
     tokenList.forEach((token) => {
       if (token.chainId === chainId) {
-        addressSet.add(token.address);
+        addressSet.add(token);
       }
     });
     popularTokenList?.forEach((token) => {
       if (token.chainId === chainId) {
-        addressSet.add(token.address);
+        addressSet.add(token);
       }
     });
     return Array.from(addressSet);
   }, [tokenList, popularTokenList, chainId, autoConnectLoading]);
 
-  const selectTokenAddress = useMemo(() => {
+  const selectTokenList = useMemo(() => {
     if (!value) return [];
-    if (Array.isArray(value)) return value.map((item) => item.address);
-    return [value.address];
+    if (Array.isArray(value)) return value.map((item) => item);
+    return [value];
   }, [value]);
-  const selectChainId = useMemo(() => {
-    if (!value) return chainId;
-    if (Array.isArray(value)) return value[0]?.chainId ?? chainId;
-    return value.chainId;
-  }, [value, chainId]);
 
   const tokenInfoMap = useFetchTokens({
-    addresses: checkTokenAddresses,
-    chainId,
+    tokenList: checkTokenList,
     skip: visible === false && !defaultLoadBalance,
   });
 
   useFetchTokens({
-    addresses: selectTokenAddress,
-    chainId: selectChainId,
+    tokenList: selectTokenList,
     blockNumber,
   });
 

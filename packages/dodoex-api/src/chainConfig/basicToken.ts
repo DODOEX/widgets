@@ -1,6 +1,15 @@
+import { NATIVE_MINT } from '@solana/spl-token';
+import { PublicKey } from '@solana/web3.js';
 import { ChainId } from './chain';
 
 export const etherTokenAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
+
+export const SOL_NATIVE_MINT = new PublicKey(
+  'So11111111111111111111111111111111111111111',
+);
+export const WSOL_NATIVE_MINT = NATIVE_MINT;
+
+// export const SOL_NATIVE_MINT = PublicKey.default;
 
 const DEFAULT_BASIC_TOKEN = {
   symbol: 'ETH',
@@ -164,18 +173,22 @@ export const basicTokenMap: {
     wrappedTokenAddress: '0x0246DffDa649e877CFd0951837332B4690fAD1EB',
   },
   [ChainId.SOLANA]: {
-    ...DEFAULT_BASIC_TOKEN,
+    address: SOL_NATIVE_MINT.toBase58(),
     symbol: 'SOL',
     name: 'Solana',
-    wrappedTokenSymbol: 'WETH',
-    wrappedTokenAddress: '',
+    decimals: 9,
+    showDecimals: 4,
+    wrappedTokenSymbol: 'WSOL',
+    wrappedTokenAddress: WSOL_NATIVE_MINT.toBase58(),
   },
   [ChainId.SOLANA_DEVNET]: {
-    ...DEFAULT_BASIC_TOKEN,
+    address: SOL_NATIVE_MINT.toBase58(),
     symbol: 'SOL',
     name: 'Solana',
-    wrappedTokenSymbol: 'WETH',
-    wrappedTokenAddress: '',
+    decimals: 9,
+    showDecimals: 4,
+    wrappedTokenSymbol: 'WSOL',
+    wrappedTokenAddress: WSOL_NATIVE_MINT.toBase58(),
   },
   [ChainId.BTC]: {
     ...DEFAULT_BASIC_TOKEN,
