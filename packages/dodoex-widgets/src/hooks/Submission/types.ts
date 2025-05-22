@@ -74,7 +74,41 @@ export interface Showing {
   submitState?: SubmitState;
 }
 
+export interface ExecuteCustomHandlerParameters {
+  onSubmit: (
+    tx: string,
+    params?: {
+      reportInfo?: Record<string, any>;
+      showing?: Partial<Showing> | null;
+    },
+  ) => void;
+  onSuccess: (
+    tx: string,
+    params?: {
+      reportInfo?: Record<string, any>;
+      notShowingDone?: boolean;
+      showing?: Partial<Showing>;
+    },
+  ) => Promise<void>;
+  onError: (e: any) => void;
+  setShowing: React.Dispatch<React.SetStateAction<Showing | null>>;
+}
+
 export type ExecutionCtx = {
+  executeCustom: (params: {
+    brief: string;
+    subtitle?: string | React.ReactNode | null;
+    early?: boolean;
+    mixpanelProps?: Record<string, any>;
+    submittedBack?: () => void;
+    submittedConfirmBack?: () => void;
+    metadata?: Record<string, any>;
+    successBack?: (
+      tx: string,
+      callback?: ExecutionProps['onTxSuccess'],
+    ) => void;
+    handler: (params: ExecuteCustomHandlerParameters) => Promise<any>;
+  }) => Promise<ExecutionResult>;
   /**
    * Execute an on-chain operation
    * @param breif: TX title. e.g.: "Swap"

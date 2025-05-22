@@ -2,15 +2,8 @@ import { ChainId, btcSignet, zetachainTestnet } from '@dodoex/api';
 import {
   AppKitNetwork,
   sepolia,
-  solanaDevnet,
-  base,
-  bitcoin,
-  bitcoinTestnet,
-  bsc,
-  mainnet,
-  polygon,
   solana,
-  zetachain,
+  solanaDevnet,
 } from '@reown/appkit/networks';
 
 import { ReactComponent as BaseLogo } from '../assets/logo/networks/base.svg';
@@ -28,6 +21,10 @@ export interface ChainListItem {
   name: string;
   mainnet?: ChainId;
   caipNetwork: AppKitNetwork;
+  // 是否是异种链
+  isEVMChain: boolean;
+  isSolanaChain: boolean;
+  isBTCChain: boolean;
 }
 
 export const chainListMap: Map<ChainId, ChainListItem> = new Map([
@@ -38,6 +35,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
   //     logo: ETHereumLogo,
   //     name: 'Ethereum',
   //     caipNetwork: mainnet,
+  //     isEVMChain: true,
   //   },
   // ],
   // [
@@ -47,6 +45,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
   //     logo: PolygonLogo,
   //     name: 'Polygon',
   //     caipNetwork: polygon,
+  //     isEVMChain: true,
   //   },
   // ],
   // [
@@ -56,6 +55,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
   //     logo: BSCLogo,
   //     name: 'BNBChain',
   //     caipNetwork: bsc,
+  //     isEVMChain: true,
   //   },
   // ],
   // [
@@ -65,6 +65,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
   //     logo: BaseLogo,
   //     name: 'Base',
   //     caipNetwork: base,
+  //     isEVMChain: true,
   //   },
   // ],
   // [
@@ -74,17 +75,21 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
   //     logo: ZetachainLogo,
   //     name: 'Zetachain',
   //     caipNetwork: zetachain,
+  //     isEVMChain: true,
   //   },
   // ],
-  // [
-  //   ChainId.SOLANA,
-  //   {
-  //     chainId: ChainId.SOLANA,
-  //     logo: SolanaLogo,
-  //     name: 'Solana',
-  //     caipNetwork: solana,
-  //   },
-  // ],
+  [
+    ChainId.SOLANA,
+    {
+      chainId: ChainId.SOLANA,
+      logo: SolanaLogo,
+      name: 'Solana',
+      caipNetwork: solana,
+      isEVMChain: false,
+      isSolanaChain: true,
+      isBTCChain: false,
+    },
+  ],
   // [
   //   ChainId.BTC,
   //   {
@@ -92,6 +97,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
   //     logo: BtcLogo,
   //     name: 'Bitcoin',
   //     caipNetwork: bitcoin,
+  //     isBTCChain: true,
   //   },
   // ],
 
@@ -102,6 +108,9 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       logo: ETHereumLogo,
       name: 'Ethereum Sepolia',
       caipNetwork: sepolia,
+      isEVMChain: true,
+      isSolanaChain: false,
+      isBTCChain: false,
     },
   ],
   [
@@ -112,6 +121,9 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       name: 'Zetachain Testnet',
       mainnet: ChainId.ZETACHAIN,
       caipNetwork: zetachainTestnet,
+      isEVMChain: true,
+      isSolanaChain: false,
+      isBTCChain: false,
     },
   ],
   [
@@ -121,6 +133,9 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       logo: SolanaLogo,
       name: 'Solana Devnet',
       caipNetwork: solanaDevnet,
+      isEVMChain: false,
+      isSolanaChain: true,
+      isBTCChain: false,
     },
   ],
   [
@@ -130,6 +145,9 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       logo: BtcSignetLogo,
       name: 'Bitcoin Signet',
       caipNetwork: btcSignet,
+      isEVMChain: false,
+      isSolanaChain: false,
+      isBTCChain: true,
     },
   ],
 ]);

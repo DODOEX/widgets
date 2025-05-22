@@ -8,6 +8,7 @@ export { default as useInflights } from './useInflights';
 
 export const ExecutionContext = createContext<ExecutionCtx>({
   execute: () => Promise.resolve(ExecutionResult.Canceled),
+  executeCustom: () => Promise.resolve(ExecutionResult.Canceled),
   requests: undefined,
   updateText: () => {
     /* Nothing */

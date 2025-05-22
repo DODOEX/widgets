@@ -1,10 +1,15 @@
 import { btcSignet, ChainId } from '@dodoex/api';
+import {
+  type Provider,
+  useAppKitConnection,
+} from '@reown/appkit-adapter-solana/react';
 import { CaipNetworksUtil } from '@reown/appkit-utils';
 import { bitcoin, solana, solanaDevnet } from '@reown/appkit/networks';
 import {
   useAppKit,
   useAppKitAccount,
   useAppKitNetwork,
+  useAppKitProvider,
   useDisconnect,
 } from '@reown/appkit/react';
 import { useCallback, useMemo } from 'react';
@@ -20,6 +25,10 @@ export function useWalletInfo() {
   const evmAccount = useAppKitAccount({ namespace: 'eip155' }); // for EVM chains
   const solanaAccount = useAppKitAccount({ namespace: 'solana' });
   const bitcoinAccount = useAppKitAccount({ namespace: 'bip122' }); // for bitcoin
+
+  const { walletProvider: solanaWalletProvider } =
+    useAppKitProvider<Provider>('solana');
+  const { connection: solanaConnection } = useAppKitConnection();
 
   const appKitActiveNetwork = useAppKitNetwork();
 
@@ -65,10 +74,12 @@ export function useWalletInfo() {
       if (!targetChainId) {
         return undefined;
       }
-      const targetCaipNetwork = chainListMap.get(targetChainId)?.caipNetwork;
-      if (!targetCaipNetwork) {
+      const chain = chainListMap.get(targetChainId);
+
+      if (!chain?.caipNetwork) {
         return undefined;
       }
+      const targetCaipNetwork = chain.caipNetwork;
       const namespace = CaipNetworksUtil.getChainNamespace(targetCaipNetwork);
 
       const appKitAccount =
@@ -78,7 +89,7 @@ export function useWalletInfo() {
             ? solanaAccount
             : evmAccount;
 
-      return { appKitAccount, namespace, targetCaipNetwork };
+      return { appKitAccount, namespace, targetCaipNetwork, chain };
     },
     [bitcoinAccount, evmAccount, solanaAccount],
   );
@@ -101,6 +112,9 @@ export function useWalletInfo() {
     evmAccount,
     solanaAccount,
     bitcoinAccount,
+
+    solanaWalletProvider,
+    solanaConnection,
 
     getAppKitAccountByChainId,
   };

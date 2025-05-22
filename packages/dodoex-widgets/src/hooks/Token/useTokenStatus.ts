@@ -40,7 +40,7 @@ export function useTokenStatus(
     skipQuery?: boolean;
   } = {},
 ) {
-  const { account } = useWalletInfo();
+  const { account, getAppKitAccountByChainId } = useWalletInfo();
   const [chainId, proxyContractAddress] = React.useMemo(() => {
     if (!token) return [undefined, contractAddress];
     return [
@@ -55,7 +55,7 @@ export function useTokenStatus(
       // skip the query
       skipQuery ? undefined : chainId,
       token?.address,
-      account,
+      getAppKitAccountByChainId(chainId)?.appKitAccount.address,
       proxyContractAddress,
     ),
     refetchInterval: chainId === ChainId.NEOX ? 3000 : undefined,

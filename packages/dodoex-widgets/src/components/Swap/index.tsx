@@ -10,7 +10,6 @@ import {
 import { Dodo, DoubleRight, Setting, Warn } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import { CaipNetworksUtil } from '@reown/appkit-utils';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -85,10 +84,17 @@ export function Swap({
 }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
-  const { chainId, account } = useWeb3React();
   const { defaultChainId, noPowerBy, onlyChainId } = useUserOptions();
-  const { open, close, disconnect, getAppKitAccountByChainId } =
-    useWalletInfo();
+
+  const {
+    open,
+    close,
+    disconnect,
+    getAppKitAccountByChainId,
+    chainId,
+    account,
+    appKitActiveNetwork,
+  } = useWalletInfo();
 
   const [isReverseRouting, setIsReverseRouting] = useState(false);
   const [displayingFromAmt, setDisplayingFromAmt] = useState<string>('');
@@ -204,6 +210,7 @@ export function Swap({
     amount: fromAmt,
     contractAddress: selectedRoute?.spenderContractAddress,
   });
+
   const handleMaxClick = useCallback(() => {
     updateFromAmt(getMaxBalance());
   }, [getMaxBalance]);
@@ -231,7 +238,6 @@ export function Swap({
     status: resPriceStatus,
     rawBrief,
     executeSwap,
-    reset: resetSwapRoute,
   } = useFetchRoutePrice({
     toToken,
     fromToken,
@@ -279,9 +285,8 @@ export function Swap({
       const val = v.toString();
       setDisplayingFromAmt(val);
       debouncedSetFromAmt(val);
-      resetSwapRoute();
     },
-    [setDisplayingFromAmt, debouncedSetFromAmt, resetSwapRoute],
+    [setDisplayingFromAmt, debouncedSetFromAmt],
   );
 
   const updateToAmt = useCallback(
@@ -289,9 +294,8 @@ export function Swap({
       const val = v.toString();
       setDisplayingToAmt(val);
       debouncedSetToAmt(val);
-      resetSwapRoute();
     },
-    [setDisplayingToAmt, debouncedSetToAmt, resetSwapRoute],
+    [setDisplayingToAmt, debouncedSetToAmt],
   );
 
   const setFromToken: (value: React.SetStateAction<TokenInfo | null>) => void =
@@ -493,10 +497,21 @@ export function Swap({
   ]);
 
   const isUnSupportChain = useMemo(() => !ChainId[chainId || 1], [chainId]);
-  const isNotCurrentChain = useMemo(
-    () => !!chainId && !!fromToken?.chainId && fromToken?.chainId !== chainId,
-    [chainId, fromToken?.chainId],
-  );
+  const isNotCurrentChain = useMemo(() => {
+    if (!fromToken) {
+      return false;
+    }
+    const appKitAccount = getAppKitAccountByChainId(fromToken.chainId);
+    if (!appKitAccount) {
+      return false;
+    }
+
+    if (!appKitAccount.chain.isEVMChain) {
+      return false;
+    }
+
+    return !!chainId && !!fromToken?.chainId && fromToken?.chainId !== chainId;
+  }, [chainId, fromToken, getAppKitAccountByChainId]);
 
   const disabledSwitch = useDisabledTokenSwitch({
     fromToken,
@@ -571,6 +586,7 @@ export function Swap({
         </Box>
       );
     }
+
     if (
       resPriceStatus === RoutePriceStatus.Loading ||
       (isBridge && bridgeRouteStatus === RoutePriceStatus.Loading)
@@ -741,6 +757,19 @@ export function Swap({
           <Trans>
             Connect to {namespaceToTitle(fromToken?.chainId)} wallet
           </Trans>
+        </Button>
+      );
+    }
+
+    if (fromAccount.chain.isEVMChain && fromAccount.chain.chainId !== chainId) {
+      return (
+        <Button
+          fullWidth
+          onClick={() => {
+            appKitActiveNetwork.switchNetwork(fromAccount.chain.caipNetwork);
+          }}
+        >
+          <Trans>Switch to {fromAccount.chain.name}</Trans>
         </Button>
       );
     }

@@ -164,6 +164,28 @@ const tokenList = [
     position: 1,
     slippage: null,
   },
+  {
+    id: 16,
+    name: 'EPjF',
+    address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+    symbol: 'EPjF',
+    decimals: 6,
+    logo: 'https://images.dodoex.io/ulpQWoOvkwpqjJgbDKZHOjbC5JaqdRPvwake0n4wBJw/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvMTM5OTgxMTE1MS9zbzExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTEx.webp',
+    chainId: 1399811149,
+    position: 1,
+    slippage: null,
+  },
+  {
+    id: 17,
+    name: 'Es9v',
+    address: 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB',
+    symbol: 'Es9v',
+    decimals: 6,
+    logo: 'https://images.dodoex.io/ulpQWoOvkwpqjJgbDKZHOjbC5JaqdRPvwake0n4wBJw/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvMTM5OTgxMTE1MS9zbzExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTEx.webp',
+    chainId: 1399811149,
+    position: 1,
+    slippage: null,
+  },
 ];
 
 export default tokenList;
