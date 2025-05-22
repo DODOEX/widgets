@@ -982,7 +982,7 @@ export function Swap({
     <Box
       sx={{
         width: 450,
-        height: 571,
+        // height: 571,
         overflow: 'hidden',
         position: 'relative',
         display: 'flex',

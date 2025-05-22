@@ -1,10 +1,9 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { convertFetchTokenToTokenInfo } from '../../utils/token';
-import React from 'react';
-import BigNumber from 'bignumber.js';
 import { SwapApi } from '@dodoex/api';
-import { useGraphQLRequests } from '../useGraphQLRequests';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
+import { convertFetchTokenToTokenInfo } from '../../utils/token';
 import { TokenInfo } from '../Token';
+import { useGraphQLRequests } from '../useGraphQLRequests';
 
 type OrderList = NonNullable<
   NonNullable<

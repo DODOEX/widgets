@@ -1,131 +1,274 @@
-import { ChainId } from '@dodoex/api';
-import { Box, BoxProps, useTheme } from '@dodoex/components';
-import { t, Trans } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
-import React from 'react';
+import { Box, TabPanel, Tabs, TabsGroup, useTheme } from '@dodoex/components';
+import { useEffect, useMemo, useState } from 'react';
+import { ChainListItem, chainListMap } from '../../../constants/chainList';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import SameChainOrderList from './SameChainOrderList';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { useTradeSwapOrderList } from '../../../hooks/Swap/useTradeSwapOrderList';
-import { CardStatus } from '../../CardWidgets';
-import LoadMore from '../../LoadMore';
-import SelectChain from '../../SelectChain';
-import Table from '../../Table';
-import { useUserOptions } from '../../UserOptionsProvider';
-import SameOrderCard from './SameOrderCard';
+import { namespaceToTitle } from '../../../utils/wallet';
+import { truncatePoolAddress } from '../../../utils/address';
 
-export default function SwapOrderHistory({
-  swapOrderListQuery: swapOrderListQueryProps,
-}: {
-  swapOrderListQuery?: ReturnType<typeof useTradeSwapOrderList>;
-}) {
+function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
+  return (
+    <TabPanel
+      {...props}
+      sx={{
+        ...sx,
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}
+    />
+  );
+}
+
+export enum SwapOrderHistoryTab {
+  sameChain = 'same-chain',
+  crossChain = 'cross-chain',
+  errorRefunds = 'error-refunds',
+}
+
+export default function SwapOrderHistory() {
   const theme = useTheme();
-  const { onlyChainId } = useUserOptions();
   const { isMobile } = useWidgetDevice();
-  const { account } = useWeb3React();
-  const [filterChainId, setFilterChainId] =
-    React.useState<ChainId | undefined>();
-  const swapOrderListQueryLocal = useTradeSwapOrderList({
-    account: swapOrderListQueryProps ? undefined : account,
-    chainId: onlyChainId ?? filterChainId,
-    limit: isMobile ? 10 : 5,
-  });
-  const swapOrderListQuery = swapOrderListQueryProps ?? swapOrderListQueryLocal;
+
+  const { evmAccount, solanaAccount, bitcoinAccount } = useWalletInfo();
+
+  const [swapOrderHistoryTab, setSwapOrderHistoryTab] = useState(
+    SwapOrderHistoryTab.sameChain,
+  );
+  const [selectedAccount, setSelectedAccount] = useState<string | undefined>();
+
+  const tabs = useMemo(() => {
+    const result = [
+      { key: SwapOrderHistoryTab.sameChain, value: 'Same chain Swaps' },
+      {
+        key: SwapOrderHistoryTab.crossChain,
+        value: 'Cross Chain Swaps',
+      },
+      {
+        key: SwapOrderHistoryTab.errorRefunds,
+        value: 'Error Refunds',
+      },
+    ];
+    return result;
+  }, []);
+
+  const accountList = useMemo<
+    {
+      account: string;
+      firstChain: ChainListItem;
+    }[]
+  >(() => {
+    const accounts: {
+      account: string;
+      firstChain: ChainListItem;
+    }[] = [];
+
+    if (evmAccount.isConnected && evmAccount.address) {
+      const firstChain = chainListMap
+        .entries()
+        .find(([_, chain]) => chain.isEVMChain)?.[1];
+
+      if (firstChain) {
+        accounts.push({
+          account: evmAccount.address,
+          firstChain,
+        });
+      }
+    }
+
+    if (solanaAccount.isConnected && solanaAccount.address) {
+      const firstChain = chainListMap
+        .entries()
+        .find(([_, chain]) => chain.isSolanaChain)?.[1];
+
+      if (firstChain) {
+        accounts.push({
+          account: solanaAccount.address,
+          firstChain,
+        });
+      }
+    }
+
+    if (bitcoinAccount.isConnected && bitcoinAccount.address) {
+      const firstChain = chainListMap
+        .entries()
+        .find(([_, chain]) => chain.isBTCChain)?.[1];
+
+      if (firstChain) {
+        accounts.push({
+          account: bitcoinAccount.address,
+          firstChain,
+        });
+      }
+    }
+
+    return accounts;
+  }, [
+    bitcoinAccount.address,
+    bitcoinAccount.isConnected,
+    evmAccount.address,
+    evmAccount.isConnected,
+    solanaAccount.address,
+    solanaAccount.isConnected,
+  ]);
+
+  useEffect(() => {
+    setSelectedAccount((prev) => {
+      if (prev) {
+        return prev;
+      }
+      if (accountList.length > 0) {
+        return accountList[0].account;
+      }
+      return undefined;
+    });
+  }, [accountList]);
 
   return (
-    <CardStatus
-      isMobile={isMobile}
-      empty={!swapOrderListQuery.orderList.length}
-      loading={swapOrderListQuery.isLoading}
-    >
-      {isMobile ? (
+    <Box>
+      <Tabs
+        value={swapOrderHistoryTab}
+        onChange={(_, value) => {
+          setSwapOrderHistoryTab(value as SwapOrderHistoryTab);
+        }}
+        sx={
+          isMobile
+            ? {}
+            : {
+                display: 'flex',
+                flexDirection: 'column',
+                flex: 1,
+                overflow: 'hidden',
+                height: 'max-content',
+                maxHeight: '100%',
+              }
+        }
+        className={isMobile ? undefined : 'gradient-card-border'}
+      >
         <Box
           sx={{
-            px: 16,
+            ...(isMobile
+              ? {
+                  ...(!selectedAccount && {
+                    pb: 20,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    borderStyle: 'solid',
+                    borderWidth: '0 0 1px',
+                  }),
+                }
+              : {
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  borderTopLeftRadius: 16,
+                  borderTopRightRadius: 16,
+                  backgroundColor: 'background.paper',
+                  px: 24,
+                  pt: 20,
+                  borderBottomWidth: 0,
+                  borderBottomColor: 'border.main',
+                  borderBottomStyle: 'solid',
+                }),
           }}
         >
-          {swapOrderListQuery.orderList.map((item) => (
-            <SameOrderCard key={item.hash} data={item} isMobile={isMobile} />
-          ))}
-          <LoadMore
-            loading={swapOrderListQuery.isFetchingNextPage}
-            onClick={swapOrderListQuery.fetchNextPage}
-            hasMore={swapOrderListQuery.hasNextPage}
-            height={68}
+          <TabsGroup
+            tabs={tabs}
+            variant="default"
+            tabsListSx={{
+              justifyContent: 'space-between',
+              ...(isMobile
+                ? {
+                    mb: 20,
+                  }
+                : {
+                    borderBottomWidth: 0,
+                  }),
+            }}
+            tabSx={
+              isMobile
+                ? undefined
+                : {
+                    pt: 0,
+                    mr: 28,
+                    typography: 'body1',
+                    lineHeight: '22px',
+                  }
+            }
           />
         </Box>
-      ) : (
-        <>
-          <Table
-            loadMoreLoading={swapOrderListQuery.isFetchingNextPage}
-            loadMore={swapOrderListQuery.fetchNextPage}
-            hasMore={swapOrderListQuery.hasNextPage}
-          >
-            <thead>
-              <tr>
-                <th>
+        <Box
+          sx={{
+            px: 24,
+            py: 12,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 12,
+          }}
+        >
+          {accountList.map((account) => {
+            const isSelected = selectedAccount === account.account;
+            return (
+              <Box
+                key={account.account}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                  pl: 8,
+                  py: 8,
+                  pr: 10,
+                  borderWidth: 1,
+                  borderColor: 'transparent',
+                  borderStyle: 'solid',
+                  borderRadius: 8,
+                  backgroundColor: 'transparent',
+                  cursor: 'pointer',
+                  typography: 'body2',
+                  lineHeight: '19px',
+                  color: 'text.secondary',
+                  ...(isSelected && {
+                    borderColor: 'primary.main',
+                    backgroundColor: 'tabActive.main',
+                    color: 'text.primary',
+                  }),
+                  '&:hover': {
+                    backgroundColor: 'background.paperDarkContrast',
+                  },
+                }}
+                onClick={() => {
+                  setSelectedAccount(account.account);
+                }}
+              >
+                {account.firstChain && (
                   <Box
+                    component={account.firstChain.logo}
                     sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 8,
+                      width: 16,
+                      height: 16,
                     }}
-                  >
-                    <Trans>Pay</Trans>
-                    {!onlyChainId && (
-                      <SelectChain
-                        chainId={filterChainId}
-                        setChainId={setFilterChainId}
-                        valueOnlyIcon
-                        sx={{
-                          '& .MuiSelect-select.MuiSelect-select.MuiSelect-select':
-                            {
-                              padding: theme.spacing(5, 28, 5, 8),
-                              backgroundColor: 'custom.background.disabled',
-                              border: 'none',
-                              borderRadius: 4,
-                              '& > svg, & > img': {
-                                width: 14,
-                                height: 14,
-                              },
-                              '&:hover, &[aria-expanded="true"]': {
-                                backgroundColor: 'custom.background.disabled',
-                              },
-                            },
-                        }}
-                      />
-                    )}
-                  </Box>
-                </th>
-                <th>
-                  <Trans>Receive</Trans>
-                </th>
-                <th>
-                  <Trans>Status</Trans>
-                </th>
-                <th>
-                  <Trans>Rate</Trans>
-                </th>
-                <Box
-                  component="th"
-                  sx={{
-                    width: 140,
-                  }}
-                >
-                  <Trans>Details</Trans>
-                </Box>
-              </tr>
-            </thead>
-            <tbody>
-              {swapOrderListQuery.orderList.map((item) => (
-                <SameOrderCard
-                  key={item.hash}
-                  data={item}
-                  isMobile={isMobile}
-                />
-              ))}
-            </tbody>
-          </Table>
-        </>
-      )}
-    </CardStatus>
+                  />
+                )}
+                ({namespaceToTitle(account.firstChain.chainId)})
+                {truncatePoolAddress(account.account)}
+              </Box>
+            );
+          })}
+        </Box>
+        {selectedAccount && (
+          <TabPanelFlexCol
+            value={SwapOrderHistoryTab.sameChain}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
+            <SameChainOrderList account={selectedAccount} />
+          </TabPanelFlexCol>
+        )}
+      </Tabs>
+    </Box>
   );
 }

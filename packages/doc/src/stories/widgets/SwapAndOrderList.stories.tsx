@@ -1,13 +1,12 @@
-import { ChainId, btcSignet, zetachainTestnet } from '@dodoex/api';
-import { SwapWidget } from '@dodoex/widgets';
-import { TokenInfo } from '@dodoex/widgets/dist/src/hooks/Token/type';
+import { btcSignet, ChainId, zetachainTestnet } from '@dodoex/api';
+import { Box } from '@dodoex/components';
+import { Swap, SwapOrderHistory, Widget } from '@dodoex/widgets';
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin';
 import { Ethers5Adapter } from '@reown/appkit-adapter-ethers5';
 import { SolanaAdapter } from '@reown/appkit-adapter-solana/react';
 import {
   base,
   bitcoin,
-  bitcoinTestnet,
   bsc,
   mainnet,
   polygon,
@@ -16,12 +15,7 @@ import {
   solanaDevnet,
   zetachain,
 } from '@reown/appkit/networks';
-import {
-  createAppKit,
-  useAppKit,
-  useAppKitAccount,
-  useAppKitProvider,
-} from '@reown/appkit/react';
+import { createAppKit, useAppKitProvider } from '@reown/appkit/react';
 
 // 1. Get projectId
 const projectId = 'bc32cb5c4e5f0d1d9a3313ae139b30e9';
@@ -68,20 +62,51 @@ createAppKit({
   },
 });
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Widgets/Swap',
+  title: 'Widgets/SwapAndOrderList',
   component: 'div',
 };
 
 export const Primary = (args) => {
-  const { open } = useAppKit();
-  const { account } = useAppKitAccount({
-    namespace: 'eip155',
-  });
   const { walletProvider: ethersProvider } = useAppKitProvider('eip155');
 
-  return <SwapWidget {...args} provider={ethersProvider} />;
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '20px',
+      }}
+    >
+      <Widget {...args} provider={ethersProvider}>
+        <Box
+          sx={{
+            width: args.width ?? 450,
+            height: args.height,
+            overflow: 'hidden',
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            minWidth: 450,
+            minHeight: 494,
+            borderRadius: 16,
+            backgroundColor: 'background.paper',
+          }}
+        >
+          <Swap />
+        </Box>
+        <Box
+          sx={{
+            width: '100%',
+            backgroundColor: 'background.paper',
+          }}
+        >
+          <SwapOrderHistory />
+        </Box>
+      </Widget>
+    </Box>
+  );
 };
 
 Primary.args = {
@@ -90,20 +115,4 @@ Primary.args = {
   noUI: true,
   defaultChainId: ChainId.ZETACHAIN_TESTNET,
   crossChain: true,
-  getAutoSlippage: ({
-    fromToken,
-    toToken,
-  }: {
-    fromToken: TokenInfo | null;
-    toToken: TokenInfo | null;
-  }) => {
-    if (!fromToken || !toToken || fromToken.chainId !== toToken.chainId) {
-      return undefined;
-    }
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(0.9);
-      }, 1000);
-    });
-  },
 };
