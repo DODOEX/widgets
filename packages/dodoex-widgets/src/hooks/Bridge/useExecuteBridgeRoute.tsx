@@ -1,19 +1,16 @@
-import { useWeb3React } from '@web3-react/core';
-import { useCallback } from 'react';
-import { t } from '@lingui/macro';
+import { Box } from '@dodoex/components';
 import { DoubleRight } from '@dodoex/icons';
+import { t } from '@lingui/macro';
+import { useCallback } from 'react';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
+import TokenLogo from '../../components/TokenLogo';
 import { formatTokenAmountNumber } from '../../utils/formatter';
 import { ExecutionProps, useSubmission } from '../Submission';
+import { OpCode } from '../Submission/spec';
+import { Metadata, MetadataFlag } from '../Submission/types';
+import { useGraphQLRequests } from '../useGraphQLRequests';
 import { createBridgeOrder } from './createBridgeOrder';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
-import { OpCode } from '../Submission/spec';
-import { Box } from '@dodoex/components';
-import TokenLogo from '../../components/TokenLogo';
-import { useGetAPIService } from '../setting/useGetAPIService';
-import { APIServiceKey } from '../../constants/api';
-import { Metadata, MetadataFlag } from '../Submission/types';
-import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export default function useExecuteBridgeRoute({
   route,
@@ -22,12 +19,9 @@ export default function useExecuteBridgeRoute({
   route?: BridgeRouteI;
   bridgeOrderTxRequest?: BridgeTXRequest;
 }) {
-  const { chainId, account } = useWeb3React();
+  const graphQLRequests = useGraphQLRequests();
+
   const submission = useSubmission();
-  const { apikey } = useUserOptions();
-  const bridgeCreateRouteAPI = useGetAPIService(
-    APIServiceKey.bridgeCreateRoute,
-  );
 
   const execute = useCallback(
     (metadata?: Metadata) => {
@@ -97,10 +91,9 @@ export default function useExecuteBridgeRoute({
           onTxSuccess?: ExecutionProps['onTxSuccess'],
         ) => {
           const orderId = await createBridgeOrder({
-            apikey,
+            graphQLRequests,
             tx,
             route,
-            bridgeCreateRouteAPI,
             encodeId: bridgeOrderTxRequest.encodeId,
           });
           if (onTxSuccess) {
@@ -150,14 +143,7 @@ export default function useExecuteBridgeRoute({
         console.error(error);
       }
     },
-    [
-      account,
-      chainId,
-      route,
-      bridgeOrderTxRequest,
-      apikey,
-      bridgeCreateRouteAPI,
-    ],
+    [bridgeOrderTxRequest, route, submission, graphQLRequests],
   );
 
   return execute;

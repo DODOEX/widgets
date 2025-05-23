@@ -1,18 +1,18 @@
 import { Box, Button, useTheme } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { useEffect } from 'react';
-import { BridgeRouteI } from '../../../hooks/Bridge/useFetchRoutePriceBridge';
 import useExecuteBridgeRoute from '../../../hooks/Bridge/useExecuteBridgeRoute';
-import Dialog from '../../Swap/components/Dialog';
-import { BridgeLogo } from '../SelectBridgeDialog/BridgeLogo';
-import { DirectionLine } from '../SelectBridgeDialog/DirectionLine';
-import { TokenWithChain } from '../SelectBridgeDialog/TokenWithChain';
-import BridgeSummaryDetail from './BridgeSummaryDetail';
+import { BridgeRouteI } from '../../../hooks/Bridge/useFetchRoutePriceBridge';
 import {
   ContractStatus,
   setContractStatus,
   useGlobalState,
 } from '../../../hooks/useGlobalState';
+import Dialog from '../../Swap/components/Dialog';
+import { BridgeLogo } from '../SelectBridgeDialog/BridgeLogo';
+import { DirectionLine } from '../SelectBridgeDialog/DirectionLine';
+import { TokenWithChain } from '../SelectBridgeDialog/TokenWithChain';
+import BridgeSummaryDetail from './BridgeSummaryDetail';
 
 export interface BridgeTXRequest {
   data: string;
@@ -20,7 +20,6 @@ export interface BridgeTXRequest {
   value: string;
   from: string;
   chainId: number;
-  encodeId: string;
 }
 
 export default function BridgeSummaryDialog({

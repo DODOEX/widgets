@@ -2004,35 +2004,36 @@ export type Cross_Chain_SwapToolDetail = {
 };
 
 export type Cross_Chain_Swap_ZetachainCrossChainOrderCreate = {
-  createdAt?: Maybe<Scalars['String']['output']>;
-  fromAddress?: Maybe<Scalars['String']['output']>;
-  fromAmount?: Maybe<Scalars['String']['output']>;
-  fromChainId?: Maybe<Scalars['Int']['output']>;
-  fromHash?: Maybe<Scalars['String']['output']>;
-  fromTokenAddress?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  toAddress?: Maybe<Scalars['String']['output']>;
-  toAmount?: Maybe<Scalars['String']['output']>;
-  toChainId?: Maybe<Scalars['Int']['output']>;
-  toHash?: Maybe<Scalars['String']['output']>;
-  toTokenAddress?: Maybe<Scalars['String']['output']>;
-  updatedAt?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type Cross_Chain_Swap_ZetachainCrossChainOrderList = {
   createdAt?: Maybe<Scalars['String']['output']>;
-  extend?: Maybe<Scalars['JSON']['output']>;
   externalId?: Maybe<Scalars['String']['output']>;
+  fees?: Maybe<Scalars['JSON']['output']>;
   fromAddress?: Maybe<Scalars['String']['output']>;
   fromAmount?: Maybe<Scalars['String']['output']>;
+  fromAmountUSD?: Maybe<Scalars['String']['output']>;
+  fromAmountWithOutDecimals?: Maybe<Scalars['String']['output']>;
   fromChainId?: Maybe<Scalars['Int']['output']>;
   fromHash?: Maybe<Scalars['String']['output']>;
   fromTokenAddress?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  omniPlan?: Maybe<Scalars['JSON']['output']>;
+  refundAmount?: Maybe<Scalars['String']['output']>;
+  refundChainId?: Maybe<Scalars['String']['output']>;
+  refundCridgeContract?: Maybe<Scalars['String']['output']>;
+  refundHash?: Maybe<Scalars['String']['output']>;
+  refundToken?: Maybe<Scalars['String']['output']>;
+  refundUser?: Maybe<Scalars['String']['output']>;
+  slippage?: Maybe<Scalars['Float']['output']>;
   status?: Maybe<Scalars['String']['output']>;
+  statusCode?: Maybe<Scalars['Int']['output']>;
+  subStatus?: Maybe<Scalars['String']['output']>;
   toAddress?: Maybe<Scalars['String']['output']>;
   toAmount?: Maybe<Scalars['String']['output']>;
+  toAmountUSD?: Maybe<Scalars['String']['output']>;
+  toAmountWithOutDecimals?: Maybe<Scalars['String']['output']>;
   toChainId?: Maybe<Scalars['Int']['output']>;
   toHash?: Maybe<Scalars['String']['output']>;
   toTokenAddress?: Maybe<Scalars['String']['output']>;
@@ -2047,14 +2048,21 @@ export type Cross_Chain_Swap_ZetachainCrossChainOrderResult = {
 
 export type Cross_Chain_Swap_ZetachainCrossChainRoute = {
   approveTarget?: Maybe<Scalars['String']['output']>;
-  asset?: Maybe<Scalars['JSON']['output']>;
   encodeParams?: Maybe<Scalars['JSON']['output']>;
   fees?: Maybe<Scalars['JSON']['output']>;
+  fromAddress?: Maybe<Scalars['String']['output']>;
   fromAmount?: Maybe<Scalars['String']['output']>;
+  fromAmountUSD?: Maybe<Scalars['String']['output']>;
+  fromAmountWithOutDecimals?: Maybe<Scalars['String']['output']>;
   fromChainId?: Maybe<Scalars['Int']['output']>;
   fromTokenAddress?: Maybe<Scalars['String']['output']>;
-  step?: Maybe<Scalars['JSON']['output']>;
+  omniPlan?: Maybe<Scalars['JSON']['output']>;
+  routeId?: Maybe<Scalars['String']['output']>;
+  slippage?: Maybe<Scalars['Float']['output']>;
+  toAddress?: Maybe<Scalars['String']['output']>;
   toAmount?: Maybe<Scalars['String']['output']>;
+  toAmountUSD?: Maybe<Scalars['String']['output']>;
+  toAmountWithOutDecimals?: Maybe<Scalars['String']['output']>;
   toChainId?: Maybe<Scalars['Int']['output']>;
   toTokenAddress?: Maybe<Scalars['String']['output']>;
 };
@@ -2098,28 +2106,31 @@ export type Cross_Chain_Swap_ZetachainSwapOrderResult = {
 };
 
 export type Cross_Chain_Swap_ZetachainorderCreateData = {
-  extend?: InputMaybe<Cross_Chain_Swap_ZetachainorderCreateDataExtend>;
+  calldata?: InputMaybe<Scalars['String']['input']>;
+  fees?: InputMaybe<Scalars['JSON']['input']>;
   fromAddress?: InputMaybe<Scalars['String']['input']>;
   fromAmount?: InputMaybe<Scalars['String']['input']>;
+  fromAmountUSD?: InputMaybe<Scalars['String']['input']>;
+  fromAmountWithOutDecimals?: InputMaybe<Scalars['String']['input']>;
   fromChainId?: InputMaybe<Scalars['Int']['input']>;
+  fromHash?: InputMaybe<Scalars['String']['input']>;
   fromTokenAddress?: InputMaybe<Scalars['String']['input']>;
-  hash?: InputMaybe<Scalars['String']['input']>;
+  omniPlan?: InputMaybe<Scalars['JSON']['input']>;
+  routeId?: InputMaybe<Scalars['String']['input']>;
   slippage?: InputMaybe<Scalars['Float']['input']>;
   toAddress?: InputMaybe<Scalars['String']['input']>;
   toAmount?: InputMaybe<Scalars['String']['input']>;
+  toAmountUSD?: InputMaybe<Scalars['String']['input']>;
+  toAmountWithOutDecimals?: InputMaybe<Scalars['String']['input']>;
   toChainId?: InputMaybe<Scalars['Int']['input']>;
   toTokenAddress?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type Cross_Chain_Swap_ZetachainorderCreateDataExtend = {
-  asset?: InputMaybe<Scalars['JSON']['input']>;
-  step?: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type Cross_Chain_Swap_ZetachainorderListData = {
   page?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -6015,113 +6026,6 @@ export type DpointTradePairInfo = {
   coefficient?: Maybe<Scalars['BigDecimal']['output']>;
   fromToken: DpointToken;
   toToken: DpointToken;
-};
-
-export type EddyAssembleArgs = {
-  baseToken?: Maybe<Scalars['String']['output']>;
-  lpFeeRate?: Maybe<Scalars['String']['output']>;
-  mtFeeRate?: Maybe<Scalars['String']['output']>;
-  pairAddress?: Maybe<Scalars['String']['output']>;
-  pairName?: Maybe<Scalars['String']['output']>;
-  quoteToken?: Maybe<Scalars['String']['output']>;
-  updatedAt?: Maybe<Scalars['String']['output']>;
-};
-
-export type EddyOmniPlan = {
-  feeAmount?: Maybe<Scalars['String']['output']>;
-  feeChainId?: Maybe<Scalars['Int']['output']>;
-  feeChainType?: Maybe<Scalars['String']['output']>;
-  feeRateBps?: Maybe<Scalars['Int']['output']>;
-  feeToken?: Maybe<Scalars['String']['output']>;
-  hash?: Maybe<Scalars['String']['output']>;
-  hashChainId?: Maybe<Scalars['String']['output']>;
-  inAmount?: Maybe<Scalars['String']['output']>;
-  inChainId?: Maybe<Scalars['Int']['output']>;
-  inChainType?: Maybe<Scalars['String']['output']>;
-  inToken?: Maybe<Scalars['String']['output']>;
-  outAmount?: Maybe<Scalars['String']['output']>;
-  outChainId?: Maybe<Scalars['Int']['output']>;
-  outChainType?: Maybe<Scalars['String']['output']>;
-  outToken?: Maybe<Scalars['String']['output']>;
-  swapSteps?: Maybe<Array<Maybe<EddySwapStep>>>;
-  type?: Maybe<Scalars['String']['output']>;
-};
-
-export type EddySubmitTx = {
-  fromAmount?: Maybe<Scalars['String']['output']>;
-  fromChainId?: Maybe<Scalars['String']['output']>;
-  fromHash?: Maybe<Scalars['String']['output']>;
-  fromToken?: Maybe<Scalars['String']['output']>;
-  fromUser?: Maybe<Scalars['String']['output']>;
-  omniPlan?: Maybe<Scalars['JSON']['output']>;
-  toChainId?: Maybe<Scalars['String']['output']>;
-  toToken?: Maybe<Scalars['String']['output']>;
-  toUser?: Maybe<Scalars['String']['output']>;
-};
-
-export type EddySubmitTxInput = {
-  fromAmount: Scalars['String']['input'];
-  fromChainId: Scalars['String']['input'];
-  fromHash: Scalars['String']['input'];
-  fromToken: Scalars['String']['input'];
-  fromUser: Scalars['String']['input'];
-  omniPlan?: InputMaybe<Scalars['JSON']['input']>;
-  toChainId: Scalars['String']['input'];
-  toToken: Scalars['String']['input'];
-  toUser: Scalars['String']['input'];
-};
-
-export type EddySwapStep = {
-  ammKey?: Maybe<Scalars['String']['output']>;
-  assembleArgs?: Maybe<EddyAssembleArgs>;
-  feeAmount?: Maybe<Scalars['String']['output']>;
-  feeToken?: Maybe<Scalars['String']['output']>;
-  inAmount?: Maybe<Scalars['String']['output']>;
-  inputToken?: Maybe<Scalars['String']['output']>;
-  label?: Maybe<Scalars['String']['output']>;
-  outAmount?: Maybe<Scalars['String']['output']>;
-  outputToken?: Maybe<Scalars['String']['output']>;
-  percent?: Maybe<Scalars['Int']['output']>;
-};
-
-export type EddyUserTx = {
-  abortStatus?: Maybe<Scalars['Int']['output']>;
-  bridgeChainBlock?: Maybe<Scalars['String']['output']>;
-  bridgeChainFee?: Maybe<Scalars['String']['output']>;
-  bridgeChainHash?: Maybe<Scalars['String']['output']>;
-  bridgeChainId?: Maybe<Scalars['String']['output']>;
-  createdAt?: Maybe<Scalars['String']['output']>;
-  externalId?: Maybe<Scalars['String']['output']>;
-  fromAmount?: Maybe<Scalars['String']['output']>;
-  fromChainBlock?: Maybe<Scalars['String']['output']>;
-  fromChainCalldata?: Maybe<Scalars['String']['output']>;
-  fromChainId?: Maybe<Scalars['String']['output']>;
-  fromHash?: Maybe<Scalars['String']['output']>;
-  fromToken?: Maybe<Scalars['String']['output']>;
-  fromUser?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
-  omniPlan?: Maybe<Scalars['JSON']['output']>;
-  processStatus?: Maybe<Scalars['Int']['output']>;
-  refundAmount?: Maybe<Scalars['String']['output']>;
-  refundChainId?: Maybe<Scalars['String']['output']>;
-  refundHash?: Maybe<Scalars['String']['output']>;
-  refundToken?: Maybe<Scalars['String']['output']>;
-  refundUser?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['Int']['output']>;
-  toAmount?: Maybe<Scalars['String']['output']>;
-  toChainBlock?: Maybe<Scalars['String']['output']>;
-  toChainCalldata?: Maybe<Scalars['String']['output']>;
-  toChainId?: Maybe<Scalars['String']['output']>;
-  toHash?: Maybe<Scalars['String']['output']>;
-  toToken?: Maybe<Scalars['String']['output']>;
-  toUser?: Maybe<Scalars['String']['output']>;
-  updatedAt?: Maybe<Scalars['String']['output']>;
-};
-
-export type EddyUserTxListInput = {
-  chainId?: InputMaybe<Scalars['String']['input']>;
-  isRefund?: InputMaybe<Scalars['Int']['input']>;
-  user: Scalars['String']['input'];
 };
 
 export type Erc20AttributeLabelV2 = {
@@ -12716,8 +12620,6 @@ export type Query = {
   dpoint_getUserPointsList: DpointPointRecordPaginationResult;
   /** 活动奖励信息 */
   dpoint_getUserRewardInfos: Array<Maybe<DpointDpointActivityRewardInfo>>;
-  eddy_getUerTxList?: Maybe<Array<Maybe<EddyUserTx>>>;
-  eddy_submitUserTx?: Maybe<EddySubmitTx>;
   erc20_extend_erc20Extend?: Maybe<Erc20_ExtendErc20Extend>;
   erc20_extend_erc20ExtendV2?: Maybe<Erc20_ExtendErc20ExtendV2>;
   erc20_list?: Maybe<Array<Maybe<Erc20Erc20List>>>;
@@ -13888,14 +13790,6 @@ export type QueryDpoint_GetUserPointsListArgs = {
 
 export type QueryDpoint_GetUserRewardInfosArgs = {
   where?: InputMaybe<DpointChainUserInput>;
-};
-
-export type QueryEddy_GetUerTxListArgs = {
-  where?: InputMaybe<EddyUserTxListInput>;
-};
-
-export type QueryEddy_SubmitUserTxArgs = {
-  where?: InputMaybe<EddySubmitTxInput>;
 };
 
 export type QueryErc20_Extend_Erc20ExtendArgs = {
@@ -22052,16 +21946,23 @@ export type Cross_Chain_Swap_Zetachain_RoutesQueryVariables = Exact<{
 
 export type Cross_Chain_Swap_Zetachain_RoutesQuery = {
   cross_chain_swap_zetachain_routes?: {
+    routeId?: string | null;
     fromChainId?: number | null;
     fromTokenAddress?: string | null;
     fromAmount?: string | null;
+    fromAmountWithOutDecimals?: string | null;
+    fromAmountUSD?: string | null;
     toChainId?: number | null;
     toTokenAddress?: string | null;
     toAmount?: string | null;
+    toAmountWithOutDecimals?: string | null;
+    toAmountUSD?: string | null;
+    fromAddress?: string | null;
+    toAddress?: string | null;
+    slippage?: number | null;
     approveTarget?: string | null;
     fees?: any | null;
-    asset?: any | null;
-    step?: any | null;
+    omniPlan?: any | null;
     encodeParams?: any | null;
   } | null;
 };
@@ -22085,22 +21986,7 @@ export type Cross_Chain_Swap_Zetachain_OrderCreateQueryVariables = Exact<{
 }>;
 
 export type Cross_Chain_Swap_Zetachain_OrderCreateQuery = {
-  cross_chain_swap_zetachain_orderCreate?: {
-    id?: number | null;
-    fromChainId?: number | null;
-    fromAmount?: string | null;
-    fromTokenAddress?: string | null;
-    toChainId?: number | null;
-    toAmount?: string | null;
-    toTokenAddress?: string | null;
-    fromAddress?: string | null;
-    toAddress?: string | null;
-    fromHash?: string | null;
-    toHash?: string | null;
-    status?: string | null;
-    createdAt?: string | null;
-    updatedAt?: string | null;
-  } | null;
+  cross_chain_swap_zetachain_orderCreate?: { success?: boolean | null } | null;
 };
 
 export type Cross_Chain_Swap_Zetachain_OrderListQueryVariables = Exact<{
@@ -22116,17 +22002,31 @@ export type Cross_Chain_Swap_Zetachain_OrderListQuery = {
       id?: number | null;
       externalId?: string | null;
       fromChainId?: number | null;
-      fromAmount?: string | null;
       fromTokenAddress?: string | null;
+      fromAmount?: string | null;
+      fromAmountWithOutDecimals?: string | null;
+      fromAmountUSD?: string | null;
       toChainId?: number | null;
-      toAmount?: string | null;
       toTokenAddress?: string | null;
+      toAmount?: string | null;
+      toAmountWithOutDecimals?: string | null;
+      toAmountUSD?: string | null;
       fromAddress?: string | null;
       toAddress?: string | null;
       fromHash?: string | null;
       toHash?: string | null;
-      extend?: any | null;
+      slippage?: number | null;
+      refundChainId?: string | null;
+      refundHash?: string | null;
+      refundAmount?: string | null;
+      refundUser?: string | null;
+      refundToken?: string | null;
+      refundCridgeContract?: string | null;
       status?: string | null;
+      statusCode?: number | null;
+      subStatus?: string | null;
+      omniPlan?: any | null;
+      fees?: any | null;
       createdAt?: string | null;
     } | null> | null;
   } | null;
@@ -23101,16 +23001,23 @@ export const Cross_Chain_Swap_Zetachain_RoutesDocument =
   new TypedDocumentString(`
     query Cross_chain_swap_zetachain_routes($where: Cross_chain_swap_zetachainrouteParams) {
   cross_chain_swap_zetachain_routes(where: $where) {
+    routeId
     fromChainId
     fromTokenAddress
     fromAmount
+    fromAmountWithOutDecimals
+    fromAmountUSD
     toChainId
     toTokenAddress
     toAmount
+    toAmountWithOutDecimals
+    toAmountUSD
+    fromAddress
+    toAddress
+    slippage
     approveTarget
     fees
-    asset
-    step
+    omniPlan
     encodeParams
   }
 }
@@ -23137,20 +23044,7 @@ export const Cross_Chain_Swap_Zetachain_OrderCreateDocument =
   new TypedDocumentString(`
     query Cross_chain_swap_zetachain_orderCreate($data: Cross_chain_swap_zetachainorderCreateData) {
   cross_chain_swap_zetachain_orderCreate(data: $data) {
-    id
-    fromChainId
-    fromAmount
-    fromTokenAddress
-    toChainId
-    toAmount
-    toTokenAddress
-    fromAddress
-    toAddress
-    fromHash
-    toHash
-    status
-    createdAt
-    updatedAt
+    success
   }
 }
     `) as unknown as TypedDocumentString<
@@ -23165,17 +23059,31 @@ export const Cross_Chain_Swap_Zetachain_OrderListDocument =
       id
       externalId
       fromChainId
-      fromAmount
       fromTokenAddress
+      fromAmount
+      fromAmountWithOutDecimals
+      fromAmountUSD
       toChainId
-      toAmount
       toTokenAddress
+      toAmount
+      toAmountWithOutDecimals
+      toAmountUSD
       fromAddress
       toAddress
       fromHash
       toHash
-      extend
+      slippage
+      refundChainId
+      refundHash
+      refundAmount
+      refundUser
+      refundToken
+      refundCridgeContract
       status
+      statusCode
+      subStatus
+      omniPlan
+      fees
       createdAt
     }
     count

@@ -1,29 +1,30 @@
-import axios from 'axios';
+import {
+  ChainId,
+  Cross_Chain_Swap_Zetachain_TransactionEncodeQuery,
+  Cross_Chain_Swap_ZetachaintransactionEncodeParams,
+  SwapApi,
+} from '@dodoex/api';
+import { t } from '@lingui/macro';
+import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { useCallback, useState } from 'react';
-import { t } from '@lingui/macro';
-import { basicTokenMap } from '../../constants/chains';
-import { ChainId } from '@dodoex/api';
-import { byWei, formatTokenAmountNumber } from '../../utils';
-import { BridgeRouteI } from './useFetchRoutePriceBridge';
-import { useWeb3React } from '@web3-react/core';
-import { getEstimateGas } from '../contract/wallet';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
-import { useGetAPIService } from '../setting/useGetAPIService';
-import { APIServiceKey } from '../../constants/api';
 import { EmptyAddress } from '../../constants/address';
-import { useUserOptions } from '../../components/UserOptionsProvider';
+import { basicTokenMap } from '../../constants/chains';
+import { byWei, formatTokenAmountNumber } from '../../utils';
+import { getEstimateGas } from '../contract/wallet';
+import { useGraphQLRequests } from '../useGraphQLRequests';
+import { BridgeRouteI } from './useFetchRoutePriceBridge';
 
 export function useSendRoute() {
+  const graphQLRequests = useGraphQLRequests();
   const { provider } = useWeb3React();
+
   const [bridgeOrderTxRequest, setBridgeOrderTxRequest] = useState<
     BridgeTXRequest | undefined
   >();
   const [sendRouteLoading, setSendRouteLoading] = useState(false);
   const [sendRouteError, setSendRouteError] = useState('');
-  const { apikey } = useUserOptions();
-
-  const bridgeEncodeAPI = useGetAPIService(APIServiceKey.bridgeEncode);
 
   const handleClickSend = useCallback(
     async ({
@@ -35,7 +36,7 @@ export function useSendRoute() {
       fromEtherTokenBalance: BigNumber | null;
       goNext: () => void;
     }) => {
-      if (!selectedRoute || !provider || !fromEtherTokenBalance) {
+      if (!selectedRoute || !fromEtherTokenBalance) {
         return;
       }
       const { encodeParams } = selectedRoute;
@@ -54,17 +55,27 @@ export function useSendRoute() {
       // 4. go next
       try {
         const { fromToken, fromAmount, product } = selectedRoute;
-        const data = {
-          product,
-          encodeParams,
-        };
-        const result = await axios.post(
-          `${bridgeEncodeAPI}${apikey ? `?apikey=${apikey}` : ''}`,
+
+        const encodeResult = await graphQLRequests.getData<
+          Cross_Chain_Swap_Zetachain_TransactionEncodeQuery,
           {
-            data,
+            data: Cross_Chain_Swap_ZetachaintransactionEncodeParams;
+          }
+        >(
+          SwapApi.graphql.cross_chain_swap_zetachain_transactionEncode.toString(),
+          {
+            data: {
+              interfaceParams: encodeParams,
+            },
           },
         );
-        const encodeResultData = result.data.data;
+
+        if (
+          !encodeResult ||
+          !encodeResult.cross_chain_swap_zetachain_transactionEncode
+        ) {
+          throw new Error('cross_chain_swap_transactionEncode is null');
+        }
 
         const {
           data: txData,
@@ -72,8 +83,8 @@ export function useSendRoute() {
           value,
           from,
           chainId,
-          encodeId,
-        } = encodeResultData;
+        } = encodeResult.cross_chain_swap_zetachain_transactionEncode;
+
         if (!txData || !to || !value || !from || !chainId) {
           throw new Error('cross_chain_swap_transactionEncode is null');
         }
@@ -106,15 +117,17 @@ export function useSendRoute() {
         }
 
         // gaslimit(number)
-        const gasLimit = await getEstimateGas(
-          {
-            from,
-            to,
-            value,
-            data: txData,
-          },
-          provider,
-        );
+        const gasLimit = provider
+          ? await getEstimateGas(
+              {
+                from,
+                to,
+                value,
+                data: txData,
+              },
+              provider,
+            )
+          : null;
         if (!gasLimit) {
           throw new Error('failed to estimate gas');
         }
@@ -125,7 +138,6 @@ export function useSendRoute() {
           value,
           from,
           chainId,
-          encodeId,
         });
         goNext();
       } catch (error) {
@@ -136,11 +148,10 @@ export function useSendRoute() {
 
       setSendRouteLoading(false);
     },
-    [setBridgeOrderTxRequest, setSendRouteLoading, provider, bridgeEncodeAPI],
+    [graphQLRequests, provider],
   );
 
   return {
-    apikey,
     sendRouteLoading,
     sendRouteError,
     setSendRouteError,

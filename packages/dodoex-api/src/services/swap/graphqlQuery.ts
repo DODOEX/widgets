@@ -36,16 +36,23 @@ export const swapGraphqlQuery = {
       $where: Cross_chain_swap_zetachainrouteParams
     ) {
       cross_chain_swap_zetachain_routes(where: $where) {
+        routeId
         fromChainId
         fromTokenAddress
         fromAmount
+        fromAmountWithOutDecimals
+        fromAmountUSD
         toChainId
         toTokenAddress
         toAmount
+        toAmountWithOutDecimals
+        toAmountUSD
+        fromAddress
+        toAddress
+        slippage
         approveTarget
         fees
-        asset
-        step
+        omniPlan
         encodeParams
       }
     }
@@ -68,20 +75,7 @@ export const swapGraphqlQuery = {
       $data: Cross_chain_swap_zetachainorderCreateData
     ) {
       cross_chain_swap_zetachain_orderCreate(data: $data) {
-        id
-        fromChainId
-        fromAmount
-        fromTokenAddress
-        toChainId
-        toAmount
-        toTokenAddress
-        fromAddress
-        toAddress
-        fromHash
-        toHash
-        status
-        createdAt
-        updatedAt
+        success
       }
     }
   `),
@@ -94,17 +88,31 @@ export const swapGraphqlQuery = {
           id
           externalId
           fromChainId
-          fromAmount
           fromTokenAddress
+          fromAmount
+          fromAmountWithOutDecimals
+          fromAmountUSD
           toChainId
-          toAmount
           toTokenAddress
+          toAmount
+          toAmountWithOutDecimals
+          toAmountUSD
           fromAddress
           toAddress
           fromHash
           toHash
-          extend
+          slippage
+          refundChainId
+          refundHash
+          refundAmount
+          refundUser
+          refundToken
+          refundCridgeContract
           status
+          statusCode
+          subStatus
+          omniPlan
+          fees
           createdAt
         }
         count

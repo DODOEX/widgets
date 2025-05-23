@@ -7,12 +7,19 @@ import LoadMore from '../../LoadMore';
 import Table from '../../Table';
 import CrossOrderCard from './CrossOrderCard';
 
-export default function CrossChainOrderList({ account }: { account: string }) {
+export default function CrossChainOrderList({
+  account,
+  type,
+}: {
+  account: string;
+  type?: 'error_refund';
+}) {
   const { isMobile } = useWidgetDevice();
 
   const swapOrderListQuery = useCrossSwapOrderList({
     account,
     limit: isMobile ? 10 : 5,
+    type,
   });
 
   return (

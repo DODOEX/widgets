@@ -177,6 +177,8 @@ export function Swap({
       toToken,
       fromToken,
       fromAmount: fromAmt,
+      fromAccount,
+      toAccount,
     });
 
   const selectedRouteId = useMemo(() => {
@@ -899,8 +901,13 @@ export function Swap({
       </Button>
     );
   }, [
-    fromAccount,
-    toAccount,
+    fromAccount?.appKitAccount?.isConnected,
+    fromAccount?.chain.isEVMChain,
+    fromAccount?.chain.chainId,
+    fromAccount?.chain.name,
+    fromAccount?.chain.caipNetwork,
+    chainId,
+    toAccount?.appKitAccount?.isConnected,
     isInflight,
     fromToken,
     toToken,
@@ -916,6 +923,7 @@ export function Swap({
     insufficientBalance,
     disconnect,
     open,
+    appKitActiveNetwork,
     submitApprove,
     bridgeRouteList.length,
     resAmount,

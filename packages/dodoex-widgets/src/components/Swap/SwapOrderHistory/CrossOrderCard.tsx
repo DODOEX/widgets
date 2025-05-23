@@ -88,17 +88,21 @@ export default function CrossOrderCard({
     let statusAlphaColor: undefined | number;
 
     switch (data.status) {
-      case '2':
-        statusText = 'Canceled';
+      case 'pending':
+        statusText = 'Pending';
         statusAlphaColor = 0.1;
         break;
-      case '0':
+      case 'success':
+        statusText = 'Succeeded';
+        statusColor = theme.palette.success.main;
+        break;
+      case 'failure_revert':
         statusText = 'Failed';
         statusColor = theme.palette.error.main;
         break;
-      case '1':
-        statusText = 'Succeeded';
-        statusColor = theme.palette.success.main;
+      case 'abort':
+        statusText = 'Aborted';
+        statusColor = theme.palette.error.main;
         break;
 
       default:

@@ -289,7 +289,10 @@ export default function SwapOrderHistory() {
               overflow: 'hidden',
             }}
           >
-            <CrossChainOrderList account={selectedAccount} />
+            <CrossChainOrderList
+              account={selectedAccount}
+              type="error_refund"
+            />
           </TabPanelFlexCol>
         </>
       ) : (

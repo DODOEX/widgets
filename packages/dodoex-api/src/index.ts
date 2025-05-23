@@ -38,6 +38,14 @@ export type { MiningMiningInfo } from './services/mining';
 
 export { TokenApi } from './services/TokenApi';
 
+export type {
+  Cross_Chain_Swap_Zetachain_OrderCreateQuery,
+  Cross_Chain_Swap_Zetachain_RoutesQuery,
+  Cross_Chain_Swap_Zetachain_TransactionEncodeQuery,
+  Cross_Chain_Swap_ZetachainorderCreateData,
+  Cross_Chain_Swap_ZetachainrouteParams,
+  Cross_Chain_Swap_ZetachaintransactionEncodeParams,
+} from './gql/graphql';
 export { SwapApi } from './services/swap/SwapApi';
 export { SystemApi } from './services/system/SystemApi';
 

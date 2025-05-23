@@ -5,6 +5,7 @@ import {
 } from '@reown/appkit-adapter-solana/react';
 import { CaipNetworksUtil } from '@reown/appkit-utils';
 import { bitcoin, solana, solanaDevnet } from '@reown/appkit/networks';
+import type { Provider as CoreProvider } from '@reown/appkit/react';
 import {
   useAppKit,
   useAppKitAccount,
@@ -25,6 +26,9 @@ export function useWalletInfo() {
   const evmAccount = useAppKitAccount({ namespace: 'eip155' }); // for EVM chains
   const solanaAccount = useAppKitAccount({ namespace: 'solana' });
   const bitcoinAccount = useAppKitAccount({ namespace: 'bip122' }); // for bitcoin
+
+  const { walletProvider: ethersProvider } =
+    useAppKitProvider<CoreProvider>('eip155');
 
   const { walletProvider: solanaWalletProvider } =
     useAppKitProvider<Provider>('solana');
@@ -112,6 +116,8 @@ export function useWalletInfo() {
     evmAccount,
     solanaAccount,
     bitcoinAccount,
+
+    ethersProvider,
 
     solanaWalletProvider,
     solanaConnection,

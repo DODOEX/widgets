@@ -1,4 +1,9 @@
-import axios from 'axios';
+import {
+  Cross_Chain_Swap_Zetachain_OrderCreateQuery,
+  GraphQLRequests,
+  SwapApi,
+} from '@dodoex/api';
+import { Cross_Chain_Swap_ZetachainorderCreateData } from '@dodoex/api/dist/types/gql/graphql';
 import { toWei } from '../../utils';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
 
@@ -25,16 +30,14 @@ export interface BridgeOrderCreateParams {
 }
 
 export async function createBridgeOrder({
-  apikey,
+  graphQLRequests,
   tx,
   route,
-  bridgeCreateRouteAPI,
   encodeId,
 }: {
-  apikey?: string;
+  graphQLRequests: GraphQLRequests;
   tx: string;
   route: BridgeRouteI;
-  bridgeCreateRouteAPI: string;
   encodeId: string;
 }) {
   const {
@@ -72,13 +75,17 @@ export async function createBridgeOrder({
       source: 'widget',
     },
   } as BridgeOrderCreateParams;
-  const result = await axios.post(
-    `${bridgeCreateRouteAPI}${apikey ? `?apikey=${apikey}` : ''}`,
-    {
-      data: createParams,
-    },
-  );
-  const data = result.data.data;
 
-  return data?.id;
+  const result = await graphQLRequests.getData<
+    Cross_Chain_Swap_Zetachain_OrderCreateQuery,
+    {
+      data?: Cross_Chain_Swap_ZetachainorderCreateData;
+    }
+  >(SwapApi.graphql.cross_chain_swap_zetachain_orderCreate.toString(), {
+    data: {
+      ...createParams,
+    },
+  });
+
+  return result.cross_chain_swap_zetachain_orderCreate?.success;
 }

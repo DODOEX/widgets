@@ -18,9 +18,11 @@ type OrderList = NonNullable<
 export function useCrossSwapOrderList({
   account,
   limit = 5,
+  type,
 }: {
   account: string | undefined;
   limit?: number;
+  type?: 'error_refund';
 }) {
   const { tokenList } = useTokenState();
   const graphQLRequests = useGraphQLRequests();
@@ -32,6 +34,7 @@ export function useCrossSwapOrderList({
       where: {
         user: account,
         pageSize: limit,
+        type,
       },
     },
   );
@@ -84,12 +87,6 @@ export function useCrossSwapOrderList({
                   .dp(toToken.decimals, BigNumber.ROUND_DOWN)
               : null;
 
-          console.log(
-            'v2 toAmount',
-            toAmount?.toString(),
-            item?.toAmount,
-            item?.id,
-          );
           return {
             hash: item?.fromHash,
             fromToken,
@@ -98,6 +95,7 @@ export function useCrossSwapOrderList({
             toAmount,
             createdAt: item?.createdAt,
             routeData: null,
+            // pending\success\failure_revert\abort
             status: item?.status,
             transactionHash: item?.fromHash,
             fromTokenPrice:

@@ -1,16 +1,23 @@
-import axios from 'axios';
-import { useWeb3React } from '@web3-react/core';
+import {
+  Cross_Chain_Swap_ZetachainrouteParams,
+  Cross_Chain_Swap_Zetachain_RoutesQuery,
+  SwapApi,
+} from '@dodoex/api';
 import { parseFixed } from '@ethersproject/bignumber';
-import { useCallback, useMemo, useState } from 'react';
-import { EmptyAddress } from '../../constants/address';
-import { usePriceTimer } from '../Swap/usePriceTimer';
-import { TokenInfo } from '../Token';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import BigNumber from 'bignumber.js';
+import { useCallback, useMemo, useState } from 'react';
+import { useUserOptions } from '../../components/UserOptionsProvider';
+import { EmptyAddress } from '../../constants/address';
+import { APIServiceKey } from '../../constants/api';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { useGetAPIService } from '../setting/useGetAPIService';
-import { APIServiceKey } from '../../constants/api';
-import { useUserOptions } from '../../components/UserOptionsProvider';
+import { usePriceTimer } from '../Swap/usePriceTimer';
+import { TokenInfo } from '../Token';
 import { useGlobalState } from '../useGlobalState';
+import { useGraphQLRequests } from '../useGraphQLRequests';
 
 export interface BridgeRouteI {
   /** update */
@@ -136,19 +143,29 @@ export enum RoutePriceStatus {
   Success = 'Success',
 }
 export interface FetchRoutePrice {
+  fromAccount: ReturnType<
+    ReturnType<typeof useWalletInfo>['getAppKitAccountByChainId']
+  >;
+  toAccount: ReturnType<
+    ReturnType<typeof useWalletInfo>['getAppKitAccountByChainId']
+  >;
   fromToken: TokenInfo | null;
   toToken: TokenInfo | null;
   fromAmount: string;
 }
 export function useFetchRoutePriceBridge({
-  toToken,
+  fromAccount,
+  toAccount,
   fromToken,
+  toToken,
   fromAmount,
 }: FetchRoutePrice) {
-  const { account, provider } = useWeb3React();
+  const graphQLRequests = useGraphQLRequests();
+
   const { defaultSlippage, loading: slippageLoading } =
     useDefaultSlippage(true);
   const slippage = useGlobalState((state) => state.slippage || defaultSlippage);
+
   const { apikey } = useUserOptions();
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,
@@ -157,6 +174,83 @@ export function useFetchRoutePriceBridge({
     [],
   );
   const bridgeRoutePriceAPI = useGetAPIService(APIServiceKey.bridgeRoutePrice);
+
+  const query = graphQLRequests.getQuery<
+    Cross_Chain_Swap_Zetachain_RoutesQuery,
+    {
+      where: Cross_Chain_Swap_ZetachainrouteParams;
+    }
+  >(SwapApi.graphql.cross_chain_swap_zetachain_routes, {
+    /**
+     {
+      "fromAddress": "0xF859Fb7F8811a5016e9A5380b497957343f40476",
+      "fromAmount": "1000000",
+      "fromChainId": 11155111,
+      "fromTokenAddress": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+      "slippage": 0.005,
+      "toAddress": "0xF859Fb7F8811a5016e9A5380b497957343f40476",
+      "toChainId": 421614,
+      "toTokenAddress": "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
+    }
+     */
+    where: {
+      fromChainId: fromToken?.chainId ?? null,
+      fromTokenAddress: fromToken?.address ?? null,
+      toChainId: toToken?.chainId ?? null,
+      toTokenAddress: toToken?.address ?? null,
+      fromAddress: fromAccount?.appKitAccount?.address ?? EmptyAddress,
+      toAddress: toAccount?.appKitAccount?.address ?? EmptyAddress,
+      fromAmount:
+        fromToken && fromAmount
+          ? parseFixed(String(fromAmount), fromToken.decimals).toString()
+          : null,
+      slippage: slippage ? Number(slippage) / 100 : null,
+    },
+  });
+
+  const { data, error, isPending } = useQuery({
+    ...query,
+    // enabled:
+    //   !!fromToken &&
+    //   !!toToken &&
+    //   !!fromAmount &&
+    //   fromToken.chainId !== toToken.chainId &&
+    //   fromAccount?.appKitAccount?.isConnected &&
+    //   toAccount?.appKitAccount?.isConnected &&
+    //   !!fromAccount?.appKitAccount?.address &&
+    //   !!toAccount?.appKitAccount?.address,
+    enabled:
+      !!fromToken &&
+      !!toToken &&
+      !!fromAmount &&
+      fromToken.chainId !== toToken.chainId,
+    refetchInterval: 15 * 1000,
+  });
+
+  useMemo(() => {
+    if (isPending) {
+      return {
+        status: RoutePriceStatus.Loading,
+        bridgeRouteList: [],
+      };
+    }
+    if (error) {
+      return {
+        status: RoutePriceStatus.Failed,
+        bridgeRouteList: [],
+      };
+    }
+    if (data) {
+      return {
+        status: RoutePriceStatus.Success,
+        bridgeRouteList: data.cross_chain_swap_zetachain_routes,
+      };
+    }
+    return {
+      status: RoutePriceStatus.Initial,
+      bridgeRouteList: [],
+    };
+  }, [isPending, error, data]);
 
   const refetch = useCallback(async () => {
     const fromChainId = fromToken?.chainId;
@@ -177,8 +271,8 @@ export function useFetchRoutePriceBridge({
 
     const fromTokenAddress = fromToken.address;
     const toTokenAddress = toToken.address;
-    const fromAddress = account || EmptyAddress;
-    const toAddress = account || EmptyAddress;
+    const fromAddress = fromAccount?.appKitAccount.address || EmptyAddress;
+    const toAddress = toAccount?.appKitAccount.address || EmptyAddress;
     const slippageNum = Number(slippage) / 100;
 
     const data: any = {
@@ -356,22 +450,20 @@ export function useFetchRoutePriceBridge({
       } else {
         setStatus(RoutePriceStatus.Failed);
       }
-
-      if (!account || !provider) return;
     } catch (error) {
       setStatus(RoutePriceStatus.Failed);
       console.error(error);
     }
   }, [
-    account,
-    toToken,
-    slippage,
     fromToken,
-    provider,
+    toToken,
     fromAmount,
-    apikey,
-    bridgeRoutePriceAPI,
     slippageLoading,
+    fromAccount?.appKitAccount.address,
+    toAccount?.appKitAccount.address,
+    slippage,
+    bridgeRoutePriceAPI,
+    apikey,
   ]);
 
   usePriceTimer({ refetch });
