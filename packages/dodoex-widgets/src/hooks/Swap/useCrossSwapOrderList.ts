@@ -1,0 +1,127 @@
+import { SwapApi } from '@dodoex/api';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
+import { useMemo } from 'react';
+import { useGraphQLRequests } from '../useGraphQLRequests';
+import { useTokenState } from '../useTokenState';
+
+type OrderList = NonNullable<
+  NonNullable<
+    ReturnType<
+      NonNullable<
+        (typeof SwapApi.graphql.cross_chain_swap_zetachain_orderList)['__apiType']
+      >
+    >['cross_chain_swap_zetachain_orderList']
+  >['list']
+>;
+
+export function useCrossSwapOrderList({
+  account,
+  limit = 5,
+}: {
+  account: string | undefined;
+  limit?: number;
+}) {
+  const { tokenList } = useTokenState();
+  const graphQLRequests = useGraphQLRequests();
+
+  const query = graphQLRequests.getInfiniteQuery(
+    SwapApi.graphql.cross_chain_swap_zetachain_orderList,
+    'page',
+    {
+      where: {
+        user: account,
+        pageSize: limit,
+      },
+    },
+  );
+  const result = useInfiniteQuery({
+    ...query,
+    enabled: !!account,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      const { page: currentPage, count: total } =
+        lastPage.cross_chain_swap_zetachain_orderList ?? {
+          page: 0,
+          count: 0,
+        };
+      if (!currentPage || !total) return null;
+      if (currentPage * limit >= total) return null;
+      return currentPage + 1;
+    },
+  });
+
+  const orderList = useMemo(() => {
+    const orderList =
+      result.data?.pages
+        ?.reduce((prev, current) => {
+          const data = current.cross_chain_swap_zetachain_orderList?.list ?? [];
+          return [...prev, ...data];
+        }, [] as OrderList)
+        ?.map((item) => {
+          const fromToken = tokenList.find(
+            (token) =>
+              token.address.toLowerCase() ===
+                item?.fromTokenAddress?.toLowerCase() &&
+              token.chainId === item?.fromChainId,
+          );
+          const toToken = tokenList.find(
+            (token) =>
+              token.address.toLowerCase() ===
+                item?.toTokenAddress?.toLowerCase() &&
+              token.chainId === item?.toChainId,
+          );
+          const fromAmount =
+            item?.fromAmount && fromToken
+              ? new BigNumber(item.fromAmount)
+                  .div(10 ** fromToken.decimals)
+                  .dp(fromToken.decimals, BigNumber.ROUND_DOWN)
+              : null;
+          const toAmount =
+            item?.toAmount && toToken
+              ? new BigNumber(item.toAmount)
+                  .div(10 ** toToken.decimals)
+                  .dp(toToken.decimals, BigNumber.ROUND_DOWN)
+              : null;
+
+          console.log(
+            'v2 toAmount',
+            toAmount?.toString(),
+            item?.toAmount,
+            item?.id,
+          );
+          return {
+            hash: item?.fromHash,
+            fromToken,
+            toToken,
+            fromAmount,
+            toAmount,
+            createdAt: item?.createdAt,
+            routeData: null,
+            status: item?.status,
+            transactionHash: item?.fromHash,
+            fromTokenPrice:
+              fromAmount && toAmount && fromToken
+                ? toAmount
+                    .div(fromAmount)
+                    .dp(fromToken.decimals, BigNumber.ROUND_DOWN)
+                    .toString()
+                : null,
+            toTokenPrice:
+              fromAmount && toAmount && toToken
+                ? fromAmount
+                    .div(toAmount)
+                    .dp(toToken.decimals, BigNumber.ROUND_DOWN)
+                    .toString()
+                : null,
+          };
+        }) ?? [];
+
+    return orderList;
+  }, [result.data?.pages, tokenList]);
+
+  return {
+    ...result,
+    orderList,
+  };
+}

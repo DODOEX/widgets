@@ -211,7 +211,8 @@ msgstr ""
 msgid "Rewards"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/index.tsx:72
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:57
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:57
 msgid "Pay"
 msgstr ""
 
@@ -1297,7 +1298,9 @@ msgstr ""
 msgid "Trader"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/index.tsx:113
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:75
+#: src/components/Swap/SwapOrderHistory/CrossOrderCard.tsx:55
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:75
 #: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:55
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:269
 #: src/widgets/PoolWidget/AMMV3/components/PositionAmountPreview.tsx:195
@@ -1691,7 +1694,8 @@ msgstr ""
 msgid "Approve {0}"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/index.tsx:105
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:67
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:67
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:193
 msgid "Rate"
 msgstr ""
@@ -1854,7 +1858,8 @@ msgstr "秒"
 msgid "Total Swap Volume"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/index.tsx:99
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:61
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:61
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:490
 msgid "Receive"
 msgstr ""
@@ -2187,7 +2192,8 @@ msgstr ""
 msgid "Create One"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/index.tsx:102
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:64
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:64
 msgid "Status"
 msgstr ""
 

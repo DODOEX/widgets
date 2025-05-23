@@ -1,6 +1,7 @@
 import { ChainId, btcSignet, zetachainTestnet } from '@dodoex/api';
 import {
   AppKitNetwork,
+  arbitrumSepolia,
   sepolia,
   solana,
   solanaDevnet,
@@ -11,6 +12,7 @@ import { ReactComponent as BSCLogo } from '../assets/logo/networks/bsc.svg';
 import { ReactComponent as BtcLogo } from '../assets/logo/networks/btc.svg';
 import { ReactComponent as PolygonLogo } from '../assets/logo/networks/polygon.svg';
 import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg';
+import { ReactComponent as ArbitrumSepoliaLogo } from '../assets/logo/networks/arbitrum.svg';
 import { ReactComponent as SolanaLogo } from '../assets/logo/networks/solana.svg';
 import { ReactComponent as ZetachainLogo } from '../assets/logo/networks/zetachain.svg';
 import { ReactComponent as BtcSignetLogo } from '../assets/logo/networks/btc-signet.svg';
@@ -108,6 +110,18 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       logo: ETHereumLogo,
       name: 'Ethereum Sepolia',
       caipNetwork: sepolia,
+      isEVMChain: true,
+      isSolanaChain: false,
+      isBTCChain: false,
+    },
+  ],
+  [
+    ChainId.ARBITRUM_SEPOLIA,
+    {
+      chainId: ChainId.ARBITRUM_SEPOLIA,
+      logo: ArbitrumSepoliaLogo,
+      name: 'Arbitrum Sepolia',
+      caipNetwork: arbitrumSepolia,
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,

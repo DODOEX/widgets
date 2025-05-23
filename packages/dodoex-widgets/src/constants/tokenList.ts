@@ -1,4 +1,11 @@
-const tokenList = [
+import { TokenInfo } from '../hooks/Token';
+
+const tokenList: (TokenInfo & {
+  id: number;
+  logo: string;
+  position: number;
+  slippage: number | null;
+})[] = [
   {
     id: 9,
     name: 'USDC.ARBSEP',
@@ -183,6 +190,17 @@ const tokenList = [
     decimals: 6,
     logo: 'https://images.dodoex.io/ulpQWoOvkwpqjJgbDKZHOjbC5JaqdRPvwake0n4wBJw/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvMTM5OTgxMTE1MS9zbzExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTEx.webp',
     chainId: 1399811149,
+    position: 1,
+    slippage: null,
+  },
+  {
+    id: 18,
+    name: 'ZetaChain ZRC20 BTC on Bitcoin Signet',
+    address: '0xdbfF6471a79E5374d771922F2194eccc42210B9F',
+    symbol: 'sBTC.BTC',
+    decimals: 8,
+    logo: 'https://images.dodoex.io/8L7szce4r10Yq8b7xvNamTTZTFxEqFxCLTIJaaOl5wM/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy9kZXYvNzAwMS8weDRiYzMyMDM0Y2FjY2M5YjdlMDI1MzY5NDVlZGJjMjg2YmFjYmEwNzM.webp',
+    chainId: 7001,
     position: 1,
     slippage: null,
   },

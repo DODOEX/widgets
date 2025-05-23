@@ -9,19 +9,17 @@ type OrderList = NonNullable<
   NonNullable<
     ReturnType<
       NonNullable<
-        typeof SwapApi.graphql.fetchUserSwapOrderHistories['__apiType']
+        (typeof SwapApi.graphql.cross_chain_swap_zetachain_swapOrderList)['__apiType']
       >
-    >['user_swap_orderHistories']
+    >['cross_chain_swap_zetachain_swapOrderList']
   >['list']
 >;
 
 export function useTradeSwapOrderList({
   account,
-  chainId,
   limit = 5,
 }: {
   account: string | undefined;
-  chainId?: number;
   limit?: number;
 }) {
   // TODO: need replace
@@ -32,13 +30,12 @@ export function useTradeSwapOrderList({
   const graphQLRequests = useGraphQLRequests();
 
   const query = graphQLRequests.getInfiniteQuery(
-    SwapApi.graphql.fetchUserSwapOrderHistories,
+    SwapApi.graphql.cross_chain_swap_zetachain_swapOrderList,
     'page',
     {
       where: {
-        userAddress: account ?? '',
-        chainId,
-        limit,
+        userAddress: account?.toLowerCase(),
+        pageSize: limit,
       },
     },
   );
@@ -48,7 +45,7 @@ export function useTradeSwapOrderList({
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       const { page: currentPage, count: total } =
-        lastPage.user_swap_orderHistories ?? {
+        lastPage.cross_chain_swap_zetachain_swapOrderList ?? {
           page: 0,
           count: 0,
         };
@@ -61,7 +58,8 @@ export function useTradeSwapOrderList({
   const orderList =
     result.data?.pages
       ?.reduce((prev, current) => {
-        const data = current.user_swap_orderHistories?.list ?? [];
+        const data =
+          current.cross_chain_swap_zetachain_swapOrderList?.list ?? [];
         return [...prev, ...data];
       }, [] as OrderList)
       ?.map((item) => {

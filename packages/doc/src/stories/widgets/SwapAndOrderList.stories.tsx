@@ -11,6 +11,7 @@ import {
   mainnet,
   polygon,
   sepolia,
+  arbitrumSepolia,
   solana,
   solanaDevnet,
   zetachain,
@@ -47,6 +48,7 @@ createAppKit({
     zetachainTestnet,
     mainnet,
     sepolia,
+    arbitrumSepolia,
     polygon,
     bsc,
     zetachain,
@@ -76,7 +78,7 @@ export const Primary = (args) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '20px',
+        gap: '40px',
       }}
     >
       <Widget {...args} provider={ethersProvider}>
@@ -96,14 +98,8 @@ export const Primary = (args) => {
         >
           <Swap />
         </Box>
-        <Box
-          sx={{
-            width: '100%',
-            backgroundColor: 'background.paper',
-          }}
-        >
-          <SwapOrderHistory />
-        </Box>
+
+        <SwapOrderHistory />
       </Widget>
     </Box>
   );

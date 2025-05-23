@@ -92,6 +92,7 @@ export default function FoldBtn({
         padding: theme.spacing(4, 8),
         transform: show ? 'rotate(180deg)' : 'none',
         transition: 'all 100ms',
+        color: 'text.primary',
       }}
       onClick={onClick}
     >

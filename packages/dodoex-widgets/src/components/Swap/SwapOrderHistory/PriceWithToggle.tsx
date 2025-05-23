@@ -37,6 +37,7 @@ export function PriceWithToggle({
         display: 'flex',
         alignItems: 'center',
         gap: 8,
+        color: 'text.primary',
         typography: 'body1',
         fontWeight: 600,
         '&:hover>svg>path': {

@@ -1,11 +1,14 @@
 import { Box, TabPanel, Tabs, TabsGroup, useTheme } from '@dodoex/components';
+import { getAddress } from '@ethersproject/address';
 import { useEffect, useMemo, useState } from 'react';
 import { ChainListItem, chainListMap } from '../../../constants/chainList';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
-import SameChainOrderList from './SameChainOrderList';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { namespaceToTitle } from '../../../utils/wallet';
 import { truncatePoolAddress } from '../../../utils/address';
+import { namespaceToTitle } from '../../../utils/wallet';
+import { CardStatus } from '../../CardWidgets';
+import CrossChainOrderList from './CrossChainOrderList';
+import SameChainOrderList from './SameChainOrderList';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -71,7 +74,7 @@ export default function SwapOrderHistory() {
 
       if (firstChain) {
         accounts.push({
-          account: evmAccount.address,
+          account: getAddress(evmAccount.address),
           firstChain,
         });
       }
@@ -126,137 +129,138 @@ export default function SwapOrderHistory() {
   }, [accountList]);
 
   return (
-    <Box>
-      <Tabs
-        value={swapOrderHistoryTab}
-        onChange={(_, value) => {
-          setSwapOrderHistoryTab(value as SwapOrderHistoryTab);
-        }}
-        sx={
-          isMobile
-            ? {}
-            : {
-                display: 'flex',
-                flexDirection: 'column',
-                flex: 1,
-                overflow: 'hidden',
-                height: 'max-content',
-                maxHeight: '100%',
-              }
-        }
-        className={isMobile ? undefined : 'gradient-card-border'}
-      >
-        <Box
-          sx={{
-            ...(isMobile
-              ? {
-                  ...(!selectedAccount && {
-                    pb: 20,
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    borderStyle: 'solid',
-                    borderWidth: '0 0 1px',
-                  }),
-                }
-              : {
+    <Tabs
+      value={swapOrderHistoryTab}
+      onChange={(_, value) => {
+        setSwapOrderHistoryTab(value as SwapOrderHistoryTab);
+      }}
+      sx={
+        isMobile
+          ? {}
+          : {
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              flex: 1,
+              overflow: 'hidden',
+              height: 'max-content',
+              maxHeight: '100%',
+              borderRadius: 16,
+              backgroundColor: 'background.default',
+              borderWidth: 1,
+              borderColor: 'border.main',
+              borderStyle: 'solid',
+            }
+      }
+      className={isMobile ? undefined : 'gradient-card-border'}
+    >
+      <Box
+        sx={{
+          ...(isMobile
+            ? {
+                ...(!selectedAccount && {
+                  pb: 20,
                   display: 'flex',
                   justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                  borderTopLeftRadius: 16,
-                  borderTopRightRadius: 16,
-                  backgroundColor: 'background.paper',
-                  px: 24,
-                  pt: 20,
+                  borderStyle: 'solid',
+                  borderWidth: '0 0 1px',
+                }),
+              }
+            : {
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                backgroundColor: 'background.paper',
+                px: 24,
+                pt: 20,
+              }),
+        }}
+      >
+        <TabsGroup
+          tabs={tabs}
+          variant="default"
+          tabsListSx={{
+            justifyContent: 'space-between',
+            ...(isMobile
+              ? {
+                  mb: 20,
+                }
+              : {
                   borderBottomWidth: 0,
-                  borderBottomColor: 'border.main',
-                  borderBottomStyle: 'solid',
                 }),
           }}
-        >
-          <TabsGroup
-            tabs={tabs}
-            variant="default"
-            tabsListSx={{
-              justifyContent: 'space-between',
-              ...(isMobile
-                ? {
-                    mb: 20,
-                  }
-                : {
-                    borderBottomWidth: 0,
-                  }),
-            }}
-            tabSx={
-              isMobile
-                ? undefined
-                : {
-                    pt: 0,
-                    mr: 28,
-                    typography: 'body1',
-                    lineHeight: '22px',
-                  }
-            }
-          />
-        </Box>
-        <Box
-          sx={{
-            px: 24,
-            py: 12,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 12,
-          }}
-        >
-          {accountList.map((account) => {
-            const isSelected = selectedAccount === account.account;
-            return (
-              <Box
-                key={account.account}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 4,
-                  pl: 8,
-                  py: 8,
-                  pr: 10,
-                  borderWidth: 1,
-                  borderColor: 'transparent',
-                  borderStyle: 'solid',
-                  borderRadius: 8,
-                  backgroundColor: 'transparent',
-                  cursor: 'pointer',
-                  typography: 'body2',
-                  lineHeight: '19px',
-                  color: 'text.secondary',
-                  ...(isSelected && {
-                    borderColor: 'primary.main',
-                    backgroundColor: 'tabActive.main',
-                    color: 'text.primary',
-                  }),
-                  '&:hover': {
-                    backgroundColor: 'background.paperDarkContrast',
-                  },
-                }}
-                onClick={() => {
-                  setSelectedAccount(account.account);
-                }}
-              >
-                {account.firstChain && (
-                  <Box
-                    component={account.firstChain.logo}
-                    sx={{
-                      width: 16,
-                      height: 16,
-                    }}
-                  />
-                )}
-                ({namespaceToTitle(account.firstChain.chainId)})
-                {truncatePoolAddress(account.account)}
-              </Box>
-            );
-          })}
-        </Box>
-        {selectedAccount && (
+          tabSx={
+            isMobile
+              ? undefined
+              : {
+                  pt: 0,
+                  mr: 28,
+                  typography: 'body1',
+                  lineHeight: '22px',
+                }
+          }
+        />
+      </Box>
+      <Box
+        sx={{
+          px: 24,
+          py: 12,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+        }}
+      >
+        {accountList.map((account) => {
+          const isSelected = selectedAccount === account.account;
+          return (
+            <Box
+              key={account.account}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                pl: 8,
+                py: 8,
+                pr: 10,
+                borderWidth: 1,
+                borderColor: 'transparent',
+                borderStyle: 'solid',
+                borderRadius: 8,
+                backgroundColor: 'transparent',
+                cursor: 'pointer',
+                typography: 'body2',
+                lineHeight: '19px',
+                color: 'text.secondary',
+                ...(isSelected && {
+                  borderColor: 'primary.main',
+                  backgroundColor: 'tabActive.main',
+                  color: 'text.primary',
+                }),
+                '&:hover': {
+                  backgroundColor: 'background.paperDarkContrast',
+                },
+              }}
+              onClick={() => {
+                setSelectedAccount(account.account);
+              }}
+            >
+              {account.firstChain && (
+                <Box
+                  component={account.firstChain.logo}
+                  sx={{
+                    width: 16,
+                    height: 16,
+                  }}
+                />
+              )}
+              ({namespaceToTitle(account.firstChain.chainId)})
+              {truncatePoolAddress(account.account)}
+            </Box>
+          );
+        })}
+      </Box>
+      {selectedAccount ? (
+        <>
           <TabPanelFlexCol
             value={SwapOrderHistoryTab.sameChain}
             sx={{
@@ -267,8 +271,30 @@ export default function SwapOrderHistory() {
           >
             <SameChainOrderList account={selectedAccount} />
           </TabPanelFlexCol>
-        )}
-      </Tabs>
-    </Box>
+          <TabPanelFlexCol
+            value={SwapOrderHistoryTab.crossChain}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
+            <CrossChainOrderList account={selectedAccount} />
+          </TabPanelFlexCol>
+          <TabPanelFlexCol
+            value={SwapOrderHistoryTab.errorRefunds}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
+            <CrossChainOrderList account={selectedAccount} />
+          </TabPanelFlexCol>
+        </>
+      ) : (
+        <CardStatus isMobile={isMobile} empty={true} loading={false} />
+      )}
+    </Tabs>
   );
 }

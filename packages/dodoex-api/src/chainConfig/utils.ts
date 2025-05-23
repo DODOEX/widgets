@@ -1,5 +1,6 @@
 import type { CaipNetwork } from '@reown/appkit-common';
 import {
+  arbitrumSepolia,
   base,
   bitcoin,
   bsc,
@@ -66,6 +67,13 @@ export function getCaipNetworkByChainId(chainId: ChainId): CaipNetwork {
     case ChainId.SEPOLIA:
       return {
         ...sepolia,
+        chainNamespace: 'eip155',
+        caipNetworkId: `eip155:${chainId}`,
+      };
+
+    case ChainId.ARBITRUM_SEPOLIA:
+      return {
+        ...arbitrumSepolia,
         chainNamespace: 'eip155',
         caipNetworkId: `eip155:${chainId}`,
       };

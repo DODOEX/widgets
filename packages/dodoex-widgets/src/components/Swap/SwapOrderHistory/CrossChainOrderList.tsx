@@ -1,16 +1,16 @@
 import { Box } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { useTradeSwapOrderList } from '../../../hooks/Swap/useTradeSwapOrderList';
+import { useCrossSwapOrderList } from '../../../hooks/Swap/useCrossSwapOrderList';
 import { CardStatus } from '../../CardWidgets';
 import LoadMore from '../../LoadMore';
 import Table from '../../Table';
-import SameOrderCard from './SameOrderCard';
+import CrossOrderCard from './CrossOrderCard';
 
-export default function SameChainOrderList({ account }: { account: string }) {
+export default function CrossChainOrderList({ account }: { account: string }) {
   const { isMobile } = useWidgetDevice();
 
-  const swapOrderListQuery = useTradeSwapOrderList({
+  const swapOrderListQuery = useCrossSwapOrderList({
     account,
     limit: isMobile ? 10 : 5,
   });
@@ -28,7 +28,7 @@ export default function SameChainOrderList({ account }: { account: string }) {
           }}
         >
           {swapOrderListQuery.orderList.map((item) => (
-            <SameOrderCard key={item.hash} data={item} isMobile={isMobile} />
+            <CrossOrderCard key={item.hash} data={item} isMobile={isMobile} />
           ))}
           <LoadMore
             loading={swapOrderListQuery.isFetchingNextPage}
@@ -78,7 +78,7 @@ export default function SameChainOrderList({ account }: { account: string }) {
             </thead>
             <tbody>
               {swapOrderListQuery.orderList.map((item) => (
-                <SameOrderCard
+                <CrossOrderCard
                   key={item.hash}
                   data={item}
                   isMobile={isMobile}
