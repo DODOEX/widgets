@@ -9,7 +9,6 @@ import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { useCallback, useState } from 'react';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
-import { EmptyAddress } from '../../constants/address';
 import { basicTokenMap } from '../../constants/chains';
 import { byWei, formatTokenAmountNumber } from '../../utils';
 import { getEstimateGas } from '../contract/wallet';
@@ -43,9 +42,7 @@ export function useSendRoute() {
       if (!encodeParams) {
         return;
       }
-      if (encodeParams.fromAddress === EmptyAddress) {
-        throw new Error('fromAddress is not valid.');
-      }
+
       setSendRouteError('');
       setSendRouteLoading(true);
       // 1. encode params
@@ -65,7 +62,7 @@ export function useSendRoute() {
           SwapApi.graphql.cross_chain_swap_zetachain_transactionEncode.toString(),
           {
             data: {
-              interfaceParams: encodeParams,
+              interfaceParams: encodeParams.interfaceParams,
             },
           },
         );

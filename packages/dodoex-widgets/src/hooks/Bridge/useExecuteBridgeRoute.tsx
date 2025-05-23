@@ -94,7 +94,6 @@ export default function useExecuteBridgeRoute({
             graphQLRequests,
             tx,
             route,
-            encodeId: bridgeOrderTxRequest.encodeId,
           });
           if (onTxSuccess) {
             onTxSuccess(tx, {

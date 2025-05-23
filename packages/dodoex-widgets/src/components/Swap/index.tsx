@@ -187,14 +187,11 @@ export function Swap({
     }
     return selectedRouteIdOrigin;
   }, [selectedRouteIdOrigin, bridgeRouteList]);
-  const selectedRoute = useMemo(
-    () =>
-      bridgeRouteList.find(
-        (route) =>
-          route.id === selectedRouteId && route.fromAddress === account,
-      ),
-    [bridgeRouteList, selectedRouteId, account],
-  );
+  const selectedRoute = useMemo(() => {
+    return bridgeRouteList.find(
+      (route) => route.id === selectedRouteId && route.fromAddress === account,
+    );
+  }, [bridgeRouteList, selectedRouteId, account]);
   useEffect(() => {
     if (!selectedRoute && selectedRouteIdOrigin) {
       setSelectRouteId('');
