@@ -6,16 +6,17 @@ import { ReactComponent as naboxLogoUrl } from '../../../assets/bridge/bridge-na
 import { ReactComponent as swftLogoUrl } from '../../../assets/bridge/bridge-swft.svg';
 import { ReactComponent as cBridgeLogoUrl } from '../../../assets/bridge/cbridge.svg';
 import { ReactComponent as connextLogoUrl } from '../../../assets/bridge/connext.svg';
-import { ReactComponent as squidLogoUrl } from '../../../assets/bridge/squid.svg';
-import { ReactComponent as stargateLogoUrl } from '../../../assets/bridge/stargate.svg';
-import { ReactComponent as synapseLogoUrl } from '../../../assets/bridge/synapse.svg';
+import { ReactComponent as DODOLogoUrl } from '../../../assets/bridge/dodochain.svg';
 import { ReactComponent as layerSwapLogoUrl } from '../../../assets/bridge/layer-swap.svg';
 import { ReactComponent as okxLogoUrl } from '../../../assets/bridge/okx.svg';
-import { ReactComponent as symbiosisLogoUrl } from '../../../assets/bridge/symbiosis.svg';
-import { ReactComponent as scrollLogoUrl } from '../../../assets/logo/networks/scroll.svg';
-import { ReactComponent as mantaLogoUrl } from '../../../assets/logo/networks/manta.svg';
 import { ReactComponent as orbiterLogoUrl } from '../../../assets/bridge/orbiter.svg';
-import { ReactComponent as DODOLogoUrl } from '../../../assets/bridge/dodochain.svg';
+import { ReactComponent as squidLogoUrl } from '../../../assets/bridge/squid.svg';
+import { ReactComponent as stargateLogoUrl } from '../../../assets/bridge/stargate.svg';
+import { ReactComponent as symbiosisLogoUrl } from '../../../assets/bridge/symbiosis.svg';
+import { ReactComponent as synapseLogoUrl } from '../../../assets/bridge/synapse.svg';
+import { ReactComponent as ZetachainLogoUrl } from '../../../assets/bridge/zetachain.svg';
+import { ReactComponent as mantaLogoUrl } from '../../../assets/logo/networks/manta.svg';
+import { ReactComponent as scrollLogoUrl } from '../../../assets/logo/networks/scroll.svg';
 
 export const productList = [
   {
@@ -107,5 +108,10 @@ export const productList = [
     id: 'dodo',
     logoURI: DODOLogoUrl,
     name: 'Omni-Trade',
+  },
+  {
+    id: 'zetachain',
+    logoURI: ZetachainLogoUrl,
+    name: 'Eddy',
   },
 ];

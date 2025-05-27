@@ -1005,7 +1005,8 @@ export function Swap({
           display: 'flex',
           justifyContent: 'space-between',
           typography: 'caption',
-          margin: 20,
+          px: 14,
+          py: 20,
         }}
       >
         <Trans>Universal Swap</Trans>
@@ -1069,7 +1070,14 @@ export function Swap({
       </Box>
 
       {/* Scroll Container */}
-      <Box sx={{ flex: 1, padding: '0 16px 12px', overflowY: 'auto' }}>
+      <Box
+        sx={{
+          flex: 1,
+          px: 14,
+          pb: 20,
+          overflowY: 'auto',
+        }}
+      >
         {/* Swap Module */}
         <Box>
           {/* First Token Card  */}
