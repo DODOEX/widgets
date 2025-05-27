@@ -300,7 +300,7 @@ export function useFetchRoutePriceBridge({
       fromToken.chainId !== toToken.chainId,
     refetchInterval: 15 * 1000,
     // enabled: false,
-    // initialData: routesExample.data,
+    initialData: routesExample.data,
   });
 
   const { status, bridgeRouteList } = useMemo(() => {

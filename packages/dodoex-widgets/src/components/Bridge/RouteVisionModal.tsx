@@ -12,7 +12,7 @@ export interface RouteVisionModalProps {
 }
 
 export const RouteVisionModal = ({ route }: RouteVisionModalProps) => {
-  const [isDialogVisible, setIsDialogVisible] = useState(false);
+  const [isDialogVisible, setIsDialogVisible] = useState(true);
   const theme = useTheme();
 
   const { fromChainId, toChainId, step } = route;
@@ -138,6 +138,9 @@ export const RouteVisionModal = ({ route }: RouteVisionModalProps) => {
         <Box
           sx={{
             minWidth: 800,
+            py: 20,
+            mx: 20,
+            borderTop: `1px solid ${theme.palette.border.main}`,
           }}
         >
           <RouteVision route={route} />

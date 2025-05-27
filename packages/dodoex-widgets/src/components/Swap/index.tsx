@@ -627,6 +627,7 @@ export function Swap({
     ) {
       return priceImpactWarning;
     }
+
     if (isBridge && bridgeRouteList.length) {
       {
         /* Bridge select route */
@@ -634,10 +635,7 @@ export function Swap({
       return (
         <>
           {slippageExceedLimit}
-          <BridgeRouteShortCard
-            route={selectedRoute}
-            onClick={() => setSwitchBridgeRouteShow(true)}
-          />
+          <BridgeRouteShortCard route={selectedRoute} />
         </>
       );
     }
@@ -807,41 +805,33 @@ export function Swap({
       );
     }
 
-    if (!fromToken || !toToken)
+    if (!fromToken || !toToken) {
       return (
         <Button fullWidth disabled data-testid={swapAlertSelectTokenBtn}>
           <Trans>Select Tokens</Trans>
         </Button>
       );
+    }
 
-    if (needApprove)
-      return (
-        <Button
-          fullWidth
-          disabled={isApproving}
-          onClick={() => submitApprove()}
-        >
-          {isApproving ? <Trans>Approving</Trans> : <Trans>Approve</Trans>}
-        </Button>
-      );
-
-    if (!new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0))
+    if (!new BigNumber(isReverseRouting ? toAmt : fromAmt).gt(0)) {
       return (
         <Button fullWidth disabled data-testid={swapAlertEnterAmountBtn}>
           <Trans>Enter an amount</Trans>
         </Button>
       );
+    }
 
     if (
       isBridge
         ? bridgeRouteStatus === RoutePriceStatus.Loading || isGetApproveLoading
         : resPriceStatus === RoutePriceStatus.Loading
-    )
+    ) {
       return (
         <Button fullWidth disabled data-testid={swapAlertFetchPriceBtn}>
           <Trans>Fetching Price...</Trans>
         </Button>
       );
+    }
 
     let routeFailed = false;
     if (isBridge) {
@@ -851,13 +841,15 @@ export function Swap({
     } else {
       routeFailed = !resAmount || resPriceStatus === RoutePriceStatus.Failed;
     }
-    if (routeFailed)
+    if (routeFailed) {
       return (
         <Button fullWidth disabled>
           <Trans>Quote not available</Trans>
         </Button>
       );
-    if (insufficientBalance)
+    }
+
+    if (insufficientBalance) {
       // balance need to greater than reserved gas!
       return (
         <Button
@@ -868,6 +860,19 @@ export function Swap({
           <Trans>Insufficient balance</Trans>
         </Button>
       );
+    }
+
+    if (needApprove) {
+      return (
+        <Button
+          fullWidth
+          disabled={isApproving}
+          onClick={() => submitApprove()}
+        >
+          {isApproving ? <Trans>Approving</Trans> : <Trans>Approve</Trans>}
+        </Button>
+      );
+    }
 
     if (isBridge) {
       return (
@@ -888,6 +893,7 @@ export function Swap({
         </Button>
       );
     }
+
     return (
       <Button
         fullWidth

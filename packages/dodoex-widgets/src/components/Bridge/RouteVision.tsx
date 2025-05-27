@@ -1,7 +1,9 @@
-import { Box } from '@dodoex/components';
+import { Box, useTheme } from '@dodoex/components';
 import { ArrowRight } from '@dodoex/icons';
 import { BridgeRouteI } from '../../hooks/Bridge';
 import { productList } from './SelectBridgeDialog/productList';
+import { useMemo } from 'react';
+import { chainListMap } from '../../constants/chainList';
 
 export interface RouteVisionProps {
   route: BridgeRouteI;
@@ -18,49 +20,90 @@ export const RouteVision = ({ route }: RouteVisionProps) => {
     toTokenAmount,
     toToken,
     toChainId,
-    step: { includedSteps },
+    step,
   } = route;
-  const productDetail = productList.find((i) => i.id === product);
+
+  const theme = useTheme();
+
+  const logoList = useMemo(() => {
+    const fromChain = chainListMap.get(fromChainId);
+    const toChain = chainListMap.get(toChainId);
+
+    const list = [
+      {
+        key: 'from',
+        logo: fromChain?.logo,
+        title: fromChain?.name,
+      },
+    ];
+
+    if (step.includedSteps.length > 0) {
+      step.includedSteps.forEach((item) => {
+        const productDetail = productList.find((i) => i.id === item.tool);
+        const chain = chainListMap.get(item.estimate.fromToken.chainId);
+
+        list.push({
+          key: item.id,
+          logo: productDetail?.logoURI ?? chain?.logo,
+          title: productDetail?.name ?? chain?.name,
+        });
+      });
+    }
+
+    list.push({
+      key: 'to',
+      logo: toChain?.logo,
+      title: toChain?.name,
+    });
+
+    return list;
+  }, [fromChainId, step.includedSteps, toChainId]);
 
   return (
     <Box
       sx={{
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-        }}
-      >
-        <Box
-          component={productDetail?.logoURI}
-          sx={{
-            width: 16,
-            height: 16,
-          }}
-        />
-        <Box
-          sx={{
-            mx: 4,
-            typography: 'body2',
-            fontWeight: 600,
-          }}
-        >
-          {productDetail?.name}
-        </Box>
-      </Box>
-      <Box
-        component={ArrowRight}
-        sx={{
-          width: 18,
-          height: 18,
-        }}
-      />
+      {logoList.map((item) => {
+        return (
+          <Box
+            key={item.key}
+            sx={{ display: 'flex', alignItems: 'center', gap: 8 }}
+          >
+            <Box
+              sx={{
+                width: 20,
+                height: 20,
+                borderRadius: '50%',
+                backgroundColor: theme.palette.background.tag,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Box
+                component={item.logo}
+                sx={{
+                  width: 20,
+                  height: 20,
+                }}
+              />
+            </Box>
+            <Box
+              sx={{
+                typography: 'body1',
+                lineHeight: '22px',
+                color: theme.palette.text.primary,
+              }}
+            >
+              {item.title}
+            </Box>
+          </Box>
+        );
+      })}
     </Box>
   );
 };
