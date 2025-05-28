@@ -100,7 +100,7 @@ msgid "* Please note that the Fee Rate cannot be modified after the pool is crea
 msgstr ""
 
 #: src/components/ConnectWallet/NeedConnectButton.tsx:84
-#: src/components/Swap/index.tsx:771
+#: src/components/Swap/index.tsx:769
 msgid "Switch to {0}"
 msgstr ""
 
@@ -216,8 +216,8 @@ msgstr ""
 msgid "Pay"
 msgstr ""
 
-#: src/components/Swap/index.tsx:756
-#: src/components/Swap/index.tsx:797
+#: src/components/Swap/index.tsx:754
+#: src/components/Swap/index.tsx:795
 msgid "Connect to {0} wallet"
 msgstr ""
 
@@ -336,7 +336,7 @@ msgstr ""
 msgid "Community Treasury"
 msgstr ""
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:137
+#: src/components/Bridge/BridgeRouteShortCard.tsx:244
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:172
 msgid "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
@@ -355,7 +355,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 msgid "Confirm"
 msgstr "确认"
 
-#: src/components/Swap/index.tsx:1175
+#: src/components/Swap/index.tsx:1189
 msgid "Powered by DODO protocol"
 msgstr ""
 
@@ -710,7 +710,7 @@ msgstr ""
 msgid "Emulator"
 msgstr ""
 
-#: src/components/Swap/index.tsx:805
+#: src/components/Swap/index.tsx:803
 msgid "Transaction Pending"
 msgstr ""
 
@@ -858,7 +858,7 @@ msgstr ""
 msgid "Related CrowdPooling"
 msgstr ""
 
-#: src/components/Swap/index.tsx:897
+#: src/components/Swap/index.tsx:903
 msgid "Review Swap"
 msgstr ""
 
@@ -895,7 +895,7 @@ msgstr ""
 msgid "Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes."
 msgstr ""
 
-#: src/components/Swap/index.tsx:813
+#: src/components/Swap/index.tsx:811
 msgid "Select Tokens"
 msgstr ""
 
@@ -986,13 +986,13 @@ msgstr ""
 msgid "Share Of Pool"
 msgstr ""
 
-#: src/components/Swap/index.tsx:1043
+#: src/components/Swap/index.tsx:1050
 msgid "The setting has been switched to swap mode"
 msgstr ""
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:658
-#: src/components/Swap/index.tsx:857
+#: src/components/Swap/index.tsx:656
+#: src/components/Swap/index.tsx:847
 msgid "Quote not available"
 msgstr "没有报价"
 
@@ -1054,7 +1054,7 @@ msgstr ""
 msgid "Your position will appear here."
 msgstr ""
 
-#: src/components/Swap/index.tsx:842
+#: src/components/Swap/index.tsx:831
 msgid "Fetching Price..."
 msgstr ""
 
@@ -1185,7 +1185,7 @@ msgstr "交易哈希："
 msgid "Single"
 msgstr ""
 
-#: src/components/Swap/index.tsx:887
+#: src/components/Swap/index.tsx:892
 msgid "Review Cross Chain"
 msgstr ""
 
@@ -1457,7 +1457,7 @@ msgstr ""
 msgid "On"
 msgstr "在"
 
-#: src/components/Swap/index.tsx:824
+#: src/components/Swap/index.tsx:872
 #: src/hooks/Token/useGetTokenStatus.ts:60
 #: src/hooks/Token/useTokenStatus.ts:134
 msgid "Approve"
@@ -1729,7 +1729,7 @@ msgstr ""
 msgid "RPC node data exception"
 msgstr "RPC节点异常"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:98
+#: src/components/Bridge/BridgeRouteShortCard.tsx:287
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:133
 msgid "Estimated transaction time"
 msgstr "预计交易时长"
@@ -1800,7 +1800,7 @@ msgstr ""
 msgid "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 msgstr ""
 
-#: src/components/Swap/index.tsx:831
+#: src/components/Swap/index.tsx:819
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:534
 msgid "Enter an amount"
 msgstr "输入代币数量"
@@ -1809,7 +1809,7 @@ msgstr "输入代币数量"
 msgid "Ratio"
 msgstr ""
 
-#: src/components/Swap/index.tsx:824
+#: src/components/Swap/index.tsx:872
 #: src/components/TokenPairStatusButton.tsx:45
 #: src/components/TokenStatusButton.tsx:31
 msgid "Approving"
@@ -2042,7 +2042,7 @@ msgstr ""
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "在冷静期无法进行清算"
 
-#: src/components/Swap/index.tsx:1041
+#: src/components/Swap/index.tsx:1048
 msgid "The setting has been switched to cross chain mode"
 msgstr ""
 
@@ -2093,7 +2093,11 @@ msgstr "详情"
 msgid "APY"
 msgstr ""
 
-#: src/components/Swap/index.tsx:1011
+#: src/components/Bridge/RouteVisionModal.tsx:134
+msgid "Route"
+msgstr ""
+
+#: src/components/Swap/index.tsx:1018
 msgid "Universal Swap"
 msgstr ""
 
@@ -2377,7 +2381,7 @@ msgstr ""
 msgid "Total Rewards=Daily Rewards*Duration"
 msgstr ""
 
-#: src/components/Swap/index.tsx:868
+#: src/components/Swap/index.tsx:860
 #: src/components/TokenStatusButton.tsx:18
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:124
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:241
