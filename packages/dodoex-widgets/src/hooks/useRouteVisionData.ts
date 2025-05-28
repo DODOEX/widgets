@@ -15,7 +15,7 @@ export type MidPathType = {
   >;
 };
 
-interface RouteDataType {
+export interface RouteDataType {
   subRouteTotalPart: number;
   subRoute: Array<{
     midPathPart: number;

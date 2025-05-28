@@ -12,7 +12,7 @@ export interface RouteVisionModalProps {
 }
 
 export const RouteVisionModal = ({ route }: RouteVisionModalProps) => {
-  const [isDialogVisible, setIsDialogVisible] = useState(true);
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
   const theme = useTheme();
 
   const { fromChainId, toChainId, step } = route;

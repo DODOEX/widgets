@@ -145,7 +145,10 @@ export default function RoutingCard({
                           if (!p.poolAddress) {
                             return;
                           }
-                          getEtherscanPage(routing.chainId, p.poolAddress);
+                          window.open(
+                            getEtherscanPage(routing.chainId, p.poolAddress),
+                            '_blank',
+                          );
                         }}
                       >
                         <Box

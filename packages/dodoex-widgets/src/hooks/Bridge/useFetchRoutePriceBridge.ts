@@ -158,12 +158,27 @@ export interface BridgeStepTool {
 }
 
 export interface BridgeStepEstimate {
-  fromToken: Pick<BridgeTokenI, 'address' | 'symbol' | 'chainId' | 'decimals'>;
-  toToken: Pick<BridgeTokenI, 'address' | 'symbol' | 'chainId' | 'decimals'>;
+  fromToken: TokenInfo;
+  toToken: TokenInfo;
   fromTokenAmount: BigNumber;
   toTokenAmount: BigNumber;
 }
 
+export interface BridgeStepSwapStep {
+  ammKey: string;
+  label: string;
+  percent: number;
+  inputToken: TokenInfo;
+  inAmount: string;
+  outputToken: TokenInfo;
+  outAmount: string;
+  assembleArgs: {
+    baseToken: string;
+    quoteToken: string;
+    pairAddress: string;
+    pairName: string;
+  };
+}
 export interface BridgeStep {
   tool: string;
   toolDetails: BridgeStepTool;
@@ -178,6 +193,7 @@ export interface BridgeStep {
     toolDetails: BridgeStepTool;
     type: string;
     estimate: BridgeStepEstimate;
+    swapSteps?: Array<BridgeStepSwapStep>;
   }>;
 }
 
@@ -300,7 +316,7 @@ export function useFetchRoutePriceBridge({
       fromToken.chainId !== toToken.chainId,
     refetchInterval: 15 * 1000,
     // enabled: false,
-    initialData: routesExample.data,
+    // initialData: routesExample.data,
   });
 
   const { status, bridgeRouteList } = useMemo(() => {
@@ -371,31 +387,74 @@ export function useFetchRoutePriceBridge({
         if (fromToken && toToken && toAmountBN.isFinite() && toAmountBN.gt(0)) {
           const newIncludedSteps: BridgeStep['includedSteps'] = [];
 
-          omniPlan.forEach((i) => {
+          omniPlan.forEach((plan) => {
+            const estimateFromToken = tokenList.find(
+              (token) =>
+                token.address.toLowerCase() === plan.inToken.toLowerCase() &&
+                token.chainId === plan.inChainId,
+            );
+            const estimateToToken = tokenList.find(
+              (token) =>
+                token.address.toLowerCase() === plan.outToken.toLowerCase() &&
+                token.chainId === plan.outChainId,
+            );
             newIncludedSteps.push({
-              id: `${i.inChainType}-${i.outChainType}-${i.type}-${i.inToken}-${i.outToken}-${i.inAmount}-${i.outAmount}`,
-              tool: i.inChainType,
+              id: `${plan.inChainType}-${plan.outChainType}-${plan.type}-${plan.inToken}-${plan.outToken}-${plan.inAmount}-${plan.outAmount}`,
+              tool: plan.inChainType,
               toolDetails: {
-                name: i.inChainType,
-                logoURI: i.inChainType,
+                name: plan.inChainType,
+                logoURI: plan.inChainType,
               },
-              type: i.type,
+              type: plan.type,
               estimate: {
-                fromToken: {
-                  address: i.inToken,
-                  symbol: i.inToken.slice(0, 6),
-                  chainId: i.inChainId,
+                fromToken: estimateFromToken ?? {
+                  address: plan.inToken,
+                  symbol: plan.inToken.slice(0, 6),
+                  chainId: plan.inChainId,
                   decimals: 18,
+                  name: plan.inToken.slice(0, 6),
                 },
-                toToken: {
-                  address: i.outToken,
-                  symbol: i.outToken.slice(0, 6),
-                  chainId: i.outChainId,
+                toToken: estimateToToken ?? {
+                  address: plan.outToken,
+                  symbol: plan.outToken.slice(0, 6),
+                  chainId: plan.outChainId,
                   decimals: 18,
+                  name: plan.outToken.slice(0, 6),
                 },
-                fromTokenAmount: new BigNumber(i.inAmountWithOutDecimals),
-                toTokenAmount: new BigNumber(i.outAmountWithOutDecimals),
+                fromTokenAmount: new BigNumber(plan.inAmountWithOutDecimals),
+                toTokenAmount: new BigNumber(plan.outAmountWithOutDecimals),
               },
+              swapSteps: plan.swapSteps?.map((swap) => {
+                const inputToken = tokenList.find(
+                  (token) =>
+                    token.address.toLowerCase() ===
+                      swap.inputToken.toLowerCase() &&
+                    token.chainId === plan.inChainId,
+                );
+                const outputToken = tokenList.find(
+                  (token) =>
+                    token.address.toLowerCase() ===
+                      swap.outputToken.toLowerCase() &&
+                    token.chainId === plan.inChainId,
+                );
+                return {
+                  ...swap,
+                  inputToken: inputToken ?? {
+                    address: swap.inputToken,
+                    symbol: swap.inputToken.slice(0, 6),
+                    chainId: plan.inChainId,
+                    decimals: 18,
+                    name: swap.inputToken.slice(0, 6),
+                  },
+                  outputToken: outputToken ?? {
+                    address: swap.outputToken,
+                    symbol: swap.outputToken.slice(0, 6),
+                    chainId: plan.inChainId,
+                    decimals: 18,
+                    name: swap.outputToken.slice(0, 6),
+                  },
+                };
+              }),
             });
           });
           if (newIncludedSteps.length > 0) {
