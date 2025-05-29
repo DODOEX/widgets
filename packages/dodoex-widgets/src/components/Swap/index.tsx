@@ -12,10 +12,9 @@ import { t, Trans } from '@lingui/macro';
 import { CaipNetworksUtil } from '@reown/appkit-utils';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { AppUrl } from '../../constants/api';
 import { chainListMap } from '../../constants/chainList';
-import { basicTokenMap } from '../../constants/chains';
 import { setLastToken } from '../../constants/localstorage';
 import { PRICE_IMPACT_THRESHOLD } from '../../constants/swap';
 import {
@@ -56,7 +55,6 @@ import { formatTokenAmountNumber, namespaceToTitle } from '../../utils';
 import { formatReadableNumber } from '../../utils/formatter';
 import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
 import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
-import SelectBridgeDialog from '../Bridge/SelectBridgeDialog';
 import ErrorMessageDialog from '../ErrorMessageDialog';
 import TokenLogo from '../TokenLogo';
 import { QuestionTooltip } from '../Tooltip';
@@ -84,15 +82,13 @@ export function Swap({
 }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
-  const { defaultChainId, noPowerBy, onlyChainId } = useUserOptions();
+  const { noPowerBy, onlyChainId } = useUserOptions();
 
   const {
     open,
-    close,
     disconnect,
     getAppKitAccountByChainId,
-    chainId,
-    account,
+    chainId: currentChainId,
     appKitActiveNetwork,
   } = useWalletInfo();
 
@@ -107,8 +103,6 @@ export function Swap({
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState<boolean>(false);
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] =
     useState<boolean>(false);
-  const [switchBridgeRouteShow, setSwitchBridgeRouteShow] = useState(false);
-  const [selectedRouteIdOrigin, setSelectRouteId] = useState('');
   const [bridgeSummaryShow, setBridgeSummaryShow] = useState(false);
 
   const fromAccount = useMemo(() => {
@@ -118,11 +112,6 @@ export function Swap({
   const toAccount = useMemo(() => {
     return getAppKitAccountByChainId(toToken?.chainId);
   }, [toToken?.chainId, getAppKitAccountByChainId]);
-
-  const basicTokenAddress = useMemo(
-    () => basicTokenMap[(chainId ?? defaultChainId) as ChainId]?.address,
-    [chainId],
-  );
 
   const debouncedSetFromAmt = useMemo(
     () => debounce((amt) => setFromAmt(amt), debounceTime),
@@ -168,7 +157,10 @@ export function Swap({
     privacySwapEnableAble,
     endpointStatusMap,
     refetchEndpointStatus,
-  } = usePrivacySwapStatus({ chainId, account });
+  } = usePrivacySwapStatus({
+    chainId: fromToken?.chainId,
+    account: fromAccount?.appKitAccount.address,
+  });
 
   const fromEtherTokenQuery = useFetchETHBalance(fromToken?.chainId);
 
@@ -181,22 +173,13 @@ export function Swap({
       toAccount,
     });
 
-  const selectedRouteId = useMemo(() => {
-    if (!selectedRouteIdOrigin && bridgeRouteList.length) {
-      return bridgeRouteList[0].id;
-    }
-    return selectedRouteIdOrigin;
-  }, [selectedRouteIdOrigin, bridgeRouteList]);
   const selectedRoute = useMemo(() => {
-    return bridgeRouteList.find(
-      (route) => route.id === selectedRouteId && route.fromAddress === account,
-    );
-  }, [bridgeRouteList, selectedRouteId, account]);
-  useEffect(() => {
-    if (!selectedRoute && selectedRouteIdOrigin) {
-      setSelectRouteId('');
+    if (bridgeRouteList && bridgeRouteList.length > 0) {
+      return bridgeRouteList[0];
     }
-  }, [selectedRoute]);
+
+    return undefined;
+  }, [bridgeRouteList]);
 
   const {
     isApproving,
@@ -207,7 +190,7 @@ export function Swap({
     getMaxBalance,
   } = useTokenStatus(fromToken, {
     amount: fromAmt,
-    contractAddress: selectedRoute?.spenderContractAddress,
+    contractAddress: selectedRoute?.spenderContractAddress ?? undefined,
   });
 
   const handleMaxClick = useCallback(() => {
@@ -216,7 +199,7 @@ export function Swap({
 
   const estimateGas = useMemo(() => {
     if (
-      !account ||
+      !fromAccount?.appKitAccount.address ||
       insufficientBalance ||
       isApproving ||
       isGetApproveLoading ||
@@ -226,7 +209,7 @@ export function Swap({
     }
     return true;
   }, [
-    account,
+    fromAccount?.appKitAccount.address,
     insufficientBalance,
     isApproving,
     isGetApproveLoading,
@@ -303,7 +286,7 @@ export function Swap({
         return setFromTokenOrigin((prev) => {
           const newValue = typeof value === 'function' ? value(prev) : value;
           // sync redux
-          if (!chainId) {
+          if (!currentChainId) {
             // The chainId is only modified when the wallet is not connected, and the chain is specified when the wallet is connected.
             useGlobalState.setState({
               fromTokenChainId: (newValue?.chainId ?? undefined) as
@@ -319,7 +302,7 @@ export function Swap({
           return newValue;
         });
       },
-      [onPayTokenChange, chainId],
+      [onPayTokenChange, currentChainId],
     );
 
   const setToToken: (value: React.SetStateAction<TokenInfo | null>) => void =
@@ -353,7 +336,6 @@ export function Swap({
     setToToken(fromToken);
     setLastToken('from', toToken);
     setLastToken('to', fromToken);
-    setSelectRouteId('');
   }, [
     setFromToken,
     toToken,
@@ -361,7 +343,6 @@ export function Swap({
     fromToken,
     updateFromAmt,
     updateToAmt,
-    setSelectRouteId,
   ]);
 
   const onFromTokenChange = useCallback(
@@ -370,17 +351,9 @@ export function Swap({
       updateFromAmt('');
       updateToAmt('');
       setFromToken(token);
-      setSelectRouteId('');
       setLastToken('from', token);
     },
-    [
-      switchTokens,
-      updateFromAmt,
-      updateToAmt,
-      setFromToken,
-      setSelectRouteId,
-      setLastToken,
-    ],
+    [switchTokens, updateFromAmt, updateToAmt, setFromToken, setLastToken],
   );
   const onToTokenChange = useCallback(
     (token: TokenInfo, isOccupied: boolean) => {
@@ -388,17 +361,9 @@ export function Swap({
       updateFromAmt('');
       updateToAmt('');
       setToToken(token);
-      setSelectRouteId('');
       setLastToken('to', token);
     },
-    [
-      switchTokens,
-      updateFromAmt,
-      updateToAmt,
-      setFromToken,
-      setSelectRouteId,
-      setLastToken,
-    ],
+    [switchTokens, updateFromAmt, updateToAmt, setFromToken, setLastToken],
   );
   const onFromTokenInputFocus = useCallback(() => {
     if (isReverseRouting) {
@@ -495,7 +460,11 @@ export function Swap({
     resPricePerFromToken,
   ]);
 
-  const isUnSupportChain = useMemo(() => !ChainId[chainId || 1], [chainId]);
+  const isUnSupportChain = useMemo(
+    () => !ChainId[fromToken?.chainId || 1],
+    [fromToken?.chainId],
+  );
+
   const isNotCurrentChain = useMemo(() => {
     if (!fromToken) {
       return false;
@@ -509,8 +478,12 @@ export function Swap({
       return false;
     }
 
-    return !!chainId && !!fromToken?.chainId && fromToken?.chainId !== chainId;
-  }, [chainId, fromToken, getAppKitAccountByChainId]);
+    return (
+      !!currentChainId &&
+      !!fromToken?.chainId &&
+      fromToken?.chainId !== currentChainId
+    );
+  }, [currentChainId, fromToken, getAppKitAccountByChainId]);
 
   const disabledSwitch = useDisabledTokenSwitch({
     fromToken,
@@ -758,7 +731,10 @@ export function Swap({
       );
     }
 
-    if (fromAccount.chain.isEVMChain && fromAccount.chain.chainId !== chainId) {
+    if (
+      fromAccount.chain.isEVMChain &&
+      fromAccount.chain.chainId !== currentChainId
+    ) {
       return (
         <Button
           fullWidth
@@ -909,7 +885,7 @@ export function Swap({
     fromAccount?.chain.chainId,
     fromAccount?.chain.name,
     fromAccount?.chain.caipNetwork,
-    chainId,
+    currentChainId,
     toAccount?.appKitAccount?.isConnected,
     isInflight,
     fromToken,
@@ -1230,13 +1206,6 @@ export function Swap({
           refetchEndpointStatus={refetchEndpointStatus}
         />
       )}
-      <SelectBridgeDialog
-        open={switchBridgeRouteShow}
-        onClose={() => setSwitchBridgeRouteShow(false)}
-        selectedRouteId={selectedRouteId}
-        setSelectRouteId={setSelectRouteId}
-        bridgeRouteList={bridgeRouteList}
-      />
       <BridgeSummaryDialog
         open={bridgeSummaryShow}
         onClose={() => setBridgeSummaryShow(false)}

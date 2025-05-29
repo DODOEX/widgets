@@ -10,15 +10,19 @@ export async function createBridgeOrder({
   graphQLRequests,
   tx,
   route,
+  calldata,
 }: {
   graphQLRequests: GraphQLRequests;
   tx: string;
   route: BridgeRouteI;
+  calldata: string;
 }) {
   const { sourceRoute } = route;
+  const { approveTarget, encodeParams, ...rest } = sourceRoute ?? {};
   const createParams: Cross_Chain_Swap_ZetachainorderCreateData = {
     fromHash: tx,
-    ...sourceRoute,
+    ...rest,
+    calldata,
   };
 
   const result = await graphQLRequests.getData<

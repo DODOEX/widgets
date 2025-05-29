@@ -52,7 +52,7 @@ function DialogBase({
         bottom: 0,
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: 'background.paper',
+        backgroundColor: 'background.default',
         borderRadius: 16,
         height,
       }}

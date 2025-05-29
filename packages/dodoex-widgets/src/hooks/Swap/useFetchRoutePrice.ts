@@ -1,11 +1,6 @@
 import { ChainId } from '@dodoex/api';
 import { parseFixed } from '@ethersproject/bignumber';
 import { t } from '@lingui/macro';
-import {
-  Transaction,
-  VersionedMessage,
-  VersionedTransaction,
-} from '@solana/web3.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import BigNumber from 'bignumber.js';
@@ -13,6 +8,7 @@ import React, { useCallback, useMemo } from 'react';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import { EmptyAddress } from '../../constants/address';
 import { APIServiceKey, getAPIService } from '../../constants/api';
+import { constructSolanaTransaction } from '../../utils/solana';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { useSubmission } from '../Submission';
 import { MetadataFlag } from '../Submission/types';
@@ -342,112 +338,46 @@ export function useFetchRoutePrice({
 
       // 解码 base64 数据
       try {
-        // Ensure rawBrief.data is a valid string
-        if (!data.rawBrief?.data || typeof data.rawBrief.data !== 'string') {
-          throw new Error('Invalid transaction data');
-        }
+        const transaction = constructSolanaTransaction({
+          data: data.rawBrief.data,
+        });
 
-        // Create buffer from base64 string
-        const binaryString = atob(data.rawBrief.data);
-        const serializedTransaction = new Uint8Array(binaryString.length);
-        for (let i = 0; i < binaryString.length; i++) {
-          serializedTransaction[i] = binaryString.charCodeAt(i);
-        }
+        return submission.executeCustom({
+          brief: t`Swap`,
+          subtitle,
+          metadata: {
+            [MetadataFlag.swap]: true,
+          },
+          handler: async (params) => {
+            try {
+              const signature = await solanaWalletProvider.sendTransaction(
+                transaction,
+                solanaConnection,
+              );
+              params.onSubmit(signature);
 
-        // Debug logging
-        console.log('Transaction data length:', serializedTransaction.length);
-        console.log('First few bytes:', serializedTransaction.slice(0, 10));
+              const latestBlockhash =
+                await solanaConnection.getLatestBlockhash();
+              const confirmResult = await solanaConnection.confirmTransaction({
+                signature,
+                blockhash: latestBlockhash.blockhash,
+                lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+              });
 
-        // Validate buffer length
-        if (serializedTransaction.length === 0) {
-          throw new Error('Empty transaction buffer');
-        }
-
-        // Validate minimum transaction size
-        if (serializedTransaction.length < 3) {
-          throw new Error('Transaction buffer too small');
-        }
-
-        try {
-          // Try to detect if this is a versioned transaction by checking the second byte
-          const firstByte = serializedTransaction[0];
-          const secondByte = serializedTransaction[1];
-
-          let transaction;
-          if (secondByte === 128) {
-            // Versioned transaction starts with 0x80 as second byte
-            // Skip the first byte (0) and deserialize the rest as a versioned transaction
-            const message = VersionedMessage.deserialize(
-              serializedTransaction.slice(1),
-            );
-            transaction = new VersionedTransaction(message);
-          } else {
-            // This is a legacy transaction
-            transaction = Transaction.from(serializedTransaction);
-          }
-
-          // Validate the transaction
-          if (!transaction) {
-            throw new Error('Failed to create transaction');
-          }
-
-          // Additional validation based on transaction type
-          if (transaction instanceof VersionedTransaction) {
-            if (!transaction.message || !transaction.message.header) {
-              throw new Error('Invalid versioned transaction structure');
-            }
-          } else {
-            if (!transaction.recentBlockhash) {
-              throw new Error('Invalid legacy transaction structure');
-            }
-          }
-
-          return submission.executeCustom({
-            brief: t`Swap`,
-            subtitle,
-            metadata: {
-              [MetadataFlag.swap]: true,
-            },
-            handler: async (params) => {
-              try {
-                const signature = await solanaWalletProvider.sendTransaction(
-                  transaction,
-                  solanaConnection,
-                );
-                params.onSubmit(signature);
-
-                const latestBlockhash =
-                  await solanaConnection.getLatestBlockhash();
-                const confirmResult = await solanaConnection.confirmTransaction(
-                  {
-                    signature,
-                    blockhash: latestBlockhash.blockhash,
-                    lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
-                  },
-                );
-
-                if (confirmResult.value.err) {
-                  params.onError(confirmResult.value.err);
-                  return;
-                }
-                params.onSuccess(signature);
-              } catch (error) {
-                console.error('wallet.sendTransaction execute:', error);
-                params.onError(error);
+              if (confirmResult.value.err) {
+                params.onError(confirmResult.value.err);
+                return;
               }
-            },
-          });
-        } catch (error) {
-          console.error('Transaction deserialization error:', error);
-          console.error('Error details:', {
-            dataLength: data.rawBrief.data.length,
-            bufferLength: serializedTransaction.length,
-            firstBytes: serializedTransaction.slice(0, 10),
-          });
-          throw error;
-        }
+              params.onSuccess(signature);
+            } catch (error) {
+              console.error('wallet.sendTransaction execute:', error);
+              params.onError(error);
+            }
+          },
+        });
       } catch (error) {
-        console.error('Buffer.from execute:', error);
+        console.error('Transaction deserialization error:', error);
+        throw error;
       }
     },
   });

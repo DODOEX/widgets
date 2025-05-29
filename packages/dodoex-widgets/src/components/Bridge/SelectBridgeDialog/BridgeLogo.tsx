@@ -1,6 +1,6 @@
-/* eslint-disable no-nested-ternary */
-import { Box, BoxProps, useTheme } from '@dodoex/components';
+import { Box, BoxProps } from '@dodoex/components';
 import { BridgeStep } from '../../../hooks/Bridge/useFetchRoutePriceBridge';
+import { productList } from './productList';
 
 export function BridgeLogo({
   size = 'medium',
@@ -15,45 +15,22 @@ export function BridgeLogo({
   logoMarginLeft?: number;
   nameSx?: BoxProps['sx'];
 }) {
-  const theme = useTheme();
-
   if (!toolDetails || !toolDetails.logoURI || !toolDetails.name) {
     return null;
   }
 
   const { logoURI, name } = toolDetails;
+
+  const productDetail = productList.find((i) => i.id === name);
+
   return (
-    <>
-      <Box
-        component="img"
-        src={logoURI}
-        alt={name}
-        sx={{
-          marginLeft: logoMarginLeft,
-          width: size === 'large' ? 24 : 16,
-          height: size === 'large' ? 24 : 16,
-        }}
-      />
-      <Box
-        sx={{
-          color: theme.palette.text.primary,
-          fontWeight: 600,
-          marginLeft: nameMarginLeft,
-          typography: {
-            mobile:
-              size === 'small' ? 'h6' : size === 'medium' ? 'body2' : 'caption',
-            tablet:
-              size === 'small'
-                ? 'body2'
-                : size === 'medium'
-                ? 'body2'
-                : 'caption',
-          },
-          ...nameSx,
-        }}
-      >
-        {name}
-      </Box>
-    </>
+    <Box
+      component={productDetail?.logoURI}
+      style={{
+        marginLeft: logoMarginLeft,
+        width: size === 'large' ? 24 : 16,
+        height: size === 'large' ? 24 : 16,
+      }}
+    />
   );
 }

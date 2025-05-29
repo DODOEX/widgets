@@ -1,4 +1,5 @@
 import { btcSignet, ChainId } from '@dodoex/api';
+import type { BitcoinConnector } from '@reown/appkit-adapter-bitcoin';
 import {
   type Provider,
   useAppKitConnection,
@@ -33,6 +34,9 @@ export function useWalletInfo() {
   const { walletProvider: solanaWalletProvider } =
     useAppKitProvider<Provider>('solana');
   const { connection: solanaConnection } = useAppKitConnection();
+
+  const { walletProvider: bitcoinWalletProvider } =
+    useAppKitProvider<BitcoinConnector>('bip122');
 
   const appKitActiveNetwork = useAppKitNetwork();
 
@@ -121,6 +125,8 @@ export function useWalletInfo() {
 
     solanaWalletProvider,
     solanaConnection,
+
+    bitcoinWalletProvider,
 
     getAppKitAccountByChainId,
   };

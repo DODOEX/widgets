@@ -48,19 +48,6 @@ export function TokenWithChain({
           height={28}
           url={token?.logoURI}
         />
-        {chain ? (
-          <Box
-            component={chain.logo}
-            sx={{
-              width: 12,
-              height: 12,
-              position: 'relative',
-              left: -6,
-            }}
-          />
-        ) : (
-          ''
-        )}
       </Box>
       <Box
         sx={{

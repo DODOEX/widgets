@@ -1,12 +1,15 @@
 import { BigNumber } from 'bignumber.js';
 import { TokenList } from '../Token/type';
-import { BridgeStep, routesExample } from './useFetchRoutePriceBridge';
+import {
+  BridgeStep,
+  CrossChainSwapZetachainRoute,
+} from './useFetchRoutePriceBridge';
 
 export function generateBridgeStep({
   omniPlan,
   tokenList,
 }: {
-  omniPlan: (typeof routesExample)['data']['cross_chain_swap_zetachain_routes']['omniPlan'];
+  omniPlan: CrossChainSwapZetachainRoute['omniPlan'];
   tokenList: TokenList;
 }): BridgeStep {
   const newIncludedSteps: BridgeStep['includedSteps'] = [];

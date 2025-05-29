@@ -1,31 +1,22 @@
 import {
-  Box,
   Accordion,
   AccordionItem,
-  Input,
+  Box,
+  ButtonBase,
   HoverOpacity,
   useTheme,
 } from '@dodoex/components';
-import {
-  DetailBorder,
-  CaretUp,
-  ArrowTopRightBorder,
-  DoneFilled,
-  Edit,
-} from '@dodoex/icons';
+import { ArrowTopRightBorder, CaretUp, DetailBorder } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { chainListMap } from '../../../constants/chainList';
-import { ChainId } from '@dodoex/api';
+import { useFeeList } from '../../../hooks/Bridge/useFeeList';
 import { BridgeRouteI } from '../../../hooks/Bridge/useFetchRoutePriceBridge';
-import {
-  formatReadableNumber,
-  getEtherscanPage,
-  truncatePoolAddress,
-} from '../../../utils';
+import { getEtherscanPage, truncatePoolAddress } from '../../../utils';
 import { formatReadableTimeDuration } from '../../../utils/time';
 import { QuestionTooltip } from '../../Tooltip';
-import { RouteSteps } from './orderInfoModal/RouteSteps';
+import { CompareRoute } from '../CompareRoute';
+import { RouteVision } from '../RouteVision';
 
 export default function BridgeSummaryDetail({
   route,
@@ -33,12 +24,14 @@ export default function BridgeSummaryDetail({
   route: BridgeRouteI;
 }) {
   const theme = useTheme();
-  const fromChain = chainListMap.get(route.fromChainId as ChainId);
-  // const [isEditFromAddress, setIsEditFromAddress] = useState(false);
-  // const [fromAddress, setFromAddress] = useState(route.fromAddress);
-  const fromAddressScanUrl = useMemo(() => {
-    return getEtherscanPage(route.fromChainId, route.fromAddress, 'address');
-  }, [route.fromAddress, route.fromChainId]);
+  const fromChain = chainListMap.get(route.fromChainId);
+  const toChain = chainListMap.get(route.toChainId);
+
+  const [feeListActive, setFeeListActive] = useState(false);
+  const [feeComparisonActive, setFeeComparisonActive] = useState(false);
+
+  const feeList = useFeeList({ fees: route.fees });
+
   return (
     <Box>
       <Box
@@ -70,6 +63,7 @@ export default function BridgeSummaryDetail({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    color: 'text.primary',
                   }}
                 >
                   <Box
@@ -123,17 +117,15 @@ export default function BridgeSummaryDetail({
                     alignItems: 'center',
                   }}
                 >
-                  {fromChain ? (
+                  {toChain ? (
                     <Box
-                      component={fromChain.logo}
+                      component={toChain.logo}
                       sx={{
                         width: 18,
                         height: 18,
                       }}
                     />
-                  ) : (
-                    ''
-                  )}
+                  ) : null}
                   <Box
                     sx={{
                       display: 'inline-block',
@@ -143,69 +135,22 @@ export default function BridgeSummaryDetail({
                       backgroundColor: 'border.main',
                     }}
                   />
-                  {/* {isEditFromAddress ? (
-                <>
-                  <Input
-                    value={fromAddress}
-                    onChange={(evt) => setFromAddress(evt.target.value)}
-                    sx={{
-                      width: '37%',
-                    }}
-                  />
-                  <HoverOpacity
-                    component={DoneFilled}
-                    weak
-                    sx={{
-                      ml: 6,
-                      width: 18,
-                      height: 18,
-                      cursor: 'pointer',
-                      '& circle': {
-                        fill: theme.palette.secondary.main,
-                      },
-                    }}
-                    onClick={() => {
-                      setIsEditFromAddress(false);
-                    }}
-                  />
-                </>
-              ) : (
-                <>
                   <Box
                     sx={{
                       typography: 'body2',
                       fontWeight: 600,
                     }}
                   >
-                    {truncatePoolAddress(route.fromAddress)}
-                  </Box>
-                  <HoverOpacity
-                    component={Edit}
-                    weak
-                    sx={{
-                      ml: 6,
-                      width: 18,
-                      height: 18,
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => {
-                      setIsEditFromAddress(true);
-                    }}
-                  />
-                </>
-              )} */}
-                  <Box
-                    sx={{
-                      typography: 'body2',
-                      fontWeight: 600,
-                    }}
-                  >
-                    {truncatePoolAddress(route.fromAddress)}
+                    {truncatePoolAddress(route.toAddress)}
                   </Box>
                   <HoverOpacity
                     component="a"
                     // @ts-ignore
-                    href={fromAddressScanUrl}
+                    href={getEtherscanPage(
+                      route.toChainId,
+                      route.toAddress,
+                      'address',
+                    )}
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{
@@ -213,6 +158,9 @@ export default function BridgeSummaryDetail({
                       width: 18,
                       height: 18,
                       color: 'text.secondary',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
                   >
                     <Box
@@ -225,37 +173,187 @@ export default function BridgeSummaryDetail({
                   </HoverOpacity>
                 </Box>
               </Box>
-              {route.feeUSD ? (
+              <Box
+                sx={{
+                  mt: 8,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
                 <Box
                   sx={{
-                    mt: 8,
                     display: 'flex',
-                    justifyContent: 'space-between',
                     alignItems: 'center',
+                    typography: 'body2',
+                    color: 'text.secondary',
+                    flexShrink: 0,
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      typography: 'body2',
-                      color: 'text.secondary',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Trans>Fee</Trans>
-                  </Box>
-                  <Box
-                    sx={{
-                      typography: 'body2',
-                    }}
-                  >
-                    ${formatReadableNumber({ input: route.feeUSD })}
-                  </Box>
+                  <Trans>Total fees</Trans>
                 </Box>
-              ) : (
-                ''
-              )}
+
+                <Box
+                  component={ButtonBase}
+                  onClick={() => setFeeListActive(!feeListActive)}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    gap: 4,
+                    typography: 'body2',
+                    color: 'text.primary',
+                  }}
+                >
+                  {route.feeUSD ? `~$${route.feeUSD}` : '-'}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="19"
+                    viewBox="0 0 18 19"
+                    fill="none"
+                  >
+                    <path
+                      d="M3.75 11.2663L4.98375 12.5L9 8.4925L13.0162 12.5L14.25 11.2663L9 6.01625L3.75 11.2663Z"
+                      fill="currentColor"
+                      fillOpacity="0.5"
+                    />
+                  </svg>
+                </Box>
+              </Box>
+
+              {feeListActive &&
+                feeList.map((fee) => {
+                  return (
+                    <Box
+                      key={fee.title}
+                      sx={{
+                        mt: 8,
+                        pl: 22,
+                        pr: 22,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        color: 'text.secondary',
+                        typography: 'body2',
+                        position: 'relative',
+                      }}
+                    >
+                      <Box
+                        component="svg"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="10"
+                        height="25"
+                        viewBox="0 0 10 25"
+                        fill="none"
+                        sx={{
+                          width: 10,
+                          height: 25,
+                          position: 'absolute',
+                          left: 10,
+                          bottom: 10,
+                        }}
+                      >
+                        <path
+                          d="M9 24L2 24C1.44772 24 1 23.5523 1 23L1 1"
+                          stroke="currentColor"
+                          strokeOpacity="0.5"
+                          strokeLinecap="round"
+                          strokeDasharray="2 2"
+                        />
+                      </Box>
+
+                      <Box
+                        sx={{
+                          flex: 1,
+                        }}
+                      >
+                        {fee.title}
+                      </Box>
+                      {fee.isFree ? (
+                        <Box
+                          sx={{
+                            color: theme.palette.primary.main,
+                          }}
+                        >
+                          Free
+                        </Box>
+                      ) : fee.value !== null ? (
+                        <Box
+                          sx={{
+                            color: theme.palette.text.primary,
+                          }}
+                        >
+                          ~${fee.value}
+                        </Box>
+                      ) : (
+                        <Box
+                          sx={{
+                            color: theme.palette.text.primary,
+                          }}
+                        >
+                          -
+                        </Box>
+                      )}
+                    </Box>
+                  );
+                })}
+
+              <Box
+                sx={{
+                  mt: 8,
+                  mb: feeComparisonActive ? 8 : 0,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    typography: 'body2',
+                    color: 'text.secondary',
+                    flexShrink: 0,
+                    background:
+                      'linear-gradient(97deg, rgba(255, 255, 255, 0.50) -19.62%, #7BF179 97.87%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  Fee comparison
+                </Box>
+                <Box
+                  component={ButtonBase}
+                  onClick={() => setFeeComparisonActive(!feeComparisonActive)}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    gap: 4,
+                    typography: 'body2',
+                    color: 'text.primary',
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="19"
+                    viewBox="0 0 18 19"
+                    fill="none"
+                  >
+                    <path
+                      d="M3.75 11.2663L4.98375 12.5L9 8.4925L13.0162 12.5L14.25 11.2663L9 6.01625L3.75 11.2663Z"
+                      fill="currentColor"
+                      fillOpacity="0.5"
+                    />
+                  </svg>
+                </Box>
+              </Box>
+
+              {feeComparisonActive && <CompareRoute feeUSD={route.feeUSD} />}
+
               <Box
                 sx={{
                   mt: 8,
@@ -327,6 +425,7 @@ export default function BridgeSummaryDetail({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    color: 'text.primary',
                   }}
                 >
                   <Box
@@ -343,6 +442,8 @@ export default function BridgeSummaryDetail({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    color: 'text.primary',
+                    typography: 'body2',
                   }}
                 >
                   {route.executionDuration
@@ -366,7 +467,7 @@ export default function BridgeSummaryDetail({
               </Box>
             }
           >
-            <RouteSteps route={route} />
+            <RouteVision route={route} />
           </AccordionItem>
         </Accordion>
       </Box>
