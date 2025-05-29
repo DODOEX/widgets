@@ -6,15 +6,19 @@ import { BridgeRouteI, BridgeStepSwapStep } from '../../hooks/Bridge';
 import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
 import { TokenInfo } from '../../hooks/Token/type';
 import { MidPathType } from '../../hooks/useRouteVisionData';
-import { formatPercentageNumber } from '../../utils/formatter';
+import {
+  formatPercentageNumber,
+  formatTokenAmountNumber,
+} from '../../utils/formatter';
 import {
   MobileRoutingVision,
   PCRoutingVision,
 } from '../Swap/SwapOrderHistory/RoutingVision';
 import { productList } from './SelectBridgeDialog/productList';
+import { getEtherscanPage } from '../../utils';
 
 export interface RouteVisionProps {
-  route: BridgeRouteI;
+  route: Pick<BridgeRouteI, 'fromChainId' | 'toChainId' | 'step'>;
 }
 
 interface RouteVisionItemProps {
@@ -56,10 +60,10 @@ function RouteVisionItem({ item }: { item: RouteVisionItemProps }) {
         poolPart: formatPercentageNumber({
           input: new BigNumber(percent).div(100),
         }),
-        poolAddress: path.assembleArgs.pairAddress,
+        poolAddress: path.assembleArgs?.pairAddress ?? null,
       };
 
-      poolDetails.set(path.assembleArgs.pairName, [poolDetail]);
+      poolDetails.set(path.assembleArgs?.pairName ?? '-', [poolDetail]);
 
       return {
         fromToken: inputToken.address,
@@ -124,7 +128,14 @@ function RouteVisionItem({ item }: { item: RouteVisionItemProps }) {
               color: theme.palette.text.primary,
             }}
           >
-            <Box>0.5 ETH</Box>
+            <Box>
+              {formatTokenAmountNumber({
+                input: item.fromTokenAmount,
+                decimals: item.fromToken?.decimals,
+              })}
+              &nbsp;
+              {item.fromToken?.symbol}
+            </Box>
             <Box sx={{ color: theme.palette.text.secondary }}>On</Box>
             <Box
               component={item.fromChain?.logo}
@@ -134,7 +145,14 @@ function RouteVisionItem({ item }: { item: RouteVisionItemProps }) {
               }}
             />
             <Box sx={{ color: theme.palette.text.secondary }}>to</Box>
-            <Box>1010.60 USDC</Box>
+            <Box>
+              {formatTokenAmountNumber({
+                input: item.toTokenAmount,
+                decimals: item.toToken?.decimals,
+              })}
+              &nbsp;
+              {item.toToken?.symbol}
+            </Box>
             <Box sx={{ color: theme.palette.text.secondary }}>on</Box>
             <Box
               component={item.toChain?.logo}
@@ -165,27 +183,45 @@ function RouteVisionItem({ item }: { item: RouteVisionItemProps }) {
                 alignItems: 'center',
                 justifyContent: 'flex-end',
                 gap: 4,
-                color: theme.palette.text.secondary,
-                typography: 'body2',
-                lineHeight: '19px',
               }}
             >
-              TX:
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
+              <Box
+                component="a"
+                href={
+                  item.tx && item.fromChain
+                    ? getEtherscanPage(item.fromChain?.chainId, item.tx, 'tx')
+                    : undefined
+                }
+                target="_blank"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                  color: theme.palette.text.secondary,
+                  typography: 'body2',
+                  lineHeight: '19px',
+                  '&:hover': {
+                    color: theme.palette.text.primary,
+                  },
+                  textDecoration: 'none',
+                }}
               >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M3.33333 3.33333V12.6667H12.6667V7.99999H14V12.6667C14 13.4 13.4 14 12.6667 14H3.33333C2.59333 14 2 13.4 2 12.6667V3.33333C2 2.6 2.59333 2 3.33333 2H8V3.33333H3.33333ZM9.33333 3.33333V2H14V6.66666H12.6667V4.27333L6.11333 10.8267L5.17333 9.88666L11.7267 3.33333H9.33333Z"
-                  fill="currentColor"
-                  fillOpacity="0.5"
-                />
-              </svg>
+                TX:
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M3.33333 3.33333V12.6667H12.6667V7.99999H14V12.6667C14 13.4 13.4 14 12.6667 14H3.33333C2.59333 14 2 13.4 2 12.6667V3.33333C2 2.6 2.59333 2 3.33333 2H8V3.33333H3.33333ZM9.33333 3.33333V2H14V6.66666H12.6667V4.27333L6.11333 10.8267L5.17333 9.88666L11.7267 3.33333H9.33333Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </Box>
               {item.swapSteps && (
                 <Box
                   component={ButtonBase}
@@ -216,8 +252,8 @@ function RouteVisionItem({ item }: { item: RouteVisionItemProps }) {
                     fill="none"
                   >
                     <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
                       d="M7.00033 9.33334L9.33366 5.83334H4.66699L7.00033 9.33334Z"
                       fill="currentColor"
                     />
@@ -289,7 +325,7 @@ export const RouteVision = ({ route }: RouteVisionProps) => {
           toTokenAmount: item.estimate.toTokenAmount,
           toToken: item.estimate.toToken,
           toChain: targetChain,
-          tx: undefined,
+          tx: item.hash,
           swapSteps: item.swapSteps,
         });
       });

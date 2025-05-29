@@ -142,6 +142,7 @@ export class TokenApi {
         chainId,
         account,
         address,
+        spender,
       ],
       enabled: !!chainId && !!address && !!account,
       queryFn: async () => {

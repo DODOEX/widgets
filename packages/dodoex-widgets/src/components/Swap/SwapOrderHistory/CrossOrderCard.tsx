@@ -1,19 +1,19 @@
+import { ChainId } from '@dodoex/api';
 import { Box, useTheme } from '@dodoex/components';
 import { ArrowTopRightBorder } from '@dodoex/icons';
-import { Trans } from '@lingui/macro';
 import React, { useMemo } from 'react';
 import { useCrossSwapOrderList } from '../../../hooks/Swap/useCrossSwapOrderList';
-import { useTradeSwapOrderList } from '../../../hooks/Swap/useTradeSwapOrderList';
-import { useRouteVisionData } from '../../../hooks/useRouteVisionData';
 import { getEtherscanPage } from '../../../utils';
 import { getTimeText } from '../../../utils/time';
+import { AddressWithLinkAndCopy } from '../../AddressWithLinkAndCopy';
+import { RouteVision } from '../../Bridge/RouteVision';
 import FoldBtn, {
   ChainName,
   StatusAndTime,
   TokenAndAmount,
 } from '../../CardWidgets';
+import { QuestionTooltip } from '../../Tooltip';
 import { PriceWithToggle } from './PriceWithToggle';
-import { MobileRoutingVision, PCRoutingVision } from './RoutingVision';
 
 function Extend({
   showFold,
@@ -22,14 +22,73 @@ function Extend({
 }: {
   showFold: boolean;
   isMobile?: boolean;
-  data: ReturnType<typeof useTradeSwapOrderList>['orderList'][0];
+  data: NonNullable<ReturnType<typeof useCrossSwapOrderList>['orderList'][0]>;
 }) {
-  const theme = useTheme();
-  const { routeData } = useRouteVisionData({
-    rawRouteData: data.routeData,
-    chainId: data.fromToken.chainId,
-  });
-  const time = getTimeText(new Date(data.createdAt));
+  const itemList = useMemo(() => {
+    return [
+      {
+        title: 'Total time spent',
+        value: '-',
+      },
+      {
+        title: 'Pay',
+        value: (
+          <AddressWithLinkAndCopy
+            address={data.fromAddress ?? ''}
+            customChainId={
+              data.routeData.fromChainId ?? ChainId.ZETACHAIN_TESTNET
+            }
+            showCopy
+            truncate
+            iconSpace={4}
+            iconSize={14}
+            size="small"
+          />
+        ),
+      },
+      {
+        title: 'Receive',
+        value: (
+          <AddressWithLinkAndCopy
+            address={data.toAddress ?? ''}
+            customChainId={
+              data.routeData.toChainId ?? ChainId.ZETACHAIN_TESTNET
+            }
+            showCopy
+            truncate
+            iconSpace={4}
+            iconSize={14}
+            size="small"
+          />
+        ),
+      },
+      {
+        title: (
+          <>
+            Fill Gas (Destination gas)
+            <QuestionTooltip onlyHover title="-" ml={0} />
+          </>
+        ),
+        value: '$-',
+      },
+      {
+        title: (
+          <>
+            Bridge Fee
+            <QuestionTooltip onlyHover title="-" ml={0} />
+          </>
+        ),
+        value: `$${data.fees?.[0]?.amountUSD ?? '-'}`,
+      },
+    ];
+  }, [
+    data.fees,
+    data.fromAddress,
+    data.routeData.fromChainId,
+    data.routeData.toChainId,
+    data.toAddress,
+  ]);
+
   return (
     <Box
       sx={{
@@ -37,8 +96,8 @@ function Extend({
         flexDirection: 'column',
         gap: 24,
         p: showFold ? 16 : 0,
-        backgroundColor: 'background.paperContrast',
-        maxHeight: showFold ? 400 : 0,
+        backgroundColor: 'background.paperDarkContrast',
+        maxHeight: showFold ? 'auto' : 0,
         transition: 'all 300ms',
         overflow: 'hidden',
       }}
@@ -47,28 +106,69 @@ function Extend({
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          typography: 'h6',
-          color: theme.palette.text.secondary,
+          gap: 20,
         }}
       >
-        <Trans>Details</Trans>
-        {isMobile && <Box>{time}</Box>}
+        {itemList.map((item, index) => {
+          return (
+            <Box
+              key={index}
+              sx={{
+                flexBasis: '20%',
+                flexGrow: 1,
+                flexShrink: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                gap: 4,
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                  color: 'text.secondary',
+                  typography: 'h6',
+                }}
+              >
+                {item.title}
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: 'text.primary',
+                  typography: 'body2',
+                }}
+              >
+                {item.value}
+              </Box>
+            </Box>
+          );
+        })}
       </Box>
 
-      {isMobile ? (
-        <MobileRoutingVision
-          routeData={routeData}
-          fromTokenRaw={data.fromToken}
-          toTokenRaw={data.toToken}
-        />
-      ) : (
-        <PCRoutingVision
-          routeData={routeData}
-          fromTokenRaw={data.fromToken}
-          toTokenRaw={data.toToken}
-        />
-      )}
+      {data.routeData.fromChainId != null &&
+        data.routeData.toChainId != null && (
+          <>
+            <Box
+              sx={{
+                height: '1px',
+                width: '100%',
+                backgroundColor: 'border.disabled',
+              }}
+            />
+
+            <RouteVision
+              route={{
+                fromChainId: data.routeData.fromChainId,
+                toChainId: data.routeData.toChainId,
+                step: data.routeData.step,
+              }}
+            />
+          </>
+        )}
     </Box>
   );
 }
@@ -77,7 +177,7 @@ export default function CrossOrderCard({
   data,
   isMobile,
 }: {
-  data: ReturnType<typeof useCrossSwapOrderList>['orderList'][0];
+  data: NonNullable<ReturnType<typeof useCrossSwapOrderList>['orderList'][0]>;
   isMobile: boolean;
 }) {
   const theme = useTheme();
@@ -219,7 +319,7 @@ export default function CrossOrderCard({
             onClick={() => setShowFold((prev) => !prev)}
           />
         </Box>
-        {/* <Extend showFold={showFold} data={data} isMobile /> */}
+        <Extend showFold={showFold} data={data} isMobile />
       </Box>
     );
   return (
@@ -308,7 +408,7 @@ export default function CrossOrderCard({
           </Box>
         </td>
       </tr>
-      {/* <tr>
+      <tr>
         <Box
           component="td"
           colSpan={5}
@@ -318,7 +418,7 @@ export default function CrossOrderCard({
         >
           <Extend showFold={showFold} data={data} />
         </Box>
-      </tr> */}
+      </tr>
     </>
   );
 }

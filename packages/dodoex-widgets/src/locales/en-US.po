@@ -1299,7 +1299,6 @@ msgid "Trader"
 msgstr "Trader"
 
 #: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:82
-#: src/components/Swap/SwapOrderHistory/CrossOrderCard.tsx:55
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:75
 #: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:55
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:269

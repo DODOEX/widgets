@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
 import { useGraphQLRequests } from '../useGraphQLRequests';
 import { useTokenState } from '../useTokenState';
+import { generateBridgeStep } from '../Bridge/utils';
 
 type OrderList = NonNullable<
   NonNullable<
@@ -94,7 +95,17 @@ export function useCrossSwapOrderList({
             fromAmount,
             toAmount,
             createdAt: item?.createdAt,
-            routeData: null,
+            fromAddress: item?.fromAddress,
+            toAddress: item?.toAddress,
+            routeData: {
+              fromChainId: item?.fromChainId,
+              toChainId: item?.toChainId,
+              step: generateBridgeStep({
+                omniPlan: item?.omniPlan,
+                tokenList,
+              }),
+            },
+            fees: item?.fees,
             // pending\success\failure_revert\abort
             status: item?.status,
             transactionHash: item?.fromHash,

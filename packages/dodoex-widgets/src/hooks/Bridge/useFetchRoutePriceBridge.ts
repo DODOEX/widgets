@@ -14,8 +14,9 @@ import { TokenInfo } from '../Token';
 import { useGlobalState } from '../useGlobalState';
 import { useGraphQLRequests } from '../useGraphQLRequests';
 import { useTokenState } from '../useTokenState';
+import { generateBridgeStep } from './utils';
 
-const routesExample = {
+export const routesExample = {
   data: {
     cross_chain_swap_zetachain_routes: {
       routeId: '87086529-d740-4847-bcb1-405dc998f936',
@@ -45,6 +46,7 @@ const routesExample = {
       ],
       omniPlan: [
         {
+          hash: '0x123',
           type: 'Bridge',
           inChainType: 'evm',
           inChainId: 11155111,
@@ -63,6 +65,7 @@ const routesExample = {
           feeRateBps: 100,
         },
         {
+          hash: '0x123',
           type: 'Swap',
           inChainType: 'zetachain',
           inChainId: 7001,
@@ -112,6 +115,7 @@ const routesExample = {
           ],
         },
         {
+          hash: '0x123',
           type: 'Bridge',
           inChainType: 'zetachain',
           inChainId: 7001,
@@ -172,7 +176,7 @@ export interface BridgeStepSwapStep {
   inAmount: string;
   outputToken: TokenInfo;
   outAmount: string;
-  assembleArgs: {
+  assembleArgs?: {
     baseToken: string;
     quoteToken: string;
     pairAddress: string;
@@ -194,6 +198,7 @@ export interface BridgeStep {
     type: string;
     estimate: BridgeStepEstimate;
     swapSteps?: Array<BridgeStepSwapStep>;
+    hash?: string;
   }>;
 }
 
@@ -385,79 +390,11 @@ export function useFetchRoutePriceBridge({
 
         const toAmountBN = new BigNumber(toAmount);
         if (fromToken && toToken && toAmountBN.isFinite() && toAmountBN.gt(0)) {
-          const newIncludedSteps: BridgeStep['includedSteps'] = [];
-
-          omniPlan.forEach((plan) => {
-            const estimateFromToken = tokenList.find(
-              (token) =>
-                token.address.toLowerCase() === plan.inToken.toLowerCase() &&
-                token.chainId === plan.inChainId,
-            );
-            const estimateToToken = tokenList.find(
-              (token) =>
-                token.address.toLowerCase() === plan.outToken.toLowerCase() &&
-                token.chainId === plan.outChainId,
-            );
-            newIncludedSteps.push({
-              id: `${plan.inChainType}-${plan.outChainType}-${plan.type}-${plan.inToken}-${plan.outToken}-${plan.inAmount}-${plan.outAmount}`,
-              tool: plan.inChainType,
-              toolDetails: {
-                name: plan.inChainType,
-                logoURI: plan.inChainType,
-              },
-              type: plan.type,
-              estimate: {
-                fromToken: estimateFromToken ?? {
-                  address: plan.inToken,
-                  symbol: plan.inToken.slice(0, 6),
-                  chainId: plan.inChainId,
-                  decimals: 18,
-                  name: plan.inToken.slice(0, 6),
-                },
-                toToken: estimateToToken ?? {
-                  address: plan.outToken,
-                  symbol: plan.outToken.slice(0, 6),
-                  chainId: plan.outChainId,
-                  decimals: 18,
-                  name: plan.outToken.slice(0, 6),
-                },
-                fromTokenAmount: new BigNumber(plan.inAmountWithOutDecimals),
-                toTokenAmount: new BigNumber(plan.outAmountWithOutDecimals),
-              },
-              swapSteps: plan.swapSteps?.map((swap) => {
-                const inputToken = tokenList.find(
-                  (token) =>
-                    token.address.toLowerCase() ===
-                      swap.inputToken.toLowerCase() &&
-                    token.chainId === plan.inChainId,
-                );
-                const outputToken = tokenList.find(
-                  (token) =>
-                    token.address.toLowerCase() ===
-                      swap.outputToken.toLowerCase() &&
-                    token.chainId === plan.inChainId,
-                );
-                return {
-                  ...swap,
-                  inputToken: inputToken ?? {
-                    address: swap.inputToken,
-                    symbol: swap.inputToken.slice(0, 6),
-                    chainId: plan.inChainId,
-                    decimals: 18,
-                    name: swap.inputToken.slice(0, 6),
-                  },
-                  outputToken: outputToken ?? {
-                    address: swap.outputToken,
-                    symbol: swap.outputToken.slice(0, 6),
-                    chainId: plan.inChainId,
-                    decimals: 18,
-                    name: swap.outputToken.slice(0, 6),
-                  },
-                };
-              }),
-            });
+          const step = generateBridgeStep({
+            omniPlan,
+            tokenList,
           });
-          if (newIncludedSteps.length > 0) {
+          if (step.includedSteps.length > 0) {
             const feeUSD = fees[0]?.amountUSD;
             const newBridgeRoute: BridgeRouteI = {
               key: routeId,
@@ -476,15 +413,7 @@ export function useFetchRoutePriceBridge({
               spenderContractAddress: approveTarget ?? '0x',
               feeUSD,
               executionDuration: null,
-              step: {
-                tool: 'zetachain',
-                toolDetails: {
-                  name: 'zetachain',
-                  logoURI: 'zetachain',
-                },
-                type: 'Bridge',
-                includedSteps: newIncludedSteps,
-              },
+              step,
               encodeParams,
               productParams: null,
               sourceRoute: data.cross_chain_swap_zetachain_routes,
