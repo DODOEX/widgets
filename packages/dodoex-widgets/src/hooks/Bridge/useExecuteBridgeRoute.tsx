@@ -14,6 +14,8 @@ import { Metadata, MetadataFlag } from '../Submission/types';
 import { useGraphQLRequests } from '../useGraphQLRequests';
 import { createBridgeOrder } from './createBridgeOrder';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
+import { transferSignet } from '../../utils/btc';
+import { BigNumber } from 'bignumber.js';
 
 export default function useExecuteBridgeRoute({
   route,
@@ -145,6 +147,33 @@ export default function useExecuteBridgeRoute({
           successBack,
           handler: async (params) => {
             try {
+              const addresses =
+                await bitcoinWalletProvider.getAccountAddresses();
+
+              const publicKey = addresses.find(
+                (address) => address.type === 'p2tr',
+              );
+
+              console.log(
+                'addresses:',
+                addresses,
+                bridgeOrderTxRequest.from,
+                publicKey,
+              );
+
+              if (!publicKey || !publicKey.publicKey) {
+                throw new Error('publicKey is null');
+              }
+
+              const tx = await transferSignet({
+                fromAddress: publicKey.address,
+                toAddress: bridgeOrderTxRequest.to,
+                amount: new BigNumber(bridgeOrderTxRequest.value).toNumber(),
+                calldata: bridgeOrderTxRequest.data,
+                publicKey: publicKey.publicKey,
+                btcWallet: bitcoinWalletProvider,
+              });
+
               const signature = await bitcoinWalletProvider.signPSBT({
                 psbt: bridgeOrderTxRequest.data,
                 signInputs: [],
@@ -231,6 +260,7 @@ export default function useExecuteBridgeRoute({
     route,
     submission,
     graphQLRequests,
+    bitcoinWalletProvider,
     solanaWalletProvider,
     solanaConnection,
   ]);

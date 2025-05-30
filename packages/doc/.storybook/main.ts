@@ -2,6 +2,7 @@ import type { StorybookConfig } from '@storybook/react-webpack5';
 import { merge } from 'lodash';
 
 import path, { join, dirname } from 'path';
+import webpack from 'webpack';
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -42,6 +43,17 @@ const config: StorybookConfig = {
       svgLoaderRule.exclude = /svg$/;
     }
     return merge(config, {
+      plugins: [
+        ...(config.plugins ?? []),
+        // Work around for Buffer is undefined:
+        // https://github.com/webpack/changelog-v5/issues/10
+        new webpack.ProvidePlugin({
+          Buffer: ['buffer', 'Buffer'],
+        }),
+        new webpack.ProvidePlugin({
+          process: 'process/browser',
+        }),
+      ],
       resolve: {
         ...config.resolve,
         alias: {
@@ -64,7 +76,7 @@ const config: StorybookConfig = {
           // https://stackoverflow.com/questions/71158775/storybook-couldnt-resolve-fs
           fs: false,
           assert: false,
-          // "buffer": require.resolve("buffer"),
+          buffer: require.resolve('buffer'),
           console: false,
           constants: false,
           crypto: false,

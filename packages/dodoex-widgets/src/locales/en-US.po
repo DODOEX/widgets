@@ -22,9 +22,9 @@ msgstr "The smaller the slippage coefficient, the lower the slippage for traders
 msgid "Transaction Time:"
 msgstr "Transaction Time:"
 
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:141
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:179
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:214
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:143
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:208
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:243
 msgid "Cross Chain"
 msgstr "Cross Chain"
 

@@ -13,54 +13,71 @@ export function constructSolanaTransaction({ data }: { data: string }) {
   }
 
   // Create buffer from base64 string
-  const binaryString = atob(data);
-  const serializedTransaction = new Uint8Array(binaryString.length);
-  for (let i = 0; i < binaryString.length; i++) {
-    serializedTransaction[i] = binaryString.charCodeAt(i);
+  // 兼容 Node.js 和浏览器
+  let serializedTransaction: Uint8Array;
+  if (typeof Buffer !== 'undefined') {
+    serializedTransaction = new Uint8Array(Buffer.from(data, 'base64'));
+  } else {
+    const binaryString = atob(data);
+    serializedTransaction = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      serializedTransaction[i] = binaryString.charCodeAt(i);
+    }
   }
 
-  // Debug logging
-  console.log('Transaction data length:', serializedTransaction.length);
-  console.log('First few bytes:', serializedTransaction.slice(0, 10));
-
-  // Validate buffer length
   if (serializedTransaction.length === 0) {
     throw new Error('Empty transaction buffer');
   }
-
-  // Validate minimum transaction size
   if (serializedTransaction.length < 3) {
     throw new Error('Transaction buffer too small');
   }
 
-  // Try to detect if this is a versioned transaction by checking the second byte
-  const firstByte = serializedTransaction[0];
-  const secondByte = serializedTransaction[1];
+  console.log(
+    'First 10 bytes:',
+    Array.from(serializedTransaction.slice(0, 10)),
+  );
+  console.log('Total length:', serializedTransaction.length);
 
+  const signatureCount = serializedTransaction[0];
+  const expectedSignatureSectionLength = 1 + signatureCount * 64;
+  console.log('Signature count:', signatureCount);
+  console.log(
+    'Expected signature section length:',
+    expectedSignatureSectionLength,
+  );
+  console.log('Actual buffer length:', serializedTransaction.length);
+
+  // 判断类型
   let transaction;
-  if (secondByte === 128) {
-    // Versioned transaction starts with 0x80 as second byte
-    // Skip the first byte (0) and deserialize the rest as a versioned transaction
-    const message = VersionedMessage.deserialize(
-      serializedTransaction.slice(1),
+  try {
+    if (serializedTransaction[0] === 0 && serializedTransaction[1] === 128) {
+      // versioned
+      const message = VersionedMessage.deserialize(
+        serializedTransaction.slice(1),
+      );
+      transaction = new VersionedTransaction(message);
+    } else {
+      // legacy
+      transaction = Transaction.from(serializedTransaction);
+    }
+  } catch (e) {
+    throw new Error(
+      `Failed to deserialize transaction: ${(e as Error).message}
+      Buffer head: ${Array.from(serializedTransaction.slice(0, 10))}
+      Buffer length: ${serializedTransaction.length}`,
     );
-    transaction = new VersionedTransaction(message);
-  } else {
-    // This is a legacy transaction
-    transaction = Transaction.from(serializedTransaction);
   }
 
-  // Validate the transaction
   if (!transaction) {
     throw new Error('Failed to create transaction');
   }
 
-  // Additional validation based on transaction type
+  // 结构校验
   if (transaction instanceof VersionedTransaction) {
     if (!transaction.message || !transaction.message.header) {
       throw new Error('Invalid versioned transaction structure');
     }
-  } else {
+  } else if (transaction instanceof Transaction) {
     if (!transaction.recentBlockhash) {
       throw new Error('Invalid legacy transaction structure');
     }

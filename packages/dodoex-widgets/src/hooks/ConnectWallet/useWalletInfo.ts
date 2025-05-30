@@ -92,7 +92,9 @@ export function useWalletInfo() {
 
       const appKitAccount =
         namespace === 'bip122'
-          ? bitcoinAccount
+          ? {
+              ...bitcoinAccount,
+            }
           : namespace === 'solana'
             ? solanaAccount
             : evmAccount;
