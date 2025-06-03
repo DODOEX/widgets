@@ -35,6 +35,7 @@ export type Scalars = {
   /** Bytes custom scalar type */
   Bytes: { input: any; output: any };
   Dodochain_earnBytes: { input: any; output: any };
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any };
   LiquidityBytes: { input: any; output: any };
 };
@@ -2009,6 +2010,7 @@ export type Cross_Chain_Swap_ZetachainCrossChainOrderCreate = {
 
 export type Cross_Chain_Swap_ZetachainCrossChainOrderList = {
   createdAt?: Maybe<Scalars['String']['output']>;
+  endTime?: Maybe<Scalars['Int']['output']>;
   externalId?: Maybe<Scalars['String']['output']>;
   fees?: Maybe<Scalars['JSON']['output']>;
   fromAddress?: Maybe<Scalars['String']['output']>;
@@ -2027,6 +2029,7 @@ export type Cross_Chain_Swap_ZetachainCrossChainOrderList = {
   refundToken?: Maybe<Scalars['String']['output']>;
   refundUser?: Maybe<Scalars['String']['output']>;
   slippage?: Maybe<Scalars['Float']['output']>;
+  startTime?: Maybe<Scalars['Int']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   statusCode?: Maybe<Scalars['Int']['output']>;
   subStatus?: Maybe<Scalars['String']['output']>;
@@ -2326,6 +2329,141 @@ export type Cross_Chain_TokentokenPairFilter = {
 export type Cross_Chain_TokentokenlistFilter = {
   isEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Cross_Chain_TransferAttributeLabelV2 = {
+  key?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_TransferCrossChainOrder = {
+  createdAt?: Maybe<Scalars['String']['output']>;
+  endTime?: Maybe<Scalars['String']['output']>;
+  fromAmount?: Maybe<Scalars['String']['output']>;
+  fromChainId?: Maybe<Scalars['Int']['output']>;
+  fromHash?: Maybe<Scalars['String']['output']>;
+  fromTokenAddress?: Maybe<Scalars['String']['output']>;
+  fromTokenDecimals?: Maybe<Scalars['Int']['output']>;
+  fromTokenName?: Maybe<Scalars['String']['output']>;
+  fromTokenSymbol?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  toAddress?: Maybe<Scalars['String']['output']>;
+  toAmount?: Maybe<Scalars['String']['output']>;
+  toChainId?: Maybe<Scalars['Int']['output']>;
+  toHash?: Maybe<Scalars['String']['output']>;
+  toTokenAddress?: Maybe<Scalars['String']['output']>;
+  toTokenDecimals?: Maybe<Scalars['Int']['output']>;
+  toTokenName?: Maybe<Scalars['String']['output']>;
+  toTokenSymbol?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_TransferCrossChainOrderList = {
+  list?: Maybe<Array<Maybe<Cross_Chain_TransferCrossChainOrder>>>;
+  total?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Cross_Chain_TransferDomain = {
+  env?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_TransferErc20V2List = {
+  address?: Maybe<Scalars['String']['output']>;
+  attributeLabels?: Maybe<Array<Maybe<Cross_Chain_TransferAttributeLabelV2>>>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  crossChainSymbol?: Maybe<Scalars['String']['output']>;
+  decimals?: Maybe<Scalars['Int']['output']>;
+  domains?: Maybe<Array<Maybe<Cross_Chain_TransferDomain>>>;
+  erc20Extend?: Maybe<Scalars['JSON']['output']>;
+  funcLabels?: Maybe<Array<Maybe<Cross_Chain_TransferFuncLabelV2>>>;
+  id?: Maybe<Scalars['Int']['output']>;
+  logoImg?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  position?: Maybe<Scalars['Int']['output']>;
+  slippage?: Maybe<Scalars['String']['output']>;
+  symbol?: Maybe<Scalars['String']['output']>;
+  tokenlists?: Maybe<Array<Maybe<Cross_Chain_TransferTokenListV2>>>;
+};
+
+export type Cross_Chain_TransferFuncLabelV2 = {
+  key?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_TransferOrderListFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Cross_Chain_TransferQuoteResponse = {
+  amount: Scalars['String']['output'];
+  amountFormatted: Scalars['String']['output'];
+  bestQuote: Scalars['String']['output'];
+  bestQuoteFormatted: Scalars['String']['output'];
+  crossChainSymbol: Scalars['String']['output'];
+  fixedFee: Scalars['String']['output'];
+  fixedFeeFormatted: Scalars['String']['output'];
+  gasFee: Scalars['String']['output'];
+  gasFeeFormatted: Scalars['String']['output'];
+  minReceiveQuote: Scalars['String']['output'];
+  minReceiveQuoteFormatted: Scalars['String']['output'];
+  orderId: Scalars['String']['output'];
+  rateFee: Scalars['String']['output'];
+  rateFeeFormatted: Scalars['String']['output'];
+  recipient: Scalars['String']['output'];
+  sourceChainId: Scalars['Int']['output'];
+  sourceTokenAddress: Scalars['String']['output'];
+  targetChainId: Scalars['Int']['output'];
+  targetTokenAddress: Scalars['String']['output'];
+  timestamp: Scalars['Int']['output'];
+  totalFee: Scalars['String']['output'];
+  totalFeeFormatted: Scalars['String']['output'];
+  transactionData: Cross_Chain_TransferQuoteResponseTransactionDataDto;
+  userAddress: Scalars['String']['output'];
+  version: Scalars['String']['output'];
+};
+
+export type Cross_Chain_TransferQuoteResponseTransactionDataDto = {
+  data: Scalars['String']['output'];
+  from: Scalars['String']['output'];
+  gas: Scalars['String']['output'];
+  maxFeePerGas?: Maybe<Scalars['String']['output']>;
+  maxPriorityFeePerGas?: Maybe<Scalars['String']['output']>;
+  to: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type Cross_Chain_TransferTokenListV2 = {
+  chainId?: Maybe<Scalars['Int']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_TransferlistV2Filter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  chainIds?: InputMaybe<Scalars['String']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Cross_Chain_TransferquoteFilter = {
+  amount: Scalars['String']['input'];
+  crossChainSymbol: Scalars['String']['input'];
+  recipient: Scalars['String']['input'];
+  sourceChainId: Scalars['Int']['input'];
+  sourceTokenAddress: Scalars['String']['input'];
+  targetChainId: Scalars['Int']['input'];
+  targetTokenAddress: Scalars['String']['input'];
+  userAddress: Scalars['String']['input'];
 };
 
 export type Cross_Chain_Zetachain_TokenCrossChainTokenlist = {
@@ -12457,6 +12595,11 @@ export type Query = {
   cross_chain_swap_zetachain_transactionEncode?: Maybe<Cross_Chain_Swap_ZetachainCrossChainTransactionEncode>;
   cross_chain_token_list?: Maybe<Cross_Chain_TokenCrossChainTokenlist>;
   cross_chain_token_tokenPair?: Maybe<Cross_Chain_TokenCrossChainTokenPair>;
+  cross_chain_transfer_getOrderList: Cross_Chain_TransferCrossChainOrderList;
+  cross_chain_transfer_getTokenList?: Maybe<
+    Array<Maybe<Cross_Chain_TransferErc20V2List>>
+  >;
+  cross_chain_transfer_quote: Cross_Chain_TransferQuoteResponse;
   cross_chain_zetachain_token_list?: Maybe<
     Array<Maybe<Cross_Chain_Zetachain_TokenCrossChainTokenlist>>
   >;
@@ -13310,6 +13453,18 @@ export type QueryCross_Chain_Token_ListArgs = {
 
 export type QueryCross_Chain_Token_TokenPairArgs = {
   where?: InputMaybe<Cross_Chain_TokentokenPairFilter>;
+};
+
+export type QueryCross_Chain_Transfer_GetOrderListArgs = {
+  where?: InputMaybe<Cross_Chain_TransferOrderListFilter>;
+};
+
+export type QueryCross_Chain_Transfer_GetTokenListArgs = {
+  where?: InputMaybe<Cross_Chain_TransferlistV2Filter>;
+};
+
+export type QueryCross_Chain_Transfer_QuoteArgs = {
+  where?: InputMaybe<Cross_Chain_TransferquoteFilter>;
 };
 
 export type QueryCross_Chain_Zetachain_Token_ListArgs = {
@@ -22028,6 +22183,8 @@ export type Cross_Chain_Swap_Zetachain_OrderListQuery = {
       omniPlan?: any | null;
       fees?: any | null;
       createdAt?: string | null;
+      startTime?: number | null;
+      endTime?: number | null;
     } | null> | null;
   } | null;
 };
@@ -23085,6 +23242,8 @@ export const Cross_Chain_Swap_Zetachain_OrderListDocument =
       omniPlan
       fees
       createdAt
+      startTime
+      endTime
     }
     count
     page

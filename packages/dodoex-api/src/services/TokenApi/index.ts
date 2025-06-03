@@ -178,10 +178,14 @@ export class TokenApi {
 
         if (chainId === ChainId.SOLANA || chainId === ChainId.SOLANA_DEVNET) {
           // 连接主网或devnet
-          const endpoint =
-            chainId === ChainId.SOLANA
-              ? clusterApiUrl('mainnet-beta')
-              : clusterApiUrl('devnet');
+          // https://dashboard.alchemy.com/apps/yhfxpgn9fa1r1yvo/networks
+          let endpoint =
+            'https://solana-mainnet.g.alchemy.com/v2/psFqWVRgb8HiduEOIZTt4-ddeaNjKhzE';
+          if (chainId === ChainId.SOLANA) {
+            // endpoint = clusterApiUrl('mainnet-beta');
+          } else if (chainId === ChainId.SOLANA_DEVNET) {
+            endpoint = clusterApiUrl('devnet');
+          }
           const connection = new Connection(endpoint, 'confirmed');
           const owner = new PublicKey(account);
           const mint = new PublicKey(address);

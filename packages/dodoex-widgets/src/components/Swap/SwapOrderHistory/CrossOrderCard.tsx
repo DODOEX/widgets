@@ -4,7 +4,7 @@ import { ArrowTopRightBorder } from '@dodoex/icons';
 import React, { useMemo } from 'react';
 import { useCrossSwapOrderList } from '../../../hooks/Swap/useCrossSwapOrderList';
 import { getEtherscanPage } from '../../../utils';
-import { getTimeText } from '../../../utils/time';
+import { formatReadableTimeDuration, getTimeText } from '../../../utils/time';
 import { AddressWithLinkAndCopy } from '../../AddressWithLinkAndCopy';
 import { RouteVision } from '../../Bridge/RouteVision';
 import FoldBtn, {
@@ -28,7 +28,10 @@ function Extend({
     return [
       {
         title: 'Total time spent',
-        value: '-',
+        value: formatReadableTimeDuration({
+          start: data.startTime ?? undefined,
+          end: data.endTime ?? undefined,
+        }),
       },
       {
         title: 'Pay',
@@ -69,7 +72,7 @@ function Extend({
             <QuestionTooltip onlyHover title="-" ml={0} />
           </>
         ),
-        value: '$-',
+        value: `$${data.fees?.find((fee: any) => fee.type === 'destinationFee')?.amountUSD ?? '-'}`,
       },
       {
         title: (
@@ -78,14 +81,16 @@ function Extend({
             <QuestionTooltip onlyHover title="-" ml={0} />
           </>
         ),
-        value: `$${data.fees?.[0]?.amountUSD ?? '-'}`,
+        value: `$${data.fees?.find((fee: any) => fee.type === 'platformFee')?.amountUSD ?? '-'}`,
       },
     ];
   }, [
+    data.endTime,
     data.fees,
     data.fromAddress,
     data.routeData.fromChainId,
     data.routeData.toChainId,
+    data.startTime,
     data.toAddress,
   ]);
 

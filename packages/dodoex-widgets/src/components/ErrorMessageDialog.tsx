@@ -42,8 +42,11 @@ export default function ErrorMessageDialog({
                 sx={{
                   color: 'text.secondary',
                   mt: 12,
+                  mx: 20,
                   typography: 'body2',
                   wordBreak: 'break-all',
+                  overflow: 'auto',
+                  height: '300px',
                 }}
               >
                 {message}

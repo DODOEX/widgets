@@ -23,8 +23,8 @@ msgid "Transaction Time:"
 msgstr "Transaction Time:"
 
 #: src/hooks/Bridge/useExecuteBridgeRoute.tsx:148
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:210
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:265
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:215
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:270
 msgid "Cross Chain"
 msgstr "Cross Chain"
 
@@ -127,7 +127,7 @@ msgstr "By adding liquidity you’ll earn <0>{0}</0> of all trades on this pair 
 msgid "Start Time"
 msgstr "Start Time"
 
-#: src/components/ErrorMessageDialog.tsx:63
+#: src/components/ErrorMessageDialog.tsx:66
 #: src/components/WithExecutionDialog/index.tsx:446
 msgid "Dismiss"
 msgstr "Dismiss"

@@ -203,6 +203,11 @@ export default function useExecuteBridgeRoute({
 
       if (fromChain.isSolanaChain) {
         if (!solanaWalletProvider || !solanaConnection) {
+          console.error(
+            'solanaWalletProvider or solanaConnection is null',
+            solanaWalletProvider,
+            solanaConnection,
+          );
           throw new Error('solanaWalletProvider or solanaConnection is null');
         }
 

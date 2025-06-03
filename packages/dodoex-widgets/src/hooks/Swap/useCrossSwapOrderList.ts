@@ -94,6 +94,8 @@ export function useCrossSwapOrderList({
             toToken,
             fromAmount,
             toAmount,
+            startTime: item?.startTime ? item.startTime * 1000 : undefined,
+            endTime: item?.endTime ? item.endTime * 1000 : undefined,
             createdAt: item?.createdAt,
             fromAddress: item?.fromAddress,
             toAddress: item?.toAddress,

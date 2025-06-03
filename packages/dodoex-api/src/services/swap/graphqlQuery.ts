@@ -114,6 +114,8 @@ export const swapGraphqlQuery = {
           omniPlan
           fees
           createdAt
+          startTime
+          endTime
         }
         count
         page
