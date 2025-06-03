@@ -1,22 +1,27 @@
-import { btcSignet, ChainId, zetachainTestnet } from '@dodoex/api';
+import { ChainId, zetachainTestnet } from '@dodoex/api';
 import { Box } from '@dodoex/components';
 import { Swap, SwapOrderHistory, Widget } from '@dodoex/widgets';
-import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin';
+// import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin';
 import { Ethers5Adapter } from '@reown/appkit-adapter-ethers5';
-import { SolanaAdapter } from '@reown/appkit-adapter-solana/react';
 import {
+  SolanaAdapter,
+  useAppKitConnection,
+} from '@reown/appkit-adapter-solana/react';
+import {
+  arbitrumSepolia,
   base,
-  bitcoin,
   bsc,
   mainnet,
   polygon,
   sepolia,
-  arbitrumSepolia,
   solana,
   solanaDevnet,
   zetachain,
 } from '@reown/appkit/networks';
 import { createAppKit, useAppKitProvider } from '@reown/appkit/react';
+
+import { WalletConnectReact } from 'btc-connect/dist/react';
+import 'btc-connect/dist/style/index.css';
 
 // 1. Get projectId
 const projectId = 'bc32cb5c4e5f0d1d9a3313ae139b30e9';
@@ -35,14 +40,15 @@ const solanaWeb3JsAdapter = new SolanaAdapter({
 });
 
 // 3. Set up Bitcoin Adapter
-const bitcoinAdapter = new BitcoinAdapter({
-  projectId,
-  networks: [bitcoin, btcSignet],
-});
+// const bitcoinAdapter = new BitcoinAdapter({
+//   projectId,
+//   networks: [bitcoin, btcSignet],
+// });
 
 // 3. Create the AppKit instance
 createAppKit({
-  adapters: [new Ethers5Adapter(), solanaWeb3JsAdapter, bitcoinAdapter],
+  // adapters: [new Ethers5Adapter(), solanaWeb3JsAdapter, bitcoinAdapter],
+  adapters: [new Ethers5Adapter(), solanaWeb3JsAdapter],
   metadata: metadata,
   networks: [
     zetachainTestnet,
@@ -53,10 +59,11 @@ createAppKit({
     bsc,
     zetachain,
     base,
+
     solana,
     solanaDevnet,
-    bitcoin,
-    btcSignet,
+    // bitcoin,
+    // btcSignet,
   ],
   projectId,
   features: {
@@ -72,6 +79,8 @@ export default {
 export const Primary = (args) => {
   const { walletProvider: ethersProvider } = useAppKitProvider('eip155');
 
+  const { connection: solanaConnection } = useAppKitConnection();
+
   return (
     <Box
       sx={{
@@ -81,7 +90,42 @@ export const Primary = (args) => {
         gap: '40px',
       }}
     >
-      <Widget {...args} provider={ethersProvider}>
+      <div
+        className="continer"
+        style={{
+          display: 'none',
+        }}
+      >
+        <WalletConnectReact
+          config={{
+            // https://github.com/sat20-labs/btc-connect
+            network: 'testnet', // or 'testnet'
+            defaultConnectorId: 'unisat', // 'unisat' or 'okx'
+          }}
+          onConnectSuccess={(btcWallet) => {
+            // Handle successful connection
+            console.log('btcWallet', btcWallet, btcWallet.balance);
+          }}
+          theme="dark"
+          onConnectError={(error) => {
+            // Handle connection error
+          }}
+          onDisconnectSuccess={() => {
+            // Handle successful disconnection
+          }}
+          onDisconnectError={(error) => {
+            // Handle disconnection error
+          }}
+        >
+          {/* Your app components */}
+        </WalletConnectReact>
+      </div>
+
+      <Widget
+        {...args}
+        provider={ethersProvider}
+        solanaConnection={solanaConnection}
+      >
         <Box
           sx={{
             width: args.width ?? 450,

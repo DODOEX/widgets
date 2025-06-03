@@ -1,6 +1,6 @@
-import * as bitcoin from 'bitcoinjs-lib';
-import type { BitcoinConnector } from '@reown/appkit-adapter-bitcoin';
 import ecc from '@bitcoinerlab/secp256k1';
+import * as bitcoin from 'bitcoinjs-lib';
+import type { WalletState } from 'btc-connect/dist/react';
 
 bitcoin.initEccLib(ecc);
 
@@ -75,22 +75,30 @@ function buildRevealWitness(leafScript: Buffer, controlBlock: Buffer) {
 
 // Signet 转账
 export async function transferSignet({
-  fromAddress,
   toAddress,
   amount,
   calldata,
-  publicKey,
   btcWallet,
+  btcDepositFee,
 }: {
-  fromAddress: string;
   toAddress: string;
   amount: number;
   calldata: string;
-  publicKey: string;
-  btcWallet: BitcoinConnector;
+  btcWallet: WalletState['btcWallet'];
+  btcDepositFee: number;
 }) {
-  console.log(toAddress, amount, calldata, publicKey, btcWallet);
-  const internalPubkey = Buffer.from(publicKey!.substr(2), 'hex');
+  if (!btcWallet) {
+    throw new Error('btcWallet is undefined');
+  }
+
+  const balance = btcWallet.balance.confirmed;
+  console.log('btcWallet balance:', btcWallet.balance);
+
+  console.log('btcWallet address:', btcWallet.address);
+
+  console.log('btcWallet publicKey:', btcWallet.publicKey);
+  const internalPubkey = Buffer.from(btcWallet.publicKey!.substr(2), 'hex');
+
   const inscriptionData = Buffer.from(calldata, 'hex');
   // 将数据分块
   const chunks = splitIntoChunks(inscriptionData);
@@ -122,7 +130,7 @@ export async function transferSignet({
     scriptTaproot.witness?.[scriptTaproot.witness.length - 1].toString('hex');
 
   // 动态查询 UTXO
-  let utxos = await getSignetMempoolUTXO(fromAddress);
+  let utxos = await getSignetMempoolUTXO(btcWallet.address!);
   console.log('utxos:', utxos.length);
   // 如果没有 UTXO，则无法进行转账，返回错误信息
   if (!utxos.length) return 'No UTXO';
@@ -156,7 +164,7 @@ export async function transferSignet({
     });
   }
 
-  const fee = 450;
+  const fee = btcDepositFee;
   const change = amountAll - amount - fee;
 
   if (change < 0) {
@@ -166,31 +174,17 @@ export async function transferSignet({
   console.log('change:', amountAll, change);
   // 添加找零
   psbt.addOutput({
-    address: fromAddress, // 找零地址
+    address: btcWallet.address!, // 找零地址
     value: change, // 金额
   });
 
   console.log('psbt.data.inputs:', psbt.data.inputs);
 
-  const psbtBase64 = psbt.toBase64();
-  console.log('psbtBase64:', psbtBase64);
+  const psbtHex = psbt.toHex();
+  console.log('psbtHex:', psbtHex);
 
-  const signPsbtResult = await btcWallet.signPSBT({
-    psbt: psbtBase64,
-    signInputs: [],
-    broadcast: true,
-  });
-  console.log(
-    'signPsbtResult:',
-    signPsbtResult,
-    signPsbtResult.psbt === psbtBase64,
-  );
-
-  const psbtResult = bitcoin.Psbt.fromBase64(signPsbtResult.psbt);
-  console.log(psbt.data.inputs); // 看看 inputs 里有没有 partialSig 字段
-
-  return signPsbtResult;
-
+  const signPsbtResult = await btcWallet.signPsbt(psbtHex);
+  console.log('signPsbtResult:', signPsbtResult);
   const tx = await btcWallet.pushPsbt(signPsbtResult);
   console.log('tx:', tx);
 
@@ -231,11 +225,7 @@ export async function transferSignet({
 
   psbt2.addOutput({ address: toAddress, value: amount - feeSat });
 
-  const signPsbtResult2 = await btcWallet.signPSBT({
-    psbt: psbt2.toBase64(),
-    signInputs: [],
-    broadcast: false,
-  });
+  const signPsbtResult2 = await btcWallet.signPsbt(psbt2.toHex(), {});
   console.log('signPsbtResult2:', signPsbtResult2);
   const tx2 = await btcWallet.pushPsbt(signPsbtResult2);
   console.log('tx2:', tx2);

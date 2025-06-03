@@ -33,10 +33,11 @@ function Extend({
     return [
       {
         title: 'Total time spent',
-        value: formatReadableTimeDuration({
-          start: data.startTime ?? undefined,
-          end: data.endTime ?? undefined,
-        }),
+        value:
+          formatReadableTimeDuration({
+            start: data.startTime ?? undefined,
+            end: data.endTime ?? undefined,
+          }) ?? '-',
       },
       {
         title: 'Pay',
@@ -207,7 +208,7 @@ export default function CrossOrderCard({
     switch (data.status) {
       case 'pending':
         statusText = 'Pending';
-        statusAlphaColor = 0.1;
+        statusColor = theme.palette.text.secondary;
         break;
       case 'success':
         statusText = 'Succeeded';
@@ -236,6 +237,7 @@ export default function CrossOrderCard({
     theme.palette.error.main,
     theme.palette.success.main,
     theme.palette.text.primary,
+    theme.palette.text.secondary,
   ]);
 
   const [showFold, setShowFold] = React.useState(false);

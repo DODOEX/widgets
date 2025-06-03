@@ -42,6 +42,8 @@ import {
 } from '../../hooks/useGlobalState';
 import { ExecutionCtx } from '../../hooks/Submission/types';
 import { TokenPickerDialogProps } from '../Swap/components/TokenCard/TokenPickerDialog';
+import { Connection } from '@solana/web3.js';
+import type { WalletStore } from 'btc-connect/dist/react';
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
@@ -128,6 +130,9 @@ export interface WidgetProps
   /** Default deadLine when it cannot be set. Unit: seconds */
   deadLine?: number;
   submission?: ExecutionCtx;
+
+  solanaConnection?: Connection;
+  btcWalletStore?: WalletStore;
 }
 
 function LangProvider(props: PropsWithChildren<WidgetProps>) {

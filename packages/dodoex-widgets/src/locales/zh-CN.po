@@ -22,9 +22,9 @@ msgstr ""
 msgid "Transaction Time:"
 msgstr "交易时长:"
 
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:148
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:215
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:270
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:149
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:189
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:244
 msgid "Cross Chain"
 msgstr "跨链桥"
 

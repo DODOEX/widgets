@@ -50,6 +50,7 @@ export default function useExecuteBridgeRoute({
         toAddress,
         slippage,
         roundedRouteCostTime,
+        fees,
       } = route;
       const pay = formatTokenAmountNumber({
         input: fromAmount,
@@ -152,47 +153,20 @@ export default function useExecuteBridgeRoute({
           successBack,
           handler: async (params) => {
             try {
-              const addresses =
-                await bitcoinWalletProvider.getAccountAddresses();
-
-              const publicKey = addresses.find(
-                (address) => address.type === 'p2tr',
-              );
-
-              console.log(
-                'addresses:',
-                addresses,
-                bridgeOrderTxRequest.from,
-                publicKey,
-              );
-
-              if (!publicKey || !publicKey.publicKey) {
-                throw new Error('publicKey is null');
-              }
+              const btcDepositFee = fees.find(
+                (fee) => fee.type === 'btcDepositFee',
+              )?.amount;
 
               const tx = await transferSignet({
-                fromAddress: publicKey.address,
                 toAddress: bridgeOrderTxRequest.to,
                 amount: new BigNumber(bridgeOrderTxRequest.value).toNumber(),
                 calldata: bridgeOrderTxRequest.data,
-                publicKey: publicKey.publicKey,
                 btcWallet: bitcoinWalletProvider,
+                btcDepositFee: btcDepositFee ? Number(btcDepositFee) : 450,
               });
 
-              const signature = await bitcoinWalletProvider.signPSBT({
-                psbt: bridgeOrderTxRequest.data,
-                signInputs: [],
-                broadcast: false,
-              });
-
-              console.log('signature:', signature);
-
-              if (!signature.txid) {
-                throw new Error('signature.txid is null');
-              }
-
-              params.onSubmit(signature.txid);
-              params.onSuccess(signature.txid);
+              params.onSubmit(tx);
+              params.onSuccess(tx);
             } catch (error) {
               console.error('wallet.signPSBT execute:', error);
               params.onError(error);
