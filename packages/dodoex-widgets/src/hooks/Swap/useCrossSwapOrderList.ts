@@ -90,6 +90,11 @@ export function useCrossSwapOrderList({
 
           return {
             hash: item?.fromHash,
+            externalId: item?.externalId,
+            refundCridgeContract: item?.refundCridgeContract,
+            refundChainId: item?.refundChainId
+              ? Number(item.refundChainId)
+              : undefined,
             fromToken,
             toToken,
             fromAmount,
@@ -110,6 +115,7 @@ export function useCrossSwapOrderList({
             fees: item?.fees,
             // pending\success\failure_revert\abort
             status: item?.status,
+            subStatus: item?.subStatus,
             transactionHash: item?.fromHash,
             fromTokenPrice:
               fromAmount && toAmount && fromToken

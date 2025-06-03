@@ -22,6 +22,8 @@ export default function CrossChainOrderList({
     type,
   });
 
+  const isErrorRefund = type === 'error_refund';
+
   return (
     <CardStatus
       isMobile={isMobile}
@@ -35,7 +37,13 @@ export default function CrossChainOrderList({
           }}
         >
           {swapOrderListQuery.orderList.map((item) => (
-            <CrossOrderCard key={item.hash} data={item} isMobile={isMobile} />
+            <CrossOrderCard
+              key={item.hash}
+              data={item}
+              isMobile={isMobile}
+              isErrorRefund={isErrorRefund}
+              refetch={swapOrderListQuery.refetch}
+            />
           ))}
           <LoadMore
             loading={swapOrderListQuery.isFetchingNextPage}
@@ -70,9 +78,16 @@ export default function CrossChainOrderList({
                 <th>
                   <Trans>Status</Trans>
                 </th>
-                <th>
-                  <Trans>Rate</Trans>
-                </th>
+                {isErrorRefund ? (
+                  <th>
+                    <Trans>Claim refunds</Trans>
+                  </th>
+                ) : (
+                  <th>
+                    <Trans>Rate</Trans>
+                  </th>
+                )}
+
                 <Box
                   component="th"
                   sx={{
@@ -89,6 +104,8 @@ export default function CrossChainOrderList({
                   key={item.hash}
                   data={item}
                   isMobile={isMobile}
+                  isErrorRefund={isErrorRefund}
+                  refetch={swapOrderListQuery.refetch}
                 />
               ))}
             </tbody>

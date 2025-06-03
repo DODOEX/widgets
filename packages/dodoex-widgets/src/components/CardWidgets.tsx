@@ -3,11 +3,12 @@ import {
   alpha,
   Box,
   BoxProps,
-  useTheme,
   ButtonBase,
   Skeleton,
+  useTheme,
 } from '@dodoex/components';
 import BigNumber from 'bignumber.js';
+import { ReactComponent as Link } from '../assets/logo/link.svg';
 import { chainListMap } from '../constants/chainList';
 import { TokenInfo } from '../hooks/Token';
 import {
@@ -17,10 +18,9 @@ import {
 import { increaseArray } from '../utils/utils';
 import { AddTokenToMetamask } from './AddTokenToMetamask';
 import { EmptyList } from './List/EmptyList';
+import { FailedList } from './List/FailedList';
 import TokenLogo from './TokenLogo';
 import { TokenLogoPair } from './TokenLogoPair';
-import { ReactComponent as Link } from '../assets/logo/link.svg';
-import { FailedList } from './List/FailedList';
 
 export function CardStatus({
   loading,
@@ -145,6 +145,7 @@ export function StatusAndTime({
   time,
   alphaColor,
   sx,
+  children,
 }: {
   isMobile: boolean;
   statusText: string;
@@ -152,6 +153,7 @@ export function StatusAndTime({
   time?: string;
   alphaColor?: number;
   sx?: BoxProps['sx'];
+  children?: React.ReactNode;
 }) {
   const theme = useTheme();
   const statusBgColor = alpha(statusColorProps, 0.1);
@@ -173,14 +175,18 @@ export function StatusAndTime({
     >
       <Box
         sx={{
-          padding: theme.spacing(4, 8),
+          padding: theme.spacing(4, 16),
           borderRadius: 4,
           backgroundColor: statusBgColor,
           color: statusColor,
           textAlign: 'center',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         {statusText}
+        {children}
       </Box>
       {time}
     </Box>

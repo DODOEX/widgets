@@ -1,7 +1,12 @@
 import { ChainId } from '@dodoex/api';
-import { Box, useTheme } from '@dodoex/components';
+import { Box, Button, useTheme } from '@dodoex/components';
 import { ArrowTopRightBorder } from '@dodoex/icons';
+import { Interface } from '@ethersproject/abi';
+import { useMutation } from '@tanstack/react-query';
 import React, { useMemo } from 'react';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { useSubmission } from '../../../hooks/Submission';
+import { OpCode } from '../../../hooks/Submission/spec';
 import { useCrossSwapOrderList } from '../../../hooks/Swap/useCrossSwapOrderList';
 import { getEtherscanPage } from '../../../utils';
 import { formatReadableTimeDuration, getTimeText } from '../../../utils/time';
@@ -181,11 +186,18 @@ function Extend({
 export default function CrossOrderCard({
   data,
   isMobile,
+  isErrorRefund,
+  refetch,
 }: {
   data: NonNullable<ReturnType<typeof useCrossSwapOrderList>['orderList'][0]>;
   isMobile: boolean;
+  isErrorRefund: boolean;
+  refetch: () => void;
 }) {
   const theme = useTheme();
+  const submission = useSubmission();
+  const { chainId, appKitActiveNetwork, getAppKitAccountByChainId } =
+    useWalletInfo();
 
   const { statusText, statusColor, statusAlphaColor } = useMemo(() => {
     let statusText = 'Loading';
@@ -228,6 +240,61 @@ export default function CrossOrderCard({
 
   const [showFold, setShowFold] = React.useState(false);
   const time = data.createdAt ? getTimeText(new Date(data.createdAt)) : '-';
+
+  const claimMutation = useMutation({
+    mutationFn: async () => {
+      if (!data.externalId || !data.refundCridgeContract) {
+        return;
+      }
+      if (chainId !== data.refundChainId) {
+        const chain = getAppKitAccountByChainId(data.refundChainId);
+        if (!chain) {
+          return;
+        }
+        appKitActiveNetwork.switchNetwork(chain.chain.caipNetwork);
+      }
+
+      const iface = new Interface([
+        {
+          inputs: [
+            {
+              internalType: 'bytes32',
+              name: 'externalId',
+              type: 'bytes32',
+            },
+          ],
+          name: 'claimRefund',
+          outputs: [],
+          stateMutability: 'nonpayable',
+          type: 'function',
+        },
+      ]);
+      const encodedData = iface.encodeFunctionData('claimRefund', [
+        data.externalId,
+      ]);
+      const result = await submission.execute(
+        'Claim',
+        {
+          opcode: OpCode.TX,
+          data: encodedData,
+          to: data.refundCridgeContract,
+          value: '0x0',
+        },
+        {
+          metadata: {
+            crossChainSwapClaimRefund: true,
+          },
+          submittedBack: () => {
+            refetch();
+          },
+          successBack: () => {
+            refetch();
+          },
+        },
+      );
+      return result;
+    },
+  });
 
   if (isMobile)
     return (
@@ -316,7 +383,18 @@ export default function CrossOrderCard({
                 statusText={statusText}
                 statusColor={statusColor}
                 alphaColor={statusAlphaColor}
-              />
+              >
+                {data.status !== 'success' && (
+                  <QuestionTooltip
+                    onlyHover
+                    title={data.subStatus}
+                    ml={4}
+                    sx={{
+                      color: statusColor,
+                    }}
+                  />
+                )}
+              </StatusAndTime>
             </Box>
           </Box>
           <FoldBtn
@@ -356,18 +434,67 @@ export default function CrossOrderCard({
             statusColor={statusColor}
             alphaColor={statusAlphaColor}
             time={time}
-          />
+          >
+            {data.status !== 'success' && (
+              <QuestionTooltip
+                onlyHover
+                title={data.subStatus}
+                ml={4}
+                sx={{
+                  color: statusColor,
+                }}
+              />
+            )}
+          </StatusAndTime>
         </td>
-        <td>
-          {data.fromToken && data.toToken && (
-            <PriceWithToggle
-              fromToken={data.fromToken}
-              toToken={data.toToken}
-              fromTokenPrice={data.fromTokenPrice}
-              toTokenPrice={data.toTokenPrice}
-            />
-          )}
-        </td>
+        {isErrorRefund ? (
+          <td>
+            <Button
+              variant={Button.Variant.contained}
+              size={Button.Size.small}
+              color="error"
+              isLoading={claimMutation.isPending}
+              disabled={
+                claimMutation.isPending ||
+                data.subStatus !== 'wait_claim_refund'
+              }
+              onClick={() => {
+                claimMutation.mutate();
+              }}
+              sx={{
+                typography: 'h6',
+                lineHeight: '16px',
+                py: 6,
+                minWidth: 98,
+                height: 28,
+              }}
+            >
+              Claim
+              {data.subStatus !== 'wait_claim_refund' && (
+                <QuestionTooltip
+                  onlyHover
+                  title={data.subStatus}
+                  ml={4}
+                  sx={{
+                    color: theme.palette.text.disabled,
+                  }}
+                />
+              )}
+            </Button>
+          </td>
+        ) : (
+          <td>
+            {data.fromToken && data.toToken && (
+              <PriceWithToggle
+                fromToken={data.fromToken}
+                toToken={data.toToken}
+                fromTokenPrice={data.fromTokenPrice}
+                toTokenPrice={data.toTokenPrice}
+              />
+            )}
+          </td>
+        )}
+
         <td>
           <Box
             sx={{
