@@ -22,9 +22,9 @@ msgstr "The smaller the slippage coefficient, the lower the slippage for traders
 msgid "Transaction Time:"
 msgstr "Transaction Time:"
 
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:143
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:208
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:243
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:148
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:210
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:265
 msgid "Cross Chain"
 msgstr "Cross Chain"
 
@@ -103,6 +103,7 @@ msgstr "* Please note that the Fee Rate cannot be modified after the pool is cre
 
 #: src/components/ConnectWallet/NeedConnectButton.tsx:84
 #: src/components/Swap/index.tsx:745
+#: src/components/Swap/index.tsx:761
 msgid "Switch to {0}"
 msgstr "Switch to {0}"
 
@@ -219,7 +220,7 @@ msgid "Pay"
 msgstr "Pay"
 
 #: src/components/Swap/index.tsx:727
-#: src/components/Swap/index.tsx:771
+#: src/components/Swap/index.tsx:787
 msgid "Connect to {0} wallet"
 msgstr "Connect to {0} wallet"
 
@@ -356,7 +357,7 @@ msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgid "Confirm"
 msgstr "Confirm"
 
-#: src/components/Swap/index.tsx:1165
+#: src/components/Swap/index.tsx:1182
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -711,7 +712,7 @@ msgstr "Add Position"
 msgid "Emulator"
 msgstr "Emulator"
 
-#: src/components/Swap/index.tsx:779
+#: src/components/Swap/index.tsx:795
 msgid "Transaction Pending"
 msgstr "Transaction Pending"
 
@@ -859,7 +860,7 @@ msgstr "*Collecting fees will withdraw currently available fees for you."
 msgid "Related CrowdPooling"
 msgstr "Related CrowdPooling"
 
-#: src/components/Swap/index.tsx:879
+#: src/components/Swap/index.tsx:895
 msgid "Review Swap"
 msgstr "Review Swap"
 
@@ -896,7 +897,7 @@ msgstr "Any Ratio"
 msgid "Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes."
 msgstr "Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes."
 
-#: src/components/Swap/index.tsx:787
+#: src/components/Swap/index.tsx:803
 msgid "Select Tokens"
 msgstr "Select Tokens"
 
@@ -987,13 +988,13 @@ msgstr "My Pools"
 msgid "Share Of Pool"
 msgstr "Share Of Pool"
 
-#: src/components/Swap/index.tsx:1026
+#: src/components/Swap/index.tsx:1043
 msgid "The setting has been switched to swap mode"
 msgstr "The setting has been switched to swap mode"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
 #: src/components/Swap/index.tsx:629
-#: src/components/Swap/index.tsx:823
+#: src/components/Swap/index.tsx:839
 msgid "Quote not available"
 msgstr "Quote not available"
 
@@ -1055,7 +1056,7 @@ msgstr "If there are no participants before the end, the rewards cannot be taken
 msgid "Your position will appear here."
 msgstr "Your position will appear here."
 
-#: src/components/Swap/index.tsx:807
+#: src/components/Swap/index.tsx:823
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
@@ -1185,7 +1186,7 @@ msgstr "Tx"
 msgid "Single"
 msgstr "Single"
 
-#: src/components/Swap/index.tsx:868
+#: src/components/Swap/index.tsx:884
 msgid "Review Cross Chain"
 msgstr "Review Cross Chain"
 
@@ -1456,7 +1457,7 @@ msgstr "Total Swap Fee"
 msgid "On"
 msgstr "On"
 
-#: src/components/Swap/index.tsx:848
+#: src/components/Swap/index.tsx:864
 #: src/hooks/Token/useGetTokenStatus.ts:60
 #: src/hooks/Token/useTokenStatus.ts:134
 msgid "Approve"
@@ -1799,7 +1800,7 @@ msgstr "Back"
 msgid "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 msgstr "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 
-#: src/components/Swap/index.tsx:795
+#: src/components/Swap/index.tsx:811
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:534
 msgid "Enter an amount"
 msgstr "Enter an amount"
@@ -1808,7 +1809,7 @@ msgstr "Enter an amount"
 msgid "Ratio"
 msgstr "Ratio"
 
-#: src/components/Swap/index.tsx:848
+#: src/components/Swap/index.tsx:864
 #: src/components/TokenPairStatusButton.tsx:45
 #: src/components/TokenStatusButton.tsx:31
 msgid "Approving"
@@ -2041,7 +2042,7 @@ msgstr "Traders"
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "Unable to SETTLE during the cooling-off period"
 
-#: src/components/Swap/index.tsx:1024
+#: src/components/Swap/index.tsx:1041
 msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
@@ -2096,7 +2097,7 @@ msgstr "APY"
 msgid "Route"
 msgstr "Route"
 
-#: src/components/Swap/index.tsx:994
+#: src/components/Swap/index.tsx:1011
 msgid "Universal Swap"
 msgstr "Universal Swap"
 
@@ -2384,7 +2385,7 @@ msgstr "OK"
 msgid "Total Rewards=Daily Rewards*Duration"
 msgstr "Total Rewards=Daily Rewards*Duration"
 
-#: src/components/Swap/index.tsx:836
+#: src/components/Swap/index.tsx:852
 #: src/components/TokenStatusButton.tsx:18
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:124
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:241

@@ -1,12 +1,19 @@
 import { Box } from '@dodoex/components';
 import { DoubleRight } from '@dodoex/icons';
 import { t } from '@lingui/macro';
+import {
+  PublicKey,
+  SendTransactionError,
+  TransactionExpiredBlockheightExceededError,
+} from '@solana/web3.js';
+import { BigNumber } from 'bignumber.js';
 import { useCallback } from 'react';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
 import TokenLogo from '../../components/TokenLogo';
 import { chainListMap } from '../../constants/chainList';
+import { transferSignet } from '../../utils/btc';
 import { formatTokenAmountNumber } from '../../utils/formatter';
-import { constructSolanaTransaction } from '../../utils/solana';
+import { constructSolanaBridgeRouteTransaction } from '../../utils/solana';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { ExecutionProps, useSubmission } from '../Submission';
 import { OpCode } from '../Submission/spec';
@@ -14,8 +21,6 @@ import { Metadata, MetadataFlag } from '../Submission/types';
 import { useGraphQLRequests } from '../useGraphQLRequests';
 import { createBridgeOrder } from './createBridgeOrder';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
-import { transferSignet } from '../../utils/btc';
-import { BigNumber } from 'bignumber.js';
 
 export default function useExecuteBridgeRoute({
   route,
@@ -200,9 +205,6 @@ export default function useExecuteBridgeRoute({
         if (!solanaWalletProvider || !solanaConnection) {
           throw new Error('solanaWalletProvider or solanaConnection is null');
         }
-        const transaction = constructSolanaTransaction({
-          data: bridgeOrderTxRequest.data,
-        });
 
         return submission.executeCustom({
           brief: t`Cross Chain`,
@@ -212,26 +214,46 @@ export default function useExecuteBridgeRoute({
           successBack,
           handler: async (params) => {
             try {
-              const signature = await solanaWalletProvider.sendTransaction(
-                transaction,
-                solanaConnection,
-              );
-              params.onSubmit(signature);
+              const transaction = constructSolanaBridgeRouteTransaction({
+                data: bridgeOrderTxRequest.data,
+              });
 
               const latestBlockhash =
                 await solanaConnection.getLatestBlockhash();
-              const confirmResult = await solanaConnection.confirmTransaction({
-                signature,
-                blockhash: latestBlockhash.blockhash,
-                lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
-              });
+              transaction.recentBlockhash = latestBlockhash.blockhash;
+              transaction.feePayer = new PublicKey(bridgeOrderTxRequest.from);
 
-              if (confirmResult.value.err) {
-                params.onError(confirmResult.value.err);
-                return;
-              }
+              const signedTransaction =
+                await solanaWalletProvider.signTransaction(transaction);
+              const signature = await solanaConnection.sendRawTransaction(
+                signedTransaction.serialize(),
+              );
+              params.onSubmit(signature);
               params.onSuccess(signature);
+
+              // const confirmResult = await solanaConnection.confirmTransaction(
+              //   {
+              //     signature,
+              //     blockhash: latestBlockhash.blockhash,
+              //     lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+              //   },
+              //   'processed',
+              // );
+
+              // if (confirmResult.value.err) {
+              //   params.onError(confirmResult.value.err);
+              //   return;
+              // }
+              // params.onSuccess(signature);
             } catch (error) {
+              if (error instanceof TransactionExpiredBlockheightExceededError) {
+                // 重新获取 blockhash，重新签名、发送
+              }
+
+              if (error instanceof SendTransactionError) {
+                const logs = await error.getLogs(solanaConnection);
+                console.log('logs:', logs);
+              }
               console.error('wallet.sendTransaction execute:', error);
               params.onError(error);
             }

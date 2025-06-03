@@ -1,10 +1,11 @@
 import {
+  Message,
   Transaction,
   VersionedMessage,
   VersionedTransaction,
 } from '@solana/web3.js';
 
-export function constructSolanaTransaction({ data }: { data: string }) {
+export function constructSolanaRouteTransaction({ data }: { data: string }) {
   // 解码 base64 数据
 
   // Ensure rawBrief.data is a valid string
@@ -82,6 +83,35 @@ export function constructSolanaTransaction({ data }: { data: string }) {
       throw new Error('Invalid legacy transaction structure');
     }
   }
+
+  return transaction;
+}
+
+export function constructSolanaBridgeRouteTransaction({
+  data,
+}: {
+  data: string;
+}) {
+  // Ensure rawBrief.data is a valid string
+  if (!data || typeof data !== 'string') {
+    throw new Error('Invalid transaction data');
+  }
+
+  // Create buffer from base64 string
+  // 兼容 Node.js 和浏览器
+  let serializedTransaction: Uint8Array;
+  if (typeof Buffer !== 'undefined') {
+    serializedTransaction = new Uint8Array(Buffer.from(data, 'base64'));
+  } else {
+    const binaryString = atob(data);
+    serializedTransaction = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      serializedTransaction[i] = binaryString.charCodeAt(i);
+    }
+  }
+
+  const message = Message.from(serializedTransaction);
+  const transaction = Transaction.populate(message);
 
   return transaction;
 }

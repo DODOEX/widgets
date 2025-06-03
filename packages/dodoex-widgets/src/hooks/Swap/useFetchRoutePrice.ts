@@ -8,7 +8,7 @@ import React, { useCallback, useMemo } from 'react';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import { EmptyAddress } from '../../constants/address';
 import { APIServiceKey, getAPIService } from '../../constants/api';
-import { constructSolanaTransaction } from '../../utils/solana';
+import { constructSolanaRouteTransaction } from '../../utils/solana';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { useSubmission } from '../Submission';
 import { MetadataFlag } from '../Submission/types';
@@ -338,7 +338,7 @@ export function useFetchRoutePrice({
 
       // 解码 base64 数据
       try {
-        const transaction = constructSolanaTransaction({
+        const transaction = constructSolanaRouteTransaction({
           data: data.rawBrief.data,
         });
 

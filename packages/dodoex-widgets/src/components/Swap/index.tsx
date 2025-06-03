@@ -747,6 +747,22 @@ export function Swap({
       );
     }
 
+    if (
+      fromAccount.chain.isSolanaChain &&
+      fromAccount.chain.chainId !== currentChainId
+    ) {
+      return (
+        <Button
+          fullWidth
+          onClick={() => {
+            appKitActiveNetwork.switchNetwork(fromAccount.chain.caipNetwork);
+          }}
+        >
+          <Trans>Switch to {fromAccount.chain.name}</Trans>
+        </Button>
+      );
+    }
+
     if (!toAccount?.appKitAccount?.isConnected) {
       return (
         <Button
@@ -883,6 +899,7 @@ export function Swap({
     fromAccount?.appKitAccount?.isConnected,
     fromAccount?.chain.isEVMChain,
     fromAccount?.chain.chainId,
+    fromAccount?.chain.isSolanaChain,
     fromAccount?.chain.name,
     fromAccount?.chain.caipNetwork,
     currentChainId,
@@ -890,8 +907,6 @@ export function Swap({
     isInflight,
     fromToken,
     toToken,
-    needApprove,
-    isApproving,
     isReverseRouting,
     toAmt,
     fromAmt,
@@ -900,12 +915,14 @@ export function Swap({
     isGetApproveLoading,
     resPriceStatus,
     insufficientBalance,
+    needApprove,
     disconnect,
     open,
     appKitActiveNetwork,
-    submitApprove,
     bridgeRouteList.length,
     resAmount,
+    isApproving,
+    submitApprove,
     selectedRoute,
     sendRouteLoading,
     handleSendBridgeRoute,

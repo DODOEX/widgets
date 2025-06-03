@@ -22,9 +22,9 @@ msgstr ""
 msgid "Transaction Time:"
 msgstr "交易时长:"
 
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:143
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:208
-#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:243
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:148
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:210
+#: src/hooks/Bridge/useExecuteBridgeRoute.tsx:265
 msgid "Cross Chain"
 msgstr "跨链桥"
 
@@ -103,6 +103,7 @@ msgstr ""
 
 #: src/components/ConnectWallet/NeedConnectButton.tsx:84
 #: src/components/Swap/index.tsx:745
+#: src/components/Swap/index.tsx:761
 msgid "Switch to {0}"
 msgstr ""
 
@@ -219,7 +220,7 @@ msgid "Pay"
 msgstr ""
 
 #: src/components/Swap/index.tsx:727
-#: src/components/Swap/index.tsx:771
+#: src/components/Swap/index.tsx:787
 msgid "Connect to {0} wallet"
 msgstr ""
 
@@ -356,7 +357,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 msgid "Confirm"
 msgstr "确认"
 
-#: src/components/Swap/index.tsx:1165
+#: src/components/Swap/index.tsx:1182
 msgid "Powered by DODO protocol"
 msgstr ""
 
@@ -711,7 +712,7 @@ msgstr ""
 msgid "Emulator"
 msgstr ""
 
-#: src/components/Swap/index.tsx:779
+#: src/components/Swap/index.tsx:795
 msgid "Transaction Pending"
 msgstr ""
 
@@ -859,7 +860,7 @@ msgstr ""
 msgid "Related CrowdPooling"
 msgstr ""
 
-#: src/components/Swap/index.tsx:879
+#: src/components/Swap/index.tsx:895
 msgid "Review Swap"
 msgstr ""
 
@@ -896,7 +897,7 @@ msgstr ""
 msgid "Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes."
 msgstr ""
 
-#: src/components/Swap/index.tsx:787
+#: src/components/Swap/index.tsx:803
 msgid "Select Tokens"
 msgstr ""
 
@@ -987,13 +988,13 @@ msgstr ""
 msgid "Share Of Pool"
 msgstr ""
 
-#: src/components/Swap/index.tsx:1026
+#: src/components/Swap/index.tsx:1043
 msgid "The setting has been switched to swap mode"
 msgstr ""
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
 #: src/components/Swap/index.tsx:629
-#: src/components/Swap/index.tsx:823
+#: src/components/Swap/index.tsx:839
 msgid "Quote not available"
 msgstr "没有报价"
 
@@ -1055,7 +1056,7 @@ msgstr ""
 msgid "Your position will appear here."
 msgstr ""
 
-#: src/components/Swap/index.tsx:807
+#: src/components/Swap/index.tsx:823
 msgid "Fetching Price..."
 msgstr ""
 
@@ -1185,7 +1186,7 @@ msgstr "交易哈希："
 msgid "Single"
 msgstr ""
 
-#: src/components/Swap/index.tsx:868
+#: src/components/Swap/index.tsx:884
 msgid "Review Cross Chain"
 msgstr ""
 
@@ -1456,7 +1457,7 @@ msgstr ""
 msgid "On"
 msgstr "在"
 
-#: src/components/Swap/index.tsx:848
+#: src/components/Swap/index.tsx:864
 #: src/hooks/Token/useGetTokenStatus.ts:60
 #: src/hooks/Token/useTokenStatus.ts:134
 msgid "Approve"
@@ -1799,7 +1800,7 @@ msgstr ""
 msgid "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 msgstr ""
 
-#: src/components/Swap/index.tsx:795
+#: src/components/Swap/index.tsx:811
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:534
 msgid "Enter an amount"
 msgstr "输入代币数量"
@@ -1808,7 +1809,7 @@ msgstr "输入代币数量"
 msgid "Ratio"
 msgstr ""
 
-#: src/components/Swap/index.tsx:848
+#: src/components/Swap/index.tsx:864
 #: src/components/TokenPairStatusButton.tsx:45
 #: src/components/TokenStatusButton.tsx:31
 msgid "Approving"
@@ -2041,7 +2042,7 @@ msgstr ""
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "在冷静期无法进行清算"
 
-#: src/components/Swap/index.tsx:1024
+#: src/components/Swap/index.tsx:1041
 msgid "The setting has been switched to cross chain mode"
 msgstr ""
 
@@ -2096,7 +2097,7 @@ msgstr ""
 msgid "Route"
 msgstr ""
 
-#: src/components/Swap/index.tsx:994
+#: src/components/Swap/index.tsx:1011
 msgid "Universal Swap"
 msgstr ""
 
@@ -2384,7 +2385,7 @@ msgstr ""
 msgid "Total Rewards=Daily Rewards*Duration"
 msgstr ""
 
-#: src/components/Swap/index.tsx:836
+#: src/components/Swap/index.tsx:852
 #: src/components/TokenStatusButton.tsx:18
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:124
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:241
