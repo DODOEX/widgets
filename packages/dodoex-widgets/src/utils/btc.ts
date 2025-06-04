@@ -1,6 +1,6 @@
 import ecc from '@bitcoinerlab/secp256k1';
 import * as bitcoin from 'bitcoinjs-lib';
-import type { WalletState } from 'btc-connect/dist/react';
+import type { WalletState } from '@dodoex/btc-connect-react';
 
 bitcoin.initEccLib(ecc);
 

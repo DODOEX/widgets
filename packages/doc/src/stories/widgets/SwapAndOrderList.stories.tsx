@@ -20,8 +20,12 @@ import {
 } from '@reown/appkit/networks';
 import { createAppKit, useAppKitProvider } from '@reown/appkit/react';
 
-import { WalletConnectReact } from 'btc-connect/dist/react';
-import 'btc-connect/dist/style/index.css';
+import {
+  Network,
+  useReactWalletStore,
+  WalletConnectReact,
+} from '@dodoex/btc-connect-react';
+import '@dodoex/btc-connect-react/dist/style/index.css';
 
 // 1. Get projectId
 const projectId = 'bc32cb5c4e5f0d1d9a3313ae139b30e9';
@@ -81,6 +85,8 @@ export const Primary = (args) => {
 
   const { connection: solanaConnection } = useAppKitConnection();
 
+  // const btcWalletStore = useReactWalletStore();
+
   return (
     <Box
       sx={{
@@ -90,36 +96,25 @@ export const Primary = (args) => {
         gap: '40px',
       }}
     >
-      <div
-        className="continer"
-        style={{
-          display: 'none',
+      <WalletConnectReact
+        config={{
+          network: Network.TESTNET, // or 'testnet'
         }}
-      >
-        <WalletConnectReact
-          config={{
-            // https://github.com/sat20-labs/btc-connect
-            network: 'testnet', // or 'testnet'
-            defaultConnectorId: 'unisat', // 'unisat' or 'okx'
-          }}
-          onConnectSuccess={(btcWallet) => {
-            // Handle successful connection
-            console.log('btcWallet', btcWallet, btcWallet.balance);
-          }}
-          theme="dark"
-          onConnectError={(error) => {
-            // Handle connection error
-          }}
-          onDisconnectSuccess={() => {
-            // Handle successful disconnection
-          }}
-          onDisconnectError={(error) => {
-            // Handle disconnection error
-          }}
-        >
-          {/* Your app components */}
-        </WalletConnectReact>
-      </div>
+        onConnectSuccess={(btcWallet) => {
+          // Handle successful connection
+          console.log('btcWallet', btcWallet, btcWallet.balance);
+        }}
+        theme="dark"
+        onConnectError={(error) => {
+          // Handle connection error
+        }}
+        onDisconnectSuccess={() => {
+          // Handle successful disconnection
+        }}
+        onDisconnectError={(error) => {
+          // Handle disconnection error
+        }}
+      />
 
       <Widget
         {...args}

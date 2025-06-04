@@ -1,4 +1,5 @@
 import { ChainId, ContractRequests, GraphQLRequests } from '@dodoex/api';
+import type { WalletStore } from '@dodoex/btc-connect-react';
 import {
   Box,
   createTheme,
@@ -10,6 +11,7 @@ import {
   WIDGET_MODAL_CLASS,
   WIDGET_MODAL_FIXED_CLASS,
 } from '@dodoex/components';
+import { Connection } from '@solana/web3.js';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
 import { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
@@ -22,28 +24,26 @@ import {
 } from '../../hooks/ConnectWallet';
 import { useFetchBlockNumber } from '../../hooks/contract';
 import { ExecutionProps } from '../../hooks/Submission';
+import { ExecutionCtx } from '../../hooks/Submission/types';
 import { DefaultTokenInfo, TokenInfo } from '../../hooks/Token/type';
 import useInitTokenList, {
   InitTokenListProps,
 } from '../../hooks/Token/useInitTokenList';
-import { LangProvider as LangProviderBase } from '../../providers/i18n';
-import { queryClient } from '../../providers/queryClient';
-import { ConfirmProps } from '../Confirm';
-import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
-import Message from '../Message';
-import { DialogProps } from '../Swap/components/Dialog';
-import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
-import WithExecutionDialog from '../WithExecutionDialog';
-import { Page } from '../../router';
-import { useInitContractRequest } from '../../providers/useInitContractRequest';
 import {
   setAutoConnectLoading,
   useGlobalState,
 } from '../../hooks/useGlobalState';
-import { ExecutionCtx } from '../../hooks/Submission/types';
+import { LangProvider as LangProviderBase } from '../../providers/i18n';
+import { queryClient } from '../../providers/queryClient';
+import { useInitContractRequest } from '../../providers/useInitContractRequest';
+import { Page } from '../../router';
+import { ConfirmProps } from '../Confirm';
+import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
+import Message from '../Message';
+import { DialogProps } from '../Swap/components/Dialog';
 import { TokenPickerDialogProps } from '../Swap/components/TokenCard/TokenPickerDialog';
-import { Connection } from '@solana/web3.js';
-import type { WalletStore } from 'btc-connect/dist/react';
+import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
+import WithExecutionDialog from '../WithExecutionDialog';
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 

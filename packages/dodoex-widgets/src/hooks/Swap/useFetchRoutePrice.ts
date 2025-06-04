@@ -1,12 +1,11 @@
 import { ChainId } from '@dodoex/api';
-import { parseFixed } from '@ethersproject/bignumber';
 import { t } from '@lingui/macro';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import React, { useCallback, useMemo } from 'react';
 import { useUserOptions } from '../../components/UserOptionsProvider';
-import { EmptyAddress } from '../../constants/address';
+import { getFallbackAddress } from '../../constants/address';
 import { APIServiceKey, getAPIService } from '../../constants/api';
 import { constructSolanaRouteTransaction } from '../../utils/solana';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
@@ -169,6 +168,13 @@ export function useFetchRoutePrice({
         };
       }
 
+      const fromAmountBN = new BigNumber(fromAmount)
+        .multipliedBy(new BigNumber(10).pow(fromToken.decimals))
+        .dp(0, BigNumber.ROUND_DOWN);
+      const toAmountBN = new BigNumber(toAmount)
+        .multipliedBy(new BigNumber(10).pow(toToken.decimals))
+        .dp(0, BigNumber.ROUND_DOWN);
+
       const apiDdl = Math.floor(Date.now() / 1000) + ddl * 60;
 
       const params: any = isSolanaChain
@@ -177,11 +183,8 @@ export function useFetchRoutePrice({
             apikey,
             inputMint: fromToken.address,
             outputMint: toToken.address,
-            amount: parseFixed(
-              String(fromAmount || 1),
-              fromToken.decimals,
-            ).toString(),
-            user: account,
+            amount: fromAmountBN.toString(),
+            user: account || getFallbackAddress(fromToken.chainId),
             chainId: isSolanaMainnet ? 'solana-mainnet' : 'solana-devnet',
             slippageBps: new BigNumber(slippage)
               .dividedBy(100)
@@ -198,22 +201,16 @@ export function useFetchRoutePrice({
             source: disableIndirectRouting ? 'noMaxHops' : 'dodoMix',
             toTokenAddress: toToken.address,
             fromTokenAddress: fromToken.address,
-            userAddr: account || EmptyAddress,
+            userAddr: account || getFallbackAddress(fromToken.chainId),
             estimateGas,
             rebateTo: rebateTo || undefined,
             fee: feeRate || undefined,
             ...(isReverseRouting
               ? {
-                  toAmount: parseFixed(
-                    String(toAmount || 1),
-                    toToken.decimals,
-                  ).toString(),
+                  toAmount: toAmountBN.toString(),
                 }
               : {
-                  fromAmount: parseFixed(
-                    String(fromAmount || 1),
-                    fromToken.decimals,
-                  ).toString(),
+                  fromAmount: fromAmountBN.toString(),
                 }),
           };
 
@@ -293,10 +290,7 @@ export function useFetchRoutePrice({
           from: account,
           fromTokenAddress: fromToken.address,
           toTokenAddress: toToken?.address,
-          fromAmount: parseFixed(
-            String(finalFromAmount || 1),
-            fromToken.decimals,
-          ).toString(),
+          fromAmount: finalFromAmount,
           resAmount: finalToAmount,
           resPricePerFromToken: isReverseRouting
             ? data.rawBrief.resPricePerToToken

@@ -16,6 +16,7 @@ import { ReactComponent as ArbitrumSepoliaLogo } from '../assets/logo/networks/a
 import { ReactComponent as SolanaLogo } from '../assets/logo/networks/solana.svg';
 import { ReactComponent as ZetachainLogo } from '../assets/logo/networks/zetachain.svg';
 import { ReactComponent as BtcSignetLogo } from '../assets/logo/networks/btc-signet.svg';
+import { EmptyAddress } from './address';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -27,6 +28,9 @@ export interface ChainListItem {
   isEVMChain: boolean;
   isSolanaChain: boolean;
   isBTCChain: boolean;
+
+  /** 未链接钱包时，使用该地址 */
+  fallbackAddress: string;
 }
 
 export const chainListMap: Map<ChainId, ChainListItem> = new Map([
@@ -90,6 +94,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: false,
       isSolanaChain: true,
       isBTCChain: false,
+      fallbackAddress: EmptyAddress,
     },
   ],
   // [
@@ -113,6 +118,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      fallbackAddress: EmptyAddress,
     },
   ],
   [
@@ -125,6 +131,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      fallbackAddress: EmptyAddress,
     },
   ],
   [
@@ -138,6 +145,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      fallbackAddress: EmptyAddress,
     },
   ],
   [
@@ -150,6 +158,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: false,
       isSolanaChain: true,
       isBTCChain: false,
+      fallbackAddress: 'CVVQYs9Pi3t4it4KFpm3hxk97uDA6AVzNVJvGQTPH17n',
     },
   ],
   [
@@ -162,6 +171,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: false,
       isSolanaChain: false,
       isBTCChain: true,
+      fallbackAddress: 'tb1qcrd8yvatjzpxl0ew29jsps2z595jpwtm5mj38v',
     },
   ],
 ]);

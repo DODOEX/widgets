@@ -76,7 +76,9 @@ export function getEtherscanPage(
   id?: string | null,
   prefix = 'address',
 ) {
-  return `https://${scanUrlDomainMap[chainId]}${id ? `/${prefix}/${id}` : ''}`;
+  return `https://${scanUrlDomainMap[chainId]}${id ? `/${prefix}/${id}` : ''}${
+    chainId === ChainId.SOLANA_DEVNET ? '?cluster=devnet' : ''
+  }`;
 }
 
 export async function openEtherscanPage(

@@ -716,9 +716,6 @@ export function Swap({
               return;
             }
             const namespace = CaipNetworksUtil.getChainNamespace(caipNetwork);
-            disconnect({
-              namespace,
-            });
             open({
               namespace,
             });
@@ -776,9 +773,6 @@ export function Swap({
               return;
             }
             const namespace = CaipNetworksUtil.getChainNamespace(caipNetwork);
-            disconnect({
-              namespace,
-            });
             open({
               namespace,
             });
@@ -916,7 +910,6 @@ export function Swap({
     resPriceStatus,
     insufficientBalance,
     needApprove,
-    disconnect,
     open,
     appKitActiveNetwork,
     bridgeRouteList.length,

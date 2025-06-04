@@ -1866,6 +1866,17 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
+"@dodoex/btc-connect-react@^1.5.9":
+  version "1.5.9"
+  resolved "https://registry.yarnpkg.com/@dodoex/btc-connect-react/-/btc-connect-react-1.5.9.tgz#b65453c9628cb06e3a15015c7711fb3b5dd96ac4"
+  integrity sha512-fbcxhr7roKT6p2EezfEKybDQ2aBNM5r9OFJExFg6ioOrdOCVMgtiQHTS6p23UEKkIov+wNA9kdsULgxA1V7nWA==
+  optionalDependencies:
+    "@types/react-dom" "^18.2.22"
+    lint-staged "^15.2.2"
+    prettier "^3.2.5"
+    react-dom "^18.2.0"
+    tailwindcss "^3.4.1"
+
 "@dodoex/contract-request@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@dodoex/contract-request/-/contract-request-1.3.0.tgz#226272dc0460be4a02f2bdde6483d7ad84ce8afa"
@@ -9176,17 +9187,6 @@ bser@2.1.1:
   integrity sha512-gQxTNE/GAfIIrmHLUE3oJyp5FO6HRBfhjnw4/wMmA63ZGDJnWBmgY/lyQBpnDUkGmAhbSe39tx2d/iTOAfglwQ==
   dependencies:
     node-int64 "^0.4.0"
-
-btc-connect@^1.5.5:
-  version "1.5.5"
-  resolved "https://registry.yarnpkg.com/btc-connect/-/btc-connect-1.5.5.tgz#6dfde63cf228fe2838f1615ef82680d2c1043971"
-  integrity sha512-hv0uQ3tdAXkpTvj9vZdSeyvlXo8NcR1Ss7OfaFK3ykpG2Yf7KkJrvCG4fi+A8W366g+roxI1cftW5llE7WTCGg==
-  optionalDependencies:
-    "@types/react-dom" "^18.2.22"
-    lint-staged "^15.2.2"
-    prettier "^3.2.5"
-    react-dom "^18.2.0"
-    tailwindcss "^3.4.1"
 
 buffer-from@^1.0.0:
   version "1.1.2"

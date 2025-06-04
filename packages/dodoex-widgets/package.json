@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.2-zetachain.32",
+  "version": "3.0.2-zetachain.34",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -110,6 +110,7 @@
     "@solana/spl-token": "^0.4.13",
     "@solana/web3.js": "1.98.2",
     "bitcoinjs-lib": "6.1.7",
+    "@dodoex/btc-connect-react": "^1.5.9",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

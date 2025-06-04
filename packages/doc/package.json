@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
+    "@dodoex/btc-connect-react": "^1.5.9",
     "@dodoex/components": "^3.0.3-zetachain.5",
     "@emotion/styled": "^11.10.0",
     "@reown/appkit": "^1.7.5",
@@ -20,7 +21,6 @@
     "@solana/spl-token": "^0.4.13",
     "@solana/web3.js": "1.98.2",
     "@storybook/addon-docs": "^8.3.5",
-    "btc-connect": "^1.5.5",
     "buffer": "^6.0.3",
     "ethers": "5.8.0",
     "lodash": "^4.17.21",

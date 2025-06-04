@@ -3,11 +3,10 @@ import {
   Cross_Chain_Swap_ZetachainrouteParams,
   SwapApi,
 } from '@dodoex/api';
-import { parseFixed } from '@ethersproject/bignumber';
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
-import { EmptyAddress } from '../../constants/address';
+import { getFallbackAddress } from '../../constants/address';
 import { chainListMap } from '../../constants/chainList';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { useDefaultSlippage } from '../setting/useDefaultSlippage';
@@ -528,6 +527,16 @@ export function useFetchRoutePriceBridge({
     useDefaultSlippage(true);
   const slippage = useGlobalState((state) => state.slippage || defaultSlippage);
 
+  const fromAmountBN = useMemo(() => {
+    if (!fromToken || !fromAmount) {
+      return null;
+    }
+
+    return new BigNumber(fromAmount)
+      .multipliedBy(new BigNumber(10).pow(fromToken.decimals))
+      .dp(0, BigNumber.ROUND_DOWN);
+  }, [fromAmount, fromToken]);
+
   const query = graphQLRequests.getQuery<
     Cross_Chain_Swap_Zetachain_RoutesQuery,
     {
@@ -551,12 +560,13 @@ export function useFetchRoutePriceBridge({
       fromTokenAddress: fromToken?.address ?? null,
       toChainId: toToken?.chainId ?? null,
       toTokenAddress: toToken?.address ?? null,
-      fromAddress: fromAccount?.appKitAccount?.address ?? EmptyAddress,
-      toAddress: toAccount?.appKitAccount?.address ?? EmptyAddress,
-      fromAmount:
-        fromToken && fromAmount
-          ? parseFixed(String(fromAmount), fromToken.decimals).toString()
-          : null,
+      fromAddress:
+        fromAccount?.appKitAccount?.address ??
+        getFallbackAddress(fromToken?.chainId),
+      toAddress:
+        toAccount?.appKitAccount?.address ??
+        getFallbackAddress(toToken?.chainId),
+      fromAmount: fromAmountBN ? fromAmountBN.toString() : null,
       slippage: slippage ? Number(slippage) / 100 : null,
     },
   });
@@ -576,7 +586,9 @@ export function useFetchRoutePriceBridge({
     enabled:
       !!fromToken &&
       !!toToken &&
-      !!fromAmount &&
+      !!fromAmountBN &&
+      fromAmountBN.isFinite() &&
+      fromAmountBN.gt(0) &&
       fromToken.chainId !== toToken.chainId,
     // enabled: false,
     // initialData: routesExample.data,
