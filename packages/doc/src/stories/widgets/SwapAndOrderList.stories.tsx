@@ -104,7 +104,7 @@ export const Primary = (args) => {
           // Handle successful connection
           console.log('btcWallet', btcWallet, btcWallet.balance);
         }}
-        theme="dark"
+        theme="light"
         onConnectError={(error) => {
           // Handle connection error
         }}
@@ -146,7 +146,7 @@ export const Primary = (args) => {
 
 Primary.args = {
   apikey: 'd5f476a6fd58e5e989',
-  colorMode: 'dark',
+  colorMode: 'light',
   noUI: true,
   defaultChainId: ChainId.ZETACHAIN_TESTNET,
   crossChain: true,

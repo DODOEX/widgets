@@ -39,7 +39,7 @@ const StyledBackdrop = styled(Backdrop)`
   position: fixed;
   inset: 0px;
   background-color: ${({ theme }) => theme.palette.background.backdrop};
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(16px);
   -webkit-tap-highlight-color: transparent;
 `;
 

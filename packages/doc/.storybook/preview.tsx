@@ -30,7 +30,7 @@ const preview = {
     theme: {
       name: 'theme',
       description: 'Global theme for components',
-      defaultValue: 'dark',
+      defaultValue: 'light',
       toolbar: {
         icon: 'circlehollow',
         // Array of plain string values or MenuItem shape (see below)

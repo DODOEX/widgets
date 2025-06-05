@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/components",
-  "version": "3.0.3-zetachain.6",
+  "version": "3.0.3-zetachain.7",
   "description": "UI component library",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
@@ -47,7 +47,7 @@
     "@mui/system": "5.8.4",
     "@szhsin/react-accordion": "^1.2.1",
     "any-touch": "^2.2.0",
-    "clsx": "^1.2.1",
+    "clsx": "^2.1.1",
     "lottie-web": "^5.12.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
