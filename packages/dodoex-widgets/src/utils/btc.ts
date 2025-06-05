@@ -4,7 +4,7 @@ import type { WalletState } from '@dodoex/btc-connect-react';
 
 bitcoin.initEccLib(ecc);
 
-const SIGNET = {
+export const SIGNET = {
   bech32: 'tb',
   bip32: { private: 0x04358394, public: 0x043587cf },
   messagePrefix: '\x18Bitcoin Signed Message:\n',

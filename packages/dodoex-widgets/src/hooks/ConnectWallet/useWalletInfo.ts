@@ -137,7 +137,6 @@ export function useWalletInfo() {
 
   const open = useCallback(
     ({ namespace }: { namespace?: ChainNamespace }) => {
-      console.log('open', namespace);
       if (namespace === 'bip122') {
         btcWalletStore?.setModalVisible(true);
         return;
@@ -150,13 +149,12 @@ export function useWalletInfo() {
 
   const disconnect = useCallback(
     ({ namespace }: { namespace?: ChainNamespace }) => {
-      console.log('disconnect', namespace);
       if (namespace === 'bip122') {
         btcWalletStore?.disconnect();
         return;
       }
 
-      appKitDisconnect.disconnect();
+      appKitDisconnect.disconnect({ namespace });
     },
     [appKitDisconnect, btcWalletStore],
   );

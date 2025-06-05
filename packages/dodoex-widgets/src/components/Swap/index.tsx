@@ -104,14 +104,32 @@ export function Swap({
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] =
     useState<boolean>(false);
   const [bridgeSummaryShow, setBridgeSummaryShow] = useState(false);
+  const [inputToAddress, setInputToAddress] = useState<string | null>(null);
 
   const fromAccount = useMemo(() => {
     return getAppKitAccountByChainId(fromToken?.chainId);
   }, [fromToken?.chainId, getAppKitAccountByChainId]);
 
   const toAccount = useMemo(() => {
-    return getAppKitAccountByChainId(toToken?.chainId);
-  }, [toToken?.chainId, getAppKitAccountByChainId]);
+    const account = getAppKitAccountByChainId(toToken?.chainId);
+
+    if (!account) {
+      return undefined;
+    }
+
+    if (inputToAddress) {
+      return {
+        ...account,
+        appKitAccount: {
+          ...account.appKitAccount,
+          isConnected: true,
+          address: inputToAddress,
+        },
+      };
+    }
+
+    return account;
+  }, [getAppKitAccountByChainId, toToken?.chainId, inputToAddress]);
 
   const debouncedSetFromAmt = useMemo(
     () => debounce((amt) => setFromAmt(amt), debounceTime),
@@ -1098,6 +1116,10 @@ export function Swap({
             showChainLogo={!onlyChainId}
             showChainName={!onlyChainId}
             notTokenPickerModal
+            enterAddressEnabled={false}
+            inputToAddress={inputToAddress}
+            setInputToAddress={setInputToAddress}
+            account={fromAccount}
           />
 
           {/* Switch Icon */}
@@ -1125,6 +1147,10 @@ export function Swap({
             showChainLogo={!onlyChainId}
             showChainName={!onlyChainId}
             notTokenPickerModal
+            enterAddressEnabled={isBridge}
+            inputToAddress={inputToAddress}
+            setInputToAddress={setInputToAddress}
+            account={toAccount}
           />
 
           {/* Price Disp or Warnings  */}

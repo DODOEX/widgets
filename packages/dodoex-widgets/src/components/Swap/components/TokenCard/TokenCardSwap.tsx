@@ -8,9 +8,9 @@ import {
 import { Trans } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { tokenApi } from '../../../../constants/api';
-import { useAppKitAccountByChainId } from '../../../../hooks/ConnectWallet/useAccountByChainId';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import {
   BalanceData,
   useBalanceUpdateLoading,
@@ -55,6 +55,12 @@ export interface TokenCardProps {
   hideToken?: boolean;
   checkLogBalance?: BalanceData;
   notTokenPickerModal?: boolean;
+  enterAddressEnabled?: boolean;
+  inputToAddress: string | null;
+  setInputToAddress: Dispatch<SetStateAction<string | null>>;
+  account: ReturnType<
+    ReturnType<typeof useWalletInfo>['getAppKitAccountByChainId']
+  >;
 }
 
 export function TokenCardSwap({
@@ -86,15 +92,21 @@ export function TokenCardSwap({
   hideToken,
   checkLogBalance,
   notTokenPickerModal,
+  enterAddressEnabled,
+  inputToAddress,
+  setInputToAddress,
+  account,
 }: TokenCardProps) {
-  const { account } = useAppKitAccountByChainId(token?.chainId);
-
   const theme = useTheme();
 
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
 
   const tokenQuery = useQuery(
-    tokenApi.getFetchTokenQuery(token?.chainId, token?.address, account),
+    tokenApi.getFetchTokenQuery(
+      token?.chainId,
+      token?.address,
+      account?.appKitAccount?.address,
+    ),
   );
   const balance = overrideBalance ?? tokenQuery.data?.balance ?? null;
 
@@ -164,7 +176,13 @@ export function TokenCardSwap({
         )}
 
         {token && (
-          <WalletConnectBtn token={token} enterAddressEnabled={side === 'to'} />
+          <WalletConnectBtn
+            token={token}
+            enterAddressEnabled={enterAddressEnabled}
+            inputToAddress={inputToAddress}
+            setInputToAddress={setInputToAddress}
+            account={account}
+          />
         )}
       </Box>
 
@@ -207,9 +225,12 @@ export function TokenCardSwap({
                   }}
                   onClick={(evt) => {
                     evt.stopPropagation();
+                    if (!account?.appKitAccount?.address) {
+                      return;
+                    }
                     gotoBuyToken?.({
                       token: token as TokenInfo,
-                      account: account as string,
+                      account: account.appKitAccount.address,
                     });
                   }}
                 >

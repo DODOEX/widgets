@@ -2,6 +2,12 @@ import { ChainId } from '@dodoex/api';
 import { useMemo } from 'react';
 import { useWalletInfo } from './useWalletInfo';
 
+/**
+ *
+ * @param chainId
+ * @returns
+ * @deprecated
+ */
 export function useAppKitAccountByChainId(chainId: ChainId | undefined) {
   const { getAppKitAccountByChainId } = useWalletInfo();
 

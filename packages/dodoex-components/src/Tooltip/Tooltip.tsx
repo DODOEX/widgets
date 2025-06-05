@@ -255,7 +255,7 @@ export default function Tooltip({
           }}
           onMouseEnter={handleOverTooltip}
           onMouseLeave={handleOutTooltip}
-          onClick={(e) => e.stopPropagation()}
+          // onClick={(e) => e.stopPropagation()}
         >
           {title}
         </Box>

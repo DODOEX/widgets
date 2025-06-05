@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.17.0",
     "@dodoex/btc-connect-react": "^1.5.9",
-    "@dodoex/components": "^3.0.3-zetachain.5",
+    "@dodoex/components": "^3.0.3-zetachain.6",
     "@emotion/styled": "^11.10.0",
     "@reown/appkit": "^1.7.5",
     "@reown/appkit-adapter-bitcoin": "^1.7.5",
