@@ -131,22 +131,7 @@ export const Primary = (args) => {
         provider={ethersProvider}
         solanaConnection={solanaConnection}
       >
-        <Box
-          sx={{
-            width: args.width ?? 450,
-            height: args.height,
-            overflow: 'hidden',
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            minWidth: 450,
-            minHeight: 494,
-            borderRadius: 16,
-            backgroundColor: 'background.paper',
-          }}
-        >
-          <Swap />
-        </Box>
+        <Swap />
 
         <SwapOrderHistory />
       </Widget>

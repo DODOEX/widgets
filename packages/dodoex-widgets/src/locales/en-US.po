@@ -357,7 +357,7 @@ msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgid "Confirm"
 msgstr "Confirm"
 
-#: src/components/Swap/index.tsx:1201
+#: src/components/Swap/index.tsx:1212
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -988,7 +988,7 @@ msgstr "My Pools"
 msgid "Share Of Pool"
 msgstr "Share Of Pool"
 
-#: src/components/Swap/index.tsx:1054
+#: src/components/Swap/index.tsx:1057
 msgid "The setting has been switched to swap mode"
 msgstr "The setting has been switched to swap mode"
 
@@ -2042,12 +2042,12 @@ msgstr "Traders"
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "Unable to SETTLE during the cooling-off period"
 
-#: src/components/Swap/index.tsx:1052
+#: src/components/Swap/index.tsx:1055
 msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
 #: src/components/Swap/components/TokenCard/index.tsx:313
-#: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:237
+#: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:252
 msgid "Buy"
 msgstr "Buy"
 
@@ -2097,7 +2097,7 @@ msgstr "APY"
 msgid "Route"
 msgstr "Route"
 
-#: src/components/Swap/index.tsx:1022
+#: src/components/Swap/index.tsx:1025
 msgid "Universal Swap"
 msgstr "Universal Swap"
 

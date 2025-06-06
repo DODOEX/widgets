@@ -357,7 +357,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 msgid "Confirm"
 msgstr "确认"
 
-#: src/components/Swap/index.tsx:1201
+#: src/components/Swap/index.tsx:1212
 msgid "Powered by DODO protocol"
 msgstr ""
 
@@ -988,7 +988,7 @@ msgstr ""
 msgid "Share Of Pool"
 msgstr ""
 
-#: src/components/Swap/index.tsx:1054
+#: src/components/Swap/index.tsx:1057
 msgid "The setting has been switched to swap mode"
 msgstr ""
 
@@ -2042,12 +2042,12 @@ msgstr ""
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "在冷静期无法进行清算"
 
-#: src/components/Swap/index.tsx:1052
+#: src/components/Swap/index.tsx:1055
 msgid "The setting has been switched to cross chain mode"
 msgstr ""
 
 #: src/components/Swap/components/TokenCard/index.tsx:313
-#: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:237
+#: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:252
 msgid "Buy"
 msgstr ""
 
@@ -2097,7 +2097,7 @@ msgstr ""
 msgid "Route"
 msgstr ""
 
-#: src/components/Swap/index.tsx:1022
+#: src/components/Swap/index.tsx:1025
 msgid "Universal Swap"
 msgstr ""
 

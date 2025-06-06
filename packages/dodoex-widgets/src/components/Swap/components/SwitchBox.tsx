@@ -11,7 +11,7 @@ export function SwitchBox({
   plus?: boolean;
 }) {
   const theme = useTheme();
-  const size = 36;
+  const size = 44;
   const disabled = disabledProps || plus || !onClick;
   return (
     <Box
@@ -26,8 +26,8 @@ export function SwitchBox({
           width: size,
           height: size,
           borderRadius: '50%',
-          backgroundColor: theme.palette.background.input,
-          border: `4px solid ${theme.palette.background.default}`,
+          backgroundColor: theme.palette.background.paper,
+          border: `4px solid #E4E1D4`,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -56,7 +56,7 @@ export function SwitchBox({
                     width: size - 8,
                     height: size - 8,
                     border: 'solid 1px',
-                    borderColor: 'text.primary',
+                    borderColor: 'text.secondary',
                   },
                 },
               }),
@@ -73,16 +73,16 @@ export function SwitchBox({
           <Box
             component={Plus}
             sx={{
-              width: 18,
-              height: 18,
+              width: 24,
+              height: 24,
             }}
           />
         ) : (
           <Box
             component={ArrowBack}
             sx={{
-              width: 18,
-              height: 18,
+              width: 24,
+              height: 24,
             }}
           />
         )}

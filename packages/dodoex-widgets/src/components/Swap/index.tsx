@@ -996,17 +996,19 @@ export function Swap({
   return (
     <Box
       sx={{
-        width: 450,
+        width: '100%',
         // height: 571,
         overflow: 'hidden',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         borderRadius: 16,
-        backgroundColor: theme.palette.background.default,
-        borderWidth: 2,
-        borderStyle: 'solid',
-        borderColor: theme.palette.border.main,
+        backgroundColor: theme.palette.background.skeleton,
+        [theme.breakpoints.up('desktop')]: {
+          width: 450,
+          backgroundColor: theme.palette.background.skeleton,
+          backdropFilter: 'blur(4px)',
+        },
       }}
     >
       {/* Header */}
@@ -1014,12 +1016,18 @@ export function Swap({
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          typography: 'caption',
-          px: 14,
+          px: 16,
           py: 20,
         }}
       >
-        <Trans>Universal Swap</Trans>
+        <Box
+          sx={{
+            typography: 'caption',
+            color: theme.palette.text.primary,
+          }}
+        >
+          Universal Swap
+        </Box>
 
         <Box
           sx={{
@@ -1027,7 +1035,7 @@ export function Swap({
             alignItems: 'center',
             borderRadius: 4,
             p: 1,
-            backgroundColor: theme.palette.background.paperContrast,
+            backgroundColor: theme.palette.background.tag,
           }}
         >
           <Box
@@ -1061,8 +1069,13 @@ export function Swap({
               onClick={() => setIsSettingsDialogOpen(true)}
               sx={{
                 p: 4,
-                backgroundColor: theme.palette.background.default,
+                backgroundColor: theme.palette.background.paper,
                 borderRadius: 4,
+                height: 28,
+                width: 28,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               <Box
@@ -1083,7 +1096,7 @@ export function Swap({
       <Box
         sx={{
           flex: 1,
-          px: 14,
+          px: 16,
           pb: 20,
           overflowY: 'auto',
         }}
@@ -1151,6 +1164,9 @@ export function Swap({
             inputToAddress={inputToAddress}
             setInputToAddress={setInputToAddress}
             account={toAccount}
+            sx={{
+              padding: theme.spacing(24, 20, 20),
+            }}
           />
 
           {/* Price Disp or Warnings  */}

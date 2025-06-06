@@ -1,11 +1,8 @@
-import { Box, Input, BoxProps, useTheme, ButtonBase } from '@dodoex/components';
-import { forwardRef, useMemo, ForwardedRef } from 'react';
-import { Error, Clear } from '@dodoex/icons';
-import {
-  formatReadableNumber,
-  fixedInputStringToFormattedNumber,
-} from '../../../../utils/formatter';
+import { Box, BoxProps, ButtonBase, Input, useTheme } from '@dodoex/components';
+import { Error } from '@dodoex/icons';
+import { ForwardedRef, forwardRef, useMemo } from 'react';
 import { numberInputWrapper } from '../../../../constants/testId';
+import { fixedInputStringToFormattedNumber } from '../../../../utils/formatter';
 
 export const NumberInput = forwardRef(function NumberInput(
   {

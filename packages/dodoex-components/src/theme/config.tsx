@@ -22,6 +22,7 @@ interface TypeBackground {
   backdrop: string;
   input: string;
   cardInput: string;
+  skeleton: string;
   tag: string;
 }
 
@@ -129,6 +130,7 @@ export const darkPalette: PaletteOptions = {
     input: '#171717',
     cardInput: '#050504',
     tag: 'rgba(255, 255, 255, 0.1)',
+    skeleton: 'rgba(255, 255, 255, 0.06)',
   },
   text: {
     primary: '#FFFFFF',
@@ -180,11 +182,12 @@ export const lightPalette: PaletteOptions = {
   background: {
     default: '#FAF6E8',
     paper: '#FFFFFF',
-    paperContrast: '#FOF1F2',
+    paperContrast: '#F0F1F2',
     paperDarkContrast: alpha('#1D1D1D', 0.04),
     backdrop: 'rgba(0, 0, 0, 0.6)',
     input: '#F4F4F4',
     cardInput: '#F4F4F4',
+    skeleton: alpha('#1D1D1D', 0.06),
     tag: alpha('#1D1D1D', 0.1),
   },
   text: {

@@ -269,7 +269,7 @@ export default function Tooltip({
               width: 16,
               height: arrowHeight + 1,
               boxSizing: 'border-box',
-              color: 'background.paperContrast',
+              color: 'background.paper',
               bottom: 0,
               marginBottom: -arrowHeight,
               '&::before': {

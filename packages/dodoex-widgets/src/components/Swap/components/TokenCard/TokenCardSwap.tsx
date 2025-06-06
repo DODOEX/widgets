@@ -30,7 +30,6 @@ export interface TokenCardProps {
   amt: string;
   fiatPriceTxt?: string | React.ReactNode;
   sx?: BoxProps['sx'];
-  inputSx?: BoxProps['sx'];
   readOnly?: boolean;
   showMaxBtn?: boolean;
   canClickBalance?: boolean;
@@ -65,7 +64,6 @@ export interface TokenCardProps {
 
 export function TokenCardSwap({
   sx,
-  inputSx,
   amt,
   token,
   readOnly,
@@ -141,17 +139,34 @@ export function TokenCardSwap({
 
   const showInputNumber = !!onInputChange || !!inputReadonlyTooltip;
 
+  const inputSx = {
+    '& input': {
+      typography: 'h2',
+      height: '44px',
+      border: 'none',
+      outline: 'none',
+      padding: 0,
+      color: 'text.primary',
+      '&::placeholder': {
+        typography: 'h2',
+        height: '44px',
+        color: 'text.disabled',
+      },
+    },
+    backgroundColor: 'background.paper',
+  };
+
   return (
     <Box
       sx={{
         minHeight: showInputNumber ? 133 : 'auto',
         padding: theme.spacing(20, 20, 24),
-        borderRadius: 16,
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        backgroundColor: theme.palette.background.input,
+        borderRadius: 12,
+        backgroundColor: theme.palette.background.paper,
         ...sx,
       }}
     >
@@ -195,7 +210,7 @@ export function TokenCardSwap({
                 readOnly
                 withClear
                 sx={{
-                  mt: 12,
+                  mt: 16,
                   ...inputSx,
                 }}
               />
@@ -240,7 +255,7 @@ export function TokenCardSwap({
             }
             typography={inputTypography}
             sx={{
-              mt: 12,
+              mt: 16,
               ...inputSx,
             }}
           />
@@ -248,7 +263,7 @@ export function TokenCardSwap({
 
       <Box
         sx={{
-          mt: showPercentage ? 9 : 0,
+          mt: showPercentage ? 9 : 4,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
