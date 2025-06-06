@@ -46,24 +46,8 @@ const preview = {
         <RootPage>
           <Suspense fallback={<div />}>
             <SwitchTheme themeMode={context.globals.theme} />
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                bottom: 0,
-                left: 0,
-                backgroundColor: 'transparent',
-              }}
-            />
-            <Box
-              sx={{
-                position: 'relative',
-                zIndex: 1,
-              }}
-            >
-              <Story />
-            </Box>
+
+            <Story />
           </Suspense>
         </RootPage>
       );

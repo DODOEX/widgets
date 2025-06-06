@@ -51,6 +51,13 @@ const solanaWeb3JsAdapter = new SolanaAdapter({
 
 // 3. Create the AppKit instance
 createAppKit({
+  themeMode: 'light',
+  themeVariables: {
+    '--w3m-color-mix': '#154618',
+    '--w3m-accent': '#154618',
+    '--w3m-border-radius-master': '2px',
+    '--w3m-z-index': 1300,
+  },
   // adapters: [new Ethers5Adapter(), solanaWeb3JsAdapter, bitcoinAdapter],
   adapters: [new Ethers5Adapter(), solanaWeb3JsAdapter],
   metadata: metadata,
@@ -99,6 +106,9 @@ export const Primary = (args) => {
       <WalletConnectReact
         config={{
           network: Network.TESTNET, // or 'testnet'
+        }}
+        ui={{
+          modalZIndex: 1300,
         }}
         onConnectSuccess={(btcWallet) => {
           // Handle successful connection

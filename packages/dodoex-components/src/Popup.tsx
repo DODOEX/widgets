@@ -1,7 +1,7 @@
 import { ClickAwayListener } from '@mui/base/ClickAwayListener';
 import { Unstable_Popup as BasePopup } from '@mui/base/Unstable_Popup';
-import { Box, BoxProps } from '@mui/system';
 import { useState } from 'react';
+import Box, { BoxProps } from './Box/Box';
 import { ButtonBase } from './Button';
 
 export function Popup({
@@ -40,8 +40,6 @@ export function Popup({
           display: 'inline-flex',
           alignItems: 'center',
           justifyContent: 'center',
-          position: 'relative',
-          zIndex: popupOpen ? 1500 : undefined,
         }}
       >
         <ButtonBase
@@ -59,8 +57,6 @@ export function Popup({
           anchor={anchor}
           placement="bottom-end"
           offset={0}
-          disablePortal
-          strategy="fixed"
         >
           <Box
             sx={{
