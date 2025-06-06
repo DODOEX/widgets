@@ -1981,7 +1981,7 @@
 
 "@dodoex/widgets@file:/home/junjie/dodo/widgets/packages/dodoex-widgets":
   "resolved" "file:packages/dodoex-widgets"
-  "version" "3.1.0"
+  "version" "3.1.1"
   dependencies:
     "@babel/runtime" "^7.17.0"
     "@dodoex/api" "3.0.3"
