@@ -611,6 +611,7 @@ export default function MyCreated({
   );
   const fetchResult = useQuery({
     ...query,
+    enabled: !!account,
   });
 
   const originList =
