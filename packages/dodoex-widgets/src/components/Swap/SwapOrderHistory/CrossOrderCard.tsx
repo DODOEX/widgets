@@ -1,5 +1,5 @@
 import { ChainId } from '@dodoex/api';
-import { Box, Button, useTheme } from '@dodoex/components';
+import { Box, Button, Tooltip, useTheme } from '@dodoex/components';
 import { ArrowTopRightBorder } from '@dodoex/icons';
 import { Interface } from '@ethersproject/abi';
 import { useMutation } from '@tanstack/react-query';
@@ -29,6 +29,7 @@ function Extend({
   isMobile?: boolean;
   data: NonNullable<ReturnType<typeof useCrossSwapOrderList>['orderList'][0]>;
 }) {
+  const theme = useTheme();
   const itemList = useMemo(() => {
     return [
       {
@@ -107,10 +108,14 @@ function Extend({
         flexDirection: 'column',
         gap: 24,
         p: showFold ? 16 : 0,
-        backgroundColor: 'background.paperDarkContrast',
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8,
+        background: `linear-gradient(0deg, ${theme.palette.background.skeleton} 0%, ${theme.palette.background.skeleton} 100%), ${theme.palette.background.paper}`,
         maxHeight: showFold ? 'auto' : 0,
         transition: 'all 300ms',
         overflow: 'hidden',
+        marginTop: '-4px',
+        marginBottom: '4px',
       }}
     >
       <Box
@@ -410,7 +415,13 @@ export default function CrossOrderCard({
   return (
     <>
       <tr>
-        <td>
+        <Box
+          component="td"
+          sx={{
+            borderTopLeftRadius: 8,
+            borderBottomLeftRadius: showFold ? 0 : 8,
+          }}
+        >
           {data.fromToken && (
             <TokenAndAmount
               token={data.fromToken}
@@ -418,7 +429,7 @@ export default function CrossOrderCard({
               showChain
             />
           )}
-        </td>
+        </Box>
         <td>
           {data.toToken && (
             <TokenAndAmount
@@ -471,7 +482,8 @@ export default function CrossOrderCard({
                 height: 28,
               }}
             >
-              Claim
+              {data.subStatus === 'refund_success' ? 'Claimed' : 'Claim'}
+
               {data.subStatus !== 'wait_claim_refund' && (
                 <QuestionTooltip
                   onlyHover
@@ -497,50 +509,69 @@ export default function CrossOrderCard({
           </td>
         )}
 
-        <td>
+        <Box
+          component="td"
+          sx={{
+            borderTopRightRadius: 8,
+            borderBottomRightRadius: showFold ? 0 : 8,
+          }}
+        >
           <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'center',
               gap: 8,
             }}
           >
-            <Box
-              component="a"
-              href={
-                data.fromToken && data.hash
-                  ? getEtherscanPage(data.fromToken.chainId, data.hash, 'tx')
-                  : undefined
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                px: 10,
-                py: 12,
-                color: 'primary.main',
-              }}
-            >
-              <Box
-                component={ArrowTopRightBorder}
-                sx={{
-                  width: 18,
-                  height: 18,
-                }}
-              />
-            </Box>
-            <Box
-              sx={{
-                height: 16,
-                width: '1px',
-                backgroundColor: 'border.main',
-              }}
-            />
+            {data.subStatus === 'refund_success' && (
+              <>
+                <Tooltip title="refund TX" placement="top" onlyHover>
+                  <Box
+                    component="a"
+                    href={
+                      data.refundChainId && data.refundHash
+                        ? getEtherscanPage(
+                            data.refundChainId,
+                            data.refundHash,
+                            'tx',
+                          )
+                        : undefined
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      p: 3,
+                      color: 'primary.main',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Box
+                      component={ArrowTopRightBorder}
+                      sx={{
+                        width: 18,
+                        height: 18,
+                      }}
+                    />
+                  </Box>
+                </Tooltip>
+                <Box
+                  sx={{
+                    height: 16,
+                    width: '1px',
+                    backgroundColor: 'border.main',
+                  }}
+                />
+              </>
+            )}
             <FoldBtn
               show={showFold}
               onClick={() => setShowFold((prev) => !prev)}
             />
           </Box>
-        </td>
+        </Box>
       </tr>
       <tr>
         <Box
@@ -548,6 +579,7 @@ export default function CrossOrderCard({
           colSpan={5}
           sx={{
             p: '0 !important',
+            backgroundColor: `transparent !important`,
           }}
         >
           <Extend showFold={showFold} data={data} />

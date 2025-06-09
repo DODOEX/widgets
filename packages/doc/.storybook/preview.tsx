@@ -1,8 +1,9 @@
-import { RootPage } from '../src/components/RootPage';
 import React, { Suspense, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { RootPage } from '../src/components/RootPage';
 import { setColorMode } from '../src/configure-store/actions/settings';
-import { Box } from '@dodoex/components';
+
+import './global.css';
 
 const SwitchTheme = ({ themeMode }) => {
   const dispatch = useDispatch();

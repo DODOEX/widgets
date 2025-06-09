@@ -65,7 +65,8 @@ function DialogBase({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            p: 20,
+            py: 20,
+            px: 16,
           }}
         >
           <Box
@@ -129,7 +130,8 @@ function ModalDialog({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              p: 20,
+              py: 20,
+              px: 16,
             }}
           >
             <Box

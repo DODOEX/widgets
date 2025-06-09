@@ -31,7 +31,7 @@ export function TextSwitch({
         alignItems: 'center',
         position: 'relative',
         borderRadius: 8,
-        backgroundColor: '#050504',
+        backgroundColor: theme.palette.background.input,
         opacity: disabled ? 0.5 : 1,
         ...sx,
       }}

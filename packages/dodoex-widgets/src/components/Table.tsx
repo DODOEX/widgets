@@ -20,6 +20,9 @@ export default function Table({
         position: 'relative',
         flex: 1,
         overflowY: 'auto',
+        pt: 12,
+        px: 20,
+        pb: 20,
         ...sx,
       }}
       {...props}
@@ -28,43 +31,46 @@ export default function Table({
         component="table"
         sx={{
           width: '100%',
-          borderCollapse: 'collapse',
+          borderCollapse: 'separate',
+          borderSpacing: '0 4px', // 第一个值0表示列间距，第二个值4px表示行间距
           '& th': {
-            py: 14,
+            py: 12,
             px: 24,
-            typography: 'body1',
+            typography: 'body2',
             textAlign: 'left',
             color: 'text.secondary',
+            backgroundColor: 'background.paper',
+          },
+          '& th:first-of-type': {
+            borderTopLeftRadius: '8px',
+            borderBottomLeftRadius: '8px',
+          },
+          '& th:last-of-type': {
+            borderTopRightRadius: '8px',
+            borderBottomRightRadius: '8px',
           },
           '& td': {
             px: 24,
-            py: 20,
+            py: 16,
+            backgroundColor: 'background.paper',
           },
+          // '& td:first-of-type': {
+          //   borderTopLeftRadius: '8px',
+          //   borderBottomLeftRadius: '8px',
+          // },
+          // '& td:last-of-type': {
+          //   borderTopRightRadius: '8px',
+          //   borderBottomRightRadius: '8px',
+          // },
           '& thead': {
             position: 'sticky',
             top: 0,
             zIndex: 2,
-            backgroundColor: 'background.paper',
-          },
-          '& th:last-child, & td:last-child': {
-            position: 'sticky',
-            zIndex: 1,
-            backgroundColor: 'background.paper',
-            '&::before': {
+            '&::after': {
               content: '""',
-              position: 'absolute',
-              top: 0,
-              bottom: 0,
-              left: 1,
-              width: '1px',
-              boxShadow: `${alpha(
-                theme.palette.text.primary,
-                0.1,
-              )} -2px 0px 4px 0px`,
+              display: 'table-row',
+              height: '0',
             },
-          },
-          '& tbody tr:hover td': {
-            backgroundColor: 'hover.default',
           },
         }}
       >

@@ -38,6 +38,7 @@ interface RouteVisionItemProps {
   fromChain?: ChainListItem;
   toChain?: ChainListItem;
   tx?: string;
+  txChainId?: number;
   swapSteps?: Array<BridgeStepSwapStep>;
 }
 
@@ -185,43 +186,41 @@ function RouteVisionItem({ item }: { item: RouteVisionItemProps }) {
                 gap: 4,
               }}
             >
-              <Box
-                component="a"
-                href={
-                  item.tx && item.fromChain
-                    ? getEtherscanPage(item.fromChain?.chainId, item.tx, 'tx')
-                    : undefined
-                }
-                target="_blank"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 4,
-                  color: theme.palette.text.secondary,
-                  typography: 'body2',
-                  lineHeight: '19px',
-                  '&:hover': {
-                    color: theme.palette.text.primary,
-                  },
-                  textDecoration: 'none',
-                }}
-              >
-                TX:
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
+              {item.tx && item.txChainId && (
+                <Box
+                  component="a"
+                  href={getEtherscanPage(item.txChainId, item.tx, 'tx')}
+                  target="_blank"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    color: theme.palette.text.secondary,
+                    typography: 'body2',
+                    lineHeight: '19px',
+                    '&:hover': {
+                      color: theme.palette.text.primary,
+                    },
+                    textDecoration: 'none',
+                  }}
                 >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M3.33333 3.33333V12.6667H12.6667V7.99999H14V12.6667C14 13.4 13.4 14 12.6667 14H3.33333C2.59333 14 2 13.4 2 12.6667V3.33333C2 2.6 2.59333 2 3.33333 2H8V3.33333H3.33333ZM9.33333 3.33333V2H14V6.66666H12.6667V4.27333L6.11333 10.8267L5.17333 9.88666L11.7267 3.33333H9.33333Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </Box>
+                  TX:
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M3.33333 3.33333V12.6667H12.6667V7.99999H14V12.6667C14 13.4 13.4 14 12.6667 14H3.33333C2.59333 14 2 13.4 2 12.6667V3.33333C2 2.6 2.59333 2 3.33333 2H8V3.33333H3.33333ZM9.33333 3.33333V2H14V6.66666H12.6667V4.27333L6.11333 10.8267L5.17333 9.88666L11.7267 3.33333H9.33333Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </Box>
+              )}
               {item.swapSteps && (
                 <Box
                   component={ButtonBase}
@@ -326,6 +325,7 @@ export const RouteVision = ({ route }: RouteVisionProps) => {
           toToken: item.estimate.toToken,
           toChain: targetChain,
           tx: item.hash,
+          txChainId: item.hashChainId,
           swapSteps: item.swapSteps,
         });
       });

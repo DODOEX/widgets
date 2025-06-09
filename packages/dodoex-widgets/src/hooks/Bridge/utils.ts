@@ -82,6 +82,7 @@ export function generateBridgeStep({
           };
         }),
         hash: plan.hash,
+        hashChainId: plan.hashChainId ? Number(plan.hashChainId) : undefined,
       });
     });
   }

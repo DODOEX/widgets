@@ -1,13 +1,12 @@
-import { Box } from '@dodoex/components';
+import { Box, useTheme } from '@dodoex/components';
+import { Loading } from '@dodoex/icons';
+import BigNumber from 'bignumber.js';
 import { CSSProperties } from 'react';
-import { formatReadableNumber } from '../../utils';
+import { tokenPickerItem } from '../../constants/testId';
+import { formatTokenAmountNumber } from '../../utils';
 import TokenLogo from '../TokenLogo';
 import { TokenInfo } from './../../hooks/Token';
-import { Loading } from '@dodoex/icons';
-import { tokenPickerItem } from '../../constants/testId';
-import { useTheme } from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
-import BigNumber from 'bignumber.js';
+import { AddressWithLinkAndCopy } from '../AddressWithLinkAndCopy';
 
 export default function TokenItem({
   token,
@@ -23,10 +22,11 @@ export default function TokenItem({
   onClick: () => void;
 }) {
   const theme = useTheme();
-  const { account } = useWeb3React();
+
   const balance = balanceBigNumber
-    ? formatReadableNumber({
+    ? formatTokenAmountNumber({
         input: balanceBigNumber,
+        decimals: token.decimals,
       })
     : '';
 
@@ -35,10 +35,10 @@ export default function TokenItem({
       sx={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        gap: 8,
         typography: 'body2',
-        px: 6,
-        py: 5,
+        px: 8,
+        py: 8,
         borderRadius: 8,
         cursor: disabled ? 'auto' : 'pointer',
         opacity: disabled ? 0.5 : 1,
@@ -53,62 +53,94 @@ export default function TokenItem({
       }}
       data-testid={tokenPickerItem}
     >
+      <TokenLogo token={token} width={32} height={32} noShowChain noBorder />
+
       <Box
         sx={{
           display: 'flex',
-          alignItems: 'center',
+          flexDirection: 'column',
+          gap: 2,
         }}
       >
-        <TokenLogo token={token} />
-        <Box>
+        <Box
+          sx={{
+            textAlign: 'left',
+            color: 'text.primary',
+            typography: 'body2',
+            fontWeight: 600,
+          }}
+        >
+          {token.symbol}
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
           <Box
             sx={{
-              fontWeight: 600,
-              textAlign: 'left',
+              color: 'text.secondary',
+              typography: 'h6',
+              fontWeight: 500,
+              maxWidth: '80px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
             }}
+            title={token.name}
           >
-            {token.symbol}
+            {token.name}
           </Box>
-          {account && (
-            <Box
-              sx={{
-                mt: 4,
-                textAlign: 'left',
-              }}
-            >
-              {balanceBigNumber?.gte(0) ? (
-                balance
-              ) : (
-                <Box
-                  component={Loading}
-                  width={18}
-                  sx={{
-                    '& path': {
-                      fill: theme.palette.text.disabled,
-                    },
-                    animation: 'loadingRotate 1.1s infinite linear',
-                    '@keyframes loadingRotate': {
-                      '0%': {
-                        transform: 'rotate(0deg)',
-                      },
-                      '100%': {
-                        transform: 'rotate(359deg)',
-                      },
-                    },
-                  }}
-                />
-              )}
-            </Box>
-          )}
+          <AddressWithLinkAndCopy
+            address={token.address}
+            customChainId={token.chainId}
+            showCopy
+            truncate
+            iconSpace={2}
+            iconSize={12}
+            size="small"
+            sx={{
+              typography: 'h6',
+              color: 'text.disabled',
+            }}
+          />
         </Box>
       </Box>
+
       <Box
         sx={{
-          color: 'text.secondary',
-          textAlign: 'right',
+          ml: 'auto',
+          typography: 'body1',
+          color: 'text.primary',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
         }}
       >
-        {token.name}
+        {balanceBigNumber?.gte(0) ? (
+          balance
+        ) : (
+          <Box
+            component={Loading}
+            width={18}
+            sx={{
+              '& path': {
+                fill: theme.palette.text.disabled,
+              },
+              animation: 'loadingRotate 1.1s infinite linear',
+              '@keyframes loadingRotate': {
+                '0%': {
+                  transform: 'rotate(0deg)',
+                },
+                '100%': {
+                  transform: 'rotate(359deg)',
+                },
+              },
+            }}
+          />
+        )}
       </Box>
     </Box>
   );

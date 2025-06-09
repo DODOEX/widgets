@@ -198,6 +198,9 @@ export function AddressWithLinkAndCopy({
             component: IconHoverBox,
             sx: {
               ml: getIconSpace(isMedium),
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             },
           }}
         />

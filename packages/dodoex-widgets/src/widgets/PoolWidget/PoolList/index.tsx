@@ -165,10 +165,11 @@ export default function PoolList({
                 isMobile
                   ? undefined
                   : {
-                      pt: 0,
                       mr: 48,
                       typography: 'h5',
                       lineHeight: '25px',
+                      minHeight: 41,
+                      padding: '8px 0px 8px 0px',
                     }
               }
             />

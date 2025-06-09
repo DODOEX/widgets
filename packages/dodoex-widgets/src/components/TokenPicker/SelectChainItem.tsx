@@ -1,5 +1,4 @@
-import { Box, Tooltip } from '@dodoex/components';
-import { Trans } from '@lingui/macro';
+import { alpha, Box, Tooltip } from '@dodoex/components';
 import { ChainListItem } from '../../constants/chainList';
 
 export default function SelectChainItem({
@@ -17,16 +16,18 @@ export default function SelectChainItem({
         sx={{
           display: 'flex',
           alignItems: 'center',
+          gap: 8,
           p: 8,
           borderRadius: 8,
           cursor: 'pointer',
+          border: '1px solid',
           ...(active
             ? {
-                backgroundColor: 'secondary.main',
-                color: 'secondary.contrastText',
+                backgroundColor: alpha('#7BF179', 0.2),
+                borderColor: alpha('#7BF179', 0.2),
+                color: 'primary.main',
               }
             : {
-                border: '1px solid',
                 borderColor: 'border.main',
                 '&:hover': {
                   backgroundColor: 'hover.default',
@@ -42,17 +43,16 @@ export default function SelectChainItem({
             height: 24,
           }}
         />
-        {active ? (
+
+        {active && (
           <Box
             sx={{
-              ml: 8,
+              typography: 'body2',
+              color: 'primary.main',
             }}
           >
-            <Trans>on</Trans>
-            {` ${chain.name}`}
+            {chain.name}
           </Box>
-        ) : (
-          ''
         )}
       </Box>
     </Tooltip>

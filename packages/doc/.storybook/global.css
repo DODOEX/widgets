@@ -3,8 +3,9 @@ body,
 #root {
   width: 100%;
   height: 100%;
-  background-color: transparent;
+  background-color: '#FAF6E8';
 }
 .sb-show-main.sb-main-padded {
   padding: 0;
+  margin: 0;
 }

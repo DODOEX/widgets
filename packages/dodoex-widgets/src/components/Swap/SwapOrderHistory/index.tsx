@@ -1,4 +1,11 @@
-import { Box, TabPanel, Tabs, TabsGroup, useTheme } from '@dodoex/components';
+import {
+  alpha,
+  Box,
+  TabPanel,
+  Tabs,
+  TabsGroup,
+  useTheme,
+} from '@dodoex/components';
 import { getAddress } from '@ethersproject/address';
 import { useEffect, useMemo, useState } from 'react';
 import { ChainListItem, chainListMap } from '../../../constants/chainList';
@@ -134,46 +141,31 @@ export default function SwapOrderHistory() {
       onChange={(_, value) => {
         setSwapOrderHistoryTab(value as SwapOrderHistoryTab);
       }}
-      sx={
-        isMobile
-          ? {}
-          : {
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              flex: 1,
-              overflow: 'hidden',
-              height: 'max-content',
-              maxHeight: '100%',
-              borderRadius: 16,
-              backgroundColor: 'background.default',
-              borderWidth: 1,
-              borderColor: 'border.main',
-              borderStyle: 'solid',
-            }
-      }
+      sx={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+        overflow: 'hidden',
+        height: 'max-content',
+        maxHeight: '100%',
+        borderRadius: 16,
+        backgroundColor: 'background.skeleton',
+        backdropFilter: 'blur(4px)',
+        [theme.breakpoints.up('laptop')]: {},
+      }}
       className={isMobile ? undefined : 'gradient-card-border'}
     >
       <Box
         sx={{
-          ...(isMobile
-            ? {
-                ...(!selectedAccount && {
-                  pb: 20,
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  borderStyle: 'solid',
-                  borderWidth: '0 0 1px',
-                }),
-              }
-            : {
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                backgroundColor: 'background.paper',
-                px: 24,
-                pt: 20,
-              }),
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          px: 16,
+          pt: 20,
+          [theme.breakpoints.up('laptop')]: {
+            px: 24,
+          },
         }}
       >
         <TabsGroup
@@ -181,33 +173,36 @@ export default function SwapOrderHistory() {
           variant="default"
           tabsListSx={{
             justifyContent: 'space-between',
-            ...(isMobile
-              ? {
-                  mb: 20,
-                }
-              : {
-                  borderBottomWidth: 0,
-                }),
+            borderBottomWidth: 0,
           }}
-          tabSx={
-            isMobile
-              ? undefined
-              : {
-                  pt: 0,
-                  mr: 28,
-                  typography: 'body1',
-                  lineHeight: '22px',
-                }
-          }
+          tabSx={{
+            mr: 28,
+            typography: 'body2',
+            lineHeight: '19px',
+            minHeight: 39,
+            padding: '0px 0px 20px 0px',
+            [theme.breakpoints.up('laptop')]: {
+              typography: 'body1',
+              lineHeight: '22px',
+              minHeight: 42,
+            },
+          }}
         />
       </Box>
       <Box
         sx={{
-          px: 24,
+          px: 16,
           py: 12,
           display: 'flex',
           alignItems: 'center',
           gap: 12,
+          overflowX: 'auto',
+          borderBottomWidth: 1,
+          borderBottomStyle: 'solid',
+          borderBottomColor: 'border.main',
+          [theme.breakpoints.up('laptop')]: {
+            px: 24,
+          },
         }}
       >
         {accountList.map((account) => {
@@ -222,22 +217,18 @@ export default function SwapOrderHistory() {
                 pl: 8,
                 py: 8,
                 pr: 10,
-                borderWidth: 1,
-                borderColor: 'transparent',
-                borderStyle: 'solid',
-                borderRadius: 8,
+                borderRadius: 4,
                 backgroundColor: 'transparent',
                 cursor: 'pointer',
                 typography: 'body2',
                 lineHeight: '19px',
                 color: 'text.secondary',
                 ...(isSelected && {
-                  borderColor: 'primary.main',
-                  backgroundColor: 'tabActive.main',
-                  color: 'text.primary',
+                  backgroundColor: alpha(theme.palette.success.main, 0.1),
+                  color: 'success.main',
                 }),
                 '&:hover': {
-                  backgroundColor: 'background.paperDarkContrast',
+                  backgroundColor: alpha(theme.palette.success.main, 0.1),
                 },
               }}
               onClick={() => {

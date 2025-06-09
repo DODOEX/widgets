@@ -84,15 +84,17 @@ export default function FoldBtn({
   show: boolean;
   onClick: () => void;
 }) {
-  const theme = useTheme();
   return (
     <Box
       component={ButtonBase}
       sx={{
-        padding: theme.spacing(4, 8),
+        p: 3,
         transform: show ? 'rotate(180deg)' : 'none',
         transition: 'all 100ms',
         color: 'text.primary',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
       onClick={onClick}
     >

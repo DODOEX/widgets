@@ -37,10 +37,14 @@ function Extend({
         flexDirection: 'column',
         gap: 24,
         p: showFold ? 16 : 0,
-        backgroundColor: 'background.paperContrast',
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8,
+        background: `linear-gradient(0deg, ${theme.palette.background.skeleton} 0%, ${theme.palette.background.skeleton} 100%), ${theme.palette.background.paper}`,
         maxHeight: showFold ? 400 : 0,
         transition: 'all 300ms',
         overflow: 'hidden',
+        marginTop: '-4px',
+        marginBottom: '4px',
       }}
     >
       <Box
@@ -180,13 +184,19 @@ export default function SameOrderCard({
   return (
     <>
       <tr>
-        <td>
+        <Box
+          component="td"
+          sx={{
+            borderTopLeftRadius: 8,
+            borderBottomLeftRadius: showFold ? 0 : 8,
+          }}
+        >
           <TokenAndAmount
             token={data.fromToken}
             amount={data.fromAmount ?? ''}
             showChain
           />
-        </td>
+        </Box>
         <td>
           <TokenAndAmount
             token={data.toToken}
@@ -212,7 +222,13 @@ export default function SameOrderCard({
             toTokenPrice={data.toTokenPrice}
           />
         </td>
-        <td>
+        <Box
+          component="td"
+          sx={{
+            borderTopRightRadius: 8,
+            borderBottomRightRadius: showFold ? 0 : 8,
+          }}
+        >
           <Box
             sx={{
               display: 'flex',
@@ -226,9 +242,11 @@ export default function SameOrderCard({
               target="_blank"
               rel="noopener noreferrer"
               sx={{
-                px: 10,
-                py: 12,
+                p: 3,
                 color: 'primary.main',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               <Box
@@ -251,7 +269,7 @@ export default function SameOrderCard({
               onClick={() => setShowFold((prev) => !prev)}
             />
           </Box>
-        </td>
+        </Box>
       </tr>
       <tr>
         <Box
@@ -259,6 +277,7 @@ export default function SameOrderCard({
           colSpan={5}
           sx={{
             p: '0 !important',
+            backgroundColor: `transparent !important`,
           }}
         >
           <Extend showFold={showFold} data={data} />

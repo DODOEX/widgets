@@ -1,21 +1,16 @@
+import { ChainId } from '@dodoex/api';
 import { Box, BoxProps, SearchInput } from '@dodoex/components';
-import React, {
-  CSSProperties,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { t } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
+import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
 import { FixedSizeList as List } from 'react-window';
 import type { TokenInfo } from '../../hooks/Token';
 import { useTokenList } from '../../hooks/Token';
-import TokenItem from './TokenItem';
-import { t } from '@lingui/macro';
-import SelectChainItem from './SelectChainItem';
 import { useSelectChainList } from '../../hooks/Token/useSelectChainList';
-import { ChainId } from '@dodoex/api';
-import { useQuery } from '@tanstack/react-query';
 import { isAddress } from '../../utils';
+import { EmptyDataIcon, EmptyList } from '../List/EmptyList';
+import SelectChainItem from './SelectChainItem';
+import TokenItem from './TokenItem';
 import { TokenSearchLoadingSkelton } from './TokenSearchLoadingSkelton';
 
 export interface TokenPickerProps {
@@ -149,7 +144,7 @@ export default function TokenPicker({
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        px: 20,
+        px: 16,
         flex: 1,
         overflow: 'hidden',
         ...sx,
@@ -166,7 +161,8 @@ export default function TokenPicker({
           mb: 16,
         }}
       />
-      {chainId === undefined && chainList.length ? (
+
+      {chainId === undefined && chainList.length && (
         <Box
           sx={{
             position: 'relative',
@@ -196,14 +192,12 @@ export default function TokenPicker({
             />
           ))}
         </Box>
-      ) : (
-        ''
       )}
+
       <Box
         sx={{
           pb: 16,
-          flex: 1,
-          minHeight: 64,
+          flexGrow: 1,
         }}
         ref={ref}
       >
@@ -211,7 +205,7 @@ export default function TokenPicker({
           <List
             height={fixedSizeHeight}
             itemCount={showTokenList.length}
-            itemSize={52}
+            itemSize={56}
             width={'100%'}
             className="token-list"
           >
@@ -226,10 +220,16 @@ export default function TokenPicker({
           >
             {searchOtherAddressQuery.isLoading ? (
               <TokenSearchLoadingSkelton />
+            ) : searchOtherAddressQuery.data ? (
+              searchOtherAddressQuery.data
             ) : (
-              ''
+              <EmptyList
+                hasSearch
+                sx={{
+                  mt: 80,
+                }}
+              />
             )}
-            {searchOtherAddressQuery.data ? searchOtherAddressQuery.data : ''}
           </Box>
         )}
       </Box>

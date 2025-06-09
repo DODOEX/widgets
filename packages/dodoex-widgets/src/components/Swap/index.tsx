@@ -65,6 +65,7 @@ import { SwapSettingsDialog } from './components/SwapSettingsDialog';
 import { SwitchBox } from './components/SwitchBox';
 import { TokenCardSwap } from './components/TokenCard/TokenCardSwap';
 import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
+import FiatEntryAndGasRefuel from './components/FiatEntryAndGasRefuel';
 
 const debounceTime = 300;
 
@@ -898,6 +899,82 @@ export function Swap({
       );
     }
 
+    if (privacySwapEnable) {
+      return (
+        <Button
+          fullWidth
+          onClick={() => setIsReviewDialogOpen(true)}
+          data-testid={swapReviewBtn}
+        >
+          <Tooltip
+            placement="top"
+            onlyHover
+            maxWidth={240}
+            title={
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 4,
+                }}
+              >
+                <Box
+                  sx={{
+                    typography: 'body2',
+                    fontWeight: 500,
+                    color: 'text.primary',
+                  }}
+                >
+                  Privacy Swap is Enabled
+                </Box>
+                <Box
+                  sx={{
+                    typography: 'h6',
+                    fontWeight: 500,
+                    color: 'text.secondary',
+                  }}
+                >
+                  Your transactions on the Ethereum network will be protected
+                  from sandwich attacks.
+                </Box>
+              </Box>
+            }
+          >
+            <Box
+              sx={{
+                mr: 8,
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="30"
+                viewBox="0 0 25 30"
+                fill="none"
+              >
+                <path
+                  d="M12.5 4L3.5 8V14C3.5 19.55 7.34 24.74 12.5 26C17.66 24.74 21.5 19.55 21.5 14V8L12.5 4Z"
+                  fill="white"
+                />
+                <path
+                  d="M23 14C23 20.1791 18.7457 26.0187 12.8555 27.457L12.5 27.5439L12.1445 27.457C6.25427 26.0187 2 20.1791 2 14V7.02539L2.89062 6.62891L11.8906 2.62891L12.5 2.3584L13.1094 2.62891L22.1094 6.62891L23 7.02539V14Z"
+                  stroke="white"
+                  strokeOpacity="0.5"
+                  strokeWidth="3"
+                />
+                <path
+                  d="M16.3937 11.3638L10.8021 16.9553L8.60457 14.7662L7.4082 15.9626L10.8021 19.3565L17.59 12.5686L16.3937 11.3638Z"
+                  fill="#154618"
+                />
+              </svg>
+            </Box>
+          </Tooltip>
+
+          <Trans>Review Swap</Trans>
+        </Button>
+      );
+    }
+
     return (
       <Button
         fullWidth
@@ -938,6 +1015,7 @@ export function Swap({
     sendRouteLoading,
     handleSendBridgeRoute,
     fromEtherTokenQuery.data?.balance,
+    privacySwapEnable,
   ]);
 
   const subtitle = useMemo(() => {
@@ -1004,7 +1082,7 @@ export function Swap({
         flexDirection: 'column',
         borderRadius: 16,
         backgroundColor: theme.palette.background.skeleton,
-        [theme.breakpoints.up('desktop')]: {
+        [theme.breakpoints.up('laptop')]: {
           width: 450,
           backgroundColor: theme.palette.background.skeleton,
           backdropFilter: 'blur(4px)',
@@ -1186,6 +1264,8 @@ export function Swap({
 
         {/* Swap Button  */}
         {swapButton}
+
+        <FiatEntryAndGasRefuel />
 
         {/*Footer*/}
         {noPowerBy ? (
