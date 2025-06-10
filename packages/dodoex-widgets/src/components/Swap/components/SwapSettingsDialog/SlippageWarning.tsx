@@ -30,6 +30,7 @@ export function SlippageWarning({
   return (
     <Box
       sx={{
+        mt: 8,
         backgroundColor: alpha(warningColor, 0.1),
         borderRadius: 8,
         padding: 12,

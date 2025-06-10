@@ -71,8 +71,11 @@ import { useUserOptions } from '../UserOptionsProvider';
 import { SwapSettingsDialog } from './components/SwapSettingsDialog';
 import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
 import { useGlobalState } from '../../hooks/useGlobalState';
+import SwapPreviewInfoCard from './components/SwapPreviewInfoCard';
 
 export interface SwapProps {
+  showPreviewInfoCard?: boolean;
+  slippageQuickInput?: boolean;
   /** Higher priority setting slippage */
   getAutoSlippage?: GetAutoSlippage;
   onPayTokenChange?: (token: TokenInfo) => void;
@@ -80,6 +83,8 @@ export interface SwapProps {
 }
 
 export function Swap({
+  showPreviewInfoCard,
+  slippageQuickInput,
   getAutoSlippage,
   onPayTokenChange,
   onReceiveTokenChange,
@@ -981,6 +986,15 @@ export function Swap({
           </Box>
         </Box>
 
+        {showPreviewInfoCard && (
+          <SwapPreviewInfoCard
+            slippage={slippageSwap}
+            receiveToken={toToken}
+            receiveAmount={resAmount}
+            priceImpact={displayPriceImpact}
+          />
+        )}
+
         {/* Swap Button  */}
         {swapButton}
 
@@ -1048,6 +1062,7 @@ export function Swap({
           onClose={() => setIsSettingsDialogOpen(false)}
           fromToken={fromToken}
           toToken={toToken}
+          slippageQuickInput={slippageQuickInput}
         />
       )}
       <SelectBridgeDialog

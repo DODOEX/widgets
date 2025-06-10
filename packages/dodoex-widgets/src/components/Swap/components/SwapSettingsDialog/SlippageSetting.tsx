@@ -16,6 +16,7 @@ import {
   TabPanel,
   useTheme,
   Tooltip,
+  ButtonBase,
 } from '@dodoex/components';
 import { Alarm } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
@@ -30,9 +31,11 @@ enum SlippageType {
 export default function SlippageSetting({
   fromToken,
   toToken,
+  slippageQuickInput,
 }: {
   fromToken?: TokenInfo | null;
   toToken?: TokenInfo | null;
+  slippageQuickInput?: boolean;
 }) {
   const theme = useTheme();
   const {
@@ -85,6 +88,13 @@ export default function SlippageSetting({
     },
     [isCustomActive, recommendSlippage, handleSlippageChange],
   );
+
+  const customInputBlurTime = React.useRef(0);
+  React.useEffect(() => {
+    return () => clearTimeout(customInputBlurTime.current);
+  }, []);
+
+  const clickedTab = React.useRef<SlippageType | null>(null);
 
   return (
     <>
@@ -168,8 +178,16 @@ export default function SlippageSetting({
           value={operateTab}
           onChange={(_, v) => {
             setOperateTab(v as SlippageType);
+            clickedTab.current = v as SlippageType;
             if (v === SlippageType.custom) {
               setIsCustomInputActive(true);
+            } else {
+              handleSlippageChange({
+                slippage: '',
+                disabled: true,
+                deleted: true,
+                recommend: String(recommendSlippage),
+              });
             }
           }}
         >
@@ -312,7 +330,7 @@ export default function SlippageSetting({
                   });
                 }}
               >
-                {isCustomInputActive ? (
+                {isCustomInputActive && !slippageQuickInput ? (
                   <Input
                     ref={customInputRef}
                     placeholder="-"
@@ -329,7 +347,7 @@ export default function SlippageSetting({
                           ? theme.palette.secondary.contrastText
                           : theme.palette.text.secondary,
                         '&::placeholder': {
-                          color: 'custom.input.placeholder',
+                          color: theme.palette.text.placeholder,
                           opacity: 1,
                         },
                       },
@@ -346,7 +364,7 @@ export default function SlippageSetting({
                       });
                     }}
                     onBlur={() => {
-                      setTimeout(() => {
+                      customInputBlurTime.current = window.setTimeout(() => {
                         setIsCustomInputActive(false);
                         if (!customSlippageNum) {
                           setOperateTab(SlippageType.recommend);
@@ -433,7 +451,34 @@ export default function SlippageSetting({
             )}
           </TabPanel>
           <TabPanel value={SlippageType.custom}>
-            <Box sx={{ mt: 8 }}></Box>
+            {slippageQuickInput && (
+              <CustomQuickGroup
+                value={customSlippage}
+                onChange={(slippage) =>
+                  handleSlippageChange({
+                    slippage,
+                    disabled: false,
+                    recommend: String(recommendSlippage),
+                  })
+                }
+                autoFocus={clickedTab.current === SlippageType.custom}
+                onBlur={(v) => {
+                  if (!v) {
+                    setOperateTab(SlippageType.recommend);
+                    return;
+                  }
+                  const deleted = !Number(v) || Number(v) < 0;
+                  if (deleted && v) {
+                    handleSlippageChange({
+                      slippage: v,
+                      disabled: deleted,
+                      deleted,
+                      recommend: String(recommendSlippage),
+                    });
+                  }
+                }}
+              />
+            )}
             {customSlippageNum > recommendSlippage && (
               <SlippageWarning
                 title={t`Higher than dynamic slippage`}
@@ -462,5 +507,140 @@ export default function SlippageSetting({
         </Tabs>
       )}
     </>
+  );
+}
+
+function CustomQuickGroup({
+  autoFocus,
+  value,
+  onChange,
+  onBlur,
+}: {
+  autoFocus?: boolean;
+  value: string | undefined;
+  onChange: (v: string) => void;
+  onBlur: (v: string) => void;
+}) {
+  const theme = useTheme();
+  const customQuickList = ['0.1', '0.5', '1'];
+  const [localValue, setLocalValue] = React.useState('');
+
+  React.useEffect(() => {
+    if (!localValue && value && !customQuickList.includes(value)) {
+      setLocalValue(value ?? '');
+    }
+  }, [value]);
+
+  const customInputRef = React.useRef<HTMLInputElement>(null);
+  const customInputBlurTime = React.useRef(0);
+  React.useEffect(() => {
+    return () => clearTimeout(customInputBlurTime.current);
+  }, []);
+
+  return (
+    <Box
+      sx={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: 4,
+        mt: 8,
+        height: 36,
+        p: 4,
+        backgroundColor: 'background.paperDarkContrast',
+        typography: 'body2',
+        borderRadius: 8,
+      }}
+    >
+      {customQuickList.map((v) => {
+        const isAcitve = v === value;
+        return (
+          <ButtonBase
+            key={v}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100%',
+              color: isAcitve ? 'text.primary' : 'text.secondary',
+              textAlign: 'center',
+              flex: 1,
+              borderRadius: 8,
+              backgroundColor: isAcitve ? 'background.paper' : undefined,
+            }}
+            onClick={() => {
+              clearTimeout(customInputBlurTime.current);
+              setLocalValue('');
+              onChange(v);
+            }}
+          >
+            {v}%
+          </ButtonBase>
+        );
+      })}
+      <Input
+        ref={customInputRef}
+        placeholder={t`Custom`}
+        suffixGap={0}
+        suffix={
+          <Box
+            component="span"
+            sx={{
+              typography: 'h6',
+              fontWeight: 600,
+            }}
+          >
+            %
+          </Box>
+        }
+        sx={{
+          backgroundColor: localValue ? 'background.paper' : 'transparent',
+          borderWidth: 0,
+          borderRadius: 8,
+          flex: 1,
+          pr: 8,
+          color: localValue
+            ? theme.palette.text.primary
+            : theme.palette.text.secondary,
+          '&.base--focused': {
+            backgroundColor: 'background.paper',
+            color: theme.palette.text.primary,
+          },
+          '& input': {
+            typography: 'body2',
+            pl: 8,
+            pr: 4,
+            py: 4,
+            boxSizing: 'border-box',
+            height: '100%',
+            '&::placeholder': {
+              color: theme.palette.text.placeholder,
+              opacity: 1,
+            },
+          },
+        }}
+        inputMode="decimal"
+        value={localValue}
+        autoFocus={autoFocus}
+        onChange={(e) => {
+          const slippage = e.target.value;
+          setLocalValue(slippage);
+        }}
+        onBlur={() => {
+          customInputBlurTime.current = window.setTimeout(() => {
+            onChange(localValue);
+            if (customQuickList.includes(localValue)) {
+              setLocalValue('');
+            }
+            onBlur?.(localValue);
+          }, 300);
+        }}
+        onKeyDown={(evt) => {
+          if (evt.code === 'Enter') {
+            evt.preventDefault();
+            customInputRef.current?.blur();
+          }
+        }}
+      />
+    </Box>
   );
 }

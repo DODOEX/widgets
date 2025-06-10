@@ -46,7 +46,7 @@ function CurveChart({
         height: 105,
         flex: 1,
         [`& .${dotClassName}`]: {
-          display: 'none',
+          visibility: 'hidden',
         },
       }}
       ref={wrapperRef}

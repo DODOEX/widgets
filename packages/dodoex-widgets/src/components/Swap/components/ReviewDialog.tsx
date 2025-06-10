@@ -366,6 +366,34 @@ export function ReviewDialog({
               </Box>
               <Box>{slippage}%</Box>
             </Box>
+
+            <Box
+              sx={{
+                mt: 8,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Trans>Minimum received</Trans>
+              </Box>
+              <LoadingSkeleton
+                loading={loading}
+                loadingProps={{
+                  width: 30,
+                }}
+              >
+                {`${formatTokenAmountNumber({
+                  input: toAmount
+                    ? new BigNumber(1)
+                        .minus(Number(slippage) / 100)
+                        .times(toAmount)
+                    : null,
+                  decimals: toToken?.decimals,
+                })} ${toToken?.symbol}`}
+              </LoadingSkeleton>
+            </Box>
           </Box>
         </Box>
 

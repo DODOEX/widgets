@@ -28,7 +28,7 @@ msgstr "跨链桥"
 msgid "99% Default"
 msgstr "99% 选择此参数"
 
-#: src/components/Swap/index.tsx:515
+#: src/components/Swap/index.tsx:520
 msgid "The current slippage protection coefficient set exceeds {maxSlippageWarning}%, which may result in losses."
 msgstr "当前滑点保护系数设置超过{maxSlippageWarning}%，可能会造成损失。"
 
@@ -177,7 +177,7 @@ msgstr "选择做市池"
 msgid "Selected Range"
 msgstr "选定区间"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageWarning.tsx:90
+#: src/components/Swap/components/SwapSettingsDialog/SlippageWarning.tsx:91
 msgid "Do not remind again"
 msgstr "不再提醒"
 
@@ -208,7 +208,7 @@ msgid "Pay"
 msgstr "支付"
 
 #: src/components/Swap/components/ReviewDialog.tsx:336
-#: src/components/Swap/index.tsx:440
+#: src/components/Swap/index.tsx:445
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
 
@@ -233,7 +233,7 @@ msgstr "{0} 已确认"
 msgid "Creation Time"
 msgstr "创建时间"
 
-#: src/components/Swap/index.tsx:547
+#: src/components/Swap/index.tsx:552
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
@@ -270,7 +270,7 @@ msgstr "最高价格"
 msgid "Staked Tokens"
 msgstr "质押代币"
 
-#: src/components/Swap/index.tsx:448
+#: src/components/Swap/index.tsx:453
 msgid "Current price impact"
 msgstr "当前价格冲击"
 
@@ -307,7 +307,7 @@ msgstr "流动性"
 msgid "APR"
 msgstr "APR"
 
-#: src/components/TokenPicker/index.tsx:163
+#: src/components/TokenPicker/index.tsx:169
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
@@ -342,7 +342,7 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 msgid "Confirm"
 msgstr "确认"
 
-#: src/components/Swap/index.tsx:1014
+#: src/components/Swap/index.tsx:1028
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -377,13 +377,14 @@ msgstr "交易成功率"
 msgid "Pool Creation"
 msgstr "创建资金池"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:411
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:429
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:582
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:198
 #: src/widgets/PoolWidget/PoolCreate/components/SelectAndInput.tsx:52
 msgid "Custom"
 msgstr "自定义"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:439
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:484
 msgid "Higher than dynamic slippage"
 msgstr "比动态滑点高"
 
@@ -701,7 +702,7 @@ msgstr "加仓"
 msgid "Emulator"
 msgstr "模拟器"
 
-#: src/components/Swap/index.tsx:703
+#: src/components/Swap/index.tsx:708
 msgid "Transaction Pending"
 msgstr "交易进行中"
 
@@ -749,13 +750,17 @@ msgstr "我的仓位"
 msgid "Day"
 msgstr "天"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:128
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:134
 msgid "minutes"
 msgstr "分"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:46
 msgid "You can set the minimum selling price for single-token pools."
 msgstr "你可以设置单边池的最小卖出价格。"
+
+#: src/components/Swap/components/ReviewDialog.tsx:379
+msgid "Minimum received"
+msgstr "最低收到"
 
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:527
 msgid "Invalid price input"
@@ -833,7 +838,7 @@ msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the q
 msgstr "资金池报价与 DODO 智能路由价格相差 {lqAndDodoCompareText}"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:568
+#: src/components/Swap/index.tsx:573
 msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
@@ -853,7 +858,7 @@ msgstr "*收取费用将领取当前已分配手续费。"
 msgid "Related CrowdPooling"
 msgstr "关联众筹建池"
 
-#: src/components/Swap/index.tsx:792
+#: src/components/Swap/index.tsx:797
 msgid "Review Swap"
 msgstr "预览交易"
 
@@ -890,7 +895,7 @@ msgstr "任意比例"
 msgid "Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes."
 msgstr "创建完成后，您可以随时修改做市价格，适用于资产锚定价可能出现变化的情况"
 
-#: src/components/Swap/index.tsx:710
+#: src/components/Swap/index.tsx:715
 msgid "Select Tokens"
 msgstr "选择代币"
 
@@ -954,7 +959,7 @@ msgstr "锚定价格是指两个代币资产之间的汇率，其中一个资产
 msgid "Deposit amounts"
 msgstr "充值数额"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:177
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:183
 msgid "Disable Indirect Routing"
 msgstr "禁止多跳"
 
@@ -985,13 +990,13 @@ msgstr "我的资金池"
 msgid "Share Of Pool"
 msgstr "资金池份额"
 
-#: src/components/Swap/index.tsx:890
+#: src/components/Swap/index.tsx:895
 msgid "The setting has been switched to swap mode"
 msgstr "设置已切换至闪兑模式"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:623
-#: src/components/Swap/index.tsx:752
+#: src/components/Swap/index.tsx:628
+#: src/components/Swap/index.tsx:757
 msgid "Quote not available"
 msgstr "没有报价"
 
@@ -999,7 +1004,7 @@ msgstr "没有报价"
 msgid "My pool share"
 msgstr "我的资金池份额"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:122
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:132
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:112
 msgid "Learn More"
 msgstr "查看详情"
@@ -1054,7 +1059,7 @@ msgstr "若截止前无任何参与者，则挖矿奖励任何人无法提取。
 msgid "Your position will appear here."
 msgstr "你的仓位将会显示在这里"
 
-#: src/components/Swap/index.tsx:737
+#: src/components/Swap/index.tsx:742
 msgid "Fetching Price..."
 msgstr "获取价格中..."
 
@@ -1081,7 +1086,7 @@ msgid "Ratio Settings"
 msgstr "比例设定"
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:146
-#: src/components/Swap/components/ReviewDialog.tsx:445
+#: src/components/Swap/components/ReviewDialog.tsx:473
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:367
 msgid "Confirming"
 msgstr "确认中"
@@ -1112,7 +1117,7 @@ msgid "Confirm Cross Chain"
 msgstr "确认跨链交易"
 
 #. js-lingui-explicit-id
-#: src/components/Swap/components/ReviewDialog.tsx:423
+#: src/components/Swap/components/ReviewDialog.tsx:451
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 
@@ -1187,7 +1192,7 @@ msgstr "交易哈希："
 msgid "Single"
 msgstr "单边"
 
-#: src/components/Swap/index.tsx:782
+#: src/components/Swap/index.tsx:787
 msgid "Review Cross Chain"
 msgstr "预览跨链交易"
 
@@ -1225,6 +1230,7 @@ msgid "Mining"
 msgstr "挖矿"
 
 #: src/components/Swap/components/ReviewDialog.tsx:333
+#: src/components/Swap/components/SwapPreviewInfoCard.tsx:62
 msgid "Price Impact"
 msgstr "价格冲击"
 
@@ -1253,7 +1259,7 @@ msgstr "标准"
 msgid "Token"
 msgstr "代币"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:451
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:496
 msgid "Lower than dynamic slippage"
 msgstr "比动态滑点低"
 
@@ -1279,7 +1285,7 @@ msgid "Bought {0} {1}, price in the pool decreased to {2}"
 msgstr "买入 {0} {1}, 资金池价格下降到 {2}"
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:34
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:68
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:70
 msgid "Settings"
 msgstr "设置"
 
@@ -1379,7 +1385,7 @@ msgstr "交易详情"
 msgid "No ForceStop access"
 msgstr "无 ForceStop 访问权限"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:180
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:186
 msgid "Checking this option means that the routing algorithm will only route to liquidity pools between the two tokens in the trading pair and will ignore routes with any intermediary tokens."
 msgstr "只使用该交易对下的资金池，不会使用第三个币种跳转。"
 
@@ -1452,7 +1458,7 @@ msgstr "累计手续费"
 msgid "On"
 msgstr "在"
 
-#: src/components/Swap/index.tsx:720
+#: src/components/Swap/index.tsx:725
 #: src/hooks/Token/useGetTokenStatus.ts:60
 #: src/hooks/Token/useTokenStatus.ts:134
 msgid "Approve"
@@ -1577,7 +1583,7 @@ msgid "Remove liquidity"
 msgstr "移除流动性"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/SlippageSlider.tsx:186
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:288
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:306
 msgid "Dynamic"
 msgstr "动态"
 
@@ -1803,11 +1809,11 @@ msgstr "免责声明"
 msgid "Back"
 msgstr "返回"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:440
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:485
 msgid "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 msgstr "动态滑点为 {recommendSlippage}%，当前的滑点设置高于动态滑点，这意味着你该交易的最终成交价格会比较差。"
 
-#: src/components/Swap/index.tsx:726
+#: src/components/Swap/index.tsx:731
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:534
 msgid "Enter an amount"
 msgstr "输入代币数量"
@@ -1816,7 +1822,7 @@ msgstr "输入代币数量"
 msgid "Ratio"
 msgstr "比例"
 
-#: src/components/Swap/index.tsx:720
+#: src/components/Swap/index.tsx:725
 #: src/components/TokenPairStatusButton.tsx:45
 #: src/components/TokenStatusButton.tsx:31
 msgid "Approving"
@@ -1883,9 +1889,13 @@ msgstr "简单的全价格区间作市资金池"
 msgid "AMM V2 Position"
 msgstr "AMM V2 仓位"
 
-#: src/components/Swap/components/ReviewDialog.tsx:447
+#: src/components/Swap/components/ReviewDialog.tsx:475
 msgid "Confirm swap"
 msgstr "确认交易"
+
+#: src/components/Swap/components/SwapPreviewInfoCard.tsx:40
+msgid "Minimum Received"
+msgstr "最低收到"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:78
 msgid "Once created, the price cannot be changed. This option applies to assets like ETH-WETH."
@@ -1936,7 +1946,7 @@ msgstr "{0} 余额不足"
 msgid "AMM V3"
 msgstr "AMM V3"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:104
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:114
 msgid "The dynamic slippage is provided by DODO team through analyzing historical transactions."
 msgstr "动态滑点是由 DODO 团队通过分析历史交易计算得出。"
 
@@ -2052,7 +2062,7 @@ msgstr "交易用户"
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "在冷静期无法进行清算"
 
-#: src/components/Swap/index.tsx:888
+#: src/components/Swap/index.tsx:893
 msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
@@ -2144,7 +2154,7 @@ msgstr "AMM V3 仓位"
 msgid "Slippage Coefficient"
 msgstr "滑点系数"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:147
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:157
 msgid "Advanced"
 msgstr "高级"
 
@@ -2217,7 +2227,7 @@ msgstr "与 DODO {lqanddodocomparetext} 的报价不同。"
 msgid "Real Time"
 msgstr "实时数据"
 
-#: src/components/Swap/index.tsx:584
+#: src/components/Swap/index.tsx:589
 msgid "Unsupported network - switch to trade"
 msgstr "未支持网络 - 请切换后进行交易"
 
@@ -2233,7 +2243,7 @@ msgstr "支付"
 msgid "Failed to add"
 msgstr "添加失败"
 
-#: src/components/Swap/index.tsx:883
+#: src/components/Swap/index.tsx:888
 #: src/hooks/Swap/useExecuteSwap.ts:60
 msgid "Swap"
 msgstr "交易"
@@ -2257,7 +2267,7 @@ msgstr "添加资金有可能会被套利，请谨慎操作。"
 msgid "address"
 msgstr "合约地址"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:247
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:265
 msgid "This trading pair does not have enough historical data and has used the default dynamic slippage."
 msgstr "该交易对没有足够的历史交易数据，已使用默认滑点值"
 
@@ -2270,7 +2280,7 @@ msgstr "管理"
 msgid "Source"
 msgstr "源"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:90
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:96
 msgid "You may modify the transaction deadline, the maximum time allowed for a trade to be processed on-chain. However, please note that this may lead to your trade executing at a subpar price, as the market price may change during that time."
 msgstr "摸可以修改交易的截止日期，也就是链上处理交易的最长时间。请注意，在链上处理期间市场价格可能会发生变化，这可能会导致你的交易会以较低的价格被执行。"
 
@@ -2286,7 +2296,7 @@ msgstr "流动性燃烧比例"
 msgid "Percentage to remove"
 msgstr "按照比例"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:100
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:110
 msgid "Max Slippage"
 msgstr "最大滑点"
 
@@ -2335,7 +2345,7 @@ msgstr "小时"
 msgid "V3"
 msgstr "V3"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:452
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:497
 msgid "Dynamic slippage is {recommendSlippage}% , the current slippage setting may increase the failure rate of transactions."
 msgstr "动态滑点是 {recommendSlippage}%， 当前的滑点设置可能会增加交易失败率。"
 
@@ -2361,11 +2371,11 @@ msgstr "挖矿合约地址"
 msgid "To avoid loss of rewards, please ensure that at least 1 or more participating users exist."
 msgstr "为避免奖励代币的损失，请确保至少存在 1 名用户参与挖矿。"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:111
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:121
 msgid "https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef"
 msgstr "https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:87
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:93
 msgid "Transaction Deadline"
 msgstr "交易截止时间"
 
@@ -2390,7 +2400,7 @@ msgstr "好的"
 msgid "Total Rewards=Daily Rewards*Duration"
 msgstr "总奖励 = 每日奖励数量 * 时长"
 
-#: src/components/Swap/index.tsx:763
+#: src/components/Swap/index.tsx:768
 #: src/components/TokenStatusButton.tsx:18
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:124
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:248
