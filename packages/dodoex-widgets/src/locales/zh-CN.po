@@ -1676,7 +1676,7 @@ msgstr "编辑"
 msgid "Min"
 msgstr "分钟"
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:673
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:674
 msgid "Hide TVL=0 pools"
 msgstr "隐藏 TVL=0 的池子"
 
