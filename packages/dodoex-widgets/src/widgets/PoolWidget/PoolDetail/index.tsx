@@ -83,10 +83,10 @@ export default function PoolDetail({
       sx={
         isMobile
           ? {
-              p: theme.spacing(28, 20, canOperate ? 108 : 0),
+              p: theme.spacing(28, 0, canOperate ? 108 : 0),
             }
           : {
-              p: theme.spacing(28, 40, 40),
+              p: theme.spacing(28, 0, 40),
             }
       }
     >

@@ -55,7 +55,7 @@ export const CurrencyInputPanel = ({
   return (
     <Box
       sx={{
-        pt: 12,
+        pt: 20,
         pb: 20,
         px: 20,
         borderRadius: 16,

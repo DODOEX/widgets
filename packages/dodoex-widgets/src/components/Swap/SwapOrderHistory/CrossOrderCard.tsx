@@ -4,6 +4,7 @@ import { ArrowTopRightBorder } from '@dodoex/icons';
 import { Interface } from '@ethersproject/abi';
 import { useMutation } from '@tanstack/react-query';
 import React, { useMemo } from 'react';
+import { chainListMap } from '../../../constants/chainList';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useSubmission } from '../../../hooks/Submission';
 import { OpCode } from '../../../hooks/Submission/spec';
@@ -13,13 +14,13 @@ import { formatReadableTimeDuration, getTimeText } from '../../../utils/time';
 import { AddressWithLinkAndCopy } from '../../AddressWithLinkAndCopy';
 import { RouteVision } from '../../Bridge/RouteVision';
 import FoldBtn, {
-  ChainName,
+  MobileTokenAndAmount,
   StatusAndTime,
   TokenAndAmount,
 } from '../../CardWidgets';
+import TokenLogo from '../../TokenLogo';
 import { QuestionTooltip } from '../../Tooltip';
 import { PriceWithToggle } from './PriceWithToggle';
-import { chainListMap } from '../../../constants/chainList';
 
 function Extend({
   showFold,
@@ -107,7 +108,7 @@ function Extend({
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 24,
+        gap: 16,
         p: showFold ? 16 : 0,
         borderBottomLeftRadius: 8,
         borderBottomRightRadius: 8,
@@ -115,15 +116,23 @@ function Extend({
         maxHeight: showFold ? 'auto' : 0,
         transition: 'all 300ms',
         overflow: 'hidden',
-        marginTop: '-4px',
-        marginBottom: '4px',
+        [theme.breakpoints.up('tablet')]: {
+          marginTop: '-4px',
+          marginBottom: '4px',
+          gap: 24,
+        },
       }}
     >
       <Box
         sx={{
           display: 'flex',
-          alignItems: 'center',
-          gap: 20,
+          flexDirection: 'column',
+          gap: 8,
+          [theme.breakpoints.up('tablet')]: {
+            alignItems: 'center',
+            flexDirection: 'row',
+            gap: 20,
+          },
         }}
       >
         {itemList.map((item, index) => {
@@ -131,13 +140,19 @@ function Extend({
             <Box
               key={index}
               sx={{
-                flexBasis: '20%',
-                flexGrow: 1,
-                flexShrink: 1,
                 display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                gap: 4,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                [theme.breakpoints.up('tablet')]: {
+                  flexBasis: '20%',
+                  flexGrow: 1,
+                  flexShrink: 1,
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
+                  gap: 4,
+                },
               }}
             >
               <Box
@@ -183,6 +198,7 @@ function Extend({
                 toChainId: data.routeData.toChainId,
                 step: data.routeData.step,
               }}
+              isMobile={isMobile}
             />
           </>
         )}
@@ -304,113 +320,206 @@ export default function CrossOrderCard({
     },
   });
 
+  const claimButton = useMemo(() => {
+    return (
+      <Button
+        variant={Button.Variant.contained}
+        size={Button.Size.small}
+        color="error"
+        isLoading={claimMutation.isPending}
+        disabled={
+          claimMutation.isPending || data.subStatus !== 'wait_claim_refund'
+        }
+        onClick={() => {
+          claimMutation.mutate();
+        }}
+        sx={{
+          typography: 'h6',
+          lineHeight: '16px',
+          py: 6,
+          minWidth: 98,
+          height: 28,
+        }}
+      >
+        {data.subStatus === 'refund_success' ? 'Claimed' : 'Claim'}
+
+        {data.subStatus !== 'wait_claim_refund' && (
+          <QuestionTooltip
+            onlyHover
+            title={data.subStatus}
+            ml={4}
+            sx={{
+              color: theme.palette.text.disabled,
+            }}
+          />
+        )}
+      </Button>
+    );
+  }, [claimMutation, data.subStatus, theme.palette.text.disabled]);
+
   if (isMobile)
     return (
       <Box
         sx={{
-          '&:not(:first-child)': {
-            borderTop: `1px solid ${theme.palette.border.main}`,
-          },
+          backgroundColor: theme.palette.background.paper,
+          borderRadius: 8,
         }}
       >
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'center',
+            flexDirection: 'column',
+            p: 16,
             gap: 16,
-            px: 16,
-            py: 20,
           }}
         >
           <Box
             sx={{
-              flex: 1,
-            }}
-            onClick={() => {
-              if (!data.fromToken) {
-                return;
-              }
-              window.open(
-                getEtherscanPage(data.fromToken.chainId, data.hash, 'tx'),
-              );
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 8,
             }}
           >
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                }}
+              >
+                <TokenLogo
+                  width={24}
+                  height={24}
+                  address={data.fromToken?.address}
+                  chainId={data.fromToken?.chainId}
+                />
+                <Box
+                  component="svg"
+                  width={18}
+                  height={18}
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
+                  <path
+                    d="M7.575 8.625L4.5 11.7L5.625 12.75L9.75 8.625L5.625 4.5L4.5 5.55L7.575 8.625ZM12.15 8.625L9.075 11.7L10.125 12.75L14.25 8.625L10.125 4.5L9.075 5.55L12.15 8.625Z"
+                    fill="currentColor"
+                  />
+                </Box>
+                <TokenLogo
+                  width={24}
+                  height={24}
+                  address={data.toToken?.address}
+                  chainId={data.toToken?.chainId}
+                />
+              </Box>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                }}
+              >
+                <StatusAndTime
+                  isMobile={false}
+                  statusText={statusText}
+                  statusColor={statusColor}
+                  alphaColor={statusAlphaColor}
+                >
+                  {data.status !== 'success' && (
+                    <QuestionTooltip
+                      onlyHover
+                      title={data.subStatus}
+                      ml={4}
+                      sx={{
+                        color: statusColor,
+                      }}
+                    />
+                  )}
+                </StatusAndTime>
+                {isErrorRefund && claimButton}
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                typography: 'h6',
+                color: theme.palette.text.secondary,
+              }}
+            >
+              {time}
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 16,
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
                 gap: 8,
               }}
             >
-              {data.fromToken && (
-                <TokenAndAmount
-                  token={data.fromToken}
-                  amount={data.fromAmount ?? ''}
-                  hideLogo
-                />
-              )}
+              <MobileTokenAndAmount
+                token={data.fromToken}
+                amount={data.fromAmount}
+                canAddMetamask={false}
+                title="Pay"
+                linkVisible={false}
+              />
 
-              <Box
-                component="svg"
-                width={18}
-                height={18}
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                sx={{
-                  color: 'text.secondary',
-                }}
-              >
-                <path
-                  d="M7.575 8.625L4.5 11.7L5.625 12.75L9.75 8.625L5.625 4.5L4.5 5.55L7.575 8.625ZM12.15 8.625L9.075 11.7L10.125 12.75L14.25 8.625L10.125 4.5L9.075 5.55L12.15 8.625Z"
-                  fill="currentColor"
-                />
-              </Box>
-              {data.toToken && (
-                <TokenAndAmount
-                  token={data.toToken}
-                  amount={data.toAmount ?? ''}
-                  hideLogo
-                  sx={{
-                    textAlign: 'right',
-                  }}
-                />
-              )}
+              <MobileTokenAndAmount
+                token={data.toToken}
+                amount={data.toAmount}
+                canAddMetamask={
+                  data.fromToken &&
+                  (chainListMap.get(data.fromToken.chainId)?.isEVMChain ??
+                    false)
+                }
+                title="Receive"
+                linkVisible={false}
+              />
             </Box>
+
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 8,
-                mt: 8,
+                justifyContent: 'center',
+                p: 2,
+                borderRadius: 8,
+                border: `1px solid ${theme.palette.border.main}`,
               }}
             >
-              {data.fromToken && <ChainName chainId={data.fromToken.chainId} />}
-              <StatusAndTime
-                isMobile={false}
-                statusText={statusText}
-                statusColor={statusColor}
-                alphaColor={statusAlphaColor}
-              >
-                {data.status !== 'success' && (
-                  <QuestionTooltip
-                    onlyHover
-                    title={data.subStatus}
-                    ml={4}
-                    sx={{
-                      color: statusColor,
-                    }}
-                  />
-                )}
-              </StatusAndTime>
+              <FoldBtn
+                show={showFold}
+                onClick={() => setShowFold((prev) => !prev)}
+                sx={{
+                  color: 'text.secondary',
+                }}
+              />
             </Box>
           </Box>
-          <FoldBtn
-            show={showFold}
-            onClick={() => setShowFold((prev) => !prev)}
-          />
         </Box>
-        <Extend showFold={showFold} data={data} isMobile />
+
+        <Extend showFold={showFold} data={data} isMobile={isMobile} />
       </Box>
     );
   return (
@@ -464,41 +573,7 @@ export default function CrossOrderCard({
           </StatusAndTime>
         </td>
         {isErrorRefund ? (
-          <td>
-            <Button
-              variant={Button.Variant.contained}
-              size={Button.Size.small}
-              color="error"
-              isLoading={claimMutation.isPending}
-              disabled={
-                claimMutation.isPending ||
-                data.subStatus !== 'wait_claim_refund'
-              }
-              onClick={() => {
-                claimMutation.mutate();
-              }}
-              sx={{
-                typography: 'h6',
-                lineHeight: '16px',
-                py: 6,
-                minWidth: 98,
-                height: 28,
-              }}
-            >
-              {data.subStatus === 'refund_success' ? 'Claimed' : 'Claim'}
-
-              {data.subStatus !== 'wait_claim_refund' && (
-                <QuestionTooltip
-                  onlyHover
-                  title={data.subStatus}
-                  ml={4}
-                  sx={{
-                    color: theme.palette.text.disabled,
-                  }}
-                />
-              )}
-            </Button>
-          </td>
+          <td>{claimButton}</td>
         ) : (
           <td>
             {data.fromToken && data.toToken && (

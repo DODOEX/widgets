@@ -1,5 +1,5 @@
-import { Box, HoverOpacity, Tooltip, useTheme } from '@dodoex/components';
-import { GasFee as FeeIcon, Switch, Time as TimeIcon } from '@dodoex/icons';
+import { Box, ButtonBase, Tooltip, useTheme } from '@dodoex/components';
+import { GasFee as FeeIcon, Time as TimeIcon } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { useState } from 'react';
@@ -63,12 +63,13 @@ export default function BridgeRouteShortCard({
               display: 'flex',
               alignItems: 'center',
               typography: 'body2',
+              color: theme.palette.text.primary,
               fontWeight: 600,
               gap: 6,
             }}
           >
             <span>1&nbsp;{baseToken.symbol}</span>
-            <span>=</span>
+            <span style={{ color: theme.palette.text.secondary }}>=</span>
             <span>
               {formatTokenAmountNumber({
                 input: isReverse
@@ -79,18 +80,43 @@ export default function BridgeRouteShortCard({
               &nbsp;
               {quoteToken.symbol}
             </span>
-            <HoverOpacity
-              component={Switch}
-              sx={{
-                color: 'text.secondary',
-                position: 'relative',
-                left: -2,
-              }}
+            <Box
+              component={ButtonBase}
               onClick={(evt) => {
                 evt.stopPropagation();
                 setIsReverse((prev) => !prev);
               }}
-            />
+              sx={{
+                color: theme.palette.text.primary,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                '&:hover': {
+                  color: theme.palette.text.secondary,
+                },
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+              >
+                <circle
+                  cx="9"
+                  cy="9"
+                  r="9"
+                  fill="currentColor"
+                  fillOpacity="0.1"
+                />
+                <path
+                  d="M9.5 6.5H4.5V8H13.5L9.5 4.25V6.5ZM8.25 13.75V11.5H13.5V10H4.5L8.25 13.75Z"
+                  fill="currentColor"
+                  fillOpacity="0.5"
+                />
+              </svg>
+            </Box>
           </Box>
 
           <RouteVisionModal route={route} />
@@ -105,6 +131,7 @@ export default function BridgeRouteShortCard({
             py: 7,
             borderRadius: 12,
             border: `solid 1px ${theme.palette.border.main}`,
+            backgroundColor: theme.palette.background.paper,
           }}
         >
           <Box

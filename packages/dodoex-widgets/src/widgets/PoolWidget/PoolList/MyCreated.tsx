@@ -348,7 +348,7 @@ function TableList({
                 break;
             }
           }
-          const hoverBg = '#182317';
+          const hoverBg = theme.palette.hover.default;
 
           return (
             <Box

@@ -7,7 +7,7 @@ import {
   useTheme,
 } from '@dodoex/components';
 import { getAddress } from '@ethersproject/address';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { ChainListItem, chainListMap } from '../../../constants/chainList';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
@@ -40,6 +40,7 @@ export enum SwapOrderHistoryTab {
 export default function SwapOrderHistory() {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const { evmAccount, solanaAccount, bitcoinAccount } = useWalletInfo();
 
@@ -135,6 +136,27 @@ export default function SwapOrderHistory() {
     });
   }, [accountList]);
 
+  const handleAccountClick = (
+    account: string,
+    isLast: boolean,
+    isFirst: boolean,
+  ) => {
+    setSelectedAccount(account);
+    if (scrollContainerRef.current) {
+      if (isLast) {
+        scrollContainerRef.current.scrollTo({
+          left: scrollContainerRef.current.scrollWidth,
+          behavior: 'smooth',
+        });
+      } else if (isFirst) {
+        scrollContainerRef.current.scrollTo({
+          left: 0,
+          behavior: 'smooth',
+        });
+      }
+    }
+  };
+
   return (
     <Tabs
       value={swapOrderHistoryTab}
@@ -190,6 +212,7 @@ export default function SwapOrderHistory() {
         />
       </Box>
       <Box
+        ref={scrollContainerRef}
         sx={{
           px: 16,
           py: 12,
@@ -203,10 +226,19 @@ export default function SwapOrderHistory() {
           [theme.breakpoints.up('laptop')]: {
             px: 24,
           },
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          msOverflowStyle: 'none',
+          scrollbarWidth: 'none',
+          WebkitOverflowScrolling: 'touch',
+          userSelect: 'none',
         }}
       >
-        {accountList.map((account) => {
+        {accountList.map((account, index) => {
           const isSelected = selectedAccount === account.account;
+          const isLast = index === accountList.length - 1;
+          const isFirst = index === 0;
           return (
             <Box
               key={account.account}
@@ -223,6 +255,7 @@ export default function SwapOrderHistory() {
                 typography: 'body2',
                 lineHeight: '19px',
                 color: 'text.secondary',
+                flexShrink: 0,
                 ...(isSelected && {
                   backgroundColor: alpha(theme.palette.success.main, 0.1),
                   color: 'success.main',
@@ -231,9 +264,9 @@ export default function SwapOrderHistory() {
                   backgroundColor: alpha(theme.palette.success.main, 0.1),
                 },
               }}
-              onClick={() => {
-                setSelectedAccount(account.account);
-              }}
+              onClick={() =>
+                handleAccountClick(account.account, isLast, isFirst)
+              }
             >
               {account.firstChain && (
                 <Box

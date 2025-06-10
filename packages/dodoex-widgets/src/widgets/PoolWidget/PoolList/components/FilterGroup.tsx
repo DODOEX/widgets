@@ -33,6 +33,7 @@ export const FilterGroup = <T extends string>(props: FilterGroupProps<T>) => {
               borderStyle: 'solid',
               typography: 'body2',
               lineHeight: '30px',
+              color: theme.palette.text.secondary,
               px: 20,
               cursor: 'pointer',
               borderTopLeftRadius: index === 0 ? 8 : 0,
@@ -42,8 +43,15 @@ export const FilterGroup = <T extends string>(props: FilterGroupProps<T>) => {
               ...(value === filter.value
                 ? {
                     backgroundColor: theme.palette.border.disabled,
+                    color: theme.palette.text.primary,
                   }
                 : {}),
+
+              [theme.breakpoints.down('tablet')]: {
+                flexGrow: 1,
+                flexBasis: '25%',
+                textAlign: 'center',
+              },
             }}
             onClick={() => onChange(filter.value)}
           >

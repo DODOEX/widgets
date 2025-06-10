@@ -36,7 +36,7 @@ export default function BridgeSummaryDetail({
     <Box>
       <Box
         sx={{
-          py: 12,
+          py: 20,
           borderStyle: 'solid',
           borderWidth: theme.spacing(1, 0, 0),
           borderColor: theme.palette.border.main,
@@ -205,7 +205,14 @@ export default function BridgeSummaryDetail({
                     color: 'text.primary',
                   }}
                 >
-                  {route.feeUSD ? `~$${route.feeUSD}` : '-'}
+                  <Box
+                    sx={{
+                      fontWeight: 600,
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    {route.feeUSD ? `~$${route.feeUSD}` : '-'}
+                  </Box>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -213,11 +220,19 @@ export default function BridgeSummaryDetail({
                     viewBox="0 0 18 19"
                     fill="none"
                   >
-                    <path
-                      d="M3.75 11.2663L4.98375 12.5L9 8.4925L13.0162 12.5L14.25 11.2663L9 6.01625L3.75 11.2663Z"
-                      fill="currentColor"
-                      fillOpacity="0.5"
-                    />
+                    {feeListActive ? (
+                      <path
+                        d="M3.75 11.2663L4.98375 12.5L9 8.4925L13.0162 12.5L14.25 11.2663L9 6.01625L3.75 11.2663Z"
+                        fill="currentColor"
+                        fillOpacity="0.5"
+                      />
+                    ) : (
+                      <path
+                        d="M14.25 7.73375L13.0163 6.5L9 10.5075L4.98375 6.5L3.75 7.73375L9 12.9838L14.25 7.73375Z"
+                        fill="currentColor"
+                        fillOpacity="0.5"
+                      />
+                    )}
                   </svg>
                 </Box>
               </Box>
@@ -313,13 +328,9 @@ export default function BridgeSummaryDetail({
                     display: 'flex',
                     alignItems: 'center',
                     typography: 'body2',
-                    color: 'text.secondary',
+                    fontWeight: 600,
+                    color: 'success.main',
                     flexShrink: 0,
-                    background:
-                      'linear-gradient(97deg, rgba(255, 255, 255, 0.50) -19.62%, #7BF179 97.87%)',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
                   }}
                 >
                   Fee comparison
@@ -336,6 +347,28 @@ export default function BridgeSummaryDetail({
                     color: 'text.primary',
                   }}
                 >
+                  <Box
+                    sx={{
+                      typography: 'body2',
+                      fontWeight: 600,
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    Eddy
+                  </Box>
+                  <Box
+                    sx={{
+                      px: 8,
+                      borderRadius: 12,
+                      backgroundColor: theme.palette.success.main,
+                      typography: 'h6',
+                      fontWeight: 600,
+                      color: theme.palette.success.contrastText,
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    Cheapest
+                  </Box>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -343,11 +376,19 @@ export default function BridgeSummaryDetail({
                     viewBox="0 0 18 19"
                     fill="none"
                   >
-                    <path
-                      d="M3.75 11.2663L4.98375 12.5L9 8.4925L13.0162 12.5L14.25 11.2663L9 6.01625L3.75 11.2663Z"
-                      fill="currentColor"
-                      fillOpacity="0.5"
-                    />
+                    {feeComparisonActive ? (
+                      <path
+                        d="M3.75 11.2663L4.98375 12.5L9 8.4925L13.0162 12.5L14.25 11.2663L9 6.01625L3.75 11.2663Z"
+                        fill="currentColor"
+                        fillOpacity="0.5"
+                      />
+                    ) : (
+                      <path
+                        d="M14.25 7.73375L13.0163 6.5L9 10.5075L4.98375 6.5L3.75 7.73375L9 12.9838L14.25 7.73375Z"
+                        fill="currentColor"
+                        fillOpacity="0.5"
+                      />
+                    )}
                   </svg>
                 </Box>
               </Box>
@@ -398,7 +439,8 @@ export default function BridgeSummaryDetail({
       </Box>
       <Box
         sx={{
-          py: 12,
+          pt: 0,
+          pb: 0,
           borderStyle: 'solid',
           borderWidth: theme.spacing(1, 0, 0),
           borderColor: theme.palette.border.main,
@@ -415,6 +457,7 @@ export default function BridgeSummaryDetail({
             header={
               <Box
                 sx={{
+                  py: 20,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -467,7 +510,7 @@ export default function BridgeSummaryDetail({
               </Box>
             }
           >
-            <RouteVision route={route} />
+            <RouteVision route={route} isMobile />
           </AccordionItem>
         </Accordion>
       </Box>

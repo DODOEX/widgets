@@ -13,7 +13,7 @@ const TabStyle = styled(BaseTab)`
   padding: 16px 0px 16px 0px;
   margin: 0px 32px 0px 0px;
   border-radius: 8px;
-  color: ${({ theme }) => theme.palette.text.primary};
+  color: ${({ theme }) => theme.palette.text.secondary};
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -22,7 +22,7 @@ const TabStyle = styled(BaseTab)`
   white-space: nowrap;
 
   &:not(.${tabClasses.selected}):hover {
-    opacity: 0.5;
+    color: ${({ theme }) => theme.palette.text.link};
   }
 
   &.${buttonClasses.disabled} {

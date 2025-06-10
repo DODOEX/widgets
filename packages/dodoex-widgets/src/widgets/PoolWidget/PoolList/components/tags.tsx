@@ -1,4 +1,4 @@
-import { Box, Tooltip } from '@dodoex/components';
+import { alpha, Box, lightPalette, Tooltip } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { byWei, formatPercentageNumber } from '../../../../utils/formatter';
@@ -10,18 +10,12 @@ export interface PoolTypeTagProps {
 }
 
 export const PoolTypeTag = ({ poolType }: PoolTypeTagProps) => {
-  const borderColor =
+  const color =
     poolType === 'AMM V2'
-      ? '#FC72FF'
+      ? lightPalette.error.main
       : poolType === 'AMM V3'
-        ? '#DFCC28'
-        : '#7BF179';
-  const background =
-    poolType === 'AMM V2'
-      ? 'linear-gradient(105deg, rgba(88, 88, 88, 0.50) -76.37%, #121212 97.95%), linear-gradient(88deg, #FC72FF -53.68%, rgba(252, 114, 255, 0.00) 133.62%), #FFF'
-      : poolType === 'AMM V3'
-        ? 'linear-gradient(105deg, rgba(88, 88, 88, 0.50) -76.37%, #121212 97.95%), linear-gradient(88deg, #DFCC28 -53.68%, rgba(223, 204, 40, 0.00) 133.62%), #FFF'
-        : 'linear-gradient(105deg, rgba(88, 88, 88, 0.50) -76.37%, #121212 97.95%), linear-gradient(90deg, #7BF179 -61.94%, rgba(123, 241, 121, 0.00) 246.32%), #1E1E1E';
+        ? lightPalette.purple.main
+        : lightPalette.success.main;
 
   return (
     <Box
@@ -31,11 +25,8 @@ export const PoolTypeTag = ({ poolType }: PoolTypeTagProps) => {
         typography: 'h6',
         lineHeight: '24px',
         borderRadius: 4,
-        borderWidth: 1,
-        borderColor,
-        borderStyle: 'solid',
-        background,
-        color: 'text.primary',
+        background: alpha(color, 0.1),
+        color,
         whiteSpace: 'nowrap',
       }}
     >
@@ -66,12 +57,8 @@ export const PoolFeeRateTag = ({
           typography: 'h6',
           lineHeight: '24px',
           borderRadius: 4,
-          borderWidth: 1,
-          borderColor: 'text.secondary',
-          borderStyle: 'solid',
-          background:
-            'linear-gradient(105deg, rgba(88, 88, 88, 0.50) -76.37%, #121212 97.95%), linear-gradient(90deg, #FFF -61.94%, rgba(255, 255, 255, 0.00) 246.32%), #1E1E1E',
-          color: 'text.primary',
+          backgroundColor: 'background.tag',
+          color: 'text.secondary',
           whiteSpace: 'nowrap',
         }}
       >

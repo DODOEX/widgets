@@ -210,8 +210,8 @@ msgstr ""
 msgid "Rewards"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:72
-#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:57
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:76
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:61
 msgid "Pay"
 msgstr ""
 
@@ -225,7 +225,7 @@ msgstr ""
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
 
-#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:66
+#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:68
 msgid "Search by token or pool address"
 msgstr ""
 
@@ -414,7 +414,7 @@ msgstr ""
 msgid "FeeRevenue"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:58
+#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:60
 msgid "Search"
 msgstr ""
 
@@ -498,7 +498,7 @@ msgstr "全部"
 msgid "Go back"
 msgstr ""
 
-#: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:374
+#: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:415
 #: src/components/Swap/components/ReviewDialog.tsx:356
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/index.tsx:123
 msgid "Slippage"
@@ -867,7 +867,7 @@ msgstr ""
 msgid "Succeeded"
 msgstr ""
 
-#: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:378
+#: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:419
 #: src/components/Swap/components/SettingsDialog/index.tsx:48
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
@@ -1008,7 +1008,7 @@ msgid "No LP pools match your criteria"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:256
-#: src/widgets/PoolWidget/PoolList/components/tags.tsx:61
+#: src/widgets/PoolWidget/PoolList/components/tags.tsx:52
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:271
 msgid "Fee rate"
 msgstr ""
@@ -1109,7 +1109,7 @@ msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 msgid "Volume (1D)"
 msgstr ""
 
-#: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:439
+#: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:482
 msgid "Estimated Time"
 msgstr "预计时间"
 
@@ -1286,9 +1286,9 @@ msgstr ""
 msgid "Trader"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:98
-#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:75
-#: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:60
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:102
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:79
+#: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:71
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:269
 #: src/widgets/PoolWidget/AMMV3/components/PositionAmountPreview.tsx:195
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:406
@@ -1672,8 +1672,8 @@ msgstr ""
 msgid "Approve {0}"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:87
-#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:67
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:91
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:71
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:193
 msgid "Rate"
 msgstr ""
@@ -1707,7 +1707,7 @@ msgstr ""
 msgid "RPC node data exception"
 msgstr "RPC节点异常"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:214
+#: src/components/Bridge/BridgeRouteShortCard.tsx:241
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:133
 msgid "Estimated transaction time"
 msgstr "预计交易时长"
@@ -1832,8 +1832,8 @@ msgstr "秒"
 msgid "Total Swap Volume"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:76
-#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:61
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:80
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:65
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:490
 msgid "Receive"
 msgstr ""
@@ -1945,7 +1945,7 @@ msgstr ""
 msgid "Once Mining has started, it cannot be stopped."
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:65
+#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:67
 msgid "Select a liquidity pool"
 msgstr ""
 
@@ -1953,10 +1953,10 @@ msgstr ""
 msgid "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:172
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:176
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:220
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:245
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:173
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:177
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:222
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:247
 msgid "Create Pool"
 msgstr ""
 
@@ -2020,7 +2020,7 @@ msgstr "在冷静期无法进行清算"
 msgid "The setting has been switched to cross chain mode"
 msgstr ""
 
-#: src/components/Swap/components/TokenCard/index.tsx:313
+#: src/components/Swap/components/TokenCard/index.tsx:315
 #: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:252
 msgid "Buy"
 msgstr ""
@@ -2067,7 +2067,7 @@ msgstr "详情"
 msgid "APY"
 msgstr ""
 
-#: src/components/Bridge/RouteVisionModal.tsx:134
+#: src/components/Bridge/RouteVisionModal.tsx:136
 msgid "Route"
 msgstr ""
 
@@ -2075,7 +2075,7 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:83
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:87
 msgid "Claim refunds"
 msgstr ""
 
@@ -2174,8 +2174,8 @@ msgstr ""
 msgid "Create One"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:79
-#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:64
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:83
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:68
 msgid "Status"
 msgstr ""
 
@@ -2288,7 +2288,7 @@ msgstr "ForceStop 异常"
 #: src/components/LoadMore.tsx:47
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/LiquidityProvidersTable.tsx:222
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:317
-#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:116
+#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:115
 msgid "Load more"
 msgstr ""
 

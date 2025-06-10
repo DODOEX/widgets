@@ -21,7 +21,7 @@ export function AccordionItem({
       component={Item}
       sx={merge(
         {
-          '& button': {
+          '&>h3>button': {
             p: 0,
             border: 'none',
             width: '100%',

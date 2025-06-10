@@ -46,13 +46,13 @@ import LiquidityTable from './components/LiquidityTable';
 import LoadingCard from './components/LoadingCard';
 import { MigrationTag } from './components/migationWidget';
 import PoolApyTooltip from './components/PoolApyTooltip';
+import { PoolFeeRateTag, PoolTypeTag } from './components/tags';
 import TokenAndPoolFilter from './components/TokenAndPoolFilter';
 import TokenListPoolItem from './components/TokenListPoolItem';
 import {
   TokenAndPoolFilterUserOptions,
   usePoolListFilterTokenAndPool,
 } from './hooks/usePoolListFilterTokenAndPool';
-import { PoolFeeRateTag, PoolTypeTag } from './components/tags';
 
 function CardList({
   lqList,
@@ -509,7 +509,7 @@ function TableList({
           const isAMMV2 = type === 'AMMV2';
           const isAMMV3 = type === 'AMMV3';
 
-          const hoverBg = '#182317';
+          const hoverBg = theme.palette.hover.default;
 
           const migrationItem = getMigrationPairAndMining?.({
             address: item.id,
@@ -856,35 +856,35 @@ export default function AddLiquidityList({
     });
   }
 
-  const filterSmallDeviceWidth = 475;
-
   const hasMore = fetchResult.hasNextPage && !hasFilterAddress;
 
   return (
     <>
       <Box
         sx={{
-          py: 16,
+          pt: 12,
+          pb: 20,
           display: 'flex',
+          flexDirection: 'column-reverse',
           gap: 8,
-          ...(minDevice(filterSmallDeviceWidth)
-            ? {}
-            : {
-                flexDirection: 'column',
-              }),
-          ...(isMobile
-            ? {}
-            : {
-                px: 0,
-                justifyContent: 'space-between',
-              }),
+          [theme.breakpoints.up('tablet')]: {
+            py: 16,
+            flexDirection: 'row',
+            px: 0,
+            justifyContent: 'space-between',
+          },
         }}
       >
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'stretch',
+            flexDirection: 'column',
             gap: 8,
+            [theme.breakpoints.up('tablet')]: {
+              flexDirection: 'row',
+              alignItems: 'center',
+            },
           }}
         >
           {!onlyChainId && (
@@ -961,6 +961,7 @@ export default function AddLiquidityList({
             onChange={(value) => setDuration(value)}
           />
         </Box>
+
         <Box
           sx={{
             display: 'flex',
@@ -970,10 +971,11 @@ export default function AddLiquidityList({
         >
           <Box
             sx={{
+              flex: 1,
               display: 'flex',
               alignItems: 'center',
               gap: 8,
-              ...(minDevice(filterSmallDeviceWidth)
+              ...(isMobile
                 ? {}
                 : {
                     '& > button': {

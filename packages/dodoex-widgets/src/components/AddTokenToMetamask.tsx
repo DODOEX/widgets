@@ -79,6 +79,9 @@ export function AddTokenToMetamask({
           '&:active': {
             outline: 'none',
           },
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         },
         sx,
       )}

@@ -153,17 +153,20 @@ export const CompareRoute = ({ feeUSD }: CompareRouteProps) => {
               pb: 2,
               borderRadius: 8,
               background: item.selected
-                ? 'linear-gradient(180deg, rgba(123, 241, 121, 0.30) 0%, #7BF179 100%)'
+                ? theme.palette.primary.main
                 : 'transparent',
             }}
           >
             <Box
               sx={{
-                color: theme.palette.primary.main,
+                color: item.selected
+                  ? theme.palette.primary.contrastText
+                  : theme.palette.primary.main,
                 typography: 'h6',
                 lineHeight: '16px',
                 px: 8,
                 py: 4,
+                textAlign: 'center',
               }}
             >
               {item.selected ? <>Cheapest</> : <>&nbsp;</>}
@@ -173,7 +176,7 @@ export const CompareRoute = ({ feeUSD }: CompareRouteProps) => {
                 p: 11,
                 border: `solid 1px ${theme.palette.border.main}`,
                 borderRadius: 8,
-                backgroundColor: 'background.default',
+                backgroundColor: 'background.paper',
                 position: 'relative',
                 overflow: 'hidden',
               }}

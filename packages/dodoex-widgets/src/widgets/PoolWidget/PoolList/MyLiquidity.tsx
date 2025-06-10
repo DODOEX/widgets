@@ -737,7 +737,7 @@ function TableList({
           const hasMetromMining =
             !!item.apy?.metromMiningApy &&
             Number(item.apy?.metromMiningApy) > 0;
-          const hoverBg = '#182317';
+          const hoverBg = theme.palette.hover.default;
 
           const migrationItem = getMigrationPairAndMining?.({
             address: item.id,
@@ -1215,27 +1215,29 @@ export default function MyLiquidity({
     <>
       <Box
         sx={{
-          py: 16,
+          pt: 12,
+          pb: 20,
           display: 'flex',
+          flexDirection: 'column-reverse',
           gap: 8,
-          ...(minDevice(filterSmallDeviceWidth)
-            ? {}
-            : {
-                flexDirection: 'column',
-              }),
-          ...(isMobile
-            ? {}
-            : {
-                px: 0,
-                justifyContent: 'space-between',
-              }),
+          [theme.breakpoints.up('tablet')]: {
+            py: 16,
+            flexDirection: 'row',
+            px: 0,
+            justifyContent: 'space-between',
+          },
         }}
       >
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'stretch',
+            flexDirection: 'column',
             gap: 8,
+            [theme.breakpoints.up('tablet')]: {
+              flexDirection: 'row',
+              alignItems: 'center',
+            },
           }}
         >
           {!onlyChainId && (
@@ -1294,22 +1296,17 @@ export default function MyLiquidity({
         >
           <Box
             sx={{
+              flex: 1,
               display: 'flex',
               alignItems: 'center',
               gap: 8,
-              ...(minDevice(filterSmallDeviceWidth)
+              ...(isMobile
                 ? {}
                 : {
                     '& > button': {
                       flex: 1,
-                      flexBasis: '100%',
                     },
                   }),
-              ...(isMobile
-                ? {
-                    flexWrap: 'wrap',
-                  }
-                : {}),
             }}
           >
             {tokenAndPoolFilter?.element ?? (

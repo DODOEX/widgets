@@ -38,7 +38,9 @@ export default function TokenAndPoolFilter({
           borderRadius: 8,
           fontWeight: 600,
           ...(isMobile
-            ? {}
+            ? {
+                width: '100%',
+              }
             : {
                 minWidth: 220,
               }),

@@ -61,6 +61,8 @@ export interface TokenCardProps {
 }
 
 export function CardPlus() {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
@@ -73,7 +75,7 @@ export function CardPlus() {
         sx={{
           width: 44,
           height: 44,
-          backgroundColor: '#050504',
+          backgroundColor: 'background.input',
           borderRadius: '50%',
           display: 'flex',
           alignItems: 'center',
@@ -85,19 +87,19 @@ export function CardPlus() {
           left: '50%',
           top: '50%',
           transform: 'translate(-50%,-50%)',
+          color: 'text.secondary',
         }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
+          width="25"
           height="24"
           viewBox="0 0 25 24"
           fill="none"
         >
           <path
             d="M19.0142 13H13.0142V19H11.0142V13H5.01416V11H11.0142V5H13.0142V11H19.0142V13Z"
-            fill="white"
-            fillOpacity="0.5"
+            fill="currentColor"
           />
         </svg>
       </Box>

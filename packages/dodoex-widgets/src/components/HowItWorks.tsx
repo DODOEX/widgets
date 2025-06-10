@@ -19,11 +19,8 @@ export function HowItWorks({
   return (
     <Box
       sx={{
-        backgroundColor: theme.palette.background.default,
+        backgroundColor: theme.palette.background.paper,
         backdropFilter: 'blur(4px)',
-        borderWidth: 1,
-        borderColor: theme.palette.border.main,
-        borderStyle: 'solid',
         borderRadius: 12,
         padding: 24,
         display: 'flex',
@@ -38,7 +35,7 @@ export function HowItWorks({
           color: theme.palette.text.primary,
           typography: 'body1',
           fontWeight: 500,
-          lineHeight: '25px',
+          lineHeight: '24px',
         }}
       >
         {title}

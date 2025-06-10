@@ -3,9 +3,9 @@ import BigNumber from 'bignumber.js';
 import React, { useMemo, useState } from 'react';
 import { ChainListItem, chainListMap } from '../../constants/chainList';
 import { BridgeRouteI, BridgeStepSwapStep } from '../../hooks/Bridge';
-import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
 import { TokenInfo } from '../../hooks/Token/type';
 import { MidPathType } from '../../hooks/useRouteVisionData';
+import { getEtherscanPage } from '../../utils';
 import {
   formatPercentageNumber,
   formatTokenAmountNumber,
@@ -15,10 +15,10 @@ import {
   PCRoutingVision,
 } from '../Swap/SwapOrderHistory/RoutingVision';
 import { productList } from './SelectBridgeDialog/productList';
-import { getEtherscanPage } from '../../utils';
 
 export interface RouteVisionProps {
   route: Pick<BridgeRouteI, 'fromChainId' | 'toChainId' | 'step'>;
+  isMobile?: boolean;
 }
 
 interface RouteVisionItemProps {
@@ -42,9 +42,14 @@ interface RouteVisionItemProps {
   swapSteps?: Array<BridgeStepSwapStep>;
 }
 
-function RouteVisionItem({ item }: { item: RouteVisionItemProps }) {
+function RouteVisionItem({
+  item,
+  isMobile,
+}: {
+  item: RouteVisionItemProps;
+  isMobile?: boolean;
+}) {
   const theme = useTheme();
-  const { isMobile } = useWidgetDevice();
 
   const [isActive, setIsActive] = useState(false);
 
@@ -87,7 +92,13 @@ function RouteVisionItem({ item }: { item: RouteVisionItemProps }) {
           justifyContent: 'space-between',
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
           <Box
             sx={{
               width: 20,
@@ -123,6 +134,8 @@ function RouteVisionItem({ item }: { item: RouteVisionItemProps }) {
             sx={{
               display: 'flex',
               alignItems: 'center',
+              flexWrap: 'wrap',
+              justifyContent: 'flex-end',
               gap: 4,
               typography: 'body2',
               lineHeight: '22px',
@@ -269,7 +282,7 @@ function RouteVisionItem({ item }: { item: RouteVisionItemProps }) {
                 ml: 20,
                 p: 12,
                 borderRadius: 12,
-                backgroundColor: theme.palette.background.paperContrast,
+                backgroundColor: theme.palette.background.paperDarkContrast,
               }}
             >
               {isMobile ? (
@@ -293,7 +306,7 @@ function RouteVisionItem({ item }: { item: RouteVisionItemProps }) {
   );
 }
 
-export const RouteVision = ({ route }: RouteVisionProps) => {
+export const RouteVision = ({ route, isMobile }: RouteVisionProps) => {
   const { fromChainId, toChainId, step } = route;
 
   const logoList = useMemo(() => {
@@ -349,7 +362,9 @@ export const RouteVision = ({ route }: RouteVisionProps) => {
       }}
     >
       {logoList.map((item) => {
-        return <RouteVisionItem key={item.key} item={item} />;
+        return (
+          <RouteVisionItem key={item.key} item={item} isMobile={isMobile} />
+        );
       })}
     </Box>
   );

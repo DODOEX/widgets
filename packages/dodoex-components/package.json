@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/components",
-  "version": "3.0.3-zetachain.10",
+  "version": "3.0.3-zetachain.11",
   "description": "UI component library",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",

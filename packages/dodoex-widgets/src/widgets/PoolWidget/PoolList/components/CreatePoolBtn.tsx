@@ -150,17 +150,18 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
         )}
       </>
     );
+
     if (isMobile) {
       return (
         <>
           <Button
-            variant={Button.Variant.outlined}
+            variant={Button.Variant.second}
             fullWidth={isMobile && !!account}
             onClick={() => {
               setSelectTypeModalOpen(true);
             }}
             sx={{
-              height: 40,
+              height: 36,
             }}
           >
             <Box
@@ -184,6 +185,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
         </>
       );
     }
+
     return (
       <Tooltip
         arrow={false}

@@ -162,7 +162,7 @@ export default function TokenPicker({
         }}
       />
 
-      {chainId === undefined && chainList.length && (
+      {chainId === undefined && chainList.length > 0 && (
         <Box
           sx={{
             position: 'relative',

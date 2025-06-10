@@ -6,6 +6,7 @@ import Dialog from '../Dialog';
 import { RouteVision } from './RouteVision';
 import { chainListMap } from '../../constants/chainList';
 import { productList } from './SelectBridgeDialog/productList';
+import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
 
 export interface RouteVisionModalProps {
   route: BridgeRouteI;
@@ -14,6 +15,7 @@ export interface RouteVisionModalProps {
 export const RouteVisionModal = ({ route }: RouteVisionModalProps) => {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const theme = useTheme();
+  const { isMobile } = useWidgetDevice();
 
   const { fromChainId, toChainId, step } = route;
 
@@ -137,13 +139,13 @@ export const RouteVisionModal = ({ route }: RouteVisionModalProps) => {
       >
         <Box
           sx={{
-            minWidth: 800,
+            minWidth: isMobile ? '100%' : 800,
             py: 20,
-            mx: 20,
+            px: 20,
             borderTop: `1px solid ${theme.palette.border.main}`,
           }}
         >
-          <RouteVision route={route} />
+          <RouteVision route={route} isMobile={isMobile} />
         </Box>
       </Dialog>
     </>

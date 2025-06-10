@@ -1,18 +1,20 @@
 import { Box, useTheme } from '@dodoex/components';
 import { ArrowTopRightBorder } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
-import React from 'react';
+import BigNumber from 'bignumber.js';
+import React, { useMemo } from 'react';
 import { chainListMap } from '../../../constants/chainList';
 import { useSubmissionStatusColor } from '../../../hooks/Submission/useSubmissionStatusColor';
 import { useTradeSwapOrderList } from '../../../hooks/Swap/useTradeSwapOrderList';
 import { useRouteVisionData } from '../../../hooks/useRouteVisionData';
-import { getEtherscanPage } from '../../../utils';
+import { formatTokenAmountNumber, getEtherscanPage } from '../../../utils';
 import { getTimeText } from '../../../utils/time';
 import FoldBtn, {
-  ChainName,
+  MobileTokenAndAmount,
   StatusAndTime,
   TokenAndAmount,
 } from '../../CardWidgets';
+import TokenLogo from '../../TokenLogo';
 import { PriceWithToggle } from './PriceWithToggle';
 import { MobileRoutingVision, PCRoutingVision } from './RoutingVision';
 
@@ -30,7 +32,14 @@ function Extend({
     rawRouteData: data.routeData,
     chainId: data.fromToken.chainId,
   });
-  const time = getTimeText(new Date(data.createdAt));
+
+  const price = useMemo(() => {
+    if (!data.fromTokenPrice) {
+      return new BigNumber(0);
+    }
+    return new BigNumber(data.fromTokenPrice);
+  }, [data.fromTokenPrice]);
+
   return (
     <Box
       sx={{
@@ -44,8 +53,10 @@ function Extend({
         maxHeight: showFold ? 400 : 0,
         transition: 'all 300ms',
         overflow: 'hidden',
-        marginTop: '-4px',
-        marginBottom: '4px',
+        [theme.breakpoints.up('tablet')]: {
+          marginTop: '-4px',
+          marginBottom: '4px',
+        },
       }}
     >
       <Box
@@ -58,7 +69,18 @@ function Extend({
         }}
       >
         <Trans>Details</Trans>
-        {isMobile && <Box>{time}</Box>}
+        {isMobile && (
+          <Box>
+            Rate:&nbsp;1&nbsp;{data.fromToken.symbol}=
+            {price && price.isFinite()
+              ? formatTokenAmountNumber({
+                  input: price,
+                  decimals: data.toToken.decimals,
+                })
+              : '-'}
+            &nbsp;{data.toToken.symbol}
+          </Box>
+        )}
       </Box>
 
       {isMobile ? (
@@ -85,38 +107,42 @@ export default function SameOrderCard({
   data: ReturnType<typeof useTradeSwapOrderList>['orderList'][0];
   isMobile: boolean;
 }) {
+  const theme = useTheme();
+
+  const [showFold, setShowFold] = React.useState(false);
+
   const { statusText, statusColor, statusAlphaColor } =
     useSubmissionStatusColor({
       status: data.status,
     });
-  const [showFold, setShowFold] = React.useState(false);
   const time = getTimeText(new Date(data.createdAt));
-  const theme = useTheme();
-  if (isMobile)
+
+  if (isMobile) {
     return (
       <Box
         sx={{
-          '&:not(:first-child)': {
-            borderTop: `1px solid ${theme.palette.border.main}`,
-          },
+          backgroundColor: theme.palette.background.paper,
+          borderRadius: 8,
         }}
       >
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'center',
+            flexDirection: 'column',
+            p: 16,
             gap: 16,
-            px: 16,
-            py: 20,
           }}
         >
           <Box
             sx={{
-              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 8,
             }}
             onClick={() =>
               window.open(
                 getEtherscanPage(data.fromToken.chainId, data.hash, 'tx'),
+                '_blank',
               )
             }
           >
@@ -124,48 +150,46 @@ export default function SameOrderCard({
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 8,
+                justifyContent: 'space-between',
               }}
             >
-              <TokenAndAmount
-                token={data.fromToken}
-                amount={data.fromAmount ?? ''}
-                hideLogo
-              />
               <Box
-                component="svg"
-                width={18}
-                height={18}
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
                 sx={{
-                  color: 'text.secondary',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
                 }}
               >
-                <path
-                  d="M7.575 8.625L4.5 11.7L5.625 12.75L9.75 8.625L5.625 4.5L4.5 5.55L7.575 8.625ZM12.15 8.625L9.075 11.7L10.125 12.75L14.25 8.625L10.125 4.5L9.075 5.55L12.15 8.625Z"
-                  fill="currentColor"
+                <TokenLogo
+                  width={24}
+                  height={24}
+                  address={data.fromToken.address}
+                  chainId={data.fromToken.chainId}
+                />
+                <Box
+                  component="svg"
+                  width={18}
+                  height={18}
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
+                  <path
+                    d="M7.575 8.625L4.5 11.7L5.625 12.75L9.75 8.625L5.625 4.5L4.5 5.55L7.575 8.625ZM12.15 8.625L9.075 11.7L10.125 12.75L14.25 8.625L10.125 4.5L9.075 5.55L12.15 8.625Z"
+                    fill="currentColor"
+                  />
+                </Box>
+                <TokenLogo
+                  width={24}
+                  height={24}
+                  address={data.toToken.address}
+                  chainId={data.toToken.chainId}
                 />
               </Box>
-              <TokenAndAmount
-                token={data.toToken}
-                amount={data.toAmount ?? ''}
-                hideLogo
-                sx={{
-                  textAlign: 'right',
-                }}
-              />
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-                mt: 8,
-              }}
-            >
-              <ChainName chainId={data.fromToken.chainId} />
+
               <StatusAndTime
                 isMobile={false}
                 statusText={statusText}
@@ -173,15 +197,74 @@ export default function SameOrderCard({
                 alphaColor={statusAlphaColor}
               />
             </Box>
+
+            <Box
+              sx={{
+                typography: 'h6',
+                color: theme.palette.text.secondary,
+              }}
+            >
+              {time}
+            </Box>
           </Box>
-          <FoldBtn
-            show={showFold}
-            onClick={() => setShowFold((prev) => !prev)}
-          />
+
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 16,
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 8,
+              }}
+            >
+              <MobileTokenAndAmount
+                token={data.fromToken}
+                amount={data.fromAmount}
+                canAddMetamask={false}
+                title="Pay"
+              />
+
+              <MobileTokenAndAmount
+                token={data.toToken}
+                amount={data.toAmount}
+                canAddMetamask={
+                  chainListMap.get(data.fromToken.chainId)?.isEVMChain ?? false
+                }
+                title="Receive"
+              />
+            </Box>
+
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                p: 2,
+                borderRadius: 8,
+                border: `1px solid ${theme.palette.border.main}`,
+              }}
+            >
+              <FoldBtn
+                show={showFold}
+                onClick={() => setShowFold((prev) => !prev)}
+                sx={{
+                  color: 'text.secondary',
+                }}
+              />
+            </Box>
+          </Box>
         </Box>
         <Extend showFold={showFold} data={data} isMobile />
       </Box>
     );
+  }
+
   return (
     <>
       <tr>

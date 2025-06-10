@@ -24,7 +24,11 @@ export default function SameChainOrderList({ account }: { account: string }) {
       {isMobile ? (
         <Box
           sx={{
+            pt: 12,
             px: 16,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 8,
           }}
         >
           {swapOrderListQuery.orderList.map((item) => (

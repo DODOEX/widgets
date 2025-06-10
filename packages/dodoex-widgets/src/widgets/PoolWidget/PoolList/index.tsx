@@ -95,7 +95,7 @@ export default function PoolList({
       sx={{
         ...(isMobile
           ? {
-              p: 20,
+              p: 0,
             }
           : {
               display: 'flex',
@@ -140,7 +140,7 @@ export default function PoolList({
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'flex-start',
-                  p: 0,
+                  pb: 16,
                   borderBottomWidth: 1,
                   borderBottomColor: 'border.main',
                   borderBottomStyle: 'solid',
@@ -155,7 +155,7 @@ export default function PoolList({
                 justifyContent: 'space-between',
                 ...(isMobile
                   ? {
-                      mb: 16,
+                      mb: 12,
                     }
                   : {
                       borderBottomWidth: 0,
@@ -284,86 +284,88 @@ export default function PoolList({
           />
         )}
       </Tabs>
-      <Box
-        sx={{
-          position: 'relative',
-          width: isMobile ? '100%' : !operatePool ? 'auto' : 375,
-        }}
-      >
-        {operatePool?.pool?.type === 'AMMV3' && operatePool.pool.chainId ? (
-          poolTab === PoolTab.myLiquidity &&
-          operatePool.pool.liquidityPositions?.[0]?.tokenId ? (
-            <AMMV3PositionManage
-              baseToken={operatePool.pool.baseToken}
-              quoteToken={operatePool.pool.quoteToken}
-              feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
-              tokenId={operatePool.pool.liquidityPositions[0].tokenId}
-              chainId={operatePool.pool.chainId}
-              onClose={() => setOperatePool(null)}
-            />
+      {operatePool && (
+        <Box
+          sx={{
+            position: 'relative',
+            width: isMobile ? '100%' : 375,
+          }}
+        >
+          {operatePool?.pool?.type === 'AMMV3' && operatePool.pool.chainId ? (
+            poolTab === PoolTab.myLiquidity &&
+            operatePool.pool.liquidityPositions?.[0]?.tokenId ? (
+              <AMMV3PositionManage
+                baseToken={operatePool.pool.baseToken}
+                quoteToken={operatePool.pool.quoteToken}
+                feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
+                tokenId={operatePool.pool.liquidityPositions[0].tokenId}
+                chainId={operatePool.pool.chainId}
+                onClose={() => setOperatePool(null)}
+              />
+            ) : (
+              <AMMV3PositionsView
+                chainId={operatePool.pool.chainId}
+                baseToken={operatePool.pool.baseToken}
+                quoteToken={operatePool.pool.quoteToken}
+                feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
+                onClose={() => setOperatePool(null)}
+                handleGoToAddLiquidityV3={(params) => {
+                  useRouterStore.getState().push({
+                    type: PageType.createPoolAMMV3,
+                    params,
+                  });
+                }}
+              />
+            )
           ) : (
-            <AMMV3PositionsView
-              chainId={operatePool.pool.chainId}
-              baseToken={operatePool.pool.baseToken}
-              quoteToken={operatePool.pool.quoteToken}
-              feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
-              onClose={() => setOperatePool(null)}
-              handleGoToAddLiquidityV3={(params) => {
-                useRouterStore.getState().push({
-                  type: PageType.createPoolAMMV3,
-                  params,
-                });
-              }}
-            />
-          )
-        ) : (
-          <>
-            {operatePMMPoolElement ?? (
-              <>
-                {isMobile ? (
-                  <PoolOperateDialog
-                    account={account}
-                    onClose={() => setOperatePool(null)}
-                    modal={isMobile}
-                    {...operatePool}
-                  />
-                ) : (
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: operatePool ? 0 : '100%',
-                      height: operatePool ? 'max-content' : 0,
-                      transition: `all ${transitionTime}ms`,
-                      zIndex: 20,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      backgroundColor: 'background.paper',
-                      borderRadius: 16,
-                      maxHeight: 'max-content',
-                    }}
-                  >
-                    <PoolOperate
+            <>
+              {operatePMMPoolElement ?? (
+                <>
+                  {isMobile ? (
+                    <PoolOperateDialog
                       account={account}
                       onClose={() => setOperatePool(null)}
+                      modal={isMobile}
                       {...operatePool}
+                    />
+                  ) : (
+                    <Box
                       sx={{
-                        width: 375,
-                        height: 'max-content',
+                        position: 'absolute',
+                        top: operatePool ? 0 : '100%',
+                        height: operatePool ? 'max-content' : 0,
+                        transition: `all ${transitionTime}ms`,
+                        zIndex: 20,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        display: 'flex',
+                        flexDirection: 'column',
                         backgroundColor: 'background.paper',
                         borderRadius: 16,
-                        overflow: 'hidden',
+                        maxHeight: 'max-content',
                       }}
-                    />
-                  </Box>
-                )}
-              </>
-            )}
-          </>
-        )}
-      </Box>
+                    >
+                      <PoolOperate
+                        account={account}
+                        onClose={() => setOperatePool(null)}
+                        {...operatePool}
+                        sx={{
+                          width: 375,
+                          height: 'max-content',
+                          backgroundColor: 'background.paper',
+                          borderRadius: 16,
+                          overflow: 'hidden',
+                        }}
+                      />
+                    </Box>
+                  )}
+                </>
+              )}
+            </>
+          )}
+        </Box>
+      )}
     </WidgetContainer>
   );
 }

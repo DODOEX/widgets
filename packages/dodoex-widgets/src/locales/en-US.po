@@ -210,8 +210,8 @@ msgstr "Asset ratio within the pool"
 msgid "Rewards"
 msgstr "Rewards"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:72
-#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:57
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:76
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:61
 msgid "Pay"
 msgstr "Pay"
 
@@ -225,7 +225,7 @@ msgstr "Connect to {0} wallet"
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
 
-#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:66
+#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:68
 msgid "Search by token or pool address"
 msgstr "Search by token or pool address"
 
@@ -414,7 +414,7 @@ msgstr "The liquidity of DODO is continuous, which is different from the discret
 msgid "FeeRevenue"
 msgstr "FeeRevenue"
 
-#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:58
+#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:60
 msgid "Search"
 msgstr "Search"
 
@@ -498,7 +498,7 @@ msgstr "Max"
 msgid "Go back"
 msgstr "Go back"
 
-#: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:374
+#: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:415
 #: src/components/Swap/components/ReviewDialog.tsx:356
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/index.tsx:123
 msgid "Slippage"
@@ -867,7 +867,7 @@ msgstr "*Deflationary tokens are not supported"
 msgid "Succeeded"
 msgstr "Succeeded"
 
-#: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:378
+#: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:419
 #: src/components/Swap/components/SettingsDialog/index.tsx:48
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
@@ -1008,7 +1008,7 @@ msgid "No LP pools match your criteria"
 msgstr "No LP pools match your criteria"
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:256
-#: src/widgets/PoolWidget/PoolList/components/tags.tsx:61
+#: src/widgets/PoolWidget/PoolList/components/tags.tsx:52
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:271
 msgid "Fee rate"
 msgstr "Fee rate"
@@ -1109,7 +1109,7 @@ msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgid "Volume (1D)"
 msgstr "Volume (1D)"
 
-#: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:439
+#: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:482
 msgid "Estimated Time"
 msgstr "Estimated Time"
 
@@ -1286,9 +1286,9 @@ msgstr "Reward Rules"
 msgid "Trader"
 msgstr "Trader"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:98
-#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:75
-#: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:60
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:102
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:79
+#: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:71
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:269
 #: src/widgets/PoolWidget/AMMV3/components/PositionAmountPreview.tsx:195
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:406
@@ -1672,8 +1672,8 @@ msgstr "My Pools"
 msgid "Approve {0}"
 msgstr "Approve {0}"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:87
-#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:67
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:91
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:71
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:193
 msgid "Rate"
 msgstr "Rate"
@@ -1707,7 +1707,7 @@ msgstr "My Pool Share"
 msgid "RPC node data exception"
 msgstr "RPC node data exception"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:214
+#: src/components/Bridge/BridgeRouteShortCard.tsx:241
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:133
 msgid "Estimated transaction time"
 msgstr "Estimated transaction time"
@@ -1832,8 +1832,8 @@ msgstr "Second"
 msgid "Total Swap Volume"
 msgstr "Total Swap Volume"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:76
-#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:61
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:80
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:65
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:490
 msgid "Receive"
 msgstr "Receive"
@@ -1945,7 +1945,7 @@ msgstr "Select pair"
 msgid "Once Mining has started, it cannot be stopped."
 msgstr "Once Mining has started, it cannot be stopped."
 
-#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:65
+#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:67
 msgid "Select a liquidity pool"
 msgstr "Select a liquidity pool"
 
@@ -1953,10 +1953,10 @@ msgstr "Select a liquidity pool"
 msgid "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
 msgstr "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:172
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:176
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:220
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:245
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:173
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:177
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:222
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:247
 msgid "Create Pool"
 msgstr "Create Pool"
 
@@ -2020,7 +2020,7 @@ msgstr "Unable to SETTLE during the cooling-off period"
 msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
-#: src/components/Swap/components/TokenCard/index.tsx:313
+#: src/components/Swap/components/TokenCard/index.tsx:315
 #: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:252
 msgid "Buy"
 msgstr "Buy"
@@ -2067,7 +2067,7 @@ msgstr "Detail"
 msgid "APY"
 msgstr "APY"
 
-#: src/components/Bridge/RouteVisionModal.tsx:134
+#: src/components/Bridge/RouteVisionModal.tsx:136
 msgid "Route"
 msgstr "Route"
 
@@ -2075,7 +2075,7 @@ msgstr "Route"
 msgid "Preview"
 msgstr "Preview"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:83
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:87
 msgid "Claim refunds"
 msgstr "Claim refunds"
 
@@ -2174,8 +2174,8 @@ msgstr "Amounts"
 msgid "Create One"
 msgstr "Create One"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:79
-#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:64
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:83
+#: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:68
 msgid "Status"
 msgstr "Status"
 
@@ -2288,7 +2288,7 @@ msgstr "ForceStop exception"
 #: src/components/LoadMore.tsx:47
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/LiquidityProvidersTable.tsx:222
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:317
-#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:116
+#: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:115
 msgid "Load more"
 msgstr "Load more"
 

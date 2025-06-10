@@ -127,7 +127,7 @@ export function RootPage({
           solanaConnection={solanaConnection}
           noUI
           crossChain={isSwap}
-          noDocumentLink
+          noDocumentLink={true}
           routerPage={undefined}
           supportAMMV2
           supportAMMV3

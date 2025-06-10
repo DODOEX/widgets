@@ -41,7 +41,9 @@ export {
   alpha,
   createTheme,
   CssBaseline,
+  darkPalette,
   getDesignTokens,
+  lightPalette,
   ThemeProvider,
   useTheme,
 } from './theme';

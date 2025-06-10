@@ -81,8 +81,8 @@ export function BaseQuotePie({
     quoteTvlRate || quoteAmount.div(total).multipliedBy(100).toFixed(2);
 
   const isEmpty = baseAmount.lte(0) && quoteAmount.lte(0);
-  const baseColor = theme.palette.purple.main;
-  const quoteColor = theme.palette.secondary.main;
+  const baseColor = theme.palette.success.main;
+  const quoteColor = theme.palette.error.main;
   const data = [
     {
       name: 'base',

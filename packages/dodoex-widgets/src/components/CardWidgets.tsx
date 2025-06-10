@@ -80,9 +80,11 @@ export function CardStatus({
 export default function FoldBtn({
   show,
   onClick,
+  sx,
 }: {
   show: boolean;
   onClick: () => void;
+  sx?: BoxProps['sx'];
 }) {
   return (
     <Box
@@ -95,6 +97,7 @@ export default function FoldBtn({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        ...sx,
       }}
       onClick={onClick}
     >
@@ -222,6 +225,69 @@ export function ChainName({ chainId }: { chainId: ChainId }) {
         />
         {chain.name}
       </>
+    </Box>
+  );
+}
+
+export function MobileTokenAndAmount({
+  token,
+  amount,
+  canAddMetamask,
+  title,
+  linkVisible = true,
+}: {
+  token: TokenInfo | undefined;
+  amount: string | BigNumber | null;
+  canAddMetamask?: boolean;
+  title: string;
+  linkVisible?: boolean;
+}) {
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 8,
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+        }}
+      >
+        <Box
+          sx={{
+            typography: 'h6',
+            fontWeight: 500,
+            color: 'text.primary',
+          }}
+        >
+          {title}:&nbsp;
+          {formatTokenAmountNumber({
+            input: amount,
+            decimals: token?.decimals,
+          })}
+          &nbsp;
+          {token?.symbol}
+        </Box>
+
+        {canAddMetamask && token && <AddTokenToMetamask token={token} />}
+      </Box>
+      <Box
+        sx={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 4,
+          typography: 'h6',
+          fontWeight: 500,
+          color: 'text.secondary',
+        }}
+      >
+        {token ? (chainListMap.get(token.chainId)?.name ?? '-') : '-'}
+        {linkVisible && <Link />}
+      </Box>
     </Box>
   );
 }
