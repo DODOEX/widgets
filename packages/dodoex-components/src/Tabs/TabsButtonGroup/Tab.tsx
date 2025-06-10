@@ -1,9 +1,5 @@
 import { alpha, styled } from '@mui/system';
-import {
-  Tab as BaseTab,
-  tabClasses,
-  TabProps as BaseTabProps,
-} from '@mui/base/Tab';
+import { Tab as BaseTab, tabClasses, TabOwnProps } from '@mui/base/Tab';
 import { buttonClasses } from '@mui/base';
 import React from 'react';
 import { Box, BoxProps } from '../../Box';
@@ -92,10 +88,11 @@ const TabTagStyle = styled(BaseTab)`
   }
 `;
 
-export interface TabProps extends BaseTabProps {
-  sx?: BoxProps['sx'];
-  variant?: 'default' | 'inPaper' | 'tag';
-}
+export type TabProps = TabOwnProps &
+  React.RefAttributes<HTMLButtonElement> & {
+    sx?: BoxProps['sx'];
+    variant?: 'default' | 'inPaper' | 'tag';
+  };
 export const Tab = React.forwardRef<HTMLDivElement, TabProps>(function TabsList(
   { sx, variant: variantProps, ...props },
   ref,
