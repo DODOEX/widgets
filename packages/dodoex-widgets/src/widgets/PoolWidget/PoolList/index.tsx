@@ -8,12 +8,12 @@ import {
 } from '@dodoex/components';
 import { Fee } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { HowItWorks } from '../../../components/HowItWorks';
 import { transitionTime } from '../../../components/Swap/components/Dialog';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import WidgetContainer from '../../../components/WidgetContainer';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../router';
 import { Page, PageType } from '../../../router/types';
@@ -67,7 +67,7 @@ export default function PoolList({
   const theme = useTheme();
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
   const scrollParentRef = React.useRef<HTMLDivElement>(null);
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const { poolTab, tabs, handleChangePoolTab } = usePoolListTabs({
     account,
     paramsTab: params?.tab,

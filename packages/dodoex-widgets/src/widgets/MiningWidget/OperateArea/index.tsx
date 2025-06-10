@@ -8,11 +8,11 @@ import {
 } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 import { TokenCard } from '../../../components/Swap/components/TokenCard';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { BalanceData } from '../../../hooks/Submission/useBalanceUpdateLoading';
 import {
   convertFetchTokenToTokenInfo,
@@ -52,7 +52,7 @@ export default function OperateArea({
   goLpLink?: () => void;
 }) {
   const theme = useTheme();
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const { miningContractAddress } = miningItem ?? {};
   const baseToken = convertFetchTokenToTokenInfo(
     miningItem?.baseToken,

@@ -43,8 +43,9 @@ const preview = {
   },
   decorators: [
     (Story, context) => {
+      console.log('context', context, Story);
       return (
-        <RootPage>
+        <RootPage title={context.title}>
           <Suspense fallback={<div />}>
             <SwitchTheme themeMode={context.globals.theme} />
 

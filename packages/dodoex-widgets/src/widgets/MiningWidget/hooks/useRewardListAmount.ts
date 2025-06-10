@@ -1,15 +1,15 @@
 import { useQueries } from '@tanstack/react-query';
-import { FetchMiningListItem } from '../types';
-import { miningApi } from '../helper';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { miningApi } from '../helper';
+import { FetchMiningListItem } from '../types';
 
 export function useRewardListAmount({
   miningItem,
 }: {
   miningItem: FetchMiningListItem;
 }) {
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const rewardList = miningItem?.rewardTokenInfos ?? [];
 
   const queryInfo = [] as Array<{

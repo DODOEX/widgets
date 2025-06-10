@@ -154,6 +154,7 @@ export const contractRequests = new ContractRequests({
   // debugQuery: process.env.NODE_ENV === 'development',
   // debugProvider: process.env.NODE_ENV === 'development',
 });
+
 export const tokenContractRequests = contractRequests.createContractRequests();
 export const tokenApi = new TokenApi({
   contractRequests: tokenContractRequests,

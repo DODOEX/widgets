@@ -1,9 +1,9 @@
 import { ChainId } from '@dodoex/api';
 import { Contract } from '@ethersproject/contracts';
-import { useWeb3React } from '@web3-react/core';
 import { isEqual } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import { privacySwapSupplierEndpointsMap } from '../../constants/chains';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { useRefetch } from '../useRefetch';
 
 const abis = [
@@ -30,7 +30,7 @@ export function usePrivacySwapStatus({
   chainId: number | undefined;
   account: string | undefined;
 }) {
-  const { provider } = useWeb3React();
+  const { evmProvider } = useWalletInfo();
 
   const privacySwapSupplierEndpoints = useMemo(() => {
     return chainId ? privacySwapSupplierEndpointsMap[chainId as ChainId] : [];
@@ -56,9 +56,13 @@ export function usePrivacySwapStatus({
       method,
     }: {
       address: string;
-      provider: ReturnType<typeof useWeb3React>['provider'];
+      provider: ReturnType<typeof useWalletInfo>['evmProvider'];
       method: string;
     }): Promise<boolean> {
+      if (!provider) {
+        return false;
+      }
+
       try {
         const contract = new Contract(address, abis, provider);
         const isCurrent = await contract[method]();
@@ -86,7 +90,7 @@ export function usePrivacySwapStatus({
               call: isCurrentEndpoint({
                 address: isPrivacyEndpoint.contract,
                 method: isPrivacyEndpoint.rpcMethod,
-                provider,
+                provider: evmProvider,
               }),
               callback: (result) => {
                 resultMap.set(key, result);
@@ -113,7 +117,7 @@ export function usePrivacySwapStatus({
     }
 
     requestPrivacyEndpointResult();
-  }, [chainId, privacySwapSupplierEndpoints, provider, refetchTimes]);
+  }, [chainId, privacySwapSupplierEndpoints, evmProvider, refetchTimes]);
 
   // 是否启用隐私交易
   const privacySwapEnable = useMemo(() => {

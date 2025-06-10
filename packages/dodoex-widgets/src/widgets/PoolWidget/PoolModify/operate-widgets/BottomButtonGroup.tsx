@@ -1,12 +1,12 @@
 import { ChainId } from '@dodoex/api';
-import { useTheme, Button, Box } from '@dodoex/components';
+import { Box, Button, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 import NeedConnectButton from '../../../../components/ConnectWallet/NeedConnectButton';
 import TokenStatusButton from '../../../../components/TokenStatusButton';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { useTokenStatus } from '../../../../hooks/Token/useTokenStatus';
 import { useRouterStore } from '../../../../router';
@@ -36,7 +36,7 @@ function NextButton({
   quoteStatus: ReturnType<typeof useTokenStatus>;
   onClick: () => void;
 }) {
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
 
   if (!account) {
     return (
@@ -105,7 +105,7 @@ export function BottomButtonGroup({
   );
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const router = useRouterStore();
 
   const [confirmModalVisible, setConfirmModalVisible] = React.useState(false);

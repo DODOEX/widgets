@@ -1,27 +1,27 @@
+import { ChainId } from '@dodoex/api';
 import { Box, Button, HoverOpacity, useTheme } from '@dodoex/components';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  ExecutionContext,
-  useExecution,
-  ExecutionProps,
-} from '../../hooks/Submission';
-import Dialog from '../Swap/components/Dialog';
-import { ReactComponent as Loading } from '../../assets/approveBorderRight.svg';
-import { t, Trans } from '@lingui/macro';
-import {
+  ArrowSubmit,
   ArrowTopRightBorder,
   DoneBorder,
-  ErrorWarn,
   Error,
-  ArrowSubmit,
+  ErrorWarn,
 } from '@dodoex/icons';
-import { Showing } from '../../hooks/Submission/types';
-import { useWeb3React } from '@web3-react/core';
+import { t, Trans } from '@lingui/macro';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { ReactComponent as Loading } from '../../assets/approveBorderRight.svg';
 import { scanUrlDomainMap } from '../../constants/chains';
-import { ChainId } from '@dodoex/api';
-import { useUserOptions } from '../UserOptionsProvider';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
+import {
+  ExecutionContext,
+  ExecutionProps,
+  useExecution,
+} from '../../hooks/Submission';
+import { Showing } from '../../hooks/Submission/types';
 import { ContractStatus, setContractStatus } from '../../hooks/useGlobalState';
+import Dialog from '../Swap/components/Dialog';
+import { useUserOptions } from '../UserOptionsProvider';
 
 const strokeWidth = 6;
 
@@ -146,7 +146,7 @@ function TransactionTime({
   tx: string;
 }) {
   const [time, setTime] = useState(0);
-  const { chainId } = useWeb3React();
+  const { chainId } = useWalletInfo();
 
   const scanUrl = useMemo(() => {
     const domain = scanUrlDomainMap[(chainId as ChainId) || 1];

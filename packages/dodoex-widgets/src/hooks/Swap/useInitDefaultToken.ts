@@ -1,9 +1,8 @@
-import { useWeb3React } from '@web3-react/core';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import { getLastToken } from '../../constants/localstorage';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { DefaultTokenInfo, TokenInfo, TokenList } from '../Token';
-import { useGlobalState } from '../useGlobalState';
 import { useTokenState } from '../useTokenState';
 
 function getDefaultToken({
@@ -83,13 +82,12 @@ export function useInitDefaultToken({
   const { tokenList } = useTokenState();
   const { crossChain, defaultFromToken, defaultToToken, onlyChainId } =
     useUserOptions();
-  const { autoConnectLoading } = useGlobalState();
-  const { chainId, isActivating } = useWeb3React();
+  const { chainId } = useWalletInfo();
 
-  const initToken = () => {
+  const initToken = useCallback(() => {
     let findFromToken: TokenInfo | null = null;
     let setDefaultFromAmount: number | undefined;
-    if (!crossChain && autoConnectLoading) return;
+
     const findChainId = crossChain ? undefined : (onlyChainId ?? chainId);
     if (!fromToken) {
       const result = getDefaultToken({
@@ -129,24 +127,27 @@ export function useInitDefaultToken({
         }
       }
     }
-  };
+  }, [
+    chainId,
+    crossChain,
+    defaultFromToken,
+    defaultToToken,
+    fromToken,
+    onlyChainId,
+    setFromToken,
+    setIsReverseRouting,
+    setToToken,
+    toToken,
+    tokenList,
+    updateFromAmt,
+    updateToAmt,
+  ]);
 
   useEffect(() => {
     // Avoid continuous triggering
     const time = setTimeout(() => {
-      if (!isActivating) {
-        initToken();
-      }
+      initToken();
     }, 10);
     return () => clearTimeout(time);
-  }, [
-    tokenList,
-    defaultFromToken,
-    defaultToToken,
-    crossChain,
-    autoConnectLoading,
-    chainId,
-    onlyChainId,
-    isActivating,
-  ]);
+  }, [initToken]);
 }

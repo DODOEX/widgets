@@ -1,46 +1,43 @@
-import { Box, Button, useTheme } from '@dodoex/components';
-import { ArrowBack } from '@dodoex/icons';
-import { Trans } from '@lingui/macro';
-import WidgetContainer from '../../../components/WidgetContainer';
-import { CreateItem } from './CreateItem';
-import TokenSelect from '../../../components/TokenSelect';
-import FeeEdit from './FeeEdit';
-import React from 'react';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import {
-  CardPlus,
-  TokenCard,
-} from '../../../components/Swap/components/TokenCard';
-import { TokenInfo } from '../../../hooks/Token';
-import { SwitchBox } from '../../../components/Swap/components/SwitchBox';
-import Ratio from './Ratio';
-import Setting from './Setting';
-import { useUniV2CreatePairs } from '../hooks/useUniV2CreatePairs';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
-import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
-import { formatPercentageNumber, formatReadableNumber } from '../../../utils';
-import BigNumber from 'bignumber.js';
-import {
-  AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION,
-  AUTO_SWAP_SLIPPAGE_PROTECTION,
-} from '../../../constants/pool';
-import ConfirmDialog from './ConfirmDialog';
-import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
-import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
-import TokenPairStatusButton from '../../../components/TokenPairStatusButton';
 import { ChainId } from '@dodoex/api';
-import GoBack from '../../../components/GoBack';
-import { PageType, useRouterStore } from '../../../router';
-import MyLiquidity from './MyLiqidity';
-import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
-import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
+import { Box, Button, useTheme } from '@dodoex/components';
 import {
   getUniswapV2Router02ContractAddressByChainId,
   getUniswapV2Router02FixedFeeContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
-import { getIsAMMV2DynamicFeeContractByChainId } from '../utils';
+import { Trans } from '@lingui/macro';
+import BigNumber from 'bignumber.js';
+import React, { useEffect } from 'react';
+import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import SquaredGoBack from '../../../components/SquaredGoBack';
+import {
+  CardPlus,
+  TokenCard,
+} from '../../../components/Swap/components/TokenCard';
+import TokenPairStatusButton from '../../../components/TokenPairStatusButton';
+import TokenSelect from '../../../components/TokenSelect';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
+import WidgetContainer from '../../../components/WidgetContainer';
+import {
+  AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION,
+  AUTO_SWAP_SLIPPAGE_PROTECTION,
+} from '../../../constants/pool';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { TokenInfo } from '../../../hooks/Token';
+import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
+import { PageType, useRouterStore } from '../../../router';
+import { formatPercentageNumber } from '../../../utils';
+import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
+import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
+import { useUniV2CreatePairs } from '../hooks/useUniV2CreatePairs';
 import { PoolTypeTag } from '../PoolList/components/tags';
+import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
+import { getIsAMMV2DynamicFeeContractByChainId } from '../utils';
+import ConfirmDialog from './ConfirmDialog';
+import { CreateItem } from './CreateItem';
+import FeeEdit from './FeeEdit';
+import MyLiquidity from './MyLiqidity';
+import Ratio from './Ratio';
+import Setting from './Setting';
 
 export default function AMMV2Create() {
   const theme = useTheme();
@@ -165,6 +162,10 @@ export default function AMMV2Create() {
       });
     },
   });
+
+  useEffect(() => {
+    console.log('createMutation.error', createMutation.error);
+  }, [createMutation.error]);
 
   return (
     <WidgetContainer>

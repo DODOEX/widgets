@@ -1,22 +1,22 @@
 import { Box, ButtonBase, useTheme } from '@dodoex/components';
-import { Switch, ArrowRight } from '@dodoex/icons';
-import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
-import React from 'react';
-import dayjs from 'dayjs';
+import { ArrowRight, Switch } from '@dodoex/icons';
 import { Trans } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
+import dayjs from 'dayjs';
+import React from 'react';
+import { AddressWithLinkAndCopy } from '../../../../../components/AddressWithLinkAndCopy';
+import { CardStatus } from '../../../../../components/CardWidgets';
+import TokenLogo from '../../../../../components/TokenLogo';
+import { useWalletInfo } from '../../../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../../../hooks/style/useWidgetDevice';
 import {
   formatPercentageNumber,
   formatReadableNumber,
 } from '../../../../../utils';
 import { usePoolDetail } from '../../../hooks/usePoolDetail';
-import { usePoolSwapList } from '../../hooks/usePoolSwapList';
 import { poolApi } from '../../../utils';
-import { AddressWithLinkAndCopy } from '../../../../../components/AddressWithLinkAndCopy';
-import TokenLogo from '../../../../../components/TokenLogo';
-import BigNumber from 'bignumber.js';
-import { CardStatus } from '../../../../../components/CardWidgets';
+import { usePoolSwapList } from '../../hooks/usePoolSwapList';
 
 export function formatDateTimeStr(timestamp?: number, short?: boolean): string {
   if (!timestamp) {
@@ -90,7 +90,7 @@ export default function SwapsTable({
 }) {
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
-  const { account, chainId } = useWeb3React();
+  const { account, chainId } = useWalletInfo();
   const feeRateQuery = useQuery(
     poolApi.getFeeRateQuery(
       poolDetail?.chainId,

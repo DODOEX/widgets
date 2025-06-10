@@ -1,25 +1,25 @@
-import { CONTRACT_QUERY_KEY } from '@dodoex/api';
-import { useWeb3React } from '@web3-react/core';
+import { ChainId, CONTRACT_QUERY_KEY } from '@dodoex/api';
 import type { TransactionResponse } from '@ethersproject/abstract-provider';
+import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useMemo, useState } from 'react';
+import { BIG_ALLOWANCE } from '../../constants/token';
+import { useCurrentChainId } from '../ConnectWallet';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { useFetchBlockNumber } from '../contract';
 import { approve, getEstimateGas, sendTransaction } from '../contract/wallet';
+import { ContractStatus, setContractStatus } from '../useGlobalState';
 import getExecutionErrorMsg from './getExecutionErrorMsg';
 import { OpCode, Step as StepSpec } from './spec';
 import {
-  ExecutionResult,
-  State,
-  Request,
-  WatchResult,
-  Showing,
-  ExecutionCtx,
-  TextUpdater,
   ExecuteCustomHandlerParameters,
+  ExecutionCtx,
+  ExecutionResult,
+  Request,
+  Showing,
+  State,
+  TextUpdater,
+  WatchResult,
 } from './types';
-import { BIG_ALLOWANCE } from '../../constants/token';
-import { useCurrentChainId } from '../ConnectWallet';
-import { useQueryClient } from '@tanstack/react-query';
-import { ContractStatus, setContractStatus } from '../useGlobalState';
 
 export interface ExecutionProps {
   onTxFail?: (error: Error, data: any) => void;
@@ -43,7 +43,8 @@ export default function useExecution({
   onTxSuccess,
   onTxReverted,
 }: ExecutionProps = {}) {
-  const { account, provider } = useWeb3React();
+  const { evmAccount, evmProvider } = useWalletInfo();
+
   const queryClient = useQueryClient();
   const chainId = useCurrentChainId();
   const [waitingSubmit, setWaitingSubmit] = useState(false);
@@ -77,10 +78,12 @@ export default function useExecution({
       } = options ?? {};
       setTransactionTx('');
       setErrorMessage('');
-      if (!account || !provider)
+      if (!evmAccount.address || !evmProvider) {
         throw new Error(
           'Submission: Cannot execute step when the wallet is disconnected',
         );
+      }
+
       setSubmittedConfirmBack(() => submittedConfirmBack);
       let tx: string | undefined;
       let params: any;
@@ -93,15 +96,15 @@ export default function useExecution({
         if (spec.opcode === OpCode.Approval) {
           transaction = await approve(
             spec.token.address,
-            account,
+            evmAccount.address,
             spec.contract,
             spec.amt || BIG_ALLOWANCE,
-            provider,
+            evmProvider,
           );
           tx = transaction.hash;
           setTransactionTx(tx);
           try {
-            nonce = await provider.getTransactionCount(account);
+            nonce = await evmProvider.getTransactionCount(evmAccount.address);
           } catch (e) {
             console.error(e);
           }
@@ -113,7 +116,7 @@ export default function useExecution({
           if (spec.data.indexOf('0x') === 0 && spec.data.length <= 2)
             throw new Error('Submission: malformed data');
           try {
-            nonce = await provider.getTransactionCount(account);
+            nonce = await evmProvider.getTransactionCount(evmAccount.address);
           } catch (e) {
             console.error(e);
           }
@@ -122,13 +125,13 @@ export default function useExecution({
             data: spec.data,
             to: spec.to,
             gasLimit: spec.gasLimit,
-            from: account,
+            from: evmAccount.address,
             chainId,
           };
 
           if (!params.gasLimit) {
             try {
-              const gasLimit = await getEstimateGas(params, provider);
+              const gasLimit = await getEstimateGas(params, evmProvider);
               if (gasLimit) {
                 params.gasLimit = gasLimit;
               }
@@ -138,7 +141,7 @@ export default function useExecution({
             }
           }
 
-          transaction = await sendTransaction(params, provider);
+          transaction = await sendTransaction(params, evmProvider);
           tx = transaction.hash;
           setTransactionTx(tx);
           if (!tx) throw new Error(`Unexpected tx: ${tx}`);
@@ -251,10 +254,10 @@ export default function useExecution({
       return ExecutionResult.Failed;
     },
     [
-      account,
+      evmAccount.address,
       chainId,
       setWaitingSubmit,
-      provider,
+      evmProvider,
       updateBlockNumber,
       queryClient,
     ],
@@ -470,7 +473,7 @@ export default function useExecution({
         return newRequests;
       });
     },
-    [account, chainId, requests],
+    [evmAccount.address, chainId, requests],
   );
 
   const ctxVal = useMemo<ExecutionCtx>(

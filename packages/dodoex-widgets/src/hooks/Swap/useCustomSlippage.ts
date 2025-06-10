@@ -1,10 +1,10 @@
-import { useWeb3React } from '@web3-react/core';
+import React from 'react';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { TokenInfo } from '../Token';
 import {
   CustomSwapPairSlippage,
   useSwapSettingStore,
 } from './useSwapSettingStore';
-import React from 'react';
 
 export function useCustomSlippage({
   fromToken,
@@ -13,7 +13,7 @@ export function useCustomSlippage({
   fromToken?: TokenInfo | null;
   toToken?: TokenInfo | null;
 }) {
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const { customSwapPairSlippages } = useSwapSettingStore();
 
   const findSlippageItem = React.useCallback(

@@ -1,15 +1,14 @@
+import { ChainId } from '@dodoex/api';
 import {
   Box,
   BoxProps,
-  HoverOpacity,
   HoverAddBackground,
   HoverAddUnderLine,
+  HoverOpacity,
   useTheme,
-  ButtonBase,
 } from '@dodoex/components';
 import { ArrowRight, ArrowTopRightBorder, Share } from '@dodoex/icons';
-import { useWeb3React } from '@web3-react/core';
-import { ChainId } from '@dodoex/api';
+import { useWalletInfo } from '../hooks/ConnectWallet/useWalletInfo';
 import { getEtherscanPage, truncatePoolAddress } from '../utils';
 import { CopyTooltipToast } from './CopyTooltipToast';
 
@@ -116,6 +115,8 @@ export function AddressWithLinkAndCopy({
   onShareClick,
 }: Props) {
   const theme = useTheme();
+  const { chainId: currentChainId } = useWalletInfo();
+  const chainId = customChainId ?? currentChainId;
 
   const isBig = size === 'big';
   const isMedium = size === 'medium';
@@ -133,8 +134,6 @@ export function AddressWithLinkAndCopy({
   };
   // eslint-disable-next-line no-nested-ternary
   const typography = isBig ? 'h5' : isMedium ? 'body1' : 'body2';
-  const { chainId: currentChainId } = useWeb3React();
-  const chainId = customChainId ?? currentChainId;
 
   const handleOpenResult: AddressTextProps['handleOpen'] = (evt, type) => {
     if (handleOpen) {

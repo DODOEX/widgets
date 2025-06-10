@@ -18,13 +18,9 @@ export default function useTokenListFetchBalance({
   visible?: boolean;
   defaultLoadBalance?: boolean;
 }) {
-  const { latestBlockNumber: blockNumber, autoConnectLoading } =
-    useGlobalState();
+  const { latestBlockNumber: blockNumber } = useGlobalState();
 
   const checkTokenList = useMemo(() => {
-    if (autoConnectLoading === undefined || autoConnectLoading) {
-      return [];
-    }
     const addressSet = new Set<TokenInfo>();
     tokenList.forEach((token) => {
       if (token.chainId === chainId) {
@@ -37,7 +33,7 @@ export default function useTokenListFetchBalance({
       }
     });
     return Array.from(addressSet);
-  }, [tokenList, popularTokenList, chainId, autoConnectLoading]);
+  }, [tokenList, popularTokenList, chainId]);
 
   const selectTokenList = useMemo(() => {
     if (!value) return [];

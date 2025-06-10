@@ -6,7 +6,6 @@ import {
 } from '@dodoex/dodo-contract-request';
 import { t } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import Confirm from '../../../components/Confirm';
 import ErrorMessageDialog from '../../../components/ErrorMessageDialog';
@@ -15,6 +14,7 @@ import {
   TokenCard,
 } from '../../../components/Swap/components/TokenCard';
 import { SLIPPAGE_PROTECTION } from '../../../constants/pool';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
 import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
 import ConfirmDialog from '../AMMV2Create/ConfirmDialog';
@@ -43,7 +43,7 @@ export function AddPoolOperate({
 }) {
   const theme = useTheme();
 
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const {
     baseAmount,
     quoteAmount,

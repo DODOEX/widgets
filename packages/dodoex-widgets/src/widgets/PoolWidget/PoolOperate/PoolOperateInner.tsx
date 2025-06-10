@@ -1,14 +1,14 @@
-import { Tabs, TabPanel, TabsButtonGroup } from '@dodoex/components';
+import { TabPanel, Tabs, TabsButtonGroup } from '@dodoex/components';
 import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import { FailedList } from '../../../components/List/FailedList';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
 import { poolApi } from '../utils';
 import { AddPoolOperate } from './AddPoolOperate';
-import { OperateTab, usePoolOperateTabs } from './hooks/usePoolOperateTabs';
 import LiquidityInfo from './components/LiquidityInfo';
-import { OperatePool } from './types';
+import { OperateTab, usePoolOperateTabs } from './hooks/usePoolOperateTabs';
 import { RemovePoolOperate } from './RemovePoolOperate';
+import { OperatePool } from './types';
 
 export interface PoolOperateInnerProps {
   pool: OperatePool;
@@ -27,7 +27,7 @@ export default function PoolOperateInner({
 }: PoolOperateInnerProps) {
   const { operateTab, operateTabs, handleChangeTab } =
     usePoolOperateTabs(operate);
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const balanceInfo = usePoolBalanceInfo({
     account,
     pool: pool

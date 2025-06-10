@@ -1,24 +1,24 @@
-import { Box, BoxProps, useTheme, Skeleton } from '@dodoex/components';
-import BigNumber from 'bignumber.js';
-import { merge } from 'lodash';
-import dayjs from 'dayjs';
-import React from 'react';
 import { ChainId } from '@dodoex/api';
+import { Box, BoxProps, Skeleton, useTheme } from '@dodoex/components';
+import { t } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
+import dayjs from 'dayjs';
+import { merge } from 'lodash';
+import React from 'react';
+import { AddressWithLinkAndCopy } from '../../../../../components/AddressWithLinkAndCopy';
 import TokenLogo from '../../../../../components/TokenLogo';
+import { useWalletInfo } from '../../../../../hooks/ConnectWallet/useWalletInfo';
+import { useWidgetDevice } from '../../../../../hooks/style/useWidgetDevice';
 import { TokenInfo } from '../../../../../hooks/Token';
 import {
   formatPercentageNumber,
   formatReadableNumber,
 } from '../../../../../utils';
-import { AddressWithLinkAndCopy } from '../../../../../components/AddressWithLinkAndCopy';
-import { usePoolDetail } from '../../../hooks/usePoolDetail';
-import { usePoolDashboard } from '../../hooks/usePoolDashboard';
-import { useQuery } from '@tanstack/react-query';
-import { poolApi } from '../../../utils';
-import { t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
-import { useWidgetDevice } from '../../../../../hooks/style/useWidgetDevice';
 import { isNotEmpty } from '../../../../../utils/utils';
+import { usePoolDetail } from '../../../hooks/usePoolDetail';
+import { poolApi } from '../../../utils';
+import { usePoolDashboard } from '../../hooks/usePoolDashboard';
 
 export function formatDateTimeStr(timestamp?: number, short?: boolean): string {
   if (!timestamp) {
@@ -337,7 +337,7 @@ export default function ParametersTable({
       showDecimals: 2,
     })}`
   );
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const feeRateQuery = useQuery(
     poolApi.getFeeRateQuery(
       detail?.chainId,

@@ -1,10 +1,10 @@
 import { MiningStatusE } from '@dodoex/api';
 import { Box, Tabs, TabsButtonGroup, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { useCallback, useMemo, useState } from 'react';
 import { AddressWithLinkAndCopy } from '../../../../components/AddressWithLinkAndCopy';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { TokenInfo } from '../../../../hooks/Token/type';
 import { useTokenStatus } from '../../../../hooks/Token/useTokenStatus';
 import {
@@ -15,6 +15,7 @@ import {
 } from '../../types';
 import { CloseButton } from '../components/CloseButton';
 import { ShareModeSelect } from '../components/ShareModeSelect';
+import { OperateButtonWrapper } from '../components/widgets';
 import { useDepositOrWithdrawOrClaim } from '../hooks/useDepositOrWithdrawOrClaim';
 import { useGetLpLink } from '../hooks/useGetLpLink';
 import { useHasUnclaimedReward } from '../hooks/useHasUnclaimedReward';
@@ -27,7 +28,6 @@ import { StakeButton } from './StakeButton';
 import { StakeTokenSelect } from './StakeTokenSelect';
 import { UnstakeButton } from './UnstakeButton';
 import { getOptToken } from './utils';
-import { OperateButtonWrapper } from '../components/widgets';
 
 export function OperateArea(props: OperateDataProps) {
   const {
@@ -68,7 +68,7 @@ export function OperateArea(props: OperateDataProps) {
 
   const theme = useTheme();
 
-  const { chainId: currentChainId, account } = useWeb3React();
+  const { chainId: currentChainId, account } = useWalletInfo();
 
   const isInCurrentChain = currentChainId === chainId;
   const skipApprove =

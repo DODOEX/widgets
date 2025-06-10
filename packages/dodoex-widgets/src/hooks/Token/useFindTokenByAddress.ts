@@ -1,9 +1,9 @@
-import { useWeb3React } from '@web3-react/core';
 import { useMemo } from 'react';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { useTokenState } from '../useTokenState';
 
 export default function useFindTokenByAddress(address?: string) {
-  const { chainId } = useWeb3React();
+  const { chainId } = useWalletInfo();
   const { tokenList } = useTokenState();
 
   const token = useMemo(() => {

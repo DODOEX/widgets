@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { miningApi } from '../helper';
 import { MiningRewardTokenI, ReviewedMiningRewardTokenI } from '../types';
 import { getV3MiningSingleRewardAmount } from './helper';
@@ -21,7 +21,7 @@ export function useReviewRewardToken({
   rewardToken: MiningRewardTokenI;
   skip?: Boolean;
 }) {
-  const { chainId: currentChainId } = useWeb3React();
+  const { chainId: currentChainId } = useWalletInfo();
   const inCurrentChain = chainId === currentChainId;
 
   const { blockNumber, blockTime } = useMiningBlockNumber(

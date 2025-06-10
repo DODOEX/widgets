@@ -1,19 +1,20 @@
-import React from 'react';
 import { Box, useTheme } from '@dodoex/components';
-import { MobileRoutingVision, PCRoutingVision } from './RoutingVision';
+import { ArrowTopRightBorder } from '@dodoex/icons';
+import { Trans } from '@lingui/macro';
+import React from 'react';
+import { chainListMap } from '../../../constants/chainList';
+import { useSubmissionStatusColor } from '../../../hooks/Submission/useSubmissionStatusColor';
 import { useTradeSwapOrderList } from '../../../hooks/Swap/useTradeSwapOrderList';
 import { useRouteVisionData } from '../../../hooks/useRouteVisionData';
-import { useSubmissionStatusColor } from '../../../hooks/Submission/useSubmissionStatusColor';
+import { getEtherscanPage } from '../../../utils';
 import { getTimeText } from '../../../utils/time';
 import FoldBtn, {
   ChainName,
   StatusAndTime,
   TokenAndAmount,
 } from '../../CardWidgets';
-import { Trans } from '@lingui/macro';
-import { ArrowTopRightBorder } from '@dodoex/icons';
-import { getEtherscanPage } from '../../../utils';
 import { PriceWithToggle } from './PriceWithToggle';
+import { MobileRoutingVision, PCRoutingVision } from './RoutingVision';
 
 function Extend({
   showFold,
@@ -202,7 +203,9 @@ export default function SameOrderCard({
             token={data.toToken}
             amount={data.toAmount ?? ''}
             showChain
-            canAddMetamask
+            canAddMetamask={
+              chainListMap.get(data.toToken.chainId)?.isEVMChain ?? false
+            }
           />
         </td>
         <td>

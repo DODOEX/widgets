@@ -1,4 +1,5 @@
 import { btcSignet, ChainId } from '@dodoex/api';
+import { Web3Provider } from '@ethersproject/providers';
 import { type Provider } from '@reown/appkit-adapter-solana/react';
 import { ChainNamespace } from '@reown/appkit-common';
 import { CaipNetworksUtil } from '@reown/appkit-utils';
@@ -61,7 +62,7 @@ export function useWalletInfo() {
   }, [btcWalletStore]);
 
   const { walletProvider: ethersProvider } =
-    useAppKitProvider<CoreProvider>('eip155');
+    useAppKitProvider<CoreProvider | null>('eip155');
 
   const { walletProvider: solanaWalletProvider } =
     useAppKitProvider<Provider>('solana');
@@ -159,6 +160,13 @@ export function useWalletInfo() {
     [appKitDisconnect, btcWalletStore],
   );
 
+  const evmProvider = useMemo(() => {
+    if (!ethersProvider) {
+      return null;
+    }
+    return new Web3Provider(ethersProvider, chainId);
+  }, [chainId, ethersProvider]);
+
   return {
     open,
     disconnect,
@@ -168,6 +176,7 @@ export function useWalletInfo() {
     connectedChainId: chainId,
     defaultChainId,
     onlyChainId,
+
     account: currentAccount?.address,
     currentAccount,
 
@@ -177,7 +186,7 @@ export function useWalletInfo() {
     solanaAccount,
     bitcoinAccount,
 
-    ethersProvider,
+    evmProvider,
 
     solanaWalletProvider,
     solanaConnection,

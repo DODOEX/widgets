@@ -1,10 +1,10 @@
 import { Box, BoxProps } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import { merge } from 'lodash';
 import { MouseEventHandler, useState } from 'react';
 import { ReactComponent as metamaskLogo } from '../assets/logo/metamask.svg';
 import { useSwitchChain } from '../hooks/ConnectWallet/useSwitchChain';
+import { useWalletInfo } from '../hooks/ConnectWallet/useWalletInfo';
 import { registerTokenWithMetamask } from '../hooks/contract/wallet';
 import { TokenInfo } from '../hooks/Token';
 import { useMessageState } from '../hooks/useMessageState';
@@ -21,7 +21,7 @@ export function AddTokenToMetamask({
   children?: React.ReactNode;
 }) {
   const [addLoading, setLoading] = useState(false);
-  const { provider, chainId: currentChainId } = useWeb3React();
+  const { evmProvider, chainId: currentChainId } = useWalletInfo();
   const switchChain = useSwitchChain(token.chainId);
 
   const handleAdd: MouseEventHandler = async (e) => {
@@ -32,15 +32,21 @@ export function AddTokenToMetamask({
       token.chainId !== currentChainId &&
       switchChain
     ) {
-      const result = await switchChain();
-      if (!result) return;
+      switchChain?.();
+      return;
     }
 
-    if (addLoading) return;
+    if (addLoading) {
+      return;
+    }
+
+    if (!evmProvider) {
+      return;
+    }
 
     setLoading(true);
     const { result, failMsg } = await registerTokenWithMetamask(
-      provider,
+      evmProvider,
       token,
     );
     if (result) {

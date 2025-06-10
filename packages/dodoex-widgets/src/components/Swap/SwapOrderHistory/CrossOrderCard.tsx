@@ -19,6 +19,7 @@ import FoldBtn, {
 } from '../../CardWidgets';
 import { QuestionTooltip } from '../../Tooltip';
 import { PriceWithToggle } from './PriceWithToggle';
+import { chainListMap } from '../../../constants/chainList';
 
 function Extend({
   showFold,
@@ -436,7 +437,9 @@ export default function CrossOrderCard({
               token={data.toToken}
               amount={data.toAmount ?? ''}
               showChain
-              canAddMetamask
+              canAddMetamask={
+                chainListMap.get(data.toToken.chainId)?.isEVMChain ?? false
+              }
             />
           )}
         </td>

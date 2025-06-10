@@ -1,8 +1,5 @@
-import { createRoot } from 'react-dom/client';
-
-import { Swap, SwapProps } from './components/Swap';
-import { Widget, WidgetProps } from './components/Widget';
-import { Pool } from './widgets/PoolWidget';
+import { SwapProps } from './components/Swap';
+import { WidgetProps } from './components/Widget';
 
 export { EmptyList } from './components/List/EmptyList';
 export { FailedList } from './components/List/FailedList';
@@ -39,9 +36,9 @@ export {
   formatTokenAmountNumber,
 } from './utils/formatter';
 
-export { MiningCreate } from './widgets/MiningWidget/MiningCreate';
-export { MiningDetail } from './widgets/MiningWidget/MiningDetail';
-export { MiningList } from './widgets/MiningWidget/MiningList';
+// export { MiningCreate } from './widgets/MiningWidget/MiningCreate';
+// export { MiningDetail } from './widgets/MiningWidget/MiningDetail';
+// export { MiningList } from './widgets/MiningWidget/MiningList';
 export { Pool } from './widgets/PoolWidget';
 export { default as AMMV2Create } from './widgets/PoolWidget/AMMV2Create';
 export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
@@ -59,38 +56,3 @@ export {
 export type { PoolOperateProps } from './widgets/PoolWidget/PoolOperate';
 
 export type SwapWidgetProps = WidgetProps & SwapProps;
-
-export function SwapWidget(props: SwapWidgetProps) {
-  return (
-    <Widget {...props}>
-      <Swap
-        getAutoSlippage={props.getAutoSlippage}
-        onPayTokenChange={props.onPayTokenChange}
-        onReceiveTokenChange={props.onReceiveTokenChange}
-      />
-    </Widget>
-  );
-}
-
-export function PoolWidget(props: SwapWidgetProps) {
-  return (
-    <Widget {...props}>
-      <Pool />
-    </Widget>
-  );
-}
-
-// For none-react project!
-export function InitSwapWidget(props: SwapWidgetProps) {
-  const rootEl = document.getElementById('dodo-swap-widget');
-  const root = createRoot(rootEl!);
-  root.render(
-    <Widget {...props}>
-      <Swap
-        getAutoSlippage={props.getAutoSlippage}
-        onPayTokenChange={props.onPayTokenChange}
-        onReceiveTokenChange={props.onReceiveTokenChange}
-      />
-    </Widget>,
-  );
-}

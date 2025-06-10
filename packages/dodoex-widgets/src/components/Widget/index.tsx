@@ -1,7 +1,6 @@
 import { ChainId, ContractRequests, GraphQLRequests } from '@dodoex/api';
 import type { WalletStore } from '@dodoex/btc-connect-react';
 import {
-  Box,
   createTheme,
   CssBaseline,
   EmptyDataIcon,
@@ -13,15 +12,9 @@ import {
 } from '@dodoex/components';
 import { Connection } from '@solana/web3.js';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
-import { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
-import { APIServices, contractRequests } from '../../constants/api';
-import { getRpcSingleUrlMap } from '../../constants/chains';
+import { PropsWithChildren, useRef } from 'react';
+import { APIServices } from '../../constants/api';
 import { defaultLang, SupportedLang } from '../../constants/locales';
-import {
-  useWeb3Connectors,
-  Web3ConnectorsProps,
-} from '../../hooks/ConnectWallet';
 import { useFetchBlockNumber } from '../../hooks/contract';
 import { ExecutionProps } from '../../hooks/Submission';
 import { ExecutionCtx } from '../../hooks/Submission/types';
@@ -29,28 +22,20 @@ import { DefaultTokenInfo, TokenInfo } from '../../hooks/Token/type';
 import useInitTokenList, {
   InitTokenListProps,
 } from '../../hooks/Token/useInitTokenList';
-import {
-  setAutoConnectLoading,
-  useGlobalState,
-} from '../../hooks/useGlobalState';
 import { LangProvider as LangProviderBase } from '../../providers/i18n';
 import { queryClient } from '../../providers/queryClient';
 import { useInitContractRequest } from '../../providers/useInitContractRequest';
 import { Page } from '../../router';
 import { ConfirmProps } from '../Confirm';
-import OpenConnectWalletInfo from '../ConnectWallet/OpenConnectWalletInfo';
 import Message from '../Message';
 import { DialogProps } from '../Swap/components/Dialog';
 import { TokenPickerDialogProps } from '../Swap/components/TokenCard/TokenPickerDialog';
-import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
+import { UserOptionsProvider } from '../UserOptionsProvider';
 import WithExecutionDialog from '../WithExecutionDialog';
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
-export interface WidgetProps
-  extends Web3ConnectorsProps,
-    InitTokenListProps,
-    ExecutionProps {
+export interface WidgetProps extends InitTokenListProps, ExecutionProps {
   apikey?: string;
   theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
@@ -151,125 +136,11 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useFetchBlockNumber();
   useInitContractRequest();
 
-  const { provider, connector, chainId } = useWeb3React();
-  const { autoConnectLoading } = useGlobalState();
-  useEffect(() => {
-    if (autoConnectLoading === undefined) {
-      if (props.noAutoConnect) {
-        setAutoConnectLoading(false);
-      } else {
-        setAutoConnectLoading(true);
-        const connectWallet = async () => {
-          const defaultChainId = props.defaultChainId;
-          try {
-            if (connector?.connectEagerly) {
-              await connector.connectEagerly(defaultChainId);
-            } else {
-              await connector.activate(defaultChainId);
-            }
-          } finally {
-            setAutoConnectLoading(false);
-          }
-        };
-        connectWallet();
-      }
-    }
-  }, [connector, props.noAutoConnect]);
-
-  useEffect(() => {
-    contractRequests.setGetConfigProvider((getProviderChainId) => {
-      const connectedProvider =
-        chainId === getProviderChainId ? provider : null;
-      if (connectedProvider) return connectedProvider;
-      if (props.getStaticJsonRpcProviderByChainId) {
-        const propsGetProvider =
-          props.getStaticJsonRpcProviderByChainId(getProviderChainId);
-        if (propsGetProvider) {
-          return propsGetProvider;
-        }
-      }
-      return null;
-    });
-  }, [provider, props.getStaticJsonRpcProviderByChainId]);
-
-  useEffect(() => {
-    if (props.onProviderChanged) {
-      props.onProviderChanged(provider);
-    }
-    const _provider = provider?.provider as any;
-    const handleChainChanged = async () => {
-      setAutoConnectLoading(true);
-      try {
-        if (connector?.connectEagerly) {
-          await connector.connectEagerly();
-        } else {
-          await connector.activate();
-        }
-      } finally {
-        setAutoConnectLoading(false);
-      }
-    };
-    if (_provider?.on) {
-      _provider.on('chainChanged', handleChainChanged);
-    }
-    return () => {
-      if (_provider?.removeListener) {
-        _provider.removeListener('chainChanged', handleChainChanged);
-      }
-    };
-  }, [provider]);
-
-  const width = props.width || 375;
-  const height = props.height || 494;
-
-  const { widgetRef } = useUserOptions();
-
   if (props.noUI) {
     return <LangProvider {...props}>{props.children}</LangProvider>;
   }
 
-  return (
-    <LangProvider {...props}>
-      <Box
-        sx={{
-          width,
-          height,
-          overflow: 'hidden',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          minWidth: 335,
-          minHeight: 494,
-          borderRadius: 16,
-          backgroundColor: 'background.default',
-        }}
-        className={WIDGET_CLASS_NAME}
-        ref={widgetRef}
-      >
-        <OpenConnectWalletInfo />
-        {props.children}
-      </Box>
-    </LangProvider>
-  );
-}
-
-function Web3Provider(props: PropsWithChildren<WidgetProps>) {
-  const { fromTokenChainId } = useGlobalState();
-  const defaultChainId = useMemo(
-    () => fromTokenChainId ?? props.defaultChainId ?? 1,
-    [props.defaultChainId, fromTokenChainId],
-  );
-  const { connectors, key } = useWeb3Connectors({
-    provider: props.provider,
-    jsonRpcUrlMap: props.jsonRpcUrlMap,
-    defaultChainId,
-  });
-
-  return (
-    <Web3ReactProvider connectors={connectors} key={key} lookupENS={false}>
-      <InitStatus {...props} />
-    </Web3ReactProvider>
-  );
+  return null;
 }
 
 export { LangProvider } from '../../providers/i18n';
@@ -279,10 +150,6 @@ export { default as Message } from '../Message';
 export function UnstyleWidget(props: PropsWithChildren<WidgetProps>) {
   const widgetRef = useRef<HTMLDivElement>(null);
 
-  if (props.jsonRpcUrlMap) {
-    contractRequests.setRpc(getRpcSingleUrlMap(props.jsonRpcUrlMap));
-  }
-
   return (
     <UserOptionsProvider
       {...{
@@ -290,7 +157,7 @@ export function UnstyleWidget(props: PropsWithChildren<WidgetProps>) {
         widgetRef: props.widgetRef ?? widgetRef,
       }}
     >
-      <Web3Provider {...props} />
+      <InitStatus {...props} />
     </UserOptionsProvider>
   );
 }

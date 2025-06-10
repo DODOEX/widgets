@@ -1,9 +1,8 @@
 import { ChainId } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import { tokenApi } from '../../constants/api';
-import { TokenInfo, TokenList } from './type';
-import { useGlobalState } from '../useGlobalState';
 import { useTokenState } from '../useTokenState';
+import { TokenInfo, TokenList } from './type';
 
 interface SimpleToken {
   chainId: ChainId;
@@ -68,7 +67,6 @@ export function useTokenListDefaultToken({
   /** Must exist in tokenList */
   tokenListInclude?: boolean;
 } = {}) {
-  const { autoConnectLoading } = useGlobalState();
   const { tokenList } = useTokenState();
   const baseInTokenListToken = getDefaultToken({
     side: 'from',
@@ -92,30 +90,26 @@ export function useTokenListDefaultToken({
   });
 
   let defaultBaseToken = null as TokenInfo | null;
-  let defaultBaseTokenLoading = autoConnectLoading;
-  if (!autoConnectLoading) {
-    defaultBaseToken = baseInTokenListToken.defaultToken;
-    if (defaultBaseTokenQuery.data) {
-      defaultBaseToken = defaultBaseTokenQuery.data;
-      defaultBaseTokenLoading = defaultBaseTokenQuery.isLoading;
-    }
+  let defaultBaseTokenLoading = false;
+  defaultBaseToken = baseInTokenListToken.defaultToken;
+  if (defaultBaseTokenQuery.data) {
+    defaultBaseToken = defaultBaseTokenQuery.data;
+    defaultBaseTokenLoading = defaultBaseTokenQuery.isLoading;
   }
 
   let defaultQuoteToken = null as TokenInfo | null;
-  let defaultQuoteTokenLoading = autoConnectLoading;
-  if (!autoConnectLoading) {
-    const quoteInTokenListToken = getDefaultToken({
-      side: 'to',
-      needFindToken: defaultQuoteSimpleToken,
-      occupyToken: defaultBaseToken,
-      tokenList,
-      chainId,
-    });
-    defaultQuoteToken = quoteInTokenListToken.defaultToken;
-    if (defaultQuoteTokenQuery.data) {
-      defaultQuoteToken = defaultQuoteTokenQuery.data;
-      defaultQuoteTokenLoading = defaultQuoteTokenQuery.isLoading;
-    }
+  let defaultQuoteTokenLoading = false;
+  const quoteInTokenListToken = getDefaultToken({
+    side: 'to',
+    needFindToken: defaultQuoteSimpleToken,
+    occupyToken: defaultBaseToken,
+    tokenList,
+    chainId,
+  });
+  defaultQuoteToken = quoteInTokenListToken.defaultToken;
+  if (defaultQuoteTokenQuery.data) {
+    defaultQuoteToken = defaultQuoteTokenQuery.data;
+    defaultQuoteTokenLoading = defaultQuoteTokenQuery.isLoading;
   }
 
   return {

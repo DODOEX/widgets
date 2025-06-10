@@ -5,20 +5,20 @@ import {
   SwapApi,
 } from '@dodoex/api';
 import { t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { useCallback, useState } from 'react';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
+import { chainListMap } from '../../constants/chainList';
 import { basicTokenMap } from '../../constants/chains';
 import { byWei, formatTokenAmountNumber } from '../../utils';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { getEstimateGas } from '../contract/wallet';
 import { useGraphQLRequests } from '../useGraphQLRequests';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
-import { chainListMap } from '../../constants/chainList';
 
 export function useSendRoute() {
   const graphQLRequests = useGraphQLRequests();
-  const { provider } = useWeb3React();
+  const { evmProvider } = useWalletInfo();
 
   const [bridgeOrderTxRequest, setBridgeOrderTxRequest] = useState<
     BridgeTXRequest | undefined
@@ -154,7 +154,7 @@ BTC
           }
 
           // gaslimit(number)
-          const gasLimit = provider
+          const gasLimit = evmProvider
             ? await getEstimateGas(
                 {
                   from,
@@ -162,7 +162,7 @@ BTC
                   value,
                   data: txData,
                 },
-                provider,
+                evmProvider,
               )
             : null;
           if (!gasLimit) {
@@ -186,7 +186,7 @@ BTC
 
       setSendRouteLoading(false);
     },
-    [graphQLRequests, provider],
+    [graphQLRequests, evmProvider],
   );
 
   return {

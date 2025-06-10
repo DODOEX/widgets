@@ -1,12 +1,11 @@
+import { ChainId } from '@dodoex/api';
 import { Button, ButtonProps } from '@dodoex/components';
 import { Trans, t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import React from 'react';
-import { ChainId } from '@dodoex/api';
 import { chainListMap } from '../../constants/chainList';
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 import { useUserOptions } from '../UserOptionsProvider';
-import { useGlobalState } from '../../hooks/useGlobalState';
 
 export default function NeedConnectButton({
   chainId,
@@ -17,16 +16,21 @@ export default function NeedConnectButton({
   chainId?: ChainId;
   includeButton?: boolean;
 }) {
-  const { account, chainId: currentChainId, connector } = useWeb3React();
+  const { chainId: currentChainId, getAppKitAccountByChainId } =
+    useWalletInfo();
   const { onConnectWalletClick, onSwitchChain } = useUserOptions();
   const [loading, setLoading] = React.useState(false);
   const switchChain = useSwitchChain(chainId);
+
   const needSwitchNetwork =
     currentChainId !== undefined &&
     chainId !== undefined &&
     currentChainId !== chainId;
+
+  const accountByChainId = getAppKitAccountByChainId(chainId);
+
   if (
-    account &&
+    accountByChainId?.appKitAccount.address &&
     !loading &&
     currentChainId !== undefined &&
     (!chainId || chainId === currentChainId)
@@ -34,6 +38,7 @@ export default function NeedConnectButton({
     if (includeButton) return <>{props.children ?? null}</>;
     return <Button {...props} />;
   }
+
   return (
     <>
       <Button
@@ -48,17 +53,14 @@ export default function NeedConnectButton({
               setLoading(false);
               return;
             }
+
             if (switchChain) {
               setLoading(true);
               await switchChain();
               setLoading(false);
               return;
             }
-            useGlobalState.setState({
-              openConnectWalletInfo: {
-                chainId,
-              },
-            });
+
             return;
           }
 
@@ -70,12 +72,6 @@ export default function NeedConnectButton({
               return;
             }
           }
-          connector.deactivate
-            ? connector.deactivate()
-            : connector.resetState();
-          useGlobalState.setState({
-            openConnectWalletInfo: true,
-          });
         }}
       >
         {loading ? (

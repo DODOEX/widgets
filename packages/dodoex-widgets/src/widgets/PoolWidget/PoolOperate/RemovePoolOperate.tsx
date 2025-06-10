@@ -6,41 +6,41 @@ import {
   Select,
   useTheme,
 } from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
+import { t, Trans } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import Confirm from '../../../components/Confirm';
+import ErrorMessageDialog from '../../../components/ErrorMessageDialog';
 import {
   CardPlus,
   TokenCard,
 } from '../../../components/Swap/components/TokenCard';
-import { useLiquidityOperateAmount } from './hooks/useLiquidityOperateAmount';
-import Ratio from './components/Ratio';
-import SlippageSetting, { useSlipper } from './components/SlippageSetting';
-import ComparePrice from './components/ComparePrice';
-import { OperatePool } from './types';
-import OperateBtn from './components/OperateBtn';
-import { t, Trans } from '@lingui/macro';
-import { useComparePrice } from './hooks/useComparePrice';
-import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
-import Confirm from '../../../components/Confirm';
-import { useOperateLiquidity } from '../hooks/contract/useOperateLiquidity';
 import { SLIPPAGE_PROTECTION } from '../../../constants/pool';
-import ErrorMessageDialog from '../../../components/ErrorMessageDialog';
-import { useRemoveLiquidityTokenStatus } from './hooks/useRemoveLiquidityTokenStatus';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { TokenInfo } from '../../../hooks/Token';
+import { toWei } from '../../../utils';
+import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
+import { useOperateLiquidity } from '../hooks/contract/useOperateLiquidity';
+import { useWithdrawInfo } from '../hooks/contract/useWithdrawInfo';
+import { useAMMV2RemoveLiquidity } from '../hooks/useAMMV2RemoveLiquidity';
+import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
+import { poolApi } from '../utils';
+import ComparePrice from './components/ComparePrice';
+import OperateBtn from './components/OperateBtn';
+import Ratio from './components/Ratio';
+import { SliderPercentageCard } from './components/SliderPercentageCard';
+import SlippageSetting, { useSlipper } from './components/SlippageSetting';
+import TokenList from './components/TokenList';
 import { useCheckToken } from './hooks/useCheckToken';
+import { useComparePrice } from './hooks/useComparePrice';
+import { useLiquidityOperateAmount } from './hooks/useLiquidityOperateAmount';
 import {
   initSliderPercentage,
   RemoveMode,
   usePercentageRemove,
 } from './hooks/usePercentageRemove';
-import { useWithdrawInfo } from '../hooks/contract/useWithdrawInfo';
-import TokenList from './components/TokenList';
-import { SliderPercentageCard } from './components/SliderPercentageCard';
-import { useAMMV2RemoveLiquidity } from '../hooks/useAMMV2RemoveLiquidity';
-import { useQuery } from '@tanstack/react-query';
-import { poolApi } from '../utils';
-import { toWei } from '../../../utils';
-import { TokenInfo } from '../../../hooks/Token';
-import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
+import { useRemoveLiquidityTokenStatus } from './hooks/useRemoveLiquidityTokenStatus';
+import { OperatePool } from './types';
 
 export function RemovePoolOperate({
   submittedBack: submittedBackProps,
@@ -55,7 +55,7 @@ export function RemovePoolOperate({
 }) {
   const theme = useTheme();
 
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const baseOverride = balanceInfo.userBaseLpToTokenBalance;
   const quoteOverride = balanceInfo.userQuoteLpToTokenBalance;
   const overrideBalanceLoading = balanceInfo.loading;
