@@ -13,6 +13,10 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:21
+msgid "ZUUO provides a variety of pool versions to suit your needs."
+msgstr "ZUUO provides a variety of pool versions to suit your needs."
+
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:70
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:137
 msgid "The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth."
@@ -61,11 +65,20 @@ msgstr "Receive {0}"
 msgid "{0} pending"
 msgstr "{0} pending"
 
+#: src/components/chart/i18n.ts:23
+#: src/widgets/PoolWidget/PoolCreate/components/DepthChartWrapper.tsx:47
+msgid "The liquidity of ZUUO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only."
+msgstr "The liquidity of ZUUO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only."
+
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:494
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:344
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:728
 msgid "Removing"
 msgstr "Removing"
+
+#: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:64
+msgid "differs from the price quoted by ZUUO by {lqAndDodoCompareText}"
+msgstr "differs from the price quoted by ZUUO by {lqAndDodoCompareText}"
 
 #: src/components/chart/i18n.ts:31
 msgid "Traders sold ‪{0}‬ {1}, price in the pool increased to {2}"
@@ -275,6 +288,10 @@ msgstr "Expected to start at block {0} and end at block {1}. There may be slight
 msgid "The token amount is calculated by initial price."
 msgstr "The token amount is calculated by initial price."
 
+#: src/components/Swap/index.tsx:1297
+msgid "Powered by ZUUO protocol"
+msgstr "Powered by ZUUO protocol"
+
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:159
 msgid "Max price"
 msgstr "Max price"
@@ -352,10 +369,6 @@ msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgid "Confirm"
 msgstr "Confirm"
 
-#: src/components/Swap/index.tsx:1297
-msgid "Powered by DODO protocol"
-msgstr "Powered by DODO protocol"
-
 #: src/widgets/PoolWidget/PoolDetail/components/Overview.tsx:73
 msgid "Fees (24H)"
 msgstr "Fees (24H)"
@@ -405,10 +418,9 @@ msgstr "Basic Fee"
 msgid "LP Balance"
 msgstr "LP Balance"
 
-#: src/components/chart/i18n.ts:23
-#: src/widgets/PoolWidget/PoolCreate/components/DepthChartWrapper.tsx:47
-msgid "The liquidity of DODO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only."
-msgstr "The liquidity of DODO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only."
+#: src/hooks/Submission/getExecutionErrorMsg.ts:21
+msgid "SafeERC20: low-level call failed. Please contact the ZUUO team."
+msgstr "SafeERC20: low-level call failed. Please contact the ZUUO team."
 
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:46
 msgid "FeeRevenue"
@@ -417,10 +429,6 @@ msgstr "FeeRevenue"
 #: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:60
 msgid "Search"
 msgstr "Search"
-
-#: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:21
-msgid "DODO provides a variety of pool versions to suit your needs."
-msgstr "DODO provides a variety of pool versions to suit your needs."
 
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/components/APRSection.tsx:38
@@ -819,11 +827,6 @@ msgstr "End release time before adjustment"
 #: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:80
 msgid "Stake"
 msgstr "Stake"
-
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:295
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:600
-msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
-msgstr "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
 #: src/components/Swap/index.tsx:595
@@ -1393,6 +1396,11 @@ msgstr "You are making changes to the liquidity of a private pool. This is a hig
 msgid "Price Range"
 msgstr "Price Range"
 
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:295
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:600
+msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on ZUUO."
+msgstr "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on ZUUO."
+
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:143
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:166
 msgid "{0} deposited"
@@ -1900,10 +1908,6 @@ msgstr "Add"
 msgid "Insufficient {0} balance"
 msgstr "Insufficient {0} balance"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:104
-msgid "The dynamic slippage is provided by DODO team through analyzing historical transactions."
-msgstr "The dynamic slippage is provided by DODO team through analyzing historical transactions."
-
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:266
 msgid "Failed to get price of the token"
 msgstr "Failed to get price of the token"
@@ -2154,10 +2158,6 @@ msgstr "Cross Chain Summary"
 msgid "{0}% fee tier"
 msgstr "{0}% fee tier"
 
-#: src/hooks/Submission/getExecutionErrorMsg.ts:21
-msgid "SafeERC20: low-level call failed. Please contact the DODO team."
-msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
-
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:88
 msgid "Pool Creation Confirmation"
 msgstr "Pool Creation Confirmation"
@@ -2182,10 +2182,6 @@ msgstr "Status"
 #: src/widgets/PoolWidget/AMMV3/components/RangeSelector.tsx:73
 msgid "Low price"
 msgstr "Low price"
-
-#: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:64
-msgid "differs from the price quoted by DODO by {lqAndDodoCompareText}"
-msgstr "differs from the price quoted by DODO by {lqAndDodoCompareText}"
 
 #: src/widgets/PoolWidget/PoolDetail/components/StatBarChart.tsx:191
 msgid "Real Time"
@@ -2267,6 +2263,10 @@ msgstr "Max Slippage"
 #: src/hooks/Submission/getExecutionErrorMsg.ts:25
 msgid "User denied transaction signature."
 msgstr "User denied transaction signature."
+
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:104
+msgid "The dynamic slippage is provided by ZUUO team through analyzing historical transactions."
+msgstr "The dynamic slippage is provided by ZUUO team through analyzing historical transactions."
 
 #: src/widgets/MiningWidget/MiningList/components/ShareModeSelect.tsx:30
 msgid "Copy link"

@@ -18,7 +18,7 @@ export default function getExecutionErrorMsg(
     },
     {
       error: 'SafeERC20: low-level call failed',
-      msg: t`SafeERC20: low-level call failed. Please contact the DODO team.`,
+      msg: t`SafeERC20: low-level call failed. Please contact the ZUUO team.`,
     },
     {
       error: ['User denied', 'cancel', 'User rejected', 'user rejected'],

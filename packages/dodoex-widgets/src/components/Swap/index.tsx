@@ -1294,7 +1294,7 @@ export function Swap({
               }}
               component={Dodo}
             />
-            <Trans>Powered by DODO protocol</Trans>
+            <Trans>Powered by ZUUO protocol</Trans>
           </Box>
         )}
       </Box>
