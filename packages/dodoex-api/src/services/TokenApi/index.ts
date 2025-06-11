@@ -109,7 +109,7 @@ export class TokenApi {
     }>,
     token: string,
   ) {
-    const path = `/frontend-v2-price-api/current/batch`;
+    const path = `/frontend-price-api-v2/current/batch`;
     return this.restApiRequest.postJson(
       path,
       {

@@ -43,7 +43,6 @@ const preview = {
   },
   decorators: [
     (Story, context) => {
-      console.log('context', context, Story);
       return (
         <RootPage title={context.title}>
           <Suspense fallback={<div />}>

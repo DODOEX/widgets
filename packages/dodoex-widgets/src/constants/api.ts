@@ -121,7 +121,7 @@ https://api.dodoex.io/route-service/zetachain/svm/swap?apikey=d5f476a6fd58e5e989
 }
  */
 export const SolanaRoutePriceAPI = `https://api.dodoex.io/route-service/zetachain/svm/swap`;
-export const FiatPriceAPI = `https://api.dodoex.io/frontend-price-api/current/batch`;
+export const FiatPriceAPI = `https://api.dodoex.io/frontend-price-api-v2/current/batch`;
 const BridgeRoutePriceAPI = `${BridgeUrlPrefix}/routes`;
 const BridgeEncodeAPI = `${BridgeUrlPrefix}/transaction/encode`;
 const BridgeCreateRouteAPI = `${BridgeUrlPrefix}/order/create`;
