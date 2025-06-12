@@ -235,6 +235,7 @@ export function useFetchRoutePriceBridge({
     toAccount?.appKitAccount?.address ?? getFallbackAddress(toToken?.chainId);
   const { data, error, isPending, refetch } = useQuery({
     // ...query,
+    retry: false,
     queryKey: [
       'graphql',
       'cross_chain_swap_zetachain_routes',
