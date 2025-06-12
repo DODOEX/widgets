@@ -1,18 +1,14 @@
-import {
-  Cross_Chain_Swap_Zetachain_RoutesQuery,
-  Cross_Chain_Swap_ZetachainrouteParams,
-  SwapApi,
-} from '@dodoex/api';
+import { Cross_Chain_Swap_Zetachain_RoutesQuery } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
+import { useUserOptions } from '../../components/UserOptionsProvider';
 import { getFallbackAddress } from '../../constants/address';
 import { chainListMap } from '../../constants/chainList';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { TokenInfo } from '../Token';
 import { useGlobalState } from '../useGlobalState';
-import { useGraphQLRequests } from '../useGraphQLRequests';
 import { useTokenState } from '../useTokenState';
 import { generateBridgeStep } from './utils';
 
@@ -216,11 +212,10 @@ export function useFetchRoutePriceBridge({
   toToken,
   fromAmount,
 }: FetchRoutePrice) {
-  const graphQLRequests = useGraphQLRequests();
   const { tokenList } = useTokenState();
+  const { API_DOMAIN } = useUserOptions();
 
-  const { defaultSlippage, loading: slippageLoading } =
-    useDefaultSlippage(true);
+  const { defaultSlippage } = useDefaultSlippage(true);
   const slippage = useGlobalState((state) => state.slippage || defaultSlippage);
 
   const fromAmountBN = useMemo(() => {
@@ -233,42 +228,82 @@ export function useFetchRoutePriceBridge({
       .dp(0, BigNumber.ROUND_DOWN);
   }, [fromAmount, fromToken]);
 
-  const query = graphQLRequests.getQuery<
-    Cross_Chain_Swap_Zetachain_RoutesQuery,
-    {
-      where: Cross_Chain_Swap_ZetachainrouteParams;
-    }
-  >(SwapApi.graphql.cross_chain_swap_zetachain_routes, {
-    /**
-     {
-      "fromAddress": "0xF859Fb7F8811a5016e9A5380b497957343f40476",
-      "fromAmount": "1000000",
-      "fromChainId": 11155111,
-      "fromTokenAddress": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
-      "slippage": 0.005,
-      "toAddress": "0xF859Fb7F8811a5016e9A5380b497957343f40476",
-      "toChainId": 421614,
-      "toTokenAddress": "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
-    }
-     */
-    where: {
-      fromChainId: fromToken?.chainId ?? null,
-      fromTokenAddress: fromToken?.address ?? null,
-      toChainId: toToken?.chainId ?? null,
-      toTokenAddress: toToken?.address ?? null,
-      fromAddress:
-        fromAccount?.appKitAccount?.address ??
-        getFallbackAddress(fromToken?.chainId),
-      toAddress:
-        toAccount?.appKitAccount?.address ??
-        getFallbackAddress(toToken?.chainId),
-      fromAmount: fromAmountBN ? fromAmountBN.toString() : null,
-      slippage: slippage ? Number(slippage) / 100 : null,
-    },
-  });
-
+  const fromAddress =
+    fromAccount?.appKitAccount?.address ??
+    getFallbackAddress(fromToken?.chainId);
+  const toAddress =
+    toAccount?.appKitAccount?.address ?? getFallbackAddress(toToken?.chainId);
   const { data, error, isPending, refetch } = useQuery({
-    ...query,
+    // ...query,
+    queryKey: [
+      'graphql',
+      'cross_chain_swap_zetachain_routes',
+      fromToken?.chainId,
+      fromToken?.address,
+      toToken?.chainId,
+      toToken?.address,
+      fromAddress,
+      toAddress,
+      fromAmountBN?.toString(),
+      slippage,
+    ],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://gateway.${API_DOMAIN}/graphql?opname=Cross_chain_swap_zetachain_routes`,
+        {
+          headers: {
+            'content-type': 'application/json',
+            // accept: '*/*',
+            // 'accept-language': 'zh,en;q=0.9,zh-CN;q=0.8',
+            // priority: 'u=1, i',
+            // 'sec-ch-ua':
+            //   '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"',
+            // 'sec-ch-ua-mobile': '?0',
+            // 'sec-ch-ua-platform': '"macOS"',
+            // 'sec-fetch-dest': 'empty',
+            // 'sec-fetch-mode': 'cors',
+            // 'sec-fetch-site': 'cross-site',
+          },
+          // referrer: 'http://localhost:6006/',
+          // referrerPolicy: 'strict-origin-when-cross-origin',
+          body: `{"query":"\\n    query Cross_chain_swap_zetachain_routes($where: Cross_chain_swap_zetachainrouteParams) {\\n  cross_chain_swap_zetachain_routes(where: $where) {\\n    routeId\\n    fromChainId\\n    fromTokenAddress\\n    fromAmount\\n    fromAmountWithOutDecimals\\n    fromAmountUSD\\n    toChainId\\n    toTokenAddress\\n    toAmount\\n    toAmountWithOutDecimals\\n    toAmountUSD\\n    fromAddress\\n    toAddress\\n    slippage\\n    approveTarget\\n    fees\\n    omniPlan\\n    encodeParams\\n  }\\n}\\n    ","variables":{"where":{"fromChainId":${
+            fromToken?.chainId
+          },"fromTokenAddress":"${fromToken?.address}","toChainId":${
+            toToken?.chainId
+          },"toTokenAddress":"${toToken?.address}","fromAddress":"${
+            fromAddress
+          }","toAddress":"${
+            toAddress
+          }","fromAmount":"${fromAmountBN?.toString()}","slippage":${slippage ? Number(slippage) / 100 : null}}},"operationName":"Cross_chain_swap_zetachain_routes"}`,
+          method: 'POST',
+          // mode: 'cors',
+          // credentials: 'omit',
+        },
+      );
+      /**
+       {
+    "errors": [
+        {
+            "message": "NOT_ROUTE_MIN_AMOUNT:min-0.074524",
+            "path": [
+                "cross_chain_swap_zetachain_routes"
+            ],
+            "extensions": {
+                "code": "INTERNAL_SERVER_ERROR"
+            }
+        }
+    ],
+    "data": {
+        "cross_chain_swap_zetachain_routes": null
+    }
+}
+       */
+      const data = await res.json();
+      if (data.errors) {
+        throw new Error(data.errors[0].message);
+      }
+      return data.data;
+    },
     // enabled:
     //   !!fromToken &&
     //   !!toToken &&
@@ -290,7 +325,7 @@ export function useFetchRoutePriceBridge({
     // initialData: routesExample.data,
   });
 
-  const { status, bridgeRouteList } = useMemo(() => {
+  const { status, failedReason, bridgeRouteList } = useMemo(() => {
     if (isPending) {
       return {
         status: RoutePriceStatus.Loading,
@@ -298,11 +333,21 @@ export function useFetchRoutePriceBridge({
       };
     }
     if (error) {
+      console.error('error:', error);
+      let failedReason = error.message;
+      if (error.message.includes('NOT_ROUTE_MIN_AMOUNT:min-')) {
+        const minAmount = error.message.split('min-')[1];
+        if (minAmount) {
+          failedReason = `(Enter min amount: ${minAmount})`;
+        }
+      }
       return {
         status: RoutePriceStatus.Failed,
+        failedReason,
         bridgeRouteList: [],
       };
     }
+
     if (data && data.cross_chain_swap_zetachain_routes) {
       const newBridgeRouteList: BridgeRouteI[] = [];
 
@@ -418,6 +463,7 @@ export function useFetchRoutePriceBridge({
 
   return {
     status,
+    failedReason,
     refetch,
     bridgeRouteList,
   };

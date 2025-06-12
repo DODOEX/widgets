@@ -1,12 +1,20 @@
 import { GraphQLRequests } from '@dodoex/api';
 import { useUserOptions } from '../components/UserOptionsProvider';
 
-export const graphQLRequestsLocal = new GraphQLRequests({
-  url: 'https://gateway.gcp.dxd.ink/graphql',
-});
+let graphQLRequestsLocal: GraphQLRequests | null = null;
 
 export function useGraphQLRequests() {
-  const { graphQLRequests } = useUserOptions();
+  const { API_DOMAIN, graphQLRequests } = useUserOptions();
 
-  return graphQLRequests ?? graphQLRequestsLocal;
+  if (graphQLRequests) {
+    return graphQLRequests;
+  }
+
+  if (!graphQLRequestsLocal) {
+    graphQLRequestsLocal = new GraphQLRequests({
+      url: `https://gateway.${API_DOMAIN}/graphql`,
+    });
+  }
+
+  return graphQLRequestsLocal;
 }

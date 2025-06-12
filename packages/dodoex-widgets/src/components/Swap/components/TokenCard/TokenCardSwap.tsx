@@ -29,6 +29,7 @@ import { WalletConnectBtn } from './WalletConnectBtn';
 export interface TokenCardProps {
   amt: string;
   fiatPriceTxt?: string | React.ReactNode;
+  failedReason?: React.ReactNode;
   sx?: BoxProps['sx'];
   readOnly?: boolean;
   showMaxBtn?: boolean;
@@ -71,6 +72,7 @@ export function TokenCardSwap({
   canClickBalance,
   onMaxClick,
   fiatPriceTxt,
+  failedReason,
   occupiedAddrs,
   occupiedChainId,
   onInputFocus,
@@ -260,6 +262,20 @@ export function TokenCardSwap({
             }}
           />
         ))}
+
+      {failedReason && (
+        <Box
+          sx={{
+            mt: 4,
+            typography: 'h6',
+            lineHeight: '16px',
+            fontWeight: 500,
+            color: theme.palette.error.main,
+          }}
+        >
+          {failedReason}
+        </Box>
+      )}
 
       <Box
         sx={{

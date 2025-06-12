@@ -37,6 +37,7 @@ export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
 export interface WidgetProps extends InitTokenListProps, ExecutionProps {
   apikey?: string;
+  API_DOMAIN: string;
   theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
   defaultChainId: ChainId;

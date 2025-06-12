@@ -183,14 +183,17 @@ export function Swap({
 
   const fromEtherTokenQuery = useFetchETHBalance(fromToken?.chainId);
 
-  const { bridgeRouteList, status: bridgeRouteStatus } =
-    useFetchRoutePriceBridge({
-      toToken,
-      fromToken,
-      fromAmount: fromAmt,
-      fromAccount,
-      toAccount,
-    });
+  const {
+    bridgeRouteList,
+    status: bridgeRouteStatus,
+    failedReason,
+  } = useFetchRoutePriceBridge({
+    toToken,
+    fromToken,
+    fromAmount: fromAmt,
+    fromAccount,
+    toAccount,
+  });
 
   const selectedRoute = useMemo(() => {
     if (bridgeRouteList && bridgeRouteList.length > 0) {
@@ -1211,6 +1214,7 @@ export function Swap({
             inputToAddress={inputToAddress}
             setInputToAddress={setInputToAddress}
             account={fromAccount}
+            failedReason={failedReason}
           />
 
           {/* Switch Icon */}

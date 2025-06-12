@@ -121,6 +121,7 @@ export function RootPage({
 
         <Widget
           apikey="ee53d6b75b12aceed4"
+          API_DOMAIN={process.env.STORYBOOK_API_DOMAIN ?? 'dodoex.io'}
           colorMode="light"
           defaultChainId={ChainId.ZETACHAIN_TESTNET}
           onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN_TESTNET}
