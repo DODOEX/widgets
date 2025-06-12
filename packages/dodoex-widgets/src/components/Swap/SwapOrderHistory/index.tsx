@@ -125,10 +125,7 @@ export default function SwapOrderHistory() {
   ]);
 
   useEffect(() => {
-    setSelectedAccount((prev) => {
-      if (prev) {
-        return prev;
-      }
+    setSelectedAccount(() => {
       if (accountList.length > 0) {
         return accountList[0].account;
       }

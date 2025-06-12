@@ -1051,7 +1051,7 @@ msgid "Fetching Price..."
 msgstr ""
 
 #: src/hooks/Token/useGetTokenStatus.ts:60
-#: src/hooks/Token/useTokenStatus.ts:134
+#: src/hooks/Token/useTokenStatus.ts:137
 msgid "Reset"
 msgstr "重置"
 
@@ -1450,7 +1450,7 @@ msgstr "在"
 
 #: src/components/Swap/index.tsx:877
 #: src/hooks/Token/useGetTokenStatus.ts:60
-#: src/hooks/Token/useTokenStatus.ts:134
+#: src/hooks/Token/useTokenStatus.ts:137
 msgid "Approve"
 msgstr "代币授权"
 

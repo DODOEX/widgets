@@ -1051,7 +1051,7 @@ msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
 #: src/hooks/Token/useGetTokenStatus.ts:60
-#: src/hooks/Token/useTokenStatus.ts:134
+#: src/hooks/Token/useTokenStatus.ts:137
 msgid "Reset"
 msgstr "Reset"
 
@@ -1450,7 +1450,7 @@ msgstr "On"
 
 #: src/components/Swap/index.tsx:877
 #: src/hooks/Token/useGetTokenStatus.ts:60
-#: src/hooks/Token/useTokenStatus.ts:134
+#: src/hooks/Token/useTokenStatus.ts:137
 msgid "Approve"
 msgstr "Approve"
 
