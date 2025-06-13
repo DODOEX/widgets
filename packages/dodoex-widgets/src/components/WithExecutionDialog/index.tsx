@@ -385,6 +385,11 @@ export default function WithExecutionDialog({
             pb: 20,
             flex: 1,
             overflowY: 'auto',
+            width: isMobile
+              ? undefined
+              : submissionDialogModal
+                ? 340
+                : undefined,
           }}
         >
           <Box>
