@@ -66,6 +66,7 @@ import { SwitchBox } from './components/SwitchBox';
 import { TokenCardSwap } from './components/TokenCard/TokenCardSwap';
 import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
 import FiatEntryAndGasRefuel from './components/FiatEntryAndGasRefuel';
+import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
 
 const debounceTime = 300;
 
@@ -84,6 +85,7 @@ export function Swap({
   const theme = useTheme();
   const { isInflight } = useInflights();
   const { noPowerBy, onlyChainId } = useUserOptions();
+  const { isMobile } = useWidgetDevice();
 
   const {
     open,
@@ -1203,13 +1205,13 @@ export function Swap({
                     input: displayFromFiatPrice,
                     showDecimals: 1,
                   })}`
-                : '-'
+                : '$-'
             }
             onTokenChange={onFromTokenChange}
             readOnly={isReverseRouting}
             showChainLogo={!onlyChainId}
             showChainName={!onlyChainId}
-            notTokenPickerModal
+            notTokenPickerModal={!isMobile}
             enterAddressEnabled={false}
             inputToAddress={inputToAddress}
             setInputToAddress={setInputToAddress}
@@ -1235,13 +1237,13 @@ export function Swap({
                     input: displayToFiatPrice,
                     showDecimals: 1,
                   })}(${displayPriceImpact}%)`
-                : '-'
+                : '$-'
             }
             onTokenChange={onToTokenChange}
             readOnly={isBridge || !isReverseRouting}
             showChainLogo={!onlyChainId}
             showChainName={!onlyChainId}
-            notTokenPickerModal
+            notTokenPickerModal={!isMobile}
             enterAddressEnabled={isBridge}
             inputToAddress={inputToAddress}
             setInputToAddress={setInputToAddress}
@@ -1254,7 +1256,7 @@ export function Swap({
           {/* Price Disp or Warnings  */}
           <Box
             sx={{
-              py: 12,
+              py: 16,
               display: 'flex',
               typography: 'body2',
               alignItems: 'center',
@@ -1322,12 +1324,14 @@ export function Swap({
         onClose={() => setIsReviewDialogOpen(false)}
         loading={resPriceStatus === RoutePriceStatus.Loading}
         slippage={slippageSwap}
+        isDialogModal={isMobile}
       />
       {isBridge ? (
         <SettingsDialog
           open={isSettingsDialogOpen}
           onClose={() => setIsSettingsDialogOpen(false)}
           isBridge
+          isDialogModal={isMobile}
         />
       ) : (
         <SwapSettingsDialog
@@ -1340,6 +1344,7 @@ export function Swap({
           privacySwapSupplierEndpoints={privacySwapSupplierEndpoints}
           endpointStatusMap={endpointStatusMap}
           refetchEndpointStatus={refetchEndpointStatus}
+          isDialogModal={isMobile}
         />
       )}
       <BridgeSummaryDialog
@@ -1349,10 +1354,12 @@ export function Swap({
         bridgeOrderTxRequest={bridgeOrderTxRequest}
         clearFromAmt={() => updateFromAmt('')}
         clearToAmt={() => updateToAmt('')}
+        isDialogModal={isMobile}
       />
       <ErrorMessageDialog
         message={sendRouteError}
         onClose={() => setSendRouteError('')}
+        isDialogModal={isMobile}
       />
     </Box>
   );

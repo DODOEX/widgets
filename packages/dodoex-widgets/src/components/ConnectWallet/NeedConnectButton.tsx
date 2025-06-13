@@ -5,7 +5,6 @@ import React from 'react';
 import { chainListMap } from '../../constants/chainList';
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
 import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
-import { useUserOptions } from '../UserOptionsProvider';
 
 export default function NeedConnectButton({
   chainId,
@@ -16,9 +15,11 @@ export default function NeedConnectButton({
   chainId?: ChainId;
   includeButton?: boolean;
 }) {
-  const { chainId: currentChainId, getAppKitAccountByChainId } =
-    useWalletInfo();
-  const { onConnectWalletClick, onSwitchChain } = useUserOptions();
+  const {
+    chainId: currentChainId,
+    getAppKitAccountByChainId,
+    open,
+  } = useWalletInfo();
   const [loading, setLoading] = React.useState(false);
   const switchChain = useSwitchChain(chainId);
 
@@ -47,13 +48,6 @@ export default function NeedConnectButton({
         onClick={async () => {
           // switch chain
           if (needSwitchNetwork) {
-            if (onSwitchChain) {
-              setLoading(true);
-              await onSwitchChain();
-              setLoading(false);
-              return;
-            }
-
             if (switchChain) {
               setLoading(true);
               await switchChain();
@@ -64,14 +58,11 @@ export default function NeedConnectButton({
             return;
           }
 
-          if (onConnectWalletClick) {
-            setLoading(true);
-            const isConnected = await onConnectWalletClick();
-            setLoading(false);
-            if (isConnected) {
-              return;
-            }
-          }
+          setLoading(true);
+          open({
+            namespace: accountByChainId?.namespace,
+          });
+          setLoading(false);
         }}
       >
         {loading ? (

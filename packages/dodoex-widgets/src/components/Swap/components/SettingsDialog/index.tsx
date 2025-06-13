@@ -13,11 +13,13 @@ export interface SettingsDialogProps {
   open: boolean;
   onClose: () => void;
   isBridge: boolean | undefined;
+  isDialogModal: boolean;
 }
 export function SettingsDialog({
   open,
   onClose,
   isBridge,
+  isDialogModal,
 }: SettingsDialogProps) {
   const theme = useTheme();
   const { slippage } = useGlobalState();
@@ -32,6 +34,7 @@ export function SettingsDialog({
       onClose={onClose}
       id="swap-settings"
       title={<Trans>Settings</Trans>}
+      modal={isDialogModal}
     >
       <Box
         sx={{

@@ -29,6 +29,7 @@ export default function BridgeSummaryDialog({
   bridgeOrderTxRequest,
   clearToAmt,
   clearFromAmt,
+  isDialogModal,
 }: {
   open: boolean;
   onClose: () => void;
@@ -36,6 +37,7 @@ export default function BridgeSummaryDialog({
   bridgeOrderTxRequest?: BridgeTXRequest;
   clearToAmt: () => void;
   clearFromAmt: () => void;
+  isDialogModal: boolean;
 }) {
   const theme = useTheme();
   const { contractStatus } = useGlobalState();
@@ -64,6 +66,7 @@ export default function BridgeSummaryDialog({
         setContractStatus(ContractStatus.Initial);
         onClose();
       }}
+      modal={isDialogModal}
     >
       <>
         {route ? (

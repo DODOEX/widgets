@@ -6,12 +6,19 @@ import Dialog from './Swap/components/Dialog';
 export default function ErrorMessageDialog({
   message,
   onClose,
+  isDialogModal,
 }: {
   message?: string;
   onClose: () => void;
+  isDialogModal: boolean;
 }) {
   return (
-    <Dialog open={!!message} onClose={onClose} id="error-message">
+    <Dialog
+      open={!!message}
+      onClose={onClose}
+      id="error-message"
+      modal={isDialogModal}
+    >
       <>
         <Box
           sx={{

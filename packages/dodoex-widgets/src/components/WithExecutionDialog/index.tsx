@@ -248,9 +248,7 @@ export default function WithExecutionDialog({
   };
   const { isMobile } = useWidgetDevice();
 
-  const noSubmissionDialog = useUserOptions(
-    (state) => state.noSubmissionDialog,
-  );
+  const { noSubmissionDialog, submissionDialogModal } = useUserOptions();
 
   const handleCloseSubmitLoadingDialog = () => {
     setShowing((prev) => {
@@ -376,6 +374,7 @@ export default function WithExecutionDialog({
         }
         onClose={closeShowing}
         id="submission"
+        modal={isMobile ? true : submissionDialogModal}
       >
         <Box
           sx={{

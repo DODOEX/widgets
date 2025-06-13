@@ -1,4 +1,4 @@
-import { Box, Popup, Tooltip } from '@dodoex/components';
+import { Box, Popup } from '@dodoex/components';
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { chainListMap } from '../../../../constants/chainList';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
@@ -78,17 +78,7 @@ export const WalletConnectBtn = ({
                 lineHeight: '16px',
               }}
             >
-              {inputToAddress
-                ? inputToAddressWalletIcon
-                : chain && (
-                    <Box
-                      component={chain.logo}
-                      sx={{
-                        width: 16,
-                        height: 16,
-                      }}
-                    />
-                  )}
+              {inputToAddressWalletIcon}
               {truncatePoolAddress(account?.appKitAccount?.address)}
               <svg
                 xmlns="http://www.w3.org/2000/svg"

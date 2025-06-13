@@ -18,6 +18,7 @@ export interface SwapSettingsDialogProps {
   onClose: () => void;
   fromToken?: TokenInfo | null;
   toToken?: TokenInfo | null;
+  isDialogModal: boolean;
 }
 
 export function SwapSettingsDialog({
@@ -30,6 +31,7 @@ export function SwapSettingsDialog({
   privacySwapSupplierEndpoints,
   endpointStatusMap,
   refetchEndpointStatus,
+  isDialogModal,
 }: SwapSettingsDialogProps &
   Pick<
     ReturnType<typeof usePrivacySwapStatus>,
@@ -87,6 +89,7 @@ export function SwapSettingsDialog({
       title={
         isSelectSupplierMode ? 'Select A Supplier' : <Trans>Settings</Trans>
       }
+      modal={isDialogModal}
     >
       <Box
         sx={{

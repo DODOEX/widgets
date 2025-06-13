@@ -19,9 +19,9 @@ export default function FiatEntryAndGasRefuel() {
           gap: 4,
           typography: 'body2',
           fontWeight: 600,
-          color: 'text.primary',
+          color: 'text.link',
           '&:hover': {
-            color: 'text.secondary',
+            color: 'text.primary',
           },
         }}
         onClick={() => setShowGasRefuel(true)}

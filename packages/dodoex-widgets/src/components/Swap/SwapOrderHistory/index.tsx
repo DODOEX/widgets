@@ -258,7 +258,9 @@ export default function SwapOrderHistory() {
                   color: 'success.main',
                 }),
                 '&:hover': {
-                  backgroundColor: alpha(theme.palette.success.main, 0.1),
+                  backgroundColor: isSelected
+                    ? alpha(theme.palette.success.main, 0.1)
+                    : theme.palette.background.paperDarkContrast,
                 },
               }}
               onClick={() =>

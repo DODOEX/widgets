@@ -34,6 +34,7 @@ export default function QuestionTooltip({
       container={container}
       maxWidth={maxWidth}
       onlyHover
+      leaveDelay={100}
       sx={{
         maxWidth: 240,
       }}

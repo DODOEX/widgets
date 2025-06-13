@@ -23,8 +23,8 @@ export default function SelectChainItem({
           border: '1px solid',
           ...(active
             ? {
-                backgroundColor: alpha('#7BF179', 0.2),
-                borderColor: alpha('#7BF179', 0.2),
+                backgroundColor: 'tabActive.main',
+                borderColor: 'tabActive.main',
                 color: 'primary.main',
               }
             : {
