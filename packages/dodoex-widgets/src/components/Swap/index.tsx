@@ -1193,7 +1193,7 @@ export function Swap({
             defaultLoadBalance
             onMaxClick={handleMaxClick}
             onInputChange={updateFromAmt}
-            onInputFocus={onFromTokenInputFocus}
+            onInputFocus={isBridge ? undefined : onFromTokenInputFocus}
             showMaxBtn={!isReverseRouting && !displayingFromAmt}
             occupiedAddrs={[toToken?.address ?? '']}
             occupiedChainId={toToken?.chainId}
@@ -1226,7 +1226,7 @@ export function Swap({
             side="to"
             amt={toFinalAmt}
             onInputChange={updateToAmt}
-            onInputFocus={onToTokenInputFocus}
+            onInputFocus={isBridge ? undefined : onToTokenInputFocus}
             occupiedAddrs={[fromToken?.address ?? '']}
             occupiedChainId={fromToken?.chainId}
             fiatPriceTxt={
