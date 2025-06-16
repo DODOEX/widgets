@@ -6,7 +6,7 @@ import {
   useTheme,
 } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
-import { t } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useMemo, useReducer, useState } from 'react';
@@ -581,12 +581,39 @@ export const AMMV3PositionManage = ({
                   locked={depositBDisabled}
                 />
               </Box>
-              <SlippageSetting
-                value={slipper}
-                onChange={setSlipper}
-                disabled={false}
-                type="AMMV3"
-              />
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  mt: 8,
+                  px: 12,
+                  height: 36,
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderStyle: 'solid',
+                  borderColor: theme.palette.border.main,
+                }}
+              >
+                <Box
+                  sx={{
+                    typography: 'body2',
+                    color: 'text.secondary',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <Trans>Slippage Tolerance</Trans>
+                </Box>
+                <SlippageSetting
+                  value={slipper}
+                  onChange={setSlipper}
+                  disabled={false}
+                  type="AMMV3"
+                  sx={{
+                    mt: 0,
+                  }}
+                />
+              </Box>
             </Box>
 
             <Box
@@ -645,12 +672,39 @@ export const AMMV3PositionManage = ({
                 value={sliderPercentage}
                 onChange={(v) => setSliderPercentage(v)}
               />
-              <SlippageSetting
-                value={slipper}
-                onChange={setSlipper}
-                disabled={false}
-                type="AMMV3"
-              />
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  mt: 8,
+                  px: 12,
+                  height: 36,
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderStyle: 'solid',
+                  borderColor: theme.palette.border.main,
+                }}
+              >
+                <Box
+                  sx={{
+                    typography: 'body2',
+                    color: 'text.secondary',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <Trans>Slippage Tolerance</Trans>
+                </Box>
+                <SlippageSetting
+                  value={slipper}
+                  onChange={setSlipper}
+                  disabled={false}
+                  type="AMMV3"
+                  sx={{
+                    mt: 0,
+                  }}
+                />
+              </Box>
             </Box>
             <Box
               sx={{

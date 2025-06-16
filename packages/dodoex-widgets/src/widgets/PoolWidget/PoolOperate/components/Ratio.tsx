@@ -16,17 +16,24 @@ import {
 import { Trans } from '@lingui/macro';
 import { Switch } from '@dodoex/icons';
 import { PoolApi } from '@dodoex/api';
+import SlippageSetting, { useSlipper } from './SlippageSetting';
 
 export default function Ratio({
   pool,
   addPortion,
   midPrice,
   shareOfPool,
+  slipper,
+  setSlipper,
+  canOperate,
 }: {
   pool?: OperatePool;
   addPortion?: BigNumber;
   midPrice?: BigNumber;
   shareOfPool?: string;
+  slipper: ReturnType<typeof useSlipper>['slipper'];
+  setSlipper: ReturnType<typeof useSlipper>['setSlipper'];
+  canOperate?: boolean;
 }) {
   const theme = useTheme();
   const [reserve, setReserve] = useState(false);
@@ -267,6 +274,50 @@ export default function Ratio({
           </Box>
         </Box>
       )}
+
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          px: 12,
+          py: 4,
+          height: 36,
+          typography: 'body2',
+          borderStyle: 'solid',
+          borderWidth: theme.spacing(1, 0, 0),
+          borderColor: 'border.main',
+        }}
+      >
+        <Box
+          sx={{
+            color: 'text.secondary',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          <Trans>Slippage Tolerance</Trans>
+        </Box>
+        <LoadingSkeleton
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            fontWeight: 600,
+            ml: 8,
+            overflow: 'hidden',
+          }}
+          loading={!pool}
+          loadingProps={{
+            width: 50,
+          }}
+        >
+          <SlippageSetting
+            value={slipper}
+            onChange={setSlipper}
+            disabled={!canOperate}
+            type={pool?.type}
+          />
+        </LoadingSkeleton>
+      </Box>
     </Box>
   );
 }

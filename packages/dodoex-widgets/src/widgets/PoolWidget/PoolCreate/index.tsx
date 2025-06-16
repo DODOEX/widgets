@@ -102,6 +102,7 @@ export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
     baseToken: state.baseToken,
     quoteToken: state.quoteToken,
     dispatch,
+    isInitPrice: state.isFixedRatio,
   });
 
   const peggedBaseTokenRatioBN = new BigNumber(state.peggedBaseTokenRatio)

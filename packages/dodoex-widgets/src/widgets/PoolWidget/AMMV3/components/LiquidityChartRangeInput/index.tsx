@@ -1,4 +1,4 @@
-import { Box, LoadingSkeleton } from '@dodoex/components';
+import { Box, LoadingSkeleton, useTheme } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { ReactNode, useCallback, useMemo } from 'react';
 import {
@@ -173,6 +173,7 @@ export default function LiquidityChartRangeInput({
     },
     [isSorted, price, ticksAtLimit],
   );
+  const theme = useTheme();
 
   const isUninitialized =
     !currencyA ||
@@ -191,7 +192,7 @@ export default function LiquidityChartRangeInput({
               height="56"
               viewBox="0 0 24 24"
               fill="none"
-              stroke={themeColor.neutral1}
+              stroke={theme.palette.text.primary}
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"

@@ -1,4 +1,4 @@
-import { alpha, Box, useTheme } from '@dodoex/components';
+import { alpha, Box, BoxProps, useTheme } from '@dodoex/components';
 import { Warn as WarningIcon } from '@dodoex/icons';
 import { Checkbox } from '@dodoex/components';
 import { useMemo } from 'react';
@@ -8,11 +8,13 @@ export function SlippageWarning({
   title,
   desc,
   doNotChecked,
+  sx,
   onChangeDoNotChecked,
 }: {
   title: string;
   desc: string;
   doNotChecked: boolean;
+  sx?: BoxProps['sx'];
   onChangeDoNotChecked?: (value: boolean) => void;
 }) {
   const theme = useTheme();
@@ -34,6 +36,7 @@ export function SlippageWarning({
         backgroundColor: alpha(warningColor, 0.1),
         borderRadius: 8,
         padding: 12,
+        ...sx,
       }}
     >
       <Box

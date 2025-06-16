@@ -283,13 +283,15 @@ function CardList({
                         {isAMMV3
                           ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
                               ?.label ?? '-')
-                          : formatPercentageNumber({
-                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                                item.mtFeeRate
-                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
-                                  : 0,
-                              ),
-                            })}
+                          : `${formatReadableNumber({
+                              input: new BigNumber(item.lpFeeRate ?? 0)
+                                .plus(
+                                  item.mtFeeRate
+                                    ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
+                                    : 0,
+                                )
+                                .times(100),
+                            })}%`}
                       </Box>
                     </Tooltip>
                   </Box>
@@ -857,13 +859,15 @@ function TableList({
                         {isAMMV3
                           ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
                               ?.label ?? '-')
-                          : formatPercentageNumber({
-                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                                item.mtFeeRate
-                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
-                                  : 0,
-                              ),
-                            })}
+                          : `${formatReadableNumber({
+                              input: new BigNumber(item.lpFeeRate ?? 0)
+                                .plus(
+                                  item.mtFeeRate
+                                    ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
+                                    : 0,
+                                )
+                                .times(100),
+                            })}%`}
                       </Box>
                     </Tooltip>
                   </Box>
