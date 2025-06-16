@@ -114,10 +114,17 @@ export default {
         type: 'boolean',
       },
     },
+    slippageQuickInput: {
+      control: {
+        type: 'boolean',
+      },
+    },
   },
 } as ComponentMeta<typeof SwapWidget>;
 
-export const Primary = (args) => <SwapWidget {...args} />;
+export const Primary = (args) => (
+  <SwapWidget {...args} onSwitchChain={undefined} />
+);
 
 Primary.args = {
   apikey: 'ef9apopzq9qrgntjubojbxe7hy4z5eez',
@@ -224,6 +231,7 @@ Primary.args = {
   ],
   tokenList: 'all',
   crossChain: true,
+  slippageQuickInput: true,
   getAutoSlippage: ({
     fromToken,
     toToken,

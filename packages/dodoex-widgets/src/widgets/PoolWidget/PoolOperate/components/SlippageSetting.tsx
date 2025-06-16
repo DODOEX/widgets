@@ -2,12 +2,13 @@ import {
   Box,
   BoxProps,
   HoverAddBackground,
+  HoverOpacity,
   Input,
   Tooltip,
   useTheme,
 } from '@dodoex/components';
-import { Setting } from '@dodoex/icons';
-import { Trans } from '@lingui/macro';
+import { Alarm, Setting } from '@dodoex/icons';
+import { t, Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { ChangeEvent, useMemo, useState } from 'react';
 import { AutoButton } from '../../../../components/AutoButton';
@@ -18,6 +19,8 @@ import {
   AUTO_SWAP_SLIPPAGE_PROTECTION,
 } from '../../../../constants/pool';
 import { PoolType } from '@dodoex/api';
+import { SlippageWarning } from '../../../../components/Swap/components/SwapSettingsDialog/SlippageWarning';
+import { useSwapSettingStore } from '../../../../hooks/Swap/useSwapSettingStore';
 
 export const useSlipper = ({
   address,
@@ -78,6 +81,7 @@ export default function SlippageSetting({
   const [tempValue, setTempValue] = useState(
     isAuto ? '' : new BigNumber(value).times(100).toNumber(),
   );
+  const { notRemindAgainSlippageHigher } = useSwapSettingStore();
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const { value: val } = evt.target;
@@ -95,6 +99,8 @@ export default function SlippageSetting({
       : type == 'AMMV2'
         ? AUTO_AMM_V2_LIQUIDITY_SLIPPAGE_PROTECTION
         : AUTO_LIQUIDITY_SLIPPAGE_PROTECTION;
+  const warnValue = Number(autoValue);
+  const isWarnSlippage = !isAuto && value * 100 > warnValue;
 
   return (
     <Tooltip
@@ -151,15 +157,6 @@ export default function SlippageSetting({
               placeholder={String(autoValue)}
               value={tempValue}
               onChange={handleChange}
-              onBlur={() => {
-                if (
-                  (!isAuto && new BigNumber(value).gt(0.1)) ||
-                  new BigNumber(value).lte(0)
-                ) {
-                  setTempValue(10);
-                  onChange(0.1);
-                }
-              }}
               suffix={
                 <Box
                   sx={{
@@ -179,25 +176,67 @@ export default function SlippageSetting({
               }}
             />
           </Box>
+          {isWarnSlippage && (
+            <SlippageWarning
+              title={t`Higher than default slippage`}
+              desc={t`Default value is ${warnValue}%,the current slippage setting is higher than the default value, which means you are willing to accept a worse final execution price.`}
+              doNotChecked={notRemindAgainSlippageHigher}
+              onChangeDoNotChecked={(notRemindAgainSlippageHigher) =>
+                useSwapSettingStore.setState({
+                  notRemindAgainSlippageHigher,
+                })
+              }
+              sx={{
+                mt: 16,
+              }}
+            />
+          )}
         </Box>
       }
       sx={{
         p: 0,
       }}
       arrow={false}
-      placement="bottom-end"
+      placement="top-end"
     >
-      <HoverAddBackground
+      <Box
         sx={{
+          display: 'flex',
           width: 'max-content',
-          alignItems: 'right',
+          alignItems: 'center',
+          gap: 4,
           margin: theme.spacing(0, 0, 0, 'auto'),
-          p: theme.spacing(4, 12),
-          borderRadius: 20,
-          backgroundColor: 'background.paperDarkContrast',
+          ...(!disabled && {
+            cursor: 'pointer',
+            '&:hover': {
+              opacity: 0.5,
+            },
+          }),
           ...sx,
         }}
       >
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 4,
+            color: isWarnSlippage ? 'warning.main' : undefined,
+          }}
+        >
+          {isWarnSlippage && (
+            <Box
+              component={Alarm}
+              sx={{
+                width: 18,
+                height: 18,
+              }}
+            />
+          )}
+          {isAuto
+            ? autoValue
+            : value && new BigNumber(value).times(100).toNumber()}
+          %
+        </Box>
         <Box
           component={Setting}
           sx={{
@@ -208,7 +247,7 @@ export default function SlippageSetting({
             },
           }}
         />
-      </HoverAddBackground>
+      </Box>
     </Tooltip>
   );
 }

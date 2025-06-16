@@ -59,6 +59,8 @@ export function SwapWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>
       <Swap
+        slippageQuickInput={props.slippageQuickInput}
+        showPreviewInfoCard={props.showPreviewInfoCard}
         getAutoSlippage={props.getAutoSlippage}
         onPayTokenChange={props.onPayTokenChange}
         onReceiveTokenChange={props.onReceiveTokenChange}

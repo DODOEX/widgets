@@ -55,6 +55,7 @@ function DialogBase({
         backgroundColor: 'background.paper',
         borderRadius: 16,
         height,
+        overflow: open ? undefined : 'hidden',
       }}
       data-testid={testId}
       data-active={open ? '1' : '0'}

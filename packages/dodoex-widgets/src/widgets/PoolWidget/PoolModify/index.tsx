@@ -112,7 +112,11 @@ export default function PoolModify({
       poolDetail?.quoteToken?.decimals,
     ),
   );
-  if (!state.slippageCoefficient && pmmStateQuery.data?.pmmParamsBG?.k) {
+  if (
+    !state.slippageCoefficient &&
+    pmmStateQuery.isFetchedAfterMount &&
+    pmmStateQuery.data?.pmmParamsBG?.k
+  ) {
     const slippageCoefficientNew = pmmStateQuery.data.pmmParamsBG.k.toString();
     const isSlippageCoefficientCustomized = !getDefaultSlippageCoefficientList({
       selectedVersion: state.selectedVersion,
@@ -136,7 +140,11 @@ export default function PoolModify({
       payload: pmmStateQuery.data.quoteReserve.toString(),
     });
   }
-  if (!state.fixedRatioPrice && pmmStateQuery.data) {
+  if (
+    !state.fixedRatioPrice &&
+    pmmStateQuery.isFetchedAfterMount &&
+    pmmStateQuery.data
+  ) {
     dispatch({
       type: Types.UpdateFixedRatioPrice,
       payload: pmmStateQuery.data.pmmParamsBG.i.toString(),
@@ -150,7 +158,7 @@ export default function PoolModify({
       poolDetail?.type,
     ),
   );
-  if (!state.feeRate && feeRateQuery.data) {
+  if (!state.feeRate && feeRateQuery.isFetchedAfterMount && feeRateQuery.data) {
     const feeRateNew = feeRateQuery.data.times(100).toString();
     const feeRateList = getFeeRateList();
     const isFeeRateCustomized =

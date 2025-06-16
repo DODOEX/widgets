@@ -1,4 +1,4 @@
-import { Box } from '@dodoex/components';
+import { Box, useTheme } from '@dodoex/components';
 import { BrushBehavior, brushX, D3BrushEvent, ScaleLinear, select } from 'd3';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { brushHandleAccentPath, brushHandlePath, OffScreenHandle } from './svg';
@@ -92,13 +92,14 @@ const Tooltip = ({
   dominantBaseline: string;
   children: React.ReactNode;
 }) => {
+  const theme = useTheme();
   return (
     <Box
       component="text"
       y={y}
       textAnchor="middle"
       fontSize="13px"
-      fill={themeColor.neutral1}
+      fill={theme.palette.text.primary}
       transform={transform}
       dominantBaseline={dominantBaseline}
     >

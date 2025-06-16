@@ -11,7 +11,6 @@ import { TokenCard } from '../../../components/Swap/components/TokenCard';
 import { TokenInfo } from '../../../hooks/Token';
 import { SwitchBox } from '../../../components/Swap/components/SwitchBox';
 import Ratio from './Ratio';
-import Setting from './Setting';
 import { useUniV2CreatePairs } from '../hooks/useUniV2CreatePairs';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
@@ -306,20 +305,14 @@ export default function AMMV2Create() {
                 showPercentage
                 readOnly={needToken}
               />
-              <Setting
-                slippage={slippage}
-                onChangeSlippage={setSlippage}
-                disabled={needToken}
-                sx={{
-                  mt: 8,
-                }}
-              />
               <Ratio
                 baseToken={baseToken}
                 quoteToken={quoteToken}
                 loading={priceLoading}
                 midPrice={price}
                 shareOfPool={shareOfPool}
+                slippage={slippage}
+                setSlippage={setSlippage}
               />
               {!!isExists && (
                 <Box
