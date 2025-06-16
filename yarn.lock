@@ -1857,10 +1857,10 @@
     ethers "^6.13.2"
     https-proxy-agent "^7.0.5"
 
-"@dodoex/dodo-contract-request@1.15.0":
-  version "1.15.0"
-  resolved "https://registry.npmjs.org/@dodoex/dodo-contract-request/-/dodo-contract-request-1.15.0.tgz"
-  integrity sha512-5PnMLr/04FbUpc9cDJfZonKqQF8JoIcXSNlFLYcA26oo+kTjJCiaoB5NzmFtl0Zi9e8KuFl0J7WHOwFBjehCfA==
+"@dodoex/dodo-contract-request@1.17.0":
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/@dodoex/dodo-contract-request/-/dodo-contract-request-1.17.0.tgz#b9e92d6929c6dafd2bd2d4be2d9edfc86cb4b80d"
+  integrity sha512-XhspgqvYHBfILYI1gqNE17sEj9M1qMExaApr+AzGJ5u5LRfQzA+3SYaZJ8f2Yjm9tTaAkIk27o0HSLDv8Zcjsw==
   dependencies:
     typescript "^5"
 
@@ -9758,7 +9758,7 @@ cli-table3@^0.6.1:
 
 cli-table3@^0.6.2:
   version "0.6.5"
-  resolved "https://registry.npmjs.org/cli-table3/-/cli-table3-0.6.5.tgz"
+  resolved "https://registry.yarnpkg.com/cli-table3/-/cli-table3-0.6.5.tgz#013b91351762739c16a9567c21a04632e449bf2f"
   integrity sha512-+W/5efTR7y5HRD7gACw9yQjqMVvEMLBHmboM/kPWam+H+Hmyrgjh6YncVKK122YZkXrLudzTuAukUw9FnMf7IQ==
   dependencies:
     string-width "^4.2.0"
