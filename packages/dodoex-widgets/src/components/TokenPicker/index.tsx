@@ -96,12 +96,18 @@ export default function TokenPicker({
   }, [value, visible]);
 
   useEffect(() => {
+    let time = 0;
     if (visible) {
-      if (ref.current) {
-        // 16 is spacing
-        setFixedSizeHeight(ref.current.offsetHeight - 16);
-      }
+      time = window.setTimeout(() => {
+        if (ref.current) {
+          // 16 is spacing
+          setFixedSizeHeight(ref.current.offsetHeight - 16);
+        }
+      }, 300);
     }
+    return () => {
+      clearTimeout(time);
+    };
   }, [ref, visible, selectChainId]);
 
   const searchOtherAddressQuery = useQuery({

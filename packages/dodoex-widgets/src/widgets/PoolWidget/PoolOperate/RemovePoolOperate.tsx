@@ -8,7 +8,7 @@ import {
 } from '../../../components/Swap/components/TokenCard';
 import { useLiquidityOperateAmount } from './hooks/useLiquidityOperateAmount';
 import Ratio from './components/Ratio';
-import SlippageSetting, { useSlipper } from './components/SlippageSetting';
+import { useSlipper } from './components/SlippageSetting';
 import ComparePrice from './components/ComparePrice';
 import {
   GetMigrationPairAndMining,
@@ -437,21 +437,15 @@ export function RemovePoolOperate({
                 </Trans>
               </Box>
             )}
-            <SlippageSetting
-              value={slipper}
-              onChange={setSlipper}
-              disabled={!canOperate}
-              type={pool?.type}
-              sx={{
-                margin: 0,
-              }}
-            />
           </Box>
           <Ratio
             pool={pool as OperatePool}
             addPortion={addPortion}
             midPrice={midPrice}
             shareOfPool={uniV2Pair?.shareOfPool}
+            slipper={slipper}
+            setSlipper={setSlipper}
+            canOperate={canOperate}
           />
         </LoadingSkeleton>
         {!!pool && (

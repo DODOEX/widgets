@@ -12,6 +12,9 @@ import { Trans } from '@lingui/macro';
 import { Switch } from '@dodoex/icons';
 import { TokenInfo } from '../../../hooks/Token';
 import { formatReadableNumber } from '../../../utils/formatter';
+import SlippageSetting, {
+  useSlipper,
+} from '../PoolOperate/components/SlippageSetting';
 
 export function RatioPrice({
   baseToken,
@@ -140,6 +143,8 @@ export default function Ratio({
   midPrice,
   shareOfPool,
   sx,
+  slippage,
+  setSlippage,
 }: {
   baseToken?: TokenInfo;
   quoteToken?: TokenInfo;
@@ -147,9 +152,12 @@ export default function Ratio({
   midPrice?: BigNumber | null;
   shareOfPool?: string;
   sx?: BoxProps['sx'];
+  slippage: ReturnType<typeof useSlipper>['slipper'];
+  setSlippage: ReturnType<typeof useSlipper>['setSlipper'];
 }) {
   const theme = useTheme();
   const disabled = !baseToken || !quoteToken;
+  const type = 'AMMV2';
 
   return (
     <Box
@@ -235,6 +243,61 @@ export default function Ratio({
             }}
           >
             {shareOfPool ? shareOfPool : '-%'}
+          </LoadingSkeleton>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          px: 12,
+          py: 4,
+          minHeight: 36,
+          typography: 'body2',
+          borderStyle: 'solid',
+          borderWidth: theme.spacing(1, 0, 0),
+          borderColor: 'border.main',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            color: 'text.secondary',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          <Trans>Slippage Tolerance</Trans>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            fontWeight: 600,
+            textAlign: 'right',
+            ml: 8,
+            overflow: 'hidden',
+          }}
+        >
+          <LoadingSkeleton
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              fontWeight: 600,
+              overflow: 'hidden',
+            }}
+            loading={loading}
+            loadingProps={{
+              width: 50,
+            }}
+          >
+            <SlippageSetting
+              value={slippage}
+              onChange={setSlippage}
+              disabled={disabled}
+              type={type}
+            />
           </LoadingSkeleton>
         </Box>
       </Box>

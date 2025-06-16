@@ -16,6 +16,7 @@ export interface SwapSettingsDialogProps {
   onClose: () => void;
   fromToken?: TokenInfo | null;
   toToken?: TokenInfo | null;
+  slippageQuickInput?: boolean;
 }
 
 export function SwapSettingsDialog({
@@ -23,6 +24,7 @@ export function SwapSettingsDialog({
   onClose,
   fromToken,
   toToken,
+  slippageQuickInput,
 }: SwapSettingsDialogProps) {
   const theme = useTheme();
   const { ddl, expertMode, disableIndirectRouting } = useSwapSettingStore();
@@ -75,7 +77,11 @@ export function SwapSettingsDialog({
         }}
         ref={scrollRef}
       >
-        <SlippageSetting fromToken={fromToken} toToken={toToken} />
+        <SlippageSetting
+          fromToken={fromToken}
+          toToken={toToken}
+          slippageQuickInput={slippageQuickInput}
+        />
         <Box
           sx={{
             mt: 24,

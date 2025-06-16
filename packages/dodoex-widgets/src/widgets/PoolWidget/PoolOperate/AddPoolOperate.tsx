@@ -8,7 +8,6 @@ import {
 } from '../../../components/Swap/components/TokenCard';
 import { useLiquidityOperateAmount } from './hooks/useLiquidityOperateAmount';
 import Ratio from './components/Ratio';
-import SlippageSetting, { useSlipper } from './components/SlippageSetting';
 import ComparePrice from './components/ComparePrice';
 import { OperatePool } from './types';
 import OperateBtn from './components/OperateBtn';
@@ -24,13 +23,12 @@ import ConfirmDialog from '../AMMV2Create/ConfirmDialog';
 import { useQuery } from '@tanstack/react-query';
 import { poolApi } from '../utils';
 import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
-import { PageType, useRouterStore } from '../../../router';
-import { PoolTab } from '../PoolList/hooks/usePoolListTabs';
 import {
   getUniswapV2Router02ContractAddressByChainId,
   getUniswapV2Router02FixedFeeContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
 import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
+import { useSlipper } from './components/SlippageSetting';
 
 export function AddPoolOperate({
   submittedBack: submittedBackProps,
@@ -202,17 +200,14 @@ export function AddPoolOperate({
             mt: 8,
           }}
         >
-          <SlippageSetting
-            value={slipper}
-            onChange={setSlipper}
-            disabled={!canOperate}
-            type={pool?.type}
-          />
           <Ratio
             pool={pool as OperatePool}
             addPortion={addPortion}
             midPrice={midPrice}
             shareOfPool={uniV2Pair?.shareOfPool}
+            slipper={slipper}
+            setSlipper={setSlipper}
+            canOperate={canOperate}
           />
         </LoadingSkeleton>
       </Box>

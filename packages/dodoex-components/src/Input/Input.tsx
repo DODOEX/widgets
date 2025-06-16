@@ -148,12 +148,11 @@ export default forwardRef<HTMLInputElement, InputProps>(function Input(
         height={height}
         suffixGap={suffixGap}
         error={error}
-        sx={sx}
         data-testid={dataTestId}
         {...props}
       />
     ),
-    [fullWidth, height, suffixGap, error, dataTestId, JSON.stringify(sx)],
+    [fullWidth, height, suffixGap, error, dataTestId],
   );
   return (
     <>
@@ -171,6 +170,7 @@ export default forwardRef<HTMLInputElement, InputProps>(function Input(
             sx: inputSx,
           },
         }}
+        sx={sx}
         {...attrs}
         ref={ref}
       />

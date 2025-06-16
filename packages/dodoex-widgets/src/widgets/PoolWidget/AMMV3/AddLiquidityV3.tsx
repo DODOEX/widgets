@@ -1,5 +1,5 @@
 import { alpha, Box, Button, ButtonBase, useTheme } from '@dodoex/components';
-import { t } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
@@ -611,12 +611,39 @@ export default function AddLiquidityV3({
                 locked={depositBDisabled}
               />
             </Box>
-            <SlippageSetting
-              value={slipper}
-              onChange={setSlipper}
-              disabled={false}
-              type="AMMV3"
-            />
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                mt: 8,
+                px: 12,
+                height: 36,
+                borderRadius: 8,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                borderColor: theme.palette.border.main,
+              }}
+            >
+              <Box
+                sx={{
+                  typography: 'body2',
+                  color: 'text.secondary',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <Trans>Slippage Tolerance</Trans>
+              </Box>
+              <SlippageSetting
+                value={slipper}
+                onChange={setSlipper}
+                disabled={false}
+                type="AMMV3"
+                sx={{
+                  mt: 0,
+                }}
+              />
+            </Box>
           </DynamicSection>
         </Box>
 

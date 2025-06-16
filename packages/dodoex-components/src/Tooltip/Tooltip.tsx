@@ -257,6 +257,8 @@ export default function Tooltip({
           onMouseEnter={handleOverTooltip}
           onMouseLeave={handleOutTooltip}
           onClick={(e) => e.stopPropagation()}
+          onPointerDown={(e) => e.stopPropagation()}
+          onTouchEnd={(e) => e.stopPropagation()}
         >
           {title}
         </Box>
@@ -295,6 +297,8 @@ export default function Tooltip({
             handleChangeOpen(false);
           }
         }}
+        // Avoid conflicts with onClick's stopPropagation
+        mouseEvent="onPointerDown"
       >
         {cloneElement(children, childrenProps)}
       </ClickAwayListener>

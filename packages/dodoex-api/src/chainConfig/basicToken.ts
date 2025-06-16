@@ -191,6 +191,9 @@ export const basicTokenMap: {
   },
   [ChainId.PHAROS_TESTNET]: {
     ...DEFAULT_BASIC_TOKEN,
+    symbol: 'PHRS',
+    name: 'PHRS',
+    wrappedTokenSymbol: 'WPHRS',
     wrappedTokenAddress: '0xb056a6b9f61b2c0ebf4906aac341bd118a1763fe',
   },
 };

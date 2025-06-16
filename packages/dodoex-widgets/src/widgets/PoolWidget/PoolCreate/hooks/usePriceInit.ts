@@ -9,12 +9,14 @@ export function usePriceInit({
   baseToken,
   quoteToken,
   dispatch,
+  isInitPrice,
 }: {
   isSingleTokenVersion: boolean;
   leftTokenAddress: StateProps['leftTokenAddress'];
   baseToken: StateProps['baseToken'];
   quoteToken: StateProps['quoteToken'];
   dispatch: Dispatch<Actions>;
+  isInitPrice?: boolean;
 }) {
   const tokens = useMemo(() => {
     if (baseToken && quoteToken) {
@@ -65,7 +67,7 @@ export function usePriceInit({
     if (isSingleTokenVersion) {
       return;
     }
-    if (baseTokenFiatPrice) {
+    if (baseTokenFiatPrice && isInitPrice) {
       dispatch({
         type: Types.InitFixedRatioPrice,
         payload: {
@@ -74,7 +76,13 @@ export function usePriceInit({
         },
       });
     }
-  }, [baseTokenFiatPrice, dispatch, isSingleTokenVersion, quoteTokenFiatPrice]);
+  }, [
+    baseTokenFiatPrice,
+    dispatch,
+    isSingleTokenVersion,
+    quoteTokenFiatPrice,
+    isInitPrice,
+  ]);
 
   return {
     fiatPriceLoading: fiatPriceQuery.isLoading || fiatPriceQuery.isPending,
