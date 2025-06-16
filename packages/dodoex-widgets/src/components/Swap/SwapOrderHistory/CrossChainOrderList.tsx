@@ -96,7 +96,7 @@ export default function CrossChainOrderList({
                   component="th"
                   sx={{
                     width: 140,
-                    textAlign: 'center !important',
+                    textAlign: 'right !important',
                   }}
                 >
                   <Trans>Details</Trans>

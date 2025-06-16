@@ -426,7 +426,6 @@ export default function SlippageSetting({
                 }
                 sx={{
                   mt: 8,
-                  overflow: 'hidden',
                 }}
               />
             ) : (

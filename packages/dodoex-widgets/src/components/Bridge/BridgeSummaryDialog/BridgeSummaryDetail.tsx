@@ -354,7 +354,7 @@ export default function BridgeSummaryDetail({
                       color: theme.palette.text.primary,
                     }}
                   >
-                    Eddy
+                    ZUNO
                   </Box>
                   <Box
                     sx={{

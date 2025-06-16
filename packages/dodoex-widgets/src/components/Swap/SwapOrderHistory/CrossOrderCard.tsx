@@ -598,7 +598,7 @@ export default function CrossOrderCard({
             sx={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'flex-end',
               gap: 8,
             }}
           >

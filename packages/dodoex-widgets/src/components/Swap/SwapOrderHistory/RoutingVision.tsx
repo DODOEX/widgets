@@ -1,6 +1,5 @@
-import { useTheme, Box, BoxProps } from '@dodoex/components';
+import { Box, BoxProps, useTheme } from '@dodoex/components';
 import React from 'react';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { TokenInfo } from '../../../hooks/Token';
 import { MidPathType } from '../../../hooks/useRouteVisionData';
 import TokenLogo from '../../TokenLogo';
@@ -68,7 +67,7 @@ function DotLineTriangle() {
         flexDirection: 'column',
         alignItems: 'center',
         flexShrink: 0,
-        ml: 37 - 5,
+        ml: 7,
       }}
     >
       <Dot />

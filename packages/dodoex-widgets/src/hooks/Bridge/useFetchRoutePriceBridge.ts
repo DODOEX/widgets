@@ -6,9 +6,7 @@ import { useUserOptions } from '../../components/UserOptionsProvider';
 import { getFallbackAddress } from '../../constants/address';
 import { chainListMap } from '../../constants/chainList';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
-import { useDefaultSlippage } from '../setting/useDefaultSlippage';
 import { TokenInfo } from '../Token';
-import { useGlobalState } from '../useGlobalState';
 import { useTokenState } from '../useTokenState';
 import { generateBridgeStep } from './utils';
 
@@ -204,6 +202,8 @@ export interface FetchRoutePrice {
   fromToken: TokenInfo | null;
   toToken: TokenInfo | null;
   fromAmount: string;
+  enabled: boolean;
+  slippage: string | number;
 }
 export function useFetchRoutePriceBridge({
   fromAccount,
@@ -211,12 +211,11 @@ export function useFetchRoutePriceBridge({
   fromToken,
   toToken,
   fromAmount,
+  enabled,
+  slippage,
 }: FetchRoutePrice) {
   const { tokenList } = useTokenState();
   const { API_DOMAIN } = useUserOptions();
-
-  const { defaultSlippage } = useDefaultSlippage(true);
-  const slippage = useGlobalState((state) => state.slippage || defaultSlippage);
 
   const fromAmountBN = useMemo(() => {
     if (!fromToken || !fromAmount) {
@@ -233,7 +232,7 @@ export function useFetchRoutePriceBridge({
     getFallbackAddress(fromToken?.chainId);
   const toAddress =
     toAccount?.appKitAccount?.address ?? getFallbackAddress(toToken?.chainId);
-  const { data, error, isPending, refetch } = useQuery({
+  const { data, error, isLoading, refetch } = useQuery({
     // ...query,
     retry: false,
     queryKey: [
@@ -321,13 +320,14 @@ export function useFetchRoutePriceBridge({
       !!fromAmountBN &&
       fromAmountBN.isFinite() &&
       fromAmountBN.gt(0) &&
-      fromToken.chainId !== toToken.chainId,
+      fromToken.chainId !== toToken.chainId &&
+      enabled,
     // enabled: false,
     // initialData: routesExample.data,
   });
 
   const { status, failedReason, bridgeRouteList } = useMemo(() => {
-    if (isPending) {
+    if (isLoading) {
       return {
         status: RoutePriceStatus.Loading,
         bridgeRouteList: [],
@@ -335,7 +335,7 @@ export function useFetchRoutePriceBridge({
     }
     if (error) {
       console.error('error:', error);
-      let failedReason = error.message;
+      let failedReason: string | undefined;
       if (error.message.includes('NOT_ROUTE_MIN_AMOUNT:min-')) {
         const minAmount = error.message.split('min-')[1];
         if (minAmount) {
@@ -460,7 +460,7 @@ export function useFetchRoutePriceBridge({
       status: RoutePriceStatus.Initial,
       bridgeRouteList: [],
     };
-  }, [isPending, error, data, tokenList]);
+  }, [isLoading, error, data, tokenList]);
 
   return {
     status,

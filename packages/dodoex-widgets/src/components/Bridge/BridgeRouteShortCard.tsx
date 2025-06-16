@@ -131,7 +131,6 @@ export default function BridgeRouteShortCard({
             py: 7,
             borderRadius: 12,
             border: `solid 1px ${theme.palette.border.main}`,
-            backgroundColor: theme.palette.background.paper,
           }}
         >
           <Box

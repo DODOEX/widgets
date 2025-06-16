@@ -28,6 +28,12 @@ import { useFetchRoutePriceBridge } from '../../hooks/Bridge/useFetchRoutePriceB
 import { useSendRoute } from '../../hooks/Bridge/useSendRoute';
 import { useSwitchBridgeOrSwapSlippage } from '../../hooks/Bridge/useSwitchBridgeOrSwapSlippage';
 import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
+import { useFetchETHBalance } from '../../hooks/contract';
+import {
+  GetAutoSlippage,
+  useSetAutoSlippage,
+} from '../../hooks/setting/useSetAutoSlippage';
+import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
 import useInflights from '../../hooks/Submission/useInflights';
 import {
   RoutePriceStatus,
@@ -35,6 +41,7 @@ import {
   useFetchRoutePrice,
   useMarginAmount,
 } from '../../hooks/Swap';
+import { useBridgeSlippage } from '../../hooks/Swap/useBridgeSlippage';
 import { useInitDefaultToken } from '../../hooks/Swap/useInitDefaultToken';
 import { usePrivacySwapStatus } from '../../hooks/Swap/usePrivacySwapStatus';
 import {
@@ -45,11 +52,6 @@ import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
 import { TokenInfo } from '../../hooks/Token/type';
 import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch';
 import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
-import { useFetchETHBalance } from '../../hooks/contract';
-import {
-  GetAutoSlippage,
-  useSetAutoSlippage,
-} from '../../hooks/setting/useSetAutoSlippage';
 import { useGlobalState } from '../../hooks/useGlobalState';
 import { formatTokenAmountNumber, namespaceToTitle } from '../../utils';
 import { formatReadableNumber } from '../../utils/formatter';
@@ -59,14 +61,13 @@ import ErrorMessageDialog from '../ErrorMessageDialog';
 import TokenLogo from '../TokenLogo';
 import { QuestionTooltip } from '../Tooltip';
 import { useUserOptions } from '../UserOptionsProvider';
+import FiatEntryAndGasRefuel from './components/FiatEntryAndGasRefuel';
 import { ReviewDialog } from './components/ReviewDialog';
 import { SettingsDialog } from './components/SettingsDialog';
 import { SwapSettingsDialog } from './components/SwapSettingsDialog';
 import { SwitchBox } from './components/SwitchBox';
 import { TokenCardSwap } from './components/TokenCard/TokenCardSwap';
 import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
-import FiatEntryAndGasRefuel from './components/FiatEntryAndGasRefuel';
-import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
 
 const debounceTime = 300;
 
@@ -172,6 +173,8 @@ export function Swap({
       toToken,
     });
 
+  const { slippage: slippageBridge } = useBridgeSlippage();
+
   const {
     privacySwapSupplierEndpoints,
     privacySwapEnable,
@@ -186,6 +189,15 @@ export function Swap({
   const fromEtherTokenQuery = useFetchETHBalance(fromToken?.chainId);
 
   const {
+    sendRouteLoading,
+    sendRouteError,
+    setSendRouteError,
+    bridgeOrderTxRequest,
+
+    handleClickSend: handleSendBridgeRoute,
+  } = useSendRoute();
+
+  const {
     bridgeRouteList,
     status: bridgeRouteStatus,
     failedReason,
@@ -195,6 +207,8 @@ export function Swap({
     fromAmount: fromAmt,
     fromAccount,
     toAccount,
+    enabled: !bridgeSummaryShow && !sendRouteLoading,
+    slippage: slippageBridge,
   });
 
   const selectedRoute = useMemo(() => {
@@ -274,15 +288,6 @@ export function Swap({
       };
     return rawBrief;
   }, [rawBrief]);
-
-  const {
-    sendRouteLoading,
-    sendRouteError,
-    setSendRouteError,
-    bridgeOrderTxRequest,
-
-    handleClickSend: handleSendBridgeRoute,
-  } = useSendRoute();
 
   const showSwitchSlippageTooltip = useSwitchBridgeOrSwapSlippage(isBridge);
 
@@ -583,6 +588,10 @@ export function Swap({
       );
     }
 
+    if (isBridge && bridgeRouteStatus === RoutePriceStatus.Initial) {
+      return '-';
+    }
+
     if (
       resPriceStatus === RoutePriceStatus.Loading ||
       (isBridge && bridgeRouteStatus === RoutePriceStatus.Loading)
@@ -602,6 +611,7 @@ export function Swap({
         </Box>
       );
     }
+
     if (isUnSupportChain) {
       return (
         <>
@@ -617,6 +627,7 @@ export function Swap({
         </>
       );
     }
+
     if (
       !isBridge &&
       displayingFromAmt &&
@@ -1132,7 +1143,7 @@ export function Swap({
             {isBridge
               ? selectedRoute?.slippage
                 ? selectedRoute.slippage * 100
-                : '-'
+                : (slippageBridge ?? '-')
               : slippageSwap}
             %
           </Box>

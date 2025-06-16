@@ -125,6 +125,7 @@ function SlippageCurveChart({
         <Box
           sx={{
             flex: 1,
+            // overflow: 'hidden',
           }}
           ref={ref}
         >

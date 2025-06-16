@@ -46,7 +46,9 @@ function CurveChart({
         height: 105,
         flex: 1,
         [`& .${dotClassName}`]: {
-          display: 'none',
+          // 这里 none 会导致 packages/dodoex-widgets/src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/index.tsx 中的 el.children[0].getBoundingClientRect().y 得到 y=0 导致滑块无法正常显示
+          // https://www.notion.so/dodotopia/swap-Trade-Settings-Advanced-bug-214080d974e780d09aade86af1a97dea
+          // display: 'none',
         },
       }}
       ref={wrapperRef}

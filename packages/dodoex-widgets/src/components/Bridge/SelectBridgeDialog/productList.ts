@@ -14,7 +14,7 @@ import { ReactComponent as squidLogoUrl } from '../../../assets/bridge/squid.svg
 import { ReactComponent as stargateLogoUrl } from '../../../assets/bridge/stargate.svg';
 import { ReactComponent as symbiosisLogoUrl } from '../../../assets/bridge/symbiosis.svg';
 import { ReactComponent as synapseLogoUrl } from '../../../assets/bridge/synapse.svg';
-import { ReactComponent as ZetachainLogoUrl } from '../../../assets/bridge/zetachain.svg';
+import { ReactComponent as ZuuoLogoUrl } from '../../../assets/bridge/zuuo.svg';
 import { ReactComponent as mantaLogoUrl } from '../../../assets/logo/networks/manta.svg';
 import { ReactComponent as scrollLogoUrl } from '../../../assets/logo/networks/scroll.svg';
 
@@ -111,7 +111,7 @@ export const productList = [
   },
   {
     id: 'zetachain',
-    logoURI: ZetachainLogoUrl,
-    name: 'Eddy',
+    logoURI: ZuuoLogoUrl,
+    name: 'ZUNO',
   },
 ];
