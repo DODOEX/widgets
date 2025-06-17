@@ -597,7 +597,7 @@ export function RemovePoolOperate({
       >
         <Box>
           <Box>
-            {t`Price discrepancy ${lqAndDodoCompareText} between liquidity pool and the quote price on ZUUO.`}
+            {t`Price discrepancy ${lqAndDodoCompareText} between liquidity pool and the quote price on ZUNO.`}
           </Box>
           <Box>
             {t`There is risk of being arbitraged if adding this liquidity.`}

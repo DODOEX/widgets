@@ -44,7 +44,7 @@ export function DepthChartWrapper({
     return null;
   }
   const title = t`Emulator`;
-  const titleQuestion = t`The liquidity of ZUUO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only.`;
+  const titleQuestion = t`The liquidity of ZUNO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only.`;
 
   return (
     <>

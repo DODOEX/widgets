@@ -61,7 +61,7 @@ export default function ComparePrice({
         <Trans>Current liquidity pool token price</Trans>
         {` 1 ${baseToken?.symbol} = ${midPriceText} ${
           quoteToken?.symbol
-        } ${t`differs from the price quoted by ZUUO by ${lqAndDodoCompareText}`}`}
+        } ${t`differs from the price quoted by ZUNO by ${lqAndDodoCompareText}`}`}
       </Box>
     </Box>
   );

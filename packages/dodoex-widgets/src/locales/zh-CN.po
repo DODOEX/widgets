@@ -13,10 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:21
-msgid "ZUUO provides a variety of pool versions to suit your needs."
-msgstr ""
-
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:70
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:137
 msgid "The smaller the slippage coefficient, the lower the slippage for traders, and the deeper the market depth."
@@ -65,19 +61,10 @@ msgstr ""
 msgid "{0} pending"
 msgstr "{0} 等待中"
 
-#: src/components/chart/i18n.ts:23
-#: src/widgets/PoolWidget/PoolCreate/components/DepthChartWrapper.tsx:47
-msgid "The liquidity of ZUUO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only."
-msgstr ""
-
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:494
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:344
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:728
 msgid "Removing"
-msgstr ""
-
-#: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:64
-msgid "differs from the price quoted by ZUUO by {lqAndDodoCompareText}"
 msgstr ""
 
 #: src/components/chart/i18n.ts:31
@@ -288,10 +275,6 @@ msgstr ""
 msgid "The token amount is calculated by initial price."
 msgstr ""
 
-#: src/components/Swap/index.tsx:1314
-msgid "Powered by ZUUO protocol"
-msgstr ""
-
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:159
 msgid "Max price"
 msgstr ""
@@ -416,10 +399,6 @@ msgstr "基础手续费"
 
 #: src/widgets/MiningWidget/MiningList/operate-area/InputArea.tsx:122
 msgid "LP Balance"
-msgstr ""
-
-#: src/hooks/Submission/getExecutionErrorMsg.ts:21
-msgid "SafeERC20: low-level call failed. Please contact the ZUUO team."
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:46
@@ -1112,6 +1091,10 @@ msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 msgid "Volume (1D)"
 msgstr ""
 
+#: src/components/Swap/index.tsx:1314
+msgid "Powered by ZUNO protocol"
+msgstr ""
+
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:482
 msgid "Estimated Time"
 msgstr "预计时间"
@@ -1394,11 +1377,6 @@ msgstr ""
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:528
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:633
 msgid "Price Range"
-msgstr ""
-
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:295
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:600
-msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on ZUUO."
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:143
@@ -1695,6 +1673,10 @@ msgstr ""
 msgid "Privacy Swap can effectively protect users from sandwich attacks that could come about due to the differences between the slippage settings and the current price in the liquidity pool. This feature is free for a limited time."
 msgstr ""
 
+#: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:21
+msgid "ZUNO provides a variety of pool versions to suit your needs."
+msgstr ""
+
 #: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:53
 msgid "fee tier"
 msgstr ""
@@ -1789,6 +1771,11 @@ msgstr "输入代币数量"
 
 #: src/widgets/PoolWidget/PoolDetail/components/TotalLiquidity.tsx:180
 msgid "Ratio"
+msgstr ""
+
+#: src/components/chart/i18n.ts:23
+#: src/widgets/PoolWidget/PoolCreate/components/DepthChartWrapper.tsx:47
+msgid "The liquidity of ZUNO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only."
 msgstr ""
 
 #: src/components/Swap/index.tsx:893
@@ -2035,6 +2022,10 @@ msgstr ""
 msgid "Total Rewards"
 msgstr ""
 
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:104
+msgid "The dynamic slippage is provided by ZUNO team through analyzing historical transactions."
+msgstr ""
+
 #: src/components/ConnectWallet/NeedConnectButton.tsx:73
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:55
 #: src/widgets/PoolWidget/AMMV3/hooks/useDerivedV3BurnInfo.tsx:96
@@ -2073,6 +2064,10 @@ msgstr ""
 
 #: src/components/Bridge/RouteVisionModal.tsx:136
 msgid "Route"
+msgstr ""
+
+#: src/hooks/Submission/getExecutionErrorMsg.ts:21
+msgid "SafeERC20: low-level call failed. Please contact the ZUNO team."
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:114
@@ -2158,6 +2153,11 @@ msgstr "跨链桥概览"
 msgid "{0}% fee tier"
 msgstr ""
 
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:295
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:600
+msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on ZUNO."
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:88
 msgid "Pool Creation Confirmation"
 msgstr ""
@@ -2236,6 +2236,10 @@ msgstr ""
 msgid "Manage"
 msgstr ""
 
+#: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:64
+msgid "differs from the price quoted by ZUNO by {lqAndDodoCompareText}"
+msgstr ""
+
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:174
 msgid "Source"
 msgstr "源"
@@ -2263,10 +2267,6 @@ msgstr ""
 #: src/hooks/Submission/getExecutionErrorMsg.ts:25
 msgid "User denied transaction signature."
 msgstr "用户拒绝交易签名."
-
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:104
-msgid "The dynamic slippage is provided by ZUUO team through analyzing historical transactions."
-msgstr ""
 
 #: src/widgets/MiningWidget/MiningList/components/ShareModeSelect.tsx:30
 msgid "Copy link"

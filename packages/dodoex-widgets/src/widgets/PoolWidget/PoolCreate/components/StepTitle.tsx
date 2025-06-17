@@ -18,7 +18,7 @@ export function StepTitle({
   switch (currentStep) {
     case 0:
       titleLabel = t`Select Pool Version`;
-      descriptionLabel = t`ZUUO provides a variety of pool versions to suit your needs.`;
+      descriptionLabel = t`ZUNO provides a variety of pool versions to suit your needs.`;
       break;
     case 1:
       titleLabel = t`Parameter Settings`;

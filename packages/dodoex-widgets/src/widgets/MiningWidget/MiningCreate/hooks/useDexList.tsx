@@ -14,7 +14,7 @@ export function useDexList() {
   const dexListObj: Record<DexKey, DexConfigI> = React.useMemo(
     () => ({
       dodo: {
-        name: dappMetadata?.logoUrl ? dappMetadata.name : 'ZUUO Dex',
+        name: dappMetadata?.logoUrl ? dappMetadata.name : 'ZUNO Dex',
         Icon: dappMetadata?.logoUrl
           ? (
               props: React.SVGProps<SVGSVGElement> & {

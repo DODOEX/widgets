@@ -102,7 +102,7 @@ export default function SlippageSetting({
             title={
               <>
                 <Trans>
-                  The dynamic slippage is provided by ZUUO team through
+                  The dynamic slippage is provided by ZUNO team through
                   analyzing historical transactions.
                 </Trans>
                 <br />

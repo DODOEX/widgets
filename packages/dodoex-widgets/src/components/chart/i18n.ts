@@ -20,7 +20,7 @@ export function chartT(key: string, params: any) {
     case 'pool.create.set-pool.emulator.title':
       return t`Emulator`;
     case 'pool.create.set-pool.emulator.title.question':
-      return t`The liquidity of ZUUO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only.`;
+      return t`The liquidity of ZUNO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only.`;
 
     // liquidity-chart
     case 'pool.chart.liquidity-chart-tip':

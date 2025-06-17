@@ -1,7 +1,7 @@
 import { Box, useTheme } from '@dodoex/components';
 import { ReactComponent as ChainFlip } from './ChainFlip.svg';
 import { ReactComponent as ThorSwap } from './ThorSwap.svg';
-import { ReactComponent as ZUUO } from './ZUUO.svg';
+import { ReactComponent as ZUNO } from './ZUNO.svg';
 
 export interface CompareRouteProps {
   feeUSD: string | null;
@@ -19,7 +19,7 @@ const compareRouteList = [
     id: 'ZUNO',
     name: 'ZUNO',
     selected: true,
-    ICON: <ZUUO />,
+    ICON: <ZUNO />,
     width: 48,
     height: 51,
   },
