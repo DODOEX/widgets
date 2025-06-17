@@ -1,5 +1,5 @@
 import { getAddress, getCreate2Address } from '@ethersproject/address';
-import { ChainId } from '@dodoex/api';
+import { basicTokenMap, ChainId } from '@dodoex/api';
 import { scanUrlDomainMap } from '../constants/chains';
 import { keccak256, pack } from '@ethersproject/solidity';
 import { TokenInfo } from '../hooks/Token';
@@ -139,7 +139,17 @@ export function sortsBefore(tokenA: TokenInfo, tokenB: TokenInfo): boolean {
   if (tokenA.chainId !== tokenB.chainId) {
     throw new Error('token is not in the same chain');
   }
-  return tokenA.address.toLowerCase() < tokenB.address.toLowerCase();
+  let tokenAAddressLow = tokenA.address.toLowerCase();
+  let tokenBAddressLow = tokenB.address.toLowerCase();
+  const basicAToken = basicTokenMap[tokenA.chainId as ChainId];
+  const basicBToken = basicTokenMap[tokenB.chainId as ChainId];
+  if (tokenAAddressLow === basicAToken?.address.toLowerCase()) {
+    tokenAAddressLow = basicAToken.wrappedTokenAddress.toLowerCase();
+  }
+  if (tokenBAddressLow === basicBToken?.address.toLowerCase()) {
+    tokenBAddressLow = basicBToken.wrappedTokenAddress.toLowerCase();
+  }
+  return tokenAAddressLow < tokenBAddressLow;
 }
 
 export function sortsBeforeTokenAddress(

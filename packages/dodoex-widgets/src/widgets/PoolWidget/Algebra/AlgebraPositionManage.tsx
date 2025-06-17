@@ -46,7 +46,7 @@ import React from 'react';
 import { useAddAlgebraLiquidity } from './hooks/useAddAlgebraLiquidity';
 import { useAlgebraPair } from './hooks/useAlgebraPair';
 import { toSlippagePercent } from './utils/slippage';
-import { getTickToPrice } from './utils/getTickToPrice';
+import { tickToPrice } from './utils/getTickToPrice';
 import {
   burnAmountsWithSlippage,
   mintAmountsWithSlippage,
@@ -151,7 +151,7 @@ export const AlgebraPositionManage = ({
     getFetchAlgebraPoolGlobalStateQueryOptions(chainId, poolAddress),
   );
   const price = globalState.data
-    ? getTickToPrice(token0, token1, globalState.data.tick)
+    ? tickToPrice(token0, token1, globalState.data.tick)
     : undefined;
   const tickCurrent = globalState.data
     ? Number(globalState.data.tick)

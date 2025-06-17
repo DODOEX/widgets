@@ -7,6 +7,7 @@ import RangeBadge from './Badge/RangeBadge';
 import { PositionSelectedRangePreview } from './PositionSelectedRangePreview';
 import { AutoColumn, LightCard, RowBetween, RowFixed } from './widgets';
 import { TokenInfo } from '../../../../hooks/Token';
+import { Price } from '../../../../utils/fractions';
 
 export const PositionPreview = ({
   token0,
@@ -26,7 +27,7 @@ export const PositionPreview = ({
   amount0: string | undefined;
   amount1: string | undefined;
   title?: ReactNode;
-  price: string | undefined;
+  price: Price | undefined;
   tickLower: number | undefined;
   tickUpper: number | undefined;
   inRange: boolean;

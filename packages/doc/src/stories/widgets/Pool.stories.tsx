@@ -357,6 +357,29 @@ export const Primary = (props: any) => {
           funcLabels: [],
           attributeLabels: [],
         },
+        {
+          name: 'Bee Token',
+          address: '0x93a0CB3ee34aA983db262F904021911eCD199228',
+          symbol: 'BEE',
+          decimals: 18,
+          slippage: null,
+          chainId: 80094,
+          logoImg:
+            'https://images.dodoex.io/rz07zQubG6s_NLrToYsLr3QfrQvZWrWLGLpliExp6Yc/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy84MDA5NC8weDkzYTBjYjNlZTM0YWE5ODNkYjI2MmY5MDQwMjE5MTFlY2QxOTkyMjg.webp',
+          tokenlists: [
+            {
+              name: 'All',
+              status: 'launched',
+            },
+          ],
+          domains: [
+            {
+              name: 'wasabee.xyz',
+            },
+          ],
+          funcLabels: [],
+          attributeLabels: [],
+        },
       ]}
       {...other}
       onlyChainId={80094}
@@ -388,6 +411,25 @@ export const Primary = (props: any) => {
         border
       /> */}
       <Pool />
+      {/* <AlgebraPositionManage */}
+      {/*   tokenId={508} */}
+      {/*   chainId={80094} */}
+      {/*   border */}
+      {/*   baseToken={{ */}
+      {/*     chainId: 80094, */}
+      {/*     address: '0x6969696969696969696969696969696969696969', */}
+      {/*     symbol: 'WBERA', */}
+      {/*     name: 'Wrapped Bera', */}
+      {/*     decimals: 18, */}
+      {/*   }} */}
+      {/*   quoteToken={{ */}
+      {/*     chainId: 80094, */}
+      {/*     address: '0xd77552d3849ab4d8c3b189a9582d0ba4c1f4f912', */}
+      {/*     symbol: 'wgBERA', */}
+      {/*     name: 'wgBERA', */}
+      {/*     decimals: 18, */}
+      {/*   }} */}
+      {/* /> */}
     </Widget>
   );
 };
@@ -398,8 +440,10 @@ Primary.args = {
   width: '100%',
   height: '100%',
   noDocumentLink: true,
-  routerPage: undefined,
+  routerPage: {
+    type: 'createPoolAlgebra',
+  },
   supportAMMV2: true,
   supportAMMV3: true,
-  onlyChainId: 2818,
+  onlyChainId: 80094,
 };

@@ -8,8 +8,9 @@ import { RateToggle } from './RateToggle';
 import { AutoColumn, LightCard, RowBetween } from './widgets';
 import { TokenInfo } from '../../../../hooks/Token';
 import BigNumber from 'bignumber.js';
-import { getTickToPrice } from '../utils/getTickToPrice';
+import { tickToPrice } from '../utils/getTickToPrice';
 import { buildCurrency } from '../utils';
+import { Price } from '../../../../utils/fractions';
 
 export const PositionSelectedRangePreview = ({
   token0,
@@ -22,7 +23,7 @@ export const PositionSelectedRangePreview = ({
 }: {
   token0: TokenInfo;
   token1: TokenInfo;
-  token0Price: string | undefined;
+  token0Price: Price | undefined;
   tickLower: number | undefined;
   tickUpper: number | undefined;
   title?: ReactNode;
@@ -40,11 +41,17 @@ export const PositionSelectedRangePreview = ({
   const currency1 = buildCurrency(token1) as Token;
   const price = token0Price
     ? sorted
-      ? token0Price
-      : new BigNumber(1).div(token0Price).toString()
+      ? token0Price.toSignificant()
+      : token0Price.invert().toSignificant()
     : undefined;
-  const priceLower = getTickToPrice(token0, token1, tickLower);
-  const priceUpper = getTickToPrice(token0, token1, tickUpper);
+  const priceLower =
+    tickLower !== undefined
+      ? tickToPrice(token0, token1, tickLower)
+      : undefined;
+  const priceUpper =
+    tickUpper !== undefined
+      ? tickToPrice(token0, token1, tickUpper)
+      : undefined;
   const loading = tickLower === undefined || tickUpper === undefined;
 
   const handleRateChange = useCallback(() => {
@@ -119,7 +126,12 @@ export const PositionSelectedRangePreview = ({
               typography: 'caption',
             }}
           >
-            {formatAmountWithAlphabetSymbol(priceLower, 6)}
+            {formatAmountWithAlphabetSymbol(
+              sorted
+                ? priceLower?.toSignificant()
+                : priceLower?.invert()?.toSignificant(),
+              6,
+            )}
           </LoadingSkeleton>
           <Box
             sx={{
@@ -178,7 +190,12 @@ export const PositionSelectedRangePreview = ({
               typography: 'caption',
             }}
           >
-            {formatAmountWithAlphabetSymbol(priceUpper, 6)}
+            {formatAmountWithAlphabetSymbol(
+              sorted
+                ? priceUpper?.toSignificant()
+                : priceUpper?.invert()?.toSignificant(),
+              6,
+            )}
           </LoadingSkeleton>
 
           <Box

@@ -128,6 +128,7 @@ export default function AddLiquidity({
   });
   const addAmount0 = sorted ? amounts.baseAmount : amounts.quoteAmount;
   const addAmount1 = !sorted ? amounts.baseAmount : amounts.quoteAmount;
+  const isToggleRange = React.useRef(false);
 
   const handleSetBaseToken = (token: TokenInfo | undefined) => {
     amounts.reset();
@@ -140,13 +141,13 @@ export default function AddLiquidity({
     setQuoteToken(token);
   };
   React.useEffect(() => {
-    if (!defaultBaseTokenQuery.data) {
+    if (!defaultBaseTokenQuery.data || isToggleRange.current) {
       return;
     }
     handleSetBaseToken(defaultBaseTokenQuery.data);
   }, [defaultBaseTokenQuery.data]);
   React.useEffect(() => {
-    if (!defaultQuoteTokenQuery.data) {
+    if (!defaultQuoteTokenQuery.data || isToggleRange.current) {
       return;
     }
     setQuoteToken(defaultQuoteTokenQuery.data);
@@ -158,6 +159,7 @@ export default function AddLiquidity({
   };
 
   const handleRateToggle = () => {
+    isToggleRange.current = !isToggleRange.current;
     range.handleRateToggle();
     handleSetBaseToken(quoteToken);
     handleSetQuoteToken(baseToken);
@@ -630,7 +632,7 @@ export default function AddLiquidity({
         tickLower={tickLower}
         tickUpper={tickUpper}
         liquidity={Number(liquidity)}
-        price={price?.toSignificant()}
+        price={price}
         amount0={addAmount0}
         amount1={addAmount1}
         on={showConfirm}

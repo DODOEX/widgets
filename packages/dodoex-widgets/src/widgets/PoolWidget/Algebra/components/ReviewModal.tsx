@@ -4,6 +4,7 @@ import Dialog from '../../../../components/Dialog';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { PositionPreview } from './PositionPreview';
 import { TokenInfo } from '../../../../hooks/Token';
+import { Price } from '../../../../utils/fractions';
 
 export interface ReviewModalProps {
   on: boolean;
@@ -16,7 +17,7 @@ export interface ReviewModalProps {
   amount0: string | undefined;
   amount1: string | undefined;
   title?: React.ReactNode;
-  price: string | undefined;
+  price: Price | undefined;
   tickLower: number | undefined;
   tickUpper: number | undefined;
   inRange: boolean;
