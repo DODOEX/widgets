@@ -20,8 +20,8 @@ const compareRouteList = [
     name: 'ZUNO',
     selected: true,
     ICON: <ZUNO />,
-    width: 48,
-    height: 51,
+    width: 44,
+    height: 52,
   },
   {
     id: 'ChainFlip',

@@ -36,7 +36,7 @@ export function useRouteVisionData({
   rawRouteData,
   chainId,
 }: {
-  rawRouteData: string;
+  rawRouteData: string | null;
   chainId: number;
 }) {
   const routeData = React.useMemo<MidPathType[]>(() => {

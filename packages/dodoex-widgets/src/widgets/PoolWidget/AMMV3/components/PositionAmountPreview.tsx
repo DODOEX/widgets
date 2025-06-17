@@ -1,4 +1,4 @@
-import { alpha, Box, ButtonBase, useTheme } from '@dodoex/components';
+import { Box, ButtonBase, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import JSBI from 'jsbi';
 import { useMemo } from 'react';
@@ -165,9 +165,9 @@ export const PositionAmountPreview = ({
               sx={{
                 py: 4,
                 px: 8,
-                color: theme.palette.primary.main,
+                color: theme.palette.text.secondary,
                 borderRadius: 4,
-                backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                backgroundColor: theme.palette.background.tag,
                 typography: 'h6',
               }}
             >

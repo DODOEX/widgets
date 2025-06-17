@@ -8,7 +8,8 @@ import {
 } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import BigNumber from 'bignumber.js';
+import React, { useMemo } from 'react';
 import Confirm from '../../../components/Confirm';
 import ErrorMessageDialog from '../../../components/ErrorMessageDialog';
 import {
@@ -17,6 +18,7 @@ import {
 } from '../../../components/Swap/components/TokenCard';
 import { SLIPPAGE_PROTECTION } from '../../../constants/pool';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { TokenInfo } from '../../../hooks/Token';
 import { toWei } from '../../../utils';
 import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
@@ -54,7 +56,7 @@ export function RemovePoolOperate({
   balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
 }) {
   const theme = useTheme();
-
+  const { isMobile } = useWidgetDevice();
   const { account } = useWalletInfo();
   const baseOverride = balanceInfo.userBaseLpToTokenBalance;
   const quoteOverride = balanceInfo.userQuoteLpToTokenBalance;
@@ -226,17 +228,6 @@ export function RemovePoolOperate({
   const isOverBalance =
     baseTokenStatus.insufficientBalance || quoteTokenStatus.insufficientBalance;
   const { isSinglePool } = balanceInfo;
-  const disabled =
-    !pool ||
-    isOverBalance ||
-    !midPrice ||
-    !!balanceInfo.loading ||
-    !!balanceInfo.error ||
-    amountCheckedDisabled ||
-    !!withdrawInfo.error ||
-    withdrawInfo.loading ||
-    !!withdrawInfo.receiveAmountBg?.lte(0) ||
-    feeRateQuery.isLoading;
 
   const submitBtnText = isOverBalance ? t`Insufficient balance` : t`Remove`;
 
@@ -284,6 +275,44 @@ export function RemovePoolOperate({
 
   const baseTokenBalanceUpdateLoading = false;
   const quoteBalanceUpdateLoading = false;
+
+  const disabled = useMemo(() => {
+    const baseInAmount = new BigNumber(baseAmount);
+    const quoteInAmount = new BigNumber(quoteAmount);
+
+    return (
+      !pool ||
+      isOverBalance ||
+      !midPrice ||
+      !!balanceInfo.loading ||
+      !!balanceInfo.error ||
+      amountCheckedDisabled ||
+      !!withdrawInfo.error ||
+      withdrawInfo.loading ||
+      !!withdrawInfo.receiveAmountBg?.lte(0) ||
+      feeRateQuery.isLoading ||
+      (isAMMV2
+        ? liquidityAmountBg == null || liquidityAmountBg.lte(0)
+        : !baseInAmount.isFinite() ||
+          !quoteInAmount.isFinite() ||
+          (baseInAmount.lte(0) && quoteInAmount.lte(0)))
+    );
+  }, [
+    amountCheckedDisabled,
+    balanceInfo.error,
+    balanceInfo.loading,
+    baseAmount,
+    feeRateQuery.isLoading,
+    isAMMV2,
+    isOverBalance,
+    liquidityAmountBg,
+    midPrice,
+    pool,
+    quoteAmount,
+    withdrawInfo.error,
+    withdrawInfo.loading,
+    withdrawInfo.receiveAmountBg,
+  ]);
 
   return (
     <>
@@ -607,6 +636,7 @@ export function RemovePoolOperate({
       <ErrorMessageDialog
         message={operateLiquidityMutation.error?.message}
         onClose={() => operateLiquidityMutation.reset()}
+        isDialogModal={isMobile}
       />
     </>
   );

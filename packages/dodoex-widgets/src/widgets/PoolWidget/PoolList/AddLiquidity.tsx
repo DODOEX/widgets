@@ -5,7 +5,7 @@ import { t, Trans } from '@lingui/macro';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
 import { CardStatus } from '../../../components/CardWidgets';
@@ -59,11 +59,13 @@ function CardList({
   setOperatePool,
   getMigrationPairAndMining,
   supportAMM,
+  timeRange,
 }: {
   lqList: FetchLiquidityListLqList;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
   getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
   supportAMM?: boolean;
+  timeRange: '1' | '7' | '14' | '30';
 }) {
   const theme = useTheme();
   const { onSharePool } = useUserOptions();
@@ -80,24 +82,28 @@ function CardList({
           item.quoteToken,
           item.chainId,
         );
-        const baseApy = item.apy
+        const timeRangeApy = item.apyList?.find(
+          (apy) => apy?.timeRange === `${timeRange}D`,
+        );
+        const baseApy = timeRangeApy
           ? formatApy(
-              new BigNumber(item.apy?.transactionBaseApy).plus(
-                item.apy?.miningBaseApy ?? 0,
+              new BigNumber(timeRangeApy?.transactionBaseApy).plus(
+                timeRangeApy?.miningBaseApy ?? 0,
               ),
             )
           : undefined;
         const quoteApy =
-          PoolApi.utils.singleSideLp(item.type as PoolType) && item.apy
+          PoolApi.utils.singleSideLp(item.type as PoolType) && timeRangeApy
             ? formatApy(
-                new BigNumber(item.apy.transactionQuoteApy).plus(
-                  item.apy.miningQuoteApy ?? 0,
+                new BigNumber(timeRangeApy.transactionQuoteApy).plus(
+                  timeRangeApy.miningQuoteApy ?? 0,
                 ),
               )
             : undefined;
         const hasMining = !!item.miningAddress?.[0];
         const hasMetromMining =
-          !!item.apy?.metromMiningApy && Number(item.apy?.metromMiningApy) > 0;
+          !!timeRangeApy?.metromMiningApy &&
+          Number(timeRangeApy?.metromMiningApy) > 0;
 
         const type = item.type as PoolType;
         const poolType = getPoolAMMOrPMM(type);
@@ -179,7 +185,7 @@ function CardList({
                           baseToken,
                           quoteToken,
                           poolId: item.id,
-                          apy: item.apy,
+                          apy: timeRangeApy,
                           isSingle: PoolApi.utils.singleSideLp(
                             item.type as PoolType,
                           ),
@@ -306,10 +312,10 @@ function CardList({
                     color: 'text.secondary',
                   }}
                 >
-                  <Trans>APY</Trans>
+                  {timeRange}d&nbsp;<Trans>APY</Trans>
                   <PoolApyTooltip
                     chainId={item.chainId}
-                    apy={item.apy}
+                    apy={timeRangeApy}
                     baseToken={baseToken}
                     quoteToken={quoteToken}
                     hasQuote={!!quoteApy}
@@ -349,7 +355,12 @@ function CardList({
                       gap: 4,
                     }}
                   >
-                    ${formatReadableNumber({ input: item.volume24H || 0 })}
+                    $
+                    {formatReadableNumber({
+                      input: item.volumeList?.find(
+                        (volume) => volume?.timeRange === `${timeRange}D`,
+                      )?.volume,
+                    })}
                   </Box>
                   <Box
                     sx={{
@@ -357,7 +368,7 @@ function CardList({
                       color: 'text.secondary',
                     }}
                   >
-                    <Trans>Volume (1D)</Trans>
+                    <Trans>Volume ({timeRange}d)</Trans>
                   </Box>
                 </Box>
               )}
@@ -367,6 +378,7 @@ function CardList({
               sx={{
                 mt: 20,
                 display: 'flex',
+                alignItems: 'center',
                 gap: '8px',
               }}
             >
@@ -404,7 +416,7 @@ function TableList({
   loadMore,
   loadMoreLoading,
   supportAMM,
-  duration,
+  timeRange,
 }: {
   lqList: FetchLiquidityListLqList;
   loading: boolean;
@@ -415,7 +427,7 @@ function TableList({
   loadMore?: () => void;
   loadMoreLoading?: boolean;
   supportAMM?: boolean;
-  duration: '1' | '7' | '14' | '30';
+  timeRange: '1' | '7' | '14' | '30';
 }) {
   const theme = useTheme();
   const { onSharePool } = useUserOptions();
@@ -441,11 +453,11 @@ function TableList({
             <Trans>TVL</Trans>
           </Box>
           <Box component="th">
-            {duration}d&nbsp;<Trans>APY</Trans>
+            {timeRange}d&nbsp;<Trans>APY</Trans>
           </Box>
           {supportAMM && (
             <th>
-              {duration}d&nbsp;<Trans>Volume</Trans>
+              {timeRange}d&nbsp;<Trans>Volume</Trans>
             </th>
           )}
           <Box
@@ -468,18 +480,21 @@ function TableList({
             item.quoteToken,
             item.chainId,
           );
-          const baseApy = item.apy
+          const timeRangeApy = item.apyList?.find(
+            (apy) => apy?.timeRange === `${timeRange}D`,
+          );
+          const baseApy = timeRangeApy
             ? formatApy(
-                new BigNumber(item.apy?.transactionBaseApy)
-                  .plus(item.apy?.miningBaseApy ?? 0)
-                  .plus(item.apy?.metromMiningApy ?? 0),
+                new BigNumber(timeRangeApy?.transactionBaseApy)
+                  .plus(timeRangeApy?.miningBaseApy ?? 0)
+                  .plus(timeRangeApy?.metromMiningApy ?? 0),
               )
             : undefined;
           const quoteApy =
-            PoolApi.utils.singleSideLp(item.type as PoolType) && item.apy
+            PoolApi.utils.singleSideLp(item.type as PoolType) && timeRangeApy
               ? formatApy(
-                  new BigNumber(item.apy.transactionQuoteApy).plus(
-                    item.apy.miningQuoteApy ?? 0,
+                  new BigNumber(timeRangeApy.transactionQuoteApy).plus(
+                    timeRangeApy.miningQuoteApy ?? 0,
                   ),
                 )
               : undefined;
@@ -501,8 +516,8 @@ function TableList({
 
           const hasMining = !!item.miningAddress?.[0];
           const hasMetromMining =
-            !!item.apy?.metromMiningApy &&
-            Number(item.apy?.metromMiningApy) > 0;
+            !!timeRangeApy?.metromMiningApy &&
+            Number(timeRangeApy?.metromMiningApy) > 0;
 
           const type = item.type as PoolType;
           const poolType = getPoolAMMOrPMM(type);
@@ -576,7 +591,7 @@ function TableList({
                                 baseToken,
                                 quoteToken,
                                 poolId: item.id,
-                                apy: item.apy,
+                                apy: timeRangeApy,
                                 isSingle: PoolApi.utils.singleSideLp(
                                   item.type as PoolType,
                                 ),
@@ -660,7 +675,7 @@ function TableList({
                   )}
                   <PoolApyTooltip
                     chainId={item.chainId}
-                    apy={item.apy}
+                    apy={timeRangeApy}
                     baseToken={baseToken}
                     quoteToken={quoteToken}
                     hasQuote={!!quoteApy}
@@ -691,7 +706,12 @@ function TableList({
                     typography: 'body2',
                   }}
                 >
-                  ${formatReadableNumber({ input: item.volume24H || 0 })}
+                  $
+                  {formatReadableNumber({
+                    input: item.volumeList?.find(
+                      (volume) => volume?.timeRange === `${timeRange}D`,
+                    )?.volume,
+                  })}
                 </Box>
               )}
               <Box component="td">
@@ -765,10 +785,8 @@ export default function AddLiquidityList({
   const { minDevice, isMobile } = useWidgetDevice();
   const queryClient = useQueryClient();
 
-  const [poolType, setPoolType] = React.useState<'all' | 'pmm' | 'v2' | 'v3'>(
-    'all',
-  );
-  const [duration, setDuration] = React.useState<'1' | '7' | '14' | '30'>('1');
+  const [poolType, setPoolType] = useState<'all' | 'pmm' | 'v2' | 'v3'>('all');
+  const [timeRange, setTimeRange] = useState<'1' | '7' | '14' | '30'>('1');
 
   const {
     filterTokens,
@@ -957,8 +975,8 @@ export default function AddLiquidityList({
                 value: '30',
               },
             ]}
-            value={duration}
-            onChange={(value) => setDuration(value)}
+            value={timeRange}
+            onChange={(value) => setTimeRange(value)}
           />
         </Box>
 
@@ -1097,6 +1115,7 @@ export default function AddLiquidityList({
               setOperatePool={setOperatePool}
               supportAMM={supportAMMV2 || supportAMMV3}
               getMigrationPairAndMining={getMigrationPairAndMining}
+              timeRange={timeRange}
             />
           </DataCardGroup>
         </InfiniteScroll>
@@ -1115,7 +1134,7 @@ export default function AddLiquidityList({
               }
             }}
             supportAMM={supportAMMV2 || supportAMMV3}
-            duration={duration}
+            timeRange={timeRange}
             getMigrationPairAndMining={getMigrationPairAndMining}
           />
           <CardStatus

@@ -62,12 +62,14 @@ function CardList({
   setOperatePool,
   getMigrationPairAndMining,
   supportAMM,
+  timeRange,
 }: {
   account?: string;
   lqList: FetchMyLiquidityListLqList;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
   getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
   supportAMM?: boolean;
+  timeRange: '1' | '7' | '14' | '30';
 }) {
   const theme = useTheme();
   return (
@@ -83,19 +85,22 @@ function CardList({
           item.quoteToken,
           item.chainId,
         );
+        const timeRangeApy = item.apyList?.find(
+          (apy) => apy?.timeRange === `${timeRange}D`,
+        );
         const singleSideLp = PoolApi.utils.singleSideLp(item.type as PoolType);
-        const baseApy = item.apy
+        const baseApy = timeRangeApy
           ? formatApy(
-              new BigNumber(item.apy?.transactionBaseApy)
-                .plus(item.apy?.miningBaseApy ?? 0)
-                .plus(item.apy?.metromMiningApy ?? 0),
+              new BigNumber(timeRangeApy?.transactionBaseApy)
+                .plus(timeRangeApy?.miningBaseApy ?? 0)
+                .plus(timeRangeApy?.metromMiningApy ?? 0),
             )
-          : '0%';
+          : undefined;
         const quoteApy =
-          singleSideLp && item.apy
+          singleSideLp && timeRangeApy
             ? formatApy(
-                new BigNumber(item.apy.transactionQuoteApy).plus(
-                  item.apy.miningQuoteApy ?? 0,
+                new BigNumber(timeRangeApy.transactionQuoteApy).plus(
+                  timeRangeApy.miningQuoteApy ?? 0,
                 ),
               )
             : undefined;
@@ -132,7 +137,8 @@ function CardList({
         }
         const hasMining = !!item.miningAddress?.[0];
         const hasMetromMining =
-          !!item.apy?.metromMiningApy && Number(item.apy?.metromMiningApy) > 0;
+          !!timeRangeApy?.metromMiningApy &&
+          Number(timeRangeApy?.metromMiningApy) > 0;
 
         const position = lq.liquidityPositions?.[0];
 
@@ -303,60 +309,58 @@ function CardList({
                 </Box>
               )}
 
-              {isAMMV3 ? null : (
-                <>
-                  <Box>
-                    <Box
-                      sx={{
-                        typography: 'h5',
-                        color: 'success.main',
-                      }}
-                    >
-                      {baseApy}
-                      {quoteApy ? `/${quoteApy}` : ''}
-                    </Box>
-                    <Box
-                      sx={{
-                        typography: 'h6',
-                        display: 'flex',
-                        alignItems: 'center',
-                        color: 'text.secondary',
-                      }}
-                    >
-                      <Trans>APY</Trans>
-                      <PoolApyTooltip
-                        chainId={item.chainId}
-                        apy={item.apy}
-                        baseToken={baseToken}
-                        quoteToken={quoteToken}
-                        hasQuote={!!quoteApy}
-                        hasMining={hasMining}
-                        sx={{
-                          width: 14,
-                          height: 14,
-                        }}
-                      />
-                    </Box>
-                  </Box>
+              <Box>
+                <Box
+                  sx={{
+                    typography: 'h5',
+                    color: 'success.main',
+                  }}
+                >
+                  {baseApy || '-%'}
+                  {quoteApy ? `/${quoteApy}` : ''}
+                </Box>
+                <Box
+                  sx={{
+                    typography: 'h6',
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'text.secondary',
+                  }}
+                >
+                  {timeRange}d&nbsp;<Trans>APY</Trans>
+                  <PoolApyTooltip
+                    chainId={item.chainId}
+                    apy={timeRangeApy}
+                    baseToken={baseToken}
+                    quoteToken={quoteToken}
+                    hasQuote={!!quoteApy}
+                    hasMining={hasMining}
+                    sx={{
+                      width: 14,
+                      height: 14,
+                    }}
+                  />
+                </Box>
+              </Box>
 
-                  <Box>
-                    <Box
-                      sx={{
-                        typography: 'h5',
-                      }}
-                    >
-                      ${formatExponentialNotation(new BigNumber(item.tvl || 0))}
-                    </Box>
-                    <Box
-                      sx={{
-                        typography: 'h6',
-                        color: 'text.secondary',
-                      }}
-                    >
-                      <Trans>TVL</Trans>
-                    </Box>
+              {isAMMV3 ? null : (
+                <Box>
+                  <Box
+                    sx={{
+                      typography: 'h5',
+                    }}
+                  >
+                    ${formatExponentialNotation(new BigNumber(item.tvl || 0))}
                   </Box>
-                </>
+                  <Box
+                    sx={{
+                      typography: 'h6',
+                      color: 'text.secondary',
+                    }}
+                  >
+                    <Trans>TVL</Trans>
+                  </Box>
+                </Box>
               )}
 
               {type === 'AMMV2' && (
@@ -465,76 +469,82 @@ function CardList({
                   <Trans>My Liquidity</Trans>
                 </Box>
               </Box>
+            </Box>
 
-              {isAMMV3 && (
-                <Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 4,
-                      color: 'text.primary',
-                    }}
-                  >
-                    <InRangeDot outOfRange={position?.outOfRange ?? false} />
-                    <Box>
-                      <>
-                        <span>
-                          {formatTickPrice({
-                            price: position?.priceRange?.token0LowerPrice,
-                            atLimit: {},
-                            direction: Bound.LOWER,
-                          })}
-                          &nbsp;
-                        </span>
-                        {baseToken?.symbol}
-                      </>
-                    </Box>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="19"
-                      viewBox="0 0 18 19"
-                      fill="none"
-                    >
-                      <path
-                        d="M15.75 9.50293L12.75 12.5029L11.7 11.4529L12.8813 10.2529L5.11875 10.2529L6.3 11.4529L5.25 12.5029L2.25 9.50293L5.25 6.50293L6.31875 7.55293L5.11875 8.75293L12.8813 8.75293L11.7 7.55293L12.75 6.50293L15.75 9.50293Z"
-                        fill="currentColor"
-                        fillOpacity="0.5"
-                      />
-                    </svg>
-                    <Box>
-                      <>
-                        <span>
-                          {formatTickPrice({
-                            price: position?.priceRange?.token1LowerPrice,
-                            atLimit: {},
-                            direction: Bound.UPPER,
-                          })}
-                          &nbsp;
-                        </span>
-                        {baseToken?.symbol}
-                      </>
-                    </Box>
+            {isAMMV3 && (
+              <Box
+                sx={{
+                  mt: 20,
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    color: 'text.primary',
+                  }}
+                >
+                  <InRangeDot outOfRange={position?.outOfRange ?? false} />
+                  <Box>
+                    <>
+                      <span>
+                        {formatTickPrice({
+                          price: position?.priceRange?.token0LowerPrice,
+                          atLimit: {},
+                          direction: Bound.LOWER,
+                        })}
+                        &nbsp;
+                      </span>
+                      {baseToken?.symbol}
+                    </>
                   </Box>
-                  <Box
-                    sx={{
-                      typography: 'h6',
-                      display: 'flex',
-                      alignItems: 'center',
-                      color: 'text.secondary',
-                    }}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="19"
+                    viewBox="0 0 18 19"
+                    fill="none"
                   >
-                    <Trans>Price Range</Trans>
+                    <path
+                      d="M15.75 9.50293L12.75 12.5029L11.7 11.4529L12.8813 10.2529L5.11875 10.2529L6.3 11.4529L5.25 12.5029L2.25 9.50293L5.25 6.50293L6.31875 7.55293L5.11875 8.75293L12.8813 8.75293L11.7 7.55293L12.75 6.50293L15.75 9.50293Z"
+                      fill="currentColor"
+                      fillOpacity="0.5"
+                    />
+                  </svg>
+                  <Box>
+                    <>
+                      <span>
+                        {formatTickPrice({
+                          price: position?.priceRange?.token1LowerPrice,
+                          atLimit: {},
+                          direction: Bound.UPPER,
+                        })}
+                        &nbsp;
+                      </span>
+                      {baseToken?.symbol}
+                    </>
                   </Box>
                 </Box>
-              )}
-            </Box>
+                <Box
+                  sx={{
+                    typography: 'h6',
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'text.secondary',
+                  }}
+                >
+                  <Trans>Price Range</Trans>
+                </Box>
+              </Box>
+            )}
+
             {/* operate */}
             <Box
               sx={{
                 mt: 20,
                 display: 'flex',
+                alignItems: 'center',
                 gap: '8px',
               }}
             >
@@ -591,6 +601,7 @@ function TableList({
   supportAMM,
   onlyV3,
   getMigrationPairAndMining,
+  timeRange,
 }: {
   account?: string;
   lqList: FetchMyLiquidityListLqList;
@@ -600,6 +611,7 @@ function TableList({
   supportAMM?: boolean;
   onlyV3?: boolean;
   getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
+  timeRange: '1' | '7' | '14' | '30';
 }) {
   const theme = useTheme();
   return (
@@ -619,11 +631,9 @@ function TableList({
               <Trans>TVL</Trans>
             </Box>
           )}
-          {onlyV3 ? null : (
-            <Box component="th">
-              <Trans>APY</Trans>
-            </Box>
-          )}
+          <Box component="th">
+            {timeRange}d&nbsp;<Trans>APY</Trans>
+          </Box>
           <Box component="th">
             <Trans>My Liquidity</Trans>
           </Box>
@@ -657,18 +667,21 @@ function TableList({
           const singleSideLp = PoolApi.utils.singleSideLp(
             item.type as PoolType,
           );
-          const baseApy = item.apy
+          const timeRangeApy = item.apyList?.find(
+            (apy) => apy?.timeRange === `${timeRange}D`,
+          );
+          const baseApy = timeRangeApy
             ? formatApy(
-                new BigNumber(item.apy?.transactionBaseApy).plus(
-                  item.apy?.miningBaseApy ?? 0,
+                new BigNumber(timeRangeApy?.transactionBaseApy).plus(
+                  timeRangeApy?.miningBaseApy ?? 0,
                 ),
               )
             : undefined;
           const quoteApy =
-            singleSideLp && item.apy
+            singleSideLp && timeRangeApy
               ? formatApy(
-                  new BigNumber(item.apy.transactionQuoteApy).plus(
-                    item.apy.miningQuoteApy ?? 0,
+                  new BigNumber(timeRangeApy.transactionQuoteApy).plus(
+                    timeRangeApy.miningQuoteApy ?? 0,
                   ),
                 )
               : undefined;
@@ -735,8 +748,8 @@ function TableList({
           }
           const hasMining = !!item.miningAddress?.[0];
           const hasMetromMining =
-            !!item.apy?.metromMiningApy &&
-            Number(item.apy?.metromMiningApy) > 0;
+            !!timeRangeApy?.metromMiningApy &&
+            Number(timeRangeApy?.metromMiningApy) > 0;
           const hoverBg = theme.palette.hover.default;
 
           const migrationItem = getMigrationPairAndMining?.({
@@ -853,56 +866,54 @@ function TableList({
                 </Box>
               )}
 
-              {isAMMV3 ? null : (
-                <Box component="td">
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    {hasMining || hasMetromMining ? (
-                      <Tooltip title={t`Mining`}>
-                        <Box
-                          component="span"
-                          sx={{
-                            typography: 'body2',
-                            color: 'success.main',
-                          }}
-                        >
-                          ✨{' '}
-                        </Box>
-                      </Tooltip>
-                    ) : (
-                      ''
-                    )}
-                    <PoolApyTooltip
-                      chainId={item.chainId}
-                      apy={item.apy}
-                      baseToken={baseToken}
-                      quoteToken={quoteToken}
-                      hasQuote={!!quoteApy}
-                      hasMining={hasMining}
-                    >
+              <Box component="td">
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  {hasMining || hasMetromMining ? (
+                    <Tooltip title={t`Mining`}>
                       <Box
                         component="span"
                         sx={{
                           typography: 'body2',
-                          fontWeight: 600,
-                          display: 'flex',
-                          alignItems: 'center',
-                          width: 'max-content',
                           color: 'success.main',
-                          cursor: 'auto',
                         }}
                       >
-                        {baseApy || '0%'}
-                        {quoteApy ? `/${quoteApy}` : ''}
+                        ✨{' '}
                       </Box>
-                    </PoolApyTooltip>
-                  </Box>
+                    </Tooltip>
+                  ) : (
+                    ''
+                  )}
+                  <PoolApyTooltip
+                    chainId={item.chainId}
+                    apy={timeRangeApy}
+                    baseToken={baseToken}
+                    quoteToken={quoteToken}
+                    hasQuote={!!quoteApy}
+                    hasMining={hasMining}
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        typography: 'body2',
+                        fontWeight: 600,
+                        display: 'flex',
+                        alignItems: 'center',
+                        width: 'max-content',
+                        color: 'success.main',
+                        cursor: 'auto',
+                      }}
+                    >
+                      {baseApy || '-%'}
+                      {quoteApy ? `/${quoteApy}` : ''}
+                    </Box>
+                  </PoolApyTooltip>
                 </Box>
-              )}
+              </Box>
 
               <Box component="td">
                 <Box
@@ -1150,7 +1161,9 @@ export default function MyLiquidity({
     useUserOptions();
 
   const [poolType, setPoolType] = React.useState<'v3' | 'pmm&v2'>('pmm&v2');
-  const [duration, setDuration] = React.useState<'1' | '7' | '14' | '30'>('1');
+  const [timeRange, setTimeRange] = React.useState<'1' | '7' | '14' | '30'>(
+    '1',
+  );
 
   const {
     filterTokens,
@@ -1282,8 +1295,8 @@ export default function MyLiquidity({
                 value: '30',
               },
             ]}
-            value={duration}
-            onChange={(value) => setDuration(value)}
+            value={timeRange}
+            onChange={(value) => setTimeRange(value)}
           />
         </Box>
 
@@ -1402,6 +1415,7 @@ export default function MyLiquidity({
             setOperatePool={setOperatePool}
             supportAMM={supportAMMV2 || supportAMMV3}
             getMigrationPairAndMining={getMigrationPairAndMining}
+            timeRange={timeRange}
           />
         </DataCardGroup>
       ) : (
@@ -1415,6 +1429,7 @@ export default function MyLiquidity({
             supportAMM={supportAMMV2 || supportAMMV3}
             onlyV3={poolType === 'v3'}
             getMigrationPairAndMining={getMigrationPairAndMining}
+            timeRange={timeRange}
           />
 
           <CardStatus

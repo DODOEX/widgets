@@ -15,6 +15,7 @@ import {
 } from '../../../components/Swap/components/TokenCard';
 import { SLIPPAGE_PROTECTION } from '../../../constants/pool';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
 import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
 import ConfirmDialog from '../AMMV2Create/ConfirmDialog';
@@ -42,6 +43,7 @@ export function AddPoolOperate({
   balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
 }) {
   const theme = useTheme();
+  const { isMobile } = useWidgetDevice();
 
   const { account } = useWalletInfo();
   const {
@@ -302,6 +304,7 @@ export function AddPoolOperate({
       <ErrorMessageDialog
         message={operateLiquidityMutation.error?.message}
         onClose={() => operateLiquidityMutation.reset()}
+        isDialogModal={isMobile}
       />
       {isAMMV2 && !!pool && (
         <ConfirmDialog

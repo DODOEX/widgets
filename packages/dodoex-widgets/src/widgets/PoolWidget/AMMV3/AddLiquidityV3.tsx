@@ -1,14 +1,12 @@
-import { alpha, Box, Button, ButtonBase, useTheme } from '@dodoex/components';
+import { alpha, Box, Button, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
-import {
-  CardPlus,
-  CardPlusConnected,
-} from '../../../components/Swap/components/TokenCard';
+import SquaredGoBack from '../../../components/SquaredGoBack';
+import { CardPlus } from '../../../components/Swap/components/TokenCard';
 import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
-import WidgetContainer from '../../../components/WidgetContainer';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { tokenApi } from '../../../constants/api';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
@@ -16,6 +14,7 @@ import { useSubmission } from '../../../hooks/Submission';
 import { OpCode } from '../../../hooks/Submission/spec';
 import { ExecutionResult, MetadataFlag } from '../../../hooks/Submission/types';
 import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
+import { PoolTypeTag } from '../PoolList/components/tags';
 import SlippageSetting, {
   useSlipper,
 } from '../PoolOperate/components/SlippageSetting';
@@ -42,9 +41,7 @@ import { Bound, Field } from './types';
 import { convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
 import { toSlippagePercent } from './utils/slippage';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
-import SquaredGoBack from '../../../components/SquaredGoBack';
-import { PoolTypeTag } from '../PoolList/components/tags';
+import { RangeSetList } from './components/RangeSetList';
 
 export default function AddLiquidityV3({
   params,
@@ -209,18 +206,39 @@ export default function AddLiquidityV3({
     dispatch,
   });
 
-  const handleSetFullRange = useCallback(() => {
-    getSetFullRange();
+  const handleSetFullRange = useCallback(
+    (part: number) => {
+      getSetFullRange();
 
-    const minPrice = pricesAtLimit[Bound.LOWER];
-    if (minPrice) {
-      onLeftRangeInput(minPrice.toSignificant(5));
-    }
-    const maxPrice = pricesAtLimit[Bound.UPPER];
-    if (maxPrice) {
-      onRightRangeInput(maxPrice.toSignificant(5));
-    }
-  }, [getSetFullRange, onLeftRangeInput, onRightRangeInput, pricesAtLimit]);
+      if (part !== 1) {
+        if (formattedPrice) {
+          const currentPrice = new BigNumber(formattedPrice);
+          const minPrice = currentPrice.multipliedBy(1 - part);
+          const maxPrice = currentPrice.multipliedBy(1 + part);
+          onLeftRangeInput(minPrice.dp(5, BigNumber.ROUND_DOWN).toString());
+          onRightRangeInput(maxPrice.dp(5, BigNumber.ROUND_DOWN).toString());
+        }
+
+        return;
+      }
+
+      const minPrice = pricesAtLimit[Bound.LOWER];
+      if (minPrice) {
+        onLeftRangeInput(minPrice.toSignificant(5));
+      }
+      const maxPrice = pricesAtLimit[Bound.UPPER];
+      if (maxPrice) {
+        onRightRangeInput(maxPrice.toSignificant(5));
+      }
+    },
+    [
+      formattedPrice,
+      getSetFullRange,
+      onLeftRangeInput,
+      onRightRangeInput,
+      pricesAtLimit,
+    ],
+  );
 
   const { deadLine: ddl } = useUserOptions();
   const onAddMutation = useMutation({
@@ -281,19 +299,22 @@ export default function AddLiquidityV3({
   });
 
   return (
-    <WidgetContainer>
+    <>
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
           gap: 20,
-          mx: 'auto',
-          width: isMobile ? '100%' : 600,
+          mx: 16,
           pb: 20,
           borderBottomWidth: 1,
           borderBottomStyle: 'solid',
           borderBottomColor: 'border.main',
           mb: 20,
+          [theme.breakpoints.up('tablet')]: {
+            width: 600,
+            mx: 'auto',
+          },
         }}
       >
         <SquaredGoBack />
@@ -314,19 +335,19 @@ export default function AddLiquidityV3({
 
       <Box
         sx={{
-          mx: 'auto',
-          borderRadius: 0,
-          width: '100%',
+          px: 16,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'stretch',
+          backgroundColor: theme.palette.background.paper,
+          borderRadius: 16,
           [theme.breakpoints.up('tablet')]: {
             borderColor: theme.palette.border.main,
             borderWidth: 1,
             borderStyle: 'solid',
-            borderRadius: 16,
+            px: 0,
+            mx: 'auto',
             width: 600,
-            backgroundColor: theme.palette.background.paper,
           },
         }}
       >
@@ -376,8 +397,8 @@ export default function AddLiquidityV3({
               sx={{
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: 'space-between',
                 gap: 8,
-                flexWrap: 'wrap',
               }}
             >
               <Box
@@ -390,78 +411,50 @@ export default function AddLiquidityV3({
               >
                 {t`Set price range`}
               </Box>
+
               {Boolean(state.baseToken && state.quoteToken) && (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 8,
-                    width: '100%',
-                    [theme.breakpoints.up('tablet')]: {
-                      ml: 'auto',
-                      width: 'auto',
-                    },
-                  }}
-                >
-                  <Button
-                    size={Button.Size.small}
-                    variant={Button.Variant.outlined}
-                    onClick={handleSetFullRange}
-                    sx={{
-                      py: 4,
-                      px: 12,
-                      height: 26,
-                      typography: 'h6',
-                      fontWeight: 600,
-                      ...(isMobile
-                        ? {
-                            flexGrow: 0,
-                            flexShrink: 1,
-                            flexBasis: '50%',
-                          }
-                        : undefined),
-                    }}
-                  >{t`Full range`}</Button>
-                  <RateToggle
-                    baseToken={state.baseToken}
-                    quoteToken={state.quoteToken}
-                    handleRateToggle={() => {
-                      if (
-                        !ticksAtLimit[Bound.LOWER] &&
-                        !ticksAtLimit[Bound.UPPER]
-                      ) {
-                        onLeftRangeInput(
-                          (invertPrice
-                            ? priceLower
-                            : priceUpper?.invert()
-                          )?.toSignificant(6) ?? '',
-                        );
-                        onRightRangeInput(
-                          (invertPrice
-                            ? priceUpper
-                            : priceLower?.invert()
-                          )?.toSignificant(6) ?? '',
-                        );
-                        onFieldAInput(formattedAmounts[Field.CURRENCY_B] ?? '');
-                      }
-                      dispatch({
-                        type: Types.ToggleRate,
-                        payload: undefined,
-                      });
-                    }}
-                    sx={
-                      isMobile
-                        ? {
-                            flexGrow: 0,
-                            flexShrink: 1,
-                            flexBasis: '50%',
-                          }
-                        : undefined
+                <RateToggle
+                  baseToken={state.baseToken}
+                  quoteToken={state.quoteToken}
+                  handleRateToggle={() => {
+                    if (
+                      !ticksAtLimit[Bound.LOWER] &&
+                      !ticksAtLimit[Bound.UPPER]
+                    ) {
+                      onLeftRangeInput(
+                        (invertPrice
+                          ? priceLower
+                          : priceUpper?.invert()
+                        )?.toSignificant(6) ?? '',
+                      );
+                      onRightRangeInput(
+                        (invertPrice
+                          ? priceUpper
+                          : priceLower?.invert()
+                        )?.toSignificant(6) ?? '',
+                      );
+                      onFieldAInput(formattedAmounts[Field.CURRENCY_B] ?? '');
                     }
-                  />
-                </Box>
+                    dispatch({
+                      type: Types.ToggleRate,
+                      payload: undefined,
+                    });
+                  }}
+                  sx={
+                    isMobile
+                      ? {
+                          flexGrow: 0,
+                          flexShrink: 1,
+                          flexBasis: '50%',
+                        }
+                      : undefined
+                  }
+                />
               )}
             </Box>
+
+            <RangeSetList onSelect={handleSetFullRange} />
+
             <RangeSelector
               priceLower={priceLower}
               priceUpper={priceUpper}
@@ -652,6 +645,6 @@ export default function AddLiquidityV3({
           loading={onAddMutation.isPending}
         />
       </Box>
-    </WidgetContainer>
+    </>
   );
 }

@@ -95,6 +95,18 @@ export const poolGraphqlQuery = {
             }
             miningAddress
             volume24H
+            apyList {
+              miningBaseApy
+              miningQuoteApy
+              transactionBaseApy
+              transactionQuoteApy
+              metromMiningApy
+              timeRange
+            }
+            volumeList {
+              volume
+              timeRange
+            }
           }
         }
       }
@@ -175,6 +187,18 @@ export const poolGraphqlQuery = {
             }
             miningAddress
             volume24H
+            apyList {
+              miningBaseApy
+              miningQuoteApy
+              transactionBaseApy
+              transactionQuoteApy
+              metromMiningApy
+              timeRange
+            }
+            volumeList {
+              volume
+              timeRange
+            }
           }
         }
       }

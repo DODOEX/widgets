@@ -79,7 +79,7 @@ export default function PoolApyTooltip({
       title={
         <Box
           sx={{
-            width: 236,
+            minWidth: 236,
           }}
         >
           {hoverData.map((item, index) => (
@@ -94,6 +94,7 @@ export default function PoolApyTooltip({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
+                  gap: 16,
                   typography: 'body2',
                   fontWeight: 600,
                   color: 'text.primary',

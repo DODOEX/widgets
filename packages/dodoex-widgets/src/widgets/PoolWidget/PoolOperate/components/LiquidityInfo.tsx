@@ -353,12 +353,8 @@ export default function LiquidityInfo({
                         typography: 'h6',
                         lineHeight: '24px',
                         borderRadius: 4,
-                        borderWidth: 1,
-                        borderColor: 'text.secondary',
-                        borderStyle: 'solid',
-                        background:
-                          'linear-gradient(105deg, rgba(88, 88, 88, 0.50) -76.37%, #121212 97.95%), linear-gradient(90deg, #FFF -61.94%, rgba(255, 255, 255, 0.00) 246.32%), #1E1E1E',
-                        color: 'text.primary',
+                        background: theme.palette.background.tag,
+                        color: 'text.secondary',
                         whiteSpace: 'nowrap',
                       }}
                     >

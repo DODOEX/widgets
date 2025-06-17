@@ -2059,6 +2059,7 @@ export type Cross_Chain_Swap_ZetachainCrossChainRoute = {
   fromAmountWithOutDecimals?: Maybe<Scalars['String']['output']>;
   fromChainId?: Maybe<Scalars['Int']['output']>;
   fromTokenAddress?: Maybe<Scalars['String']['output']>;
+  min?: Maybe<Scalars['String']['output']>;
   omniPlan?: Maybe<Scalars['JSON']['output']>;
   routeId?: Maybe<Scalars['String']['output']>;
   slippage?: Maybe<Scalars['Float']['output']>;
@@ -2127,6 +2128,12 @@ export type Cross_Chain_Swap_ZetachainorderCreateData = {
   toAmountWithOutDecimals?: InputMaybe<Scalars['String']['input']>;
   toChainId?: InputMaybe<Scalars['Int']['input']>;
   toTokenAddress?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Cross_Chain_Swap_ZetachainorderDetailData = {
+  fromChainId?: InputMaybe<Scalars['Int']['input']>;
+  fromHash?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type Cross_Chain_Swap_ZetachainorderListData = {
@@ -2340,6 +2347,8 @@ export type Cross_Chain_TransferAttributeLabelV2 = {
 export type Cross_Chain_TransferCrossChainOrder = {
   createdAt?: Maybe<Scalars['String']['output']>;
   endTime?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['String']['output']>;
+  feeUsd?: Maybe<Scalars['String']['output']>;
   fromAmount?: Maybe<Scalars['String']['output']>;
   fromChainId?: Maybe<Scalars['Int']['output']>;
   fromHash?: Maybe<Scalars['String']['output']>;
@@ -2347,7 +2356,9 @@ export type Cross_Chain_TransferCrossChainOrder = {
   fromTokenDecimals?: Maybe<Scalars['Int']['output']>;
   fromTokenName?: Maybe<Scalars['String']['output']>;
   fromTokenSymbol?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
+  gas?: Maybe<Scalars['String']['output']>;
+  gasUsd?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   toAddress?: Maybe<Scalars['String']['output']>;
   toAmount?: Maybe<Scalars['String']['output']>;
@@ -2362,6 +2373,7 @@ export type Cross_Chain_TransferCrossChainOrder = {
 };
 
 export type Cross_Chain_TransferCrossChainOrderList = {
+  currentPage?: Maybe<Scalars['Int']['output']>;
   list?: Maybe<Array<Maybe<Cross_Chain_TransferCrossChainOrder>>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
@@ -2395,6 +2407,10 @@ export type Cross_Chain_TransferFuncLabelV2 = {
   status?: Maybe<Scalars['String']['output']>;
 };
 
+export type Cross_Chain_TransferOrderDetailFilter = {
+  orderId: Scalars['String']['input'];
+};
+
 export type Cross_Chain_TransferOrderListFilter = {
   chainId?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -2411,21 +2427,33 @@ export type Cross_Chain_TransferQuoteResponse = {
   crossChainSymbol: Scalars['String']['output'];
   fixedFee: Scalars['String']['output'];
   fixedFeeFormatted: Scalars['String']['output'];
+  fixedFeeUsd: Scalars['String']['output'];
   gasFee: Scalars['String']['output'];
   gasFeeFormatted: Scalars['String']['output'];
+  gasFeeUsd: Scalars['String']['output'];
+  gasTokenPrice: Scalars['String']['output'];
   minReceiveQuote: Scalars['String']['output'];
   minReceiveQuoteFormatted: Scalars['String']['output'];
   orderId: Scalars['String']['output'];
   rateFee: Scalars['String']['output'];
   rateFeeFormatted: Scalars['String']['output'];
+  rateFeeUsd: Scalars['String']['output'];
   recipient: Scalars['String']['output'];
   sourceChainId: Scalars['Int']['output'];
   sourceTokenAddress: Scalars['String']['output'];
+  sourceTokenDecimals: Scalars['Int']['output'];
+  sourceTokenName: Scalars['String']['output'];
+  sourceTokenPrice: Scalars['String']['output'];
+  sourceTokenSymbol: Scalars['String']['output'];
   targetChainId: Scalars['Int']['output'];
   targetTokenAddress: Scalars['String']['output'];
-  timestamp: Scalars['Int']['output'];
+  targetTokenDecimals: Scalars['Int']['output'];
+  targetTokenName: Scalars['String']['output'];
+  targetTokenSymbol: Scalars['String']['output'];
+  timestamp: Scalars['String']['output'];
   totalFee: Scalars['String']['output'];
   totalFeeFormatted: Scalars['String']['output'];
+  totalFeeUsd: Scalars['String']['output'];
   transactionData: Cross_Chain_TransferQuoteResponseTransactionDataDto;
   userAddress: Scalars['String']['output'];
   version: Scalars['String']['output'];
@@ -12589,12 +12617,14 @@ export type Query = {
   cross_chain_swap_routesV2?: Maybe<Cross_Chain_SwapCrossChainRouteV2>;
   cross_chain_swap_transactionEncode?: Maybe<Cross_Chain_SwapCrossChainTransactionEncode>;
   cross_chain_swap_zetachain_orderCreate?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderCreate>;
+  cross_chain_swap_zetachain_orderDetail?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderList>;
   cross_chain_swap_zetachain_orderList?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderResult>;
   cross_chain_swap_zetachain_routes?: Maybe<Cross_Chain_Swap_ZetachainCrossChainRoute>;
   cross_chain_swap_zetachain_swapOrderList?: Maybe<Cross_Chain_Swap_ZetachainSwapOrderResult>;
   cross_chain_swap_zetachain_transactionEncode?: Maybe<Cross_Chain_Swap_ZetachainCrossChainTransactionEncode>;
   cross_chain_token_list?: Maybe<Cross_Chain_TokenCrossChainTokenlist>;
   cross_chain_token_tokenPair?: Maybe<Cross_Chain_TokenCrossChainTokenPair>;
+  cross_chain_transfer_getOrderDetail?: Maybe<Cross_Chain_TransferCrossChainOrder>;
   cross_chain_transfer_getOrderList: Cross_Chain_TransferCrossChainOrderList;
   cross_chain_transfer_getTokenList?: Maybe<
     Array<Maybe<Cross_Chain_TransferErc20V2List>>
@@ -13431,6 +13461,10 @@ export type QueryCross_Chain_Swap_Zetachain_OrderCreateArgs = {
   data?: InputMaybe<Cross_Chain_Swap_ZetachainorderCreateData>;
 };
 
+export type QueryCross_Chain_Swap_Zetachain_OrderDetailArgs = {
+  where?: InputMaybe<Cross_Chain_Swap_ZetachainorderDetailData>;
+};
+
 export type QueryCross_Chain_Swap_Zetachain_OrderListArgs = {
   where?: InputMaybe<Cross_Chain_Swap_ZetachainorderListData>;
 };
@@ -13453,6 +13487,10 @@ export type QueryCross_Chain_Token_ListArgs = {
 
 export type QueryCross_Chain_Token_TokenPairArgs = {
   where?: InputMaybe<Cross_Chain_TokentokenPairFilter>;
+};
+
+export type QueryCross_Chain_Transfer_GetOrderDetailArgs = {
+  where?: InputMaybe<Cross_Chain_TransferOrderDetailFilter>;
 };
 
 export type QueryCross_Chain_Transfer_GetOrderListArgs = {
@@ -21720,6 +21758,18 @@ export type FetchLiquidityListQuery = {
           transactionQuoteApy?: any | null;
           metromMiningApy?: any | null;
         } | null;
+        apyList?: Array<{
+          miningBaseApy?: any | null;
+          miningQuoteApy?: any | null;
+          transactionBaseApy?: any | null;
+          transactionQuoteApy?: any | null;
+          metromMiningApy?: any | null;
+          timeRange?: string | null;
+        } | null> | null;
+        volumeList?: Array<{
+          volume?: any | null;
+          timeRange?: string | null;
+        } | null> | null;
       } | null;
     } | null> | null;
   } | null;
@@ -21797,6 +21847,18 @@ export type FetchMyLiquidityListQuery = {
           transactionQuoteApy?: any | null;
           metromMiningApy?: any | null;
         } | null;
+        apyList?: Array<{
+          miningBaseApy?: any | null;
+          miningQuoteApy?: any | null;
+          transactionBaseApy?: any | null;
+          transactionQuoteApy?: any | null;
+          metromMiningApy?: any | null;
+          timeRange?: string | null;
+        } | null> | null;
+        volumeList?: Array<{
+          volume?: any | null;
+          timeRange?: string | null;
+        } | null> | null;
       } | null;
     } | null> | null;
   } | null;
@@ -22721,6 +22783,18 @@ export const FetchLiquidityListDocument = new TypedDocumentString(`
         }
         miningAddress
         volume24H
+        apyList {
+          miningBaseApy
+          miningQuoteApy
+          transactionBaseApy
+          transactionQuoteApy
+          metromMiningApy
+          timeRange
+        }
+        volumeList {
+          volume
+          timeRange
+        }
       }
     }
   }
@@ -22804,6 +22878,18 @@ export const FetchMyLiquidityListDocument = new TypedDocumentString(`
         }
         miningAddress
         volume24H
+        apyList {
+          miningBaseApy
+          miningQuoteApy
+          transactionBaseApy
+          transactionQuoteApy
+          metromMiningApy
+          timeRange
+        }
+        volumeList {
+          volume
+          timeRange
+        }
       }
     }
   }

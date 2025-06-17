@@ -1,20 +1,20 @@
-import BigNumber from 'bignumber.js';
-import { alpha, Box, Button, useTheme } from '@dodoex/components';
-import { TokenInfo } from '../../../hooks/Token';
-import Dialog from '../../../components/Dialog';
+import { Box, Button, useTheme } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
+import BigNumber from 'bignumber.js';
+import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
+import Dialog from '../../../components/Dialog';
+import SpaceBetweenItem from '../../../components/SpaceBetweenItem';
+import TokenLogo from '../../../components/TokenLogo';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { TokenInfo } from '../../../hooks/Token';
 import {
   formatPercentageNumber,
   formatTokenAmountNumber,
 } from '../../../utils';
-import SpaceBetweenItem from '../../../components/SpaceBetweenItem';
-import TokenLogo from '../../../components/TokenLogo';
-import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
-import { RatioPrice } from './Ratio';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
 import { PoolTypeTag } from '../PoolList/components/tags';
+import { RatioPrice } from './Ratio';
 
 export default function ConfirmDialog({
   open,
@@ -101,6 +101,7 @@ export default function ConfirmDialog({
             sx={{
               display: 'flex',
               alignItems: 'center',
+              color: theme.palette.text.secondary,
               gap: 4,
               fontWeight: 600,
             }}

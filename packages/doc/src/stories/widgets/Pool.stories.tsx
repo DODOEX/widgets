@@ -13,7 +13,6 @@ export const Primary = (args) => {
     <Box
       sx={{
         mt: 12,
-        mx: 16,
         mb: 40,
         [theme.breakpoints.up('tablet')]: {
           mt: 28,

@@ -34,13 +34,14 @@ export interface FetchRoutePrice {
   slippageLoading?: boolean;
 }
 
-interface IRouteResponse {
+export interface IRouteResponse {
   resAmount: number;
   priceImpact: number;
   baseFeeAmount: number;
   additionalFeeAmount: number;
   resPricePerToToken: number;
   resPricePerFromToken: number;
+  routeInfo: string;
   to: string;
   data: string;
   value: string;
@@ -234,6 +235,7 @@ export function useFetchRoutePrice({
         status: RoutePriceStatus.Success,
         rawBrief: {
           ...routeInfo,
+          routeInfo: JSON.stringify(routeInfo.routeInfo),
           resPricePerToToken: isSolanaChain
             ? new BigNumber(fromAmount)
                 .dividedBy(routeInfo.resAmount)

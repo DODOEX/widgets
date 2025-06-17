@@ -50,7 +50,7 @@ export default function StatBarChart({
 
   const chartBg =
     theme.palette.mode === 'light'
-      ? theme.palette.secondary.main
+      ? alpha(theme.palette.success.main, 0.6)
       : theme.palette.primary.main;
   const chartBgCurrentDay = '#ff9553';
 

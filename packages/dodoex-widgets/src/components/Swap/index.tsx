@@ -276,6 +276,7 @@ export function Swap({
     additionalFeeAmount,
     resPricePerToToken,
     resPricePerFromToken,
+    routeInfo,
   } = useMemo(() => {
     if (!rawBrief)
       return {
@@ -285,6 +286,7 @@ export function Swap({
         additionalFeeAmount: null,
         resPricePerToToken: null,
         resPricePerFromToken: null,
+        routeInfo: null,
       };
     return rawBrief;
   }, [rawBrief]);
@@ -479,6 +481,7 @@ export function Swap({
         priceStatus={resPriceStatus}
         pricePerToToken={resPricePerToToken}
         pricePerFromToken={resPricePerFromToken}
+        routeInfo={routeInfo}
       />
     );
   }, [
@@ -487,6 +490,7 @@ export function Swap({
     resPriceStatus,
     resPricePerToToken,
     resPricePerFromToken,
+    routeInfo,
   ]);
 
   const isUnSupportChain = useMemo(
@@ -628,14 +632,6 @@ export function Swap({
       );
     }
 
-    if (
-      !isBridge &&
-      displayingFromAmt &&
-      new BigNumber(displayPriceImpact).gt(PRICE_IMPACT_THRESHOLD)
-    ) {
-      return priceImpactWarning;
-    }
-
     if (isBridge && bridgeRouteList.length) {
       {
         /* Bridge select route */
@@ -668,6 +664,10 @@ export function Swap({
 
     return (
       <>
+        {!isBridge &&
+          displayingFromAmt &&
+          new BigNumber(displayPriceImpact).gt(PRICE_IMPACT_THRESHOLD) &&
+          priceImpactWarning}
         {slippageExceedLimit}
         {tokenPairPrice}
       </>
