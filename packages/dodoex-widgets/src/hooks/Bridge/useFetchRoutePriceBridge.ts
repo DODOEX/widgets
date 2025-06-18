@@ -215,7 +215,7 @@ export function useFetchRoutePriceBridge({
   slippage,
 }: FetchRoutePrice) {
   const { tokenList } = useTokenState();
-  const { API_DOMAIN } = useUserOptions();
+  const { GRAPHQL_URL } = useUserOptions();
 
   const fromAmountBN = useMemo(() => {
     if (!fromToken || !fromAmount) {
@@ -249,7 +249,7 @@ export function useFetchRoutePriceBridge({
     ],
     queryFn: async () => {
       const res = await fetch(
-        `https://gateway.${API_DOMAIN}/graphql?opname=Cross_chain_swap_zetachain_routes`,
+        `${GRAPHQL_URL}?opname=Cross_chain_swap_zetachain_routes`,
         {
           headers: {
             'content-type': 'application/json',

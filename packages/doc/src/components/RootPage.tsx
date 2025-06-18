@@ -121,7 +121,10 @@ export function RootPage({
 
         <Widget
           apikey="ee53d6b75b12aceed4"
-          API_DOMAIN={process.env.STORYBOOK_API_DOMAIN ?? 'dodoex.io'}
+          GRAPHQL_URL={
+            process.env.STORYBOOK_GRAPHQL_URL ??
+            'https://api.dodoex.io/frontend-graphql'
+          }
           colorMode="light"
           defaultChainId={ChainId.ZETACHAIN_TESTNET}
           onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN_TESTNET}

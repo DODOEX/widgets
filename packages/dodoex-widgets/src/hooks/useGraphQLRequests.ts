@@ -4,7 +4,7 @@ import { useUserOptions } from '../components/UserOptionsProvider';
 let graphQLRequestsLocal: GraphQLRequests | null = null;
 
 export function useGraphQLRequests() {
-  const { API_DOMAIN, graphQLRequests } = useUserOptions();
+  const { GRAPHQL_URL, graphQLRequests } = useUserOptions();
 
   if (graphQLRequests) {
     return graphQLRequests;
@@ -12,7 +12,7 @@ export function useGraphQLRequests() {
 
   if (!graphQLRequestsLocal) {
     graphQLRequestsLocal = new GraphQLRequests({
-      url: `https://gateway.${API_DOMAIN}/graphql`,
+      url: GRAPHQL_URL,
     });
   }
 

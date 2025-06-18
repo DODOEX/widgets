@@ -164,23 +164,26 @@ export default function AMMV2Create() {
   });
 
   useEffect(() => {
-    console.log('createMutation.error', createMutation.error);
+    console.error('createMutation.error', createMutation.error);
   }, [createMutation.error]);
 
   return (
-    <WidgetContainer>
+    <>
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
           gap: 20,
-          mx: 'auto',
-          width: isMobile ? '100%' : 600,
+          mx: 16,
           pb: 20,
           borderBottomWidth: 1,
           borderBottomStyle: 'solid',
           borderBottomColor: 'border.main',
           mb: 20,
+          [theme.breakpoints.up('tablet')]: {
+            width: 600,
+            mx: 'auto',
+          },
         }}
       >
         <SquaredGoBack onClick={back} />
@@ -201,18 +204,19 @@ export default function AMMV2Create() {
 
       <Box
         sx={{
-          mx: 'auto',
-          borderRadius: 0,
-          width: '100%',
+          pt: 20,
+          px: 16,
           position: 'relative',
           overflow: 'hidden',
+          backgroundColor: theme.palette.background.paper,
+          borderRadius: 16,
           [theme.breakpoints.up('tablet')]: {
             borderWidth: 1,
             borderStyle: 'solid',
             borderColor: 'border.main',
+            px: 0,
+            mx: 'auto',
             width: 600,
-            borderRadius: 16,
-            backgroundColor: 'background.paper',
           },
         }}
       >
@@ -382,6 +386,7 @@ export default function AMMV2Create() {
         </Box>
         <Box
           sx={{
+            mt: 20,
             py: 16,
             [theme.breakpoints.up('tablet')]: {
               px: 20,
@@ -423,22 +428,22 @@ export default function AMMV2Create() {
             </TokenPairStatusButton>
           </NeedConnectButton>
         </Box>
+        <ConfirmDialog
+          open={showConfirm}
+          onClose={() => setShowConfirm(false)}
+          slippage={slippageNumber}
+          baseToken={baseToken}
+          baseAmount={baseAmount}
+          quoteToken={quoteToken}
+          quoteAmount={quoteAmount}
+          fee={fee}
+          price={price}
+          lpAmount={liquidityMinted}
+          shareOfPool={shareOfPool}
+          pairAddress={pairAddress}
+          createMutation={createMutation}
+        />
       </Box>
-      <ConfirmDialog
-        open={showConfirm}
-        onClose={() => setShowConfirm(false)}
-        slippage={slippageNumber}
-        baseToken={baseToken}
-        baseAmount={baseAmount}
-        quoteToken={quoteToken}
-        quoteAmount={quoteAmount}
-        fee={fee}
-        price={price}
-        lpAmount={liquidityMinted}
-        shareOfPool={shareOfPool}
-        pairAddress={pairAddress}
-        createMutation={createMutation}
-      />
-    </WidgetContainer>
+    </>
   );
 }
