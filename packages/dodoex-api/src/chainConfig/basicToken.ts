@@ -194,6 +194,6 @@ export const basicTokenMap: {
     symbol: 'PHRS',
     name: 'PHRS',
     wrappedTokenSymbol: 'WPHRS',
-    wrappedTokenAddress: '0xb056a6b9f61b2c0ebf4906aac341bd118a1763fe',
+    wrappedTokenAddress: '0x3019b247381c850ab53dc0ee53bce7a07ea9155f',
   },
 };
