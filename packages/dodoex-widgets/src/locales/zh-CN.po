@@ -315,7 +315,7 @@ msgstr ""
 msgid "APR"
 msgstr ""
 
-#: src/components/TokenPicker/index.tsx:159
+#: src/components/TokenPicker/index.tsx:177
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 

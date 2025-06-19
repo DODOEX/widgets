@@ -76,7 +76,8 @@ export default function TokenPicker({
   });
 
   const ref = useRef<HTMLDivElement>(null);
-  const [fixedSizeHeight, setFixedSizeHeight] = useState(0);
+  const chainListRef = useRef<HTMLDivElement>(null);
+  const [fixedSizeHeight, setFixedSizeHeight] = useState(329);
 
   useEffect(() => {
     if (visible && value) {
@@ -92,13 +93,29 @@ export default function TokenPicker({
   }, [value, visible]);
 
   useEffect(() => {
-    if (visible) {
-      if (ref.current) {
-        // 16 is spacing
-        setFixedSizeHeight(ref.current.offsetHeight - 16);
-      }
+    if (visible && ref.current) {
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.target === ref.current && chainListRef.current) {
+            const height =
+              entry.contentRect.height -
+              48 -
+              chainListRef.current.offsetHeight -
+              16;
+            if (height > 0) {
+              setFixedSizeHeight(height);
+            }
+          }
+        }
+      });
+
+      resizeObserver.observe(ref.current);
+
+      return () => {
+        resizeObserver.disconnect();
+      };
     }
-  }, [ref, visible, selectChainId]);
+  }, [visible, selectChainId]);
 
   const searchOtherAddressQuery = useQuery({
     queryKey: ['token-picker-searchOtherAddress', filter],
@@ -145,10 +162,11 @@ export default function TokenPicker({
         display: 'flex',
         flexDirection: 'column',
         px: 16,
-        flex: 1,
+        flexGrow: 1,
         overflow: 'hidden',
         ...sx,
       }}
+      ref={ref}
     >
       <SearchInput
         fullWidth
@@ -164,6 +182,7 @@ export default function TokenPicker({
 
       {chainId === undefined && chainList.length > 0 && (
         <Box
+          ref={chainListRef}
           sx={{
             position: 'relative',
             display: 'flex',
@@ -199,7 +218,6 @@ export default function TokenPicker({
           pb: 16,
           flexGrow: 1,
         }}
-        ref={ref}
       >
         {showTokenList.length ? (
           <List

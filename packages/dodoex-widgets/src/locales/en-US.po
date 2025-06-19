@@ -315,7 +315,7 @@ msgstr "Liquidity"
 msgid "APR"
 msgstr "APR"
 
-#: src/components/TokenPicker/index.tsx:159
+#: src/components/TokenPicker/index.tsx:177
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
