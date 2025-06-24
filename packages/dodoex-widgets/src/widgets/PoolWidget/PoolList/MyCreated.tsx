@@ -703,18 +703,17 @@ export default function MyCreated({
         </DataCardGroup>
       ) : (
         <>
-          {/* <TableList */}
-          {/*   account={account} */}
-          {/*   list={list} */}
-          {/*   loading={fetchResult.isLoading} */}
-          {/*   operatePool={operatePool} */}
-          {/*   setOperatePool={setOperatePool} */}
-          {/* /> */}
+          <TableList
+            account={account}
+            list={list}
+            loading={fetchResult.isLoading}
+            operatePool={operatePool}
+            setOperatePool={setOperatePool}
+          />
           <CardStatus
             loading={fetchResult.isLoading}
             refetch={fetchResult.error ? fetchResult.refetch : undefined}
-            // empty={!list?.length}
-            empty
+            empty={!list?.length}
             hasSearch={!!activeChainId && !onlyChainId}
           />
         </>

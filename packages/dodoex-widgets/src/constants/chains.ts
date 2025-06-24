@@ -63,7 +63,9 @@ export const rpcServerMap: {
   [ChainId.ZERO]: ['https://zero-network.calderachain.xyz/http'],
   [ChainId.HASHKEY]: ['https://mainnet.hsk.xyz'],
   [ChainId.HEMI]: ['https://rpc.hemi.network/rpc'],
+  [ChainId.PHAROS_TESTNET]: ['https://testnet.dplabs-internal.com'],
 };
+
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
 }) => {
@@ -117,6 +119,7 @@ export const scanUrlDomainMap: {
   [ChainId.ZERO]: 'zerion-explorer.vercel.app',
   [ChainId.HASHKEY]: 'explorer.hsk.xyz',
   [ChainId.HEMI]: 'explorer.hemi.xyz',
+  [ChainId.PHAROS_TESTNET]: 'testnet.pharosscan.xyz',
 };
 
 export const ThegraphKeyMap: {
@@ -153,6 +156,7 @@ export const ThegraphKeyMap: {
   [ChainId.ZERO]: 'zero-mainnet',
   [ChainId.HASHKEY]: 'hashkey',
   [ChainId.HEMI]: 'hemi',
+  [ChainId.PHAROS_TESTNET]: 'pharos-testnet',
 };
 
 export const blockTimeMap: {
@@ -189,6 +193,7 @@ export const blockTimeMap: {
   [ChainId.ZERO]: 3000,
   [ChainId.HASHKEY]: 2000,
   [ChainId.HEMI]: 12000,
+  [ChainId.PHAROS_TESTNET]: 0,
 };
 
 export const dexKeysMap: {
@@ -225,4 +230,5 @@ export const dexKeysMap: {
   [ChainId.ZERO]: [],
   [ChainId.HASHKEY]: [],
   [ChainId.HEMI]: [],
+  [ChainId.PHAROS_TESTNET]: [],
 };
