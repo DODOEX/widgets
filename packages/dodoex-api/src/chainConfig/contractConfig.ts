@@ -326,7 +326,7 @@ const contractMap: {
     CALLEE_HELPER: plume.DODOCalleeHelper,
 
     DODO_PROXY: plume.DODOV2Proxy02,
-    DODO_DSP_PROXY: plume.DODODspProxyWithoutGSP,
+    DODO_DSP_PROXY: plume.DODODspProxy,
     DODO_DPP_PROXY: plume.DODODppProxy,
     DODO_MINEV3_PROXY: plume.DODOMineV3Proxy,
   },
@@ -354,7 +354,7 @@ const contractMap: {
     CALLEE_HELPER: neox.DODOCalleeHelper,
 
     DODO_PROXY: neox.DODOV2Proxy02,
-    DODO_DSP_PROXY: neox.DODODspProxyWithoutGSP,
+    DODO_DSP_PROXY: neox.DODODspProxy,
     DODO_DPP_PROXY: neox.DODODppProxy,
     DODO_MINEV3_PROXY: neox.DODOMineV3Proxy,
   },
@@ -368,7 +368,7 @@ const contractMap: {
     CALLEE_HELPER: morph.DODOCalleeHelper,
 
     DODO_PROXY: morph.DODOV2Proxy02,
-    DODO_DSP_PROXY: morph.DODODspProxyWithoutGSP,
+    DODO_DSP_PROXY: morph.DODODspProxy,
     DODO_DPP_PROXY: morph.DODODppProxy,
     DODO_MINEV3_PROXY: morph.DODOMineV3Proxy,
   },
@@ -382,7 +382,7 @@ const contractMap: {
     CALLEE_HELPER: riseTestnet.DODOCalleeHelper,
 
     DODO_PROXY: riseTestnet.DODOV2Proxy02,
-    DODO_DSP_PROXY: riseTestnet.DODODspProxyWithoutGSP,
+    DODO_DSP_PROXY: riseTestnet.DODODspProxy,
     DODO_DPP_PROXY: riseTestnet.DODODppProxy,
     DODO_MINEV3_PROXY: riseTestnet.DODOMineV3Proxy,
   },
@@ -396,7 +396,7 @@ const contractMap: {
     CALLEE_HELPER: nero.DODOCalleeHelper,
 
     DODO_PROXY: nero.DODOV2Proxy02,
-    DODO_DSP_PROXY: nero.DODODspProxyWithoutGSP,
+    DODO_DSP_PROXY: nero.DODODspProxy,
     DODO_DPP_PROXY: nero.DODODppProxy,
     DODO_MINEV3_PROXY: nero.DODOMineV3Proxy,
   },
@@ -438,7 +438,7 @@ const contractMap: {
     CALLEE_HELPER: xLayer.DODOCalleeHelper,
 
     DODO_PROXY: xLayer.DODOV2Proxy02,
-    DODO_DSP_PROXY: xLayer.DODODspProxyWithoutGSP,
+    DODO_DSP_PROXY: xLayer.DODODspProxy,
     DODO_DPP_PROXY: xLayer.DODODppProxy,
     DODO_MINEV3_PROXY: xLayer.DODOMineV3Proxy,
   },
@@ -494,7 +494,7 @@ const contractMap: {
     CALLEE_HELPER: pharosTestnet.DODOCalleeHelper,
 
     DODO_PROXY: pharosTestnet.DODOV2Proxy02,
-    DODO_DSP_PROXY: pharosTestnet.DODODspProxyWithoutGSP,
+    DODO_DSP_PROXY: pharosTestnet.DODODspProxy,
     DODO_DPP_PROXY: pharosTestnet.DODODppProxy,
     DODO_MINEV3_PROXY: pharosTestnet.DODOMineV3Proxy,
   },

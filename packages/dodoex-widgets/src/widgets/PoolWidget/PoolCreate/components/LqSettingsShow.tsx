@@ -56,6 +56,7 @@ function Card({
 }
 
 export function LqSettingsShow({
+  chainId,
   status,
   selectedVersion,
   baseToken,
@@ -66,6 +67,7 @@ export function LqSettingsShow({
   quoteAmount,
   cardBg,
 }: {
+  chainId: number | undefined;
   status: SectionStatusT;
   selectedVersion: StateProps['selectedVersion'];
   baseToken: StateProps['baseToken'];
@@ -84,7 +86,7 @@ export function LqSettingsShow({
     slippageCoefficient,
   });
 
-  const { versionMap } = useVersionList();
+  const { versionMap } = useVersionList(chainId);
 
   const isWaiting = status === 'waiting';
   const { initPriceLabel } = versionMap[selectedVersion];

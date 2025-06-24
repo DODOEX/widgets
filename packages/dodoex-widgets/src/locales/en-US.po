@@ -165,7 +165,7 @@ msgstr "The end time must be later than the start time."
 msgid "Pools with lower transaction fees will attract more traders."
 msgstr "Pools with lower transaction fees will attract more traders."
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:40
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:41
 msgid "Single-Token"
 msgstr "Single-Token"
 
@@ -193,7 +193,7 @@ msgid "Search by address"
 msgstr "Search by address"
 
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:45
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:350
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:353
 msgid "Asset ratio within the pool"
 msgstr "Asset ratio within the pool"
 
@@ -218,12 +218,12 @@ msgstr "Due to the market condition, market price and estimated price may have a
 msgid "Search by token or pool address"
 msgstr "Search by token or pool address"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:35
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:36
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:613
 msgid "Pegged Exchange Rate"
 msgstr "Pegged Exchange Rate"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:50
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:51
 msgid "Private Pool"
 msgstr "Private Pool"
 
@@ -251,7 +251,7 @@ msgstr "Full range"
 msgid "*Depending on the block time, the real amount of Daily Rewards may deviate slightly."
 msgstr "*Depending on the block time, the real amount of Daily Rewards may deviate slightly."
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:24
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:25
 msgid "Since this pool uses the PMM algorithm, which is different from the normal AMM pool mechanism, the initial price calculation is also different from AMM."
 msgstr "Since this pool uses the PMM algorithm, which is different from the normal AMM pool mechanism, the initial price calculation is also different from AMM."
 
@@ -284,7 +284,7 @@ msgstr "Minute"
 msgid "Copied"
 msgstr "Copied"
 
-#: src/widgets/PoolWidget/PoolModify/index.tsx:344
+#: src/widgets/PoolWidget/PoolModify/index.tsx:345
 msgid "Edit Parameter Settings"
 msgstr "Edit Parameter Settings"
 
@@ -294,7 +294,7 @@ msgstr "Hour"
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:169
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:28
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:318
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:320
 msgid "Pricing Model"
 msgstr "Pricing Model"
 
@@ -514,7 +514,7 @@ msgstr "The slippage coefficient needs to be greater than or equal to 0, and les
 msgid "Calculation = current rewards for a single block  × number of blocks in 24h"
 msgstr "Calculation = current rewards for a single block  × number of blocks in 24h"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:55
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:56
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:611
 msgid "Mid Price"
 msgstr "Mid Price"
@@ -532,7 +532,7 @@ msgstr "Mining Pool Setup"
 msgid "Copied"
 msgstr "Copied"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:77
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:81
 msgid "The pool’s market-making price is fixed"
 msgstr "The pool’s market-making price is fixed"
 
@@ -566,7 +566,7 @@ msgid "Swap Rate"
 msgstr "Swap Rate"
 
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:169
-#: src/widgets/PoolWidget/PoolModify/index.tsx:460
+#: src/widgets/PoolWidget/PoolModify/index.tsx:462
 msgid "Pool not found. Please switch to another network and retry."
 msgstr "Pool not found. Please switch to another network and retry."
 
@@ -594,7 +594,7 @@ msgstr "The area of the chart indicates the buy/sell volume of {baseSymbol} that
 msgid "Added successful"
 msgstr "Added successful"
 
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:501
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:507
 msgid "Add Initial Liquidity"
 msgstr "Add Initial Liquidity"
 
@@ -727,7 +727,7 @@ msgstr "Suitable for stablecoins with price fluctuations within 2%"
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:56
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:57
 msgid "set current mid price"
 msgstr "set current mid price"
 
@@ -760,7 +760,7 @@ msgstr "Day"
 msgid "minutes"
 msgstr "minutes"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:46
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:47
 msgid "You can set the minimum selling price for single-token pools."
 msgstr "You can set the minimum selling price for single-token pools."
 
@@ -815,7 +815,7 @@ msgid "Additional Fee"
 msgstr "Additional Fee"
 
 #: src/widgets/PoolWidget/hooks/usePoolTypeTag.ts:15
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:30
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:31
 msgid "Pegged"
 msgstr "Pegged"
 
@@ -897,7 +897,7 @@ msgstr "Set pool parameters"
 msgid "Any Ratio"
 msgstr "Any Ratio"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:83
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:91
 msgid "Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes."
 msgstr "Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes."
 
@@ -939,7 +939,7 @@ msgstr "Flexible customization, take full control of liquidity"
 msgid "Risk Disclaimer"
 msgstr "Risk Disclaimer"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:82
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:90
 msgid "The pool’s market-making price can be adjusted"
 msgstr "The pool’s market-making price can be adjusted"
 
@@ -956,7 +956,7 @@ msgstr "Time"
 msgid "Owner"
 msgstr "Owner"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:36
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:37
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 
@@ -1011,7 +1011,7 @@ msgid "My pool share"
 msgstr "My pool share"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:132
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:112
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:114
 msgid "Learn More"
 msgstr "Learn More"
 
@@ -1137,7 +1137,7 @@ msgstr "Volume (1D)"
 msgid "Estimated Time"
 msgstr "Estimated Time"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:19
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:20
 #: src/widgets/PoolWidget/PoolList/index.tsx:226
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr "Classical AMM-like pool. Suitable for most assets."
@@ -1180,7 +1180,7 @@ msgstr "Rewards"
 msgid "Last"
 msgstr "Last"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:31
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:32
 msgid "Suitable for synthetic assets. The liquidity is super concentrated at some price like Curve Finance."
 msgstr "Suitable for synthetic assets. The liquidity is super concentrated at some price like Curve Finance."
 
@@ -1257,7 +1257,7 @@ msgid "Doc"
 msgstr "Doc"
 
 #: src/widgets/PoolWidget/hooks/usePoolTypeTag.ts:11
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:18
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:19
 msgid "Standard"
 msgstr "Standard"
 
@@ -1379,7 +1379,7 @@ msgstr "When adding rewards, the number of rewards for a single block may be adj
 msgid "This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
 msgstr "This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
 
-#: src/widgets/PoolWidget/PoolCreate/components/PriceModeCard.tsx:50
+#: src/widgets/PoolWidget/PoolCreate/components/PriceModeCard.tsx:52
 msgid "Can the pool price be adjusted?"
 msgstr "Can the pool price be adjusted?"
 
@@ -1399,16 +1399,16 @@ msgstr "Checking this option means that the routing algorithm will only route to
 #: src/widgets/PoolWidget/PoolCreate/components/FeeRateCard.tsx:59
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:30
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:38
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:337
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:340
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:582
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:187
-#: src/widgets/PoolWidget/PoolModify/index.tsx:280
+#: src/widgets/PoolWidget/PoolModify/index.tsx:281
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:61
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:94
 msgid "Fee Rate"
 msgstr "Fee Rate"
 
-#: src/widgets/PoolWidget/PoolModify/index.tsx:476
+#: src/widgets/PoolWidget/PoolModify/index.tsx:478
 msgid "You are making changes to the liquidity of a private pool. This is a highly discretionary operation that may cause substantial inflows/outflows of funds and changes in market prices. Please make sure you are fully aware of the implications of each parameter modification."
 msgstr "You are making changes to the liquidity of a private pool. This is a highly discretionary operation that may cause substantial inflows/outflows of funds and changes in market prices. Please make sure you are fully aware of the implications of each parameter modification."
 
@@ -1499,7 +1499,7 @@ msgstr "<0>{lostRatio}</0> of the initial liquidity you provide will be burned. 
 msgid "Maximum slippage do not exceed 50%"
 msgstr "Maximum slippage do not exceed 50%"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:41
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:42
 msgid "For those who are looking to sell tokens and only need ask-side liquidity."
 msgstr "For those who are looking to sell tokens and only need ask-side liquidity."
 
@@ -1605,8 +1605,8 @@ msgstr "Delete"
 msgid "Initial Price {0} {1} = {2} {3}"
 msgstr "Initial Price {0} {1} = {2} {3}"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:23
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:45
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:24
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:46
 msgid "Initial Price"
 msgstr "Initial Price"
 
@@ -1700,8 +1700,8 @@ msgstr "Results in a more volatile price."
 
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:94
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:105
-#: src/widgets/PoolWidget/PoolCreate/components/BaseInfoCardList.tsx:51
-#: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:114
+#: src/widgets/PoolWidget/PoolCreate/components/BaseInfoCardList.tsx:53
+#: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:116
 msgid "Token Pair"
 msgstr "Token Pair"
 
@@ -1907,7 +1907,7 @@ msgstr "Confirm swap"
 msgid "Minimum Received"
 msgstr "Minimum Received"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:78
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:82
 msgid "Once created, the price cannot be changed. This option applies to assets like ETH-WETH."
 msgstr "Once created, the price cannot be changed. This option applies to assets like ETH-WETH."
 
@@ -1964,7 +1964,7 @@ msgstr "AMM V3"
 msgid "The dynamic slippage is provided by DODO team through analyzing historical transactions."
 msgstr "The dynamic slippage is provided by DODO team through analyzing historical transactions."
 
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:265
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:267
 msgid "Failed to get price of the token"
 msgstr "Failed to get price of the token"
 
@@ -2033,7 +2033,7 @@ msgstr "Volume (24H)"
 msgid "Pool Setup"
 msgstr "Pool Setup"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:51
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:52
 msgid "100% use your own funds and enjoy the maximum degree of flexibility."
 msgstr "100% use your own funds and enjoy the maximum degree of flexibility."
 
@@ -2051,7 +2051,7 @@ msgstr "MT Fee"
 msgid "All chains"
 msgstr "All chains"
 
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:261
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:263
 msgid "Current Market Price:"
 msgstr "Current Market Price:"
 
@@ -2159,9 +2159,9 @@ msgstr "Total Liquidity"
 msgid "AMM V3 Position"
 msgstr "AMM V3 Position"
 
-#: src/widgets/PoolWidget/PoolCreate/components/BaseInfoCardList.tsx:63
+#: src/widgets/PoolWidget/PoolCreate/components/BaseInfoCardList.tsx:65
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:151
-#: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:153
+#: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:155
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:68
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:135
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:596

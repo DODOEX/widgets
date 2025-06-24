@@ -6,16 +6,18 @@ import { useVersionList } from '../hooks/useVersionList';
 import { Actions, StateProps, Types } from '../reducer';
 
 export default function VersionSelect({
+  chainId,
   selectedVersion,
   dispatch,
 }: {
+  chainId: number | undefined;
   selectedVersion: StateProps['selectedVersion'];
   dispatch: React.Dispatch<Actions>;
 }) {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
 
-  const { versionList } = useVersionList();
+  const { versionList } = useVersionList(chainId);
 
   const isLight = theme.palette.mode === 'light';
   return (

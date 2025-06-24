@@ -163,7 +163,7 @@ msgstr "结束时间必须晚于开始时间"
 msgid "Pools with lower transaction fees will attract more traders."
 msgstr "更低的手续费率，可以吸引更多的交易者。"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:40
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:41
 msgid "Single-Token"
 msgstr "单边"
 
@@ -191,7 +191,7 @@ msgid "Search by address"
 msgstr "输入地址"
 
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:45
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:350
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:353
 msgid "Asset ratio within the pool"
 msgstr "资金池中资产比例"
 
@@ -216,12 +216,12 @@ msgstr "由于市场情况不同，市场价格与估算价格可能略有差异
 msgid "Search by token or pool address"
 msgstr "通过代币或者资金池地址查找"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:35
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:36
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:613
 msgid "Pegged Exchange Rate"
 msgstr "锚定价格"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:50
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:51
 msgid "Private Pool"
 msgstr "私有池"
 
@@ -249,7 +249,7 @@ msgstr "全区间"
 msgid "*Depending on the block time, the real amount of Daily Rewards may deviate slightly."
 msgstr "*每天出块的时间并不是固定的，实际每日奖励数量可能会略有偏差"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:24
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:25
 msgid "Since this pool uses the PMM algorithm, which is different from the normal AMM pool mechanism, the initial price calculation is also different from AMM."
 msgstr "由于该池使用了PMM算法，与通常的AMM池机制不同，因此初始价格的计算也与AMM不同。"
 
@@ -282,7 +282,7 @@ msgstr "分钟"
 msgid "Copied"
 msgstr "已复制"
 
-#: src/widgets/PoolWidget/PoolModify/index.tsx:344
+#: src/widgets/PoolWidget/PoolModify/index.tsx:345
 msgid "Edit Parameter Settings"
 msgstr "修改参数"
 
@@ -292,7 +292,7 @@ msgstr "小时"
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:169
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:28
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:318
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:320
 msgid "Pricing Model"
 msgstr "定价模式"
 
@@ -512,7 +512,7 @@ msgstr "滑点系数需要大于等于 0 且小于等于 0.1"
 msgid "Calculation = current rewards for a single block  × number of blocks in 24h"
 msgstr "计算方式=当前单个区块奖励×24h出块数"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:55
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:56
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:611
 msgid "Mid Price"
 msgstr "盘口中间价"
@@ -530,7 +530,7 @@ msgstr "设置挖矿资金池"
 msgid "Copied"
 msgstr "已复制"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:77
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:81
 msgid "The pool’s market-making price is fixed"
 msgstr "资金池价格固定"
 
@@ -564,7 +564,7 @@ msgid "Swap Rate"
 msgstr "价格"
 
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:169
-#: src/widgets/PoolWidget/PoolModify/index.tsx:460
+#: src/widgets/PoolWidget/PoolModify/index.tsx:462
 msgid "Pool not found. Please switch to another network and retry."
 msgstr "没有查到资金池，建议您切换网络后重试"
 
@@ -592,7 +592,7 @@ msgstr "图表的面积表示 {baseSymbol} 从市场价到悬停选定价格，�
 msgid "Added successful"
 msgstr "添加成功"
 
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:501
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:507
 msgid "Add Initial Liquidity"
 msgstr "添加初始流动性"
 
@@ -725,7 +725,7 @@ msgstr "适用于价格波动在2%以内的稳定币"
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:56
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:57
 msgid "set current mid price"
 msgstr "设置当前中间价"
 
@@ -758,7 +758,7 @@ msgstr "天"
 msgid "minutes"
 msgstr "分"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:46
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:47
 msgid "You can set the minimum selling price for single-token pools."
 msgstr "你可以设置单边池的最小卖出价格。"
 
@@ -813,7 +813,7 @@ msgid "Additional Fee"
 msgstr "额外手续费"
 
 #: src/widgets/PoolWidget/hooks/usePoolTypeTag.ts:15
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:30
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:31
 msgid "Pegged"
 msgstr "锚定池"
 
@@ -895,7 +895,7 @@ msgstr "修改资金池参数"
 msgid "Any Ratio"
 msgstr "任意比例"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:83
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:91
 msgid "Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes."
 msgstr "创建完成后，您可以随时修改做市价格，适用于资产锚定价可能出现变化的情况"
 
@@ -937,7 +937,7 @@ msgstr "灵活自定义，高度掌控流动性"
 msgid "Risk Disclaimer"
 msgstr "风险警示"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:82
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:90
 msgid "The pool’s market-making price can be adjusted"
 msgstr "池子价格可调整"
 
@@ -954,7 +954,7 @@ msgstr "时间"
 msgid "Owner"
 msgstr "所有者"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:36
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:37
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr "锚定价格是指两个代币资产之间的汇率，其中一个资产的价值由另一个锚定。例如，美元和 USDT 之间的汇率是 1。"
 
@@ -1009,7 +1009,7 @@ msgid "My pool share"
 msgstr "我的资金池份额"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:132
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:112
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:114
 msgid "Learn More"
 msgstr "查看详情"
 
@@ -1135,7 +1135,7 @@ msgstr "交易量（1天）"
 msgid "Estimated Time"
 msgstr "预计时间"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:19
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:20
 #: src/widgets/PoolWidget/PoolList/index.tsx:226
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr "类似 AMM 做市策略，适用于大多数币种"
@@ -1178,7 +1178,7 @@ msgstr "奖励代币"
 msgid "Last"
 msgstr "上一步"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:31
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:32
 msgid "Suitable for synthetic assets. The liquidity is super concentrated at some price like Curve Finance."
 msgstr "类似于 Curve 的做市策略，适用于合成资产、按照稳定比例兑换的资产"
 
@@ -1255,7 +1255,7 @@ msgid "Doc"
 msgstr "文档"
 
 #: src/widgets/PoolWidget/hooks/usePoolTypeTag.ts:11
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:18
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:19
 msgid "Standard"
 msgstr "标准"
 
@@ -1377,7 +1377,7 @@ msgstr "补充奖励时，单个区块奖励数量可能会有所调整"
 msgid "This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
 msgstr "必须先初始化该资金池，才能添加流动性。要初始化，请选择池的起价。然后，输入流动性价格范围和充值金额。由于初始化交易，Gas 费将比通常高。"
 
-#: src/widgets/PoolWidget/PoolCreate/components/PriceModeCard.tsx:50
+#: src/widgets/PoolWidget/PoolCreate/components/PriceModeCard.tsx:52
 msgid "Can the pool price be adjusted?"
 msgstr "是否可以更改资金池报价"
 
@@ -1397,16 +1397,16 @@ msgstr "只使用该交易对下的资金池，不会使用第三个币种跳转
 #: src/widgets/PoolWidget/PoolCreate/components/FeeRateCard.tsx:59
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:30
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:38
-#: src/widgets/PoolWidget/PoolCreate/index.tsx:337
+#: src/widgets/PoolWidget/PoolCreate/index.tsx:340
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:582
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:187
-#: src/widgets/PoolWidget/PoolModify/index.tsx:280
+#: src/widgets/PoolWidget/PoolModify/index.tsx:281
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:61
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:94
 msgid "Fee Rate"
 msgstr "手续费率"
 
-#: src/widgets/PoolWidget/PoolModify/index.tsx:476
+#: src/widgets/PoolWidget/PoolModify/index.tsx:478
 msgid "You are making changes to the liquidity of a private pool. This is a highly discretionary operation that may cause substantial inflows/outflows of funds and changes in market prices. Please make sure you are fully aware of the implications of each parameter modification."
 msgstr "您正在修改私有池的流动性。这是一项自由度极高的操作，有可能造成资金流入/流出，也有可能造成市场价格变化。请确保您清楚每一项修改的含义。"
 
@@ -1497,7 +1497,7 @@ msgstr "<0>{lostRatio}</0> 你提供的初始流动性会被燃烧。<1/>提供�
 msgid "Maximum slippage do not exceed 50%"
 msgstr "最大滑点不能超过50%"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:41
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:42
 msgid "For those who are looking to sell tokens and only need ask-side liquidity."
 msgstr "适用于新资产发行，为其提供卖盘流动性"
 
@@ -1603,8 +1603,8 @@ msgstr "删除"
 msgid "Initial Price {0} {1} = {2} {3}"
 msgstr "初始价格 {0} {1} = {2} {3}"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:23
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:45
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:24
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:46
 msgid "Initial Price"
 msgstr "初始价格"
 
@@ -1698,8 +1698,8 @@ msgstr "适用于价格波动较大的交易对"
 
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:94
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:105
-#: src/widgets/PoolWidget/PoolCreate/components/BaseInfoCardList.tsx:51
-#: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:114
+#: src/widgets/PoolWidget/PoolCreate/components/BaseInfoCardList.tsx:53
+#: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:116
 msgid "Token Pair"
 msgstr "币对"
 
@@ -1905,7 +1905,7 @@ msgstr "确认交易"
 msgid "Minimum Received"
 msgstr "最低收到"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:78
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:82
 msgid "Once created, the price cannot be changed. This option applies to assets like ETH-WETH."
 msgstr "创建完成后，该价格不可更改，适用于ETH-WETH等刚兑资产"
 
@@ -1962,7 +1962,7 @@ msgstr "AMM V3"
 msgid "The dynamic slippage is provided by DODO team through analyzing historical transactions."
 msgstr "动态滑点是由 DODO 团队通过分析历史交易计算得出。"
 
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:265
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:267
 msgid "Failed to get price of the token"
 msgstr "无法获取该币种价格"
 
@@ -2031,7 +2031,7 @@ msgstr "交易量（24小时）"
 msgid "Pool Setup"
 msgstr "设置资金池"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:51
+#: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:52
 msgid "100% use your own funds and enjoy the maximum degree of flexibility."
 msgstr "全部使用你的资金，创建者享有最大程度的调整参数的权限"
 
@@ -2049,7 +2049,7 @@ msgstr "MT 手续费"
 msgid "All chains"
 msgstr "所有链"
 
-#: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:261
+#: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:263
 msgid "Current Market Price:"
 msgstr "市价："
 
@@ -2157,9 +2157,9 @@ msgstr "总资金"
 msgid "AMM V3 Position"
 msgstr "AMM V3 仓位"
 
-#: src/widgets/PoolWidget/PoolCreate/components/BaseInfoCardList.tsx:63
+#: src/widgets/PoolWidget/PoolCreate/components/BaseInfoCardList.tsx:65
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:151
-#: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:153
+#: src/widgets/PoolWidget/PoolCreate/components/LqSettingsShow.tsx:155
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:68
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:135
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:596

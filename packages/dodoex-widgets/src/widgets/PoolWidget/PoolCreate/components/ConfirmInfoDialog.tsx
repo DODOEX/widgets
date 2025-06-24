@@ -65,7 +65,7 @@ export default function ConfirmInfoDialog({
   loading?: boolean;
 }) {
   const { chainId } = useWalletInfo();
-  const { versionMap } = useVersionList();
+  const { versionMap } = useVersionList(chainId);
   const { isMobile } = useWidgetDevice();
 
   const { title, initPriceLabel } = versionMap[state.selectedVersion];
@@ -77,7 +77,7 @@ export default function ConfirmInfoDialog({
     slippageCoefficient: state.slippageCoefficient,
   });
 
-  const subPeggedVersionMap = getSubPeggedVersionMap();
+  const subPeggedVersionMap = getSubPeggedVersionMap(chainId);
   const isPeggedVersion = state.selectedVersion === Version.pegged;
 
   return (

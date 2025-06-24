@@ -179,6 +179,7 @@ export class PoolApi {
             .div(10000)
             .multipliedBy(10 ** 18)
             .toString(),
+          '0',
           parseFixed(
             new BigNumber(i).toString(),
             18 - baseToken.decimals + quoteToken.decimals,

@@ -4,16 +4,18 @@ import { getSubPeggedVersionMap } from '../hooks/useVersionList';
 import { StateProps } from '../reducer';
 
 export function PriceModeCard({
+  chainId,
   isWaiting,
   selectedSubPeggedVersion,
   cardBg,
 }: {
+  chainId: number | undefined;
   isWaiting: boolean;
   selectedSubPeggedVersion: StateProps['selectedSubPeggedVersion'];
   cardBg: string;
 }) {
   const theme = useTheme();
-  const subPeggedVersionMap = getSubPeggedVersionMap();
+  const subPeggedVersionMap = getSubPeggedVersionMap(chainId);
 
   return (
     <Box

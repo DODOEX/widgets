@@ -23,6 +23,7 @@ import { usePriceInit } from '../hooks/usePriceInit';
 import { SettingItemWrapper } from './widgets';
 
 export function InitPriceSetting({
+  chainId,
   selectedVersion,
   isStandardVersion,
   isSingleTokenVersion,
@@ -34,6 +35,7 @@ export function InitPriceSetting({
   dispatch,
   priceInfo,
 }: {
+  chainId: number | undefined;
   selectedVersion: StateProps['selectedVersion'];
   isStandardVersion: boolean;
   isSingleTokenVersion: boolean;
@@ -49,7 +51,7 @@ export function InitPriceSetting({
 
   const [cancelFixedModalVisible, setCancelFixedModalVisible] = useState(false);
 
-  const { versionMap } = useVersionList();
+  const { versionMap } = useVersionList(chainId);
 
   const { initPriceLabel, initPriceTips, initPriceTipsLink } =
     versionMap[selectedVersion];

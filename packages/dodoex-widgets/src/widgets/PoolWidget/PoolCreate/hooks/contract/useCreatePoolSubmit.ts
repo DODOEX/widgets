@@ -45,10 +45,10 @@ export const useCreatePoolSubmit = ({
 
     const isPrivate = selectedVersion === PoolVersionE.marketMakerPool;
     const isStandard = selectedVersion === PoolVersionE.standard;
-    const isDsp = selectedVersion === PoolVersionE.pegged;
     const isGSP =
       selectedVersion === PoolVersionE.pegged &&
       selectedSubPeggedVersion === SubPeggedVersionE.GSP;
+    const isDsp = selectedVersion === PoolVersionE.pegged && !isGSP;
     const baseTokenParam = {
       decimals: baseDecimals,
       address: baseToken.address,
