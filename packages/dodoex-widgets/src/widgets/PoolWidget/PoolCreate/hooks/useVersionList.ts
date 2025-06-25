@@ -8,8 +8,9 @@ import { ReactComponent as SingleChartExampleImgUrl } from '../components/single
 import { ReactComponent as StandardChartExampleDarkImgUrl } from '../components/standard-chart-example-dark.svg';
 import { ReactComponent as StandardChartExampleImgUrl } from '../components/standard-chart-example.svg';
 import { SubPeggedVersionE, Version, VersionItem } from '../types';
+import { getDODODspProxyContractAddressByChainId } from '@dodoex/dodo-contract-request';
 
-export function useVersionList() {
+export function useVersionList(chainId: number | undefined) {
   const docUrl =
     'https://docs.dodoex.io/product/tutorial/how-to-create-pools#learn-more-about-the-characteristics-of-different-pool-models';
   const versionList: VersionItem[] = [
@@ -57,39 +58,50 @@ export function useVersionList() {
     },
   ];
 
-  const versionMap = versionList.reduce((map, item) => {
-    map[item.version] = item;
-    return map;
-  }, {} as Record<Version, VersionItem>);
+  const versionMap = versionList.reduce(
+    (map, item) => {
+      map[item.version] = item;
+      return map;
+    },
+    {} as Record<Version, VersionItem>,
+  );
 
-  const subPeggedVersionList = getSubPeggedVersionList();
+  const subPeggedVersionList = getSubPeggedVersionList(chainId);
   return { versionList, versionMap, subPeggedVersionList };
 }
 
-export function getSubPeggedVersionList(): Array<
+export function getSubPeggedVersionList(chainId: number | undefined): Array<
   Pick<VersionItem, 'title' | 'description'> & {
     version: SubPeggedVersionE;
   }
 > {
-  return [
+  const result = [
     {
       version: SubPeggedVersionE.DSP,
       title: t`The pool’s market-making price is fixed`,
       description: t`Once created, the price cannot be changed. This option applies to assets like ETH-WETH.`,
     },
-    {
+  ];
+  const hasGSP =
+    chainId !== undefined && getDODODspProxyContractAddressByChainId(chainId);
+  if (hasGSP) {
+    result.push({
       version: SubPeggedVersionE.GSP,
       title: t`The pool’s market-making price can be adjusted`,
       description: t`Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes.`,
-    },
-  ];
+    });
+  }
+  return result;
 }
 
-export function getSubPeggedVersionMap() {
-  const subPeggedVersionList = getSubPeggedVersionList();
+export function getSubPeggedVersionMap(chainId: number | undefined) {
+  const subPeggedVersionList = getSubPeggedVersionList(chainId);
 
-  return subPeggedVersionList.reduce((map, item) => {
-    map[item.version] = item;
-    return map;
-  }, {} as Record<SubPeggedVersionE, Pick<VersionItem, 'title' | 'description'>>);
+  return subPeggedVersionList.reduce(
+    (map, item) => {
+      map[item.version] = item;
+      return map;
+    },
+    {} as Record<SubPeggedVersionE, Pick<VersionItem, 'title' | 'description'>>,
+  );
 }

@@ -1930,9 +1930,9 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@dodoex/api@3.0.4", "@dodoex/api@file:/home/junjie/dodo/widgets/packages/dodoex-api":
+"@dodoex/api@3.0.5", "@dodoex/api@file:/home/junjie/dodo/widgets/packages/dodoex-api":
   "resolved" "file:packages/dodoex-api"
-  "version" "3.0.4"
+  "version" "3.0.5"
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/properties" "^5.7.0"
@@ -1982,10 +1982,10 @@
     "ethers" "^6.13.2"
     "https-proxy-agent" "^7.0.5"
 
-"@dodoex/dodo-contract-request@1.18.0", "@dodoex/dodo-contract-request@1.x":
-  "integrity" "sha512-t0azg2+dO54tEY3f8FiRUqmL6u2LqydpwsBrfMGOEi/RwnAUiyjtuohAFc5AsCiD+O9HbC8AsYnmVPMk5HaMfA=="
-  "resolved" "https://registry.npmjs.org/@dodoex/dodo-contract-request/-/dodo-contract-request-1.18.0.tgz"
-  "version" "1.18.0"
+"@dodoex/dodo-contract-request@1.18.1", "@dodoex/dodo-contract-request@1.x":
+  "integrity" "sha512-3Ak397qsICBHQCt2qkfly1LaFCdiGedeUmFp5aaHxV6TEBQnHYSGhz4YO66xJ7vXLbHzjrB979lrzjB3CZpFzg=="
+  "resolved" "https://registry.npmjs.org/@dodoex/dodo-contract-request/-/dodo-contract-request-1.18.1.tgz"
+  "version" "1.18.1"
   dependencies:
     "typescript" "^5"
 
@@ -1997,10 +1997,10 @@
 
 "@dodoex/widgets@file:/home/junjie/dodo/widgets/packages/dodoex-widgets":
   "resolved" "file:packages/dodoex-widgets"
-  "version" "3.1.5"
+  "version" "3.1.6"
   dependencies:
     "@babel/runtime" "^7.17.0"
-    "@dodoex/api" "3.0.3-pharos.5"
+    "@dodoex/api" "3.0.4"
     "@dodoex/components" "3.0.9"
     "@dodoex/contract-request" "^1.3.0"
     "@dodoex/dodo-contract-request" "1.18.0"
@@ -9584,9 +9584,7 @@
     "@colors/colors" "1.5.0"
 
 "cli-table3@^0.6.2":
-  "integrity" "sha512-+W/5efTR7y5HRD7gACw9yQjqMVvEMLBHmboM/kPWam+H+Hmyrgjh6YncVKK122YZkXrLudzTuAukUw9FnMf7IQ=="
-  "resolved" "https://registry.npmjs.org/cli-table3/-/cli-table3-0.6.5.tgz"
-  "version" "0.6.5"
+  "version" "0.6.2"
   dependencies:
     "string-width" "^4.2.0"
   optionalDependencies:

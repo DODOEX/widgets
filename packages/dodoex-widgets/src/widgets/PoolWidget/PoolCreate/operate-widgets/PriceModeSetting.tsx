@@ -6,6 +6,7 @@ import { Actions, StateProps, Types } from '../reducer';
 import { computeInitPriceText } from '../utils';
 
 export function PriceModeSetting({
+  chainId,
   selectedVersion,
   selectedSubPeggedVersion,
   baseToken,
@@ -13,6 +14,7 @@ export function PriceModeSetting({
   initPrice,
   dispatch,
 }: {
+  chainId: number | undefined;
   selectedVersion: StateProps['selectedVersion'];
   selectedSubPeggedVersion: StateProps['selectedSubPeggedVersion'];
   baseToken: StateProps['baseToken'];
@@ -22,7 +24,7 @@ export function PriceModeSetting({
 }) {
   const theme = useTheme();
 
-  const { versionMap, subPeggedVersionList } = useVersionList();
+  const { versionMap, subPeggedVersionList } = useVersionList(chainId);
 
   const { initPriceLabel } = versionMap[selectedVersion];
 

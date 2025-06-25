@@ -87,7 +87,7 @@ export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
   }
 
   const { isMobile } = useWidgetDevice();
-  const { versionMap } = useVersionList();
+  const { versionMap } = useVersionList(chainId);
   const versionItem = versionMap[state.selectedVersion];
   const isSingleTokenVersion = state.selectedVersion === Version.singleToken;
   const isStandardVersion = state.selectedVersion === Version.standard;
@@ -277,6 +277,7 @@ export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
             />
             {isPeggedVersion ? (
               <BaseInfoCardList
+                chainId={chainId}
                 status={
                   state.currentStep === 0
                     ? 'waiting'
@@ -294,6 +295,7 @@ export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
               />
             ) : (
               <LqSettingsShow
+                chainId={chainId}
                 status={
                   state.currentStep === 0
                     ? 'waiting'
@@ -326,6 +328,7 @@ export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
                   }
                 />
                 <PriceModeCard
+                  chainId={chainId}
                   isWaiting={state.currentStep < 2}
                   selectedSubPeggedVersion={state.selectedSubPeggedVersion}
                   cardBg={cardBg}
@@ -404,6 +407,7 @@ export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
 
           {state.currentStep === 0 && (
             <VersionSelect
+              chainId={chainId}
               selectedVersion={state.selectedVersion}
               dispatch={dispatch}
             />
@@ -441,6 +445,7 @@ export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
                 isStandardVersion={isStandardVersion}
               />
               <InitPriceSetting
+                chainId={chainId}
                 selectedVersion={state.selectedVersion}
                 isFixedRatio={state.isFixedRatio}
                 leftTokenAddress={state.leftTokenAddress}
@@ -457,6 +462,7 @@ export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
 
           {isPeggedVersion && state.currentStep === 2 && (
             <PriceModeSetting
+              chainId={chainId}
               selectedVersion={state.selectedVersion}
               selectedSubPeggedVersion={state.selectedSubPeggedVersion}
               baseToken={state.baseToken}

@@ -184,7 +184,7 @@ export default function PoolModify({
     dispatch,
   });
 
-  const { versionMap } = useVersionList();
+  const { versionMap } = useVersionList(chainId);
 
   const versionItem = versionMap[state.selectedVersion];
   const poolDetailLoading = !poolDetail?.baseToken;
@@ -265,6 +265,7 @@ export default function PoolModify({
                 loadingEle
               ) : (
                 <LqSettingsShow
+                  chainId={chainId}
                   status="running"
                   baseToken={state.baseToken}
                   quoteToken={state.quoteToken}
@@ -416,6 +417,7 @@ export default function PoolModify({
                   />
                 )}
                 <InitPriceSetting
+                  chainId={chainId}
                   selectedVersion={state.selectedVersion}
                   isFixedRatio={state.isFixedRatio}
                   leftTokenAddress={state.leftTokenAddress}

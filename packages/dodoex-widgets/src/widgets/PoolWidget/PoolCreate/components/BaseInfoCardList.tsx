@@ -9,6 +9,7 @@ import { computeInitPriceText } from '../utils';
 import { Card } from './widgets';
 
 export function BaseInfoCardList({
+  chainId,
   status,
   selectedVersion,
   baseToken,
@@ -19,6 +20,7 @@ export function BaseInfoCardList({
   sx,
   cardBg,
 }: {
+  chainId: number | undefined;
   status: SectionStatusT;
   selectedVersion: StateProps['selectedVersion'];
   baseToken: StateProps['baseToken'];
@@ -29,7 +31,7 @@ export function BaseInfoCardList({
   sx?: BoxProps['sx'];
   cardBg: string;
 }) {
-  const { versionMap } = useVersionList();
+  const { versionMap } = useVersionList(chainId);
 
   const isWaiting = status === 'waiting';
   const { initPriceLabel } = versionMap[selectedVersion];
