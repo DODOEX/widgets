@@ -1,10 +1,11 @@
-import { Box, TabPanel, Tabs, TabsGroup, useTheme } from '@dodoex/components';
+import { Box, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { HowItWorks } from '../../../components/HowItWorks';
+import { transitionTime } from '../../../components/Swap/components/Dialog';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import WidgetContainer from '../../../components/WidgetContainer';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../router';
 import { Page, PageType } from '../../../router/types';
@@ -15,19 +16,18 @@ import PoolOperateDialog, {
   PoolOperate,
   PoolOperateProps,
 } from '../PoolOperate';
-import AddLiquidityList from './AddLiquidity';
-import { CreatePoolBtn } from './components/CreatePoolBtn';
-import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
-import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
-import MyCreated from './MyCreated';
-import MyLiquidity from './MyLiquidity';
-import { ReactComponent as LeftImage } from './pool-left.svg';
-import { transitionTime } from '../../../components/Swap/components/Dialog';
-import { TokenAndPoolFilterUserOptions } from './hooks/usePoolListFilterTokenAndPool';
 import {
   GetMigrationPairAndMining,
   ShowMigrationPairAndMining,
 } from '../PoolOperate/types';
+import AddLiquidityList from './AddLiquidity';
+import { CreatePoolBtn } from './components/CreatePoolBtn';
+import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
+import { TokenAndPoolFilterUserOptions } from './hooks/usePoolListFilterTokenAndPool';
+import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
+import MyCreated from './MyCreated';
+import MyLiquidity from './MyLiquidity';
+import { ReactComponent as LeftImage } from './pool-left.svg';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -59,10 +59,10 @@ export default function PoolList({
   supportAMMIcon?: boolean;
 }) {
   const { isMobile } = useWidgetDevice();
-  const theme = useTheme();
+
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
   const scrollParentRef = React.useRef<HTMLDivElement>(null);
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const { poolTab, tabs, handleChangePoolTab } = usePoolListTabs({
     account,
     paramsTab: params?.tab,
@@ -240,6 +240,9 @@ export default function PoolList({
           poolTab === PoolTab.myLiquidity &&
           operatePool.pool.liquidityPositions?.[0]?.tokenId ? (
             <AMMV3PositionManage
+              // key 让 AMMV3PositionManage 重新渲染，避免组建内部状态不更新
+              // https://dodo-family.slack.com/archives/C01N2RXKXB4/p1750755768216569
+              key={`${operatePool.pool.chainId}-${operatePool.pool.liquidityPositions[0].tokenId}-${operatePool.pool.lpFeeRate}-${operatePool.pool.baseToken.address}-${operatePool.pool.quoteToken.address}`}
               baseToken={operatePool.pool.baseToken}
               quoteToken={operatePool.pool.quoteToken}
               feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}
