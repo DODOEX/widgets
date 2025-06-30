@@ -10,6 +10,7 @@ import { TokenInfo } from '../../../../hooks/Token';
 import { poolApi } from '../../utils';
 import { getModifyDPPPoolParams } from './getModifyDPPPoolParams';
 import { useUserOptions } from '../../../../components/UserOptionsProvider';
+import { useMessageState } from '../../../../hooks/useMessageState';
 
 const computeAmount = (
   newAmount: string,
@@ -72,67 +73,74 @@ export function useModifyDppPool({
       txTitle: string;
       submittedBack?: () => void;
     }) => {
-      if (!pool) {
-        throw new Error('pool is undefined');
-      }
-      const lpFeeRate = feeRateQuery.data;
-      if (!lpFeeRate) {
-        throw new Error('lpFeeRate is undefined');
-      }
-      if (!pmmStateQuery.data) {
-        throw new Error('pmmStateQuery.data is undefined');
-      }
-      const { pmmParamsBG, baseReserve, quoteReserve } = pmmStateQuery.data;
-      const i = pmmParamsBG.i.toNumber();
-      const k = pmmParamsBG.k.toNumber();
-      const params = await getModifyDPPPoolParams({
-        account,
-        chainId: pool?.chainId,
-        SLIPPAGE_PROTECTION,
-        srcPool: {
-          ...pool,
-          baseReserve,
-          quoteReserve,
-          i: i,
-          k: k,
-          feeRate: lpFeeRate.times(100).toString(),
-        },
-        baseToken: pool?.baseToken,
-        quoteToken: pool?.quoteToken,
-        baseAmount: computeAmount(
-          baseAmount,
-          baseReserve ? new BigNumber(baseReserve) : undefined,
-          isRemove,
-        ),
-        quoteAmount: computeAmount(
-          quoteAmount,
-          quoteReserve ? new BigNumber(quoteReserve) : undefined,
-          isRemove,
-        ),
-        feeRate: feeRate ?? lpFeeRate.times(100).toString(),
-        initPrice: initPrice ?? String(i),
-        slippageCoefficient: slippageCoefficient ?? String(k),
-        ddl,
-      });
-      if (!params) {
-        throw new Error(`modify pool failed: ${pool.address}`);
-      }
-      return submission.execute(
-        txTitle,
-        {
-          opcode: OpCode.TX,
-          ...params,
-          value: params.value ?? 0,
-        },
-        {
-          metadata: {
-            [isRemove
-              ? MetadataFlag.removeLiquidity
-              : MetadataFlag.addLiquidity]: true,
+      try {
+        if (!pool) {
+          throw new Error('pool is undefined');
+        }
+        const lpFeeRate = feeRateQuery.data;
+        if (!lpFeeRate) {
+          throw new Error('lpFeeRate is undefined');
+        }
+        if (!pmmStateQuery.data) {
+          throw new Error('pmmStateQuery.data is undefined');
+        }
+        const { pmmParamsBG, baseReserve, quoteReserve } = pmmStateQuery.data;
+        const i = pmmParamsBG.i.toNumber();
+        const k = pmmParamsBG.k.toNumber();
+        const params = await getModifyDPPPoolParams({
+          account,
+          chainId: pool?.chainId,
+          SLIPPAGE_PROTECTION,
+          srcPool: {
+            ...pool,
+            baseReserve,
+            quoteReserve,
+            i: i,
+            k: k,
+            feeRate: lpFeeRate.times(100).toString(),
           },
-          submittedBack,
-        },
-      );
+          baseToken: pool?.baseToken,
+          quoteToken: pool?.quoteToken,
+          baseAmount: computeAmount(
+            baseAmount,
+            baseReserve ? new BigNumber(baseReserve) : undefined,
+            isRemove,
+          ),
+          quoteAmount: computeAmount(
+            quoteAmount,
+            quoteReserve ? new BigNumber(quoteReserve) : undefined,
+            isRemove,
+          ),
+          feeRate: feeRate ?? lpFeeRate.times(100).toString(),
+          initPrice: initPrice ?? String(i),
+          slippageCoefficient: slippageCoefficient ?? String(k),
+          ddl,
+        });
+        if (!params) {
+          throw new Error(`modify pool failed: ${pool.address}`);
+        }
+        return submission.execute(
+          txTitle,
+          {
+            opcode: OpCode.TX,
+            ...params,
+            value: params.value ?? 0,
+          },
+          {
+            metadata: {
+              [isRemove
+                ? MetadataFlag.removeLiquidity
+                : MetadataFlag.addLiquidity]: true,
+            },
+            submittedBack,
+          },
+        );
+      } catch (error: any) {
+        useMessageState.getState().toast({
+          message: error?.message ?? 'Error',
+          type: 'error',
+        });
+      }
     },
   });
 

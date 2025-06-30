@@ -600,7 +600,7 @@ msgstr "添加初始流动性"
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:335
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:481
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
-#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:174
+#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
 msgid "Add liquidity"
 msgstr "添加做市资金"
 
@@ -913,7 +913,7 @@ msgstr "质押中"
 msgid "Claiming"
 msgstr "领取中"
 
-#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:174
+#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
 msgid "Create AMM V2 Position"
 msgstr "创建 AMM V2 仓位"
 
@@ -1582,7 +1582,7 @@ msgstr "挖矿类型"
 msgid "Settler"
 msgstr "结算者"
 
-#: src/widgets/PoolWidget/hooks/useAMMV2RemoveLiquidity.ts:164
+#: src/widgets/PoolWidget/hooks/useAMMV2RemoveLiquidity.ts:166
 msgid "Remove liquidity"
 msgstr "移除流动性"
 

@@ -16,6 +16,7 @@ import { getEthersValue } from '../../../../utils/bytes';
 import { usePoolBalanceInfo } from '../usePoolBalanceInfo';
 import { useModifyDppPool } from './useModifyDppPool';
 import { useUserOptions } from '../../../../components/UserOptionsProvider';
+import { useMessageState } from '../../../../hooks/useMessageState';
 
 export interface SubmitLiquidityParams {
   balanceInfo?: ReturnType<typeof usePoolBalanceInfo>;
@@ -404,6 +405,10 @@ if (totalSupply == 0) {
           }
         }
       } catch (error) {
+        useMessageState.getState().toast({
+          message: `${error}`,
+          type: 'error',
+        });
         throw new Error(
           `v2 addDVMLiquidity or removeDVMLiquidity or removeDSPLiquidity error: ${error}`,
         );
@@ -490,6 +495,10 @@ if (totalSupply == 0) {
             }
           }
         } catch (error) {
+          useMessageState.getState().toast({
+            message: `${error}`,
+            type: 'error',
+          });
           throw Error(`v2 sendTransaction error: ${error}`);
         }
       }

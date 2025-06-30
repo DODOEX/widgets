@@ -19,6 +19,8 @@ import { BIG_ALLOWANCE } from '../../constants/token';
 import { useCurrentChainId } from '../ConnectWallet';
 import { useQueryClient } from '@tanstack/react-query';
 import { ContractStatus, setContractStatus } from '../useGlobalState';
+import { useUserOptions } from '../../components/UserOptionsProvider';
+import { useMessageState } from '../useMessageState';
 
 export interface ExecutionProps {
   onTxFail?: (error: Error, data: any) => void;
@@ -43,6 +45,7 @@ export default function useExecution({
   onTxReverted,
 }: ExecutionProps = {}) {
   const { account, provider } = useWeb3React();
+  const { noSubmissionDialog } = useUserOptions();
   const queryClient = useQueryClient();
   const chainId = useCurrentChainId();
   const [waitingSubmit, setWaitingSubmit] = useState(false);
@@ -155,6 +158,15 @@ export default function useExecution({
           if (onTxFail) {
             onTxFail(e, mixpanelProps);
           }
+          if (
+            noSubmissionDialog &&
+            (!e.code || (e.code !== 4001 && e.code !== 'ACTION_REJECTED'))
+          ) {
+            useMessageState.getState().toast({
+              message: e.message,
+              type: 'error',
+            });
+          }
 
           setErrorMessage(getExecutionErrorMsg(chainId, e.message));
         }
@@ -256,6 +268,7 @@ export default function useExecution({
       provider,
       updateBlockNumber,
       queryClient,
+      noSubmissionDialog,
     ],
   );
 
