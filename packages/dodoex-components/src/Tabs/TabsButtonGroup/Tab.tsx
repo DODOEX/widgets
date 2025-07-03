@@ -63,6 +63,35 @@ const TabInPaperStyle = styled(BaseTab)`
   }
 `;
 
+const TabInPaperContrastStyle = styled(BaseTab)`
+  flex: 1;
+  padding: 4px 16px;
+  border-radius: 4px;
+  color: ${({ theme }) => theme.palette.text.secondary};
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  white-space: nowrap;
+
+  &:not(.${tabClasses.selected}):hover {
+    color: ${({ theme }) => theme.palette.tabActive.contrastText};
+  }
+
+  &.${buttonClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.${tabClasses.selected} {
+    position: relative;
+    background-color: ${({ theme }) => theme.palette.background.paper};
+    color: ${({ theme }) => theme.palette.tabActive.contrastText};
+  }
+`;
+
 const TabTagStyle = styled(BaseTab)`
   display: flex;
   align-items: center;
@@ -94,7 +123,7 @@ const TabTagStyle = styled(BaseTab)`
 
 export interface TabProps extends BaseTabProps {
   sx?: BoxProps['sx'];
-  variant?: 'default' | 'inPaper' | 'tag';
+  variant?: 'default' | 'inPaper' | 'tag' | 'inPaperContrast';
 }
 export const Tab = React.forwardRef<HTMLDivElement, TabProps>(function TabsList(
   { sx, variant: variantProps, ...props },
@@ -105,6 +134,7 @@ export const Tab = React.forwardRef<HTMLDivElement, TabProps>(function TabsList(
     default: TabStyle,
     inPaper: TabInPaperStyle,
     tag: TabTagStyle,
+    inPaperContrast: TabInPaperContrastStyle,
   };
   return (
     <Box

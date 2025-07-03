@@ -1,16 +1,13 @@
 import {
-  alpha,
   Box,
   TabPanel,
   Tabs,
+  TabsButtonGroup,
   TabsGroup,
   useTheme,
 } from '@dodoex/components';
-import { Fee } from '@dodoex/icons';
-import { Trans } from '@lingui/macro';
 import React from 'react';
 import { HowItWorks } from '../../../components/HowItWorks';
-import { transitionTime } from '../../../components/Swap/components/Dialog';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
@@ -28,9 +25,15 @@ import AddLiquidityList from './AddLiquidity';
 import { CreatePoolBtn } from './components/CreatePoolBtn';
 import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
 import { TokenAndPoolFilterUserOptions } from './hooks/usePoolListFilterTokenAndPool';
-import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
+import {
+  MultiTokenPoolTab,
+  PoolTab,
+  PoolTopTab,
+  usePoolListTabs,
+} from './hooks/usePoolListTabs';
 import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
+import { AllPools } from '../curve/AllPools';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -50,7 +53,6 @@ export default function PoolList({
   params,
   scrollRef: scrollParentRefProps,
   tokenAndPoolFilter,
-  operatePMMPoolElement,
   operatePool: operatePoolProps,
   onOperatePool,
   getMigrationPairAndMining,
@@ -58,20 +60,28 @@ export default function PoolList({
   params?: Page<PageType.Pool>['params'];
   scrollRef?: React.RefObject<any>;
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
-  operatePMMPoolElement?: React.ReactElement;
   operatePool?: Partial<PoolOperateProps> | null;
   onOperatePool?: (pool: Partial<PoolOperateProps> | null) => boolean;
   getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
 }) {
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
+
   const noDocumentLink = useUserOptions((state) => state.noDocumentLink);
   const scrollParentRef = React.useRef<HTMLDivElement>(null);
   const { account } = useWalletInfo();
-  const { poolTab, tabs, handleChangePoolTab } = usePoolListTabs({
-    account,
-    paramsTab: params?.tab,
-  });
+  const {
+    poolTopTab,
+    normalPoolTab,
+    almPoolTab,
+    multiTokenPoolTab,
+    normalTabs,
+    almTabs,
+    topTabs,
+    multiTokenTabs,
+    handleChangePoolTab,
+  } = usePoolListTabs();
+
   const { activeChainId, filterChainIds, handleChangeActiveChainId } =
     usePoolListFilterChainId();
 
@@ -106,9 +116,24 @@ export default function PoolList({
       ref={scrollParentRef}
     >
       <Tabs
-        value={poolTab}
+        value={poolTopTab}
         onChange={(_, value) => {
-          handleChangePoolTab(value as PoolTab);
+          if (value === PoolTopTab.NORMAL) {
+            handleChangePoolTab({
+              topTab: value,
+              poolTab: normalPoolTab,
+            });
+          } else if (value === PoolTopTab.ALM) {
+            handleChangePoolTab({
+              topTab: value,
+              poolTab: almPoolTab,
+            });
+          } else if (value === PoolTopTab.MULTI_TOKEN) {
+            handleChangePoolTab({
+              topTab: value,
+              poolTab: multiTokenPoolTab,
+            });
+          }
         }}
         sx={
           isMobile
@@ -122,20 +147,11 @@ export default function PoolList({
                 maxHeight: '100%',
               }
         }
-        className={isMobile ? undefined : 'gradient-card-border'}
       >
         <Box
           sx={{
             ...(isMobile
-              ? {
-                  ...(!account && {
-                    pb: 20,
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    borderStyle: 'solid',
-                    borderWidth: '0 0 1px',
-                  }),
-                }
+              ? undefined
               : {
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -147,143 +163,193 @@ export default function PoolList({
                 }),
           }}
         >
-          {account ? (
-            <TabsGroup
-              tabs={tabs}
-              variant="default"
-              tabsListSx={{
-                justifyContent: 'space-between',
-                ...(isMobile
-                  ? {
-                      mb: 12,
-                    }
-                  : {
-                      borderBottomWidth: 0,
-                    }),
-              }}
-              tabSx={
-                isMobile
-                  ? undefined
-                  : {
-                      mr: 48,
-                      typography: 'h5',
-                      lineHeight: '25px',
-                      minHeight: 41,
-                      padding: '8px 0px 8px 0px',
-                    }
-              }
-            />
-          ) : (
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                fontWeight: 600,
-                typography: 'h5',
-                lineHeight: '25px',
-                pb: 16,
-              }}
-            >
-              {isMobile ? (
-                ''
-              ) : (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 24,
-                    height: 24,
-                    backgroundColor: alpha(theme.palette.secondary.main, 0.3),
-                    borderRadius: 6,
-                    mr: 4,
-                    color: 'primary.main',
-                  }}
-                >
-                  <Box
-                    component={Fee}
-                    sx={{
-                      width: 16,
-                      height: 16,
-                    }}
-                  />
-                </Box>
-              )}
-              <Trans>Add Liquidity</Trans>
-            </Box>
-          )}
-          <CreatePoolBtn />
+          <TabsGroup
+            tabs={topTabs}
+            variant="default"
+            tabsListSx={{
+              justifyContent: 'space-between',
+              ...(isMobile
+                ? {
+                    mb: 12,
+                    gap: 32,
+                  }
+                : {
+                    borderBottomWidth: 0,
+                  }),
+            }}
+            tabSx={
+              isMobile
+                ? {
+                    mr: 0,
+                    padding: '0px 0px 16px 0px',
+                    flexGrow: 1,
+                    flexShrink: 1,
+                    flexBasis: '93px',
+                    gap: 32,
+                  }
+                : {
+                    mr: 48,
+                    typography: 'h5',
+                    lineHeight: '25px',
+                    minHeight: 41,
+                    padding: '8px 0px 8px 0px',
+                  }
+            }
+          />
+
+          {poolTopTab === PoolTopTab.NORMAL && <CreatePoolBtn />}
         </Box>
+
         <TabPanelFlexCol
-          value={PoolTab.addLiquidity}
+          value={PoolTopTab.ALM}
           sx={{
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
           }}
         >
-          <AddLiquidityList
-            account={account}
-            filterChainIds={filterChainIds}
-            scrollParentRef={scrollParentRefProps ?? scrollParentRef}
-            activeChainId={activeChainId}
-            handleChangeActiveChainId={handleChangeActiveChainId}
-            operatePool={operatePool}
-            setOperatePool={setOperatePool}
-            tokenAndPoolFilter={tokenAndPoolFilter}
-            getMigrationPairAndMining={getMigrationPairAndMining}
-          />
-        </TabPanelFlexCol>
-        <TabPanelFlexCol value={PoolTab.myLiquidity}>
-          <MyLiquidity
-            account={account}
-            filterChainIds={filterChainIds}
-            activeChainId={activeChainId}
-            handleChangeActiveChainId={handleChangeActiveChainId}
-            operatePool={operatePool}
-            setOperatePool={setOperatePool}
-            tokenAndPoolFilter={tokenAndPoolFilter}
-            getMigrationPairAndMining={getMigrationPairAndMining}
-          />
-        </TabPanelFlexCol>
-        <TabPanelFlexCol value={PoolTab.myCreated}>
-          <MyCreated
-            account={account}
-            filterChainIds={filterChainIds}
-            activeChainId={activeChainId}
-            handleChangeActiveChainId={handleChangeActiveChainId}
-            operatePool={operatePool}
-            setOperatePool={setOperatePool}
-          />
+          ALM
         </TabPanelFlexCol>
 
-        {!noDocumentLink && (
-          <HowItWorks
-            title="How does Liquidity Pools work?"
-            descList={[
-              {
-                title: 'Deposit Liquidity',
-                desc: "Select a liquidity pool that suits your preferences and supply a pair of assets in our AMM pools or any supported assets in StableSwap pools. In return, you'll receive LP tokens, representing your share of the liquidity provided.",
-              },
-              {
-                title: 'Earn Fees',
-                desc: "As transactions occur within the pool, fees are collected and added to your LP tokens' value. This accrues daily, giving you real-time APY as your token holdings grow.",
-              },
-              {
-                title: 'Delegate & Change Pool Fees',
-                desc: "Boosted pool rewards are distributed every Sunday. If you've contributed liquidity to these pools, simply visit the rewards page, select the relevant week, and claim your earnings with ease.",
-              },
-            ]}
-            linkTo="https://docs.dodoex.io/product/tutorial/how-to-provide-liquidity"
-            sx={{
-              mt: 16,
-              ...(isMobile && {
-                mt: 20,
-              }),
+        <TabPanelFlexCol
+          value={PoolTopTab.NORMAL}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+          }}
+        >
+          <Tabs
+            value={normalPoolTab}
+            onChange={(_, value) => {
+              handleChangePoolTab({
+                topTab: PoolTopTab.NORMAL,
+                poolTab: value as PoolTab,
+              });
             }}
-          />
-        )}
+          >
+            <TabPanel value={PoolTab.addLiquidity}>
+              <AddLiquidityList
+                account={account}
+                filterChainIds={filterChainIds}
+                scrollParentRef={scrollParentRefProps ?? scrollParentRef}
+                activeChainId={activeChainId}
+                handleChangeActiveChainId={handleChangeActiveChainId}
+                operatePool={operatePool}
+                setOperatePool={setOperatePool}
+                tokenAndPoolFilter={tokenAndPoolFilter}
+                getMigrationPairAndMining={getMigrationPairAndMining}
+              >
+                <TabsButtonGroup tabs={normalTabs} variant="inPaperContrast" />
+              </AddLiquidityList>
+            </TabPanel>
+            <TabPanel value={PoolTab.myLiquidity}>
+              <MyLiquidity
+                account={account}
+                filterChainIds={filterChainIds}
+                activeChainId={activeChainId}
+                handleChangeActiveChainId={handleChangeActiveChainId}
+                operatePool={operatePool}
+                setOperatePool={setOperatePool}
+                tokenAndPoolFilter={tokenAndPoolFilter}
+                getMigrationPairAndMining={getMigrationPairAndMining}
+              >
+                <TabsButtonGroup tabs={normalTabs} variant="inPaperContrast" />
+              </MyLiquidity>
+            </TabPanel>
+            <TabPanel value={PoolTab.myCreated}>
+              <MyCreated
+                account={account}
+                filterChainIds={filterChainIds}
+                activeChainId={activeChainId}
+                handleChangeActiveChainId={handleChangeActiveChainId}
+                operatePool={operatePool}
+                setOperatePool={setOperatePool}
+              >
+                <TabsButtonGroup tabs={normalTabs} variant="inPaperContrast" />
+              </MyCreated>
+            </TabPanel>
+
+            {!noDocumentLink && (
+              <HowItWorks
+                title="How does Liquidity Pools work?"
+                descList={[
+                  {
+                    title: 'Deposit Liquidity',
+                    desc: "Select a liquidity pool that suits your preferences and supply a pair of assets in our AMM pools or any supported assets in StableSwap pools. In return, you'll receive LP tokens, representing your share of the liquidity provided.",
+                  },
+                  {
+                    title: 'Earn Fees',
+                    desc: "As transactions occur within the pool, fees are collected and added to your LP tokens' value. This accrues daily, giving you real-time APY as your token holdings grow.",
+                  },
+                  {
+                    title: 'Delegate & Change Pool Fees',
+                    desc: "Boosted pool rewards are distributed every Sunday. If you've contributed liquidity to these pools, simply visit the rewards page, select the relevant week, and claim your earnings with ease.",
+                  },
+                ]}
+                linkTo="https://docs.dodoex.io/product/tutorial/how-to-provide-liquidity"
+                sx={{
+                  mt: 16,
+                  ...(isMobile && {
+                    mt: 20,
+                  }),
+                }}
+              />
+            )}
+          </Tabs>
+        </TabPanelFlexCol>
+
+        <TabPanelFlexCol
+          value={PoolTopTab.MULTI_TOKEN}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+          }}
+        >
+          <Tabs
+            value={multiTokenPoolTab}
+            onChange={(_, value) => {
+              handleChangePoolTab({
+                topTab: PoolTopTab.MULTI_TOKEN,
+                poolTab: value as MultiTokenPoolTab,
+              });
+            }}
+          >
+            <TabPanel value={MultiTokenPoolTab.ALL}>
+              <AllPools
+                filterChainIds={filterChainIds}
+                scrollParentRef={scrollParentRefProps ?? scrollParentRef}
+                activeChainId={activeChainId}
+                operatePool={operatePool}
+                setOperatePool={setOperatePool}
+                tokenAndPoolFilter={tokenAndPoolFilter}
+              >
+                <TabsButtonGroup
+                  tabs={multiTokenTabs}
+                  variant="inPaperContrast"
+                />
+              </AllPools>
+            </TabPanel>
+            <TabPanel value={MultiTokenPoolTab.MY}>
+              <AllPools
+                filterChainIds={filterChainIds}
+                scrollParentRef={scrollParentRefProps ?? scrollParentRef}
+                activeChainId={activeChainId}
+                operatePool={operatePool}
+                setOperatePool={setOperatePool}
+                tokenAndPoolFilter={tokenAndPoolFilter}
+              >
+                <TabsButtonGroup
+                  tabs={multiTokenTabs}
+                  variant="inPaperContrast"
+                />
+              </AllPools>
+            </TabPanel>
+          </Tabs>
+        </TabPanelFlexCol>
       </Tabs>
+
       {operatePool && (
         <Box
           sx={{
@@ -292,7 +358,7 @@ export default function PoolList({
           }}
         >
           {operatePool?.pool?.type === 'AMMV3' && operatePool.pool.chainId ? (
-            poolTab === PoolTab.myLiquidity &&
+            normalPoolTab === PoolTab.myLiquidity &&
             operatePool.pool.liquidityPositions?.[0]?.tokenId ? (
               <AMMV3PositionManage
                 baseToken={operatePool.pool.baseToken}
@@ -319,30 +385,26 @@ export default function PoolList({
             )
           ) : (
             <>
-              {operatePMMPoolElement ?? (
-                <>
-                  {isMobile ? (
-                    <PoolOperateDialog
-                      account={account}
-                      onClose={() => setOperatePool(null)}
-                      modal={isMobile}
-                      {...operatePool}
-                    />
-                  ) : (
-                    <PoolOperate
-                      account={account}
-                      onClose={() => setOperatePool(null)}
-                      {...operatePool}
-                      sx={{
-                        width: 375,
-                        height: 'max-content',
-                        backgroundColor: 'background.paper',
-                        borderRadius: 16,
-                        overflow: 'hidden',
-                      }}
-                    />
-                  )}
-                </>
+              {isMobile ? (
+                <PoolOperateDialog
+                  account={account}
+                  onClose={() => setOperatePool(null)}
+                  modal={isMobile}
+                  {...operatePool}
+                />
+              ) : (
+                <PoolOperate
+                  account={account}
+                  onClose={() => setOperatePool(null)}
+                  {...operatePool}
+                  sx={{
+                    width: 375,
+                    height: 'max-content',
+                    backgroundColor: 'background.paper',
+                    borderRadius: 16,
+                    overflow: 'hidden',
+                  }}
+                />
               )}
             </>
           )}

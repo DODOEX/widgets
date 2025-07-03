@@ -1143,6 +1143,7 @@ export default function MyLiquidity({
   setOperatePool,
   getMigrationPairAndMining,
   tokenAndPoolFilter,
+  children,
 }: {
   account?: string;
   filterChainIds?: ChainId[];
@@ -1153,6 +1154,7 @@ export default function MyLiquidity({
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
   getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
+  children?: React.ReactNode;
 }) {
   const theme = useTheme();
   const { minDevice, isMobile } = useWidgetDevice();
@@ -1231,11 +1233,12 @@ export default function MyLiquidity({
           pt: 12,
           pb: 20,
           display: 'flex',
-          flexDirection: 'column-reverse',
-          gap: 8,
+          flexDirection: 'column',
+          gap: 12,
           [theme.breakpoints.up('tablet')]: {
             py: 16,
             flexDirection: 'row',
+            gap: 8,
             px: 0,
             justifyContent: 'space-between',
           },
@@ -1243,62 +1246,60 @@ export default function MyLiquidity({
       >
         <Box
           sx={{
-            display: 'flex',
-            alignItems: 'stretch',
-            flexDirection: 'column',
-            gap: 8,
             [theme.breakpoints.up('tablet')]: {
-              flexDirection: 'row',
-              alignItems: 'center',
+              mr: 'auto',
             },
           }}
         >
-          {!onlyChainId && (
-            <SelectChain
-              chainId={activeChainId}
-              setChainId={handleChangeActiveChainId}
-            />
-          )}
-          {supportAMMV3 && (
-            <FilterGroup
-              filterList={[
-                {
-                  label: 'V3',
-                  value: 'v3',
-                },
-                {
-                  label: 'V2 & PMM',
-                  value: 'pmm&v2',
-                },
-              ]}
-              value={poolType}
-              onChange={(value) => setPoolType(value)}
-            />
-          )}
+          {children}
+        </Box>
 
+        {!onlyChainId && (
+          <SelectChain
+            chainId={activeChainId}
+            setChainId={handleChangeActiveChainId}
+          />
+        )}
+
+        {supportAMMV3 && (
           <FilterGroup
             filterList={[
               {
-                label: '1d',
-                value: '1',
+                label: 'V3',
+                value: 'v3',
               },
               {
-                label: '7d',
-                value: '7',
-              },
-              {
-                label: '14d',
-                value: '14',
-              },
-              {
-                label: '30d',
-                value: '30',
+                label: 'V2 & PMM',
+                value: 'pmm&v2',
               },
             ]}
-            value={timeRange}
-            onChange={(value) => setTimeRange(value)}
+            value={poolType}
+            onChange={(value) => setPoolType(value)}
           />
-        </Box>
+        )}
+
+        <FilterGroup
+          filterList={[
+            {
+              label: '1d',
+              value: '1',
+            },
+            {
+              label: '7d',
+              value: '7',
+            },
+            {
+              label: '14d',
+              value: '14',
+            },
+            {
+              label: '30d',
+              value: '30',
+            },
+          ]}
+          value={timeRange}
+          onChange={(value) => setTimeRange(value)}
+        />
 
         <Box
           sx={{

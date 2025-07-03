@@ -5,7 +5,7 @@ import { t, Trans } from '@lingui/macro';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
 import { CardStatus } from '../../../components/CardWidgets';
@@ -13,7 +13,6 @@ import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
 import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
 import { EmptyList } from '../../../components/List/EmptyList';
 import { FailedList } from '../../../components/List/FailedList';
-import SelectChain from '../../../components/SelectChain';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
@@ -21,14 +20,23 @@ import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
 import {
-  byWei,
   formatApy,
   formatExponentialNotation,
-  formatPercentageNumber,
   formatReadableNumber,
 } from '../../../utils';
-import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
-import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
+import AddingOrRemovingBtn from '../PoolList/components/AddingOrRemovingBtn';
+import FilterAddressTags from '../PoolList/components/FilterAddressTags';
+import FilterTokenTags from '../PoolList/components/FilterTokenTags';
+import GoPoolDetailBtn from '../PoolList/components/GoPoolDetailBtn';
+import LiquidityTable from '../PoolList/components/LiquidityTable';
+import LoadingCard from '../PoolList/components/LoadingCard';
+import PoolApyTooltip from '../PoolList/components/PoolApyTooltip';
+import TokenAndPoolFilter from '../PoolList/components/TokenAndPoolFilter';
+import TokenListPoolItem from '../PoolList/components/TokenListPoolItem';
+import {
+  TokenAndPoolFilterUserOptions,
+  usePoolListFilterTokenAndPool,
+} from '../PoolList/hooks/usePoolListFilterTokenAndPool';
 import { PoolOperateProps } from '../PoolOperate';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import {
@@ -37,35 +45,13 @@ import {
   FetchLiquidityListLqList,
   getPoolAMMOrPMM,
 } from '../utils';
-import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
-import FilterAddressTags from './components/FilterAddressTags';
-import { FilterGroup } from './components/FilterGroup';
-import FilterTokenTags from './components/FilterTokenTags';
-import GoPoolDetailBtn from './components/GoPoolDetailBtn';
-import LiquidityTable from './components/LiquidityTable';
-import LoadingCard from './components/LoadingCard';
-import { MigrationTag } from './components/migationWidget';
-import PoolApyTooltip from './components/PoolApyTooltip';
-import { PoolFeeRateTag, PoolTypeTag } from './components/tags';
-import TokenAndPoolFilter from './components/TokenAndPoolFilter';
-import TokenListPoolItem from './components/TokenListPoolItem';
-import {
-  TokenAndPoolFilterUserOptions,
-  usePoolListFilterTokenAndPool,
-} from './hooks/usePoolListFilterTokenAndPool';
 
 function CardList({
   lqList,
   setOperatePool,
-  getMigrationPairAndMining,
-  supportAMM,
-  timeRange,
 }: {
   lqList: FetchLiquidityListLqList;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
-  getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
-  supportAMM?: boolean;
-  timeRange: '1' | '7' | '14' | '30';
 }) {
   const theme = useTheme();
   const { onSharePool } = useUserOptions();
@@ -83,7 +69,7 @@ function CardList({
           item.chainId,
         );
         const timeRangeApy = item.apyList?.find(
-          (apy) => apy?.timeRange === `${timeRange}D`,
+          (apy) => apy?.timeRange === `1D`,
         );
         const baseApy = timeRangeApy
           ? formatApy(
@@ -110,11 +96,6 @@ function CardList({
         const isAMMV2 = type === 'AMMV2';
         const isAMMV3 = type === 'AMMV3';
 
-        const migrationItem = getMigrationPairAndMining?.({
-          address: item.id,
-          chainId: item.chainId,
-        });
-
         return (
           <Box
             key={item.id + item.chainId}
@@ -127,7 +108,6 @@ function CardList({
             }}
             className="gradient-card-border"
             onClick={() => {
-              if (supportAMM) return;
               useRouterStore.getState().push({
                 type: PageType.PoolDetail,
                 params: {
@@ -198,7 +178,6 @@ function CardList({
                     chainId={item.chainId}
                   />
                 </Box>
-                {!!migrationItem && <MigrationTag />}
               </Box>
               {hasMining || hasMetromMining ? (
                 <Box
@@ -248,52 +227,6 @@ function CardList({
                 },
               }}
             >
-              {supportAMM && (
-                <Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 4,
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {poolType}
-                    <Tooltip title={<Trans>Fee rate</Trans>}>
-                      <Box
-                        sx={{
-                          px: 8,
-                          py: 4,
-                          borderRadius: 4,
-                          typography: 'h6',
-                          backgroundColor: 'background.tag',
-                          color: 'text.secondary',
-                        }}
-                      >
-                        {isAMMV3
-                          ? (FEE_AMOUNT_DETAIL[item.lpFeeRate as FeeAmount]
-                              ?.label ?? '-')
-                          : formatPercentageNumber({
-                              input: new BigNumber(item.lpFeeRate ?? 0).plus(
-                                item.mtFeeRate
-                                  ? byWei(item.mtFeeRate, isAMMV2 ? 4 : 18)
-                                  : 0,
-                              ),
-                            })}
-                      </Box>
-                    </Tooltip>
-                  </Box>
-                  <Box
-                    sx={{
-                      typography: 'h6',
-                      color: 'text.secondary',
-                    }}
-                  >
-                    <Trans>Pool Type</Trans>
-                  </Box>
-                </Box>
-              )}
-
               <Box>
                 <Box
                   sx={{
@@ -312,7 +245,7 @@ function CardList({
                     color: 'text.secondary',
                   }}
                 >
-                  {timeRange}d&nbsp;<Trans>APY</Trans>
+                  {1}d&nbsp;<Trans>APY</Trans>
                   <PoolApyTooltip
                     chainId={item.chainId}
                     apy={timeRangeApy}
@@ -345,33 +278,6 @@ function CardList({
                   <Trans>TVL</Trans>
                 </Box>
               </Box>
-
-              {supportAMM && (
-                <Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 4,
-                    }}
-                  >
-                    $
-                    {formatReadableNumber({
-                      input: item.volumeList?.find(
-                        (volume) => volume?.timeRange === `${timeRange}D`,
-                      )?.volume,
-                    })}
-                  </Box>
-                  <Box
-                    sx={{
-                      typography: 'h6',
-                      color: 'text.secondary',
-                    }}
-                  >
-                    <Trans>Volume ({timeRange}d)</Trans>
-                  </Box>
-                </Box>
-              )}
             </Box>
             {/* operate */}
             <Box
@@ -395,9 +301,7 @@ function CardList({
               >
                 <Trans>Add</Trans>
               </Button>
-              {supportAMM && poolType === 'PMM' && (
-                <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
-              )}
+              <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
             </Box>
           </Box>
         );
@@ -411,23 +315,17 @@ function TableList({
   loading,
   operatePool,
   setOperatePool,
-  getMigrationPairAndMining,
   hasMore,
   loadMore,
   loadMoreLoading,
-  supportAMM,
-  timeRange,
 }: {
   lqList: FetchLiquidityListLqList;
   loading: boolean;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
-  getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
   hasMore?: boolean;
   loadMore?: () => void;
   loadMoreLoading?: boolean;
-  supportAMM?: boolean;
-  timeRange: '1' | '7' | '14' | '30';
 }) {
   const theme = useTheme();
   const { onSharePool } = useUserOptions();
@@ -444,22 +342,12 @@ function TableList({
           <Box component="th">
             <Trans>Pair</Trans>
           </Box>
-          {supportAMM && (
-            <Box component="th">
-              <Trans>Pool Type</Trans>
-            </Box>
-          )}
           <Box component="th">
             <Trans>TVL</Trans>
           </Box>
           <Box component="th">
-            {timeRange}d&nbsp;<Trans>APY</Trans>
+            {1}d&nbsp;<Trans>APY</Trans>
           </Box>
-          {supportAMM && (
-            <th>
-              {timeRange}d&nbsp;<Trans>Volume</Trans>
-            </th>
-          )}
           <Box
             component="th"
             sx={{
@@ -481,7 +369,7 @@ function TableList({
             item.chainId,
           );
           const timeRangeApy = item.apyList?.find(
-            (apy) => apy?.timeRange === `${timeRange}D`,
+            (apy) => apy?.timeRange === `${1}D`,
           );
           const baseApy = timeRangeApy
             ? formatApy(
@@ -525,11 +413,6 @@ function TableList({
           const isAMMV3 = type === 'AMMV3';
 
           const hoverBg = theme.palette.hover.default;
-
-          const migrationItem = getMigrationPairAndMining?.({
-            address: item.id,
-            chainId: item.chainId,
-          });
           return (
             <Box
               component="tr"
@@ -573,7 +456,6 @@ function TableList({
                         address={item.id}
                         chainId={item.chainId}
                       />
-                      {!!migrationItem && <MigrationTag />}
                     </Box>
                     <AddressWithLinkAndCopy
                       address={item.id}
@@ -602,7 +484,6 @@ function TableList({
                         typography: 'h6',
                         color: 'text.secondary',
                       }}
-                      disabledAddress={supportAMM}
                       onAddressClick={() => {
                         useRouterStore.getState().push({
                           type: PageType.PoolDetail,
@@ -616,25 +497,6 @@ function TableList({
                   </Box>
                 </Box>
               </Box>
-              {supportAMM && (
-                <Box component="td">
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 4,
-                    }}
-                  >
-                    <PoolTypeTag poolType={poolType} />
-                    <PoolFeeRateTag
-                      isAMMV2={isAMMV2}
-                      isAMMV3={isAMMV3}
-                      lpFeeRate={item.lpFeeRate}
-                      mtFeeRate={item.mtFeeRate}
-                    />
-                  </Box>
-                </Box>
-              )}
               <Box component="td">
                 <Box
                   sx={{
@@ -699,21 +561,6 @@ function TableList({
                   </PoolApyTooltip>
                 </Box>
               </Box>
-              {supportAMM && (
-                <Box
-                  component="td"
-                  sx={{
-                    typography: 'body2',
-                  }}
-                >
-                  $
-                  {formatReadableNumber({
-                    input: item.volumeList?.find(
-                      (volume) => volume?.timeRange === `${timeRange}D`,
-                    )?.volume,
-                  })}
-                </Box>
-              )}
               <Box component="td">
                 <Box
                   sx={{
@@ -723,9 +570,8 @@ function TableList({
                     gap: '8px',
                   }}
                 >
-                  {supportAMM && poolType === 'PMM' && (
-                    <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
-                  )}
+                  <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
+
                   {operateBtnText ? (
                     <AddingOrRemovingBtn
                       text={operateBtnText}
@@ -758,37 +604,30 @@ function TableList({
   );
 }
 
-export default function AddLiquidityList({
-  scrollParentRef,
-  filterChainIds,
-  activeChainId,
-  handleChangeActiveChainId,
-  operatePool,
-  setOperatePool,
-  tokenAndPoolFilter,
-  getMigrationPairAndMining,
-  children,
-}: {
+export interface AllPoolsProps {
   scrollParentRef: React.MutableRefObject<HTMLDivElement | null>;
-  account?: string;
   filterChainIds?: ChainId[];
-
   activeChainId: ChainId | undefined;
-  handleChangeActiveChainId: (chainId: number | undefined) => void;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
-  getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
   children?: React.ReactNode;
-}) {
-  const theme = useTheme();
-  const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
-    useUserOptions();
-  const { minDevice, isMobile } = useWidgetDevice();
-  const queryClient = useQueryClient();
+}
 
-  const [poolType, setPoolType] = useState<'all' | 'pmm' | 'v2' | 'v3'>('all');
-  const [timeRange, setTimeRange] = useState<'1' | '7' | '14' | '30'>('1');
+export const AllPools = ({
+  scrollParentRef,
+  filterChainIds,
+  activeChainId,
+  operatePool,
+  setOperatePool,
+  children,
+  tokenAndPoolFilter,
+}: AllPoolsProps) => {
+  const theme = useTheme();
+  const { isMobile } = useWidgetDevice();
+  const graphQLRequests = useGraphQLRequests();
+  const queryClient = useQueryClient();
+  const { onlyChainId } = useUserOptions();
 
   const {
     filterTokens,
@@ -799,28 +638,7 @@ export default function AddLiquidityList({
     handleDeleteToken,
     handleChangeFilterTokens,
     handleChangeFilterAddress,
-  } = usePoolListFilterTokenAndPool(tokenAndPoolFilter);
-
-  const filterTypes = useMemo(() => {
-    if (supportAMMV3 && poolType === 'v3') {
-      return ['AMMV3'];
-    }
-    if (supportAMMV2 && poolType === 'v2') {
-      return ['AMMV2'];
-    }
-    if (!notSupportPMM && poolType === 'pmm') {
-      return ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
-    }
-
-    let filterTypes = notSupportPMM ? [] : ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
-    if (supportAMMV2) {
-      filterTypes.push('AMMV2');
-    }
-    if (supportAMMV3) {
-      filterTypes.push('AMMV3');
-    }
-    return filterTypes;
-  }, [notSupportPMM, supportAMMV2, supportAMMV3, poolType]);
+  } = usePoolListFilterTokenAndPool();
 
   const defaultQueryFilter = useMemo(() => {
     return {
@@ -828,12 +646,10 @@ export default function AddLiquidityList({
       pageSize: isMobile ? 4 : 8,
       filterState: {
         viewOnlyOwn: false,
-        filterTypes,
+        filterTypes: ['CURVE'],
       },
     };
-  }, [filterChainIds, filterTypes, isMobile]);
-
-  const graphQLRequests = useGraphQLRequests();
+  }, [filterChainIds, isMobile]);
 
   const query = graphQLRequests.getInfiniteQuery(
     PoolApi.graphql.fetchLiquidityList,
@@ -906,81 +722,6 @@ export default function AddLiquidityList({
         >
           {children}
         </Box>
-
-        {!onlyChainId && (
-          <SelectChain
-            chainId={activeChainId}
-            setChainId={handleChangeActiveChainId}
-          />
-        )}
-
-        {(supportAMMV2 || supportAMMV3) && (
-          <FilterGroup
-            filterList={[
-              {
-                label: 'All',
-                value: 'all',
-              },
-            ]
-              .concat(
-                notSupportPMM
-                  ? []
-                  : [
-                      {
-                        label: 'PMM',
-                        value: 'pmm',
-                      },
-                    ],
-              )
-              .concat(
-                supportAMMV2
-                  ? [
-                      {
-                        label: 'V2',
-                        value: 'v2',
-                      },
-                    ]
-                  : [],
-              )
-              .concat(
-                supportAMMV3
-                  ? [
-                      {
-                        label: 'V3',
-                        value: 'v3',
-                      },
-                    ]
-                  : [],
-              )}
-            value={poolType}
-            onChange={(value) =>
-              setPoolType(value as 'all' | 'pmm' | 'v2' | 'v3')
-            }
-          />
-        )}
-
-        <FilterGroup
-          filterList={[
-            {
-              label: '1d',
-              value: '1',
-            },
-            {
-              label: '7d',
-              value: '7',
-            },
-            {
-              label: '14d',
-              value: '14',
-            },
-            {
-              label: '30d',
-              value: '30',
-            },
-          ]}
-          value={timeRange}
-          onChange={(value) => setTimeRange(value)}
-        />
 
         <Box
           sx={{
@@ -1112,13 +853,7 @@ export default function AddLiquidityList({
                 }}
               />
             )}
-            <CardList
-              lqList={lqList}
-              setOperatePool={setOperatePool}
-              supportAMM={supportAMMV2 || supportAMMV3}
-              getMigrationPairAndMining={getMigrationPairAndMining}
-              timeRange={timeRange}
-            />
+            <CardList lqList={lqList} setOperatePool={setOperatePool} />
           </DataCardGroup>
         </InfiniteScroll>
       ) : (
@@ -1135,9 +870,6 @@ export default function AddLiquidityList({
                 fetchResult.fetchNextPage();
               }
             }}
-            supportAMM={supportAMMV2 || supportAMMV3}
-            timeRange={timeRange}
-            getMigrationPairAndMining={getMigrationPairAndMining}
           />
           <CardStatus
             loading={fetchResult.isLoading}
@@ -1155,4 +887,4 @@ export default function AddLiquidityList({
       )}
     </>
   );
-}
+};

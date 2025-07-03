@@ -1,8 +1,20 @@
-import { t } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import React from 'react';
-import { POOLS_LIST_TAB } from '../../../../constants/sessionStorage';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useUserOptions } from '../../../../components/UserOptionsProvider';
+import {
+  POOLS_LIST_TAB,
+  POOLS_LIST_TOP_TAB,
+} from '../../../../constants/sessionStorage';
+
+export enum PoolTopTab {
+  ALM = 'ALM',
+  NORMAL = 'NORMAL',
+  MULTI_TOKEN = 'MULTI_TOKEN',
+}
+
+export enum ALMPoolTab {
+  ALL = 'ALL',
+  MY = 'MY',
+}
 
 export enum PoolTab {
   addLiquidity = 'add-liquidity',
@@ -10,56 +22,132 @@ export enum PoolTab {
   myCreated = 'my-created',
 }
 
-export function usePoolListTabs({
-  account,
-  paramsTab,
-}: {
-  account?: string;
-  paramsTab: PoolTab | undefined;
-}) {
-  const { i18n } = useLingui();
-  const [poolTab, setPoolTab] = React.useState(PoolTab.addLiquidity);
+export enum MultiTokenPoolTab {
+  ALL = 'ALL',
+  MY = 'MY',
+}
+
+export function usePoolListTabs() {
+  const [poolTopTab, setPoolTopTab] = useState(PoolTopTab.NORMAL);
+
+  const [almPoolTab, setAlmPoolTab] = useState(ALMPoolTab.ALL);
+  const [normalPoolTab, setNormalPoolTab] = useState(PoolTab.addLiquidity);
+  const [multiTokenPoolTab, setMultiTokenPoolTab] = useState(
+    MultiTokenPoolTab.ALL,
+  );
+
   const { supportAMMV2, supportAMMV3, notSupportPMM } = useUserOptions();
-  const tabs = React.useMemo(() => {
+
+  const topTabs = useMemo(() => {
+    return [
+      // { key: PoolTopTab.ALM, value: 'ALM' },
+      {
+        key: PoolTopTab.NORMAL,
+        value: 'Normal',
+      },
+      {
+        key: PoolTopTab.MULTI_TOKEN,
+        value: 'Multi-token',
+      },
+    ];
+  }, []);
+
+  const almTabs = useMemo(() => {
+    return [
+      { key: ALMPoolTab.ALL, value: 'All vauls' },
+      {
+        key: ALMPoolTab.MY,
+        value: 'My liquidity',
+      },
+    ];
+  }, []);
+
+  const normalTabs = useMemo(() => {
     const result = [
-      { key: PoolTab.addLiquidity, value: t`Add Liquidity` },
+      { key: PoolTab.addLiquidity, value: 'Add Liquidity' },
       {
         key: PoolTab.myLiquidity,
-        value: t`My Liquidity`,
+        value: 'My Liquidity',
       },
     ];
     if (!notSupportPMM) {
       result.push({
         key: PoolTab.myCreated,
-        value: supportAMMV2 || supportAMMV3 ? t`My Pools (PMM)` : t`My Pools`,
+        value: supportAMMV2 || supportAMMV3 ? 'My Pools (PMM)' : 'My Pools',
       });
     }
     return result;
-  }, [i18n._, supportAMMV2, supportAMMV3, notSupportPMM]);
+  }, [supportAMMV2, supportAMMV3, notSupportPMM]);
 
-  const isSetPoolTabCache = React.useRef(false);
-  React.useEffect(() => {
+  const multiTokenTabs = useMemo(() => {
+    return [
+      { key: MultiTokenPoolTab.ALL, value: 'All pools' },
+      {
+        key: MultiTokenPoolTab.MY,
+        value: 'My liquidity',
+      },
+    ];
+  }, []);
+
+  const isSetPoolTabCache = useRef(false);
+  useEffect(() => {
+    const topTabCache = sessionStorage.getItem(POOLS_LIST_TOP_TAB);
     const poolTabCache = sessionStorage.getItem(POOLS_LIST_TAB);
-    if (!!account && poolTabCache && !isSetPoolTabCache.current) {
+    if (topTabCache && poolTabCache && !isSetPoolTabCache.current) {
       isSetPoolTabCache.current = true;
-      setPoolTab(poolTabCache as PoolTab);
+      setPoolTopTab(topTabCache as PoolTopTab);
+      if (topTabCache === PoolTopTab.NORMAL) {
+        setNormalPoolTab(poolTabCache as PoolTab);
+      } else if (topTabCache === PoolTopTab.ALM) {
+        setAlmPoolTab(poolTabCache as ALMPoolTab);
+      } else if (topTabCache === PoolTopTab.MULTI_TOKEN) {
+        setMultiTokenPoolTab(poolTabCache as MultiTokenPoolTab);
+      }
     }
-  }, [account]);
+  }, []);
 
-  const handleChangePoolTab = (poolTab: PoolTab) => {
-    setPoolTab(poolTab);
+  const handleChangePoolTab = ({
+    topTab,
+    poolTab,
+  }:
+    | {
+        topTab: PoolTopTab.NORMAL;
+        poolTab: PoolTab;
+      }
+    | {
+        topTab: PoolTopTab.ALM;
+        poolTab: ALMPoolTab;
+      }
+    | {
+        topTab: PoolTopTab.MULTI_TOKEN;
+        poolTab: MultiTokenPoolTab;
+      }) => {
+    setPoolTopTab(topTab);
+
+    if (topTab === PoolTopTab.NORMAL) {
+      setNormalPoolTab(poolTab);
+    } else if (topTab === PoolTopTab.ALM) {
+      setAlmPoolTab(poolTab);
+    } else if (topTab === PoolTopTab.MULTI_TOKEN) {
+      setMultiTokenPoolTab(poolTab);
+    }
+
+    sessionStorage.setItem(POOLS_LIST_TOP_TAB, topTab);
     sessionStorage.setItem(POOLS_LIST_TAB, poolTab);
   };
 
-  React.useEffect(() => {
-    if (paramsTab) {
-      handleChangePoolTab(paramsTab);
-    }
-  }, [paramsTab]);
-
   return {
-    poolTab,
-    tabs,
+    poolTopTab,
+
+    normalPoolTab,
+    almPoolTab,
+    multiTokenPoolTab,
+
+    topTabs,
+    normalTabs,
+    almTabs,
+    multiTokenTabs,
+
     handleChangePoolTab,
   };
 }

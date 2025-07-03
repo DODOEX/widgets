@@ -7,14 +7,13 @@ import {
   useTheme,
 } from '@dodoex/components';
 import { Plus as PlusIcon } from '@dodoex/icons';
-import { t, Trans } from '@lingui/macro';
+import { Trans } from '@lingui/macro';
 import React from 'react';
+import Dialog from '../../../../components/Dialog';
 import { useUserOptions } from '../../../../components/UserOptionsProvider';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../../router';
 import { PageType } from '../../../../router/types';
-import Dialog from '../../../../components/Dialog';
-import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 
 function CreateItem({
   onClick,
@@ -90,7 +89,7 @@ export interface CreatePoolBtnProps {}
 export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
-  const { account } = useWalletInfo();
+
   const { supportAMMV2, supportAMMV3, notSupportPMM } = useUserOptions();
 
   const [selectTypeModalOpen, setSelectTypeModalOpen] = React.useState(false);
@@ -121,7 +120,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
             title={<Trans>PMM Pool</Trans>}
             desc={
               <Trans>
-                Fexible customization, take full control of liquidity
+                Flexible customization, take full control of liquidity
               </Trans>
             }
           />
@@ -156,7 +155,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
         <>
           <Button
             variant={Button.Variant.second}
-            fullWidth={isMobile && !!account}
+            fullWidth
             onClick={() => {
               setSelectTypeModalOpen(true);
             }}

@@ -1,44 +1,42 @@
+import { ChainId, PoolApi, PoolType } from '@dodoex/api';
 import {
+  alpha,
   Box,
   Button,
   ButtonBase,
   Checkbox,
   HoverAddBackground,
   HoverAddUnderLine,
-  alpha,
   useTheme,
 } from '@dodoex/components';
-import { PoolApi, PoolType, ChainId } from '@dodoex/api';
-import { useQuery } from '@tanstack/react-query';
-import { Edit } from '@dodoex/icons';
-import React from 'react';
-import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { ArrowRight, Edit } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
+import React from 'react';
+import { CardStatus } from '../../../components/CardWidgets';
+import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
+import { EmptyList } from '../../../components/List/EmptyList';
+import { FailedList } from '../../../components/List/FailedList';
+import SelectChain from '../../../components/SelectChain';
+import { TokenLogoPair } from '../../../components/TokenLogoPair';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { useRouterStore } from '../../../router';
+import { PageType } from '../../../router/types';
 import {
   formatExponentialNotation,
   formatReadableNumber,
   truncatePoolAddress,
 } from '../../../utils';
-import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
-import LoadingCard from './components/LoadingCard';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import SelectChain from '../../../components/SelectChain';
-import { EmptyList } from '../../../components/List/EmptyList';
-import { FailedList } from '../../../components/List/FailedList';
-import { PoolOperateProps } from '../PoolOperate';
-import { useRouterStore } from '../../../router';
-import { PageType } from '../../../router/types';
 import { getPoolTypeTag } from '../hooks/usePoolTypeTag';
+import { PoolOperateProps } from '../PoolOperate';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import { FetchMyCreateListLqList } from '../utils';
-import LiquidityTable from './components/LiquidityTable';
-import { ArrowRight } from '@dodoex/icons';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
-import SkeletonTable from './components/SkeletonTable';
-import { useUserOptions } from '../../../components/UserOptionsProvider';
-import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
-import { CardStatus } from '../../../components/CardWidgets';
+import LiquidityTable from './components/LiquidityTable';
+import LoadingCard from './components/LoadingCard';
 
 function CardList({
   account,
@@ -590,6 +588,7 @@ export default function MyCreated({
   handleChangeActiveChainId,
   operatePool,
   setOperatePool,
+  children,
 }: {
   account?: string;
   filterChainIds?: ChainId[];
@@ -598,8 +597,10 @@ export default function MyCreated({
   handleChangeActiveChainId: (chainId: number | undefined) => void;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  children?: React.ReactNode;
 }) {
   const { isMobile } = useWidgetDevice();
+  const theme = useTheme();
   const { onlyChainId } = useUserOptions();
 
   const defaultQueryFilter = {
@@ -635,17 +636,31 @@ export default function MyCreated({
     <>
       <Box
         sx={{
-          py: 16,
+          pt: 12,
+          pb: 20,
           display: 'flex',
-          justifyContent: 'space-between',
-          gap: 8,
-          ...(isMobile
-            ? {}
-            : {
-                px: 0,
-              }),
+          flexDirection: 'column',
+          gap: 12,
+          [theme.breakpoints.up('tablet')]: {
+            py: 16,
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 8,
+            px: 0,
+            justifyContent: 'space-between',
+          },
         }}
       >
+        <Box
+          sx={{
+            [theme.breakpoints.up('tablet')]: {
+              mr: 'auto',
+            },
+          }}
+        >
+          {children}
+        </Box>
+
         {!onlyChainId && (
           <SelectChain
             chainId={activeChainId}

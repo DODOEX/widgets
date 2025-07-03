@@ -44,6 +44,11 @@ export const TabsList = React.forwardRef<
       borderRadius = 12;
       padding = 4;
       break;
+    case 'inPaperContrast':
+      backgroundColor = 'background.tag';
+      borderRadius = 8;
+      padding = 4;
+      break;
     case 'tag':
       width = 'max-content';
       backgroundColor = 'transparent';
