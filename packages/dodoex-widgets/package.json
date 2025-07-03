@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.2-zetachain.57",
+  "version": "3.0.2-zetachain.58",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -59,10 +59,10 @@
   "dependencies": {
     "@babel/runtime": "^7.17.0",
     "@bitcoinerlab/secp256k1": "1.2.0",
-    "@dodoex/api": "3.0.3-zetachain.12",
+    "@dodoex/api": "3.0.3-zetachain.13",
     "@dodoex/components": "3.0.3-zetachain.12",
     "@dodoex/contract-request": "^1.3.0",
-    "@dodoex/dodo-contract-request": "1.12.0-alpha.8",
+    "@dodoex/dodo-contract-request": "1.19.0-alpha.2",
     "@dodoex/icons": "2.0.3-zetachain.1",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",

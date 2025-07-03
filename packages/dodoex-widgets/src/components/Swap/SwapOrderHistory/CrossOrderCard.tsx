@@ -47,9 +47,7 @@ function Extend({
         value: (
           <AddressWithLinkAndCopy
             address={data.fromAddress ?? ''}
-            customChainId={
-              data.routeData.fromChainId ?? ChainId.ZETACHAIN_TESTNET
-            }
+            customChainId={data.routeData.fromChainId ?? ChainId.ZETACHAIN}
             showCopy
             truncate
             iconSpace={4}
@@ -63,9 +61,7 @@ function Extend({
         value: (
           <AddressWithLinkAndCopy
             address={data.toAddress ?? ''}
-            customChainId={
-              data.routeData.toChainId ?? ChainId.ZETACHAIN_TESTNET
-            }
+            customChainId={data.routeData.toChainId ?? ChainId.ZETACHAIN}
             showCopy
             truncate
             iconSpace={4}

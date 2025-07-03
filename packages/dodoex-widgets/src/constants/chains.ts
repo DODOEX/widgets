@@ -113,7 +113,7 @@ export const scanUrlDomainMap: {
   [ChainId.NEOX]: 'xexplorer.neo.org',
   [ChainId.MORPH]: 'explorer.morphl2.io',
   [ChainId.RISE_TESTNET]: 'explorer.testnet.riselabs.xyz',
-  [ChainId.ZETACHAIN]: 'explorer.zetachain.com',
+  [ChainId.ZETACHAIN]: 'zetachain.blockscout.com',
   [ChainId.ZETACHAIN_TESTNET]: 'zetachain-testnet.blockscout.com',
   [ChainId.SOLANA]: 'solscan.io',
   [ChainId.SOLANA_DEVNET]: 'solscan.io',

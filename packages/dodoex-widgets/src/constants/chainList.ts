@@ -2,20 +2,26 @@ import { ChainId, btcSignet, zetachainTestnet } from '@dodoex/api';
 import {
   AppKitNetwork,
   arbitrumSepolia,
+  base,
+  bitcoin,
+  bsc,
+  mainnet,
+  polygon,
   sepolia,
   solana,
   solanaDevnet,
+  zetachain,
 } from '@reown/appkit/networks';
 
+import { ReactComponent as ArbitrumSepoliaLogo } from '../assets/logo/networks/arbitrum.svg';
 import { ReactComponent as BaseLogo } from '../assets/logo/networks/base.svg';
 import { ReactComponent as BSCLogo } from '../assets/logo/networks/bsc.svg';
+import { ReactComponent as BtcSignetLogo } from '../assets/logo/networks/btc-signet.svg';
 import { ReactComponent as BtcLogo } from '../assets/logo/networks/btc.svg';
-import { ReactComponent as PolygonLogo } from '../assets/logo/networks/polygon.svg';
 import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg';
-import { ReactComponent as ArbitrumSepoliaLogo } from '../assets/logo/networks/arbitrum.svg';
+import { ReactComponent as PolygonLogo } from '../assets/logo/networks/polygon.svg';
 import { ReactComponent as SolanaLogo } from '../assets/logo/networks/solana.svg';
 import { ReactComponent as ZetachainLogo } from '../assets/logo/networks/zetachain.svg';
-import { ReactComponent as BtcSignetLogo } from '../assets/logo/networks/btc-signet.svg';
 import { EmptyAddress } from './address';
 
 export interface ChainListItem {
@@ -34,56 +40,71 @@ export interface ChainListItem {
 }
 
 export const chainListMap: Map<ChainId, ChainListItem> = new Map([
-  // [
-  //   ChainId.MAINNET,
-  //   {
-  //     chainId: ChainId.MAINNET,
-  //     logo: ETHereumLogo,
-  //     name: 'Ethereum',
-  //     caipNetwork: mainnet,
-  //     isEVMChain: true,
-  //   },
-  // ],
-  // [
-  //   ChainId.POLYGON,
-  //   {
-  //     chainId: ChainId.POLYGON,
-  //     logo: PolygonLogo,
-  //     name: 'Polygon',
-  //     caipNetwork: polygon,
-  //     isEVMChain: true,
-  //   },
-  // ],
-  // [
-  //   ChainId.BSC,
-  //   {
-  //     chainId: ChainId.BSC,
-  //     logo: BSCLogo,
-  //     name: 'BNBChain',
-  //     caipNetwork: bsc,
-  //     isEVMChain: true,
-  //   },
-  // ],
-  // [
-  //   ChainId.BASE,
-  //   {
-  //     chainId: ChainId.BASE,
-  //     logo: BaseLogo,
-  //     name: 'Base',
-  //     caipNetwork: base,
-  //     isEVMChain: true,
-  //   },
-  // ],
-  // [
-  //   ChainId.ZETACHAIN,
-  //   {
-  //     chainId: ChainId.ZETACHAIN,
-  //     logo: ZetachainLogo,
-  //     name: 'Zetachain',
-  //     caipNetwork: zetachain,
-  //     isEVMChain: true,
-  //   },
-  // ],
+  [
+    ChainId.MAINNET,
+    {
+      chainId: ChainId.MAINNET,
+      logo: ETHereumLogo,
+      name: 'Ethereum',
+      caipNetwork: mainnet,
+      isEVMChain: true,
+      isSolanaChain: false,
+      isBTCChain: false,
+      fallbackAddress: EmptyAddress,
+    },
+  ],
+  [
+    ChainId.POLYGON,
+    {
+      chainId: ChainId.POLYGON,
+      logo: PolygonLogo,
+      name: 'Polygon',
+      caipNetwork: polygon,
+      isEVMChain: true,
+      isSolanaChain: false,
+      isBTCChain: false,
+      fallbackAddress: EmptyAddress,
+    },
+  ],
+  [
+    ChainId.BSC,
+    {
+      chainId: ChainId.BSC,
+      logo: BSCLogo,
+      name: 'BNBChain',
+      caipNetwork: bsc,
+      isEVMChain: true,
+      isSolanaChain: false,
+      isBTCChain: false,
+      fallbackAddress: EmptyAddress,
+    },
+  ],
+  [
+    ChainId.BASE,
+    {
+      chainId: ChainId.BASE,
+      logo: BaseLogo,
+      name: 'Base',
+      caipNetwork: base,
+      isEVMChain: true,
+      isSolanaChain: false,
+      isBTCChain: false,
+      fallbackAddress: EmptyAddress,
+    },
+  ],
+  [
+    ChainId.ZETACHAIN,
+    {
+      chainId: ChainId.ZETACHAIN,
+      logo: ZetachainLogo,
+      name: 'Zetachain',
+      caipNetwork: zetachain,
+      isEVMChain: true,
+      isSolanaChain: false,
+      isBTCChain: false,
+      fallbackAddress: EmptyAddress,
+    },
+  ],
   [
     ChainId.SOLANA,
     {
@@ -97,16 +118,19 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       fallbackAddress: EmptyAddress,
     },
   ],
-  // [
-  //   ChainId.BTC,
-  //   {
-  //     chainId: ChainId.BTC,
-  //     logo: BtcLogo,
-  //     name: 'Bitcoin',
-  //     caipNetwork: bitcoin,
-  //     isBTCChain: true,
-  //   },
-  // ],
+  [
+    ChainId.BTC,
+    {
+      chainId: ChainId.BTC,
+      logo: BtcLogo,
+      name: 'Bitcoin',
+      caipNetwork: bitcoin,
+      isEVMChain: false,
+      isSolanaChain: false,
+      isBTCChain: true,
+      fallbackAddress: EmptyAddress,
+    },
+  ],
 
   [
     ChainId.SEPOLIA,
