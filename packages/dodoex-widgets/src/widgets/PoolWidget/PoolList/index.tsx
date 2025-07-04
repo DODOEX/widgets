@@ -34,6 +34,7 @@ import {
 import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
 import { AllPools } from '../curve/AllPools';
+import { CurvePoolT, OperateCurvePoolT } from '../curve/types';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -84,6 +85,9 @@ export default function PoolList({
 
   const { activeChainId, filterChainIds, handleChangeActiveChainId } =
     usePoolListFilterChainId();
+
+  const [operateCurvePool, setOperateCurvePool] =
+    React.useState<OperateCurvePoolT | null>(null);
 
   const [operatePool, setOperatePoolOrigin] =
     React.useState<Partial<PoolOperateProps> | null>(operatePoolProps || null);
@@ -321,8 +325,8 @@ export default function PoolList({
                 filterChainIds={filterChainIds}
                 scrollParentRef={scrollParentRefProps ?? scrollParentRef}
                 activeChainId={activeChainId}
-                operatePool={operatePool}
-                setOperatePool={setOperatePool}
+                operateCurvePool={operateCurvePool}
+                setOperateCurvePool={setOperateCurvePool}
                 tokenAndPoolFilter={tokenAndPoolFilter}
               >
                 <TabsButtonGroup
@@ -336,8 +340,8 @@ export default function PoolList({
                 filterChainIds={filterChainIds}
                 scrollParentRef={scrollParentRefProps ?? scrollParentRef}
                 activeChainId={activeChainId}
-                operatePool={operatePool}
-                setOperatePool={setOperatePool}
+                operateCurvePool={operateCurvePool}
+                setOperateCurvePool={setOperateCurvePool}
                 tokenAndPoolFilter={tokenAndPoolFilter}
               >
                 <TabsButtonGroup

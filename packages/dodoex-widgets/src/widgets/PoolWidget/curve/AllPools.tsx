@@ -1,5 +1,5 @@
 import { ChainId, PoolApi, PoolType } from '@dodoex/api';
-import { alpha, Box, Button, Tooltip, useTheme } from '@dodoex/components';
+import { alpha, Box, Button, useTheme } from '@dodoex/components';
 import { Share } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
@@ -22,7 +22,7 @@ import { PageType } from '../../../router/types';
 import {
   formatApy,
   formatExponentialNotation,
-  formatReadableNumber,
+  formatTokenAmountNumber,
 } from '../../../utils';
 import AddingOrRemovingBtn from '../PoolList/components/AddingOrRemovingBtn';
 import FilterAddressTags from '../PoolList/components/FilterAddressTags';
@@ -45,6 +45,9 @@ import {
   FetchLiquidityListLqList,
   getPoolAMMOrPMM,
 } from '../utils';
+import { CoinsLogoList } from './components/CoinsLogoList';
+import { CurvePoolT, OperateCurvePoolT } from './types';
+import { mockCurvePoolList } from './utils';
 
 function CardList({
   lqList,
@@ -311,88 +314,57 @@ function CardList({
 }
 
 function TableList({
-  lqList,
+  poolList = mockCurvePoolList,
   loading,
-  operatePool,
-  setOperatePool,
+  operateCurvePool,
+  setOperateCurvePool,
   hasMore,
   loadMore,
   loadMoreLoading,
 }: {
-  lqList: FetchLiquidityListLqList;
+  poolList: CurvePoolT[];
   loading: boolean;
-  operatePool: Partial<PoolOperateProps> | null;
-  setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  operateCurvePool: OperateCurvePoolT | null;
+  setOperateCurvePool: React.Dispatch<
+    React.SetStateAction<OperateCurvePoolT | null>
+  >;
   hasMore?: boolean;
   loadMore?: () => void;
   loadMoreLoading?: boolean;
 }) {
   const theme = useTheme();
-  const { onSharePool } = useUserOptions();
+
   return (
     <LiquidityTable
       hasMore={hasMore}
       loadMore={loadMore}
       loadMoreLoading={loadMoreLoading}
-      empty={!lqList?.length}
+      empty={!poolList?.length}
       loading={loading}
     >
       <Box component="thead">
         <Box component="tr">
-          <Box component="th">
-            <Trans>Pair</Trans>
-          </Box>
-          <Box component="th">
-            <Trans>TVL</Trans>
-          </Box>
-          <Box component="th">
-            {1}d&nbsp;<Trans>APY</Trans>
-          </Box>
+          <Box component="th">Pool</Box>
+          <Box component="th">Assets</Box>
+          <Box component="th">APY</Box>
+          <Box component="th">TVL</Box>
+          <Box component="th">Volume</Box>
           <Box
             component="th"
             sx={{
-              width: 80,
+              width: 155,
             }}
           ></Box>
         </Box>
       </Box>
       <Box component="tbody">
-        {lqList?.map((lq) => {
-          if (!lq?.pair) return null;
-          const item = lq.pair;
-          const baseToken = convertLiquidityTokenToTokenInfo(
-            item.baseToken,
-            item.chainId,
-          );
-          const quoteToken = convertLiquidityTokenToTokenInfo(
-            item.quoteToken,
-            item.chainId,
-          );
-          const timeRangeApy = item.apyList?.find(
-            (apy) => apy?.timeRange === `${1}D`,
-          );
-          const baseApy = timeRangeApy
-            ? formatApy(
-                new BigNumber(timeRangeApy?.transactionBaseApy)
-                  .plus(timeRangeApy?.miningBaseApy ?? 0)
-                  .plus(timeRangeApy?.metromMiningApy ?? 0),
-              )
-            : undefined;
-          const quoteApy =
-            PoolApi.utils.singleSideLp(item.type as PoolType) && timeRangeApy
-              ? formatApy(
-                  new BigNumber(timeRangeApy.transactionQuoteApy).plus(
-                    timeRangeApy.miningQuoteApy ?? 0,
-                  ),
-                )
-              : undefined;
-
+        {poolList.map((pool) => {
           let operateBtnText = '';
           if (
-            operatePool?.pool?.address === item.id ||
-            operatePool?.address === item.id
+            operateCurvePool?.pool?.address.toLowerCase() ===
+            pool.address.toLowerCase()
           ) {
-            switch (operatePool.operate) {
+            switch (operateCurvePool.type) {
               case OperateTab.Remove:
                 operateBtnText = t`Removing`;
                 break;
@@ -402,21 +374,11 @@ function TableList({
             }
           }
 
-          const hasMining = !!item.miningAddress?.[0];
-          const hasMetromMining =
-            !!timeRangeApy?.metromMiningApy &&
-            Number(timeRangeApy?.metromMiningApy) > 0;
-
-          const type = item.type as PoolType;
-          const poolType = getPoolAMMOrPMM(type);
-          const isAMMV2 = type === 'AMMV2';
-          const isAMMV3 = type === 'AMMV3';
-
           const hoverBg = theme.palette.hover.default;
           return (
             <Box
               component="tr"
-              key={item.id + item.chainId}
+              key={`${pool.chainId}-${pool.address}`}
               sx={{
                 [`&:hover td${operateBtnText ? ', & td' : ''}`]: {
                   backgroundImage: `linear-gradient(${hoverBg}, ${hoverBg})`,
@@ -426,92 +388,30 @@ function TableList({
               <Box component="td">
                 <Box
                   sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  {baseToken && quoteToken ? (
-                    <TokenLogoPair
-                      tokens={[baseToken, quoteToken]}
-                      width={24}
-                      mr={8}
-                      chainId={item.chainId}
-                      showChainLogo
-                    />
-                  ) : (
-                    ''
-                  )}
-                  <Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 4,
-                        typography: 'body2',
-                        fontWeight: 600,
-                      }}
-                    >
-                      {`${baseToken?.symbol}/${quoteToken?.symbol}`}
-                      <LiquidityLpPartnerReward
-                        address={item.id}
-                        chainId={item.chainId}
-                      />
-                    </Box>
-                    <AddressWithLinkAndCopy
-                      address={item.id}
-                      customChainId={item.chainId}
-                      truncate
-                      showCopy
-                      iconDarkHover
-                      iconSize={14}
-                      iconSpace={4}
-                      onShareClick={
-                        onSharePool
-                          ? () =>
-                              onSharePool({
-                                chainId: item.chainId,
-                                baseToken,
-                                quoteToken,
-                                poolId: item.id,
-                                apy: timeRangeApy,
-                                isSingle: PoolApi.utils.singleSideLp(
-                                  item.type as PoolType,
-                                ),
-                              })
-                          : undefined
-                      }
-                      sx={{
-                        typography: 'h6',
-                        color: 'text.secondary',
-                      }}
-                      onAddressClick={() => {
-                        useRouterStore.getState().push({
-                          type: PageType.PoolDetail,
-                          params: {
-                            chainId: item.chainId as ChainId,
-                            address: item.id as string,
-                          },
-                        });
-                      }}
-                    />
-                  </Box>
-                </Box>
-              </Box>
-              <Box component="td">
-                <Box
-                  sx={{
                     typography: 'body2',
+                    lineHeight: '19px',
+                    fontWeight: 600,
                   }}
-                  title={
-                    item.tvl
-                      ? `$${formatReadableNumber({
-                          input: item.tvl,
-                        })}`
-                      : undefined
-                  }
                 >
-                  ${formatExponentialNotation(new BigNumber(item.tvl))}
+                  {pool.name}
                 </Box>
+
+                <AddressWithLinkAndCopy
+                  address={pool.address}
+                  customChainId={pool.chainId}
+                  truncate
+                  showCopy
+                  iconDarkHover
+                  iconSize={14}
+                  iconSpace={4}
+                  sx={{
+                    typography: 'h6',
+                    color: 'text.secondary',
+                  }}
+                />
+              </Box>
+              <Box component="td">
+                <CoinsLogoList pool={pool} separate={true} wrap={false} />
               </Box>
               <Box component="td">
                 <Box
@@ -520,28 +420,13 @@ function TableList({
                     alignItems: 'center',
                   }}
                 >
-                  {hasMining || hasMetromMining ? (
-                    <Tooltip title={t`Mining`}>
-                      <Box
-                        component="span"
-                        sx={{
-                          typography: 'body2',
-                          color: 'success.main',
-                        }}
-                      >
-                        ✨{' '}
-                      </Box>
-                    </Tooltip>
-                  ) : (
-                    ''
-                  )}
                   <PoolApyTooltip
-                    chainId={item.chainId}
-                    apy={timeRangeApy}
-                    baseToken={baseToken}
-                    quoteToken={quoteToken}
-                    hasQuote={!!quoteApy}
-                    hasMining={hasMining}
+                    chainId={pool.chainId}
+                    apy={undefined}
+                    baseToken={pool.coins[0]}
+                    quoteToken={pool.coins[1]}
+                    hasQuote={!!pool.apy}
+                    hasMining={false}
                   >
                     <Box
                       component="span"
@@ -555,10 +440,43 @@ function TableList({
                         cursor: 'auto',
                       }}
                     >
-                      {baseApy}
-                      {quoteApy ? `/${quoteApy}` : ''}
+                      {pool.apy}
                     </Box>
                   </PoolApyTooltip>
+                </Box>
+              </Box>
+              <Box component="td">
+                <Box
+                  sx={{
+                    typography: 'body2',
+                    fontWeight: 600,
+                  }}
+                  title={`$${formatTokenAmountNumber({
+                    input: pool.tvl,
+                    decimals: 2,
+                  })}`}
+                >
+                  $
+                  {pool.tvl
+                    ? formatExponentialNotation(new BigNumber(pool.tvl))
+                    : '-'}
+                </Box>
+              </Box>
+              <Box component="td">
+                <Box
+                  sx={{
+                    typography: 'body2',
+                    fontWeight: 600,
+                  }}
+                  title={`$${formatTokenAmountNumber({
+                    input: pool.volume,
+                    decimals: 2,
+                  })}`}
+                >
+                  $
+                  {pool.volume
+                    ? formatExponentialNotation(new BigNumber(pool.volume))
+                    : '-'}
                 </Box>
               </Box>
               <Box component="td">
@@ -570,20 +488,23 @@ function TableList({
                     gap: '8px',
                   }}
                 >
-                  <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
+                  <GoPoolDetailBtn
+                    chainId={pool.chainId}
+                    address={pool.address}
+                  />
 
                   {operateBtnText ? (
                     <AddingOrRemovingBtn
                       text={operateBtnText}
-                      onClick={() => setOperatePool(null)}
+                      onClick={() => setOperateCurvePool(null)}
                     />
                   ) : (
                     <Button
                       size={Button.Size.small}
                       onClick={() => {
-                        setOperatePool({
-                          pool: convertFetchLiquidityToOperateData(lq),
-                          hasMining,
+                        setOperateCurvePool({
+                          pool,
+                          type: OperateTab.Add,
                         });
                       }}
                       sx={{
@@ -608,8 +529,10 @@ export interface AllPoolsProps {
   scrollParentRef: React.MutableRefObject<HTMLDivElement | null>;
   filterChainIds?: ChainId[];
   activeChainId: ChainId | undefined;
-  operatePool: Partial<PoolOperateProps> | null;
-  setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  operateCurvePool: OperateCurvePoolT | null;
+  setOperateCurvePool: React.Dispatch<
+    React.SetStateAction<OperateCurvePoolT | null>
+  >;
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
   children?: React.ReactNode;
 }
@@ -618,8 +541,8 @@ export const AllPools = ({
   scrollParentRef,
   filterChainIds,
   activeChainId,
-  operatePool,
-  setOperatePool,
+  operateCurvePool,
+  setOperateCurvePool,
   children,
   tokenAndPoolFilter,
 }: AllPoolsProps) => {
@@ -698,7 +621,6 @@ export const AllPools = ({
     <>
       <Box
         sx={{
-          pt: 12,
           pb: 20,
           display: 'flex',
           flexDirection: 'column',
@@ -853,16 +775,16 @@ export const AllPools = ({
                 }}
               />
             )}
-            <CardList lqList={lqList} setOperatePool={setOperatePool} />
+            {/* <CardList lqList={lqList} setOperatePool={setOperatePool} /> */}
           </DataCardGroup>
         </InfiniteScroll>
       ) : (
         <>
           <TableList
-            lqList={lqList}
+            poolList={mockCurvePoolList}
             loading={fetchResult.isLoading}
-            operatePool={operatePool}
-            setOperatePool={setOperatePool}
+            operateCurvePool={operateCurvePool}
+            setOperateCurvePool={setOperateCurvePool}
             hasMore={hasMore}
             loadMoreLoading={fetchResult.isFetchingNextPage}
             loadMore={() => {
