@@ -1,4 +1,4 @@
-import { CONTRACT_QUERY_KEY } from '@dodoex/api';
+import { ChainId, CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { useWeb3React } from '@web3-react/core';
 import type { TransactionResponse } from '@ethersproject/abstract-provider';
 import { useCallback, useMemo, useState } from 'react';
@@ -21,6 +21,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { ContractStatus, setContractStatus } from '../useGlobalState';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import { useMessageState } from '../useMessageState';
+import { updatePharosTestnetRpc } from '../ConnectWallet/useSwitchChain';
 
 export interface ExecutionProps {
   onTxFail?: (error: Error, data: any) => void;
@@ -92,6 +93,7 @@ export default function useExecution({
       setShowing({ spec, brief, subtitle, submitState: 'loading' });
       try {
         setWaitingSubmit(true);
+        await updatePharosTestnetRpc(chainId, provider?.provider ?? provider);
         if (spec.opcode === OpCode.Approval) {
           transaction = await approve(
             spec.token.address,
@@ -128,7 +130,7 @@ export default function useExecution({
             chainId,
           };
 
-          if (!params.gasLimit) {
+          if (chainId !== ChainId.PHAROS_TESTNET && !params.gasLimit) {
             try {
               const gasLimit = await getEstimateGas(params, provider);
               if (gasLimit) {

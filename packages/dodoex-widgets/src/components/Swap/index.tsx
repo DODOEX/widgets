@@ -193,6 +193,9 @@ export function Swap({
   }, [getMaxBalance]);
 
   const estimateGas = useMemo(() => {
+    // Unstable, temporarily canceled
+    if (fromToken?.chainId === ChainId.PHAROS_TESTNET) return false;
+
     if (
       !account ||
       insufficientBalance ||
@@ -204,6 +207,7 @@ export function Swap({
     }
     return true;
   }, [
+    fromToken?.chainId,
     account,
     insufficientBalance,
     isApproving,

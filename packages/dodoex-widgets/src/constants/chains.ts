@@ -63,7 +63,9 @@ export const rpcServerMap: {
   [ChainId.ZERO]: ['https://zero-network.calderachain.xyz/http'],
   [ChainId.HASHKEY]: ['https://mainnet.hsk.xyz'],
   [ChainId.HEMI]: ['https://rpc.hemi.network/rpc'],
-  [ChainId.PHAROS_TESTNET]: ['https://testnet.dplabs-internal.com'],
+  [ChainId.PHAROS_TESTNET]: [
+    'https://api.zan.top/node/v1/pharos/testnet/54b49326c9f44b6e8730dc5dd4348421',
+  ],
 };
 
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
