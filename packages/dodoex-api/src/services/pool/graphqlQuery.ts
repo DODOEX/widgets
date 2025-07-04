@@ -603,4 +603,22 @@ export const poolGraphqlQuery = {
       }
     }
   `),
+  fetchVe33TicksData: graphql(`
+    query Ve33_getTicksData($where: Ve33getTicksDataInput) {
+      ve33_getTicksData(where: $where) {
+        ticks {
+          id
+          poolAddress
+          tickIdx
+          price0
+          price1
+          liquidityGross
+          liquidityNet
+          protocolPosition
+          tickArrayLower
+          tickArrayUpper
+        }
+      }
+    }
+  `),
 };

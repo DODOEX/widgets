@@ -22,7 +22,7 @@ export const PoolHead = ({
 
   const isSmall = size === 'small';
   const tokenLogoWidth = isSmall ? 28 : 36;
-  const typography = isSmall ? 'body1' : 'h3';
+  const typography = isSmall ? 'body1' : 'h4';
   return (
     <Box
       sx={{
@@ -78,6 +78,12 @@ export const PoolHead = ({
             iconSpace={4}
             iconSize={14}
             size="small"
+            sx={{
+              color: theme.palette.text.secondary,
+              '&:hover': {
+                color: theme.palette.text.primary,
+              },
+            }}
           />
           <Tooltip
             title={
@@ -164,8 +170,8 @@ export const PoolHead = ({
                 fill="none"
               >
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M6.99999 1.16675C3.77999 1.16675 1.16666 3.78008 1.16666 7.00008C1.16666 10.2201 3.77999 12.8334 6.99999 12.8334C10.22 12.8334 12.8333 10.2201 12.8333 7.00008C12.8333 3.78008 10.22 1.16675 6.99999 1.16675ZM7.58336 5.25006V4.08339H6.4167V5.25006H7.58336ZM7.58336 9.91673V6.41673H6.4167V9.91673H7.58336ZM2.33336 7.00006C2.33336 9.57256 4.42753 11.6667 7.00003 11.6667C9.57253 11.6667 11.6667 9.57256 11.6667 7.00006C11.6667 4.42756 9.57253 2.33339 7.00003 2.33339C4.42753 2.33339 2.33336 4.42756 2.33336 7.00006Z"
                   fill="currentColor"
                 />

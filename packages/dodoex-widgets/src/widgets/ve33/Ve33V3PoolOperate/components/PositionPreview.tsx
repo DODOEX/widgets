@@ -22,7 +22,7 @@ export const PositionPreview = ({
 }: {
   token0: TokenInfo | undefined;
   token1: TokenInfo | undefined;
-  liquidity: number | undefined;
+  liquidity: number | string | undefined;
   amount0: string | undefined;
   amount1: string | undefined;
   title?: ReactNode;

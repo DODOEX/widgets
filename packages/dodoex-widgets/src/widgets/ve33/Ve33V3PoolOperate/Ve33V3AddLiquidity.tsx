@@ -36,6 +36,8 @@ import { ReviewModal } from './components/ReviewModal';
 import { formatReadableNumber } from '../../../utils';
 import RangeRatioSelect from './components/RangeRatioSelect';
 import { useQuery } from '@tanstack/react-query';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
+import { PoolApi } from '@dodoex/api';
 
 export default function Ve33V3AddLiquidity({
   pool,
@@ -46,35 +48,17 @@ export default function Ve33V3AddLiquidity({
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
 
+  const graphQLRequests = useGraphQLRequests();
   const fetchTicksQuery = useQuery({
-    queryKey: ['test'],
-    queryFn: () => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve([
-            {
-              id: '0x37afbad94db04a96f9fbe86cb4048664941f6233#-887270',
-              poolAddress: '0x2f63a87bf42dc4c021af8be085cece16269e3b67',
-              tickIdx: '-887270',
-              liquidityNet: '6049724999999999999',
-              price0: '0.99980002999600049994000699920009',
-              price1: '1.00020001',
-            },
-            {
-              id: '0x37afbad94db04a96f9fbe86cb4048664941f6233#887270',
-              poolAddress: '0x2f63a87bf42dc4c021af8be085cece16269e3b67',
-              tickIdx: '887270',
-              liquidityNet: '-6049724999999999999',
-              price0: '1.00020001',
-              price1: '0.99980002999600049994000699920009',
-            },
-          ]);
-        }, 1000);
-      });
-    },
+    ...graphQLRequests.getQuery(PoolApi.graphql.fetchVe33TicksData, {
+      where: {
+        pool: pool?.id ?? '',
+      },
+    }),
+    enabled: !!pool?.id,
   });
   const fetchTicks = {
-    ticks: fetchTicksQuery.data,
+    ticks: fetchTicksQuery.data?.ve33_getTicksData?.ticks ?? [],
     ...fetchTicksQuery,
   };
 
@@ -107,8 +91,6 @@ export default function Ve33V3AddLiquidity({
   const tokenA = sorted ? token0 : token1;
   const tokenB = sorted ? token1 : token0;
 
-  let liquidity: number | undefined;
-
   const {
     ticksAtLimit,
     priceLower,
@@ -117,6 +99,7 @@ export default function Ve33V3AddLiquidity({
     outOfRange,
     tickLower,
     tickUpper,
+    tickSpaceLimits,
     getDecrementLower,
     getIncrementLower,
     getDecrementUpper,
@@ -206,7 +189,7 @@ export default function Ve33V3AddLiquidity({
     token0,
     token1,
     tickCurrent,
-    liquidity,
+    liquidity: pair.fetchLiquidity?.data?.toString(),
     fetchTicks,
   });
 
@@ -216,6 +199,10 @@ export default function Ve33V3AddLiquidity({
     !amounts.baseAmount ||
     !amounts.quoteAmount ||
     !!isInvalidPair;
+
+  const totalApr = pool
+    ? BigInt(pool.apr.fees) + BigInt(pool.apr.incentives)
+    : undefined;
 
   return (
     <>
@@ -298,7 +285,19 @@ export default function Ve33V3AddLiquidity({
             </Box>
           </Box>
         </Box>
-        <RangeRatioSelect />
+        <RangeRatioSelect
+          totalApr={totalApr}
+          currentPrice={formattedPrice}
+          tickSpacing={pair.tickSpacing}
+          priceLower={priceLower}
+          priceUpper={priceUpper}
+          token0={token0}
+          token1={token1}
+          tickSpaceLimits={tickSpaceLimits}
+          handleSetFullRange={handleSetFullRange}
+          onLeftRangeInput={onLeftRangeInput}
+          onRightRangeInput={onRightRangeInput}
+        />
         <RangeSelector
           priceLower={priceLower}
           priceUpper={priceUpper}
@@ -445,7 +444,7 @@ export default function Ve33V3AddLiquidity({
         token1={token1}
         tickLower={tickLower}
         tickUpper={tickUpper}
-        liquidity={Number(liquidity)}
+        liquidity={pair.fetchLiquidity?.data?.toString()}
         price={price?.toSignificant()}
         amount0={addAmount0}
         amount1={addAmount1}

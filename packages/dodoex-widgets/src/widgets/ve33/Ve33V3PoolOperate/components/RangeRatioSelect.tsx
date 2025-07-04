@@ -1,34 +1,36 @@
-import { Box, useTheme } from '@dodoex/components';
-import { t, Trans } from '@lingui/macro';
+import { Box } from '@dodoex/components';
+import { Trans } from '@lingui/macro';
+import {
+  PriceRangeRatioSelectProps,
+  usePriceRangeRatioSelect,
+} from '../hooks/usePriceRangeRatioSelect';
 
-export default function RangeRatioSelect() {
-  const theme = useTheme();
-  const options = [
-    {
-      type: t`Narrow`,
-      ratio: '(±3%)',
-      apr: '153.8%',
-      borderRadius: theme.spacing(8, 0, 0, 0),
-    },
-    {
-      type: t`Common`,
-      ratio: '(±8%)',
-      apr: '153.8%',
-      borderRadius: theme.spacing(0, 8, 0, 0),
-    },
-    {
-      type: t`Wide`,
-      ratio: '(±15%)',
-      apr: '153.8%',
-      borderRadius: theme.spacing(0, 0, 0, 8),
-    },
-    {
-      type: t`Full`,
-      ratio: '(∞)',
-      apr: '153.8%',
-      borderRadius: theme.spacing(0, 0, 8, 0),
-    },
-  ];
+export default function RangeRatioSelect({
+  totalApr,
+  currentPrice,
+  tickSpacing,
+  priceLower,
+  priceUpper,
+  token0,
+  token1,
+  tickSpaceLimits,
+  onLeftRangeInput,
+  onRightRangeInput,
+  handleSetFullRange,
+}: PriceRangeRatioSelectProps) {
+  const { options } = usePriceRangeRatioSelect({
+    totalApr,
+    currentPrice,
+    tickSpacing,
+    priceLower,
+    priceUpper,
+    token0,
+    token1,
+    tickSpaceLimits,
+    onLeftRangeInput,
+    onRightRangeInput,
+    handleSetFullRange,
+  });
 
   return (
     <Box
@@ -39,16 +41,16 @@ export default function RangeRatioSelect() {
       }}
     >
       {options.map((item) => {
-        // @TODO: replace this
-        const active = item.ratio === '(∞)';
+        const { active, borderRadius, type, ratio, apr } = item;
         return (
           <Box
+            key={ratio + type}
             sx={{
               p: 12,
               borderStyle: 'solid',
               borderWidth: 1,
               borderColor: active ? 'text.primary' : 'border.main',
-              borderRadius: item.borderRadius,
+              borderRadius,
               cursor: 'pointer',
               '&:hover': {
                 opacity: 0.7,
@@ -66,6 +68,8 @@ export default function RangeRatioSelect() {
                     },
                   }),
             }}
+            onClick={item.onClick}
+            role="button"
           >
             <Box
               sx={{
@@ -74,14 +78,14 @@ export default function RangeRatioSelect() {
                 gap: 8,
               }}
             >
-              {item.type}
+              {type}
               <Box
                 sx={{
                   typography: 'h6',
                   color: 'text.secondary',
                 }}
               >
-                {item.ratio}
+                {ratio}
               </Box>
             </Box>
             <Box
@@ -91,7 +95,7 @@ export default function RangeRatioSelect() {
               }}
             >
               <Trans>APR</Trans>
-              {' ' + item.apr}
+              {' ' + apr}
             </Box>
           </Box>
         );

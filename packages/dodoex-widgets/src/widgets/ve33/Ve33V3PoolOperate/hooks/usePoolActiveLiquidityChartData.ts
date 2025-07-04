@@ -43,7 +43,7 @@ export function usePoolActiveLiquidityChartData({
   token1,
 }: {
   tickCurrent: number | undefined;
-  liquidity: number | undefined;
+  liquidity: string | undefined;
   fetchTicks?: FetchTicks;
   token0: TokenInfo | undefined;
   token1: TokenInfo | undefined;

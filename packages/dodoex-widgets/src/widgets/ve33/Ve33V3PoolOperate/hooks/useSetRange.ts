@@ -268,11 +268,11 @@ export function useSetRange({
   const handleRateToggle = () => {
     if (!ticksAtLimit[Bound.LOWER] && !ticksAtLimit[Bound.UPPER]) {
       setLeftRangeTypedValue(
-        (invertPrice ? priceLower : priceLower?.invert())?.toSignificant(6) ??
+        (invertPrice ? priceLower : priceUpper?.invert())?.toSignificant(6) ??
           '',
       );
       setRightRangeTypedValue(
-        (invertPrice ? priceUpper : priceUpper?.invert())?.toSignificant(6) ??
+        (invertPrice ? priceUpper : priceLower?.invert())?.toSignificant(6) ??
           '',
       );
     }
@@ -295,6 +295,7 @@ export function useSetRange({
   );
 
   return {
+    tickSpaceLimits,
     ticksAtLimit,
     tickLower,
     tickUpper,

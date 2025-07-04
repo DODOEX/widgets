@@ -9,6 +9,9 @@ import { GoBack } from '../components/GoBack';
 import { PoolHead } from '../components/PoolHead';
 import { CardContainer } from '../components/widgets';
 import { compositePoolInfo } from '../utils';
+import { Trans } from '@lingui/macro';
+import { formatApy, formatReadableNumber } from '../../../utils';
+import PoolInfo from './PoolInfo';
 
 export interface Ve33PoolDetailProps {
   id: string;
@@ -112,44 +115,10 @@ export const Ve33PoolDetail = ({
                 <PoolHead chainId={chainId} poolInfo={poolInfo} size="medium" />
               </Box>
               <CardContainer title="Pool Info">
-                <Box
-                  sx={{
-                    p: 20,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 20,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        flexBasis: '50%',
-                        px: 20,
-                        py: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 4,
-                      }}
-                    >
-                      a
-                    </Box>
-                    <Box
-                      sx={{
-                        height: 48,
-                        width: '1px',
-                        flexGrow: 0,
-                        flexShrink: 0,
-                        backgroundColor: theme.palette.border.main,
-                      }}
-                    />
-                    <Box>b</Box>
-                  </Box>
-                </Box>
+                <PoolInfo
+                  poolInfo={poolInfo}
+                  isLoading={fetchResult.isLoading}
+                />
               </CardContainer>
               <CardContainer title="My Assets">
                 <Box>My Assets</Box>
