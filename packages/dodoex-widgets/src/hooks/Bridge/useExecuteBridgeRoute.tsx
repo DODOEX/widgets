@@ -106,6 +106,7 @@ export default function useExecuteBridgeRoute({
           if (onTxSuccess) {
             onTxSuccess(tx, {
               orderId,
+              chainId: fromToken.chainId,
             });
           }
         };

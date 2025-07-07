@@ -153,9 +153,9 @@ export default function useExecution({
         setWaitingSubmit(false);
         setShowing({ spec, brief, subtitle });
         console.error(e);
+        setContractStatus(ContractStatus.Failed);
         if (e.message) {
-          setContractStatus(ContractStatus.Failed);
-          const options = { error: e.message, brief };
+          const options = { error: e.message, brief, chainId };
           if (mixpanelProps) Object.assign(options, mixpanelProps);
           if (onTxFail) {
             onTxFail(e, mixpanelProps);
@@ -186,6 +186,7 @@ export default function useExecution({
         subtitle,
         metadata,
         nonce,
+        chainId,
         ...mixpanelProps,
       };
       setContractStatus(ContractStatus.Pending);
@@ -207,6 +208,7 @@ export default function useExecution({
       setRequests((res) => res.set(tx as string, [request, State.Running]));
 
       if (early) {
+        setContractStatus(ContractStatus.Initial);
         return ExecutionResult.Submitted;
       }
       if (submittedBack) {
@@ -247,6 +249,7 @@ export default function useExecution({
           return ExecutionResult.Success;
         }
       }
+      setContractStatus(ContractStatus.Failed);
       if (onTxReverted) {
         onTxReverted(tx, reportInfo);
       }
