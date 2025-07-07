@@ -6,7 +6,7 @@ import { ChainId } from '@dodoex/api';
 export const getMaxSlippageWarning = (chainId: number | undefined) => {
   switch (chainId) {
     case ChainId.PHAROS_TESTNET:
-      return 11; // 10% for Pharos Testnet
+      return 32; // for Pharos Testnet
     default:
       return 5; // Default to 5% for other networks
   }
