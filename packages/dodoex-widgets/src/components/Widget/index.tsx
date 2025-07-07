@@ -1,4 +1,4 @@
-import { ChainId, ContractRequests, GraphQLRequests } from '@dodoex/api';
+import { ChainId, GraphQLRequests } from '@dodoex/api';
 import type { WalletStore } from '@dodoex/btc-connect-react';
 import {
   createTheme,
@@ -70,12 +70,6 @@ export interface WidgetProps extends InitTokenListProps, ExecutionProps {
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
   submissionDialogModal?: boolean;
-
-  onProviderChanged?: (provider?: any) => void;
-  getStaticJsonRpcProviderByChainId?: Exclude<
-    ConstructorParameters<typeof ContractRequests>[0],
-    undefined
-  >['getProvider'];
 
   widgetRef?: React.RefObject<HTMLDivElement>;
   /** When the token balance is insufficient, users can purchase or swap callbacks */

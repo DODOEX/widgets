@@ -1,4 +1,4 @@
-import { ContractRequests, TokenApi, ChainId } from '@dodoex/api';
+import { ChainId, ContractRequests, TokenApi } from '@dodoex/api';
 import { getRpcSingleUrlMap } from './chains';
 
 export enum APIServiceKey {
@@ -155,7 +155,6 @@ export const contractRequests = new ContractRequests({
   // debugProvider: process.env.NODE_ENV === 'development',
 });
 
-export const tokenContractRequests = contractRequests.createContractRequests();
 export const tokenApi = new TokenApi({
-  contractRequests: tokenContractRequests,
+  contractRequests,
 });
