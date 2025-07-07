@@ -7,10 +7,10 @@ export const rpcServerMap: {
   [key in ChainId]: Array<string>;
 } = {
   [ChainId.MAINNET]: [
-    'https://rpc.ankr.com/eth',
     'https://eth-mainnet.public.blastapi.io',
     'https://eth-rpc.gateway.pokt.network',
     'https://main-rpc.linkpool.io',
+    'https://rpc.ankr.com/eth',
   ],
   [ChainId.GOERLI]: ['https://gateway.tenderly.co/public/goerli'],
   [ChainId.BSC]: [
