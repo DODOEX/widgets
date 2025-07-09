@@ -22,6 +22,7 @@ import { ChainId } from '@dodoex/api';
 import { useUserOptions } from '../UserOptionsProvider';
 import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
 import { ContractStatus, setContractStatus } from '../../hooks/useGlobalState';
+import SubmittedDialog from '../SubmittedDialog';
 
 const strokeWidth = 6;
 
@@ -248,9 +249,8 @@ export default function WithExecutionDialog({
   };
   const { isMobile } = useWidgetDevice();
 
-  const noSubmissionDialog = useUserOptions(
-    (state) => state.noSubmissionDialog,
-  );
+  const { noSubmissionDialog, showSubmissionSubmittedDialog } =
+    useUserOptions();
 
   const handleCloseSubmitLoadingDialog = () => {
     setShowing((prev) => {
@@ -368,6 +368,15 @@ export default function WithExecutionDialog({
           )}
         </Dialog>
       )}
+
+      <SubmittedDialog
+        brief={showing?.brief}
+        open={
+          !!showSubmissionSubmittedDialog &&
+          showing?.submitState === 'submitted'
+        }
+        onClose={closeShowing}
+      />
 
       {/* widget dialog */}
       <Dialog

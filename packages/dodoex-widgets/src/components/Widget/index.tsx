@@ -82,6 +82,7 @@ export interface WidgetProps
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
+  showSubmissionSubmittedDialog?: boolean;
 
   onProviderChanged?: (provider?: any) => void;
   getStaticJsonRpcProviderByChainId?: Exclude<
