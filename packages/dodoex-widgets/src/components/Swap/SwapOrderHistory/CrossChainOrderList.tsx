@@ -82,11 +82,9 @@ export default function CrossChainOrderList({
                 <th>
                   <Trans>Status</Trans>
                 </th>
-                {isErrorRefund ? (
-                  <th>
-                    <Trans>Claim refunds</Trans>
-                  </th>
-                ) : (
+                {isErrorRefund ? //   <Trans>Claim refunds</Trans> // <th>
+                // </th>
+                null : (
                   <th>
                     <Trans>Rate</Trans>
                   </th>

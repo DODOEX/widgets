@@ -16,7 +16,8 @@ export interface DialogProps {
     | 'swap-settings'
     | 'cross-chain-summary'
     | 'select-cross-chain'
-    | 'pool-operate';
+    | 'pool-operate'
+    | 'curve-pool-operate';
   onClose?: () => void;
   afterClose?: () => void;
   // Do not render on widget root node

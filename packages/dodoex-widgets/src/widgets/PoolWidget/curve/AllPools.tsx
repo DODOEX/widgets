@@ -48,6 +48,7 @@ import {
 import { CoinsLogoList } from './components/CoinsLogoList';
 import { CurvePoolT, OperateCurvePoolT } from './types';
 import { mockCurvePoolList } from './utils';
+import { ApyTooltip } from './components/ApyTooltip';
 
 function CardList({
   lqList,
@@ -420,29 +421,11 @@ function TableList({
                     alignItems: 'center',
                   }}
                 >
-                  <PoolApyTooltip
-                    chainId={pool.chainId}
-                    apy={undefined}
-                    baseToken={pool.coins[0]}
-                    quoteToken={pool.coins[1]}
-                    hasQuote={!!pool.apy}
-                    hasMining={false}
-                  >
-                    <Box
-                      component="span"
-                      sx={{
-                        typography: 'body2',
-                        fontWeight: 600,
-                        display: 'flex',
-                        alignItems: 'center',
-                        width: 'max-content',
-                        color: 'success.main',
-                        cursor: 'auto',
-                      }}
-                    >
-                      {pool.apy}
-                    </Box>
-                  </PoolApyTooltip>
+                  <ApyTooltip
+                    apy={pool.apy}
+                    dailyApy={pool.dailyApy}
+                    weeklyApy={pool.weeklyApy}
+                  />
                 </Box>
               </Box>
               <Box component="td">

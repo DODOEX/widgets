@@ -17,10 +17,15 @@ import { Page, PageType } from '../../../router/types';
 import { AMMV3PositionManage } from '../AMMV3/AMMV3PositionManage';
 import { AMMV3PositionsView } from '../AMMV3/AMMV3PositionsView';
 import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
+import { AllPools } from '../curve/AllPools';
+import { OperateDialog } from '../curve/OperateDialog';
+import { OperateCurvePoolT } from '../curve/types';
+import { mockCurvePoolList } from '../curve/utils';
 import PoolOperateDialog, {
   PoolOperate,
   PoolOperateProps,
 } from '../PoolOperate';
+import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import AddLiquidityList from './AddLiquidity';
 import { CreatePoolBtn } from './components/CreatePoolBtn';
 import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
@@ -33,8 +38,6 @@ import {
 } from './hooks/usePoolListTabs';
 import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
-import { AllPools } from '../curve/AllPools';
-import { CurvePoolT, OperateCurvePoolT } from '../curve/types';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -87,10 +90,14 @@ export default function PoolList({
     usePoolListFilterChainId();
 
   const [operateCurvePool, setOperateCurvePool] =
-    React.useState<OperateCurvePoolT | null>(null);
+    React.useState<OperateCurvePoolT | null>({
+      pool: mockCurvePoolList[0],
+      type: OperateTab.Add,
+    });
 
   const [operatePool, setOperatePoolOrigin] =
     React.useState<Partial<PoolOperateProps> | null>(operatePoolProps || null);
+
   const setOperatePool = (pool: Partial<PoolOperateProps> | null) => {
     if (onOperatePool) {
       const parentOperate = onOperatePool(pool);
@@ -354,7 +361,7 @@ export default function PoolList({
         </TabPanelFlexCol>
       </Tabs>
 
-      {operatePool && (
+      {poolTopTab === PoolTopTab.NORMAL && operatePool && (
         <Box
           sx={{
             position: 'relative',
@@ -412,6 +419,20 @@ export default function PoolList({
               )}
             </>
           )}
+        </Box>
+      )}
+
+      {poolTopTab === PoolTopTab.MULTI_TOKEN && operateCurvePool && (
+        <Box
+          sx={{
+            position: 'relative',
+            width: isMobile ? '100%' : 375,
+          }}
+        >
+          <OperateDialog
+            operateCurvePool={operateCurvePool}
+            setOperateCurvePool={setOperateCurvePool}
+          />
         </Box>
       )}
     </WidgetContainer>

@@ -40,17 +40,25 @@ export const CoinsLogoList = ({ pool, separate, wrap }: CoinsLogoListProps) => {
               maxWidth: 240,
             }}
           >
-            <TokenLogo
-              address={coin.address}
-              width={width}
-              height={width}
-              chainId={pool.chainId}
-              url={undefined}
-              cross={false}
-              noShowChain
-              noBorder
-              marginRight={0}
-            />
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <TokenLogo
+                address={coin.address}
+                width={width}
+                height={width}
+                chainId={pool.chainId}
+                url={undefined}
+                cross={false}
+                noShowChain
+                noBorder
+                marginRight={0}
+              />
+            </Box>
           </Tooltip>
         ))}
       </Box>
@@ -76,17 +84,25 @@ export const CoinsLogoList = ({ pool, separate, wrap }: CoinsLogoListProps) => {
             maxWidth: 240,
           }}
         >
-          <TokenLogo
-            address={coin.address}
-            width={width}
-            height={width}
-            chainId={pool.chainId}
-            url={undefined}
-            cross={false}
-            noShowChain
-            noBorder
-            marginRight={0}
-          />
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <TokenLogo
+              address={coin.address}
+              width={width}
+              height={width}
+              chainId={pool.chainId}
+              url={undefined}
+              cross={false}
+              noShowChain
+              noBorder
+              marginRight={0}
+            />
+          </Box>
         </Tooltip>
       ))}
     </Box>

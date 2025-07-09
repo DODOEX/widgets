@@ -162,7 +162,12 @@ export function PoolOperate({
                     height: 24,
                     borderRadius: '50%',
                     borderWidth: 1,
+                    borderStyle: 'solid',
+                    borderColor: 'border.main',
                     color: 'text.secondary',
+                    '&:hover': {
+                      color: 'text.primary',
+                    },
                     cursor: 'pointer',
                   }}
                 >

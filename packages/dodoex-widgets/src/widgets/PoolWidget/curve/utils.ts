@@ -43,6 +43,8 @@ export const mockCurvePoolList: CurvePoolT[] = [
     ],
 
     apy: null,
+    dailyApy: null,
+    weeklyApy: null,
     tvl: null,
     volume: null,
   },

@@ -18,6 +18,8 @@ export type CurvePoolT = {
   coins: TokenInfo[];
 
   apy: string | null;
+  dailyApy: string | null;
+  weeklyApy: string | null;
   tvl: string | null;
   volume: string | null;
 };

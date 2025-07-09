@@ -444,7 +444,7 @@ export default function CrossOrderCard({
                     />
                   )}
                 </StatusAndTime>
-                {isErrorRefund && claimButton}
+                {/* {isErrorRefund && claimButton} */}
               </Box>
             </Box>
 
@@ -568,9 +568,8 @@ export default function CrossOrderCard({
             )}
           </StatusAndTime>
         </td>
-        {isErrorRefund ? (
-          <td>{claimButton}</td>
-        ) : (
+        {isErrorRefund ? // <td>{claimButton}</td>
+        null : (
           <td>
             {data.fromToken && data.toToken && (
               <PriceWithToggle
