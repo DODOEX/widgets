@@ -1,4 +1,11 @@
-import { alpha, Box, Button, useTheme, Tooltip } from '@dodoex/components';
+import {
+  alpha,
+  Box,
+  Button,
+  useTheme,
+  Tooltip,
+  LoadingSkeleton,
+} from '@dodoex/components';
 import { PoolApi, PoolType } from '@dodoex/api';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -56,6 +63,7 @@ import { formatTickPrice } from '../AMMV3/utils/formatTickPrice';
 import { Bound } from '../AMMV3/types';
 import { MigrationTag } from './components/migationWidget';
 import { GetMigrationPairAndMining } from '../PoolOperate/types';
+import { usePoolListMyLiquidity } from '../hooks/usePoolListMyLiquidity';
 
 function CardList({
   account,
@@ -71,6 +79,10 @@ function CardList({
   supportAMM?: boolean;
 }) {
   const theme = useTheme();
+  const myLiquidityQuery = usePoolListMyLiquidity({
+    account,
+    lqList,
+  });
   return (
     <>
       {lqList?.map((lq) => {
@@ -103,7 +115,13 @@ function CardList({
 
         let baseLpTokenBalance: BigNumber | undefined;
         let quoteLpTokenBalance: BigNumber | undefined;
-        if (lq.liquidityPositions?.length) {
+        let poolShare = lq.liquidityPositions?.[0]?.poolShare;
+        if (myLiquidityQuery.needRealtimeBalance) {
+          const lpBalanceItem = myLiquidityQuery.userLpBalanceMap.get(item.id);
+          baseLpTokenBalance = lpBalanceItem?.userBaseLpBalance;
+          quoteLpTokenBalance = lpBalanceItem?.userQuoteLpBalance;
+          poolShare = lpBalanceItem?.poolTokenPercentage?.toString();
+        } else if (lq.liquidityPositions?.length) {
           lq.liquidityPositions.forEach((position) => {
             if (position?.liquidityTokenBalance) {
               const idArray = position.id?.split('-');
@@ -364,15 +382,19 @@ function CardList({
 
               {type === 'AMMV2' && (
                 <Box>
-                  <Box
+                  <LoadingSkeleton
+                    loading={myLiquidityQuery.isPoolShareLoading}
+                    loadingProps={{
+                      width: 80,
+                    }}
                     sx={{
                       typography: 'h5',
                     }}
                   >
                     {formatPercentageNumber({
-                      input: lq.liquidityPositions?.[0]?.poolShare,
+                      input: poolShare,
                     })}
-                  </Box>
+                  </LoadingSkeleton>
                   <Box
                     sx={{
                       typography: 'h6',
@@ -429,11 +451,18 @@ function CardList({
                           chainId={item.chainId}
                         />
                       )}
-                      {baseLpTokenBalance
-                        ? formatReadableNumber({
-                            input: baseLpTokenBalance,
-                          })
-                        : ''}
+                      <LoadingSkeleton
+                        loading={myLiquidityQuery.isLpLoading}
+                        loadingProps={{
+                          width: 40,
+                        }}
+                      >
+                        {baseLpTokenBalance
+                          ? formatReadableNumber({
+                              input: baseLpTokenBalance,
+                            })
+                          : '-'}
+                      </LoadingSkeleton>
                       {singleSideLp && (
                         <>
                           {' / '}
@@ -447,11 +476,19 @@ function CardList({
                               mx: 4,
                             }}
                           />
-                          {quoteLpTokenBalance
-                            ? formatReadableNumber({
-                                input: quoteLpTokenBalance,
-                              })
-                            : '0'}
+                          <LoadingSkeleton
+                            loading={myLiquidityQuery.isLpLoading}
+                            loadingProps={{
+                              width: 40,
+                            }}
+                          >
+                            {' '}
+                            {quoteLpTokenBalance
+                              ? formatReadableNumber({
+                                  input: quoteLpTokenBalance,
+                                })
+                              : '0'}
+                          </LoadingSkeleton>
                         </>
                       )}
                     </>
@@ -605,6 +642,10 @@ function TableList({
   getMigrationPairAndMining?: GetMigrationPairAndMining;
 }) {
   const theme = useTheme();
+  const myLiquidityQuery = usePoolListMyLiquidity({
+    account,
+    lqList,
+  });
   return (
     <LiquidityTable empty={!lqList?.length} loading={loading}>
       <Box component="thead">
@@ -683,7 +724,15 @@ function TableList({
 
           let baseLpTokenBalance: BigNumber | undefined;
           let quoteLpTokenBalance: BigNumber | undefined;
-          if (lq.liquidityPositions?.length) {
+          let poolShare = lq.liquidityPositions?.[0]?.poolShare;
+          if (myLiquidityQuery.needRealtimeBalance) {
+            const lpBalanceItem = myLiquidityQuery.userLpBalanceMap.get(
+              item.id,
+            );
+            baseLpTokenBalance = lpBalanceItem?.userBaseLpBalance;
+            quoteLpTokenBalance = lpBalanceItem?.userQuoteLpBalance;
+            poolShare = lpBalanceItem?.poolTokenPercentage?.toString();
+          } else if (lq.liquidityPositions?.length) {
             lq.liquidityPositions.forEach((position) => {
               if (position?.liquidityTokenBalance) {
                 const idArray = position.id?.split('-');
@@ -987,11 +1036,18 @@ function TableList({
                           chainId={item.chainId}
                         />
                       )}
-                      {baseLpTokenBalance
-                        ? formatReadableNumber({
-                            input: baseLpTokenBalance,
-                          })
-                        : '-'}
+                      <LoadingSkeleton
+                        loading={myLiquidityQuery.isLpLoading}
+                        loadingProps={{
+                          width: 40,
+                        }}
+                      >
+                        {baseLpTokenBalance
+                          ? formatReadableNumber({
+                              input: baseLpTokenBalance,
+                            })
+                          : '-'}
+                      </LoadingSkeleton>
                       {singleSideLp && (
                         <>
                           {' / '}
@@ -1006,16 +1062,28 @@ function TableList({
                               mx: 4,
                             }}
                           />
-                          {quoteLpTokenBalance
-                            ? formatReadableNumber({
-                                input: quoteLpTokenBalance,
-                              })
-                            : '0'}
+                          <LoadingSkeleton
+                            loading={myLiquidityQuery.isLpLoading}
+                            loadingProps={{
+                              width: 40,
+                            }}
+                          >
+                            {' '}
+                            {quoteLpTokenBalance
+                              ? formatReadableNumber({
+                                  input: quoteLpTokenBalance,
+                                })
+                              : '0'}
+                          </LoadingSkeleton>
                         </>
                       )}
                       {isAMMV2 && (
                         <Tooltip title={<Trans>My pool share</Trans>}>
-                          <Box
+                          <LoadingSkeleton
+                            loading={myLiquidityQuery.isPoolShareLoading}
+                            loadingProps={{
+                              width: 40,
+                            }}
                             sx={{
                               ml: 4,
                               px: 8,
@@ -1027,9 +1095,9 @@ function TableList({
                             }}
                           >
                             {formatPercentageNumber({
-                              input: lq.liquidityPositions?.[0]?.poolShare,
+                              input: poolShare,
                             })}
-                          </Box>
+                          </LoadingSkeleton>
                         </Tooltip>
                       )}
                     </>

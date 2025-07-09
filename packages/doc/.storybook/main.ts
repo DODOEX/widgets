@@ -56,6 +56,7 @@ const config: StorybookConfig = {
             'src/',
           ),
           '@dodoex/icons': path.resolve(__dirname, '../../dodoex-icons'),
+          '@dodoex/api': path.resolve(__dirname, '../../dodoex-api', 'src/'),
           ...config.resolve?.alias,
         },
         fallback: {

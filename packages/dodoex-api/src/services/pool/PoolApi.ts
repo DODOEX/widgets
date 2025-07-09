@@ -76,7 +76,7 @@ export class PoolApi {
   constructor(config: PoolApiProps) {
     if (config.contractRequests) {
       this.contractRequests = config.contractRequests;
-    } else if (config.contractRequests) {
+    } else if (config.contractRequestsConfig) {
       this.contractRequests = new ContractRequests(
         config.contractRequestsConfig,
       );
