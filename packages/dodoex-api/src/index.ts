@@ -33,6 +33,8 @@ export {
 export type { PmmModelParams, PoolType } from './services/pool';
 export { SwapWidgetApi } from './services/SwapWidgetApi';
 
+export { CurveApi } from './services/curve';
+
 export { MiningApi, MiningStatusE } from './services/mining';
 export type { MiningMiningInfo } from './services/mining';
 

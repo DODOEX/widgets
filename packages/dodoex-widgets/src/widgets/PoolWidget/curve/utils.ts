@@ -1,5 +1,10 @@
-import { ChainId } from '@dodoex/api';
+import { ChainId, CurveApi } from '@dodoex/api';
+import { contractRequests } from '../../../constants/api';
 import { CurvePoolT } from './types';
+
+export const curveApi = new CurveApi({
+  contractRequests,
+});
 
 export const mockCurvePoolList: CurvePoolT[] = [
   // @see https://zetachain-testnet.blockscout.com/token/0xDddfBCc76166d741c2dfa6b6a90769df398b9969?tab=read_contract

@@ -77,4 +77,6 @@ export enum ABIName {
   DODOV1PmmHelperABI = 'DODOV1PmmHelperABI',
 
   D3MM_READ_ABI = 'D3MM_READ_ABI',
+
+  CurveStableSwapNG = 'CurveStableSwapNG',
 }

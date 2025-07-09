@@ -10,9 +10,12 @@ import {
 import { Error } from '@dodoex/icons';
 import { useState } from 'react';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { formatTokenAmountNumber } from '../../../utils';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import { Add } from './Add';
+import { useLpTokenBalances } from './hooks/useLpTokenBalances';
 import { Remove } from './Remove';
 import { OperateCurvePoolT } from './types';
 
@@ -30,6 +33,7 @@ export const AndOrRemove = ({
 }: AndOrRemoveProps) => {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
+  const { account } = useWalletInfo();
 
   const [operateTab, setOperateTab] = useState(operateCurvePool.type);
 
@@ -38,6 +42,16 @@ export const AndOrRemove = ({
     setPrevOperateTab(operateCurvePool.type);
     setOperateTab(operateCurvePool.type);
   }
+
+  const {
+    lpTokenTotalSupply,
+    tokenBalances,
+    lpTokenBalance,
+    userTokenBalances,
+  } = useLpTokenBalances({
+    pool: operateCurvePool.pool,
+    account,
+  });
 
   return (
     <>
@@ -211,7 +225,24 @@ export const AndOrRemove = ({
                 >
                   My LP tokens
                 </Box>
-                <Tooltip title="20.8892">
+                <Tooltip
+                  title={
+                    <Box>
+                      {userTokenBalances?.map((balance, index) => {
+                        const coin = operateCurvePool.pool.coins[index];
+                        return (
+                          <Box key={index}>
+                            {coin.symbol}{' '}
+                            {formatTokenAmountNumber({
+                              input: balance,
+                              decimals: coin.decimals,
+                            })}
+                          </Box>
+                        );
+                      })}
+                    </Box>
+                  }
+                >
                   <Box
                     sx={{
                       display: 'flex',
@@ -227,7 +258,10 @@ export const AndOrRemove = ({
                         color: theme.palette.text.primary,
                       }}
                     >
-                      20.8892
+                      {formatTokenAmountNumber({
+                        input: lpTokenBalance,
+                        decimals: operateCurvePool.pool.decimals,
+                      })}
                     </Box>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
