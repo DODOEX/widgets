@@ -1,17 +1,25 @@
+import { CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { Box, Button, ButtonBase, useTheme } from '@dodoex/components';
-import { OperateButtonContainer } from './components/OperateButtonContainer';
-import { OperateCurvePoolT } from './types';
-import { SlippageBonus } from './components/SlippageBonus';
+import { Interface } from '@ethersproject/abi';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { BigNumber } from 'bignumber.js';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
+import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
+import TokenLogo from '../../../components/TokenLogo';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { useSubmission } from '../../../hooks/Submission';
+import { OpCode } from '../../../hooks/Submission/spec';
+import { MetadataFlag } from '../../../hooks/Submission/types';
+import { formatTokenAmountNumber } from '../../../utils/formatter';
 import SlippageSetting, {
   useSlipper,
 } from '../PoolOperate/components/SlippageSetting';
-import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
+import { OperateButtonContainer } from './components/OperateButtonContainer';
+import { SlippageBonus } from './components/SlippageBonus';
 import { useLpTokenBalances } from './hooks/useLpTokenBalances';
-import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
-import { useEffect, useState } from 'react';
-import { BigNumber } from 'bignumber.js';
-import { formatTokenAmountNumber } from '../../../utils/formatter';
-import TokenLogo from '../../../components/TokenLogo';
+import { OperateCurvePoolT } from './types';
+import { curveApi } from './utils';
 
 function RadioButton({
   disabled,
@@ -110,24 +118,16 @@ export interface RemoveProps {
 
 export const Remove = ({ operateCurvePool }: RemoveProps) => {
   const theme = useTheme();
-  const { account } = useWalletInfo();
+  const { account, chainId: currentChainId } = useWalletInfo();
+  const submission = useSubmission();
+  const queryClient = useQueryClient();
 
   const [inputValue, setInputValue] = useState('');
   const [withdrawType, setWithdrawType] = useState<
     'oneCoin' | 'balanced' | 'custom'
-  >('balanced');
+  >('oneCoin');
 
-  const firstCoin = operateCurvePool.pool.coins[0];
-  const [selectedOneCoin, setSelectedOneCoin] = useState<string | null>(
-    firstCoin?.address || null,
-  );
-  const [prevSelectedOneCoin, setPrevSelectedOneCoin] = useState<string | null>(
-    firstCoin?.address || null,
-  );
-  if (firstCoin.address !== prevSelectedOneCoin) {
-    setSelectedOneCoin(firstCoin.address);
-    setPrevSelectedOneCoin(firstCoin.address);
-  }
+  const [selectedOneCoinIndex, setSelectedOneCoinIndex] = useState<number>(0);
 
   const [tokenInputs, setTokenInputs] = useState<Record<string, string>>({});
 
@@ -135,17 +135,13 @@ export const Remove = ({ operateCurvePool }: RemoveProps) => {
     address: operateCurvePool.pool.address,
   });
 
-  const {
-    lpTokenTotalSupply,
-    tokenBalances,
-    lpTokenBalance,
-    userTokenBalances,
-  } = useLpTokenBalances({
-    pool: operateCurvePool.pool,
-    account,
-  });
+  const { lpTokenBalance, userTokenBalances, lpTokenBalanceLoading } =
+    useLpTokenBalances({
+      pool: operateCurvePool.pool,
+      account,
+    });
 
-  useEffect(() => {
+  const resetInputValues = useCallback(() => {
     const initialInputs: Record<string, string> = {};
     operateCurvePool.pool.coins.forEach((coin) => {
       initialInputs[coin.address] = '';
@@ -153,12 +149,492 @@ export const Remove = ({ operateCurvePool }: RemoveProps) => {
     setTokenInputs(initialInputs);
   }, [operateCurvePool.pool.coins]);
 
+  useEffect(() => {
+    resetInputValues();
+  }, [resetInputValues]);
+
   const handleInputChange = (coinAddress: string, value: string) => {
     setTokenInputs((prev) => ({
       ...prev,
       [coinAddress]: value,
     }));
   };
+  const inputValueBN = useMemo(() => {
+    const B = new BigNumber(inputValue);
+    if (!B.isFinite()) {
+      return null;
+    }
+    return B;
+  }, [inputValue]);
+
+  const withdrawOneCoinQuery = useQuery(
+    curveApi.calcWithdrawOneCoin(
+      operateCurvePool.pool.chainId,
+      operateCurvePool.pool.address,
+      inputValueBN
+        ? inputValueBN
+            .multipliedBy(10 ** operateCurvePool.pool.decimals)
+            .dp(0, BigNumber.ROUND_DOWN)
+            .toString()
+        : '0',
+      selectedOneCoinIndex,
+    ),
+  );
+
+  const removeLiquidityOneCoinMutation = useMutation({
+    mutationFn: async () => {
+      if (!account || !withdrawOneCoinQuery.data) {
+        return;
+      }
+
+      try {
+        const iface = new Interface([
+          {
+            inputs: [
+              { name: '_burn_amount', type: 'uint256' },
+              { name: 'i', type: 'int128' },
+              { name: '_min_received', type: 'uint256' },
+            ],
+            name: 'remove_liquidity_one_coin',
+            outputs: [{ name: '', type: 'uint256' }],
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ]);
+        const burnAmount = inputValueBN
+          ? inputValueBN
+              .multipliedBy(10 ** operateCurvePool.pool.decimals)
+              .dp(0, BigNumber.ROUND_DOWN)
+              .toString()
+          : '0';
+
+        const minReceived = withdrawOneCoinQuery.data
+          .multipliedBy(1 - slipperValue)
+          .dp(0, BigNumber.ROUND_DOWN)
+          .toString();
+
+        const encodedData = iface.encodeFunctionData(
+          'remove_liquidity_one_coin',
+          [burnAmount, selectedOneCoinIndex, minReceived],
+        );
+
+        const refetch = () => {
+          queryClient.invalidateQueries({
+            queryKey: [CONTRACT_QUERY_KEY, 'curve'],
+            refetchType: 'all',
+          });
+          queryClient.invalidateQueries({
+            queryKey: [CONTRACT_QUERY_KEY, 'token', 'getFetchTokenQuery'],
+            refetchType: 'all',
+          });
+        };
+
+        const result = await submission.execute(
+          'remove_liquidity_one_coin',
+          {
+            opcode: OpCode.TX,
+            data: encodedData,
+            to: operateCurvePool.pool.address,
+            value: '0x0',
+          },
+          {
+            metadata: {
+              [MetadataFlag.curveRemoveLiquidityOneCoin]: true,
+            },
+            submittedBack: () => {
+              refetch();
+            },
+            successBack: () => {
+              refetch();
+              setInputValue('');
+            },
+          },
+        );
+
+        return result;
+      } catch (error) {
+        console.error('curve remove_liquidity_one_coin', error);
+      }
+    },
+  });
+
+  const removeLiquidityMutation = useMutation({
+    mutationFn: async () => {
+      if (!account) {
+        return;
+      }
+
+      try {
+        const iface = new Interface([
+          {
+            inputs: [
+              { name: '_burn_amount', type: 'uint256' },
+              { name: '_min_amounts', type: 'uint256[]' },
+            ],
+            name: 'remove_liquidity',
+            outputs: [{ name: '', type: 'uint256[]' }],
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ]);
+        const burnAmount = inputValueBN
+          ? inputValueBN
+              .multipliedBy(10 ** operateCurvePool.pool.decimals)
+              .dp(0, BigNumber.ROUND_DOWN)
+              .toString()
+          : '0';
+
+        const minAmounts = operateCurvePool.pool.coins.map((coin, index) => {
+          return userTokenBalances?.[index] &&
+            inputValueBN &&
+            lpTokenBalance &&
+            lpTokenBalance.gt(0)
+            ? userTokenBalances[index]
+                .multipliedBy(inputValueBN)
+                .div(lpTokenBalance)
+                .multipliedBy(10 ** coin.decimals)
+                .multipliedBy(1 - slipperValue)
+                .dp(0, BigNumber.ROUND_DOWN)
+                .toString()
+            : '0';
+        });
+
+        const encodedData = iface.encodeFunctionData('remove_liquidity', [
+          burnAmount,
+          minAmounts,
+        ]);
+
+        const refetch = () => {
+          queryClient.invalidateQueries({
+            queryKey: [CONTRACT_QUERY_KEY, 'curve'],
+            refetchType: 'all',
+          });
+          queryClient.invalidateQueries({
+            queryKey: [CONTRACT_QUERY_KEY, 'token', 'getFetchTokenQuery'],
+            refetchType: 'all',
+          });
+        };
+
+        const result = await submission.execute(
+          'remove_liquidity',
+          {
+            opcode: OpCode.TX,
+            data: encodedData,
+            to: operateCurvePool.pool.address,
+            value: '0x0',
+          },
+          {
+            metadata: {
+              [MetadataFlag.curveRemoveLiquidity]: true,
+            },
+            submittedBack: () => {
+              refetch();
+            },
+            successBack: () => {
+              refetch();
+              setInputValue('');
+            },
+          },
+        );
+
+        return result;
+      } catch (error) {
+        console.error('curve remove_liquidity', error);
+      }
+    },
+  });
+
+  const withdrawLpTokenQuery = useQuery(
+    curveApi.calcTokenAmount(
+      operateCurvePool.pool.chainId,
+      operateCurvePool.pool.address,
+      operateCurvePool.pool.coins.map((coin) => {
+        const amount = tokenInputs[coin.address] || '0';
+        const amountBN = new BigNumber(amount);
+        if (!amountBN.isFinite()) {
+          return '0';
+        }
+        return amountBN
+          .multipliedBy(10 ** coin.decimals)
+          .dp(0, BigNumber.ROUND_DOWN)
+          .toString();
+      }),
+      false,
+    ),
+  );
+
+  const removeLiquidityImBalanceMutation = useMutation({
+    mutationFn: async () => {
+      if (!account || !withdrawLpTokenQuery.data) {
+        return;
+      }
+
+      try {
+        const iface = new Interface([
+          {
+            inputs: [
+              { name: '_amounts', type: 'uint256[]' },
+              { name: '_max_burn_amount', type: 'uint256' },
+            ],
+            name: 'remove_liquidity_imbalance',
+            outputs: [{ name: '', type: 'uint256' }],
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ]);
+
+        const amounts = operateCurvePool.pool.coins.map((coin) => {
+          const amount = tokenInputs[coin.address] || '0';
+          const amountBN = new BigNumber(amount);
+          if (!amountBN.isFinite()) {
+            return '0';
+          }
+          return amountBN
+            .multipliedBy(10 ** coin.decimals)
+            .dp(0, BigNumber.ROUND_DOWN)
+            .toString();
+        });
+        const maxBurnAmount = withdrawLpTokenQuery.data
+          .multipliedBy(1 + slipperValue)
+          .dp(0, BigNumber.ROUND_DOWN)
+          .toString();
+
+        const encodedData = iface.encodeFunctionData(
+          'remove_liquidity_imbalance',
+          [amounts, maxBurnAmount],
+        );
+
+        const refetch = () => {
+          queryClient.invalidateQueries({
+            queryKey: [CONTRACT_QUERY_KEY, 'curve'],
+            refetchType: 'all',
+          });
+          queryClient.invalidateQueries({
+            queryKey: [CONTRACT_QUERY_KEY, 'token', 'getFetchTokenQuery'],
+            refetchType: 'all',
+          });
+        };
+
+        const result = await submission.execute(
+          'remove_liquidity_imbalance',
+          {
+            opcode: OpCode.TX,
+            data: encodedData,
+            to: operateCurvePool.pool.address,
+            value: '0x0',
+          },
+          {
+            metadata: {
+              [MetadataFlag.curveRemoveLiquidityImBalance]: true,
+            },
+            submittedBack: () => {
+              refetch();
+            },
+            successBack: () => {
+              refetch();
+              setInputValue('');
+              resetInputValues();
+            },
+          },
+        );
+
+        return result;
+      } catch (error) {
+        console.error('curve remove_liquidity_imbalance', error);
+      }
+    },
+  });
+
+  const confirmButton = useMemo(() => {
+    if (!account || operateCurvePool.pool.chainId !== currentChainId) {
+      return (
+        <NeedConnectButton chainId={operateCurvePool.pool.chainId} fullWidth />
+      );
+    }
+
+    if (!inputValue || inputValue === '0') {
+      return (
+        <Button fullWidth disabled>
+          Please enter amount
+        </Button>
+      );
+    }
+
+    const inputValueBN = new BigNumber(inputValue);
+    if (!inputValueBN.isFinite()) {
+      return (
+        <Button fullWidth disabled>
+          Invalid input
+        </Button>
+      );
+    }
+
+    if (lpTokenBalanceLoading) {
+      return (
+        <Button fullWidth disabled isLoading>
+          Loading...
+        </Button>
+      );
+    }
+
+    if (!lpTokenBalance || lpTokenBalance.lte(0)) {
+      return (
+        <Button fullWidth disabled>
+          No LP token balance
+        </Button>
+      );
+    }
+
+    if (inputValueBN.gt(lpTokenBalance)) {
+      return (
+        <Button fullWidth disabled>
+          Insufficient LP token balance
+        </Button>
+      );
+    }
+
+    if (withdrawType === 'oneCoin') {
+      if (withdrawOneCoinQuery.isLoading || !withdrawOneCoinQuery.data) {
+        return (
+          <Button fullWidth disabled isLoading>
+            Calculating...
+          </Button>
+        );
+      }
+
+      if (withdrawOneCoinQuery.data.lte(0)) {
+        return (
+          <Button fullWidth disabled>
+            Invalid input
+          </Button>
+        );
+      }
+
+      return (
+        <Button
+          fullWidth
+          disabled={removeLiquidityOneCoinMutation.isPending}
+          isLoading={removeLiquidityOneCoinMutation.isPending}
+          onClick={() => {
+            removeLiquidityOneCoinMutation.mutate();
+          }}
+        >
+          Remove
+        </Button>
+      );
+    }
+
+    if (withdrawType === 'balanced') {
+      return (
+        <Button
+          fullWidth
+          disabled={removeLiquidityMutation.isPending}
+          isLoading={removeLiquidityMutation.isPending}
+          onClick={() => {
+            removeLiquidityMutation.mutate();
+          }}
+        >
+          Remove
+        </Button>
+      );
+    }
+
+    if (withdrawType === 'custom') {
+      const hasAnyInput = Object.values(tokenInputs).some(
+        (value) => value && value !== '0',
+      );
+      if (!hasAnyInput) {
+        return (
+          <Button fullWidth disabled>
+            Please enter amount
+          </Button>
+        );
+      }
+
+      for (const coin of operateCurvePool.pool.coins) {
+        const inputValue = tokenInputs[coin.address];
+        if (!inputValue || inputValue === '0') continue;
+        const inputBN = new BigNumber(inputValue);
+
+        if (!inputBN.isFinite()) {
+          return (
+            <Button fullWidth disabled>
+              Invalid input
+            </Button>
+          );
+        }
+      }
+
+      if (withdrawLpTokenQuery.isLoading || !withdrawLpTokenQuery.data) {
+        return (
+          <Button fullWidth disabled isLoading>
+            Calculating...
+          </Button>
+        );
+      }
+
+      if (withdrawLpTokenQuery.data.lte(0)) {
+        return (
+          <Button fullWidth disabled>
+            Invalid input
+          </Button>
+        );
+      }
+
+      const withdrawLpTokenBN = withdrawLpTokenQuery.data
+        .dividedBy(10 ** operateCurvePool.pool.decimals)
+        .dp(operateCurvePool.pool.decimals, BigNumber.ROUND_DOWN);
+
+      if (withdrawLpTokenBN.gt(inputValueBN)) {
+        return (
+          <Button fullWidth disabled>
+            Insufficient input amount
+          </Button>
+        );
+      }
+
+      if (withdrawLpTokenBN.gt(lpTokenBalance)) {
+        return (
+          <Button fullWidth disabled>
+            Insufficient LP token balance
+          </Button>
+        );
+      }
+
+      return (
+        <Button
+          fullWidth
+          disabled={removeLiquidityImBalanceMutation.isPending}
+          isLoading={removeLiquidityImBalanceMutation.isPending}
+          onClick={() => {
+            removeLiquidityImBalanceMutation.mutate();
+          }}
+        >
+          Remove
+        </Button>
+      );
+    }
+
+    return null;
+  }, [
+    account,
+    operateCurvePool.pool.chainId,
+    operateCurvePool.pool.decimals,
+    operateCurvePool.pool.coins,
+    currentChainId,
+    inputValue,
+    lpTokenBalanceLoading,
+    lpTokenBalance,
+    withdrawType,
+    withdrawOneCoinQuery.isLoading,
+    withdrawOneCoinQuery.data,
+    removeLiquidityOneCoinMutation,
+    removeLiquidityMutation,
+    tokenInputs,
+    withdrawLpTokenQuery.isLoading,
+    withdrawLpTokenQuery.data,
+    removeLiquidityImBalanceMutation,
+  ]);
 
   return (
     <>
@@ -326,7 +802,7 @@ export const Remove = ({ operateCurvePool }: RemoveProps) => {
                 gap: 12,
               }}
             >
-              {operateCurvePool.pool.coins.map((coin) => {
+              {operateCurvePool.pool.coins.map((coin, index) => {
                 return (
                   <RadioButton
                     iconVisible={
@@ -336,12 +812,12 @@ export const Remove = ({ operateCurvePool }: RemoveProps) => {
                     disabled={false}
                     selected={
                       withdrawType === 'oneCoin'
-                        ? selectedOneCoin === coin.address
+                        ? selectedOneCoinIndex === index
                         : true
                     }
                     onClick={() => {
                       if (withdrawType === 'oneCoin') {
-                        setSelectedOneCoin(coin.address);
+                        setSelectedOneCoinIndex(index);
                       }
                     }}
                   >
@@ -364,8 +840,7 @@ export const Remove = ({ operateCurvePool }: RemoveProps) => {
                     >
                       {coin.symbol}
                     </Box>
-                    {(withdrawType === 'oneCoin' ||
-                      withdrawType === 'balanced') && (
+                    {withdrawType === 'oneCoin' && (
                       <Box
                         sx={{
                           ml: 'auto',
@@ -375,9 +850,41 @@ export const Remove = ({ operateCurvePool }: RemoveProps) => {
                           color: theme.palette.text.primary,
                         }}
                       >
-                        0.123
+                        {selectedOneCoinIndex === index
+                          ? formatTokenAmountNumber({
+                              input: withdrawOneCoinQuery.data?.div(
+                                10 ** coin.decimals,
+                              ),
+                              decimals: coin.decimals,
+                            })
+                          : '0'}
                       </Box>
                     )}
+
+                    {withdrawType === 'balanced' && (
+                      <Box
+                        sx={{
+                          ml: 'auto',
+                          typography: 'body1',
+                          fontWeight: 600,
+                          lineHeight: '22px',
+                          color: theme.palette.text.primary,
+                        }}
+                      >
+                        {userTokenBalances?.[index] &&
+                        inputValueBN &&
+                        lpTokenBalance &&
+                        lpTokenBalance.gt(0)
+                          ? formatTokenAmountNumber({
+                              input: userTokenBalances[index]
+                                .multipliedBy(inputValueBN)
+                                .div(lpTokenBalance),
+                              decimals: coin.decimals,
+                            })
+                          : '-'}
+                      </Box>
+                    )}
+
                     {withdrawType === 'custom' && (
                       <Box
                         sx={{
@@ -440,18 +947,7 @@ export const Remove = ({ operateCurvePool }: RemoveProps) => {
         <SlippageBonus />
       </Box>
 
-      <OperateButtonContainer>
-        <Button
-          fullWidth
-          disabled={false}
-          isLoading={false}
-          onClick={() => {
-            //
-          }}
-        >
-          Remove
-        </Button>
-      </OperateButtonContainer>
+      <OperateButtonContainer>{confirmButton}</OperateButtonContainer>
     </>
   );
 };

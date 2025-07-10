@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
+import { useMemo } from 'react';
 import { CurvePoolT } from '../types';
 import { curveApi } from '../utils';
-import { useMemo } from 'react';
-import BigNumber from 'bignumber.js';
 
 export function useLpTokenBalances({
   pool,
   account,
 }: {
   pool: CurvePoolT;
-  account: string;
+  account: string | undefined;
 }) {
   const balanceOfResult = useQuery(
     curveApi.getBalanceOf(pool.chainId, pool.address, account),
@@ -74,5 +74,10 @@ export function useLpTokenBalances({
     tokenBalances,
     lpTokenBalance,
     userTokenBalances,
+
+    lpTokenBalanceLoading:
+      balanceOfResult.isLoading ||
+      balancesResult.isLoading ||
+      totalSupplyResult.isLoading,
   };
 }

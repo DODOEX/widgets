@@ -177,8 +177,7 @@ export function useWalletInfo() {
     defaultChainId,
     onlyChainId,
 
-    account: '0xfa0d8ebcA31a1501144A785a2929e9F91b0571d0',
-    // account: currentAccount?.address,
+    account: currentAccount?.address,
     currentAccount,
 
     appKitActiveNetwork,

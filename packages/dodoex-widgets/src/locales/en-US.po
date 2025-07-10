@@ -61,7 +61,7 @@ msgstr "Receive {0}"
 msgid "{0} pending"
 msgstr "{0} pending"
 
-#: src/widgets/PoolWidget/curve/AllPools.tsx:369
+#: src/widgets/PoolWidget/curve/AllPools.tsx:370
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:509
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:342
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:741
@@ -142,7 +142,7 @@ msgstr "Pool Type"
 msgid "Unstaking"
 msgstr "Unstaking"
 
-#: src/widgets/PoolWidget/curve/AllPools.tsx:372
+#: src/widgets/PoolWidget/curve/AllPools.tsx:373
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:512
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:345
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:744
@@ -664,7 +664,7 @@ msgstr "More trade settings"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "Insufficient cross-chain fees, need at least {0} {1}"
 
-#: src/widgets/PoolWidget/curve/AllPools.tsx:281
+#: src/widgets/PoolWidget/curve/AllPools.tsx:282
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:345
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:453
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:112
@@ -1187,7 +1187,7 @@ msgstr "Staked"
 msgid "Start Time"
 msgstr "Start Time"
 
-#: src/widgets/PoolWidget/curve/AllPools.tsx:200
+#: src/widgets/PoolWidget/curve/AllPools.tsx:201
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:218
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:662
 #: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:191
@@ -1269,7 +1269,7 @@ msgstr "Reward Rules"
 msgid "Trader"
 msgstr "Trader"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:102
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:100
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:79
 #: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:71
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:269
@@ -1653,7 +1653,7 @@ msgstr "My Pools"
 msgid "Approve {0}"
 msgstr "Approve {0}"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:91
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:89
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:71
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:194
 msgid "Rate"
@@ -1877,8 +1877,8 @@ msgstr "My Staked"
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:478
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:451
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
-#: src/widgets/PoolWidget/curve/AllPools.tsx:305
-#: src/widgets/PoolWidget/curve/AllPools.tsx:515
+#: src/widgets/PoolWidget/curve/AllPools.tsx:306
+#: src/widgets/PoolWidget/curve/AllPools.tsx:498
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:207
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:396
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:748
@@ -2053,7 +2053,7 @@ msgstr "Output is estimated. If the price changes by more than {0} your transact
 msgid "Detail"
 msgstr "Detail"
 
-#: src/widgets/PoolWidget/curve/AllPools.tsx:251
+#: src/widgets/PoolWidget/curve/AllPools.tsx:252
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:239
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:315
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:456
@@ -2076,10 +2076,6 @@ msgstr "SafeERC20: low-level call failed. Please contact the ZUNO team."
 #: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:114
 msgid "Preview"
 msgstr "Preview"
-
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:87
-msgid "Claim refunds"
-msgstr "Claim refunds"
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/TokenPairSelect.tsx:56
 msgid "Select Platform"

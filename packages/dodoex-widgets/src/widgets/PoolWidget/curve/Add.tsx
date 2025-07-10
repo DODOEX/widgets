@@ -1,12 +1,22 @@
+import { CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { Box, Button, ButtonBase, useTheme } from '@dodoex/components';
-import { useQueries } from '@tanstack/react-query';
+import { Interface } from '@ethersproject/abi';
+import {
+  useMutation,
+  useQueries,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
 import TokenLogo from '../../../components/TokenLogo';
 import { tokenApi } from '../../../constants/api';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { useSubmission } from '../../../hooks/Submission';
+import { OpCode } from '../../../hooks/Submission/spec';
+import { MetadataFlag } from '../../../hooks/Submission/types';
 import { ApprovalState, BalanceState } from '../../../hooks/Token/type';
 import { useGetTokenStatus } from '../../../hooks/Token/useGetTokenStatus';
 import { formatTokenAmountNumber } from '../../../utils';
@@ -15,7 +25,9 @@ import SlippageSetting, {
 } from '../PoolOperate/components/SlippageSetting';
 import { OperateButtonContainer } from './components/OperateButtonContainer';
 import { SlippageBonus } from './components/SlippageBonus';
+import { useLpTokenBalances } from './hooks/useLpTokenBalances';
 import { OperateCurvePoolT } from './types';
+import { curveApi } from './utils';
 
 export interface AddProps {
   operateCurvePool: OperateCurvePoolT;
@@ -24,18 +36,31 @@ export interface AddProps {
 export const Add = ({ operateCurvePool }: AddProps) => {
   const theme = useTheme();
   const { account, chainId: currentChainId } = useWalletInfo();
+  const submission = useSubmission();
+  const queryClient = useQueryClient();
 
   const [balancedProportionOn, setBalancedProportionOn] = useState(false);
 
   // 为每个代币创建输入值状态
   const [tokenInputs, setTokenInputs] = useState<Record<string, string>>({});
+  const tokenInputsRef = useRef(tokenInputs);
+  tokenInputsRef.current = tokenInputs;
 
   const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
     address: operateCurvePool.pool.address,
   });
 
-  // 初始化输入值状态
-  useEffect(() => {
+  const {
+    lpTokenTotalSupply,
+    tokenBalances,
+    lpTokenBalance,
+    userTokenBalances,
+  } = useLpTokenBalances({
+    pool: operateCurvePool.pool,
+    account,
+  });
+
+  const resetInputValues = useCallback(() => {
     const initialInputs: Record<string, string> = {};
     operateCurvePool.pool.coins.forEach((coin) => {
       initialInputs[coin.address] = '';
@@ -43,18 +68,65 @@ export const Add = ({ operateCurvePool }: AddProps) => {
     setTokenInputs(initialInputs);
   }, [operateCurvePool.pool.coins]);
 
+  // 初始化输入值状态
+  useEffect(() => {
+    resetInputValues();
+  }, [resetInputValues]);
+
   // 处理输入值变化
   const handleInputChange = (coinAddress: string, value: string) => {
-    setTokenInputs((prev) => ({
-      ...prev,
-      [coinAddress]: value,
-    }));
-  };
+    setTokenInputs((prev) => {
+      const newInputs = {
+        ...prev,
+        [coinAddress]: value,
+      };
 
-  // 处理平衡比例模式
-  const handleBalancedProportion = () => {
-    setBalancedProportionOn(!balancedProportionOn);
-    // TODO: 实现平衡比例逻辑
+      // 如果在平衡模式下，根据比例自动调整其他输入框
+      if (balancedProportionOn && tokenBalances) {
+        const changedCoinIndex = operateCurvePool.pool.coins.findIndex(
+          (coin) => coin.address === coinAddress,
+        );
+
+        if (changedCoinIndex !== -1) {
+          const changedBalance = tokenBalances[changedCoinIndex];
+          const inputValue = new BigNumber(value || '0');
+
+          // 如果输入值为 0 或空，将所有其他输入框也设置为 0
+          if (inputValue.isZero() || value === '') {
+            operateCurvePool.pool.coins.forEach((coin) => {
+              if (coin.address !== coinAddress) {
+                newInputs[coin.address] = '0';
+              }
+            });
+          } else if (
+            changedBalance &&
+            changedBalance.gt(0) &&
+            inputValue.gt(0)
+          ) {
+            // 根据当前输入值和余额比例计算其他代币的输入值
+            operateCurvePool.pool.coins.forEach((coin, index) => {
+              if (index !== changedCoinIndex) {
+                const balance = tokenBalances[index];
+                if (balance && balance.gt(0)) {
+                  // 计算比例：当前代币余额 / 修改的代币余额
+                  const ratio = balance.div(changedBalance);
+                  // 根据修改的输入值计算新的输入值
+                  const newInputValue = inputValue
+                    .multipliedBy(ratio)
+                    .dp(coin.decimals, BigNumber.ROUND_DOWN)
+                    .toString();
+                  newInputs[coin.address] = newInputValue;
+                } else {
+                  newInputs[coin.address] = '0';
+                }
+              }
+            });
+          }
+        }
+      }
+
+      return newInputs;
+    });
   };
 
   // 处理最大余额点击
@@ -112,6 +184,210 @@ export const Add = ({ operateCurvePool }: AddProps) => {
       contractAddress: operateCurvePool.pool.address,
     });
 
+  // 计算平衡比例输入值的函数
+  const calculateBalancedProportions = useCallback(
+    (
+      baseInputValue?: string,
+      currentTokenInputs?: Record<string, string>,
+      currentTokensQueriesData?: any[],
+    ) => {
+      if (!tokenBalances) return {};
+
+      const newTokenInputs: Record<string, string> = {};
+      const tokenInputsToUse = currentTokenInputs || tokenInputs;
+      const tokensQueriesDataToUse =
+        currentTokensQueriesData || tokensQueries.data;
+
+      // 找到第一个非零余额作为基准
+      const firstNonZeroIndex = tokenBalances.findIndex(
+        (balance) => balance && balance.gt(0),
+      );
+
+      if (firstNonZeroIndex !== -1) {
+        const baseBalance = tokenBalances[firstNonZeroIndex];
+        const baseCoin = operateCurvePool.pool.coins[firstNonZeroIndex];
+
+        // 确定基准值：按照优先级顺序
+        let finalBaseInputValue: string;
+
+        if (baseInputValue !== undefined) {
+          // 如果传入了基准值，直接使用
+          finalBaseInputValue = baseInputValue;
+        } else {
+          // 按照优先级顺序确定基准值
+          // 1. 不为空的第一个输入框
+          const firstNonEmptyInput = Object.values(tokenInputsToUse).find(
+            (value) => value && value !== '0' && value !== '',
+          );
+          if (firstNonEmptyInput) {
+            finalBaseInputValue = firstNonEmptyInput;
+          } else {
+            // 2. 第一个代币最大余额
+            const firstCoinBalance = tokensQueriesDataToUse?.find(
+              (t) =>
+                t.address?.toLowerCase() === baseCoin.address?.toLowerCase(),
+            )?.balance;
+            if (firstCoinBalance && firstCoinBalance.gt(0)) {
+              finalBaseInputValue = firstCoinBalance
+                .dp(baseCoin.decimals, BigNumber.ROUND_DOWN)
+                .toString();
+            } else {
+              // 3. 默认值 1
+              finalBaseInputValue = '1';
+            }
+          }
+        }
+
+        const baseInputBN = new BigNumber(finalBaseInputValue);
+
+        // 设置基准代币的输入值
+        newTokenInputs[baseCoin.address] = finalBaseInputValue;
+
+        // 根据比例计算其他代币的输入值
+        operateCurvePool.pool.coins.forEach((coin, index) => {
+          if (index !== firstNonZeroIndex) {
+            const balance = tokenBalances[index];
+            if (balance && balance.gt(0) && baseBalance.gt(0)) {
+              // 计算比例：当前代币余额 / 基准代币余额
+              const ratio = balance.div(baseBalance);
+              // 根据基准输入值计算新的输入值
+              const inputValue = baseInputBN
+                .multipliedBy(ratio)
+                .dp(coin.decimals, BigNumber.ROUND_DOWN)
+                .toString();
+              newTokenInputs[coin.address] = inputValue;
+            } else {
+              newTokenInputs[coin.address] = '0';
+            }
+          }
+        });
+      }
+
+      return newTokenInputs;
+    },
+    [
+      operateCurvePool.pool.coins,
+      tokenBalances,
+      tokenInputs,
+      tokensQueries.data,
+    ],
+  );
+
+  // 处理平衡比例模式
+  const handleBalancedProportion = () => {
+    const newBalancedProportionOn = !balancedProportionOn;
+    setBalancedProportionOn(newBalancedProportionOn);
+
+    // 如果开启平衡模式且有 tokenBalances 数据，则根据比例设置输入值
+    if (newBalancedProportionOn && tokenBalances) {
+      const balancedInputs = calculateBalancedProportions(
+        undefined,
+        tokenInputsRef.current,
+        tokensQueries.data,
+      );
+      setTokenInputs(balancedInputs);
+    }
+  };
+
+  const lpTokenReceivedQuery = useQuery(
+    curveApi.calcTokenAmount(
+      operateCurvePool.pool.chainId,
+      operateCurvePool.pool.address,
+      operateCurvePool.pool.coins.map((coin) => {
+        const amount = tokenInputs[coin.address] || '0';
+        const amountBN = new BigNumber(amount);
+        if (!amountBN.isFinite()) {
+          return '0';
+        }
+        return amountBN
+          .multipliedBy(10 ** coin.decimals)
+          .dp(0, BigNumber.ROUND_DOWN)
+          .toString();
+      }),
+      true,
+    ),
+  );
+
+  const onAddMutation = useMutation({
+    mutationFn: async () => {
+      if (!account || !lpTokenReceivedQuery.data) {
+        return;
+      }
+
+      try {
+        const iface = new Interface([
+          {
+            inputs: [
+              { name: '_amounts', type: 'uint256[]' },
+              { name: '_min_mint_amount', type: 'uint256' },
+            ],
+            name: 'add_liquidity',
+            outputs: [{ name: '', type: 'uint256' }],
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ]);
+        const amounts = operateCurvePool.pool.coins.map((coin) => {
+          const amount = tokenInputs[coin.address] || '0';
+          const amountBN = new BigNumber(amount);
+          if (!amountBN.isFinite()) {
+            return '0';
+          }
+          return amountBN
+            .multipliedBy(10 ** coin.decimals)
+            .dp(0, BigNumber.ROUND_DOWN)
+            .toString();
+        });
+        const minMintAmount = lpTokenReceivedQuery.data
+          .multipliedBy(1 - slipperValue)
+          .dp(0, BigNumber.ROUND_DOWN)
+          .toString();
+
+        const encodedData = iface.encodeFunctionData('add_liquidity', [
+          amounts,
+          minMintAmount,
+        ]);
+
+        const refetch = () => {
+          queryClient.invalidateQueries({
+            queryKey: [CONTRACT_QUERY_KEY, 'curve'],
+            refetchType: 'all',
+          });
+          queryClient.invalidateQueries({
+            queryKey: [CONTRACT_QUERY_KEY, 'token', 'getFetchTokenQuery'],
+            refetchType: 'all',
+          });
+        };
+
+        const result = await submission.execute(
+          'add_liquidity',
+          {
+            opcode: OpCode.TX,
+            data: encodedData,
+            to: operateCurvePool.pool.address,
+            value: '0x0',
+          },
+          {
+            metadata: {
+              [MetadataFlag.curveAddLiquidity]: true,
+            },
+            submittedBack: () => {
+              refetch();
+            },
+            successBack: () => {
+              refetch();
+              resetInputValues();
+            },
+          },
+        );
+
+        return result;
+      } catch (error) {
+        console.error('curve add_liquidity', error);
+      }
+    },
+  });
+
   const confirmButton = useMemo(() => {
     if (!account || operateCurvePool.pool.chainId !== currentChainId) {
       return (
@@ -164,17 +440,6 @@ export const Add = ({ operateCurvePool }: AddProps) => {
       const pendingRest = getPendingRest(coin, allowance);
       const approvalState = getApprovalState(coin, inputBN, balance, allowance);
 
-      // console.log(
-      //   'balance',
-      //   coin.symbol,
-      //   inputBN.toString(),
-      //   balance?.toString(),
-      //   allowance?.toString(),
-      //   balanceState,
-      //   pendingRest,
-      //   approvalState,
-      // );
-
       if (
         balanceState === BalanceState.Loading ||
         approvalState === ApprovalState.Loading
@@ -216,12 +481,29 @@ export const Add = ({ operateCurvePool }: AddProps) => {
       }
     }
 
+    if (lpTokenReceivedQuery.isLoading || !lpTokenReceivedQuery.data) {
+      return (
+        <Button fullWidth disabled isLoading>
+          Calculating...
+        </Button>
+      );
+    }
+
+    if (lpTokenReceivedQuery.data.lte(0)) {
+      return (
+        <Button fullWidth disabled>
+          Invalid input
+        </Button>
+      );
+    }
+
     return (
       <Button
         fullWidth
+        disabled={onAddMutation.isPending}
+        isLoading={onAddMutation.isPending}
         onClick={() => {
-          // TODO: 实现添加流动性逻辑
-          // 这里可以处理添加流动性的逻辑
+          onAddMutation.mutate();
         }}
       >
         Add
@@ -233,6 +515,9 @@ export const Add = ({ operateCurvePool }: AddProps) => {
     getApprovalState,
     getBalanceState,
     getPendingRest,
+    lpTokenReceivedQuery.data,
+    lpTokenReceivedQuery.isLoading,
+    onAddMutation,
     operateCurvePool.pool.chainId,
     operateCurvePool.pool.coins,
     submitApprove,

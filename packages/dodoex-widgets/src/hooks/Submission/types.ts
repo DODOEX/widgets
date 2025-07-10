@@ -30,6 +30,10 @@ export enum MetadataFlag {
   submissionCreateMetaKey = 'submissionCreateMetaKey',
   approve = 'approve',
   reset = 'reset',
+  curveAddLiquidity = 'curveAddLiquidity',
+  curveRemoveLiquidityOneCoin = 'curveRemoveLiquidityOneCoin',
+  curveRemoveLiquidity = 'curveRemoveLiquidity',
+  curveRemoveLiquidityImBalance = 'curveRemoveLiquidityImBalance',
 }
 
 export type Metadata = Record<string, any>;

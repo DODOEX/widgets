@@ -39,7 +39,7 @@ export const SlippageBonus = (props: SlippageBonusProps) => {
           color: theme.palette.success.main,
         }}
       >
-        1.526%
+        -
       </Box>
     </Box>
   );

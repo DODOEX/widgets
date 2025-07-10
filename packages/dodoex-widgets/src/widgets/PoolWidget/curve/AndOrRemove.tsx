@@ -10,15 +10,14 @@ import {
 import { Error } from '@dodoex/icons';
 import { useState } from 'react';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
+import TokenLogo from '../../../components/TokenLogo';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { formatTokenAmountNumber } from '../../../utils';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import { Add } from './Add';
 import { useLpTokenBalances } from './hooks/useLpTokenBalances';
 import { Remove } from './Remove';
 import { OperateCurvePoolT } from './types';
-import TokenLogo from '../../../components/TokenLogo';
 
 export interface AndOrRemoveProps {
   onClose?: () => void;
@@ -33,7 +32,6 @@ export const AndOrRemove = ({
   operateCurvePool,
 }: AndOrRemoveProps) => {
   const theme = useTheme();
-  const { isMobile } = useWidgetDevice();
   const { account } = useWalletInfo();
 
   const [operateTab, setOperateTab] = useState(operateCurvePool.type);
@@ -44,12 +42,7 @@ export const AndOrRemove = ({
     setOperateTab(operateCurvePool.type);
   }
 
-  const {
-    lpTokenTotalSupply,
-    tokenBalances,
-    lpTokenBalance,
-    userTokenBalances,
-  } = useLpTokenBalances({
+  const { lpTokenBalance, userTokenBalances } = useLpTokenBalances({
     pool: operateCurvePool.pool,
     account,
   });

@@ -1,5 +1,5 @@
-import { BigNumber as BigNumberE } from '@ethersproject/bignumber';
 import BigNumber from 'bignumber.js';
+import { ChainId } from '../../chainConfig';
 import ContractRequests, {
   CONTRACT_QUERY_KEY,
   ContractRequestsConfig,
@@ -7,7 +7,6 @@ import ContractRequests, {
 import { ABIName } from '../../helper/ContractRequests/abi/abiName';
 import { poolUtils } from '../pool/poolUtils';
 import { AllV3TicksDocument } from './queries';
-import { ChainId } from '../../chainConfig';
 
 interface TokenInfo {
   readonly chainId: ChainId;
@@ -129,16 +128,17 @@ export class CurveApi {
     };
   }
 
-  getTokenOfOwnerByIndex(
+  calcTokenAmount(
     chainId: number | undefined,
     contractAddress: string | undefined,
-    tokenIdsArgs: (string | number)[][],
+    amounts: string[],
+    isDeposit: boolean,
   ) {
     return {
       queryKey: [
         CONTRACT_QUERY_KEY,
-        'ammv3',
-        'getTokenOfOwnerByIndex',
+        'curve',
+        'calc_token_amount',
         ...arguments,
       ],
       enabled: !!chainId && !!contractAddress,
@@ -146,100 +146,47 @@ export class CurveApi {
         if (!chainId || !contractAddress) {
           return null;
         }
-
-        const result = await this.contractRequests.callMultiQuery(
-          chainId,
-          tokenIdsArgs.map((tokenIdsArg) => {
-            return {
-              abiName: ABIName.NonfungiblePositionManager,
-              contractAddress,
-              method: 'tokenOfOwnerByIndex',
-              params: tokenIdsArg.map((i) => i.toString()),
-            };
-          }),
-        );
-        return result;
-      },
-    };
-  }
-
-  getV3PoolSlot0(chainId: number | undefined, poolAddress: string | undefined) {
-    return {
-      queryKey: [CONTRACT_QUERY_KEY, 'ammv3', 'getSlot0', ...arguments],
-      enabled: !!chainId || !!poolAddress,
-      queryFn: async () => {
-        if (!chainId || !poolAddress) {
-          return null;
-        }
-
         const result = await this.contractRequests.batchCallQuery(chainId, {
-          abiName: ABIName.UniswapV3Pool,
-          contractAddress: poolAddress,
-          method: 'slot0',
-          params: [],
+          abiName: ABIName.CurveStableSwapNG,
+          contractAddress: contractAddress,
+          method: 'calc_token_amount',
+          params: [amounts, isDeposit],
         });
-        return result;
+
+        const lpTokenReceived = new BigNumber(result.toString());
+        return lpTokenReceived;
       },
     };
   }
 
-  getV3PoolLiquidity(
+  calcWithdrawOneCoin(
     chainId: number | undefined,
-    poolAddress: string | undefined,
+    contractAddress: string | undefined,
+    burnAmount: string,
+    coinIndex: number,
   ) {
     return {
       queryKey: [
         CONTRACT_QUERY_KEY,
-        'ammv3',
-        'getV3PoolLiquidity',
+        'curve',
+        'calc_withdraw_one_coin',
         ...arguments,
       ],
-      enabled: !!chainId || !!poolAddress,
+      enabled: !!chainId && !!contractAddress,
       queryFn: async () => {
-        if (!chainId || !poolAddress) {
+        // burnAmount = 0 合约会报错
+        if (!chainId || !contractAddress || !burnAmount || burnAmount === '0') {
           return null;
         }
-
         const result = await this.contractRequests.batchCallQuery(chainId, {
-          abiName: ABIName.UniswapV3Pool,
-          contractAddress: poolAddress,
-          method: 'liquidity',
-          params: [],
+          abiName: ABIName.CurveStableSwapNG,
+          contractAddress: contractAddress,
+          method: 'calc_withdraw_one_coin',
+          params: [burnAmount, coinIndex],
         });
-        return result;
-      },
-    };
-  }
 
-  getCollect(
-    chainId: number | undefined,
-    contractAddress: string | undefined,
-    tokenId: string,
-    recipient: string,
-  ) {
-    return {
-      queryKey: [CONTRACT_QUERY_KEY, 'ammv3', 'getCollect', ...arguments],
-      enabled: !!chainId || !!contractAddress,
-      queryFn: async () => {
-        if (!chainId || !contractAddress || !tokenId || !recipient) {
-          return null;
-        }
-        const MAX_UINT128 = BigNumberE.from(2).pow(128).sub(1);
-        const result = await this.contractRequests.callQuery(chainId, {
-          abiName: ABIName.NonfungiblePositionManager,
-          contractAddress,
-          method: 'collect',
-          params: [
-            {
-              tokenId,
-              recipient, // some tokens might fail if transferred to address(0)
-              amount0Max: MAX_UINT128,
-              amount1Max: MAX_UINT128,
-            },
-            { from: recipient }, // need to simulate the call as the owner
-          ],
-        });
-        return result;
+        const tokenReceived = new BigNumber(result.toString());
+        return tokenReceived;
       },
     };
   }
