@@ -92,7 +92,7 @@ export default function PoolList({
   const [operateCurvePool, setOperateCurvePool] =
     React.useState<OperateCurvePoolT | null>({
       pool: mockCurvePoolList[0],
-      type: OperateTab.Add,
+      type: OperateTab.Remove,
     });
 
   const [operatePool, setOperatePoolOrigin] =

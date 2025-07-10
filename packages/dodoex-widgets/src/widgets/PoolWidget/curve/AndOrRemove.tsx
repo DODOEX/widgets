@@ -18,6 +18,7 @@ import { Add } from './Add';
 import { useLpTokenBalances } from './hooks/useLpTokenBalances';
 import { Remove } from './Remove';
 import { OperateCurvePoolT } from './types';
+import TokenLogo from '../../../components/TokenLogo';
 
 export interface AndOrRemoveProps {
   onClose?: () => void;
@@ -227,16 +228,49 @@ export const AndOrRemove = ({
                 </Box>
                 <Tooltip
                   title={
-                    <Box>
+                    <Box
+                      sx={{
+                        m: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 20,
+                        minWidth: 216,
+                      }}
+                    >
                       {userTokenBalances?.map((balance, index) => {
                         const coin = operateCurvePool.pool.coins[index];
                         return (
-                          <Box key={index}>
-                            {coin.symbol}{' '}
-                            {formatTokenAmountNumber({
-                              input: balance,
-                              decimals: coin.decimals,
-                            })}
+                          <Box
+                            key={index}
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 4,
+                              typography: 'body2',
+                              fontWeight: 600,
+                              lineHeight: '14px',
+                            }}
+                          >
+                            <TokenLogo
+                              width={14}
+                              height={14}
+                              address={coin.address}
+                              chainId={coin.chainId}
+                              noShowChain
+                              noBorder
+                              marginRight={0}
+                            />
+                            <Box>{coin.symbol}</Box>
+                            <Box
+                              sx={{
+                                ml: 'auto',
+                              }}
+                            >
+                              {formatTokenAmountNumber({
+                                input: balance,
+                                decimals: coin.decimals,
+                              })}
+                            </Box>
                           </Box>
                         );
                       })}

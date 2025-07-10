@@ -5,17 +5,17 @@ import { useEffect, useMemo, useState } from 'react';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
 import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
 import TokenLogo from '../../../components/TokenLogo';
-import { QuestionTooltip } from '../../../components/Tooltip';
 import { tokenApi } from '../../../constants/api';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { ApprovalState, BalanceState } from '../../../hooks/Token/type';
+import { useGetTokenStatus } from '../../../hooks/Token/useGetTokenStatus';
 import { formatTokenAmountNumber } from '../../../utils';
 import SlippageSetting, {
   useSlipper,
 } from '../PoolOperate/components/SlippageSetting';
 import { OperateButtonContainer } from './components/OperateButtonContainer';
+import { SlippageBonus } from './components/SlippageBonus';
 import { OperateCurvePoolT } from './types';
-import { useGetTokenStatus } from '../../../hooks/Token/useGetTokenStatus';
-import { ApprovalState, BalanceState } from '../../../hooks/Token/type';
 
 export interface AddProps {
   operateCurvePool: OperateCurvePoolT;
@@ -290,20 +290,15 @@ export const Add = ({ operateCurvePool }: AddProps) => {
                       gap: 4,
                     }}
                   >
-                    <Box
-                      sx={{
-                        width: 24,
-                      }}
-                    >
-                      <TokenLogo
-                        width={24}
-                        height={24}
-                        address={coin.address}
-                        chainId={coin.chainId}
-                        noShowChain
-                        noBorder
-                      />
-                    </Box>
+                    <TokenLogo
+                      width={24}
+                      height={24}
+                      address={coin.address}
+                      chainId={coin.chainId}
+                      noShowChain
+                      noBorder
+                      marginRight={0}
+                    />
                     <Box
                       sx={{
                         typography: 'body1',
@@ -423,41 +418,7 @@ export const Add = ({ operateCurvePool }: AddProps) => {
           />
         </Box>
 
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: 8,
-            px: 12,
-            height: 36,
-            borderRadius: 8,
-            border: `1px solid ${theme.palette.border.main}`,
-          }}
-        >
-          <Box
-            sx={{
-              typography: 'body2',
-              fontWeight: 500,
-              lineHeight: '19px',
-              color: theme.palette.text.secondary,
-              textTransform: 'capitalize',
-            }}
-          >
-            Slippage Bonus (incl. pricing)
-            <QuestionTooltip title="Bonus comes as an advantage from current coin prices which usually appears for coins which are low in balance" />
-          </Box>
-          <Box
-            sx={{
-              typography: 'body2',
-              fontWeight: 600,
-              lineHeight: '19px',
-              color: theme.palette.success.main,
-            }}
-          >
-            1.526%
-          </Box>
-        </Box>
+        <SlippageBonus />
       </Box>
 
       <OperateButtonContainer>{confirmButton}</OperateButtonContainer>
