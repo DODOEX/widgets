@@ -136,6 +136,7 @@ export function RootPage({
           supportAMMV2
           supportAMMV3
           notSupportPMM={false}
+          supportCurve
         >
           {children}
         </Widget>

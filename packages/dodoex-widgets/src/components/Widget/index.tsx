@@ -66,6 +66,7 @@ export interface WidgetProps extends InitTokenListProps, ExecutionProps {
   notSupportPMM?: boolean;
   supportAMMV2?: boolean;
   supportAMMV3?: boolean;
+  supportCurve?: boolean;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;

@@ -36,21 +36,27 @@ export function usePoolListTabs() {
     MultiTokenPoolTab.ALL,
   );
 
-  const { supportAMMV2, supportAMMV3, notSupportPMM } = useUserOptions();
+  const { supportAMMV2, supportAMMV3, notSupportPMM, supportCurve } =
+    useUserOptions();
 
   const topTabs = useMemo(() => {
-    return [
+    const tabs = [
       // { key: PoolTopTab.ALM, value: 'ALM' },
       {
         key: PoolTopTab.NORMAL,
         value: 'Normal',
       },
-      {
+    ];
+
+    if (supportCurve) {
+      tabs.push({
         key: PoolTopTab.MULTI_TOKEN,
         value: 'Multi-token',
-      },
-    ];
-  }, []);
+      });
+    }
+
+    return tabs;
+  }, [supportCurve]);
 
   const almTabs = useMemo(() => {
     return [
