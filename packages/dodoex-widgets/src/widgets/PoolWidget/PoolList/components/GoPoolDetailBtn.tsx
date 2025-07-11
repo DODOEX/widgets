@@ -6,9 +6,11 @@ import { ChainId } from '@dodoex/api';
 export default function GoPoolDetailBtn({
   chainId,
   address,
+  type = PageType.PoolDetail,
 }: {
   chainId: number;
   address: string;
+  type?: PageType.PoolDetail | PageType.CurvePoolDetail;
 }) {
   const { isMobile } = useWidgetDevice();
   return (
@@ -17,7 +19,7 @@ export default function GoPoolDetailBtn({
       onClick={(evt) => {
         evt.stopPropagation();
         useRouterStore.getState().push({
-          type: PageType.PoolDetail,
+          type,
           params: {
             chainId: chainId as ChainId,
             address: address,

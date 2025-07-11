@@ -47,6 +47,7 @@ export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsVie
 export { usePoolBalanceInfo } from './widgets/PoolWidget/hooks/usePoolBalanceInfo';
 export { default as PoolCreate } from './widgets/PoolWidget/PoolCreate';
 export { default as PoolDetail } from './widgets/PoolWidget/PoolDetail';
+export { CurvePoolDetail } from './widgets/PoolWidget/curve/CurvePoolDetail';
 export { default as PoolList } from './widgets/PoolWidget/PoolList';
 export { default as PoolModify } from './widgets/PoolWidget/PoolModify';
 export {

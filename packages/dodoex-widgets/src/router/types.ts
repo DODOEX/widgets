@@ -4,6 +4,7 @@ import { PoolTab } from '../widgets/PoolWidget/PoolList/hooks/usePoolListTabs';
 export enum PageType {
   Pool = 'pool',
   PoolDetail = 'poolDetail',
+  CurvePoolDetail = 'curvePoolDetail',
   CreatePool = 'createPool',
   ModifyPool = 'modifyPool',
   MiningList = 'miningList',
@@ -19,6 +20,10 @@ interface PageTypeParams {
       }
     | undefined;
   [PageType.PoolDetail]: {
+    address: string;
+    chainId: ChainId;
+  };
+  [PageType.CurvePoolDetail]: {
     address: string;
     chainId: ChainId;
   };

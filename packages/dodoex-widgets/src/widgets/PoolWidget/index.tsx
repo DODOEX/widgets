@@ -7,6 +7,7 @@ import PoolDetail from './PoolDetail';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import AMMV2Create from './AMMV2Create';
 import AMMV3Create from './AMMV3/AddLiquidityV3';
+import { CurvePoolDetail } from './curve/CurvePoolDetail';
 
 export { default as AMMV3Create } from './AMMV3/AddLiquidityV3';
 export { AMMV3PositionsView } from './AMMV3/AMMV3PositionsView';
@@ -26,6 +27,12 @@ export function Pool() {
       return <PoolModify params={(page as Page<PageType.ModifyPool>).params} />;
     case PageType.PoolDetail:
       return <PoolDetail params={(page as Page<PageType.PoolDetail>).params} />;
+    case PageType.CurvePoolDetail:
+      return (
+        <CurvePoolDetail
+          params={(page as Page<PageType.CurvePoolDetail>).params}
+        />
+      );
     case PageType.createPoolAMMV2:
       return <AMMV2Create />;
     case PageType.createPoolAMMV3:

@@ -3,7 +3,7 @@ import { store } from '../configure-store';
 import { WithMuiTheme } from './theme/WithMuiTheme';
 
 import { ChainId, zetachainTestnet } from '@dodoex/api';
-import { Widget } from '@dodoex/widgets';
+import { PageType, Widget } from '@dodoex/widgets';
 // import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin';
 import { Ethers5Adapter } from '@reown/appkit-adapter-ethers5';
 import {
@@ -126,17 +126,23 @@ export function RootPage({
             'https://api.dodoex.io/frontend-graphql'
           }
           colorMode="light"
-          defaultChainId={ChainId.ZETACHAIN}
-          onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN}
+          defaultChainId={ChainId.ZETACHAIN_TESTNET}
+          onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN_TESTNET}
           solanaConnection={solanaConnection}
           noUI
           crossChain={isSwap}
           noDocumentLink={true}
-          routerPage={undefined}
           supportAMMV2
           supportAMMV3
           notSupportPMM={false}
           supportCurve
+          routerPage={{
+            type: PageType.CurvePoolDetail,
+            params: {
+              address: '0xDddfBCc76166d741c2dfa6b6a90769df398b9969',
+              chainId: ChainId.ZETACHAIN_TESTNET,
+            },
+          }}
         >
           {children}
         </Widget>

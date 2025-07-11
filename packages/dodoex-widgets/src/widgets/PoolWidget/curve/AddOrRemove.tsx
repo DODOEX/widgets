@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
 import TokenLogo from '../../../components/TokenLogo';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { PageType, useRouterStore } from '../../../router';
 import { formatTokenAmountNumber } from '../../../utils';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import { Add } from './Add';
@@ -19,18 +20,18 @@ import { useLpTokenBalances } from './hooks/useLpTokenBalances';
 import { Remove } from './Remove';
 import { OperateCurvePoolT } from './types';
 
-export interface AndOrRemoveProps {
+export interface AddOrRemoveProps {
   onClose?: () => void;
   poolInfoVisible?: boolean;
 
   operateCurvePool: OperateCurvePoolT;
 }
 
-export const AndOrRemove = ({
+export const AddOrRemove = ({
   onClose,
   poolInfoVisible = true,
   operateCurvePool,
-}: AndOrRemoveProps) => {
+}: AddOrRemoveProps) => {
   const theme = useTheme();
   const { account } = useWalletInfo();
 
@@ -156,7 +157,13 @@ export const AndOrRemove = ({
                 <Box
                   component={ButtonBase}
                   onClick={() => {
-                    //
+                    useRouterStore.getState().push({
+                      type: PageType.CurvePoolDetail,
+                      params: {
+                        address: operateCurvePool.pool.address,
+                        chainId: operateCurvePool.pool.chainId,
+                      },
+                    });
                   }}
                   sx={{
                     display: 'flex',

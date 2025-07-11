@@ -305,7 +305,11 @@ function CardList({
               >
                 <Trans>Add</Trans>
               </Button>
-              <GoPoolDetailBtn chainId={item.chainId} address={item.id} />
+              <GoPoolDetailBtn
+                chainId={item.chainId}
+                address={item.id}
+                type={PageType.CurvePoolDetail}
+              />
             </Box>
           </Box>
         );
@@ -474,6 +478,7 @@ function TableList({
                   <GoPoolDetailBtn
                     chainId={pool.chainId}
                     address={pool.address}
+                    type={PageType.CurvePoolDetail}
                   />
 
                   {operateBtnText ? (
