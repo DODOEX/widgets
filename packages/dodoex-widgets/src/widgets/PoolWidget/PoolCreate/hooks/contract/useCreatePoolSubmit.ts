@@ -1,4 +1,9 @@
-import { basicTokenMap, ChainId, PoolApi } from '@dodoex/api';
+import {
+  basicTokenMap,
+  ChainId,
+  etherTokenAddress,
+  PoolApi,
+} from '@dodoex/api';
 import { parseFixed } from '@ethersproject/bignumber';
 import BigNumber from 'bignumber.js';
 import { useWalletInfo } from '../../../../../hooks/ConnectWallet/useWalletInfo';
@@ -137,13 +142,14 @@ export const useCreatePoolSubmit = ({
 
     if (result && result.data) {
       try {
-        const etherAddressLow = EtherToken.address.toLocaleLowerCase();
-        if (
-          baseAmount &&
-          baseToken.address.toLocaleUpperCase() === etherAddressLow
-        ) {
+        const etherAddressLow = EtherToken.address.toLowerCase();
+
+        if (baseAmount && baseToken.address.toLowerCase() === etherAddressLow) {
           result.value = getEthersValue(baseAmount);
-        } else if (quoteAmount && quoteToken.address === etherAddressLow) {
+        } else if (
+          quoteAmount &&
+          quoteToken.address.toLowerCase() === etherAddressLow
+        ) {
           result.value = getEthersValue(quoteAmount);
         } else {
           result.value = 0;
