@@ -1,6 +1,5 @@
-import { ChainId, PoolApi, PoolType } from '@dodoex/api';
-import { alpha, Box, Button, useTheme } from '@dodoex/components';
-import { Share } from '@dodoex/icons';
+import { ChainId, PoolApi } from '@dodoex/api';
+import { Box, Button, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
@@ -10,17 +9,14 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
 import { CardStatus } from '../../../components/CardWidgets';
 import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
-import LiquidityLpPartnerReward from '../../../components/LiquidityLpPartnerReward';
 import { EmptyList } from '../../../components/List/EmptyList';
 import { FailedList } from '../../../components/List/FailedList';
-import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
 import {
-  formatApy,
   formatExponentialNotation,
   formatTokenAmountNumber,
 } from '../../../utils';
@@ -30,248 +26,136 @@ import FilterTokenTags from '../PoolList/components/FilterTokenTags';
 import GoPoolDetailBtn from '../PoolList/components/GoPoolDetailBtn';
 import LiquidityTable from '../PoolList/components/LiquidityTable';
 import LoadingCard from '../PoolList/components/LoadingCard';
-import PoolApyTooltip from '../PoolList/components/PoolApyTooltip';
 import TokenAndPoolFilter from '../PoolList/components/TokenAndPoolFilter';
 import TokenListPoolItem from '../PoolList/components/TokenListPoolItem';
 import {
   TokenAndPoolFilterUserOptions,
   usePoolListFilterTokenAndPool,
 } from '../PoolList/hooks/usePoolListFilterTokenAndPool';
-import { PoolOperateProps } from '../PoolOperate';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
-import {
-  convertFetchLiquidityToOperateData,
-  convertLiquidityTokenToTokenInfo,
-  FetchLiquidityListLqList,
-  getPoolAMMOrPMM,
-} from '../utils';
+import { FetchLiquidityListLqList } from '../utils';
+import { ApyTooltip } from './components/ApyTooltip';
 import { CoinsLogoList } from './components/CoinsLogoList';
 import { CurvePoolT, OperateCurvePoolT } from './types';
 import { mockCurvePoolList } from './utils';
-import { ApyTooltip } from './components/ApyTooltip';
 
 function CardList({
-  lqList,
-  setOperatePool,
+  poolList,
+  setOperateCurvePool,
 }: {
-  lqList: FetchLiquidityListLqList;
-  setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  poolList: CurvePoolT[];
+  setOperateCurvePool: React.Dispatch<
+    React.SetStateAction<OperateCurvePoolT | null>
+  >;
 }) {
   const theme = useTheme();
-  const { onSharePool } = useUserOptions();
+
   return (
     <>
-      {lqList?.map((lq) => {
-        if (!lq?.pair) return null;
-        const item = lq.pair;
-        const baseToken = convertLiquidityTokenToTokenInfo(
-          item.baseToken,
-          item.chainId,
-        );
-        const quoteToken = convertLiquidityTokenToTokenInfo(
-          item.quoteToken,
-          item.chainId,
-        );
-        const timeRangeApy = item.apyList?.find(
-          (apy) => apy?.timeRange === `1D`,
-        );
-        const baseApy = timeRangeApy
-          ? formatApy(
-              new BigNumber(timeRangeApy?.transactionBaseApy).plus(
-                timeRangeApy?.miningBaseApy ?? 0,
-              ),
-            )
-          : undefined;
-        const quoteApy =
-          PoolApi.utils.singleSideLp(item.type as PoolType) && timeRangeApy
-            ? formatApy(
-                new BigNumber(timeRangeApy.transactionQuoteApy).plus(
-                  timeRangeApy.miningQuoteApy ?? 0,
-                ),
-              )
-            : undefined;
-        const hasMining = !!item.miningAddress?.[0];
-        const hasMetromMining =
-          !!timeRangeApy?.metromMiningApy &&
-          Number(timeRangeApy?.metromMiningApy) > 0;
-
-        const type = item.type as PoolType;
-        const poolType = getPoolAMMOrPMM(type);
-        const isAMMV2 = type === 'AMMV2';
-        const isAMMV3 = type === 'AMMV3';
-
+      {poolList.map((pool) => {
         return (
           <Box
-            key={item.id + item.chainId}
+            key={`${pool.chainId}-${pool.address}`}
             sx={{
               px: 20,
               pt: 20,
               pb: 12,
               backgroundColor: 'background.paper',
+              border: `1px solid ${theme.palette.border.main}`,
               borderRadius: 16,
             }}
             className="gradient-card-border"
             onClick={() => {
               useRouterStore.getState().push({
-                type: PageType.PoolDetail,
+                type: PageType.CurvePoolDetail,
                 params: {
-                  chainId: item.chainId as ChainId,
-                  address: item.id as string,
+                  chainId: pool.chainId,
+                  address: pool.address,
                 },
               });
             }}
           >
-            {/* title */}
             <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                flexWrap: 'wrap',
+              }}
+            >
+              <Box>
+                <Box
+                  sx={{
+                    typography: 'body1',
+                    fontWeight: 600,
+                  }}
+                >
+                  {pool.name}
+                </Box>
+                <Box
+                  sx={{
+                    maxWidth: 146,
+                    wordBreak: 'break-word',
+                    typography: 'body2',
+                    color: theme.palette.text.secondary,
+                  }}
+                >
+                  {pool.coins.map((coin, index) => {
+                    return (
+                      <Box component="span" key={coin.address}>
+                        {coin.symbol}
+                        {index !== pool.coins.length - 1 && '/'}
+                      </Box>
+                    );
+                  })}
+                </Box>
+              </Box>
+              <CoinsLogoList pool={pool} separate={true} wrap={true} />
+            </Box>
+
+            <Box
+              sx={{
+                mt: 40,
+              }}
+            >
+              <ApyTooltip
+                apy={pool.apy}
+                dailyApy={pool.dailyApy}
+                weeklyApy={pool.weeklyApy}
+              />
+              <Box
+                sx={{
+                  typography: 'h6',
+                  color: 'text.secondary',
+                }}
+              >
+                <Trans>APY</Trans>
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                mt: 20,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 20,
               }}
             >
               <Box
                 sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
+                  flexBasis: '100%',
+                  flexGrow: 1,
+                  flexShrink: 1,
                 }}
               >
-                {baseToken && quoteToken ? (
-                  <TokenLogoPair
-                    tokens={[baseToken, quoteToken]}
-                    width={24}
-                    mr={6}
-                    chainId={item.chainId}
-                    showChainLogo
-                  />
-                ) : (
-                  ''
-                )}
-                <Box
-                  sx={{
-                    typography: 'body2',
-                    fontWeight: 600,
-                  }}
-                >
-                  {`${baseToken?.symbol}/${quoteToken?.symbol}`}
-                  {!!onSharePool && (
-                    <Box
-                      component={Share}
-                      sx={{
-                        ml: 2,
-                        width: 12,
-                        height: 12,
-                      }}
-                      onClick={() =>
-                        onSharePool({
-                          chainId: item.chainId,
-                          baseToken,
-                          quoteToken,
-                          poolId: item.id,
-                          apy: timeRangeApy,
-                          isSingle: PoolApi.utils.singleSideLp(
-                            item.type as PoolType,
-                          ),
-                        })
-                      }
-                    />
-                  )}
-                  <LiquidityLpPartnerReward
-                    address={item.id}
-                    chainId={item.chainId}
-                  />
-                </Box>
-              </Box>
-              {hasMining || hasMetromMining ? (
-                <Box
-                  sx={{
-                    p: 8,
-                    typography: 'h6',
-                    fontWeight: 'bold',
-                    background: `linear-gradient(180deg, ${alpha(
-                      theme.palette.secondary.main,
-                      0.3,
-                    )} 0%, ${alpha(theme.palette.purple.main, 0.3)} 100%)`,
-                    borderRadius: 8,
-                    color: 'purple.main',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  ✨ <Trans>Mining</Trans>
-                </Box>
-              ) : (
-                ''
-              )}
-            </Box>
-            {/* info */}
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                rowGap: 20,
-                mt: 44,
-                '& > div:nth-child(odd)': {
-                  pr: 20,
-                },
-                '& > div:nth-child(even)': {
-                  position: 'relative',
-                  pl: 20,
-                  '&::before': {
-                    position: 'absolute',
-                    left: 0,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    display: 'inline-block',
-                    content: '""',
-                    height: 24,
-                    width: '1px',
-                    backgroundColor: 'border.main',
-                  },
-                },
-              }}
-            >
-              <Box>
-                <Box
-                  sx={{
-                    typography: 'h5',
-                    color: 'success.main',
-                  }}
-                >
-                  {baseApy}
-                  {quoteApy ? `/${quoteApy}` : ''}
-                </Box>
-                <Box
-                  sx={{
-                    typography: 'h6',
-                    display: 'flex',
-                    alignItems: 'center',
-                    color: 'text.secondary',
-                  }}
-                >
-                  {1}d&nbsp;<Trans>APY</Trans>
-                  <PoolApyTooltip
-                    chainId={item.chainId}
-                    apy={timeRangeApy}
-                    baseToken={baseToken}
-                    quoteToken={quoteToken}
-                    hasQuote={!!quoteApy}
-                    hasMining={hasMining}
-                    sx={{
-                      width: 14,
-                      height: 14,
-                    }}
-                  />
-                </Box>
-              </Box>
-
-              <Box>
                 <Box
                   sx={{
                     typography: 'h5',
                   }}
                 >
-                  ${formatExponentialNotation(new BigNumber(item.tvl))}
+                  $
+                  {pool.tvl
+                    ? formatExponentialNotation(new BigNumber(pool.tvl))
+                    : '-'}
                 </Box>
                 <Box
                   sx={{
@@ -282,8 +166,43 @@ function CardList({
                   <Trans>TVL</Trans>
                 </Box>
               </Box>
+              <Box
+                sx={{
+                  flexShrink: 0,
+                  flexGrow: 0,
+                  width: '1px',
+                  height: 24,
+                  backgroundColor: theme.palette.border.main,
+                }}
+              />
+              <Box
+                sx={{
+                  flexBasis: '100%',
+                  flexGrow: 1,
+                  flexShrink: 1,
+                }}
+              >
+                <Box
+                  sx={{
+                    typography: 'h5',
+                  }}
+                >
+                  $
+                  {pool.volume
+                    ? formatExponentialNotation(new BigNumber(pool.volume))
+                    : '-'}
+                </Box>
+                <Box
+                  sx={{
+                    typography: 'h6',
+                    color: 'text.secondary',
+                  }}
+                >
+                  <Trans>Volume </Trans>
+                </Box>
+              </Box>
             </Box>
-            {/* operate */}
+
             <Box
               sx={{
                 mt: 20,
@@ -297,17 +216,17 @@ function CardList({
                 size={Button.Size.small}
                 onClick={(evt) => {
                   evt.stopPropagation();
-                  setOperatePool({
-                    pool: convertFetchLiquidityToOperateData(lq),
-                    hasMining,
+                  setOperateCurvePool({
+                    pool: pool,
+                    type: OperateTab.Add,
                   });
                 }}
               >
                 <Trans>Add</Trans>
               </Button>
               <GoPoolDetailBtn
-                chainId={item.chainId}
-                address={item.id}
+                chainId={pool.chainId}
+                address={pool.address}
                 type={PageType.CurvePoolDetail}
               />
             </Box>
@@ -763,7 +682,10 @@ export const AllPools = ({
                 }}
               />
             )}
-            {/* <CardList lqList={lqList} setOperatePool={setOperatePool} /> */}
+            <CardList
+              poolList={mockCurvePoolList}
+              setOperateCurvePool={setOperateCurvePool}
+            />
           </DataCardGroup>
         </InfiniteScroll>
       ) : (

@@ -270,11 +270,11 @@ export const getDesignTokens = (
       caption: {
         fontSize: 20,
         fontWeight: 600,
-        lineHeight: '28px',
+        lineHeight: '27px',
       },
       h5: {
         fontSize: 18,
-        lineHeight: '24px',
+        lineHeight: '25px',
         fontWeight: 600,
       },
       body1: {
@@ -289,7 +289,7 @@ export const getDesignTokens = (
       },
       h6: {
         fontSize: 12,
-        lineHeight: '17px',
+        lineHeight: '16px',
         fontWeight: normalFontWeight,
       },
       button: {

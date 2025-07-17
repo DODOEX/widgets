@@ -78,7 +78,40 @@ createAppKit({
   projectId,
   features: {
     analytics: true, // Optional - defaults to your Cloud configuration
+    connectorTypeOrder: [
+      'featured',
+      'recent',
+      'injected',
+      'walletConnect',
+      'custom',
+      'external',
+      'recommended',
+    ],
   },
+  featuredWalletIds: [
+    '38f5d18bd8522c244bdd70cb4a68e0e718865155811c043f052fb9f1c51de662',
+    'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96',
+    '971e689d0a5be527bac79629b4ee9b925e82208e5168b733496a09c0faed0709',
+  ],
+  includeWalletIds: [
+    '38f5d18bd8522c244bdd70cb4a68e0e718865155811c043f052fb9f1c51de662',
+    'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96',
+    '971e689d0a5be527bac79629b4ee9b925e82208e5168b733496a09c0faed0709',
+    '18388be9ac2d02726dbac9777c96efaac06d744b2f6d580fccdd4127a6d01fd1',
+    '6adb6082c909901b9e7189af3a4a0223102cd6f8d5c39e39f3d49acb92b578bb',
+    'fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa',
+    '2a3c89040ac3b723a1972a33a125b1db11e258a6975d3a61252cd64e6ea5ea01',
+    '20459438007b75f4f4acb98bf29aa3b800550309646d375da5fd4aac6c2a2c66',
+    '8a0ee50d1f22f6651afcae7eb4253e52a3310b90af5daef78a8c4929a9bb99d4',
+
+    // bitcoin
+    'f896cbca30cd6dc414712d3d6fcc2f8f7d35d5bd30e3b1fc5d60cf6c8926f98f',
+
+    // solana
+    'a797aa35c0fadbfc1a53e7f675162ed5226968b44a19ee3d24385c64d1d3c393',
+    '2bd8c14e035c2d48f184aaa168559e86b0e3433228d3c4075900a221785019b0',
+  ],
+  enableWalletGuide: false,
 });
 
 export function RootPage({

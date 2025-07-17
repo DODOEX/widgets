@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useMemo } from 'react';
 import Dialog from '../../../components/Dialog';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { AddOrRemove } from './AddOrRemove';
@@ -6,22 +6,27 @@ import { OperateCurvePoolT } from './types';
 import { Box } from '@dodoex/components';
 
 export interface OperateDialogProps {
-  poolInfoVisible?: boolean;
+  poolDetailBtnVisible?: boolean;
   operateCurvePool: OperateCurvePoolT;
-  setOperateCurvePool: React.Dispatch<
+  setOperateCurvePool?: React.Dispatch<
     React.SetStateAction<OperateCurvePoolT | null>
   >;
 }
 
 export const OperateDialog = ({
-  poolInfoVisible = true,
+  poolDetailBtnVisible,
   operateCurvePool,
   setOperateCurvePool,
 }: OperateDialogProps) => {
   const { isMobile } = useWidgetDevice();
 
-  const onClose = useCallback(() => {
-    setOperateCurvePool(null);
+  const onClose = useMemo(() => {
+    if (!setOperateCurvePool) {
+      return;
+    }
+    return () => {
+      setOperateCurvePool(null);
+    };
   }, [setOperateCurvePool]);
 
   if (!isMobile) {
@@ -35,7 +40,7 @@ export const OperateDialog = ({
         <AddOrRemove
           onClose={onClose}
           operateCurvePool={operateCurvePool}
-          poolInfoVisible={poolInfoVisible}
+          poolDetailBtnVisible={poolDetailBtnVisible}
         />
       </Box>
     );
@@ -52,7 +57,7 @@ export const OperateDialog = ({
       <AddOrRemove
         onClose={onClose}
         operateCurvePool={operateCurvePool}
-        poolInfoVisible={poolInfoVisible}
+        poolDetailBtnVisible={poolDetailBtnVisible}
       />
     </Dialog>
   );

@@ -1,15 +1,19 @@
-import { Box, Tooltip } from '@dodoex/components';
+import { Box, BoxProps, Tooltip, useTheme } from '@dodoex/components';
 import { formatPercentageNumber } from '../../../../utils';
 
 export function ApyTooltip({
   apy,
   dailyApy,
   weeklyApy,
+  sx,
 }: {
-  apy: string | null;
-  dailyApy: string | null;
-  weeklyApy: string | null;
+  apy: string | null | undefined;
+  dailyApy: string | null | undefined;
+  weeklyApy: string | null | undefined;
+  sx?: BoxProps['sx'];
 }) {
+  const theme = useTheme();
+
   return (
     <Tooltip
       title={
@@ -40,13 +44,17 @@ export function ApyTooltip({
       <Box
         component="span"
         sx={{
-          typography: 'body2',
           fontWeight: 600,
           display: 'flex',
           alignItems: 'center',
           width: 'max-content',
           color: 'success.main',
           cursor: 'auto',
+          typography: 'h5',
+          [theme.breakpoints.up('tablet')]: {
+            typography: 'body2',
+          },
+          ...sx,
         }}
       >
         {formatPercentageNumber({ input: apy, showDecimals: 2 })}

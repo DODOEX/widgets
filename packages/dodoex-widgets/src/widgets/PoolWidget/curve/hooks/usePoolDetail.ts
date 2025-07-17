@@ -10,7 +10,7 @@ export function usePoolDetail({
   address: string | undefined;
   chainId: ChainId | undefined;
 }) {
-  const { data, isLoading, error } = useQuery<CurvePoolT | null>({
+  const { data, isLoading, error } = useQuery<CurvePoolT>({
     queryKey: ['poolDetail'],
     queryFn: () => {
       return mockCurvePoolList[0];
