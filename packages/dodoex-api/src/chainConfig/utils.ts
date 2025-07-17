@@ -6,6 +6,7 @@ import {
   bsc,
   mainnet,
   polygon,
+  avalanche,
   sepolia,
   solana,
   solanaDevnet,
@@ -57,6 +58,13 @@ export function getCaipNetworkByChainId(chainId: ChainId): CaipNetwork {
     case ChainId.ZETACHAIN:
       return {
         ...zetachain,
+        chainNamespace: 'eip155',
+        caipNetworkId: `eip155:${chainId}`,
+      };
+
+    case ChainId.AVALANCHE:
+      return {
+        ...avalanche,
         chainNamespace: 'eip155',
         caipNetworkId: `eip155:${chainId}`,
       };

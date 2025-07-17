@@ -2,6 +2,7 @@ import { ChainId, btcSignet, zetachainTestnet } from '@dodoex/api';
 import {
   AppKitNetwork,
   arbitrumSepolia,
+  avalanche,
   base,
   bitcoin,
   bsc,
@@ -14,6 +15,7 @@ import {
 } from '@reown/appkit/networks';
 
 import { ReactComponent as ArbitrumSepoliaLogo } from '../assets/logo/networks/arbitrum.svg';
+import { ReactComponent as AvalancheLogo } from '../assets/logo/networks/avalanche.svg';
 import { ReactComponent as BaseLogo } from '../assets/logo/networks/base.svg';
 import { ReactComponent as BSCLogo } from '../assets/logo/networks/bsc.svg';
 import { ReactComponent as BtcSignetLogo } from '../assets/logo/networks/btc-signet.svg';
@@ -35,6 +37,8 @@ export interface ChainListItem {
   isSolanaChain: boolean;
   isBTCChain: boolean;
 
+  isTestNet: boolean;
+
   /** 未链接钱包时，使用该地址 */
   fallbackAddress: string;
 }
@@ -50,6 +54,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
   ],
@@ -63,6 +68,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
   ],
@@ -71,11 +77,12 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     {
       chainId: ChainId.BSC,
       logo: BSCLogo,
-      name: 'BNBChain',
+      name: bsc.name,
       caipNetwork: bsc,
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
   ],
@@ -84,11 +91,12 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     {
       chainId: ChainId.BASE,
       logo: BaseLogo,
-      name: 'Base',
+      name: base.name,
       caipNetwork: base,
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
   ],
@@ -97,11 +105,26 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     {
       chainId: ChainId.ZETACHAIN,
       logo: ZetachainLogo,
-      name: 'Zetachain',
+      name: zetachain.name,
       caipNetwork: zetachain,
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isTestNet: false,
+      fallbackAddress: EmptyAddress,
+    },
+  ],
+  [
+    ChainId.AVALANCHE,
+    {
+      chainId: ChainId.AVALANCHE,
+      logo: AvalancheLogo,
+      name: avalanche.name,
+      caipNetwork: avalanche,
+      isEVMChain: true,
+      isSolanaChain: false,
+      isBTCChain: false,
+      isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
   ],
@@ -110,11 +133,12 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     {
       chainId: ChainId.SOLANA,
       logo: SolanaLogo,
-      name: 'Solana',
+      name: solana.name,
       caipNetwork: solana,
       isEVMChain: false,
       isSolanaChain: true,
       isBTCChain: false,
+      isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
   ],
@@ -123,11 +147,12 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     {
       chainId: ChainId.BTC,
       logo: BtcLogo,
-      name: 'Bitcoin',
+      name: bitcoin.name,
       caipNetwork: bitcoin,
       isEVMChain: false,
       isSolanaChain: false,
       isBTCChain: true,
+      isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
   ],
@@ -137,11 +162,12 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     {
       chainId: ChainId.SEPOLIA,
       logo: ETHereumLogo,
-      name: 'Ethereum Sepolia',
+      name: sepolia.name,
       caipNetwork: sepolia,
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isTestNet: true,
       fallbackAddress: EmptyAddress,
     },
   ],
@@ -150,11 +176,12 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     {
       chainId: ChainId.ARBITRUM_SEPOLIA,
       logo: ArbitrumSepoliaLogo,
-      name: 'Arbitrum Sepolia',
+      name: arbitrumSepolia.name,
       caipNetwork: arbitrumSepolia,
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isTestNet: true,
       fallbackAddress: EmptyAddress,
     },
   ],
@@ -163,12 +190,13 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     {
       chainId: ChainId.ZETACHAIN_TESTNET,
       logo: ZetachainLogo,
-      name: 'Zetachain Testnet',
+      name: zetachainTestnet.name,
       mainnet: ChainId.ZETACHAIN,
       caipNetwork: zetachainTestnet,
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isTestNet: true,
       fallbackAddress: EmptyAddress,
     },
   ],
@@ -177,11 +205,12 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     {
       chainId: ChainId.SOLANA_DEVNET,
       logo: SolanaLogo,
-      name: 'Solana Devnet',
+      name: solanaDevnet.name,
       caipNetwork: solanaDevnet,
       isEVMChain: false,
       isSolanaChain: true,
       isBTCChain: false,
+      isTestNet: true,
       fallbackAddress: 'CVVQYs9Pi3t4it4KFpm3hxk97uDA6AVzNVJvGQTPH17n',
     },
   ],
@@ -190,11 +219,12 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     {
       chainId: ChainId.BTC_SIGNET,
       logo: BtcSignetLogo,
-      name: 'Bitcoin Signet',
+      name: btcSignet.name,
       caipNetwork: btcSignet,
       isEVMChain: false,
       isSolanaChain: false,
       isBTCChain: true,
+      isTestNet: true,
       fallbackAddress: 'tb1qcrd8yvatjzpxl0ew29jsps2z595jpwtm5mj38v',
     },
   ],

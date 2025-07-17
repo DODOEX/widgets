@@ -16,6 +16,7 @@ import {
   bsc,
   mainnet,
   polygon,
+  avalanche,
   sepolia,
   solana,
   solanaDevnet,
@@ -69,7 +70,7 @@ createAppKit({
     bsc,
     zetachain,
     base,
-
+    avalanche,
     solana,
     solanaDevnet,
     // bitcoin,
@@ -159,8 +160,12 @@ export function RootPage({
             'https://api.dodoex.io/frontend-graphql'
           }
           colorMode="light"
+          IS_TEST_ENV={true}
           defaultChainId={ChainId.ZETACHAIN_TESTNET}
           onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN_TESTNET}
+          // IS_TEST_ENV={false}
+          // defaultChainId={ChainId.ZETACHAIN}
+          // onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN}
           solanaConnection={solanaConnection}
           noUI
           crossChain={isSwap}

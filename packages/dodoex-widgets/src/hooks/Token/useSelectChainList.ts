@@ -3,15 +3,21 @@ import { useUserOptions } from '../../components/UserOptionsProvider';
 import { chainListMap } from '../../constants/chainList';
 
 export function useSelectChainList(side?: 'from' | 'to') {
-  const { crossChain, defaultChainId } = useUserOptions();
+  const { crossChain, defaultChainId, IS_TEST_ENV } = useUserOptions();
 
   const chainList = useMemo(() => {
     if (!crossChain) {
       return [];
     }
 
+    if (!IS_TEST_ENV) {
+      return Array.from(chainListMap.values()).filter(
+        (chain) => !chain.isTestNet,
+      );
+    }
+
     return Array.from(chainListMap.values());
-  }, [crossChain]);
+  }, [IS_TEST_ENV, crossChain]);
 
   const [selectChainId, setSelectChainId] = useState(defaultChainId);
 
