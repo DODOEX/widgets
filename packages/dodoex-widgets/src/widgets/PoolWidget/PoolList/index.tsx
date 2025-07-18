@@ -20,12 +20,10 @@ import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
 import { AllPools } from '../curve/AllPools';
 import { OperateDialog } from '../curve/OperateDialog';
 import { OperateCurvePoolT } from '../curve/types';
-import { mockCurvePoolList } from '../curve/utils';
 import PoolOperateDialog, {
   PoolOperate,
   PoolOperateProps,
 } from '../PoolOperate';
-import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
 import AddLiquidityList from './AddLiquidity';
 import { CreatePoolBtn } from './components/CreatePoolBtn';
 import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
@@ -90,10 +88,7 @@ export default function PoolList({
     usePoolListFilterChainId();
 
   const [operateCurvePool, setOperateCurvePool] =
-    React.useState<OperateCurvePoolT | null>({
-      pool: mockCurvePoolList[0],
-      type: OperateTab.Remove,
-    });
+    React.useState<OperateCurvePoolT | null>(null);
 
   const [operatePool, setOperatePoolOrigin] =
     React.useState<Partial<PoolOperateProps> | null>(operatePoolProps || null);
@@ -329,12 +324,10 @@ export default function PoolList({
           >
             <TabPanel value={MultiTokenPoolTab.ALL}>
               <AllPools
-                filterChainIds={filterChainIds}
                 scrollParentRef={scrollParentRefProps ?? scrollParentRef}
                 activeChainId={activeChainId}
                 operateCurvePool={operateCurvePool}
                 setOperateCurvePool={setOperateCurvePool}
-                tokenAndPoolFilter={tokenAndPoolFilter}
               >
                 <TabsButtonGroup
                   tabs={multiTokenTabs}
@@ -344,12 +337,11 @@ export default function PoolList({
             </TabPanel>
             <TabPanel value={MultiTokenPoolTab.MY}>
               <AllPools
-                filterChainIds={filterChainIds}
                 scrollParentRef={scrollParentRefProps ?? scrollParentRef}
                 activeChainId={activeChainId}
                 operateCurvePool={operateCurvePool}
                 setOperateCurvePool={setOperateCurvePool}
-                tokenAndPoolFilter={tokenAndPoolFilter}
+                isMyPool
               >
                 <TabsButtonGroup
                   tabs={multiTokenTabs}

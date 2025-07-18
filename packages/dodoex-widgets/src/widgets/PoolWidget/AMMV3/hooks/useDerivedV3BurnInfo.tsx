@@ -28,7 +28,7 @@ export function useDerivedV3BurnInfo({
   outOfRange: boolean;
   error?: ReactNode;
 } {
-  const { account, chainId } = useWalletInfo();
+  const { account } = useWalletInfo();
 
   const [tokenA, tokenB] = useMemo(
     () => [baseToken?.wrapped, quoteToken?.wrapped],

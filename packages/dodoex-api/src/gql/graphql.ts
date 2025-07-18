@@ -34,8 +34,8 @@ export type Scalars = {
   BigNumber: { input: any; output: any };
   /** Bytes custom scalar type */
   Bytes: { input: any; output: any };
+  Curve_stableswap_ngBytes: { input: any; output: any };
   Dodochain_earnBytes: { input: any; output: any };
-  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any };
   LiquidityBytes: { input: any; output: any };
 };
@@ -2346,6 +2346,7 @@ export type Cross_Chain_TransferAttributeLabelV2 = {
 
 export type Cross_Chain_TransferCrossChainOrder = {
   createdAt?: Maybe<Scalars['String']['output']>;
+  duration?: Maybe<Scalars['Int']['output']>;
   endTime?: Maybe<Scalars['String']['output']>;
   fee?: Maybe<Scalars['String']['output']>;
   feeUsd?: Maybe<Scalars['String']['output']>;
@@ -3380,6 +3381,138 @@ export type Crowd_PoolingcrowdpoolingVoteListFilter = {
 export type Crowd_Poolinglist_Filter = {
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
   top?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Curve_Stableswap_NgFilterState = {
+  poolAddress?: InputMaybe<Scalars['String']['input']>;
+  poolName?: InputMaybe<Scalars['String']['input']>;
+  tokenAddress?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Curve_Stableswap_NgLp = {
+  id?: Maybe<Scalars['String']['output']>;
+  liquidityTokenBalance?: Maybe<Scalars['String']['output']>;
+  lpTokens?: Maybe<Array<Maybe<Curve_Stableswap_NgUserToken>>>;
+};
+
+export type Curve_Stableswap_NgLiquidityHistory = {
+  action: Scalars['String']['output'];
+  assets?: Maybe<Array<Curve_Stableswap_NgLiquidityHistoryAsset>>;
+  id: Scalars['ID']['output'];
+  time: Scalars['BigInt']['output'];
+  user: Scalars['String']['output'];
+};
+
+export type Curve_Stableswap_NgLiquidityHistoryAsset = {
+  amount: Scalars['BigInt']['output'];
+  token: Curve_Stableswap_NgToken;
+};
+
+export type Curve_Stableswap_NgLiquidityHistoryListInfo = {
+  currentPage?: Maybe<Scalars['Int']['output']>;
+  liquidityHistories?: Maybe<Array<Curve_Stableswap_NgLiquidityHistory>>;
+  pageSize?: Maybe<Scalars['Int']['output']>;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Curve_Stableswap_NgListInfo = {
+  chainId?: Maybe<Scalars['Int']['output']>;
+  currentPage?: Maybe<Scalars['Int']['output']>;
+  lqList?: Maybe<Array<Maybe<Curve_Stableswap_NgLqList>>>;
+  pageSize?: Maybe<Scalars['Int']['output']>;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+  user?: Maybe<Scalars['String']['output']>;
+};
+
+export type Curve_Stableswap_NgLqList = {
+  id?: Maybe<Scalars['String']['output']>;
+  isMyLiquidity?: Maybe<Scalars['Boolean']['output']>;
+  liquidityPositions?: Maybe<Array<Maybe<Curve_Stableswap_NgLp>>>;
+  pool?: Maybe<Curve_Stableswap_NgPool>;
+};
+
+export type Curve_Stableswap_NgOrder = {
+  /** updatedAt tvl apy liquidity */
+  orderBy?: InputMaybe<Scalars['String']['input']>;
+  /** desc asc' */
+  orderDirection?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Curve_Stableswap_NgPool = {
+  a: Scalars['BigInt']['output'];
+  address: Scalars['String']['output'];
+  apy: Scalars['BigDecimal']['output'];
+  coins: Array<Curve_Stableswap_NgToken>;
+  dailyVolumeUsd: Scalars['BigDecimal']['output'];
+  daoFee: Scalars['BigDecimal']['output'];
+  fee: Scalars['BigDecimal']['output'];
+  fees: Scalars['BigDecimal']['output'];
+  id: Scalars['ID']['output'];
+  liquidityUtilization: Scalars['BigDecimal']['output'];
+  name: Scalars['String']['output'];
+  offpegFeeMultiplier: Scalars['BigInt']['output'];
+  poolType: Scalars['String']['output'];
+  reserves?: Maybe<Array<Maybe<Curve_Stableswap_NgPoolReserve>>>;
+  traderCount: Scalars['BigInt']['output'];
+  tvl: Scalars['BigDecimal']['output'];
+  virtualPrice: Scalars['BigDecimal']['output'];
+  volume: Scalars['BigDecimal']['output'];
+};
+
+export type Curve_Stableswap_NgPoolReserve = {
+  amount: Scalars['BigInt']['output'];
+  ratio: Scalars['BigDecimal']['output'];
+  token: Curve_Stableswap_NgToken;
+};
+
+export type Curve_Stableswap_NgSwap = {
+  id: Scalars['ID']['output'];
+  paidAmount: Scalars['BigInt']['output'];
+  paidToken: Curve_Stableswap_NgToken;
+  receivedAmount: Scalars['BigInt']['output'];
+  receivedToken: Curve_Stableswap_NgToken;
+  time: Scalars['BigInt']['output'];
+  user: Scalars['String']['output'];
+};
+
+export type Curve_Stableswap_NgSwapListInfo = {
+  currentPage?: Maybe<Scalars['Int']['output']>;
+  pageSize?: Maybe<Scalars['Int']['output']>;
+  swaps?: Maybe<Array<Curve_Stableswap_NgSwap>>;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Curve_Stableswap_NgToken = {
+  address: Scalars['String']['output'];
+  decimals: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  /** token logo img */
+  logoImg?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  symbol: Scalars['String']['output'];
+};
+
+export type Curve_Stableswap_NgUserToken = {
+  address: Scalars['String']['output'];
+  amount: Scalars['BigInt']['output'];
+  decimals: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  symbol: Scalars['String']['output'];
+};
+
+export type Curve_Stableswap_Nglist_Filter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  currentPage?: InputMaybe<Scalars['Int']['input']>;
+  filterState?: InputMaybe<Curve_Stableswap_NgFilterState>;
+  order?: InputMaybe<Curve_Stableswap_NgOrder>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Curve_Stableswap_Ngpool_Info_Filter = {
+  chainId: Scalars['Int']['input'];
+  poolAddress: Scalars['String']['input'];
 };
 
 export type D3mmAsset = {
@@ -9110,6 +9243,22 @@ export type MintHistory_OrderBy =
   | 'timestamp'
   | 'user';
 
+export type Native_SignerdepositData = {
+  amount?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Native_SignerredeemData = {
+  sharesToBurn?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Native_SignersignatureResult = {
+  transaction?: Maybe<Scalars['String']['output']>;
+};
+
 export type Nft = {
   chain: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -12655,6 +12804,16 @@ export type Query = {
   crowd_pooling_voteList?: Maybe<
     Array<Maybe<Crowd_PoolingCrowdpoolingVoteList>>
   >;
+  /** 获取所有池子列表 */
+  curve_stableswap_ng_getAllPools?: Maybe<Curve_Stableswap_NgListInfo>;
+  /** 获取我的流动性列表 */
+  curve_stableswap_ng_getMyLiquidity?: Maybe<Curve_Stableswap_NgListInfo>;
+  /** 获取池子详情信息 */
+  curve_stableswap_ng_getPoolInfo?: Maybe<Curve_Stableswap_NgPool>;
+  /** 获取池子流动性操作历史列表 */
+  curve_stableswap_ng_getPoolLiquidityHistory?: Maybe<Curve_Stableswap_NgLiquidityHistoryListInfo>;
+  /** 获取池子交易信息列表 */
+  curve_stableswap_ng_getPoolSwapInfo?: Maybe<Curve_Stableswap_NgSwapListInfo>;
   /** 资产每日收益折线图 */
   d3mm_getAssetDailyInterests: Array<Maybe<D3mmAssetDailyInterest>>;
   /** 资产详情信息, 如果资产不存在则返回null */
@@ -12873,6 +13032,8 @@ export type Query = {
   mining_list?: Maybe<MiningMiningListInfo>;
   mintHistories: Array<MintHistory>;
   mintHistory?: Maybe<MintHistory>;
+  native_signer_deposit?: Maybe<Native_SignersignatureResult>;
+  native_signer_redeem?: Maybe<Native_SignersignatureResult>;
   nft?: Maybe<Nft>;
   nftCollateralVault?: Maybe<NftCollateralVault>;
   nftCollateralVaults: Array<NftCollateralVault>;
@@ -12974,6 +13135,9 @@ export type Query = {
   swap?: Maybe<Swap>;
   swaps: Array<Swap>;
   third_party_token_list?: Maybe<Array<Maybe<Third_Party_TokenList>>>;
+  third_party_token_zetachain_list?: Maybe<
+    Array<Maybe<Third_Party_Token_ZetachainList>>
+  >;
   tick?: Maybe<Tick>;
   ticks: Array<Tick>;
   token?: Maybe<Token>;
@@ -13588,6 +13752,26 @@ export type QueryCrowd_Pooling_VoteArgs = {
 
 export type QueryCrowd_Pooling_VoteListArgs = {
   where?: InputMaybe<Crowd_PoolingcrowdpoolingVoteListFilter>;
+};
+
+export type QueryCurve_Stableswap_Ng_GetAllPoolsArgs = {
+  where?: InputMaybe<Curve_Stableswap_Nglist_Filter>;
+};
+
+export type QueryCurve_Stableswap_Ng_GetMyLiquidityArgs = {
+  where?: InputMaybe<Curve_Stableswap_Nglist_Filter>;
+};
+
+export type QueryCurve_Stableswap_Ng_GetPoolInfoArgs = {
+  where?: InputMaybe<Curve_Stableswap_Ngpool_Info_Filter>;
+};
+
+export type QueryCurve_Stableswap_Ng_GetPoolLiquidityHistoryArgs = {
+  where?: InputMaybe<Curve_Stableswap_Ngpool_Info_Filter>;
+};
+
+export type QueryCurve_Stableswap_Ng_GetPoolSwapInfoArgs = {
+  where?: InputMaybe<Curve_Stableswap_Ngpool_Info_Filter>;
 };
 
 export type QueryD3mm_GetAssetDailyInterestsArgs = {
@@ -14372,6 +14556,14 @@ export type QueryMintHistoryArgs = {
   where?: InputMaybe<MintHistory_Filter>;
 };
 
+export type QueryNative_Signer_DepositArgs = {
+  data?: InputMaybe<Native_SignerdepositData>;
+};
+
+export type QueryNative_Signer_RedeemArgs = {
+  data?: InputMaybe<Native_SignerredeemData>;
+};
+
 export type QueryNftArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
@@ -14876,6 +15068,10 @@ export type QuerySwapsArgs = {
 
 export type QueryThird_Party_Token_ListArgs = {
   data?: InputMaybe<Third_Party_TokenlistData>;
+};
+
+export type QueryThird_Party_Token_Zetachain_ListArgs = {
+  data?: InputMaybe<Third_Party_Token_ZetachainlistData>;
 };
 
 export type QueryTickArgs = {
@@ -17117,6 +17313,22 @@ export type Third_Party_TokenList = {
   logoURI?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   symbol?: Maybe<Scalars['String']['output']>;
+};
+
+export type Third_Party_Token_ZetachainList = {
+  address?: Maybe<Scalars['String']['output']>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  decimals?: Maybe<Scalars['Int']['output']>;
+  from?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  logoURI?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  symbol?: Maybe<Scalars['String']['output']>;
+};
+
+export type Third_Party_Token_ZetachainlistData = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  fromNames?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Third_Party_TokenlistData = {
@@ -21438,6 +21650,251 @@ export type TicksQuery = {
   }>;
 };
 
+export type Curve_Stableswap_Ng_GetAllPoolsQueryVariables = Exact<{
+  where?: InputMaybe<Curve_Stableswap_Nglist_Filter>;
+}>;
+
+export type Curve_Stableswap_Ng_GetAllPoolsQuery = {
+  curve_stableswap_ng_getAllPools?: {
+    chainId?: number | null;
+    user?: string | null;
+    currentPage?: number | null;
+    pageSize?: number | null;
+    totalCount?: number | null;
+    lqList?: Array<{
+      id?: string | null;
+      isMyLiquidity?: boolean | null;
+      pool?: {
+        id: string;
+        address: string;
+        name: string;
+        apy: any;
+        tvl: any;
+        volume: any;
+        traderCount: any;
+        fees: any;
+        dailyVolumeUsd: any;
+        liquidityUtilization: any;
+        fee: any;
+        daoFee: any;
+        virtualPrice: any;
+        poolType: string;
+        a: any;
+        offpegFeeMultiplier: any;
+        coins: Array<{
+          id: string;
+          address: string;
+          name: string;
+          symbol: string;
+          decimals: number;
+          logoImg?: string | null;
+        }>;
+        reserves?: Array<{
+          amount: any;
+          ratio: any;
+          token: {
+            id: string;
+            address: string;
+            name: string;
+            symbol: string;
+            decimals: number;
+            logoImg?: string | null;
+          };
+        } | null> | null;
+      } | null;
+      liquidityPositions?: Array<{
+        id?: string | null;
+        liquidityTokenBalance?: string | null;
+        lpTokens?: Array<{
+          id: string;
+          address: string;
+          name: string;
+          symbol: string;
+          decimals: number;
+          amount: any;
+        } | null> | null;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+};
+
+export type Curve_Stableswap_Ng_GetMyLiquidityQueryVariables = Exact<{
+  where?: InputMaybe<Curve_Stableswap_Nglist_Filter>;
+}>;
+
+export type Curve_Stableswap_Ng_GetMyLiquidityQuery = {
+  curve_stableswap_ng_getMyLiquidity?: {
+    chainId?: number | null;
+    user?: string | null;
+    currentPage?: number | null;
+    pageSize?: number | null;
+    totalCount?: number | null;
+    lqList?: Array<{
+      id?: string | null;
+      isMyLiquidity?: boolean | null;
+      pool?: {
+        id: string;
+        address: string;
+        name: string;
+        apy: any;
+        tvl: any;
+        volume: any;
+        traderCount: any;
+        fees: any;
+        dailyVolumeUsd: any;
+        liquidityUtilization: any;
+        fee: any;
+        daoFee: any;
+        virtualPrice: any;
+        poolType: string;
+        a: any;
+        offpegFeeMultiplier: any;
+        coins: Array<{
+          id: string;
+          address: string;
+          name: string;
+          symbol: string;
+          decimals: number;
+          logoImg?: string | null;
+        }>;
+        reserves?: Array<{
+          amount: any;
+          ratio: any;
+          token: {
+            id: string;
+            address: string;
+            name: string;
+            symbol: string;
+            decimals: number;
+            logoImg?: string | null;
+          };
+        } | null> | null;
+      } | null;
+      liquidityPositions?: Array<{
+        id?: string | null;
+        liquidityTokenBalance?: string | null;
+        lpTokens?: Array<{
+          id: string;
+          address: string;
+          name: string;
+          symbol: string;
+          decimals: number;
+          amount: any;
+        } | null> | null;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+};
+
+export type Curve_Stableswap_Ng_GetPoolInfoQueryVariables = Exact<{
+  where?: InputMaybe<Curve_Stableswap_Ngpool_Info_Filter>;
+}>;
+
+export type Curve_Stableswap_Ng_GetPoolInfoQuery = {
+  curve_stableswap_ng_getPoolInfo?: {
+    id: string;
+    address: string;
+    name: string;
+    apy: any;
+    tvl: any;
+    volume: any;
+    traderCount: any;
+    fees: any;
+    dailyVolumeUsd: any;
+    liquidityUtilization: any;
+    fee: any;
+    daoFee: any;
+    virtualPrice: any;
+    poolType: string;
+    a: any;
+    offpegFeeMultiplier: any;
+    coins: Array<{
+      id: string;
+      address: string;
+      name: string;
+      symbol: string;
+      decimals: number;
+      logoImg?: string | null;
+    }>;
+    reserves?: Array<{
+      amount: any;
+      ratio: any;
+      token: {
+        id: string;
+        address: string;
+        name: string;
+        symbol: string;
+        decimals: number;
+        logoImg?: string | null;
+      };
+    } | null> | null;
+  } | null;
+};
+
+export type Curve_Stableswap_Ng_GetPoolSwapInfoQueryVariables = Exact<{
+  where?: InputMaybe<Curve_Stableswap_Ngpool_Info_Filter>;
+}>;
+
+export type Curve_Stableswap_Ng_GetPoolSwapInfoQuery = {
+  curve_stableswap_ng_getPoolSwapInfo?: {
+    currentPage?: number | null;
+    pageSize?: number | null;
+    totalCount?: number | null;
+    swaps?: Array<{
+      id: string;
+      time: any;
+      user: string;
+      paidAmount: any;
+      receivedAmount: any;
+      paidToken: {
+        id: string;
+        address: string;
+        name: string;
+        symbol: string;
+        decimals: number;
+        logoImg?: string | null;
+      };
+      receivedToken: {
+        id: string;
+        address: string;
+        name: string;
+        symbol: string;
+        decimals: number;
+        logoImg?: string | null;
+      };
+    }> | null;
+  } | null;
+};
+
+export type Curve_Stableswap_Ng_GetPoolLiquidityHistoryQueryVariables = Exact<{
+  where?: InputMaybe<Curve_Stableswap_Ngpool_Info_Filter>;
+}>;
+
+export type Curve_Stableswap_Ng_GetPoolLiquidityHistoryQuery = {
+  curve_stableswap_ng_getPoolLiquidityHistory?: {
+    currentPage?: number | null;
+    pageSize?: number | null;
+    totalCount?: number | null;
+    liquidityHistories?: Array<{
+      id: string;
+      time: any;
+      user: string;
+      action: string;
+      assets?: Array<{
+        amount: any;
+        token: {
+          id: string;
+          address: string;
+          name: string;
+          symbol: string;
+          decimals: number;
+          logoImg?: string | null;
+        };
+      }> | null;
+    }> | null;
+  } | null;
+};
+
 export type FetchMiningListQueryVariables = Exact<{
   where?: InputMaybe<Miningmining_List_Filter>;
 }>;
@@ -22446,6 +22903,254 @@ export const TicksDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<TicksQuery, TicksQueryVariables>;
+export const Curve_Stableswap_Ng_GetAllPoolsDocument = new TypedDocumentString(`
+    query Curve_stableswap_ng_getAllPools($where: Curve_stableswap_nglist_filter) {
+  curve_stableswap_ng_getAllPools(where: $where) {
+    chainId
+    user
+    currentPage
+    pageSize
+    totalCount
+    lqList {
+      id
+      isMyLiquidity
+      pool {
+        id
+        address
+        name
+        coins {
+          id
+          address
+          name
+          symbol
+          decimals
+          logoImg
+        }
+        apy
+        tvl
+        volume
+        traderCount
+        fees
+        reserves {
+          token {
+            id
+            address
+            name
+            symbol
+            decimals
+            logoImg
+          }
+          amount
+          ratio
+        }
+        dailyVolumeUsd
+        liquidityUtilization
+        fee
+        daoFee
+        virtualPrice
+        poolType
+        a
+        offpegFeeMultiplier
+      }
+      liquidityPositions {
+        id
+        liquidityTokenBalance
+        lpTokens {
+          id
+          address
+          name
+          symbol
+          decimals
+          amount
+        }
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  Curve_Stableswap_Ng_GetAllPoolsQuery,
+  Curve_Stableswap_Ng_GetAllPoolsQueryVariables
+>;
+export const Curve_Stableswap_Ng_GetMyLiquidityDocument =
+  new TypedDocumentString(`
+    query Curve_stableswap_ng_getMyLiquidity($where: Curve_stableswap_nglist_filter) {
+  curve_stableswap_ng_getMyLiquidity(where: $where) {
+    chainId
+    user
+    currentPage
+    pageSize
+    totalCount
+    lqList {
+      id
+      isMyLiquidity
+      pool {
+        id
+        address
+        name
+        coins {
+          id
+          address
+          name
+          symbol
+          decimals
+          logoImg
+        }
+        apy
+        tvl
+        volume
+        traderCount
+        fees
+        reserves {
+          token {
+            id
+            address
+            name
+            symbol
+            decimals
+            logoImg
+          }
+          amount
+          ratio
+        }
+        dailyVolumeUsd
+        liquidityUtilization
+        fee
+        daoFee
+        virtualPrice
+        poolType
+        a
+        offpegFeeMultiplier
+      }
+      liquidityPositions {
+        id
+        liquidityTokenBalance
+        lpTokens {
+          id
+          address
+          name
+          symbol
+          decimals
+          amount
+        }
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+    Curve_Stableswap_Ng_GetMyLiquidityQuery,
+    Curve_Stableswap_Ng_GetMyLiquidityQueryVariables
+  >;
+export const Curve_Stableswap_Ng_GetPoolInfoDocument = new TypedDocumentString(`
+    query Curve_stableswap_ng_getPoolInfo($where: Curve_stableswap_ngpool_info_filter) {
+  curve_stableswap_ng_getPoolInfo(where: $where) {
+    id
+    address
+    name
+    coins {
+      id
+      address
+      name
+      symbol
+      decimals
+      logoImg
+    }
+    apy
+    tvl
+    volume
+    traderCount
+    fees
+    reserves {
+      token {
+        id
+        address
+        name
+        symbol
+        decimals
+        logoImg
+      }
+      amount
+      ratio
+    }
+    dailyVolumeUsd
+    liquidityUtilization
+    fee
+    daoFee
+    virtualPrice
+    poolType
+    a
+    offpegFeeMultiplier
+  }
+}
+    `) as unknown as TypedDocumentString<
+  Curve_Stableswap_Ng_GetPoolInfoQuery,
+  Curve_Stableswap_Ng_GetPoolInfoQueryVariables
+>;
+export const Curve_Stableswap_Ng_GetPoolSwapInfoDocument =
+  new TypedDocumentString(`
+    query Curve_stableswap_ng_getPoolSwapInfo($where: Curve_stableswap_ngpool_info_filter) {
+  curve_stableswap_ng_getPoolSwapInfo(where: $where) {
+    currentPage
+    pageSize
+    totalCount
+    swaps {
+      id
+      time
+      user
+      paidAmount
+      paidToken {
+        id
+        address
+        name
+        symbol
+        decimals
+        logoImg
+      }
+      receivedAmount
+      receivedToken {
+        id
+        address
+        name
+        symbol
+        decimals
+        logoImg
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+    Curve_Stableswap_Ng_GetPoolSwapInfoQuery,
+    Curve_Stableswap_Ng_GetPoolSwapInfoQueryVariables
+  >;
+export const Curve_Stableswap_Ng_GetPoolLiquidityHistoryDocument =
+  new TypedDocumentString(`
+    query Curve_stableswap_ng_getPoolLiquidityHistory($where: Curve_stableswap_ngpool_info_filter) {
+  curve_stableswap_ng_getPoolLiquidityHistory(where: $where) {
+    currentPage
+    pageSize
+    totalCount
+    liquidityHistories {
+      id
+      time
+      user
+      action
+      assets {
+        token {
+          id
+          address
+          name
+          symbol
+          decimals
+          logoImg
+        }
+        amount
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+    Curve_Stableswap_Ng_GetPoolLiquidityHistoryQuery,
+    Curve_Stableswap_Ng_GetPoolLiquidityHistoryQueryVariables
+  >;
 export const FetchMiningListDocument = new TypedDocumentString(`
     query FetchMiningList($where: Miningmining_list_filter) {
   mining_list(where: $where) {

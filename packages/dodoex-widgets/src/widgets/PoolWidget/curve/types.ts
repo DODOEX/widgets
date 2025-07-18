@@ -22,6 +22,8 @@ export type CurvePoolT = {
   weeklyApy: string | null;
   tvl: string | null;
   volume: string | null;
+
+  lpTokenBalance: string | null;
 };
 
 export type OperateCurvePoolT = {

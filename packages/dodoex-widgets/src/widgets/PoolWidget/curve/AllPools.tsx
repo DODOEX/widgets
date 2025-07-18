@@ -1,4 +1,4 @@
-import { ChainId, PoolApi } from '@dodoex/api';
+import { ChainId, CurveApi } from '@dodoex/api';
 import { Box, Button, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
@@ -21,29 +21,27 @@ import {
   formatTokenAmountNumber,
 } from '../../../utils';
 import AddingOrRemovingBtn from '../PoolList/components/AddingOrRemovingBtn';
-import FilterAddressTags from '../PoolList/components/FilterAddressTags';
 import FilterTokenTags from '../PoolList/components/FilterTokenTags';
 import GoPoolDetailBtn from '../PoolList/components/GoPoolDetailBtn';
 import LiquidityTable from '../PoolList/components/LiquidityTable';
 import LoadingCard from '../PoolList/components/LoadingCard';
 import TokenAndPoolFilter from '../PoolList/components/TokenAndPoolFilter';
-import TokenListPoolItem from '../PoolList/components/TokenListPoolItem';
-import {
-  TokenAndPoolFilterUserOptions,
-  usePoolListFilterTokenAndPool,
-} from '../PoolList/hooks/usePoolListFilterTokenAndPool';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
-import { FetchLiquidityListLqList } from '../utils';
 import { ApyTooltip } from './components/ApyTooltip';
 import { CoinsLogoList } from './components/CoinsLogoList';
+import FilterAddressTags from './components/FilterAddressTags';
+import TokenListPoolItem from './components/TokenListPoolItem';
+import { usePoolListFilterTokenAndPool } from './hooks/usePoolListFilterTokenAndPool';
 import { CurvePoolT, OperateCurvePoolT } from './types';
-import { mockCurvePoolList } from './utils';
+import { convertRawPoolListToCurvePoolListT } from './utils';
 
 function CardList({
   poolList,
+  isMyPool,
   setOperateCurvePool,
 }: {
   poolList: CurvePoolT[];
+  isMyPool: boolean;
   setOperateCurvePool: React.Dispatch<
     React.SetStateAction<OperateCurvePoolT | null>
   >;
@@ -175,6 +173,7 @@ function CardList({
                   backgroundColor: theme.palette.border.main,
                 }}
               />
+
               <Box
                 sx={{
                   flexBasis: '100%',
@@ -187,10 +186,23 @@ function CardList({
                     typography: 'h5',
                   }}
                 >
-                  $
-                  {pool.volume
-                    ? formatExponentialNotation(new BigNumber(pool.volume))
-                    : '-'}
+                  {isMyPool ? (
+                    pool.lpTokenBalance ? (
+                      formatTokenAmountNumber({
+                        input: pool.lpTokenBalance,
+                        decimals: pool.decimals,
+                      })
+                    ) : (
+                      '-'
+                    )
+                  ) : (
+                    <>
+                      $
+                      {pool.volume
+                        ? formatExponentialNotation(new BigNumber(pool.volume))
+                        : '-'}
+                    </>
+                  )}
                 </Box>
                 <Box
                   sx={{
@@ -198,7 +210,7 @@ function CardList({
                     color: 'text.secondary',
                   }}
                 >
-                  <Trans>Volume </Trans>
+                  {isMyPool ? 'My LP tokens' : 'Volume'}
                 </Box>
               </Box>
             </Box>
@@ -211,6 +223,23 @@ function CardList({
                 gap: '8px',
               }}
             >
+              {isMyPool && (
+                <Button
+                  fullWidth
+                  variant={Button.Variant.outlined}
+                  size={Button.Size.small}
+                  onClick={(evt) => {
+                    evt.stopPropagation();
+                    setOperateCurvePool({
+                      pool: pool,
+                      type: OperateTab.Remove,
+                    });
+                  }}
+                >
+                  <Trans>Remove</Trans>
+                </Button>
+              )}
+
               <Button
                 fullWidth
                 size={Button.Size.small}
@@ -238,7 +267,8 @@ function CardList({
 }
 
 function TableList({
-  poolList = mockCurvePoolList,
+  poolList,
+  isMyPool,
   loading,
   operateCurvePool,
   setOperateCurvePool,
@@ -247,6 +277,7 @@ function TableList({
   loadMoreLoading,
 }: {
   poolList: CurvePoolT[];
+  isMyPool: boolean;
   loading: boolean;
   operateCurvePool: OperateCurvePoolT | null;
   setOperateCurvePool: React.Dispatch<
@@ -272,11 +303,11 @@ function TableList({
           <Box component="th">Assets</Box>
           <Box component="th">APY</Box>
           <Box component="th">TVL</Box>
-          <Box component="th">Volume</Box>
+          <Box component="th">{isMyPool ? 'My LP tokens' : 'Volume'}</Box>
           <Box
             component="th"
             sx={{
-              width: 155,
+              width: isMyPool ? 249 : 155,
             }}
           ></Box>
         </Box>
@@ -369,21 +400,41 @@ function TableList({
                 </Box>
               </Box>
               <Box component="td">
-                <Box
-                  sx={{
-                    typography: 'body2',
-                    fontWeight: 600,
-                  }}
-                  title={`$${formatTokenAmountNumber({
-                    input: pool.volume,
-                    decimals: 2,
-                  })}`}
-                >
-                  $
-                  {pool.volume
-                    ? formatExponentialNotation(new BigNumber(pool.volume))
-                    : '-'}
-                </Box>
+                {isMyPool ? (
+                  <Box
+                    sx={{
+                      typography: 'body2',
+                      fontWeight: 600,
+                    }}
+                    title={`$${formatTokenAmountNumber({
+                      input: pool.lpTokenBalance,
+                      decimals: 2,
+                    })}`}
+                  >
+                    {pool.lpTokenBalance
+                      ? formatTokenAmountNumber({
+                          input: pool.lpTokenBalance,
+                          decimals: pool.decimals,
+                        })
+                      : '-'}
+                  </Box>
+                ) : (
+                  <Box
+                    sx={{
+                      typography: 'body2',
+                      fontWeight: 600,
+                    }}
+                    title={`$${formatTokenAmountNumber({
+                      input: pool.volume,
+                      decimals: 2,
+                    })}`}
+                  >
+                    $
+                    {pool.volume
+                      ? formatExponentialNotation(new BigNumber(pool.volume))
+                      : '-'}
+                  </Box>
+                )}
               </Box>
               <Box component="td">
                 <Box
@@ -406,21 +457,41 @@ function TableList({
                       onClick={() => setOperateCurvePool(null)}
                     />
                   ) : (
-                    <Button
-                      size={Button.Size.small}
-                      onClick={() => {
-                        setOperateCurvePool({
-                          pool,
-                          type: OperateTab.Add,
-                        });
-                      }}
-                      sx={{
-                        py: 0,
-                        height: 32,
-                      }}
-                    >
-                      {t`Add`}
-                    </Button>
+                    <>
+                      {isMyPool && (
+                        <Button
+                          variant={Button.Variant.second}
+                          size={Button.Size.small}
+                          onClick={() => {
+                            setOperateCurvePool({
+                              pool,
+                              type: OperateTab.Remove,
+                            });
+                          }}
+                          sx={{
+                            py: 0,
+                            height: 32,
+                          }}
+                        >
+                          {t`Remove`}
+                        </Button>
+                      )}
+                      <Button
+                        size={Button.Size.small}
+                        onClick={() => {
+                          setOperateCurvePool({
+                            pool,
+                            type: OperateTab.Add,
+                          });
+                        }}
+                        sx={{
+                          py: 0,
+                          height: 32,
+                        }}
+                      >
+                        {t`Add`}
+                      </Button>
+                    </>
                   )}
                 </Box>
               </Box>
@@ -433,25 +504,25 @@ function TableList({
 }
 
 export interface AllPoolsProps {
+  account?: string;
   scrollParentRef: React.MutableRefObject<HTMLDivElement | null>;
-  filterChainIds?: ChainId[];
   activeChainId: ChainId | undefined;
   operateCurvePool: OperateCurvePoolT | null;
   setOperateCurvePool: React.Dispatch<
     React.SetStateAction<OperateCurvePoolT | null>
   >;
-  tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
   children?: React.ReactNode;
+  isMyPool?: boolean;
 }
 
 export const AllPools = ({
+  account,
   scrollParentRef,
-  filterChainIds,
   activeChainId,
   operateCurvePool,
   setOperateCurvePool,
   children,
-  tokenAndPoolFilter,
+  isMyPool = false,
 }: AllPoolsProps) => {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
@@ -461,8 +532,7 @@ export const AllPools = ({
 
   const {
     filterTokens,
-    filterASymbol,
-    filterBSymbol,
+
     filterAddressLqList,
 
     handleDeleteToken,
@@ -472,57 +542,134 @@ export const AllPools = ({
 
   const defaultQueryFilter = useMemo(() => {
     return {
-      chainIds: filterChainIds,
+      chainId: activeChainId,
       pageSize: isMobile ? 4 : 8,
+      order: {
+        orderBy: 'tvl',
+        orderDirection: 'desc',
+      },
+      user: isMyPool ? account?.toLowerCase() : null,
       filterState: {
-        viewOnlyOwn: false,
-        filterTypes: ['CURVE'],
+        // poolAddress: null,
+        // poolType: null,
+        tokenAddress: filterTokens[0]?.address.toLowerCase() ?? null,
       },
     };
-  }, [filterChainIds, isMobile]);
+  }, [activeChainId, isMobile, isMyPool, account, filterTokens]);
 
   const query = graphQLRequests.getInfiniteQuery(
-    PoolApi.graphql.fetchLiquidityList,
+    CurveApi.graphql.curve_stableswap_ng_getAllPools,
     'currentPage',
     {
       where: {
         ...defaultQueryFilter,
-        filterState: {
-          filterASymbol,
-          filterBSymbol,
-          ...defaultQueryFilter.filterState,
-        },
       },
     },
   );
+
+  const queryMyPool = graphQLRequests.getInfiniteQuery(
+    CurveApi.graphql.curve_stableswap_ng_getMyLiquidity,
+    'currentPage',
+    {
+      where: {
+        ...defaultQueryFilter,
+      },
+    },
+  );
+
   const fetchResult = useInfiniteQuery({
     ...query,
+    enabled: !isMyPool,
     initialPageParam: 1,
     getNextPageParam: (item) => {
-      const { currentPage, totalCount, pageSize } = item.liquidity_list ?? {};
-      if (!currentPage || !totalCount || !pageSize) return null;
+      if (!item.curve_stableswap_ng_getAllPools) {
+        return null;
+      }
+
+      const { currentPage, totalCount, pageSize } =
+        item.curve_stableswap_ng_getAllPools;
+      if (!currentPage || !totalCount || !pageSize) {
+        return null;
+      }
+
       let totalPage = Math.floor(totalCount / pageSize);
       if (totalCount % pageSize) {
         totalPage += 1;
       }
-      if (currentPage >= totalPage) return null;
+      if (currentPage >= totalPage) {
+        return null;
+      }
       return currentPage + 1;
     },
   });
 
-  let lqList = [] as FetchLiquidityListLqList;
-  const hasFilterAddress = !!filterAddressLqList?.length;
-  if (hasFilterAddress) {
-    lqList = [...filterAddressLqList];
-  } else {
-    fetchResult.data?.pages.forEach((page) => {
-      page.liquidity_list?.lqList?.forEach((lq) => {
-        lqList?.push(lq);
-      });
-    });
-  }
+  const fetchResultMyPool = useInfiniteQuery({
+    ...queryMyPool,
+    enabled: isMyPool && account != null,
+    initialPageParam: 1,
+    getNextPageParam: (item) => {
+      if (!item.curve_stableswap_ng_getMyLiquidity) {
+        return null;
+      }
 
-  const hasMore = fetchResult.hasNextPage && !hasFilterAddress;
+      const { currentPage, totalCount, pageSize } =
+        item.curve_stableswap_ng_getMyLiquidity;
+      if (!currentPage || !totalCount || !pageSize) {
+        return null;
+      }
+
+      let totalPage = Math.floor(totalCount / pageSize);
+      if (totalCount % pageSize) {
+        totalPage += 1;
+      }
+      if (currentPage >= totalPage) {
+        return null;
+      }
+      return currentPage + 1;
+    },
+  });
+
+  const hasFilterAddress = !!filterAddressLqList?.length;
+
+  const poolList = useMemo(() => {
+    let lqList: CurvePoolT[] = [];
+    if (hasFilterAddress) {
+      lqList = [...filterAddressLqList];
+    } else if (!isMyPool) {
+      fetchResult.data?.pages.forEach((page) => {
+        const list = convertRawPoolListToCurvePoolListT(
+          page.curve_stableswap_ng_getAllPools?.lqList,
+          activeChainId,
+        );
+
+        lqList = [...lqList, ...list];
+      });
+    } else {
+      fetchResultMyPool.data?.pages.forEach((page) => {
+        const list = convertRawPoolListToCurvePoolListT(
+          page.curve_stableswap_ng_getMyLiquidity?.lqList,
+          activeChainId,
+        );
+
+        lqList = [...lqList, ...list];
+      });
+    }
+
+    return lqList;
+  }, [
+    hasFilterAddress,
+    isMyPool,
+    filterAddressLqList,
+    fetchResult.data?.pages,
+    activeChainId,
+    fetchResultMyPool.data?.pages,
+  ]);
+
+  const hasMore =
+    (isMyPool ? fetchResultMyPool.hasNextPage : fetchResult.hasNextPage) &&
+    !hasFilterAddress;
+
+  const fetchResultStatus = isMyPool ? fetchResultMyPool : fetchResult;
 
   return (
     <>
@@ -574,41 +721,60 @@ export const AllPools = ({
                   }),
             }}
           >
-            {tokenAndPoolFilter?.element ?? (
-              <TokenAndPoolFilter
-                value={filterTokens}
-                onChange={handleChangeFilterTokens}
-                searchAddress={async (address, onClose) => {
-                  const query = graphQLRequests.getInfiniteQuery(
-                    PoolApi.graphql.fetchLiquidityList,
-                    'currentPage',
-                    {
-                      where: {
-                        ...defaultQueryFilter,
-                        filterState: {
-                          address,
-                          ...defaultQueryFilter.filterState,
-                        },
+            <TokenAndPoolFilter
+              value={filterTokens}
+              onChange={handleChangeFilterTokens}
+              searchAddress={async (address, onClose) => {
+                const query = graphQLRequests.getInfiniteQuery(
+                  CurveApi.graphql.curve_stableswap_ng_getAllPools,
+                  'currentPage',
+                  {
+                    where: {
+                      ...defaultQueryFilter,
+                      filterState: {
+                        poolAddress: address.toLowerCase(),
                       },
                     },
+                  },
+                );
+                const result = await queryClient.fetchQuery(query);
+
+                const queryMyPool = graphQLRequests.getInfiniteQuery(
+                  CurveApi.graphql.curve_stableswap_ng_getMyLiquidity,
+                  'currentPage',
+                  {
+                    where: {
+                      ...defaultQueryFilter,
+                      filterState: {
+                        poolAddress: address.toLowerCase(),
+                      },
+                    },
+                  },
+                );
+                const resultMyPool = await queryClient.fetchQuery(queryMyPool);
+
+                const lqList = isMyPool
+                  ? resultMyPool.curve_stableswap_ng_getMyLiquidity?.lqList
+                  : result.curve_stableswap_ng_getAllPools?.lqList;
+
+                const list = convertRawPoolListToCurvePoolListT(
+                  lqList,
+                  activeChainId,
+                );
+                if (list?.length) {
+                  return (
+                    <TokenListPoolItem
+                      list={list}
+                      onClick={() => {
+                        handleChangeFilterAddress(list);
+                        onClose();
+                      }}
+                    />
                   );
-                  const result = await queryClient.fetchQuery(query);
-                  const lqList = result.liquidity_list?.lqList;
-                  if (lqList?.length) {
-                    return (
-                      <TokenListPoolItem
-                        list={lqList}
-                        onClick={() => {
-                          handleChangeFilterAddress(lqList);
-                          onClose();
-                        }}
-                      />
-                    );
-                  }
-                  return null;
-                }}
-              />
-            )}
+                }
+                return null;
+              }}
+            />
           </Box>
 
           {/* filter tag */}
@@ -623,9 +789,7 @@ export const AllPools = ({
                   lqList={filterAddressLqList}
                   onDeleteTag={() => handleChangeFilterAddress([])}
                 />
-              ) : (
-                ''
-              )}
+              ) : null}
               <FilterTokenTags
                 tags={filterTokens}
                 onDeleteTag={handleDeleteToken}
@@ -641,8 +805,11 @@ export const AllPools = ({
           hasMore={hasMore}
           threshold={300}
           loadMore={debounce(() => {
-            if (fetchResult.hasNextPage && !fetchResult.isFetching) {
-              fetchResult.fetchNextPage();
+            if (
+              fetchResultStatus.hasNextPage &&
+              !fetchResultStatus.isFetching
+            ) {
+              fetchResultStatus.fetchNextPage();
             }
           }, 500)}
           useWindow={false}
@@ -657,33 +824,28 @@ export const AllPools = ({
           }
         >
           <DataCardGroup>
-            {fetchResult.isLoading ? <LoadingCard /> : ''}
-            {!fetchResult.isLoading &&
-              !lqList?.length &&
-              !fetchResult.error && (
+            {fetchResultStatus.isLoading ? <LoadingCard /> : ''}
+            {!fetchResultStatus.isLoading &&
+              !poolList?.length &&
+              !fetchResultStatus.error && (
                 <EmptyList
                   sx={{
                     mt: 40,
                   }}
-                  hasSearch={
-                    !!(
-                      (activeChainId && !onlyChainId) ||
-                      filterASymbol ||
-                      filterBSymbol
-                    )
-                  }
+                  hasSearch={!!(activeChainId && !onlyChainId)}
                 />
               )}
-            {!!fetchResult.error && (
+            {!!fetchResultStatus.error && (
               <FailedList
-                refresh={fetchResult.refetch}
+                refresh={fetchResultStatus.refetch}
                 sx={{
                   mt: 40,
                 }}
               />
             )}
             <CardList
-              poolList={mockCurvePoolList}
+              isMyPool={isMyPool}
+              poolList={poolList}
               setOperateCurvePool={setOperateCurvePool}
             />
           </DataCardGroup>
@@ -691,29 +853,29 @@ export const AllPools = ({
       ) : (
         <>
           <TableList
-            poolList={mockCurvePoolList}
-            loading={fetchResult.isLoading}
+            isMyPool={isMyPool}
+            poolList={poolList}
+            loading={fetchResultStatus.isLoading}
             operateCurvePool={operateCurvePool}
             setOperateCurvePool={setOperateCurvePool}
             hasMore={hasMore}
-            loadMoreLoading={fetchResult.isFetchingNextPage}
+            loadMoreLoading={fetchResultStatus.isFetchingNextPage}
             loadMore={() => {
-              if (fetchResult.hasNextPage && !fetchResult.isFetching) {
-                fetchResult.fetchNextPage();
+              if (
+                fetchResultStatus.hasNextPage &&
+                !fetchResultStatus.isFetching
+              ) {
+                fetchResultStatus.fetchNextPage();
               }
             }}
           />
           <CardStatus
-            loading={fetchResult.isLoading}
-            refetch={fetchResult.error ? fetchResult.refetch : undefined}
-            empty={!lqList?.length}
-            hasSearch={
-              !!(
-                (activeChainId && !onlyChainId) ||
-                filterASymbol ||
-                filterBSymbol
-              )
+            loading={fetchResultStatus.isLoading}
+            refetch={
+              fetchResultStatus.error ? fetchResultStatus.refetch : undefined
             }
+            empty={!poolList?.length}
+            hasSearch={!!(activeChainId && !onlyChainId)}
           />
         </>
       )}

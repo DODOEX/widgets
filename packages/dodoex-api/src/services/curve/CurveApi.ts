@@ -6,7 +6,13 @@ import ContractRequests, {
 } from '../../helper/ContractRequests';
 import { ABIName } from '../../helper/ContractRequests/abi/abiName';
 import { poolUtils } from '../pool/poolUtils';
-import { AllV3TicksDocument } from './queries';
+import {
+  curve_stableswap_ng_getAllPools,
+  curve_stableswap_ng_getMyLiquidity,
+  curve_stableswap_ng_getPoolInfo,
+  curve_stableswap_ng_getPoolLiquidityHistory,
+  curve_stableswap_ng_getPoolSwapInfo,
+} from './queries';
 
 interface TokenInfo {
   readonly chainId: ChainId;
@@ -36,7 +42,11 @@ export class CurveApi {
   }
 
   static graphql = {
-    AllV3TicksDocument,
+    curve_stableswap_ng_getAllPools,
+    curve_stableswap_ng_getMyLiquidity,
+    curve_stableswap_ng_getPoolInfo,
+    curve_stableswap_ng_getPoolSwapInfo,
+    curve_stableswap_ng_getPoolLiquidityHistory,
   };
 
   static utils = poolUtils;

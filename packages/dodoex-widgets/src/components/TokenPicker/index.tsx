@@ -96,11 +96,11 @@ export default function TokenPicker({
     if (visible && ref.current) {
       const resizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
-          if (entry.target === ref.current && chainListRef.current) {
+          if (entry.target === ref.current) {
             const height =
               entry.contentRect.height -
               48 -
-              chainListRef.current.offsetHeight -
+              (chainListRef.current?.offsetHeight ?? 0) -
               16;
             if (height > 0) {
               setFixedSizeHeight(height);

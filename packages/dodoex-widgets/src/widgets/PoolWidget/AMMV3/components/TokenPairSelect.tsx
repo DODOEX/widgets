@@ -1,28 +1,29 @@
+import { ChainId } from '@dodoex/api';
 import { Box, ButtonBase, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import { useState } from 'react';
 import { TokenPickerDialog } from '../../../../components/Swap/components/TokenCard/TokenPickerDialog';
 import TokenLogo from '../../../../components/TokenLogo';
-import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { TokenInfo } from '../../../../hooks/Token';
 import { Actions, StateProps, Types } from '../reducer';
 import { Currency } from '../sdks/sdk-core/entities/currency';
-import { ReactComponent as Arrow } from './arrow.svg';
 import { convertBackToTokenInfo } from '../utils';
+import { ReactComponent as Arrow } from './arrow.svg';
 
 function TokenPickSelect({
+  chainId,
   token,
   oppositeTokenAddress,
   dispatch,
   tokenSelectOnChange,
 }: {
+  chainId: ChainId;
   token: Maybe<Currency>;
   oppositeTokenAddress: string;
   dispatch: React.Dispatch<Actions>;
   tokenSelectOnChange: (value: TokenInfo) => void;
 }) {
   const theme = useTheme();
-  const { chainId } = useWalletInfo();
 
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
 
@@ -148,12 +149,14 @@ function TokenPickSelect({
 }
 
 export interface TokenPairSelectProps {
+  chainId: ChainId;
   baseToken: StateProps['baseToken'];
   quoteToken: StateProps['quoteToken'];
   dispatch: React.Dispatch<Actions>;
 }
 
 export const TokenPairSelect = ({
+  chainId,
   baseToken,
   quoteToken,
   dispatch,
@@ -173,6 +176,7 @@ export const TokenPairSelect = ({
       }}
     >
       <TokenPickSelect
+        chainId={chainId}
         token={baseToken}
         oppositeTokenAddress={quoteToken?.address ?? ''}
         dispatch={dispatch}
@@ -184,6 +188,7 @@ export const TokenPairSelect = ({
         }}
       />
       <TokenPickSelect
+        chainId={chainId}
         token={quoteToken}
         oppositeTokenAddress={baseToken?.address ?? ''}
         dispatch={dispatch}

@@ -1,3 +1,4 @@
+import { ChainId } from '@dodoex/api';
 import { t } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
 import JSBI from 'jsbi';
@@ -26,10 +27,12 @@ import { useSwapTaxes } from './useSwapTaxes';
 export function useV3DerivedMintInfo({
   state,
   existingPosition,
+  chainId,
 }: {
   state: StateProps;
   // override for existing position
   existingPosition?: Position;
+  chainId: ChainId;
 }): {
   pool?: Pool | null;
   poolState: PoolState;
@@ -57,7 +60,7 @@ export function useV3DerivedMintInfo({
   ticksAtLimit: { [bound in Bound]?: boolean | undefined };
   isTaxed: boolean;
 } {
-  const { account, chainId } = useWalletInfo();
+  const { account } = useWalletInfo();
 
   const {
     feeAmount,

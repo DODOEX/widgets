@@ -174,13 +174,13 @@ export function RootPage({
           supportAMMV3
           notSupportPMM={false}
           supportCurve
-          routerPage={{
-            type: PageType.CurvePoolDetail,
-            params: {
-              address: '0xDddfBCc76166d741c2dfa6b6a90769df398b9969',
-              chainId: ChainId.ZETACHAIN_TESTNET,
-            },
-          }}
+          // routerPage={{
+          //   type: PageType.CurvePoolDetail,
+          //   params: {
+          //     address: '0xDddfBCc76166d741c2dfa6b6a90769df398b9969',
+          //     chainId: ChainId.ZETACHAIN_TESTNET,
+          //   },
+          // }}
         >
           {children}
         </Widget>

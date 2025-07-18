@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import JSBI from 'jsbi';
 import { useEffect, useMemo, useState } from 'react';
 import { ThegraphKeyMap } from '../../../../constants/chains';
-import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import { useGraphQLRequests } from '../../../../hooks/useGraphQLRequests';
 import {
   Currency,
@@ -116,7 +115,7 @@ export function usePoolActiveLiquidity(
   currencyA: Currency | undefined,
   currencyB: Currency | undefined,
   feeAmount: FeeAmount | undefined,
-  chainId?: ChainId,
+  chainId: ChainId,
 ): {
   isLoading: boolean;
   error: any;
@@ -126,7 +125,6 @@ export function usePoolActiveLiquidity(
   sqrtPriceX96?: JSBI;
   data?: TickProcessed[];
 } {
-  const { chainId: defaultChainId } = useWalletInfo();
   const pool = usePool(currencyA, currencyB, feeAmount);
   const liquidity = pool[1]?.liquidity;
   const sqrtPriceX96 = pool[1]?.sqrtRatioX96;
@@ -142,7 +140,7 @@ export function usePoolActiveLiquidity(
     currencyA,
     currencyB,
     feeAmount,
-    chainId ?? defaultChainId,
+    chainId,
   );
 
   return useMemo(() => {

@@ -168,7 +168,7 @@ export const AMMV3PositionManage = ({
     invertPrice,
     ticksAtLimit,
     isTaxed,
-  } = useV3DerivedMintInfo({ state, existingPosition });
+  } = useV3DerivedMintInfo({ state, existingPosition, chainId });
 
   const {
     position: positionSDK,

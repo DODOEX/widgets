@@ -1,3 +1,4 @@
+import { ChainId } from '@dodoex/api';
 import { useCallback, useMemo } from 'react';
 import {
   TickProcessed,
@@ -11,15 +12,18 @@ export function useDensityChartData({
   currencyA,
   currencyB,
   feeAmount,
+  chainId,
 }: {
   currencyA?: Currency;
   currencyB?: Currency;
   feeAmount?: FeeAmount;
+  chainId: ChainId;
 }) {
   const { isLoading, error, data } = usePoolActiveLiquidity(
     currencyA,
     currencyB,
     feeAmount,
+    chainId,
   );
 
   const formatData = useCallback(() => {

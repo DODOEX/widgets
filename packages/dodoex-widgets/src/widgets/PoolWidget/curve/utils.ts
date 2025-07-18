@@ -1,4 +1,4 @@
-import { ChainId, CurveApi } from '@dodoex/api';
+import { ChainId, CurveApi, ExcludeNone } from '@dodoex/api';
 import { contractRequests } from '../../../constants/api';
 import { CurvePoolT } from './types';
 
@@ -59,5 +59,65 @@ export const mockCurvePoolList: CurvePoolT[] = [
     weeklyApy: '0.002',
     tvl: '1000000000000000000',
     volume: '1000000000000000000',
+    lpTokenBalance: '1000000000000000000',
   },
 ];
+
+export function convertRawPoolListToCurvePoolListT(
+  rawPoolList: ExcludeNone<
+    ReturnType<
+      Exclude<
+        (typeof CurveApi.graphql.curve_stableswap_ng_getAllPools)['__apiType'],
+        undefined
+      >
+    >['curve_stableswap_ng_getAllPools']
+  >['lqList'],
+  chainId: ChainId | undefined,
+): CurvePoolT[] {
+  if (!rawPoolList || !chainId) {
+    return [];
+  }
+
+  const curvePoolList: CurvePoolT[] = [];
+
+  for (const lqItem of rawPoolList) {
+    if (!lqItem?.pool) {
+      continue;
+    }
+
+    const pool = lqItem.pool;
+
+    // Convert coins to TokenInfo format
+    const coins =
+      pool.coins?.map((coin) => ({
+        chainId,
+        address: coin.address || coin.id || '',
+        name: coin.name || coin.symbol || '',
+        decimals: coin.decimals || 18,
+        symbol: coin.symbol || '',
+        logoURI: coin.logoImg || undefined,
+      })) || [];
+
+    // Create CurvePoolT object
+    const curvePool: CurvePoolT = {
+      chainId,
+      name: pool.name || '',
+      address: pool.address || pool.id || '',
+      symbol: coins.length > 0 ? coins.map((c) => c.symbol).join('.') : '',
+      decimals: 18, // Default decimals for LP token
+      fee: pool.fee?.toString() || '0',
+      coins: coins,
+      apy: pool.apy?.toString() || null,
+      dailyApy: null, // Not available in raw data
+      weeklyApy: null, // Not available in raw data
+      tvl: pool.tvl?.toString() || null,
+      volume: pool.volume?.toString() || null,
+      lpTokenBalance:
+        lqItem.liquidityPositions?.[0]?.liquidityTokenBalance || null,
+    };
+
+    curvePoolList.push(curvePool);
+  }
+
+  return curvePoolList;
+}

@@ -56,7 +56,8 @@ export default function AddLiquidityV3({
   handleGoBack: () => void;
   handleGoToPoolList: () => void;
 }) {
-  const { chainId, account } = useWalletInfo();
+  const { account, onlyChainId, defaultChainId } = useWalletInfo();
+  const chainId = onlyChainId ?? defaultChainId;
   const theme = useTheme();
   const submission = useSubmission();
   const { isMobile } = useWidgetDevice();
@@ -121,7 +122,7 @@ export default function AddLiquidityV3({
     invertPrice,
     ticksAtLimit,
     isTaxed,
-  } = useV3DerivedMintInfo({ state });
+  } = useV3DerivedMintInfo({ state, chainId });
 
   const formattedPrice = useMemo(() => {
     return (invertPrice ? price?.invert() : price)?.toSignificant();
@@ -382,6 +383,7 @@ export default function AddLiquidityV3({
               {t`Select pair`}
             </Box>
             <TokenPairSelect
+              chainId={chainId}
               baseToken={state.baseToken}
               quoteToken={state.quoteToken}
               dispatch={dispatch}
@@ -539,6 +541,7 @@ export default function AddLiquidityV3({
                 </Box>
               </Box>
               <LiquidityChartRangeInput
+                chainId={chainId}
                 currencyA={state.baseToken ?? undefined}
                 currencyB={state.quoteToken ?? undefined}
                 feeAmount={state.feeAmount}

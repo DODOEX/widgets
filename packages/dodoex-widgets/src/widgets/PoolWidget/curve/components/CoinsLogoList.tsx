@@ -17,8 +17,6 @@ export const CoinsLogoList = ({ pool, separate, wrap }: CoinsLogoListProps) => {
     return null;
   }
 
-  const coinsLength = pool.coins.length;
-
   // 限制最多8
   const displayCoins = pool.coins.slice(0, 8);
   const actualLength = displayCoins.length;
@@ -69,8 +67,7 @@ export const CoinsLogoList = ({ pool, separate, wrap }: CoinsLogoListProps) => {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent:
-              rowIndex === 1 && actualLength === 5 ? 'flex-start' : 'center',
+            justifyContent: 'flex-start',
             gap: separate ? 2 : 0,
             [theme.breakpoints.up('tablet')]: {
               gap: separate ? 4 : 0,

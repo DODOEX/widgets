@@ -1,10 +1,8 @@
+import { ChainId } from '@dodoex/api';
 import { Box, LoadingSkeleton } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { ReactNode, useCallback, useMemo } from 'react';
-import {
-  formatPercentageNumber,
-  formatTokenAmountNumber,
-} from '../../../../../utils';
+import { formatTokenAmountNumber } from '../../../../../utils';
 import { Currency, Price } from '../../sdks/sdk-core';
 import { FeeAmount } from '../../sdks/v3-sdk';
 import { Bound } from '../../types';
@@ -65,6 +63,7 @@ function LoadingBars() {
 }
 
 export default function LiquidityChartRangeInput({
+  chainId,
   currencyA,
   currencyB,
   feeAmount,
@@ -76,6 +75,7 @@ export default function LiquidityChartRangeInput({
   onRightRangeInput,
   interactive,
 }: {
+  chainId: ChainId;
   currencyA?: Currency;
   currencyB?: Currency;
   feeAmount?: FeeAmount;
@@ -96,6 +96,7 @@ export default function LiquidityChartRangeInput({
     currencyA,
     currencyB,
     feeAmount,
+    chainId,
   });
 
   const onBrushDomainChangeEnded = useCallback(
