@@ -47,6 +47,7 @@ export type {
   Cross_Chain_Swap_ZetachainorderCreateData,
   Cross_Chain_Swap_ZetachainrouteParams,
   Cross_Chain_Swap_ZetachaintransactionEncodeParams,
+  Curve_Stableswap_Ng_GetPoolInfoQuery,
 } from './gql/graphql';
 export { SwapApi } from './services/swap/SwapApi';
 export { SystemApi } from './services/system/SystemApi';

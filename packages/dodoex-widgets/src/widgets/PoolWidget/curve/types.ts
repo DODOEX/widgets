@@ -22,6 +22,23 @@ export type CurvePoolT = {
   weeklyApy: string | null;
   tvl: string | null;
   volume: string | null;
+  dailyVolumeUsd: string | null;
+  traderCount: string | null;
+  liquidityUtilization: string | null;
+  daoFee: string | null;
+  virtualPrice: string | null;
+  /**
+   * export const POOL_TYPE_PLAIN = "plain";
+export const POOL_TYPE_META = "meta";
+现在有两种池子类型
+11:44
+PlainPoolDeployed
+MetaPoolDeployed
+创建池的时候事件不同
+   */
+  poolType: 'plain' | 'meta';
+  a: string | null;
+  offpegFeeMultiplier: string | null;
 
   lpTokenBalance: string | null;
 };

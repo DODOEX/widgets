@@ -3,6 +3,12 @@ import { CurvePoolT } from '../types';
 import { QuestionTooltip } from '../../../../components/Tooltip';
 import { AddressWithLinkAndCopy } from '../../../../components/AddressWithLinkAndCopy';
 import TokenLogo from '../../../../components/TokenLogo';
+import BigNumber from 'bignumber.js';
+import {
+  formatExponentialNotation,
+  formatPercentageNumber,
+  formatTokenAmountNumber,
+} from '../../../../utils/formatter';
 
 export interface ParametersTableProps {
   poolDetail: CurvePoolT | undefined;
@@ -70,9 +76,18 @@ export const ParametersTable = ({ poolDetail }: ParametersTableProps) => {
         alignItems: 'stretch',
       }}
     >
-      <Item title="Daily USD volume">200.33M</Item>
+      <Item title="Daily USD volume">
+        {poolDetail?.dailyVolumeUsd
+          ? `$${formatExponentialNotation(new BigNumber(poolDetail?.dailyVolumeUsd || '0'))}`
+          : '-'}
+      </Item>
       <Item title="Liquidity utilization" tip="24h Volume/Liquidity ratio">
-        138.93%
+        {poolDetail?.liquidityUtilization
+          ? `${formatPercentageNumber({
+              input: new BigNumber(poolDetail?.liquidityUtilization || '0'),
+              showDecimals: 2,
+            })}`
+          : '-'}
       </Item>
 
       <Box
@@ -84,8 +99,23 @@ export const ParametersTable = ({ poolDetail }: ParametersTableProps) => {
         }}
       />
 
-      <Item title="Fee">0.02%</Item>
-      <Item title="DAO fee">0.02%</Item>
+      <Item title="Fee">
+        {poolDetail?.fee
+          ? `${formatPercentageNumber({
+              input: new BigNumber(poolDetail?.fee || '0'),
+              showDecimals: 2,
+            })}`
+          : '-'}
+      </Item>
+
+      <Item title="DAO fee">
+        {poolDetail?.daoFee
+          ? `${formatPercentageNumber({
+              input: new BigNumber(poolDetail?.daoFee || '0'),
+              showDecimals: 2,
+            })}`
+          : '-'}
+      </Item>
 
       <Box
         sx={{
@@ -100,7 +130,12 @@ export const ParametersTable = ({ poolDetail }: ParametersTableProps) => {
         title="Virtual price"
         tip="Measures pool growth; this is not a dollar value"
       >
-        1.00440296
+        {poolDetail?.virtualPrice
+          ? `${formatTokenAmountNumber({
+              input: new BigNumber(poolDetail?.virtualPrice || '0'),
+              decimals: 18,
+            })}`
+          : '-'}
       </Item>
 
       <Box
@@ -141,10 +176,16 @@ export const ParametersTable = ({ poolDetail }: ParametersTableProps) => {
         }}
       />
 
-      <Item title="Pool Type">Stableswap-NG</Item>
+      <Item title="Pool Type">
+        {poolDetail?.poolType === 'plain'
+          ? 'Stableswap-NG'
+          : poolDetail?.poolType === 'meta'
+            ? 'Metapool'
+            : '-'}
+      </Item>
       <Item title="Basepool">
         <AddressWithLinkAndCopy
-          address="0xDddfBCc76166d741c2dfa6b6a90769df398b9969"
+          address="0x"
           customChainId={poolDetail?.chainId}
           truncate
           showCopy
@@ -159,7 +200,7 @@ export const ParametersTable = ({ poolDetail }: ParametersTableProps) => {
       </Item>
       <Item title="Registry">
         <AddressWithLinkAndCopy
-          address="0xDddfBCc76166d741c2dfa6b6a90769df398b9969"
+          address="0x"
           customChainId={poolDetail?.chainId}
           truncate
           showCopy
@@ -196,37 +237,39 @@ export const ParametersTable = ({ poolDetail }: ParametersTableProps) => {
             gap: 12,
           }}
         >
-          {poolDetail?.coins.map((coin) => (
-            <Box
-              key={coin.address}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 4,
-              }}
-            >
-              <TokenLogo
-                address={coin.address}
-                width={16}
-                height={16}
-                chainId={poolDetail?.chainId}
-                url={undefined}
-                cross={false}
-                noShowChain
-                noBorder
-                marginRight={0}
-              />
-              <Box
-                sx={{
-                  typography: 'body1',
-                  fontWeight: 500,
-                  color: 'text.primary',
-                }}
-              >
-                {coin.symbol}(Standard)
-              </Box>
-            </Box>
-          ))}
+          {poolDetail
+            ? poolDetail.coins.map((coin) => (
+                <Box
+                  key={coin.address}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                >
+                  <TokenLogo
+                    address={coin.address}
+                    width={16}
+                    height={16}
+                    chainId={poolDetail?.chainId}
+                    url={undefined}
+                    cross={false}
+                    noShowChain
+                    noBorder
+                    marginRight={0}
+                  />
+                  <Box
+                    sx={{
+                      typography: 'body1',
+                      fontWeight: 500,
+                      color: 'text.primary',
+                    }}
+                  >
+                    {coin.symbol}(Standard)
+                  </Box>
+                </Box>
+              ))
+            : '-'}
         </Box>
       </Item>
       <Item
@@ -256,7 +299,7 @@ export const ParametersTable = ({ poolDetail }: ParametersTableProps) => {
                 color: 'text.primary',
               }}
             >
-              A:200
+              A:{poolDetail?.a ?? '-'}
             </Box>
 
             <QuestionTooltip title="Amplification coefficient chosen from fluctuation of prices around 1." />
@@ -267,7 +310,7 @@ export const ParametersTable = ({ poolDetail }: ParametersTableProps) => {
               color: 'text.primary',
             }}
           >
-            Off Peg Multiplier:5
+            Off Peg Multiplier:{poolDetail?.offpegFeeMultiplier ?? '-'}
           </Box>
         </Box>
       </Item>

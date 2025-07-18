@@ -715,6 +715,10 @@ msgstr "Canceled"
 msgid "The fee rate must be between 0.01% to 10%"
 msgstr "The fee rate must be between 0.01% to 10%"
 
+#: src/widgets/PoolWidget/curve/components/LiquidityProvidersTable.tsx:89
+msgid "Assets"
+msgstr "Assets"
+
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/components/GoBack.tsx:49
 msgid "Go back"
@@ -912,6 +916,8 @@ msgid "Stake tokens to receive mining rewards."
 msgstr "Stake tokens to receive mining rewards."
 
 #: src/components/DateTimePickerInput/components/MobileDateTimePicker.tsx:245
+#: src/widgets/PoolWidget/curve/components/LiquidityProvidersTable.tsx:83
+#: src/widgets/PoolWidget/curve/components/SwapsTable.tsx:96
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:165
 msgid "Time"
 msgstr "Time"
@@ -1264,6 +1270,7 @@ msgstr "Creator"
 msgid "Reward Rules"
 msgstr "Reward Rules"
 
+#: src/widgets/PoolWidget/curve/components/SwapsTable.tsx:99
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:168
 msgid "Trader"
 msgstr "Trader"
@@ -1514,6 +1521,10 @@ msgstr "Select pool by tokens"
 msgid "Asset"
 msgstr "Asset"
 
+#: src/widgets/PoolWidget/curve/components/LiquidityProvidersTable.tsx:86
+msgid "Action"
+msgstr "Action"
+
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:425
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:124
 msgid "Supply"
@@ -1640,6 +1651,7 @@ msgstr "Results in a more volatile price."
 msgid "Token Pair"
 msgstr "Token Pair"
 
+#: src/widgets/PoolWidget/curve/components/SwapsTable.tsx:105
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:174
 msgid "Received"
 msgstr "Received"
@@ -1878,7 +1890,7 @@ msgstr "My Staked"
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
 #: src/widgets/PoolWidget/curve/AllPools.tsx:254
 #: src/widgets/PoolWidget/curve/AllPools.tsx:492
-#: src/widgets/PoolWidget/curve/CurvePoolDetail.tsx:234
+#: src/widgets/PoolWidget/curve/CurvePoolDetail.tsx:242
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:207
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:396
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:748
@@ -2131,7 +2143,7 @@ msgstr "Initial Price Alert"
 #: src/widgets/PoolWidget/AMMV3/components/RemoveButton.tsx:32
 #: src/widgets/PoolWidget/curve/AllPools.tsx:239
 #: src/widgets/PoolWidget/curve/AllPools.tsx:476
-#: src/widgets/PoolWidget/curve/CurvePoolDetail.tsx:220
+#: src/widgets/PoolWidget/curve/CurvePoolDetail.tsx:228
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:200
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:251
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:554
@@ -2197,6 +2209,7 @@ msgstr "Unsupported network - switch to trade"
 msgid "Enter parameters to view the yield curve"
 msgstr "Enter parameters to view the yield curve"
 
+#: src/widgets/PoolWidget/curve/components/SwapsTable.tsx:102
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:171
 msgid "Paid"
 msgstr "Paid"
@@ -2288,6 +2301,8 @@ msgid "ForceStop exception"
 msgstr "ForceStop exception"
 
 #: src/components/LoadMore.tsx:47
+#: src/widgets/PoolWidget/curve/components/LiquidityProvidersTable.tsx:191
+#: src/widgets/PoolWidget/curve/components/SwapsTable.tsx:201
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/LiquidityProvidersTable.tsx:222
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:317
 #: src/widgets/PoolWidget/PoolList/components/LiquidityTable.tsx:115

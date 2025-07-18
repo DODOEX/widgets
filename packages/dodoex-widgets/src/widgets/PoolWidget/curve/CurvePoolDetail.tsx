@@ -123,20 +123,22 @@ export const CurvePoolDetail = ({ params }: CurvePoolDetailProps) => {
 
           <PoolTotalStats poolDetail={poolDetail} />
 
-          <Box>
-            <Box
-              sx={{
-                typography: 'body1',
-                color: theme.palette.text.primary,
-              }}
-            >
-              Currency reserves
+          {poolDetail && (
+            <Box>
+              <Box
+                sx={{
+                  typography: 'body1',
+                  color: theme.palette.text.primary,
+                }}
+              >
+                Currency reserves
+              </Box>
+              <CoinReservePieChart
+                poolDetail={poolDetail}
+                tokenBalances={tokenBalances}
+              />
             </Box>
-            <CoinReservePieChart
-              poolDetail={poolDetail}
-              tokenBalances={tokenBalances}
-            />
-          </Box>
+          )}
 
           <Box
             sx={{
@@ -162,10 +164,16 @@ export const CurvePoolDetail = ({ params }: CurvePoolDetailProps) => {
                 <ParametersTable poolDetail={poolDetail} />
               </TabPanel>
               <TabPanel value="swaps">
-                <SwapsTable poolDetail={poolDetail} />
+                <SwapsTable
+                  chainId={params?.chainId}
+                  address={params?.address}
+                />
               </TabPanel>
               <TabPanel value="liquidity">
-                <LiquidityProvidersTable poolDetail={poolDetail} />
+                <LiquidityProvidersTable
+                  chainId={params?.chainId}
+                  address={params?.address}
+                />
               </TabPanel>
             </Tabs>
           </Box>

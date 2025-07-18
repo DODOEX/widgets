@@ -737,7 +737,6 @@ export const AllPools = ({
                     },
                   },
                 );
-                const result = await queryClient.fetchQuery(query);
 
                 const queryMyPool = graphQLRequests.getInfiniteQuery(
                   CurveApi.graphql.curve_stableswap_ng_getMyLiquidity,
@@ -751,11 +750,12 @@ export const AllPools = ({
                     },
                   },
                 );
-                const resultMyPool = await queryClient.fetchQuery(queryMyPool);
 
                 const lqList = isMyPool
-                  ? resultMyPool.curve_stableswap_ng_getMyLiquidity?.lqList
-                  : result.curve_stableswap_ng_getAllPools?.lqList;
+                  ? (await queryClient.fetchQuery(queryMyPool))
+                      .curve_stableswap_ng_getMyLiquidity?.lqList
+                  : (await queryClient.fetchQuery(query))
+                      .curve_stableswap_ng_getAllPools?.lqList;
 
                 const list = convertRawPoolListToCurvePoolListT(
                   lqList,

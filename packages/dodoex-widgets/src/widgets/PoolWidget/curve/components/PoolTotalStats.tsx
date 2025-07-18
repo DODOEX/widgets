@@ -1,4 +1,4 @@
-import { Box, useTheme } from '@dodoex/components';
+import { Box, Skeleton, useTheme } from '@dodoex/components';
 import BigNumber from 'bignumber.js';
 import {
   formatExponentialNotation,
@@ -16,20 +16,22 @@ export const PoolTotalStats = ({ poolDetail }: PoolTotalStatsProps) => {
   const poolDataList = [
     {
       title: 'Trader',
-      value: formatExponentialNotation(new BigNumber('1770')),
+      value: formatExponentialNotation(
+        new BigNumber(poolDetail?.traderCount || '0'),
+      ),
     },
     {
       title: 'Total Liquidity',
-      value: `$${formatExponentialNotation(new BigNumber('381800'))}`,
+      value: `$${formatExponentialNotation(new BigNumber(poolDetail?.tvl || '0'))}`,
     },
     {
       title: 'Volume',
-      value: `$${formatExponentialNotation(new BigNumber('159820'))}`,
+      value: `$${formatExponentialNotation(new BigNumber(poolDetail?.volume || '0'))}`,
     },
     {
       title: 'Fees',
       value: formatPercentageNumber({
-        input: new BigNumber('0.0002'),
+        input: new BigNumber(poolDetail?.fee || '0'),
         showDecimals: 2,
       }),
     },
@@ -49,6 +51,17 @@ export const PoolTotalStats = ({ poolDetail }: PoolTotalStatsProps) => {
       }}
     >
       {poolDataList.map((item, index) => {
+        if (!poolDetail) {
+          return (
+            <Skeleton
+              key={index}
+              width="100%"
+              height={77}
+              sx={{ borderRadius: 8 }}
+            />
+          );
+        }
+
         return (
           <Box
             key={index}

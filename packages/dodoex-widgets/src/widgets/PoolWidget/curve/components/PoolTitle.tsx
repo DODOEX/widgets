@@ -1,4 +1,4 @@
-import { Box, useTheme } from '@dodoex/components';
+import { Box, Skeleton, useTheme } from '@dodoex/components';
 import { AddressWithLinkAndCopy } from '../../../../components/AddressWithLinkAndCopy';
 import { CurvePoolT } from '../types';
 import { ApyTooltip } from './ApyTooltip';
@@ -34,7 +34,11 @@ export const PoolTitle = ({ poolDetail }: PoolTitleProps) => {
           gap: 8,
         }}
       >
-        <CoinsLogoList pool={poolDetail} separate={false} wrap={true} />
+        {poolDetail ? (
+          <CoinsLogoList pool={poolDetail} separate={false} wrap={true} />
+        ) : (
+          <Skeleton width={72} height={52} sx={{ borderRadius: 8 }} />
+        )}
         <Box>
           <Box
             sx={{

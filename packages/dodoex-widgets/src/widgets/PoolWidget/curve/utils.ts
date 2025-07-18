@@ -6,63 +6,6 @@ export const curveApi = new CurveApi({
   contractRequests,
 });
 
-export const mockCurvePoolList: CurvePoolT[] = [
-  // @see https://zetachain-testnet.blockscout.com/token/0xDddfBCc76166d741c2dfa6b6a90769df398b9969?tab=read_contract
-  {
-    chainId: ChainId.ZETACHAIN_TESTNET,
-    name: 'MockToken 4Pool',
-    address: '0xDddfBCc76166d741c2dfa6b6a90769df398b9969',
-    symbol: 'MTK.10000',
-    decimals: 18,
-
-    fee: '20000000',
-    coins: [
-      {
-        address: '0x08f9f0e8EBc8B3F7808974463D31CC39Ca9F79F0',
-        name: 'Mock Token 1',
-        decimals: 18,
-        symbol: 'MTK1',
-        chainId: ChainId.ZETACHAIN_TESTNET,
-      },
-      {
-        address: '0xc39f8C093b10660E12d982256979E239B18D073d',
-        name: 'Mock Token 2',
-        decimals: 18,
-        symbol: 'MTK2',
-        chainId: ChainId.ZETACHAIN_TESTNET,
-      },
-      {
-        address: '0xbE3499499C928F086a32B0bE586e07A9D085b5eF',
-        name: 'Mock Token 3',
-        decimals: 18,
-        symbol: 'MTK3',
-        chainId: ChainId.ZETACHAIN_TESTNET,
-      },
-      {
-        address: '0x11D6F6C038B9E841e024F7aB5Bd40101D69638b3',
-        name: 'Mock Token 4',
-        decimals: 18,
-        symbol: 'MTK4',
-        chainId: ChainId.ZETACHAIN_TESTNET,
-      },
-      // {
-      //   address: '0x11D6F6C038B9E841e024F7aB5Bd40101D69638b3',
-      //   name: 'Mock Token 4',
-      //   decimals: 18,
-      //   symbol: 'MTK4',
-      //   chainId: ChainId.ZETACHAIN_TESTNET,
-      // },
-    ],
-
-    apy: '0.631',
-    dailyApy: '0.001',
-    weeklyApy: '0.002',
-    tvl: '1000000000000000000',
-    volume: '1000000000000000000',
-    lpTokenBalance: '1000000000000000000',
-  },
-];
-
 export function convertRawPoolListToCurvePoolListT(
   rawPoolList: ExcludeNone<
     ReturnType<
@@ -108,12 +51,20 @@ export function convertRawPoolListToCurvePoolListT(
       fee: pool.fee?.toString() || '0',
       coins: coins,
       apy: pool.apy?.toString() || null,
-      dailyApy: null, // Not available in raw data
-      weeklyApy: null, // Not available in raw data
+      dailyApy: null,
+      weeklyApy: null,
       tvl: pool.tvl?.toString() || null,
       volume: pool.volume?.toString() || null,
+      dailyVolumeUsd: pool.dailyVolumeUsd?.toString() || null,
+      traderCount: pool.traderCount?.toString() || null,
+      liquidityUtilization: pool.liquidityUtilization?.toString() || null,
       lpTokenBalance:
         lqItem.liquidityPositions?.[0]?.liquidityTokenBalance || null,
+      daoFee: pool.daoFee?.toString() || null,
+      virtualPrice: pool.virtualPrice?.toString() || null,
+      poolType: (pool.poolType as 'plain' | 'meta') || 'plain',
+      a: pool.a?.toString() || null,
+      offpegFeeMultiplier: pool.offpegFeeMultiplier?.toString() || null,
     };
 
     curvePoolList.push(curvePool);
