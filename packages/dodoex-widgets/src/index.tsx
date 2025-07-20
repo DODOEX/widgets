@@ -18,7 +18,6 @@ export { WIDGET_MODULE_CLASS_NAME } from './components/WidgetContainer';
 
 export { chainListMap } from './constants/chainList';
 export { rpcServerMap, scanUrlDomainMap } from './constants/chains';
-export { default as defaultTokenList } from './constants/tokenList';
 
 export { MetadataFlag } from './hooks/Submission/types';
 export { useTradeSwapOrderList } from './hooks/Swap/useTradeSwapOrderList';

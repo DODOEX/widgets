@@ -2509,6 +2509,7 @@ export type Cross_Chain_Zetachain_TokenCrossChainTokenlist = {
 
 export type Cross_Chain_Zetachain_TokentokenlistFilter = {
   chainId?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -3445,6 +3446,7 @@ export type Curve_Stableswap_NgPool = {
   coins: Array<Curve_Stableswap_NgToken>;
   dailyVolumeUsd: Scalars['BigDecimal']['output'];
   daoFee: Scalars['BigDecimal']['output'];
+  decimals: Scalars['Int']['output'];
   fee: Scalars['BigDecimal']['output'];
   fees: Scalars['BigDecimal']['output'];
   id: Scalars['ID']['output'];
@@ -3453,6 +3455,8 @@ export type Curve_Stableswap_NgPool = {
   offpegFeeMultiplier: Scalars['BigInt']['output'];
   poolType: Scalars['String']['output'];
   reserves?: Maybe<Array<Maybe<Curve_Stableswap_NgPoolReserve>>>;
+  symbol: Scalars['String']['output'];
+  totalSupply: Scalars['BigInt']['output'];
   traderCount: Scalars['BigInt']['output'];
   tvl: Scalars['BigDecimal']['output'];
   virtualPrice: Scalars['BigDecimal']['output'];
@@ -3490,6 +3494,7 @@ export type Curve_Stableswap_NgToken = {
   logoImg?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   symbol: Scalars['String']['output'];
+  tokenIndex?: Maybe<Scalars['Int']['output']>;
 };
 
 export type Curve_Stableswap_NgUserToken = {
@@ -21605,15 +21610,11 @@ export type Cross_Chain_Zetachain_Token_ListQueryVariables = Exact<{
 
 export type Cross_Chain_Zetachain_Token_ListQuery = {
   cross_chain_zetachain_token_list?: Array<{
-    id?: number | null;
     name?: string | null;
     address?: string | null;
     symbol?: string | null;
     decimals?: number | null;
-    logo?: string | null;
     chainId?: number | null;
-    position?: number | null;
-    slippage?: string | null;
   } | null> | null;
 };
 
@@ -21631,6 +21632,14 @@ export type FetchErc20ForecastSlippageQuery = {
       confidenceIntervalLower?: any | null;
     } | null> | null;
   } | null;
+};
+
+export type Token_Info_BalancesQueryVariables = Exact<{
+  data?: InputMaybe<Token_InfoTokenBalanceListData>;
+}>;
+
+export type Token_Info_BalancesQuery = {
+  token_info_balances?: { tokens?: any | null } | null;
 };
 
 export type TicksQueryVariables = Exact<{
@@ -22860,15 +22869,11 @@ export const Cross_Chain_Zetachain_Token_ListDocument =
   new TypedDocumentString(`
     query Cross_chain_zetachain_token_list($where: Cross_chain_zetachain_tokentokenlistFilter) {
   cross_chain_zetachain_token_list(where: $where) {
-    id
     name
     address
     symbol
     decimals
-    logo
     chainId
-    position
-    slippage
   }
 }
     `) as unknown as TypedDocumentString<
@@ -22890,6 +22895,16 @@ export const FetchErc20ForecastSlippageDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   FetchErc20ForecastSlippageQuery,
   FetchErc20ForecastSlippageQueryVariables
+>;
+export const Token_Info_BalancesDocument = new TypedDocumentString(`
+    query Token_info_balances($data: Token_infoTokenBalanceListData) {
+  token_info_balances(data: $data) {
+    tokens
+  }
+}
+    `) as unknown as TypedDocumentString<
+  Token_Info_BalancesQuery,
+  Token_Info_BalancesQueryVariables
 >;
 export const TicksDocument = new TypedDocumentString(`
     query Ticks($where: Tick_filter, $skip: Int, $first: Int) {

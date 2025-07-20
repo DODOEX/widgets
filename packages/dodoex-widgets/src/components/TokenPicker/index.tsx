@@ -2,13 +2,14 @@ import { ChainId } from '@dodoex/api';
 import { Box, BoxProps, SearchInput } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
-import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import BigNumber from 'bignumber.js';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FixedSizeList as List } from 'react-window';
 import type { TokenInfo } from '../../hooks/Token';
 import { useTokenList } from '../../hooks/Token';
 import { useSelectChainList } from '../../hooks/Token/useSelectChainList';
 import { isAddress } from '../../utils';
-import { EmptyDataIcon, EmptyList } from '../List/EmptyList';
+import { EmptyList } from '../List/EmptyList';
 import SelectChainItem from './SelectChainItem';
 import TokenItem from './TokenItem';
 import { TokenSearchLoadingSkelton } from './TokenSearchLoadingSkelton';
@@ -35,6 +36,71 @@ export interface TokenPickerProps {
   sx?: BoxProps['sx'];
 }
 
+function Row({
+  data,
+  index,
+  style,
+}: {
+  data: {
+    onSelectToken: (token: TokenInfo) => void;
+    tokenList: TokenInfo[];
+    getIsDisabled: (token: TokenInfo) => boolean;
+    getBalance: (token: TokenInfo) => BigNumber | undefined;
+  };
+  index: number;
+  // isScrolling: boolean;
+  style: any;
+}) {
+  const token = data.tokenList[index];
+  const disabled = data.getIsDisabled(token);
+  const balance = data.getBalance(token);
+  return (
+    <TokenItem
+      key={token.address + token.chainId}
+      token={token}
+      disabled={disabled}
+      style={style}
+      onSelect={data.onSelectToken}
+      balance={balance}
+    />
+  );
+}
+
+function VirtualizedList({
+  fixedSizeHeight,
+  tokenList,
+  onSelectToken,
+  getIsDisabled,
+  getBalance,
+}: {
+  fixedSizeHeight: number;
+  onSelectToken: (token: TokenInfo) => void;
+  tokenList: TokenInfo[];
+  getIsDisabled: (token: TokenInfo) => boolean;
+  getBalance: (token: TokenInfo) => BigNumber | undefined;
+}) {
+  const itemData = useMemo<Parameters<typeof Row>[0]['data']>(() => {
+    return {
+      onSelectToken,
+      tokenList,
+      getIsDisabled,
+      getBalance,
+    };
+  }, [onSelectToken, tokenList, getIsDisabled, getBalance]);
+
+  return (
+    <List
+      height={fixedSizeHeight}
+      width={'100%'}
+      itemSize={56}
+      itemData={itemData}
+      itemCount={tokenList.length}
+    >
+      {Row}
+    </List>
+  );
+}
+
 export default function TokenPicker({
   chainId,
   value,
@@ -52,7 +118,7 @@ export default function TokenPicker({
   sx,
 }: TokenPickerProps) {
   const { chainList, selectChainId, setSelectChainId } =
-    useSelectChainList(side);
+    useSelectChainList(value);
 
   const {
     showTokenList,
@@ -75,31 +141,19 @@ export default function TokenPicker({
     multiple,
   });
 
-  const ref = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const chainListRef = useRef<HTMLDivElement>(null);
   const [fixedSizeHeight, setFixedSizeHeight] = useState(329);
 
   useEffect(() => {
-    if (visible && value) {
-      if (Array.isArray(value)) {
-        const [firstValue] = value;
-        if (firstValue && firstValue.chainId !== selectChainId) {
-          setSelectChainId(firstValue.chainId);
-        }
-      } else {
-        setSelectChainId(value.chainId);
-      }
-    }
-  }, [value, visible]);
-
-  useEffect(() => {
-    if (visible && ref.current) {
+    if (containerRef.current) {
       const resizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
-          if (entry.target === ref.current) {
+          if (entry.target === containerRef.current) {
             const height =
               entry.contentRect.height -
               48 -
+              16 -
               (chainListRef.current?.offsetHeight ?? 0) -
               16;
             if (height > 0) {
@@ -109,13 +163,13 @@ export default function TokenPicker({
         }
       });
 
-      resizeObserver.observe(ref.current);
+      resizeObserver.observe(containerRef.current);
 
       return () => {
         resizeObserver.disconnect();
       };
     }
-  }, [visible, selectChainId]);
+  }, []);
 
   const searchOtherAddressQuery = useQuery({
     queryKey: ['token-picker-searchOtherAddress', filter],
@@ -126,13 +180,10 @@ export default function TokenPicker({
     enabled: isAddress(filter) && !!searchOtherAddress,
   });
 
-  const TokenItemFixedSizeMemo = useCallback(
-    ({ index, style }: { index: number; style: CSSProperties }) => {
-      const token = showTokenList[index];
-      if (!token) return null;
-      let disabled = false;
+  const getIsDisabled = useCallback(
+    (token: TokenInfo) => {
       if (value) {
-        disabled = Array.isArray(value)
+        return Array.isArray(value)
           ? value.some(
               (valueItem) =>
                 valueItem.address === token.address &&
@@ -140,20 +191,17 @@ export default function TokenPicker({
             )
           : value.address === token.address && value.chainId === token.chainId;
       }
-      return (
-        <TokenItem
-          key={token.address + token.chainId}
-          token={token}
-          disabled={disabled}
-          style={style}
-          onClick={() => onSelectToken(token)}
-          balance={
-            tokenInfoMap.get(`${token.chainId}-${token.address}`)?.balance
-          }
-        />
-      );
+
+      return false;
     },
-    [showTokenList, popularTokenList, value],
+    [value],
+  );
+
+  const getBalance = useCallback(
+    (token: TokenInfo) => {
+      return tokenInfoMap.get(`${token.chainId}-${token.address}`)?.balance;
+    },
+    [tokenInfoMap],
   );
 
   return (
@@ -166,7 +214,7 @@ export default function TokenPicker({
         overflow: 'hidden',
         ...sx,
       }}
-      ref={ref}
+      ref={containerRef}
     >
       <SearchInput
         fullWidth
@@ -220,15 +268,13 @@ export default function TokenPicker({
         }}
       >
         {showTokenList.length ? (
-          <List
-            height={fixedSizeHeight}
-            itemCount={showTokenList.length}
-            itemSize={56}
-            width={'100%'}
-            className="token-list"
-          >
-            {TokenItemFixedSizeMemo as any}
-          </List>
+          <VirtualizedList
+            fixedSizeHeight={fixedSizeHeight}
+            tokenList={showTokenList}
+            onSelectToken={onSelectToken}
+            getIsDisabled={getIsDisabled}
+            getBalance={getBalance}
+          />
         ) : (
           <Box
             sx={{

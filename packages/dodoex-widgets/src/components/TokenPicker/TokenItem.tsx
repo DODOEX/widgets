@@ -1,7 +1,7 @@
 import { Box, useTheme } from '@dodoex/components';
 import { Loading } from '@dodoex/icons';
 import BigNumber from 'bignumber.js';
-import { CSSProperties } from 'react';
+import { CSSProperties, useMemo } from 'react';
 import { tokenPickerItem } from '../../constants/testId';
 import { formatTokenAmountNumber } from '../../utils';
 import TokenLogo from '../TokenLogo';
@@ -13,22 +13,24 @@ export default function TokenItem({
   disabled,
   style,
   balance: balanceBigNumber,
-  onClick,
+  onSelect,
 }: {
   token: TokenInfo;
   disabled?: boolean;
   style?: CSSProperties;
   balance?: BigNumber;
-  onClick: () => void;
+  onSelect: (token: TokenInfo) => void;
 }) {
   const theme = useTheme();
 
-  const balance = balanceBigNumber
-    ? formatTokenAmountNumber({
-        input: balanceBigNumber,
-        decimals: token.decimals,
-      })
-    : '';
+  const balance = useMemo(() => {
+    return balanceBigNumber
+      ? formatTokenAmountNumber({
+          input: balanceBigNumber,
+          decimals: token.decimals,
+        })
+      : '';
+  }, [balanceBigNumber, token.decimals]);
 
   return (
     <Box
@@ -49,7 +51,7 @@ export default function TokenItem({
       style={style}
       onClick={() => {
         if (disabled) return;
-        onClick();
+        onSelect(token);
       }}
       data-testid={tokenPickerItem}
     >

@@ -14,6 +14,13 @@ type TokenInfoMap = Map<
   }
 >;
 
+/**
+ *
+ * 不要使用该方法进行批量查询大于 250 条的数据(使用 useFetchMultiTokensForSingleChain 查询大于 250 条的数据)，see https://www.notion.so/dodotopia/TokenPicker-234080d974e780f0911cf95d16e8b88e?v=2bfb3e6eb8e64d93af03487c4fba35e7&source=copy_link
+ *
+ * @param param0
+ * @returns
+ */
 export default function useFetchTokens({
   tokenList,
   blockNumber,

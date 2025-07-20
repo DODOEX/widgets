@@ -1,11 +1,10 @@
+import { ChainId } from '@dodoex/api';
 import BigNumber from 'bignumber.js';
 import { useCallback, useMemo, useState } from 'react';
-import { TokenInfo, TokenList } from './type';
 import { useCurrentChainId } from '../ConnectWallet';
-import defaultTokens from '../../constants/tokenList';
-import useTokenListFetchBalance from './useTokenListFetchBalance';
-import { ChainId } from '@dodoex/api';
 import { useTokenState } from '../useTokenState';
+import { TokenInfo, TokenList } from './type';
+import useTokenListFetchBalance from './useTokenListFetchBalance';
 
 enum MatchLevel {
   fully = 1,
@@ -104,24 +103,14 @@ export default function useTokenList({
   multiple?: boolean;
 }) {
   const [filter, setFilter] = useState('');
-  const { tokenList: preloadedOrigin } = useTokenState();
+
   const currentChainId = useCurrentChainId();
-  const chainId = useMemo(
-    () => chainIdProps ?? currentChainId,
-    [chainIdProps, currentChainId],
-  );
-  const preloaded = useMemo(() => {
-    const preloadedResult = preloadedOrigin.filter(
-      (token) => token.chainId === chainId,
-    );
-    return preloadedResult;
-  }, [preloadedOrigin, chainId]);
-  const popularTokenListOrigin = useTokenState((state) =>
-    state.popularTokenList.filter((token) => token.chainId === chainId),
-  );
-  const defaultTokenList = useMemo(() => {
-    return defaultTokens?.filter((token) => token.chainId === chainId) || [];
-  }, [chainId]);
+  const chainId = chainIdProps ?? currentChainId;
+
+  const {
+    tokenList: tokenListOrigin,
+    popularTokenList: popularTokenListOrigin,
+  } = useTokenState();
 
   const hiddenSet = useMemo(
     () =>
@@ -159,13 +148,20 @@ export default function useTokenList({
         return isShow;
       });
     },
-    [showSet, chainId, hiddenSet],
+    [chainId, showSet, hiddenSet, side],
   );
 
-  const popularTokenList = useMemo(
-    () => getNeedShowList(popularTokenListOrigin),
-    [popularTokenListOrigin, getNeedShowList],
-  );
+  const tokenList = useMemo(() => {
+    return getNeedShowList(
+      tokenListOrigin.filter((token) => token.chainId === chainId),
+    );
+  }, [getNeedShowList, tokenListOrigin, chainId]);
+
+  const popularTokenList = useMemo(() => {
+    return getNeedShowList(
+      popularTokenListOrigin.filter((token) => token.chainId === chainId),
+    );
+  }, [getNeedShowList, popularTokenListOrigin, chainId]);
 
   const onSelectToken = useCallback(
     (token: TokenInfo) => {
@@ -192,23 +188,23 @@ export default function useTokenList({
     [onChange, occupiedAddrs, occupiedChainId],
   );
 
-  const showTokenList = useMemo(() => {
-    const needShowList = getNeedShowList(preloaded);
-    const preloadedTokenAddressSet = new Set<string>();
-    needShowList.forEach((token) => {
-      preloadedTokenAddressSet.add(token.address);
-    });
-    popularTokenList.forEach((token) => {
-      if (!preloadedTokenAddressSet.has(token.address)) {
-        needShowList.push(token);
-      }
-    });
-    return needShowList || ([] as TokenList);
-  }, [preloaded, getNeedShowList, popularTokenList]);
+  // 假设 preloaded 已经包含 popularTokenList
+  // const showTokenList = useMemo(() => {
+  //   const preloadedTokenAddressSet = new Set<string>();
+  //   preloaded.forEach((token) => {
+  //     preloadedTokenAddressSet.add(token.address);
+  //   });
+  //   popularTokenList.forEach((token) => {
+  //     if (!preloadedTokenAddressSet.has(token.address)) {
+  //       preloaded.push(token);
+  //     }
+  //   });
+  //   return preloaded || ([] as TokenList);
+  // }, [preloaded, popularTokenList]);
 
   const tokenInfoMap = useTokenListFetchBalance({
     chainId,
-    tokenList: showTokenList,
+    tokenList,
     popularTokenList,
     value,
     visible,
@@ -298,14 +294,6 @@ export default function useTokenList({
           if (aItem.sort !== bItem.sort)
             return aItem.sort > bItem.sort ? 1 : -1;
 
-          const defaultAddresses = defaultTokenList.map((item) => item.address);
-          if (defaultAddresses?.includes(a.address)) {
-            return -1;
-          }
-          if (defaultAddresses?.includes(b.address)) {
-            return 1;
-          }
-
           return a.symbol.localeCompare(b.symbol); // A - Z
         })
         .some((item) => {
@@ -317,19 +305,12 @@ export default function useTokenList({
         });
       return tokenRes;
     },
-    [
-      filter,
-      tokenInfoMap,
-      occupiedAddrs,
-      value,
-      popularTokenList,
-      defaultTokenList,
-    ],
+    [filter, tokenInfoMap, occupiedAddrs, value, popularTokenList],
   );
 
   const sortTokenList = useMemo(
-    () => getSortTokenList(showTokenList) || ([] as TokenList),
-    [getSortTokenList],
+    () => getSortTokenList(tokenList) || ([] as TokenList),
+    [getSortTokenList, tokenList],
   );
 
   return {

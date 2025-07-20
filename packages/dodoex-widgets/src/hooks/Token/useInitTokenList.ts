@@ -1,11 +1,11 @@
+import { unionBy } from 'lodash';
 import { useEffect } from 'react';
-import { unionBy, isArray } from 'lodash';
-import { TokenList, TokenListType } from './type';
 import defaultTokens from '../../constants/tokenList';
 import { setPopularTokenList, setTokenList } from '../useTokenState';
+import { TokenList } from './type';
 
 export interface InitTokenListProps {
-  tokenList?: TokenList | TokenListType;
+  tokenList?: TokenList;
   popularTokenList?: TokenList;
 }
 export default function useInitTokenList({
@@ -15,7 +15,7 @@ export default function useInitTokenList({
   useEffect(() => {
     const computed = async () => {
       let allTokenList = [];
-      if (isArray(tokenList)) {
+      if (tokenList) {
         allTokenList = tokenList;
       } else {
         allTokenList = unionBy(

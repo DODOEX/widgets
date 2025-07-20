@@ -1,9 +1,19 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import { chainListMap } from '../../constants/chainList';
+import { TokenInfo } from './type';
 
-export function useSelectChainList(side?: 'from' | 'to') {
+export function useSelectChainList(
+  value?: TokenInfo | null | Array<TokenInfo>,
+) {
   const { crossChain, defaultChainId, IS_TEST_ENV } = useUserOptions();
+  const [selectChainId, setSelectChainId] = useState(
+    value
+      ? Array.isArray(value)
+        ? value[0].chainId
+        : value.chainId
+      : defaultChainId,
+  );
 
   const chainList = useMemo(() => {
     if (!crossChain) {
@@ -19,25 +29,9 @@ export function useSelectChainList(side?: 'from' | 'to') {
     return Array.from(chainListMap.values());
   }, [IS_TEST_ENV, crossChain]);
 
-  const [selectChainId, setSelectChainId] = useState(defaultChainId);
-
-  useEffect(() => {
-    setSelectChainId((selectChainId) => {
-      if (selectChainId === undefined) {
-        return defaultChainId;
-      }
-      return selectChainId;
-    });
-  }, [defaultChainId]);
-
-  const selectChainIdShow = useMemo(
-    () => selectChainId ?? defaultChainId,
-    [selectChainId, defaultChainId],
-  );
-
   return {
     chainList,
-    selectChainId: selectChainIdShow,
+    selectChainId,
     setSelectChainId,
   };
 }

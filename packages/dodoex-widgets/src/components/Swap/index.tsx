@@ -558,8 +558,9 @@ export function Swap({
   }, [
     isSlippageExceedLimit,
     isReverseRouting,
-    fromAmt,
     toAmt,
+    fromAmt,
+    insufficientBalance,
     isBridge,
     bridgeRouteStatus,
     resPriceStatus,

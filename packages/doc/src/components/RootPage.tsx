@@ -26,6 +26,7 @@ import { createAppKit } from '@reown/appkit/react';
 
 import { Network, WalletConnectReact } from '@dodoex/btc-connect-react';
 import '@dodoex/btc-connect-react/dist/style/index.css';
+import tokenList from './tokenList';
 
 // 1. Get projectId
 const projectId = 'bc32cb5c4e5f0d1d9a3313ae139b30e9';
@@ -115,6 +116,33 @@ createAppKit({
   enableWalletGuide: false,
 });
 
+function getTokenLogoUrl({
+  chainId,
+  address,
+  width: widthProps,
+  height: heightProps,
+}: {
+  chainId?: number | null;
+  address?: string | null;
+  width?: number;
+  height?: number;
+}) {
+  let logoUrl = '';
+  if (address && chainId) {
+    logoUrl = `https://token-img.dodoex.io/${chainId}/${address.toLocaleLowerCase()}`;
+    const devicePixelRatio =
+      typeof document !== 'undefined' ? (window.devicePixelRatio ?? 3) : 3;
+
+    const width = widthProps
+      ? String(Math.round(widthProps * devicePixelRatio))
+      : undefined;
+    const height = heightProps
+      ? String(Math.round(heightProps * devicePixelRatio))
+      : undefined;
+  }
+  return logoUrl;
+}
+
 export function RootPage({
   children,
   title,
@@ -160,9 +188,11 @@ export function RootPage({
             'https://api.dodoex.io/frontend-graphql'
           }
           colorMode="light"
-          IS_TEST_ENV={true}
-          defaultChainId={ChainId.ZETACHAIN_TESTNET}
-          onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN_TESTNET}
+          IS_TEST_ENV={false}
+          // tokenList={tokenList.slice(0, 100)}
+          tokenList={tokenList}
+          defaultChainId={ChainId.ZETACHAIN}
+          onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN}
           // IS_TEST_ENV={false}
           // defaultChainId={ChainId.ZETACHAIN}
           // onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN}
@@ -181,6 +211,7 @@ export function RootPage({
           //     chainId: ChainId.ZETACHAIN_TESTNET,
           //   },
           // }}
+          getTokenLogoUrl={getTokenLogoUrl}
         >
           {children}
         </Widget>
