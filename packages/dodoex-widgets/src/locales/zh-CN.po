@@ -596,7 +596,7 @@ msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:188
 #: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:54
-#: src/widgets/PoolWidget/AMMV3/components/PositionPreview.tsx:122
+#: src/widgets/PoolWidget/AMMV3/components/PositionPreview.tsx:123
 msgid "Fee tier"
 msgstr ""
 
