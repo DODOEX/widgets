@@ -160,7 +160,7 @@ export function RootPage({
       <WithMuiTheme>
         <WalletConnectReact
           config={{
-            network: Network.TESTNET, // or 'testnet'
+            network: Network.LIVENET, // or 'testnet'
           }}
           ui={{
             modalZIndex: 1300,

@@ -45,6 +45,7 @@ export const PositionPreview = ({
               { address: currency1.address },
             ]}
             mr={8}
+            chainId={currency0.chainId}
           />
           <Box
             sx={{

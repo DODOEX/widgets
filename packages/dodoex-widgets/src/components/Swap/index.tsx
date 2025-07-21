@@ -1213,9 +1213,9 @@ export function Swap({
             occupiedChainId={toToken?.chainId}
             fiatPriceTxt={
               displayFromFiatPrice
-                ? `$${formatReadableNumber({
+                ? `$${formatTokenAmountNumber({
                     input: displayFromFiatPrice,
-                    showDecimals: 1,
+                    decimals: 2,
                   })}`
                 : '$-'
             }
@@ -1245,9 +1245,9 @@ export function Swap({
             occupiedChainId={fromToken?.chainId}
             fiatPriceTxt={
               displayToFiatPrice
-                ? `$${formatReadableNumber({
+                ? `$${formatTokenAmountNumber({
                     input: displayToFiatPrice,
-                    showDecimals: 1,
+                    decimals: 2,
                   })}(${displayPriceImpact}%)`
                 : '$-'
             }

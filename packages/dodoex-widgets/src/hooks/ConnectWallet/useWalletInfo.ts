@@ -53,7 +53,7 @@ export function useWalletInfo() {
           type: 'payment',
         },
       ],
-      caipAddress: `bip122:${btcSignet.id}:${btcWalletStore.address}`,
+      caipAddress: `bip122:${btcWalletStore.network === 'livenet' ? bitcoin.id : btcSignet.id}:${btcWalletStore.address}`,
       address: btcWalletStore.address,
       isConnected: btcWalletStore.connected,
       embeddedWalletInfo: undefined,
