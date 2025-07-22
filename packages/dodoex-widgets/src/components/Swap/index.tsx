@@ -1250,7 +1250,7 @@ export function Swap({
                     input: displayToFiatPrice,
                     decimals: 2,
                   })}
-                  {isBridge ? null : `(${displayPriceImpact}%)`}
+                  {/* {isBridge ? null : `(${displayPriceImpact}%)`} */}
                 </>
               ) : (
                 '$-'
