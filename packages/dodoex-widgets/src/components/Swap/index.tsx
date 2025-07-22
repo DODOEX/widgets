@@ -54,7 +54,6 @@ import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch
 import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
 import { useGlobalState } from '../../hooks/useGlobalState';
 import { formatTokenAmountNumber, namespaceToTitle } from '../../utils';
-import { formatReadableNumber } from '../../utils/formatter';
 import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
 import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
 import ErrorMessageDialog from '../ErrorMessageDialog';
@@ -1244,12 +1243,18 @@ export function Swap({
             occupiedAddrs={[fromToken?.address ?? '']}
             occupiedChainId={fromToken?.chainId}
             fiatPriceTxt={
-              displayToFiatPrice
-                ? `$${formatTokenAmountNumber({
+              displayToFiatPrice ? (
+                <>
+                  $
+                  {formatTokenAmountNumber({
                     input: displayToFiatPrice,
                     decimals: 2,
-                  })}(${displayPriceImpact}%)`
-                : '$-'
+                  })}
+                  {isBridge ? null : `(${displayPriceImpact}%)`}
+                </>
+              ) : (
+                '$-'
+              )
             }
             onTokenChange={onToTokenChange}
             readOnly={isBridge || !isReverseRouting}

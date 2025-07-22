@@ -188,14 +188,13 @@ export function RootPage({
             'https://api.dodoex.io/frontend-graphql'
           }
           colorMode="light"
-          IS_TEST_ENV={false}
-          // tokenList={tokenList.slice(0, 100)}
           tokenList={tokenList}
-          defaultChainId={ChainId.ZETACHAIN}
-          onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN}
           // IS_TEST_ENV={false}
           // defaultChainId={ChainId.ZETACHAIN}
           // onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN}
+          IS_TEST_ENV={false}
+          defaultChainId={ChainId.ZETACHAIN_TESTNET}
+          onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN_TESTNET}
           solanaConnection={solanaConnection}
           noUI
           crossChain={isSwap}

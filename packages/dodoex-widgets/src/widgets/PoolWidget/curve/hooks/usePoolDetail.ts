@@ -23,21 +23,22 @@ export function usePoolDetail({
       if (!pool) {
         return undefined;
       }
-      const coins =
+      const coins = (
         pool.coins?.map((coin) => ({
           chainId: chainId ?? ChainId.ZETACHAIN,
           address: coin.address || coin.id || '',
           name: coin.name || coin.symbol || '',
-          decimals: coin.decimals || 18,
+          decimals: coin.decimals,
           symbol: coin.symbol || '',
-          logoURI: coin.logoImg || undefined,
-        })) || [];
+          tokenIndex: coin.tokenIndex || 0,
+        })) || []
+      ).sort((a, b) => a.tokenIndex - b.tokenIndex);
       return {
         chainId: chainId ?? ChainId.ZETACHAIN,
         name: pool.name || '',
         address: pool.address || pool.id || '',
-        symbol: coins.length > 0 ? coins.map((c) => c.symbol).join('.') : '',
-        decimals: 18, // LP token decimals
+        symbol: pool.symbol,
+        decimals: pool.decimals, // LP token decimals
         fee: pool.fee?.toString() || '0',
         coins,
         apy: pool.apy?.toString() || null,

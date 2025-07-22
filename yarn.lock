@@ -1866,10 +1866,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@dodoex/btc-connect-react@^1.5.9":
-  version "1.5.9"
-  resolved "https://registry.yarnpkg.com/@dodoex/btc-connect-react/-/btc-connect-react-1.5.9.tgz#b65453c9628cb06e3a15015c7711fb3b5dd96ac4"
-  integrity sha512-fbcxhr7roKT6p2EezfEKybDQ2aBNM5r9OFJExFg6ioOrdOCVMgtiQHTS6p23UEKkIov+wNA9kdsULgxA1V7nWA==
+"@dodoex/btc-connect-react@^1.5.10":
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/@dodoex/btc-connect-react/-/btc-connect-react-1.5.10.tgz#e6b539b743675407ce3ad2101ce35cf51fbb81e7"
+  integrity sha512-jW3TV3azFRB3ZxgDLF17c0AJ0w8kTbdHVe3SSoCZ8nUCZ6/i0zznGxJWBXTmQHxtTiNwZuEhUTvUApQVGHVjRA==
   optionalDependencies:
     "@types/react-dom" "^18.2.22"
     lint-staged "^15.2.2"

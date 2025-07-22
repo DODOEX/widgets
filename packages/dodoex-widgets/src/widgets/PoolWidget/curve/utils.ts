@@ -31,23 +31,24 @@ export function convertRawPoolListToCurvePoolListT(
     const pool = lqItem.pool;
 
     // Convert coins to TokenInfo format
-    const coins =
+    const coins = (
       pool.coins?.map((coin) => ({
         chainId,
         address: coin.address || coin.id || '',
         name: coin.name || coin.symbol || '',
-        decimals: coin.decimals || 18,
+        decimals: coin.decimals,
         symbol: coin.symbol || '',
-        logoURI: coin.logoImg || undefined,
-      })) || [];
+        tokenIndex: coin.tokenIndex || 0,
+      })) || []
+    ).sort((a, b) => a.tokenIndex - b.tokenIndex);
 
     // Create CurvePoolT object
     const curvePool: CurvePoolT = {
       chainId,
       name: pool.name || '',
       address: pool.address || pool.id || '',
-      symbol: coins.length > 0 ? coins.map((c) => c.symbol).join('.') : '',
-      decimals: 18, // Default decimals for LP token
+      symbol: pool.symbol,
+      decimals: pool.decimals, // Default decimals for LP token
       fee: pool.fee?.toString() || '0',
       coins: coins,
       apy: pool.apy?.toString() || null,

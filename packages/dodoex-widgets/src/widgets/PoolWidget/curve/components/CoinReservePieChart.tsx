@@ -4,6 +4,7 @@ import { AddressWithLinkAndCopy } from '../../../../components/AddressWithLinkAn
 import {
   formatExponentialNotation,
   formatPercentageNumber,
+  formatTokenAmountNumber,
 } from '../../../../utils/formatter';
 import TokenLogo from '../../../../components/TokenLogo';
 import { useMemo } from 'react';
@@ -49,6 +50,7 @@ export const CoinReservePieChart = ({
         symbol: coin.symbol,
         address: coin.address,
         chainId: coin.chainId,
+        decimals: coin.decimals,
         value: tokenBalances[index].toNumber(),
         percentage: tokenBalances[index].div(total).toNumber(),
         color: COLORS[index],
@@ -227,7 +229,10 @@ export const CoinReservePieChart = ({
                     textAlign: 'right',
                   }}
                 >
-                  {formatExponentialNotation(new BigNumber(coin.value))}
+                  {formatTokenAmountNumber({
+                    input: coin.value,
+                    decimals: coin.decimals,
+                  })}
                 </Box>
                 <Box
                   sx={{
@@ -372,7 +377,10 @@ export const CoinReservePieChart = ({
                   px: 20,
                 }}
               >
-                {formatExponentialNotation(new BigNumber(coin.value))}
+                {formatTokenAmountNumber({
+                  input: coin.value,
+                  decimals: coin.decimals,
+                })}
               </Box>
 
               <Box

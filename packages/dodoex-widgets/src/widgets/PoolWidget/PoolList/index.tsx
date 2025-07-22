@@ -328,6 +328,7 @@ export default function PoolList({
                 activeChainId={activeChainId}
                 operateCurvePool={operateCurvePool}
                 setOperateCurvePool={setOperateCurvePool}
+                account={account}
               >
                 <TabsButtonGroup
                   tabs={multiTokenTabs}
@@ -341,6 +342,7 @@ export default function PoolList({
                 activeChainId={activeChainId}
                 operateCurvePool={operateCurvePool}
                 setOperateCurvePool={setOperateCurvePool}
+                account={account}
                 isMyPool
               >
                 <TabsButtonGroup

@@ -17,6 +17,9 @@ export const curve_stableswap_ng_getAllPools = graphql(`
           id
           address
           name
+          symbol
+          decimals
+          totalSupply
           coins {
             id
             address
@@ -24,6 +27,7 @@ export const curve_stableswap_ng_getAllPools = graphql(`
             symbol
             decimals
             logoImg
+            tokenIndex
           }
           apy
           tvl
@@ -38,6 +42,7 @@ export const curve_stableswap_ng_getAllPools = graphql(`
               symbol
               decimals
               logoImg
+              tokenIndex
             }
             amount
             ratio
@@ -85,6 +90,9 @@ export const curve_stableswap_ng_getMyLiquidity = graphql(`
           id
           address
           name
+          symbol
+          decimals
+          totalSupply
           coins {
             id
             address
@@ -92,6 +100,7 @@ export const curve_stableswap_ng_getMyLiquidity = graphql(`
             symbol
             decimals
             logoImg
+            tokenIndex
           }
           apy
           tvl
@@ -106,6 +115,7 @@ export const curve_stableswap_ng_getMyLiquidity = graphql(`
               symbol
               decimals
               logoImg
+              tokenIndex
             }
             amount
             ratio
@@ -144,6 +154,9 @@ export const curve_stableswap_ng_getPoolInfo = graphql(`
       id
       address
       name
+      symbol
+      decimals
+      totalSupply
       coins {
         id
         address
@@ -151,6 +164,7 @@ export const curve_stableswap_ng_getPoolInfo = graphql(`
         symbol
         decimals
         logoImg
+        tokenIndex
       }
       apy
       tvl
@@ -165,6 +179,7 @@ export const curve_stableswap_ng_getPoolInfo = graphql(`
           symbol
           decimals
           logoImg
+          tokenIndex
         }
         amount
         ratio
@@ -201,6 +216,7 @@ export const curve_stableswap_ng_getPoolSwapInfo = graphql(`
           symbol
           decimals
           logoImg
+          tokenIndex
         }
         receivedAmount
         receivedToken {
@@ -210,6 +226,7 @@ export const curve_stableswap_ng_getPoolSwapInfo = graphql(`
           symbol
           decimals
           logoImg
+          tokenIndex
         }
       }
     }
@@ -237,6 +254,7 @@ export const curve_stableswap_ng_getPoolLiquidityHistory = graphql(`
             symbol
             decimals
             logoImg
+            tokenIndex
           }
           amount
         }

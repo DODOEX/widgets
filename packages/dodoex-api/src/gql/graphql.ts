@@ -21677,6 +21677,9 @@ export type Curve_Stableswap_Ng_GetAllPoolsQuery = {
         id: string;
         address: string;
         name: string;
+        symbol: string;
+        decimals: number;
+        totalSupply: any;
         apy: any;
         tvl: any;
         volume: any;
@@ -21697,6 +21700,7 @@ export type Curve_Stableswap_Ng_GetAllPoolsQuery = {
           symbol: string;
           decimals: number;
           logoImg?: string | null;
+          tokenIndex?: number | null;
         }>;
         reserves?: Array<{
           amount: any;
@@ -21708,6 +21712,7 @@ export type Curve_Stableswap_Ng_GetAllPoolsQuery = {
             symbol: string;
             decimals: number;
             logoImg?: string | null;
+            tokenIndex?: number | null;
           };
         } | null> | null;
       } | null;
@@ -21745,6 +21750,9 @@ export type Curve_Stableswap_Ng_GetMyLiquidityQuery = {
         id: string;
         address: string;
         name: string;
+        symbol: string;
+        decimals: number;
+        totalSupply: any;
         apy: any;
         tvl: any;
         volume: any;
@@ -21765,6 +21773,7 @@ export type Curve_Stableswap_Ng_GetMyLiquidityQuery = {
           symbol: string;
           decimals: number;
           logoImg?: string | null;
+          tokenIndex?: number | null;
         }>;
         reserves?: Array<{
           amount: any;
@@ -21776,6 +21785,7 @@ export type Curve_Stableswap_Ng_GetMyLiquidityQuery = {
             symbol: string;
             decimals: number;
             logoImg?: string | null;
+            tokenIndex?: number | null;
           };
         } | null> | null;
       } | null;
@@ -21804,6 +21814,9 @@ export type Curve_Stableswap_Ng_GetPoolInfoQuery = {
     id: string;
     address: string;
     name: string;
+    symbol: string;
+    decimals: number;
+    totalSupply: any;
     apy: any;
     tvl: any;
     volume: any;
@@ -21824,6 +21837,7 @@ export type Curve_Stableswap_Ng_GetPoolInfoQuery = {
       symbol: string;
       decimals: number;
       logoImg?: string | null;
+      tokenIndex?: number | null;
     }>;
     reserves?: Array<{
       amount: any;
@@ -21835,6 +21849,7 @@ export type Curve_Stableswap_Ng_GetPoolInfoQuery = {
         symbol: string;
         decimals: number;
         logoImg?: string | null;
+        tokenIndex?: number | null;
       };
     } | null> | null;
   } | null;
@@ -21862,6 +21877,7 @@ export type Curve_Stableswap_Ng_GetPoolSwapInfoQuery = {
         symbol: string;
         decimals: number;
         logoImg?: string | null;
+        tokenIndex?: number | null;
       };
       receivedToken: {
         id: string;
@@ -21870,6 +21886,7 @@ export type Curve_Stableswap_Ng_GetPoolSwapInfoQuery = {
         symbol: string;
         decimals: number;
         logoImg?: string | null;
+        tokenIndex?: number | null;
       };
     }> | null;
   } | null;
@@ -21898,6 +21915,7 @@ export type Curve_Stableswap_Ng_GetPoolLiquidityHistoryQuery = {
           symbol: string;
           decimals: number;
           logoImg?: string | null;
+          tokenIndex?: number | null;
         };
       }> | null;
     }> | null;
@@ -22933,6 +22951,9 @@ export const Curve_Stableswap_Ng_GetAllPoolsDocument = new TypedDocumentString(`
         id
         address
         name
+        symbol
+        decimals
+        totalSupply
         coins {
           id
           address
@@ -22940,6 +22961,7 @@ export const Curve_Stableswap_Ng_GetAllPoolsDocument = new TypedDocumentString(`
           symbol
           decimals
           logoImg
+          tokenIndex
         }
         apy
         tvl
@@ -22954,6 +22976,7 @@ export const Curve_Stableswap_Ng_GetAllPoolsDocument = new TypedDocumentString(`
             symbol
             decimals
             logoImg
+            tokenIndex
           }
           amount
           ratio
@@ -23002,6 +23025,9 @@ export const Curve_Stableswap_Ng_GetMyLiquidityDocument =
         id
         address
         name
+        symbol
+        decimals
+        totalSupply
         coins {
           id
           address
@@ -23009,6 +23035,7 @@ export const Curve_Stableswap_Ng_GetMyLiquidityDocument =
           symbol
           decimals
           logoImg
+          tokenIndex
         }
         apy
         tvl
@@ -23023,6 +23050,7 @@ export const Curve_Stableswap_Ng_GetMyLiquidityDocument =
             symbol
             decimals
             logoImg
+            tokenIndex
           }
           amount
           ratio
@@ -23061,6 +23089,9 @@ export const Curve_Stableswap_Ng_GetPoolInfoDocument = new TypedDocumentString(`
     id
     address
     name
+    symbol
+    decimals
+    totalSupply
     coins {
       id
       address
@@ -23068,6 +23099,7 @@ export const Curve_Stableswap_Ng_GetPoolInfoDocument = new TypedDocumentString(`
       symbol
       decimals
       logoImg
+      tokenIndex
     }
     apy
     tvl
@@ -23082,6 +23114,7 @@ export const Curve_Stableswap_Ng_GetPoolInfoDocument = new TypedDocumentString(`
         symbol
         decimals
         logoImg
+        tokenIndex
       }
       amount
       ratio
@@ -23119,6 +23152,7 @@ export const Curve_Stableswap_Ng_GetPoolSwapInfoDocument =
         symbol
         decimals
         logoImg
+        tokenIndex
       }
       receivedAmount
       receivedToken {
@@ -23128,6 +23162,7 @@ export const Curve_Stableswap_Ng_GetPoolSwapInfoDocument =
         symbol
         decimals
         logoImg
+        tokenIndex
       }
     }
   }
@@ -23156,6 +23191,7 @@ export const Curve_Stableswap_Ng_GetPoolLiquidityHistoryDocument =
           symbol
           decimals
           logoImg
+          tokenIndex
         }
         amount
       }
