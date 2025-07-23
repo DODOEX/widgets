@@ -63,10 +63,10 @@ export const basicTokenMap: {
   },
   [ChainId.POLYGON]: {
     ...DEFAULT_BASIC_TOKEN,
-    symbol: 'MATIC',
-    name: 'MATIC',
+    symbol: 'POL',
+    name: 'Polygon Ecosystem Token',
     showDecimals: 6,
-    wrappedTokenSymbol: 'WMATIC',
+    wrappedTokenSymbol: 'WPOL',
     wrappedTokenAddress: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
   },
   [ChainId.ARBITRUM_ONE]: {
