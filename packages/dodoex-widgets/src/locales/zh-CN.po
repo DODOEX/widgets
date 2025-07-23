@@ -2219,7 +2219,7 @@ msgid "Failed to add"
 msgstr ""
 
 #: src/hooks/Swap/useExecuteSwap.ts:56
-#: src/hooks/Swap/useFetchRoutePrice.ts:342
+#: src/hooks/Swap/useFetchRoutePrice.ts:344
 msgid "Swap"
 msgstr "交易"
 

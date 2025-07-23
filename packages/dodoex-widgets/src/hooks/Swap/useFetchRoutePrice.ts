@@ -271,6 +271,7 @@ export function useFetchRoutePrice({
         useSource,
         duration,
         value,
+        routeInfo,
       } = data.rawBrief;
 
       const finalFromAmount = isReverseRouting ? resAmount : fromAmount;
@@ -304,6 +305,7 @@ export function useFetchRoutePrice({
           toTokenSymbol: toToken?.symbol,
           fromTokenDecimals: fromToken.decimals,
           toTokenDecimals: toToken?.decimals,
+          routeData: routeInfo,
         },
       });
     },
