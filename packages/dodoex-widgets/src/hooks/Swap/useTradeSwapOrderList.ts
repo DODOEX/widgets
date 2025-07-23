@@ -95,12 +95,7 @@ export function useTradeSwapOrderList({
             },
             item?.chainId as number,
           ) as TokenInfo,
-          fromAmount:
-            item?.fromAmount && !!String(item.fromTokenDecimals)
-              ? new BigNumber(item.fromAmount).div(
-                  10 ** (item.fromTokenDecimals as number),
-                )
-              : null,
+          fromAmount: item?.fromAmount ?? '',
           toAmount: item?.toAmount ?? '',
           minAmount: item?.minAmount ?? '',
           fromTokenPrice: item?.fromTokenPrice ?? '',
