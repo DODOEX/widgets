@@ -7,6 +7,7 @@ import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { Trans } from '@lingui/macro';
 import { getEtherscanPage } from '../../../utils';
 import TokenLogo from '../../TokenLogo';
+import { useTokenState } from '../../../hooks/useTokenState';
 
 const { isSameAddress } = TokenApi.utils;
 
@@ -21,6 +22,7 @@ function useTokenInfo({
   toTokenRaw: TokenInfo;
   targetTokenAddress: string;
 }) {
+  const { tokenList } = useTokenState();
   const token = React.useMemo(() => {
     if (isSameAddress(fromTokenRaw.address, targetTokenAddress)) {
       return fromTokenRaw;
@@ -28,8 +30,25 @@ function useTokenInfo({
     if (isSameAddress(toTokenRaw.address, targetTokenAddress)) {
       return toTokenRaw;
     }
-    return null;
-  }, [fromTokenRaw, routing.chainId, targetTokenAddress, toTokenRaw]);
+    if (
+      isSameAddress(
+        '0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf',
+        targetTokenAddress,
+      )
+    ) {
+      return {
+        address: '0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf',
+        chainId: fromTokenRaw.chainId,
+        symbol: 'WZETA',
+        name: 'Wrapped Zeta',
+        decimals: 18,
+      };
+    }
+    const token = tokenList.find((t) =>
+      isSameAddress(t.address, targetTokenAddress),
+    );
+    return token;
+  }, [fromTokenRaw, targetTokenAddress, toTokenRaw, tokenList]);
 
   return token;
 }

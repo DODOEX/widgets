@@ -1423,7 +1423,7 @@ msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:118
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:149
-#: src/components/Swap/SwapOrderHistory/RoutingCard.tsx:103
+#: src/components/Swap/SwapOrderHistory/RoutingCard.tsx:122
 #: src/components/TextSwitch.tsx:79
 msgid "On"
 msgstr "在"
