@@ -112,47 +112,48 @@ export const AddOrRemove = ({
         )}
 
         <Box>
-          <Box
-            sx={{
-              px: 20,
-              py: 12,
-              borderTopLeftRadius: 8,
-              borderTopRightRadius: 8,
-              borderStyle: 'solid',
-              borderColor: 'border.main',
-              borderWidth: 1,
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <Box>
-              <Box
-                sx={{
-                  typography: 'body2',
-                  fontWeight: 600,
-                  lineHeight: '19px',
-                  color: 'text.primary',
-                }}
-              >
-                {operateCurvePool.pool.name}
+          {poolDetailBtnVisible && (
+            <Box
+              sx={{
+                px: 20,
+                py: 12,
+                borderTopLeftRadius: 8,
+                borderTopRightRadius: 8,
+                borderStyle: 'solid',
+                borderColor: 'border.main',
+                borderWidth: 1,
+                borderBottom: 'none',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Box>
+                <Box
+                  sx={{
+                    typography: 'body2',
+                    fontWeight: 600,
+                    lineHeight: '19px',
+                    color: 'text.primary',
+                  }}
+                >
+                  {operateCurvePool.pool.name}
+                </Box>
+                <AddressWithLinkAndCopy
+                  address={operateCurvePool.pool.address}
+                  customChainId={operateCurvePool.pool.chainId}
+                  truncate
+                  showCopy
+                  iconDarkHover
+                  iconSize={14}
+                  iconSpace={4}
+                  sx={{
+                    typography: 'h6',
+                    color: 'text.secondary',
+                  }}
+                />
               </Box>
-              <AddressWithLinkAndCopy
-                address={operateCurvePool.pool.address}
-                customChainId={operateCurvePool.pool.chainId}
-                truncate
-                showCopy
-                iconDarkHover
-                iconSize={14}
-                iconSpace={4}
-                sx={{
-                  typography: 'h6',
-                  color: 'text.secondary',
-                }}
-              />
-            </Box>
 
-            {poolDetailBtnVisible && (
               <Box
                 component={ButtonBase}
                 onClick={() => {
@@ -197,19 +198,20 @@ export const AddOrRemove = ({
                   />
                 </svg>
               </Box>
-            )}
-          </Box>
+            </Box>
+          )}
 
           <Box
             sx={{
               px: 20,
               py: 12,
+              borderTopLeftRadius: poolDetailBtnVisible ? 0 : 8,
+              borderTopRightRadius: poolDetailBtnVisible ? 0 : 8,
               borderBottomLeftRadius: 8,
               borderBottomRightRadius: 8,
               borderStyle: 'solid',
               borderColor: 'border.main',
               borderWidth: 1,
-              borderTop: 'none',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'flex-start',

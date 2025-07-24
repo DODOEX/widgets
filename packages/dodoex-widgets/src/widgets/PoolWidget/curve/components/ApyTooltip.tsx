@@ -26,7 +26,7 @@ export function ApyTooltip({
           }}
         >
           <Box sx={{ fontWeight: 700 }}>Base vAPY (annualized)</Box>
-          <Box component="ul" sx={{ pl: 16, my: 0 }}>
+          <Box component="ul" sx={{ pl: 16, my: 0, listStyleType: 'disc' }}>
             <li>
               Daily: 
               {formatPercentageNumber({ input: dailyApy, showDecimals: 2 })}
