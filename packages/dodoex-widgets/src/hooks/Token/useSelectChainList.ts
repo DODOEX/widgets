@@ -10,7 +10,9 @@ export function useSelectChainList(
   const [selectChainId, setSelectChainId] = useState(
     value
       ? Array.isArray(value)
-        ? value[0].chainId
+        ? value[0]
+          ? value[0].chainId
+          : defaultChainId
         : value.chainId
       : defaultChainId,
   );
