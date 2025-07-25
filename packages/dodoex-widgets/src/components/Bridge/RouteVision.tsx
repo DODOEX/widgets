@@ -66,10 +66,16 @@ function RouteVisionItem({
         poolPart: formatPercentageNumber({
           input: new BigNumber(percent).div(100),
         }),
-        poolAddress: path.assembleArgs?.pairAddress ?? null,
+        poolAddress:
+          path.assembleArgs?.pairAddress ??
+          path.assembleArgs?.id ??
+          path.ammKey ??
+          null,
       };
 
-      poolDetails.set(path.assembleArgs?.pairName ?? '-', [poolDetail]);
+      poolDetails.set(path.assembleArgs?.pairName ?? path.label ?? '-', [
+        poolDetail,
+      ]);
 
       return {
         fromToken: inputToken.address,

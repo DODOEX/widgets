@@ -126,6 +126,7 @@ export interface BridgeStepSwapStep {
     quoteToken: string;
     pairAddress: string;
     pairName: string;
+    id: string;
   };
 }
 export interface BridgeStep {
@@ -387,7 +388,6 @@ export function useFetchRoutePriceBridge({
         slippage &&
         (fromChain?.isEVMChain ? approveTarget : true) &&
         fees &&
-        fees.length > 0 &&
         omniPlan &&
         omniPlan.length > 0 &&
         encodeParams
