@@ -522,6 +522,49 @@ export function Swap({
     toToken,
   });
 
+  const switchSlippageTooltip = useMemo(() => {
+    return (
+      <Tooltip
+        open={showSwitchSlippageTooltip.showSwitchSlippage}
+        title={
+          isBridge ? (
+            <Trans>The setting has been switched to cross chain mode</Trans>
+          ) : (
+            <Trans>The setting has been switched to swap mode</Trans>
+          )
+        }
+        placement="bottom-end"
+        onClose={() => showSwitchSlippageTooltip.setShowSwitchSlippage(false)}
+        onlyClick
+      >
+        <Box
+          component={ButtonBase}
+          onClick={() => setIsSettingsDialogOpen(true)}
+          sx={{
+            p: 4,
+            backgroundColor: theme.palette.background.paper,
+            borderRadius: 4,
+            height: 28,
+            width: 28,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Box
+            component={Setting}
+            sx={{
+              width: 20,
+              height: 20,
+              color: 'text.primary',
+              cursor: 'pointer',
+            }}
+          />
+        </Box>
+      </Tooltip>
+    );
+  }, [isBridge, showSwitchSlippageTooltip, theme.palette.background.paper]);
+
   const slippageExceedLimit = useMemo(() => {
     if (
       !isSlippageExceedLimit ||
@@ -1147,42 +1190,7 @@ export function Swap({
               : slippageSwap}
             %
           </Box>
-          <Tooltip
-            open={showSwitchSlippageTooltip}
-            title={
-              isBridge ? (
-                <Trans>The setting has been switched to cross chain mode</Trans>
-              ) : (
-                <Trans>The setting has been switched to swap mode</Trans>
-              )
-            }
-            placement="bottom-end"
-          >
-            <Box
-              component={ButtonBase}
-              onClick={() => setIsSettingsDialogOpen(true)}
-              sx={{
-                p: 4,
-                backgroundColor: theme.palette.background.paper,
-                borderRadius: 4,
-                height: 28,
-                width: 28,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Box
-                component={Setting}
-                sx={{
-                  width: 20,
-                  height: 20,
-                  color: 'text.primary',
-                  cursor: 'pointer',
-                }}
-              />
-            </Box>
-          </Tooltip>
+          {switchSlippageTooltip}
         </Box>
       </Box>
 

@@ -5,6 +5,7 @@ const tokenList: (TokenInfo & {
   logo: string;
   position: number;
   slippage: number | null;
+  // @ts-ignore
 })[] = [
   {
     name: 'CumRocket',
@@ -196,6 +197,20 @@ const tokenList: (TokenInfo & {
     chainId: 7000,
   },
   {
+    name: 'WSOL',
+    address: 'So11111111111111111111111111111111111111112',
+    symbol: 'WSOL',
+    decimals: 9,
+    chainId: 1399811149,
+  },
+  {
+    name: 'Polygon Ecosystem Token',
+    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+    symbol: 'POL',
+    decimals: 18,
+    chainId: 137,
+  },
+  {
     name: 'USDC',
     address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
     symbol: 'USDC',
@@ -245,11 +260,11 @@ const tokenList: (TokenInfo & {
     chainId: 1,
   },
   {
-    name: 'MATIC',
+    name: 'ZETA',
     address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-    symbol: 'MATIC',
+    symbol: 'ZETA',
     decimals: 18,
-    chainId: 137,
+    chainId: 7000,
   },
   {
     name: 'POL.POL',
@@ -336,13 +351,6 @@ const tokenList: (TokenInfo & {
     chainId: 1399811149,
   },
   {
-    name: 'ZETA',
-    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-    symbol: 'ZETA',
-    decimals: 18,
-    chainId: 7000,
-  },
-  {
     name: 'USDC',
     address: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
     symbol: 'USDC',
@@ -362,13 +370,6 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC.ETH',
     decimals: 6,
     chainId: 7000,
-  },
-  {
-    name: 'WSOL',
-    address: 'So11111111111111111111111111111111111111112',
-    symbol: 'SOL',
-    decimals: 9,
-    chainId: 1399811149,
   },
   {
     name: 'BTC',
@@ -12899,6 +12900,13 @@ const tokenList: (TokenInfo & {
     symbol: 'LTO',
     decimals: 18,
     chainId: 56,
+  },
+  {
+    name: 'Wrapped ZETA ',
+    address: '0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf',
+    symbol: 'WZETA',
+    decimals: 18,
+    chainId: 7000,
   },
   {
     name: 'Circuits of Value',

@@ -1,6 +1,5 @@
 import { Box } from '@dodoex/components';
 import { DoubleRight } from '@dodoex/icons';
-import { t } from '@lingui/macro';
 import {
   PublicKey,
   SendTransactionError,
@@ -12,6 +11,7 @@ import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
 import TokenLogo from '../../components/TokenLogo';
 import { chainListMap } from '../../constants/chainList';
 import { transferSignet } from '../../utils/btc';
+import { CROSS_CHAIN_TEXT } from '../../utils/constants';
 import { formatTokenAmountNumber } from '../../utils/formatter';
 import { constructSolanaBridgeRouteTransaction } from '../../utils/solana';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
@@ -146,7 +146,7 @@ export default function useExecuteBridgeRoute({
         }
 
         return submission.executeCustom({
-          brief: t`Cross Chain`,
+          brief: CROSS_CHAIN_TEXT,
           subtitle,
           metadata,
           mixpanelProps,
@@ -186,7 +186,7 @@ export default function useExecuteBridgeRoute({
         }
 
         return submission.executeCustom({
-          brief: t`Cross Chain`,
+          brief: CROSS_CHAIN_TEXT,
           subtitle,
           metadata,
           mixpanelProps,
@@ -241,7 +241,7 @@ export default function useExecuteBridgeRoute({
       }
 
       return submission.execute(
-        t`Cross Chain`,
+        CROSS_CHAIN_TEXT,
         {
           opcode: OpCode.TX,
           ...bridgeOrderTxRequest,

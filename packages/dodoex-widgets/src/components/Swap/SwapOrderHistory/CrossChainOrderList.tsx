@@ -46,7 +46,6 @@ export default function CrossChainOrderList({
               data={item}
               isMobile={isMobile}
               isErrorRefund={isErrorRefund}
-              refetch={swapOrderListQuery.refetch}
             />
           ))}
           <LoadMore
@@ -66,25 +65,22 @@ export default function CrossChainOrderList({
             <thead>
               <tr>
                 <th>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 8,
-                    }}
-                  >
-                    <Trans>Pay</Trans>
-                  </Box>
+                  <Trans>Pay</Trans>
                 </th>
+
                 <th>
                   <Trans>Receive</Trans>
                 </th>
+
                 <th>
                   <Trans>Status</Trans>
                 </th>
-                {isErrorRefund ? //   <Trans>Claim refunds</Trans> // <th>
-                // </th>
-                null : (
+
+                {isErrorRefund ? (
+                  <th>
+                    <Trans>Refunds TX</Trans>
+                  </th>
+                ) : (
                   <th>
                     <Trans>Rate</Trans>
                   </th>
@@ -93,7 +89,7 @@ export default function CrossChainOrderList({
                 <Box
                   component="th"
                   sx={{
-                    width: 140,
+                    width: isErrorRefund ? 110 : 140,
                     textAlign: 'right !important',
                   }}
                 >
@@ -108,7 +104,6 @@ export default function CrossChainOrderList({
                   data={item}
                   isMobile={isMobile}
                   isErrorRefund={isErrorRefund}
-                  refetch={swapOrderListQuery.refetch}
                 />
               ))}
             </tbody>

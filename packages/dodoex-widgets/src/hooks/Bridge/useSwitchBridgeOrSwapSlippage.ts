@@ -20,12 +20,12 @@ export function useSwitchBridgeOrSwapSlippage(isBridge: boolean | undefined) {
     setShowSwitchSlippage(true);
     const time = setTimeout(() => {
       setShowSwitchSlippage(false);
-    }, 3000);
+    }, 5000);
 
     return () => {
       clearTimeout(time);
     };
   }, [isBridge]);
 
-  return showSwitchSlippage;
+  return { showSwitchSlippage, setShowSwitchSlippage };
 }

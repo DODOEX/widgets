@@ -3,7 +3,7 @@ import { store } from '../configure-store';
 import { WithMuiTheme } from './theme/WithMuiTheme';
 
 import { ChainId, zetachainTestnet } from '@dodoex/api';
-import { PageType, Widget } from '@dodoex/widgets';
+import { Widget } from '@dodoex/widgets';
 // import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin';
 import { Ethers5Adapter } from '@reown/appkit-adapter-ethers5';
 import {
@@ -12,11 +12,11 @@ import {
 } from '@reown/appkit-adapter-solana/react';
 import {
   arbitrumSepolia,
+  avalanche,
   base,
   bsc,
   mainnet,
   polygon,
-  avalanche,
   sepolia,
   solana,
   solanaDevnet,
@@ -26,6 +26,7 @@ import { createAppKit } from '@reown/appkit/react';
 
 import { Network, WalletConnectReact } from '@dodoex/btc-connect-react';
 import '@dodoex/btc-connect-react/dist/style/index.css';
+import testEnvTokenList from './testEnvTokenList';
 import tokenList from './tokenList';
 
 // 1. Get projectId
@@ -155,6 +156,10 @@ export function RootPage({
   const isSwap =
     title === 'Widgets/SwapAndOrderList' || title === 'Widgets/Swap';
 
+  const PROD_GRAPHQL_URL = 'https://api.dodoex.io/frontend-graphql';
+  const GRAPHQL_URL = process.env.STORYBOOK_GRAPHQL_URL ?? PROD_GRAPHQL_URL;
+  const IS_TEST_ENV = GRAPHQL_URL !== PROD_GRAPHQL_URL;
+
   return (
     <ReduxProvider store={store}>
       <WithMuiTheme>
@@ -183,18 +188,20 @@ export function RootPage({
 
         <Widget
           apikey="ee53d6b75b12aceed4"
-          GRAPHQL_URL={
-            process.env.STORYBOOK_GRAPHQL_URL ??
-            'https://api.dodoex.io/frontend-graphql'
-          }
+          GRAPHQL_URL={GRAPHQL_URL}
           colorMode="light"
-          tokenList={tokenList}
-          // IS_TEST_ENV={false}
-          // defaultChainId={ChainId.ZETACHAIN}
-          // onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN}
-          IS_TEST_ENV={false}
-          defaultChainId={ChainId.ZETACHAIN_TESTNET}
-          onlyChainId={isSwap ? undefined : ChainId.ZETACHAIN_TESTNET}
+          tokenList={IS_TEST_ENV ? testEnvTokenList : tokenList}
+          IS_TEST_ENV={IS_TEST_ENV}
+          defaultChainId={
+            IS_TEST_ENV ? ChainId.ZETACHAIN_TESTNET : ChainId.ZETACHAIN
+          }
+          onlyChainId={
+            isSwap
+              ? undefined
+              : IS_TEST_ENV
+                ? ChainId.ZETACHAIN_TESTNET
+                : ChainId.ZETACHAIN
+          }
           solanaConnection={solanaConnection}
           noUI
           crossChain={isSwap}

@@ -1,3 +1,4 @@
+import { SwapApi } from '@dodoex/api';
 import {
   alpha,
   Box,
@@ -7,10 +8,12 @@ import {
   useTheme,
 } from '@dodoex/components';
 import { getAddress } from '@ethersproject/address';
-import { useEffect, useMemo, useState, useRef } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ChainListItem, chainListMap } from '../../../constants/chainList';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useGlobalState } from '../../../hooks/useGlobalState';
 import { truncatePoolAddress } from '../../../utils/address';
 import { namespaceToTitle } from '../../../utils/wallet';
 import { CardStatus } from '../../CardWidgets';
@@ -40,9 +43,16 @@ export enum SwapOrderHistoryTab {
 export default function SwapOrderHistory() {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const accountListScrollContainerRef = useRef<HTMLDivElement>(null);
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
 
-  const { evmAccount, solanaAccount, bitcoinAccount } = useWalletInfo();
+  const { crossChainSubmittedCounter } = useGlobalState();
+  const queryClient = useQueryClient();
+  const lastTransactionAccountRef = useRef<string | undefined>();
+  const queryClientRef = useRef(queryClient);
+
+  const { evmAccount, solanaAccount, bitcoinAccount, currentAccount } =
+    useWalletInfo();
 
   const [swapOrderHistoryTab, setSwapOrderHistoryTab] = useState(
     SwapOrderHistoryTab.sameChain,
@@ -133,26 +143,72 @@ export default function SwapOrderHistory() {
     });
   }, [accountList]);
 
-  const handleAccountClick = (
-    account: string,
-    isLast: boolean,
-    isFirst: boolean,
-  ) => {
-    setSelectedAccount(account);
-    if (scrollContainerRef.current) {
-      if (isLast) {
-        scrollContainerRef.current.scrollTo({
-          left: scrollContainerRef.current.scrollWidth,
-          behavior: 'smooth',
-        });
-      } else if (isFirst) {
-        scrollContainerRef.current.scrollTo({
-          left: 0,
-          behavior: 'smooth',
-        });
+  const handleAccountClick = useCallback(
+    (account: string, isLast: boolean, isFirst: boolean) => {
+      {
+        setSelectedAccount(account);
+        if (accountListScrollContainerRef.current) {
+          if (isLast) {
+            accountListScrollContainerRef.current.scrollTo({
+              left: accountListScrollContainerRef.current.scrollWidth,
+              behavior: 'smooth',
+            });
+          } else if (isFirst) {
+            accountListScrollContainerRef.current.scrollTo({
+              left: 0,
+              behavior: 'smooth',
+            });
+          }
+        }
       }
+    },
+    [],
+  );
+
+  useEffect(() => {
+    const targetAccount = currentAccount?.address;
+    if (!targetAccount) {
+      return;
     }
-  };
+    const findAccount = accountList.find(
+      (account) =>
+        account.account.toLowerCase() === targetAccount.toLowerCase(),
+    );
+    if (!findAccount) {
+      return;
+    }
+    lastTransactionAccountRef.current = findAccount.account;
+  }, [accountList, currentAccount?.address]);
+  useEffect(() => {
+    queryClientRef.current = queryClient;
+  }, [queryClient]);
+
+  useEffect(() => {
+    if (crossChainSubmittedCounter === 0) {
+      return;
+    }
+    setTimeout(() => {
+      tabsContainerRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+
+      setSwapOrderHistoryTab(SwapOrderHistoryTab.crossChain);
+
+      if (!lastTransactionAccountRef.current) {
+        return;
+      }
+      setSelectedAccount(lastTransactionAccountRef.current);
+      queryClientRef.current.invalidateQueries({
+        queryKey: [
+          'graphql',
+          'getInfiniteQuery',
+          'page',
+          SwapApi.graphql.cross_chain_swap_zetachain_orderList,
+        ],
+      });
+    }, 300);
+  }, [crossChainSubmittedCounter]);
 
   return (
     <Tabs
@@ -176,6 +232,7 @@ export default function SwapOrderHistory() {
       className={isMobile ? undefined : 'gradient-card-border'}
     >
       <Box
+        ref={tabsContainerRef}
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -209,7 +266,7 @@ export default function SwapOrderHistory() {
         />
       </Box>
       <Box
-        ref={scrollContainerRef}
+        ref={accountListScrollContainerRef}
         sx={{
           px: 16,
           py: 12,

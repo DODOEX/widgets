@@ -1,13 +1,14 @@
 import { ChainId } from '@dodoex/api';
-import { Box, Button, Tooltip, useTheme } from '@dodoex/components';
+import {
+  alpha,
+  Box,
+  RotatingIcon,
+  Tooltip,
+  useTheme,
+} from '@dodoex/components';
 import { ArrowTopRightBorder } from '@dodoex/icons';
-import { Interface } from '@ethersproject/abi';
-import { useMutation } from '@tanstack/react-query';
 import React, { useMemo } from 'react';
 import { chainListMap } from '../../../constants/chainList';
-import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
-import { useSubmission } from '../../../hooks/Submission';
-import { OpCode } from '../../../hooks/Submission/spec';
 import { useCrossSwapOrderList } from '../../../hooks/Swap/useCrossSwapOrderList';
 import { getEtherscanPage } from '../../../utils';
 import { formatReadableTimeDuration, getTimeText } from '../../../utils/time';
@@ -21,6 +22,7 @@ import FoldBtn, {
 import TokenLogo from '../../TokenLogo';
 import { QuestionTooltip } from '../../Tooltip';
 import { PriceWithToggle } from './PriceWithToggle';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 
 function Extend({
   showFold,
@@ -202,21 +204,151 @@ function Extend({
   );
 }
 
+function RefundsTX({
+  data,
+}: {
+  data: NonNullable<ReturnType<typeof useCrossSwapOrderList>['orderList'][0]>;
+}) {
+  const theme = useTheme();
+  const isRefundSuccess = data.subStatus === 'refund_success';
+  const { isMobile } = useWidgetDevice();
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 2,
+        [theme.breakpoints.up('tablet')]: {
+          gap: 8,
+        },
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 16,
+          height: 16,
+          color: isRefundSuccess
+            ? theme.palette.success.main
+            : theme.palette.text.disabled,
+          borderRadius: '50%',
+          backgroundColor: isRefundSuccess
+            ? alpha(theme.palette.success.main, 0.1)
+            : theme.palette.background.tag,
+
+          [theme.breakpoints.up('tablet')]: {
+            width: 24,
+            height: 24,
+          },
+        }}
+      >
+        {isRefundSuccess ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={isMobile ? '12' : '16'}
+            height={isMobile ? '12' : '16'}
+            viewBox="0 0 16 16"
+            fill="none"
+          >
+            <path
+              d="M12.7601 3.55554L5.92598 10.3896L3.24005 7.71406L1.77783 9.17628L5.92598 13.3244L14.2223 5.02813L12.7601 3.55554Z"
+              fill="currentColor"
+            />
+          </svg>
+        ) : (
+          <RotatingIcon
+            sx={{
+              width: 12,
+              color: theme.palette.text.disabled,
+              [theme.breakpoints.up('tablet')]: {
+                width: 16,
+              },
+            }}
+          />
+        )}
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          [theme.breakpoints.up('tablet')]: {
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+          },
+        }}
+      >
+        {data.refundChainId && data.refundHash ? (
+          <AddressWithLinkAndCopy
+            address={data.refundHash}
+            customChainId={data.refundChainId}
+            showCopy={false}
+            truncate
+            iconSpace={isMobile ? 2 : 8}
+            sx={{
+              typography: 'h6',
+              [theme.breakpoints.up('tablet')]: {
+                typography: 'body1',
+              },
+            }}
+          />
+        ) : (
+          <Box
+            sx={{
+              typography: 'h6',
+              [theme.breakpoints.up('tablet')]: {
+                typography: 'body1',
+              },
+            }}
+          >
+            -
+          </Box>
+        )}
+        <Box
+          sx={{
+            display: 'none',
+            [theme.breakpoints.up('tablet')]: {
+              display: 'block',
+              typography: 'h6',
+              color: theme.palette.text.secondary,
+            },
+          }}
+        >
+          {isRefundSuccess
+            ? 'Refunded to this address.'
+            : 'Refund in progress.'}
+        </Box>
+        {isRefundSuccess ? null : (
+          <Box
+            sx={{
+              typography: 'h6',
+              color: theme.palette.text.secondary,
+              [theme.breakpoints.up('tablet')]: {
+                display: 'none',
+              },
+            }}
+          >
+            (Refund in progress.)
+          </Box>
+        )}
+      </Box>
+    </Box>
+  );
+}
+
 export default function CrossOrderCard({
   data,
   isMobile,
   isErrorRefund,
-  refetch,
 }: {
   data: NonNullable<ReturnType<typeof useCrossSwapOrderList>['orderList'][0]>;
   isMobile: boolean;
   isErrorRefund: boolean;
-  refetch: () => void;
 }) {
   const theme = useTheme();
-  const submission = useSubmission();
-  const { chainId, appKitActiveNetwork, getAppKitAccountByChainId } =
-    useWalletInfo();
 
   const { statusText, statusColor, statusAlphaColor } = useMemo(() => {
     let statusText = 'Loading';
@@ -233,7 +365,7 @@ export default function CrossOrderCard({
         statusColor = theme.palette.success.main;
         break;
       case 'failure_revert':
-        statusText = 'Failed';
+        statusText = 'Swap failed';
         statusColor = theme.palette.error.main;
         break;
       case 'abort':
@@ -261,99 +393,7 @@ export default function CrossOrderCard({
   const [showFold, setShowFold] = React.useState(false);
   const time = data.createdAt ? getTimeText(new Date(data.createdAt)) : '-';
 
-  const claimMutation = useMutation({
-    mutationFn: async () => {
-      if (!data.externalId || !data.refundCridgeContract) {
-        return;
-      }
-      if (chainId !== data.refundChainId) {
-        const chain = getAppKitAccountByChainId(data.refundChainId);
-        if (!chain) {
-          return;
-        }
-        appKitActiveNetwork.switchNetwork(chain.chain.caipNetwork);
-      }
-
-      const iface = new Interface([
-        {
-          inputs: [
-            {
-              internalType: 'bytes32',
-              name: 'externalId',
-              type: 'bytes32',
-            },
-          ],
-          name: 'claimRefund',
-          outputs: [],
-          stateMutability: 'nonpayable',
-          type: 'function',
-        },
-      ]);
-      const encodedData = iface.encodeFunctionData('claimRefund', [
-        data.externalId,
-      ]);
-      const result = await submission.execute(
-        'Claim',
-        {
-          opcode: OpCode.TX,
-          data: encodedData,
-          to: data.refundCridgeContract,
-          value: '0x0',
-        },
-        {
-          metadata: {
-            crossChainSwapClaimRefund: true,
-          },
-          submittedBack: () => {
-            refetch();
-          },
-          successBack: () => {
-            refetch();
-          },
-        },
-      );
-      return result;
-    },
-  });
-
-  const claimButton = useMemo(() => {
-    return (
-      <Button
-        variant={Button.Variant.contained}
-        size={Button.Size.small}
-        color="error"
-        isLoading={claimMutation.isPending}
-        disabled={
-          claimMutation.isPending || data.subStatus !== 'wait_claim_refund'
-        }
-        onClick={() => {
-          claimMutation.mutate();
-        }}
-        sx={{
-          typography: 'h6',
-          lineHeight: '16px',
-          py: 6,
-          minWidth: 98,
-          height: 28,
-        }}
-      >
-        {data.subStatus === 'refund_success' ? 'Claimed' : 'Claim'}
-
-        {data.subStatus !== 'wait_claim_refund' && (
-          <QuestionTooltip
-            onlyHover
-            title={data.subStatus}
-            ml={4}
-            sx={{
-              color: theme.palette.text.disabled,
-            }}
-          />
-        )}
-      </Button>
-    );
-  }, [claimMutation, data.subStatus, theme.palette.text.disabled]);
-
-  if (isMobile)
+  if (isMobile) {
     return (
       <Box
         sx={{
@@ -444,7 +484,6 @@ export default function CrossOrderCard({
                     />
                   )}
                 </StatusAndTime>
-                {/* {isErrorRefund && claimButton} */}
               </Box>
             </Box>
 
@@ -492,6 +531,27 @@ export default function CrossOrderCard({
                 title="Receive"
                 linkVisible={false}
               />
+
+              {isErrorRefund && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 2,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      typography: 'h6',
+                      fontWeight: 500,
+                      color: 'text.primary',
+                    }}
+                  >
+                    Refunds TX:
+                  </Box>
+                  <RefundsTX data={data} />
+                </Box>
+              )}
             </Box>
 
             <Box
@@ -518,6 +578,8 @@ export default function CrossOrderCard({
         <Extend showFold={showFold} data={data} isMobile={isMobile} />
       </Box>
     );
+  }
+
   return (
     <>
       <tr>
@@ -568,8 +630,11 @@ export default function CrossOrderCard({
             )}
           </StatusAndTime>
         </td>
-        {isErrorRefund ? // <td>{claimButton}</td>
-        null : (
+        {isErrorRefund ? (
+          <td>
+            <RefundsTX data={data} />
+          </td>
+        ) : (
           <td>
             {data.fromToken && data.toToken && (
               <PriceWithToggle
@@ -597,7 +662,7 @@ export default function CrossOrderCard({
               gap: 8,
             }}
           >
-            {data.subStatus === 'refund_success' && (
+            {!isErrorRefund && data.subStatus === 'refund_success' && (
               <>
                 <Tooltip title="refund TX" placement="top" onlyHover>
                   <Box

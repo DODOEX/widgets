@@ -26,6 +26,7 @@ interface GlobalState {
     value: number | null;
   };
   slippage: string | null;
+  crossChainSubmittedCounter: number;
 }
 
 export const useGlobalState = create<GlobalState>((set) => ({
@@ -33,6 +34,7 @@ export const useGlobalState = create<GlobalState>((set) => ({
   latestBlockNumber: 0,
   openConnectWalletInfo: false,
   slippage: null,
+  crossChainSubmittedCounter: 0,
 }));
 
 export function setContractStatus(value: GlobalState['contractStatus']) {
@@ -64,4 +66,14 @@ export function setSlippage(value: GlobalState['slippage']) {
   useGlobalState.setState({
     slippage: value,
   });
+}
+export function increaseCrossChainSubmittedCounter() {
+  useGlobalState.setState({
+    crossChainSubmittedCounter: 1,
+  });
+  setTimeout(() => {
+    useGlobalState.setState({
+      crossChainSubmittedCounter: 0,
+    });
+  }, 300);
 }

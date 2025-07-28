@@ -19,7 +19,12 @@ import {
   useExecution,
 } from '../../hooks/Submission';
 import { Showing } from '../../hooks/Submission/types';
-import { ContractStatus, setContractStatus } from '../../hooks/useGlobalState';
+import {
+  ContractStatus,
+  increaseCrossChainSubmittedCounter,
+  setContractStatus,
+} from '../../hooks/useGlobalState';
+import { CROSS_CHAIN_TEXT } from '../../utils/constants';
 import Dialog from '../Swap/components/Dialog';
 import { useUserOptions } from '../UserOptionsProvider';
 
@@ -117,7 +122,9 @@ function ExecutionInfo({
         }}
       >
         {showingDone
-          ? t`${showing?.brief} confirmed`
+          ? showing?.brief === CROSS_CHAIN_TEXT
+            ? t`${showing?.brief} Submitted`
+            : t`${showing?.brief} confirmed`
           : t`${showing?.brief} pending`}
       </Box>
       {showing?.subtitle ? (
@@ -259,6 +266,9 @@ export default function WithExecutionDialog({
     });
   };
 
+  const isCrossChainShowingDone =
+    showingDone && showing?.brief === CROSS_CHAIN_TEXT;
+
   return (
     <ExecutionContext.Provider value={ctxVal}>
       {children}
@@ -380,7 +390,6 @@ export default function WithExecutionDialog({
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between',
             px: 20,
             pb: 20,
             flex: 1,
@@ -436,6 +445,25 @@ export default function WithExecutionDialog({
               </>
             )}
           </Box>
+
+          {isCrossChainShowingDone && (
+            <Button
+              variant={Button.Variant.outlined}
+              fullWidth
+              size={Button.Size.big}
+              onClick={() => {
+                setContractStatus(ContractStatus.Initial);
+                closeShowing();
+                increaseCrossChainSubmittedCounter();
+              }}
+              sx={{
+                mt: isMobile ? 20 : 'auto',
+              }}
+            >
+              Check in order list
+            </Button>
+          )}
+
           <Button
             fullWidth
             size={Button.Size.big}
@@ -444,7 +472,7 @@ export default function WithExecutionDialog({
               closeShowing();
             }}
             sx={{
-              mt: 20,
+              mt: isCrossChainShowingDone ? 12 : isMobile ? 20 : 'auto',
             }}
           >
             {errorMessage ? <Trans>Dismiss</Trans> : <Trans>Close</Trans>}
