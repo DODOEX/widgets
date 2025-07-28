@@ -206,7 +206,7 @@ export function RootPage({
           // routerPage={{
           //   type: PageType.CurvePoolDetail,
           //   params: {
-          //     address: '0xDddfBCc76166d741c2dfa6b6a90769df398b9969',
+          //     address: '0xa7cf4c2a2b339d659544ae5cce1a30e28c818d94',
           //     chainId: ChainId.ZETACHAIN_TESTNET,
           //   },
           // }}

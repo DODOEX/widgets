@@ -344,8 +344,8 @@ export const Remove = ({ operateCurvePool }: RemoveProps) => {
     },
   });
 
-  const withdrawLpTokenQuery = useQuery(
-    curveApi.calcTokenAmount(
+  const withdrawLpTokenQuery = useQuery({
+    ...curveApi.calcTokenAmount(
       operateCurvePool.pool.chainId,
       operateCurvePool.pool.address,
       operateCurvePool.pool.coins.map((coin) => {
@@ -361,7 +361,26 @@ export const Remove = ({ operateCurvePool }: RemoveProps) => {
       }),
       false,
     ),
-  );
+  });
+
+  useEffect(() => {
+    if (
+      withdrawType === 'custom' &&
+      withdrawLpTokenQuery.isSuccess &&
+      withdrawLpTokenQuery.data
+    ) {
+      const withdrawLpTokenBN = withdrawLpTokenQuery.data
+        .dividedBy(10 ** operateCurvePool.pool.decimals)
+        .dp(operateCurvePool.pool.decimals, BigNumber.ROUND_DOWN);
+
+      setInputValue(withdrawLpTokenBN.toString());
+    }
+  }, [
+    withdrawLpTokenQuery.isSuccess,
+    withdrawLpTokenQuery.data,
+    withdrawType,
+    operateCurvePool.pool.decimals,
+  ]);
 
   const removeLiquidityImBalanceMutation = useMutation({
     mutationFn: async () => {
