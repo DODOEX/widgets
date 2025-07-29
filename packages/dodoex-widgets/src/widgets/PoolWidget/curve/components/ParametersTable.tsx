@@ -102,7 +102,7 @@ export const ParametersTable = ({ poolDetail }: ParametersTableProps) => {
       <Item title="Fee">
         {poolDetail?.fee
           ? `${formatPercentageNumber({
-              input: new BigNumber(poolDetail?.fee || '0'),
+              input: new BigNumber(poolDetail?.fee || '0').div(1e10),
               showDecimals: 2,
             })}`
           : '-'}
@@ -310,7 +310,12 @@ export const ParametersTable = ({ poolDetail }: ParametersTableProps) => {
               color: 'text.primary',
             }}
           >
-            Off Peg Multiplier:{poolDetail?.offpegFeeMultiplier ?? '-'}
+            Off Peg Multiplier:
+            {poolDetail?.offpegFeeMultiplier
+              ? new BigNumber(poolDetail?.offpegFeeMultiplier)
+                  .div(1e10)
+                  .toString()
+              : '-'}
           </Box>
         </Box>
       </Item>

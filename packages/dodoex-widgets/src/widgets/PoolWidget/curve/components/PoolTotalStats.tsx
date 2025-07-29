@@ -31,7 +31,7 @@ export const PoolTotalStats = ({ poolDetail }: PoolTotalStatsProps) => {
     {
       title: 'Fees',
       value: formatPercentageNumber({
-        input: new BigNumber(poolDetail?.fee || '0'),
+        input: new BigNumber(poolDetail?.fee || '0').div(1e10),
         showDecimals: 2,
       }),
     },
