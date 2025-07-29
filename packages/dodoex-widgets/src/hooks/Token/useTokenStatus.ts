@@ -32,17 +32,20 @@ export function useTokenStatus(
     offset,
     overrideBalance,
     skipQuery,
+    account: inputAccount,
   }: {
     amount?: string | number | BigNumber;
     contractAddress?: string;
     offset?: BigNumber;
     overrideBalance?: BigNumber | null;
     skipQuery?: boolean;
+    account?: string;
   } = {},
 ) {
   const { getAppKitAccountByChainId } = useWalletInfo();
-  const account = getAppKitAccountByChainId(token?.chainId)?.appKitAccount
-    .address;
+  const account =
+    inputAccount ??
+    getAppKitAccountByChainId(token?.chainId)?.appKitAccount.address;
 
   const [chainId, proxyContractAddress] = React.useMemo(() => {
     if (!token) return [undefined, contractAddress];
@@ -218,5 +221,6 @@ export function useTokenStatus(
     approveTitle,
     submitApprove,
     getMaxBalance,
+    tokenQuery,
   };
 }

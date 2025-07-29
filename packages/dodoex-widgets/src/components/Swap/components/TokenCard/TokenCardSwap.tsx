@@ -6,10 +6,9 @@ import {
   useTheme,
 } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
-import { useQuery } from '@tanstack/react-query';
+import { UseQueryResult } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { tokenApi } from '../../../../constants/api';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 import {
   BalanceData,
@@ -61,6 +60,7 @@ export interface TokenCardProps {
   account: ReturnType<
     ReturnType<typeof useWalletInfo>['getAppKitAccountByChainId']
   >;
+  tokenQuery: UseQueryResult<{ balance: BigNumber } | null, Error>;
 }
 
 export function TokenCardSwap({
@@ -96,18 +96,12 @@ export function TokenCardSwap({
   inputToAddress,
   setInputToAddress,
   account,
+  tokenQuery,
 }: TokenCardProps) {
   const theme = useTheme();
 
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
 
-  const tokenQuery = useQuery(
-    tokenApi.getFetchTokenQuery(
-      token?.chainId,
-      token?.address,
-      account?.appKitAccount?.address,
-    ),
-  );
   const balance = overrideBalance ?? tokenQuery.data?.balance ?? null;
 
   const { isTokenLoading } = useBalanceUpdateLoading();

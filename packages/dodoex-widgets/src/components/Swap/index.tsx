@@ -225,9 +225,15 @@ export function Swap({
     insufficientBalance,
     submitApprove,
     getMaxBalance,
+    tokenQuery: fromTokenQuery,
   } = useTokenStatus(fromToken, {
     amount: fromAmt,
     contractAddress: selectedRoute?.spenderContractAddress ?? undefined,
+    account: fromAccount?.appKitAccount.address,
+  });
+
+  const { tokenQuery: toTokenQuery } = useTokenStatus(toToken, {
+    account: toAccount?.appKitAccount.address,
   });
 
   const handleMaxClick = useCallback(() => {
@@ -1236,6 +1242,7 @@ export function Swap({
             setInputToAddress={setInputToAddress}
             account={fromAccount}
             failedReason={failedReason}
+            tokenQuery={fromTokenQuery}
           />
 
           {/* Switch Icon */}
@@ -1276,6 +1283,7 @@ export function Swap({
             sx={{
               padding: theme.spacing(24, 20, 20),
             }}
+            tokenQuery={toTokenQuery}
           />
 
           {/* Price Disp or Warnings  */}
