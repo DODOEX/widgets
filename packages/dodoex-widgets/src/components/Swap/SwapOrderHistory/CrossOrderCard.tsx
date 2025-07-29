@@ -292,6 +292,7 @@ function RefundsTX({
               typography: 'h6',
               [theme.breakpoints.up('tablet')]: {
                 typography: 'body1',
+                fontWeight: 600,
               },
             }}
           />
@@ -301,6 +302,7 @@ function RefundsTX({
               typography: 'h6',
               [theme.breakpoints.up('tablet')]: {
                 typography: 'body1',
+                fontWeight: 600,
               },
             }}
           >

@@ -1,4 +1,4 @@
-import { Box, BoxProps, useTheme, alpha } from '@dodoex/components';
+import { Box, BoxProps } from '@dodoex/components';
 import LoadMore from './LoadMore';
 
 export default function Table({
@@ -13,7 +13,6 @@ export default function Table({
   loadMore?: () => void;
   loadMoreLoading?: boolean;
 }) {
-  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -51,7 +50,7 @@ export default function Table({
           },
           '& td': {
             px: 24,
-            py: 16,
+            py: 20,
             backgroundColor: 'background.paper',
           },
           // '& td:first-of-type': {

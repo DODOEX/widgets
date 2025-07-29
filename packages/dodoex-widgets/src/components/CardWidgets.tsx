@@ -335,7 +335,10 @@ export function TokenAndAmount({
       )}
       <Box
         sx={{
-          fontWeight: 600,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          gap: 2,
         }}
       >
         <Box
@@ -344,6 +347,8 @@ export function TokenAndAmount({
             alignItems: 'center',
             gap: 4,
             wordBreak: 'break-word',
+            typography: 'body1',
+            fontWeight: 600,
           }}
         >
           {`${amountText} ${token.symbol}`}

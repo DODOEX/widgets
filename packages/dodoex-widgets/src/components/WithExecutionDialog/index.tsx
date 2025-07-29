@@ -267,7 +267,7 @@ export default function WithExecutionDialog({
   };
 
   const isCrossChainShowingDone =
-    showingDone && showing?.brief === CROSS_CHAIN_TEXT;
+    showingDone && showing?.brief === CROSS_CHAIN_TEXT && !errorMessage;
 
   return (
     <ExecutionContext.Provider value={ctxVal}>
