@@ -132,7 +132,7 @@ export const ParametersTable = ({ poolDetail }: ParametersTableProps) => {
       >
         {poolDetail?.virtualPrice
           ? `${formatTokenAmountNumber({
-              input: new BigNumber(poolDetail?.virtualPrice || '0'),
+              input: new BigNumber(poolDetail?.virtualPrice || '0').div(1e18),
               decimals: 18,
             })}`
           : '-'}
@@ -180,38 +180,8 @@ export const ParametersTable = ({ poolDetail }: ParametersTableProps) => {
         {poolDetail?.poolType === 'plain'
           ? 'Stableswap-NG'
           : poolDetail?.poolType === 'meta'
-            ? 'Metapool'
+            ? 'Plain pool'
             : '-'}
-      </Item>
-      <Item title="Basepool">
-        <AddressWithLinkAndCopy
-          address="0x"
-          customChainId={poolDetail?.chainId}
-          truncate
-          showCopy
-          iconDarkHover
-          iconSize={14}
-          iconSpace={4}
-          sx={{
-            typography: 'body1',
-            color: 'text.primary',
-          }}
-        />
-      </Item>
-      <Item title="Registry">
-        <AddressWithLinkAndCopy
-          address="0x"
-          customChainId={poolDetail?.chainId}
-          truncate
-          showCopy
-          iconDarkHover
-          iconSize={14}
-          iconSpace={4}
-          sx={{
-            typography: 'body1',
-            color: 'text.primary',
-          }}
-        />
       </Item>
 
       <Box
