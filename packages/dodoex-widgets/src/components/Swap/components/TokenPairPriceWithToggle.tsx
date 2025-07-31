@@ -102,7 +102,7 @@ export function TokenPairPriceWithToggle({
                 >
                   1&nbsp;{leftSymbol}&nbsp;
                   <span style={{ color: theme.palette.text.secondary }}>=</span>
-                  &nbsp;$
+                  &nbsp;
                   {formatReadableNumber({
                     input: rightAmount as number,
                     showDecimals: 4,

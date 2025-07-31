@@ -2218,7 +2218,7 @@ msgid "Failed to add"
 msgstr "Failed to add"
 
 #: src/hooks/Swap/useExecuteSwap.ts:56
-#: src/hooks/Swap/useFetchRoutePrice.ts:345
+#: src/hooks/Swap/useFetchRoutePrice.ts:375
 msgid "Swap"
 msgstr "Swap"
 

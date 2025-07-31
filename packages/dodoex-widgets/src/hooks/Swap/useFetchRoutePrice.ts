@@ -232,11 +232,41 @@ export function useFetchRoutePrice({
         };
       }
 
+      let routeInfoStr: Record<string, any>;
+      if (isSolanaChain) {
+        const routePlan = (routeInfo as unknown as ISolanaRouteResponse)
+          .routePlan;
+        routeInfoStr = {
+          subRouteTotalPart: 100,
+          subRoute: [
+            {
+              midPathPart: 100,
+              midPath: routePlan.map((route) => {
+                const { swapInfo, percent } = route;
+                return {
+                  fromToken: swapInfo.inputMint,
+                  toToken: swapInfo.outputMint,
+                  oneSplitTotalPart: percent,
+                  poolDetails: [
+                    {
+                      poolName: swapInfo.label,
+                      pool: swapInfo.ammKey,
+                      poolPart: percent,
+                    },
+                  ],
+                };
+              }),
+            },
+          ],
+        };
+      } else {
+        routeInfoStr = routeInfo.routeInfo as unknown as Record<string, any>;
+      }
       return {
         status: RoutePriceStatus.Success,
         rawBrief: {
           ...routeInfo,
-          routeInfo: JSON.stringify(routeInfo.routeInfo),
+          routeInfo: JSON.stringify(routeInfoStr),
           resPricePerToToken: isSolanaChain
             ? new BigNumber(fromAmount)
                 .dividedBy(routeInfo.resAmount)
