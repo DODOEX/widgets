@@ -311,7 +311,7 @@ msgstr ""
 msgid "APR"
 msgstr ""
 
-#: src/components/TokenPicker/index.tsx:225
+#: src/components/TokenPicker/index.tsx:219
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
@@ -1201,7 +1201,7 @@ msgstr ""
 msgid "Price Impact"
 msgstr "价格冲击"
 
-#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:53
+#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:55
 msgid "Select a token"
 msgstr "选择代币"
 
@@ -2024,7 +2024,7 @@ msgid "The setting has been switched to cross chain mode"
 msgstr ""
 
 #: src/components/Swap/components/TokenCard/index.tsx:315
-#: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:248
+#: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:250
 msgid "Buy"
 msgstr ""
 
@@ -2218,7 +2218,7 @@ msgid "Failed to add"
 msgstr ""
 
 #: src/hooks/Swap/useExecuteSwap.ts:56
-#: src/hooks/Swap/useFetchRoutePrice.ts:344
+#: src/hooks/Swap/useFetchRoutePrice.ts:345
 msgid "Swap"
 msgstr "交易"
 

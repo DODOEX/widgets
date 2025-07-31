@@ -21,6 +21,7 @@ import {
   solana,
   solanaDevnet,
   zetachain,
+  arbitrum,
 } from '@reown/appkit/networks';
 import { createAppKit } from '@reown/appkit/react';
 
@@ -73,6 +74,7 @@ createAppKit({
     zetachain,
     base,
     avalanche,
+    arbitrum,
     solana,
     solanaDevnet,
     // bitcoin,

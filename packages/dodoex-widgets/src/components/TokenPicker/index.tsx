@@ -150,12 +150,7 @@ export default function TokenPicker({
       const resizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
           if (entry.target === containerRef.current) {
-            const height =
-              entry.contentRect.height -
-              48 -
-              16 -
-              (chainListRef.current?.offsetHeight ?? 0) -
-              16;
+            const height = entry.contentRect.height - 1;
             if (height > 0) {
               setFixedSizeHeight(height);
             }
@@ -214,7 +209,6 @@ export default function TokenPicker({
         overflow: 'hidden',
         ...sx,
       }}
-      ref={containerRef}
     >
       <SearchInput
         fullWidth
@@ -263,9 +257,10 @@ export default function TokenPicker({
 
       <Box
         sx={{
-          pb: 16,
+          pb: 15,
           flexGrow: 1,
         }}
+        ref={containerRef}
       >
         {showTokenList.length ? (
           <VirtualizedList

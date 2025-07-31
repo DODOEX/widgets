@@ -1,6 +1,7 @@
 import { ChainId, btcSignet, zetachainTestnet } from '@dodoex/api';
 import {
   AppKitNetwork,
+  arbitrum,
   arbitrumSepolia,
   avalanche,
   base,
@@ -14,7 +15,10 @@ import {
   zetachain,
 } from '@reown/appkit/networks';
 
-import { ReactComponent as ArbitrumSepoliaLogo } from '../assets/logo/networks/arbitrum.svg';
+import {
+  ReactComponent as ArbitrumLogo,
+  ReactComponent as ArbitrumSepoliaLogo,
+} from '../assets/logo/networks/arbitrum.svg';
 import { ReactComponent as AvalancheLogo } from '../assets/logo/networks/avalanche.svg';
 import { ReactComponent as BaseLogo } from '../assets/logo/networks/base.svg';
 import { ReactComponent as BSCLogo } from '../assets/logo/networks/bsc.svg';
@@ -87,20 +91,6 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     },
   ],
   [
-    ChainId.BASE,
-    {
-      chainId: ChainId.BASE,
-      logo: BaseLogo,
-      name: base.name,
-      caipNetwork: base,
-      isEVMChain: true,
-      isSolanaChain: false,
-      isBTCChain: false,
-      isTestNet: false,
-      fallbackAddress: EmptyAddress,
-    },
-  ],
-  [
     ChainId.ZETACHAIN,
     {
       chainId: ChainId.ZETACHAIN,
@@ -115,12 +105,40 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     },
   ],
   [
+    ChainId.BASE,
+    {
+      chainId: ChainId.BASE,
+      logo: BaseLogo,
+      name: base.name,
+      caipNetwork: base,
+      isEVMChain: true,
+      isSolanaChain: false,
+      isBTCChain: false,
+      isTestNet: false,
+      fallbackAddress: EmptyAddress,
+    },
+  ],
+  [
     ChainId.AVALANCHE,
     {
       chainId: ChainId.AVALANCHE,
       logo: AvalancheLogo,
       name: avalanche.name,
       caipNetwork: avalanche,
+      isEVMChain: true,
+      isSolanaChain: false,
+      isBTCChain: false,
+      isTestNet: false,
+      fallbackAddress: EmptyAddress,
+    },
+  ],
+  [
+    ChainId.ARBITRUM_ONE,
+    {
+      chainId: ChainId.ARBITRUM_ONE,
+      logo: ArbitrumLogo,
+      name: arbitrum.name,
+      caipNetwork: arbitrum,
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,

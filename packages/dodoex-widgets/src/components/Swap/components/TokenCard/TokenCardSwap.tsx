@@ -34,6 +34,7 @@ export interface TokenCardProps {
   showMaxBtn?: boolean;
   canClickBalance?: boolean;
   occupiedAddrs?: string[];
+  showAddrs?: string[];
   occupiedChainId?: TokenPickerProps['occupiedChainId'];
   onMaxClick?: (max: string) => void;
   token?: TokenInfo | null;
@@ -75,6 +76,7 @@ export function TokenCardSwap({
   failedReason,
   occupiedAddrs,
   occupiedChainId,
+  showAddrs,
   onInputFocus,
   onTokenClick,
   onInputChange,
@@ -319,6 +321,7 @@ export function TokenCardSwap({
         open={tokenPickerVisible}
         side={side}
         chainId={undefined}
+        showAddrs={showAddrs}
         occupiedAddrs={occupiedAddrs}
         occupiedChainId={occupiedChainId}
         defaultLoadBalance={defaultLoadBalance}

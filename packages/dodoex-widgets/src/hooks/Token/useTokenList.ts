@@ -129,7 +129,9 @@ export default function useTokenList({
     (tokens: TokenList) => {
       const includeKeySet = new Set<string>();
       return tokens.filter((e: TokenInfo) => {
-        if (e.chainId !== chainId) return false;
+        if (e.chainId !== chainId) {
+          return false;
+        }
         let isShow = true;
         if (showSet) {
           isShow = showSet.has(e.address.toLowerCase());

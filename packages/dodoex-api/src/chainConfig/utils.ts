@@ -1,12 +1,13 @@
 import type { CaipNetwork } from '@reown/appkit-common';
 import {
+  arbitrum,
   arbitrumSepolia,
+  avalanche,
   base,
   bitcoin,
   bsc,
   mainnet,
   polygon,
-  avalanche,
   sepolia,
   solana,
   solanaDevnet,
@@ -65,6 +66,13 @@ export function getCaipNetworkByChainId(chainId: ChainId): CaipNetwork {
     case ChainId.AVALANCHE:
       return {
         ...avalanche,
+        chainNamespace: 'eip155',
+        caipNetworkId: `eip155:${chainId}`,
+      };
+
+    case ChainId.ARBITRUM_ONE:
+      return {
+        ...arbitrum,
         chainNamespace: 'eip155',
         caipNetworkId: `eip155:${chainId}`,
       };

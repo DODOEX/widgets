@@ -311,7 +311,7 @@ msgstr "Liquidity"
 msgid "APR"
 msgstr "APR"
 
-#: src/components/TokenPicker/index.tsx:225
+#: src/components/TokenPicker/index.tsx:219
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
@@ -1201,7 +1201,7 @@ msgstr "Mining"
 msgid "Price Impact"
 msgstr "Price Impact"
 
-#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:53
+#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:55
 msgid "Select a token"
 msgstr "Select a token"
 
@@ -2024,7 +2024,7 @@ msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
 #: src/components/Swap/components/TokenCard/index.tsx:315
-#: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:248
+#: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:250
 msgid "Buy"
 msgstr "Buy"
 
@@ -2218,7 +2218,7 @@ msgid "Failed to add"
 msgstr "Failed to add"
 
 #: src/hooks/Swap/useExecuteSwap.ts:56
-#: src/hooks/Swap/useFetchRoutePrice.ts:344
+#: src/hooks/Swap/useFetchRoutePrice.ts:345
 msgid "Swap"
 msgstr "Swap"
 

@@ -11,6 +11,7 @@ export interface TokenPickerDialogProps {
   title?: React.ReactNode | string;
   occupiedAddrs?: string[];
   hiddenAddrs?: string[];
+  showAddrs?: string[];
   occupiedChainId?: TokenPickerProps['occupiedChainId'];
   onClose: DialogProps['onClose'];
   value?: TokenPickerProps['value'];
@@ -34,6 +35,7 @@ export function TokenPickerDialog(props: TokenPickerDialogProps) {
     onClose,
     occupiedAddrs,
     hiddenAddrs,
+    showAddrs,
     occupiedChainId,
     onTokenChange,
     side,
@@ -62,6 +64,7 @@ export function TokenPickerDialog(props: TokenPickerDialogProps) {
         occupiedAddrs={occupiedAddrs}
         occupiedChainId={occupiedChainId}
         hiddenAddrs={hiddenAddrs}
+        showAddrs={showAddrs}
         side={side}
         defaultLoadBalance={defaultLoadBalance}
         multiple={multiple}

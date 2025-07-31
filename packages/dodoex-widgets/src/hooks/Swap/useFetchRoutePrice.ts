@@ -193,6 +193,7 @@ export function useFetchRoutePrice({
               .dp(0, BigNumber.ROUND_DOWN)
               .toString(),
             source: 'jupiter',
+            simulate: estimateGas,
           }
         : {
             chainId: fromToken.chainId,
