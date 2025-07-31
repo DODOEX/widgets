@@ -255,10 +255,13 @@ export default function useExecution({
     },
     [
       evmAccount.address,
-      chainId,
-      setWaitingSubmit,
       evmProvider,
+      onTxSubmit,
+      onTxReverted,
       updateBlockNumber,
+      chainId,
+      onTxFail,
+      onTxSuccess,
       queryClient,
     ],
   );
@@ -282,6 +285,7 @@ export default function useExecution({
       const reportInfo = {
         brief,
         subtitle,
+        metadata,
         ...mixpanelProps,
       };
 
@@ -443,7 +447,14 @@ export default function useExecution({
         }
       });
     },
-    [chainId, setWaitingSubmit, updateBlockNumber, queryClient],
+    [
+      onTxSubmit,
+      onTxSuccess,
+      updateBlockNumber,
+      queryClient,
+      onTxFail,
+      chainId,
+    ],
   );
 
   /**
