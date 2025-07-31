@@ -216,7 +216,7 @@ msgstr ""
 msgid "Connect to {0} wallet"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:340
+#: src/components/Swap/components/ReviewDialog.tsx:341
 #: src/components/Swap/index.tsx:464
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
@@ -381,11 +381,11 @@ msgstr ""
 msgid "Higher than dynamic slippage"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:275
+#: src/components/Swap/components/ReviewDialog.tsx:276
 msgid "Estimated service provider fees"
 msgstr "预计服务供应商费用"
 
-#: src/components/Swap/components/ReviewDialog.tsx:273
+#: src/components/Swap/components/ReviewDialog.tsx:274
 msgid "Basic Fee"
 msgstr "基础手续费"
 
@@ -478,7 +478,7 @@ msgid "Go back"
 msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:415
-#: src/components/Swap/components/ReviewDialog.tsx:360
+#: src/components/Swap/components/ReviewDialog.tsx:361
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/index.tsx:123
 msgid "Slippage"
 msgstr "滑点"
@@ -694,7 +694,7 @@ msgstr "在"
 msgid "Suitable for stablecoins with price fluctuations within 2%"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:363
+#: src/components/Swap/components/ReviewDialog.tsx:364
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
 
@@ -777,7 +777,7 @@ msgstr ""
 msgid "Connecting..."
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:303
+#: src/components/Swap/components/ReviewDialog.tsx:304
 msgid "Additional Fee"
 msgstr "额外手续费"
 
@@ -1054,7 +1054,7 @@ msgid "Ratio Settings"
 msgstr ""
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:148
-#: src/components/Swap/components/ReviewDialog.tsx:449
+#: src/components/Swap/components/ReviewDialog.tsx:450
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:367
 msgid "Confirming"
 msgstr "确认中"
@@ -1084,7 +1084,7 @@ msgid "Confirm Cross Chain"
 msgstr "确认跨链交易"
 
 #. js-lingui-explicit-id
-#: src/components/Swap/components/ReviewDialog.tsx:427
+#: src/components/Swap/components/ReviewDialog.tsx:428
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 
@@ -1197,7 +1197,7 @@ msgstr ""
 msgid "Mining"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:337
+#: src/components/Swap/components/ReviewDialog.tsx:338
 msgid "Price Impact"
 msgstr "价格冲击"
 
@@ -1346,7 +1346,7 @@ msgstr ""
 msgid "Can the pool price be adjusted?"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:246
+#: src/components/Swap/components/ReviewDialog.tsx:247
 msgid "Swap Detail"
 msgstr "交易详情"
 
@@ -1437,7 +1437,7 @@ msgstr "代币授权"
 msgid "Share"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:306
+#: src/components/Swap/components/ReviewDialog.tsx:307
 msgid "Additional routing fees set by the Widget user"
 msgstr "由 Widget 设置的额外路由费用"
 
@@ -1855,7 +1855,7 @@ msgstr ""
 msgid "AMM V2 Position"
 msgstr ""
 
-#: src/components/Swap/components/ReviewDialog.tsx:451
+#: src/components/Swap/components/ReviewDialog.tsx:452
 msgid "Confirm swap"
 msgstr "确认交易"
 
@@ -2218,7 +2218,7 @@ msgid "Failed to add"
 msgstr ""
 
 #: src/hooks/Swap/useExecuteSwap.ts:56
-#: src/hooks/Swap/useFetchRoutePrice.ts:375
+#: src/hooks/Swap/useFetchRoutePrice.ts:360
 msgid "Swap"
 msgstr "交易"
 

@@ -1,9 +1,4 @@
-import {
-  Message,
-  Transaction,
-  VersionedMessage,
-  VersionedTransaction,
-} from '@solana/web3.js';
+import { Message, Transaction, VersionedTransaction } from '@solana/web3.js';
 
 export function constructSolanaRouteTransaction({ data }: { data: string }) {
   // 解码 base64 数据
@@ -51,16 +46,11 @@ export function constructSolanaRouteTransaction({ data }: { data: string }) {
   // 判断类型
   let transaction;
   try {
-    if (serializedTransaction[0] === 0 && serializedTransaction[1] === 128) {
-      // versioned
-      const message = VersionedMessage.deserialize(
-        serializedTransaction.slice(1),
-      );
-      transaction = new VersionedTransaction(message);
-    } else {
-      // legacy
-      transaction = Transaction.from(serializedTransaction);
-    }
+    // versioned
+    // const message = VersionedMessage.deserialize(
+    //   serializedTransaction.slice(1),
+    // );
+    transaction = VersionedTransaction.deserialize(serializedTransaction);
   } catch (e) {
     throw new Error(
       `Failed to deserialize transaction: ${(e as Error).message}
@@ -74,15 +64,15 @@ export function constructSolanaRouteTransaction({ data }: { data: string }) {
   }
 
   // 结构校验
-  if (transaction instanceof VersionedTransaction) {
-    if (!transaction.message || !transaction.message.header) {
-      throw new Error('Invalid versioned transaction structure');
-    }
-  } else if (transaction instanceof Transaction) {
-    if (!transaction.recentBlockhash) {
-      throw new Error('Invalid legacy transaction structure');
-    }
-  }
+  // if (transaction instanceof VersionedTransaction) {
+  //   if (!transaction.message || !transaction.message.header) {
+  //     throw new Error('Invalid versioned transaction structure');
+  //   }
+  // } else if (transaction instanceof Transaction) {
+  //   if (!transaction.recentBlockhash) {
+  //     throw new Error('Invalid legacy transaction structure');
+  //   }
+  // }
 
   return transaction;
 }

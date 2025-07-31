@@ -1,6 +1,6 @@
 import { ChainId } from '@dodoex/api';
 import { t } from '@lingui/macro';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import React, { useCallback, useMemo } from 'react';
@@ -354,66 +354,58 @@ export function useFetchRoutePrice({
     ],
   );
 
-  const executeSolanaSwap = useMutation({
-    mutationFn: async (subtitle: React.ReactNode) => {
-      if (
-        !data.rawBrief ||
-        !data.rawBrief.data ||
-        !solanaWalletProvider ||
-        !solanaConnection
-      ) {
-        return;
-      }
-
-      // 解码 base64 数据
-      try {
-        const transaction = constructSolanaRouteTransaction({
-          data: data.rawBrief.data,
-        });
-
-        return submission.executeCustom({
-          brief: t`Swap`,
-          subtitle,
-          metadata: {
-            [MetadataFlag.swap]: true,
-          },
-          handler: async (params) => {
-            try {
-              const signature = await solanaWalletProvider.sendTransaction(
-                transaction,
-                solanaConnection,
-              );
-              params.onSubmit(signature);
-
-              const latestBlockhash =
-                await solanaConnection.getLatestBlockhash();
-              const confirmResult = await solanaConnection.confirmTransaction({
-                signature,
-                blockhash: latestBlockhash.blockhash,
-                lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
-              });
-
-              if (confirmResult.value.err) {
-                params.onError(confirmResult.value.err);
-                return;
-              }
-              params.onSuccess(signature);
-            } catch (error) {
-              console.error('wallet.sendTransaction execute:', error);
-              params.onError(error);
+  const executeSolanaSwap = useCallback(
+    async (subtitle: React.ReactNode) => {
+      submission.executeCustom({
+        brief: t`Swap`,
+        subtitle,
+        metadata: {
+          [MetadataFlag.swap]: true,
+        },
+        handler: async (params) => {
+          try {
+            if (
+              !data.rawBrief ||
+              !data.rawBrief.data ||
+              !solanaWalletProvider ||
+              !solanaConnection
+            ) {
+              throw new Error('Invalid solana swap params');
             }
-          },
-        });
-      } catch (error) {
-        console.error('Transaction deserialization error:', error);
-        throw error;
-      }
+            const transaction = constructSolanaRouteTransaction({
+              data: data.rawBrief.data,
+            });
+            const signature = await solanaWalletProvider.sendTransaction(
+              transaction,
+              solanaConnection,
+            );
+            params.onSubmit(signature);
+
+            const latestBlockhash = await solanaConnection.getLatestBlockhash();
+            const confirmResult = await solanaConnection.confirmTransaction({
+              signature,
+              blockhash: latestBlockhash.blockhash,
+              lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+            });
+
+            if (confirmResult.value.err) {
+              params.onError(confirmResult.value.err);
+              return;
+            }
+            params.onSuccess(signature);
+          } catch (error) {
+            console.error('wallet.sendTransaction execute:', error);
+            params.onError(error);
+          }
+        },
+      });
     },
-  });
+    [data.rawBrief, solanaConnection, solanaWalletProvider, submission],
+  );
 
   const executeSwap = useMemo(() => {
-    return isSolanaChain ? executeSolanaSwap.mutate : executeEVMSwap;
-  }, [executeEVMSwap, executeSolanaSwap.mutate, isSolanaChain]);
+    return isSolanaChain ? executeSolanaSwap : executeEVMSwap;
+  }, [executeEVMSwap, executeSolanaSwap, isSolanaChain]);
 
   return {
     status: isLoading

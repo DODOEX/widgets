@@ -190,7 +190,7 @@ export function ReviewDialog({
                   ? `$${formatReadableNumber({
                       input: curToFiatPrice,
                       showDecimals: 1,
-                    })}(${priceImpact}%)`
+                    })}`
                   : '-'}
               </LoadingSkeleton>
             </Box>
@@ -203,7 +203,7 @@ export function ReviewDialog({
               typography: 'h6',
             }}
           >
-            {`1 ${fromToken?.symbol}  = `}
+            1&nbsp;{fromToken?.symbol}&nbsp;=&nbsp;
             <LoadingSkeleton
               loading={loading}
               loadingProps={{
@@ -216,8 +216,9 @@ export function ReviewDialog({
                 ),
                 decimals: toToken?.decimals,
               })}
-            </LoadingSkeleton>{' '}
-            {`${toToken?.symbol}`}
+            </LoadingSkeleton>
+            &nbsp;
+            {toToken?.symbol}
           </Box>
         </Box>
 

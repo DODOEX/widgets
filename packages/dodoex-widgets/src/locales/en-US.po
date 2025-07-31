@@ -216,7 +216,7 @@ msgstr "Pay"
 msgid "Connect to {0} wallet"
 msgstr "Connect to {0} wallet"
 
-#: src/components/Swap/components/ReviewDialog.tsx:340
+#: src/components/Swap/components/ReviewDialog.tsx:341
 #: src/components/Swap/index.tsx:464
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
@@ -381,11 +381,11 @@ msgstr "Custom"
 msgid "Higher than dynamic slippage"
 msgstr "Higher than dynamic slippage"
 
-#: src/components/Swap/components/ReviewDialog.tsx:275
+#: src/components/Swap/components/ReviewDialog.tsx:276
 msgid "Estimated service provider fees"
 msgstr "Estimated service provider fees"
 
-#: src/components/Swap/components/ReviewDialog.tsx:273
+#: src/components/Swap/components/ReviewDialog.tsx:274
 msgid "Basic Fee"
 msgstr "Basic Fee"
 
@@ -478,7 +478,7 @@ msgid "Go back"
 msgstr "Go back"
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:415
-#: src/components/Swap/components/ReviewDialog.tsx:360
+#: src/components/Swap/components/ReviewDialog.tsx:361
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/index.tsx:123
 msgid "Slippage"
 msgstr "Slippage"
@@ -694,7 +694,7 @@ msgstr "on"
 msgid "Suitable for stablecoins with price fluctuations within 2%"
 msgstr "Suitable for stablecoins with price fluctuations within 2%"
 
-#: src/components/Swap/components/ReviewDialog.tsx:363
+#: src/components/Swap/components/ReviewDialog.tsx:364
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
@@ -777,7 +777,7 @@ msgstr "{0}"
 msgid "Connecting..."
 msgstr "Connecting..."
 
-#: src/components/Swap/components/ReviewDialog.tsx:303
+#: src/components/Swap/components/ReviewDialog.tsx:304
 msgid "Additional Fee"
 msgstr "Additional Fee"
 
@@ -1054,7 +1054,7 @@ msgid "Ratio Settings"
 msgstr "Ratio Settings"
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:148
-#: src/components/Swap/components/ReviewDialog.tsx:449
+#: src/components/Swap/components/ReviewDialog.tsx:450
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:367
 msgid "Confirming"
 msgstr "Confirming"
@@ -1084,7 +1084,7 @@ msgid "Confirm Cross Chain"
 msgstr "Confirm Cross Chain"
 
 #. js-lingui-explicit-id
-#: src/components/Swap/components/ReviewDialog.tsx:427
+#: src/components/Swap/components/ReviewDialog.tsx:428
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 
@@ -1197,7 +1197,7 @@ msgstr "Start Time"
 msgid "Mining"
 msgstr "Mining"
 
-#: src/components/Swap/components/ReviewDialog.tsx:337
+#: src/components/Swap/components/ReviewDialog.tsx:338
 msgid "Price Impact"
 msgstr "Price Impact"
 
@@ -1346,7 +1346,7 @@ msgstr "This pool must be initialized before you can add liquidity. To initializ
 msgid "Can the pool price be adjusted?"
 msgstr "Can the pool price be adjusted?"
 
-#: src/components/Swap/components/ReviewDialog.tsx:246
+#: src/components/Swap/components/ReviewDialog.tsx:247
 msgid "Swap Detail"
 msgstr "Swap Detail"
 
@@ -1437,7 +1437,7 @@ msgstr "Approve"
 msgid "Share"
 msgstr "Share"
 
-#: src/components/Swap/components/ReviewDialog.tsx:306
+#: src/components/Swap/components/ReviewDialog.tsx:307
 msgid "Additional routing fees set by the Widget user"
 msgstr "Additional routing fees set by the Widget user"
 
@@ -1855,7 +1855,7 @@ msgstr "Simple, full-range liquidity"
 msgid "AMM V2 Position"
 msgstr "AMM V2 Position"
 
-#: src/components/Swap/components/ReviewDialog.tsx:451
+#: src/components/Swap/components/ReviewDialog.tsx:452
 msgid "Confirm swap"
 msgstr "Confirm swap"
 
@@ -2218,7 +2218,7 @@ msgid "Failed to add"
 msgstr "Failed to add"
 
 #: src/hooks/Swap/useExecuteSwap.ts:56
-#: src/hooks/Swap/useFetchRoutePrice.ts:375
+#: src/hooks/Swap/useFetchRoutePrice.ts:360
 msgid "Swap"
 msgstr "Swap"
 
