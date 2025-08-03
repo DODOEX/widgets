@@ -20153,6 +20153,13 @@ const tokenList: (TokenInfo & {
     decimals: 18,
     chainId: 7000,
   },
+  {
+    name: 'ZetaChain ZRC20 USDC on Arbitrum One',
+    address: '0x0327f0660525b15Cdb8f1f5FBF0dD7Cd5Ba182aD',
+    symbol: 'USDC.ARB',
+    decimals: 6,
+    chainId: 7000,
+  },
 ];
 
 export default tokenList;

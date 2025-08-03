@@ -99,6 +99,13 @@ const testEnvTokenList: (TokenInfo & {
     chainId: 1399811149,
   },
   {
+    name: 'WSOL',
+    address: 'So11111111111111111111111111111111111111112',
+    symbol: 'WSOL',
+    decimals: 9,
+    chainId: 1399811149,
+  },
+  {
     name: 'USDC',
     address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
     symbol: 'USDC',

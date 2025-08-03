@@ -1,5 +1,29 @@
 import { Message, Transaction, VersionedTransaction } from '@solana/web3.js';
 
+function deserializeTransaction(serializedTransaction: Uint8Array) {
+  try {
+    // First try to deserialize as VersionedTransaction
+    console.log('try to deserialize as VersionedTransaction');
+    const versionedTransaction = VersionedTransaction.deserialize(
+      serializedTransaction,
+    );
+    return versionedTransaction;
+  } catch (versionedError) {
+    console.error('versionedError', versionedError);
+    try {
+      // If VersionedTransaction fails, try as regular Transaction
+      console.log('try to deserialize as regular Transaction');
+      const transaction = Transaction.from(serializedTransaction);
+      return transaction;
+    } catch (regularError) {
+      console.error('regularError', regularError);
+      throw new Error(
+        'Failed to deserialize transaction. Please check if the base64 string is a valid Solana transaction.',
+      );
+    }
+  }
+}
+
 export function constructSolanaRouteTransaction({ data }: { data: string }) {
   // 解码 base64 数据
 
@@ -44,24 +68,24 @@ export function constructSolanaRouteTransaction({ data }: { data: string }) {
   console.log('Actual buffer length:', serializedTransaction.length);
 
   // 判断类型
-  let transaction;
-  try {
-    // versioned
-    // const message = VersionedMessage.deserialize(
-    //   serializedTransaction.slice(1),
-    // );
-    transaction = VersionedTransaction.deserialize(serializedTransaction);
-  } catch (e) {
-    throw new Error(
-      `Failed to deserialize transaction: ${(e as Error).message}
-      Buffer head: ${Array.from(serializedTransaction.slice(0, 10))}
-      Buffer length: ${serializedTransaction.length}`,
-    );
-  }
+  // let transaction;
+  // try {
+  //   // versioned
+  //   // const message = VersionedMessage.deserialize(
+  //   //   serializedTransaction.slice(1),
+  //   // );
+  //   transaction = VersionedTransaction.deserialize(serializedTransaction);
+  // } catch (e) {
+  //   throw new Error(
+  //     `Failed to deserialize transaction: ${(e as Error).message}
+  //     Buffer head: ${Array.from(serializedTransaction.slice(0, 10))}
+  //     Buffer length: ${serializedTransaction.length}`,
+  //   );
+  // }
 
-  if (!transaction) {
-    throw new Error('Failed to create transaction');
-  }
+  // if (!transaction) {
+  //   throw new Error('Failed to create transaction');
+  // }
 
   // 结构校验
   // if (transaction instanceof VersionedTransaction) {
@@ -74,7 +98,7 @@ export function constructSolanaRouteTransaction({ data }: { data: string }) {
   //   }
   // }
 
-  return transaction;
+  return deserializeTransaction(serializedTransaction);
 }
 
 export function constructSolanaBridgeRouteTransaction({
