@@ -1284,6 +1284,7 @@ export function Swap({
               padding: theme.spacing(24, 20, 20),
             }}
             tokenQuery={toTokenQuery}
+            filterBySupportTargetChain
           />
 
           {/* Price Disp or Warnings  */}

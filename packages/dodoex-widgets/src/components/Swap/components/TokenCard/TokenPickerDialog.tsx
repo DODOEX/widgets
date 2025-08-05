@@ -23,6 +23,7 @@ export interface TokenPickerDialogProps {
   searchOtherAddress?: TokenPickerProps['searchOtherAddress'];
   chainId?: TokenPickerProps['chainId'];
   modal?: boolean;
+  filterBySupportTargetChain?: boolean;
 }
 export function TokenPickerDialog(props: TokenPickerDialogProps) {
   const { height, TokenPickerDialog } = useUserOptions();
@@ -45,6 +46,7 @@ export function TokenPickerDialog(props: TokenPickerDialogProps) {
     searchOtherAddress,
     chainId,
     modal,
+    filterBySupportTargetChain,
   } = props;
 
   return (
@@ -79,6 +81,7 @@ export function TokenPickerDialog(props: TokenPickerDialogProps) {
               }
             : undefined
         }
+        filterBySupportTargetChain={filterBySupportTargetChain}
       />
     </Dialog>
   );

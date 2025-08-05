@@ -2504,6 +2504,7 @@ export type Cross_Chain_Zetachain_TokenCrossChainTokenlist = {
   name?: Maybe<Scalars['String']['output']>;
   position?: Maybe<Scalars['Int']['output']>;
   slippage?: Maybe<Scalars['String']['output']>;
+  supportTargetChain?: Maybe<Scalars['Boolean']['output']>;
   symbol?: Maybe<Scalars['String']['output']>;
 };
 
@@ -3456,7 +3457,7 @@ export type Curve_Stableswap_NgPool = {
   poolType: Scalars['String']['output'];
   reserves?: Maybe<Array<Maybe<Curve_Stableswap_NgPoolReserve>>>;
   symbol: Scalars['String']['output'];
-  totalSupply: Scalars['BigInt']['output'];
+  totalSupply: Scalars['BigDecimal']['output'];
   traderCount: Scalars['BigInt']['output'];
   tvl: Scalars['BigDecimal']['output'];
   virtualPrice: Scalars['BigDecimal']['output'];
@@ -21615,6 +21616,7 @@ export type Cross_Chain_Zetachain_Token_ListQuery = {
     symbol?: string | null;
     decimals?: number | null;
     chainId?: number | null;
+    supportTargetChain?: boolean | null;
   } | null> | null;
 };
 
@@ -22892,6 +22894,7 @@ export const Cross_Chain_Zetachain_Token_ListDocument =
     symbol
     decimals
     chainId
+    supportTargetChain
   }
 }
     `) as unknown as TypedDocumentString<

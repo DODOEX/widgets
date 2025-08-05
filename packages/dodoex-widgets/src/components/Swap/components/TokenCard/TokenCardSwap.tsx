@@ -62,6 +62,7 @@ export interface TokenCardProps {
     ReturnType<typeof useWalletInfo>['getAppKitAccountByChainId']
   >;
   tokenQuery: UseQueryResult<{ balance: BigNumber } | null, Error>;
+  filterBySupportTargetChain?: boolean;
 }
 
 export function TokenCardSwap({
@@ -99,6 +100,7 @@ export function TokenCardSwap({
   setInputToAddress,
   account,
   tokenQuery,
+  filterBySupportTargetChain,
 }: TokenCardProps) {
   const theme = useTheme();
 
@@ -339,6 +341,7 @@ export function TokenCardSwap({
           }, transitionTime);
         }}
         modal={!notTokenPickerModal}
+        filterBySupportTargetChain={filterBySupportTargetChain}
       />
     </Box>
   );

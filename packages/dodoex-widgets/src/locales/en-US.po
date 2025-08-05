@@ -311,7 +311,7 @@ msgstr "Liquidity"
 msgid "APR"
 msgstr "APR"
 
-#: src/components/TokenPicker/index.tsx:219
+#: src/components/TokenPicker/index.tsx:222
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
@@ -1092,7 +1092,7 @@ msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgid "Volume (1D)"
 msgstr "Volume (1D)"
 
-#: src/components/Swap/index.tsx:1336
+#: src/components/Swap/index.tsx:1337
 msgid "Powered by ZUNO protocol"
 msgstr "Powered by ZUNO protocol"
 
@@ -1201,7 +1201,7 @@ msgstr "Mining"
 msgid "Price Impact"
 msgstr "Price Impact"
 
-#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:55
+#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:57
 msgid "Select a token"
 msgstr "Select a token"
 
@@ -2024,7 +2024,7 @@ msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
 #: src/components/Swap/components/TokenCard/index.tsx:315
-#: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:250
+#: src/components/Swap/components/TokenCard/TokenCardSwap.tsx:252
 msgid "Buy"
 msgstr "Buy"
 

@@ -34,6 +34,7 @@ export interface TokenPickerProps {
   /** like search pool address */
   searchOtherAddress?: (address: string) => Promise<JSX.Element | null>;
   sx?: BoxProps['sx'];
+  filterBySupportTargetChain?: boolean;
 }
 
 function Row({
@@ -116,6 +117,7 @@ export default function TokenPicker({
   searchPlaceholder,
   searchOtherAddress,
   sx,
+  filterBySupportTargetChain,
 }: TokenPickerProps) {
   const { chainList, selectChainId, setSelectChainId } =
     useSelectChainList(value);
@@ -139,6 +141,7 @@ export default function TokenPicker({
     visible,
     defaultLoadBalance,
     multiple,
+    filterBySupportTargetChain,
   });
 
   const containerRef = useRef<HTMLDivElement>(null);

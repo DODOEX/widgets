@@ -37,6 +37,7 @@ export const tokenGraphqlQuery = {
         symbol
         decimals
         chainId
+        supportTargetChain
       }
     }
   `),

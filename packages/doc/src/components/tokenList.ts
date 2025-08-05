@@ -5,6 +5,7 @@ const tokenList: (TokenInfo & {
   logo: string;
   position: number;
   slippage: number | null;
+  supportTargetChain?: boolean;
   // @ts-ignore
 })[] = [
   {

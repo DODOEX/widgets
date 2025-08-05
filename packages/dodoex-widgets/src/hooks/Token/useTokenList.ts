@@ -82,6 +82,7 @@ export default function useTokenList({
   visible,
   defaultLoadBalance,
   multiple,
+  filterBySupportTargetChain,
 }: {
   value?: TokenInfo | null | Array<TokenInfo>;
   onChange: (token: TokenInfo | Array<TokenInfo>, isOccupied: boolean) => void;
@@ -101,6 +102,7 @@ export default function useTokenList({
   visible?: boolean;
   defaultLoadBalance?: boolean;
   multiple?: boolean;
+  filterBySupportTargetChain?: boolean;
 }) {
   const [filter, setFilter] = useState('');
 
@@ -155,15 +157,28 @@ export default function useTokenList({
 
   const tokenList = useMemo(() => {
     return getNeedShowList(
-      tokenListOrigin.filter((token) => token.chainId === chainId),
+      tokenListOrigin.filter(
+        (token) =>
+          token.chainId === chainId &&
+          (filterBySupportTargetChain ? token.supportTargetChain : true),
+      ),
     );
-  }, [getNeedShowList, tokenListOrigin, chainId]);
+  }, [getNeedShowList, tokenListOrigin, chainId, filterBySupportTargetChain]);
 
   const popularTokenList = useMemo(() => {
     return getNeedShowList(
-      popularTokenListOrigin.filter((token) => token.chainId === chainId),
+      popularTokenListOrigin.filter(
+        (token) =>
+          token.chainId === chainId &&
+          (filterBySupportTargetChain ? token.supportTargetChain : true),
+      ),
     );
-  }, [getNeedShowList, popularTokenListOrigin, chainId]);
+  }, [
+    getNeedShowList,
+    popularTokenListOrigin,
+    chainId,
+    filterBySupportTargetChain,
+  ]);
 
   const onSelectToken = useCallback(
     (token: TokenInfo) => {

@@ -10,6 +10,7 @@ export interface TokenInfo {
   readonly tags?: string[];
   readonly extensions?: any;
   readonly side?: 'from' | 'to';
+  readonly supportTargetChain?: boolean;
 }
 export interface DefaultTokenInfo extends TokenInfo {
   amount?: number;
