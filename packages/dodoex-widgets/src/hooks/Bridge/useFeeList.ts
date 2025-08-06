@@ -15,7 +15,9 @@ export function useFeeList({ fees }: { fees: BridgeRouteI['fees'] }) {
               ? 'Source Chain Fees'
               : fee.type === 'destinationFee'
                 ? 'Destination Chain Fees'
-                : fee.type,
+                : fee.type === 'svmRentFee'
+                  ? 'Rent (only first transaction of SPL token)'
+                  : fee.type,
         value: feeBN.isFinite()
           ? feeBN.dp(4, BigNumber.ROUND_DOWN).toString()
           : null,

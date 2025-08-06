@@ -1702,7 +1702,7 @@ msgstr "My Pool Share"
 msgid "RPC node data exception"
 msgstr "RPC node data exception"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:240
+#: src/components/Bridge/BridgeRouteShortCard.tsx:246
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:133
 msgid "Estimated transaction time"
 msgstr "Estimated transaction time"

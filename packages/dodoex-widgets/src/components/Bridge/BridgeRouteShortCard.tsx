@@ -169,11 +169,17 @@ export default function BridgeRouteShortCard({
                         key={fee.key}
                         sx={{
                           display: 'flex',
-                          alignItems: 'center',
+                          alignItems: 'flex-start',
                           justifyContent: 'space-between',
                         }}
                       >
-                        <Box>{fee.title}</Box>
+                        <Box
+                          sx={{
+                            maxWidth: 150,
+                          }}
+                        >
+                          {fee.title}
+                        </Box>
                         {fee.isFree ? (
                           <Box
                             sx={{

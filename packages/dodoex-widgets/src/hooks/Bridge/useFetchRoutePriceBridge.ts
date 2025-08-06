@@ -17,8 +17,16 @@ destinationFee = destination chain Fee
 btcDepositFee = source chain Fee
 11:58
 btcDepositFee 只有btc 链为起始链才有
+
+// https://www.notion.so/dodotopia/V2-8-solana-USDC-A-Z-swap-246080d974e780439da0cbcca8284a2d?source=copy_link
+svmRentFee
      */
-  type: 'platformFee' | 'btcDepositFee' | 'destinationFee' | 'protocolFees';
+  type:
+    | 'platformFee'
+    | 'btcDepositFee'
+    | 'destinationFee'
+    | 'protocolFees'
+    | 'svmRentFee';
   chainId: number;
   token: string;
   amount: string | number;

@@ -1702,7 +1702,7 @@ msgstr ""
 msgid "RPC node data exception"
 msgstr "RPC节点异常"
 
-#: src/components/Bridge/BridgeRouteShortCard.tsx:240
+#: src/components/Bridge/BridgeRouteShortCard.tsx:246
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:133
 msgid "Estimated transaction time"
 msgstr "预计交易时长"

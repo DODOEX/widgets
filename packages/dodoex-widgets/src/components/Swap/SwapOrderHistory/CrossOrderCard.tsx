@@ -35,7 +35,7 @@ function Extend({
 }) {
   const theme = useTheme();
   const itemList = useMemo(() => {
-    return [
+    const list = [
       {
         title: 'Total time spent',
         value:
@@ -91,6 +91,25 @@ function Extend({
         value: `$${data.fees?.find((fee: any) => fee.type === 'platformFee')?.amountUSD ?? '-'}`,
       },
     ];
+
+    const svmRentFee = data.fees?.find((fee: any) => fee.type === 'svmRentFee');
+    if (svmRentFee) {
+      list.push({
+        title: (
+          <>
+            Rent
+            <QuestionTooltip
+              onlyHover
+              title="Rent (only first transaction of SPL token)"
+              ml={0}
+            />
+          </>
+        ),
+        value: `$${svmRentFee.amountUSD}`,
+      });
+    }
+
+    return list;
   }, [
     data.endTime,
     data.fees,
