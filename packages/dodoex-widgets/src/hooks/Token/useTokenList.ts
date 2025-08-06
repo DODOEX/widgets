@@ -160,17 +160,29 @@ export default function useTokenList({
       tokenListOrigin.filter(
         (token) =>
           token.chainId === chainId &&
-          (filterBySupportTargetChain ? token.supportTargetChain : true),
+          (filterBySupportTargetChain &&
+          occupiedChainId != null &&
+          occupiedChainId !== chainId
+            ? token.supportTargetChain
+            : true),
       ),
     );
-  }, [getNeedShowList, tokenListOrigin, chainId, filterBySupportTargetChain]);
+  }, [
+    getNeedShowList,
+    tokenListOrigin,
+    chainId,
+    filterBySupportTargetChain,
+    occupiedChainId,
+  ]);
 
   const popularTokenList = useMemo(() => {
     return getNeedShowList(
       popularTokenListOrigin.filter(
         (token) =>
           token.chainId === chainId &&
-          (filterBySupportTargetChain ? token.supportTargetChain : true),
+          (filterBySupportTargetChain && occupiedChainId !== chainId
+            ? token.supportTargetChain
+            : true),
       ),
     );
   }, [
@@ -178,6 +190,7 @@ export default function useTokenList({
     popularTokenListOrigin,
     chainId,
     filterBySupportTargetChain,
+    occupiedChainId,
   ]);
 
   const onSelectToken = useCallback(
