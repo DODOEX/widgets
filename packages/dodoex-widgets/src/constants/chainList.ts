@@ -28,7 +28,11 @@ import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg'
 import { ReactComponent as PolygonLogo } from '../assets/logo/networks/polygon.svg';
 import { ReactComponent as SolanaLogo } from '../assets/logo/networks/solana.svg';
 import { ReactComponent as ZetachainLogo } from '../assets/logo/networks/zetachain.svg';
-import { EmptyAddress } from './address';
+import {
+  btcFallbackAddress,
+  EmptyAddress,
+  solanaFallbackAddress,
+} from './address';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -157,7 +161,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isSolanaChain: true,
       isBTCChain: false,
       isTestNet: false,
-      fallbackAddress: EmptyAddress,
+      fallbackAddress: solanaFallbackAddress,
     },
   ],
   [
@@ -171,7 +175,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isSolanaChain: false,
       isBTCChain: true,
       isTestNet: false,
-      fallbackAddress: EmptyAddress,
+      fallbackAddress: btcFallbackAddress,
     },
   ],
 
@@ -229,7 +233,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isSolanaChain: true,
       isBTCChain: false,
       isTestNet: true,
-      fallbackAddress: 'CVVQYs9Pi3t4it4KFpm3hxk97uDA6AVzNVJvGQTPH17n',
+      fallbackAddress: solanaFallbackAddress,
     },
   ],
   [
@@ -243,7 +247,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isSolanaChain: false,
       isBTCChain: true,
       isTestNet: true,
-      fallbackAddress: 'tb1qcrd8yvatjzpxl0ew29jsps2z595jpwtm5mj38v',
+      fallbackAddress: btcFallbackAddress,
     },
   ],
 ]);
