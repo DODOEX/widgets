@@ -314,6 +314,16 @@ function RefundsTX({
                 fontWeight: 600,
               },
             }}
+            handleOpen={(evt) => {
+              evt.stopPropagation();
+              window.open(
+                getEtherscanPage(
+                  data.refundChainId as ChainId,
+                  data.refundHash,
+                  'tx',
+                ),
+              );
+            }}
           />
         ) : (
           <Box
