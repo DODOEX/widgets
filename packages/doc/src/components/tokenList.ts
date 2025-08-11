@@ -14,6 +14,7 @@ const tokenList: (TokenInfo & {
     symbol: 'slUSDT',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped stETH',
@@ -21,6 +22,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wstETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped stETH',
@@ -28,6 +30,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wstETH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Arbitrum',
@@ -35,6 +38,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARB',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'sBTC.BTC',
@@ -42,6 +46,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sBTC.BTC',
     decimals: 8,
     chainId: 7001,
+    supportTargetChain: true,
   },
   {
     name: 'WSOL',
@@ -49,6 +54,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOL',
     decimals: 9,
     chainId: 1399811151,
+    supportTargetChain: false,
   },
   {
     name: 'WETH',
@@ -56,6 +62,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WETH',
     decimals: 18,
     chainId: 7001,
+    supportTargetChain: true,
   },
   {
     name: 'ChainLink Token',
@@ -63,6 +70,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LINK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SOL.SOLANA',
@@ -70,6 +78,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOL.SOLANA',
     decimals: 9,
     chainId: 7001,
+    supportTargetChain: true,
   },
   {
     name: 'Trust Wallet',
@@ -77,6 +86,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TWT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ETH.ARBSEP',
@@ -84,6 +94,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH.ARBSEP',
     decimals: 18,
     chainId: 7001,
+    supportTargetChain: true,
   },
   {
     name: 'sETH.SEPOLIA',
@@ -91,6 +102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sETH.SEPOLIA',
     decimals: 18,
     chainId: 7001,
+    supportTargetChain: true,
   },
   {
     name: 'ETH',
@@ -98,6 +110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH',
     decimals: 18,
     chainId: 421614,
+    supportTargetChain: true,
   },
   {
     name: 'KAVA',
@@ -105,6 +118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KAVA',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ETH',
@@ -112,6 +126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH',
     decimals: 18,
     chainId: 11155111,
+    supportTargetChain: true,
   },
   {
     name: 'Syrup Token',
@@ -119,6 +134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SYRUP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'USDD',
@@ -126,6 +142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDD',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'TRAINING1',
@@ -133,6 +150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRAINING1',
     decimals: 6,
     chainId: 1399811151,
+    supportTargetChain: false,
   },
   {
     name: 'SOL',
@@ -140,6 +158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOL',
     decimals: 9,
     chainId: 1399811151,
+    supportTargetChain: true,
   },
   {
     name: 'Cardano Token',
@@ -147,6 +166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ADA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cosmos Token',
@@ -154,6 +174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ATOM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'USDC',
@@ -169,6 +190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC.ARBSEP',
     decimals: 6,
     chainId: 7001,
+    supportTargetChain: true,
   },
   {
     name: 'USDC.SEPOLIA',
@@ -176,6 +198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC.SEPOLIA',
     decimals: 6,
     chainId: 7001,
+    supportTargetChain: true,
   },
   {
     name: 'USDC',
@@ -183,6 +206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 421614,
+    supportTargetChain: true,
   },
   {
     name: 'USDC',
@@ -190,6 +214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 11155111,
+    supportTargetChain: true,
   },
   {
     name: 'SOL.SOL',
@@ -197,6 +222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOL.SOL',
     decimals: 9,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'WSOL',
@@ -204,7 +230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WSOL',
     decimals: 9,
     chainId: 1399811149,
-    supportTargetChain: true,
+    supportTargetChain: false,
   },
   {
     name: 'Polygon Ecosystem Token',
@@ -212,20 +238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POL',
     decimals: 18,
     chainId: 137,
-  },
-  {
-    name: 'USDT.ETH',
-    address: '0x7c8dDa80bbBE1254a7aACf3219EBe1481c6E01d7',
-    symbol: 'USDT.ETH',
-    decimals: 6,
-    chainId: 7000,
-  },
-  {
-    name: 'USDT',
-    address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-    symbol: 'USDT',
-    decimals: 6,
-    chainId: 1,
+    supportTargetChain: true,
   },
   {
     name: 'USDT',
@@ -236,11 +249,28 @@ const tokenList: (TokenInfo & {
     supportTargetChain: true,
   },
   {
+    name: 'USDT.ETH',
+    address: '0x7c8dDa80bbBE1254a7aACf3219EBe1481c6E01d7',
+    symbol: 'USDT.ETH',
+    decimals: 6,
+    chainId: 7000,
+    supportTargetChain: true,
+  },
+  {
+    name: 'USDT',
+    address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+    symbol: 'USDT',
+    decimals: 6,
+    chainId: 1,
+    supportTargetChain: true,
+  },
+  {
     name: 'USDC.POL',
     address: '0xfC9201f4116aE6b054722E10b98D904829b469c3',
     symbol: 'USDC.POL',
     decimals: 6,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'ETH.ETH',
@@ -248,6 +278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH.ETH',
     decimals: 18,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'ETH',
@@ -255,6 +286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: true,
   },
   {
     name: 'ZETA',
@@ -262,6 +294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZETA',
     decimals: 18,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'POL.POL',
@@ -269,6 +302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POL.POL',
     decimals: 18,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'USDT',
@@ -276,6 +310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: true,
   },
   {
     name: 'USDC',
@@ -283,6 +318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 8453,
+    supportTargetChain: true,
   },
   {
     name: 'USDC',
@@ -290,6 +326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: true,
   },
   {
     name: 'USDC.SOL',
@@ -297,6 +334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC.SOL',
     decimals: 6,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'USDC.BSC',
@@ -304,6 +342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC.BSC',
     decimals: 18,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'USDC.BASE',
@@ -311,6 +350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC.BASE',
     decimals: 6,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'ETH.BASE',
@@ -318,6 +358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH.BASE',
     decimals: 18,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'BNB',
@@ -325,6 +366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BNB',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: true,
   },
   {
     name: 'ETH',
@@ -332,6 +374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: true,
   },
   {
     name: 'BNB.BSC',
@@ -339,6 +382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BNB.BSC',
     decimals: 18,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'USDT',
@@ -346,6 +390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: true,
   },
   {
     name: 'SOL',
@@ -361,6 +406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: true,
   },
   {
     name: 'USDC',
@@ -368,6 +414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: true,
   },
   {
     name: 'USDC.ETH',
@@ -375,6 +422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC.ETH',
     decimals: 6,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'BTC',
@@ -382,6 +430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTC',
     decimals: 8,
     chainId: 8223,
+    supportTargetChain: true,
   },
   {
     name: 'USDC',
@@ -389,6 +438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 43114,
+    supportTargetChain: true,
   },
   {
     name: 'Frax',
@@ -396,6 +446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRAX',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Avalanche',
@@ -403,6 +454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AVAX',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: true,
   },
   {
     name: 'USD Coin',
@@ -410,6 +462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC.e',
     decimals: 6,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Tether USD',
@@ -417,6 +470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT.e',
     decimals: 6,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Ape-X',
@@ -424,6 +478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'APE-X',
     decimals: 9,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Avaware USD',
@@ -431,6 +486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AUSD',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'agEUR ',
@@ -438,6 +494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'agEUR',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'AlphaToken',
@@ -445,6 +502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALPHA.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: ' Ape In',
@@ -452,6 +510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'APEIN',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'AVAI ',
@@ -459,6 +518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AVAI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'GMX',
@@ -466,6 +526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMX',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'USDD',
@@ -473,6 +534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDD',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Ether',
@@ -480,6 +542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WETH.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Binance USD',
@@ -487,6 +550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BUSD.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped BTC',
@@ -494,13 +558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBTC.e',
     decimals: 8,
     chainId: 43114,
-  },
-  {
-    name: 'Tether',
-    address: '0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7',
-    symbol: 'USDt',
-    decimals: 6,
-    chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'TrueUSD',
@@ -508,6 +566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TUSD',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped AVAX',
@@ -515,6 +574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAVAX',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Dai Stablecoin',
@@ -522,6 +582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAI.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Verified USD',
@@ -529,6 +590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDV',
     decimals: 6,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Tether USD',
@@ -536,6 +598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT',
     decimals: 6,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'The Graph',
@@ -543,6 +606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GRT.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Maker',
@@ -550,6 +614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MKR.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'WOO Network',
@@ -557,6 +622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOO.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Mai Stablecoin',
@@ -564,6 +630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlWMAI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Staked GLP',
@@ -571,6 +638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sGLP',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar FIL',
@@ -578,6 +646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlFIL',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Ethos Reserve Note',
@@ -585,6 +654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ERN',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped BTC',
@@ -592,6 +662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBTC',
     decimals: 8,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Ether (Wormhole)',
@@ -599,6 +670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WETH',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Compound',
@@ -606,6 +678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COMP.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar USDT',
@@ -613,6 +686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlUSDT',
     decimals: 6,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Oath Token',
@@ -620,6 +694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OATH',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Binance USD',
@@ -627,6 +702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BUSD',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Staked ERN Vault',
@@ -634,6 +710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'stERN',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Orbs',
@@ -641,6 +718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ORBS',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Synthetix Network',
@@ -648,6 +726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SNX.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Frax Share',
@@ -655,6 +734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FXS',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Uniswap',
@@ -662,6 +742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNI.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped DEUS',
@@ -669,6 +750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlDEUS',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: '1inch',
@@ -676,6 +758,7 @@ const tokenList: (TokenInfo & {
     symbol: '1INCH.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Basic Attention',
@@ -683,6 +766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAT.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Sushi',
@@ -690,6 +774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SUSHI.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Synapse',
@@ -697,6 +782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SYN',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'JOE',
@@ -704,6 +790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JOE',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'MAI',
@@ -711,6 +798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'miMatic',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Binance',
@@ -718,6 +806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BNB',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Matic',
@@ -725,6 +814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MATIC',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: '0x',
@@ -732,6 +822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZRX.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'inSure DeFi',
@@ -739,6 +830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SURE',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'MoonRiver',
@@ -746,6 +838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MOVR',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Kyber Network Crystal',
@@ -753,6 +846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KNC',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'BENQI Liquid Staked AVAX',
@@ -760,6 +854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sAVAX',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Ankr Network',
@@ -767,6 +862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ANKR',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Bitcoin Avalanche Bridged (BTC.b)',
@@ -774,6 +870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTC.b',
     decimals: 8,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'UMA',
@@ -781,6 +878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UMA.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Stargate Finance',
@@ -788,6 +886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STG',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'BENQI',
@@ -795,6 +894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Magic Internet Money',
@@ -802,6 +902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIM',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Cartesi',
@@ -809,6 +910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CTSI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Spell',
@@ -816,6 +918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPELL',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Impossible Finance Launchpad',
@@ -823,6 +926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IDIA',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Beta Finance',
@@ -830,6 +934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BETA',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'DEAPCOIN',
@@ -837,6 +942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEP',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Step App',
@@ -844,6 +950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FITFI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Snowbank',
@@ -851,6 +958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SB',
     decimals: 9,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Spookyswap',
@@ -858,6 +966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOO',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'USD+',
@@ -865,6 +974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USD+',
     decimals: 6,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Genius',
@@ -872,6 +982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GENI',
     decimals: 9,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'XANA',
@@ -879,6 +990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XETA',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'EverRise',
@@ -886,6 +998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RISE',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'WXT Token',
@@ -893,6 +1006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WXT',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'YUSD Stablecoin',
@@ -900,6 +1014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YUSD',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'OpenOcean',
@@ -907,6 +1022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OOE',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Wonderland TIME',
@@ -914,6 +1030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TIME',
     decimals: 9,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Qi Dao',
@@ -921,6 +1038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'SpiceUSD',
@@ -928,6 +1046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDS',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'SpiceEURO',
@@ -935,6 +1054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EUROS',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Inflation Adjusted EURO',
@@ -942,6 +1062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'iEUROS',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'JPY Coin',
@@ -949,6 +1070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JPYC',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'ApeCoin',
@@ -956,6 +1078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'APE',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'MUX LP Token',
@@ -963,6 +1086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MUXLP',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Pangolin',
@@ -970,6 +1094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PNG',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'PenguinToken',
@@ -977,6 +1102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PEFI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Snowball',
@@ -984,6 +1110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SNOB',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Elk',
@@ -991,6 +1118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ELK',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Yak Token',
@@ -998,6 +1126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YAK',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'MAI Stablecoin',
@@ -1005,6 +1134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MAI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Blizz.Finance',
@@ -1012,6 +1142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BLZZ',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Crabada Token',
@@ -1019,6 +1150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRA',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Defrost Finance Token',
@@ -1026,6 +1158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MELT',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'CRAFT',
@@ -1033,6 +1166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRAFT',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Governance OHM',
@@ -1040,6 +1174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'gOHM',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Colony Token',
@@ -1047,6 +1182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CLY',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Defrost Finance H2O',
@@ -1054,6 +1190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'H2O',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Platypus',
@@ -1061,6 +1198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PTP',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Tomb Finance',
@@ -1068,6 +1206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TOMB',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Boo Finance Token',
@@ -1075,6 +1214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOOFI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Dragon Crypto Aurum',
@@ -1082,6 +1222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DCAU',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Vector',
@@ -1089,6 +1230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VTX',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Echidna',
@@ -1096,6 +1238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ECD',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Zoo Token',
@@ -1103,6 +1246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZOO',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Platypus USD',
@@ -1110,6 +1254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USP',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Dexalot',
@@ -1117,6 +1262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALOT',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'New Order',
@@ -1124,6 +1270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEWO',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Domani Protocol',
@@ -1131,6 +1278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEXTF',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Aave',
@@ -1138,6 +1286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AAVE.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'yearn.finance',
@@ -1145,6 +1294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YFI.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'DSLA Protocol',
@@ -1152,6 +1302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DSLA',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Avalaunch',
@@ -1159,6 +1310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XAVA',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Weble Ecosystem Token',
@@ -1166,6 +1318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WET',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'TerraClassicUSD',
@@ -1173,6 +1326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UST',
     decimals: 6,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Imperium Empires Token',
@@ -1180,6 +1334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IME',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Chikn Egg',
@@ -1187,6 +1342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EGG',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'THOR v2',
@@ -1194,6 +1350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'THOR',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Hon Token',
@@ -1201,6 +1358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HON',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'The Phoenix',
@@ -1208,6 +1366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FIRE',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'VaporNodes',
@@ -1215,6 +1374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VPND',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Yeti Finance',
@@ -1222,6 +1382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YETI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Chikn Feed',
@@ -1229,6 +1390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FEED',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Openblox Token',
@@ -1236,6 +1398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OBX',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Curve DAO Token',
@@ -1243,6 +1406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRV',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'HeroesChained',
@@ -1250,6 +1414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HeC',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Ripae AVAX',
@@ -1257,6 +1422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'pAVAX',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'SmarterCoin',
@@ -1264,6 +1430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SMRTr',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Snail Trail',
@@ -1271,6 +1438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SLIME',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'EVO',
@@ -1278,6 +1446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EVO',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Colony Avalanche Index',
@@ -1285,6 +1454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CAI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Magic',
@@ -1292,6 +1462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MAGIC',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'AllianceBlock Nexera',
@@ -1299,6 +1470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NXRA',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Trustswap',
@@ -1306,6 +1478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWAP.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Ether',
@@ -1313,6 +1486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped BNB (Wormhole)',
@@ -1320,6 +1494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBNB',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'MELD',
@@ -1327,6 +1502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MELD',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar USDC',
@@ -1334,6 +1510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlUSDC',
     decimals: 6,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'LiquidDriver',
@@ -1341,6 +1518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlLqdr',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped KNC',
@@ -1348,6 +1526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlKNC',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped FRAX',
@@ -1355,6 +1534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlFRAX',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar',
@@ -1362,6 +1542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AXL',
     decimals: 6,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Chainlink',
@@ -1369,6 +1550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LINK.e',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped wstETH',
@@ -1376,6 +1558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axl-wstETH',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Multichain',
@@ -1383,6 +1566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MULTI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Ampleforth',
@@ -1390,6 +1574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AMPL',
     decimals: 9,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Beefy.Finance',
@@ -1397,6 +1582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BIFI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Pendle',
@@ -1404,6 +1590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PENDLE',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Wagmi',
@@ -1411,6 +1598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAGMI',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Inflation Adjusted USDS',
@@ -1418,6 +1606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'iUSDS',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Statik',
@@ -1425,6 +1614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STATIK',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Husky',
@@ -1432,6 +1622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HUSKY',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Pizza',
@@ -1439,6 +1630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PIZZA',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'STEAK',
@@ -1446,6 +1638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STEAK',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'BiLira',
@@ -1453,6 +1646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRYB',
     decimals: 6,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'PLAYA3ULL GAMES',
@@ -1460,6 +1654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'w3ULL',
     decimals: 18,
     chainId: 43114,
+    supportTargetChain: false,
   },
   {
     name: 'Zerogoki Token',
@@ -1467,6 +1662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DODO bird',
@@ -1474,6 +1670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DODO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ICONOMI',
@@ -1481,6 +1678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ICN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Compound Sai (Legacy Dai)',
@@ -1488,6 +1686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cDAI',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Compound USD Coin',
@@ -1495,6 +1694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cUSDC',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Octo.fi',
@@ -1502,6 +1702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OCTO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'VesperToken',
@@ -1509,6 +1710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VSP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Akropolis',
@@ -1516,6 +1718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AKRO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BetProtocolToken',
@@ -1523,6 +1726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BEPRO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PickleToken',
@@ -1530,6 +1734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PICKLE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'k21.kanon.art',
@@ -1537,6 +1742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'K21',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AtariToken',
@@ -1544,6 +1750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ATRI',
     decimals: 0,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'EASY',
@@ -1551,6 +1758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EASY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tixl Token',
@@ -1558,6 +1766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TXL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'KIRA Network',
@@ -1565,6 +1774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KEX',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bella',
@@ -1572,6 +1782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BEL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Serum',
@@ -1579,6 +1790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SRM',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Ether',
@@ -1586,6 +1798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DerivaDAO',
@@ -1593,6 +1806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DDX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SuperFarm',
@@ -1600,6 +1814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SUPER',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Donut',
@@ -1607,6 +1822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DONUT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Muse',
@@ -1614,6 +1830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MUSE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FreewayToken',
@@ -1621,6 +1838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FWT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CudosToken',
@@ -1628,6 +1846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CUDOS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ocean Token',
@@ -1635,6 +1854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OCEAN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Zerogoki USD',
@@ -1642,6 +1862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'zUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NEAR',
@@ -1649,6 +1870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEAR',
     decimals: 24,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ALICE',
@@ -1656,6 +1878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALICE',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Boba Token',
@@ -1663,6 +1886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOBA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'YOP',
@@ -1670,6 +1894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YOP',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Compound Ether',
@@ -1677,6 +1902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cETH',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Biconomy Token',
@@ -1684,6 +1910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BICO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Be One',
@@ -1691,6 +1918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BEONE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Chi Gastoken by 1inch',
@@ -1698,6 +1926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CHI',
     decimals: 0,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Alchemist',
@@ -1705,6 +1934,7 @@ const tokenList: (TokenInfo & {
     symbol: '⚗️',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DAFI Token',
@@ -1712,6 +1942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAFI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped UST Token',
@@ -1719,6 +1950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UST',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CocosTokenV2',
@@ -1726,6 +1958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COCOS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Status Network Token',
@@ -1733,6 +1966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SNT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Integral',
@@ -1740,6 +1974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ITGR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Polkamon',
@@ -1747,6 +1982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PMON',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Nord Token',
@@ -1754,6 +1990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NORD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'STAKE',
@@ -1761,6 +1998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STAKE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GameStop.Finance',
@@ -1768,6 +2006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GME',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SAND',
@@ -1775,6 +2014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SAND',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PYR Token',
@@ -1782,6 +2022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PYR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GamyFi',
@@ -1789,6 +2030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GFX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SPLYT SHOPX',
@@ -1796,6 +2038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHOPX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Alien Worlds Trilium',
@@ -1803,6 +2046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TLM',
     decimals: 4,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'UniLend Finance Token',
@@ -1810,6 +2054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UFT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CFL365 Finance',
@@ -1817,6 +2062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CFL365',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Non-Fungible Yearn',
@@ -1824,6 +2070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ROOK',
@@ -1831,6 +2078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ROOK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SPANK',
@@ -1838,6 +2086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPANK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'UniBright',
@@ -1845,6 +2094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UBT',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Botto',
@@ -1852,6 +2102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOTTO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Crowns',
@@ -1859,6 +2110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CWS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DexKit',
@@ -1866,6 +2118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KIT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Swirge',
@@ -1873,6 +2126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: '88mph.app',
@@ -1880,6 +2134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MPH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Basic Attention Token',
@@ -1887,6 +2142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Swapfolio',
@@ -1894,6 +2150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWFL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: '$Poolz Finance',
@@ -1901,6 +2158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POOLZ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Unilayer',
@@ -1908,6 +2166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LAYER',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Highstreet Token',
@@ -1915,6 +2174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HIGH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Spell Token',
@@ -1922,6 +2182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPELL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Metal',
@@ -1929,6 +2190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MTL',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CC Token',
@@ -1936,6 +2198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'district0x',
@@ -1943,6 +2206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DNT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Compound',
@@ -1950,6 +2214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COMP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SHIBA INU',
@@ -1957,6 +2222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHIB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Furucombo',
@@ -1964,6 +2230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COMBO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped AR',
@@ -1971,6 +2238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAR',
     decimals: 12,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Emblem',
@@ -1978,6 +2246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EMB',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LoopringCoin V2',
@@ -1985,6 +2254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LRC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'yearn.finance',
@@ -1992,6 +2262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YFI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'O3 Swap Token',
@@ -1999,6 +2270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'O3',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Kattana',
@@ -2006,6 +2278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KTN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DeFiner',
@@ -2013,6 +2286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FIN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bifrost',
@@ -2020,6 +2294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BFC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BASv2',
@@ -2027,6 +2302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BASv2',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Statera',
@@ -2034,6 +2310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HYVE',
@@ -2041,6 +2318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HYVE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Feisty Doge NFT',
@@ -2048,6 +2326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CARD.STARTER',
@@ -2055,6 +2334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CARDS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Augur Reputation',
@@ -2062,6 +2342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cream',
@@ -2069,6 +2350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CREAM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'KardiaChain Token',
@@ -2076,6 +2358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KAI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Swerve DAO Token',
@@ -2083,6 +2366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWRV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Saitama Inu',
@@ -2090,6 +2374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SAITAMA',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TrustToken',
@@ -2097,6 +2382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRU',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Shopping.io',
@@ -2104,6 +2390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PowerTrade Fuel Token',
@@ -2111,6 +2398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PTF',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DOS Network Token',
@@ -2118,6 +2406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Universal Market Access',
@@ -2125,6 +2414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UMA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CLAIM ',
@@ -2132,6 +2422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CLAIM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Morpheus.Network',
@@ -2139,6 +2430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MRPH',
     decimals: 4,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NFTWiKi Token',
@@ -2146,6 +2438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFTK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CRO',
@@ -2153,6 +2446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRO',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Synthetix Network Token',
@@ -2160,6 +2454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SNX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FunFair',
@@ -2167,6 +2462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FUN',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HOPR Token',
@@ -2174,6 +2470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOPR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PAID Network',
@@ -2181,6 +2478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PAID',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hot Cross Token',
@@ -2188,6 +2486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOTCROSS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Binance USD',
@@ -2195,6 +2494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BitDAO',
@@ -2202,6 +2502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BIT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'bZx Protocol Token',
@@ -2209,6 +2510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BZRX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Monavale',
@@ -2216,6 +2518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MONA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'KEEP Token',
@@ -2223,6 +2526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KEEP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ChainGuardians Governance Token',
@@ -2230,6 +2534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CGG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ZAP TOKEN',
@@ -2237,6 +2542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZAP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Benchmark',
@@ -2244,6 +2550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MARK',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sushi',
@@ -2251,6 +2558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SUSHI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Valkyrie Network',
@@ -2258,6 +2566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VAL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Curve DAO Token',
@@ -2265,6 +2574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CyberFi Token',
@@ -2272,6 +2582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CFi',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FYOOZ',
@@ -2279,6 +2590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FYZ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Zilliqa',
@@ -2286,6 +2598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZIL',
     decimals: 12,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hut34 Entropy Token',
@@ -2293,6 +2606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ENTRP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Covalent Query Token',
@@ -2300,6 +2614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CQT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Render Token',
@@ -2307,6 +2622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RNDR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Kine Governance Token',
@@ -2314,6 +2630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KINE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Royale',
@@ -2321,6 +2638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ROYA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'copsfinance.com',
@@ -2328,6 +2646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COPS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped STA',
@@ -2335,6 +2654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WSTA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Compound Basic Attention Token',
@@ -2342,6 +2662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cBAT',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Maker',
@@ -2349,6 +2670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MKR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'renBTC',
@@ -2356,6 +2678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'renBTC',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NuCypher',
@@ -2363,6 +2686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NU',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Storj',
@@ -2370,6 +2694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STORJ',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped BTC',
@@ -2377,6 +2702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBTC',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: '@EthernityChain $ERN Token',
@@ -2384,6 +2710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ERN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'QuiverX',
@@ -2391,6 +2718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QRX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wise Token',
@@ -2398,6 +2726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WISE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Terra Virtua Kolect',
@@ -2405,6 +2734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TVK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aave Token',
@@ -2412,6 +2742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AAVE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wootrade Network',
@@ -2419,6 +2750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ferrum Network Token',
@@ -2426,6 +2758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRM',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NFTLAUNCH.network',
@@ -2433,6 +2766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFTL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TosDis',
@@ -2440,6 +2774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DIS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'OriginToken',
@@ -2447,6 +2782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OGN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Iron Bank EUR',
@@ -2454,6 +2790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ibEUR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tellor Tributes',
@@ -2461,6 +2798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FinNexus',
@@ -2468,6 +2806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FNX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wilder',
@@ -2475,6 +2814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WILD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped CRES',
@@ -2482,6 +2822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wCRES',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NameChangeToken',
@@ -2489,6 +2830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NCT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Armor',
@@ -2496,6 +2838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARMOR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TornadoCash',
@@ -2503,6 +2846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TORN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: '0chain',
@@ -2510,6 +2854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZCN',
     decimals: 10,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Growth',
@@ -2517,6 +2862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GRO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rangers Protocol Gas',
@@ -2524,6 +2870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RPG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ruler Protocol',
@@ -2531,6 +2878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RULER',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Lympo tokens',
@@ -2538,6 +2886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LYM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LooksRare Token',
@@ -2545,6 +2894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LOOKS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'mStable USD',
@@ -2552,6 +2902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'mUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bondly Token',
@@ -2559,6 +2910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BONDLY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Numeraire',
@@ -2566,6 +2918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NMR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Litentry',
@@ -2573,6 +2926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LIT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Chainlink Token',
@@ -2580,6 +2934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LINK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gemini Dollar',
@@ -2587,6 +2942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GUSD',
     decimals: 2,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Basis Gold Shares',
@@ -2594,6 +2950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BSGS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PowerLedger',
@@ -2601,6 +2958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POWR',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Akita Inu',
@@ -2608,6 +2966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AKITA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ethereum Name Service',
@@ -2615,6 +2974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ENS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Archer DAO Governance Token',
@@ -2622,6 +2982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARCH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tokemak',
@@ -2629,6 +2990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TOKE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Convex Token',
@@ -2636,6 +2998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CVX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tribe',
@@ -2643,6 +3006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRIBE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Woofy',
@@ -2650,6 +3014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOOFY',
     decimals: 12,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dai Stablecoin',
@@ -2657,6 +3022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'The Doge NFT',
@@ -2664,6 +3030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Habitat Token',
@@ -2671,6 +3038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HBT',
     decimals: 10,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Symbiosis',
@@ -2678,6 +3046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SIS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MMToken',
@@ -2685,6 +3054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Radicle',
@@ -2692,6 +3062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RAD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Digg',
@@ -2699,6 +3070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DIGG',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mask Network',
@@ -2706,6 +3078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MASK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BBS',
@@ -2713,6 +3086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BBS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Injective Protocol',
@@ -2720,6 +3094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'INJ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Voucher Ethereum',
@@ -2727,6 +3102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'vETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'dotmoovs',
@@ -2734,6 +3110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MOOV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aavegotchi GHST Token',
@@ -2741,6 +3118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GHST',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Pundi X Token',
@@ -2748,6 +3126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NPXS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Modefi',
@@ -2755,6 +3134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MOD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Immutable X',
@@ -2762,6 +3142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IMX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'izumi Token',
@@ -2769,6 +3150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'iZi',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: '0x Protocol Token',
@@ -2776,6 +3158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZRX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rari Governance Token',
@@ -2783,6 +3166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RGT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'IceToken',
@@ -2790,6 +3174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ICE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Balancer',
@@ -2797,6 +3182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aave',
@@ -2804,6 +3190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LEND',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Frax Share',
@@ -2811,6 +3198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FXS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Kishu Inu',
@@ -2818,6 +3206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KISHU',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'OptionRoom Token',
@@ -2825,6 +3214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ROOM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Antimatter.Finance Governance Token ',
@@ -2832,6 +3222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MATTER',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'OMGToken',
@@ -2839,6 +3230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OMG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'sUSD',
@@ -2846,6 +3238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Graph Token',
@@ -2853,6 +3246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GRT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ACoconut',
@@ -2860,6 +3254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'UniCrypt',
@@ -2867,6 +3262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNCX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AMLT Network',
@@ -2874,6 +3270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AMLT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Fei USD',
@@ -2881,6 +3278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FEI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ampleforth',
@@ -2888,6 +3286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AMPL',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BoringDAO',
@@ -2895,6 +3294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped MIR Token',
@@ -2902,6 +3302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'renBCH',
@@ -2909,6 +3310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'renBCH',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'VERA',
@@ -2916,6 +3318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VRA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bancor Network Token',
@@ -2923,6 +3326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BNT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AirSwap Token',
@@ -2930,6 +3334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AST',
     decimals: 4,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gnosis Token',
@@ -2937,6 +3342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GNO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MATH Token',
@@ -2944,6 +3350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MATH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'REVV',
@@ -2951,6 +3358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REVV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hegic',
@@ -2958,6 +3366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HEGIC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Compound 0x',
@@ -2965,6 +3374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cZRX',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'XY Oracle',
@@ -2972,6 +3382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XYO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HooToken',
@@ -2979,6 +3390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOO',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'oneDODO',
@@ -2986,6 +3398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'oneDODO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bandot',
@@ -2993,6 +3406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BDT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sai Stablecoin v1.0',
@@ -3000,6 +3414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'EnjinCoin',
@@ -3007,6 +3422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ENJ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Perpetual',
@@ -3014,6 +3430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PERP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PolkastarterToken',
@@ -3021,6 +3438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POLS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Unistake',
@@ -3028,6 +3446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNISTAKE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cartesi Token',
@@ -3035,6 +3454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CTSI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'pNetwork Token',
@@ -3042,6 +3462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PNT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Prosper',
@@ -3049,6 +3470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PROS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Melon Token',
@@ -3056,6 +3478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MLN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BaoToken',
@@ -3063,6 +3486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Olympus',
@@ -3070,6 +3494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OHM',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'iExec RLC Token',
@@ -3077,6 +3502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RLC',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Basis Gold',
@@ -3084,6 +3510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BSG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LGCY Network',
@@ -3091,6 +3518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LGCY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'renZEC',
@@ -3098,6 +3526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'renZEC',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Trace Token',
@@ -3105,6 +3534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRAC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Carbon',
@@ -3112,6 +3542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRBN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dether',
@@ -3119,6 +3550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DTH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LCX',
@@ -3126,6 +3558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LCX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FOAM',
@@ -3133,6 +3566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FOAM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ichi.farm',
@@ -3140,6 +3574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ICHI',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Audius',
@@ -3147,6 +3582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AUDIO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cellframe Token',
@@ -3154,6 +3590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CELL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'dYdX',
@@ -3161,6 +3598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DYDX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rubic',
@@ -3168,6 +3606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RBC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Float Bank',
@@ -3175,6 +3614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BANK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Polygon Ecosystem Token',
@@ -3182,6 +3622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Verified USD',
@@ -3189,6 +3630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDV',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dogs Of Elon',
@@ -3196,6 +3638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Uniswap Protocol Governance Token',
@@ -3203,6 +3646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HuskyToken',
@@ -3210,6 +3654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HUSKY',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Staker',
@@ -3217,6 +3662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STKR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Meta',
@@ -3224,6 +3670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MTA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SnowSwap',
@@ -3231,6 +3678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SNOW',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Offshift',
@@ -3238,6 +3686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XFT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Reef.finance',
@@ -3245,6 +3694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REEF',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SKALE',
@@ -3252,6 +3702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SKL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Compound Dai',
@@ -3259,6 +3710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cDAI',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Request',
@@ -3266,6 +3718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REQ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Badger',
@@ -3273,6 +3726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BADGER',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cap',
@@ -3280,6 +3734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CAP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aion Network',
@@ -3287,6 +3742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AION',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TrueUSD',
@@ -3294,6 +3750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BarnBridge Governance Token',
@@ -3301,6 +3758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOND',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TOPSWAP',
@@ -3308,6 +3766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TOPS',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'StormX',
@@ -3315,6 +3774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STMX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Linear Token',
@@ -3322,6 +3782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LINA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'InsurAce',
@@ -3329,6 +3790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'INSUR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Marlin POND',
@@ -3336,6 +3798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POND',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'API3',
@@ -3343,6 +3806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'API3',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rally',
@@ -3350,6 +3814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RLY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Kyber Network Crystal',
@@ -3357,6 +3822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KNC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aragon Network Token',
@@ -3364,6 +3830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ANT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Paint',
@@ -3371,6 +3838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PAINT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ETHA',
@@ -3378,6 +3846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETHA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DIAToken',
@@ -3385,6 +3854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DIA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: '0xBitcoin Token',
@@ -3392,6 +3862,7 @@ const tokenList: (TokenInfo & {
     symbol: '0xBTC',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SmartKey',
@@ -3399,6 +3870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Skey',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'dfohub',
@@ -3406,6 +3878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'buidl',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Amp',
@@ -3413,6 +3886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AMP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Maple Token',
@@ -3420,6 +3894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MPL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Konomi',
@@ -3427,6 +3902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KONO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BAC',
@@ -3434,6 +3910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'USDP',
@@ -3441,6 +3918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'B.20',
@@ -3448,6 +3926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'B20',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tokenlon',
@@ -3455,6 +3934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LON',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Exeedme',
@@ -3462,6 +3942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XED',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MCDEX Token',
@@ -3469,6 +3950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MCB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'OVR',
@@ -3476,6 +3958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OVR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AllianceBlock Token',
@@ -3483,6 +3966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALBT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped SZO',
@@ -3490,6 +3974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WSZO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Falcon',
@@ -3497,6 +3982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FNT',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rai.Finance ',
@@ -3504,6 +3990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Rai',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bird.Money',
@@ -3511,6 +3998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BIRD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GDT',
@@ -3518,6 +4006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GDT',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ethersocks',
@@ -3525,6 +4014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LABS Group',
@@ -3532,6 +4022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LABS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mithril Token',
@@ -3539,6 +4030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MITH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'https://unimex.network/',
@@ -3546,6 +4038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UMX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tidal Token',
@@ -3553,6 +4046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TIDAL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Stone Token',
@@ -3560,6 +4054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Meta Network',
@@ -3567,6 +4062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Meta',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Telcoin',
@@ -3574,6 +4070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TEL',
     decimals: 2,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AIOZ Network',
@@ -3581,6 +4078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AIOZ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Livepeer Token',
@@ -3588,6 +4086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LPT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Loom Network Token',
@@ -3595,6 +4094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LOOM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DAOstack',
@@ -3602,6 +4102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GEN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Frontier Token',
@@ -3609,6 +4110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRONT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Keep3rV1',
@@ -3616,6 +4118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KP3R',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Universe Finance Token',
@@ -3623,6 +4126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Celer Network Token',
@@ -3630,6 +4134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CELR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TrustSwap Token',
@@ -3637,6 +4142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWAP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FarSwap',
@@ -3644,6 +4150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FAR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'chiliZ',
@@ -3651,6 +4158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CHZ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Phala',
@@ -3658,6 +4166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PHA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bounce Token',
@@ -3665,6 +4174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Parsiq Token',
@@ -3672,6 +4182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PRQ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'decentral.games',
@@ -3679,6 +4190,7 @@ const tokenList: (TokenInfo & {
     symbol: '$DG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hokkaidu Inu',
@@ -3686,6 +4198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOKK',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: '1INCH Token',
@@ -3693,6 +4206,7 @@ const tokenList: (TokenInfo & {
     symbol: '1INCH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ampleforth Governance',
@@ -3700,6 +4214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FORTH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'APY Governance Token',
@@ -3707,6 +4222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'APY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'dego.finance',
@@ -3714,6 +4230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEGO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gas Token 2',
@@ -3721,6 +4238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GST2',
     decimals: 2,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Thales DAO Token',
@@ -3728,6 +4246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'THALES',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'RAMP DEFI',
@@ -3735,6 +4254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RAMP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped NXM',
@@ -3742,6 +4262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wNXM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Republic Protocol',
@@ -3749,6 +4270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'THORChain ETH.RUNE',
@@ -3756,6 +4278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RUNE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BAS',
@@ -3763,6 +4286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Frax',
@@ -3770,6 +4294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRAX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Reserve Rights',
@@ -3777,6 +4302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RSR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BDPToken',
@@ -3784,6 +4310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BDP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DefHold',
@@ -3791,6 +4318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEFO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Value Liquidity',
@@ -3798,6 +4326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VALUE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'vDODO Membership Token',
@@ -3805,6 +4334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'vDODO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Indexed',
@@ -3812,6 +4342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NDX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'renDOGE',
@@ -3819,6 +4350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'renDOGE',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'OPEN Governance Token',
@@ -3826,6 +4358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OPEN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MANTRA DAO',
@@ -3833,6 +4366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Compound Augur',
@@ -3840,6 +4374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cREP',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Decentr',
@@ -3847,6 +4382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Raiden Network Token',
@@ -3854,6 +4390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RDN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Nexo',
@@ -3861,6 +4398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEXO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DENT',
@@ -3868,6 +4406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DENT',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rarible',
@@ -3875,6 +4414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RARI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LUKSO Token',
@@ -3882,6 +4422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LYXe',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GET',
@@ -3889,6 +4430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GET',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mainframe Token',
@@ -3896,6 +4438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MFT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'UniTrade',
@@ -3903,6 +4446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRADE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aurora',
@@ -3910,6 +4454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AURORA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Pundi X Token',
@@ -3917,6 +4462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PUNDIX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dogelon',
@@ -3924,6 +4470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ELON',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BOOTY',
@@ -3931,6 +4478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOOTY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Zks',
@@ -3938,6 +4486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZKS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Beta Token',
@@ -3945,6 +4494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BETA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Decentraland',
@@ -3952,6 +4502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MANA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Klee Kai',
@@ -3959,6 +4510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KLEE',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Quant',
@@ -3966,6 +4518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QNT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Yield',
@@ -3973,6 +4526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YLD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'hoge.finance',
@@ -3980,6 +4534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOGE',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Yield Guild Games Token',
@@ -3987,6 +4542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YGG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Illuvium',
@@ -3994,6 +4550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ILV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gelato Network Token',
@@ -4001,6 +4558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GEL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Fear NFTs',
@@ -4008,6 +4566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FEAR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Spice',
@@ -4015,6 +4574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SFI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Matic Token',
@@ -4022,6 +4582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MATIC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ApeCoin',
@@ -4029,6 +4590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'APE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DAO Maker',
@@ -4036,6 +4598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Magic Internet Money',
@@ -4043,6 +4606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NFTX',
@@ -4050,6 +4614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFTX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ConstitutionDAO',
@@ -4057,6 +4622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PEOPLE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Polkadog',
@@ -4064,6 +4630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PDOG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aurox Token',
@@ -4071,6 +4638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'URUS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Chroma',
@@ -4078,6 +4646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CHR',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CoShi Inu',
@@ -4085,6 +4654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CoShi',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Adventure Gold',
@@ -4092,6 +4662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AGLD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Alchemix',
@@ -4099,6 +4670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALCX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'OddzToken',
@@ -4106,6 +4678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ODDZ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SuperRare',
@@ -4113,6 +4686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RARE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Axie Infinity Shard',
@@ -4120,6 +4694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AXS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Kuma Inu',
@@ -4127,6 +4702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KUMA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bluzelle Token',
@@ -4134,6 +4710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BLZ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DFYN Token',
@@ -4141,6 +4718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DFYN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gitcoin',
@@ -4148,6 +4726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GTC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Quickswap',
@@ -4155,6 +4734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QUICK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gala',
@@ -4162,6 +4742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GALA',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Smooth Love Potion',
@@ -4169,6 +4750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SLP',
     decimals: 0,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SOS',
@@ -4176,6 +4758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Fantom Token',
@@ -4183,6 +4766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FTM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Civilization',
@@ -4190,6 +4774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CIV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cinder Coin',
@@ -4197,6 +4782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CINDER',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FLOKI ',
@@ -4204,6 +4790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLOKI',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'XEN Crypto',
@@ -4211,6 +4798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XEN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Lido Staked Ether',
@@ -4218,6 +4806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'stETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'USDD',
@@ -4225,6 +4814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AltLayer',
@@ -4232,6 +4822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mountain Protocol USD',
@@ -4239,6 +4830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Solv BTC',
@@ -4246,6 +4838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SolvBTC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Autobet',
@@ -4253,6 +4846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BET',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Smart Layer Network Token',
@@ -4260,6 +4854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SLN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'UST (Wormhole) ',
@@ -4267,6 +4862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UST',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'StakeWise Staked Ether',
@@ -4274,6 +4870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'osETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'xSolvBTC',
@@ -4281,6 +4878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'xSolvBTC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'crvUSD',
@@ -4288,6 +4886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'crvUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Liquid Staked Ether',
@@ -4295,6 +4894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LsETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Functional BTC',
@@ -4302,6 +4902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FBTC',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mantle Staked Ether',
@@ -4309,6 +4910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'mETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HashKey Platform Token',
@@ -4316,6 +4918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HSK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MyShell',
@@ -4323,6 +4926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHELL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Eigen',
@@ -4330,6 +4934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EIGEN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'USDe',
@@ -4337,6 +4942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDe',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Mountain Protocol USD',
@@ -4344,6 +4950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wUSDM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'First Digital USD',
@@ -4351,6 +4958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FDUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'EUROe Stablecoin',
@@ -4358,6 +4966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EUROe',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'OKB',
@@ -4365,6 +4974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OKB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BNB',
@@ -4372,6 +4982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BNB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Toncoin',
@@ -4379,6 +4990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TONCOIN',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LEO Token',
@@ -4386,6 +4998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LEO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Lido DAO',
@@ -4393,6 +5006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LDO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Huobi',
@@ -4400,6 +5014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rocket Pool',
@@ -4407,6 +5022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RPL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Baby Doge Coin',
@@ -4414,6 +5030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BabyDoge',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BitTorrent',
@@ -4421,6 +5038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gate',
@@ -4428,6 +5046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tokenize Xchange',
@@ -4435,6 +5054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TKX',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PAX Gold',
@@ -4442,6 +5062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PAXG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'WhiteBIT Token',
@@ -4449,6 +5070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBT',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tether Gold',
@@ -4456,6 +5078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XAUt',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SingularityNET',
@@ -4463,6 +5086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AGIX',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Fetch.ai',
@@ -4470,6 +5094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FET',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BTSE Token',
@@ -4477,6 +5102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTSE',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DeFiChain',
@@ -4484,6 +5110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DFI',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Holo',
@@ -4491,6 +5118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Onyxcoin',
@@ -4498,6 +5126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XCN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bone ShibaSwap',
@@ -4505,6 +5134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BONE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rocket Pool ETH',
@@ -4512,6 +5142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'rETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Magic',
@@ -4519,6 +5150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MAGIC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Olympus',
@@ -4526,6 +5158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OHM',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Nexus Mutual',
@@ -4533,6 +5166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NXM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'IoTeX',
@@ -4540,6 +5174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IOTX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'STEPN',
@@ -4547,6 +5182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMT',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Synapse',
@@ -4554,6 +5190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SYN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ECOMI',
@@ -4561,6 +5198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OMI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Golem',
@@ -4568,6 +5206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GLM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gains Farm',
@@ -4575,6 +5214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GFARM2',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Convex CRV',
@@ -4582,6 +5222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cvxCRV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Waves',
@@ -4589,6 +5230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAVES',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Escoin',
@@ -4596,6 +5238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ELG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Liquity USD',
@@ -4603,6 +5246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ankr Network',
@@ -4610,6 +5254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ANKR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Celsius Network',
@@ -4617,6 +5262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CEL',
     decimals: 4,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Euro Tether',
@@ -4624,6 +5270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EURT',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Band Protocol',
@@ -4631,6 +5278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAND',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SwissBorg',
@@ -4638,6 +5286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CHSB',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Artificial Liquid Intelligence',
@@ -4645,6 +5294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Huobi BTC',
@@ -4652,6 +5302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HBTC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SSV Network',
@@ -4659,6 +5310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SSV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Reserve Rights',
@@ -4666,6 +5318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RSR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Blox',
@@ -4673,6 +5326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CDT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SXP',
@@ -4680,6 +5334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SXP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Multichain',
@@ -4687,6 +5342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MULTI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Evmos',
@@ -4694,6 +5350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WEVMOS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Alchemix USD',
@@ -4701,6 +5358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'alUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BORA',
@@ -4708,6 +5366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BORA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Everscale',
@@ -4715,6 +5374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WEVER',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Polymath',
@@ -4722,6 +5382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POLY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ribbon Finance',
@@ -4729,6 +5390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RBN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Metis',
@@ -4736,6 +5398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Metis',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'cUSDT',
@@ -4743,6 +5406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cUSDT',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Frax Ether',
@@ -4750,6 +5414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'frxETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Voyager VGX',
@@ -4757,6 +5422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VGX',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bolide',
@@ -4764,6 +5430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BLID',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Nest Protocol',
@@ -4771,6 +5438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEST',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dejitaru Tsuka',
@@ -4778,6 +5446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TSUKA',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'STASIS EURO',
@@ -4785,6 +5454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EURS',
     decimals: 2,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'APENFT',
@@ -4792,6 +5462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFT',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'VVS Finance',
@@ -4799,6 +5470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VVS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Kyber Network Crystal',
@@ -4806,6 +5478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KNC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Shardus',
@@ -4813,6 +5486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ULT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FLEX Coin',
@@ -4820,6 +5494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLEX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CoinEx',
@@ -4827,6 +5502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CET',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Saitama',
@@ -4834,6 +5510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SAITAMA',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PlayDapp',
@@ -4841,6 +5518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Creditcoin',
@@ -4848,6 +5526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'G-CRE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar',
@@ -4855,6 +5534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AXL',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Merit Circle',
@@ -4862,6 +5542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Stargate Finance',
@@ -4869,6 +5550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'sETH2',
@@ -4876,6 +5558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sETH2',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Function X',
@@ -4883,6 +5566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Nym',
@@ -4890,6 +5574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NYM',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aragon',
@@ -4897,6 +5582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ANT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Euler',
@@ -4904,6 +5590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EUL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'aelf',
@@ -4911,6 +5598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ELF',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Volt Inu',
@@ -4918,6 +5606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VOLT',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DeXe',
@@ -4925,6 +5614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEXE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Coin98',
@@ -4932,6 +5622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'C98',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Orbs',
@@ -4939,6 +5630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ORBS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DUSK Network',
@@ -4946,6 +5638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DUSK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'COTI',
@@ -4953,6 +5646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COTI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MX',
@@ -4960,6 +5654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MVL',
@@ -4967,6 +5662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MVL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PlatonCoin',
@@ -4974,6 +5670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLTC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Galxe',
@@ -4981,6 +5678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GAL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CEEK Smart VR',
@@ -4988,6 +5686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CEEK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'IQ',
@@ -4995,6 +5694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IQ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Centrifuge',
@@ -5002,6 +5702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wCFG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Humanscape',
@@ -5009,6 +5710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HUM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Prom',
@@ -5016,6 +5718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PROM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'dKargo',
@@ -5023,6 +5726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DKA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ankr Staked ETH',
@@ -5030,6 +5734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ankrETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hashflow',
@@ -5037,6 +5742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HFT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Vulcan Forged',
@@ -5044,6 +5750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PYR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Civic',
@@ -5051,6 +5758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CVC',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hermez Network',
@@ -5058,6 +5766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HEZ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Alchemy Pay',
@@ -5065,6 +5774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ACH',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'STP',
@@ -5072,6 +5782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STPT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'xSUSHI',
@@ -5079,6 +5790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'xSUSHI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MaidSafeCoin',
@@ -5086,6 +5798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'eMAID',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Staked Frax Ether',
@@ -5093,6 +5806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sfrxETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Liquity',
@@ -5100,6 +5814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LQTY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'e-Radix',
@@ -5107,6 +5822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'eXRD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tokamak Network',
@@ -5114,6 +5830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TON',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Fidu',
@@ -5121,6 +5838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FIDU',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Morpheus Network',
@@ -5128,6 +5846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MNW',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Veritaseum',
@@ -5135,6 +5854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VERI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Radio Caca',
@@ -5142,6 +5862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RACA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Kujira',
@@ -5149,6 +5870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KUJI',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Share',
@@ -5156,6 +5878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHR',
     decimals: 2,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BitMEX',
@@ -5163,6 +5886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BMEX',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'QuarkChain',
@@ -5170,6 +5894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QKC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dopex',
@@ -5177,6 +5902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DPX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MXC',
@@ -5184,6 +5910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MXC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NKN',
@@ -5191,6 +5918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NKN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Xido Finance',
@@ -5198,6 +5926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XIDO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'hi Dollar',
@@ -5205,6 +5934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Augur',
@@ -5212,6 +5942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REPv2',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Uquid Coin',
@@ -5219,6 +5950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UQC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Lyra Finance',
@@ -5226,6 +5958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LYRA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'StormX',
@@ -5233,6 +5966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STMX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ultra',
@@ -5240,6 +5974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UOS',
     decimals: 4,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'inSure DeFi',
@@ -5247,6 +5982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SURE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hunt',
@@ -5254,6 +5990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HUNT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TempleDAO',
@@ -5261,6 +5998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TEMPLE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hxro',
@@ -5268,6 +6006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HXRO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Efinity',
@@ -5275,6 +6014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EFI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Velas',
@@ -5282,6 +6022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VLX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Orchid Protocol',
@@ -5289,6 +6030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OXT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'UFO Gaming',
@@ -5296,6 +6038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UFO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dawn Protocol',
@@ -5303,6 +6046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAWN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dopex Rebate',
@@ -5310,6 +6054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'rDPX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Automata',
@@ -5317,6 +6062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ATA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aura Finance',
@@ -5324,6 +6070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AURA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aergo',
@@ -5331,6 +6078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AERGO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SingularityDAO',
@@ -5338,6 +6086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SDAO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Stader MaticX',
@@ -5345,6 +6094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MaticX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gods Unchained',
@@ -5352,6 +6102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GODS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Revain',
@@ -5359,6 +6110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REV',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'flexUSD',
@@ -5366,6 +6118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'flexUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Premia',
@@ -5373,6 +6126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PREMIA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Metadium',
@@ -5380,6 +6134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'META',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Strike',
@@ -5387,6 +6142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STRK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dola',
@@ -5394,6 +6150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOLA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sweatcoin (Sweat Economy)',
@@ -5401,6 +6158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWEAT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Origin Dollar',
@@ -5408,6 +6166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Utrust',
@@ -5415,6 +6174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UTK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'League of Kingdoms',
@@ -5422,6 +6182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LOKA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tap',
@@ -5429,6 +6190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XTP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SX Network',
@@ -5436,6 +6198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Railgun',
@@ -5443,6 +6206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RAIL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DFI.money',
@@ -5450,6 +6214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YFII',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Vega Protocol',
@@ -5457,6 +6222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VEGA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GMT Token',
@@ -5464,6 +6230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Opulous',
@@ -5471,6 +6238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OPUL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Coinmetro',
@@ -5478,6 +6246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XCM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mute',
@@ -5485,6 +6254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MUTE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'XSGD',
@@ -5492,6 +6262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XSGD',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ThunderCore',
@@ -5499,6 +6270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Doge Killer',
@@ -5506,6 +6278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LEASH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'XMON',
@@ -5513,6 +6286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XMON',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LeisureMeta',
@@ -5520,6 +6294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hifi Finance',
@@ -5527,6 +6302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HIFI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MAI',
@@ -5534,6 +6310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MAI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Altered State Machine',
@@ -5541,6 +6318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ASTO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AVINOC',
@@ -5548,6 +6326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AVINOC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'XCAD Network',
@@ -5555,6 +6334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XCAD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Zignaly',
@@ -5562,6 +6342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZIG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aura BAL',
@@ -5569,6 +6350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'auraBAL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Adshares',
@@ -5576,6 +6358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ADS',
     decimals: 11,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SONM',
@@ -5583,6 +6366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SNM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NuNet',
@@ -5590,6 +6374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NTX',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cratos',
@@ -5597,6 +6382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRTS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Instadapp ETH',
@@ -5604,6 +6390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'iETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Redacted',
@@ -5611,6 +6398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTRFLY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Manifold Finance',
@@ -5618,6 +6406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FOLD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Minted',
@@ -5625,6 +6414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MTD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cere Network',
@@ -5632,6 +6422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CERE',
     decimals: 10,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'RAI Finance',
@@ -5639,6 +6430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOFI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Umee',
@@ -5646,6 +6438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UMEE',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Shina Inu',
@@ -5653,6 +6446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AscendEx',
@@ -5660,6 +6454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ASD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Qredo',
@@ -5667,6 +6462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QRDO',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LTO Network',
@@ -5674,6 +6470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LTO',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Carry',
@@ -5681,6 +6478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'X2Y2',
@@ -5688,6 +6486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'X2Y2',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ARPA',
@@ -5695,6 +6494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARPA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'chrono.tech',
@@ -5702,6 +6502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TIME',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Efforce',
@@ -5709,6 +6510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOZX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Divi',
@@ -5716,6 +6518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DIVI',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Crust Network',
@@ -5723,6 +6526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRU',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'StarLink',
@@ -5730,6 +6534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STARL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'pSTAKE Finance',
@@ -5737,6 +6542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PSTAKE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'A Hunters Dream',
@@ -5744,6 +6550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CAW',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cult DAO',
@@ -5751,6 +6558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CULT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bounce',
@@ -5758,6 +6566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Auction',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Vela Exchange',
@@ -5765,6 +6574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DXP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'IDEX',
@@ -5772,6 +6582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IDEX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Victoria VR',
@@ -5779,6 +6590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Coinweb',
@@ -5786,6 +6598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CWEB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Circuits of Value',
@@ -5793,6 +6606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Coval',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CUBE',
@@ -5800,6 +6614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ITAMCUBE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SaitaRealty',
@@ -5807,6 +6622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SRLTY',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'sETH',
@@ -5814,6 +6630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Vaiot',
@@ -5821,6 +6638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VAI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rootkit',
@@ -5828,6 +6646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ROOT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Conic',
@@ -5835,6 +6654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CNC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Unifi Protocol DAO',
@@ -5842,6 +6662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNFI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Euro Coin',
@@ -5849,6 +6670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EUROC',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bean',
@@ -5856,6 +6678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BEAN',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bit2Me',
@@ -5863,6 +6686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'B2M',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Firmachain',
@@ -5870,6 +6694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FCT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'VitaDAO',
@@ -5877,6 +6702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VITA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Saito',
@@ -5884,6 +6710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SAITO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'StakeWise',
@@ -5891,6 +6718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWISE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LeverFi',
@@ -5898,6 +6726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LEVER',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Router Protocol',
@@ -5905,6 +6734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ROUTE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Swarm',
@@ -5912,6 +6742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BZZ',
     decimals: 16,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Clover Finance',
@@ -5919,6 +6750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CLV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Pluton',
@@ -5926,6 +6758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLU',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aeternity',
@@ -5933,6 +6766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'agEUR',
@@ -5940,6 +6774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'agEUR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Orion Protocol',
@@ -5947,6 +6782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ORN',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FEG',
@@ -5954,6 +6790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FEG',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'VIDT DAO',
@@ -5961,6 +6798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VIDT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Stafi',
@@ -5968,6 +6806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FIS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Unizen',
@@ -5975,6 +6814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZCX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Syntropy',
@@ -5982,6 +6822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NOIA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: "JPEG'd",
@@ -5989,6 +6830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JPEG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Oraichain',
@@ -5996,6 +6838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ORAI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'JasmyCoin',
@@ -6003,6 +6846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JASMY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Proton',
@@ -6010,6 +6854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XPR',
     decimals: 4,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'THORSwap',
@@ -6017,6 +6862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'THOR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Shiba Predator',
@@ -6024,6 +6870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QOM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Propy',
@@ -6031,6 +6878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PRO',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Vectorspace AI',
@@ -6038,6 +6886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VXV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mossland',
@@ -6045,6 +6894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MOC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Alpha Quark',
@@ -6052,6 +6902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AQT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CargoX',
@@ -6059,6 +6910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CXO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Reserve',
@@ -6066,6 +6918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RSV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Guild of Guardians',
@@ -6073,6 +6926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GOG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Refereum',
@@ -6080,6 +6934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RFR',
     decimals: 4,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Measurable Data',
@@ -6087,6 +6942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MDT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Forta',
@@ -6094,6 +6950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FORT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Streamr',
@@ -6101,6 +6958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DATA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'USDK',
@@ -6108,6 +6966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Talken',
@@ -6115,6 +6974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TALK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ferro',
@@ -6122,6 +6982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FER',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'cUNI',
@@ -6129,6 +6990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cUNI',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'RFOX',
@@ -6136,6 +6998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RFOX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DeGate',
@@ -6143,6 +7006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Boson Protocol',
@@ -6150,6 +7014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOSON',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Streamr XDATA',
@@ -6157,6 +7022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XDATA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ICHI',
@@ -6164,6 +7030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ICHI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sport and Leisure',
@@ -6171,6 +7038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SnL',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dogechain',
@@ -6178,6 +7046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TokenPocket Token',
@@ -6185,6 +7054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TPT',
     decimals: 4,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Stader',
@@ -6192,6 +7062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SelfKey',
@@ -6199,6 +7070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KEY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Astrafer',
@@ -6206,6 +7078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ASTRAFER',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HUSD',
@@ -6213,6 +7086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HUSD',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Elastos',
@@ -6220,6 +7094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ELA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Phantasma',
@@ -6227,6 +7102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOUL',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ambire AdEx',
@@ -6234,6 +7110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ADX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tracer DAO',
@@ -6241,6 +7118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TCR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ONBUFF',
@@ -6248,6 +7126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ONIT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Freeway',
@@ -6255,6 +7134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FWT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Harvest Finance',
@@ -6262,6 +7142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FARM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DEAPCOIN',
@@ -6269,6 +7150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cosplay Token',
@@ -6276,6 +7158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DeRace',
@@ -6283,6 +7166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DERC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Media Licensing Token',
@@ -6290,6 +7174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MLT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DeFi Pulse Index',
@@ -6297,6 +7182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DPI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Goldfinch',
@@ -6304,6 +7190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GFI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FUSION',
@@ -6311,6 +7198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'anyFSN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Presearch',
@@ -6318,6 +7206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PRE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'OATH',
@@ -6325,6 +7214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OATH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GNY',
@@ -6332,6 +7222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GNYerc20',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Frax Price Index Share',
@@ -6339,6 +7230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FPIS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'veCRV-DAO yVault',
@@ -6346,6 +7238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'yveCRV-DAO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Choise.com',
@@ -6353,6 +7246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CHO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Vite',
@@ -6360,6 +7254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VITE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Somnium Space CUBEs',
@@ -6367,6 +7262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CUBE',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Silo Finance',
@@ -6374,6 +7270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Silo',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'RMRK',
@@ -6381,6 +7278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'xcRMRK',
     decimals: 10,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DexTools',
@@ -6388,6 +7286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEXT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Revolution Populi',
@@ -6395,6 +7294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RVP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Berry',
@@ -6402,6 +7302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BERRY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MAP Protocol',
@@ -6409,6 +7310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MAP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GuildFi',
@@ -6416,6 +7318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GF',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sentinel Protocol',
@@ -6423,6 +7326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UPP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tamadoge',
@@ -6430,6 +7334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TAMA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Alkimi',
@@ -6437,6 +7342,7 @@ const tokenList: (TokenInfo & {
     symbol: '$ADS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dacxi',
@@ -6444,6 +7350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DACXI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ECOx',
@@ -6451,6 +7358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ECOx',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'dForce',
@@ -6458,6 +7366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DF',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Decentral Games',
@@ -6465,6 +7374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BOB',
@@ -6472,6 +7382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ooki',
@@ -6479,6 +7390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OOKI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'UniDex',
@@ -6486,6 +7398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNIDX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Pintu',
@@ -6493,6 +7406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PTU',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BitMart',
@@ -6500,6 +7414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BMC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Spookyswap',
@@ -6507,6 +7422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Genius',
@@ -6514,6 +7430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GENI',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Kleros',
@@ -6521,6 +7438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PNK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cornucopias',
@@ -6528,6 +7446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COPI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GYEN',
@@ -6535,6 +7454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GYEN',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Drep',
@@ -6542,6 +7462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DREP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Clearpool',
@@ -6549,6 +7470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CPOOL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Stake DAO',
@@ -6556,6 +7478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SDT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Yuan Chain Coin',
@@ -6563,6 +7486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YCC',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Fuse',
@@ -6570,6 +7494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FUSE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DXdao',
@@ -6577,6 +7502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DXD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Viberate',
@@ -6584,6 +7510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VIB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Handshake',
@@ -6591,6 +7518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WHNS',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SideShift',
@@ -6598,6 +7526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XAI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Neutrino Index Token',
@@ -6605,6 +7534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SOLVE',
@@ -6612,6 +7542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOLVE',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Anchor Protocol',
@@ -6619,6 +7550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ANC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Interest Compounding ETH Index',
@@ -6626,6 +7558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'icETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MixMarvel',
@@ -6633,6 +7566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Advertise Coin',
@@ -6640,6 +7574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ADCO',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Instadapp',
@@ -6647,6 +7582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'INST',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PolySwarm',
@@ -6654,6 +7590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NCT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ParaSwap',
@@ -6661,6 +7598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PSP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'RSS3',
@@ -6668,6 +7606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RSS3',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BigShortBets',
@@ -6675,6 +7614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BigSB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ternoa',
@@ -6682,6 +7622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CAPS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Panther Protocol',
@@ -6689,6 +7630,7 @@ const tokenList: (TokenInfo & {
     symbol: '$ZKP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Lossless',
@@ -6696,6 +7638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LSS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ShapeShift FOX',
@@ -6703,6 +7646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FOX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Octopus Network',
@@ -6710,6 +7654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OCT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'VeraOne',
@@ -6717,6 +7662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VRO',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bezoge Earth',
@@ -6724,6 +7670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BEZOGE',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Zipmex',
@@ -6731,6 +7678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZMT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hacken HAI',
@@ -6738,6 +7686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HAI',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Stratos',
@@ -6745,6 +7694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STOS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gearbox',
@@ -6752,6 +7702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GEAR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TriasLab',
@@ -6759,6 +7710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRIAS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DEUS Finance',
@@ -6766,6 +7718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEUS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Orbcity',
@@ -6773,6 +7726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ORB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BendDAO',
@@ -6780,6 +7734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BEND',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Arcblock',
@@ -6787,6 +7742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ABT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Qmall',
@@ -6794,6 +7750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QMALL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ParagonsDAO',
@@ -6801,6 +7758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PDT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Carbon Protocol',
@@ -6808,6 +7766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWTH',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Obyte',
@@ -6815,6 +7774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GBYTE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Shikoku',
@@ -6822,6 +7782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHIK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aleph.im',
@@ -6829,6 +7790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALEPH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Index Coop - ETH 2x Flexible Leverage Index',
@@ -6836,6 +7798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH2x-FLI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NUM Token',
@@ -6843,6 +7806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NUM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dego Finance',
@@ -6850,6 +7814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEGOV2',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HAPI',
@@ -6857,6 +7822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HAPI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ApeX',
@@ -6864,6 +7830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'APEX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Boosted LUSD',
@@ -6871,6 +7838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'bLUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Inverse Finance',
@@ -6878,6 +7846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'INV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'XANA',
@@ -6885,6 +7854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XETA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Strips Finance',
@@ -6892,6 +7862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STRP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Era Swap',
@@ -6899,6 +7870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ES',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Polkadex',
@@ -6906,6 +7878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PDEX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PowerPool Concentrated Voting Power',
@@ -6913,6 +7886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CVP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ANGLE',
@@ -6920,6 +7894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ANGLE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Decentral Games Governance',
@@ -6927,6 +7902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'xDG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'EverRise',
@@ -6934,6 +7910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RISE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Raini',
@@ -6941,6 +7918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RAINI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Kambria',
@@ -6948,6 +7926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KAT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ApeSwap',
@@ -6955,6 +7934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BANANA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Lunr',
@@ -6962,6 +7942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'eLunr',
     decimals: 4,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SWFTCOIN',
@@ -6969,6 +7950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWFTC',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Vita Inu',
@@ -6976,6 +7958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VINU',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'xFUND',
@@ -6983,6 +7966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'xFUND',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Swash',
@@ -6990,6 +7974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWASH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LockTrip',
@@ -6997,6 +7982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LOC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'OpenOcean',
@@ -7004,6 +7990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OOE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'IMPT',
@@ -7011,6 +7998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IMPT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Neutrino System Base',
@@ -7018,6 +8006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NSBT',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AMO Coin',
@@ -7025,6 +8014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AMO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Town Star',
@@ -7032,6 +8022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TOWN',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ZigZag',
@@ -7039,6 +8030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZZ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Luffy',
@@ -7046,6 +8038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LUFFY',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Peercoin',
@@ -7053,6 +8046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wPPC',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aladdin DAO',
@@ -7060,6 +8054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Quantstamp',
@@ -7067,6 +8062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QSP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Firebird',
@@ -7074,6 +8070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PKF',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Pendle',
@@ -7081,6 +8078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PENDLE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dora Factory',
@@ -7088,6 +8086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DORA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ForTube',
@@ -7095,6 +8094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FOR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'sBTC',
@@ -7102,6 +8102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sBTC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Index Cooperative',
@@ -7109,6 +8110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'INDEX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aventus',
@@ -7116,6 +8118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AVT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'KRYLL',
@@ -7123,6 +8126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KRL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Yieldification',
@@ -7130,6 +8134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YDF',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Paribus',
@@ -7137,6 +8142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PBX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bitrue Coin',
@@ -7144,6 +8150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CoW Protocol',
@@ -7151,6 +8158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COW',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Enjinstarter',
@@ -7158,6 +8166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EJS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CHEQD Network',
@@ -7165,6 +8174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CHEQ',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BOSagora',
@@ -7172,6 +8182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOA',
     decimals: 7,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ELYSIA',
@@ -7179,6 +8190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Crypterium',
@@ -7186,6 +8198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRPT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MagicCraft',
@@ -7193,6 +8206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MCRT',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'KOMPETE Token',
@@ -7200,6 +8214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KOMPETE',
     decimals: 10,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Realm',
@@ -7207,6 +8222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REALM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bitcoin Pro',
@@ -7214,6 +8230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTCP',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'XDEFI',
@@ -7221,6 +8238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XDEFI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'WXT Token',
@@ -7228,6 +8246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WXT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'OAX',
@@ -7235,6 +8254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OAX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BTU Protocol',
@@ -7242,6 +8262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTU',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Adappter',
@@ -7249,6 +8270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ADP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Woonkly Power',
@@ -7256,6 +8278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOOP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Aurox',
@@ -7263,6 +8286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'URUS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mancium',
@@ -7270,6 +8294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MANC',
     decimals: 2,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cirus',
@@ -7277,6 +8302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CIRUS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TE-FOOD',
@@ -7284,6 +8310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TONE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MintMe.com Coin',
@@ -7291,6 +8318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MINTME',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Unisocks',
@@ -7298,6 +8326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOCKS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Digits DAO',
@@ -7305,6 +8334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DIGITS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gamium',
@@ -7312,6 +8342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'EDEN',
@@ -7319,6 +8350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EDEN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Morpheus Labs',
@@ -7326,6 +8358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MITx',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Pleasure Coin',
@@ -7333,6 +8366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NSFW',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Across Protocol',
@@ -7340,6 +8374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ACX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mimo Governance',
@@ -7347,6 +8382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIMO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sidus',
@@ -7354,6 +8390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SIDUS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Reflexer Ungovernance',
@@ -7361,6 +8398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Robo Inu Finance',
@@ -7368,6 +8406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RBIF',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hourglass',
@@ -7375,6 +8414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAIT',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BLOCKv',
@@ -7382,6 +8422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VEE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sylo',
@@ -7389,6 +8430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SYLO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Voice',
@@ -7396,6 +8438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VOICE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mycelium',
@@ -7403,6 +8446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MYC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Blur',
@@ -7410,6 +8454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BLUR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'QASH',
@@ -7417,6 +8462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QASH',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Netvrk',
@@ -7424,6 +8470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NTVRK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'USDP Stablecoin',
@@ -7431,6 +8478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BiLira',
@@ -7438,6 +8486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRYB',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'USDT.SOL',
@@ -7445,6 +8494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT.SOL',
     decimals: 6,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'SpiceUSD',
@@ -7452,6 +8502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'sEUR',
@@ -7459,6 +8510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sEUR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CNH Tether',
@@ -7466,6 +8518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CNHT',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'XIDR',
@@ -7473,6 +8526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XIDR',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DefiDollar',
@@ -7480,6 +8534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ARTH',
@@ -7487,6 +8542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARTH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Coin98 Dollar',
@@ -7494,6 +8550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Inflation Adjusted USDS',
@@ -7501,6 +8558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'iUSDS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BondAppetite USD',
@@ -7508,6 +8566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDap',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Parallel',
@@ -7515,6 +8574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PAR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ZUSD',
@@ -7522,6 +8582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZUSD',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Float Protocol: Float',
@@ -7529,6 +8590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLOAT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'One Cash',
@@ -7536,6 +8598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ONC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dynamic Set Dollar',
@@ -7543,6 +8606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'New Zealand Dollar Stablecoin',
@@ -7550,6 +8614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NZDS',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Stand Cash',
@@ -7557,6 +8622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SAC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SpiceEURO',
@@ -7564,6 +8630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EUROS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Monerium EUR emoney',
@@ -7571,6 +8638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EURe',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CAD Coin',
@@ -7578,6 +8646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CADC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Empty Set Dollar',
@@ -7585,6 +8654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ESD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Inflation Adjusted EURO',
@@ -7592,6 +8662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'iEUROS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'unified Stable Dollar',
@@ -7599,6 +8670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'uSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Jarvis Synthetic Swiss Franc',
@@ -7606,6 +8678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'jCHF',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Celo Euro (Wormhole)',
@@ -7613,6 +8686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cEUR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'JPY Coin',
@@ -7620,6 +8694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JPYC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Stably USDS',
@@ -7627,6 +8702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDS',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Jarvis Synthetic British Pound',
@@ -7634,6 +8710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'jGBP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Jarvis Synthetic Euro',
@@ -7641,6 +8718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'jEUR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'JPY Coin v1',
@@ -7648,6 +8726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JPYC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'dForce USD',
@@ -7655,6 +8734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BABB',
@@ -7662,6 +8742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TRVL',
@@ -7669,6 +8750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRVL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Silent Notary',
@@ -7676,6 +8758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UBSN',
     decimals: 0,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Robonomics Network',
@@ -7683,6 +8766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XRT',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Global Coin Research',
@@ -7690,6 +8774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GCR',
     decimals: 4,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Timeless',
@@ -7697,6 +8782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LIT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sperax',
@@ -7704,6 +8790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sovryn',
@@ -7711,6 +8798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'eSOV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'New Order',
@@ -7718,6 +8806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEWO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hord',
@@ -7725,6 +8814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HORD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BoringDAO',
@@ -7732,6 +8822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BORING',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Zano',
@@ -7739,6 +8830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WZANO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DappRadar',
@@ -7746,6 +8838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RADAR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Domani Protocol',
@@ -7753,6 +8846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEXTF',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Polkaswap',
@@ -7760,6 +8854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PSWAP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Phonon DAO',
@@ -7767,6 +8862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PHONON',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SALT',
@@ -7774,6 +8870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SALT',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Defactor',
@@ -7781,6 +8878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FACTR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hop Protocol',
@@ -7788,6 +8886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SEDA Protocol',
@@ -7795,6 +8894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Celestial',
@@ -7802,6 +8902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Celt',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'sudoswap',
@@ -7809,6 +8910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SUDO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GensoKishi Metaverse',
@@ -7816,6 +8918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'QANplatform',
@@ -7823,6 +8926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QANX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Push Protocol',
@@ -7830,6 +8934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PUSH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sora',
@@ -7837,6 +8942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XOR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Spool DAO',
@@ -7844,6 +8950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPOOL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Luxurious Pro Network',
@@ -7851,6 +8958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LPNT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GroveCoin',
@@ -7858,6 +8966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GRV',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: "Don't Buy Inu",
@@ -7865,6 +8974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DBI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Offshift',
@@ -7872,6 +8982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XFT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'tBTC',
@@ -7879,6 +8990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'tBTC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'UwU Lend',
@@ -7886,6 +8998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UwU',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Echelon Prime',
@@ -7893,6 +9006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PRIME',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NvirWorld',
@@ -7900,6 +9014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Nvir',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sommelier',
@@ -7907,6 +9022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'somm',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DSLA Protocol',
@@ -7914,6 +9030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DSLA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Crypto Carbon Energy',
@@ -7921,6 +9038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CYCE',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SUKU',
@@ -7928,6 +9046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SUKU',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Quickswap',
@@ -7935,6 +9054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QUICK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'cWBTC',
@@ -7942,6 +9062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cWBTC',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'KOK',
@@ -7949,6 +9070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KOK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: "McPepe's",
@@ -7956,6 +9078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PEPES',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wasder',
@@ -7963,6 +9086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'handle.fi',
@@ -7970,6 +9094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FOREX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dash 2 Trade',
@@ -7977,6 +9102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'D2T',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Optimus AI',
@@ -7984,6 +9110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OPTIMUS',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'tomiNet',
@@ -7991,6 +9118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TOMI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FUBT Token',
@@ -7998,6 +9126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FUC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GOLCOIN',
@@ -8005,6 +9134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GOLC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'RigoBlock',
@@ -8012,6 +9142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GRG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gamma Strategies',
@@ -8019,6 +9150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GAMMA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sandclock',
@@ -8026,6 +9158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QUARTZ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sanin Inu',
@@ -8033,6 +9166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SANI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Kromatika',
@@ -8040,6 +9174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KROM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Yoshi.exchange',
@@ -8047,6 +9182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YOSHI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mogul Stars',
@@ -8054,6 +9190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STARS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'tBTC',
@@ -8061,6 +9198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TBTC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rai Reflex Index',
@@ -8068,6 +9206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RAI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'APWine Token',
@@ -8075,6 +9214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'APW',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BasketDAO DeFi Index',
@@ -8082,6 +9222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BDI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BiFi',
@@ -8089,6 +9230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BiFi',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Blocks Dao',
@@ -8096,6 +9238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BLOCKS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bridge Mutual',
@@ -8103,6 +9246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BMI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BlackPool Token',
@@ -8110,6 +9254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BPT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cigarette Token',
@@ -8117,6 +9262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CIG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'The DAOX Index',
@@ -8124,6 +9270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAOX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DELTA',
@@ -8131,6 +9278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DELTA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PieDAO',
@@ -8138,6 +9286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOUGH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Fancy Games',
@@ -8145,6 +9294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FNC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Fodl',
@@ -8152,6 +9302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FODL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FTX Token',
@@ -8159,6 +9310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FTX Token',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Invest Like Stakeborg Index',
@@ -8166,6 +9318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ILSI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MaidCoin',
@@ -8173,6 +9326,7 @@ const tokenList: (TokenInfo & {
     symbol: '$MAID',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MARS4',
@@ -8180,6 +9334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MARS4',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MASQ',
@@ -8187,6 +9342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MASQ',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Nifty League',
@@ -8194,6 +9350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFTL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Poly Ontology Wing Token',
@@ -8201,6 +9358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'pWING',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sake',
@@ -8208,6 +9366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SAK3',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Splintershards',
@@ -8215,6 +9374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'pSTAKE Staked Atom',
@@ -8222,6 +9382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'stkATOM',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'THORWallet Governance Token',
@@ -8229,6 +9390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TGT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Telos',
@@ -8236,6 +9398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TLOS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped NCG',
@@ -8243,6 +9406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WNCG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'XRUNE Token',
@@ -8250,6 +9414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XRUNE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'YAM',
@@ -8257,6 +9422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YAM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'YEL Token',
@@ -8264,6 +9430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YEL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Yearn Compounding veCRV yVault',
@@ -8271,6 +9438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'yvBOOST',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AllianceBlock Nexera',
@@ -8278,6 +9446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NXRA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Quiztok',
@@ -8285,6 +9454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QTCON',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tolar',
@@ -8292,6 +9462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TOL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Exorde',
@@ -8299,6 +9470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EXD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SPACE ID',
@@ -8306,6 +9478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ID',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Block Commerce Protocol',
@@ -8313,6 +9486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BCP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Buying.com',
@@ -8320,6 +9494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBUY',
     decimals: 2,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Alongside Crypto Market Index',
@@ -8327,6 +9502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AMKT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FEG',
@@ -8334,6 +9510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FEG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dimitra',
@@ -8341,6 +9518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DMTR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Nation3',
@@ -8348,6 +9526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NATION',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SmarDex',
@@ -8355,6 +9534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SDEX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Shiryo',
@@ -8362,6 +9542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Shiryo-Inu',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NFT Worlds',
@@ -8369,6 +9550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WRLD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'WeWay',
@@ -8376,6 +9558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WWY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ISKRA Token',
@@ -8383,6 +9566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ISK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HAVAH',
@@ -8390,6 +9574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HVH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Vivid Labs',
@@ -8397,6 +9582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VID',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Accumulate',
@@ -8404,6 +9590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WACME',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Shib Original Vision',
@@ -8411,6 +9598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Flashstake',
@@ -8418,6 +9606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLASH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'rETH2',
@@ -8425,6 +9614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'rETH2',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Image Generation AI',
@@ -8432,6 +9622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'imgnAI',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Swarm Markets',
@@ -8439,6 +9630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SMT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Newscrypto Coin',
@@ -8446,6 +9638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NWC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Blocksquare',
@@ -8453,6 +9646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BST',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NAGA',
@@ -8460,6 +9654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NGC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Jupiter',
@@ -8467,6 +9662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JUP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Quadrant Protocol',
@@ -8474,6 +9670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'eQUAD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'RocketX exchange',
@@ -8481,6 +9678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RVF',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CryptoGPT Token',
@@ -8488,6 +9686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GPT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bonk',
@@ -8495,6 +9694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Bonk',
     decimals: 5,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Glitch Protocol',
@@ -8502,6 +9702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GLCH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DIMO',
@@ -8509,6 +9710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DIMO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DogeGF',
@@ -8516,6 +9718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOGEGF',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Degen Zoo',
@@ -8523,6 +9726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DZOO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'unshETH',
@@ -8530,6 +9734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dione',
@@ -8537,6 +9742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Dione',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Pepe',
@@ -8544,6 +9750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PEPE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wojak',
@@ -8551,6 +9758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOJAK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GPEX',
@@ -8558,6 +9766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GPX',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Popcorn',
@@ -8565,6 +9774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CropBytes',
@@ -8572,6 +9782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CBX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GalleryCoin',
@@ -8579,6 +9790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GLR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SnailBrook',
@@ -8586,6 +9798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SNAIL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AirTor Protocol',
@@ -8593,6 +9806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ATOR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HEdpAY',
@@ -8600,6 +9814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Hdp.ф',
     decimals: 4,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Fief',
@@ -8607,6 +9822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FIEF',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DinoLFG',
@@ -8614,6 +9830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DINO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Undead Blocks',
@@ -8621,6 +9838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNDEAD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'USDT.BSC',
@@ -8628,6 +9846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT.BSC',
     decimals: 18,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'Galvan',
@@ -8635,6 +9854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IZE',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ribbit Meme',
@@ -8642,6 +9862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RIBBIT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Turbo',
@@ -8649,6 +9870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TURBO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BOB Token',
@@ -8656,6 +9878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GM',
@@ -8663,6 +9886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'gm',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Delysium',
@@ -8670,6 +9894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AGI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ben',
@@ -8677,6 +9902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BEN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Coin of the champions',
@@ -8684,6 +9910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: '0x0.ai: AI Smart Contract',
@@ -8691,6 +9918,7 @@ const tokenList: (TokenInfo & {
     symbol: '0x0',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FourCoin',
@@ -8698,6 +9926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FOUR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Milady Meme Coin',
@@ -8705,6 +9934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LADYS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'eUSD',
@@ -8712,6 +9942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'eUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Meme',
@@ -8719,6 +9950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MEME',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Volt Inu',
@@ -8726,6 +9958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VOLT',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Humans.ai',
@@ -8733,6 +9966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HEART',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SpaceChain (ERC-20)',
@@ -8740,6 +9974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GALA',
@@ -8747,6 +9982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GALA',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PUBLISH',
@@ -8754,6 +9990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEWS',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MELD',
@@ -8761,6 +9998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MELD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'POOH',
@@ -8768,6 +10006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POOH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Beacon ETH',
@@ -8775,6 +10014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wBETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Lybra Finance',
@@ -8782,6 +10022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LBR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sentivate',
@@ -8789,6 +10030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SNTVT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Crypto Carbon Energy',
@@ -8796,6 +10038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CYCE',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Swell Ethereum',
@@ -8803,6 +10046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'swETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Origin Ether',
@@ -8810,6 +10054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ethix',
@@ -8817,6 +10062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETHIX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Kitty Inu',
@@ -8824,6 +10070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'kitty',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BedlingtonTerrierToken',
@@ -8831,6 +10078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BETT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Coinbase Wrapped Staked ETH',
@@ -8838,6 +10086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cbETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TOKPIE',
@@ -8845,6 +10094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TKP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TENET',
@@ -8852,6 +10102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TENET',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Refund',
@@ -8859,6 +10110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RFD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Verse',
@@ -8866,6 +10118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VERSE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DUST Protocol',
@@ -8873,6 +10126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DUST',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Combo Token',
@@ -8880,6 +10134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COMBO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mysterium',
@@ -8887,6 +10142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MYST',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Smart MFG',
@@ -8894,6 +10150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MFG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'R',
@@ -8901,6 +10158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'R',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tempus',
@@ -8908,6 +10166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TEMP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Jesus Coin',
@@ -8915,6 +10174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JESUS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PointPay',
@@ -8922,6 +10182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PXP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rupiah Token',
@@ -8929,6 +10190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IDRT',
     decimals: 2,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Open Exchange Token',
@@ -8936,6 +10198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hotbit',
@@ -8943,6 +10206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HTB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cobak',
@@ -8950,6 +10214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CBK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hippocrat',
@@ -8957,6 +10222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HPO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'STEPN Green Satoshi Token on ETH',
@@ -8964,6 +10230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GST',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Mai Stablecoin',
@@ -8971,6 +10238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WMAI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Arbitrum',
@@ -8978,6 +10246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Ethos Reserve Note',
@@ -8985,6 +10254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ERN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar FIL',
@@ -8992,6 +10262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlFIL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bumper',
@@ -8999,6 +10270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BUMP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PoolTogether',
@@ -9006,6 +10278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POOL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ADreward',
@@ -9013,6 +10286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Maverick Protocol',
@@ -9020,6 +10294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MAV',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Nash',
@@ -9027,6 +10302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEX',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rollbit Coin',
@@ -9034,6 +10310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RLB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bad Idea AI',
@@ -9041,6 +10318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LORDS',
@@ -9048,6 +10326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LORDS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Pepe 2.0',
@@ -9055,6 +10334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PEPE2.0',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Koyo',
@@ -9062,6 +10342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KOY',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Unibot',
@@ -9069,6 +10350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNIBOT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CANTO',
@@ -9076,6 +10358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CANTO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Jim',
@@ -9083,6 +10366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'jim',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Osaka Protocol',
@@ -9090,6 +10374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OSAK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Not Financial Advice',
@@ -9097,6 +10382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFAi',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Robo Inu Finance',
@@ -9104,6 +10390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RBIF',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: '00 Token',
@@ -9111,6 +10398,7 @@ const tokenList: (TokenInfo & {
     symbol: '00',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'JumpToken',
@@ -9118,6 +10406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JMPT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Arkham',
@@ -9125,6 +10414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARKM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Propchain',
@@ -9132,6 +10422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PROPC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Grai',
@@ -9139,6 +10430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GRAI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Hamsters',
@@ -9146,6 +10438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HAMS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Banano',
@@ -9153,6 +10446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wBAN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mantle',
@@ -9160,6 +10454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MNT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Worldcoin',
@@ -9167,6 +10462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WLD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'WAGMI Game',
@@ -9174,6 +10470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAGMIGAMES',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TeraBlock',
@@ -9181,6 +10478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TBC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HarryPotterObamaSonic10Inu (ETH)',
@@ -9188,6 +10486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BITCOIN',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Metacade',
@@ -9195,6 +10494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MCADE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wagie Bot',
@@ -9202,6 +10502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WagieBot',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'MEVFree',
@@ -9209,6 +10510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MEVFree',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'STFX',
@@ -9216,6 +10518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STFX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tectum',
@@ -9223,6 +10526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TET',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GHO',
@@ -9230,6 +10534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GHO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Stader ETHx',
@@ -9237,6 +10542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETHx',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Mog Coin',
@@ -9244,6 +10550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Mog',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Energi',
@@ -9251,6 +10558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NRG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'X',
@@ -9258,6 +10566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'X',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bitrock',
@@ -9265,6 +10574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BITROCK',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'World Mobile Token',
@@ -9272,6 +10582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WMT',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PAAL AI',
@@ -9279,6 +10590,7 @@ const tokenList: (TokenInfo & {
     symbol: '$PAAL',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Skeb',
@@ -9286,6 +10598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SKEB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TENET',
@@ -9293,6 +10606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TENET',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cyberconnect',
@@ -9300,6 +10614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CYBER',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Impermax',
@@ -9307,6 +10622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IMX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Arc',
@@ -9314,6 +10630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Spheroid Universe',
@@ -9321,6 +10638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Roko Network',
@@ -9328,6 +10646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ROKO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bazaars',
@@ -9335,6 +10654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BZR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HarryPotterObamaPacMan8Inu',
@@ -9342,6 +10662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XRP',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Katana Inu',
@@ -9349,6 +10670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KATA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LootBot',
@@ -9356,6 +10678,7 @@ const tokenList: (TokenInfo & {
     symbol: '$LOOT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CPChain',
@@ -9363,6 +10686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CPC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sonar',
@@ -9370,6 +10694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ePING',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Neos Credits',
@@ -9377,6 +10702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NCR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'NONbeta',
@@ -9384,6 +10710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Blockchain Bets',
@@ -9391,6 +10718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BCB',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Nest Protocol',
@@ -9398,6 +10726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEST',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HMX',
@@ -9405,6 +10734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HMX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Castello Coin',
@@ -9412,6 +10742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CAST',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LeisureMeta',
@@ -9419,6 +10750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AimBot',
@@ -9426,6 +10758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AIMBOT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Short-term T-Bill Token',
@@ -9433,6 +10766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STBT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Base Protocol',
@@ -9440,6 +10774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BASE',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Autonolas',
@@ -9447,6 +10782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OLAS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Lybra',
@@ -9454,6 +10790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LBR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AVA',
@@ -9461,6 +10798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AVA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Meme Inu',
@@ -9468,6 +10806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MEME',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Veloce',
@@ -9475,6 +10814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VEXT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Tarot',
@@ -9482,6 +10822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TAROT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Connext',
@@ -9489,6 +10830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEXT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'blockbank',
@@ -9496,6 +10838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BBANK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'PayPal USD',
@@ -9503,6 +10846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PYUSD',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Maple',
@@ -9510,6 +10854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MPL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Real Smurf Cat',
@@ -9517,6 +10862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'шайлушай',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Prisma mkUSD',
@@ -9524,6 +10870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'mkUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Banana Gun',
@@ -9531,6 +10878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BANANA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Shiba Saga',
@@ -9538,6 +10886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHIA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Santiment Network',
@@ -9545,6 +10894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SAN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Foom',
@@ -9552,6 +10902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FOOM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SwissBorg',
@@ -9559,6 +10910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BORG',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wagmi',
@@ -9566,6 +10918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAGMI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wall Street Memes',
@@ -9573,6 +10926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WSM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Polaris Share',
@@ -9580,6 +10934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POLA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Fasttoken',
@@ -9587,6 +10942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FTN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AMATERASU OMIKAMI',
@@ -9594,6 +10950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OMIKAMI',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cream ETH 2',
@@ -9601,6 +10958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRETH2',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SquidGrow',
@@ -9608,6 +10966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SquidGrow',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CryptoPawCoin',
@@ -9615,6 +10974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CPRC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'B.Protocol',
@@ -9622,6 +10982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BPRO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped BNB (Wormhole)',
@@ -9629,6 +10990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBNB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'RonWeasleyGenslerSpyro11Inu',
@@ -9636,6 +10998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Menlo One',
@@ -9643,6 +11006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ONE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'inSure',
@@ -9650,6 +11014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SURE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'RonWeasleyDonaldTrumpTails30Inu',
@@ -9657,6 +11022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Big Time',
@@ -9664,6 +11030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BIGTIME',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HarryPotterTrumpPikachu10Inu',
@@ -9671,6 +11038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BNB',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'One Piece',
@@ -9678,6 +11046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OP',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HarryPotterObamaSatoshi1Meme',
@@ -9685,6 +11054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTC',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped AVAX (Wormhole)',
@@ -9692,6 +11062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAVAX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'XELS',
@@ -9699,6 +11070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XELS',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ZeusAiTrading',
@@ -9706,6 +11078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZAT',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Revest Finance',
@@ -9713,6 +11086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RVST',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'AQTIS',
@@ -9720,6 +11094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AQTIS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'eUSD',
@@ -9727,6 +11102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'eUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'peg-eUSD',
@@ -9734,6 +11110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'peUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Myria',
@@ -9741,6 +11118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MYRIA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Bazed Games',
@@ -9748,6 +11126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAZED',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'RabbitX',
@@ -9755,6 +11134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RBX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Voxel X Network',
@@ -9762,6 +11142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VXL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TokenSight',
@@ -9769,6 +11150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TKST',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Beefy',
@@ -9776,6 +11158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BIFI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'APF coin',
@@ -9783,6 +11166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'APFC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'TokenFi',
@@ -9790,6 +11174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TOKEN',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Prisma Governance Token',
@@ -9797,6 +11182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PRISMA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SENATE',
@@ -9804,6 +11190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SENATE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Memecoin',
@@ -9811,6 +11198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MEME',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Jex',
@@ -9818,6 +11206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JEX',
     decimals: 4,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Joe Coin',
@@ -9825,6 +11214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JOE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LimeWire',
@@ -9832,6 +11222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LMWR',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'holoride',
@@ -9839,6 +11230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RIDE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'BitcoinBrand',
@@ -9846,6 +11238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTCB',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Beam',
@@ -9853,6 +11246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BEAM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Shido',
@@ -9860,6 +11254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHIDO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GAMEE',
@@ -9867,6 +11262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMEE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Sipher',
@@ -9874,6 +11270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SIPHER',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Niza Global',
@@ -9881,6 +11278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Niza',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Cryptex Finance',
@@ -9888,6 +11286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CTX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Epik Prime',
@@ -9895,6 +11294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EPIK',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Electronic USD',
@@ -9902,6 +11302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'eUSD',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Dora Factory',
@@ -9909,6 +11310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DORA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'SophiaVerse',
@@ -9916,6 +11318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOPH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'HILO',
@@ -9923,6 +11326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HILO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Zenon',
@@ -9930,6 +11334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wZNN',
     decimals: 8,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'ResearchCoin',
@@ -9937,6 +11342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RSC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'IX Swap',
@@ -9944,6 +11350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IXS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Alephium',
@@ -9951,6 +11358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALPH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Penpie',
@@ -9958,6 +11366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PNP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Asymetrix',
@@ -9965,6 +11374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ASX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'CorgiAI',
@@ -9972,6 +11382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CORGIAI',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'GameSwift',
@@ -9979,6 +11390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GSWIFT',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Oath Token',
@@ -9986,6 +11398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OATH',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Staked ERN Vault',
@@ -9993,6 +11406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'stERN',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gridex',
@@ -10000,6 +11414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GDX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped DEUS',
@@ -10007,6 +11422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlDEUS',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LiquidDriver',
@@ -10014,6 +11430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlLqdr',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'axlTIA',
@@ -10021,6 +11438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlTIA',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Chainflip',
@@ -10028,6 +11446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLIP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'UltraSuperfuckingDementedgreendildoretardstrengthCoin',
@@ -10035,6 +11454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Polytrade',
@@ -10042,6 +11462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRADE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LiquidLayer',
@@ -10049,6 +11470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LILA',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'DODO',
@@ -10056,6 +11478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DODO',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Whiteheart',
@@ -10063,6 +11486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WHITE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Loom Network (NEW)',
@@ -10070,6 +11494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LOOM',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'LEOX',
@@ -10077,6 +11502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LEOX',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Flooring Lab Credit',
@@ -10084,6 +11510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Rejuve.AI',
@@ -10091,6 +11518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RJV',
     decimals: 6,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'FORE Protocol',
@@ -10098,6 +11526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FORE',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'KAP Games',
@@ -10105,6 +11534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KAP',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gold Fever Native Gold',
@@ -10112,6 +11542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NGL',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Gorilla',
@@ -10119,6 +11550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GORILLA',
     decimals: 9,
     chainId: 1,
+    supportTargetChain: false,
   },
   {
     name: 'Burger Swap',
@@ -10126,6 +11558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BURGER',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Injective Protocol',
@@ -10133,6 +11566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'INJ',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Badger Sett Badger',
@@ -10140,6 +11574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'bBADGER',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Unifi Token',
@@ -10147,6 +11582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNFI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Math',
@@ -10154,6 +11590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MATH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Crossfi',
@@ -10161,6 +11598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRFI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DOGGY',
@@ -10168,6 +11606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOGGY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Ditto',
@@ -10175,6 +11614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DITTO',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'RFOX',
@@ -10182,6 +11622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RFOX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ACoconut Bridged Token',
@@ -10189,6 +11630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped SZO',
@@ -10196,6 +11638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wSZO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Marhaba Network',
@@ -10203,6 +11646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MRHB',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BlackHole.BLACK Mapping Token',
@@ -10210,6 +11654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BLACK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Metahero',
@@ -10217,6 +11662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HERO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CryptoBlades Skill Token',
@@ -10224,6 +11670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SKILL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ETHPAD.network',
@@ -10231,6 +11678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETHPAD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bakery Token',
@@ -10238,6 +11686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAKE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CFL365 Finance',
@@ -10245,6 +11694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CFL365',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Mist',
@@ -10252,6 +11702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIST',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BSCPAD.com',
@@ -10259,6 +11710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BSCPAD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Poollotto.finance',
@@ -10266,6 +11718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BTCB Token',
@@ -10273,6 +11726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTCB',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'loser coin',
@@ -10280,6 +11734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'lowb',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Paris Saint-Germain',
@@ -10287,6 +11742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PSG',
     decimals: 2,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SafeMoon',
@@ -10294,6 +11750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SAFEMOON',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Doge King',
@@ -10301,6 +11758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOGEK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CryptoTycoon Token',
@@ -10308,6 +11766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CTT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Tokocrypto Token',
@@ -10315,6 +11774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TKO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SinCity Token',
@@ -10322,6 +11782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SIN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BELT Token',
@@ -10329,6 +11790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BELT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Pig Token',
@@ -10336,6 +11798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PIG',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SWGb',
@@ -10343,6 +11806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWGb',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CryptoZoon',
@@ -10350,6 +11814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZOON',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CoinsPaid',
@@ -10357,6 +11822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CPD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Multiplier',
@@ -10364,6 +11830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'bMXX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'leek token',
@@ -10371,6 +11838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'leek',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'My DeFi Pet Token',
@@ -10378,6 +11846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DPET',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CateCoin',
@@ -10385,6 +11854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CATE',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CrystalPowder',
@@ -10392,6 +11862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CLAIM ',
@@ -10399,6 +11870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CLAIM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ASET',
@@ -10406,6 +11878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ASET',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DNA',
@@ -10413,6 +11886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DNA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Impossible Decentralized Incubator Access',
@@ -10420,6 +11894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IDIA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Dice.finance Token',
@@ -10427,6 +11902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DICE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'XRP Token',
@@ -10434,6 +11910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XRP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BLINk',
@@ -10441,6 +11918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'blink',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ZooToken',
@@ -10448,6 +11926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Zoo',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Binance-Peg dForce Token',
@@ -10455,6 +11934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DF',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Automata',
@@ -10462,6 +11942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ATA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BSC Conflux',
@@ -10469,6 +11950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'bCFX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: '1INCH Token',
@@ -10476,6 +11958,7 @@ const tokenList: (TokenInfo & {
     symbol: '1INCH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'OVR',
@@ -10483,6 +11966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OVR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DekBox',
@@ -10490,6 +11974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Uniswap',
@@ -10497,6 +11982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'AlpaToken',
@@ -10504,6 +11990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALPA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Universe Finance Token [via ChainPort.io]',
@@ -10511,6 +11998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bitcoin Cash Token',
@@ -10518,6 +12006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BCH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Orbs',
@@ -10525,6 +12014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ORBS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Mars Ecosystem Token',
@@ -10532,6 +12022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XMS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Dai Token',
@@ -10539,6 +12030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'TOPS token',
@@ -10546,6 +12038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TOPS',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Kalmar Token',
@@ -10553,6 +12046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KALM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Highstreet Token',
@@ -10560,6 +12054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HIGH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ArgonToken',
@@ -10567,6 +12062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARGON',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'OG',
@@ -10574,6 +12070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OG',
     decimals: 2,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Ruler Protocol',
@@ -10581,6 +12078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RULER',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'AUTOv2',
@@ -10588,6 +12086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AUTO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'NUM Token',
@@ -10595,6 +12094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NUM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'VELASPAD.io',
@@ -10602,6 +12102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VLXPAD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'YFII.finance Token',
@@ -10609,6 +12110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YFII',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'NFTBomb Protocol',
@@ -10616,6 +12118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NBP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Prometeus',
@@ -10623,6 +12126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PROM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Beatsquare',
@@ -10630,6 +12134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BQR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Nabox Token',
@@ -10637,6 +12142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NABOX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'NFTWiKi Token',
@@ -10644,6 +12150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFTK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Black Whale Token',
@@ -10651,6 +12158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BLK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Fusible | Fusible.io',
@@ -10658,6 +12166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FUSII',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CertiK Token',
@@ -10665,6 +12174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CTK',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'EKTA v2',
@@ -10672,6 +12182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EKTA v2',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ITAM',
@@ -10679,6 +12190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ITAM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'dForce USD',
@@ -10686,6 +12198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped MTRG on BSC by Meter.io',
@@ -10693,6 +12206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MTRG',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Alien Worlds Trilium',
@@ -10700,6 +12214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TLM',
     decimals: 4,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Zerogoki USD',
@@ -10707,6 +12222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'zUSD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Easy V2',
@@ -10714,6 +12230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EZ',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Linear Token',
@@ -10721,6 +12238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LINA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GamyFi',
@@ -10728,6 +12246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GFX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Australian Shepherd Token',
@@ -10735,6 +12254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ASS',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PancakeSwap Token',
@@ -10742,6 +12262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Cake',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Pagan Gods FUR Token',
@@ -10749,6 +12270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FUR',
     decimals: 10,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'NAR Token',
@@ -10756,6 +12278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NAR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'TrueUSD',
@@ -10763,6 +12286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TUSD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Berry Tributes',
@@ -10770,6 +12294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BRY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ARPA Token',
@@ -10777,6 +12302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARPA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Hot Cross Token',
@@ -10784,6 +12310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOTCROSS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Mystic Warriors Game Token',
@@ -10791,6 +12318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MYSTIC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'WaultSwap',
@@ -10798,6 +12326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WEX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Everdome',
@@ -10805,6 +12334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOME',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PIGGY',
@@ -10812,6 +12342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PIGGY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Frontier Token',
@@ -10819,6 +12350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRONT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'dego.finance',
@@ -10826,6 +12358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEGO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Atletico de Madrid',
@@ -10833,6 +12366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ATM',
     decimals: 2,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Vera',
@@ -10840,6 +12374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VERA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PolyCrowns',
@@ -10847,6 +12382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'pCWS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PUSD Stablecoin',
@@ -10854,6 +12390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PUSD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Swipe',
@@ -10861,6 +12398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SXP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ROOBEE',
@@ -10868,6 +12406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'bROOBEE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PULSEPAD.io',
@@ -10875,6 +12414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLSPAD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ASTROSWAP.app',
@@ -10882,6 +12422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ASTRO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Zerogoki Token',
@@ -10889,6 +12430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Beefy.finance',
@@ -10896,6 +12438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BIFI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Doraemon-NFT',
@@ -10903,6 +12446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Domon',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PANDADAO',
@@ -10910,6 +12454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PDAO',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SafePal Token',
@@ -10917,6 +12462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SFP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BunnyPark',
@@ -10924,6 +12470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BBS [via ChainPort.io]',
@@ -10931,6 +12478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BBS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ZETH',
@@ -10938,6 +12486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZETH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bunny Token',
@@ -10945,6 +12494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BUNNY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Ellipsis',
@@ -10952,6 +12502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EPS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bwitter Token',
@@ -10959,6 +12510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CashCow.Finance',
@@ -10966,6 +12518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CCF',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'NerveNetwork',
@@ -10973,6 +12526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NVT',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'YIN Finance',
@@ -10980,6 +12534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YIN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MetaversePRO',
@@ -10987,6 +12542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Meta',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PlaceWar Governance Token',
@@ -10994,6 +12550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLACE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DEFINA TOKEN',
@@ -11001,6 +12558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FINA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'AdEx Network',
@@ -11008,6 +12566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ADX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cake Monster',
@@ -11015,6 +12574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MONSTA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Nyanswop Token',
@@ -11022,6 +12582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NYA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Suterusu',
@@ -11029,6 +12590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Suter',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'RichQUACK.com',
@@ -11036,6 +12598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QUACK',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'O3 Swap Token',
@@ -11043,6 +12606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'O3',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped MASS',
@@ -11050,6 +12614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WMASS',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'lien on xDai from xDai',
@@ -11057,6 +12622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LIEN',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DePlutus Token',
@@ -11064,6 +12630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLUT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'HyperGraph Token',
@@ -11071,6 +12638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HGT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Switcheo Token',
@@ -11078,6 +12646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWTH',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CP',
@@ -11085,6 +12654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Hakka Finance on xDai on BSC',
@@ -11092,6 +12662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HAKKA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'KmonCoin',
@@ -11099,6 +12670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KMON',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'NFans ',
@@ -11106,6 +12678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BinaryX',
@@ -11113,6 +12686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BNX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Venus',
@@ -11120,6 +12694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XVS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Zilliqa',
@@ -11127,6 +12702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZIL',
     decimals: 12,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'HooToken',
@@ -11134,6 +12710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOO',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Litecoin Token',
@@ -11141,6 +12718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LTC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DANGO',
@@ -11148,6 +12726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DANGO',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Qian Governance Token',
@@ -11155,6 +12734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KUN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'StepHero',
@@ -11162,6 +12742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HERO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'The Doge NFT',
@@ -11169,6 +12750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOG',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Reef',
@@ -11176,6 +12758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REEF',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Juventus',
@@ -11183,6 +12766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JUV',
     decimals: 2,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'USD Open Dollar',
@@ -11190,6 +12774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'YOOSHI',
@@ -11197,6 +12782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YOOSHI',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DefiDollar DAO',
@@ -11204,6 +12790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DFD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CanYaCoin',
@@ -11211,6 +12798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CAN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Binemon',
@@ -11218,6 +12806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BIN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Rabbit Coin',
@@ -11225,6 +12814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RABBIT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CryptoMechaKing',
@@ -11232,6 +12822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MCK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Ankr',
@@ -11239,6 +12830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ANKR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Ontology Token',
@@ -11246,6 +12838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ONT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'VAI Stablecoin',
@@ -11253,6 +12846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VAI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SWINGBY token',
@@ -11260,6 +12854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWINGBY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GeStone',
@@ -11267,6 +12862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GES',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Streamity',
@@ -11274,6 +12870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'XCarnival',
@@ -11281,6 +12878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XCV',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Seek Tiger',
@@ -11288,6 +12886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STI',
     decimals: 10,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Binance-Peg Axie Infinity Shard Token',
@@ -11295,6 +12894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AXS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bondly Token',
@@ -11302,6 +12902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BONDLY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Phantom Protocol Token',
@@ -11309,6 +12910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PHM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ADAMoracle Token',
@@ -11316,6 +12918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ADAM',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CC Token',
@@ -11323,6 +12926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Fuel',
@@ -11330,6 +12934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Fuel',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'OPEN Governance Token',
@@ -11337,6 +12942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'bOPEN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cloudname',
@@ -11344,6 +12950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CNAME',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'AS Roma',
@@ -11351,6 +12958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ASR',
     decimals: 2,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Juggernaut DeFi ',
@@ -11358,6 +12966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JGN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'XBank',
@@ -11365,6 +12974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XBA',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'WAGYUSWAP.app',
@@ -11372,6 +12982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAG',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'AllianceBlock',
@@ -11379,6 +12990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'bALBT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Beer Garden',
@@ -11386,6 +12998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Beer',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Binance-Peg IoTeX Network',
@@ -11393,6 +13006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IOTX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'USDxc Stablecoin',
@@ -11400,6 +13014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDxc',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Perlin ',
@@ -11407,6 +13022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PERL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Exeedme',
@@ -11414,6 +13030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XED',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Antex',
@@ -11421,6 +13038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ANTEX',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'fry.world',
@@ -11428,6 +13046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRIES',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Tezos Token',
@@ -11435,6 +13054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XTZ',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cream',
@@ -11442,6 +13062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CREAM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'yearn.finance',
@@ -11449,6 +13070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YFI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BoringDAO Token',
@@ -11456,6 +13078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bomber Coin',
@@ -11463,6 +13086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BCOIN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GAMER',
@@ -11470,6 +13094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMR',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'pTokens GALA',
@@ -11477,6 +13102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GALA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Qubit Token',
@@ -11484,6 +13110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QBT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Deri',
@@ -11491,6 +13118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DERI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Binance-Peg Dogecoin',
@@ -11498,6 +13126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOGE',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'TokenPocket Token',
@@ -11505,6 +13134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TPT',
     decimals: 4,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MetaToken',
@@ -11512,6 +13142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'META',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'FREY',
@@ -11519,6 +13150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FREY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'StargateToken',
@@ -11526,6 +13158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STG',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ALPINE Fan Token',
@@ -11533,6 +13166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALPINE',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Chainport.io-Peg Fear NFTs',
@@ -11540,6 +13174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FEAR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Mobox',
@@ -11547,6 +13182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MBOX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wall Street Games',
@@ -11554,6 +13190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WSG',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Zcash Token',
@@ -11561,6 +13198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZEC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'HODL',
@@ -11568,6 +13206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HODL',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Legion Token',
@@ -11575,6 +13214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LGX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'TABOO TOKEN',
@@ -11582,6 +13222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TABOO',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cellframe Token',
@@ -11589,6 +13230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CELL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PRIVATEUM',
@@ -11596,6 +13238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PVM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'OddzToken ',
@@ -11603,6 +13246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ODDZ',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SafeHamsters',
@@ -11610,6 +13254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SAFEHAMSTERS',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ALICE',
@@ -11617,6 +13262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALICE',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Nuls',
@@ -11624,6 +13270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NULS',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Helmet.insure',
@@ -11631,6 +13278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Helmet',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Horizon Protocol',
@@ -11638,6 +13286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HZN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cyclone Protocol',
@@ -11645,6 +13294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CYC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Vmates Token',
@@ -11652,6 +13302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MATE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Credit Coin',
@@ -11659,6 +13310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CDTC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Radio Caca V2',
@@ -11666,6 +13318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RACA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'UnmarshalToken',
@@ -11673,6 +13326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MARSH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Thetan Coin',
@@ -11680,6 +13334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'THC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Green Metaverse Token',
@@ -11687,6 +13342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMT',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'FEGtoken',
@@ -11694,6 +13350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FEG',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DFuture Token',
@@ -11701,6 +13358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DFT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Coin98',
@@ -11708,6 +13366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'C98',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GreenSatoshiToken',
@@ -11715,6 +13374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GST',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Soul Meta Token',
@@ -11722,6 +13382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOUL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Mai Stablecoin',
@@ -11729,6 +13390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MAI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'LOFI',
@@ -11736,6 +13398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LOFI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'World Of Masters Token',
@@ -11743,6 +13406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOFM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PANDAVERSE',
@@ -11750,6 +13414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PNDV',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bovine Verse Token',
@@ -11757,6 +13422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BVT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Piastr',
@@ -11764,6 +13430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PST',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Frax',
@@ -11771,6 +13438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRAX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'FLOKI',
@@ -11778,6 +13446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLOKI',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bizverse ',
@@ -11785,6 +13454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BIVE',
     decimals: 4,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Hook Token',
@@ -11792,6 +13462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOOK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Infinity Pad',
@@ -11799,6 +13470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IPAD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DAO Maker',
@@ -11806,6 +13478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'USDD',
@@ -11813,6 +13486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GourmetGalaxy ',
@@ -11820,6 +13494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GUM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BUSD Token',
@@ -11827,6 +13502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BUSD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ChronoTech Token',
@@ -11834,6 +13510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TIME',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Standard on xDai on BSC',
@@ -11841,6 +13518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'xMARK',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'QIAN second generation dollar',
@@ -11848,6 +13526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QSD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SeedifyFund',
@@ -11855,6 +13534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SFUND',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Nerve ',
@@ -11862,6 +13542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NRV',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DODO bird',
@@ -11869,6 +13550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DODO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Binamon',
@@ -11876,6 +13558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BMON',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'RAMP DEFI  ',
@@ -11883,6 +13566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RAMP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Onion Mixer Token',
@@ -11890,6 +13574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OMT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'oneDODO',
@@ -11897,6 +13582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'oneDODO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'AlpacaToken',
@@ -11904,6 +13590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALPACA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wootrade Network',
@@ -11911,6 +13598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Venus Reward Token',
@@ -11918,6 +13606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VRT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Shield Protocol',
@@ -11925,6 +13614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHIELD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Token X',
@@ -11932,6 +13622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TKX',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Genshiro Token',
@@ -11939,6 +13630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GENS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'EASY ',
@@ -11946,6 +13638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EASY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BoringDAO',
@@ -11953,6 +13646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BORING',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'JNTR/b',
@@ -11960,6 +13654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JNTR/b',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DogeKing',
@@ -11967,6 +13662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DogeKing',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MusicianWorldsNFT',
@@ -11974,6 +13670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MUCNFT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'First Digital USD',
@@ -11981,6 +13678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FDUSD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'AlphaToken',
@@ -11988,6 +13686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALPHA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BAND Protocol Token',
@@ -11995,6 +13694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAND',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CyberDragon Gold',
@@ -12002,6 +13702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Gold',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'EOS Token',
@@ -12009,6 +13710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EOS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'X-Token',
@@ -12016,6 +13718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'X-Token',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MultiVAC',
@@ -12023,6 +13726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MTV',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Rangers Protocol Gas',
@@ -12030,6 +13734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RPG',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'signin',
@@ -12037,6 +13742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SIGNIN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'StableXSwap',
@@ -12044,6 +13750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STAX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'FinNexus',
@@ -12051,6 +13758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FNX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'APYSwap',
@@ -12058,6 +13766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'APYS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DeHub',
@@ -12065,6 +13774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DeHub',
     decimals: 5,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ARIVA',
@@ -12072,6 +13782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARV',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Nerve HUSD',
@@ -12079,6 +13790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HUSD',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'HARD',
@@ -12086,6 +13798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HARD',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Valkyrie Network',
@@ -12093,6 +13806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VAL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PCATv3.finance',
@@ -12100,6 +13814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'pCATv3',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped BNB',
@@ -12107,6 +13822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBNB',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Baby Doge Coin',
@@ -12114,6 +13830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BabyDoge',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'QUSD Stablecoin',
@@ -12121,6 +13838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QUSD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bitcoin And Ethereum Standard Token',
@@ -12128,6 +13846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BEST',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Filecoin',
@@ -12135,6 +13854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FIL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Polkadot Token',
@@ -12142,6 +13862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BNB48 Club Token',
@@ -12149,6 +13870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KOGE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Ethereum Token',
@@ -12156,6 +13878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'NEXTYPE',
@@ -12163,6 +13886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BSCEX',
@@ -12170,6 +13894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BSCX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped MIR Token',
@@ -12177,6 +13902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Plant vs Undead Token',
@@ -12184,6 +13910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PVU',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Tenet',
@@ -12191,6 +13918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TEN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SPARTAN PROTOCOL TOKEN',
@@ -12198,6 +13926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPARTA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Functional BTC',
@@ -12205,6 +13934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FBTC',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Solv BTC',
@@ -12212,6 +13942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SolvBTC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SolvBTC Ethena',
@@ -12219,6 +13950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SolvBTC.ENA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped BSC GRECAS',
@@ -12226,6 +13958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBGCS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'StarNet',
@@ -12233,6 +13966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SIREN',
@@ -12240,6 +13974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SIREN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'xSolvBTC',
@@ -12247,6 +13982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'xSolvBTC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Smart Layer Network Token',
@@ -12254,6 +13990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SLN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Verified USD',
@@ -12261,6 +13998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDV',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Tether USD Bridged ZED20',
@@ -12268,6 +14006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT.z',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'World Liberty Financial USD',
@@ -12275,6 +14014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USD1',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Alphaterra',
@@ -12282,6 +14022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Alfat',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Polyhedra Network',
@@ -12289,6 +14030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZKJ',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'InfinitiCoin',
@@ -12296,6 +14038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'INCO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MyShell',
@@ -12303,6 +14046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHELL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Polygon',
@@ -12310,6 +14054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MATIC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Fetch.ai',
@@ -12317,6 +14062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FET',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DeFiChain',
@@ -12324,6 +14070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DFI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Thena',
@@ -12331,6 +14078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'THE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Coinary Token (Dragonary)',
@@ -12338,6 +14086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CYT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GAMER',
@@ -12345,6 +14094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CryptoMines Reborn',
@@ -12352,6 +14102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRUX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar FIL',
@@ -12359,6 +14110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlFIL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'XEN Crypto',
@@ -12366,6 +14118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'bXEN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Mai Stablecoin',
@@ -12373,6 +14126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlWMAI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Ethos Reserve Note',
@@ -12380,6 +14134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ERN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped AVAX (Wormhole)',
@@ -12387,6 +14142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAVAX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'onPlanet',
@@ -12394,6 +14150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Harmony ONE',
@@ -12401,6 +14158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ONE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BigOne Token',
@@ -12408,6 +14166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ONE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Avalanche',
@@ -12415,6 +14174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AVAX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Fantom',
@@ -12422,6 +14182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FTM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Mogul Stars',
@@ -12429,6 +14190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STARS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'QiDao',
@@ -12436,6 +14198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BENQI',
@@ -12443,6 +14206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Toncoin',
@@ -12450,6 +14214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TONCOIN',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Aave',
@@ -12457,6 +14222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AAVE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Onyxcoin',
@@ -12464,6 +14230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XCN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Compound',
@@ -12471,6 +14238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COMP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Frax Share',
@@ -12478,6 +14246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FXS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'TrueUSD',
@@ -12485,6 +14254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TUSD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Sushi',
@@ -12492,6 +14262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SUSHI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Mdex',
@@ -12499,6 +14270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MDX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'JOE',
@@ -12506,6 +14278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JOE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SafeMoon',
@@ -12513,6 +14286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SFM',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'APENFT',
@@ -12520,6 +14294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFT',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MVL',
@@ -12527,6 +14302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'bMVL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SingularityDAO',
@@ -12534,6 +14310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SDAO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Clash of Lilliput',
@@ -12541,6 +14318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Perpetual Protocol',
@@ -12548,6 +14326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PERP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Alchemy Pay',
@@ -12555,6 +14334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ACH',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Biswap',
@@ -12562,6 +14342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BSW',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Share',
@@ -12569,6 +14350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'inSure DeFi',
@@ -12576,6 +14358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SURE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Phoenix Global',
@@ -12583,6 +14366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PHB',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Dogelon Mars',
@@ -12590,6 +14374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ELON',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar',
@@ -12597,6 +14382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AXL',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'USDT.POL',
@@ -12604,6 +14390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT.POL',
     decimals: 6,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'DeXe',
@@ -12611,6 +14398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEXE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Hashflow',
@@ -12618,6 +14406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HFT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bolide',
@@ -12625,6 +14414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BLID',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Kyber Network Crystal',
@@ -12632,6 +14422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KNC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Metars Genesis',
@@ -12639,6 +14430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MRS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Multichain',
@@ -12646,6 +14438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MULTI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'IQ',
@@ -12653,6 +14446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IQ',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Adshares',
@@ -12660,6 +14454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ADS',
     decimals: 11,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Galxe',
@@ -12667,6 +14462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GAL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Everscale',
@@ -12674,6 +14470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WEVER',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'WazirX',
@@ -12681,6 +14478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WRX',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Puppets Arts',
@@ -12688,6 +14486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PUPPETS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'EverGrow Coin',
@@ -12695,6 +14494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EGC',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bitgert',
@@ -12702,6 +14502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BRISE',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Gifto',
@@ -12709,6 +14510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GFT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Chromia',
@@ -12716,6 +14518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CHR',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Magic Internet Money',
@@ -12723,6 +14526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cartesi',
@@ -12730,6 +14534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CTSI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'hi Dollar',
@@ -12737,6 +14542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Volt Inu',
@@ -12744,6 +14550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VOLT',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CEEK Smart VR',
@@ -12751,6 +14558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CEEK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Xido Finance',
@@ -12758,6 +14566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XIDO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Dola',
@@ -12765,6 +14574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOLA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Polkastarter',
@@ -12772,6 +14582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POLS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Beta Finance',
@@ -12779,6 +14590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BETA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Velas',
@@ -12786,6 +14598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VLX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Krypton DAO',
@@ -12793,6 +14606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KRD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'XCAD Network',
@@ -12800,6 +14614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XCAD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cratos',
@@ -12807,6 +14622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRTS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Refinable',
@@ -12814,6 +14630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FINE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bit2Me',
@@ -12821,6 +14638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'B2M',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Koda Cryptocurrency',
@@ -12828,6 +14646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KODA',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Ampleforth',
@@ -12835,6 +14654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AMPL',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Destablecoin HAY',
@@ -12842,6 +14662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HAY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DEAPCOIN',
@@ -12849,6 +14670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Offshift',
@@ -12856,6 +14678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XFT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Tranchess',
@@ -12863,6 +14686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CHESS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Stader',
@@ -12870,6 +14694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Freeway',
@@ -12877,6 +14702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FWT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'OATH',
@@ -12884,6 +14710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OATH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GameFi',
@@ -12891,6 +14718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GAFI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'LTO Network',
@@ -12898,6 +14726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LTO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped ZETA ',
@@ -12905,6 +14734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WZETA',
     decimals: 18,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'Circuits of Value',
@@ -12912,6 +14742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COVAL',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'AIOZ Network',
@@ -12919,6 +14750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AIOZ',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'RAI Finance',
@@ -12926,6 +14758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOFI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'pSTAKE Finance',
@@ -12933,6 +14766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PSTAKE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DIA',
@@ -12940,6 +14774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DIA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Clover Finance',
@@ -12947,6 +14782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CLV',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bluzelle',
@@ -12954,6 +14790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BLZ',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Phantasma',
@@ -12961,6 +14798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOUL',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Saito',
@@ -12968,6 +14806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SAITO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'KardiaChain',
@@ -12975,6 +14814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KAI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Santos FC Fan Token',
@@ -12982,6 +14822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SANTOS',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Harvest Finance',
@@ -12989,6 +14830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FARM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MANTRA',
@@ -12996,6 +14838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GNY',
@@ -13003,6 +14846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GNY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Kunci Coin',
@@ -13010,6 +14854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KUNCI',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PARSIQ',
@@ -13017,6 +14862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PRQ',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Ethereum Meta',
@@ -13024,6 +14870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETHM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DeRace',
@@ -13031,6 +14878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DERC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'WeGro',
@@ -13038,6 +14886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WEGRO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Petals',
@@ -13045,6 +14894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PTS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Unidef',
@@ -13052,6 +14902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'U',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Defigram',
@@ -13059,6 +14910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DFG',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Oraichain',
@@ -13066,6 +14918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ORAI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Outer Ring MMO',
@@ -13073,6 +14926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GQ',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Media Licensing Token',
@@ -13080,6 +14934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MLT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'UniLend Finance',
@@ -13087,6 +14942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UFT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ApolloX',
@@ -13094,6 +14950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'APX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Streamr',
@@ -13101,6 +14958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DATA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Drep',
@@ -13108,6 +14966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DREP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MixMarvel',
@@ -13115,6 +14974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ParaSwap',
@@ -13122,6 +14982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PSP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MarsDAO',
@@ -13129,6 +14990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MDAO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MUX Protocol',
@@ -13136,6 +14998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MCB',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Proton',
@@ -13143,6 +15006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XPR',
     decimals: 4,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'H2O Dao',
@@ -13150,6 +15014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'H2O',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'TOR',
@@ -13157,6 +15022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TOR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'USD+',
@@ -13164,6 +15030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USD+',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'FUSION',
@@ -13171,6 +15038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FSN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Tornado Cash',
@@ -13178,6 +15046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TORN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Fuse',
@@ -13185,6 +15054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FUSE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Hacken HAI',
@@ -13192,6 +15062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HAI',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Aleph.im',
@@ -13199,6 +15070,15 @@ const tokenList: (TokenInfo & {
     symbol: 'ALEPH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
+  },
+  {
+    name: 'Tether',
+    address: '0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7',
+    symbol: 'USDt',
+    decimals: 6,
+    chainId: 43114,
+    supportTargetChain: true,
   },
   {
     name: 'Swash',
@@ -13206,6 +15086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWASH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Vite',
@@ -13213,6 +15094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VITE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Kambria',
@@ -13220,6 +15102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KAT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Velo',
@@ -13227,6 +15110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VELO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Zenon',
@@ -13234,6 +15118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wZNN',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Hoge Finance',
@@ -13241,6 +15126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOGE',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Poolz Finance',
@@ -13248,6 +15134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POOLZ',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Seedify NFT Space',
@@ -13255,6 +15142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SNFTS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PinkSale',
@@ -13262,6 +15150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PINKSALE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Qmall',
@@ -13269,6 +15158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QMALL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Obyte',
@@ -13276,6 +15166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GBYTE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'HAPI',
@@ -13283,6 +15174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HAPI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'VEED',
@@ -13290,6 +15182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VEED',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Dafi Protocol',
@@ -13297,6 +15190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAFI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Genius',
@@ -13304,6 +15198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GENI',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Lossless',
@@ -13311,6 +15206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LSS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'XANA',
@@ -13318,6 +15214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XETA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Diamond Launch',
@@ -13325,6 +15222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DLC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Vita Inu',
@@ -13332,6 +15230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VINU',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BOB',
@@ -13339,6 +15238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOB',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Synapse',
@@ -13346,6 +15246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SYN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Lunr',
@@ -13353,6 +15254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'eLunr',
     decimals: 4,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Scallop',
@@ -13360,6 +15262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SCLP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SquidGrow',
@@ -13367,6 +15270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SquidGrow',
     decimals: 19,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Ternoa',
@@ -13374,6 +15278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CAPS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'TriasLab',
@@ -13381,6 +15286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRIAS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'EverRise',
@@ -13388,6 +15294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RISE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ApeSwap',
@@ -13395,6 +15302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BANANA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Prosper',
@@ -13402,6 +15310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PROS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Yoshi.exchange',
@@ -13409,6 +15318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YOSHI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Jade Protocol',
@@ -13416,6 +15326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JADE',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'pNetwork',
@@ -13423,6 +15334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PNT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Aurox',
@@ -13430,6 +15342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'URUS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BICO',
@@ -13437,6 +15350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BICO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Merit Circle',
@@ -13444,6 +15358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'UniCrypt',
@@ -13451,6 +15366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNCX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'FutureCoin',
@@ -13458,6 +15374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FUTURE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Altura',
@@ -13465,6 +15382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALU',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'OpenOcean',
@@ -13472,6 +15390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OOE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BUX',
@@ -13479,6 +15398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BUX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Dego Finance',
@@ -13486,6 +15406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEGOV2',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MagicCraft',
@@ -13493,6 +15414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MCRT',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Realm',
@@ -13500,6 +15422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REALM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Carbon Protocol',
@@ -13507,6 +15430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWTH',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Raini',
@@ -13514,6 +15438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RAINI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Luffy',
@@ -13521,6 +15446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LUFFY',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'HELLO',
@@ -13528,6 +15454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HELLO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Meta Apes PEEL',
@@ -13535,6 +15462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PEEL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cellframe',
@@ -13542,6 +15470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CELL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Woonkly Power',
@@ -13549,6 +15478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOOP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Pleasure Coin',
@@ -13556,6 +15486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NSFW',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Enjinstarter',
@@ -13563,6 +15494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WEJS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MUX LP Token',
@@ -13570,6 +15502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MUXLP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Drip Network',
@@ -13577,6 +15510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DRIP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'USDX',
@@ -13584,6 +15518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDX',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Standard BTC Hashrate Token',
@@ -13591,6 +15526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTCST',
     decimals: 17,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Soteria',
@@ -13598,6 +15534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wSOTE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'NICE',
@@ -13605,6 +15542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NICE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MacaronSwap Token',
@@ -13612,6 +15550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MCRN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'WenLambo',
@@ -13619,6 +15558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WENLAMBO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'WrappedConceal',
@@ -13626,6 +15566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wCCX',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Million',
@@ -13633,6 +15574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'WOWSwap',
@@ -13640,6 +15582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOW',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ShibaWallet',
@@ -13647,6 +15590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHWA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Spell',
@@ -13654,6 +15598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPELL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Staked Spell',
@@ -13661,6 +15606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SSPELL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cerby Token',
@@ -13668,6 +15614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CERBY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Symbiosis',
@@ -13675,6 +15622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SIS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'renBTC',
@@ -13682,6 +15630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'renBTC',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'marumaruNFT',
@@ -13689,6 +15638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MARU',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BiLira',
@@ -13696,6 +15646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRYB',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Coin98 Dollar',
@@ -13703,6 +15654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CUSD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ARTH',
@@ -13710,6 +15662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARTH.bsc',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Zasset zUSD',
@@ -13717,6 +15670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'zUSD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Inflation Adjusted EURO',
@@ -13724,6 +15678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'iUSDS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Iron BSC',
@@ -13731,6 +15686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IRON',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SpiceEURO',
@@ -13738,6 +15694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EUROS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Jarvis Synthetic Euro',
@@ -13745,6 +15702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'jEUR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Jarvis Synthetic Swiss Franc',
@@ -13752,6 +15710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'jCHF',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Jarvis Synthetic British Pound',
@@ -13759,6 +15718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'jGBP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'TRVL',
@@ -13766,6 +15726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRVL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'D3D Social',
@@ -13773,6 +15734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'D3D',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MetaVPad',
@@ -13780,6 +15742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'METAV',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Popsicle Finance',
@@ -13787,6 +15750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ICE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'TrustPad',
@@ -13794,6 +15758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TPAD',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Level',
@@ -13801,6 +15766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LVL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bridge Oracle',
@@ -13808,6 +15774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BRG',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DappRadar',
@@ -13815,6 +15782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RADAR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'LIF3',
@@ -13822,6 +15790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LIF3',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Defactor',
@@ -13829,6 +15798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FACTR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Blockasset',
@@ -13836,6 +15806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BLOCK',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'QANplatform',
@@ -13843,6 +15814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QANX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GroveCoin',
@@ -13850,6 +15822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GRV',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Mask Network',
@@ -13857,6 +15830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MASK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'StrikeX',
@@ -13864,6 +15838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STRX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Stader BNBx',
@@ -13871,6 +15846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BNBx',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DSLA Protocol',
@@ -13878,6 +15854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DSLA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Pallapay',
@@ -13885,6 +15862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PALLA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Chain Guardians',
@@ -13892,6 +15870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CGG',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Halo Coin',
@@ -13899,6 +15878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HALO',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped KNC',
@@ -13906,6 +15886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlKNC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Dusk',
@@ -13913,6 +15894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DUSK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Hotbit',
@@ -13920,6 +15902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HTB',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BabyCake',
@@ -13927,6 +15910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BABYCAKE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Telos',
@@ -13934,6 +15918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TLOS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Lightning',
@@ -13941,6 +15926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LIGHT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Mines of Dalarnia',
@@ -13948,6 +15934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAR',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CryptoMines Eternal',
@@ -13955,6 +15942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETERNAL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Sheesha Finance',
@@ -13962,6 +15950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHEESHA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Thetan Gem',
@@ -13969,6 +15958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'THG',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BitBook',
@@ -13976,6 +15966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BBT',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PearDAO',
@@ -13983,6 +15974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PEX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Tiny Coin',
@@ -13990,6 +15982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TINC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Staked BNB',
@@ -13997,6 +15990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'stkBNB',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Spintop',
@@ -14004,6 +15998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPIN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Nafter',
@@ -14011,6 +16006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NAFT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PAID Network',
@@ -14018,6 +16014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PAID',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Shirtum',
@@ -14025,6 +16022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SHI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'NFTB',
@@ -14032,6 +16030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFTB',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'FLOKI',
@@ -14039,6 +16038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLOKI',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MiniFootball',
@@ -14046,6 +16046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MiniFootball',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'FaraCrystal',
@@ -14053,6 +16054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FARA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Hunny Token',
@@ -14060,6 +16062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HUNNY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'WEYU',
@@ -14067,6 +16070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WEYU',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'UNCL on xDai on BSC',
@@ -14074,6 +16078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNCL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Tenset',
@@ -14081,6 +16086,7 @@ const tokenList: (TokenInfo & {
     symbol: '10SET',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar USDT',
@@ -14088,6 +16094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlUSDT',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'LiquidDriver',
@@ -14095,6 +16102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlLqdr',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Oath Token',
@@ -14102,6 +16110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OATH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Staked ERN Vault',
@@ -14109,6 +16118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'stERN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Polkastarter Token',
@@ -14116,6 +16126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POLS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Orbs',
@@ -14123,6 +16134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ORBS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MrWeb Finance [OLD]',
@@ -14130,6 +16142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AMA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GulfCoin',
@@ -14137,6 +16150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GULF',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped DEUS',
@@ -14144,6 +16158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlDEUS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped FRAX',
@@ -14151,6 +16166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlFRAX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'OVN',
@@ -14158,6 +16174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OVN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'axlTIA',
@@ -14165,6 +16182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlTIA',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Lazio Fan Token',
@@ -14172,6 +16190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LAZIO',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SuperVerse',
@@ -14179,6 +16198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SUPER',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped wstETH',
@@ -14186,6 +16206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axl-wstETH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cornucopias',
@@ -14193,6 +16214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COPI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Trustswap',
@@ -14200,6 +16222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWAP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ForTube',
@@ -14207,6 +16230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FOR',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Market Making Pro',
@@ -14214,6 +16238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MMPRO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GGTKN',
@@ -14221,6 +16246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GGTKN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SPACE ID',
@@ -14228,6 +16254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ID',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'AllianceBlock Nexera',
@@ -14235,6 +16262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NXRA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Synth oUSD',
@@ -14242,6 +16270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'oUSD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Hord',
@@ -14249,6 +16278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HORD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Beacon ETH',
@@ -14256,6 +16286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wBETH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Open Campus',
@@ -14263,6 +16294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EDU',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CyberHarbor',
@@ -14270,6 +16302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CHT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Combo Token',
@@ -14277,6 +16310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COMBO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cheelee',
@@ -14284,6 +16318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CHEEL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Beam',
@@ -14291,6 +16326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BEAM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GameAI',
@@ -14298,6 +16334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GAT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BRN Metaverse',
@@ -14305,6 +16342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BRN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Maverick Protocol',
@@ -14312,6 +16350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MAV',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Morphex',
@@ -14319,6 +16358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MPX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Ether (Wormhole)',
@@ -14326,6 +16366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WETH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Yoshi inu',
@@ -14333,6 +16374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Yoshi',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Volt Inu',
@@ -14340,6 +16382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VOLT',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'FEG BSC',
@@ -14347,6 +16390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FEG',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MANGOMAN INTELLIGENT',
@@ -14354,6 +16398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MMIT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Lido DAO Token (Wormhole)',
@@ -14361,6 +16406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LDO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Z7DAO',
@@ -14368,6 +16414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Z7',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Dai Stablecoin (Wormhole)',
@@ -14375,6 +16422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DogeZila Ai',
@@ -14382,6 +16430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Nest Protocol',
@@ -14389,6 +16438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEST',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Cyberconnect',
@@ -14396,6 +16446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CYBER',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar USDC',
@@ -14403,6 +16454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlUSDC',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Metis',
@@ -14410,6 +16462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Metis',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Marblex',
@@ -14417,6 +16470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MBX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Nest Protocol',
@@ -14424,6 +16478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEST',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GMT Token',
@@ -14431,6 +16486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Opulous',
@@ -14438,6 +16494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OPUL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'IguVerse IGU',
@@ -14445,6 +16502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IGU',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BedlingtonTerrierToken',
@@ -14452,6 +16510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BETT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'NuNet',
@@ -14459,6 +16518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NTX',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Travala.com',
@@ -14466,6 +16526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AVA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'RocketX exchange',
@@ -14473,6 +16534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RVF',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bonk',
@@ -14480,6 +16542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Bonk',
     decimals: 5,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SCI Coin',
@@ -14487,6 +16550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SCI+',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Planeteer Social',
@@ -14494,6 +16558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLANETEER',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Bella Protocol',
@@ -14501,6 +16566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BEL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DexTools',
@@ -14508,6 +16574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEXT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CUBE',
@@ -14515,6 +16582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ITAMCUBE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'World Mobile Token',
@@ -14522,6 +16590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WMT',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Hector Network',
@@ -14529,6 +16598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HEC',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'TokenFi',
@@ -14536,6 +16606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TOKEN',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Denarius',
@@ -14543,6 +16614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DB',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Delysium',
@@ -14550,6 +16622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AGI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'unshETH',
@@ -14557,6 +16630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'CrossWallet',
@@ -14564,6 +16638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CWT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GameZone',
@@ -14571,6 +16646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GZONE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SWFTCOIN',
@@ -14578,6 +16654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWFTC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Vyvo Smart Chain',
@@ -14585,6 +16662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VSC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'TOKPIE',
@@ -14592,6 +16670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TKP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'WeWay',
@@ -14599,6 +16678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WWY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'MintMe.com Coin',
@@ -14606,6 +16686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MINTME',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Renewable Energy',
@@ -14613,6 +16694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RET',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wagmi',
@@ -14620,6 +16702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAGMI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Pink BNB',
@@ -14627,6 +16710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PNB',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Wombat Exchange',
@@ -14634,6 +16718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Gamium',
@@ -14641,6 +16726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMM',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Tarot',
@@ -14648,6 +16734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TAROT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Utility Web3Shot',
@@ -14655,6 +16742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UW3S',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Premia',
@@ -14662,6 +16750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PREMIA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Newscrypto Coin',
@@ -14669,6 +16758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NWC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'T-mac DAO',
@@ -14676,6 +16766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TMG',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PodFast',
@@ -14683,6 +16774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FAST',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Navcoin',
@@ -14690,6 +16782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WNAV',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Decubate',
@@ -14697,6 +16790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DCB',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Mysterium',
@@ -14704,6 +16798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MYST',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ChainGPT',
@@ -14711,6 +16806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CGPT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Banano',
@@ -14718,6 +16814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wBAN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Games for a living',
@@ -14725,6 +16822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GFAL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GamiWorld.io',
@@ -14732,6 +16830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GAMI',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Gridex',
@@ -14739,6 +16838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GDX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SpaceN',
@@ -14746,6 +16846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Areon Network',
@@ -14753,6 +16854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AREA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Era Token',
@@ -14760,6 +16862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ERA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'bDollar',
@@ -14767,6 +16870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BDO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GOLCOIN',
@@ -14774,6 +16878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GOLC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'XCAD Network PLAY',
@@ -14781,6 +16886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLAY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'TeraBlock',
@@ -14788,6 +16894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TBC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Poolz Finance',
@@ -14795,6 +16902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POOLX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'JumpToken',
@@ -14802,6 +16910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JMPT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'BeNFT Solutions',
@@ -14809,6 +16918,7 @@ const tokenList: (TokenInfo & {
     symbol: '$BeAI',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Glitch Protocol',
@@ -14816,6 +16926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GLCH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Buying.com',
@@ -14823,6 +16934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BUY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Lovely Inu finance',
@@ -14830,6 +16942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LOVELY',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Catgirl',
@@ -14837,6 +16950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CATGIRL',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Coin of the champions',
@@ -14844,6 +16958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COC',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Degen Zoo',
@@ -14851,6 +16966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wDZOO',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Rupiah Token',
@@ -14858,6 +16974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IDRT',
     decimals: 2,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Grizzly Honey',
@@ -14865,6 +16982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GHNY',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SophiaVerse',
@@ -14872,6 +16990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SOPH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Channels',
@@ -14879,6 +16998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CAN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ZambesiGold',
@@ -14886,6 +17006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZGD',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Zillion Aakar XO',
@@ -14893,6 +17014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZAX',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Steam Exchange',
@@ -14900,6 +17022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SteamX',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Balance Network',
@@ -14907,6 +17030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BLN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Sonar',
@@ -14914,6 +17038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PING',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Jupiter',
@@ -14921,6 +17046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'bwJUP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'LitLab Games',
@@ -14928,6 +17054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LITT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'OpenOcean',
@@ -14935,6 +17062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OOE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'PLEARN',
@@ -14942,6 +17070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Lucro',
@@ -14949,6 +17078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LCR',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Katana Inu',
@@ -14956,6 +17086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KATA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Kamaleont',
@@ -14963,6 +17094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KLT',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Genopets',
@@ -14970,6 +17102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GENE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'SquidGrow',
@@ -14977,6 +17110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SquidGrow',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'blockbank',
@@ -14984,6 +17118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BBANK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Battle Infinity',
@@ -14991,6 +17126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IBAT',
     decimals: 9,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ALVA',
@@ -14998,6 +17134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AA',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Xpense',
@@ -15005,6 +17142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XPE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Magpie',
@@ -15012,6 +17150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MGP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Solidus Ai Tech',
@@ -15019,6 +17158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AITECH',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'xWIN Finance',
@@ -15026,6 +17166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XWIN',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Epik Prime',
@@ -15033,6 +17174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EPIK',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GAMEE',
@@ -15040,6 +17182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMEE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'WeSendit',
@@ -15047,6 +17190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WSI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ONINO',
@@ -15054,6 +17198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ONI',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Polytrade',
@@ -15061,6 +17206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRADE',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Carbon Browser',
@@ -15068,6 +17214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CSIX',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Penpie',
@@ -15075,6 +17222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PNP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Football at AlphaVerse',
@@ -15082,6 +17230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FAV',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Gold Fever Native Gold',
@@ -15089,6 +17238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NGL',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'DragonKing',
@@ -15096,6 +17246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DragonKing',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Acet',
@@ -15103,6 +17254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ACT',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Rejuve.AI',
@@ -15110,6 +17262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RJV',
     decimals: 6,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Electra Protocol',
@@ -15117,6 +17270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XEP',
     decimals: 8,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Popcorn',
@@ -15124,6 +17278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POP',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Murasaki',
@@ -15131,6 +17286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Mura',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'GAME Credits',
@@ -15138,6 +17294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GAME',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Qi Dao',
@@ -15145,6 +17302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Anyswap',
@@ -15152,6 +17310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ANY',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Dark.Build',
@@ -15159,6 +17318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DB',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Sentinel',
@@ -15166,6 +17326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SENT',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'HEXX',
@@ -15173,6 +17334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HEX',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Furucombo',
@@ -15180,6 +17342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COMBO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'PYR Token',
@@ -15187,6 +17350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PYR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Unibright',
@@ -15194,6 +17358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UBT',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'DODO bird',
@@ -15201,6 +17366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DODO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Celsius',
@@ -15208,6 +17374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CEL',
     decimals: 4,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'TrustSwap Token',
@@ -15215,6 +17382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWAP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'DEFI Top 5 Tokens Index',
@@ -15222,6 +17390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEFI5',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Fear NFTs (PoS)',
@@ -15229,6 +17398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FEAR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'ChumHum',
@@ -15236,6 +17406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CHUM',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'ZeroUtility',
@@ -15243,6 +17414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZUT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Frax',
@@ -15250,6 +17422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRAX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Matic Deflect Protocol',
@@ -15257,6 +17430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'mDEF',
     decimals: 9,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Swirge',
@@ -15264,6 +17438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWG',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Cartesi Token',
@@ -15271,6 +17446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CTSI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'iFARM',
@@ -15278,6 +17454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'miFARM',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Decentraland MANA',
@@ -15285,6 +17462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MANA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Vision Token',
@@ -15292,6 +17470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VISION',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Frax Share',
@@ -15299,6 +17478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FXS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Standard',
@@ -15306,6 +17486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'xMARK',
     decimals: 9,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'NFT Platform Index',
@@ -15313,6 +17494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFTP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'EthLend Token',
@@ -15320,6 +17502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LEND',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Holyheld',
@@ -15327,6 +17510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Must',
@@ -15334,6 +17518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MUST',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Pepedex',
@@ -15341,6 +17526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PPDEX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'DEGEN Index',
@@ -15348,6 +17534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEGEN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Uniswap',
@@ -15355,6 +17542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'WazirX',
@@ -15362,6 +17550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WRX',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'ARIANEE',
@@ -15369,6 +17558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARIA20',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'BTU Protocol',
@@ -15376,6 +17566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTU',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'OM',
@@ -15383,6 +17574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OM',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'DSLA',
@@ -15390,6 +17582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DSLA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'decentral.games',
@@ -15397,6 +17590,7 @@ const tokenList: (TokenInfo & {
     symbol: '$DG',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'SuperFarm',
@@ -15404,6 +17598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SUPER',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'IG Gold',
@@ -15411,6 +17606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IGG',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Monavale',
@@ -15418,6 +17614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MONA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: '0xBitcoin Token',
@@ -15425,6 +17622,7 @@ const tokenList: (TokenInfo & {
     symbol: '0xBTC',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Compound',
@@ -15432,6 +17630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COMP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Wise Token',
@@ -15439,6 +17638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WISE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'AGA Token',
@@ -15446,6 +17646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AGA',
     decimals: 4,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Frax',
@@ -15453,6 +17654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRAX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'GamyFi',
@@ -15460,6 +17662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GFX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Matic Aave interest bearing USDC',
@@ -15467,6 +17670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'maUSDC',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'AGA Rewards',
@@ -15474,6 +17678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AGAr',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'SportX',
@@ -15481,6 +17686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Zeus',
@@ -15488,6 +17694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZUZ',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Yield (PoS)',
@@ -15495,6 +17702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YLD',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Polygon Ecosystem Token',
@@ -15502,6 +17710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WPOL',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Telcoin',
@@ -15509,6 +17718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TEL',
     decimals: 2,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Matic Aave interest bearing DAI',
@@ -15516,6 +17726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'maDAI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Aave',
@@ -15523,6 +17734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AAVE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Gains V2',
@@ -15530,6 +17742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GFARM2',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Fish',
@@ -15537,6 +17750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FISH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Matic Aave interest bearing TUSD',
@@ -15544,6 +17758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'maTUSD',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Matic Aave interest bearing AAVE',
@@ -15551,6 +17766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'maAAVE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Matic Aave interest bearing WETH',
@@ -15558,6 +17774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'maWETH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Matic Aave interest bearing LINK',
@@ -15565,6 +17782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'maLINK',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Matic Aave interest bearing YFI',
@@ -15572,6 +17790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'maYFI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'PLOT',
@@ -15579,6 +17798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLOT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Elementeum',
@@ -15586,6 +17806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ELET',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'miMATIC',
@@ -15593,6 +17814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'miMATIC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'CyberFi Token',
@@ -15600,6 +17822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CFi',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Dark Matter Token',
@@ -15607,6 +17830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DMT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Opu Coin',
@@ -15614,6 +17838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OPU',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Graph Token (PoS)',
@@ -15621,6 +17846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GRT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'PolyDoge',
@@ -15628,6 +17854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PolyDoge',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Krill',
@@ -15635,6 +17862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Krill',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Nafstars Tokens',
@@ -15642,6 +17870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NSTARS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'CyberCity Token',
@@ -15649,6 +17878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CYBR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Shardus',
@@ -15656,6 +17886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ULT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Dai Stablecoin',
@@ -15663,6 +17894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped BTC',
@@ -15670,6 +17902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBTC',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'beefy.finance',
@@ -15677,6 +17910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BIFI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Ether',
@@ -15684,6 +17918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WETH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Render Token',
@@ -15691,6 +17926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RNDR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Aavegotchi GHST Token',
@@ -15698,6 +17934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GHST',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Quickswap',
@@ -15705,6 +17942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QUICK',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'moonwolf.io',
@@ -15712,6 +17950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOLF',
     decimals: 9,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'DokiDokiAzuki',
@@ -15719,6 +17958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AZUKI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'yearn.finance',
@@ -15726,6 +17966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YFI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Digital Reserve Currency',
@@ -15733,6 +17974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DRC',
     decimals: 0,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Cryptocurrency Top Tokens Index',
@@ -15740,6 +17982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CC10',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'ChainLink Token',
@@ -15747,6 +17990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LINK',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Own a fraction',
@@ -15754,6 +17998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRACTION',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Minerva Wallet SuperToken',
@@ -15761,6 +18006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIVA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Matic Aave interest bearing UNI',
@@ -15768,6 +18014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'maUNI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Matic Aave interest bearing USDT',
@@ -15775,6 +18022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'maUSDT',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Verified USD',
@@ -15782,6 +18030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDV',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Mountain Protocol USD',
@@ -15789,6 +18038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDM',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Mountain Protocol USD',
@@ -15796,6 +18046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wUSDM',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Pi polygon',
@@ -15803,6 +18054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Pi polygon',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'MOODENG',
@@ -15810,6 +18062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MOODENG',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'DeepSeek Ai',
@@ -15817,6 +18070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DeepSeek Ai',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Carbon Innovation Token',
@@ -15824,6 +18078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CIT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Smart Layer Network Token',
@@ -15831,6 +18086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SLN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'XAU  GOLD',
@@ -15838,6 +18094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XAU',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'PEPECOIN',
@@ -15845,6 +18102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PEPE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'PANDA',
@@ -15852,6 +18110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PANDA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'GOV TOKEN',
@@ -15859,6 +18118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GOV',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'USD Coin (PoS)',
@@ -15866,6 +18126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC.e',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'EV charger',
@@ -15873,6 +18134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EV charger',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'CP center point ',
@@ -15880,6 +18142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CP',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Dola USD Stablecoin',
@@ -15887,6 +18150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'fxDOLA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped BNB (Wormhole)',
@@ -15894,6 +18158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBNB',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Alongside Crypto Market Index',
@@ -15901,6 +18166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AMKT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Maker',
@@ -15908,6 +18174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MKR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'WOO Network',
@@ -15915,6 +18182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Impermax (PoS)',
@@ -15922,6 +18190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IMX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Staked ETH',
@@ -15929,6 +18198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wstETH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Coinbase Wrapped Staked ETH',
@@ -15936,6 +18206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'fxcbETH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Sushi',
@@ -15943,6 +18214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SUSHI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped BTC (Wormhole)',
@@ -15950,6 +18222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBTC',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar FIL',
@@ -15957,6 +18230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlFIL',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Binance Token',
@@ -15964,6 +18238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BNB',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Mai Stablecoin',
@@ -15971,6 +18246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlWMAI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Ethos Reserve Note',
@@ -15978,6 +18254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ERN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'BNB',
@@ -15985,6 +18262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BNB',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'PoolTogether',
@@ -15992,6 +18270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POOL',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Avalanche Token',
@@ -15999,6 +18278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AVAX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Fantom Token',
@@ -16006,6 +18286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FTM',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Kromatika (PoS)',
@@ -16013,6 +18294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KROM',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'BUSD Token',
@@ -16020,6 +18302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BUSD',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Lido DAO',
@@ -16027,6 +18310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LDO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Binance USD',
@@ -16034,6 +18318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BUSD',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar USDT',
@@ -16041,6 +18326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlUSDT',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Synthetix Network',
@@ -16048,6 +18334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SNX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Frax Share',
@@ -16055,6 +18342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FXS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'TrueUSD',
@@ -16062,6 +18350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TUSD',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Curve DAO',
@@ -16069,6 +18358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRV',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'The Sandbox',
@@ -16076,6 +18366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SAND',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: '1inch',
@@ -16083,6 +18374,7 @@ const tokenList: (TokenInfo & {
     symbol: '1INCH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Basic Attention',
@@ -16090,6 +18382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Balancer',
@@ -16097,6 +18390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAL',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Synapse',
@@ -16104,6 +18398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SYN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Gains Network',
@@ -16111,6 +18406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GNS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Battle World',
@@ -16118,6 +18414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BWO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Nest Protocol',
@@ -16125,6 +18422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEST',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'inSure DeFi',
@@ -16132,6 +18430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SURE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Mask Network',
@@ -16139,6 +18438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MASK',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Dogelon Mars',
@@ -16146,6 +18446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ELON',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar',
@@ -16153,6 +18454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AXL',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'STASIS EURO',
@@ -16160,6 +18462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EURS',
     decimals: 2,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Kyber Network Crystal',
@@ -16167,6 +18470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KNC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Multichain',
@@ -16174,6 +18478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MULTI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'IQ',
@@ -16181,6 +18486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IQ',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Vulcan Forged',
@@ -16188,6 +18494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PYR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'IX',
@@ -16195,6 +18502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IXT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Axion',
@@ -16202,6 +18510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AXN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Ankr Network',
@@ -16209,6 +18518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ANKR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'PlayDapp',
@@ -16216,6 +18526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Stargate Finance',
@@ -16223,6 +18534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STG',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Stader MaticX',
@@ -16230,6 +18542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MaticX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Magic Internet Money',
@@ -16237,6 +18550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIM',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Request',
@@ -16244,6 +18558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REQ',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Civic',
@@ -16251,6 +18566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CVC',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Automata',
@@ -16258,6 +18574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ATA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'XSGD',
@@ -16265,6 +18582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XSGD',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'XCAD Network',
@@ -16272,6 +18590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XCAD',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'RAMP [OLD]',
@@ -16279,6 +18598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RAMP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'CargoX',
@@ -16286,6 +18606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CXO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'OATH',
@@ -16293,6 +18614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OATH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Gelato',
@@ -16300,6 +18622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GEL',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'ARPA',
@@ -16307,6 +18630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARPA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Circuits of Value',
@@ -16314,6 +18638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COVAL',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Sphere Finance',
@@ -16321,6 +18646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPHERE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Syntropy',
@@ -16328,6 +18654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NOIA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Stake DAO',
@@ -16335,6 +18662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SDT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Auto',
@@ -16342,6 +18670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'oAUTO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Ethereum Meta',
@@ -16349,6 +18678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETHM',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'DeRace',
@@ -16356,6 +18686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DERC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Router Protocol',
@@ -16363,6 +18694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ROUTE (PoS)',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'agEUR',
@@ -16370,6 +18702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'agEUR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Astrafer',
@@ -16377,6 +18710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ASTRAFER',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'UniLend Finance',
@@ -16384,6 +18718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UFT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Voxies',
@@ -16391,6 +18726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VOXEL',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Streamr',
@@ -16398,6 +18734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DATA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'ICHI',
@@ -16405,6 +18742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ICHI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'ParaSwap',
@@ -16412,6 +18750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PSP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Ambire AdEx',
@@ -16419,6 +18758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ADX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'DeFi Pulse Index',
@@ -16426,6 +18766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DPI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Rebel Bots',
@@ -16433,6 +18774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RBLS',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Giddy',
@@ -16440,6 +18782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GIDDY',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Cosplay Token',
@@ -16447,6 +18790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Fuse',
@@ -16454,6 +18798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FUSE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Neutrino Index Token',
@@ -16461,6 +18806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Swash',
@@ -16468,6 +18814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWASH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Nakamoto Games',
@@ -16475,6 +18822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NAKA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'GET Protocol',
@@ -16482,6 +18830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GET',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'ShapeShift FOX',
@@ -16489,6 +18838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FOX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Ovr',
@@ -16496,6 +18846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OVR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Klima DAO',
@@ -16503,6 +18854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KLIMA',
     decimals: 9,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Decentral Games',
@@ -16510,6 +18862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DG',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'TETU',
@@ -16517,6 +18870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TETU',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Orbcity',
@@ -16524,6 +18878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ORB',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Obyte',
@@ -16531,6 +18886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GBYTE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Dafi Protocol',
@@ -16538,6 +18894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAFI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Genius',
@@ -16545,6 +18902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GENI',
     decimals: 9,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Instadapp',
@@ -16552,6 +18910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'INST',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Vita Inu',
@@ -16559,6 +18918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VINU',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Lunr',
@@ -16566,6 +18926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'eLunr',
     decimals: 4,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'EverRise',
@@ -16573,6 +18934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RISE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'ApeSwap',
@@ -16580,6 +18942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BANANA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Panther Protocol',
@@ -16587,6 +18950,7 @@ const tokenList: (TokenInfo & {
     symbol: '$ZKP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Index Cooperative',
@@ -16594,6 +18958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'INDEX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'BICO',
@@ -16601,6 +18966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BICO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Decentral Games Governance',
@@ -16608,6 +18974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'xDG',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'OpenOcean',
@@ -16615,6 +18982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OOE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Morpheus Labs',
@@ -16622,6 +18990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MITx',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'DEUS Finance',
@@ -16629,6 +18998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEUS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'FibSwap DEX',
@@ -16636,6 +19006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FIBO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Peercoin',
@@ -16643,6 +19014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wPPC',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Pleasure Coin',
@@ -16650,6 +19022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NSFW',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Affyn',
@@ -16657,6 +19030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FYN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Exeedme',
@@ -16664,6 +19038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XED',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Amp',
@@ -16671,6 +19046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AMP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Metavault Trade',
@@ -16678,6 +19054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MVX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Band Protocol',
@@ -16685,6 +19062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAND',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Ethereum name Service',
@@ -16692,6 +19070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ENS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Gnosis Token',
@@ -16699,6 +19078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GNO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Keep Network',
@@ -16706,6 +19086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KEEP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Kyber Network Crystal',
@@ -16713,6 +19094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KNC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Loom Network',
@@ -16720,6 +19102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LOOM',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'LoopringCoin V2',
@@ -16727,6 +19110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LRC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Orchid',
@@ -16734,6 +19118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OXT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Republic Token',
@@ -16741,6 +19126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Reputation Augur v2',
@@ -16748,6 +19134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'REPv2',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Storj Token',
@@ -16755,6 +19142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STORJ',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Synth sUSD',
@@ -16762,6 +19150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sUSD',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'tBTC',
@@ -16769,6 +19158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TBTC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'UMA Voting Token v1',
@@ -16776,6 +19166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UMA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: '0x Protocol Token',
@@ -16783,6 +19174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZRX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Mimo Governance',
@@ -16790,6 +19182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIMO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'BLOCKv',
@@ -16797,6 +19190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VEE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'renBTC',
@@ -16804,6 +19198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'renBTC',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'BiLira',
@@ -16811,6 +19206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRYB',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'SpiceUSD',
@@ -16818,6 +19214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'XIDR',
@@ -16825,6 +19222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XIDR',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Inflation Adjusted USDS',
@@ -16832,6 +19230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'iUSDS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Parallel',
@@ -16839,6 +19238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PAR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'ARTH',
@@ -16846,6 +19246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARTH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'New Zealand Dollar Stablecoin',
@@ -16853,6 +19254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NZDS',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Inflation Adjusted EURO',
@@ -16860,6 +19262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'iEUROS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'JPY Coin',
@@ -16867,6 +19270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JPYC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Jarvis Synthetic Euro',
@@ -16874,6 +19278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'jEUR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Monerium EUR emoney',
@@ -16881,6 +19286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EURe',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'JPY Coin v1',
@@ -16888,6 +19294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JPYC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Jarvis Synthetic Swiss Franc',
@@ -16895,6 +19302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'jCHF',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'dForce USD',
@@ -16902,6 +19310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Jarvis Synthetic British Pound',
@@ -16909,6 +19318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'jGBP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Global Coin Research',
@@ -16916,6 +19326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GCR',
     decimals: 4,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Dfyn Network',
@@ -16923,6 +19334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DFYN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Popsicle Finance',
@@ -16930,6 +19342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ICE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'LIF3',
@@ -16937,6 +19350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LIF3',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Defactor',
@@ -16944,6 +19358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FACTR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Hop Protocol',
@@ -16951,6 +19366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Crypto Gladiator League',
@@ -16958,6 +19374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CGL',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Volt Inu',
@@ -16965,6 +19382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VOLT',
     decimals: 9,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'NFTBooks',
@@ -16972,6 +19390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NFTBS',
     decimals: 9,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Frax Ether',
@@ -16979,6 +19398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'frxETH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Real USD',
@@ -16986,6 +19406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDR',
     decimals: 9,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Chain Guardians',
@@ -16993,6 +19414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CGG',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Civilization',
@@ -17000,6 +19422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CIV',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Lucidao',
@@ -17007,6 +19430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LCD',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'MASQ',
@@ -17014,6 +19438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MASQ',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'MCHCoin',
@@ -17021,6 +19446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MCHC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Nitro (POS)',
@@ -17028,6 +19454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NITRO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Sunflower Land',
@@ -17035,6 +19462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SFL',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Staked MATIC (PoS) | Lido',
@@ -17042,6 +19470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'stMATIC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Exchange Genesis Ethlas Medium',
@@ -17049,6 +19478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XGEM',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Crypto Raider',
@@ -17056,6 +19486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RAIDER',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Artificial Liquid Intelligence',
@@ -17063,6 +19494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Adshares',
@@ -17070,6 +19502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ADS',
     decimals: 11,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Bit2Me',
@@ -17077,6 +19510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'B2M',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Thales',
@@ -17084,6 +19518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'THALES',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'BOB',
@@ -17091,6 +19526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOB',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'PolySwarm',
@@ -17098,6 +19534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NCT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Across Protocol',
@@ -17105,6 +19542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ACX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Gravity Finance',
@@ -17112,6 +19550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GFI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Prosper',
@@ -17119,6 +19558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PROS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'AllianceBlock Nexera',
@@ -17126,6 +19566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NXRA',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Iron',
@@ -17133,6 +19574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IRON',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'DUST Protocol',
@@ -17140,6 +19582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DUST',
     decimals: 9,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'xDollar Stablecoin',
@@ -17147,6 +19590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'xUSD',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Zus',
@@ -17154,6 +19598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZCN',
     decimals: 10,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'handle.fi',
@@ -17161,6 +19606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FOREX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Sandclock',
@@ -17168,6 +19614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QUARTZ',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped KNC',
@@ -17175,6 +19622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlKNC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'LiquidDriver',
@@ -17182,6 +19630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlLqdr',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Oath Token',
@@ -17189,6 +19638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OATH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Staked ERN Vault',
@@ -17196,6 +19646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'stERN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Gridex',
@@ -17203,6 +19654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GDX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped DEUS',
@@ -17210,6 +19662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlDEUS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped FRAX',
@@ -17217,6 +19670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlFRAX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'inSure (PoS)',
@@ -17224,6 +19678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SURE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Volt Inu',
@@ -17231,6 +19686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VOLT',
     decimals: 9,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped AVAX (Wormhole)',
@@ -17238,6 +19694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAVAX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'XEN Crypto',
@@ -17245,6 +19702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'mXEN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Cobak',
@@ -17252,6 +19710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CBK',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'axlUSDC',
@@ -17259,6 +19718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlUSDC',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Nash',
@@ -17266,6 +19726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NEX',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Liquity USD',
@@ -17273,6 +19734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LUSD',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'ApeCoin',
@@ -17280,6 +19742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'APE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Orbs',
@@ -17287,6 +19750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ORBS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Open Exchange Token',
@@ -17294,6 +19758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'RocketX exchange',
@@ -17301,6 +19766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RVF',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Bonk',
@@ -17308,6 +19774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Bonk',
     decimals: 5,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'GensoKishi Metaverse',
@@ -17315,6 +19782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MV',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Stader',
@@ -17322,6 +19790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SD',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'World$tateCoin',
@@ -17329,6 +19798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'W$C',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Frontier',
@@ -17336,6 +19806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRONT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Toucan Protocol: Base Carbon Tonne',
@@ -17343,6 +19814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BCT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'JumpToken',
@@ -17350,6 +19822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JMPT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'USD+',
@@ -17357,6 +19830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USD+',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Real USD',
@@ -17364,6 +19838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDR',
     decimals: 9,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Swarm Markets',
@@ -17371,6 +19846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SMT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'NFT Worlds',
@@ -17378,6 +19854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WRLD',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Bancor Network Token',
@@ -17385,6 +19862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BNT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Numeraire',
@@ -17392,6 +19870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NMR',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Popcorn',
@@ -17399,6 +19878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'CAD Coin',
@@ -17406,6 +19886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CADC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'DogeGF',
@@ -17413,6 +19894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOGEGF',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Mysterium',
@@ -17420,6 +19902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MYST',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Polylastic',
@@ -17427,6 +19910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POLX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Banano',
@@ -17434,6 +19918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wBAN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Rocket Pool ETH',
@@ -17441,6 +19926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'rETH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Pegaxy',
@@ -17448,6 +19934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PGX',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Raider Aurum',
@@ -17455,6 +19942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AURUM',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'SpiceEURO',
@@ -17462,6 +19950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EUROS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Quickswap',
@@ -17469,6 +19958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QUICK',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Vyvo Smart Chain',
@@ -17476,6 +19966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VSC',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Wagmi',
@@ -17483,6 +19974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAGMI',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Glitch Protocol',
@@ -17490,6 +19982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GLCH',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'DIMO',
@@ -17497,6 +19990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DIMO',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Rupiah Token',
@@ -17504,6 +19998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IDRT',
     decimals: 6,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'ViciCoin',
@@ -17511,6 +20006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VCNT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Zizy',
@@ -17518,6 +20014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZIZY',
     decimals: 8,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Veloce',
@@ -17525,6 +20022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VEXT',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Taki',
@@ -17532,6 +20030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TAKI',
     decimals: 9,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'MetaTrace',
@@ -17539,6 +20038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRC',
     decimals: 2,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'D-Drops',
@@ -17546,6 +20046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'IX Swap',
@@ -17553,6 +20054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WIXS',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Carbify',
@@ -17560,6 +20062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CBY',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'xWIN Finance',
@@ -17567,6 +20070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XWIN',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'GAMEE',
@@ -17574,6 +20078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMEE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Polytrade',
@@ -17581,6 +20086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TRADE',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'KAP Games',
@@ -17588,6 +20094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'fxKAP',
     decimals: 18,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Dogami',
@@ -17595,6 +20102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOGA',
     decimals: 5,
     chainId: 137,
+    supportTargetChain: false,
   },
   {
     name: 'Coinbase Wrapped Staked ETH',
@@ -17602,6 +20110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cbETH',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Dai Stablecoin',
@@ -17609,6 +20118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAI',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Baseswap Token',
@@ -17616,6 +20126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BSWAP',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Toshi',
@@ -17623,6 +20134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TOSHI',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'USD Base Coin',
@@ -17630,6 +20142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDbC',
     decimals: 6,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Ether',
@@ -17637,6 +20150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WETH',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Bald',
@@ -17644,6 +20158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BALD',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped USDC',
@@ -17651,6 +20166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlUSDC',
     decimals: 6,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Mountain Protocol USD',
@@ -17658,6 +20174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDM',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Brett',
@@ -17665,6 +20182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BRETT',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Degen',
@@ -17672,6 +20190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEGEN',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'JOJO',
@@ -17679,6 +20198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JOJO',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Mountain Protocol USD',
@@ -17686,6 +20206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wUSDM',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'GoPlus Security',
@@ -17693,6 +20214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GPS',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Smart Layer Network Token',
@@ -17700,6 +20222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SLN',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Magic Internet Money',
@@ -17707,6 +20230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIM',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'QiDao',
@@ -17714,6 +20238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QI',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar DAI',
@@ -17721,6 +20246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlDAI',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar USDT',
@@ -17728,6 +20254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlUSDT',
     decimals: 6,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar',
@@ -17735,6 +20262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AXL',
     decimals: 6,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Oath Token',
@@ -17742,6 +20270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OATH',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar ATOM',
@@ -17749,6 +20278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlATOM',
     decimals: 6,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar MAI',
@@ -17756,6 +20286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlWMAI',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Ethos Reserve Note',
@@ -17763,6 +20294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ERN',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Morphex',
@@ -17770,6 +20302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MPX',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Horizon',
@@ -17777,6 +20310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HZN',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Gridex',
@@ -17784,6 +20318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GDX',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Arbidex',
@@ -17791,6 +20326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARX',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Curve USDC',
@@ -17798,6 +20334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'crvUSD',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'OVN',
@@ -17805,6 +20342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OVN',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Balancer',
@@ -17812,6 +20350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlBAL',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped wstETH',
@@ -17819,6 +20358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axl-wstETH',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Balancer',
@@ -17826,6 +20366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAL',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Tether USD',
@@ -17833,6 +20374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped BTC',
@@ -17840,6 +20382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlWBTC',
     decimals: 8,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar BNB',
@@ -17847,6 +20390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlBNB',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar WAVAX',
@@ -17854,6 +20398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlAVAX',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar WMATIC',
@@ -17861,6 +20406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlMATIC',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Arbitrum',
@@ -17868,6 +20414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlARB',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar BUSD',
@@ -17875,6 +20422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlBUSD',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'axlTIA',
@@ -17882,6 +20430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlTIA',
     decimals: 6,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'SHREKT',
@@ -17889,6 +20438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OGRE',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Staked ERN Vault',
@@ -17896,6 +20446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'stERN',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped KNC',
@@ -17903,6 +20454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlKNC',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Sonne',
@@ -17910,6 +20462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SONNE',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'VelaToken',
@@ -17917,6 +20470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VELA',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped FRAX',
@@ -17924,6 +20478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlFRAX',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'Base Velocimeter',
@@ -17931,6 +20486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BVM',
     decimals: 18,
     chainId: 8453,
+    supportTargetChain: false,
   },
   {
     name: 'DXdao',
@@ -17938,6 +20494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DXD',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Premia',
@@ -17945,6 +20502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PREMIA',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Compound',
@@ -17952,6 +20510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COMP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Gnosis Token',
@@ -17959,6 +20518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GNO',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Graph Token',
@@ -17966,6 +20526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GRT',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'MATH Token',
@@ -17973,6 +20534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MATH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Stake DAO Token',
@@ -17980,6 +20542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SDT',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'SushiToken',
@@ -17987,6 +20550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SUSHI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'ChainLink Token',
@@ -17994,6 +20558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LINK',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Maker',
@@ -18001,6 +20566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MKR',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'VISOR',
@@ -18008,6 +20574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VISR',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'dForce USD',
@@ -18015,6 +20582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'xDollar',
@@ -18022,6 +20590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XDO',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'dForce EUR',
@@ -18029,6 +20598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EUX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Uniswap',
@@ -18036,6 +20606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'QIAN governance token',
@@ -18043,6 +20614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KUN',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: ' Amy Finance Token',
@@ -18050,6 +20622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AMY',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'The Doge NFT ',
@@ -18057,6 +20630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOG',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'dForce',
@@ -18064,6 +20638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DF',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'MCDEX Token',
@@ -18071,6 +20646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MCB',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Wootrade Network',
@@ -18078,6 +20654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOO',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'QIAN second generation dollar',
@@ -18085,6 +20662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QSD',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'yearn.finance',
@@ -18092,6 +20670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YFI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Dai Stablecoin',
@@ -18099,6 +20678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Hundred Finance',
@@ -18106,6 +20686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HND',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Balancer',
@@ -18113,6 +20694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAL',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'xDollar Stablecoin',
@@ -18120,6 +20702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'xUSD',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'CelerToken',
@@ -18127,6 +20710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CELR',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Bridged USDC',
@@ -18134,6 +20718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC.e',
     decimals: 6,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Curve DAO Token',
@@ -18141,6 +20726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRV',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'DODO bird',
@@ -18148,6 +20734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DODO',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Badger',
@@ -18155,6 +20742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BADGER',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Carbon',
@@ -18162,6 +20750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CARBON',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'ArbiNYAN',
@@ -18169,6 +20758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'NYAN',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Frax',
@@ -18176,6 +20766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRAX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'MAGIC',
@@ -18183,6 +20774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MAGIC',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Tether USD',
@@ -18190,6 +20782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT',
     decimals: 6,
     chainId: 42161,
+    supportTargetChain: true,
   },
   {
     name: 'Wrapped Ether',
@@ -18197,6 +20790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WETH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Alchemy',
@@ -18204,6 +20798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ALCH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Synth sUSD',
@@ -18211,6 +20806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sUSD',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Capital.finance',
@@ -18218,6 +20814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CAP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Fuse Token',
@@ -18225,6 +20822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FUSE',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Cream',
@@ -18232,6 +20830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CREAM',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Rari Governance Token',
@@ -18239,6 +20838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RGT',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'USD Coin',
@@ -18246,6 +20846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 42161,
+    supportTargetChain: true,
   },
   {
     name: 'Renzo Restaked ETH',
@@ -18253,6 +20854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ezETH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'SolvBTC',
@@ -18260,6 +20862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SolvBTC',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'xSolvBTC',
@@ -18267,6 +20870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'xSolvBTC',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Mountain Protocol USD',
@@ -18274,6 +20878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDM',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'ETH',
@@ -18281,6 +20886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: true,
   },
   {
     name: 'Wrapped eETH',
@@ -18288,6 +20894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'weETH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Mountain Protocol USD',
@@ -18295,6 +20902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wUSDM',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'SolvBTC.ENA',
@@ -18302,6 +20910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SolvBTC.ENA',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped BTC',
@@ -18309,6 +20918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBTC',
     decimals: 8,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Smart Layer Network Token',
@@ -18316,6 +20926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SLN',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Verified USD',
@@ -18323,6 +20934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDV',
     decimals: 6,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Alongside Crypto Market Index',
@@ -18330,6 +20942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AMKT',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Mai Stablecoin',
@@ -18337,6 +20950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlWMAI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar USDC',
@@ -18344,6 +20958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlUSDC',
     decimals: 6,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'UMA',
@@ -18351,6 +20966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UMA',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar USDT',
@@ -18358,6 +20974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlUSDT',
     decimals: 6,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Ethos Reserve Note',
@@ -18365,6 +20982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ERN',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'The Graph',
@@ -18372,6 +20990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GRT',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Fantom Token',
@@ -18379,6 +20998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FTM',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Impermax',
@@ -18386,6 +21006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IMX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Dola USD Stablecoin',
@@ -18393,6 +21014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DOLA',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Coinbase Wrapped Staked ETH',
@@ -18400,6 +21022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cbETH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'axlTIA',
@@ -18407,6 +21030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlTIA',
     decimals: 6,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'LiquidDriver',
@@ -18414,6 +21038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Lqdr',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Oath Token',
@@ -18421,6 +21046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OATH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Matic Token',
@@ -18428,6 +21054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MATIC',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Staked ERN Vault',
@@ -18435,6 +21062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'stERN',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Gridex',
@@ -18442,6 +21070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GDX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'OneRing',
@@ -18449,6 +21078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RING',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Arbinu',
@@ -18456,6 +21086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARBINU',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Arbidex',
@@ -18463,6 +21094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped FRAX',
@@ -18470,6 +21102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlFRAX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Lido DAO',
@@ -18477,6 +21110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LDO',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Balancer',
@@ -18484,6 +21118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlBAL',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Frax Share',
@@ -18491,6 +21126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FXS',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Loopring',
@@ -18498,6 +21134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LRC',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'GMX',
@@ -18505,6 +21142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GMX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Synapse',
@@ -18512,6 +21150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SYN',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Gains Network',
@@ -18519,6 +21158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GNS',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'JOE',
@@ -18526,6 +21166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JOE',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'MAI',
@@ -18533,6 +21174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MAI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'BarnBridge',
@@ -18540,6 +21182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOND',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Perpetual Protocol',
@@ -18547,6 +21190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PERP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Kyber Network Crystal',
@@ -18554,6 +21198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KNC',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Multichain',
@@ -18561,6 +21206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MULTI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Magic Internet Money',
@@ -18568,6 +21214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIM',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Cartesi',
@@ -18575,6 +21222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CTSI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Spell',
@@ -18582,6 +21230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPELL',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Dopex',
@@ -18589,6 +21238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DPX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Dopex Rebate',
@@ -18596,6 +21246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'rDPX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'OATH',
@@ -18603,6 +21254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OATH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Hegic',
@@ -18610,6 +21262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HEGIC',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Beefy.Finance',
@@ -18617,6 +21270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BIFI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Radiant Capital',
@@ -18624,6 +21278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RDNT',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'agEUR',
@@ -18631,6 +21286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'agEUR',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Camelot Token',
@@ -18638,6 +21294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GRAIL',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Tracer DAO',
@@ -18645,6 +21302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TCR',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Vela Token',
@@ -18652,6 +21310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VELA',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Cap',
@@ -18659,6 +21318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CAP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Jones DAO',
@@ -18666,6 +21326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'JONES',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Across Protocol',
@@ -18673,6 +21334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ACX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Pendle',
@@ -18680,6 +21342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PENDLE',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'GOVI',
@@ -18687,6 +21350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GOVI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Jones ETH',
@@ -18694,6 +21358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'jETH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Yieldification',
@@ -18701,6 +21366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'YDF',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Tokenlon',
@@ -18708,6 +21374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LON',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Strips Finance',
@@ -18715,6 +21382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STRP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Vesta Stable',
@@ -18722,6 +21390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VST',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Carbon Protocol',
@@ -18729,6 +21398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SWTH',
     decimals: 8,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'TridentDAO',
@@ -18736,6 +21406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PSI',
     decimals: 9,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'L2DAO Token',
@@ -18743,6 +21414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'L2DAO',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Mycelium',
@@ -18750,6 +21422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MYC',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Ice Token',
@@ -18757,6 +21430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ICE',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Sperax USD',
@@ -18764,6 +21438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDs',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'MUX LP Token',
@@ -18771,6 +21446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MUXLP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'dForce EUR',
@@ -18778,6 +21454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EUX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'ArbiDoge',
@@ -18785,6 +21462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ADOGE',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'ArbiMoon',
@@ -18792,6 +21470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'aMoon',
     decimals: 9,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Staked Spell Token',
@@ -18799,6 +21478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SSPELL',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'O3 Swap Token',
@@ -18806,6 +21486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'O3',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Parrot Egg',
@@ -18813,6 +21494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PPEGG',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Magnethereum',
@@ -18820,6 +21502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MAGNET',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'ArVault',
@@ -18827,6 +21510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARVAULT',
     decimals: 9,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped sOHM',
@@ -18834,6 +21518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wsOHM',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Arbucks',
@@ -18841,6 +21526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BUCK',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'DeversiFi Token',
@@ -18848,6 +21534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DVF',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'ZeroTwOhm',
@@ -18855,6 +21542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Z2O',
     decimals: 9,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Arbys',
@@ -18862,6 +21550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARBYS',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Governance OHM',
@@ -18869,6 +21558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'gOHM',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Arbis',
@@ -18876,6 +21566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARBIS',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Ideamarket',
@@ -18883,6 +21574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IMO',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'CreDA Protocol Token',
@@ -18890,6 +21582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CREDA',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'FluidFi',
@@ -18897,6 +21590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLUID',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'dForce USD',
@@ -18904,6 +21598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Symbiosis',
@@ -18911,6 +21606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SIS',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'DigitalDollar',
@@ -18918,6 +21614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DUSD',
     decimals: 6,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Y2K',
@@ -18925,6 +21622,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Y2K',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Lyra Finance',
@@ -18932,6 +21630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LYRA',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'ZetaChain Bridged BTC BTC ZetaChain',
@@ -18939,6 +21638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTC.BTC',
     decimals: 8,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'Sperax',
@@ -18946,6 +21646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPA',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Phonon DAO',
@@ -18953,6 +21654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PHONON',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Buffer Token',
@@ -18960,6 +21662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BFR',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Hop Protocol',
@@ -18967,6 +21670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HOP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Arbitrove Governance Token',
@@ -18974,6 +21678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TROVE',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Rocket Pool ETH',
@@ -18981,6 +21686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'rETH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Biconomy',
@@ -18988,6 +21694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BICO',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Umami',
@@ -18995,6 +21702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UMAMI',
     decimals: 9,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'DSLA Protocol',
@@ -19002,6 +21710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DSLA',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'TrueUSD',
@@ -19009,6 +21718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TUSD',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'BOB',
@@ -19016,6 +21726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOB',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Liquity USD',
@@ -19023,6 +21734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LUSD',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'handle.fi',
@@ -19030,6 +21742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FOREX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Liquid',
@@ -19037,6 +21750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LIQD',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'liquid ETH',
@@ -19044,6 +21758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'lqETH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Party Dice',
@@ -19051,6 +21766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DICE',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'EthereumMax',
@@ -19058,6 +21774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EMAX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Radiant Capital',
@@ -19065,6 +21782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RDNT',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'ArbDoge AI',
@@ -19072,6 +21790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AIDOGE',
     decimals: 6,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Zyberswap',
@@ -19079,6 +21798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZYB',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Thales',
@@ -19086,6 +21806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'THALES',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar',
@@ -19093,6 +21814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AXL',
     decimals: 6,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Staked GLP',
@@ -19100,6 +21822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sGLP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar FIL',
@@ -19107,6 +21830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlFIL',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Livepeer',
@@ -19114,6 +21838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LPT',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Aurory',
@@ -19121,6 +21846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AURY',
     decimals: 9,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped KNC',
@@ -19128,6 +21854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlKNC',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Hamachi Finance',
@@ -19135,6 +21862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HAMI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'BattleFly',
@@ -19142,6 +21870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GFLY',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'PlutusDAO',
@@ -19149,6 +21878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PLS',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Flashstake',
@@ -19156,6 +21886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLASH',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Ramses Exchange',
@@ -19163,6 +21894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RAM',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'DEUS',
@@ -19170,6 +21902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DEUS',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'OVN',
@@ -19177,6 +21910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OVN',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Kromatika',
@@ -19184,6 +21918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KROM',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'QiDao',
@@ -19191,6 +21926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'COTI',
@@ -19198,6 +21934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'COTI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Stargate Finance',
@@ -19205,6 +21942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STG',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Bonk',
@@ -19212,6 +21950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Bonk',
     decimals: 5,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Vesta Finance',
@@ -19219,6 +21958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VSTA',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Wagmi',
@@ -19226,6 +21966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WAGMI',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Tarot',
@@ -19233,6 +21974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TAROT',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Compounded Marinated Umami',
@@ -19240,6 +21982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cmUMAMI',
     decimals: 9,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Adamant Token',
@@ -19247,6 +21990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ARBY',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Flux Protocol',
@@ -19254,6 +21998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FLUX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Banano',
@@ -19261,6 +22006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wBAN',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'BullBear AI',
@@ -19268,6 +22014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AIBB',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Impossible Finance Launchpad',
@@ -19275,6 +22022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'IDIA',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'peg-eUSD',
@@ -19282,6 +22030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'peUSD',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Silo Finance',
@@ -19289,6 +22038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'Silo',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'ZTX',
@@ -19296,6 +22046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZTX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Dream Machine Token',
@@ -19303,6 +22054,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DMT',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Tigris',
@@ -19310,6 +22062,7 @@ const tokenList: (TokenInfo & {
     symbol: 'TIG',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Vertex Protocol',
@@ -19317,6 +22070,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VRTX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Hydranet',
@@ -19324,6 +22078,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HDN',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'WINR Protocol',
@@ -19331,6 +22086,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WINR',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Empyreal',
@@ -19338,6 +22094,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EMP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'HMX',
@@ -19345,6 +22102,7 @@ const tokenList: (TokenInfo & {
     symbol: 'HMX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'STFX',
@@ -19352,6 +22110,7 @@ const tokenList: (TokenInfo & {
     symbol: 'STFX',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Lybra',
@@ -19359,6 +22118,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LBR',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Vaultka',
@@ -19366,6 +22126,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VKA',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Magpie',
@@ -19373,6 +22134,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MGP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'GameSwift',
@@ -19380,6 +22142,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GSWIFT',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'KAP Games',
@@ -19387,6 +22150,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KAP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Penpie',
@@ -19394,6 +22158,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PNP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'FORE Protocol',
@@ -19401,6 +22166,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FORE',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'Popcorn',
@@ -19408,6 +22174,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POP',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'El Dorado Exchange (Arb)',
@@ -19415,6 +22182,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EDE',
     decimals: 18,
     chainId: 42161,
+    supportTargetChain: false,
   },
   {
     name: 'AIWORLD(old)',
@@ -19422,6 +22190,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AIWORLD',
     decimals: 6,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'USDC',
@@ -19429,6 +22198,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Frax',
@@ -19436,6 +22206,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FRAX',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Synthetix Network Token',
@@ -19443,6 +22214,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SNX',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Aelin Token',
@@ -19450,6 +22222,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AELIN',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Thales DAO Token',
@@ -19457,6 +22230,7 @@ const tokenList: (TokenInfo & {
     symbol: 'THALES',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Rai Reflex Index',
@@ -19464,6 +22238,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RAI',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Synth sUSD',
@@ -19471,6 +22246,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sUSD',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Optimism',
@@ -19478,6 +22254,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OP',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'ChainLink Token',
@@ -19485,6 +22262,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LINK',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: ' Lyra Token',
@@ -19492,6 +22270,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LYRA',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Kromatika ',
@@ -19499,6 +22278,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KROM',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Perpetual ',
@@ -19506,6 +22286,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PERP',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Liquity USD',
@@ -19513,6 +22294,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LUSD',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'BOB',
@@ -19520,6 +22302,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOB',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'AIWORLD',
@@ -19527,6 +22310,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AIWORLD',
     decimals: 6,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Alchemix USD',
@@ -19534,6 +22318,7 @@ const tokenList: (TokenInfo & {
     symbol: 'alUSD',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'MAI',
@@ -19541,6 +22326,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MAI',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'USDT',
@@ -19548,6 +22334,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT',
     decimals: 6,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'USD Coin',
@@ -19555,6 +22342,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'ETH',
@@ -19562,6 +22350,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'DAI',
@@ -19569,6 +22358,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DAI',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'WBTC',
@@ -19576,6 +22366,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WBTC',
     decimals: 8,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'WETH',
@@ -19583,6 +22374,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WETH',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Mountain Protocol USD',
@@ -19590,6 +22382,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDM',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Mountain Protocol USD',
@@ -19597,6 +22390,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wUSDM',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Smart Layer Network Token',
@@ -19604,6 +22398,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SLN',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Mummy',
@@ -19611,6 +22406,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MMY',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'QiDao',
@@ -19618,6 +22414,7 @@ const tokenList: (TokenInfo & {
     symbol: 'QI',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Balancer',
@@ -19625,6 +22422,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BAL',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'ACX',
@@ -19632,6 +22430,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ACX',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Wootrade Network',
@@ -19639,6 +22438,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WOO',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped Staked ETH',
@@ -19646,6 +22446,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wstETH',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Coinbase Wrapped Staked ETH',
@@ -19653,6 +22454,7 @@ const tokenList: (TokenInfo & {
     symbol: 'cbETH',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Magic Internet Money',
@@ -19660,6 +22462,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MIM',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Ethos Reserve Note',
@@ -19667,6 +22470,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ERN',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Overnight Finance USD',
@@ -19674,6 +22478,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USD+',
     decimals: 6,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Angle EURO',
@@ -19681,6 +22486,7 @@ const tokenList: (TokenInfo & {
     symbol: 'agEUR',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Velodrome',
@@ -19688,6 +22494,7 @@ const tokenList: (TokenInfo & {
     symbol: 'VELO',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Beefy',
@@ -19695,6 +22502,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BIFI',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'UniDex',
@@ -19702,6 +22510,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNIDX',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Meta',
@@ -19709,6 +22518,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MTA',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'BlueNorva Token',
@@ -19716,6 +22526,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BLU',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'StaFi rETH',
@@ -19723,6 +22534,7 @@ const tokenList: (TokenInfo & {
     symbol: 'rETH',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'wTBT(Bridge Token)',
@@ -19730,6 +22542,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wTBT',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Mai Stablecoin',
@@ -19737,6 +22550,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlWMAI',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar USDC',
@@ -19744,6 +22558,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlUSDC',
     decimals: 6,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'PoolTogether',
@@ -19751,6 +22566,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POOL',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar USDT',
@@ -19758,6 +22574,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlUSDT',
     decimals: 6,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'L2DAO Token',
@@ -19765,6 +22582,7 @@ const tokenList: (TokenInfo & {
     symbol: 'L2DAO',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Synthetic Ether',
@@ -19772,6 +22590,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sETH',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Paper',
@@ -19779,6 +22598,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PAPER',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Premia',
@@ -19786,6 +22606,7 @@ const tokenList: (TokenInfo & {
     symbol: 'PREMIA',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Frax Shares',
@@ -19793,6 +22614,7 @@ const tokenList: (TokenInfo & {
     symbol: 'FXS',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: '0xBitcoin',
@@ -19800,6 +22622,7 @@ const tokenList: (TokenInfo & {
     symbol: '0xBTC',
     decimals: 8,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Aave Token',
@@ -19807,6 +22630,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AAVE',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'BarnBridge Governance Token',
@@ -19814,6 +22638,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BOND',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'BitANT',
@@ -19821,6 +22646,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BitANT',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'BitBTC',
@@ -19828,6 +22654,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BITBTC',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'CryptoFranc',
@@ -19835,6 +22662,7 @@ const tokenList: (TokenInfo & {
     symbol: 'XCHF',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Curve DAO Token',
@@ -19842,6 +22670,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CRV',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'dForce',
@@ -19849,6 +22678,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DF',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Equalizer',
@@ -19856,6 +22686,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EQZ',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Erica Social Token',
@@ -19863,6 +22694,7 @@ const tokenList: (TokenInfo & {
     symbol: 'EST',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Ethereum name Service',
@@ -19870,6 +22702,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ENS',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'LoopringCoin V2',
@@ -19877,6 +22710,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LRC',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Maker',
@@ -19884,6 +22718,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MKR',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Mask Network',
@@ -19891,6 +22726,7 @@ const tokenList: (TokenInfo & {
     symbol: 'MASK',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Rocket Pool ETH',
@@ -19898,6 +22734,7 @@ const tokenList: (TokenInfo & {
     symbol: 'rETH',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Sarcophagus',
@@ -19905,6 +22742,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SARCO',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'SPANK',
@@ -19912,6 +22750,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPANK',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Synthetic Chainlink',
@@ -19919,6 +22758,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SLINK',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'UMA Voting Token v1',
@@ -19926,6 +22766,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UMA',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'UST (Wormhole)',
@@ -19933,6 +22774,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UST',
     decimals: 6,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Theranos Coin',
@@ -19940,6 +22782,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LIZ',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'OATH Token',
@@ -19947,6 +22790,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OATH',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar',
@@ -19954,6 +22798,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AXL',
     decimals: 6,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Worldcoin',
@@ -19961,6 +22806,7 @@ const tokenList: (TokenInfo & {
     symbol: 'WLD',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'LiquidDriver',
@@ -19968,6 +22814,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlLqdr',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Oath Token',
@@ -19975,6 +22822,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OATH',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Staked ERN Vault',
@@ -19982,6 +22830,7 @@ const tokenList: (TokenInfo & {
     symbol: 'stERN',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Gridex',
@@ -19989,6 +22838,7 @@ const tokenList: (TokenInfo & {
     symbol: 'GDX',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'OneRing',
@@ -19996,6 +22846,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RING',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'ZYB - Zyber Token',
@@ -20003,6 +22854,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ZYB',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Sonne',
@@ -20010,6 +22862,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SONNE',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped FRAX',
@@ -20017,6 +22870,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlFRAX',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'OVN',
@@ -20024,6 +22878,7 @@ const tokenList: (TokenInfo & {
     symbol: 'OVN',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'axlTIA',
@@ -20031,6 +22886,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlTIA',
     decimals: 6,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Lido DAO Token',
@@ -20038,6 +22894,7 @@ const tokenList: (TokenInfo & {
     symbol: 'LDO',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped USDR (Tangible USD)',
@@ -20045,6 +22902,7 @@ const tokenList: (TokenInfo & {
     symbol: 'wUSDR',
     decimals: 9,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Kwenta DAO',
@@ -20052,6 +22910,7 @@ const tokenList: (TokenInfo & {
     symbol: 'KWENTA',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'BICO',
@@ -20059,6 +22918,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BICO',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Synth BTC(sBTC)',
@@ -20066,6 +22926,7 @@ const tokenList: (TokenInfo & {
     symbol: 'sBTC',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Dentacoin',
@@ -20073,6 +22934,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DCN',
     decimals: 0,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'dHEDGE DAO Token',
@@ -20080,6 +22942,7 @@ const tokenList: (TokenInfo & {
     symbol: 'DHT',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Rari Governance Token',
@@ -20087,6 +22950,7 @@ const tokenList: (TokenInfo & {
     symbol: 'RGT',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Uniswap',
@@ -20094,6 +22958,7 @@ const tokenList: (TokenInfo & {
     symbol: 'UNI',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'Axelar Wrapped KNC',
@@ -20101,6 +22966,7 @@ const tokenList: (TokenInfo & {
     symbol: 'axlKNC',
     decimals: 18,
     chainId: 10,
+    supportTargetChain: false,
   },
   {
     name: 'ZetaChain ZRC20 USDT on Arbitrum One',
@@ -20108,6 +22974,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT.ARB',
     decimals: 6,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'ZetaChain ZRC20 USDT on Avalanche C-Chain',
@@ -20115,6 +22982,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDT.AVAX',
     decimals: 6,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'ZetaChain ZRC20 USDC on Avalanche C-Chain',
@@ -20122,6 +22990,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC.AVAX',
     decimals: 6,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'ZetaChain ZRC20 ETH on Arbitrum One',
@@ -20129,6 +22998,7 @@ const tokenList: (TokenInfo & {
     symbol: 'ETH.ARB',
     decimals: 18,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'ZetaChain ZRC20 USDC on Arbitrum One',
@@ -20136,6 +23006,7 @@ const tokenList: (TokenInfo & {
     symbol: 'USDC.ARB',
     decimals: 6,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'CumRocket',
@@ -20143,6 +23014,7 @@ const tokenList: (TokenInfo & {
     symbol: 'CUMMIES',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'ZetaChain ZRC20 AVAX on Avalanche C-Chain',
@@ -20150,6 +23022,7 @@ const tokenList: (TokenInfo & {
     symbol: 'AVAX.AVAX',
     decimals: 18,
     chainId: 7000,
+    supportTargetChain: true,
   },
   {
     name: 'BTC',
@@ -20157,6 +23030,7 @@ const tokenList: (TokenInfo & {
     symbol: 'BTC',
     decimals: 8,
     chainId: 18333,
+    supportTargetChain: true,
   },
   {
     name: 'Moonpot',
@@ -20164,6 +23038,7 @@ const tokenList: (TokenInfo & {
     symbol: 'POTS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
   {
     name: 'Splintershards',
@@ -20171,6 +23046,7 @@ const tokenList: (TokenInfo & {
     symbol: 'SPS',
     decimals: 18,
     chainId: 56,
+    supportTargetChain: false,
   },
 ];
 

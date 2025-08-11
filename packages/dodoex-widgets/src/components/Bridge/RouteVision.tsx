@@ -40,6 +40,7 @@ interface RouteVisionItemProps {
   tx?: string;
   txChainId?: number;
   swapSteps?: Array<BridgeStepSwapStep>;
+  isGatewayType?: boolean;
 }
 
 function RouteVisionItem({
@@ -148,39 +149,77 @@ function RouteVisionItem({
               color: theme.palette.text.primary,
             }}
           >
-            <Box>
-              {formatTokenAmountNumber({
-                input: item.fromTokenAmount,
-                decimals: item.fromToken?.decimals,
-              })}
-              &nbsp;
-              {item.fromToken?.symbol}
-            </Box>
-            <Box sx={{ color: theme.palette.text.secondary }}>On</Box>
-            <Box
-              component={item.fromChain?.logo}
-              sx={{
-                width: 18,
-                height: 18,
-              }}
-            />
+            {item.isGatewayType ? (
+              <Box>{item.fromToken?.symbol}</Box>
+            ) : (
+              <>
+                <Box>
+                  {formatTokenAmountNumber({
+                    input: item.fromTokenAmount,
+                    decimals: item.fromToken?.decimals,
+                  })}
+                  &nbsp;
+                  {item.fromToken?.symbol}
+                </Box>
+                <Box sx={{ color: theme.palette.text.secondary }}>On</Box>
+                <Box
+                  component={item.fromChain?.logo}
+                  sx={{
+                    width: 18,
+                    height: 18,
+                  }}
+                />
+              </>
+            )}
             <Box sx={{ color: theme.palette.text.secondary }}>to</Box>
-            <Box>
-              {formatTokenAmountNumber({
-                input: item.toTokenAmount,
-                decimals: item.toToken?.decimals,
-              })}
-              &nbsp;
-              {item.toToken?.symbol}
-            </Box>
-            <Box sx={{ color: theme.palette.text.secondary }}>on</Box>
-            <Box
-              component={item.toChain?.logo}
-              sx={{
-                width: 18,
-                height: 18,
-              }}
-            />
+            {item.isGatewayType ? (
+              <>
+                <Box>Zeta Gateway</Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 18,
+                    height: 18,
+                    backgroundColor: theme.palette.background.paper,
+                    borderRadius: '50%',
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="9"
+                    height="11"
+                    viewBox="0 0 9 11"
+                    fill="none"
+                  >
+                    <path
+                      d="M7.33688 7.48936V8.70487H2.32255C2.39171 7.90488 2.64985 7.34203 3.54255 6.55053L7.33688 3.31355V6.15406H8.70276V0.928162H0.936131V3.53308H2.302V2.29404H6.42818L2.65236 5.51648L2.64333 5.525C1.06093 6.926 0.93512 8.05677 0.93512 9.38907V10.0718H8.70326V7.49037H7.33739L7.33688 7.48936Z"
+                      fill="#005741"
+                    />
+                  </svg>
+                </Box>
+              </>
+            ) : (
+              <>
+                <Box>
+                  {formatTokenAmountNumber({
+                    input: item.toTokenAmount,
+                    decimals: item.toToken?.decimals,
+                  })}
+                  &nbsp;
+                  {item.toToken?.symbol}
+                </Box>
+                <Box sx={{ color: theme.palette.text.secondary }}>on</Box>
+                <Box
+                  component={item.toChain?.logo}
+                  sx={{
+                    width: 18,
+                    height: 18,
+                  }}
+                />
+              </>
+            )}
           </Box>
         )}
       </Box>
@@ -346,6 +385,7 @@ export const RouteVision = ({ route, isMobile }: RouteVisionProps) => {
           tx: item.hash,
           txChainId: item.hashChainId,
           swapSteps: item.swapSteps,
+          isGatewayType: item.type === 'Gateway',
         });
       });
     }

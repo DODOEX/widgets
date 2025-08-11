@@ -26,12 +26,14 @@ export function generateBridgeStep({
           token.address.toLowerCase() === plan.outToken.toLowerCase() &&
           token.chainId === Number(plan.outChainId),
       );
+      const isGatewayType = plan.type === 'Gateway';
+      const tool = isGatewayType ? 'null' : plan.inChainType;
       newIncludedSteps.push({
         id: `${plan.inChainType}-${plan.outChainType}-${plan.type}-${plan.inToken}-${plan.outToken}-${plan.inAmount}-${plan.outAmount}-${index}`,
-        tool: plan.inChainType,
+        tool,
         toolDetails: {
-          name: plan.inChainType,
-          logoURI: plan.inChainType,
+          name: tool,
+          logoURI: tool,
         },
         type: plan.type,
         estimate: {

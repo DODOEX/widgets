@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.17.0",
     "@dodoex/btc-connect-react": "^1.5.10",
     "@dodoex/components": "^3.0.3-zetachain.14",
-    "@dodoex/widgets": "^3.0.2-zetachain.95",
+    "@dodoex/widgets": "^3.0.2-zetachain.96",
     "@dodoex/api": "^3.0.3-zetachain.22",
     "@emotion/styled": "^11.10.0",
     "@reown/appkit": "^1.7.5",
