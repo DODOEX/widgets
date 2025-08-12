@@ -230,9 +230,11 @@ export default function WithExecutionDialog({
   children,
   executionStatus,
   showSubmitLoadingDialog,
+  executionDialogExtra,
   ...props
 }: {
   children: React.ReactNode;
+  executionDialogExtra?: React.FunctionComponent;
 } & ExecutionProps) {
   const execution = useExecution(props);
   const {
@@ -329,7 +331,8 @@ export default function WithExecutionDialog({
                       </Box>
                     )}
                   </div>
-                  <Button
+                  
+                  {!!executionDialogExtra ? executionDialogExtra : <Button
                     variant={Button.Variant.outlined}
                     fullWidth
                     onClick={handleCloseSubmitLoadingDialog}
@@ -338,7 +341,8 @@ export default function WithExecutionDialog({
                     }}
                   >
                     <Trans>OK</Trans>
-                  </Button>
+                  </Button>}
+                  
                 </>
               ) : (
                 <>

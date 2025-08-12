@@ -79,6 +79,7 @@ export interface WidgetProps
   notSupportPMM?: boolean;
   supportAMMV2?: boolean;
   supportAMMV3?: boolean;
+  executionDialogExtra?: React.FunctionComponent;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
