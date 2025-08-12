@@ -12,7 +12,7 @@ export default function SubmittedDialog({
 }: {
   brief?: string;
   open: boolean;
-  executionDialogExtra: any;
+  executionDialogExtra: any
   onClose: () => void;
 }) {
   return (
