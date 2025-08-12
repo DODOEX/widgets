@@ -7,10 +7,12 @@ import { t } from '@lingui/macro';
 export default function SubmittedDialog({
   brief,
   open,
+  executionDialogExtra,
   onClose,
 }: {
   brief?: string;
   open: boolean;
+  executionDialogExtra: any;
   onClose: () => void;
 }) {
   return (
@@ -64,6 +66,7 @@ export default function SubmittedDialog({
           }}
         />
         <Box>{t`${brief} submitted`}</Box>
+        {executionDialogExtra}
       </Box>
     </Dialog>
   );
