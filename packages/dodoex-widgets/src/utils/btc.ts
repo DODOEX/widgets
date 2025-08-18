@@ -61,8 +61,8 @@ function buildRevealWitness(leafScript: Buffer, controlBlock: Buffer) {
   return Buffer.concat(parts);
 }
 
-// Signet 转账
-export async function transferSignet({
+// Bitcoin transfer (supports both mainnet and signet)
+export async function transferBitcoin({
   toAddress,
   amount,
   calldata,
@@ -89,6 +89,11 @@ export async function transferSignet({
   console.log('btcWallet publicKey:', btcWallet.publicKey);
   const internalPubkey = Buffer.from(btcWallet.publicKey!.substr(2), 'hex');
 
+  // Detect network from address prefix
+  const isMainnet = btcWallet.address!.startsWith('bc1');
+  const network = isMainnet ? bitcoin.networks.bitcoin : SIGNET;
+  const isSignetNetwork = !isMainnet;
+
   const inscriptionData = Buffer.from(calldata, 'hex');
   // 将数据分块
   const chunks = splitIntoChunks(inscriptionData);
@@ -113,18 +118,18 @@ export async function transferSignet({
     internalPubkey,
     scriptTree,
     redeem: scriptTree,
-    network: SIGNET,
+    network: network,
   });
   console.log('scriptTaproot', scriptTaproot);
   const controlblock =
     scriptTaproot.witness?.[scriptTaproot.witness.length - 1].toString('hex');
 
   // 动态查询 UTXO
-  let utxos = await getSignetMempoolUTXO(btcWallet.address!, isTestNet);
+  let utxos = await getSignetMempoolUTXO(btcWallet.address!, isSignetNetwork);
   console.log('utxos:', utxos.length);
   // 如果没有 UTXO，则无法进行转账，返回错误信息
   if (!utxos.length) {
-    console.error('No UTXO', utxos, btcWallet.address, isTestNet);
+    console.error('No UTXO', utxos, btcWallet.address, isSignetNetwork);
     throw new Error('No UTXO');
   }
 
@@ -134,7 +139,7 @@ export async function transferSignet({
   console.log(utxos);
   // 选择最后一个 UTXO 作为输入
 
-  const psbt = new bitcoin.Psbt({ network: SIGNET });
+  const psbt = new bitcoin.Psbt({ network: network });
 
   psbt.addOutput({
     script: scriptTaproot.output!,
@@ -144,7 +149,7 @@ export async function transferSignet({
 
   for (let i = 0; i < utxos.length; i++) {
     const u = utxos[i];
-    const txDetail = await getSignetMempoolTxDetail(u.txid, isTestNet);
+    const txDetail = await getSignetMempoolTxDetail(u.txid, isSignetNetwork);
     console.log(i, txDetail);
     amountAll += u.value;
     psbt.addInput({
@@ -181,11 +186,11 @@ export async function transferSignet({
   const tx = await btcWallet.pushPsbt(signPsbtResult);
   console.log('tx:', tx);
 
-  const psbt2 = new bitcoin.Psbt({ network: SIGNET });
+  const psbt2 = new bitcoin.Psbt({ network: network });
 
   const { output: commitScript } = bitcoin.payments.p2tr({
     internalPubkey,
-    network: SIGNET,
+    network: network,
     scriptTree: { output: leafScript },
   });
 

@@ -10,7 +10,7 @@ import { useCallback } from 'react';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
 import TokenLogo from '../../components/TokenLogo';
 import { chainListMap } from '../../constants/chainList';
-import { transferSignet } from '../../utils/btc';
+import { transferBitcoin } from '../../utils/btc';
 import { CROSS_CHAIN_TEXT } from '../../utils/constants';
 import { formatTokenAmountNumber } from '../../utils/formatter';
 import { constructSolanaBridgeRouteTransaction } from '../../utils/solana';
@@ -157,7 +157,7 @@ export default function useExecuteBridgeRoute({
                 (fee) => fee.type === 'btcDepositFee',
               )?.amount;
 
-              const tx = await transferSignet({
+              const tx = await transferBitcoin({
                 toAddress: bridgeOrderTxRequest.to,
                 amount: new BigNumber(bridgeOrderTxRequest.value).toNumber(),
                 calldata: bridgeOrderTxRequest.data,

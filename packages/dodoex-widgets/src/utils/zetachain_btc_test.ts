@@ -71,7 +71,7 @@ export const executeRouteZetachainBtc = async () => {
 
   const decodeRes = bitcoinDecode(encodeRes.data.data.data);
   console.log('decodeRes', decodeRes);
-  const tx = await transferSignet(
+  const tx = await transferBitcoin(
     encodeRes.data.data.to,
     Number(fromAmount),
     encodeRes.data.data.data,
@@ -105,8 +105,8 @@ const SIGNET = {
   wif: 0xef,
 };
 
-// Signet 转账
-async function transferSignet(
+// Bitcoin transfer (supports both mainnet and signet)
+async function transferBitcoin(
   toAddress: string,
   amount: number,
   calldata: string,
