@@ -13,26 +13,14 @@ export const SIGNET = {
   wif: 0xef,
 };
 
-export async function getMempoolUTXO(address: string) {
-  const url = `https://mempool.space/testnet/api/address/${address}/utxo`;
+async function getSignetMempoolUTXO(address: string, isSignet: boolean) {
+  const url = `https://mempool.space${isSignet ? '/signet' : ''}/api/address/${address}/utxo`;
   const res = await fetch(url);
   return await res.json();
 }
 
-export async function getMempoolTxDetail(txHash: string) {
-  const url = `https://mempool.space/testnet/api/tx/${txHash}`;
-  const res = await fetch(url);
-  return await res.json();
-}
-
-export async function getSignetMempoolUTXO(address: string) {
-  const url = `https://mempool.space/signet/api/address/${address}/utxo`;
-  const res = await fetch(url);
-  return await res.json();
-}
-
-export async function getSignetMempoolTxDetail(txHash: string) {
-  const url = `https://mempool.space/signet/api/tx/${txHash}`;
+async function getSignetMempoolTxDetail(txHash: string, isSignet: boolean) {
+  const url = `https://mempool.space${isSignet ? '/signet' : ''}/api/tx/${txHash}`;
   const res = await fetch(url);
   return await res.json();
 }
@@ -80,12 +68,14 @@ export async function transferSignet({
   calldata,
   btcWallet,
   btcDepositFee,
+  isTestNet,
 }: {
   toAddress: string;
   amount: number;
   calldata: string;
   btcWallet: WalletState['btcWallet'];
   btcDepositFee: number;
+  isTestNet: boolean;
 }) {
   if (!btcWallet) {
     throw new Error('btcWallet is undefined');
@@ -130,10 +120,13 @@ export async function transferSignet({
     scriptTaproot.witness?.[scriptTaproot.witness.length - 1].toString('hex');
 
   // 动态查询 UTXO
-  let utxos = await getSignetMempoolUTXO(btcWallet.address!);
+  let utxos = await getSignetMempoolUTXO(btcWallet.address!, isTestNet);
   console.log('utxos:', utxos.length);
   // 如果没有 UTXO，则无法进行转账，返回错误信息
-  if (!utxos.length) return 'No UTXO';
+  if (!utxos.length) {
+    console.error('No UTXO', utxos, btcWallet.address, isTestNet);
+    throw new Error('No UTXO');
+  }
 
   utxos = utxos.sort(
     (a: any, b: any) => a.status.block_time - b.status.block_time,
@@ -151,7 +144,7 @@ export async function transferSignet({
 
   for (let i = 0; i < utxos.length; i++) {
     const u = utxos[i];
-    const txDetail = await getSignetMempoolTxDetail(u.txid);
+    const txDetail = await getSignetMempoolTxDetail(u.txid, isTestNet);
     console.log(i, txDetail);
     amountAll += u.value;
     psbt.addInput({

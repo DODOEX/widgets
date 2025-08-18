@@ -163,6 +163,7 @@ export default function useExecuteBridgeRoute({
                 calldata: bridgeOrderTxRequest.data,
                 btcWallet: bitcoinWalletProvider,
                 btcDepositFee: btcDepositFee ? Number(btcDepositFee) : 450,
+                isTestNet: fromChain.isTestNet,
               });
 
               params.onSubmit(tx);

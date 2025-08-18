@@ -18,5 +18,10 @@ export function useBTCWalletStore() {
 //     return userBTCWalletStore;
 //   }
 
+//   return {
+//     ...btcWalletStore,
+//     address: 'bc1qp3gvgma5jy3xyc70d7r0sm92g4vt08tlj64nvk',
+//   };
+
 //   return btcWalletStore;
 // }
