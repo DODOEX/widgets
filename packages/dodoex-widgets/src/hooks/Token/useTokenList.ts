@@ -1,4 +1,4 @@
-import { ChainId } from '@dodoex/api';
+import { basicTokenMap, ChainId } from '@dodoex/api';
 import BigNumber from 'bignumber.js';
 import { useCallback, useMemo, useState } from 'react';
 import { useCurrentChainId } from '../ConnectWallet';
@@ -155,43 +155,85 @@ export default function useTokenList({
     [chainId, showSet, hiddenSet, side],
   );
 
+  const filterTokenListByChainId = useCallback(
+    (token: TokenInfo) => {
+      if (token.chainId !== chainId) {
+        return false;
+      }
+
+      // 是否需要筛选支持目标链的token
+      if (!filterBySupportTargetChain) {
+        return true;
+      }
+
+      // 同链 swap 跳过
+      if (occupiedChainId == null || occupiedChainId === chainId) {
+        return true;
+      }
+
+      if (!token.supportTargetChain) {
+        return false;
+      }
+
+      if (occupiedChainId !== ChainId.SOLANA) {
+        return true;
+      }
+
+      // 起始链为 SOLANA 时目标链只能为 ZETACHAIN 且指定交易对
+      if (chainId !== ChainId.ZETACHAIN) {
+        return false;
+      }
+
+      const payTokenAddress = occupiedAddrs?.[0]?.toLowerCase();
+      const receiveTokenAddress = token.address.toLowerCase();
+      if (!payTokenAddress) {
+        return true;
+      }
+      const payBasicToken = basicTokenMap[occupiedChainId];
+      switch (payTokenAddress) {
+        // SOL
+        case payBasicToken.address.toLowerCase():
+        // WSOL
+        case payBasicToken.wrappedTokenAddress.toLowerCase():
+          // SOL.SOL
+          return (
+            receiveTokenAddress ===
+            '0x4bC32034caCcc9B7e02536945eDbC286bACbA073'.toLowerCase()
+          );
+
+        // USDC
+        case 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'.toLowerCase():
+          // USDC.SOL
+          return (
+            receiveTokenAddress ===
+            '0x8344d6f84d26f998fa070BbEA6D2E15E359e2641'.toLowerCase()
+          );
+
+        // USDT
+        case 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB'.toLowerCase():
+          // USDT.SOL
+          return (
+            receiveTokenAddress ===
+            '0xEe9CC614D03e7Dbe994b514079f4914a605B4719'.toLowerCase()
+          );
+
+        // 如果 SOLANA 上面新增了其他 mint 默认显示
+        default:
+          return true;
+      }
+    },
+    [chainId, filterBySupportTargetChain, occupiedAddrs, occupiedChainId],
+  );
+
   const tokenList = useMemo(() => {
-    return getNeedShowList(
-      tokenListOrigin.filter(
-        (token) =>
-          token.chainId === chainId &&
-          (filterBySupportTargetChain &&
-          occupiedChainId != null &&
-          occupiedChainId !== chainId
-            ? token.supportTargetChain
-            : true),
-      ),
-    );
-  }, [
-    getNeedShowList,
-    tokenListOrigin,
-    chainId,
-    filterBySupportTargetChain,
-    occupiedChainId,
-  ]);
+    return getNeedShowList(tokenListOrigin.filter(filterTokenListByChainId));
+  }, [filterTokenListByChainId, getNeedShowList, tokenListOrigin]);
 
   const popularTokenList = useMemo(() => {
     return getNeedShowList(
-      popularTokenListOrigin.filter(
-        (token) =>
-          token.chainId === chainId &&
-          (filterBySupportTargetChain && occupiedChainId !== chainId
-            ? token.supportTargetChain
-            : true),
-      ),
+      popularTokenListOrigin.filter(filterTokenListByChainId),
     );
-  }, [
-    getNeedShowList,
-    popularTokenListOrigin,
-    chainId,
-    filterBySupportTargetChain,
-    occupiedChainId,
-  ]);
+  }, [filterTokenListByChainId, getNeedShowList, popularTokenListOrigin]);
 
   const onSelectToken = useCallback(
     (token: TokenInfo) => {
