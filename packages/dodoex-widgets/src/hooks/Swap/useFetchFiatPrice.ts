@@ -42,16 +42,22 @@ export function useFetchFiatPrice({ fromToken, toToken }: FetchFiatPriceProps) {
       )
       .then((res) => {
         setLoading(false);
-        const fiatPriceInfo = res.data?.data;
+        const fiatPriceInfo = res.data?.data as Array<{
+          address: string;
+          price: string;
+        }>;
         if (fiatPriceInfo) {
           setFromFiatPrice(
             fiatPriceInfo.find(
-              (info: any) => info.address === fromToken.address,
-            ).price,
+              (info) =>
+                info.address.toLowerCase() === fromToken.address.toLowerCase(),
+            )?.price ?? '',
           );
           setToFiatPrice(
-            fiatPriceInfo.find((info: any) => info.address === toToken.address)
-              .price,
+            fiatPriceInfo.find(
+              (info) =>
+                info.address.toLowerCase() === toToken.address.toLowerCase(),
+            )?.price ?? '',
           );
         }
       })
