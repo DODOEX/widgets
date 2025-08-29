@@ -206,7 +206,7 @@ msgstr ""
 msgid "Rewards"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:68
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:69
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:61
 msgid "Pay"
 msgstr ""
@@ -1270,7 +1270,7 @@ msgstr ""
 msgid "Trader"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:96
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:97
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:79
 #: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:71
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:269
@@ -1306,7 +1306,7 @@ msgstr ""
 msgid "Suitable for most situations."
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:81
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:82
 msgid "Refunds TX"
 msgstr ""
 
@@ -1663,7 +1663,7 @@ msgstr ""
 msgid "Approve {0}"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:85
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:86
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:71
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:194
 msgid "Rate"
@@ -1836,7 +1836,7 @@ msgstr "秒"
 msgid "Total Swap Volume"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:72
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:73
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:65
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:519
 msgid "Receive"
@@ -2187,7 +2187,7 @@ msgstr ""
 msgid "Create One"
 msgstr ""
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:76
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:77
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:68
 msgid "Status"
 msgstr ""

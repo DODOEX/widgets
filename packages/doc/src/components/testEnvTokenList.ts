@@ -54,7 +54,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'ETH',
     decimals: 18,
     chainId: 421614,
-    supportTargetChain: false,
+    supportTargetChain: true,
   },
   {
     name: 'USDC',
@@ -102,7 +102,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 1399811149,
-    supportTargetChain: false,
+    supportTargetChain: true,
   },
   {
     name: 'SOL',
@@ -111,13 +111,6 @@ const testEnvTokenList: (TokenInfo & {
     decimals: 9,
     chainId: 1399811149,
     supportTargetChain: false,
-  },
-  {
-    name: 'WSOL',
-    address: 'So11111111111111111111111111111111111111112',
-    symbol: 'WSOL',
-    decimals: 9,
-    chainId: 1399811149,
   },
   {
     name: 'USDC',
@@ -141,7 +134,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'POL',
     decimals: 18,
     chainId: 137,
-    supportTargetChain: false,
+    supportTargetChain: true,
   },
   {
     name: 'Nerve HUSD',
@@ -181,7 +174,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'SOL',
     decimals: 9,
     chainId: 1399811151,
-    supportTargetChain: false,
+    supportTargetChain: true,
   },
   {
     name: 'ETH',
@@ -189,7 +182,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'ETH',
     decimals: 18,
     chainId: 11155111,
-    supportTargetChain: false,
+    supportTargetChain: true,
   },
   {
     name: 'sBTC.BTC',
@@ -205,7 +198,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'BTC',
     decimals: 8,
     chainId: 18333,
-    supportTargetChain: false,
+    supportTargetChain: true,
   },
   {
     name: 'WSOL',
@@ -221,7 +214,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 43114,
-    supportTargetChain: true,
+    supportTargetChain: false,
   },
   {
     name: 'USDT',
@@ -229,7 +222,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'USDT',
     decimals: 6,
     chainId: 137,
-    supportTargetChain: true,
+    supportTargetChain: false,
   },
   {
     name: 'BTC.BTC',
@@ -1901,7 +1894,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'USDT',
     decimals: 6,
     chainId: 1,
-    supportTargetChain: true,
+    supportTargetChain: false,
   },
   {
     name: 'Wrapped BTC',
@@ -1909,7 +1902,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'WBTC',
     decimals: 8,
     chainId: 1,
-    supportTargetChain: true,
+    supportTargetChain: false,
   },
   {
     name: 'Smooth Love Potion',
@@ -2197,7 +2190,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 1,
-    supportTargetChain: true,
+    supportTargetChain: false,
   },
   {
     name: 'Metal',
@@ -2357,7 +2350,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'SHIB',
     decimals: 18,
     chainId: 1,
-    supportTargetChain: true,
+    supportTargetChain: false,
   },
   {
     name: 'Convex Token',
@@ -2565,7 +2558,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'DAI',
     decimals: 18,
     chainId: 1,
-    supportTargetChain: true,
+    supportTargetChain: false,
   },
   {
     name: 'ZAP TOKEN',
@@ -5152,6 +5145,14 @@ const testEnvTokenList: (TokenInfo & {
     supportTargetChain: false,
   },
   {
+    name: 'Steam Exchange',
+    address: '0xc0924EDEFB2C0C303de2d0c21BfF07ab763163B5',
+    symbol: 'SteamX',
+    decimals: 9,
+    chainId: 56,
+    supportTargetChain: false,
+  },
+  {
     name: 'Katana Inu',
     address: '0x6D6bA21E4C4b29CA7Bfa1c344Ba1E35B8DaE7205',
     symbol: 'KATA',
@@ -6693,7 +6694,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'USDC',
     decimals: 6,
     chainId: 8453,
-    supportTargetChain: true,
+    supportTargetChain: false,
   },
   {
     name: 'Cornucopias',
@@ -8141,7 +8142,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'PEPE',
     decimals: 18,
     chainId: 1,
-    supportTargetChain: true,
+    supportTargetChain: false,
   },
   {
     name: 'Hippocrat',
@@ -11245,7 +11246,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'USDT',
     decimals: 18,
     chainId: 56,
-    supportTargetChain: true,
+    supportTargetChain: false,
   },
   {
     name: 'Doge King',
@@ -15848,14 +15849,6 @@ const testEnvTokenList: (TokenInfo & {
     supportTargetChain: false,
   },
   {
-    name: 'Steam Exchange',
-    address: '0xc0924EDEFB2C0C303de2d0c21BfF07ab763163B5',
-    symbol: 'SteamX',
-    decimals: 9,
-    chainId: 56,
-    supportTargetChain: false,
-  },
-  {
     name: 'ZETA',
     address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
     symbol: 'ZETA',
@@ -15864,9 +15857,9 @@ const testEnvTokenList: (TokenInfo & {
     supportTargetChain: true,
   },
   {
-    name: 'MK1',
-    address: '0x08f9f0e8EBc8B3F7808974463D31CC39Ca9F79F0',
-    symbol: 'MTK1',
+    name: 'WZETA',
+    address: '0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf',
+    symbol: 'WZETA',
     decimals: 18,
     chainId: 7001,
     supportTargetChain: true,
@@ -15875,6 +15868,14 @@ const testEnvTokenList: (TokenInfo & {
     name: 'MK2',
     address: '0xc39f8C093b10660E12d982256979E239B18D073d',
     symbol: 'MTK2',
+    decimals: 18,
+    chainId: 7001,
+    supportTargetChain: true,
+  },
+  {
+    name: 'MK1',
+    address: '0x08f9f0e8EBc8B3F7808974463D31CC39Ca9F79F0',
+    symbol: 'MTK1',
     decimals: 18,
     chainId: 7001,
     supportTargetChain: true,

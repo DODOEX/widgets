@@ -206,7 +206,7 @@ msgstr "Asset ratio within the pool"
 msgid "Rewards"
 msgstr "Rewards"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:68
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:69
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:61
 msgid "Pay"
 msgstr "Pay"
@@ -1270,7 +1270,7 @@ msgstr "Reward Rules"
 msgid "Trader"
 msgstr "Trader"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:96
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:97
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:79
 #: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:71
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:269
@@ -1306,7 +1306,7 @@ msgstr "Single-Token Stake Mining"
 msgid "Suitable for most situations."
 msgstr "Suitable for most situations."
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:81
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:82
 msgid "Refunds TX"
 msgstr "Refunds TX"
 
@@ -1663,7 +1663,7 @@ msgstr "My Pools"
 msgid "Approve {0}"
 msgstr "Approve {0}"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:85
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:86
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:71
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:194
 msgid "Rate"
@@ -1836,7 +1836,7 @@ msgstr "Second"
 msgid "Total Swap Volume"
 msgstr "Total Swap Volume"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:72
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:73
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:65
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:519
 msgid "Receive"
@@ -2187,7 +2187,7 @@ msgstr "Amounts"
 msgid "Create One"
 msgstr "Create One"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:76
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:77
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:68
 msgid "Status"
 msgstr "Status"

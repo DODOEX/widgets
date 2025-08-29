@@ -2,13 +2,21 @@ import { ChainId } from '@dodoex/api';
 import {
   alpha,
   Box,
+  Button,
   RotatingIcon,
+  Skeleton,
   Tooltip,
   useTheme,
 } from '@dodoex/components';
 import { ArrowTopRightBorder } from '@dodoex/icons';
-import React, { useMemo } from 'react';
+import { Interface } from '@ethersproject/abi';
+import { useMutation } from '@tanstack/react-query';
+import React, { useMemo, useState } from 'react';
 import { chainListMap } from '../../../constants/chainList';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { useSubmission } from '../../../hooks/Submission';
+import { OpCode } from '../../../hooks/Submission/spec';
 import { useCrossSwapOrderList } from '../../../hooks/Swap/useCrossSwapOrderList';
 import { getEtherscanPage } from '../../../utils';
 import { formatReadableTimeDuration, getTimeText } from '../../../utils/time';
@@ -21,8 +29,8 @@ import FoldBtn, {
 } from '../../CardWidgets';
 import TokenLogo from '../../TokenLogo';
 import { QuestionTooltip } from '../../Tooltip';
+import Dialog from '../components/Dialog';
 import { PriceWithToggle } from './PriceWithToggle';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 
 function Extend({
   showFold,
@@ -225,12 +233,203 @@ function Extend({
 
 function RefundsTX({
   data,
+  refetch,
 }: {
   data: NonNullable<ReturnType<typeof useCrossSwapOrderList>['orderList'][0]>;
+  refetch: () => void;
 }) {
   const theme = useTheme();
+
+  const isWaitClaimRefund = data.subStatus === 'wait_claim_refund';
+  const isRefundPending = data.subStatus === 'refund_pending';
   const isRefundSuccess = data.subStatus === 'refund_success';
+
   const { isMobile } = useWidgetDevice();
+  const submission = useSubmission();
+  const { chainId, appKitActiveNetwork, getAppKitAccountByChainId } =
+    useWalletInfo();
+
+  const [claimConfirmOpen, setClaimConfirmOpen] = useState(false);
+
+  const claimMutation = useMutation({
+    mutationFn: async () => {
+      if (!data.externalId || !data.bridgeRefundVault) {
+        return;
+      }
+
+      const iface = new Interface([
+        {
+          inputs: [
+            {
+              internalType: 'bytes32',
+              name: 'externalId',
+              type: 'bytes32',
+            },
+          ],
+          name: 'claimRefund',
+          outputs: [],
+          stateMutability: 'nonpayable',
+          type: 'function',
+        },
+      ]);
+      const encodedData = iface.encodeFunctionData('claimRefund', [
+        data.externalId,
+      ]);
+      const result = await submission.execute(
+        'Claim',
+        {
+          opcode: OpCode.TX,
+          data: encodedData,
+          to: data.bridgeRefundVault,
+          value: '0x0',
+        },
+        {
+          metadata: {
+            crossChainSwapClaimRefund: true,
+          },
+          submittedBack: () => {
+            refetch();
+          },
+          successBack: () => {
+            refetch();
+          },
+        },
+      );
+      return result;
+    },
+  });
+
+  if (isWaitClaimRefund) {
+    const bridgeChain = data.bridgeChainId
+      ? chainListMap.get(data.bridgeChainId)
+      : undefined;
+    const bridgeChainName = bridgeChain ? bridgeChain.name : '-';
+
+    const isInCurrentChain = chainId === data.bridgeChainId;
+
+    return (
+      <>
+        <Button
+          variant={Button.Variant.contained}
+          size={Button.Size.small}
+          color="error"
+          isLoading={claimMutation.isPending}
+          disabled={claimMutation.isPending}
+          onClick={() => {
+            setClaimConfirmOpen(true);
+          }}
+          sx={{
+            typography: 'h6',
+            lineHeight: '16px',
+            py: 6,
+            minWidth: 98,
+            height: 28,
+          }}
+        >
+          Claim
+        </Button>
+
+        <Dialog
+          open={claimConfirmOpen}
+          onClose={() => setClaimConfirmOpen(false)}
+          title="Claim"
+          modal
+        >
+          <Box
+            sx={{
+              borderTop: `1px solid ${theme.palette.border.main}`,
+              mx: 20,
+              py: 24,
+            }}
+          >
+            <Box
+              sx={{
+                typography: 'h5',
+                textAlign: 'center',
+              }}
+            >
+              Start refund on {bridgeChainName}
+            </Box>
+
+            <Box
+              sx={{
+                mt: 20,
+                typography: 'body2',
+                color: 'text.secondary',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 6,
+              }}
+            >
+              <Box>Refund will be sent to</Box>
+              <AddressWithLinkAndCopy
+                address={data.refundUser ?? ''}
+                customChainId={data.refundChainId}
+                showCopy={false}
+                truncate
+                iconSpace={2}
+                sx={{
+                  typography: 'body2',
+                }}
+                handleOpen={(evt) => {
+                  evt.stopPropagation();
+                  window.open(
+                    getEtherscanPage(
+                      data.refundChainId as ChainId,
+                      data.refundUser,
+                      'address',
+                    ),
+                  );
+                }}
+              />
+            </Box>
+            <Box
+              sx={{
+                mt: 4,
+                typography: 'body2',
+                color: 'text.secondary',
+                textAlign: 'center',
+              }}
+            >
+              on {bridgeChainName}
+            </Box>
+
+            <Button
+              variant={Button.Variant.contained}
+              size={Button.Size.big}
+              fullWidth
+              color="error"
+              isLoading={claimMutation.isPending}
+              disabled={claimMutation.isPending}
+              onClick={() => {
+                if (isInCurrentChain) {
+                  claimMutation.mutate();
+                  return;
+                }
+
+                if (!data.bridgeChainId) {
+                  return;
+                }
+                const chain = getAppKitAccountByChainId(data.bridgeChainId);
+                if (!chain) {
+                  return;
+                }
+                appKitActiveNetwork.switchNetwork(chain.chain.caipNetwork);
+              }}
+              sx={{
+                mt: 20,
+              }}
+            >
+              {isInCurrentChain
+                ? 'Start refund'
+                : `Switch to ${bridgeChainName}`}
+            </Button>
+          </Box>
+        </Dialog>
+      </>
+    );
+  }
 
   return (
     <Box
@@ -325,7 +524,7 @@ function RefundsTX({
               );
             }}
           />
-        ) : (
+        ) : isMobile ? (
           <Box
             sx={{
               typography: 'h6',
@@ -337,6 +536,13 @@ function RefundsTX({
           >
             -
           </Box>
+        ) : (
+          <Skeleton
+            sx={{
+              width: 90,
+              height: 22,
+            }}
+          />
         )}
         <Box
           sx={{
@@ -348,9 +554,7 @@ function RefundsTX({
             },
           }}
         >
-          {isRefundSuccess
-            ? 'Refunded to this address.'
-            : 'Refund in progress.'}
+          {isRefundSuccess ? 'Refunded to this address.' : 'Refund pending…'}
         </Box>
         {isRefundSuccess ? null : (
           <Box
@@ -362,7 +566,7 @@ function RefundsTX({
               },
             }}
           >
-            (Refund in progress.)
+            (Refund pending…)
           </Box>
         )}
       </Box>
@@ -374,10 +578,12 @@ export default function CrossOrderCard({
   data,
   isMobile,
   isErrorRefund,
+  refetch,
 }: {
   data: NonNullable<ReturnType<typeof useCrossSwapOrderList>['orderList'][0]>;
   isMobile: boolean;
   isErrorRefund: boolean;
+  refetch: () => void;
 }) {
   const theme = useTheme();
 
@@ -580,7 +786,7 @@ export default function CrossOrderCard({
                   >
                     Refunds TX:
                   </Box>
-                  <RefundsTX data={data} />
+                  <RefundsTX data={data} refetch={refetch} />
                 </Box>
               )}
             </Box>
@@ -663,7 +869,7 @@ export default function CrossOrderCard({
         </td>
         {isErrorRefund ? (
           <td>
-            <RefundsTX data={data} />
+            <RefundsTX data={data} refetch={refetch} />
           </td>
         ) : (
           <td>
