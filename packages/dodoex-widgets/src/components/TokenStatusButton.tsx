@@ -5,12 +5,14 @@ import { useTokenStatus } from '../hooks/Token/useTokenStatus';
 export default function TokenStatusButton({
   status,
   children,
-  buttonProps,
+  buttonProps: buttonPropsOrigin,
 }: React.PropsWithChildren<{
   status: ReturnType<typeof useTokenStatus>;
   buttonProps?: ButtonProps;
 }>) {
   if (!status.needShowTokenStatusButton && children) return <>{children}</>;
+
+  const { disabled, isLoading, ...buttonProps } = buttonPropsOrigin ?? {};
 
   if (status.insufficientBalance) {
     return (
@@ -23,9 +25,9 @@ export default function TokenStatusButton({
   return (
     <Button
       fullWidth
-      isLoading={status.isApproving}
+      isLoading={status.isApproving || isLoading}
       onClick={status.submitApprove}
-      disabled={status.insufficientBalance}
+      disabled={status.insufficientBalance || disabled}
       {...buttonProps}
     >
       {status.isApproving ? <Trans>Approving</Trans> : status.approveTitle}

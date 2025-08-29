@@ -621,4 +621,16 @@ export const poolGraphqlQuery = {
       }
     }
   `),
+  fetchVe33UserLocks: graphql(`
+    query Ve33_getUserLock($where: Ve33UserInput!) {
+      ve33_getUserLock(where: $where) {
+        id
+        value
+        votingPower
+        lockedEnd
+        isPermanent
+        isVoted
+      }
+    }
+  `),
 };

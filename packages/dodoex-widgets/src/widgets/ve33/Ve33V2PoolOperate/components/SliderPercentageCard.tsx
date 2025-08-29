@@ -29,46 +29,52 @@ export function SliderPercentageCard({
   value,
   onChange,
   sx,
+  hideNumberInput,
 }: {
   disabled?: boolean;
   value: number;
   onChange: (val: number) => void;
   sx?: BoxProps['sx'];
+  hideNumberInput?: boolean;
 }) {
   return (
     <Box
       sx={{
-        p: 20,
-        backgroundColor: 'background.input',
-        borderRadius: 12,
+        ...(!hideNumberInput && {
+          p: 20,
+          backgroundColor: 'background.input',
+          borderRadius: 12,
+        }),
         ...sx,
       }}
     >
-      <NumberInput
-        value={String(value)}
-        onChange={(str) => onChange(+str)}
-        readOnly
-        readonlyShowSuffix
-        suffix={
-          <Box
-            sx={{
-              typography: 'h2',
-            }}
-          >
-            %
-          </Box>
-        }
-        sx={{
-          mt: 12,
-          '& input': {
-            pl: 0,
-            typography: 'h1',
-          },
-        }}
-      />
+      {!hideNumberInput && (
+        <NumberInput
+          value={String(value)}
+          onChange={(str) => onChange(+str)}
+          readOnly
+          readonlyShowSuffix
+          suffix={
+            <Box
+              sx={{
+                typography: 'h2',
+              }}
+            >
+              %
+            </Box>
+          }
+          sx={{
+            mt: 12,
+            '& input': {
+              pl: 0,
+              typography: 'h1',
+            },
+          }}
+        />
+      )}
       <Box
         sx={{
-          mt: 20,
+          mt: hideNumberInput ? 0 : 20,
         }}
       >
         <Slider
@@ -77,6 +83,7 @@ export function SliderPercentageCard({
           disabled={disabled}
           value={value}
           onChange={(evt, newVal) => onChange(newVal as number)}
+          tooltip={hideNumberInput ? '%' : undefined}
         />
       </Box>
     </Box>

@@ -1,4 +1,4 @@
-import { Box, Modal } from '@dodoex/components';
+import { Box, BoxProps, Modal, useMediaDevices } from '@dodoex/components';
 import { Error } from '@dodoex/icons';
 import { createPortal } from 'react-dom';
 import { useUserOptions } from '../../UserOptionsProvider';
@@ -27,6 +27,8 @@ export interface DialogProps {
   children: React.ReactNode;
   height?: number | string;
   testId?: string;
+  headerSx?: BoxProps['sx'];
+  pcWidth?: number | string;
 }
 
 function DialogBase({
@@ -39,7 +41,11 @@ function DialogBase({
   children,
   height,
   testId,
+  headerSx,
+  pcWidth,
 }: DialogProps) {
+  const { isMobile } = useMediaDevices();
+
   return (
     <Box
       sx={{
@@ -55,6 +61,7 @@ function DialogBase({
         backgroundColor: 'background.paper',
         borderRadius: 16,
         height,
+        width: isMobile ? undefined : pcWidth,
       }}
       data-testid={testId}
       data-active={open ? '1' : '0'}
@@ -66,6 +73,7 @@ function DialogBase({
             alignItems: 'center',
             justifyContent: 'space-between',
             p: 20,
+            ...headerSx,
           }}
         >
           <Box
@@ -108,7 +116,10 @@ function ModalDialog({
   children,
   height,
   testId,
+  headerSx,
+  pcWidth,
 }: DialogProps) {
+  const { isMobile } = useMediaDevices();
   return (
     <Modal
       open={open}
@@ -121,6 +132,7 @@ function ModalDialog({
           display: 'flex',
           flexDirection: 'column',
           height,
+          width: isMobile ? undefined : pcWidth,
         }}
       >
         {title ? (
@@ -130,6 +142,7 @@ function ModalDialog({
               alignItems: 'center',
               justifyContent: 'space-between',
               p: 20,
+              ...headerSx,
             }}
           >
             <Box

@@ -18,7 +18,7 @@ export const CardContainer = ({ title, children }: CardContainerProps) => {
       <Box
         sx={{
           p: 20,
-          borderRadius: 24,
+          borderRadius: theme.spacing(12, 12, 0, 0),
           backgroundColor: theme.palette.background.paper,
           typography: 'h5',
           fontWeight: 600,

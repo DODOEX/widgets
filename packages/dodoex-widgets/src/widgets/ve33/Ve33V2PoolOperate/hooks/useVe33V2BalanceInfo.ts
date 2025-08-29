@@ -60,7 +60,7 @@ export function useVe33V2BalanceInfo({
       ? new BigNumber(formatUnits(reserveQuery.data._reserve1, token1Decimals))
       : undefined;
 
-  const [_, userLpToToken0] = getLpToTokenBalance(
+  const [baseLpToTokenProportion, userLpToToken0] = getLpToTokenBalance(
     userLp,
     totalLp,
     token0Reserve,
@@ -69,7 +69,7 @@ export function useVe33V2BalanceInfo({
     undefined,
     lpDecimals,
   );
-  const [__, userLpToToken1] = getLpToTokenBalance(
+  const [quoteLpToTokenProportion, userLpToToken1] = getLpToTokenBalance(
     userLp,
     totalLp,
     token1Reserve,
@@ -182,6 +182,9 @@ export function useVe33V2BalanceInfo({
     userLpQuery,
     totalLpQuery,
     reserveQuery,
+
+    baseLpToTokenProportion,
+    quoteLpToTokenProportion,
 
     userLp,
     totalLp,

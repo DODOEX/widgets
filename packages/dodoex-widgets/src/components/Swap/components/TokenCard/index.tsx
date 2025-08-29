@@ -4,6 +4,7 @@ import {
   useTheme,
   Button,
   TooltipToast,
+  Skeleton,
 } from '@dodoex/components';
 import { Plus } from '@dodoex/icons';
 import { TokenLogoCollapse } from './TokenLogoCollapse';
@@ -202,7 +203,7 @@ export function TokenCard({
       >
         {hideToken ? (
           <Box />
-        ) : (
+        ) : !token && !onTokenChange ? <Skeleton variant="circular" width={30} height={30} /> : (
           <TokenLogoCollapse
             token={token}
             showChainLogo={showChainLogo}

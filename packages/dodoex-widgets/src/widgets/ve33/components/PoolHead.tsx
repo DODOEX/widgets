@@ -5,6 +5,7 @@ import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { WIDGET_CLASS_NAME } from '../../../components/Widget';
 import { Ve33PoolInfoI } from '../types';
 import { PoolTypeTag } from './PoolTypeTag';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 
 export interface PoolHeadProps {
   chainId: ChainId;
@@ -19,10 +20,16 @@ export const PoolHead = ({
 }: PoolHeadProps) => {
   const { baseToken, quoteToken } = poolInfo;
   const theme = useTheme();
+  const { isMobile } = useWidgetDevice();
 
   const isSmall = size === 'small';
-  const tokenLogoWidth = isSmall ? 28 : 36;
-  const typography = isSmall ? 'body1' : 'h4';
+  let tokenLogoWidth = isSmall ? 28 : 36;
+  let typography = isSmall ? 'body1' : 'h4';
+  if (isMobile) {
+    tokenLogoWidth = isSmall ? 18 : 28;
+    typography = isSmall ? 'body1' : 'h5';
+  }
+
   return (
     <Box
       sx={{
@@ -42,6 +49,7 @@ export const PoolHead = ({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
+          flexWrap: 'wrap',
           gap: 2,
         }}
       >
@@ -49,6 +57,7 @@ export const PoolHead = ({
           sx={{
             display: 'flex',
             alignItems: 'center',
+            flexWrap: 'wrap',
             gap: 4,
             typography,
             fontWeight: 600,

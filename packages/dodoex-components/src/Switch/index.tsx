@@ -4,7 +4,9 @@ import { Box, BoxProps } from '../Box';
 type SwitchProps = {
   sx?: BoxProps['sx'];
   size?: number;
+  padding?: number;
   checked?: boolean;
+  disabled?: boolean;
   onChange?: (
     evt: React.ChangeEvent<HTMLInputElement>,
     checked: boolean,
@@ -12,12 +14,11 @@ type SwitchProps = {
 };
 
 export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
-  function Switch({ sx, onChange, size: sizeProps, ...other }, ref) {
-    const size = sizeProps ?? 12; // 使用高度作为基准尺寸
-    const thumbSize = 8; // 滑块大小固定为 8x8
-    const trackWidth = 22; // 固定宽度 22px
-    const trackHeight = size; // 固定高度 12px
-    const gap = 2; // 2px 间距
+  function Switch({ sx, onChange, size, padding, ...other }, ref) {
+    const gap = padding ?? 2;
+    const thumbSize = size ?? 8;
+    const trackHeight = thumbSize + gap + gap;
+    const trackWidth = trackHeight * 2;
 
     return (
       <Box
@@ -29,7 +30,7 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
           position: 'relative',
           width: trackWidth,
           height: trackHeight,
-          cursor: 'pointer',
+          opacity: other.disabled ? 0.6 : undefined,
           ...sx,
         }}
       >
@@ -48,7 +49,7 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
             width: '100%',
             height: '100%',
             opacity: 0,
-            cursor: 'pointer',
+            cursor: other.disabled ? 'default' : 'pointer',
             zIndex: 1,
           }}
         />

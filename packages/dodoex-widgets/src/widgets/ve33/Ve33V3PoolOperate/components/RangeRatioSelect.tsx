@@ -60,10 +60,10 @@ export default function RangeRatioSelect({
                     backgroundColor: 'background.paperDarkContrast',
                   }
                 : {
-                    '&:nth-child(odd)': {
+                    '&:nth-of-type(odd)': {
                       borderRightWidth: 0,
                     },
-                    '&:not(:nth-child(-n + 2))': {
+                    '&:not(:nth-of-type(-n + 2))': {
                       borderTopWidth: 0,
                     },
                   }),

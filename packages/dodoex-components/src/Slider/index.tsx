@@ -4,8 +4,9 @@ import {
   sliderClasses,
   SliderProps as BaseSliderProps,
 } from '@mui/base/Slider';
-import { alpha, styled } from '@mui/system';
+import { alpha, Box, styled } from '@mui/system';
 import { ButtonBase } from '../Button';
+import { Tooltip } from '../Tooltip';
 
 const boxShadow = `0 2px 4px ${alpha('#1A1A1B', 0.2)}`;
 
@@ -108,6 +109,33 @@ const SliderStyle = styled(BaseSlider)(
 
 function ThumbComponent(props: React.HTMLAttributes<unknown>) {
   const { children, ...other } = props;
+
+  const ownerState = (other as any)?.ownerState as SliderProps | undefined;
+
+  if (ownerState?.tooltip) {
+    return (
+      <Tooltip
+        open
+        title={ownerState?.value + ownerState.tooltip}
+        arrow={false}
+        placement="bottom"
+        offset={[0, 4]}
+        sx={{
+          padding: '2px 4px',
+          backgroundColor: 'primary.main',
+          color: 'primary.contrastText',
+        }}
+      >
+        <ButtonBase {...other}>
+          {children}
+          <span className="thumb-bar" />
+          <span className="thumb-bar" />
+          <span className="thumb-bar" />
+        </ButtonBase>
+      </Tooltip>
+    );
+  }
+
   return (
     <ButtonBase {...other}>
       {children}
@@ -118,13 +146,16 @@ function ThumbComponent(props: React.HTMLAttributes<unknown>) {
   );
 }
 
-export interface SliderProps extends BaseSliderProps {}
-export const Slider = (other: SliderProps) => {
+export interface SliderProps extends BaseSliderProps {
+  tooltip?: string;
+}
+export const Slider = ({ tooltip, ...other }: SliderProps) => {
   return (
     <SliderStyle
       slots={{
         thumb: ThumbComponent,
       }}
+      tooltip={tooltip}
       {...other}
     />
   );

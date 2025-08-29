@@ -33,6 +33,24 @@ export enum MetadataFlag {
   addLiquidityVe33V2Position = 'addLiquidityVe33V2Position',
   removeLiquidityVe33V2Position = 'removeLiquidityVe33V2Position',
   addLiquidityVe33V3Position = 'addLiquidityVe33V3Position',
+  removeLiquidityVe33V3Position = 'removeLiquidityVe33V3Position',
+  stakeVe33V2Position = 'stakeVe33V2Position',
+  stakeVe33V3Position = 'stakeVe33V3Position',
+  unStakeVe33V2Position = 'unStakeVe33V2Position',
+  unStakeVe33V3Position = 'unStakeVe33V3Position',
+  claimEmissionsVe33V2Position = 'claimEmissionsVe33V2Position',
+  claimEmissionsVe33V3Position = 'claimEmissionsVe33V3Position',
+  claimTradingFeesVe33V2Position = 'claimTradingFeesVe33V2Position',
+  claimTradingFeesVe33V3Position = 'claimTradingFeesVe33V3Position',
+
+  // lock
+  createVe33Lock = 'createVe33Lock',
+  mergeVe33Lock = 'mergeVe33Lock',
+  increaseVe33Lock = 'increaseVe33Lock',
+  extendVe33Lock = 'extendVe33Lock',
+  transferVe33Lock = 'transferVe33Lock',
+  claimRebases = 'claimRebases',
+  claimBribes = 'claimBribes',
 }
 
 export type Metadata = Record<string, any>;

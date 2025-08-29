@@ -44,6 +44,7 @@ export interface TooltipProps {
   leaveDelay?: number;
   arrow?: boolean;
   disabled?: boolean;
+  offset?: [number, number];
 }
 
 export const tooltipClasses = {
@@ -99,6 +100,7 @@ export default function Tooltip({
   onClose,
   disabled,
   placement = 'top',
+  offset,
   ...attrs
 }: TooltipProps) {
   const theme = useTheme();
@@ -210,7 +212,7 @@ export default function Tooltip({
               {
                 name: 'offset',
                 options: {
-                  offset: [0, 8],
+                  offset: offset ?? [0, 8],
                 },
               },
               {

@@ -11,6 +11,7 @@ export interface ButtonsProps {
   error?: React.ReactNode;
   onConfirm: () => void;
   border?: boolean;
+  removeText?: React.ReactNode;
 }
 
 export const RemoveButton = ({
@@ -21,6 +22,7 @@ export const RemoveButton = ({
   error,
   onConfirm,
   border,
+  removeText,
 }: ButtonsProps) => {
   return (
     <NeedConnectButton
@@ -53,7 +55,7 @@ export const RemoveButton = ({
             : undefined
         }
       >
-        {removed ? t`Closed` : (error ?? t`Remove`)}
+        {removed ? t`Closed` : (error ?? removeText ?? t`Remove`)}
       </Button>
     </NeedConnectButton>
   );

@@ -67,6 +67,11 @@ export function Ve33V2PoolOperate({
 }: PoolOperateProps) {
   const { operateTab, operateTabs, handleChangeTab } =
     usePoolOperateTabs(operate);
+  React.useEffect(() => {
+    if (operate && operate !== operateTab) {
+      handleChangeTab(operate);
+    }
+  }, [operate]);
   const chainId = pool?.chainId;
 
   const balanceInfo = useVe33V2BalanceInfo({

@@ -13,9 +13,11 @@ import {
   encodeVE33NonfungiblePositionManagerRefundETH,
   getVE33NonfungiblePositionManagerContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
+import { useUserOptions } from '../../../../components/UserOptionsProvider';
 
 export function useAddVe33V3Liquidity() {
   const submission = useSubmission();
+  const { deadLine: ddl } = useUserOptions();
 
   return useMutation({
     mutationFn: async ({
@@ -47,7 +49,7 @@ export function useAddVe33V3Liquidity() {
     }) => {
       if (!pool?.token0Wrapped || !pool.token1Wrapped) return;
       const calldatas: string[] = [];
-      const deadline = Math.ceil(Date.now() / 1000) + 10 * 60;
+      const deadline = Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60);
 
       const title = t`Add Liquidity`;
 

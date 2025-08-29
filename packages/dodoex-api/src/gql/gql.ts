@@ -54,6 +54,8 @@ const documents = {
     types.Ve33_GetVotePoolListDocument,
   '\n    query Ve33_getTicksData($where: Ve33getTicksDataInput) {\n      ve33_getTicksData(where: $where) {\n        ticks {\n          id\n          poolAddress\n          tickIdx\n          price0\n          price1\n          liquidityGross\n          liquidityNet\n          protocolPosition\n          tickArrayLower\n          tickArrayUpper\n        }\n      }\n    }\n  ':
     types.Ve33_GetTicksDataDocument,
+  '\n    query Ve33_getUserLock($where: Ve33UserInput!) {\n      ve33_getUserLock(where: $where) {\n        id\n        value\n        votingPower\n        lockedEnd\n        isPermanent\n        isVoted\n      }\n    }\n  ':
+    types.Ve33_GetUserLockDocument,
   '\n    query FetchUserSwapOrderHistories($where: User_swapswapFilter) {\n      user_swap_orderHistories(where: $where) {\n        count\n        page\n        list {\n          chainId\n          createdAt\n          fromAmount\n          fromTokenDecimals\n          fromTokenPrice\n          fromTokenSymbol\n          fromTokenAddress\n          fromTokenLogoImg\n          hash\n          status\n          toAmount\n          toTokenDecimals\n          toTokenPrice\n          toTokenSymbol\n          toTokenAddress\n          toTokenLogoImg\n          minAmount\n          nonce\n          extra\n          user\n        }\n      }\n    }\n  ':
     types.FetchUserSwapOrderHistoriesDocument,
   '\n    query FetchNoticeCenterTransactionList(\n      $where: Notice_centertransactionListFilter\n    ) {\n      notice_center_transactionList(where: $where) {\n        list {\n          chainId\n          createTime\n          extend\n          from\n          id\n          key\n          type\n        }\n        count\n        limit\n        page\n      }\n    }\n  ':
@@ -190,6 +192,12 @@ export function graphql(
 export function graphql(
   source: '\n    query Ve33_getTicksData($where: Ve33getTicksDataInput) {\n      ve33_getTicksData(where: $where) {\n        ticks {\n          id\n          poolAddress\n          tickIdx\n          price0\n          price1\n          liquidityGross\n          liquidityNet\n          protocolPosition\n          tickArrayLower\n          tickArrayUpper\n        }\n      }\n    }\n  ',
 ): typeof import('./graphql').Ve33_GetTicksDataDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query Ve33_getUserLock($where: Ve33UserInput!) {\n      ve33_getUserLock(where: $where) {\n        id\n        value\n        votingPower\n        lockedEnd\n        isPermanent\n        isVoted\n      }\n    }\n  ',
+): typeof import('./graphql').Ve33_GetUserLockDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

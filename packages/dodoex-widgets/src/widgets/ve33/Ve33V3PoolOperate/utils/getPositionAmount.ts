@@ -10,12 +10,14 @@ export function getPositionAmount0({
   tickUpper,
   liquidity,
   roundUp,
+  sqrtRatioX96: sqrtRatioX96Props,
 }: {
   tickCurrent: number;
   tickLower: number;
   tickUpper: number;
   liquidity: number | bigint | JSBI | string;
   roundUp?: boolean;
+  sqrtRatioX96?: JSBI | bigint;
 }) {
   const liquidityJsbi = JSBI.BigInt(liquidity.toString());
   if (tickCurrent < tickLower) {
@@ -27,7 +29,9 @@ export function getPositionAmount0({
     );
     return amount;
   } else if (tickCurrent < tickUpper) {
-    const sqrtRatioX96 = TickMath.getSqrtRatioAtTick(tickCurrent);
+    const sqrtRatioX96 = sqrtRatioX96Props
+      ? JSBI.BigInt(sqrtRatioX96Props.toString())
+      : TickMath.getSqrtRatioAtTick(tickCurrent);
     const amount = SqrtPriceMath.getAmount0Delta(
       sqrtRatioX96,
       TickMath.getSqrtRatioAtTick(tickUpper),
@@ -46,18 +50,22 @@ export function getPositionAmount1({
   tickUpper,
   liquidity,
   roundUp,
+  sqrtRatioX96: sqrtRatioX96Props,
 }: {
   tickCurrent: number;
   tickLower: number;
   tickUpper: number;
   liquidity: number | bigint | JSBI | string;
   roundUp?: boolean;
+  sqrtRatioX96?: bigint;
 }) {
   const liquidityJsbi = JSBI.BigInt(liquidity.toString());
   if (tickCurrent < tickLower) {
     return ZERO;
   } else if (tickCurrent < tickUpper) {
-    const sqrtRatioX96 = TickMath.getSqrtRatioAtTick(tickCurrent);
+    const sqrtRatioX96 = sqrtRatioX96Props
+      ? JSBI.BigInt(sqrtRatioX96Props.toString())
+      : TickMath.getSqrtRatioAtTick(tickCurrent);
     const amount = SqrtPriceMath.getAmount1Delta(
       TickMath.getSqrtRatioAtTick(tickLower),
       sqrtRatioX96,

@@ -410,6 +410,9 @@ export default function Ve33V3AddLiquidity({
 
       <Box
         sx={{
+          position: 'sticky',
+          bottom: 0,
+          backgroundColor: 'background.paper',
           pt: 16,
           pb: 20,
         }}

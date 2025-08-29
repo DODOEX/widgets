@@ -1,4 +1,4 @@
-import { SwapWidgetApi } from '@dodoex/api';
+import { ChainId, SwapWidgetApi } from '@dodoex/api';
 import { PoolWidget, SwapWidgetProps } from '@dodoex/widgets';
 import React from 'react';
 
@@ -62,5 +62,5 @@ Primary.args = {
   routerPage: undefined,
   supportAMMV2: true,
   supportAMMV3: true,
-  onlyChainId: 2810,
+  onlyChainId: ChainId.PHAROS_TESTNET,
 };

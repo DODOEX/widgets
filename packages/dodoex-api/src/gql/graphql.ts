@@ -34,8 +34,8 @@ export type Scalars = {
   BigNumber: { input: any; output: any };
   /** Bytes custom scalar type */
   Bytes: { input: any; output: any };
+  Curve_stableswap_ngBytes: { input: any; output: any };
   Dodochain_earnBytes: { input: any; output: any };
-  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any };
   LiquidityBytes: { input: any; output: any };
 };
@@ -2144,6 +2144,11 @@ export type Cross_Chain_Swap_ZetachainorderListData = {
   user?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Cross_Chain_Swap_ZetachainorderRefundClaimedData = {
+  externalId?: InputMaybe<Scalars['String']['input']>;
+  hash?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Cross_Chain_Swap_ZetachainrouteParams = {
   fromAddress?: InputMaybe<Scalars['String']['input']>;
   fromAmount?: InputMaybe<Scalars['String']['input']>;
@@ -2402,6 +2407,34 @@ export type Cross_Chain_TransferErc20V2List = {
   tokenlists?: Maybe<Array<Maybe<Cross_Chain_TransferTokenListV2>>>;
 };
 
+export type Cross_Chain_TransferExplorerAllSections = {
+  lastUpdated: Scalars['String']['output'];
+  sections: Array<Cross_Chain_TransferExplorerSectionProjects>;
+};
+
+export type Cross_Chain_TransferExplorerProject = {
+  estimatedDate?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  launchDate?: Maybe<Scalars['String']['output']>;
+  projectLogo?: Maybe<Scalars['String']['output']>;
+  projectName: Scalars['String']['output'];
+  sections: Array<Scalars['String']['output']>;
+  sortOrder: Scalars['Int']['output'];
+  supportedChains?: Maybe<Array<Cross_Chain_TransferSupportedChain>>;
+  tags?: Maybe<Array<Scalars['String']['output']>>;
+  tgeDate?: Maybe<Scalars['String']['output']>;
+  totalRaised?: Maybe<Scalars['String']['output']>;
+  twitterUrl?: Maybe<Scalars['String']['output']>;
+  websiteUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_TransferExplorerSectionProjects = {
+  projects: Array<Cross_Chain_TransferExplorerProject>;
+  section: Scalars['String']['output'];
+  sectionName: Scalars['String']['output'];
+  total: Scalars['Int']['output'];
+};
+
 export type Cross_Chain_TransferFuncLabelV2 = {
   key?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -2414,6 +2447,10 @@ export type Cross_Chain_TransferOrderDetailFilter = {
 
 export type Cross_Chain_TransferOrderListFilter = {
   chainId?: InputMaybe<Scalars['Int']['input']>;
+  destChainId?: InputMaybe<Scalars['Int']['input']>;
+  maxAmount?: InputMaybe<Scalars['String']['input']>;
+  minAmount?: InputMaybe<Scalars['String']['input']>;
+  origChainId?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
@@ -2470,6 +2507,11 @@ export type Cross_Chain_TransferQuoteResponseTransactionDataDto = {
   value: Scalars['String']['output'];
 };
 
+export type Cross_Chain_TransferSupportedChain = {
+  chainId: Scalars['Int']['output'];
+  chainName: Scalars['String']['output'];
+};
+
 export type Cross_Chain_TransferTokenListV2 = {
   chainId?: Maybe<Scalars['Int']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -2504,11 +2546,13 @@ export type Cross_Chain_Zetachain_TokenCrossChainTokenlist = {
   name?: Maybe<Scalars['String']['output']>;
   position?: Maybe<Scalars['Int']['output']>;
   slippage?: Maybe<Scalars['String']['output']>;
+  supportTargetChain?: Maybe<Scalars['Boolean']['output']>;
   symbol?: Maybe<Scalars['String']['output']>;
 };
 
 export type Cross_Chain_Zetachain_TokentokenlistFilter = {
   chainId?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -3381,6 +3425,142 @@ export type Crowd_PoolingcrowdpoolingVoteListFilter = {
 export type Crowd_Poolinglist_Filter = {
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
   top?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Curve_Stableswap_NgFilterState = {
+  poolAddress?: InputMaybe<Scalars['String']['input']>;
+  poolName?: InputMaybe<Scalars['String']['input']>;
+  tokenAddress?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Curve_Stableswap_NgLp = {
+  id?: Maybe<Scalars['String']['output']>;
+  liquidityTokenBalance?: Maybe<Scalars['String']['output']>;
+  lpTokens?: Maybe<Array<Maybe<Curve_Stableswap_NgUserToken>>>;
+};
+
+export type Curve_Stableswap_NgLiquidityHistory = {
+  action: Scalars['String']['output'];
+  assets?: Maybe<Array<Curve_Stableswap_NgLiquidityHistoryAsset>>;
+  id: Scalars['ID']['output'];
+  time: Scalars['BigInt']['output'];
+  user: Scalars['String']['output'];
+};
+
+export type Curve_Stableswap_NgLiquidityHistoryAsset = {
+  amount: Scalars['BigDecimal']['output'];
+  token: Curve_Stableswap_NgToken;
+};
+
+export type Curve_Stableswap_NgLiquidityHistoryListInfo = {
+  currentPage?: Maybe<Scalars['Int']['output']>;
+  liquidityHistories?: Maybe<Array<Curve_Stableswap_NgLiquidityHistory>>;
+  pageSize?: Maybe<Scalars['Int']['output']>;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Curve_Stableswap_NgListInfo = {
+  chainId?: Maybe<Scalars['Int']['output']>;
+  currentPage?: Maybe<Scalars['Int']['output']>;
+  lqList?: Maybe<Array<Maybe<Curve_Stableswap_NgLqList>>>;
+  pageSize?: Maybe<Scalars['Int']['output']>;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+  user?: Maybe<Scalars['String']['output']>;
+};
+
+export type Curve_Stableswap_NgLqList = {
+  id?: Maybe<Scalars['String']['output']>;
+  isMyLiquidity?: Maybe<Scalars['Boolean']['output']>;
+  liquidityPositions?: Maybe<Array<Maybe<Curve_Stableswap_NgLp>>>;
+  pool?: Maybe<Curve_Stableswap_NgPool>;
+};
+
+export type Curve_Stableswap_NgOrder = {
+  /** updatedAt tvl apy liquidity */
+  orderBy?: InputMaybe<Scalars['String']['input']>;
+  /** desc asc' */
+  orderDirection?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Curve_Stableswap_NgPool = {
+  a: Scalars['BigInt']['output'];
+  address: Scalars['String']['output'];
+  apy: Scalars['BigDecimal']['output'];
+  coins: Array<Curve_Stableswap_NgToken>;
+  dailyVolumeUsd: Scalars['BigDecimal']['output'];
+  daoFee: Scalars['BigDecimal']['output'];
+  decimals: Scalars['Int']['output'];
+  fee: Scalars['BigDecimal']['output'];
+  fees: Scalars['BigDecimal']['output'];
+  id: Scalars['ID']['output'];
+  liquidityUtilization: Scalars['BigDecimal']['output'];
+  name: Scalars['String']['output'];
+  offpegFeeMultiplier: Scalars['BigInt']['output'];
+  poolType: Scalars['String']['output'];
+  reserves?: Maybe<Array<Maybe<Curve_Stableswap_NgPoolReserve>>>;
+  symbol: Scalars['String']['output'];
+  totalSupply: Scalars['BigDecimal']['output'];
+  traderCount: Scalars['BigInt']['output'];
+  tvl: Scalars['BigDecimal']['output'];
+  virtualPrice: Scalars['BigDecimal']['output'];
+  volume: Scalars['BigDecimal']['output'];
+};
+
+export type Curve_Stableswap_NgPoolReserve = {
+  amount: Scalars['BigDecimal']['output'];
+  ratio: Scalars['BigDecimal']['output'];
+  token: Curve_Stableswap_NgToken;
+};
+
+export type Curve_Stableswap_NgSwap = {
+  id: Scalars['ID']['output'];
+  paidAmount: Scalars['BigDecimal']['output'];
+  paidToken: Curve_Stableswap_NgToken;
+  receivedAmount: Scalars['BigDecimal']['output'];
+  receivedToken: Curve_Stableswap_NgToken;
+  time: Scalars['BigInt']['output'];
+  user: Scalars['String']['output'];
+};
+
+export type Curve_Stableswap_NgSwapListInfo = {
+  currentPage?: Maybe<Scalars['Int']['output']>;
+  pageSize?: Maybe<Scalars['Int']['output']>;
+  swaps?: Maybe<Array<Curve_Stableswap_NgSwap>>;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Curve_Stableswap_NgToken = {
+  address: Scalars['String']['output'];
+  decimals: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  /** token logo img */
+  logoImg?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  symbol: Scalars['String']['output'];
+  tokenIndex?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Curve_Stableswap_NgUserToken = {
+  address: Scalars['String']['output'];
+  amount: Scalars['BigDecimal']['output'];
+  decimals: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  symbol: Scalars['String']['output'];
+};
+
+export type Curve_Stableswap_Nglist_Filter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  currentPage?: InputMaybe<Scalars['Int']['input']>;
+  filterState?: InputMaybe<Curve_Stableswap_NgFilterState>;
+  order?: InputMaybe<Curve_Stableswap_NgOrder>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Curve_Stableswap_Ngpool_Info_Filter = {
+  chainId: Scalars['Int']['input'];
+  poolAddress: Scalars['String']['input'];
 };
 
 export type D3mmAsset = {
@@ -9111,6 +9291,22 @@ export type MintHistory_OrderBy =
   | 'timestamp'
   | 'user';
 
+export type Native_SignerdepositData = {
+  amount?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Native_SignerredeemData = {
+  sharesToBurn?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Native_SignersignatureResult = {
+  transaction?: Maybe<Scalars['String']['output']>;
+};
+
 export type Nft = {
   chain: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -12620,11 +12816,13 @@ export type Query = {
   cross_chain_swap_zetachain_orderCreate?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderCreate>;
   cross_chain_swap_zetachain_orderDetail?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderList>;
   cross_chain_swap_zetachain_orderList?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderResult>;
+  cross_chain_swap_zetachain_orderRefundClaimed?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderCreate>;
   cross_chain_swap_zetachain_routes?: Maybe<Cross_Chain_Swap_ZetachainCrossChainRoute>;
   cross_chain_swap_zetachain_swapOrderList?: Maybe<Cross_Chain_Swap_ZetachainSwapOrderResult>;
   cross_chain_swap_zetachain_transactionEncode?: Maybe<Cross_Chain_Swap_ZetachainCrossChainTransactionEncode>;
   cross_chain_token_list?: Maybe<Cross_Chain_TokenCrossChainTokenlist>;
   cross_chain_token_tokenPair?: Maybe<Cross_Chain_TokenCrossChainTokenPair>;
+  cross_chain_transfer_getExplorerAllSections: Cross_Chain_TransferExplorerAllSections;
   cross_chain_transfer_getOrderDetail?: Maybe<Cross_Chain_TransferCrossChainOrder>;
   cross_chain_transfer_getOrderList: Cross_Chain_TransferCrossChainOrderList;
   cross_chain_transfer_getTokenList?: Maybe<
@@ -12656,6 +12854,16 @@ export type Query = {
   crowd_pooling_voteList?: Maybe<
     Array<Maybe<Crowd_PoolingCrowdpoolingVoteList>>
   >;
+  /** 获取所有池子列表 */
+  curve_stableswap_ng_getAllPools?: Maybe<Curve_Stableswap_NgListInfo>;
+  /** 获取我的流动性列表 */
+  curve_stableswap_ng_getMyLiquidity?: Maybe<Curve_Stableswap_NgListInfo>;
+  /** 获取池子详情信息 */
+  curve_stableswap_ng_getPoolInfo?: Maybe<Curve_Stableswap_NgPool>;
+  /** 获取池子流动性操作历史列表 */
+  curve_stableswap_ng_getPoolLiquidityHistory?: Maybe<Curve_Stableswap_NgLiquidityHistoryListInfo>;
+  /** 获取池子交易信息列表 */
+  curve_stableswap_ng_getPoolSwapInfo?: Maybe<Curve_Stableswap_NgSwapListInfo>;
   /** 资产每日收益折线图 */
   d3mm_getAssetDailyInterests: Array<Maybe<D3mmAssetDailyInterest>>;
   /** 资产详情信息, 如果资产不存在则返回null */
@@ -12874,6 +13082,8 @@ export type Query = {
   mining_list?: Maybe<MiningMiningListInfo>;
   mintHistories: Array<MintHistory>;
   mintHistory?: Maybe<MintHistory>;
+  native_signer_deposit?: Maybe<Native_SignersignatureResult>;
+  native_signer_redeem?: Maybe<Native_SignersignatureResult>;
   nft?: Maybe<Nft>;
   nftCollateralVault?: Maybe<NftCollateralVault>;
   nftCollateralVaults: Array<NftCollateralVault>;
@@ -12975,6 +13185,9 @@ export type Query = {
   swap?: Maybe<Swap>;
   swaps: Array<Swap>;
   third_party_token_list?: Maybe<Array<Maybe<Third_Party_TokenList>>>;
+  third_party_token_zetachain_list?: Maybe<
+    Array<Maybe<Third_Party_Token_ZetachainList>>
+  >;
   tick?: Maybe<Tick>;
   ticks: Array<Tick>;
   token?: Maybe<Token>;
@@ -13470,6 +13683,10 @@ export type QueryCross_Chain_Swap_Zetachain_OrderListArgs = {
   where?: InputMaybe<Cross_Chain_Swap_ZetachainorderListData>;
 };
 
+export type QueryCross_Chain_Swap_Zetachain_OrderRefundClaimedArgs = {
+  data?: InputMaybe<Cross_Chain_Swap_ZetachainorderRefundClaimedData>;
+};
+
 export type QueryCross_Chain_Swap_Zetachain_RoutesArgs = {
   where?: InputMaybe<Cross_Chain_Swap_ZetachainrouteParams>;
 };
@@ -13589,6 +13806,26 @@ export type QueryCrowd_Pooling_VoteArgs = {
 
 export type QueryCrowd_Pooling_VoteListArgs = {
   where?: InputMaybe<Crowd_PoolingcrowdpoolingVoteListFilter>;
+};
+
+export type QueryCurve_Stableswap_Ng_GetAllPoolsArgs = {
+  where?: InputMaybe<Curve_Stableswap_Nglist_Filter>;
+};
+
+export type QueryCurve_Stableswap_Ng_GetMyLiquidityArgs = {
+  where?: InputMaybe<Curve_Stableswap_Nglist_Filter>;
+};
+
+export type QueryCurve_Stableswap_Ng_GetPoolInfoArgs = {
+  where?: InputMaybe<Curve_Stableswap_Ngpool_Info_Filter>;
+};
+
+export type QueryCurve_Stableswap_Ng_GetPoolLiquidityHistoryArgs = {
+  where?: InputMaybe<Curve_Stableswap_Ngpool_Info_Filter>;
+};
+
+export type QueryCurve_Stableswap_Ng_GetPoolSwapInfoArgs = {
+  where?: InputMaybe<Curve_Stableswap_Ngpool_Info_Filter>;
 };
 
 export type QueryD3mm_GetAssetDailyInterestsArgs = {
@@ -14373,6 +14610,14 @@ export type QueryMintHistoryArgs = {
   where?: InputMaybe<MintHistory_Filter>;
 };
 
+export type QueryNative_Signer_DepositArgs = {
+  data?: InputMaybe<Native_SignerdepositData>;
+};
+
+export type QueryNative_Signer_RedeemArgs = {
+  data?: InputMaybe<Native_SignerredeemData>;
+};
+
 export type QueryNftArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
@@ -14877,6 +15122,10 @@ export type QuerySwapsArgs = {
 
 export type QueryThird_Party_Token_ListArgs = {
   data?: InputMaybe<Third_Party_TokenlistData>;
+};
+
+export type QueryThird_Party_Token_Zetachain_ListArgs = {
+  data?: InputMaybe<Third_Party_Token_ZetachainlistData>;
 };
 
 export type QueryTickArgs = {
@@ -17118,6 +17367,22 @@ export type Third_Party_TokenList = {
   logoURI?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   symbol?: Maybe<Scalars['String']['output']>;
+};
+
+export type Third_Party_Token_ZetachainList = {
+  address?: Maybe<Scalars['String']['output']>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  decimals?: Maybe<Scalars['Int']['output']>;
+  from?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  logoURI?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  symbol?: Maybe<Scalars['String']['output']>;
+};
+
+export type Third_Party_Token_ZetachainlistData = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  fromNames?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Third_Party_TokenlistData = {
@@ -22219,6 +22484,21 @@ export type Ve33_GetTicksDataQuery = {
   };
 };
 
+export type Ve33_GetUserLockQueryVariables = Exact<{
+  where: Ve33UserInput;
+}>;
+
+export type Ve33_GetUserLockQuery = {
+  ve33_getUserLock: Array<{
+    id: string;
+    value: any;
+    votingPower: any;
+    lockedEnd: any;
+    isPermanent: boolean;
+    isVoted: boolean;
+  } | null>;
+};
+
 export type FetchUserSwapOrderHistoriesQueryVariables = Exact<{
   where?: InputMaybe<User_SwapswapFilter>;
 }>;
@@ -23282,6 +23562,21 @@ export const Ve33_GetTicksDataDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   Ve33_GetTicksDataQuery,
   Ve33_GetTicksDataQueryVariables
+>;
+export const Ve33_GetUserLockDocument = new TypedDocumentString(`
+    query Ve33_getUserLock($where: Ve33UserInput!) {
+  ve33_getUserLock(where: $where) {
+    id
+    value
+    votingPower
+    lockedEnd
+    isPermanent
+    isVoted
+  }
+}
+    `) as unknown as TypedDocumentString<
+  Ve33_GetUserLockQuery,
+  Ve33_GetUserLockQueryVariables
 >;
 export const FetchUserSwapOrderHistoriesDocument = new TypedDocumentString(`
     query FetchUserSwapOrderHistories($where: User_swapswapFilter) {
