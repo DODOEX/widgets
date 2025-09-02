@@ -309,6 +309,9 @@ export const getDesignTokens = (
             borderColor: palette.border?.main,
             borderRadius: 100,
           },
+          '::-webkit-scrollbar-corner': {
+            backgroundColor: 'transparent',
+          },
         },
       },
       MuiTypography: {

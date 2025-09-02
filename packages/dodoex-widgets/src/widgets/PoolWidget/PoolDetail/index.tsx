@@ -96,15 +96,16 @@ export default function PoolDetail({
       }
     >
       <Box
-        sx={
-          isMobile
+        sx={{
+          mt: 28,
+          ...(isMobile
             ? {}
             : {
                 display: 'flex',
                 gap: 12,
                 overflow: 'hidden',
-              }
-        }
+              }),
+        }}
       >
         <Box
           sx={{

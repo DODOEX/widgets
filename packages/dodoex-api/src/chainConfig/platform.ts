@@ -35,4 +35,5 @@ export const platformIdMap: {
   [ChainId.HASHKEY]: 'hashkey',
   [ChainId.HEMI]: 'hemi',
   [ChainId.PHAROS_TESTNET]: 'pharos-testnet',
+  [ChainId.MONAD_TESTNET]: 'monad-testnet',
 };

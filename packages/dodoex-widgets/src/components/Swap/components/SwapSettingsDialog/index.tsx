@@ -17,6 +17,7 @@ export interface SwapSettingsDialogProps {
   fromToken?: TokenInfo | null;
   toToken?: TokenInfo | null;
   slippageQuickInput?: boolean;
+  switchDefualtPrimary?: boolean;
 }
 
 export function SwapSettingsDialog({
@@ -25,6 +26,7 @@ export function SwapSettingsDialog({
   fromToken,
   toToken,
   slippageQuickInput,
+  switchDefualtPrimary,
 }: SwapSettingsDialogProps) {
   const theme = useTheme();
   const { ddl, expertMode, disableIndirectRouting } = useSwapSettingStore();
@@ -195,6 +197,7 @@ export function SwapSettingsDialog({
             </Box>
             <TextSwitch
               checked={disableIndirectRouting}
+              defualtPrimary={switchDefualtPrimary}
               onChange={(v) => {
                 useSwapSettingStore.setState({
                   disableIndirectRouting: v,

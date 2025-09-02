@@ -15,6 +15,8 @@ const WidgetContainer = React.forwardRef(function WidgetContainer(
       className={WIDGET_MODULE_CLASS_NAME}
       ref={ref}
       sx={{
+        display: 'flex',
+        flexDirection: 'column',
         flex: 1,
         overflowY: 'auto',
         backgroundColor: 'background.default',

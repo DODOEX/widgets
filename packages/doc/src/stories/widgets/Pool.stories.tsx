@@ -1,5 +1,6 @@
 import { SwapWidgetApi } from '@dodoex/api';
 import { PoolWidget, SwapWidgetProps } from '@dodoex/widgets';
+import { Box } from '@dodoex/components';
 import React from 'react';
 
 export default {
@@ -21,55 +22,114 @@ export const Primary = (props: any) => {
     }
   }, [projectId, apiKey]);
   return (
-    <PoolWidget
-      {...config}
-      tokenList={[
-        {
-          address: '0x7D381e6a9c23A0E6969658f6B8Eba57A4Dbf93a0',
-          symbol: 'USDT',
-          name: 'USDT',
-          decimals: 18,
-          chainId: 11155111,
-        },
-        {
-          address: '0xf86Ed431954d101eaC10F3eBC19E6EaeD1291365',
-          symbol: 'test',
-          name: 'test',
-          decimals: 18,
-          chainId: 11155111,
-        },
-        {
-          address: '0x163D876AF3949f45D934870a1783A040Cf717Bc5',
-          symbol: 'uni_test2',
-          name: 'test',
-          decimals: 18,
-          chainId: 11155111,
-        },
-        {
-          address: '0xac4D957b99482C0309717FDd8fA779f3FEE5c309',
-          symbol: 'uni_test1',
-          name: 'test',
-          decimals: 18,
-          chainId: 11155111,
-        },
-        {
-          address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-          symbol: 'ETH',
-          name: 'ETH',
-          decimals: 18,
-          chainId: 11155111,
-        },
-        {
-          address: '0x7B07164ecFaF0F0D85DFC062Bc205a4674c75Aa0',
-          symbol: 'WETH',
-          name: 'WETH',
-          decimals: 18,
-          chainId: 11155111,
-        },
-      ]}
-      {...other}
-      apikey={apiKey}
-    />
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        // height: 900,
+        overflow: 'hidden',
+      }}
+    >
+      <PoolWidget
+        {...config}
+        tokenList={[
+          {
+            name: 'MON',
+            address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+            symbol: 'MON',
+            decimals: 18,
+            slippage: null,
+            chainId: 10143,
+            logoImg:
+              'https://images.dodoex.io/RtVAjU6oDHyqSGDUo1_LGHbIfK-J0uCqMkgI9bKtXIM/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy8xMDE0My8weGVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWU.webp',
+            tokenlists: [
+              {
+                name: 'All',
+                status: 'launched',
+              },
+            ],
+            domains: [
+              {
+                name: 'wonkaswap.xyz',
+              },
+            ],
+            funcLabels: [],
+            attributeLabels: [],
+          },
+          {
+            name: 'WMON',
+            address: '0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701',
+            symbol: 'WMON',
+            decimals: 18,
+            slippage: null,
+            chainId: 10143,
+            logoImg:
+              'https://images.dodoex.io/d90bXxHvK0MhH99-UqjAaMFHGXqecrkrVyTO1fmo7BQ/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy8xMDE0My8weDc2MGFmZTg2ZTVkZTVmYTBlZTU0MmZjN2I3YjcxM2UxYzU0MjU3MDE.webp',
+            tokenlists: [
+              {
+                name: 'All',
+                status: 'launched',
+              },
+            ],
+            domains: [
+              {
+                name: 'wonkaswap.xyz',
+              },
+            ],
+            funcLabels: [],
+            attributeLabels: [],
+          },
+          {
+            name: 'MTK',
+            address: '0x4f59b88556c1B133939b2655729Ad53226ed5FAD',
+            symbol: 'MTK',
+            decimals: 18,
+            slippage: null,
+            chainId: 10143,
+            logoImg:
+              'https://images.dodoex.io/GpbsR9irReXLCC1Tgq3MvS09pA_Ac2GqnWrMCBsQRE4/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy8xMDE0My8weDRmNTliODg1NTZjMWIxMzM5MzliMjY1NTcyOWFkNTMyMjZlZDVmYWQ.webp',
+            tokenlists: [
+              {
+                name: 'All',
+                status: 'launched',
+              },
+            ],
+            domains: [
+              {
+                name: 'wonkaswap.xyz',
+              },
+            ],
+            funcLabels: [],
+            attributeLabels: [],
+          },
+          {
+            name: 'MTK2',
+            address: '0x973CAFEDB651D710CD1890ebc5C207D836BA5E9F',
+            symbol: 'MTK2',
+            decimals: 18,
+            slippage: null,
+            chainId: 10143,
+            logoImg:
+              'https://images.dodoex.io/iJAnev4ye1v-NeAInZVM7G4E6aex6zsAO4UEI29jUnY/rs:fit:160:160:0/g:no/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2RvZG8tbWVkaWEtc3RhZ2luZy8xMDE0My8weDk3M2NhZmVkYjY1MWQ3MTBjZDE4OTBlYmM1YzIwN2Q4MzZiYTVlOWY.webp',
+            tokenlists: [
+              {
+                name: 'All',
+                status: 'launched',
+              },
+            ],
+            domains: [
+              {
+                name: 'wonkaswap.xyz',
+              },
+            ],
+            funcLabels: [],
+            attributeLabels: [],
+          },
+        ]}
+        {...other}
+        apikey={apiKey}
+      />
+    </Box>
   );
 };
 

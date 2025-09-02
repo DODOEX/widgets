@@ -64,7 +64,7 @@ export function FeeRateSetting({
                 ) : undefined
               }
               sx={{
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: '#F4F0EC',
                 borderColor: selected
                   ? theme.palette.primary.main
                   : theme.palette.border.main,

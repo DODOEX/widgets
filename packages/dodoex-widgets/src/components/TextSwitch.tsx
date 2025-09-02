@@ -11,16 +11,18 @@ export function TextSwitch({
   onChange,
   sx,
   disabled,
+  defualtPrimary,
 }: {
   sx?: BoxProps['sx'];
   checked: boolean;
   onChange: (v: boolean) => void;
   disabled?: boolean;
+  defualtPrimary?: boolean;
 }) {
   const theme = useTheme();
 
   let bgColor = theme.palette.background.paper;
-  if (checked) {
+  if (checked || defualtPrimary) {
     bgColor = theme.palette.secondary.main;
   }
 

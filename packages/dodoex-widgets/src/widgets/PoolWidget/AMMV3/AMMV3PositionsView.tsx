@@ -145,7 +145,15 @@ export const AMMV3PositionsView = ({
         </Box>
 
         {currentPairPositions && currentPairPositions.length > 0 ? (
-          <>
+          <Box
+            sx={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 16,
+              overflowY: 'auto',
+            }}
+          >
             {currentPairPositions?.map((p) => {
               return (
                 <PositionViewCard
@@ -187,7 +195,7 @@ export const AMMV3PositionsView = ({
               </svg>
               {t`Add Position`}
             </Button>
-          </>
+          </Box>
         ) : (
           <>
             <Box

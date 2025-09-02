@@ -22,7 +22,7 @@ export function usePoolListTabs({
   const { supportAMMV2, supportAMMV3, notSupportPMM } = useUserOptions();
   const tabs = React.useMemo(() => {
     const result = [
-      { key: PoolTab.addLiquidity, value: t`Add Liquidity` },
+      { key: PoolTab.addLiquidity, value: t`All Pools` },
       {
         key: PoolTab.myLiquidity,
         value: t`My Liquidity`,

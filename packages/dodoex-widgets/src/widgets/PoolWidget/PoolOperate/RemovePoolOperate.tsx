@@ -183,7 +183,6 @@ export function RemovePoolOperate({
     reset();
     resetPercentage();
   }, [checkTokenType]);
-
   const prevPool = usePrevious(pool);
   React.useEffect(() => {
     if (pool?.address !== prevPool?.address) {
