@@ -198,21 +198,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
     );
     if (isMobile) {
       return (
-        <Box
-          sx={{
-            pt: 16,
-            px: 20,
-            backgroundColor: '#F4E8D0',
-            '&::after': {
-              content: '""',
-              display: 'block',
-              mt: 20,
-              height: '1px',
-              width: 1,
-              backgroundColor: 'border.main',
-            },
-          }}
-        >
+        <>
           <Button
             variant={Button.Variant.outlined}
             fullWidth={isMobile && !!account}
@@ -220,10 +206,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
               setSelectTypeModalOpen(true);
             }}
             sx={{
-              width: '100%',
               height: 40,
-              backgroundColor: '#833F2D',
-              color: '#FFF',
             }}
           >
             <Box
@@ -244,15 +227,21 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
           >
             <Box sx={{ mb: 0 }}>{items}</Box>
           </Dialog>
-        </Box>
+        </>
       );
     }
     return (
-      <>
-        <Tooltip
-          arrow={false}
-          leaveDelay={300}
-          placement={isMobile ? 'bottom' : 'bottom-end'}
+      <Tooltip
+        arrow={false}
+        leaveDelay={300}
+        placement={isMobile ? 'bottom' : 'bottom-end'}
+        sx={{
+          p: 0,
+          backgroundColor: 'background.paper',
+        }}
+        title={<Box>{items}</Box>}
+      >
+        <Box
           sx={{
             width: isMobile ? '100%' : 'auto',
             display: 'inline-flex',
@@ -273,44 +262,11 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
               backgroundColor: alpha(theme.palette.primary.main, 0.1),
             },
           }}
-          title={<Box>{items}</Box>}
         >
-          <Box
-            sx={{
-              position: 'relative',
-              width: isMobile ? '100%' : 'auto',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 10,
-              pl: 29,
-              pr: 54,
-              height: 40,
-              borderRadius: theme.spacing(0, 24, 0, 0),
-              typography: 'body1',
-              fontWeight: 600,
-              color: '#FFF',
-              cursor: 'pointer',
-              backgroundColor: '#833F2D',
-              '&:hover': {
-                color: alpha('#FFF', 0.5),
-              },
-            }}
-          >
-            <Box
-              component={PoolTabRadiusIcon}
-              sx={{
-                position: 'absolute',
-                left: 0,
-                transform: 'rotateY(180deg) translateX(100%)',
-                color: '#833F2D',
-              }}
-            />
-            <Box component={PlusIcon} />
-            <Trans>Create</Trans>
-          </Box>
-        </Tooltip>
-      </>
+          <Box component={PlusIcon} />
+          <Trans>Create Pool</Trans>
+        </Box>
+      </Tooltip>
     );
   }
 

@@ -498,6 +498,7 @@ const contractMap: {
     DODO_DSP_PROXY: pharosTestnet.DODODspProxy,
     DODO_DPP_PROXY: pharosTestnet.DODODppProxy,
     DODO_MINEV3_PROXY: pharosTestnet.DODOMineV3Proxy,
+  },
   [ChainId.MONAD_TESTNET]: {
     MULTI_CALL: monadTestnet.MulticallWithValid,
     DODO_APPROVE: monadTestnet.DODOApprove,

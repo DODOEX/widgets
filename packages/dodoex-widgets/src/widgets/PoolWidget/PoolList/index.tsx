@@ -1,16 +1,5 @@
-
+import { Box, TabPanel, Tabs, TabsGroup } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
-import {
-  alpha,
-  Box,
-  Tab,
-  tabClasses,
-  TabPanel,
-  Tabs,
-  TabsGroup,
-  TabsList,
-} from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { HowItWorks } from '../../../components/HowItWorks';
 import { transitionTime } from '../../../components/Swap/components/Dialog';
@@ -39,7 +28,6 @@ import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
 import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
-import { ReactComponent as PoolTabRadiusIcon } from '../../../assets/pool-tab-radius.svg';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -112,6 +100,7 @@ export default function PoolList({
                 display: 'flex',
                 flexDirection: 'column',
                 borderRadius: 16,
+                backgroundColor: 'background.paper',
                 flex: 1,
                 overflow: 'hidden',
                 height: 'max-content',
@@ -133,7 +122,6 @@ export default function PoolList({
                   }),
                 }
               : {
-                  position: 'relative',
                   display: 'flex',
                   justifyContent: 'space-between',
                   p: 20,
@@ -176,17 +164,11 @@ export default function PoolList({
           )}
           <CreatePoolBtn />
         </Box>
-        <Box
+        <TabPanelFlexCol
+          value={PoolTab.addLiquidity}
           sx={{
-            flex: 1,
             display: 'flex',
-            gap: 12,
-            background: isMobile
-              ? '#F4E8D0'
-              : 'linear-gradient(180deg, #F4E8D0 64.3%, #EFCE8D 100%)',
-            pl: isMobile ? 20 : 0,
-            pr: 20,
-            pb: 20,
+            flexDirection: 'column',
             overflow: 'hidden',
           }}
         >

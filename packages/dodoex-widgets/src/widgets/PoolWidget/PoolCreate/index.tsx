@@ -244,20 +244,13 @@ export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
             <Box
               sx={{
                 mt: 28,
-                p: 20,
-                backgroundColor: 'background.paper',
-                borderRadius: 24,
+                typography: 'h4',
+                fontWeight: 600,
+                color: 'text.primary',
               }}
             >
-              <Box
-                sx={{
-                  typography: 'h4',
-                  fontWeight: 600,
-                  color: 'text.primary',
-                }}
-              >
-                <Trans>Pool Setup</Trans>
-              </Box>
+              <Trans>Pool Setup</Trans>
+            </Box>
 
             <SectionTitle
               titleKey={t`Select Pool Version`}
@@ -327,18 +320,12 @@ export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
                   titleKey={t`Pricing Model`}
                   index={3}
                   status={
-                    state.currentStep === 0
-                      ? 'waiting'
-                      : state.currentStep === 1
+                    state.currentStep > 2
+                      ? 'completed'
+                      : state.currentStep === 2
                         ? 'running'
-                        : 'completed'
+                        : 'waiting'
                   }
-                  baseToken={state.baseToken}
-                  quoteToken={state.quoteToken}
-                  initPrice={state.initPrice}
-                  slippageCoefficient={state.slippageCoefficient}
-                  selectedVersion={state.selectedVersion}
-                  midPrice={undefined}
                 />
                 <PriceModeCard
                   chainId={chainId}
@@ -366,12 +353,15 @@ export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
                   titleKey={t`Asset ratio within the pool`}
                   index={5}
                   status={
-                    state.currentStep === 0
-                      ? 'waiting'
-                      : state.currentStep === 1
+                    state.currentStep > 4
+                      ? 'completed'
+                      : state.currentStep === 4
                         ? 'running'
-                        : 'completed'
+                        : 'waiting'
                   }
+                />
+                <LqRatioSet
+                  isWaiting={state.currentStep < 4}
                   baseToken={state.baseToken}
                   quoteToken={state.quoteToken}
                   initPrice={state.initPrice}
@@ -383,66 +373,8 @@ export default function PoolCreate({ cardMode }: { cardMode?: boolean }) {
                   peggedQuoteTokenRatio={state.peggedQuoteTokenRatio}
                   cardBg={cardBg}
                 />
-              )}
-
-              {isPeggedVersion && (
-                <>
-                  <SectionTitle
-                    titleKey={t`Pricing Model`}
-                    index={3}
-                    status={
-                      state.currentStep > 2
-                        ? 'completed'
-                        : state.currentStep === 2
-                          ? 'running'
-                          : 'waiting'
-                    }
-                  />
-                  <PriceModeCard
-                    isWaiting={state.currentStep < 2}
-                    selectedSubPeggedVersion={state.selectedSubPeggedVersion}
-                  />
-                </>
-              )}
-
-              <SectionTitle
-                titleKey={t`Fee Rate`}
-                index={3}
-                status={state.currentStep === 2 ? 'running' : 'waiting'}
-              />
-              <FeeRateCard
-                isWaiting={state.currentStep < (isPeggedVersion ? 3 : 2)}
-                feeRate={state.feeRate}
-              />
-
-              {isPeggedVersion && (
-                <>
-                  <SectionTitle
-                    titleKey={t`Asset ratio within the pool`}
-                    index={5}
-                    status={
-                      state.currentStep > 4
-                        ? 'completed'
-                        : state.currentStep === 4
-                          ? 'running'
-                          : 'waiting'
-                    }
-                  />
-                  <LqRatioSet
-                    isWaiting={state.currentStep < 4}
-                    baseToken={state.baseToken}
-                    quoteToken={state.quoteToken}
-                    initPrice={state.initPrice}
-                    slippageCoefficient={state.slippageCoefficient}
-                    selectedVersion={state.selectedVersion}
-                    baseAmount={state.baseAmount}
-                    quoteAmount={state.quoteAmount}
-                    peggedBaseTokenRatio={state.peggedBaseTokenRatio}
-                    peggedQuoteTokenRatio={state.peggedQuoteTokenRatio}
-                  />
-                </>
-              )}
-            </Box>
+              </>
+            )}
           </Box>
         )}
 

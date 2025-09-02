@@ -195,6 +195,7 @@ export const basicTokenMap: {
     name: 'PHRS',
     wrappedTokenSymbol: 'WPHRS',
     wrappedTokenAddress: '0x3019b247381c850ab53dc0ee53bce7a07ea9155f',
+  },
   [ChainId.MONAD_TESTNET]: {
     ...DEFAULT_BASIC_TOKEN,
     symbol: 'MON',
