@@ -11,6 +11,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   convertFetchMyLiquidityToOperateData,
   convertLiquidityTokenToTokenInfo,
+  FetchLiquidityListLqList,
   FetchMyLiquidityListLqList,
   getPoolAMMOrPMM,
 } from '../utils';
@@ -64,6 +65,7 @@ import { Bound } from '../AMMV3/types';
 import { MigrationTag } from './components/migationWidget';
 import { GetMigrationPairAndMining } from '../PoolOperate/types';
 import { usePoolListMyLiquidity } from '../hooks/usePoolListMyLiquidity';
+import { TokenInfo } from '../../../hooks/Token';
 
 function CardList({
   account,
@@ -1226,12 +1228,15 @@ export default function MyLiquidity({
   account,
   filterChainIds,
   activeChainId,
-  handleChangeActiveChainId,
   operatePool,
   setOperatePool,
   getMigrationPairAndMining,
-  tokenAndPoolFilter,
-  supportAMMIcon,
+  filterASymbol,
+  filterBSymbol,
+  filterAddressLqList,
+  filterTokens,
+  handleChangeFilterAddress,
+  handleDeleteToken,
 }: {
   account?: string;
   filterChainIds?: ChainId[];
@@ -1243,24 +1248,18 @@ export default function MyLiquidity({
   getMigrationPairAndMining?: GetMigrationPairAndMining;
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
   supportAMMIcon?: boolean;
+  filterASymbol: string;
+  filterBSymbol: string;
+  filterAddressLqList: FetchLiquidityListLqList;
+  filterTokens: Array<TokenInfo>;
+  handleChangeFilterAddress: (lqList: FetchLiquidityListLqList) => void;
+  handleDeleteToken: (token: TokenInfo) => void;
 }) {
-  const theme = useTheme();
   const { minDevice, isMobile } = useWidgetDevice();
-  const queryClient = useQueryClient();
   const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
     useUserOptions();
   const [onlyV3Checked, setOnlyV3] = React.useState(false);
 
-  const {
-    filterTokens,
-    filterASymbol,
-    filterBSymbol,
-    filterAddressLqList,
-
-    handleDeleteToken,
-    handleChangeFilterTokens,
-    handleChangeFilterAddress,
-  } = usePoolListFilterTokenAndPool(tokenAndPoolFilter);
 
   let filterTypes: PoolType[] = notSupportPMM
     ? []
@@ -1317,7 +1316,7 @@ export default function MyLiquidity({
 
   return (
     <>
-      <Box
+      {(hasFilterAddress || !!filterTokens.length) && <Box
         sx={{
           py: 16,
           display: 'flex',
@@ -1335,109 +1334,26 @@ export default function MyLiquidity({
               }),
         }}
       >
+        {/* filter tag */}
         <Box
           sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            ...(minDevice(filterSmallDeviceWidth)
-              ? {}
-              : {
-                  '& > button': {
-                    flex: 1,
-                    flexBasis: '100%',
-                  },
-                }),
-            ...(isMobile
-              ? {
-                  flexWrap: 'wrap',
-                }
-              : {}),
+            my: 0,
           }}
         >
-          {!onlyChainId && (
-            <SelectChain
-              chainId={activeChainId}
-              setChainId={handleChangeActiveChainId}
-              sx={{
-                justifyContent: 'space-between',
-              }}
-              showNewIcon={supportAMMIcon}
+          {hasFilterAddress ? (
+            <FilterAddressTags
+              lqList={filterAddressLqList}
+              onDeleteTag={() => handleChangeFilterAddress([])}
             />
+          ) : (
+            ''
           )}
-          {showOnlyV3Checked && (
-            <OnlyV3Toggle
-              onlyV3={onlyV3}
-              setOnlyV3={setOnlyV3}
-              sx={
-                isMobile
-                  ? {
-                      flexGrow: 1,
-                      flexBasis: '100%',
-                    }
-                  : undefined
-              }
-            />
-          )}
-          {tokenAndPoolFilter?.element ?? (
-            <TokenAndPoolFilter
-              value={filterTokens}
-              onChange={handleChangeFilterTokens}
-              searchAddress={async (address, onClose) => {
-                const query = graphQLRequests.getInfiniteQuery(
-                  PoolApi.graphql.fetchLiquidityList,
-                  'currentPage',
-                  {
-                    where: {
-                      ...defaultQueryFilter,
-                      filterState: {
-                        address,
-                        ...defaultQueryFilter.filterState,
-                      },
-                    },
-                  },
-                );
-                const result = await queryClient.fetchQuery(query);
-                const lqList = result.liquidity_list?.lqList;
-                if (lqList?.length) {
-                  return (
-                    <TokenListPoolItem
-                      list={lqList}
-                      onClick={() => {
-                        handleChangeFilterAddress(lqList);
-                        onClose();
-                      }}
-                    />
-                  );
-                }
-                return null;
-              }}
-            />
-          )}
+          <FilterTokenTags
+            tags={filterTokens}
+            onDeleteTag={handleDeleteToken}
+          />
         </Box>
-
-        {/* filter tag */}
-        {(hasFilterAddress || !!filterTokens.length) && (
-          <Box
-            sx={{
-              my: 0,
-            }}
-          >
-            {hasFilterAddress ? (
-              <FilterAddressTags
-                lqList={filterAddressLqList}
-                onDeleteTag={() => handleChangeFilterAddress([])}
-              />
-            ) : (
-              ''
-            )}
-            <FilterTokenTags
-              tags={filterTokens}
-              onDeleteTag={handleDeleteToken}
-            />
-          </Box>
-        )}
-      </Box>
+      </Box>}
 
       {/* list */}
       {isMobile ? (

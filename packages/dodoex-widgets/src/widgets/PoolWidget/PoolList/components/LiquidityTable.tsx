@@ -60,7 +60,7 @@ export default function LiquidityTable({
             position: 'sticky',
             top: 0,
             zIndex: 2,
-            background: '#F4E8D0',
+            background: 'transparent',
           },
           '& tbody tr td': {
             backgroundColor: '#FFF',

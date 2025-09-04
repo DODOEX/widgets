@@ -28,6 +28,8 @@ import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
 import MyCreated from './MyCreated';
 import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
+import { TokenInfo } from '../../../hooks/Token';
+import { FetchLiquidityListLqList } from '../utils';
 
 function TabPanelFlexCol({ sx, ...props }: Parameters<typeof TabPanel>[0]) {
   return (
@@ -173,17 +175,22 @@ export default function PoolList({
           }}
         >
           <AddLiquidityList
-            account={account}
             filterChainIds={filterChainIds}
             scrollParentRef={scrollParentRefProps ?? scrollParentRef}
             activeChainId={activeChainId}
-            handleChangeActiveChainId={handleChangeActiveChainId}
             operatePool={operatePool}
             setOperatePool={setOperatePool}
-            tokenAndPoolFilter={tokenAndPoolFilter}
-            getMigrationPairAndMining={getMigrationPairAndMining}
-            supportAMMIcon={supportAMMIcon}
-          />
+            getMigrationPairAndMining={getMigrationPairAndMining} 
+            filterASymbol={''} 
+            filterBSymbol={''} 
+            filterAddressLqList={undefined} 
+            filterTokens={[]} 
+            handleChangeFilterAddress={function (lqList: FetchLiquidityListLqList): void {
+              throw new Error('Function not implemented.');
+            } } 
+            handleDeleteToken={function (token: TokenInfo): void {
+              throw new Error('Function not implemented.');
+            } }          />
         </TabPanelFlexCol>
         <TabPanelFlexCol value={PoolTab.myLiquidity}>
           <MyLiquidity
@@ -196,6 +203,16 @@ export default function PoolList({
             tokenAndPoolFilter={tokenAndPoolFilter}
             getMigrationPairAndMining={getMigrationPairAndMining}
             supportAMMIcon={supportAMMIcon}
+            filterASymbol={''} 
+            filterBSymbol={''} 
+            filterAddressLqList={undefined} 
+            filterTokens={[]} 
+            handleChangeFilterAddress={function (lqList: FetchLiquidityListLqList): void {
+              throw new Error('Function not implemented.');
+            } } 
+            handleDeleteToken={function (token: TokenInfo): void {
+              throw new Error('Function not implemented.');
+            } }       
           />
         </TabPanelFlexCol>
         <TabPanelFlexCol value={PoolTab.myCreated}>
