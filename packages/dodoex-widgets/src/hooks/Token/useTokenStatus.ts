@@ -1,11 +1,8 @@
 import { basicTokenMap, ChainId, contractConfig } from '@dodoex/api';
-import { t } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 import { tokenApi } from '../../constants/api';
-import { getTokenSymbolDisplay } from '../../utils/token';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import useFetchBlockNumber from '../contract/useFetchBlockNumber';
 import { useInflights, useSubmission } from '../Submission';
@@ -14,7 +11,7 @@ import { ExecutionResult, MetadataFlag } from '../Submission/types';
 import { ApprovalState, TokenInfo } from './type';
 
 function getPendingRest(
-  token: TokenInfo | undefined | null,
+  token: Pick<TokenInfo, 'address' | 'chainId' | 'symbol'> | undefined | null,
   allowance: BigNumber | undefined,
 ) {
   const isUSDT =
@@ -25,7 +22,10 @@ function getPendingRest(
 }
 
 export function useTokenStatus(
-  token: TokenInfo | undefined | null,
+  token:
+    | (Pick<TokenInfo, 'address' | 'chainId'> & { symbol?: string })
+    | undefined
+    | null,
   {
     amount,
     contractAddress,
@@ -68,7 +68,7 @@ export function useTokenStatus(
   });
   const { runningRequests } = useInflights();
   const { updateBlockNumber } = useFetchBlockNumber();
-  const { i18n } = useLingui();
+
   const basicTokenAddress = React.useMemo(
     () => (chainId ? basicTokenMap[chainId as ChainId]?.address : null),
     [chainId],
@@ -117,7 +117,15 @@ export function useTokenStatus(
   const { isApproving, isGetApproveLoading, needApprove, needReset } =
     React.useMemo(() => {
       const approvalState = getApprovalState();
-      const pendingReset = getPendingRest(token, tokenQuery.data?.allowance);
+      const pendingReset = getPendingRest(
+        token
+          ? {
+              ...token,
+              symbol: token?.symbol ?? tokenQuery.data?.symbol ?? '-',
+            }
+          : undefined,
+        tokenQuery.data?.allowance,
+      );
       return {
         isApproving: approvalState === ApprovalState.Approving,
         isGetApproveLoading:
@@ -130,6 +138,7 @@ export function useTokenStatus(
       getApprovalState,
       token,
       tokenQuery.data?.allowance,
+      tokenQuery.data?.symbol,
       tokenQuery.isLoading,
     ]);
 
@@ -137,9 +146,9 @@ export function useTokenStatus(
 
   const approveTitle = React.useMemo(() => {
     if (!token) return '';
-    const prefix = needReset ? t`Reset` : t`Approve`;
-    return `${prefix} ${getTokenSymbolDisplay(token)}`;
-  }, [token, needReset, i18n._]);
+    const prefix = needReset ? 'Reset' : 'Approve';
+    return `${prefix} ${token.symbol ?? tokenQuery.data?.symbol ?? '-'}`;
+  }, [token, needReset, tokenQuery.data?.symbol]);
 
   const submitApproveMutation = useMutation({
     mutationFn: async () => {
@@ -194,7 +203,7 @@ export function useTokenStatus(
     //   val = balance.gt(keepChanges) ? balance.minus(keepChanges) : defaultVal;
 
     return val.toString();
-  }, [chainId, tokenQuery.data?.balance, overrideBalance, token]);
+  }, [tokenQuery.data?.balance, overrideBalance, token]);
 
   const insufficientBalance = React.useMemo(() => {
     if (!amount) return false;

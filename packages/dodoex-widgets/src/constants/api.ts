@@ -1,4 +1,4 @@
-import { ChainId, ContractRequests, TokenApi } from '@dodoex/api';
+import { ChainId, ContractRequests, SwapApi, TokenApi } from '@dodoex/api';
 import { getRpcSingleUrlMap } from './chains';
 
 export enum APIServiceKey {
@@ -156,5 +156,9 @@ export const contractRequests = new ContractRequests({
 });
 
 export const tokenApi = new TokenApi({
+  contractRequests,
+});
+
+export const swapApi = new SwapApi({
   contractRequests,
 });

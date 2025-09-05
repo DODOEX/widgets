@@ -74,6 +74,19 @@ export default [
     type: 'function' as const,
   },
   {
+    inputs: [],
+    name: 'decimals',
+    outputs: [
+      {
+        internalType: 'uint8',
+        name: '',
+        type: 'uint8',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     constant: true,
     inputs: [
       {

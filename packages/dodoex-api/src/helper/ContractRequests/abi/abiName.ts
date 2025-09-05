@@ -79,4 +79,6 @@ export enum ABIName {
   D3MM_READ_ABI = 'D3MM_READ_ABI',
 
   CurveStableSwapNG = 'CurveStableSwapNG',
+
+  RefundVault = 'RefundVault',
 }
