@@ -70,6 +70,8 @@ const documents = {
     types.Cross_Chain_Swap_Zetachain_OrderListDocument,
   '\n    query Cross_chain_swap_zetachain_swapOrderList(\n      $where: Cross_chain_swap_zetachainswapOrderListData\n    ) {\n      cross_chain_swap_zetachain_swapOrderList(where: $where) {\n        list {\n          key\n          user\n          chainId\n          hash\n          createdAt\n          fromTokenAddress\n          toTokenAddress\n          fromAmount\n          toAmount\n          minAmount\n          maxAmount\n          fromTokenPrice\n          toTokenPrice\n          fromTokenSymbol\n          toTokenSymbol\n          fromTokenDecimals\n          toTokenDecimals\n          status\n          nonce\n          extra\n        }\n        count\n        page\n        pageSize\n      }\n    }\n  ':
     types.Cross_Chain_Swap_Zetachain_SwapOrderListDocument,
+  '\n    query Cross_chain_swap_zetachain_orderRefundClaimed(\n      $data: Cross_chain_swap_zetachainorderRefundClaimedData\n    ) {\n      cross_chain_swap_zetachain_orderRefundClaimed(data: $data) {\n        success\n      }\n    }\n  ':
+    types.Cross_Chain_Swap_Zetachain_OrderRefundClaimedDocument,
   '\n    query FetchNoticeCenterTransactionList(\n      $where: Notice_centertransactionListFilter\n    ) {\n      notice_center_transactionList(where: $where) {\n        list {\n          chainId\n          createTime\n          extend\n          from\n          id\n          key\n          type\n        }\n        count\n        limit\n        page\n      }\n    }\n  ':
     types.FetchNoticeCenterTransactionListDocument,
   '\n    query FetchLiquidityLpPartnerRewards(\n      $where: LiquidityLpPartnerRewardsInput\n    ) {\n      liquidity_getLpPartnerRewards(where: $where) {\n        partnerInfos {\n          partner\n          logo\n          introduction\n          link\n          theme\n          sort\n          platform\n          extra\n        }\n        partnerRewards {\n          chainId\n          pool\n          partner\n          reward\n          type\n        }\n      }\n    }\n  ':
@@ -252,6 +254,12 @@ export function graphql(
 export function graphql(
   source: '\n    query Cross_chain_swap_zetachain_swapOrderList(\n      $where: Cross_chain_swap_zetachainswapOrderListData\n    ) {\n      cross_chain_swap_zetachain_swapOrderList(where: $where) {\n        list {\n          key\n          user\n          chainId\n          hash\n          createdAt\n          fromTokenAddress\n          toTokenAddress\n          fromAmount\n          toAmount\n          minAmount\n          maxAmount\n          fromTokenPrice\n          toTokenPrice\n          fromTokenSymbol\n          toTokenSymbol\n          fromTokenDecimals\n          toTokenDecimals\n          status\n          nonce\n          extra\n        }\n        count\n        page\n        pageSize\n      }\n    }\n  ',
 ): typeof import('./graphql').Cross_Chain_Swap_Zetachain_SwapOrderListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query Cross_chain_swap_zetachain_orderRefundClaimed(\n      $data: Cross_chain_swap_zetachainorderRefundClaimedData\n    ) {\n      cross_chain_swap_zetachain_orderRefundClaimed(data: $data) {\n        success\n      }\n    }\n  ',
+): typeof import('./graphql').Cross_Chain_Swap_Zetachain_OrderRefundClaimedDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

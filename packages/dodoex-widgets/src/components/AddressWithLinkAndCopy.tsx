@@ -179,6 +179,11 @@ export function AddressWithLinkAndCopy({
         onClick={(evt) => {
           handleOpenResult(evt, 'icon');
         }}
+        color={
+          typeof sx === 'object' && sx && 'color' in sx
+            ? (sx.color as string)
+            : undefined
+        }
       >
         <Box
           component={ArrowTopRightBorder}

@@ -7756,6 +7756,7 @@ export type LiquidityPair = {
   mtFeeUSD: Scalars['BigDecimal']['output'];
   /** owner */
   owner?: Maybe<Scalars['LiquidityBytes']['output']>;
+  priceList?: Maybe<Array<Maybe<LiquidityPriceData>>>;
   /** quote LP token,for DPP is null, for dodo v1 lpToken is different */
   quoteLpToken?: Maybe<LiquidityLpToken>;
   /** quote token reserve */
@@ -8146,6 +8147,12 @@ export type LiquidityPosition_OrderBy =
   | 'user'
   | 'vault'
   | 'yesterdayInterest';
+
+export type LiquidityPriceData = {
+  changeRate?: Maybe<Scalars['BigDecimal']['output']>;
+  price?: Maybe<Scalars['BigDecimal']['output']>;
+  timeRange?: Maybe<Scalars['String']['output']>;
+};
 
 export type LiquidityTick = {
   id: Scalars['ID']['output'];
@@ -22821,6 +22828,17 @@ export type Cross_Chain_Swap_Zetachain_SwapOrderListQuery = {
   } | null;
 };
 
+export type Cross_Chain_Swap_Zetachain_OrderRefundClaimedQueryVariables =
+  Exact<{
+    data?: InputMaybe<Cross_Chain_Swap_ZetachainorderRefundClaimedData>;
+  }>;
+
+export type Cross_Chain_Swap_Zetachain_OrderRefundClaimedQuery = {
+  cross_chain_swap_zetachain_orderRefundClaimed?: {
+    success?: boolean | null;
+  } | null;
+};
+
 export type FetchNoticeCenterTransactionListQueryVariables = Exact<{
   where?: InputMaybe<Notice_CentertransactionListFilter>;
 }>;
@@ -24184,6 +24202,17 @@ export const Cross_Chain_Swap_Zetachain_SwapOrderListDocument =
     `) as unknown as TypedDocumentString<
     Cross_Chain_Swap_Zetachain_SwapOrderListQuery,
     Cross_Chain_Swap_Zetachain_SwapOrderListQueryVariables
+  >;
+export const Cross_Chain_Swap_Zetachain_OrderRefundClaimedDocument =
+  new TypedDocumentString(`
+    query Cross_chain_swap_zetachain_orderRefundClaimed($data: Cross_chain_swap_zetachainorderRefundClaimedData) {
+  cross_chain_swap_zetachain_orderRefundClaimed(data: $data) {
+    success
+  }
+}
+    `) as unknown as TypedDocumentString<
+    Cross_Chain_Swap_Zetachain_OrderRefundClaimedQuery,
+    Cross_Chain_Swap_Zetachain_OrderRefundClaimedQueryVariables
   >;
 export const FetchNoticeCenterTransactionListDocument =
   new TypedDocumentString(`

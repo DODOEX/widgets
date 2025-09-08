@@ -1,4 +1,9 @@
-import { ChainId } from '@dodoex/api';
+import {
+  ChainId,
+  Cross_Chain_Swap_Zetachain_OrderRefundClaimedQuery,
+  Cross_Chain_Swap_ZetachainorderRefundClaimedData,
+  SwapApi,
+} from '@dodoex/api';
 import { Box, Button, useTheme } from '@dodoex/components';
 import { Interface } from '@ethersproject/abi';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -9,10 +14,12 @@ import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useSubmission } from '../../../hooks/Submission';
 import { OpCode } from '../../../hooks/Submission/spec';
 import { useCrossSwapOrderList } from '../../../hooks/Swap/useCrossSwapOrderList';
+import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
+import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { getEtherscanPage } from '../../../utils';
+import { CLAIM_REFUND_TEXT } from '../../../utils/constants';
 import { AddressWithLinkAndCopy } from '../../AddressWithLinkAndCopy';
 import Dialog from '../components/Dialog';
-import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
 
 const StepNumIcon = ({
   step,
@@ -34,7 +41,7 @@ const StepNumIcon = ({
         top: 16,
         typography: 'body2',
         fontWeight: 600,
-        color: theme.palette.text.primary,
+        color: theme.palette.primary.main,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -75,6 +82,8 @@ export const RefundModal = ({
 }: RefundModalProps) => {
   const theme = useTheme();
   const submission = useSubmission();
+  const graphQLRequests = useGraphQLRequests();
+
   const { chainId, appKitActiveNetwork, getAppKitAccountByChainId, account } =
     useWalletInfo();
   const refundInfoZRC20Result = useQuery(
@@ -133,7 +142,7 @@ export const RefundModal = ({
         data.externalId,
       ]);
       const result = await submission.execute(
-        'Claim',
+        CLAIM_REFUND_TEXT,
         {
           opcode: OpCode.TX,
           data: encodedData,
@@ -147,7 +156,38 @@ export const RefundModal = ({
           submittedBack: () => {
             refetch();
           },
-          successBack: () => {
+          successBack: async (tx: string) => {
+            function submitRefundClaimed() {
+              return graphQLRequests.getData<
+                Cross_Chain_Swap_Zetachain_OrderRefundClaimedQuery,
+                {
+                  data?: Cross_Chain_Swap_ZetachainorderRefundClaimedData;
+                }
+              >(
+                SwapApi.graphql.cross_chain_swap_zetachain_orderRefundClaimed.toString(),
+                {
+                  data: {
+                    externalId: data.externalId,
+                    hash: tx,
+                  },
+                },
+              );
+            }
+
+            const result = await submitRefundClaimed();
+            if (
+              !result.cross_chain_swap_zetachain_orderRefundClaimed?.success
+            ) {
+              console.log('submitRefundClaimed failed', result);
+
+              const result2 = await submitRefundClaimed();
+              if (
+                !result2.cross_chain_swap_zetachain_orderRefundClaimed?.success
+              ) {
+                console.log('submitRefundClaimed retry failed', result2);
+              }
+            }
+
             refetch();
             setClaimConfirmOpen(false);
           },
@@ -173,7 +213,7 @@ export const RefundModal = ({
     needApprove ||
     isApproving ||
     isGetApproveLoading;
-  // const isStep1 = false;
+  // const isStep1 = true;
 
   const button1 = useMemo(() => {
     if (!isInCurrentChain) {
@@ -342,9 +382,14 @@ export const RefundModal = ({
             textAlign: 'center',
           }}
         >
-          {isStep1
-            ? `Approve gas on ${bridgeChainName} for refund`
-            : `Start refund on ${bridgeChainName}`}
+          {isStep1 ? (
+            <>
+              Approve gas on {bridgeChainName} <br />
+              for refund
+            </>
+          ) : (
+            `Start refund on ${bridgeChainName}`
+          )}
         </Box>
 
         {isStep1 ? (
@@ -380,6 +425,7 @@ export const RefundModal = ({
                 iconSpace={2}
                 sx={{
                   typography: 'body2',
+                  color: theme.palette.primary.main,
                 }}
                 handleOpen={(evt) => {
                   evt.stopPropagation();

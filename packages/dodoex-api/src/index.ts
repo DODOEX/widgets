@@ -42,9 +42,11 @@ export { TokenApi } from './services/TokenApi';
 
 export type {
   Cross_Chain_Swap_Zetachain_OrderCreateQuery,
+  Cross_Chain_Swap_Zetachain_OrderRefundClaimedQuery,
   Cross_Chain_Swap_Zetachain_RoutesQuery,
   Cross_Chain_Swap_Zetachain_TransactionEncodeQuery,
   Cross_Chain_Swap_ZetachainorderCreateData,
+  Cross_Chain_Swap_ZetachainorderRefundClaimedData,
   Cross_Chain_Swap_ZetachainrouteParams,
   Cross_Chain_Swap_ZetachaintransactionEncodeParams,
   Curve_Stableswap_Ng_GetPoolInfoQuery,

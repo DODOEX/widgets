@@ -157,4 +157,13 @@ export const swapGraphqlQuery = {
       }
     }
   `),
+  cross_chain_swap_zetachain_orderRefundClaimed: graphql(`
+    query Cross_chain_swap_zetachain_orderRefundClaimed(
+      $data: Cross_chain_swap_zetachainorderRefundClaimedData
+    ) {
+      cross_chain_swap_zetachain_orderRefundClaimed(data: $data) {
+        success
+      }
+    }
+  `),
 };

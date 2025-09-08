@@ -256,9 +256,16 @@ function RefundsTX({
           sx={{
             typography: 'h6',
             lineHeight: '16px',
-            py: 6,
-            minWidth: 98,
-            height: 28,
+            minWidth: 57,
+            height: 24,
+            py: 0,
+            px: 0,
+            [theme.breakpoints.up('tablet')]: {
+              py: 6,
+              px: 16,
+              minWidth: 98,
+              height: 28,
+            },
           }}
         >
           Claim
@@ -619,7 +626,7 @@ export default function CrossOrderCard({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 2,
+                    gap: 8,
                   }}
                 >
                   <Box
