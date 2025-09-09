@@ -252,7 +252,6 @@ function CardList({
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {poolType}
                     <Tooltip title={<Trans>Fee rate</Trans>}>
                       <Box
                         sx={{
@@ -285,7 +284,7 @@ function CardList({
                       color: 'text.secondary',
                     }}
                   >
-                    <Trans>Pool Type</Trans>
+                    <Trans>Fee Tier</Trans>
                   </Box>
                 </Box>
               )}
@@ -434,7 +433,7 @@ function TableList({
           </Box>
           {supportAMM && (
             <Box component="th">
-              <Trans>Pool Type</Trans>
+              <Trans>Fee Tier</Trans>
             </Box>
           )}
           <Box component="th">
@@ -610,19 +609,6 @@ function TableList({
                       gap: 4,
                     }}
                   >
-                    <Box
-                      sx={{
-                        px: 8,
-                        py: 4,
-                        borderRadius: 4,
-                        typography: 'h6',
-                        backgroundColor: 'background.tag',
-                        color: 'text.secondary',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {poolType}
-                    </Box>
                     <Tooltip title={<Trans>Fee rate</Trans>}>
                       <Box
                         sx={{

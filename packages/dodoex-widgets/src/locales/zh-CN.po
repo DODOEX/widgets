@@ -56,9 +56,9 @@ msgstr "获得 {0}"
 msgid "{0} pending"
 msgstr "{0} 等待中"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:494
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:493
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:344
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:787
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:786
 msgid "Removing"
 msgstr "提取"
 
@@ -121,11 +121,7 @@ msgstr "开始时间"
 msgid "Dismiss"
 msgstr "忽略"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:288
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:437
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:85
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:324
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:660
 msgid "Pool Type"
 msgstr "类型"
 
@@ -138,9 +134,9 @@ msgstr "赎回中"
 msgid "All Pools"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:497
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:496
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:347
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:790
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:789
 msgid "Adding"
 msgstr "添加"
 
@@ -237,11 +233,11 @@ msgstr "创建时间"
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:401
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:314
 msgid "Set price range"
 msgstr "设置价格区间"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:434
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:347
 msgid "Full range"
 msgstr "全区间"
 
@@ -459,9 +455,9 @@ msgstr "当前挖矿获得的代币奖励"
 msgid "No results found"
 msgstr "未找到匹配结果"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:433
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:432
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:298
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:656
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:655
 msgid "Pair"
 msgstr "交易对"
 
@@ -553,7 +549,7 @@ msgstr "适用于价格相对稳定的交易对"
 msgid "Approving {0}..."
 msgstr "授权 {0} 中"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:552
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:465
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:213
 #: src/widgets/PoolWidget/AMMV3/components/PositionViewCard.tsx:233
 msgid "Current price"
@@ -597,7 +593,6 @@ msgid "Add Initial Liquidity"
 msgstr "添加初始流动性"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:206
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:335
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:485
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
@@ -686,13 +681,13 @@ msgstr "更多设置"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:341
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:441
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:340
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:440
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:112
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:198
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:301
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:379
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:665
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:378
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:664
 msgid "TVL"
 msgstr "TVL"
 
@@ -800,7 +795,7 @@ msgstr "邀请"
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 msgstr "该池的价格不在你选定的区间内。你的仓位目前不能赚取交易手续费。"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:614
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:613
 msgid "{0}"
 msgstr "{0}"
 
@@ -846,7 +841,7 @@ msgstr "资金池报价与 DODO 智能路由价格相差 {lqAndDodoCompareText}"
 msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:496
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:409
 msgid "Invalid range selected. The min price must be lower than the max price."
 msgstr "选定区间无效，最低价格必须低于最高价格。"
 
@@ -959,7 +954,7 @@ msgid "The pegged exchange rate refers to the exchange rate between two token as
 msgstr "锚定价格是指两个代币资产之间的汇率，其中一个资产的价值由另一个锚定。例如，美元和 USDT 之间的汇率是 1。"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:277
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:593
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:506
 msgid "Deposit amounts"
 msgstr "充值数额"
 
@@ -1004,7 +999,7 @@ msgstr "设置已切换至闪兑模式"
 msgid "Quote not available"
 msgstr "没有报价"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1083
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1069
 msgid "My pool share"
 msgstr "我的资金池份额"
 
@@ -1026,10 +1021,10 @@ msgstr "质押 做市 LP 代币，获得挖矿奖励"
 msgid "No LP pools match your criteria"
 msgstr "没有找到符合条件的挖矿项目"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:256
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:626
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:292
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:899
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:255
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:612
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:291
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:885
 msgid "Fee rate"
 msgstr "手续费费率"
 
@@ -1124,8 +1119,8 @@ msgstr "确认跨链交易"
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:362
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:448
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:361
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:447
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:125
 msgid "Volume (1D)"
 msgstr "交易量（1天）"
@@ -1224,10 +1219,10 @@ msgid "Start Time"
 msgstr "开始时间"
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:212
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:678
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:664
 #: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:190
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:248
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:955
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:941
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:20
 msgid "Mining"
 msgstr "挖矿"
@@ -1372,7 +1367,7 @@ msgstr "你的仓位将在该价格全部由 {0} 组成"
 msgid "When adding rewards, the number of rewards for a single block may be adjusted"
 msgstr "补充奖励时，单个区块奖励数量可能会有所调整"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:521
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:434
 msgid "This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
 msgstr "必须先初始化该资金池，才能添加流动性。要初始化，请选择池的起价。然后，输入流动性价格范围和充值金额。由于初始化交易，Gas 费将比通常高。"
 
@@ -1409,8 +1404,8 @@ msgstr "手续费率"
 msgid "You are making changes to the liquidity of a private pool. This is a highly discretionary operation that may cause substantial inflows/outflows of funds and changes in market prices. Please make sure you are fully aware of the implications of each parameter modification."
 msgstr "您正在修改私有池的流动性。这是一项自由度极高的操作，有可能造成资金流入/流出，也有可能造成市场价格变化。请确保您清楚每一项修改的含义。"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:570
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:684
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:569
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:683
 msgid "Price Range"
 msgstr "价格区间"
 
@@ -1422,8 +1417,8 @@ msgstr "{0} 已充值"
 #: src/widgets/PoolWidget/AMMV2Create/MyLiqidity.tsx:64
 #: src/widgets/PoolWidget/AMMV3/components/PositionAmountPreview.tsx:222
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:28
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:507
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:679
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:506
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:678
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:430
 msgid "My Liquidity"
 msgstr "我的流动性"
@@ -1534,11 +1529,11 @@ msgstr "分钟"
 msgid "Off"
 msgstr "关"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:491
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:404
 msgid "Your position will not earn fees or be used in trades until the market price moves into your range."
 msgstr "在市场价格进入到你的价格区间之前，您的仓位不能赚取交易手续费。"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:554
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:467
 msgid "per"
 msgstr "每"
 
@@ -1695,6 +1690,13 @@ msgstr "交易被拒绝."
 msgid "\"Created by {0}"
 msgstr "创建者 {0}"
 
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:287
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:436
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:323
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:659
+msgid "Fee Tier"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:85
 msgid "Results in a more volatile price."
 msgstr "适用于价格波动较大的交易对"
@@ -1741,7 +1743,7 @@ msgstr "服务升级中, 请等待或重试"
 msgid "Gas price is too low, please adjust in your wallet and try again"
 msgstr "Gas 价格过低, 请调整后重试"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:406
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:405
 msgid "My Pool Share"
 msgstr "我的资金池份额"
 
@@ -1914,7 +1916,7 @@ msgstr "创建完成后，该价格不可更改，适用于ETH-WETH等刚兑资�
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:45
 #: src/widgets/PoolWidget/AMMV2Create/Ratio.tsx:271
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:635
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:548
 #: src/widgets/PoolWidget/PoolOperate/components/Ratio.tsx:298
 #: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:129
 msgid "Slippage Tolerance"
@@ -1939,11 +1941,11 @@ msgstr "已质押"
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:451
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:220
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:386
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:750
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:385
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:736
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:268
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:564
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1213
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1199
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:120
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
 msgid "Add"
@@ -1995,7 +1997,6 @@ msgid "Low"
 msgstr "低"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:224
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:371
 msgid "Select pair"
 msgstr "选择币对"
 
@@ -2019,7 +2020,7 @@ msgstr "请勿选择非标准ERC20代币，可能导致未知错误！"
 msgid "Create Pool"
 msgstr "创建资金池"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:778
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:777
 msgid "Managing"
 msgstr "操作中"
 
@@ -2120,12 +2121,12 @@ msgid "Detail"
 msgstr "详情"
 
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:239
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:311
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:444
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:310
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:443
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:100
 #: src/widgets/PoolWidget/PoolList/components/TokenListPoolItem.tsx:102
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:349
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:670
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:348
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:669
 msgid "APY"
 msgstr "预估年化（APY）"
 
@@ -2188,8 +2189,8 @@ msgstr "初始价格提示"
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:213
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:253
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:552
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:599
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1200
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:598
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1186
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:247
 msgid "Remove"
@@ -2289,7 +2290,7 @@ msgid "This trading pair does not have enough historical data and has used the d
 msgstr "该交易对没有足够的历史交易数据，已使用默认滑点值"
 
 #: src/widgets/PoolWidget/AMMV3/components/PositionViewCard.tsx:248
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1213
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1199
 msgid "Manage"
 msgstr "管理"
 
@@ -2405,7 +2406,7 @@ msgstr "领取奖励"
 msgid "My Pools (PMM)"
 msgstr "我的资金池 (PMM)"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:510
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:423
 msgid "Starting price"
 msgstr "初始价格"
 
