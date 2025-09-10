@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/api",
-  "version": "3.0.3-zetachain.22",
+  "version": "3.0.3-zetachain.23",
   "description": "DODO API Kit",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
