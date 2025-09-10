@@ -89,6 +89,14 @@ const testEnvTokenList: (TokenInfo & {
     supportTargetChain: true,
   },
   {
+    name: 'Wrapped Zeta',
+    address: '0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf',
+    symbol: 'WZETA',
+    decimals: 18,
+    chainId: 7001,
+    supportTargetChain: true,
+  },
+  {
     name: 'USDT',
     address: 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB',
     symbol: 'USDT',

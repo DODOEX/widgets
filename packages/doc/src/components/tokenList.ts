@@ -65,6 +65,14 @@ const tokenList: (TokenInfo & {
     supportTargetChain: true,
   },
   {
+    name: 'Wrapped Zeta',
+    address: '0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf',
+    symbol: 'WZETA',
+    decimals: 18,
+    chainId: 7001,
+    supportTargetChain: true,
+  },
+  {
     name: 'ChainLink Token',
     address: '0xF8A0BF9cF54Bb92F17374d9e9A321E6a111a51bD',
     symbol: 'LINK',

@@ -406,7 +406,7 @@ function RefundsTX({
             },
           }}
         >
-          {isRefundSuccess ? 'Refunded to this address.' : 'Refund pending…'}
+          {isRefundSuccess ? 'Refund successful' : 'Refund pending…'}
         </Box>
         {isRefundSuccess ? null : (
           <Box

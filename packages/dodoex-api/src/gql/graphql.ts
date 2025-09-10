@@ -7698,6 +7698,8 @@ export type LiquidityOrder = {
 };
 
 export type LiquidityPair = {
+  /** Number of aggregated pools when aggPairs is true */
+  aggregatedCount?: Maybe<Scalars['Int']['output']>;
   apy?: Maybe<LiquidityApyData>;
   apyList?: Maybe<Array<Maybe<LiquidityApyData>>>;
   /** base LP token, for DPP is null, for dodo v1 lpToken is different */
@@ -8211,6 +8213,7 @@ export type Liquiditycount_Data_Query = {
 };
 
 export type Liquiditylist_Filter = {
+  aggPairs?: InputMaybe<Scalars['Boolean']['input']>;
   /** This field has been discarded for compatibility with the previous interface */
   chain?: InputMaybe<Scalars['String']['input']>;
   /** The default is all chains, including test chains */
