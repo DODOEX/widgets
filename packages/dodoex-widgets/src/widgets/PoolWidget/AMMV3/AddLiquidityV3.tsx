@@ -290,7 +290,6 @@ export default function AddLiquidityV3({
           flexDirection: 'column',
           alignItems: 'stretch',
           gap: 20,
-          p: 20,
         }}
       >
         <DynamicSection disabled={!state.feeAmount || invalidPool}>

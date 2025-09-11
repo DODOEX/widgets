@@ -235,11 +235,11 @@ msgstr "Creation Time"
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "The current network is inconsistent with the wallet - please switch in wallet"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:314
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:312
 msgid "Set price range"
 msgstr "Set price range"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:347
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:345
 msgid "Full range"
 msgstr "Full range"
 
@@ -370,7 +370,7 @@ msgstr "Please confirm in wallet"
 msgid "Success Rate"
 msgstr "Success Rate"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:255
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:254
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:339
 msgid "Pool Creation"
 msgstr "Pool Creation"
@@ -551,7 +551,7 @@ msgstr "Results in a relatively fixed price."
 msgid "Approving {0}..."
 msgstr "Approving {0}..."
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:465
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:463
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:213
 #: src/widgets/PoolWidget/AMMV3/components/PositionViewCard.tsx:233
 msgid "Current price"
@@ -843,7 +843,7 @@ msgstr "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the 
 msgid "Fetching best price..."
 msgstr "Fetching best price..."
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:409
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:407
 msgid "Invalid range selected. The min price must be lower than the max price."
 msgstr "Invalid range selected. The min price must be lower than the max price."
 
@@ -956,7 +956,7 @@ msgid "The pegged exchange rate refers to the exchange rate between two token as
 msgstr "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:277
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:506
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:504
 msgid "Deposit amounts"
 msgstr "Deposit amounts"
 
@@ -1369,7 +1369,7 @@ msgstr "Your position will be 100% composed of {0} at this price"
 msgid "When adding rewards, the number of rewards for a single block may be adjusted"
 msgstr "When adding rewards, the number of rewards for a single block may be adjusted"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:434
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:432
 msgid "This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
 msgstr "This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
 
@@ -1531,11 +1531,11 @@ msgstr "Minutes"
 msgid "Off"
 msgstr "Off"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:404
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:402
 msgid "Your position will not earn fees or be used in trades until the market price moves into your range."
 msgstr "Your position will not earn fees or be used in trades until the market price moves into your range."
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:467
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:465
 msgid "per"
 msgstr "per"
 
@@ -1918,7 +1918,7 @@ msgstr "Once created, the price cannot be changed. This option applies to assets
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:45
 #: src/widgets/PoolWidget/AMMV2Create/Ratio.tsx:271
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:548
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:546
 #: src/widgets/PoolWidget/PoolOperate/components/Ratio.tsx:298
 #: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:129
 msgid "Slippage Tolerance"
@@ -2408,7 +2408,7 @@ msgstr "Claim Rewards"
 msgid "My Pools (PMM)"
 msgstr "My Pools (PMM)"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:423
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:421
 msgid "Starting price"
 msgstr "Starting price"
 
