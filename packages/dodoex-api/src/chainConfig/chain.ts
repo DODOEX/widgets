@@ -58,4 +58,10 @@ export enum ChainId {
   BTC_SIGNET = 18333,
 
   BTC = 8223,
+
+  SUI = 105,
+  SUI_TESTNET = 103,
+
+  TON = 2015140,
+  TON_TESTNET = 2015141,
 }

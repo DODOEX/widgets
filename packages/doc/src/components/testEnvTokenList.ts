@@ -9,11 +9,12 @@ const testEnvTokenList: (TokenInfo & {
   // @ts-ignore
 })[] = [
   {
-    name: 'Degen Zoo',
-    address: '0x56d06a78Ef8E95D6043341f24759e2834BE6f97B',
-    symbol: 'wDZOO',
-    decimals: 18,
-    chainId: 56,
+    name: 'SUI',
+    address:
+      '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    symbol: 'SUI',
+    decimals: 9,
+    chainId: 103,
     supportTargetChain: false,
   },
   {
@@ -84,14 +85,6 @@ const testEnvTokenList: (TokenInfo & {
     name: 'WETH',
     address: '0x0246DffDa649e877CFd0951837332B4690fAD1EB',
     symbol: 'WETH',
-    decimals: 18,
-    chainId: 7001,
-    supportTargetChain: true,
-  },
-  {
-    name: 'Wrapped Zeta',
-    address: '0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf',
-    symbol: 'WZETA',
     decimals: 18,
     chainId: 7001,
     supportTargetChain: true,
@@ -5176,6 +5169,14 @@ const testEnvTokenList: (TokenInfo & {
     supportTargetChain: false,
   },
   {
+    name: 'Degen Zoo',
+    address: '0x56d06a78Ef8E95D6043341f24759e2834BE6f97B',
+    symbol: 'wDZOO',
+    decimals: 18,
+    chainId: 56,
+    supportTargetChain: false,
+  },
+  {
     name: 'USDC.ARBSEP',
     address: '0x4bC32034caCcc9B7e02536945eDbC286bACbA073',
     symbol: 'USDC.ARBSEP',
@@ -5349,6 +5350,14 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'UQC',
     decimals: 18,
     chainId: 1,
+    supportTargetChain: false,
+  },
+  {
+    name: 'TON',
+    address: 'Ton1111111111111111111111111111111111111111',
+    symbol: 'TON',
+    decimals: 9,
+    chainId: 2015141,
     supportTargetChain: false,
   },
   {
@@ -5686,6 +5695,14 @@ const testEnvTokenList: (TokenInfo & {
     decimals: 18,
     chainId: 1,
     supportTargetChain: false,
+  },
+  {
+    name: 'TON.TON',
+    address: '0x54Bf2B1E91FCb56853097BD2545750d218E245e1',
+    symbol: 'TON.TON',
+    decimals: 9,
+    chainId: 7001,
+    supportTargetChain: true,
   },
   {
     name: 'Opulous',
@@ -6190,6 +6207,14 @@ const testEnvTokenList: (TokenInfo & {
     decimals: 18,
     chainId: 1,
     supportTargetChain: false,
+  },
+  {
+    name: 'SUI.SUI',
+    address: '0x3e128c169564DD527C8e9bd85124BF6A890E5a5f',
+    symbol: 'SUI.SUI',
+    decimals: 9,
+    chainId: 7001,
+    supportTargetChain: true,
   },
   {
     name: 'Unizen',
