@@ -1,11 +1,11 @@
 import { t } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
-import { Version, VersionItem } from '../types';
+import { Version } from '../types';
 import {
   DEFAULT_SLIPPAGE_COEFFICIENT,
-  MAX_SLIPPAGE_COEFFICIENT_PEGGED,
   MAX_FEE_RATE,
   MAX_INIT_PRICE,
+  MAX_SLIPPAGE_COEFFICIENT_PEGGED,
   MIN_FEE_RATE,
 } from '../utils';
 
@@ -16,7 +16,7 @@ export const validFeeRate = (feeRateStr?: string) => {
     !feeRate.isNaN() &&
     (feeRate.lt(MIN_FEE_RATE) || feeRate.gt(MAX_FEE_RATE))
   ) {
-    return t`The fee rate must be between 0.01% to 10%`;
+    return t`The fee rate must be between 0% to 10%`;
   }
   return '';
 };

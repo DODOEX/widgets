@@ -706,10 +706,6 @@ msgstr ""
 msgid "Canceled"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:19
-msgid "The fee rate must be between 0.01% to 10%"
-msgstr ""
-
 #: src/widgets/PoolWidget/curve/components/LiquidityProvidersTable.tsx:89
 msgid "Assets"
 msgstr ""
@@ -2230,6 +2226,10 @@ msgstr ""
 #: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:40
 #: src/widgets/PoolWidget/AMMV3/components/InRangeDot.tsx:12
 msgid "In range"
+msgstr ""
+
+#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:19
+msgid "The fee rate must be between 0% to 10%"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:300

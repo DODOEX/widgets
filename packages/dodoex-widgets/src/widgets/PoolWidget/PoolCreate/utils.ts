@@ -6,7 +6,7 @@ import { formatTokenAmountNumber } from '../../../utils/formatter';
 import { Version } from './types';
 
 export const DEFAULT_FEE_RATE = '0.3';
-export const MIN_FEE_RATE = 0.01;
+export const MIN_FEE_RATE = 0;
 export const MAX_FEE_RATE = 10;
 export const DEFAULT_INIT_PRICE = '1';
 /**
