@@ -45,6 +45,7 @@ export default function AddLiquidityV3({
   params,
   handleGoBack,
   handleGoToPoolList,
+  noHeader,
 }: {
   params?: {
     from?: string;
@@ -53,6 +54,7 @@ export default function AddLiquidityV3({
   };
   handleGoBack: () => void;
   handleGoToPoolList: () => void;
+  noHeader?: boolean;
 }) {
   const { chainId, account } = useWalletInfo();
   const theme = useTheme();
@@ -65,6 +67,7 @@ export default function AddLiquidityV3({
   const defaultQuoteTokenQuery = useQuery({
     ...tokenApi.getFetchTokenQuery(chainId, params?.to, account),
   });
+
   const [state, dispatch] = useReducer<typeof reducer>(reducer, {
     baseToken: null,
     quoteToken: null,
@@ -275,30 +278,86 @@ export default function AddLiquidityV3({
   });
 
   return (
-    <Box
-      sx={{
-        mx: 'auto',
-        backgroundColor: 'background.paper',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'stretch',
-      }}
-    >
+    <WidgetContainer sx={noHeader ? { padding: 0 } : {}}>
       <Box
         sx={{
+          mx: 'auto',
+          backgroundColor: 'background.paper',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'stretch',
-          gap: 20,
         }}
       >
-        <DynamicSection disabled={!state.feeAmount || invalidPool}>
+        {noHeader ? null : <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            px: 20,
+            py: 24,
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            backgroundColor: theme.palette.background.paper,
+          }}
+        >
           <Box
+            component={ButtonBase}
+            onClick={handleGoBack}
             sx={{
+              flexGrow: 0,
+              flexShrink: 0,
               display: 'flex',
               alignItems: 'center',
-              gap: 8,
-              flexWrap: 'wrap',
+              color: theme.palette.text.primary,
+              width: 24,
+              height: 24,
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="25"
+              viewBox="0 0 24 25"
+              fill="none"
+            >
+              <path
+                d="M20 11.5H7.83L13.42 5.91L12 4.5L4 12.5L12 20.5L13.41 19.09L7.83 13.5H20V11.5Z"
+                fill="currentColor"
+              />
+            </svg>
+          </Box>
+          <Box
+            sx={{
+              flexGrow: 1,
+              textAlign: 'center',
+              typography: 'caption',
+              color: theme.palette.text.primary,
+            }}
+          >{t`Add liquidity`}</Box>
+          <Box
+            sx={{
+              flexGrow: 0,
+              flexShrink: 0,
+              width: 24,
+              height: 24,
+            }}
+          />
+        </Box>}
+
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            gap: 20,
+            p: 20,
+          }}
+        >
+          {noHeader ? null : <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'stretch',
+              gap: 12,
             }}
           >
             <Box
@@ -309,294 +368,325 @@ export default function AddLiquidityV3({
                 textAlign: 'left',
               }}
             >
-              {t`Set price range`}
+              {t`Select pair`}
             </Box>
-            {Boolean(state.baseToken && state.quoteToken) && (
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  width: '100%',
-                  [theme.breakpoints.up('tablet')]: {
-                    ml: 'auto',
-                    width: 'auto',
-                  },
-                }}
-              >
-                <Button
-                  size={Button.Size.small}
-                  variant={Button.Variant.outlined}
-                  onClick={handleSetFullRange}
-                  sx={{
-                    py: 4,
-                    px: 12,
-                    height: 26,
-                    typography: 'h6',
-                    fontWeight: 600,
-                    ...(isMobile
-                      ? {
-                          flexGrow: 0,
-                          flexShrink: 1,
-                          flexBasis: '50%',
-                        }
-                      : undefined),
-                  }}
-                >{t`Full range`}</Button>
-                <RateToggle
-                  baseToken={state.baseToken}
-                  quoteToken={state.quoteToken}
-                  handleRateToggle={() => {
-                    if (
-                      !ticksAtLimit[Bound.LOWER] &&
-                      !ticksAtLimit[Bound.UPPER]
-                    ) {
-                      onLeftRangeInput(
-                        (invertPrice
-                          ? priceLower
-                          : priceUpper?.invert()
-                        )?.toSignificant(6) ?? '',
-                      );
-                      onRightRangeInput(
-                        (invertPrice
-                          ? priceUpper
-                          : priceLower?.invert()
-                        )?.toSignificant(6) ?? '',
-                      );
-                      onFieldAInput(formattedAmounts[Field.CURRENCY_B] ?? '');
-                    }
-                    dispatch({
-                      type: Types.ToggleRate,
-                      payload: undefined,
-                    });
-                  }}
-                  sx={
-                    isMobile
-                      ? {
-                          flexGrow: 0,
-                          flexShrink: 1,
-                          flexBasis: '50%',
-                        }
-                      : undefined
-                  }
-                />
-              </Box>
-            )}
-          </Box>
-          <RangeSelector
-            priceLower={priceLower}
-            priceUpper={priceUpper}
-            getDecrementLower={getDecrementLower}
-            getIncrementLower={getIncrementLower}
-            getDecrementUpper={getDecrementUpper}
-            getIncrementUpper={getIncrementUpper}
-            onLeftRangeInput={onLeftRangeInput}
-            onRightRangeInput={onRightRangeInput}
-            currencyA={state.baseToken}
-            currencyB={state.quoteToken}
-            feeAmount={state.feeAmount}
-            ticksAtLimit={ticksAtLimit}
-          />
-          {outOfRange && (
-            <YellowCard>
-              {t`Your position will not earn fees or be used in trades until the market price moves into your range.`}
-            </YellowCard>
-          )}
-          {invalidRange && (
-            <YellowCard>
-              {t`Invalid range selected. The min price must be lower than the max price.`}
-            </YellowCard>
-          )}
-        </DynamicSection>
-        {noLiquidity ? (
-          <DynamicSection>
-            <Box
-              sx={{
-                typography: 'body1',
-                fontWeight: 600,
-                color: theme.palette.text.primary,
-                textAlign: 'left',
-              }}
-            >
-              {t`Starting price`}
-            </Box>
-            <Box
-              sx={{
-                p: 8,
-                borderRadius: 8,
-                backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                typography: 'h6',
-                color: theme.palette.primary.main,
-              }}
-            >
-              {t`This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction.`}
-            </Box>
-            <Box
-              sx={{
-                px: 16,
-                py: 12,
-                borderRadius: 8,
-                borderWidth: 1,
-                borderColor: theme.palette.border.main,
-                borderStyle: 'solid',
-              }}
-            >
-              <NumberInput
-                sx={{
-                  backgroundColor: 'transparent',
-                }}
-                value={startPriceTypedValue}
-                onChange={onStartPriceInput}
-              />
-            </Box>
-          </DynamicSection>
-        ) : (
+            <TokenPairSelect
+              baseToken={state.baseToken}
+              quoteToken={state.quoteToken}
+              dispatch={dispatch}
+            />
+            <FeeSelector
+              disabled={!state.baseToken || !state.quoteToken}
+              feeAmount={state.feeAmount}
+              dispatch={dispatch}
+            />
+          </Box>}
           <DynamicSection disabled={!state.feeAmount || invalidPool}>
             <Box
               sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                flexWrap: 'wrap',
+              }}
+            >
+              <Box
+                sx={{
+                  typography: 'body1',
+                  fontWeight: 600,
+                  color: theme.palette.text.primary,
+                  textAlign: 'left',
+                }}
+              >
+                {t`Set price range`}
+              </Box>
+              {Boolean(state.baseToken && state.quoteToken) && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    width: '100%',
+                    [theme.breakpoints.up('tablet')]: {
+                      ml: 'auto',
+                      width: 'auto',
+                    },
+                  }}
+                >
+                  <Button
+                    size={Button.Size.small}
+                    variant={Button.Variant.outlined}
+                    onClick={handleSetFullRange}
+                    sx={{
+                      py: 4,
+                      px: 12,
+                      height: 26,
+                      typography: 'h6',
+                      fontWeight: 600,
+                      ...(isMobile
+                        ? {
+                            flexGrow: 0,
+                            flexShrink: 1,
+                            flexBasis: '50%',
+                          }
+                        : undefined),
+                    }}
+                  >{t`Full range`}</Button>
+                  <RateToggle
+                    baseToken={state.baseToken}
+                    quoteToken={state.quoteToken}
+                    handleRateToggle={() => {
+                      if (
+                        !ticksAtLimit[Bound.LOWER] &&
+                        !ticksAtLimit[Bound.UPPER]
+                      ) {
+                        onLeftRangeInput(
+                          (invertPrice
+                            ? priceLower
+                            : priceUpper?.invert()
+                          )?.toSignificant(6) ?? '',
+                        );
+                        onRightRangeInput(
+                          (invertPrice
+                            ? priceUpper
+                            : priceLower?.invert()
+                          )?.toSignificant(6) ?? '',
+                        );
+                        onFieldAInput(formattedAmounts[Field.CURRENCY_B] ?? '');
+                      }
+                      dispatch({
+                        type: Types.ToggleRate,
+                        payload: undefined,
+                      });
+                    }}
+                    sx={
+                      isMobile
+                        ? {
+                            flexGrow: 0,
+                            flexShrink: 1,
+                            flexBasis: '50%',
+                          }
+                        : undefined
+                    }
+                  />
+                </Box>
+              )}
+            </Box>
+            <RangeSelector
+              priceLower={priceLower}
+              priceUpper={priceUpper}
+              getDecrementLower={getDecrementLower}
+              getIncrementLower={getIncrementLower}
+              getDecrementUpper={getDecrementUpper}
+              getIncrementUpper={getIncrementUpper}
+              onLeftRangeInput={onLeftRangeInput}
+              onRightRangeInput={onRightRangeInput}
+              currencyA={state.baseToken}
+              currencyB={state.quoteToken}
+              feeAmount={state.feeAmount}
+              ticksAtLimit={ticksAtLimit}
+            />
+            {outOfRange && (
+              <YellowCard>
+                {t`Your position will not earn fees or be used in trades until the market price moves into your range.`}
+              </YellowCard>
+            )}
+            {invalidRange && (
+              <YellowCard>
+                {t`Invalid range selected. The min price must be lower than the max price.`}
+              </YellowCard>
+            )}
+          </DynamicSection>
+          {noLiquidity ? (
+            <DynamicSection>
+              <Box
+                sx={{
+                  typography: 'body1',
+                  fontWeight: 600,
+                  color: theme.palette.text.primary,
+                  textAlign: 'left',
+                }}
+              >
+                {t`Starting price`}
+              </Box>
+              <Box
+                sx={{
+                  p: 8,
+                  borderRadius: 8,
+                  backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                  typography: 'h6',
+                  color: theme.palette.primary.main,
+                }}
+              >
+                {t`This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction.`}
+              </Box>
+              <Box
+                sx={{
+                  px: 16,
+                  py: 12,
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderColor: theme.palette.border.main,
+                  borderStyle: 'solid',
+                }}
+              >
+                <NumberInput
+                  sx={{
+                    backgroundColor: 'transparent',
+                  }}
+                  value={startPriceTypedValue}
+                  onChange={onStartPriceInput}
+                />
+              </Box>
+            </DynamicSection>
+          ) : (
+            <DynamicSection disabled={!state.feeAmount || invalidPool}>
+              <Box
+                sx={{
+                  typography: 'body1',
+                  fontWeight: 600,
+                  color: theme.palette.text.primary,
+                  textAlign: 'left',
+                }}
+              >
+                {t`Current price`}
+                <Box>
+                  {formattedPrice}&nbsp;{t`per`}&nbsp;
+                  {state.baseToken?.symbol ?? ''}
+                </Box>
+              </Box>
+              <LiquidityChartRangeInput
+                currencyA={state.baseToken ?? undefined}
+                currencyB={state.quoteToken ?? undefined}
+                feeAmount={state.feeAmount}
+                ticksAtLimit={ticksAtLimit}
+                price={
+                  price
+                    ? parseFloat(
+                        (invertPrice ? price.invert() : price).toSignificant(8),
+                      )
+                    : undefined
+                }
+                priceLower={priceLower}
+                priceUpper={priceUpper}
+                onLeftRangeInput={onLeftRangeInput}
+                onRightRangeInput={onRightRangeInput}
+                interactive={true}
+              />
+            </DynamicSection>
+          )}
+          <DynamicSection
+            disabled={
+              invalidPool ||
+              invalidRange ||
+              (noLiquidity && !startPriceTypedValue)
+            }
+          >
+            <Box
+              sx={{
                 typography: 'body1',
                 fontWeight: 600,
                 color: theme.palette.text.primary,
                 textAlign: 'left',
               }}
             >
-              {t`Current price`}
-              <Box>
-                {formattedPrice}&nbsp;{t`per`}&nbsp;
-                {state.baseToken?.symbol ?? ''}
-              </Box>
+              {t`Deposit amounts`}
             </Box>
-            <LiquidityChartRangeInput
-              currencyA={state.baseToken ?? undefined}
-              currencyB={state.quoteToken ?? undefined}
-              feeAmount={state.feeAmount}
-              ticksAtLimit={ticksAtLimit}
-              price={
-                price
-                  ? parseFloat(
-                      (invertPrice ? price.invert() : price).toSignificant(8),
-                    )
-                  : undefined
-              }
-              priceLower={priceLower}
-              priceUpper={priceUpper}
-              onLeftRangeInput={onLeftRangeInput}
-              onRightRangeInput={onRightRangeInput}
-              interactive={true}
-            />
-          </DynamicSection>
-        )}
-        <DynamicSection
-          disabled={
-            invalidPool ||
-            invalidRange ||
-            (noLiquidity && !startPriceTypedValue)
-          }
-        >
-          <Box
-            sx={{
-              typography: 'body1',
-              fontWeight: 600,
-              color: theme.palette.text.primary,
-              textAlign: 'left',
-            }}
-          >
-            {t`Deposit amounts`}
-          </Box>
-          <Box>
-            <CurrencyInputPanel
-              value={formattedAmounts[Field.CURRENCY_A]}
-              onUserInput={onFieldAInput}
-              maxAmount={maxAmounts[Field.CURRENCY_A]}
-              balance={currencyBalances[Field.CURRENCY_A]}
-              currency={currencies[Field.CURRENCY_A] ?? null}
-              locked={depositADisabled}
-            />
-            <CardPlusConnected />
-            <CurrencyInputPanel
-              value={formattedAmounts[Field.CURRENCY_B]}
-              onUserInput={onFieldBInput}
-              maxAmount={maxAmounts[Field.CURRENCY_B]}
-              balance={currencyBalances[Field.CURRENCY_B]}
-              currency={currencies[Field.CURRENCY_B] ?? null}
-              locked={depositBDisabled}
-            />
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              mt: 8,
-              px: 12,
-              height: 36,
-              borderRadius: 8,
-              borderWidth: 1,
-              borderStyle: 'solid',
-              borderColor: theme.palette.border.main,
-            }}
-          >
+            <Box>
+              <CurrencyInputPanel
+                value={formattedAmounts[Field.CURRENCY_A]}
+                onUserInput={onFieldAInput}
+                maxAmount={maxAmounts[Field.CURRENCY_A]}
+                balance={currencyBalances[Field.CURRENCY_A]}
+                currency={currencies[Field.CURRENCY_A] ?? null}
+                locked={depositADisabled}
+              />
+              <CardPlusConnected />
+              <CurrencyInputPanel
+                value={formattedAmounts[Field.CURRENCY_B]}
+                onUserInput={onFieldBInput}
+                maxAmount={maxAmounts[Field.CURRENCY_B]}
+                balance={currencyBalances[Field.CURRENCY_B]}
+                currency={currencies[Field.CURRENCY_B] ?? null}
+                locked={depositBDisabled}
+              />
+            </Box>
             <Box
               sx={{
-                typography: 'body2',
-                color: 'text.secondary',
-                whiteSpace: 'nowrap',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                mt: 8,
+                px: 12,
+                height: 36,
+                borderRadius: 8,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                borderColor: theme.palette.border.main,
               }}
             >
-              <Trans>Slippage Tolerance</Trans>
+              <Box
+                sx={{
+                  typography: 'body2',
+                  color: 'text.secondary',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <Trans>Slippage Tolerance</Trans>
+              </Box>
+              <SlippageSetting
+                value={slipper}
+                onChange={setSlipper}
+                disabled={false}
+                type="AMMV3"
+                sx={{
+                  mt: 0,
+                }}
+              />
             </Box>
-            <SlippageSetting
-              value={slipper}
-              onChange={setSlipper}
-              disabled={false}
-              type="AMMV3"
-              sx={{
-                mt: 0,
-              }}
-            />
-          </Box>
-        </DynamicSection>
-      </Box>
+          </DynamicSection>
+        </Box>
 
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          px: 20,
-          py: 16,
-          borderBottomLeftRadius: 16,
-          borderBottomRightRadius: 16,
-          backgroundColor: theme.palette.background.paper,
-        }}
-      >
-        <Buttons
-          chainId={chainId}
-          approvalA={approvalA}
-          approvalB={approvalB}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            px: 20,
+            py: 16,
+            borderBottomLeftRadius: 16,
+            borderBottomRightRadius: 16,
+            backgroundColor: theme.palette.background.paper,
+          }}
+        >
+          <Buttons
+            chainId={chainId}
+            approvalA={approvalA}
+            approvalB={approvalB}
+            parsedAmounts={parsedAmounts}
+            isValid={isValid}
+            depositADisabled={depositADisabled}
+            depositBDisabled={depositBDisabled}
+            errorMessage={errorMessage}
+            setShowConfirm={setShowConfirm}
+          />
+        </Box>
+
+        <ReviewModal
           parsedAmounts={parsedAmounts}
-          isValid={isValid}
-          depositADisabled={depositADisabled}
-          depositBDisabled={depositBDisabled}
-          errorMessage={errorMessage}
-          setShowConfirm={setShowConfirm}
+          position={position}
+          existingPosition={undefined}
+          priceLower={priceLower}
+          priceUpper={priceUpper}
+          outOfRange={outOfRange}
+          ticksAtLimit={ticksAtLimit}
+          on={showConfirm}
+          onClose={() => {
+            setShowConfirm(false);
+          }}
+          onConfirm={onAddMutation.mutate}
+          loading={onAddMutation.isPending}
         />
       </Box>
-
-      <ReviewModal
-        parsedAmounts={parsedAmounts}
-        position={position}
-        existingPosition={undefined}
-        priceLower={priceLower}
-        priceUpper={priceUpper}
-        outOfRange={outOfRange}
-        ticksAtLimit={ticksAtLimit}
-        on={showConfirm}
-        onClose={() => {
-          setShowConfirm(false);
-        }}
-        onConfirm={onAddMutation.mutate}
-        loading={onAddMutation.isPending}
-      />
-    </Box>
+    </WidgetContainer>
   );
 }
