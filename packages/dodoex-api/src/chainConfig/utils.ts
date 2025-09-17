@@ -14,7 +14,14 @@ import {
   zetachain,
 } from '@reown/appkit/networks';
 import { ChainId } from './chain';
-import { btcSignet, zetachainTestnet } from './defineChain';
+import {
+  btcSignet,
+  zetachainTestnet,
+  sui,
+  suiTestnet,
+  ton,
+  tonTestnet,
+} from './defineChain';
 
 export function getCaipNetworkByChainId(chainId: ChainId): CaipNetwork {
   switch (chainId) {
@@ -22,6 +29,14 @@ export function getCaipNetworkByChainId(chainId: ChainId): CaipNetwork {
       return bitcoin;
     case ChainId.BTC_SIGNET:
       return btcSignet;
+    case ChainId.SUI:
+      return sui;
+    case ChainId.SUI_TESTNET:
+      return suiTestnet;
+    case ChainId.TON:
+      return ton;
+    case ChainId.TON_TESTNET:
+      return tonTestnet;
 
     case ChainId.SOLANA_DEVNET:
       return solanaDevnet;

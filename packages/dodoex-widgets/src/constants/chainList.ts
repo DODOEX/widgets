@@ -1,4 +1,12 @@
-import { ChainId, btcSignet, zetachainTestnet } from '@dodoex/api';
+import {
+  btcSignet,
+  ChainId,
+  sui,
+  suiTestnet,
+  ton,
+  tonTestnet,
+  zetachainTestnet,
+} from '@dodoex/api';
 import {
   AppKitNetwork,
   arbitrum,
@@ -27,11 +35,17 @@ import { ReactComponent as BtcLogo } from '../assets/logo/networks/btc.svg';
 import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg';
 import { ReactComponent as PolygonLogo } from '../assets/logo/networks/polygon.svg';
 import { ReactComponent as SolanaLogo } from '../assets/logo/networks/solana.svg';
+import { ReactComponent as SuiTestnetLogo } from '../assets/logo/networks/sui-testnet.svg';
+import { ReactComponent as SuiLogo } from '../assets/logo/networks/sui.svg';
+import { ReactComponent as TonTestnetLogo } from '../assets/logo/networks/ton-testnet.svg';
+import { ReactComponent as TonLogo } from '../assets/logo/networks/ton.svg';
 import { ReactComponent as ZetachainLogo } from '../assets/logo/networks/zetachain.svg';
 import {
   btcFallbackAddress,
   EmptyAddress,
   solanaFallbackAddress,
+  suiFallbackAddress,
+  tonFallbackAddress,
 } from './address';
 
 export interface ChainListItem {
@@ -44,6 +58,8 @@ export interface ChainListItem {
   isEVMChain: boolean;
   isSolanaChain: boolean;
   isBTCChain: boolean;
+  isSUIChain: boolean;
+  isTONChain: boolean;
 
   isTestNet: boolean;
 
@@ -62,6 +78,8 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
@@ -76,6 +94,8 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
@@ -90,6 +110,8 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
@@ -104,6 +126,8 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
@@ -118,6 +142,8 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
@@ -132,6 +158,8 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
@@ -146,6 +174,8 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: false,
       fallbackAddress: EmptyAddress,
     },
@@ -160,6 +190,8 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: false,
       isSolanaChain: true,
       isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: false,
       fallbackAddress: solanaFallbackAddress,
     },
@@ -174,8 +206,42 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: false,
       isSolanaChain: false,
       isBTCChain: true,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: false,
       fallbackAddress: btcFallbackAddress,
+    },
+  ],
+  [
+    ChainId.SUI,
+    {
+      chainId: ChainId.SUI,
+      logo: SuiLogo,
+      name: sui.name,
+      caipNetwork: sui,
+      isEVMChain: false,
+      isSolanaChain: false,
+      isBTCChain: false,
+      isSUIChain: true,
+      isTONChain: false,
+      isTestNet: false,
+      fallbackAddress: suiFallbackAddress,
+    },
+  ],
+  [
+    ChainId.TON,
+    {
+      chainId: ChainId.TON,
+      logo: TonLogo,
+      name: ton.name,
+      caipNetwork: ton,
+      isEVMChain: false,
+      isSolanaChain: false,
+      isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: true,
+      isTestNet: false,
+      fallbackAddress: tonFallbackAddress,
     },
   ],
 
@@ -189,6 +255,8 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: true,
       fallbackAddress: EmptyAddress,
     },
@@ -203,6 +271,8 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: true,
       fallbackAddress: EmptyAddress,
     },
@@ -218,6 +288,8 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: true,
       isSolanaChain: false,
       isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: true,
       fallbackAddress: EmptyAddress,
     },
@@ -232,6 +304,8 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: false,
       isSolanaChain: true,
       isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: true,
       fallbackAddress: solanaFallbackAddress,
     },
@@ -246,8 +320,42 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       isEVMChain: false,
       isSolanaChain: false,
       isBTCChain: true,
+      isSUIChain: false,
+      isTONChain: false,
       isTestNet: true,
       fallbackAddress: btcFallbackAddress,
+    },
+  ],
+  [
+    ChainId.SUI_TESTNET,
+    {
+      chainId: ChainId.SUI_TESTNET,
+      logo: SuiTestnetLogo,
+      name: suiTestnet.name,
+      caipNetwork: suiTestnet,
+      isEVMChain: false,
+      isSolanaChain: false,
+      isBTCChain: false,
+      isSUIChain: true,
+      isTONChain: false,
+      isTestNet: true,
+      fallbackAddress: suiFallbackAddress,
+    },
+  ],
+  [
+    ChainId.TON_TESTNET,
+    {
+      chainId: ChainId.TON_TESTNET,
+      logo: TonTestnetLogo,
+      name: tonTestnet.name,
+      caipNetwork: tonTestnet,
+      isEVMChain: false,
+      isSolanaChain: false,
+      isBTCChain: false,
+      isSUIChain: false,
+      isTONChain: true,
+      isTestNet: true,
+      fallbackAddress: tonFallbackAddress,
     },
   ],
 ]);

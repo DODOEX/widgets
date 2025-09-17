@@ -9,7 +9,6 @@ import {
 } from '@dodoex/components';
 import { Dodo, DoubleRight, Setting, Warn } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
-import { CaipNetworksUtil } from '@reown/appkit-utils';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash';
 import { useCallback, useMemo, useState } from 'react';
@@ -54,6 +53,7 @@ import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch
 import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
 import { useGlobalState } from '../../hooks/useGlobalState';
 import { formatTokenAmountNumber, namespaceToTitle } from '../../utils';
+import { CaipNetworksUtil } from '../../utils/CaipNetworksUtil';
 import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
 import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
 import ErrorMessageDialog from '../ErrorMessageDialog';
@@ -67,6 +67,7 @@ import { SwapSettingsDialog } from './components/SwapSettingsDialog';
 import { SwitchBox } from './components/SwitchBox';
 import { TokenCardSwap } from './components/TokenCard/TokenCardSwap';
 import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
+import { ConnectModal } from '@mysten/dapp-kit';
 
 const debounceTime = 300;
 
@@ -90,6 +91,8 @@ export function Swap({
   const {
     open,
     disconnect,
+    suiConnectModalOpen,
+    setSuiConnectModalOpen,
     getAppKitAccountByChainId,
     chainId: currentChainId,
     appKitActiveNetwork,
@@ -786,28 +789,46 @@ export function Swap({
 
   const swapButton = useMemo(() => {
     if (!fromAccount?.appKitAccount?.isConnected) {
+      const btnText = `Connect to ${namespaceToTitle(fromToken?.chainId)} wallet`;
+      const disabledBtn = (
+        <Button fullWidth disabled>
+          {btnText}
+        </Button>
+      );
+
+      if (!fromToken?.chainId) {
+        return disabledBtn;
+      }
+
+      const caipNetwork = chainListMap.get(fromToken.chainId)?.caipNetwork;
+      if (!caipNetwork) {
+        return disabledBtn;
+      }
+
+      const namespace = CaipNetworksUtil.getChainNamespace(caipNetwork);
+      if (namespace === 'sui') {
+        return (
+          <ConnectModal
+            trigger={<Button fullWidth>{btnText}</Button>}
+            open={suiConnectModalOpen}
+            onOpenChange={(isOpen) => {
+              console.log('swap from button  isOpen', isOpen);
+              setSuiConnectModalOpen(isOpen);
+            }}
+          />
+        );
+      }
+
       return (
         <Button
           fullWidth
           onClick={() => {
-            if (!fromToken?.chainId) {
-              return;
-            }
-            const caipNetwork = chainListMap.get(
-              fromToken.chainId,
-            )?.caipNetwork;
-            if (!caipNetwork) {
-              return;
-            }
-            const namespace = CaipNetworksUtil.getChainNamespace(caipNetwork);
             open({
               namespace,
             });
           }}
         >
-          <Trans>
-            Connect to {namespaceToTitle(fromToken?.chainId)} wallet
-          </Trans>
+          {btnText}
         </Button>
       );
     }
@@ -845,24 +866,45 @@ export function Swap({
     }
 
     if (!toAccount?.appKitAccount?.isConnected) {
+      const btnText = `Connect to ${namespaceToTitle(toToken?.chainId)} wallet`;
+      const disabledBtn = (
+        <Button fullWidth disabled>
+          {btnText}
+        </Button>
+      );
+
+      if (!toToken?.chainId) {
+        return disabledBtn;
+      }
+      const caipNetwork = chainListMap.get(toToken.chainId)?.caipNetwork;
+      if (!caipNetwork) {
+        return disabledBtn;
+      }
+      const namespace = CaipNetworksUtil.getChainNamespace(caipNetwork);
+
+      if (namespace === 'sui') {
+        return (
+          <ConnectModal
+            trigger={<Button fullWidth>{btnText}</Button>}
+            open={suiConnectModalOpen}
+            onOpenChange={(isOpen) => {
+              console.log('swap to button isOpen', isOpen);
+              setSuiConnectModalOpen(isOpen);
+            }}
+          />
+        );
+      }
+
       return (
         <Button
           fullWidth
           onClick={() => {
-            if (!toToken?.chainId) {
-              return;
-            }
-            const caipNetwork = chainListMap.get(toToken.chainId)?.caipNetwork;
-            if (!caipNetwork) {
-              return;
-            }
-            const namespace = CaipNetworksUtil.getChainNamespace(caipNetwork);
             open({
               namespace,
             });
           }}
         >
-          <Trans>Connect to {namespaceToTitle(toToken?.chainId)} wallet</Trans>
+          {btnText}
         </Button>
       );
     }
@@ -1070,6 +1112,9 @@ export function Swap({
     resPriceStatus,
     insufficientBalance,
     needApprove,
+    privacySwapEnable,
+    suiConnectModalOpen,
+    setSuiConnectModalOpen,
     open,
     appKitActiveNetwork,
     bridgeRouteList.length,
@@ -1080,7 +1125,6 @@ export function Swap({
     sendRouteLoading,
     handleSendBridgeRoute,
     fromEtherTokenQuery.data?.balance,
-    privacySwapEnable,
   ]);
 
   const subtitle = useMemo(() => {

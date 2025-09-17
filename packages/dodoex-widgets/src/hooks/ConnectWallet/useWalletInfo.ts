@@ -1,8 +1,19 @@
-import { btcSignet, ChainId } from '@dodoex/api';
+import {
+  btcSignet,
+  ChainId,
+  sui,
+  suiTestnet,
+  ton,
+  tonTestnet,
+} from '@dodoex/api';
 import { Web3Provider } from '@ethersproject/providers';
+import {
+  useCurrentAccount,
+  useCurrentWallet,
+  useDisconnectWallet,
+  useSuiClientContext,
+} from '@mysten/dapp-kit';
 import { type Provider } from '@reown/appkit-adapter-solana/react';
-import { ChainNamespace } from '@reown/appkit-common';
-import { CaipNetworksUtil } from '@reown/appkit-utils';
 import { bitcoin, solana, solanaDevnet } from '@reown/appkit/networks';
 import type {
   Provider as CoreProvider,
@@ -15,9 +26,21 @@ import {
   useAppKitProvider,
   useDisconnect,
 } from '@reown/appkit/react';
-import { useCallback, useMemo } from 'react';
+import {
+  CHAIN,
+  useTonAddress,
+  useTonConnectModal,
+  useTonConnectUI,
+  useTonWallet,
+} from '@tonconnect/ui-react';
+import { useCallback, useMemo, useState } from 'react';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import { chainListMap } from '../../constants/chainList';
+import { CaipNetworksUtil } from '../../utils/CaipNetworksUtil';
+import {
+  ChainNamespaceExtend,
+  UseAppKitAccountReturnExtend,
+} from '../../utils/reown-types';
 import { useBTCWalletStore } from './useBTCWalletStore';
 
 export function useWalletInfo() {
@@ -31,6 +54,20 @@ export function useWalletInfo() {
   const evmAccount = useAppKitAccount({ namespace: 'eip155' }); // for EVM chains
   const solanaAccount = useAppKitAccount({ namespace: 'solana' });
   // const bitcoinAccount = useAppKitAccount({ namespace: 'bip122' }); // for bitcoin
+
+  const tonConnectModal = useTonConnectModal();
+  const [tonConnectUI] = useTonConnectUI();
+  // https://ton-connect.github.io/sdk/modules/_tonconnect_ui-react.html#usetonwallet
+  const tonWallet = useTonWallet();
+  const tonUserFriendlyAddress = useTonAddress();
+
+  // sui
+  const [suiConnectModalOpen, setSuiConnectModalOpen] = useState(false);
+  const { mutate: suiDisconnect } = useDisconnectWallet();
+  const suiCurrentAccount = useCurrentAccount();
+  const suiCurrentWallet = useCurrentWallet();
+  const suiContext = useSuiClientContext();
+  // const suiClient = useSuiClient();
 
   const bitcoinAccount = useMemo<UseAppKitAccountReturn>(() => {
     if (!btcWalletStore || !btcWalletStore.address) {
@@ -61,6 +98,71 @@ export function useWalletInfo() {
     };
   }, [btcWalletStore]);
 
+  const tonAccount = useMemo<UseAppKitAccountReturnExtend>(() => {
+    if (tonWallet == null || !tonUserFriendlyAddress) {
+      return {
+        allAccounts: [],
+        caipAddress: undefined,
+        address: undefined,
+        isConnected: false,
+        embeddedWalletInfo: undefined,
+        status: 'disconnected',
+      };
+    }
+
+    return {
+      allAccounts: [
+        {
+          namespace: 'ton',
+          address: tonUserFriendlyAddress,
+          // publicKey: tonWallet.account.publicKey,
+          type: 'eoa',
+        },
+      ],
+      caipAddress: `ton:${tonWallet.account.chain === CHAIN.MAINNET ? ChainId.TON : ChainId.TON_TESTNET}:${tonUserFriendlyAddress}`,
+      address: tonUserFriendlyAddress,
+      isConnected: true,
+      embeddedWalletInfo: undefined,
+      status: 'connected',
+    };
+  }, [tonUserFriendlyAddress, tonWallet]);
+
+  const suiAccount = useMemo<UseAppKitAccountReturnExtend>(() => {
+    if (
+      suiCurrentWallet.connectionStatus !== 'connected' ||
+      suiCurrentAccount == null
+    ) {
+      return {
+        allAccounts: [],
+        caipAddress: undefined,
+        address: undefined,
+        isConnected: false,
+        embeddedWalletInfo: undefined,
+        status: 'disconnected',
+      };
+    }
+
+    return {
+      allAccounts: [
+        {
+          namespace: 'sui',
+          address: suiCurrentAccount.address,
+          // publicKey: suiCurrentAccount.publicKey,
+          type: 'eoa',
+        },
+      ],
+      caipAddress: `sui:${suiContext.network === 'mainnet' ? ChainId.SUI : ChainId.SUI_TESTNET}:${suiCurrentAccount.address}`,
+      address: suiCurrentAccount.address,
+      isConnected: true,
+      embeddedWalletInfo: undefined,
+      status: 'connected',
+    };
+  }, [
+    suiContext.network,
+    suiCurrentAccount,
+    suiCurrentWallet.connectionStatus,
+  ]);
+
   const { walletProvider: ethersProvider } =
     useAppKitProvider<CoreProvider | null>('eip155');
 
@@ -89,6 +191,18 @@ export function useWalletInfo() {
     if (appKitChainId === bitcoin.id) {
       return ChainId.BTC;
     }
+    if (appKitChainId === sui.id) {
+      return ChainId.SUI;
+    }
+    if (appKitChainId === suiTestnet.id) {
+      return ChainId.SUI_TESTNET;
+    }
+    if (appKitChainId === ton.id) {
+      return ChainId.TON;
+    }
+    if (appKitChainId === tonTestnet.id) {
+      return ChainId.TON_TESTNET;
+    }
     return Number(appKitChainId) as ChainId;
   }, [appKitActiveNetwork, defaultChainId, onlyChainId]);
 
@@ -102,12 +216,23 @@ export function useWalletInfo() {
     }
     const namespace = CaipNetworksUtil.getChainNamespace(chainIdToCaipNetwork);
 
-    return namespace === 'bip122'
-      ? bitcoinAccount
-      : namespace === 'solana'
-        ? solanaAccount
-        : evmAccount;
-  }, [bitcoinAccount, chainIdToCaipNetwork, evmAccount, solanaAccount]);
+    return namespace === 'sui'
+      ? suiAccount
+      : namespace === 'ton'
+        ? tonAccount
+        : namespace === 'bip122'
+          ? bitcoinAccount
+          : namespace === 'solana'
+            ? solanaAccount
+            : evmAccount;
+  }, [
+    bitcoinAccount,
+    chainIdToCaipNetwork,
+    evmAccount,
+    solanaAccount,
+    suiAccount,
+    tonAccount,
+  ]);
 
   const getAppKitAccountByChainId = useCallback(
     (targetChainId: ChainId | undefined) => {
@@ -123,41 +248,66 @@ export function useWalletInfo() {
       const namespace = CaipNetworksUtil.getChainNamespace(targetCaipNetwork);
 
       const appKitAccount =
-        namespace === 'bip122'
-          ? {
-              ...bitcoinAccount,
-            }
-          : namespace === 'solana'
-            ? solanaAccount
-            : evmAccount;
+        namespace === 'sui'
+          ? suiAccount
+          : namespace === 'ton'
+            ? tonAccount
+            : namespace === 'bip122'
+              ? {
+                  ...bitcoinAccount,
+                }
+              : namespace === 'solana'
+                ? solanaAccount
+                : evmAccount;
 
       return { appKitAccount, namespace, targetCaipNetwork, chain };
     },
-    [bitcoinAccount, evmAccount, solanaAccount],
+    [bitcoinAccount, evmAccount, solanaAccount, suiAccount, tonAccount],
   );
 
   const open = useCallback(
-    ({ namespace }: { namespace?: ChainNamespace }) => {
+    ({ namespace }: { namespace?: ChainNamespaceExtend }) => {
       if (namespace === 'bip122') {
         btcWalletStore?.setModalVisible(true);
         return;
       }
 
+      if (namespace === 'ton') {
+        tonConnectModal.open();
+        return;
+      }
+
+      if (namespace === 'sui') {
+        setSuiConnectModalOpen(true);
+        return;
+      }
+
       appKit.open({ namespace });
     },
-    [appKit, btcWalletStore],
+    [appKit, btcWalletStore, tonConnectModal],
   );
 
   const disconnect = useCallback(
-    ({ namespace }: { namespace?: ChainNamespace }) => {
+    ({ namespace }: { namespace?: ChainNamespaceExtend }) => {
       if (namespace === 'bip122') {
         btcWalletStore?.disconnect();
         return;
       }
 
+      if (namespace === 'ton') {
+        tonConnectUI.disconnect();
+        return;
+      }
+
+      if (namespace === 'sui') {
+        setSuiConnectModalOpen(false);
+        suiDisconnect();
+        return;
+      }
+
       appKitDisconnect.disconnect({ namespace });
     },
-    [appKitDisconnect, btcWalletStore],
+    [appKitDisconnect, btcWalletStore, suiDisconnect, tonConnectUI],
   );
 
   const evmProvider = useMemo(() => {
@@ -170,6 +320,9 @@ export function useWalletInfo() {
   return {
     open,
     disconnect,
+
+    suiConnectModalOpen,
+    setSuiConnectModalOpen,
 
     chainId,
     chainIdToCaipNetwork,
@@ -185,6 +338,8 @@ export function useWalletInfo() {
     evmAccount,
     solanaAccount,
     bitcoinAccount,
+    tonAccount,
+    suiAccount,
 
     evmProvider,
 

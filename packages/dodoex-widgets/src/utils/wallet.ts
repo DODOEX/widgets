@@ -1,7 +1,6 @@
 import { ChainId } from '@dodoex/api';
-import { scanUrlDomainMap } from '../constants/chains';
-import { CaipNetworksUtil } from '@reown/appkit-utils';
 import { chainListMap } from '../constants/chainList';
+import { CaipNetworksUtil } from './CaipNetworksUtil';
 
 export const isETHChain = (
   chainId?: number,
@@ -50,6 +49,10 @@ export function namespaceToTitle(chainId: ChainId | undefined) {
       return 'Solana';
     case 'bip122':
       return 'Bitcoin';
+    case 'ton':
+      return 'TON';
+    case 'sui':
+      return 'Sui';
     default:
       return namespace;
   }

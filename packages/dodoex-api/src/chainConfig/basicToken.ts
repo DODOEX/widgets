@@ -1,3 +1,4 @@
+import { SUI_DECIMALS } from '@mysten/sui/utils';
 import { NATIVE_MINT } from '@solana/spl-token';
 import { PublicKey } from '@solana/web3.js';
 import { ChainId } from './chain';
@@ -8,6 +9,11 @@ export const SOL_NATIVE_MINT = new PublicKey(
   'So11111111111111111111111111111111111111111',
 );
 export const WSOL_NATIVE_MINT = NATIVE_MINT;
+
+export const SUI_NATIVE_MINT =
+  '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+
+export const TON_NATIVE_MINT = 'Ton1111111111111111111111111111111111111111';
 
 // export const SOL_NATIVE_MINT = PublicKey.default;
 
@@ -203,5 +209,41 @@ export const basicTokenMap: {
     name: 'sBitcoin',
     wrappedTokenSymbol: 'sWBTC',
     wrappedTokenAddress: '',
+  },
+  [ChainId.SUI]: {
+    address: SUI_NATIVE_MINT,
+    symbol: 'SUI',
+    name: 'SUI',
+    decimals: SUI_DECIMALS,
+    showDecimals: 4,
+    wrappedTokenSymbol: 'SUI',
+    wrappedTokenAddress: SUI_NATIVE_MINT,
+  },
+  [ChainId.SUI_TESTNET]: {
+    address: SUI_NATIVE_MINT,
+    symbol: 'SUI',
+    name: 'SUI',
+    decimals: SUI_DECIMALS,
+    showDecimals: 4,
+    wrappedTokenSymbol: 'SUI',
+    wrappedTokenAddress: SUI_NATIVE_MINT,
+  },
+  [ChainId.TON]: {
+    address: TON_NATIVE_MINT,
+    symbol: 'TON',
+    name: 'TON',
+    decimals: 9,
+    showDecimals: 4,
+    wrappedTokenSymbol: 'TON',
+    wrappedTokenAddress: TON_NATIVE_MINT,
+  },
+  [ChainId.TON_TESTNET]: {
+    address: TON_NATIVE_MINT,
+    symbol: 'TON',
+    name: 'TON',
+    decimals: 9,
+    showDecimals: 4,
+    wrappedTokenSymbol: 'TON',
+    wrappedTokenAddress: TON_NATIVE_MINT,
   },
 };

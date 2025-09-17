@@ -241,6 +241,14 @@ export default function useExecuteBridgeRoute({
         });
       }
 
+      if (fromChain.isTONChain) {
+        throw new Error('TON is not supported');
+      }
+
+      if (fromChain.isSUIChain) {
+        throw new Error('SUI is not supported');
+      }
+
       return submission.execute(
         CROSS_CHAIN_TEXT,
         {

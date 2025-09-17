@@ -1,4 +1,5 @@
-import { ChainId } from '@dodoex/api';
+import { ChainId, tonEndpointByChain } from '@dodoex/api';
+import { getFullnodeUrl } from '@mysten/sui/client';
 import { clusterApiUrl } from '@solana/web3.js';
 
 export { basicTokenMap, etherTokenAddress } from '@dodoex/api';
@@ -66,7 +67,12 @@ export const rpcServerMap: {
   [ChainId.SOLANA_DEVNET]: [clusterApiUrl('devnet')],
   [ChainId.BTC]: ['https://rpc.walletconnect.org/v1'],
   [ChainId.BTC_SIGNET]: ['https://rpc.walletconnect.org/v1'],
+  [ChainId.SUI]: [getFullnodeUrl('mainnet')],
+  [ChainId.SUI_TESTNET]: [getFullnodeUrl('testnet')],
+  [ChainId.TON]: [tonEndpointByChain[ChainId.TON]],
+  [ChainId.TON_TESTNET]: [tonEndpointByChain[ChainId.TON_TESTNET]],
 };
+
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
 }) => {
@@ -119,6 +125,10 @@ export const scanUrlDomainMap: {
   [ChainId.SOLANA_DEVNET]: 'solscan.io',
   [ChainId.BTC]: 'mempool.space',
   [ChainId.BTC_SIGNET]: 'mempool.space/signet',
+  [ChainId.SUI]: 'suiscan.xyz/mainnet',
+  [ChainId.SUI_TESTNET]: 'suiscan.xyz/testnet',
+  [ChainId.TON]: 'tonviewer.com',
+  [ChainId.TON_TESTNET]: 'testnet.tonviewer.com',
 };
 
 export const ThegraphKeyMap: {
@@ -154,6 +164,10 @@ export const ThegraphKeyMap: {
   [ChainId.SOLANA_DEVNET]: 'solana-devnet',
   [ChainId.BTC]: 'btc',
   [ChainId.BTC_SIGNET]: 'btc-signet',
+  [ChainId.SUI]: 'sui',
+  [ChainId.SUI_TESTNET]: 'sui-testnet',
+  [ChainId.TON]: 'ton',
+  [ChainId.TON_TESTNET]: 'ton-testnet',
 };
 
 export const blockTimeMap: {
@@ -189,6 +203,10 @@ export const blockTimeMap: {
   [ChainId.SOLANA_DEVNET]: 1000,
   [ChainId.BTC]: 1000,
   [ChainId.BTC_SIGNET]: 1000,
+  [ChainId.SUI]: 1000,
+  [ChainId.SUI_TESTNET]: 1000,
+  [ChainId.TON]: 1000,
+  [ChainId.TON_TESTNET]: 1000,
 };
 
 export const dexKeysMap: {
@@ -224,6 +242,10 @@ export const dexKeysMap: {
   [ChainId.SOLANA_DEVNET]: [],
   [ChainId.BTC]: [],
   [ChainId.BTC_SIGNET]: [],
+  [ChainId.SUI]: [],
+  [ChainId.SUI_TESTNET]: [],
+  [ChainId.TON]: [],
+  [ChainId.TON_TESTNET]: [],
 };
 
 export interface PrivacySwapSupplierEndpointI {
@@ -319,4 +341,8 @@ export const privacySwapSupplierEndpointsMap: {
   [ChainId.SOLANA_DEVNET]: [],
   [ChainId.BTC]: [],
   [ChainId.BTC_SIGNET]: [],
+  [ChainId.SUI]: [],
+  [ChainId.SUI_TESTNET]: [],
+  [ChainId.TON]: [],
+  [ChainId.TON_TESTNET]: [],
 };
