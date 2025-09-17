@@ -201,6 +201,6 @@ export const basicTokenMap: {
     symbol: 'MON',
     name: 'MON',
     wrappedTokenSymbol: 'WMON',
-    wrappedTokenAddress: '0x0246DffDa649e877CFd0951837332B4690fAD1EB',
+    wrappedTokenAddress: '0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701',
   },
 };
