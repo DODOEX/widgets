@@ -92,7 +92,7 @@ export function useCrossSwapOrderList({
             hash: item?.fromHash,
             refundHash: item?.refundHash,
             externalId: item?.externalId,
-            refundCridgeContract: item?.refundCridgeContract,
+            refundCridgeContract: undefined,
             refundChainId: item?.refundChainId
               ? Number(item.refundChainId)
               : undefined,

@@ -1088,7 +1088,7 @@ msgstr "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgid "Volume (1D)"
 msgstr "Volume (1D)"
 
-#: src/components/Swap/index.tsx:1337
+#: src/components/Swap/index.tsx:1338
 msgid "Powered by ZUNO protocol"
 msgstr "Powered by ZUNO protocol"
 
