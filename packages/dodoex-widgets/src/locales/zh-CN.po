@@ -1083,7 +1083,7 @@ msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
 msgid "Volume (1D)"
 msgstr ""
 
-#: src/components/Swap/index.tsx:1381
+#: src/components/Swap/index.tsx:1382
 msgid "Powered by ZUNO protocol"
 msgstr ""
 

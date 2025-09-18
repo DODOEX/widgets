@@ -21675,7 +21675,6 @@ export type Cross_Chain_Zetachain_Token_ListQuery = {
     symbol?: string | null;
     decimals?: number | null;
     chainId?: number | null;
-    supportTargetChain?: boolean | null;
   } | null> | null;
 };
 
@@ -22952,7 +22951,6 @@ export const Cross_Chain_Zetachain_Token_ListDocument =
     symbol
     decimals
     chainId
-    supportTargetChain
   }
 }
     `) as unknown as TypedDocumentString<

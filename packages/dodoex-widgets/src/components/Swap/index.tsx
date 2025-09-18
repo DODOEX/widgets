@@ -1328,7 +1328,8 @@ export function Swap({
               padding: theme.spacing(24, 20, 20),
             }}
             tokenQuery={toTokenQuery}
-            filterBySupportTargetChain
+            // https://www.notion.so/dodotopia/V5-zetachain-B-swap-solana-23a080d974e780bab2c2f8b736ec7fe2?source=copy_link
+            filterBySupportTargetChain={false}
           />
 
           {/* Price Disp or Warnings  */}
