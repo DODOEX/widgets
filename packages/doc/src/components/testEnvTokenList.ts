@@ -309,7 +309,7 @@ const testEnvTokenList: (TokenInfo & {
     symbol: 'AVAX',
     decimals: 18,
     chainId: 43114,
-    supportTargetChain: false,
+    supportTargetChain: true,
   },
   {
     name: 'Wrapped BNB (Wormhole)',
