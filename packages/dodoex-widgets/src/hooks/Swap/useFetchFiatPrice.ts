@@ -45,18 +45,22 @@ export function useFetchFiatPrice({ fromToken, toToken }: FetchFiatPriceProps) {
         const fiatPriceInfo = res.data?.data as Array<{
           address: string;
           price: string;
+          chainId: string;
         }>;
         if (fiatPriceInfo) {
           setFromFiatPrice(
             fiatPriceInfo.find(
               (info) =>
-                info.address.toLowerCase() === fromToken.address.toLowerCase(),
+                info.address.toLowerCase() ===
+                  fromToken.address.toLowerCase() &&
+                info.chainId === String(fromToken.chainId),
             )?.price ?? '',
           );
           setToFiatPrice(
             fiatPriceInfo.find(
               (info) =>
-                info.address.toLowerCase() === toToken.address.toLowerCase(),
+                info.address.toLowerCase() === toToken.address.toLowerCase() &&
+                info.chainId === String(toToken.chainId),
             )?.price ?? '',
           );
         }
