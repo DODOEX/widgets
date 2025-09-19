@@ -11,7 +11,9 @@ import {
   useCurrentAccount,
   useCurrentWallet,
   useDisconnectWallet,
+  useSuiClient,
   useSuiClientContext,
+  useSignAndExecuteTransaction,
 } from '@mysten/dapp-kit';
 import { type Provider } from '@reown/appkit-adapter-solana/react';
 import { bitcoin, solana, solanaDevnet } from '@reown/appkit/networks';
@@ -67,7 +69,8 @@ export function useWalletInfo() {
   const suiCurrentAccount = useCurrentAccount();
   const suiCurrentWallet = useCurrentWallet();
   const suiContext = useSuiClientContext();
-  // const suiClient = useSuiClient();
+  const suiClient = useSuiClient();
+  const signAndExecuteTransaction = useSignAndExecuteTransaction();
 
   const bitcoinAccount = useMemo<UseAppKitAccountReturn>(() => {
     if (!btcWalletStore || !btcWalletStore.address) {
@@ -349,6 +352,10 @@ export function useWalletInfo() {
     bitcoinWalletProvider: btcWalletStore?.btcWallet,
 
     tonConnectUI,
+
+    suiClient,
+    suiCurrentWallet,
+    signAndExecuteTransaction,
 
     getAppKitAccountByChainId,
   };
