@@ -348,6 +348,8 @@ export function useWalletInfo() {
 
     bitcoinWalletProvider: btcWalletStore?.btcWallet,
 
+    tonConnectUI,
+
     getAppKitAccountByChainId,
   };
 }

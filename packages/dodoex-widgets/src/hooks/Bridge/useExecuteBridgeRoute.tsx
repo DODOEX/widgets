@@ -5,6 +5,7 @@ import {
   SendTransactionError,
   TransactionExpiredBlockheightExceededError,
 } from '@solana/web3.js';
+import { Address, beginCell, Cell, storeStateInit, toNano } from '@ton/core';
 import { BigNumber } from 'bignumber.js';
 import { useCallback } from 'react';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
@@ -21,6 +22,9 @@ import { Metadata, MetadataFlag } from '../Submission/types';
 import { useGraphQLRequests } from '../useGraphQLRequests';
 import { createBridgeOrder } from './createBridgeOrder';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
+import { normalizedExtHashFromBoc, waitForTransaction } from '../../utils/ton';
+import { TonClient } from '@ton/ton';
+import { ChainId, tonEndpointByChain } from '@dodoex/api';
 
 export default function useExecuteBridgeRoute({
   route,
@@ -30,8 +34,12 @@ export default function useExecuteBridgeRoute({
   bridgeOrderTxRequest?: BridgeTXRequest;
 }) {
   const graphQLRequests = useGraphQLRequests();
-  const { solanaWalletProvider, solanaConnection, bitcoinWalletProvider } =
-    useWalletInfo();
+  const {
+    solanaWalletProvider,
+    solanaConnection,
+    bitcoinWalletProvider,
+    tonConnectUI,
+  } = useWalletInfo();
 
   const submission = useSubmission();
 
@@ -242,7 +250,69 @@ export default function useExecuteBridgeRoute({
       }
 
       if (fromChain.isTONChain) {
-        throw new Error('TON is not supported');
+        if (!tonConnectUI) {
+          throw new Error('tonConnectUI is null');
+        }
+
+        return submission.executeCustom({
+          brief: CROSS_CHAIN_TEXT,
+          subtitle,
+          metadata,
+          mixpanelProps,
+          successBack,
+          handler: async (params) => {
+            try {
+              // https://docs.ton.org/v3/guidelines/ton-connect/cookbook/ton-transfer#transfer-with-a-comment
+
+              const payload = Cell.fromBoc(
+                Buffer.from(bridgeOrderTxRequest.data, 'hex'),
+              )[0]
+                .toBoc()
+                .toString('base64');
+
+              const myTransaction = {
+                validUntil: Math.floor(Date.now() / 1000) + 360,
+                messages: [
+                  {
+                    address: Address.parse(bridgeOrderTxRequest.to).toString(),
+                    amount: Number(bridgeOrderTxRequest.value).toString(),
+                    payload,
+                    // payload with the comment in body
+                  },
+                ],
+              };
+
+              const { boc } = await tonConnectUI.sendTransaction(myTransaction);
+
+              // const client = new TonClient({
+              //   endpoint:
+              //     tonEndpointByChain[
+              //       fromChain.chainId as ChainId.TON | ChainId.TON_TESTNET
+              //     ],
+              // });
+
+              // const tx = await waitForTransaction(
+              //   boc,
+              //   client,
+              //   10, // retries
+              //   1000, // timeout before each retry
+              // );
+
+              //           const extmsghash = Cell.fromBase64(boc).hash();
+              // console.log('Full message hash:', extmsghash.toString('hex'));
+
+              const tx = normalizedExtHashFromBoc(boc);
+
+              console.log('Normalized hash:', tx);
+
+              params.onSubmit(tx);
+              params.onSuccess(tx);
+            } catch (error) {
+              console.error('tonConnectUI.sendTransaction:', error);
+              params.onError(error);
+            }
+          },
+        });
       }
 
       if (fromChain.isSUIChain) {
