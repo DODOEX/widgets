@@ -112,26 +112,8 @@ export default function SlippageSetting({
             title={
               <>
                 <Trans>
-                  The dynamic slippage is provided by DODO team through
-                  analyzing historical transactions.
+                  The dynamic slippage is provided by SigmaX through analyzing historical transactions.
                 </Trans>
-                <br />
-                <Box
-                  component="a"
-                  href={t`https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{
-                    color: 'primary.main',
-                    textDecoration: 'underline',
-                  }}
-                  onClick={(evt) => {
-                    evt.stopPropagation();
-                  }}
-                >
-                  <Trans>Learn More</Trans>
-                  {'>'}
-                </Box>
               </>
             }
             ml={7}

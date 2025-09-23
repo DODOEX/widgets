@@ -253,6 +253,8 @@ export default function LiquidityChartRangeInput({
             maxHeight: '200px',
             justifyContent: 'center',
             alignContent: 'center',
+            border: 'solid 1px #4D3B791A',
+            borderRadius: 12
           }}
         >
           <Chart

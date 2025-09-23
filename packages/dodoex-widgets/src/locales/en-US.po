@@ -170,7 +170,7 @@ msgstr "Single-Token"
 msgid "Select Pool"
 msgstr "Select Pool"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:548
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:550
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:65
 msgid "Selected Range"
 msgstr "Selected Range"
@@ -179,7 +179,7 @@ msgstr "Selected Range"
 msgid "Do not remind again"
 msgstr "Do not remind again"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:372
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:374
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:280
 msgid "Remove Liquidity"
 msgstr "Remove Liquidity"
@@ -375,14 +375,14 @@ msgstr "Success Rate"
 msgid "Pool Creation"
 msgstr "Pool Creation"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:429
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:582
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:411
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:564
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:198
 #: src/widgets/PoolWidget/PoolCreate/components/SelectAndInput.tsx:52
 msgid "Custom"
 msgstr "Custom"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:484
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:466
 msgid "Higher than dynamic slippage"
 msgstr "Higher than dynamic slippage"
 
@@ -475,7 +475,7 @@ msgstr "Yes, I am sure"
 msgid "Add liquidity to obtain LP tokens for mining"
 msgstr "Add liquidity to obtain LP tokens for mining"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:572
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:574
 msgid "Add more liquidity"
 msgstr "Add more liquidity"
 
@@ -596,7 +596,7 @@ msgstr "Add Initial Liquidity"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:206
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:335
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:485
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:487
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
 msgid "Add liquidity"
@@ -852,7 +852,7 @@ msgstr "Invalid range selected. The min price must be lower than the max price."
 msgid "Liquidity Provider"
 msgstr "Liquidity Provider"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:810
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:812
 msgid "*Collecting fees will withdraw currently available fees for you."
 msgstr "*Collecting fees will withdraw currently available fees for you."
 
@@ -1006,7 +1006,6 @@ msgstr "Quote not available"
 msgid "My pool share"
 msgstr "My pool share"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:132
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:114
 msgid "Learn More"
 msgstr "Learn More"
@@ -1031,7 +1030,7 @@ msgstr "No LP pools match your criteria"
 msgid "Fee rate"
 msgstr "Fee rate"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:305
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:307
 #: src/widgets/PoolWidget/PoolList/index.tsx:164
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:138
 msgid "Add Liquidity"
@@ -1260,7 +1259,7 @@ msgstr "Standard"
 msgid "Token"
 msgstr "Token"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:496
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:478
 msgid "Lower than dynamic slippage"
 msgstr "Lower than dynamic slippage"
 
@@ -1584,7 +1583,7 @@ msgid "Remove liquidity"
 msgstr "Remove liquidity"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/SlippageSlider.tsx:189
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:306
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:288
 msgid "Dynamic"
 msgstr "Dynamic"
 
@@ -1803,7 +1802,7 @@ msgstr "Select Pool Version"
 #: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:465
 #: src/widgets/MiningWidget/MiningList/operate-area/index.tsx:204
 #: src/widgets/MiningWidget/OperateArea/index.tsx:74
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:453
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:455
 msgid "Claim"
 msgstr "Claim"
 
@@ -1821,7 +1820,7 @@ msgstr "Disclaimer"
 msgid "Back"
 msgstr "Back"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:485
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:467
 msgid "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 msgstr "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 
@@ -1941,7 +1940,7 @@ msgid "My Staked"
 msgstr "My Staked"
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:478
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:451
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:453
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:220
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:385
@@ -1963,10 +1962,6 @@ msgstr "Insufficient {0} balance"
 #: src/widgets/PoolWidget/AMMV3/components/Badge/AMMV3.tsx:21
 msgid "AMM V3"
 msgstr "AMM V3"
-
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:114
-msgid "The dynamic slippage is provided by DODO team through analyzing historical transactions."
-msgstr "The dynamic slippage is provided by DODO team through analyzing historical transactions."
 
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:267
 msgid "Failed to get price of the token"
@@ -2134,6 +2129,10 @@ msgstr "Detail"
 msgid "APY"
 msgstr "APY"
 
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:114
+msgid "The dynamic slippage is provided by SigmaX through analyzing historical transactions."
+msgstr "The dynamic slippage is provided by SigmaX through analyzing historical transactions."
+
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:121
 msgid "AMM V2"
 msgstr "AMM V2"
@@ -2176,7 +2175,7 @@ msgstr "AMM V3 Position"
 msgid "Slippage Coefficient"
 msgstr "Slippage Coefficient"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:157
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:139
 msgid "Advanced"
 msgstr "Advanced"
 
@@ -2188,7 +2187,7 @@ msgstr "{0}/{1} Pool Tokens"
 msgid "Initial Price Alert"
 msgstr "Initial Price Alert"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:452
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:454
 #: src/widgets/PoolWidget/AMMV3/components/RemoveButton.tsx:32
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:213
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:253
@@ -2221,7 +2220,7 @@ msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
 msgid "Pool Creation Confirmation"
 msgstr "Pool Creation Confirmation"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:785
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:787
 msgid "Claim fees"
 msgstr "Claim fees"
 
@@ -2289,7 +2288,7 @@ msgstr "There is risk of being arbitraged if adding this liquidity."
 msgid "address"
 msgstr "address"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:265
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:247
 msgid "This trading pair does not have enough historical data and has used the default dynamic slippage."
 msgstr "This trading pair does not have enough historical data and has used the default dynamic slippage."
 
@@ -2367,7 +2366,7 @@ msgstr "Hours"
 msgid "V3"
 msgstr "V3"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:497
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:479
 msgid "Dynamic slippage is {recommendSlippage}% , the current slippage setting may increase the failure rate of transactions."
 msgstr "Dynamic slippage is {recommendSlippage}% , the current slippage setting may increase the failure rate of transactions."
 
@@ -2393,16 +2392,12 @@ msgstr "Mining Pool"
 msgid "To avoid loss of rewards, please ensure that at least 1 or more participating users exist."
 msgstr "To avoid loss of rewards, please ensure that at least 1 or more participating users exist."
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:121
-msgid "https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef"
-msgstr "https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef"
-
 #: src/components/Swap/components/SwapSettingsDialog/index.tsx:95
 msgid "Transaction Deadline"
 msgstr "Transaction Deadline"
 
 #: src/widgets/MiningWidget/MiningList/hooks/useDepositOrWithdrawOrClaim.ts:190
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:422
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:424
 msgid "Claim Rewards"
 msgstr "Claim Rewards"
 

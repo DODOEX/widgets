@@ -349,7 +349,7 @@ export default function AddLiquidityV3({
             flexDirection: 'column',
             alignItems: 'stretch',
             gap: 20,
-            p: 20,
+            p: 0,
           }}
         >
           {noHeader ? null : <Box

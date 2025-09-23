@@ -103,6 +103,7 @@ export interface AMMV3PositionManageProps {
   feeAmount: FeeAmount;
   tokenId: string;
   onClose: (() => void) | undefined;
+  noHeader?: boolean;
 }
 
 export const AMMV3PositionManage = ({
@@ -112,6 +113,7 @@ export const AMMV3PositionManage = ({
   feeAmount,
   tokenId,
   onClose,
+  noHeader
 }: AMMV3PositionManageProps) => {
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
@@ -463,7 +465,7 @@ export const AMMV3PositionManage = ({
           backgroundColor: theme.palette.background.paper,
         }}
       >
-        <Box
+        {!noHeader && <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -511,7 +513,7 @@ export const AMMV3PositionManage = ({
               />
             </Box>
           ) : undefined}
-        </Box>
+        </Box>}
         <Box
           sx={{
             flex: 1,

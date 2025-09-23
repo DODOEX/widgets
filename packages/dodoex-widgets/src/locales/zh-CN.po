@@ -168,7 +168,7 @@ msgstr "单边"
 msgid "Select Pool"
 msgstr "选择做市池"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:548
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:550
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:65
 msgid "Selected Range"
 msgstr "选定区间"
@@ -177,7 +177,7 @@ msgstr "选定区间"
 msgid "Do not remind again"
 msgstr "不再提醒"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:372
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:374
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:280
 msgid "Remove Liquidity"
 msgstr "移除流动性"
@@ -373,14 +373,14 @@ msgstr "交易成功率"
 msgid "Pool Creation"
 msgstr "创建资金池"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:429
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:582
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:411
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:564
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:198
 #: src/widgets/PoolWidget/PoolCreate/components/SelectAndInput.tsx:52
 msgid "Custom"
 msgstr "自定义"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:484
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:466
 msgid "Higher than dynamic slippage"
 msgstr "比动态滑点高"
 
@@ -473,7 +473,7 @@ msgstr "是的，我确定"
 msgid "Add liquidity to obtain LP tokens for mining"
 msgstr "添加流动性后，可以获取 LP 代币。质押 LP 代币，开启挖矿。"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:572
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:574
 msgid "Add more liquidity"
 msgstr "添加更多流动性"
 
@@ -594,7 +594,7 @@ msgstr "添加初始流动性"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:206
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:335
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:485
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:487
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
 msgid "Add liquidity"
@@ -850,7 +850,7 @@ msgstr "选定区间无效，最低价格必须低于最高价格。"
 msgid "Liquidity Provider"
 msgstr "做市用户"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:810
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:812
 msgid "*Collecting fees will withdraw currently available fees for you."
 msgstr "*收取费用将领取当前已分配手续费。"
 
@@ -1004,7 +1004,6 @@ msgstr "没有报价"
 msgid "My pool share"
 msgstr "我的资金池份额"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:132
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:114
 msgid "Learn More"
 msgstr "查看详情"
@@ -1029,7 +1028,7 @@ msgstr "没有找到符合条件的挖矿项目"
 msgid "Fee rate"
 msgstr "手续费费率"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:305
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:307
 #: src/widgets/PoolWidget/PoolList/index.tsx:164
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:138
 msgid "Add Liquidity"
@@ -1258,7 +1257,7 @@ msgstr "标准"
 msgid "Token"
 msgstr "代币"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:496
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:478
 msgid "Lower than dynamic slippage"
 msgstr "比动态滑点低"
 
@@ -1582,7 +1581,7 @@ msgid "Remove liquidity"
 msgstr "移除流动性"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageCurveChart/SlippageSlider.tsx:189
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:306
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:288
 msgid "Dynamic"
 msgstr "动态"
 
@@ -1801,7 +1800,7 @@ msgstr "选择模式"
 #: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:465
 #: src/widgets/MiningWidget/MiningList/operate-area/index.tsx:204
 #: src/widgets/MiningWidget/OperateArea/index.tsx:74
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:453
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:455
 msgid "Claim"
 msgstr "领取"
 
@@ -1819,7 +1818,7 @@ msgstr "免责声明"
 msgid "Back"
 msgstr "返回"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:485
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:467
 msgid "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 msgstr "动态滑点为 {recommendSlippage}%，当前的滑点设置高于动态滑点，这意味着你该交易的最终成交价格会比较差。"
 
@@ -1939,7 +1938,7 @@ msgid "My Staked"
 msgstr "已质押"
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:478
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:451
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:453
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:220
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:385
@@ -1961,10 +1960,6 @@ msgstr "{0} 余额不足"
 #: src/widgets/PoolWidget/AMMV3/components/Badge/AMMV3.tsx:21
 msgid "AMM V3"
 msgstr "AMM V3"
-
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:114
-msgid "The dynamic slippage is provided by DODO team through analyzing historical transactions."
-msgstr "动态滑点是由 DODO 团队通过分析历史交易计算得出。"
 
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:267
 msgid "Failed to get price of the token"
@@ -2132,6 +2127,10 @@ msgstr "详情"
 msgid "APY"
 msgstr "预估年化（APY）"
 
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:114
+msgid "The dynamic slippage is provided by SigmaX through analyzing historical transactions."
+msgstr ""
+
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:121
 msgid "AMM V2"
 msgstr "AMM V2"
@@ -2174,7 +2173,7 @@ msgstr "AMM V3 仓位"
 msgid "Slippage Coefficient"
 msgstr "滑点系数"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:157
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:139
 msgid "Advanced"
 msgstr "高级"
 
@@ -2186,7 +2185,7 @@ msgstr "{0}/{1} 资金池代币"
 msgid "Initial Price Alert"
 msgstr "初始价格提示"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:452
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:454
 #: src/widgets/PoolWidget/AMMV3/components/RemoveButton.tsx:32
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:213
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:253
@@ -2219,7 +2218,7 @@ msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
 msgid "Pool Creation Confirmation"
 msgstr "确认创建资金池"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:785
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:787
 msgid "Claim fees"
 msgstr "领取手续费"
 
@@ -2287,7 +2286,7 @@ msgstr "添加资金有可能会被套利，请谨慎操作。"
 msgid "address"
 msgstr "合约地址"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:265
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:247
 msgid "This trading pair does not have enough historical data and has used the default dynamic slippage."
 msgstr "该交易对没有足够的历史交易数据，已使用默认滑点值"
 
@@ -2365,7 +2364,7 @@ msgstr "小时"
 msgid "V3"
 msgstr "V3"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:497
+#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:479
 msgid "Dynamic slippage is {recommendSlippage}% , the current slippage setting may increase the failure rate of transactions."
 msgstr "动态滑点是 {recommendSlippage}%， 当前的滑点设置可能会增加交易失败率。"
 
@@ -2391,16 +2390,12 @@ msgstr "挖矿合约地址"
 msgid "To avoid loss of rewards, please ensure that at least 1 or more participating users exist."
 msgstr "为避免奖励代币的损失，请确保至少存在 1 名用户参与挖矿。"
 
-#: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:121
-msgid "https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef"
-msgstr "https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef"
-
 #: src/components/Swap/components/SwapSettingsDialog/index.tsx:95
 msgid "Transaction Deadline"
 msgstr "交易截止时间"
 
 #: src/widgets/MiningWidget/MiningList/hooks/useDepositOrWithdrawOrClaim.ts:190
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:422
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:424
 msgid "Claim Rewards"
 msgstr "领取奖励"
 
