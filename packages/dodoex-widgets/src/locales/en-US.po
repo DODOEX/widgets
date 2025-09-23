@@ -368,7 +368,7 @@ msgstr "Pool Creation"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:411
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:206
-#: src/widgets/PoolWidget/PoolCreate/components/SelectAndInput.tsx:52
+#: src/widgets/PoolWidget/PoolCreate/components/SelectAndInput.tsx:71
 msgid "Custom"
 msgstr "Custom"
 
