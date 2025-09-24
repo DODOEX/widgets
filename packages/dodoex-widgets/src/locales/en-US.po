@@ -706,10 +706,6 @@ msgstr "set current mid price"
 msgid "Canceled"
 msgstr "Canceled"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:19
-msgid "The fee rate must be between 0.01% to 10%"
-msgstr "The fee rate must be between 0.01% to 10%"
-
 #: src/widgets/PoolWidget/curve/components/LiquidityProvidersTable.tsx:89
 msgid "Assets"
 msgstr "Assets"
@@ -2229,6 +2225,10 @@ msgstr "Hide"
 #: src/widgets/PoolWidget/AMMV3/components/InRangeDot.tsx:12
 msgid "In range"
 msgstr "In range"
+
+#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:19
+msgid "The fee rate must be between 0% to 10%"
+msgstr "The fee rate must be between 0% to 10%"
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:300
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:632
