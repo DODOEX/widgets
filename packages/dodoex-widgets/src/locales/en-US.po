@@ -170,7 +170,7 @@ msgstr "Single-Token"
 msgid "Select Pool"
 msgstr "Select Pool"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:550
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:549
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:65
 msgid "Selected Range"
 msgstr "Selected Range"
@@ -210,7 +210,7 @@ msgstr "Pay"
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
 
-#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:66
+#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:107
 msgid "Search by token or pool address"
 msgstr "Search by token or pool address"
 
@@ -407,7 +407,7 @@ msgstr "The liquidity of DODO is continuous, which is different from the discret
 msgid "Default value is {warnValue}%,the current slippage setting is higher than the default value, which means you are willing to accept a worse final execution price."
 msgstr "Default value is {warnValue}%,the current slippage setting is higher than the default value, which means you are willing to accept a worse final execution price."
 
-#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:58
+#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:99
 msgid "Search"
 msgstr "Search"
 
@@ -475,7 +475,7 @@ msgstr "Yes, I am sure"
 msgid "Add liquidity to obtain LP tokens for mining"
 msgstr "Add liquidity to obtain LP tokens for mining"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:574
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:573
 msgid "Add more liquidity"
 msgstr "Add more liquidity"
 
@@ -596,7 +596,7 @@ msgstr "Add Initial Liquidity"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:206
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:335
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:487
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:486
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
 msgid "Add liquidity"
@@ -852,7 +852,7 @@ msgstr "Invalid range selected. The min price must be lower than the max price."
 msgid "Liquidity Provider"
 msgstr "Liquidity Provider"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:812
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:811
 msgid "*Collecting fees will withdraw currently available fees for you."
 msgstr "*Collecting fees will withdraw currently available fees for you."
 
@@ -2004,7 +2004,7 @@ msgstr "Select pair"
 msgid "Once Mining has started, it cannot be stopped."
 msgstr "Once Mining has started, it cannot be stopped."
 
-#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:65
+#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:106
 msgid "Select a liquidity pool"
 msgstr "Select a liquidity pool"
 
@@ -2220,7 +2220,7 @@ msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
 msgid "Pool Creation Confirmation"
 msgstr "Pool Creation Confirmation"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:787
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:786
 msgid "Claim fees"
 msgstr "Claim fees"
 

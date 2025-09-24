@@ -465,19 +465,18 @@ export const AMMV3PositionManage = ({
           backgroundColor: theme.palette.background.paper,
         }}
       >
-        {!noHeader && <Box
+        <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            px: 20,
-            py: 24,
+            p: 10,
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
             backgroundColor: theme.palette.background.paper,
           }}
         >
-          <Box
+          {!noHeader && <Box
             sx={{
               typography: 'body1',
               fontWeight: 600,
@@ -485,7 +484,7 @@ export const AMMV3PositionManage = ({
             }}
           >
             {t`Add liquidity`}
-          </Box>
+          </Box>}
 
           {onClose ? (
             <Box
@@ -513,7 +512,7 @@ export const AMMV3PositionManage = ({
               />
             </Box>
           ) : undefined}
-        </Box>}
+        </Box>
         <Box
           sx={{
             flex: 1,
@@ -521,7 +520,7 @@ export const AMMV3PositionManage = ({
           }}
         >
           {hasExistingPosition && existingPosition && (
-            <Box sx={{ mx: 20, mb: 16 }}>
+            <Box sx={{ mx: 10, mb: 16 }}>
               <PositionAmountPreview
                 position={existingPosition}
                 inRange={!outOfRange}
@@ -539,12 +538,12 @@ export const AMMV3PositionManage = ({
               tabs={operateTypes}
               variant="inPaper"
               tabsListSx={{
-                mx: 20,
+                mx: 10,
               }}
             />
             <TabPanel value="stake">
               {hasExistingPosition && existingPosition && (
-                <Box sx={{ mt: 16, mx: 20 }}>
+                <Box sx={{ mt: 16, mx: 10 }}>
                   <PositionSelectedRangePreview
                     position={existingPosition}
                     title={t`Selected Range`}
@@ -556,7 +555,7 @@ export const AMMV3PositionManage = ({
               <Box
                 sx={{
                   mt: 16,
-                  mx: 20,
+                  mx: 10,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'stretch',
@@ -606,7 +605,7 @@ export const AMMV3PositionManage = ({
                   bottom: 0,
                   display: 'flex',
                   alignItems: 'center',
-                  px: 20,
+                  px: 10,
                   py: 16,
                   borderBottomLeftRadius: 16,
                   borderBottomRightRadius: 16,
@@ -646,7 +645,7 @@ export const AMMV3PositionManage = ({
               <Box
                 sx={{
                   mt: 16,
-                  mx: 20,
+                  mx: 10,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'stretch',
@@ -668,7 +667,7 @@ export const AMMV3PositionManage = ({
               <Box
                 sx={{
                   mt: 16,
-                  mx: 20,
+                  mx: 10,
                   display: 'flex',
                   alignItems: 'flex-start',
                   justifyContent: 'space-between',
@@ -743,7 +742,7 @@ export const AMMV3PositionManage = ({
                   mt: 20,
                   display: 'flex',
                   alignItems: 'center',
-                  px: 20,
+                  px: 10,
                   py: 16,
                   borderBottomLeftRadius: 16,
                   borderBottomRightRadius: 16,
@@ -765,7 +764,7 @@ export const AMMV3PositionManage = ({
             <TabPanel value="claim">
               <Box
                 sx={{
-                  mx: 20,
+                  mx: 10,
                   mt: 16,
                   borderRadius: 12,
                   borderWidth: 1,
@@ -776,7 +775,7 @@ export const AMMV3PositionManage = ({
                 <Box
                   sx={{
                     py: 12,
-                    px: 20,
+                    px: 10,
                     typography: 'body1',
                     color: theme.palette.text.primary,
                     borderBottomWidth: 1,
@@ -803,7 +802,7 @@ export const AMMV3PositionManage = ({
               </Box>
               <Box
                 sx={{
-                  mx: 20,
+                  mx: 10,
                   mt: 16,
                   typography: 'h6',
                   color: theme.palette.text.secondary,
@@ -818,7 +817,7 @@ export const AMMV3PositionManage = ({
                   mt: 20,
                   display: 'flex',
                   alignItems: 'center',
-                  px: 20,
+                  px: 10,
                   py: 16,
                   borderBottomLeftRadius: 16,
                   borderBottomRightRadius: 16,

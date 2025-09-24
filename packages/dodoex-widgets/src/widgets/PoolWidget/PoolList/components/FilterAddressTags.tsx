@@ -35,19 +35,14 @@ export default function FilterAddressTags({
         alignItems: 'center',
         px: 8,
         mr: 8,
-        borderRadius: 8,
+        borderRadius: 12,
         fontWeight: 600,
-        height: 32,
+        height: 24,
         backgroundColor: 'hover.default',
+        color: 'primary.contrastText',
         ...sx,
       }}
     >
-      <TokenLogoPair
-        tokens={[baseToken, quoteToken]}
-        chainId={baseToken.chainId}
-        width={20}
-        mr={8}
-      />
       {baseToken.symbol}+{quoteToken.symbol}
       <Box
         component={Error}
@@ -60,7 +55,11 @@ export default function FilterAddressTags({
           position: 'relative',
           top: 1.5,
         }}
-        onClick={() => onDeleteTag()}
+        onClick={(e) => { 
+          e.stopPropagation();
+          e.preventDefault();
+          onDeleteTag()
+        }}
       />
     </Box>
   );

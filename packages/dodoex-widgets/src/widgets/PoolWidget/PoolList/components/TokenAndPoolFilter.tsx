@@ -5,23 +5,33 @@ import { Search } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import { TokenPickerDialog } from '../../../../components/Swap/components/TokenCard/TokenPickerDialog';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
+import { FetchLiquidityListLqList } from '../../utils';
+import FilterAddressTags from './FilterAddressTags';
+import FilterTokenTags from './FilterTokenTags';
 
 export default function TokenAndPoolFilter({
   sx,
   value,
   onChange,
   searchAddress,
+  filterAddressLqList,
+  handleChangeFilterAddress,
+  handleDeleteToken
 }: {
   sx?: BoxProps['sx'];
   value: Array<TokenInfo>;
   onChange: (v: Array<TokenInfo>) => void;
+  filterAddressLqList: FetchLiquidityListLqList;
+  handleChangeFilterAddress: (lqList: FetchLiquidityListLqList) => void;
+  handleDeleteToken: (token: TokenInfo) => void;
   searchAddress: (
     address: string,
     onClose: () => void,
   ) => Promise<JSX.Element | null>;
 }) {
   const [showPicker, setShowPicker] = React.useState(false);
-  const { isMobile } = useWidgetDevice();
+  const { minDevice, isMobile } = useWidgetDevice();
+  const hasFilterAddress = !!filterAddressLqList?.length;
   return (
     <>
       <Box
@@ -55,7 +65,38 @@ export default function TokenAndPoolFilter({
             flexShrink: 0,
           }}
         />
-        <Trans>Search</Trans>
+        {(value.length) ? <Box
+          sx={{
+            py: 16,
+            display: 'flex',
+            gap: 8,
+            ...(minDevice(475)
+              ? {}
+              : {
+                  flexDirection: 'column',
+                }),
+          }}
+        >
+          {/* filter tag */}
+          <Box
+            sx={{
+              my: 0,
+            }}
+          >
+            {hasFilterAddress ? (
+              <FilterAddressTags
+                lqList={filterAddressLqList}
+                onDeleteTag={() => handleChangeFilterAddress([])}
+              />
+            ) : (
+              ''
+            )}
+            <FilterTokenTags
+              tags={value}
+              onDeleteTag={handleDeleteToken}
+            />
+          </Box>
+        </Box> : <Trans>Search</Trans>}
       </Box>
       {/* Token Picker */}
       <TokenPickerDialog

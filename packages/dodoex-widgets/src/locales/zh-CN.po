@@ -168,7 +168,7 @@ msgstr "单边"
 msgid "Select Pool"
 msgstr "选择做市池"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:550
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:549
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:65
 msgid "Selected Range"
 msgstr "选定区间"
@@ -208,7 +208,7 @@ msgstr "支付"
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
 
-#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:66
+#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:107
 msgid "Search by token or pool address"
 msgstr "通过代币或者资金池地址查找"
 
@@ -405,7 +405,7 @@ msgstr "DODO 的流动性是连续的，这与UniV3的离散流动性不同。�
 msgid "Default value is {warnValue}%,the current slippage setting is higher than the default value, which means you are willing to accept a worse final execution price."
 msgstr "默认滑点是 {warnValue}%，当前滑点设置比默认滑点高，可能会导致最终成交价格较差。"
 
-#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:58
+#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:99
 msgid "Search"
 msgstr "搜索"
 
@@ -473,7 +473,7 @@ msgstr "是的，我确定"
 msgid "Add liquidity to obtain LP tokens for mining"
 msgstr "添加流动性后，可以获取 LP 代币。质押 LP 代币，开启挖矿。"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:574
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:573
 msgid "Add more liquidity"
 msgstr "添加更多流动性"
 
@@ -594,7 +594,7 @@ msgstr "添加初始流动性"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:206
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:335
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:487
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:486
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
 msgid "Add liquidity"
@@ -850,7 +850,7 @@ msgstr "选定区间无效，最低价格必须低于最高价格。"
 msgid "Liquidity Provider"
 msgstr "做市用户"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:812
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:811
 msgid "*Collecting fees will withdraw currently available fees for you."
 msgstr "*收取费用将领取当前已分配手续费。"
 
@@ -2002,7 +2002,7 @@ msgstr "选择币对"
 msgid "Once Mining has started, it cannot be stopped."
 msgstr "挖矿一旦开始，无法终止。"
 
-#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:65
+#: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:106
 msgid "Select a liquidity pool"
 msgstr "查找资金池"
 
@@ -2218,7 +2218,7 @@ msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
 msgid "Pool Creation Confirmation"
 msgstr "确认创建资金池"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:787
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:786
 msgid "Claim fees"
 msgstr "领取手续费"
 

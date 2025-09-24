@@ -844,45 +844,6 @@ export default function AddLiquidityList({
 
   return (
     <>
-      {(hasFilterAddress || !!filterTokens.length) && <Box
-        sx={{
-          py: 16,
-          display: 'flex',
-          gap: 8,
-          ...(minDevice(filterSmallDeviceWidth)
-            ? {}
-            : {
-                flexDirection: 'column',
-              }),
-          ...(isMobile
-            ? {}
-            : {
-                mx: 20,
-                borderBottomWidth: 1,
-              }),
-        }}
-      >
-        {/* filter tag */}
-        <Box
-          sx={{
-            my: 0,
-          }}
-        >
-          {hasFilterAddress ? (
-            <FilterAddressTags
-              lqList={filterAddressLqList}
-              onDeleteTag={() => handleChangeFilterAddress([])}
-            />
-          ) : (
-            ''
-          )}
-          <FilterTokenTags
-            tags={filterTokens}
-            onDeleteTag={handleDeleteToken}
-          />
-        </Box>
-      </Box>}
-
       {/* list */}
       {isMobile ? (
         <InfiniteScroll
