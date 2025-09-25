@@ -465,7 +465,7 @@ export const AMMV3PositionManage = ({
           backgroundColor: theme.palette.background.paper,
         }}
       >
-        <Box
+        {!noHeader && <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -476,7 +476,7 @@ export const AMMV3PositionManage = ({
             backgroundColor: theme.palette.background.paper,
           }}
         >
-          {!noHeader && <Box
+          <Box
             sx={{
               typography: 'body1',
               fontWeight: 600,
@@ -484,7 +484,7 @@ export const AMMV3PositionManage = ({
             }}
           >
             {t`Add liquidity`}
-          </Box>}
+          </Box>
 
           {onClose ? (
             <Box
@@ -512,7 +512,7 @@ export const AMMV3PositionManage = ({
               />
             </Box>
           ) : undefined}
-        </Box>
+        </Box>}
         <Box
           sx={{
             flex: 1,
