@@ -281,7 +281,6 @@ export default function AddLiquidityV3({
     <WidgetContainer sx={noHeader ? { padding: 0 } : {}}>
       <Box
         sx={{
-          mx: 'auto',
           backgroundColor: 'background.paper',
           display: 'flex',
           flexDirection: 'column',
@@ -547,6 +546,11 @@ export default function AddLiquidityV3({
                   fontWeight: 600,
                   color: theme.palette.text.primary,
                   textAlign: 'left',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
                 }}
               >
                 {t`Current price`}

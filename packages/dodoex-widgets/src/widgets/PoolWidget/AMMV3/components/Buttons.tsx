@@ -60,13 +60,13 @@ export const Buttons = ({
               gap: 8,
             }}
           >
-            {showApprovalA && (
+            {showApprovalA ? (
               <Button
                 size={Button.Size.big}
                 isLoading={approvalA.isApproving}
                 onClick={approvalA.submitApprove}
                 disabled={approvalA.insufficientBalance}
-                width={showApprovalB ? '50%' : '100%'}
+                width={'100%'}
               >
                 {approvalA.isApproving ? (
                   <Trans>Approving {approvalA.token?.symbol}...</Trans>
@@ -74,15 +74,13 @@ export const Buttons = ({
                   approvalA.approveTitle
                 )}
               </Button>
-            )}
-
-            {showApprovalB && (
+            ) : showApprovalB && (
               <Button
                 size={Button.Size.big}
                 isLoading={approvalB.isApproving}
                 onClick={approvalB.submitApprove}
                 disabled={approvalB.insufficientBalance}
-                width={showApprovalA ? '50%' : '100%'}
+                width={'100%'}
               >
                 {approvalB.isApproving ? (
                   <Trans>Approving {approvalB.token?.symbol}...</Trans>

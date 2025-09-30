@@ -233,11 +233,11 @@ msgstr "创建时间"
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:401
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:400
 msgid "Set price range"
 msgstr "设置价格区间"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:434
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:433
 msgid "Full range"
 msgstr "全区间"
 
@@ -545,11 +545,11 @@ msgid "Results in a relatively fixed price."
 msgstr "适用于价格相对稳定的交易对"
 
 #: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:72
-#: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:88
+#: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:86
 msgid "Approving {0}..."
 msgstr "授权 {0} 中"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:552
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:556
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:213
 #: src/widgets/PoolWidget/AMMV3/components/PositionViewCard.tsx:233
 msgid "Current price"
@@ -593,7 +593,7 @@ msgid "Add Initial Liquidity"
 msgstr "添加初始流动性"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:206
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:335
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:334
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:486
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
@@ -842,7 +842,7 @@ msgstr "资金池报价与 DODO 智能路由价格相差 {lqAndDodoCompareText}"
 msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:496
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:495
 msgid "Invalid range selected. The min price must be lower than the max price."
 msgstr "选定区间无效，最低价格必须低于最高价格。"
 
@@ -955,7 +955,7 @@ msgid "The pegged exchange rate refers to the exchange rate between two token as
 msgstr "锚定价格是指两个代币资产之间的汇率，其中一个资产的价值由另一个锚定。例如，美元和 USDT 之间的汇率是 1。"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:277
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:593
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:597
 msgid "Deposit amounts"
 msgstr "充值数额"
 
@@ -1367,7 +1367,7 @@ msgstr "你的仓位将在该价格全部由 {0} 组成"
 msgid "When adding rewards, the number of rewards for a single block may be adjusted"
 msgstr "补充奖励时，单个区块奖励数量可能会有所调整"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:521
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:520
 msgid "This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
 msgstr "必须先初始化该资金池，才能添加流动性。要初始化，请选择池的起价。然后，输入流动性价格范围和充值金额。由于初始化交易，Gas 费将比通常高。"
 
@@ -1529,11 +1529,11 @@ msgstr "分钟"
 msgid "Off"
 msgstr "关"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:491
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:490
 msgid "Your position will not earn fees or be used in trades until the market price moves into your range."
 msgstr "在市场价格进入到你的价格区间之前，您的仓位不能赚取交易手续费。"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:554
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:558
 msgid "per"
 msgstr "每"
 
@@ -1916,7 +1916,7 @@ msgstr "创建完成后，该价格不可更改，适用于ETH-WETH等刚兑资�
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:45
 #: src/widgets/PoolWidget/AMMV2Create/Ratio.tsx:271
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:635
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:639
 #: src/widgets/PoolWidget/PoolOperate/components/Ratio.tsx:298
 #: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:129
 msgid "Slippage Tolerance"
@@ -1993,7 +1993,7 @@ msgid "Low"
 msgstr "低"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:224
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:371
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:370
 msgid "Select pair"
 msgstr "选择币对"
 
@@ -2135,7 +2135,7 @@ msgstr ""
 msgid "AMM V2"
 msgstr "AMM V2"
 
-#: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:114
+#: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:112
 msgid "Preview"
 msgstr "预览"
 
@@ -2403,7 +2403,7 @@ msgstr "领取奖励"
 msgid "My Pools (PMM)"
 msgstr "我的资金池 (PMM)"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:510
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:509
 msgid "Starting price"
 msgstr "初始价格"
 
