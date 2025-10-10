@@ -1,4 +1,3 @@
-import { ChainId } from '@dodoex/api';
 import { Box } from '@dodoex/components';
 import { Swap, SwapOrderHistory } from '@dodoex/widgets';
 

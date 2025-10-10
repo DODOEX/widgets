@@ -209,8 +209,6 @@ export default function AddLiquidityV3({
 
   const handleSetFullRange = useCallback(
     (part: number) => {
-      getSetFullRange();
-
       if (part !== 1) {
         if (formattedPrice) {
           const currentPrice = new BigNumber(formattedPrice);
@@ -223,22 +221,9 @@ export default function AddLiquidityV3({
         return;
       }
 
-      const minPrice = pricesAtLimit[Bound.LOWER];
-      if (minPrice) {
-        onLeftRangeInput(minPrice.toSignificant(5));
-      }
-      const maxPrice = pricesAtLimit[Bound.UPPER];
-      if (maxPrice) {
-        onRightRangeInput(maxPrice.toSignificant(5));
-      }
+      getSetFullRange();
     },
-    [
-      formattedPrice,
-      getSetFullRange,
-      onLeftRangeInput,
-      onRightRangeInput,
-      pricesAtLimit,
-    ],
+    [formattedPrice, getSetFullRange, onLeftRangeInput, onRightRangeInput],
   );
 
   const { deadLine: ddl } = useUserOptions();
