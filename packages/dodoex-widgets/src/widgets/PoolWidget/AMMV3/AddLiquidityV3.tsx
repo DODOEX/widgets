@@ -208,16 +208,7 @@ export default function AddLiquidityV3({
 
   const handleSetFullRange = useCallback(() => {
     getSetFullRange();
-
-    const minPrice = pricesAtLimit[Bound.LOWER];
-    if (minPrice) {
-      onLeftRangeInput(minPrice.toSignificant(5));
-    }
-    const maxPrice = pricesAtLimit[Bound.UPPER];
-    if (maxPrice) {
-      onRightRangeInput(maxPrice.toSignificant(5));
-    }
-  }, [getSetFullRange, onLeftRangeInput, onRightRangeInput, pricesAtLimit]);
+  }, [getSetFullRange]);
 
   const { deadLine: ddl } = useUserOptions();
   const onAddMutation = useMutation({
@@ -287,60 +278,62 @@ export default function AddLiquidityV3({
           alignItems: 'stretch',
         }}
       >
-        {noHeader ? null : <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            px: 20,
-            py: 24,
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-            backgroundColor: theme.palette.background.paper,
-          }}
-        >
+        {noHeader ? null : (
           <Box
-            component={ButtonBase}
-            onClick={handleGoBack}
             sx={{
-              flexGrow: 0,
-              flexShrink: 0,
               display: 'flex',
               alignItems: 'center',
-              color: theme.palette.text.primary,
-              width: 24,
-              height: 24,
+              px: 20,
+              py: 24,
+              borderTopLeftRadius: 16,
+              borderTopRightRadius: 16,
+              backgroundColor: theme.palette.background.paper,
             }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="25"
-              viewBox="0 0 24 25"
-              fill="none"
+            <Box
+              component={ButtonBase}
+              onClick={handleGoBack}
+              sx={{
+                flexGrow: 0,
+                flexShrink: 0,
+                display: 'flex',
+                alignItems: 'center',
+                color: theme.palette.text.primary,
+                width: 24,
+                height: 24,
+              }}
             >
-              <path
-                d="M20 11.5H7.83L13.42 5.91L12 4.5L4 12.5L12 20.5L13.41 19.09L7.83 13.5H20V11.5Z"
-                fill="currentColor"
-              />
-            </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="25"
+                viewBox="0 0 24 25"
+                fill="none"
+              >
+                <path
+                  d="M20 11.5H7.83L13.42 5.91L12 4.5L4 12.5L12 20.5L13.41 19.09L7.83 13.5H20V11.5Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </Box>
+            <Box
+              sx={{
+                flexGrow: 1,
+                textAlign: 'center',
+                typography: 'caption',
+                color: theme.palette.text.primary,
+              }}
+            >{t`Add liquidity`}</Box>
+            <Box
+              sx={{
+                flexGrow: 0,
+                flexShrink: 0,
+                width: 24,
+                height: 24,
+              }}
+            />
           </Box>
-          <Box
-            sx={{
-              flexGrow: 1,
-              textAlign: 'center',
-              typography: 'caption',
-              color: theme.palette.text.primary,
-            }}
-          >{t`Add liquidity`}</Box>
-          <Box
-            sx={{
-              flexGrow: 0,
-              flexShrink: 0,
-              width: 24,
-              height: 24,
-            }}
-          />
-        </Box>}
+        )}
 
         <Box
           sx={{
@@ -351,35 +344,37 @@ export default function AddLiquidityV3({
             p: 0,
           }}
         >
-          {noHeader ? null : <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'stretch',
-              gap: 12,
-            }}
-          >
+          {noHeader ? null : (
             <Box
               sx={{
-                typography: 'body1',
-                fontWeight: 600,
-                color: theme.palette.text.primary,
-                textAlign: 'left',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'stretch',
+                gap: 12,
               }}
             >
-              {t`Select pair`}
+              <Box
+                sx={{
+                  typography: 'body1',
+                  fontWeight: 600,
+                  color: theme.palette.text.primary,
+                  textAlign: 'left',
+                }}
+              >
+                {t`Select pair`}
+              </Box>
+              <TokenPairSelect
+                baseToken={state.baseToken}
+                quoteToken={state.quoteToken}
+                dispatch={dispatch}
+              />
+              <FeeSelector
+                disabled={!state.baseToken || !state.quoteToken}
+                feeAmount={state.feeAmount}
+                dispatch={dispatch}
+              />
             </Box>
-            <TokenPairSelect
-              baseToken={state.baseToken}
-              quoteToken={state.quoteToken}
-              dispatch={dispatch}
-            />
-            <FeeSelector
-              disabled={!state.baseToken || !state.quoteToken}
-              feeAmount={state.feeAmount}
-              dispatch={dispatch}
-            />
-          </Box>}
+          )}
           <DynamicSection disabled={!state.feeAmount || invalidPool}>
             <Box
               sx={{
