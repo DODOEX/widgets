@@ -229,7 +229,8 @@ export const PositionSelectedRangePreview = ({
             typography: 'caption',
           }}
         >{`${formatTokenAmountNumber({
-          input: price.toSignificant(),
+          input: price.toSignificant(8),
+          decimals: 8,
         })} `}</Box>
       </LightCard>
     </AutoColumn>
