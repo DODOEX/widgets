@@ -2245,7 +2245,7 @@ msgstr "address"
 msgid "This trading pair does not have enough historical data and has used the default dynamic slippage."
 msgstr "This trading pair does not have enough historical data and has used the default dynamic slippage."
 
-#: src/widgets/PoolWidget/AMMV3/components/PositionViewCard.tsx:248
+#: src/widgets/PoolWidget/AMMV3/components/PositionViewCard.tsx:249
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1123
 msgid "Manage"
 msgstr "Manage"
