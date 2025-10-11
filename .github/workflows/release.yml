@@ -3,8 +3,18 @@ name: Release
 on:
   workflow_dispatch: # trigger manually
     inputs:
-      dry_run:
-        description: Skip publishing
+      publishWidgets:
+        description: Publish widgets packages
+        required: false
+        default: true
+        type: boolean
+      publishApi:
+        description: Publish api packages
+        required: false
+        default: true
+        type: boolean
+      publishComponents:
+        description: Publish components packages
         required: false
         default: true
         type: boolean
@@ -45,8 +55,21 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install dependencies
         run: yarn install
-      - name: Release package
-        run: yarn release --dry-run=${{ inputs.dry_run }}
+      - name: Release package widgets
+        if: ${{ inputs.publishWidgets }}
+        run: yarn workspace @dodoex/widgets release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Release package api
+        if: ${{ inputs.publishApi }}
+        run: yarn workspace @dodoex/api release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Release package components
+        if: ${{ inputs.publishComponents }}
+        run: yarn workspace @dodoex/components release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

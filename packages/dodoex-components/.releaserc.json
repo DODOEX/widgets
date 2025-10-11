@@ -29,7 +29,7 @@
           "CHANGELOG.md",
           "package.json"
         ],
-        "message": "chore(release): @dodoex/widgets@${nextRelease.version} [skip ci]"
+        "message": "chore(release): @dodoex/components@${nextRelease.version} [skip ci]"
       }
     ]
   ]

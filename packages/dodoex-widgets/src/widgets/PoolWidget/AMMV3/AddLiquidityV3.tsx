@@ -206,16 +206,7 @@ export default function AddLiquidityV3({
 
   const handleSetFullRange = useCallback(() => {
     getSetFullRange();
-
-    const minPrice = pricesAtLimit[Bound.LOWER];
-    if (minPrice) {
-      onLeftRangeInput(minPrice.toSignificant(5));
-    }
-    const maxPrice = pricesAtLimit[Bound.UPPER];
-    if (maxPrice) {
-      onRightRangeInput(maxPrice.toSignificant(5));
-    }
-  }, [getSetFullRange, onLeftRangeInput, onRightRangeInput, pricesAtLimit]);
+  }, [getSetFullRange]);
 
   const { deadLine: ddl } = useUserOptions();
   const onAddMutation = useMutation({
