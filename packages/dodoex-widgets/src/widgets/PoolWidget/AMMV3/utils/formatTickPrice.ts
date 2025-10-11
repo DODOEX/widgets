@@ -20,6 +20,7 @@ export function formatTickPrice({
   }
 
   return formatTokenAmountNumber({
-    input: typeof price === 'string' ? price : price?.toSignificant(),
+    input: typeof price === 'string' ? price : price?.toSignificant(8),
+    decimals: 8,
   });
 }
