@@ -1,4 +1,4 @@
-import { Box, ButtonBase, useTheme } from '@dodoex/components';
+import { Box, BoxProps, ButtonBase, useTheme } from '@dodoex/components';
 import { TokenInfo } from '../hooks/Token/type';
 import { chainListMap } from '../constants/chainList';
 import { selectTokenBtn } from '../constants/testId';
@@ -10,6 +10,26 @@ import { useUserOptions } from './UserOptionsProvider';
 import { ChainId } from '@dodoex/api';
 import { transitionTime } from './Swap/components/Dialog';
 
+export interface TokenSelectProps {
+  token?: TokenInfo | null;
+  chainId?: ChainId;
+  showChainLogo?: boolean;
+  readonly?: boolean;
+  showChainName?: boolean;
+  logoSize?: number;
+  chainLogoSize?: number;
+  side?: TokenInfo['side'];
+  occupiedToken?: TokenInfo;
+  defaultLoadBalance?: boolean;
+  notTokenPickerModal?: boolean;
+  border?: boolean;
+  px?: number;
+  py?: number;
+  highlightDefault?: boolean;
+  sx?: BoxProps['sx'];
+  onTokenClick?: () => void;
+  onTokenChange?: (token: TokenInfo, isOccupied: boolean) => void;
+}
 export default function TokenSelect({
   token,
   chainId: chainIdProps,
@@ -26,27 +46,10 @@ export default function TokenSelect({
   px = 20,
   py = 8,
   highlightDefault,
+  sx,
   onTokenClick,
   onTokenChange,
-}: {
-  token?: TokenInfo | null;
-  chainId?: ChainId;
-  showChainLogo?: boolean;
-  readonly?: boolean;
-  showChainName?: boolean;
-  logoSize?: number;
-  chainLogoSize?: number;
-  side?: TokenInfo['side'];
-  occupiedToken?: TokenInfo;
-  defaultLoadBalance?: boolean;
-  notTokenPickerModal?: boolean;
-  border?: boolean;
-  px?: number;
-  py?: number;
-  highlightDefault?: boolean;
-  onTokenClick?: () => void;
-  onTokenChange?: (token: TokenInfo, isOccupied: boolean) => void;
-}) {
+}: TokenSelectProps) {
   const { onlyChainId } = useUserOptions();
   const chainId = chainIdProps || onlyChainId;
   const theme = useTheme();
@@ -84,6 +87,7 @@ export default function TokenSelect({
               opacity: 0.8,
             },
           }),
+          ...sx,
         }}
         onClick={() => {
           if (readonly) return;

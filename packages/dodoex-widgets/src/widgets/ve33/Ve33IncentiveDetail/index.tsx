@@ -10,32 +10,26 @@ import { PoolHead } from '../components/PoolHead';
 import { CardContainer } from '../components/widgets';
 import { compositePoolInfo } from '../utils';
 import { Trans } from '@lingui/macro';
-import PoolInfo from './PoolInfo';
-import MyAssets from './MyAssets';
-import Ve33PoolOperateDialog from '../Ve33PoolOperate';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
-import MyPosition from './MyPosition';
-import { OperateTypeE, PoolTypeE } from '../types';
+import PoolInfo from './PoolInfo';
+import Dashboard from './Dashboard';
+import AddIncentiveDialog from './AddIncentiveDialog';
 
-export interface Ve33PoolDetailProps {
+export interface Ve33IncentiveDetailProps {
   id: string;
   chainId: ChainId;
   onClickGoBack: () => void;
 }
 
-export const Ve33PoolDetail = ({
+export default function Ve33IncentiveDetail({
   id,
   chainId,
   onClickGoBack,
-}: Ve33PoolDetailProps) => {
+}: Ve33IncentiveDetailProps) {
   const graphQLRequests = useGraphQLRequests();
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
-  const { account } = useWalletInfo();
-  const [showOperate, setShowOperate] = React.useState<OperateTypeE | null>(
-    null,
-  );
+  const [showAddDialog, setShowAddDialog] = React.useState(false);
 
   const scrollParentRef = useRef<HTMLDivElement>(null);
 
@@ -52,7 +46,6 @@ export const Ve33PoolDetail = ({
   const poolInfo = fetchResult.data?.ve33_getPool
     ? compositePoolInfo(fetchResult.data.ve33_getPool, chainId)
     : null;
-  const isV3 = poolInfo?.type === PoolTypeE.CLPool;
 
   return (
     <WidgetContainer
@@ -132,31 +125,31 @@ export const Ve33PoolDetail = ({
               >
                 <PoolHead chainId={chainId} poolInfo={poolInfo} size="medium" />
               </Box>
+              <Dashboard poolInfo={poolInfo} />
               <CardContainer title="Pool Info">
                 <PoolInfo
                   poolInfo={poolInfo}
                   isLoading={fetchResult.isLoading}
                 />
               </CardContainer>
-              {!!account &&
-                (isV3 ? (
-                  <CardContainer title="My Position">
-                    <MyPosition poolInfo={poolInfo} account={account} />
-                  </CardContainer>
-                ) : (
-                  <CardContainer title="My Assets">
-                    <MyAssets poolInfo={poolInfo} account={account} />
-                  </CardContainer>
-                ))}
             </Box>
-            <Ve33PoolOperateDialog
-              pool={showOperate || !isMobile ? poolInfo : undefined}
-              operate={showOperate || undefined}
-              onClose={() => setShowOperate(null)}
-              account={account}
-              errorRefetch={
-                fetchResult.isError ? fetchResult.refetch : undefined
+            <AddIncentiveDialog
+              data={
+                !isMobile || showAddDialog
+                  ? {
+                      chainId,
+                      type: poolInfo.type,
+                      token: {
+                        chainId,
+                        symbol: 'MOMO',
+                        name: 'MOMO',
+                        decimals: 18,
+                        address: '0x42EDf453F8483c7168c158d28D610A58308517D1',
+                      },
+                    }
+                  : undefined
               }
+              onClose={() => setShowAddDialog(false)}
             />
           </>
         )}
@@ -174,29 +167,11 @@ export const Ve33PoolDetail = ({
             backgroundColor: theme.palette.background.paper,
           }}
         >
-          {isV3 ? (
-            <Button fullWidth onClick={() => setShowOperate(OperateTypeE.Add)}>
-              <Trans>Create position</Trans>
-            </Button>
-          ) : (
-            <>
-              <Button
-                fullWidth
-                onClick={() => setShowOperate(OperateTypeE.Add)}
-              >
-                <Trans>Add</Trans>
-              </Button>
-              <Button
-                fullWidth
-                onClick={() => setShowOperate(OperateTypeE.Remove)}
-                variant={Button.Variant.second}
-              >
-                <Trans>Remove</Trans>
-              </Button>
-            </>
-          )}
+          <Button fullWidth onClick={() => setShowAddDialog(true)}>
+            <Trans>Add incentive</Trans>
+          </Button>
         </Box>
       )}
     </WidgetContainer>
   );
-};
+}

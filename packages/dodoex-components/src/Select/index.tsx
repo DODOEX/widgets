@@ -39,13 +39,13 @@ const Listbox = styled('ul')(
   box-shadow: 0px 2px 4px ${
     theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.5)' : 'rgba(0,0,0, 0.05)'
   };
-  
+
   .closed & {
     opacity: 0;
     transform: scale(0.95, 0.8);
     transition: opacity 200ms ease-in, transform 200ms ease-in;
   }
-  
+
   .open & {
     opacity: 1;
     transform: scale(1, 1);
@@ -123,6 +123,7 @@ const Button = React.forwardRef(function Button<
       {other.children}
       <Box
         component="span"
+        className="icon"
         sx={{
           display: 'inline-block',
           width: 0,
@@ -206,9 +207,12 @@ export function Select<
   px = 20,
   height = 48,
   popupOffset = 8,
+  listBoxSx,
   ...props
   // @ts-ignore
-}: Props<Value, Multiple>) {
+}: Props<Value, Multiple> & {
+  listBoxSx?: BoxProps['sx'];
+}) {
   const theme = useTheme();
 
   return (
@@ -254,6 +258,7 @@ export function Select<
           style: {
             borderRadius: popupOffset ? 12 : theme.spacing(0, 0, 12, 12),
           },
+          sx: listBoxSx,
         },
       }}
       {...props}

@@ -51,6 +51,8 @@ export enum MetadataFlag {
   transferVe33Lock = 'transferVe33Lock',
   claimRebases = 'claimRebases',
   claimBribes = 'claimBribes',
+  voteVe33 = 'voteVe33',
+  addIncentive = 'addIncentive',
 }
 
 export type Metadata = Record<string, any>;

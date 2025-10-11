@@ -255,6 +255,7 @@ export default function Message() {
             {/* close */}
             <Box
               sx={{
+                flexShrink: 0,
                 position: 'relative',
                 top: 10,
                 ml: 12,

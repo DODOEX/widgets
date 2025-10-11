@@ -11,15 +11,20 @@ import { Ve33PoolInfoI, Ve33PoolOperateProps } from '../types';
 import { compositePoolInfo } from '../utils';
 import { TableList } from './TableList';
 import PoolOperateDialog from '../Ve33PoolOperate';
+import { useUserOptions } from '../../../components/UserOptionsProvider';
+import InfiniteScroll from 'react-infinite-scroller';
+import { debounce } from 'lodash';
+import { CardItem, CardList } from './CardList';
+import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
 
 export interface Ve33PoolListProps {
   onClickPoolListRow: (id: string, chainId: ChainId) => void;
 }
 
 export const Ve33PoolList = ({ onClickPoolListRow }: Ve33PoolListProps) => {
-  // TODO: need replace
-  const chainId = ChainId.MORPH_HOLESKY_TESTNET;
-  const { account } = useWalletInfo();
+  const { onlyChainId } = useUserOptions();
+  const { chainId: connectedChainId, account } = useWalletInfo();
+  const chainId = onlyChainId ?? connectedChainId;
   const { isMobile } = useWidgetDevice();
   const graphQLRequests = useGraphQLRequests();
   const theme = useTheme();
@@ -27,57 +32,7 @@ export const Ve33PoolList = ({ onClickPoolListRow }: Ve33PoolListProps) => {
   const [filterToken, setFilterToken] = useState<string>('');
   const [usdValueChecked, setUsdValueChecked] = useState(false);
   const [operatePool, setOperatePool] = useState<Ve33PoolOperateProps | null>(
-    // null,
-    {
-      poolInfo: {
-        id: '0x2f63a87bf42dc4c021af8be085cece16269e3b67',
-        title: 'V3.CL=200',
-        version: 'v3',
-        gaugeAddress: '0x640be2253a65740152dc933fab757606e9c7bd52',
-        feeRate: '3000',
-        apr: {
-          fees: '0',
-          incentives: '0',
-        },
-        tvl: '0',
-        totalValueLockedUSD: '0',
-        totalValueLockedToken0: '0',
-        totalValueLockedToken1: '0',
-        volumeUSD: '0',
-        volumeToken0: '0',
-        volumeToken1: '0',
-        feesUSD: '0',
-        feesToken0: '0',
-        feesToken1: '0',
-        token0Address: '0x42edf453f8483c7168c158d28d610a58308517d1',
-        token0Name: 'Momodrome',
-        token0Symbol: 'MOMO',
-        token0Decimals: 18,
-        token1Address: '0x5300000000000000000000000000000000000011',
-        token1Name: 'Wrapped Ether',
-        token1Symbol: 'WETH',
-        token1Decimals: 18,
-        chainId: 2810,
-        stable: true,
-        fee: '3000',
-        type: 2,
-        baseToken: {
-          chainId: 2810,
-          address: '0x42edf453f8483c7168c158d28d610a58308517d1',
-          name: 'Momodrome',
-          decimals: 18,
-          symbol: 'MOMO',
-        },
-        quoteToken: {
-          chainId: 2810,
-          address: '0x5300000000000000000000000000000000000011',
-          name: 'Wrapped Ether',
-          decimals: 18,
-          symbol: 'WETH',
-        },
-      },
-      operateType: 1,
-    },
+    null,
   );
 
   const scrollParentRef = useRef<HTMLDivElement>(null);
@@ -131,6 +86,8 @@ export const Ve33PoolList = ({ onClickPoolListRow }: Ve33PoolListProps) => {
         display: 'flex',
         gap: 20,
         flex: 1,
+        px: isMobile ? 20 : 40,
+        py: 20,
       }}
       ref={scrollParentRef}
     >
@@ -195,29 +152,60 @@ export const Ve33PoolList = ({ onClickPoolListRow }: Ve33PoolListProps) => {
             />
           </Box>
         </Box>
-
-        <TableList
-          chainId={chainId}
-          poolList={poolList}
-          usdValueChecked={usdValueChecked}
-          operatePool={operatePool}
-          setOperatePool={setOperatePool}
-          hasMore={hasMore}
-          loadMoreLoading={fetchResult.isFetchingNextPage}
-          loadMore={() => {
-            if (fetchResult.hasNextPage && !fetchResult.isFetching) {
-              fetchResult.fetchNextPage();
-            }
-          }}
-          onClickPoolListRow={onClickPoolListRow}
-        />
-
-        <CardStatus
-          loading={fetchResult.isLoading}
-          refetch={fetchResult.error ? fetchResult.refetch : undefined}
-          empty={!poolList?.length}
-          hasSearch={!!filterToken}
-        />
+        {isMobile ? (
+          <InfiniteScroll
+            hasMore={hasMore}
+            threshold={300}
+            loadMore={debounce(() => {
+              if (fetchResult.hasNextPage && !fetchResult.isFetching) {
+                fetchResult.fetchNextPage();
+              }
+            }, 500)}
+            useWindow={false}
+            getScrollParent={() => scrollParentRef.current || null}
+            loader={<CardItem key="loader" />}
+          >
+            <DataCardGroup>
+              <CardStatus
+                loading={fetchResult.isLoading}
+                refetch={fetchResult.error ? fetchResult.refetch : undefined}
+                empty={!poolList?.length}
+                loadingCard={<CardItem />}
+              >
+                <CardList
+                  poolList={poolList}
+                  chainId={chainId}
+                  usdValueChecked={usdValueChecked}
+                  operatePool={operatePool}
+                  setOperatePool={setOperatePool}
+                  onClickPoolListRow={onClickPoolListRow}
+                />
+              </CardStatus>
+            </DataCardGroup>
+          </InfiniteScroll>
+        ) : (
+          <CardStatus
+            loading={fetchResult.isLoading}
+            refetch={fetchResult.error ? fetchResult.refetch : undefined}
+            empty={!poolList?.length}
+          >
+            <TableList
+              chainId={chainId}
+              poolList={poolList}
+              usdValueChecked={usdValueChecked}
+              operatePool={operatePool}
+              setOperatePool={setOperatePool}
+              hasMore={hasMore}
+              loadMoreLoading={fetchResult.isFetchingNextPage}
+              loadMore={() => {
+                if (fetchResult.hasNextPage && !fetchResult.isFetching) {
+                  fetchResult.fetchNextPage();
+                }
+              }}
+              onClickPoolListRow={onClickPoolListRow}
+            />
+          </CardStatus>
+        )}
       </Box>
       {operatePool && (
         <PoolOperateDialog

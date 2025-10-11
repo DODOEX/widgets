@@ -32,7 +32,13 @@ export function WithMuiTheme({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
+      <CssBaseline
+        styles={{
+          'body.sb-show-main.sb-main-padded': {
+            padding: 0,
+          },
+        }}
+      />
       {children}
     </ThemeProvider>
   );

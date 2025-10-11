@@ -299,7 +299,7 @@ function IncreaseLock({ lock, refetch }: { lock: Lock; refetch: () => void }) {
             if (!token) return;
             increaesMutation.mutate({
               tokenId: lock.tokenId,
-              amount: toWei(amount, token?.decimals).toS,
+              amount: toWei(amount, token?.decimals).toString(),
             });
           }}
         >{t`Increase`}</NeedConnectButton>

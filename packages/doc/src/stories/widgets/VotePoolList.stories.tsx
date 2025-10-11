@@ -1,4 +1,5 @@
 import { ChainId } from '@dodoex/api';
+import { Box } from '@dodoex/components';
 import { VotePoolListWidget, WidgetProps } from '@dodoex/widgets';
 
 export default {
@@ -10,26 +11,34 @@ export const Primary = (props: WidgetProps) => {
   const { apikey, ...other } = props;
 
   return (
-    <VotePoolListWidget
-      tokenList={[
-        {
-          address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-          symbol: 'ETH',
-          name: 'ETH',
-          decimals: 18,
-          chainId: ChainId.MORPH_HOLESKY_TESTNET,
-        },
-        {
-          address: '0x5300000000000000000000000000000000000011',
-          symbol: 'WETH',
-          name: 'WETH',
-          decimals: 18,
-          chainId: ChainId.MORPH_HOLESKY_TESTNET,
-        },
-      ]}
-      {...other}
-      apikey={apikey}
-    />
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100vh',
+      }}
+    >
+      <VotePoolListWidget
+        tokenList={[
+          {
+            address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+            symbol: 'ETH',
+            name: 'ETH',
+            decimals: 18,
+            chainId: ChainId.MORPH_HOLESKY_TESTNET,
+          },
+          {
+            address: '0x5300000000000000000000000000000000000011',
+            symbol: 'WETH',
+            name: 'WETH',
+            decimals: 18,
+            chainId: ChainId.MORPH_HOLESKY_TESTNET,
+          },
+        ]}
+        {...other}
+        apikey={apikey}
+      />
+    </Box>
   );
 };
 

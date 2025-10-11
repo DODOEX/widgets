@@ -22,6 +22,10 @@ msgstr ""
 msgid "Transaction Time:"
 msgstr "交易时长:"
 
+#: src/widgets/ve33/Ve33IncentiveDetail/Dashboard.tsx:86
+msgid "Will be distributed"
+msgstr ""
+
 #: src/hooks/Bridge/useExecuteBridgeRoute.tsx:127
 msgid "Cross Chain"
 msgstr "跨链桥"
@@ -47,7 +51,9 @@ msgid "Total Number of Traders"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:43
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:61
+#: src/widgets/ve33/Ve33PoolList/CardList.tsx:97
+#: src/widgets/ve33/Ve33PoolList/CardList.tsx:149
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:62
 msgid "Volume"
 msgstr ""
 
@@ -56,12 +62,15 @@ msgid "To"
 msgstr "至"
 
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:416
-#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:287
+#: src/widgets/ve33/Ve33V2PoolOperate/RemovePoolOperate.tsx:287
 msgid "Receive {0}"
 msgstr ""
 
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:64
-#: src/widgets/ve33/VotePoolList/TableList.tsx:56
+#: src/widgets/ve33/Ve33PoolList/CardList.tsx:101
+#: src/widgets/ve33/Ve33PoolList/CardList.tsx:171
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:65
+#: src/widgets/ve33/VotePoolList/CardList.tsx:111
+#: src/widgets/ve33/VotePoolList/TableList.tsx:57
 msgid "Fees"
 msgstr ""
 
@@ -72,8 +81,12 @@ msgstr "{0} 等待中"
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:449
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:343
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:713
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:88
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:89
 msgid "Removing"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/index.tsx:319
+msgid "My voted / My total veMOMO"
 msgstr ""
 
 #: src/components/chart/i18n.ts:31
@@ -86,6 +99,7 @@ msgid "Balance:"
 msgstr "余额:"
 
 #: src/widgets/PoolWidget/AMMV3/components/TokenPairSelect.tsx:100
+#: src/widgets/ve33/Ve33V3PoolOperate/components/TokenPairSelect.tsx:100
 msgid "Select token"
 msgstr ""
 
@@ -99,7 +113,7 @@ msgid "Staking Rules"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/components/OperateBtn.tsx:76
-#: src/widgets/ve33/Ve33PoolOperate/components/OperateBtn.tsx:76
+#: src/widgets/ve33/Ve33V2PoolOperate/components/OperateBtn.tsx:76
 msgid "Loading info..."
 msgstr ""
 
@@ -111,7 +125,12 @@ msgstr ""
 msgid "Switch to {0}"
 msgstr ""
 
+#: src/widgets/ve33/VotePoolList/index.tsx:275
+msgid "Current voting round ends in"
+msgstr ""
+
 #: src/widgets/PoolWidget/AMMV3/components/InputStepCounter.tsx:124
+#: src/widgets/ve33/Ve33V3PoolOperate/components/InputStepCounter.tsx:129
 msgid "{tokenB} per {tokenA}"
 msgstr ""
 
@@ -123,6 +142,10 @@ msgstr ""
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:343
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:336
 msgid "By adding liquidity you’ll earn <0>{0}</0> of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:158
+msgid "Allocate 100% of your votes above."
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:159
@@ -148,10 +171,15 @@ msgstr ""
 msgid "Unstaking"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/CardList.tsx:203
+#: src/widgets/ve33/Ve33LockList/TableList.tsx:50
+msgid "Locked Amount"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:452
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:346
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:716
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:91
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:92
 msgid "Adding"
 msgstr ""
 
@@ -161,6 +189,10 @@ msgstr ""
 
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:233
 msgid "Ended"
+msgstr ""
+
+#: src/widgets/ve33/hooks/useVe33V3StakeApproveStatus.ts:72
+msgid "Failed to Approve:"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:389
@@ -183,12 +215,18 @@ msgstr ""
 msgid "Select Pool"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockOperate/index.tsx:148
+msgid "Lock More, Vote Stronger, Earn More"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:43
 msgid "he slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1."
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:539
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:65
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionManage.tsx:344
+#: src/widgets/ve33/Ve33V3PoolOperate/components/ReviewModal.tsx:78
 msgid "Selected Range"
 msgstr ""
 
@@ -198,16 +236,49 @@ msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:372
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:266
+#: src/widgets/ve33/Ve33V3PoolOperate/hooks/useRemoveVe33V3Liquidity.ts:48
 msgid "Remove Liquidity"
+msgstr ""
+
+#: src/widgets/ve33/Ve33IncentiveDetail/PoolInfo.tsx:179
+#: src/widgets/ve33/Ve33IncentiveDetail/PoolInfo.tsx:180
+#: src/widgets/ve33/Ve33PoolDetail/PoolInfo.tsx:179
+#: src/widgets/ve33/Ve33PoolDetail/PoolInfo.tsx:180
+msgid "Total {0}"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:474
 msgid "Search by address"
 msgstr ""
 
+#: src/widgets/ve33/hooks/useVe33V2UnStake.ts:46
+#: src/widgets/ve33/hooks/useVe33V3UnStake.ts:49
+msgid "Failed to unStake:"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:45
 #: src/widgets/PoolWidget/PoolCreate/index.tsx:335
 msgid "Asset ratio within the pool"
+msgstr ""
+
+#: src/widgets/ve33/hooks/useAddIncentive.ts:85
+msgid "Failed to Add incentive:"
+msgstr ""
+
+#: src/widgets/ve33/Ve33IncentiveDetail/Dashboard.tsx:62
+msgid "By providing an incentive, you draw more liquidity providers to this pool."
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/widgets.tsx:51
+msgid "Fees + Incentives APR"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockOperate/index.tsx:252
+msgid "Locking will give you an NFT, referred to as a veNFT. You can increase the Lock amount or extend the Lock time at any point after."
+msgstr ""
+
+#: src/widgets/ve33/Ve33IncentiveList/index.tsx:151
+msgid "Warning: The incentivize feature is mainly used by protocols. Please make sure you understand how it works before using it as any transaction is final and cannot be reverted."
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:118
@@ -248,16 +319,30 @@ msgstr "{0} 已确认"
 msgid "Creation Time"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:106
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:529
+msgid "Extend"
+msgstr ""
+
 #: src/components/Swap/index.tsx:527
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
+#: src/widgets/ve33/Ve33V3PoolOperate/hooks/usePriceRangeRatioSelect.ts:41
+msgid "Narrow"
+msgstr ""
+
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:401
+#: src/widgets/ve33/Ve33V3PoolOperate/Ve33V3AddLiquidity.tsx:226
 msgid "Set price range"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:434
 msgid "Full range"
+msgstr ""
+
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:151
+msgid "Unstake position"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:594
@@ -278,7 +363,12 @@ msgid "The token amount is calculated by initial price."
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:159
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionSelectedRangePreview.tsx:154
 msgid "Max price"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/MergeDialog.tsx:277
+msgid "*Merging an Auto Max-Lockis not allowed."
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/components/StakingRules.tsx:91
@@ -288,6 +378,24 @@ msgstr ""
 #: src/components/Swap/index.tsx:428
 msgid "Current price impact"
 msgstr "当前价格冲击"
+
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:529
+msgid "Enable Auto Max-Lock"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:251
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:371
+msgid "Est. Rewards"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:147
+#: src/widgets/ve33/VotePoolList/widgets.tsx:601
+msgid "Locked Until"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/widgets.tsx:141
+msgid "Tokens"
+msgstr ""
 
 #: src/utils/time.ts:17
 msgid "Minute"
@@ -311,7 +419,8 @@ msgstr "小时"
 msgid "Pricing Model"
 msgstr ""
 
-#: src/widgets/ve33/Ve33PoolOperate/index.tsx:198
+#: src/widgets/ve33/Ve33V2PoolOperate/index.tsx:203
+#: src/widgets/ve33/Ve33V3PoolOperate/index.tsx:181
 msgid "Gauge Adress"
 msgstr ""
 
@@ -323,7 +432,16 @@ msgstr ""
 
 #: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:146
 #: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:213
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:55
+#: src/widgets/ve33/Ve33IncentiveDetail/PoolInfo.tsx:151
+#: src/widgets/ve33/Ve33IncentiveList/CardList.tsx:65
+#: src/widgets/ve33/Ve33IncentiveList/TableList.tsx:39
+#: src/widgets/ve33/Ve33PoolDetail/PoolInfo.tsx:151
+#: src/widgets/ve33/Ve33PoolList/CardList.tsx:87
+#: src/widgets/ve33/Ve33PoolList/CardList.tsx:108
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:56
+#: src/widgets/ve33/Ve33V3PoolOperate/components/RangeRatioSelect.tsx:97
+#: src/widgets/ve33/VotePoolList/CardList.tsx:97
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:357
 msgid "APR"
 msgstr ""
 
@@ -332,6 +450,7 @@ msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
 #: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:211
+#: src/widgets/ve33/Ve33V3PoolOperate/components/LiquidityChartRangeInput/index.tsx:183
 msgid "Liquidity data not available."
 msgstr ""
 
@@ -359,7 +478,10 @@ msgstr "费用包括过跨链桥和交易的手续费，不包括 gas 费。"
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/SlippageCoefficientSetting.tsx:240
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:74
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:197
-#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:251
+#: src/widgets/ve33/Ve33LockList/ClaimLockDialog.tsx:121
+#: src/widgets/ve33/Ve33LockList/MergeDialog.tsx:268
+#: src/widgets/ve33/Ve33V2PoolOperate/components/V2ConfirmDialog.tsx:251
+#: src/widgets/ve33/Ve33V3PoolOperate/components/ReviewModal.tsx:91
 msgid "Confirm"
 msgstr "确认"
 
@@ -374,6 +496,9 @@ msgstr ""
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:109
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:167
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:221
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionSelectedRangePreview.tsx:103
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionSelectedRangePreview.tsx:162
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionSelectedRangePreview.tsx:217
 msgid "{0} per {1}"
 msgstr ""
 
@@ -425,8 +550,20 @@ msgstr ""
 msgid "The liquidity of DODO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only."
 msgstr ""
 
+#: src/widgets/ve33/Ve33IncentiveDetail/AddIncentiveDialog.tsx:131
+msgid "Incentive"
+msgstr ""
+
+#: src/widgets/ve33/Ve33IncentiveDetail/Dashboard.tsx:72
+msgid "Current votes"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:44
 msgid "FeeRevenue"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/MergeDialog.tsx:229
+msgid "Claim Lock#{0} rewards before merge."
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:58
@@ -454,7 +591,7 @@ msgid "Active"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:56
-#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:60
+#: src/widgets/ve33/Ve33V2PoolOperate/components/V2ConfirmDialog.tsx:60
 msgid "You will receive"
 msgstr ""
 
@@ -479,8 +616,10 @@ msgstr ""
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:388
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:297
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:595
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:52
-#: src/widgets/ve33/VotePoolList/TableList.tsx:47
+#: src/widgets/ve33/Ve33IncentiveList/TableList.tsx:36
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:53
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:248
+#: src/widgets/ve33/VotePoolList/TableList.tsx:48
 msgid "Pair"
 msgstr ""
 
@@ -492,11 +631,17 @@ msgstr "秒"
 msgid "Yes, I am sure"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:478
+#: src/widgets/ve33/Ve33LockOperate/index.tsx:234
+msgid "voting power"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:199
 msgid "Add liquidity to obtain LP tokens for mining"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:563
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionManage.tsx:371
 msgid "Add more liquidity"
 msgstr ""
 
@@ -506,6 +651,18 @@ msgstr "此众筹池已被其他地址结算"
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/LiquidityProvidersTable.tsx:94
 msgid "Liquidity Supplied"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/ClaimLockDialog.tsx:102
+msgid "until"
+msgstr ""
+
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:186
+msgid "Stake position"
+msgstr ""
+
+#: src/widgets/ve33/hooks/useVe33V3StakeApproveStatus.ts:31
+msgid "Approve {0}-{1} LP"
 msgstr ""
 
 #: src/components/Swap/components/TokenCard/BalanceText.tsx:84
@@ -551,6 +708,8 @@ msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:30
 #: src/widgets/PoolWidget/AMMV3/components/RemoveButton.tsx:32
+#: src/widgets/ve33/Ve33V3PoolOperate/components/Badge/RangeBadge.tsx:30
+#: src/widgets/ve33/Ve33V3PoolOperate/components/RemoveButton.tsx:58
 msgid "Closed"
 msgstr ""
 
@@ -563,6 +722,10 @@ msgstr ""
 msgid "Results in a relatively fixed price."
 msgstr ""
 
+#: src/widgets/ve33/Ve33PoolDetail/index.tsx:179
+msgid "Create position"
+msgstr ""
+
 #: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:72
 #: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:88
 msgid "Approving {0}..."
@@ -571,6 +734,8 @@ msgstr ""
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:552
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:213
 #: src/widgets/PoolWidget/AMMV3/components/PositionViewCard.tsx:233
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionSelectedRangePreview.tsx:209
+#: src/widgets/ve33/Ve33V3PoolOperate/Ve33V3AddLiquidity.tsx:273
 msgid "Current price"
 msgstr ""
 
@@ -588,7 +753,13 @@ msgstr ""
 msgid "Daily Rewards"
 msgstr ""
 
-#: src/widgets/ve33/VotePoolList/TableList.tsx:59
+#: src/widgets/ve33/Ve33PoolDetail/MyAssets.tsx:268
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:595
+msgid "Trading Fees"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/CardList.tsx:114
+#: src/widgets/ve33/VotePoolList/TableList.tsx:60
 msgid "Incentives"
 msgstr ""
 
@@ -624,23 +795,33 @@ msgstr ""
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:481
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:174
-#: src/widgets/ve33/Ve33PoolOperate/hooks/useVe33V2AddLiquidity.ts:140
+#: src/widgets/ve33/Ve33V2PoolOperate/hooks/useVe33V2AddLiquidity.ts:140
+#: src/widgets/ve33/Ve33V3PoolOperate/components/ReviewModal.tsx:48
 msgid "Add liquidity"
 msgstr ""
 
+#: src/widgets/ve33/hooks/useVe33V2UnStake.ts:27
+#: src/widgets/ve33/hooks/useVe33V3UnStake.ts:30
+#: src/widgets/ve33/Ve33PoolDetail/MyAssets.tsx:231
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:576
+#: src/widgets/ve33/Ve33StakeDialog.tsx:78
+msgid "UnStake"
+msgstr ""
+
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:101
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionSelectedRangePreview.tsx:95
 msgid "Min price"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:229
-#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:223
+#: src/widgets/ve33/Ve33V2PoolOperate/components/V2ConfirmDialog.tsx:223
 msgid "Pool address"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:198
 #: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:54
 #: src/widgets/PoolWidget/AMMV3/components/PositionPreview.tsx:122
-#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:192
+#: src/widgets/ve33/Ve33V2PoolOperate/components/V2ConfirmDialog.tsx:192
 msgid "Fee tier"
 msgstr ""
 
@@ -648,8 +829,16 @@ msgstr ""
 msgid "Are you sure swapping to another chain?"
 msgstr "是否确认切换到另一个链？"
 
+#: src/widgets/ve33/Ve33LockList/hooks/useMergeLock.ts:57
+msgid "Failed to Merge:"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/index.tsx:25
 msgid "Swaps"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:283
+msgid "Depositing into the lock will increase your voting power. You can also extend the lock time."
 msgstr ""
 
 #: src/components/WithExecutionDialog/index.tsx:320
@@ -663,6 +852,10 @@ msgstr ""
 
 #: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:110
 msgid "PMM Pool"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/MergeDialog.tsx:136
+msgid "Before"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -715,9 +908,20 @@ msgstr "跨链费用不足，至少需要 {0} {1} "
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:300
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:345
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:604
-#: src/widgets/ve33/Ve33PoolList/TableList.tsx:58
-#: src/widgets/ve33/VotePoolList/TableList.tsx:53
+#: src/widgets/ve33/Ve33IncentiveDetail/PoolInfo.tsx:106
+#: src/widgets/ve33/Ve33IncentiveList/CardList.tsx:90
+#: src/widgets/ve33/Ve33IncentiveList/TableList.tsx:42
+#: src/widgets/ve33/Ve33PoolDetail/PoolInfo.tsx:106
+#: src/widgets/ve33/Ve33PoolList/CardList.tsx:94
+#: src/widgets/ve33/Ve33PoolList/CardList.tsx:127
+#: src/widgets/ve33/Ve33PoolList/TableList.tsx:59
+#: src/widgets/ve33/VotePoolList/CardList.tsx:108
+#: src/widgets/ve33/VotePoolList/TableList.tsx:54
 msgid "TVL"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/hooks/useIncreaseLock.ts:59
+msgid "Failed to Increase:"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:187
@@ -745,6 +949,12 @@ msgstr "在"
 msgid "Suitable for stablecoins with price fluctuations within 2%"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/CardList.tsx:90
+#: src/widgets/ve33/Ve33LockList/ClaimLockDialog.tsx:28
+#: src/widgets/ve33/Ve33LockList/TableList.tsx:124
+msgid "Claim & Lock"
+msgstr ""
+
 #: src/components/Swap/components/ReviewDialog.tsx:363
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
@@ -761,7 +971,10 @@ msgstr ""
 msgid "The fee rate must be between 0.01% to 10%"
 msgstr ""
 
-#: src/widgets/ve33/VotePoolList/TableList.tsx:62
+#: src/widgets/ve33/VotePoolList/CardList.tsx:122
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:250
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:368
+#: src/widgets/ve33/VotePoolList/TableList.tsx:63
 msgid "Total Vote"
 msgstr ""
 
@@ -786,6 +999,19 @@ msgstr "天"
 msgid "minutes"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/CardList.tsx:173
+#: src/widgets/ve33/Ve33LockList/MergeDialog.tsx:319
+#: src/widgets/ve33/Ve33LockList/TableList.tsx:44
+#: src/widgets/ve33/Ve33LockList/TableList.tsx:191
+#: src/widgets/ve33/Ve33LockOperate/hooks/useCreateLock.ts:45
+#: src/widgets/ve33/VotePoolList/widgets.tsx:561
+msgid "Lock"
+msgstr ""
+
+#: src/widgets/ve33/Ve33IncentiveDetail/AddIncentiveDialog.tsx:154
+msgid "Epoch ends in"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:46
 msgid "You can set the minimum selling price for single-token pools."
 msgstr ""
@@ -794,8 +1020,12 @@ msgstr ""
 msgid "Invalid price input"
 msgstr ""
 
-#: src/widgets/ve33/Ve33PoolOperate/hooks/useVe33V2RemoveLiquidity.ts:137
+#: src/widgets/ve33/Ve33V2PoolOperate/hooks/useVe33V2RemoveLiquidity.ts:137
 msgid "Failed to remove"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/widgets.tsx:136
+msgid "and"
 msgstr ""
 
 #: src/utils/time.ts:27
@@ -810,6 +1040,23 @@ msgstr ""
 msgid "Deposit ratio is determined by the current assets ratio in the pool. The ratio does not represent the exchange price"
 msgstr ""
 
+#: src/widgets/ve33/Ve33V3PoolOperate/hooks/usePriceRangeRatioSelect.ts:43
+msgid "Wide"
+msgstr ""
+
+#: src/widgets/ve33/hooks/useAddIncentive.ts:63
+#: src/widgets/ve33/Ve33IncentiveDetail/index.tsx:171
+msgid "Add incentive"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/index.tsx:650
+msgid "Total {selectedPoolListLen}"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/widgets.tsx:590
+msgid "Voted"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/components/UnknownUSDPopover.tsx:22
 msgid "Insufficient market depth to capture the dollar value of [ {{symbols}} ]"
@@ -821,6 +1068,7 @@ msgid "Invite"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:40
+#: src/widgets/ve33/Ve33V3PoolOperate/components/Badge/RangeBadge.tsx:40
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 msgstr ""
 
@@ -841,6 +1089,10 @@ msgstr "额外手续费"
 msgid "Pegged"
 msgstr ""
 
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:94
+msgid "Set vote power"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:634
 msgid "Equilibrium target"
 msgstr ""
@@ -858,13 +1110,20 @@ msgstr ""
 #: src/widgets/MiningWidget/OperateArea/index.tsx:72
 #: src/widgets/MiningWidget/OperateArea/StakeButton.tsx:80
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:451
+#: src/widgets/ve33/hooks/useVe33V2Stake.ts:27
+#: src/widgets/ve33/hooks/useVe33V3Stake.ts:30
+#: src/widgets/ve33/Ve33PoolDetail/MyAssets.tsx:204
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:549
+#: src/widgets/ve33/Ve33StakeDialog.tsx:77
+#: src/widgets/ve33/Ve33StakeDialog.tsx:342
+#: src/widgets/ve33/Ve33StakeDialog.tsx:629
 msgid "Stake"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:281
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:568
-#: src/widgets/ve33/Ve33PoolOperate/AddPoolOperate.tsx:233
-#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:425
+#: src/widgets/ve33/Ve33V2PoolOperate/AddPoolOperate.tsx:233
+#: src/widgets/ve33/Ve33V2PoolOperate/RemovePoolOperate.tsx:425
 msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 msgstr ""
 
@@ -874,7 +1133,13 @@ msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:496
+#: src/widgets/ve33/Ve33V3PoolOperate/Ve33V3AddLiquidity.tsx:322
 msgid "Invalid range selected. The min price must be lower than the max price."
+msgstr ""
+
+#: src/widgets/ve33/hooks/useVe33V2Stake.ts:46
+#: src/widgets/ve33/hooks/useVe33V3Stake.ts:49
+msgid "Failed to Stake:"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/LiquidityProvidersTable.tsx:91
@@ -916,6 +1181,10 @@ msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格
 
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:228
 msgid "Set pool parameters"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:414
+msgid "When activated, it sets the lock to maximum unlock time, until disabled. Once disabled, the regular vesting unlock time will apply. Maximum unlock time gives a 1-to-1 voting power to the amount of locked tokens."
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/components/Ratio.tsx:251
@@ -977,12 +1246,18 @@ msgstr ""
 msgid "Owner"
 msgstr ""
 
+#: src/widgets/ve33/Ve33PoolDetail/MyAssets.tsx:296
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:621
+msgid "Emissions"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:36
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:278
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:593
+#: src/widgets/ve33/Ve33V3PoolOperate/Ve33V3AddLiquidity.tsx:367
 msgid "Deposit amounts"
 msgstr ""
 
@@ -991,12 +1266,18 @@ msgid "Disable Indirect Routing"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:23
+#: src/widgets/ve33/Ve33V3PoolOperate/components/Badge/RangeBadge.tsx:23
 msgid "Your position has 0 liquidity, and is not earning fees."
 msgstr ""
 
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/my-created/OperateArea.tsx:266
 msgid "Mining Pool"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:252
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:375
+msgid "My Vote"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/TokenPairSelect.tsx:121
@@ -1031,6 +1312,10 @@ msgstr "没有报价"
 msgid "My pool share"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/MergeDialog.tsx:198
+msgid "After"
+msgstr ""
+
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:122
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:112
 msgid "Learn More"
@@ -1049,6 +1334,11 @@ msgstr ""
 msgid "No LP pools match your criteria"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/CardList.tsx:223
+#: src/widgets/ve33/Ve33LockList/TableList.tsx:56
+msgid "Unlock Date"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:220
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:560
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:260
@@ -1059,6 +1349,7 @@ msgstr ""
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:305
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:25
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:140
+#: src/widgets/ve33/Ve33V3PoolOperate/hooks/useAddVe33V3Liquidity.ts:54
 msgid "Add Liquidity"
 msgstr ""
 
@@ -1070,6 +1361,10 @@ msgstr ""
 #: src/widgets/MiningWidget/OperateArea/index.tsx:73
 #: src/widgets/MiningWidget/OperateArea/UnstakeButton.tsx:70
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:452
+#: src/widgets/ve33/Ve33PoolDetail/MyAssets.tsx:197
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:541
+#: src/widgets/ve33/Ve33StakeDialog.tsx:494
+#: src/widgets/ve33/Ve33StakeDialog.tsx:733
 msgid "Unstake"
 msgstr ""
 
@@ -1083,6 +1378,7 @@ msgid "If there are no participants before the end, the rewards cannot be taken 
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:189
+#: src/widgets/ve33/Ve33V3PoolOperate/components/LiquidityChartRangeInput/index.tsx:161
 msgid "Your position will appear here."
 msgstr ""
 
@@ -1092,6 +1388,7 @@ msgstr "获取价格中..."
 
 #: src/hooks/Token/useGetTokenStatus.ts:60
 #: src/hooks/Token/useTokenStatus.ts:134
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:173
 msgid "Reset"
 msgstr "重置"
 
@@ -1106,6 +1403,10 @@ msgstr ""
 #: src/widgets/PoolWidget/PoolDetail/components/Overview.tsx:98
 #: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:151
 msgid "LP Fee"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/index.tsx:62
+msgid "My Locks"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/RatioSetting.tsx:208
@@ -1123,7 +1424,7 @@ msgid "The initial price needs to be greater than {min} and less than 100,000,00
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePercentageRemove.ts:98
-#: src/widgets/ve33/Ve33PoolOperate/hooks/usePercentageRemove.ts:95
+#: src/widgets/ve33/Ve33V2PoolOperate/hooks/usePercentageRemove.ts:95
 msgid "Quantity model"
 msgstr ""
 
@@ -1144,10 +1445,18 @@ msgstr ""
 msgid "Confirm Cross Chain"
 msgstr "确认跨链交易"
 
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:249
+msgid "VAPR"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/components/Swap/components/ReviewDialog.tsx:424
 msgid "Price impact reaches <0>{priceImpact}</0>%, accept the quote"
 msgstr "价格冲击为<0>{priceImpact}</0>%, 仍接受此报价"
+
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:248
+msgid "Add To Lock"
+msgstr ""
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:324
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:403
@@ -1175,13 +1484,23 @@ msgstr ""
 msgid "The creator of the liquidity pool can adjust the liquidity distribution by modifying the market-making price parameters. <0>Learn more</0>"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/hooks/useTransferLock.ts:46
+msgid "Transfer Lock"
+msgstr ""
+
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:389
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:523
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionManage.tsx:214
+#: src/widgets/ve33/Ve33V3PoolOperate/Ve33V3AddLiquidity.tsx:150
 msgid "Invalid pair"
 msgstr ""
 
 #: src/components/AutoButton.tsx:50
 msgid "Auto"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/hooks/useTransferLock.ts:65
+msgid "Failed to Transfer:"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -1195,6 +1514,10 @@ msgstr ""
 #: src/widgets/MiningWidget/MiningList/my-created/MyCreatedMining.tsx:131
 #: src/widgets/MiningWidget/MiningList/my-created/RewardCard.tsx:132
 msgid "Rewards"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/ClaimLockDialog.tsx:99
+msgid "into Lock"
 msgstr ""
 
 #: src/components/DateTimePickerInput/components/MobileDateTimePicker.tsx:237
@@ -1225,7 +1548,7 @@ msgstr "预览跨链交易"
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:225
 #: src/widgets/PoolWidget/AMMV2Create/Ratio.tsx:213
-#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:219
+#: src/widgets/ve33/Ve33V2PoolOperate/components/V2ConfirmDialog.tsx:219
 msgid "Share of pool"
 msgstr ""
 
@@ -1316,9 +1639,25 @@ msgstr "设置"
 msgid "Creator"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:576
+msgid "Transferring a lock will also transfer any rewards and rebases! Before continuing, please make sure you have claimed all available rewards"
+msgstr ""
+
 #: src/widgets/MiningWidget/MiningCreate/components/StepTitle.tsx:49
 #: src/widgets/MiningWidget/MiningCreate/index.tsx:139
 msgid "Reward Rules"
+msgstr ""
+
+#: src/widgets/ve33/Ve33IncentiveDetail/PoolInfo.tsx:328
+#: src/widgets/ve33/Ve33IncentiveDetail/PoolInfo.tsx:329
+#: src/widgets/ve33/Ve33PoolDetail/PoolInfo.tsx:328
+#: src/widgets/ve33/Ve33PoolDetail/PoolInfo.tsx:329
+msgid "My {0}"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/index.tsx:99
+#: src/widgets/ve33/Ve33LockList/MergeDialog.tsx:89
+msgid "Merge"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:168
@@ -1330,11 +1669,12 @@ msgstr ""
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:269
 #: src/widgets/PoolWidget/AMMV3/components/PositionAmountPreview.tsx:195
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:400
+#: src/widgets/ve33/Ve33V3PoolOperate/index.tsx:283
 msgid "Details"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/components/OperateBtn.tsx:69
-#: src/widgets/ve33/Ve33PoolOperate/components/OperateBtn.tsx:69
+#: src/widgets/ve33/Ve33V2PoolOperate/components/OperateBtn.tsx:69
 msgid "Pending"
 msgstr ""
 
@@ -1361,8 +1701,22 @@ msgstr "秒"
 msgid "Single-Token Stake Mining"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/CardList.tsx:236
+#: src/widgets/ve33/Ve33LockList/TableList.tsx:59
+msgid "Rebases"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:69
 msgid "Suitable for most situations."
+msgstr ""
+
+#: src/widgets/ve33/hooks/useVe33V2ClaimEmissions.ts:49
+#: src/widgets/ve33/hooks/useVe33V2ClaimTradingFees.ts:50
+#: src/widgets/ve33/hooks/useVe33V3ClaimEmissions.ts:49
+#: src/widgets/ve33/hooks/useVe33V3ClaimTradingFees.ts:68
+#: src/widgets/ve33/Ve33LockList/hooks/useClaimBribes.ts:61
+#: src/widgets/ve33/Ve33LockList/hooks/useClaimRebases.ts:53
+msgid "Failed to Claim:"
 msgstr ""
 
 #: src/components/List/FailedList.tsx:47
@@ -1385,6 +1739,8 @@ msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:132
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:191
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionSelectedRangePreview.tsx:126
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionSelectedRangePreview.tsx:186
 msgid "Your position will be 100% composed of {0} at this price"
 msgstr ""
 
@@ -1408,6 +1764,10 @@ msgstr "交易详情"
 #: src/hooks/Submission/getExecutionErrorMsg.ts:48
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
+
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:435
+msgid "Extend to"
+msgstr ""
 
 #: src/components/Swap/components/SwapSettingsDialog/index.tsx:297
 msgid "Checking this option means that the routing algorithm will only route to liquidity pools between the two tokens in the trading pair and will ignore routes with any intermediary tokens."
@@ -1437,8 +1797,8 @@ msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:154
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:177
-#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:148
-#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:171
+#: src/widgets/ve33/Ve33V2PoolOperate/components/V2ConfirmDialog.tsx:148
+#: src/widgets/ve33/Ve33V2PoolOperate/components/V2ConfirmDialog.tsx:171
 msgid "{0} deposited"
 msgstr ""
 
@@ -1448,7 +1808,8 @@ msgstr ""
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:454
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:613
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:430
-#: src/widgets/ve33/Ve33PoolOperate/index.tsx:277
+#: src/widgets/ve33/Ve33V2PoolOperate/index.tsx:282
+#: src/widgets/ve33/Ve33V3PoolOperate/components/MyLiquidity.tsx:55
 msgid "My Liquidity"
 msgstr ""
 
@@ -1457,11 +1818,11 @@ msgid "For"
 msgstr "对于"
 
 #: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:52
-#: src/widgets/ve33/Ve33PoolOperate/components/ComparePrice.tsx:52
+#: src/widgets/ve33/Ve33V2PoolOperate/components/ComparePrice.tsx:52
 msgid "{lqAndDodoCompareText} Price Difference"
 msgstr ""
 
-#: src/widgets/ve33/VotePoolList/TableList.tsx:50
+#: src/widgets/ve33/VotePoolList/TableList.tsx:51
 msgid "vAPR"
 msgstr ""
 
@@ -1475,8 +1836,13 @@ msgstr ""
 msgid "You have not create any mining"
 msgstr ""
 
-#: src/widgets/ve33/Ve33PoolOperate/index.tsx:177
+#: src/widgets/ve33/Ve33V2PoolOperate/index.tsx:182
+#: src/widgets/ve33/Ve33V3PoolOperate/index.tsx:160
 msgid "Pool Adress"
+msgstr ""
+
+#: src/widgets/ve33/Ve33IncentiveDetail/AddIncentiveDialog.tsx:211
+msgid "I understand I will NOT be able to withdraw incentives"
 msgstr ""
 
 #: src/components/chart/i18n.ts:27
@@ -1508,12 +1874,16 @@ msgstr ""
 msgid "Additional routing fees set by the Widget user"
 msgstr "由 Widget 设置的额外路由费用"
 
+#: src/widgets/ve33/Ve33LockOperate/index.tsx:202
+msgid "Locking for"
+msgstr ""
+
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:344
 msgid "The start time is too soon, please set a later time"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:61
-#: src/widgets/ve33/Ve33PoolOperate/components/ComparePrice.tsx:61
+#: src/widgets/ve33/Ve33V2PoolOperate/components/ComparePrice.tsx:61
 msgid "Current liquidity pool token price"
 msgstr ""
 
@@ -1534,16 +1904,25 @@ msgstr "最大滑点不能超过50%"
 msgid "For those who are looking to sell tokens and only need ask-side liquidity."
 msgstr ""
 
+#: src/widgets/ve33/VotePoolList/widgets.tsx:45
+msgid "Fees rewards + Incentives rewards"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:177
 msgid "Price"
 msgstr ""
 
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:391
+msgid "In Range"
+msgstr ""
+
 #: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:34
+#: src/widgets/ve33/Ve33V3PoolOperate/components/Badge/RangeBadge.tsx:34
 msgid "The price of this pool is within your selected range. Your position is currently earning fees."
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:58
-#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:62
+#: src/widgets/ve33/Ve33V2PoolOperate/components/V2ConfirmDialog.tsx:62
 msgid "You are creating a pool"
 msgstr ""
 
@@ -1560,15 +1939,25 @@ msgstr ""
 msgid "Minutes"
 msgstr "分钟"
 
+#: src/widgets/ve33/Ve33V3PoolOperate/hooks/usePriceRangeRatioSelect.ts:42
+msgid "Common"
+msgstr ""
+
 #: src/components/TextSwitch.tsx:61
 msgid "Off"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:505
+msgid "You can extend the lock or increase the lock amount. These actions will increase your voting power. The maximum lock time is 1 years!"
+msgstr ""
+
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:491
+#: src/widgets/ve33/Ve33V3PoolOperate/Ve33V3AddLiquidity.tsx:317
 msgid "Your position will not earn fees or be used in trades until the market price moves into your range."
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:554
+#: src/widgets/ve33/Ve33V3PoolOperate/Ve33V3AddLiquidity.tsx:282
 msgid "per"
 msgstr ""
 
@@ -1578,8 +1967,8 @@ msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:275
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:562
-#: src/widgets/ve33/Ve33PoolOperate/AddPoolOperate.tsx:227
-#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:419
+#: src/widgets/ve33/Ve33V2PoolOperate/AddPoolOperate.tsx:227
+#: src/widgets/ve33/Ve33V2PoolOperate/RemovePoolOperate.tsx:419
 msgid "Confirm submission"
 msgstr ""
 
@@ -1605,12 +1994,17 @@ msgstr ""
 msgid "Mining Type"
 msgstr ""
 
+#: src/widgets/ve33/Ve33PoolDetail/MyAssets.tsx:157
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:500
+msgid "Total liquidity"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:548
 msgid "Settler"
 msgstr ""
 
 #: src/widgets/PoolWidget/hooks/useAMMV2RemoveLiquidity.ts:164
-#: src/widgets/ve33/Ve33PoolOperate/hooks/useVe33V2RemoveLiquidity.ts:144
+#: src/widgets/ve33/Ve33V2PoolOperate/hooks/useVe33V2RemoveLiquidity.ts:144
 msgid "Remove liquidity"
 msgstr ""
 
@@ -1720,6 +2114,10 @@ msgstr "交易被拒绝."
 msgid "\"Created by {0}"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:128
+msgid "Lock #{0}"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:85
 msgid "Results in a more volatile price."
 msgstr ""
@@ -1746,7 +2144,7 @@ msgstr ""
 
 #: src/components/Swap/SwapOrderHistory/index.tsx:105
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:204
-#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:198
+#: src/widgets/ve33/Ve33V2PoolOperate/components/V2ConfirmDialog.tsx:198
 msgid "Rate"
 msgstr ""
 
@@ -1759,9 +2157,21 @@ msgstr ""
 msgid "fee tier"
 msgstr ""
 
+#: src/widgets/ve33/Ve33V3PoolOperate/hooks/usePriceRangeRatioSelect.ts:44
+msgid "Full"
+msgstr ""
+
 #: src/hooks/Submission/getExecutionErrorMsg.ts:66
 msgid "Service update, please wait and try again"
 msgstr "服务升级中, 请等待或重试"
+
+#: src/widgets/ve33/Ve33LockList/hooks/useExtendLock.ts:49
+msgid "Extend Lock"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockOperate/index.tsx:117
+msgid "My total ve{0}"
+msgstr ""
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:44
 msgid "Gas price is too low, please adjust in your wallet and try again"
@@ -1781,6 +2191,7 @@ msgid "Estimated transaction time"
 msgstr "预计交易时长"
 
 #: src/widgets/PoolWidget/AMMV3/components/ClaimButton.tsx:28
+#: src/widgets/ve33/Ve33V3PoolOperate/components/ClaimButton.tsx:52
 msgid "Collect fees"
 msgstr ""
 
@@ -1814,10 +2225,18 @@ msgstr ""
 msgid "Token Amount"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/hooks/useIncreaseLock.ts:40
+msgid "Increase Lock"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:20
 #: src/widgets/PoolWidget/PoolCreate/index.tsx:246
 #: src/widgets/PoolWidget/PoolModify/index.tsx:237
 msgid "Select Pool Version"
+msgstr ""
+
+#: src/widgets/ve33/Ve33IncentiveList/index.tsx:189
+msgid "Available Pools"
 msgstr ""
 
 #: src/widgets/MiningWidget/hooks/useClaimMiningSubmit.ts:46
@@ -1825,11 +2244,27 @@ msgstr ""
 #: src/widgets/MiningWidget/MiningList/operate-area/index.tsx:204
 #: src/widgets/MiningWidget/OperateArea/index.tsx:74
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:453
+#: src/widgets/ve33/hooks/useVe33V2ClaimEmissions.ts:30
+#: src/widgets/ve33/hooks/useVe33V2ClaimTradingFees.ts:31
+#: src/widgets/ve33/hooks/useVe33V3ClaimEmissions.ts:30
+#: src/widgets/ve33/hooks/useVe33V3ClaimTradingFees.ts:49
+#: src/widgets/ve33/Ve33LockList/CardList.tsx:90
+#: src/widgets/ve33/Ve33LockList/ClaimLockDialog.tsx:28
+#: src/widgets/ve33/Ve33LockList/hooks/useClaimBribes.ts:42
+#: src/widgets/ve33/Ve33LockList/hooks/useClaimRebases.ts:34
+#: src/widgets/ve33/Ve33LockList/MergeDialog.tsx:249
+#: src/widgets/ve33/Ve33LockList/TableList.tsx:124
+#: src/widgets/ve33/Ve33PoolDetail/MyAssets.tsx:279
+#: src/widgets/ve33/Ve33PoolDetail/MyAssets.tsx:305
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:604
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:630
 msgid "Claim"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:48
 #: src/widgets/PoolWidget/AMMV3/components/InRangeDot.tsx:12
+#: src/widgets/ve33/Ve33V3PoolOperate/components/Badge/RangeBadge.tsx:48
+#: src/widgets/ve33/Ve33V3PoolOperate/components/InRangeDot.tsx:12
 msgid "Out of range"
 msgstr ""
 
@@ -1848,16 +2283,30 @@ msgstr ""
 
 #: src/components/Swap/index.tsx:706
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:534
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionManage.tsx:217
+#: src/widgets/ve33/Ve33V3PoolOperate/Ve33V3AddLiquidity.tsx:153
 msgid "Enter an amount"
 msgstr "输入代币数量"
+
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:395
+msgid "Auto Max-Lock Mode"
+msgstr ""
 
 #: src/widgets/PoolWidget/PoolDetail/components/TotalLiquidity.tsx:180
 msgid "Ratio"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/index.tsx:78
+msgid "{selectedLen} Lock selected"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/MergeDialog.tsx:200
+msgid "Merging two locks will inherit the longest lock time of the two and will increase the final Lock (veNFT) voting power by adding up the two underlying locked amounts based on the new lock time."
+msgstr ""
+
 #: src/components/Swap/index.tsx:700
 #: src/components/TokenPairStatusButton.tsx:45
-#: src/components/TokenStatusButton.tsx:31
+#: src/components/TokenStatusButton.tsx:33
 msgid "Approving"
 msgstr "授权中"
 
@@ -1874,6 +2323,7 @@ msgid "Liquidity Providers"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/RangeSelector.tsx:98
+#: src/widgets/ve33/Ve33V3PoolOperate/components/RangeSelector.tsx:94
 msgid "High price"
 msgstr ""
 
@@ -1896,6 +2346,10 @@ msgstr "发生异常错误."
 msgid "Daily Rewards"
 msgstr ""
 
+#: src/widgets/ve33/VotePoolList/hooks/useVoteVe33.ts:61
+msgid "Failed to Vote:"
+msgstr ""
+
 #: src/utils/time.ts:7
 msgid "Second"
 msgstr "秒"
@@ -1904,9 +2358,17 @@ msgstr "秒"
 msgid "Total Swap Volume"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/hooks/useExtendLock.ts:68
+msgid "Failed to Extend:"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/hooks/useMergeLock.ts:38
+msgid "Merge Lock"
+msgstr ""
+
 #: src/components/Swap/SwapOrderHistory/index.tsx:99
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:458
-#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:323
+#: src/widgets/ve33/Ve33V2PoolOperate/RemovePoolOperate.tsx:323
 msgid "Receive"
 msgstr ""
 
@@ -1919,9 +2381,21 @@ msgstr ""
 msgid "AMM V2 Position"
 msgstr ""
 
+#: src/widgets/ve33/Ve33IncentiveDetail/AddIncentiveDialog.tsx:253
+#: src/widgets/ve33/Ve33IncentiveList/CardList.tsx:103
+#: src/widgets/ve33/Ve33IncentiveList/TableList.tsx:100
+msgid "Add Incentive"
+msgstr ""
+
 #: src/components/Swap/components/ReviewDialog.tsx:448
 msgid "Confirm swap"
 msgstr "确认交易"
+
+#: src/widgets/ve33/VotePoolList/hooks/useVoteVe33.ts:42
+#: src/widgets/ve33/VotePoolList/index.tsx:229
+#: src/widgets/ve33/VotePoolList/index.tsx:691
+msgid "Vote"
+msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:78
 msgid "Once created, the price cannot be changed. This option applies to assets like ETH-WETH."
@@ -1931,7 +2405,7 @@ msgstr ""
 #: src/components/Swap/components/SwapSettingsDialog/index.tsx:87
 #: src/widgets/PoolWidget/AMMV2Create/Setting.tsx:100
 #: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:123
-#: src/widgets/ve33/Ve33PoolOperate/components/SlippageSetting.tsx:111
+#: src/widgets/ve33/Ve33V2PoolOperate/components/SlippageSetting.tsx:111
 msgid "Slippage Tolerance"
 msgstr "滑点"
 
@@ -1960,9 +2434,14 @@ msgstr ""
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1110
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:122
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
-#: src/widgets/ve33/Ve33PoolOperate/AddPoolOperate.tsx:91
-#: src/widgets/ve33/Ve33PoolOperate/hooks/usePoolOperateTabs.ts:15
-#: src/widgets/ve33/Ve33PoolOperate/index.tsx:401
+#: src/widgets/ve33/Ve33PoolDetail/index.tsx:187
+#: src/widgets/ve33/Ve33PoolList/CardList.tsx:224
+#: src/widgets/ve33/Ve33V2PoolOperate/AddPoolOperate.tsx:91
+#: src/widgets/ve33/Ve33V2PoolOperate/hooks/usePoolOperateTabs.ts:15
+#: src/widgets/ve33/Ve33V2PoolOperate/index.tsx:406
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionManage.tsx:237
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionManage.tsx:446
+#: src/widgets/ve33/VotePoolList/widgets.tsx:171
 msgid "Add"
 msgstr ""
 
@@ -2025,8 +2504,21 @@ msgstr ""
 msgid "Select a liquidity pool"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:554
+msgid "Wallet address where the lock will be transferred"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/widgets.tsx:423
+msgid "selected Lock to vote"
+msgstr ""
+
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/SingleTokenSelect.tsx:137
 msgid "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
+msgstr ""
+
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:116
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:354
+msgid "Position"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:157
@@ -2057,6 +2549,10 @@ msgstr ""
 msgid "The closer the provided asset ratio is to the recommended ratio ({recommendRatioText}), the smaller the portion burned."
 msgstr ""
 
+#: src/widgets/ve33/Ve33V3PoolOperate/index.tsx:260
+msgid "My Position"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolDetail/components/Overview.tsx:112
 #: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:169
 msgid "MT Fee"
@@ -2071,18 +2567,38 @@ msgstr ""
 msgid "Current Market Price:"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/CardList.tsx:213
+#: src/widgets/ve33/Ve33LockList/TableList.tsx:53
+msgid "Voting Power"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolCreate/components/GasWrapGasTokenError.tsx:48
 msgid "{0}-{1} is not supported. Please select another pair."
 msgstr ""
 
+#: src/widgets/ve33/Ve33PoolDetail/MyAssets.tsx:340
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:665
+msgid "Lock {0} >"
+msgstr ""
+
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:255
-#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:249
+#: src/widgets/ve33/Ve33V2PoolOperate/components/V2ConfirmDialog.tsx:249
 msgid "Confirming..."
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:105
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:305
+msgid "Increase"
 msgstr ""
 
 #: src/components/chart/i18n.ts:7
 #: src/components/chart/i18n.ts:11
 msgid "Users pay {0} {1} and receive {2} {3}\\nPrice {4} ({5}%)"
+msgstr ""
+
+#: src/widgets/ve33/Ve33PoolDetail/MyAssets.tsx:223
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:568
+msgid "Staked"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:45
@@ -2097,7 +2613,7 @@ msgstr "在冷静期无法进行清算"
 msgid "The setting has been switched to cross chain mode"
 msgstr "设置已切换到跨链桥交易模式"
 
-#: src/components/Swap/components/TokenCard/index.tsx:284
+#: src/components/Swap/components/TokenCard/index.tsx:288
 msgid "Buy"
 msgstr ""
 
@@ -2107,10 +2623,16 @@ msgstr ""
 msgid "Total Rewards"
 msgstr ""
 
+#: src/widgets/ve33/Ve33IncentiveDetail/AddIncentiveDialog.tsx:230
+msgid "Your incentive will be released linearly over the remaining time of the current epoch."
+msgstr ""
+
 #: src/components/ConnectWallet/NeedConnectButton.tsx:87
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:55
 #: src/widgets/PoolWidget/AMMV3/hooks/useDerivedV3BurnInfo.tsx:96
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:519
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionManage.tsx:210
+#: src/widgets/ve33/Ve33V3PoolOperate/Ve33V3AddLiquidity.tsx:146
 msgid "Connect to a wallet"
 msgstr "连接钱包"
 
@@ -2122,11 +2644,12 @@ msgid "End Time"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:231
+#: src/widgets/ve33/Ve33V3PoolOperate/components/LiquidityChartRangeInput/index.tsx:203
 msgid "There is no liquidity data."
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:134
-#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:128
+#: src/widgets/ve33/Ve33V2PoolOperate/components/V2ConfirmDialog.tsx:128
 msgid "Output is estimated. If the price changes by more than {0} your transaction will revert."
 msgstr ""
 
@@ -2149,6 +2672,7 @@ msgid "AMM V2"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:114
+#: src/widgets/ve33/Ve33V3PoolOperate/Ve33V3AddLiquidity.tsx:439
 msgid "Preview"
 msgstr ""
 
@@ -2157,15 +2681,24 @@ msgid "Select Platform"
 msgstr ""
 
 #: src/components/Swap/components/TokenCard/TokenLogoCollapse.tsx:64
-#: src/components/TokenSelect.tsx:124
+#: src/components/TokenSelect.tsx:128
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:356
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:414
 #: src/widgets/PoolWidget/AMMV3/components/CurrencyInputPanel.tsx:99
 msgid "SELECT TOKEN"
 msgstr "选择代币"
 
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:184
+msgid "Voting Power Granted"
+msgstr ""
+
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:579
 msgid "Add Token"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:453
+#: src/widgets/ve33/Ve33LockOperate/index.tsx:214
+msgid "for"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolDetail/components/Overview.tsx:53
@@ -2175,6 +2708,10 @@ msgstr ""
 
 #: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:132
 msgid "AMM V3 Position"
+msgstr ""
+
+#: src/widgets/ve33/Ve33IncentiveDetail/Dashboard.tsx:92
+msgid "Current Incentives"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolCreate/components/BaseInfoCardList.tsx:55
@@ -2191,7 +2728,7 @@ msgid "Advanced"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:107
-#: src/widgets/ve33/Ve33PoolOperate/components/V2ConfirmDialog.tsx:111
+#: src/widgets/ve33/Ve33V2PoolOperate/components/V2ConfirmDialog.tsx:111
 msgid "{0}/{1} Pool Tokens"
 msgstr ""
 
@@ -2207,9 +2744,12 @@ msgstr ""
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1098
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:233
-#: src/widgets/ve33/Ve33PoolOperate/hooks/usePoolOperateTabs.ts:16
-#: src/widgets/ve33/Ve33PoolOperate/index.tsx:402
-#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:205
+#: src/widgets/ve33/Ve33PoolDetail/index.tsx:194
+#: src/widgets/ve33/Ve33V2PoolOperate/hooks/usePoolOperateTabs.ts:16
+#: src/widgets/ve33/Ve33V2PoolOperate/index.tsx:407
+#: src/widgets/ve33/Ve33V2PoolOperate/RemovePoolOperate.tsx:205
+#: src/widgets/ve33/Ve33V3PoolOperate/components/PositionManage.tsx:238
+#: src/widgets/ve33/Ve33V3PoolOperate/components/RemoveButton.tsx:58
 msgid "Remove"
 msgstr ""
 
@@ -2251,11 +2791,12 @@ msgid "Status"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/RangeSelector.tsx:73
+#: src/widgets/ve33/Ve33V3PoolOperate/components/RangeSelector.tsx:69
 msgid "Low price"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:64
-#: src/widgets/ve33/Ve33PoolOperate/components/ComparePrice.tsx:64
+#: src/widgets/ve33/Ve33V2PoolOperate/components/ComparePrice.tsx:64
 msgid "differs from the price quoted by DODO by {lqAndDodoCompareText}"
 msgstr ""
 
@@ -2277,13 +2818,22 @@ msgstr ""
 msgid "Description of this type of pool"
 msgstr ""
 
+#: src/widgets/ve33/Ve33PoolDetail/MyAssets.tsx:328
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:653
+msgid "Lock {0} to get ve{1}. You can use ve{2} to vote for more rewards."
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:171
 msgid "Paid"
 msgstr ""
 
 #: src/components/AddTokenToMetamask.tsx:54
-#: src/widgets/ve33/Ve33PoolOperate/hooks/useVe33V2AddLiquidity.ts:133
+#: src/widgets/ve33/Ve33V2PoolOperate/hooks/useVe33V2AddLiquidity.ts:133
 msgid "Failed to add"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/SetVotePowerDialog.tsx:161
+msgid "Distribute equally"
 msgstr ""
 
 #: src/components/Swap/index.tsx:863
@@ -2298,14 +2848,20 @@ msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:36
 #: src/widgets/PoolWidget/AMMV3/components/InRangeDot.tsx:12
+#: src/widgets/ve33/Ve33V3PoolOperate/components/Badge/RangeBadge.tsx:36
+#: src/widgets/ve33/Ve33V3PoolOperate/components/InRangeDot.tsx:12
 msgid "In range"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:284
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:571
-#: src/widgets/ve33/Ve33PoolOperate/AddPoolOperate.tsx:236
-#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:428
+#: src/widgets/ve33/Ve33V2PoolOperate/AddPoolOperate.tsx:236
+#: src/widgets/ve33/Ve33V2PoolOperate/RemovePoolOperate.tsx:428
 msgid "There is risk of being arbitraged if adding this liquidity."
+msgstr ""
+
+#: src/widgets/ve33/Ve33V3PoolOperate/index.tsx:275
+msgid "{0} Position"
 msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/SingleTokenSelect.tsx:106
@@ -2316,8 +2872,23 @@ msgstr ""
 msgid "This trading pair does not have enough historical data and has used the default dynamic slippage."
 msgstr ""
 
+#: src/widgets/ve33/VotePoolList/index.tsx:237
+msgid "Voters earn a share of transaction fees and incentives for helping govern how emissions are distributed."
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/widgets.tsx:425
+#: src/widgets/ve33/VotePoolList/widgets.tsx:480
+msgid "Select A Lock"
+msgstr ""
+
+#: src/widgets/ve33/Ve33IncentiveList/index.tsx:156
+msgid "Select pool pair you want to incentive"
+msgstr ""
+
 #: src/widgets/PoolWidget/AMMV3/components/PositionViewCard.tsx:248
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1110
+#: src/widgets/ve33/Ve33LockList/TableList.tsx:286
+#: src/widgets/ve33/Ve33PoolDetail/MyPosition.tsx:453
 msgid "Manage"
 msgstr ""
 
@@ -2338,12 +2909,16 @@ msgid "Liquidity Burn Ratio"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePercentageRemove.ts:102
-#: src/widgets/ve33/Ve33PoolOperate/hooks/usePercentageRemove.ts:99
+#: src/widgets/ve33/Ve33V2PoolOperate/hooks/usePercentageRemove.ts:99
 msgid "Percentage to remove"
 msgstr ""
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:100
 msgid "Max Slippage"
+msgstr ""
+
+#: src/widgets/ve33/VotePoolList/index.tsx:682
+msgid "Clear"
 msgstr ""
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:25
@@ -2357,6 +2932,10 @@ msgstr ""
 #: src/widgets/MiningWidget/MiningCreate/index.tsx:342
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:298
 msgid "WARNING"
+msgstr ""
+
+#: src/widgets/ve33/Ve33LockOperate/hooks/useCreateLock.ts:64
+msgid "Failed to Create:"
 msgstr ""
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:36
@@ -2416,6 +2995,11 @@ msgstr ""
 msgid "https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef"
 msgstr ""
 
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:107
+#: src/widgets/ve33/Ve33LockList/LockManageDialog.tsx:599
+msgid "Transfer"
+msgstr ""
+
 #: src/components/Swap/components/SwapSettingsDialog/index.tsx:195
 msgid "Transaction Deadline"
 msgstr "交易截止时间"
@@ -2442,13 +3026,19 @@ msgid "Total Rewards=Daily Rewards*Duration"
 msgstr ""
 
 #: src/components/Swap/index.tsx:743
-#: src/components/TokenStatusButton.tsx:18
+#: src/components/TokenStatusButton.tsx:20
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:124
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:233
-#: src/widgets/ve33/Ve33PoolOperate/AddPoolOperate.tsx:93
-#: src/widgets/ve33/Ve33PoolOperate/RemovePoolOperate.tsx:205
+#: src/widgets/ve33/Ve33V2PoolOperate/AddPoolOperate.tsx:93
+#: src/widgets/ve33/Ve33V2PoolOperate/RemovePoolOperate.tsx:205
 msgid "Insufficient balance"
 msgstr "余额不足"
+
+#: src/widgets/ve33/Ve33LockList/CardList.tsx:191
+#: src/widgets/ve33/Ve33LockList/TableList.tsx:47
+#: src/widgets/ve33/VotePoolList/widgets.tsx:48
+msgid "Rebase APR"
+msgstr ""
 
 #: src/widgets/PoolWidget/hooks/usePoolTypeTag.ts:19
 msgid "Private"

@@ -12,7 +12,7 @@ export function useGraphQLRequests() {
 
   if (!graphQLRequestsLocal) {
     graphQLRequestsLocal = new GraphQLRequests({
-      url: `https://gateway.${apiDomain}/graphql`,
+      url: `https://gateway${apiDomain ?? '.dodoex.io'}/graphql`,
     });
   }
 

@@ -9,6 +9,7 @@ export default function TokenItem({
   size,
   offset,
   rightContent,
+  hideLogo,
 }: {
   chainId: number;
   address: string;
@@ -16,6 +17,7 @@ export default function TokenItem({
   size: number;
   offset?: number;
   rightContent?: React.ReactNode;
+  hideLogo?: boolean;
 }) {
   const LogoAndSymbol = (
     <Box
@@ -25,14 +27,16 @@ export default function TokenItem({
         gap: offset,
       }}
     >
-      <TokenLogo
-        chainId={chainId}
-        address={address}
-        width={size}
-        height={size}
-        noShowChain
-        marginRight={0}
-      />
+      {!hideLogo && (
+        <TokenLogo
+          chainId={chainId}
+          address={address}
+          width={size}
+          height={size}
+          noShowChain
+          marginRight={0}
+        />
+      )}
       {showName}
     </Box>
   );

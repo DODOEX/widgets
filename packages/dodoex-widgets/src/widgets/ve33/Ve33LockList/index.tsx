@@ -13,7 +13,8 @@ import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { Lock, useFetchUserLocks } from './hooks/useFetchUserLocks';
 import LockManageDialog from './LockManageDialog';
 import ClaimLockDialog from './ClaimLockDialog';
-import { CardList } from './CardList';
+import { CardItem, CardList } from './CardList';
+import { CardStatus } from '../../../components/CardWidgets';
 
 export default function Ve33LockList() {
   const [selectedId, setSelectedId] = React.useState<number[]>([]);
@@ -53,6 +54,8 @@ export default function Ve33LockList() {
       >
         <Box
           sx={{
+            display: 'flex',
+            alignItems: 'center',
             typography: 'h5',
           }}
         >
@@ -64,58 +67,77 @@ export default function Ve33LockList() {
               width: 40,
             }}
           >
-            {fetchUserLocks.userLocks?.length}
+            {fetchUserLocks.userLocks?.length ?? 0}
           </LoadingSkeleton>
           )
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {!!selectedLen && (
-            <Box sx={{ typography: 'h6', fontWeight: 600 }}>
-              <Trans>{selectedLen} Lock selected</Trans>
-            </Box>
-          )}
-          <Button
-            sx={{
-              py: 0,
-              px: 16,
-              height: 32,
-              borderRadius: 24,
-              typography: 'body2',
-            }}
-            variant={inSelected ? undefined : Button.Variant.outlined}
-            disabled={inSelected && !selectedLen}
-            onClick={() => {
-              if (inSelected) {
-                setOpenMerge(true);
-              } else {
-                setInSelected(true);
-              }
-            }}
-          >
-            <Trans>Merge</Trans>
-          </Button>
-        </Box>
+        {!!fetchUserLocks.userLocks?.length && (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            {!!selectedLen && (
+              <Box sx={{ typography: 'h6', fontWeight: 600 }}>
+                <Trans>{selectedLen} Lock selected</Trans>
+              </Box>
+            )}
+            <Button
+              sx={{
+                py: 0,
+                px: 16,
+                height: 32,
+                borderRadius: 24,
+                typography: 'body2',
+              }}
+              variant={inSelected ? undefined : Button.Variant.outlined}
+              disabled={inSelected && !selectedLen}
+              onClick={() => {
+                if (inSelected) {
+                  setOpenMerge(true);
+                } else {
+                  setInSelected(true);
+                }
+              }}
+            >
+              <Trans>Merge</Trans>
+            </Button>
+          </Box>
+        )}
       </Box>
 
-      {isMobile ? (
-        <CardList
-          inSelected={inSelected}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-          fetchUserLocks={fetchUserLocks}
-          onManage={(lock) => setManageLock(lock)}
-          onClaim={(lock) => setShowClaimLock(lock)}
-        />
-      ) : (
-        <TableList
-          inSelected={inSelected}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-          fetchUserLocks={fetchUserLocks}
-          onManage={(lock) => setManageLock(lock)}
-          onClaim={(lock) => setShowClaimLock(lock)}
-        />
-      )}
+      <CardStatus
+        loading={fetchUserLocks.isLoading}
+        refetch={fetchUserLocks.error ? fetchUserLocks.refetch : undefined}
+        empty={!fetchUserLocks.userLocks?.length}
+        loadingCard={
+          isMobile ? (
+            <CardItem
+              inSelected={inSelected}
+              selectedId={selectedId}
+              setSelectedId={setSelectedId}
+              onManage={(lock) => setManageLock(lock)}
+              onClaim={(lock) => setShowClaimLock(lock)}
+            />
+          ) : undefined
+        }
+      >
+        {isMobile ? (
+          <CardList
+            inSelected={inSelected}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+            fetchUserLocks={fetchUserLocks}
+            onManage={(lock) => setManageLock(lock)}
+            onClaim={(lock) => setShowClaimLock(lock)}
+          />
+        ) : (
+          <TableList
+            inSelected={inSelected}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+            fetchUserLocks={fetchUserLocks}
+            onManage={(lock) => setManageLock(lock)}
+            onClaim={(lock) => setShowClaimLock(lock)}
+          />
+        )}
+      </CardStatus>
       <MergeDialog
         open={openMerge}
         onClose={() => setOpenMerge(false)}

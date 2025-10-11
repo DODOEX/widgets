@@ -19,50 +19,17 @@ export function useFetchUserLocks({
   const grahqlRequest = useGraphQLRequests();
   const fetchUserLocks = useQuery({
     enabled: !!account,
-    // ...grahqlRequest.getQuery(PoolApi.graphql.fetchVe33UserLocks, {
-    //   where: {
-    //     user: account?.toLocaleLowerCase() ?? '',
-    //   },
-    // }),
-    queryKey: ['test1'],
-    queryFn: async () => {
-      return {
-        ve33_getUserLock: [
-          {
-            id: '3',
-            value: '1000000000000000000',
-            votingPower: '0',
-            lockedEnd: '1756339200',
-            isPermanent: false,
-            isVoted: false,
-          },
-          {
-            id: '4',
-            value: '1000000000000000000',
-            votingPower: '0',
-            lockedEnd: '1759968000',
-            isPermanent: false,
-            isVoted: false,
-          },
-        ],
-      };
-    },
+    ...grahqlRequest.getQuery(PoolApi.graphql.fetchVe33UserLocks, {
+      where: {
+        user: account?.toLocaleLowerCase() ?? '',
+      },
+    }),
   });
-  // const fetchTokenAddress = useQuery(
-  //   getFetchVE33VotingEscrowTokenQueryOptions(chainId),
-  // );
+  const fetchTokenAddress = useQuery(
+    getFetchVE33VotingEscrowTokenQueryOptions(chainId),
+  );
   const tokenQuery = useQuery({
-    // ...tokenApi.getFetchTokenQuery(chainId, fetchTokenAddress.data, account),
-    queryKey: ['test2'],
-    queryFn: () => {
-      return {
-        address: '0x42EDf453F8483c7168c158d28D610A58308517D1',
-        symbol: 'MOMO',
-        decimals: 18,
-        name: 'MOMO',
-        chainId,
-      };
-    },
+    ...tokenApi.getFetchTokenQuery(chainId, fetchTokenAddress.data, account),
   });
 
   const userLocks = React.useMemo(() => {

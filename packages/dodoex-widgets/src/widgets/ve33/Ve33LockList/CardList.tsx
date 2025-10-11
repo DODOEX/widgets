@@ -2,14 +2,12 @@ import {
   Box,
   Button,
   ButtonBase,
-  Checkbox,
   LoadingSkeleton,
   Skeleton,
   Tooltip,
   useTheme,
 } from '@dodoex/components';
-import LiquidityTable from '../../PoolWidget/PoolList/components/LiquidityTable';
-import { t, Trans } from '@lingui/macro';
+import { t } from '@lingui/macro';
 import TokenLogo from '../../../components/TokenLogo';
 import { formatTokenAmountNumber } from '../../../utils';
 import { Lock, useFetchUserLocks } from './hooks/useFetchUserLocks';
@@ -72,7 +70,7 @@ export const CardList = ({
   );
 };
 
-function CardItem({
+export function CardItem({
   inSelected,
   selectedId,
   setSelectedId,

@@ -28,15 +28,18 @@ export function CardStatus({
   hasSearch,
   children,
   refetch,
+  loadingCard,
 }: React.PropsWithChildren<{
   isMobile?: boolean;
   loading: boolean;
   empty: boolean;
   hasSearch?: boolean;
   refetch?: () => void;
+  loadingCard?: React.ReactNode;
 }>) {
   const height = 320;
   if (loading) {
+    if (loadingCard) return <>{loadingCard}</>;
     return (
       <Box
         sx={{

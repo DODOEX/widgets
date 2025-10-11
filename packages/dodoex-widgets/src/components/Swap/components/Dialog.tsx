@@ -133,6 +133,7 @@ function ModalDialog({
           flexDirection: 'column',
           height,
           width: isMobile ? undefined : pcWidth,
+          maxWidth: '100vw',
         }}
       >
         {title ? (

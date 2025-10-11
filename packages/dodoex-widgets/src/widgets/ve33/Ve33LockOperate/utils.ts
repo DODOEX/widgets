@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 
 export const iMAXTIME = 1 * 365 * 86400;
 export const WEEK = 604800;
+const ONE_HOUR = 3600;
 
 export function getLockDurationRemainder(nowTime: number) {
   const remainder = nowTime % WEEK;
@@ -68,4 +69,10 @@ export function getUnlockTimeText(unlockTime: number) {
     utcText = '0' + utcText;
   }
   return `${formatText} UTC+${utcText}`;
+}
+
+export function getEpochVoteEnd(nowTimeProps: number) {
+  const nowTime = Math.floor(nowTimeProps / 1000);
+  const remainder = nowTime % WEEK;
+  return nowTime - remainder + WEEK - ONE_HOUR;
 }

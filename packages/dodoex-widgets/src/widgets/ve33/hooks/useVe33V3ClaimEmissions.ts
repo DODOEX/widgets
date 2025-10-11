@@ -25,7 +25,7 @@ export function useVe33V3ClaimEmissions({
         if (!tokenId) {
           throw new Error('tokenId is undefined');
         }
-        const data = await encodeVE33V3GaugeGetReward(tokenId);
+        const data = encodeVE33V3GaugeGetReward(tokenId);
         const result = await submission.execute(
           t`Claim`,
           {

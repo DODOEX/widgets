@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.4-ve33.10",
+  "version": "3.0.4-ve33.13",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -59,9 +59,9 @@
   "dependencies": {
     "@babel/runtime": "^7.17.0",
     "@dodoex/api": "3.0.4-ve33.4",
-    "@dodoex/components": "3.0.4-ve33.3",
+    "@dodoex/components": "3.0.4-ve33.4",
     "@dodoex/contract-request": "^1.3.0",
-    "@dodoex/dodo-contract-request": "1.15.0-morph-holesky.6",
+    "@dodoex/dodo-contract-request": "1.15.0-morph-holesky.7",
     "@dodoex/icons": "^2.0.2",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
@@ -155,4 +155,3 @@
     "typescript": "^5.6.3"
   }
 }
-

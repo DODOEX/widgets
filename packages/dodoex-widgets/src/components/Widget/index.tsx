@@ -265,7 +265,7 @@ export function UnstyleWidget(props: PropsWithChildren<WidgetProps>) {
         {...{
           ...props,
           widgetRef: props.widgetRef ?? widgetRef,
-          apiDomain: props.apiDomain ?? 'dodoex.io',
+          apiDomain: props.apiDomain,
         }}
       >
         <Web3Provider {...props} />
