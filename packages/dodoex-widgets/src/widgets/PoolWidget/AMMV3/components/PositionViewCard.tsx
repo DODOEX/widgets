@@ -232,7 +232,8 @@ export const PositionViewCard = ({
           >
             {t`Current price`}:&nbsp;
             {`${formatTokenAmountNumber({
-              input: price?.toSignificant(),
+              input: price?.toSignificant(8),
+              decimals: 8,
             })}`}
             &nbsp;{currencyQuote?.symbol}&nbsp;per&nbsp;
             {currencyBase?.symbol}

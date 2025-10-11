@@ -11,7 +11,7 @@
     "@dodoex/api": "^3.0.3-zetachain.24.ton.2",
     "@dodoex/btc-connect-react": "^1.5.10",
     "@dodoex/components": "^3.0.3-zetachain.14",
-    "@dodoex/widgets": "^3.0.2-zetachain.108.ton.5",
+    "@dodoex/widgets": "^3.0.2-zetachain.110.ton.1",
     "@emotion/styled": "^11.10.0",
     "@mysten/dapp-kit": "^0.18.0",
     "@mysten/sui": "^1.38.0",
