@@ -99,7 +99,6 @@
     "react-window": "^1.8.8",
     "recharts": "^2.12.7",
     "rmc-date-picker": "^6.0.10",
-    "semantic-release": "^19.0.2",
     "tiny-invariant": "^1.1.0",
     "zustand": "^4.5.5"
   },
