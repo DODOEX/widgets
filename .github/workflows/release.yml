@@ -29,7 +29,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [22.9.0]
 
     steps:
       - uses: actions/checkout@v2
@@ -55,12 +55,6 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install dependencies
         run: yarn install
-      - name: Release package widgets
-        if: ${{ inputs.publishWidgets }}
-        run: yarn workspace @dodoex/widgets release
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Release package api
         if: ${{ inputs.publishApi }}
         run: yarn workspace @dodoex/api release
@@ -70,6 +64,12 @@ jobs:
       - name: Release package components
         if: ${{ inputs.publishComponents }}
         run: yarn workspace @dodoex/components release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Release package widgets
+        if: ${{ inputs.publishWidgets }}
+        run: yarn workspace @dodoex/widgets release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
