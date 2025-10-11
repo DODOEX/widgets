@@ -12,7 +12,8 @@
     "watch": "yarn run rollup -c --watch",
     "publish-sample": "npm publish --access public",
     "prerelease": "yarn run build",
-    "release": "np --any-branch --no-cleanup --no-tests",
+    "release": "semantic-release",
+    "release:local": "np --any-branch --no-cleanup --no-tests",
     "release.npm-publish-beta": "npm publish --tag beta"
   },
   "author": "",
