@@ -2018,6 +2018,36 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
+"@dodoex/api@3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@dodoex/api/-/api-3.0.5.tgz#cda66f4c679122ab8767e64e6c7c627d4cf51d7c"
+  integrity sha512-nqQi/3vHUUvJjmt5J2uB42Xh3XdUiirjjB6qUVoUCn0dJRvRIhzJPes6nVppoPepQA+COMpY/jesBjkHb5U07g==
+  dependencies:
+    "@ethersproject/abi" "^5.7.0"
+    "@ethersproject/properties" "^5.7.0"
+    "@ethersproject/providers" "^5.7.2"
+    "@ethersproject/web" "^5.7.1"
+    cross-fetch "^4.0.0"
+    graphql "^16.8.1"
+    graphql-request "^6.1.0"
+    qs "^6.11.2"
+
+"@dodoex/components@3.0.9", "@dodoex/components@^3.0.2":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@dodoex/components/-/components-3.0.9.tgz#4c7a941b3c28f58e2eec310a2f097677ecffce36"
+  integrity sha512-R83M5n6HFgtAWqGs34MYveeXbaZDSHLU5pdRsQMIWO0euZCCrzBlEDqW98QaE9mMsoz+zampx4INI6ha3YEMzA==
+  dependencies:
+    "@babel/runtime" "^7.17.0"
+    "@dodoex/icons" "^2.0.2"
+    "@emotion/react" "^11.10.0"
+    "@emotion/styled" "^11.10.0"
+    "@mui/base" "5.0.0-beta.58"
+    "@mui/system" "5.8.4"
+    "@szhsin/react-accordion" "^1.2.1"
+    any-touch "^2.2.0"
+    clsx "^1.2.1"
+    lottie-web "^5.12.2"
+
 "@dodoex/contract-request@^1.3.0":
   version "1.3.0"
   resolved "https://registry.npmjs.org/@dodoex/contract-request/-/contract-request-1.3.0.tgz"
@@ -2026,10 +2056,10 @@
     ethers "^6.13.2"
     https-proxy-agent "^7.0.5"
 
-"@dodoex/dodo-contract-request@1.18.1":
-  version "1.18.1"
-  resolved "https://registry.npmjs.org/@dodoex/dodo-contract-request/-/dodo-contract-request-1.18.1.tgz"
-  integrity sha512-3Ak397qsICBHQCt2qkfly1LaFCdiGedeUmFp5aaHxV6TEBQnHYSGhz4YO66xJ7vXLbHzjrB979lrzjB3CZpFzg==
+"@dodoex/dodo-contract-request@^1.24.0":
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/@dodoex/dodo-contract-request/-/dodo-contract-request-1.24.0.tgz#dfc3a56593edbf3eeb58c60e5acd50dfc99752de"
+  integrity sha512-rM4yUal0T66sonka998BaBnyxzLmjW3ZXJPi9w5HTzpJBTD7jJajBUkXKPQdN0uFwLH7Ys3yJ0mdXcJ1fqKGRQ==
   dependencies:
     typescript "^5"
 

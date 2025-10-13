@@ -6,9 +6,11 @@
   </a>
 </p>
 
-<p align="center">
-<a href="https://www.npmjs.com/package/@dodoex/widgets"><img src="https://img.shields.io/npm/v/@dodoex/widgets" alt="npm version" /></a>
-<p>
+[![npm version](https://img.shields.io/npm/v/@dodoex/widgets)](https://www.npmjs.com/package/@dodoex/widgets)
+[![Release](https://github.com/DODOEX/widgets/actions/workflows/release.yml/badge.svg)](https://github.com/DODOEX/widgets/actions/workflows/release.yml)
+[![Test](https://github.com/DODOEX/widgets/actions/workflows/test.yml/badge.svg)](https://github.com/DODOEX/widgets/actions/workflows/test.yml)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 ## DODO Swap Widget
 
