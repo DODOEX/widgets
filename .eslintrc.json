@@ -1,19 +1,28 @@
 {
-  "extends": ["next/core-web-vitals", "prettier"],
-
+  "extends": [
+    "next/core-web-vitals",
+    "prettier",
+    "plugin:storybook/recommended"
+  ],
   "settings": {
     "next": {
       "rootDir": "packages/*/"
     }
   },
-
   "rules": {
     "camelcase": "off",
-
     // "max-len": ["warn", { "code": 80 }]
     "no-use-before-define": "off",
     "no-shadow": "off",
-    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
     "no-unused-vars": "warn",
     "no-plusplus": [
       "error",
@@ -22,7 +31,6 @@
       }
     ],
     "no-restricted-syntax": "off",
-
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -33,15 +41,24 @@
     ],
     "import/no-extraneous-dependencies": "warn",
     "import/prefer-default-export": "off",
-
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-
-    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [
+          ".tsx"
+        ]
+      }
+    ],
     "react/prop-types": "off",
     "react/require-default-props": "off",
-    "react/jsx-key": ["error", { "checkFragmentShorthand": false }],
-
+    "react/jsx-key": [
+      "error",
+      {
+        "checkFragmentShorthand": false
+      }
+    ],
     "jsx-a11y/alt-text": "off"
   }
 }
