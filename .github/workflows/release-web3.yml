@@ -1,0 +1,54 @@
+name: Release Web3
+
+on:
+  workflow_dispatch: # trigger manually
+    inputs:
+      dry_run:
+        description: Skip publishing
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  # test:
+  #   uses: ./.github/workflows/test-base.yml
+
+  release:
+    # runs-on: ubuntu-latest
+    # needs: [test]
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: restore lerna
+      uses: actions/cache@v3
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-lerna-${{ hashFiles('**/yarn.lock') }}
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+    - name: restore yarn
+      uses: actions/cache@v3
+      id: yarn-cache
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    - name: Install dependencies
+      run: yarn install
+    - name: Release package
+      run: yarn release --dry-run=${{ inputs.dry_run }}
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    
+
