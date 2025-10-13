@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-# use lerna isntead of yarn in windows
-./node_modules/.bin/lerna run test
