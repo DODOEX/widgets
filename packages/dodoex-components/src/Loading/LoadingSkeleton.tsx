@@ -18,6 +18,7 @@ const LoadingSkeleton = forwardRef<HTMLDivElement, LoadingSkeletonProps>(
           // @ts-ignore
           <Skeleton
             height="fit-content"
+            component={attrs.component}
             // @ts-ignore
             width={loadingSx?.width ?? '100%'}
             {...loadingProps}
@@ -30,6 +31,7 @@ const LoadingSkeleton = forwardRef<HTMLDivElement, LoadingSkeletonProps>(
             )}
           >
             <Box
+              component={attrs.component}
               sx={{
                 visibility: 'hidden',
               }}

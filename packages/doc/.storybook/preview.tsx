@@ -17,7 +17,7 @@ const preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
     backgrounds: {
-      disable: true,
+      disabled: true,
     },
     controls: {
       matchers: {

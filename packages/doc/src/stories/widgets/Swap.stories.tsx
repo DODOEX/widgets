@@ -1,6 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { SwapWidget } from '@dodoex/widgets';
-import { TokenInfo } from '@dodoex/widgets/dist/src/hooks/Token/type';
+import { SwapWidget, type TokenInfo } from '@dodoex/widgets';
 
 export enum ChainId {
   MAINNET = 1,
@@ -120,7 +118,7 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof SwapWidget>;
+};
 
 export const Primary = (args) => (
   <SwapWidget {...args} onSwitchChain={undefined} />

@@ -5,6 +5,7 @@ import { Transition } from 'react-transition-group';
 import Countdown from './Countdown';
 import { useMessageState } from '../../hooks/useMessageState';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 // function TransitionComponent(props: any) {
 //   const { isMobile } = useDevices();
@@ -29,7 +30,7 @@ const positioningStyles = {
   unmounted: 'translateX(500px)',
 };
 
-export default function Message() {
+function MessageInner() {
   const theme = useTheme();
   const { notify, close } = useMessageState();
   const [exited, setExited] = React.useState(true);
@@ -124,7 +125,7 @@ export default function Message() {
         top: mobileSpace,
         left: mobileSpace,
         right: mobileSpace,
-        zIndex: 1,
+        zIndex: 9000,
         [theme.breakpoints.up('tablet')]: {
           left: 'auto',
         },
@@ -194,6 +195,9 @@ export default function Message() {
                 <Box
                   sx={{
                     typography: 'caption',
+                    wordBreak: 'break-all',
+                    maxHeight: '50vh',
+                    overflowY: 'auto',
                   }}
                 >
                   {notify?.message}
@@ -319,4 +323,17 @@ export default function Message() {
       </Transition>
     </Box>
   );
+}
+
+export default function Message() {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+
+    return () => setMounted(false);
+  }, []);
+
+  if (mounted) return ReactDOM.createPortal(<MessageInner />, document.body);
+  return null;
 }

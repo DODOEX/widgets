@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
 var _jsxRuntime = require("react/jsx-runtime");
-var _default = (0, _createSvgIcon.default)([/*#__PURE__*/(0, _jsxRuntime.jsx)("defs", {
+var _default = exports.default = (0, _createSvgIcon.default)([/*#__PURE__*/(0, _jsxRuntime.jsx)("defs", {
   children: /*#__PURE__*/(0, _jsxRuntime.jsx)("filter", {
     id: "a",
     "color-interpolation-filters": "auto",
@@ -31,4 +31,3 @@ var _default = (0, _createSvgIcon.default)([/*#__PURE__*/(0, _jsxRuntime.jsx)("d
     })]
   })
 }, "1")], 'Link');
-exports.default = _default;

@@ -123,6 +123,7 @@ const Button = React.forwardRef(function Button<
       {other.children}
       <Box
         component="span"
+        className="icon"
         sx={{
           display: 'inline-block',
           width: 0,
@@ -206,9 +207,12 @@ export function Select<
   px = 20,
   height = 48,
   popupOffset = 8,
+  listBoxSx,
   ...props
   // @ts-ignore
-}: Props<Value, Multiple>) {
+}: Props<Value, Multiple> & {
+  listBoxSx?: BoxProps['sx'];
+}) {
   const theme = useTheme();
 
   return (
@@ -254,6 +258,7 @@ export function Select<
           style: {
             borderRadius: popupOffset ? 12 : theme.spacing(0, 0, 12, 12),
           },
+          sx: listBoxSx,
         },
       }}
       {...props}

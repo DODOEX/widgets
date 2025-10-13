@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/api",
-  "version": "3.0.5",
+  "version": "3.1.0",
   "description": "DODO API Kit",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",

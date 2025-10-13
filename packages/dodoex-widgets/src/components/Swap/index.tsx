@@ -57,7 +57,7 @@ import { useSwitchBridgeOrSwapSlippage } from '../../hooks/Bridge/useSwitchBridg
 import { useInitDefaultToken } from '../../hooks/Swap/useInitDefaultToken';
 import { setLastToken } from '../../constants/localstorage';
 import {
-  maxSlippageWarning,
+  getMaxSlippageWarning,
   useSlippageLimit,
 } from '../../hooks/Swap/useSlippageLimit';
 import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch';
@@ -397,6 +397,7 @@ export function Swap({
 
   const isSlippageExceedLimit = useSlippageLimit(
     isBridge ? undefined : slippageSwap,
+    fromToken?.chainId,
   );
 
   const displayPriceImpact = useMemo(
@@ -517,7 +518,7 @@ export function Swap({
             color: 'warning.main',
           }}
         />
-        {t`The current slippage protection coefficient set exceeds ${maxSlippageWarning}%, which may result in losses.`}
+        {t`The current slippage protection coefficient set exceeds ${getMaxSlippageWarning(fromToken?.chainId)}%, which may result in losses.`}
       </Box>
     );
   }, [
@@ -527,6 +528,8 @@ export function Swap({
     toAmt,
     isBridge,
     bridgeRouteStatus,
+    fromToken?.chainId,
+    insufficientBalance,
     resPriceStatus,
   ]);
 

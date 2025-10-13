@@ -1,4 +1,4 @@
-import { CONTRACT_QUERY_KEY } from '@dodoex/api';
+import { ChainId, CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { useWeb3React } from '@web3-react/core';
 import type { TransactionResponse } from '@ethersproject/abstract-provider';
 import { useCallback, useMemo, useState } from 'react';
@@ -19,6 +19,9 @@ import { BIG_ALLOWANCE } from '../../constants/token';
 import { useCurrentChainId } from '../ConnectWallet';
 import { useQueryClient } from '@tanstack/react-query';
 import { ContractStatus, setContractStatus } from '../useGlobalState';
+import { useUserOptions } from '../../components/UserOptionsProvider';
+import { useMessageState } from '../useMessageState';
+import { updatePharosTestnetRpc } from '../ConnectWallet/useSwitchChain';
 
 export interface ExecutionProps {
   onTxFail?: (error: Error, data: any) => void;
@@ -43,6 +46,7 @@ export default function useExecution({
   onTxReverted,
 }: ExecutionProps = {}) {
   const { account, provider } = useWeb3React();
+  const { noSubmissionDialog } = useUserOptions();
   const queryClient = useQueryClient();
   const chainId = useCurrentChainId();
   const [waitingSubmit, setWaitingSubmit] = useState(false);
@@ -89,6 +93,7 @@ export default function useExecution({
       setShowing({ spec, brief, subtitle, submitState: 'loading' });
       try {
         setWaitingSubmit(true);
+        await updatePharosTestnetRpc(chainId, provider?.provider ?? provider);
         if (spec.opcode === OpCode.Approval) {
           transaction = await approve(
             spec.token.address,
@@ -125,7 +130,7 @@ export default function useExecution({
             chainId,
           };
 
-          if (!params.gasLimit) {
+          if (chainId !== ChainId.PHAROS_TESTNET && !params.gasLimit) {
             try {
               const gasLimit = await getEstimateGas(params, provider);
               if (gasLimit) {
@@ -148,12 +153,21 @@ export default function useExecution({
         setWaitingSubmit(false);
         setShowing({ spec, brief, subtitle });
         console.error(e);
+        setContractStatus(ContractStatus.Failed);
         if (e.message) {
-          setContractStatus(ContractStatus.Failed);
-          const options = { error: e.message, brief };
+          const options = { error: e.message, brief, chainId };
           if (mixpanelProps) Object.assign(options, mixpanelProps);
           if (onTxFail) {
             onTxFail(e, mixpanelProps);
+          }
+          if (
+            noSubmissionDialog &&
+            (!e.code || (e.code !== 4001 && e.code !== 'ACTION_REJECTED'))
+          ) {
+            useMessageState.getState().toast({
+              message: e.message,
+              type: 'error',
+            });
           }
 
           setErrorMessage(getExecutionErrorMsg(chainId, e.message));
@@ -172,6 +186,7 @@ export default function useExecution({
         subtitle,
         metadata,
         nonce,
+        chainId,
         ...mixpanelProps,
       };
       setContractStatus(ContractStatus.Pending);
@@ -193,6 +208,7 @@ export default function useExecution({
       setRequests((res) => res.set(tx as string, [request, State.Running]));
 
       if (early) {
+        setContractStatus(ContractStatus.Initial);
         return ExecutionResult.Submitted;
       }
       if (submittedBack) {
@@ -233,6 +249,7 @@ export default function useExecution({
           return ExecutionResult.Success;
         }
       }
+      setContractStatus(ContractStatus.Failed);
       if (onTxReverted) {
         onTxReverted(tx, reportInfo);
       }
@@ -256,6 +273,7 @@ export default function useExecution({
       provider,
       updateBlockNumber,
       queryClient,
+      noSubmissionDialog,
     ],
   );
 
