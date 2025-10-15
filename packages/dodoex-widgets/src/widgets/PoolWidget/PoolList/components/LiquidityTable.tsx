@@ -32,6 +32,7 @@ export default function LiquidityTable({
         position: 'relative',
         flex: 1,
         overflowY: 'auto',
+        px: 20,
         ...sx,
       }}
       {...props}
@@ -39,23 +40,36 @@ export default function LiquidityTable({
       <Box
         component="table"
         sx={{
+          borderCollapse: 'separate',
+          borderSpacing: '0px 8px',
           width: '100%',
-          borderCollapse: 'collapse',
           '& th': {
-            p: 24,
-            typography: 'body1',
+            px: 24,
+            pt: 12,
+            pb: 4,
+            typography: 'body2',
+            lineHeight: '16px',
             textAlign: 'left',
             color: 'text.secondary',
           },
           '& td': {
             px: 24,
-            py: 20,
+            py: 12,
           },
           '& thead': {
             position: 'sticky',
             top: 0,
             zIndex: 2,
-            backgroundColor: 'background.paper',
+            background: 'transparent',
+          },
+          '& tbody tr td': {
+            backgroundColor: '#FFF',
+            '&:first-child': {
+              borderRadius: theme.spacing(8, 0, 0, 8),
+            },
+            '&:last-child': {
+              borderRadius: theme.spacing(0, 8, 8, 0),
+            },
           },
           ...(!empty &&
             !loading && {

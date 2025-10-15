@@ -52,6 +52,7 @@ import { Share } from '@dodoex/icons';
 import { MigrationTag } from './components/migationWidget';
 import TokenAndPoolFilter from './components/TokenAndPoolFilter';
 import { GetMigrationPairAndMining } from '../PoolOperate/types';
+import { TokenInfo } from '../../../hooks/Token';
 
 function CardList({
   lqList,
@@ -251,7 +252,6 @@ function CardList({
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {poolType}
                     <Tooltip title={<Trans>Fee rate</Trans>}>
                       <Box
                         sx={{
@@ -284,7 +284,7 @@ function CardList({
                       color: 'text.secondary',
                     }}
                   >
-                    <Trans>Pool Type</Trans>
+                    <Trans>Fee Tier</Trans>
                   </Box>
                 </Box>
               )}
@@ -433,7 +433,7 @@ function TableList({
           </Box>
           {supportAMM && (
             <Box component="th">
-              <Trans>Pool Type</Trans>
+              <Trans>Fee Tier</Trans>
             </Box>
           )}
           <Box component="th">
@@ -609,19 +609,6 @@ function TableList({
                       gap: 4,
                     }}
                   >
-                    <Box
-                      sx={{
-                        px: 8,
-                        py: 4,
-                        borderRadius: 4,
-                        typography: 'h6',
-                        backgroundColor: 'background.tag',
-                        color: 'text.secondary',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {poolType}
-                    </Box>
                     <Tooltip title={<Trans>Fee rate</Trans>}>
                       <Box
                         sx={{
@@ -763,41 +750,34 @@ export default function AddLiquidityList({
   scrollParentRef,
   filterChainIds,
   activeChainId,
-  handleChangeActiveChainId,
   operatePool,
   setOperatePool,
-  tokenAndPoolFilter,
   getMigrationPairAndMining,
-  supportAMMIcon,
+  filterASymbol,
+  filterBSymbol,
+  filterAddressLqList,
+  filterTokens,
+  handleChangeFilterAddress,
+  handleDeleteToken,
 }: {
   scrollParentRef: React.MutableRefObject<HTMLDivElement | null>;
-  account?: string;
   filterChainIds?: ChainId[];
 
   activeChainId: ChainId | undefined;
-  handleChangeActiveChainId: (chainId: number | undefined) => void;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
-  tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
   getMigrationPairAndMining?: GetMigrationPairAndMining;
-  supportAMMIcon?: boolean;
+  filterASymbol: string;
+  filterBSymbol: string;
+  filterAddressLqList: FetchLiquidityListLqList;
+  filterTokens: Array<TokenInfo>;
+  handleChangeFilterAddress: (lqList: FetchLiquidityListLqList) => void;
+  handleDeleteToken: (token: TokenInfo) => void;
 }) {
   const theme = useTheme();
   const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
     useUserOptions();
   const { minDevice, isMobile } = useWidgetDevice();
-  const queryClient = useQueryClient();
-
-  const {
-    filterTokens,
-    filterASymbol,
-    filterBSymbol,
-    filterAddressLqList,
-
-    handleDeleteToken,
-    handleChangeFilterTokens,
-    handleChangeFilterAddress,
-  } = usePoolListFilterTokenAndPool(tokenAndPoolFilter);
 
   const filterTypes = notSupportPMM ? [] : ['CLASSICAL', 'DVM', 'DSP', 'GSP'];
   if (supportAMMV2) {
@@ -864,105 +844,6 @@ export default function AddLiquidityList({
 
   return (
     <>
-      <Box
-        sx={{
-          py: 16,
-          display: 'flex',
-          gap: 8,
-          ...(minDevice(filterSmallDeviceWidth)
-            ? {}
-            : {
-                flexDirection: 'column',
-              }),
-          ...(isMobile
-            ? {}
-            : {
-                px: 20,
-                borderBottomWidth: 1,
-              }),
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            ...(minDevice(filterSmallDeviceWidth)
-              ? {}
-              : {
-                  '& > button': {
-                    flex: 1,
-                  },
-                }),
-          }}
-        >
-          {!onlyChainId && (
-            <SelectChain
-              chainId={activeChainId}
-              setChainId={handleChangeActiveChainId}
-              showNewIcon={supportAMMIcon}
-            />
-          )}
-          {tokenAndPoolFilter?.element ?? (
-            <TokenAndPoolFilter
-              value={filterTokens}
-              onChange={handleChangeFilterTokens}
-              searchAddress={async (address, onClose) => {
-                const query = graphQLRequests.getInfiniteQuery(
-                  PoolApi.graphql.fetchLiquidityList,
-                  'currentPage',
-                  {
-                    where: {
-                      ...defaultQueryFilter,
-                      filterState: {
-                        address,
-                        ...defaultQueryFilter.filterState,
-                      },
-                    },
-                  },
-                );
-                const result = await queryClient.fetchQuery(query);
-                const lqList = result.liquidity_list?.lqList;
-                if (lqList?.length) {
-                  return (
-                    <TokenListPoolItem
-                      list={lqList}
-                      onClick={() => {
-                        handleChangeFilterAddress(lqList);
-                        onClose();
-                      }}
-                    />
-                  );
-                }
-                return null;
-              }}
-            />
-          )}
-        </Box>
-
-        {/* filter tag */}
-        {(hasFilterAddress || !!filterTokens.length) && (
-          <Box
-            sx={{
-              my: 0,
-            }}
-          >
-            {hasFilterAddress ? (
-              <FilterAddressTags
-                lqList={filterAddressLqList}
-                onDeleteTag={() => handleChangeFilterAddress([])}
-              />
-            ) : (
-              ''
-            )}
-            <FilterTokenTags
-              tags={filterTokens}
-              onDeleteTag={handleDeleteToken}
-            />
-          </Box>
-        )}
-      </Box>
-
       {/* list */}
       {isMobile ? (
         <InfiniteScroll

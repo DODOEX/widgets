@@ -33,6 +33,7 @@ export interface FetchRoutePrice {
   isReverseRouting?: boolean;
   slippage?: number;
   slippageLoading?: boolean;
+  pools?: string[];
 }
 
 interface IRouteResponse {
@@ -59,6 +60,7 @@ export function useFetchRoutePrice({
   isReverseRouting,
   slippage,
   slippageLoading,
+  pools,
 }: FetchRoutePrice) {
   const { account, chainId: walletChainId, provider } = useWeb3React();
   const { defaultChainId, feeRate, rebateTo, apikey } = useUserOptions();
@@ -111,6 +113,7 @@ export function useFetchRoutePrice({
       fromTokenAddress: fromToken.address,
       userAddr: account || EmptyAddress,
       estimateGas,
+      pools: pools ? pools.join(',') : undefined,
     };
 
     if (isReverseRouting) {

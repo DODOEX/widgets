@@ -268,7 +268,7 @@ export const RatioSetting = ({
           borderStyle: 'solid',
           backgroundColor:
             isRecommendRatio || isDefaultInput
-              ? theme.palette.background.paper
+              ? '#F4F0EC'
               : alpha(theme.palette.warning.main, 0.1),
         }}
       >

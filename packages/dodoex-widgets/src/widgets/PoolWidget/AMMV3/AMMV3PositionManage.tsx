@@ -103,6 +103,7 @@ export interface AMMV3PositionManageProps {
   feeAmount: FeeAmount;
   tokenId: string;
   onClose: (() => void) | undefined;
+  noHeader?: boolean;
 }
 
 export const AMMV3PositionManage = ({
@@ -112,6 +113,7 @@ export const AMMV3PositionManage = ({
   feeAmount,
   tokenId,
   onClose,
+  noHeader
 }: AMMV3PositionManageProps) => {
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
@@ -455,17 +457,20 @@ export const AMMV3PositionManage = ({
     return (
       <Box
         sx={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
           borderRadius: 16,
           backgroundColor: theme.palette.background.paper,
         }}
       >
-        <Box
+        {!noHeader && <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            px: 20,
-            py: 24,
+            p: 10,
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
             backgroundColor: theme.palette.background.paper,
@@ -507,368 +512,328 @@ export const AMMV3PositionManage = ({
               />
             </Box>
           ) : undefined}
-        </Box>
-
-        {hasExistingPosition && existingPosition && (
-          <Box sx={{ mx: 20, mb: 16 }}>
-            <PositionAmountPreview
-              position={existingPosition}
-              inRange={!outOfRange}
-            />
-          </Box>
-        )}
-
-        <Tabs
-          value={operateType}
-          onChange={(_, value) => {
-            setOperateType(value as OperateType);
+        </Box>}
+        <Box
+          sx={{
+            flex: 1,
+            overflowY: 'auto',
           }}
         >
-          <TabsButtonGroup
-            tabs={operateTypes}
-            variant="inPaper"
-            tabsListSx={{
-              mx: 20,
+          {hasExistingPosition && existingPosition && (
+            <Box sx={{ mx: 10, mb: 16 }}>
+              <PositionAmountPreview
+                position={existingPosition}
+                inRange={!outOfRange}
+              />
+            </Box>
+          )}
+
+          <Tabs
+            value={operateType}
+            onChange={(_, value) => {
+              setOperateType(value as OperateType);
             }}
-          />
-          <TabPanel value="stake">
-            {hasExistingPosition && existingPosition && (
-              <Box sx={{ mt: 16, mx: 20 }}>
-                <PositionSelectedRangePreview
-                  position={existingPosition}
-                  title={t`Selected Range`}
-                  ticksAtLimit={ticksAtLimit}
-                />
-              </Box>
-            )}
-
-            <Box
-              sx={{
-                mt: 16,
-                mx: 20,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'stretch',
-                gap: 12,
+          >
+            <TabsButtonGroup
+              tabs={operateTypes}
+              variant="inPaper"
+              tabsListSx={{
+                mx: 10,
               }}
-            >
-              <Box
-                sx={{
-                  typography: 'body1',
-                  fontWeight: 600,
-                  color: theme.palette.text.secondary,
-                  textAlign: 'left',
-                }}
-              >
-                {t`Add more liquidity`}
-              </Box>
-              <Box>
-                <CurrencyInputPanel
-                  value={formattedAmounts[Field.CURRENCY_A]}
-                  onUserInput={onFieldAInput}
-                  maxAmount={maxAmounts[Field.CURRENCY_A]}
-                  balance={currencyBalances[Field.CURRENCY_A]}
-                  currency={currencies[Field.CURRENCY_A] ?? null}
-                  locked={depositADisabled}
-                />
-                <CardPlusConnected />
-                <CurrencyInputPanel
-                  value={formattedAmounts[Field.CURRENCY_B]}
-                  onUserInput={onFieldBInput}
-                  maxAmount={maxAmounts[Field.CURRENCY_B]}
-                  balance={currencyBalances[Field.CURRENCY_B]}
-                  currency={currencies[Field.CURRENCY_B] ?? null}
-                  locked={depositBDisabled}
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  mt: 8,
-                  px: 12,
-                  height: 36,
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  borderStyle: 'solid',
-                  borderColor: theme.palette.border.main,
-                }}
-              >
-                <Box
-                  sx={{
-                    typography: 'body2',
-                    color: 'text.secondary',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  <Trans>Slippage Tolerance</Trans>
-                </Box>
-                <SlippageSetting
-                  value={slipper}
-                  onChange={setSlipper}
-                  disabled={false}
-                  type="AMMV3"
-                  sx={{
-                    mt: 0,
-                  }}
-                />
-              </Box>
-            </Box>
-
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                px: 20,
-                py: 16,
-                borderBottomLeftRadius: 16,
-                borderBottomRightRadius: 16,
-                backgroundColor: theme.palette.background.paper,
-              }}
-            >
-              <Buttons
-                chainId={chainId}
-                approvalA={approvalA}
-                approvalB={approvalB}
-                parsedAmounts={parsedAmounts}
-                isValid={isValid}
-                depositADisabled={depositADisabled}
-                depositBDisabled={depositBDisabled}
-                errorMessage={errorMessage}
-                setShowConfirm={setShowConfirm}
-              />
-            </Box>
-
-            <ReviewModal
-              parsedAmounts={parsedAmounts}
-              position={position}
-              existingPosition={undefined}
-              priceLower={priceLower}
-              priceUpper={priceUpper}
-              outOfRange={outOfRange}
-              ticksAtLimit={ticksAtLimit}
-              on={showConfirm}
-              onClose={() => {
-                setShowConfirm(false);
-              }}
-              onConfirm={onAddMutation.mutate}
-              loading={onAddMutation.isPending}
             />
-          </TabPanel>
-          <TabPanel value="unstake">
-            <Box
-              sx={{
-                mt: 16,
-                mx: 20,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'stretch',
-                gap: 12,
-              }}
-            >
-              <SliderPercentageCard
-                disabled={false}
-                value={sliderPercentage}
-                onChange={(v) => setSliderPercentage(v)}
-              />
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  mt: 8,
-                  px: 12,
-                  height: 36,
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  borderStyle: 'solid',
-                  borderColor: theme.palette.border.main,
-                }}
-              >
-                <Box
-                  sx={{
-                    typography: 'body2',
-                    color: 'text.secondary',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  <Trans>Slippage Tolerance</Trans>
+            <TabPanel value="stake">
+              {hasExistingPosition && existingPosition && (
+                <Box sx={{ mt: 16, mx: 10 }}>
+                  <PositionSelectedRangePreview
+                    position={existingPosition}
+                    title={t`Selected Range`}
+                    ticksAtLimit={ticksAtLimit}
+                  />
                 </Box>
-                <SlippageSetting
-                  value={slipper}
-                  onChange={setSlipper}
-                  disabled={false}
-                  type="AMMV3"
-                  sx={{
-                    mt: 0,
-                  }}
-                />
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                mt: 16,
-                mx: 20,
-                display: 'flex',
-                alignItems: 'flex-start',
-                justifyContent: 'space-between',
-              }}
-            >
+              )}
+
               <Box
                 sx={{
-                  typography: 'body2',
-                  color: theme.palette.text.secondary,
-                }}
-              >
-                Receive
-              </Box>
-              <Box
-                sx={{
+                  mt: 16,
+                  mx: 10,
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'flex-end',
-                  gap: 4,
+                  alignItems: 'stretch',
+                  gap: 12,
                 }}
               >
                 <Box
                   sx={{
                     typography: 'body1',
                     fontWeight: 600,
-                    color: theme.palette.text.primary,
+                    color: theme.palette.text.secondary,
+                    textAlign: 'left',
                   }}
                 >
-                  <Box
-                    component="span"
-                    sx={{
-                      color: theme.palette.primary.main,
-                    }}
-                  >
-                    {liquidityValue0
-                      ? formatTokenAmountNumber({
-                          input: liquidityValue0.toExact(),
-                          decimals: liquidityValue0.currency.decimals,
-                        })
-                      : '-'}
-                  </Box>
-                  &nbsp;{liquidityValue0?.currency?.symbol}
+                  {t`Add more liquidity`}
+                </Box>
+                <Box>
+                  <CurrencyInputPanel
+                    value={formattedAmounts[Field.CURRENCY_A]}
+                    onUserInput={onFieldAInput}
+                    maxAmount={maxAmounts[Field.CURRENCY_A]}
+                    balance={currencyBalances[Field.CURRENCY_A]}
+                    currency={currencies[Field.CURRENCY_A] ?? null}
+                    locked={depositADisabled}
+                  />
+                  <CardPlusConnected />
+                  <CurrencyInputPanel
+                    value={formattedAmounts[Field.CURRENCY_B]}
+                    onUserInput={onFieldBInput}
+                    maxAmount={maxAmounts[Field.CURRENCY_B]}
+                    balance={currencyBalances[Field.CURRENCY_B]}
+                    currency={currencies[Field.CURRENCY_B] ?? null}
+                    locked={depositBDisabled}
+                  />
+                </Box>
+                <SlippageSetting
+                  value={slipper}
+                  onChange={setSlipper}
+                  disabled={false}
+                  type="AMMV3"
+                />
+              </Box>
+
+              <Box
+                sx={{
+                  position: 'sticky',
+                  bottom: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  px: 10,
+                  py: 16,
+                  borderBottomLeftRadius: 16,
+                  borderBottomRightRadius: 16,
+                  backgroundColor: theme.palette.background.paper,
+                }}
+              >
+                <Buttons
+                  chainId={chainId}
+                  approvalA={approvalA}
+                  approvalB={approvalB}
+                  parsedAmounts={parsedAmounts}
+                  isValid={isValid}
+                  depositADisabled={depositADisabled}
+                  depositBDisabled={depositBDisabled}
+                  errorMessage={errorMessage}
+                  setShowConfirm={setShowConfirm}
+                />
+              </Box>
+
+              <ReviewModal
+                parsedAmounts={parsedAmounts}
+                position={position}
+                existingPosition={undefined}
+                priceLower={priceLower}
+                priceUpper={priceUpper}
+                outOfRange={outOfRange}
+                ticksAtLimit={ticksAtLimit}
+                on={showConfirm}
+                onClose={() => {
+                  setShowConfirm(false);
+                }}
+                onConfirm={onAddMutation.mutate}
+                loading={onAddMutation.isPending}
+              />
+            </TabPanel>
+            <TabPanel value="unstake">
+              <Box
+                sx={{
+                  mt: 16,
+                  mx: 10,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'stretch',
+                  gap: 12,
+                }}
+              >
+                <SliderPercentageCard
+                  disabled={false}
+                  value={sliderPercentage}
+                  onChange={(v) => setSliderPercentage(v)}
+                />
+                <SlippageSetting
+                  value={slipper}
+                  onChange={setSlipper}
+                  disabled={false}
+                  type="AMMV3"
+                />
+              </Box>
+              <Box
+                sx={{
+                  mt: 16,
+                  mx: 10,
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Box
+                  sx={{
+                    typography: 'body2',
+                    color: theme.palette.text.secondary,
+                  }}
+                >
+                  Receive
                 </Box>
                 <Box
                   sx={{
-                    typography: 'body1',
-                    fontWeight: 600,
-                    color: theme.palette.text.primary,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
+                    gap: 4,
                   }}
                 >
                   <Box
-                    component="span"
                     sx={{
-                      color: theme.palette.primary.main,
+                      typography: 'body1',
+                      fontWeight: 600,
+                      color: theme.palette.text.primary,
                     }}
                   >
-                    {liquidityValue1
-                      ? formatTokenAmountNumber({
-                          input: liquidityValue1.toExact(),
-                          decimals: liquidityValue1.currency.decimals,
-                        })
-                      : '-'}
+                    <Box
+                      component="span"
+                      sx={{
+                        color: theme.palette.primary.main,
+                      }}
+                    >
+                      {liquidityValue0
+                        ? formatTokenAmountNumber({
+                            input: liquidityValue0.toExact(),
+                            decimals: liquidityValue0.currency.decimals,
+                          })
+                        : '-'}
+                    </Box>
+                    &nbsp;{liquidityValue0?.currency?.symbol}
                   </Box>
-                  &nbsp;{liquidityValue1?.currency?.symbol}
+                  <Box
+                    sx={{
+                      typography: 'body1',
+                      fontWeight: 600,
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        color: theme.palette.primary.main,
+                      }}
+                    >
+                      {liquidityValue1
+                        ? formatTokenAmountNumber({
+                            input: liquidityValue1.toExact(),
+                            decimals: liquidityValue1.currency.decimals,
+                          })
+                        : '-'}
+                    </Box>
+                    &nbsp;{liquidityValue1?.currency?.symbol}
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                mt: 20,
-                display: 'flex',
-                alignItems: 'center',
-                px: 20,
-                py: 16,
-                borderBottomLeftRadius: 16,
-                borderBottomRightRadius: 16,
-                backgroundColor: theme.palette.background.paper,
-              }}
-            >
-              <RemoveButton
-                chainId={chainId}
-                disabled={removed || sliderPercentage === 0 || !liquidityValue0}
-                removed={removed}
-                error={error}
-                onConfirm={onRemoveMutation.mutate}
-                isLoading={onRemoveMutation.isPending}
-              />
-            </Box>
-          </TabPanel>
-          <TabPanel value="claim">
-            <Box
-              sx={{
-                mx: 20,
-                mt: 16,
-                borderRadius: 12,
-                borderWidth: 1,
-                borderStyle: 'solid',
-                borderColor: theme.palette.border.main,
-              }}
-            >
               <Box
                 sx={{
-                  py: 12,
-                  px: 20,
-                  typography: 'body1',
-                  color: theme.palette.text.primary,
-                  borderBottomWidth: 1,
-                  borderBottomStyle: 'solid',
-                  borderBottomColor: theme.palette.border.main,
+                  position: 'sticky',
+                  bottom: 0,
+                  mt: 20,
+                  display: 'flex',
+                  alignItems: 'center',
+                  px: 10,
+                  py: 16,
+                  borderBottomLeftRadius: 16,
+                  borderBottomRightRadius: 16,
+                  backgroundColor: theme.palette.background.paper,
                 }}
               >
-                {t`Claim fees`}
+                <RemoveButton
+                  chainId={chainId}
+                  disabled={
+                    removed || sliderPercentage === 0 || !liquidityValue0
+                  }
+                  removed={removed}
+                  error={error}
+                  onConfirm={onRemoveMutation.mutate}
+                  isLoading={onRemoveMutation.isPending}
+                />
+              </Box>
+            </TabPanel>
+            <TabPanel value="claim">
+              <Box
+                sx={{
+                  mx: 10,
+                  mt: 16,
+                  borderRadius: 12,
+                  borderWidth: 1,
+                  borderStyle: 'solid',
+                  borderColor: theme.palette.border.main,
+                }}
+              >
+                <Box
+                  sx={{
+                    py: 12,
+                    px: 10,
+                    typography: 'body1',
+                    color: theme.palette.text.primary,
+                    borderBottomWidth: 1,
+                    borderBottomStyle: 'solid',
+                    borderBottomColor: theme.palette.border.main,
+                  }}
+                >
+                  {t`Claim fees`}
+                </Box>
+                <Box
+                  sx={{
+                    p: 20,
+                  }}
+                >
+                  <RewardItem
+                    token={feeValueUpper?.currency}
+                    amount={feeValueUpper}
+                  />
+                  <RewardItem
+                    token={feeValueLower?.currency}
+                    amount={feeValueLower}
+                  />
+                </Box>
               </Box>
               <Box
                 sx={{
-                  p: 20,
+                  mx: 10,
+                  mt: 16,
+                  typography: 'h6',
+                  color: theme.palette.text.secondary,
                 }}
               >
-                <RewardItem
-                  token={feeValueUpper?.currency}
-                  amount={feeValueUpper}
-                />
-                <RewardItem
-                  token={feeValueLower?.currency}
-                  amount={feeValueLower}
+                {t`*Collecting fees will withdraw currently available fees for you.`}
+              </Box>
+              <Box
+                sx={{
+                  position: 'sticky',
+                  bottom: 0,
+                  mt: 20,
+                  display: 'flex',
+                  alignItems: 'center',
+                  px: 10,
+                  py: 16,
+                  borderBottomLeftRadius: 16,
+                  borderBottomRightRadius: 16,
+                  backgroundColor: theme.palette.background.paper,
+                }}
+              >
+                <ClaimButton
+                  chainId={chainId}
+                  disabled={onClaimMutation.isPending}
+                  onConfirm={onClaimMutation.mutate}
+                  isLoading={onClaimMutation.isPending}
                 />
               </Box>
-            </Box>
-            <Box
-              sx={{
-                mx: 20,
-                mt: 16,
-                typography: 'h6',
-                color: theme.palette.text.secondary,
-              }}
-            >
-              {t`*Collecting fees will withdraw currently available fees for you.`}
-            </Box>
-            <Box
-              sx={{
-                mt: 20,
-                display: 'flex',
-                alignItems: 'center',
-                px: 20,
-                py: 16,
-                borderBottomLeftRadius: 16,
-                borderBottomRightRadius: 16,
-                backgroundColor: theme.palette.background.paper,
-              }}
-            >
-              <ClaimButton
-                chainId={chainId}
-                disabled={onClaimMutation.isPending}
-                onConfirm={onClaimMutation.mutate}
-                isLoading={onClaimMutation.isPending}
-              />
-            </Box>
-          </TabPanel>
-        </Tabs>
+            </TabPanel>
+          </Tabs>
+        </Box>
       </Box>
     );
   }, [

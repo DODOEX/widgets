@@ -60,4 +60,6 @@ export enum ChainId {
   HEMI = 43111,
 
   PHAROS_TESTNET = 688688,
+  
+  MONAD_TESTNET = 10143,
 }

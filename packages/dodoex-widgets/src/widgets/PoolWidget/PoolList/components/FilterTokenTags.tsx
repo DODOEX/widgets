@@ -30,21 +30,13 @@ export default function FilterTokenTags({
             alignItems: 'center',
             px: 8,
             mr: 8,
-            borderRadius: 8,
+            borderRadius: 12,
             fontWeight: 600,
-            height: 32,
-            backgroundColor: 'hover.default',
+            height: 24,
+            color: 'primary.contrastText',
+            backgroundColor: 'disable.default',
           }}
         >
-          <TokenLogo
-            address={tag.address}
-            width={20}
-            height={20}
-            chainId={tag.chainId}
-            url={tag.logoURI}
-            noShowChain
-            marginRight={8}
-          />
           {tag.symbol}
           <Box
             component={Error}
@@ -57,7 +49,11 @@ export default function FilterTokenTags({
               position: 'relative',
               top: 1.5,
             }}
-            onClick={() => onDeleteTag(tag)}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              onDeleteTag(tag)
+            }}
           />
         </Box>
       ))}

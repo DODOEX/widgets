@@ -48,6 +48,9 @@ const SliderOver = styled(SliderOrigin)(({ theme }) => ({
     fontSize: '12px',
     lineHeight: '17px',
   },
+  '&&& .base-Slider-thumb': {
+    backgroundColor: 'transparent',
+  },
 }));
 
 interface Props {

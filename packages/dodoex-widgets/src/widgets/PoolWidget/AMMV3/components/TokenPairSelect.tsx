@@ -52,7 +52,7 @@ function TokenPickSelect({
             borderColor: token
               ? theme.palette.border.main
               : theme.palette.primary.main,
-            opacity: 0.8,
+              opacity: 0.8,
           },
           [theme.breakpoints.up('tablet')]: {
             flexBasis: '50%',

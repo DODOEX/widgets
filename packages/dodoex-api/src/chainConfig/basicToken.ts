@@ -196,4 +196,11 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WPHRS',
     wrappedTokenAddress: '0x3019b247381c850ab53dc0ee53bce7a07ea9155f',
   },
+  [ChainId.MONAD_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'MON',
+    name: 'MON',
+    wrappedTokenSymbol: 'WMON',
+    wrappedTokenAddress: '0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701',
+  },
 };

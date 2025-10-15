@@ -9,7 +9,13 @@ import {
   Tooltip,
 } from '@dodoex/components';
 import { formatTokenAmountNumber } from '../../utils';
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import {
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  ReactElement,
+} from 'react';
 import {
   Setting,
   SettingCrossChain,
@@ -80,11 +86,18 @@ export interface SwapProps {
   getAutoSlippage?: GetAutoSlippage;
   onPayTokenChange?: (token: TokenInfo) => void;
   onReceiveTokenChange?: (token: TokenInfo) => void;
+  Header?: (props: {
+    isBridge?: boolean;
+    onClickSetting: () => void;
+  }) => ReactElement | null;
+  switchDefualtPrimary?: boolean;
 }
 
 export function Swap({
   showPreviewInfoCard,
   slippageQuickInput,
+  Header,
+  switchDefualtPrimary,
   getAutoSlippage,
   onPayTokenChange,
   onReceiveTokenChange,
@@ -880,40 +893,49 @@ export function Swap({
   return (
     <>
       {/* Header */}
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          typography: 'caption',
-          margin: 20,
-        }}
-      >
-        <Trans>Swap</Trans>
-        <Tooltip
-          open={showSwitchSlippageTooltip}
-          title={
-            isBridge ? (
-              <Trans>The setting has been switched to cross chain mode</Trans>
-            ) : (
-              <Trans>The setting has been switched to swap mode</Trans>
-            )
-          }
-          placement="bottom-end"
+      {Header ? (
+        <Header
+          isBridge={isBridge}
+          onClickSetting={() => {
+            setIsSettingsDialogOpen(true);
+          }}
+        />
+      ) : (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            typography: 'caption',
+            margin: 20,
+          }}
         >
-          <Box component={ButtonBase}>
-            <Box
-              component={isBridge ? SettingCrossChain : Setting}
-              onClick={() => setIsSettingsDialogOpen(true)}
-              sx={{
-                width: 19,
-                height: 19,
-                color: 'text.primary',
-                cursor: 'pointer',
-              }}
-            />
-          </Box>
-        </Tooltip>
-      </Box>
+          <Trans>Swap</Trans>
+          <Tooltip
+            open={showSwitchSlippageTooltip}
+            title={
+              isBridge ? (
+                <Trans>The setting has been switched to cross chain mode</Trans>
+              ) : (
+                <Trans>The setting has been switched to swap mode</Trans>
+              )
+            }
+            placement="bottom-end"
+          >
+            <Box component={ButtonBase}>
+              <Box
+                component={isBridge ? SettingCrossChain : Setting}
+                onClick={() => setIsSettingsDialogOpen(true)}
+                sx={{
+                  width: 19,
+                  height: 19,
+                  color: 'text.primary',
+                  cursor: 'pointer',
+                }}
+              />
+            </Box>
+          </Tooltip>
+        </Box>
+      )}
 
       {/* Scroll Container */}
       <Box sx={{ flex: 1, padding: '0 16px 12px', overflowY: 'auto' }}>
@@ -1066,6 +1088,7 @@ export function Swap({
           fromToken={fromToken}
           toToken={toToken}
           slippageQuickInput={slippageQuickInput}
+          switchDefualtPrimary={switchDefualtPrimary}
         />
       )}
       <SelectBridgeDialog

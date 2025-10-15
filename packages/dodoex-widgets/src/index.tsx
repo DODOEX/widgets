@@ -11,6 +11,17 @@ export { MetadataFlag } from './hooks/Submission/types';
 export { rpcServerMap, scanUrlDomainMap } from './constants/chains';
 export { chainListMap } from './constants/chainList';
 import { Pool } from './widgets/PoolWidget';
+export { ReviewDialog } from './components/Swap/components/ReviewDialog';
+export { useInflights } from './hooks/Submission';
+export { default as ConnectWallet } from './components/Swap/components/ConnectWallet';
+export { TokenPairPriceWithToggle } from './components/Swap/components/TokenPairPriceWithToggle';
+export { useSlippageLimit, getMaxSlippageWarning } from './hooks/Swap/useSlippageLimit';
+export { useFetchETHBalance } from './hooks/contract';
+export { useSetAutoSlippage } from './hooks/setting/useSetAutoSlippage';
+export { useMarginAmount, useFetchFiatPrice } from './hooks/Swap';
+export { useSwapSlippage } from './hooks/Swap/useSwapSlippage';
+export { SwapSettingsDialog } from './components/Swap/components/SwapSettingsDialog';
+export { AddressWithLinkAndCopy } from './components/AddressWithLinkAndCopy';
 export { Widget, UnstyleWidget, Message } from './components/Widget';
 export { WIDGET_MODULE_CLASS_NAME } from './components/WidgetContainer';
 export type { WidgetProps } from './components/Widget';
@@ -38,9 +49,19 @@ export { MiningCreate } from './widgets/MiningWidget/MiningCreate';
 export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
 export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
 export { AMMV3PositionManage } from './widgets/PoolWidget/AMMV3/AMMV3PositionManage';
+export { default as AMMV3Create } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
+export { default as AddLiquidityList } from './widgets/PoolWidget/PoolList/AddLiquidity';
+export { default as MyLiquidityList } from './widgets/PoolWidget/PoolList/MyLiquidity';
+export { default as MyCreatedList } from './widgets/PoolWidget/PoolList/MyCreated';
+export { usePoolListTabs, PoolTab } from './widgets/PoolWidget/PoolList/hooks/usePoolListTabs';
+export { usePoolListFilterChainId } from './widgets/PoolWidget/PoolList/hooks/usePoolListFilterChainId';
+export { CreatePoolBtn } from './widgets/PoolWidget/PoolList/components/CreatePoolBtn'; 
+export { usePoolListFilterTokenAndPool } from './widgets/PoolWidget/PoolList/hooks/usePoolListFilterTokenAndPool';
+export { default as TokenAndPoolFilter } from './widgets/PoolWidget/PoolList/components/TokenAndPoolFilter';
+export { default as TokenListPoolItem } from './widgets/PoolWidget/PoolList/components/TokenListPoolItem';
 
 export { useTokenStatus } from './hooks/Token/useTokenStatus';
-
+export { useFetchRoutePrice, RoutePriceStatus } from './hooks/Swap';
 export { default as TokenStatusButton } from './components/TokenStatusButton';
 export { default as TokenPairStatusButton } from './components/TokenPairStatusButton';
 export { TokenCard } from './components/Swap/components/TokenCard';
@@ -54,7 +75,6 @@ export {
   formatShortNumber,
   formatPercentageNumber,
 } from './utils/formatter';
-
 export function SwapWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>

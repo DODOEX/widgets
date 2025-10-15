@@ -105,8 +105,8 @@ export default function Zoom({
         gridTemplateColumns: `repeat(${showResetButton ? 3 : 2}, 1fr)`,
         gridGap: '6px',
         position: 'absolute',
-        top: '-32px',
-        right: 0,
+        top: 8,
+        right: 8
       }}
     >
       {showResetButton && (
@@ -138,55 +138,31 @@ export default function Zoom({
           </svg>
         </Button>
       )}
-      <Button
-        size={Button.Size.small}
+      <Box
         sx={{
-          borderRadius: 16,
+          cursor: 'pointer',
         }}
         onClick={zoomIn}
-        disabled={false}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          <line x1="11" y1="8" x2="11" y2="14"></line>
-          <line x1="8" y1="11" x2="14" y2="11"></line>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="11.5" stroke="#4D3B79" stroke-opacity="0.1"/>
+          <mask id="path-2-inside-1_153_33729" fill="white">
+          <path d="M12.75 11H16V12.5H12.75V15.75H11.25V12.5H8V11H11.25V7.75H12.75V11Z"/>
+          </mask>
+          <path d="M12.75 11H11.75V12H12.75V11ZM16 11H17V10H16V11ZM16 12.5V13.5H17V12.5H16ZM12.75 12.5V11.5H11.75V12.5H12.75ZM12.75 15.75V16.75H13.75V15.75H12.75ZM11.25 15.75H10.25V16.75H11.25V15.75ZM11.25 12.5H12.25V11.5H11.25V12.5ZM8 12.5H7V13.5H8V12.5ZM8 11V10H7V11H8ZM11.25 11V12H12.25V11H11.25ZM11.25 7.75V6.75H10.25V7.75H11.25ZM12.75 7.75H13.75V6.75H12.75V7.75ZM12.75 11V12H16V11V10H12.75V11ZM16 11H15V12.5H16H17V11H16ZM16 12.5V11.5H12.75V12.5V13.5H16V12.5ZM12.75 12.5H11.75V15.75H12.75H13.75V12.5H12.75ZM12.75 15.75V14.75H11.25V15.75V16.75H12.75V15.75ZM11.25 15.75H12.25V12.5H11.25H10.25V15.75H11.25ZM11.25 12.5V11.5H8V12.5V13.5H11.25V12.5ZM8 12.5H9V11H8H7V12.5H8ZM8 11V12H11.25V11V10H8V11ZM11.25 11H12.25V7.75H11.25H10.25V11H11.25ZM11.25 7.75V8.75H12.75V7.75V6.75H11.25V7.75ZM12.75 7.75H11.75V11H12.75H13.75V7.75H12.75Z" fill="#0C002B" fill-opacity="0.5" mask="url(#path-2-inside-1_153_33729)"/>
         </svg>
-      </Button>
-      <Button
-        size={Button.Size.small}
+      </Box>
+      <Box
         sx={{
-          borderRadius: 16,
+          cursor: 'pointer',
         }}
         onClick={zoomOut}
-        disabled={false}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          <line x1="8" y1="11" x2="14" y2="11"></line>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="11.5" stroke="#4D3B79" stroke-opacity="0.1"/>
+          <rect x="8.375" y="11.375" width="7.25" height="0.75" stroke="#0C002B" stroke-opacity="0.5" stroke-width="0.75"/>
         </svg>
-      </Button>
+      </Box>
     </Box>
   );
 }
