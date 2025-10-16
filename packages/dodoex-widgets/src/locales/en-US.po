@@ -166,6 +166,10 @@ msgstr "Pools with lower transaction fees will attract more traders."
 msgid "Single-Token"
 msgstr "Single-Token"
 
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:93
+msgid "Same chain setting"
+msgstr "Same chain setting"
+
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:301
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/TokenPairSelect.tsx:111
 msgid "Select Pool"
@@ -727,7 +731,7 @@ msgstr "My Positions"
 msgid "Day"
 msgstr "Day"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:166
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:170
 msgid "minutes"
 msgstr "minutes"
 
@@ -926,7 +930,7 @@ msgstr "The pegged exchange rate refers to the exchange rate between two token a
 msgid "Deposit amounts"
 msgstr "Deposit amounts"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:215
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:219
 msgid "Disable Indirect Routing"
 msgstr "Disable Indirect Routing"
 
@@ -1018,6 +1022,10 @@ msgstr "Set the fee to the same as most other pools"
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:313
 msgid "If there are no participants before the end, the rewards cannot be taken out anymore."
 msgstr "If there are no participants before the end, the rewards cannot be taken out anymore."
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:36
+msgid "Cross chain setting"
+msgstr "Cross chain setting"
 
 #: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:187
 msgid "Your position will appear here."
@@ -1243,12 +1251,7 @@ msgstr "Wallet incompatibility"
 msgid "Bought {0} {1}, price in the pool decreased to {2}"
 msgstr "Bought {0} {1}, price in the pool decreased to {2}"
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:36
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:90
-msgid "Settings"
-msgstr "Settings"
-
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:247
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:251
 msgid "Privacy Swap"
 msgstr "Privacy Swap"
 
@@ -1350,7 +1353,7 @@ msgstr "Swap Detail"
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:218
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:222
 msgid "Checking this option means that the routing algorithm will only route to liquidity pools between the two tokens in the trading pair and will ignore routes with any intermediary tokens."
 msgstr "Checking this option means that the routing algorithm will only route to liquidity pools between the two tokens in the trading pair and will ignore routes with any intermediary tokens."
 
@@ -1670,7 +1673,7 @@ msgstr "Rate"
 msgid "Balance"
 msgstr "Balance"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:250
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:254
 msgid "Privacy Swap can effectively protect users from sandwich attacks that could come about due to the differences between the slippage settings and the current price in the liquidity pool. This feature is free for a limited time."
 msgstr "Privacy Swap can effectively protect users from sandwich attacks that could come about due to the differences between the slippage settings and the current price in the liquidity pool. This feature is free for a limited time."
 
@@ -2258,7 +2261,7 @@ msgstr "differs from the price quoted by ZUNO by {lqAndDodoCompareText}"
 msgid "Source"
 msgstr "Source"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:127
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:131
 msgid "You may modify the transaction deadline, the maximum time allowed for a trade to be processed on-chain. However, please note that this may lead to your trade executing at a subpar price, as the market price may change during that time."
 msgstr "You may modify the transaction deadline, the maximum time allowed for a trade to be processed on-chain. However, please note that this may lead to your trade executing at a subpar price, as the market price may change during that time."
 
@@ -2350,7 +2353,7 @@ msgstr "To avoid loss of rewards, please ensure that at least 1 or more particip
 msgid "https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef"
 msgstr "https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:124
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:128
 msgid "Transaction Deadline"
 msgstr "Transaction Deadline"
 

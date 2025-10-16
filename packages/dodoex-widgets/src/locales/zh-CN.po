@@ -166,6 +166,10 @@ msgstr ""
 msgid "Single-Token"
 msgstr ""
 
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:93
+msgid "Same chain setting"
+msgstr ""
+
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:301
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/TokenPairSelect.tsx:111
 msgid "Select Pool"
@@ -727,7 +731,7 @@ msgstr ""
 msgid "Day"
 msgstr "天"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:166
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:170
 msgid "minutes"
 msgstr ""
 
@@ -926,7 +930,7 @@ msgstr ""
 msgid "Deposit amounts"
 msgstr ""
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:215
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:219
 msgid "Disable Indirect Routing"
 msgstr ""
 
@@ -1017,6 +1021,10 @@ msgstr ""
 #: src/widgets/MiningWidget/MiningCreate/index.tsx:360
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:313
 msgid "If there are no participants before the end, the rewards cannot be taken out anymore."
+msgstr ""
+
+#: src/components/Swap/components/SettingsDialog/index.tsx:36
+msgid "Cross chain setting"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:187
@@ -1243,12 +1251,7 @@ msgstr "钱包不兼容"
 msgid "Bought {0} {1}, price in the pool decreased to {2}"
 msgstr ""
 
-#: src/components/Swap/components/SettingsDialog/index.tsx:36
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:90
-msgid "Settings"
-msgstr "设置"
-
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:247
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:251
 msgid "Privacy Swap"
 msgstr ""
 
@@ -1350,7 +1353,7 @@ msgstr "交易详情"
 msgid "No ForceStop access"
 msgstr "No ForceStop access"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:218
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:222
 msgid "Checking this option means that the routing algorithm will only route to liquidity pools between the two tokens in the trading pair and will ignore routes with any intermediary tokens."
 msgstr ""
 
@@ -1670,7 +1673,7 @@ msgstr ""
 msgid "Balance"
 msgstr ""
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:250
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:254
 msgid "Privacy Swap can effectively protect users from sandwich attacks that could come about due to the differences between the slippage settings and the current price in the liquidity pool. This feature is free for a limited time."
 msgstr ""
 
@@ -2258,7 +2261,7 @@ msgstr ""
 msgid "Source"
 msgstr "源"
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:127
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:131
 msgid "You may modify the transaction deadline, the maximum time allowed for a trade to be processed on-chain. However, please note that this may lead to your trade executing at a subpar price, as the market price may change during that time."
 msgstr ""
 
@@ -2350,7 +2353,7 @@ msgstr ""
 msgid "https://blog.dodoex.io/introducing-the-dodo-smart-slippage-3d32d13a4fef"
 msgstr ""
 
-#: src/components/Swap/components/SwapSettingsDialog/index.tsx:124
+#: src/components/Swap/components/SwapSettingsDialog/index.tsx:128
 msgid "Transaction Deadline"
 msgstr "交易截止时间"
 

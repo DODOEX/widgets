@@ -87,7 +87,11 @@ export function SwapSettingsDialog({
       }
       id="swap-settings"
       title={
-        isSelectSupplierMode ? 'Select A Supplier' : <Trans>Settings</Trans>
+        isSelectSupplierMode ? (
+          'Select A Supplier'
+        ) : (
+          <Trans>Same chain setting</Trans>
+        )
       }
       modal={isDialogModal}
     >
