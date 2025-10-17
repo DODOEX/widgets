@@ -83,6 +83,7 @@ export default function useTokenList({
   visible,
   defaultLoadBalance,
   multiple,
+  tokenList: tokenListProps,
 }: {
   value?: TokenInfo | null | Array<TokenInfo>;
   onChange: (token: TokenInfo | Array<TokenInfo>, isOccupied: boolean) => void;
@@ -102,6 +103,7 @@ export default function useTokenList({
   visible?: boolean;
   defaultLoadBalance?: boolean;
   multiple?: boolean;
+  tokenList?: TokenInfo[];
 }) {
   const [filter, setFilter] = useState('');
   const { tokenList: preloadedOrigin } = useTokenState();
@@ -111,11 +113,12 @@ export default function useTokenList({
     [chainIdProps, currentChainId],
   );
   const preloaded = useMemo(() => {
-    const preloadedResult = preloadedOrigin.filter(
+    const originTokenList = tokenListProps ? tokenListProps : preloadedOrigin;
+    const preloadedResult = originTokenList.filter(
       (token) => token.chainId === chainId,
     );
     return preloadedResult;
-  }, [preloadedOrigin, chainId]);
+  }, [preloadedOrigin, chainId, tokenListProps]);
   const popularTokenListOrigin = useTokenState((state) =>
     state.popularTokenList.filter((token) => token.chainId === chainId),
   );

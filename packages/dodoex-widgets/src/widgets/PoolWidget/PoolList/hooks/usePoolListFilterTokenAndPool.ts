@@ -1,6 +1,7 @@
 import React from 'react';
 import { TokenInfo } from '../../../../hooks/Token';
 import { FetchLiquidityListLqList } from '../../utils';
+import { basicTokenMap, ChainId } from '@dodoex/api';
 
 export interface TokenAndPoolFilterUserOptions {
   tokens: Array<TokenInfo>;
@@ -28,7 +29,19 @@ export function usePoolListFilterTokenAndPool(
 
   const [filterASymbol, filterBSymbol] = React.useMemo(() => {
     const [filterAToken, filterBToken] = filterTokens;
-    return [filterAToken?.symbol, filterBToken?.symbol];
+    const filterChainId = (filterAToken?.chainId ?? filterBToken?.chainId) as
+      | ChainId
+      | undefined;
+    const basicToken =
+      filterChainId !== undefined ? basicTokenMap[filterChainId] : undefined;
+    return [
+      filterAToken?.symbol === basicToken?.symbol
+        ? basicToken?.wrappedTokenSymbol
+        : filterAToken?.symbol,
+      filterBToken?.symbol === basicToken?.symbol
+        ? basicToken?.wrappedTokenSymbol
+        : filterBToken?.symbol,
+    ];
   }, [filterTokens]);
 
   const handleChangeFilterTokens = (tokens: Array<TokenInfo>) => {

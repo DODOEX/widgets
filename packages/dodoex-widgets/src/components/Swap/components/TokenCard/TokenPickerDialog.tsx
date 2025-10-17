@@ -5,6 +5,7 @@ import { tokenPickerWrapper } from '../../../../constants/testId';
 import { DialogProps } from '../Dialog';
 import { useUserOptions } from '../../../UserOptionsProvider';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
+import { TokenInfo } from '../../../../hooks/Token';
 
 export interface TokenPickerDialogProps {
   open: boolean;
@@ -22,6 +23,7 @@ export interface TokenPickerDialogProps {
   searchOtherAddress?: TokenPickerProps['searchOtherAddress'];
   chainId?: TokenPickerProps['chainId'];
   modal?: boolean;
+  tokenList?: Array<TokenInfo>;
 }
 export function TokenPickerDialog(props: TokenPickerDialogProps) {
   const { height, TokenPickerDialog } = useUserOptions();
@@ -43,6 +45,7 @@ export function TokenPickerDialog(props: TokenPickerDialogProps) {
     searchOtherAddress,
     chainId,
     modal,
+    tokenList,
   } = props;
 
   return (
@@ -68,6 +71,7 @@ export function TokenPickerDialog(props: TokenPickerDialogProps) {
         searchPlaceholder={searchPlaceholder}
         searchOtherAddress={searchOtherAddress}
         chainId={chainId}
+        tokenList={tokenList}
         sx={
           modal
             ? {

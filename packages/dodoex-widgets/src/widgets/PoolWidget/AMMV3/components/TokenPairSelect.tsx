@@ -9,6 +9,7 @@ import { Actions, StateProps, Types } from '../reducer';
 import { Currency } from '../sdks/sdk-core/entities/currency';
 import { ReactComponent as Arrow } from './arrow.svg';
 import { convertBackToTokenInfo } from '../utils';
+import { useUserOptions } from '../../../../components/UserOptionsProvider';
 
 function TokenPickSelect({
   token,
@@ -22,6 +23,7 @@ function TokenPickSelect({
   tokenSelectOnChange: (value: TokenInfo) => void;
 }) {
   const theme = useTheme();
+  const { onlyChainId } = useUserOptions();
   const { chainId } = useWalletInfo();
 
   const [tokenPickerVisible, setTokenPickerVisible] = useState(false);
@@ -52,7 +54,7 @@ function TokenPickSelect({
             borderColor: token
               ? theme.palette.border.main
               : theme.palette.primary.main,
-              opacity: 0.8,
+            opacity: 0.8,
           },
           [theme.breakpoints.up('tablet')]: {
             flexBasis: '50%',
@@ -75,7 +77,7 @@ function TokenPickSelect({
               marginRight={0}
               width={24}
               height={24}
-              chainId={token.chainId || chainId}
+              chainId={token.chainId || onlyChainId || chainId}
               noShowChain
               sx={{
                 flexShrink: 0,
@@ -120,7 +122,7 @@ function TokenPickSelect({
       <TokenPickerDialog
         value={convertBackToTokenInfo(token)}
         open={tokenPickerVisible}
-        chainId={chainId}
+        chainId={onlyChainId || chainId}
         occupiedAddrs={[oppositeTokenAddress]}
         occupiedChainId={token?.chainId}
         onClose={() => {

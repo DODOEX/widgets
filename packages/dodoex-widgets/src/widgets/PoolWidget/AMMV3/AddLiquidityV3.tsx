@@ -599,6 +599,16 @@ export default function AddLiquidityV3({
                 balance={currencyBalances[Field.CURRENCY_A]}
                 currency={currencies[Field.CURRENCY_A] ?? null}
                 locked={depositADisabled}
+                onChangeNativeCurrenct={
+                  noHeader
+                    ? (payload) => {
+                        dispatch({
+                          type: Types.UpdateBaseToken,
+                          payload,
+                        });
+                      }
+                    : undefined
+                }
               />
               <CardPlusConnected />
               <CurrencyInputPanel
@@ -608,6 +618,16 @@ export default function AddLiquidityV3({
                 balance={currencyBalances[Field.CURRENCY_B]}
                 currency={currencies[Field.CURRENCY_B] ?? null}
                 locked={depositBDisabled}
+                onChangeNativeCurrenct={
+                  noHeader
+                    ? (payload) => {
+                        dispatch({
+                          type: Types.UpdateQuoteToken,
+                          payload,
+                        });
+                      }
+                    : undefined
+                }
               />
             </Box>
             <Box

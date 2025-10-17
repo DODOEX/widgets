@@ -38,6 +38,7 @@ export interface TokenPickerProps {
   /** like search pool address */
   searchOtherAddress?: (address: string) => Promise<JSX.Element | null>;
   sx?: BoxProps['sx'];
+  tokenList?: Array<TokenInfo>;
 }
 
 export default function TokenPicker({
@@ -55,6 +56,7 @@ export default function TokenPicker({
   searchPlaceholder,
   searchOtherAddress,
   sx,
+  tokenList,
 }: TokenPickerProps) {
   const { chainList, selectChainId, setSelectChainId } =
     useSelectChainList(side);
@@ -77,6 +79,7 @@ export default function TokenPicker({
     visible,
     defaultLoadBalance,
     multiple,
+    tokenList,
   });
 
   const ref = useRef<HTMLDivElement>(null);

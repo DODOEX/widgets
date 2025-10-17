@@ -1,5 +1,6 @@
 import {
   Box,
+  ButtonBase,
   TabPanel,
   Tabs,
   TabsButtonGroup,
@@ -39,7 +40,7 @@ import { useV3DerivedMintInfo } from './hooks/useV3DerivedMintInfo';
 import { useV3MintActionHandlers } from './hooks/useV3MintActionHandlers';
 import { useV3PositionFees } from './hooks/useV3PositionFees';
 import { useV3PositionFromTokenId } from './hooks/useV3Positions';
-import { reducer } from './reducer';
+import { reducer, Types } from './reducer';
 import {
   ChainId,
   Currency,
@@ -51,7 +52,7 @@ import { Bound, Field, OperateType } from './types';
 import { buildCurrency, convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
 import { toSlippagePercent } from './utils/slippage';
-import { CONTRACT_QUERY_KEY } from '@dodoex/api';
+import { basicTokenMap, CONTRACT_QUERY_KEY } from '@dodoex/api';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 
 const RewardItem = ({
@@ -113,7 +114,7 @@ export const AMMV3PositionManage = ({
   feeAmount,
   tokenId,
   onClose,
-  noHeader
+  noHeader,
 }: AMMV3PositionManageProps) => {
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
@@ -188,6 +189,22 @@ export const AMMV3PositionManage = ({
     quoteToken: state.quoteToken,
   });
   const removed = existingPositionDetails?.liquidity === '0';
+  const basicToken = basicTokenMap[chainId]
+    ? {
+        ...basicTokenMap[chainId],
+        chainId,
+      }
+    : undefined;
+  const wrappedAddressLow = basicToken?.wrappedTokenAddress.toLowerCase();
+  const canReceiveNativeToken0 =
+    liquidityValue0?.currency.isNative ||
+    liquidityValue0?.currency.address.toLowerCase() === wrappedAddressLow;
+  const canReceiveNativeToken1 =
+    liquidityValue1?.currency.isNative ||
+    liquidityValue1?.currency.address.toLowerCase() === wrappedAddressLow;
+  const canReceiveNativeToken =
+    canReceiveNativeToken0 || canReceiveNativeToken1;
+  const [receiveNative, setReceiveNative] = useState(true);
 
   // fees
   const [feeValue0, feeValue1] = useV3PositionFees({
@@ -348,6 +365,26 @@ export const AMMV3PositionManage = ({
       const deadline = Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60);
 
       try {
+        let expectedCurrencyOwed0 =
+          feeValue0Remove ??
+          CurrencyAmount.fromRawAmount(liquidityValue0.currency, 0);
+        let expectedCurrencyOwed1 =
+          feeValue1Remove ??
+          CurrencyAmount.fromRawAmount(liquidityValue1.currency, 0);
+        if (receiveNative && basicToken) {
+          if (canReceiveNativeToken0) {
+            expectedCurrencyOwed0 = CurrencyAmount.fromRawAmount(
+              buildCurrency(basicToken)!,
+              0,
+            );
+          } else if (canReceiveNativeToken1) {
+            expectedCurrencyOwed1 = CurrencyAmount.fromRawAmount(
+              buildCurrency(basicToken)!,
+              0,
+            );
+          }
+        }
+
         const { calldata, value } =
           NonfungiblePositionManager.removeCallParameters(positionSDK, {
             tokenId: tokenId.toString(),
@@ -355,12 +392,8 @@ export const AMMV3PositionManage = ({
             slippageTolerance: toSlippagePercent(slipperValue * 100),
             deadline: deadline.toString(),
             collectOptions: {
-              expectedCurrencyOwed0:
-                feeValue0Remove ??
-                CurrencyAmount.fromRawAmount(liquidityValue0.currency, 0),
-              expectedCurrencyOwed1:
-                feeValue1Remove ??
-                CurrencyAmount.fromRawAmount(liquidityValue1.currency, 0),
+              expectedCurrencyOwed0,
+              expectedCurrencyOwed1,
               recipient: account,
             },
           });
@@ -465,54 +498,56 @@ export const AMMV3PositionManage = ({
           backgroundColor: theme.palette.background.paper,
         }}
       >
-        {!noHeader && <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            p: 10,
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-            backgroundColor: theme.palette.background.paper,
-          }}
-        >
+        {!noHeader && (
           <Box
             sx={{
-              typography: 'body1',
-              fontWeight: 600,
-              color: theme.palette.text.primary,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              p: 10,
+              borderTopLeftRadius: 16,
+              borderTopRightRadius: 16,
+              backgroundColor: theme.palette.background.paper,
             }}
           >
-            {t`Add liquidity`}
-          </Box>
-
-          {onClose ? (
             <Box
               sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: 24,
-                height: 24,
-                borderRadius: '50%',
-                borderWidth: 1,
-                color: 'text.secondary',
-                cursor: 'pointer',
+                typography: 'body1',
+                fontWeight: 600,
+                color: theme.palette.text.primary,
               }}
             >
-              <Box
-                component={Error}
-                sx={{
-                  width: 16,
-                  height: 16,
-                }}
-                onClick={() => {
-                  onClose();
-                }}
-              />
+              {t`Add liquidity`}
             </Box>
-          ) : undefined}
-        </Box>}
+
+            {onClose ? (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 24,
+                  height: 24,
+                  borderRadius: '50%',
+                  borderWidth: 1,
+                  color: 'text.secondary',
+                  cursor: 'pointer',
+                }}
+              >
+                <Box
+                  component={Error}
+                  sx={{
+                    width: 16,
+                    height: 16,
+                  }}
+                  onClick={() => {
+                    onClose();
+                  }}
+                />
+              </Box>
+            ) : undefined}
+          </Box>
+        )}
         <Box
           sx={{
             flex: 1,
@@ -580,6 +615,12 @@ export const AMMV3PositionManage = ({
                     balance={currencyBalances[Field.CURRENCY_A]}
                     currency={currencies[Field.CURRENCY_A] ?? null}
                     locked={depositADisabled}
+                    onChangeNativeCurrenct={(payload) => {
+                      dispatch({
+                        type: Types.UpdateBaseToken,
+                        payload,
+                      });
+                    }}
                   />
                   <CardPlusConnected />
                   <CurrencyInputPanel
@@ -589,6 +630,12 @@ export const AMMV3PositionManage = ({
                     balance={currencyBalances[Field.CURRENCY_B]}
                     currency={currencies[Field.CURRENCY_B] ?? null}
                     locked={depositBDisabled}
+                    onChangeNativeCurrenct={(payload) => {
+                      dispatch({
+                        type: Types.UpdateQuoteToken,
+                        payload,
+                      });
+                    }}
                   />
                 </Box>
                 <SlippageSetting
@@ -657,12 +704,53 @@ export const AMMV3PositionManage = ({
                   value={sliderPercentage}
                   onChange={(v) => setSliderPercentage(v)}
                 />
-                <SlippageSetting
-                  value={slipper}
-                  onChange={setSlipper}
-                  disabled={false}
-                  type="AMMV3"
-                />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    gap: 8,
+                  }}
+                >
+                  {canReceiveNativeToken && (
+                    <ButtonBase
+                      sx={{
+                        px: 12,
+                        py: 4,
+                        borderRadius: 20,
+                        border: `solid 1px ${theme.palette.border.main}`,
+                        typography: 'body2',
+                        color: theme.palette.primary.main,
+                      }}
+                      onClick={() => setReceiveNative((prev) => !prev)}
+                    >
+                      <Trans>
+                        Receive{' '}
+                        {!receiveNative
+                          ? basicToken?.symbol
+                          : basicToken?.wrappedTokenSymbol}
+                      </Trans>
+                    </ButtonBase>
+                  )}
+                  <SlippageSetting
+                    value={slipper}
+                    onChange={setSlipper}
+                    disabled={false}
+                    type="AMMV3"
+                    sx={
+                      canReceiveNativeToken
+                        ? {
+                            m: 0,
+                            px: 12,
+                            py: 4,
+                            borderRadius: 20,
+                            backgroundColor:
+                              theme.palette.background.paperDarkContrast,
+                          }
+                        : undefined
+                    }
+                  />
+                </Box>
               </Box>
               <Box
                 sx={{
@@ -709,7 +797,10 @@ export const AMMV3PositionManage = ({
                           })
                         : '-'}
                     </Box>
-                    &nbsp;{liquidityValue0?.currency?.symbol}
+                    &nbsp;
+                    {canReceiveNativeToken0 && receiveNative
+                      ? basicToken?.symbol
+                      : liquidityValue0?.currency?.symbol}
                   </Box>
                   <Box
                     sx={{
@@ -731,7 +822,10 @@ export const AMMV3PositionManage = ({
                           })
                         : '-'}
                     </Box>
-                    &nbsp;{liquidityValue1?.currency?.symbol}
+                    &nbsp;
+                    {canReceiveNativeToken1 && receiveNative
+                      ? basicToken?.symbol
+                      : liquidityValue1?.currency?.symbol}
                   </Box>
                 </Box>
               </Box>

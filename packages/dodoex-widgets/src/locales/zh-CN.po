@@ -48,6 +48,7 @@ msgstr "交易量"
 msgid "To"
 msgstr "至"
 
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:727
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:431
 msgid "Receive {0}"
 msgstr "获得 {0}"
@@ -71,7 +72,7 @@ msgstr "卖出{0} {1}，资金池盘口价格涨到 {2}"
 msgid "Balance:"
 msgstr "余额:"
 
-#: src/widgets/PoolWidget/AMMV3/components/TokenPairSelect.tsx:105
+#: src/widgets/PoolWidget/AMMV3/components/TokenPairSelect.tsx:107
 msgid "Select token"
 msgstr "代币选择"
 
@@ -168,7 +169,7 @@ msgstr "单边"
 msgid "Select Pool"
 msgstr "选择做市池"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:549
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:584
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:65
 msgid "Selected Range"
 msgstr "选定区间"
@@ -177,7 +178,7 @@ msgstr "选定区间"
 msgid "Do not remind again"
 msgstr "不再提醒"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:374
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:407
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:280
 msgid "Remove Liquidity"
 msgstr "移除流动性"
@@ -303,7 +304,7 @@ msgstr "流动性"
 msgid "APR"
 msgstr "APR"
 
-#: src/components/TokenPicker/index.tsx:169
+#: src/components/TokenPicker/index.tsx:172
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
@@ -473,7 +474,7 @@ msgstr "是的，我确定"
 msgid "Add liquidity to obtain LP tokens for mining"
 msgstr "添加流动性后，可以获取 LP 代币。质押 LP 代币，开启挖矿。"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:573
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:608
 msgid "Add more liquidity"
 msgstr "添加更多流动性"
 
@@ -594,7 +595,7 @@ msgstr "添加初始流动性"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:206
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:326
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:486
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:520
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
 msgid "Add liquidity"
@@ -850,7 +851,7 @@ msgstr "选定区间无效，最低价格必须低于最高价格。"
 msgid "Liquidity Provider"
 msgstr "做市用户"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:811
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:905
 msgid "*Collecting fees will withdraw currently available fees for you."
 msgstr "*收取费用将领取当前已分配手续费。"
 
@@ -1028,7 +1029,7 @@ msgstr "没有找到符合条件的挖矿项目"
 msgid "Fee rate"
 msgstr "手续费费率"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:307
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:324
 #: src/widgets/PoolWidget/PoolList/index.tsx:164
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:138
 msgid "Add Liquidity"
@@ -1232,7 +1233,7 @@ msgstr "挖矿"
 msgid "Price Impact"
 msgstr "价格冲击"
 
-#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:53
+#: src/components/Swap/components/TokenCard/TokenPickerDialog.tsx:56
 msgid "Select a token"
 msgstr "选择代币"
 
@@ -1726,7 +1727,7 @@ msgstr "授权 {0}"
 msgid "Rate"
 msgstr "价格"
 
-#: src/widgets/PoolWidget/AMMV3/components/CurrencyInputPanel.tsx:125
+#: src/widgets/PoolWidget/AMMV3/components/CurrencyInputPanel.tsx:184
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/TokenPairSelect.tsx:95
 msgid "Balance"
 msgstr "余额"
@@ -1800,7 +1801,7 @@ msgstr "选择模式"
 #: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:465
 #: src/widgets/MiningWidget/MiningList/operate-area/index.tsx:204
 #: src/widgets/MiningWidget/OperateArea/index.tsx:74
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:455
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:488
 msgid "Claim"
 msgstr "领取"
 
@@ -1916,7 +1917,7 @@ msgstr "创建完成后，该价格不可更改，适用于ETH-WETH等刚兑资�
 
 #: src/components/Swap/components/SettingsDialog/index.tsx:45
 #: src/widgets/PoolWidget/AMMV2Create/Ratio.tsx:271
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:634
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:654
 #: src/widgets/PoolWidget/PoolOperate/components/Ratio.tsx:298
 #: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:129
 msgid "Slippage Tolerance"
@@ -1938,7 +1939,7 @@ msgid "My Staked"
 msgstr "已质押"
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:478
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:453
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:486
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:220
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:385
@@ -2147,7 +2148,7 @@ msgstr "选择平台"
 #: src/components/TokenSelect.tsx:124
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:356
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:414
-#: src/widgets/PoolWidget/AMMV3/components/CurrencyInputPanel.tsx:99
+#: src/widgets/PoolWidget/AMMV3/components/CurrencyInputPanel.tsx:142
 msgid "SELECT TOKEN"
 msgstr "选择代币"
 
@@ -2185,7 +2186,7 @@ msgstr "{0}/{1} 资金池代币"
 msgid "Initial Price Alert"
 msgstr "初始价格提示"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:454
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:487
 #: src/widgets/PoolWidget/AMMV3/components/RemoveButton.tsx:32
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:213
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:253
@@ -2218,7 +2219,7 @@ msgstr "SafeERC20：low-level call failed，请联系DODO团队解决。"
 msgid "Pool Creation Confirmation"
 msgstr "确认创建资金池"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:786
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:880
 msgid "Claim fees"
 msgstr "领取手续费"
 
@@ -2395,7 +2396,7 @@ msgid "Transaction Deadline"
 msgstr "交易截止时间"
 
 #: src/widgets/MiningWidget/MiningList/hooks/useDepositOrWithdrawOrClaim.ts:190
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:424
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:457
 msgid "Claim Rewards"
 msgstr "领取奖励"
 
