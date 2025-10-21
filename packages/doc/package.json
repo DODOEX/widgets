@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/api": "^3.0.3-zetachain.24.ton.2",
+    "@dodoex/api": "^3.0.3-zetachain.25",
     "@dodoex/btc-connect-react": "^1.5.10",
     "@dodoex/components": "^3.0.3-zetachain.14",
-    "@dodoex/widgets": "^3.0.2-zetachain.111",
+    "@dodoex/widgets": "^3.0.2-zetachain.112",
     "@emotion/styled": "^11.10.0",
     "@mysten/dapp-kit": "^0.18.0",
     "@mysten/sui": "^1.38.0",
