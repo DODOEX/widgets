@@ -1,4 +1,5 @@
 import { Box, Popup } from '@dodoex/components';
+import { ConnectModal } from '@mysten/dapp-kit';
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { chainListMap } from '../../../../constants/chainList';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
@@ -25,7 +26,8 @@ export const WalletConnectBtn = ({
 }: Props) => {
   const targetChainId = token.chainId;
 
-  const { open, disconnect } = useWalletInfo();
+  const { open, disconnect, suiConnectModalOpen, setSuiConnectModalOpen } =
+    useWalletInfo();
 
   const [isReceiveAddressInputModalOpen, setIsReceiveAddressInputModalOpen] =
     useState(false);
@@ -219,24 +221,51 @@ export const WalletConnectBtn = ({
                   backgroundColor: 'border.main',
                 }}
               />
-              <Box
-                sx={{
-                  p: 8,
-                  cursor: 'pointer',
-                  typography: 'body2',
-                  lineHeight: '19px',
-                  color: 'text.primary',
-                  '&:hover': {
-                    borderRadius: 8,
-                    backgroundColor: 'background.paperContrast',
-                  },
-                }}
-                onClick={() => {
-                  open({ namespace: account?.namespace });
-                }}
-              >
-                Connect a new wallet
-              </Box>
+              {account?.namespace === 'sui' ? (
+                <ConnectModal
+                  trigger={
+                    <Box
+                      sx={{
+                        p: 8,
+                        cursor: 'pointer',
+                        typography: 'body2',
+                        lineHeight: '19px',
+                        color: 'text.primary',
+                        '&:hover': {
+                          borderRadius: 8,
+                          backgroundColor: 'background.paperContrast',
+                        },
+                      }}
+                    >
+                      Connect a new wallet
+                    </Box>
+                  }
+                  open={suiConnectModalOpen}
+                  onOpenChange={(isOpen) => {
+                    console.log('walletconnectbtn isOpen', isOpen);
+                    setSuiConnectModalOpen(isOpen);
+                  }}
+                />
+              ) : (
+                <Box
+                  sx={{
+                    p: 8,
+                    cursor: 'pointer',
+                    typography: 'body2',
+                    lineHeight: '19px',
+                    color: 'text.primary',
+                    '&:hover': {
+                      borderRadius: 8,
+                      backgroundColor: 'background.paperContrast',
+                    },
+                  }}
+                  onClick={() => {
+                    open({ namespace: account?.namespace });
+                  }}
+                >
+                  Connect a new wallet
+                </Box>
+              )}
             </>
           )}
           {enterAddressEnabled && (

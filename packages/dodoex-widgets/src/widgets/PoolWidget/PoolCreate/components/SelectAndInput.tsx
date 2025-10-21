@@ -35,8 +35,8 @@ export function SelectAndInput({
             (isCustomized && errorMsg) || errorInput
               ? theme.palette.error.main
               : isCustomized
-              ? theme.palette.primary.main
-              : theme.palette.border.main,
+                ? theme.palette.primary.main
+                : theme.palette.border.main,
           borderWidth: 1,
           borderStyle: 'solid',
           borderRadius: 12,
@@ -48,7 +48,26 @@ export function SelectAndInput({
         <NumberInput
           value={isCustomized ? value : ''}
           onChange={onChange}
-          suffix={<RadioButtonIcon selected={isCustomized} />}
+          suffix={
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 16,
+              }}
+            >
+              <Box
+                sx={{
+                  typography: 'body1',
+                  fontWeight: 600,
+                  ml: 8,
+                }}
+              >
+                %
+              </Box>
+              <RadioButtonIcon selected={isCustomized} />
+            </Box>
+          }
           placeholder={t`Custom`}
           sx={{
             backgroundColor: 'transparent',

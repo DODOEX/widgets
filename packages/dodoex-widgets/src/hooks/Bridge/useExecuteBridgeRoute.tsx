@@ -5,6 +5,8 @@ import {
   SendTransactionError,
   TransactionExpiredBlockheightExceededError,
 } from '@solana/web3.js';
+import { Address, Cell } from '@ton/core';
+import { Transaction } from '@mysten/sui/transactions';
 import { BigNumber } from 'bignumber.js';
 import { useCallback } from 'react';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
@@ -14,6 +16,7 @@ import { transferBitcoin } from '../../utils/btc';
 import { CROSS_CHAIN_TEXT } from '../../utils/constants';
 import { formatTokenAmountNumber } from '../../utils/formatter';
 import { constructSolanaBridgeRouteTransaction } from '../../utils/solana';
+import { normalizedExtHashFromBoc } from '../../utils/ton';
 import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { ExecutionProps, useSubmission } from '../Submission';
 import { OpCode } from '../Submission/spec';
@@ -30,8 +33,14 @@ export default function useExecuteBridgeRoute({
   bridgeOrderTxRequest?: BridgeTXRequest;
 }) {
   const graphQLRequests = useGraphQLRequests();
-  const { solanaWalletProvider, solanaConnection, bitcoinWalletProvider } =
-    useWalletInfo();
+  const {
+    solanaWalletProvider,
+    solanaConnection,
+    bitcoinWalletProvider,
+    tonConnectUI,
+    suiCurrentWallet,
+    signAndExecuteTransaction,
+  } = useWalletInfo();
 
   const submission = useSubmission();
 
@@ -124,6 +133,7 @@ export default function useExecuteBridgeRoute({
 
       const metadata: Metadata = {
         [MetadataFlag.crossChain]: true,
+        chainId: fromChainId,
       };
 
       const mixpanelProps = {
@@ -231,10 +241,97 @@ export default function useExecuteBridgeRoute({
               }
 
               if (error instanceof SendTransactionError) {
-                const logs = await error.getLogs(solanaConnection);
-                console.log('logs:', logs);
+                await error.getLogs(solanaConnection);
               }
               console.error('wallet.sendTransaction execute:', error);
+              params.onError(error);
+            }
+          },
+        });
+      }
+
+      if (fromChain.isTONChain) {
+        if (!tonConnectUI) {
+          throw new Error('tonConnectUI is null');
+        }
+
+        return submission.executeCustom({
+          brief: CROSS_CHAIN_TEXT,
+          subtitle,
+          metadata,
+          mixpanelProps,
+          successBack,
+          handler: async (params) => {
+            try {
+              // https://docs.ton.org/v3/guidelines/ton-connect/cookbook/ton-transfer#transfer-with-a-comment
+
+              const payload = Cell.fromBoc(
+                Buffer.from(bridgeOrderTxRequest.data, 'hex'),
+              )[0]
+                .toBoc()
+                .toString('base64');
+
+              const myTransaction = {
+                validUntil: Math.floor(Date.now() / 1000) + 360,
+                messages: [
+                  {
+                    address: Address.parse(bridgeOrderTxRequest.to).toString(),
+                    amount: Number(bridgeOrderTxRequest.value).toString(),
+                    payload,
+                    // payload with the comment in body
+                  },
+                ],
+              };
+
+              const { boc } = await tonConnectUI.sendTransaction(myTransaction);
+
+              const tx = normalizedExtHashFromBoc(boc);
+
+              params.onSubmit(tx);
+              params.onSuccess(tx);
+            } catch (error) {
+              console.error('tonConnectUI.sendTransaction:', error);
+              params.onError(error);
+            }
+          },
+        });
+      }
+
+      if (fromChain.isSUIChain) {
+        // 检查钱包是否已连接
+        if (
+          !suiCurrentWallet ||
+          suiCurrentWallet.connectionStatus !== 'connected'
+        ) {
+          throw new Error('Sui wallet not connected');
+        }
+
+        return submission.executeCustom({
+          brief: CROSS_CHAIN_TEXT,
+          subtitle,
+          metadata,
+          mixpanelProps,
+          successBack,
+          handler: async (params) => {
+            try {
+              // 从 bridgeOrderTxRequest 获取交易数据
+              const transactionData = bridgeOrderTxRequest.data;
+
+              // 创建 Sui 交易对象
+              const tx = Transaction.from(transactionData);
+
+              // 使用已连接的钱包执行交易
+              const result = await signAndExecuteTransaction.mutateAsync({
+                transaction: tx,
+              });
+
+              // 获取交易 hash
+              const txHash = result.digest;
+
+              params.onSubmit(txHash);
+              params.onSuccess(txHash);
+            } catch (error) {
+              console.error('Sui transaction error:', error);
               params.onError(error);
             }
           },
@@ -265,6 +362,9 @@ export default function useExecuteBridgeRoute({
     bitcoinWalletProvider,
     solanaWalletProvider,
     solanaConnection,
+    suiCurrentWallet,
+    signAndExecuteTransaction,
+    tonConnectUI,
   ]);
 
   return execute;

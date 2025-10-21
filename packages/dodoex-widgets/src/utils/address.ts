@@ -76,7 +76,16 @@ export function getEtherscanPage(
   id?: string | null,
   prefix = 'address',
 ) {
-  return `https://${scanUrlDomainMap[chainId]}${id ? `/${prefix}/${id}` : ''}${
+  const finalPrefix =
+    chainId === ChainId.TON || chainId === ChainId.TON_TESTNET
+      ? prefix === 'tx'
+        ? 'transaction'
+        : prefix === 'address'
+          ? ''
+          : prefix
+      : prefix;
+
+  return `https://${scanUrlDomainMap[chainId]}${id ? `/${finalPrefix}/${id}` : ''}${
     chainId === ChainId.SOLANA_DEVNET ? '?cluster=devnet' : ''
   }`;
 }

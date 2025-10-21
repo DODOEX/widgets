@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/api",
-  "version": "3.0.3-zetachain.24",
+  "version": "3.0.3-zetachain.24.ton.2",
   "description": "DODO API Kit",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
@@ -55,11 +55,17 @@
   "peerDependencies": {
     "@dodoex/contract-request": "1.x",
     "@dodoex/dodo-contract-request": "1.x",
-    "bignumber.js": "^9.3.0",
-    "lodash": "^4.17.21",
+    "@mysten/dapp-kit": "^0.18.0",
+    "@mysten/sui": "^1.38.0",
     "@reown/appkit": "^1.7.5",
+    "@solana/spl-token": "^0.4.13",
     "@solana/web3.js": "1.98.2",
-    "@solana/spl-token": "^0.4.13"
+    "@ton/core": "^0.61.0",
+    "@ton/crypto": "^3.3.0",
+    "@ton/ton": "^15.3.1",
+    "@tonconnect/ui-react": "^2.3.0",
+    "bignumber.js": "^9.3.0",
+    "lodash": "^4.17.21"
   },
   "dependencies": {
     "@ethersproject/abi": "^5.8.0",

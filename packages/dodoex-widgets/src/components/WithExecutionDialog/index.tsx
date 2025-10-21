@@ -10,7 +10,6 @@ import {
 import { t, Trans } from '@lingui/macro';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ReactComponent as Loading } from '../../assets/approveBorderRight.svg';
-import { scanUrlDomainMap } from '../../constants/chains';
 import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
 import {
@@ -24,6 +23,7 @@ import {
   increaseCrossChainSubmittedCounter,
   setContractStatus,
 } from '../../hooks/useGlobalState';
+import { getEtherscanPage } from '../../utils/address';
 import { CROSS_CHAIN_TEXT } from '../../utils/constants';
 import Dialog from '../Swap/components/Dialog';
 import { useUserOptions } from '../UserOptionsProvider';
@@ -147,18 +147,23 @@ function TransactionTime({
   isStarted,
   isEnded,
   tx,
+  currentRequestChainId,
 }: {
   isStarted: boolean;
   isEnded: boolean;
   tx: string;
+  currentRequestChainId: number;
 }) {
   const [time, setTime] = useState(0);
   const { chainId } = useWalletInfo();
 
   const scanUrl = useMemo(() => {
-    const domain = scanUrlDomainMap[(chainId as ChainId) || 1];
-    return `https://${domain}/tx/${tx}`;
-  }, [tx, chainId]);
+    return getEtherscanPage(
+      (currentRequestChainId as ChainId) || (chainId as ChainId) || 1,
+      tx,
+      'tx',
+    );
+  }, [currentRequestChainId, chainId, tx]);
 
   const timeText = useMemo(() => {
     const min = Math.floor(time / 60);
@@ -249,6 +254,7 @@ export default function WithExecutionDialog({
     showingDone,
     errorMessage,
     transactionTx,
+    requests,
   } = {
     ...execution,
     ...executionStatus,
@@ -268,6 +274,9 @@ export default function WithExecutionDialog({
 
   const isCrossChainShowingDone =
     showingDone && showing?.brief === CROSS_CHAIN_TEXT && !errorMessage;
+
+  const currentRequestChainId = requests?.get(transactionTx)?.[0].metadata
+    ?.chainId as number;
 
   return (
     <ExecutionContext.Provider value={ctxVal}>
@@ -441,6 +450,7 @@ export default function WithExecutionDialog({
                   isStarted={!!showing}
                   isEnded={showingDone}
                   tx={transactionTx}
+                  currentRequestChainId={currentRequestChainId}
                 />
               </>
             )}

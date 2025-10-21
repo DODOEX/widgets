@@ -8,6 +8,12 @@ export const solanaFallbackAddress =
 
 export const btcFallbackAddress = 'tb1qcrd8yvatjzpxl0ew29jsps2z595jpwtm5mj38v';
 
+export const suiFallbackAddress =
+  '0xf5361d9079c5769b7b0c83841357f8f5b96d48b0477e1721e81c875ac7277e73';
+
+export const tonFallbackAddress =
+  '0QArAJPiEbfybbhm4XYU2ve5fIMozDvZvqU7wpVoKd-xJcRd';
+
 export const getFallbackAddress = (chainId: ChainId | undefined) => {
   if (!chainId) {
     return EmptyAddress;

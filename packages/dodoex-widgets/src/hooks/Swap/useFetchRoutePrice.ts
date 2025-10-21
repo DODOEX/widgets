@@ -361,6 +361,7 @@ export function useFetchRoutePrice({
         subtitle,
         metadata: {
           [MetadataFlag.swap]: true,
+          chainId: fromToken?.chainId,
         },
         handler: async (params) => {
           try {
@@ -400,7 +401,13 @@ export function useFetchRoutePrice({
         },
       });
     },
-    [data.rawBrief, solanaConnection, solanaWalletProvider, submission],
+    [
+      data.rawBrief,
+      fromToken?.chainId,
+      solanaConnection,
+      solanaWalletProvider,
+      submission,
+    ],
   );
 
   const executeSwap = useMemo(() => {
