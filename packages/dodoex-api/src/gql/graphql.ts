@@ -2009,6 +2009,8 @@ export type Cross_Chain_Swap_ZetachainCrossChainOrderCreate = {
 };
 
 export type Cross_Chain_Swap_ZetachainCrossChainOrderList = {
+  bridgeChainId?: Maybe<Scalars['Int']['output']>;
+  bridgeRefundVault?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
   endTime?: Maybe<Scalars['Int']['output']>;
   externalId?: Maybe<Scalars['String']['output']>;
@@ -2024,7 +2026,6 @@ export type Cross_Chain_Swap_ZetachainCrossChainOrderList = {
   omniPlan?: Maybe<Scalars['JSON']['output']>;
   refundAmount?: Maybe<Scalars['String']['output']>;
   refundChainId?: Maybe<Scalars['String']['output']>;
-  refundCridgeContract?: Maybe<Scalars['String']['output']>;
   refundHash?: Maybe<Scalars['String']['output']>;
   refundToken?: Maybe<Scalars['String']['output']>;
   refundUser?: Maybe<Scalars['String']['output']>;
@@ -2142,6 +2143,11 @@ export type Cross_Chain_Swap_ZetachainorderListData = {
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Cross_Chain_Swap_ZetachainorderRefundClaimedData = {
+  externalId?: InputMaybe<Scalars['String']['input']>;
+  hash?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Cross_Chain_Swap_ZetachainrouteParams = {
@@ -2402,6 +2408,34 @@ export type Cross_Chain_TransferErc20V2List = {
   tokenlists?: Maybe<Array<Maybe<Cross_Chain_TransferTokenListV2>>>;
 };
 
+export type Cross_Chain_TransferExplorerAllSections = {
+  lastUpdated: Scalars['String']['output'];
+  sections: Array<Cross_Chain_TransferExplorerSectionProjects>;
+};
+
+export type Cross_Chain_TransferExplorerProject = {
+  estimatedDate?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  launchDate?: Maybe<Scalars['String']['output']>;
+  projectLogo?: Maybe<Scalars['String']['output']>;
+  projectName: Scalars['String']['output'];
+  sections: Array<Scalars['String']['output']>;
+  sortOrder: Scalars['Int']['output'];
+  supportedChains?: Maybe<Array<Cross_Chain_TransferSupportedChain>>;
+  tags?: Maybe<Array<Scalars['String']['output']>>;
+  tgeDate?: Maybe<Scalars['String']['output']>;
+  totalRaised?: Maybe<Scalars['String']['output']>;
+  twitterUrl?: Maybe<Scalars['String']['output']>;
+  websiteUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_TransferExplorerSectionProjects = {
+  projects: Array<Cross_Chain_TransferExplorerProject>;
+  section: Scalars['String']['output'];
+  sectionName: Scalars['String']['output'];
+  total: Scalars['Int']['output'];
+};
+
 export type Cross_Chain_TransferFuncLabelV2 = {
   key?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -2414,6 +2448,10 @@ export type Cross_Chain_TransferOrderDetailFilter = {
 
 export type Cross_Chain_TransferOrderListFilter = {
   chainId?: InputMaybe<Scalars['Int']['input']>;
+  destChainId?: InputMaybe<Scalars['Int']['input']>;
+  maxAmount?: InputMaybe<Scalars['String']['input']>;
+  minAmount?: InputMaybe<Scalars['String']['input']>;
+  origChainId?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
@@ -2468,6 +2506,11 @@ export type Cross_Chain_TransferQuoteResponseTransactionDataDto = {
   maxPriorityFeePerGas?: Maybe<Scalars['String']['output']>;
   to: Scalars['String']['output'];
   value: Scalars['String']['output'];
+};
+
+export type Cross_Chain_TransferSupportedChain = {
+  chainId: Scalars['Int']['output'];
+  chainName: Scalars['String']['output'];
 };
 
 export type Cross_Chain_TransferTokenListV2 = {
@@ -3406,7 +3449,7 @@ export type Curve_Stableswap_NgLiquidityHistory = {
 };
 
 export type Curve_Stableswap_NgLiquidityHistoryAsset = {
-  amount: Scalars['BigInt']['output'];
+  amount: Scalars['BigDecimal']['output'];
   token: Curve_Stableswap_NgToken;
 };
 
@@ -3465,16 +3508,16 @@ export type Curve_Stableswap_NgPool = {
 };
 
 export type Curve_Stableswap_NgPoolReserve = {
-  amount: Scalars['BigInt']['output'];
+  amount: Scalars['BigDecimal']['output'];
   ratio: Scalars['BigDecimal']['output'];
   token: Curve_Stableswap_NgToken;
 };
 
 export type Curve_Stableswap_NgSwap = {
   id: Scalars['ID']['output'];
-  paidAmount: Scalars['BigInt']['output'];
+  paidAmount: Scalars['BigDecimal']['output'];
   paidToken: Curve_Stableswap_NgToken;
-  receivedAmount: Scalars['BigInt']['output'];
+  receivedAmount: Scalars['BigDecimal']['output'];
   receivedToken: Curve_Stableswap_NgToken;
   time: Scalars['BigInt']['output'];
   user: Scalars['String']['output'];
@@ -3500,7 +3543,7 @@ export type Curve_Stableswap_NgToken = {
 
 export type Curve_Stableswap_NgUserToken = {
   address: Scalars['String']['output'];
-  amount: Scalars['BigInt']['output'];
+  amount: Scalars['BigDecimal']['output'];
   decimals: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
@@ -7655,6 +7698,8 @@ export type LiquidityOrder = {
 };
 
 export type LiquidityPair = {
+  /** Number of aggregated pools when aggPairs is true */
+  aggregatedCount?: Maybe<Scalars['Int']['output']>;
   apy?: Maybe<LiquidityApyData>;
   apyList?: Maybe<Array<Maybe<LiquidityApyData>>>;
   /** base LP token, for DPP is null, for dodo v1 lpToken is different */
@@ -7713,6 +7758,7 @@ export type LiquidityPair = {
   mtFeeUSD: Scalars['BigDecimal']['output'];
   /** owner */
   owner?: Maybe<Scalars['LiquidityBytes']['output']>;
+  priceList?: Maybe<Array<Maybe<LiquidityPriceData>>>;
   /** quote LP token,for DPP is null, for dodo v1 lpToken is different */
   quoteLpToken?: Maybe<LiquidityLpToken>;
   /** quote token reserve */
@@ -8104,6 +8150,12 @@ export type LiquidityPosition_OrderBy =
   | 'vault'
   | 'yesterdayInterest';
 
+export type LiquidityPriceData = {
+  changeRate?: Maybe<Scalars['BigDecimal']['output']>;
+  price?: Maybe<Scalars['BigDecimal']['output']>;
+  timeRange?: Maybe<Scalars['String']['output']>;
+};
+
 export type LiquidityTick = {
   id: Scalars['ID']['output'];
   liquidityGross: Scalars['BigInt']['output'];
@@ -8161,6 +8213,7 @@ export type Liquiditycount_Data_Query = {
 };
 
 export type Liquiditylist_Filter = {
+  aggPairs?: InputMaybe<Scalars['Boolean']['input']>;
   /** This field has been discarded for compatibility with the previous interface */
   chain?: InputMaybe<Scalars['String']['input']>;
   /** The default is all chains, including test chains */
@@ -12774,11 +12827,13 @@ export type Query = {
   cross_chain_swap_zetachain_orderCreate?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderCreate>;
   cross_chain_swap_zetachain_orderDetail?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderList>;
   cross_chain_swap_zetachain_orderList?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderResult>;
+  cross_chain_swap_zetachain_orderRefundClaimed?: Maybe<Cross_Chain_Swap_ZetachainCrossChainOrderCreate>;
   cross_chain_swap_zetachain_routes?: Maybe<Cross_Chain_Swap_ZetachainCrossChainRoute>;
   cross_chain_swap_zetachain_swapOrderList?: Maybe<Cross_Chain_Swap_ZetachainSwapOrderResult>;
   cross_chain_swap_zetachain_transactionEncode?: Maybe<Cross_Chain_Swap_ZetachainCrossChainTransactionEncode>;
   cross_chain_token_list?: Maybe<Cross_Chain_TokenCrossChainTokenlist>;
   cross_chain_token_tokenPair?: Maybe<Cross_Chain_TokenCrossChainTokenPair>;
+  cross_chain_transfer_getExplorerAllSections: Cross_Chain_TransferExplorerAllSections;
   cross_chain_transfer_getOrderDetail?: Maybe<Cross_Chain_TransferCrossChainOrder>;
   cross_chain_transfer_getOrderList: Cross_Chain_TransferCrossChainOrderList;
   cross_chain_transfer_getTokenList?: Maybe<
@@ -13637,6 +13692,10 @@ export type QueryCross_Chain_Swap_Zetachain_OrderDetailArgs = {
 
 export type QueryCross_Chain_Swap_Zetachain_OrderListArgs = {
   where?: InputMaybe<Cross_Chain_Swap_ZetachainorderListData>;
+};
+
+export type QueryCross_Chain_Swap_Zetachain_OrderRefundClaimedArgs = {
+  data?: InputMaybe<Cross_Chain_Swap_ZetachainorderRefundClaimedData>;
 };
 
 export type QueryCross_Chain_Swap_Zetachain_RoutesArgs = {
@@ -21616,7 +21675,6 @@ export type Cross_Chain_Zetachain_Token_ListQuery = {
     symbol?: string | null;
     decimals?: number | null;
     chainId?: number | null;
-    supportTargetChain?: boolean | null;
   } | null> | null;
 };
 
@@ -22724,7 +22782,6 @@ export type Cross_Chain_Swap_Zetachain_OrderListQuery = {
       refundAmount?: string | null;
       refundUser?: string | null;
       refundToken?: string | null;
-      refundCridgeContract?: string | null;
       status?: string | null;
       statusCode?: number | null;
       subStatus?: string | null;
@@ -22894,7 +22951,6 @@ export const Cross_Chain_Zetachain_Token_ListDocument =
     symbol
     decimals
     chainId
-    supportTargetChain
   }
 }
     `) as unknown as TypedDocumentString<
@@ -24080,7 +24136,6 @@ export const Cross_Chain_Swap_Zetachain_OrderListDocument =
       refundAmount
       refundUser
       refundToken
-      refundCridgeContract
       status
       statusCode
       subStatus

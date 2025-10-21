@@ -107,7 +107,6 @@ export const swapGraphqlQuery = {
           refundAmount
           refundUser
           refundToken
-          refundCridgeContract
           status
           statusCode
           subStatus
