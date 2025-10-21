@@ -60,4 +60,5 @@ export enum ChainId {
   HEMI = 43111,
 
   PHAROS_TESTNET = 688688,
+  PHAROS_ATLANTIC_TESTNET = 688689,
 }

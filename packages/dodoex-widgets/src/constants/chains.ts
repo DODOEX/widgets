@@ -66,6 +66,7 @@ export const rpcServerMap: {
   [ChainId.PHAROS_TESTNET]: [
     'https://api.zan.top/node/v1/pharos/testnet/54b49326c9f44b6e8730dc5dd4348421',
   ],
+  [ChainId.PHAROS_ATLANTIC_TESTNET]: ['https://api.zan.top/node/v1/pharos/atlantic/54b49326c9f44b6e8730dc5dd4348421']
 };
 
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
@@ -122,6 +123,7 @@ export const scanUrlDomainMap: {
   [ChainId.HASHKEY]: 'explorer.hsk.xyz',
   [ChainId.HEMI]: 'explorer.hemi.xyz',
   [ChainId.PHAROS_TESTNET]: 'testnet.pharosscan.xyz',
+  [ChainId.PHAROS_ATLANTIC_TESTNET]: 'atlantic.pharosscan.xyz'
 };
 
 export const ThegraphKeyMap: {
@@ -159,6 +161,7 @@ export const ThegraphKeyMap: {
   [ChainId.HASHKEY]: 'hashkey',
   [ChainId.HEMI]: 'hemi',
   [ChainId.PHAROS_TESTNET]: 'pharos-testnet',
+  [ChainId.PHAROS_ATLANTIC_TESTNET]: 'pharos-atlantic-testnet',
 };
 
 export const blockTimeMap: {
@@ -196,6 +199,7 @@ export const blockTimeMap: {
   [ChainId.HASHKEY]: 2000,
   [ChainId.HEMI]: 12000,
   [ChainId.PHAROS_TESTNET]: 0,
+  [ChainId.PHAROS_ATLANTIC_TESTNET]: 2777,
 };
 
 export const dexKeysMap: {
@@ -233,4 +237,5 @@ export const dexKeysMap: {
   [ChainId.HASHKEY]: [],
   [ChainId.HEMI]: [],
   [ChainId.PHAROS_TESTNET]: [],
+  [ChainId.PHAROS_ATLANTIC_TESTNET]: [],
 };
