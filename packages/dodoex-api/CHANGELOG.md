@@ -1,3 +1,10 @@
+# [@dodoex/api-v3.2.0](https://github.com/DODOEX/widgets/compare/@dodoex/api-v3.1.0...@dodoex/api-v3.2.0) (2025-10-24)
+
+
+### Features
+
+* add pharos atlantic testnet ([22b0b8c](https://github.com/DODOEX/widgets/commit/22b0b8c2095ce402166b4a402209e9afb58ffac1))
+
 # [@dodoex/api-v3.1.0](https://github.com/DODOEX/widgets/compare/@dodoex/api-v3.0.6...@dodoex/api-v3.1.0) (2025-10-13)
 
 

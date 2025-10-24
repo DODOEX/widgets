@@ -294,6 +294,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       name: 'Pharos Testnet',
     },
   ],
+  [
+    ChainId.PHAROS_ATLANTIC_TESTNET,
+    {
+      chainId: ChainId.PHAROS_ATLANTIC_TESTNET,
+      logo: PharosLogo,
+      name: 'Pharos Atlantic Testnet',
+    },
+  ],
 ]);
 
 export const isTestNet = (chainId: ChainId) => {

@@ -1,3 +1,10 @@
+# [@dodoex/widgets-v3.4.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.3.0...@dodoex/widgets-v3.4.0) (2025-10-24)
+
+
+### Features
+
+* add pharos atlantic testnet ([22b0b8c](https://github.com/DODOEX/widgets/commit/22b0b8c2095ce402166b4a402209e9afb58ffac1))
+
 # [@dodoex/widgets-v3.3.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.2.3...@dodoex/widgets-v3.3.0) (2025-10-13)
 
 
