@@ -146,7 +146,7 @@ export function useFetchRoutePrice({
       slippage,
       feeRate,
       rebateTo,
-      apikey,
+      // apikey,
       apiServices,
       ddl,
       disableIndirectRouting,
@@ -181,7 +181,7 @@ export function useFetchRoutePrice({
       const params: any = isSolanaChain
         ? {
             // apikey=d5f476a6fd58e5e989&inputMint=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&outputMint=Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB&amount=1000000&user=CjeWeg7Pfyq5VcakxaUwBHCZoEePKYuZTYgfkXaaiCw3&chainId=solana-mainnet&slippageBps=32&source=jupiter
-            apikey,
+            // apikey,
             inputMint: fromToken.address,
             outputMint: toToken.address,
             amount: fromAmountBN.toString(),
@@ -198,7 +198,7 @@ export function useFetchRoutePrice({
         : {
             chainId: fromToken.chainId,
             deadLine: apiDdl,
-            apikey,
+            // apikey,
             slippage,
             source: disableIndirectRouting ? 'noMaxHops' : 'dodoMix',
             toTokenAddress: toToken.address,
@@ -361,6 +361,7 @@ export function useFetchRoutePrice({
         subtitle,
         metadata: {
           [MetadataFlag.swap]: true,
+          chainId: fromToken?.chainId,
         },
         handler: async (params) => {
           try {
@@ -400,7 +401,13 @@ export function useFetchRoutePrice({
         },
       });
     },
-    [data.rawBrief, solanaConnection, solanaWalletProvider, submission],
+    [
+      data.rawBrief,
+      fromToken?.chainId,
+      solanaConnection,
+      solanaWalletProvider,
+      submission,
+    ],
   );
 
   const executeSwap = useMemo(() => {

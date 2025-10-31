@@ -33,7 +33,7 @@ export function SettingsDialog({
       open={open}
       onClose={onClose}
       id="swap-settings"
-      title={<Trans>Settings</Trans>}
+      title={<Trans>Cross chain setting</Trans>}
       modal={isDialogModal}
     >
       <Box

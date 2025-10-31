@@ -24,7 +24,10 @@ export default function FiatEntryAndGasRefuel() {
             color: 'text.primary',
           },
         }}
-        onClick={() => setShowGasRefuel(true)}
+        onClick={() => {
+          // setShowGasRefuel(true);
+          window.open(iframeUrl, '_blank');
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

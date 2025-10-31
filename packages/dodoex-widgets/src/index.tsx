@@ -34,6 +34,14 @@ export {
   formatShortNumber,
   formatTokenAmountNumber,
 } from './utils/formatter';
+export type {
+  AppKitNetworkExtend,
+  CaipAddressExtend,
+  CaipNetworkExtend,
+  CaipNetworkIdExtend,
+  ChainNamespaceExtend,
+  UseAppKitAccountReturnExtend,
+} from './utils/reown-types';
 
 // export { MiningCreate } from './widgets/MiningWidget/MiningCreate';
 // export { MiningDetail } from './widgets/MiningWidget/MiningDetail';
@@ -43,10 +51,10 @@ export { default as AMMV2Create } from './widgets/PoolWidget/AMMV2Create';
 export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
 export { AMMV3PositionManage } from './widgets/PoolWidget/AMMV3/AMMV3PositionManage';
 export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
+export { CurvePoolDetail } from './widgets/PoolWidget/curve/CurvePoolDetail';
 export { usePoolBalanceInfo } from './widgets/PoolWidget/hooks/usePoolBalanceInfo';
 export { default as PoolCreate } from './widgets/PoolWidget/PoolCreate';
 export { default as PoolDetail } from './widgets/PoolWidget/PoolDetail';
-export { CurvePoolDetail } from './widgets/PoolWidget/curve/CurvePoolDetail';
 export { default as PoolList } from './widgets/PoolWidget/PoolList';
 export { default as PoolModify } from './widgets/PoolWidget/PoolModify';
 export {

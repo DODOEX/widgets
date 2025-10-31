@@ -1,5 +1,5 @@
-import { ChainId } from '@dodoex/api';
 import { useMemo } from 'react';
+import { chainListMap } from '../../constants/chainList';
 import { useFetchTokens } from '../contract';
 import useFetchMultiTokensForSingleChain from '../contract/useFetchMultiTokensForSingleChain';
 import { useGlobalState } from '../useGlobalState';
@@ -23,22 +23,23 @@ export default function useTokenListFetchBalance({
 }) {
   const { latestBlockNumber: blockNumber } = useGlobalState();
 
-  const isBtcOrSolana =
-    chainId === ChainId.BTC ||
-    chainId === ChainId.BTC_SIGNET ||
-    chainId === ChainId.SOLANA ||
-    chainId === ChainId.SOLANA_DEVNET;
+  const chain = chainListMap.get(chainId);
+  const isBtcOrSolanaOrSuiOrTon =
+    chainListMap.get(chainId)?.isBTCChain ||
+    chain?.isSolanaChain ||
+    chain?.isSUIChain ||
+    chain?.isTONChain;
 
-  // BTC or Solana
+  // BTC or Solana or SUI or TON
   const tokenInfoMap = useFetchTokens({
-    tokenList: isBtcOrSolana ? tokenList : [],
+    tokenList: isBtcOrSolanaOrSuiOrTon ? tokenList : [],
     skip: visible === false && !defaultLoadBalance,
   });
 
   // EVM
   const multiTokenInfoMap = useFetchMultiTokensForSingleChain({
     chainId,
-    tokenList: isBtcOrSolana ? [] : tokenList,
+    tokenList: isBtcOrSolanaOrSuiOrTon ? [] : tokenList,
     skip: visible === false && !defaultLoadBalance,
   });
 
@@ -57,7 +58,7 @@ export default function useTokenListFetchBalance({
   const mergedTokenInfoMap = useMemo(() => {
     const merged = new Map();
 
-    // Add BTC/Solana tokens
+    // Add BTC/Solana/SUI/TON tokens
     tokenInfoMap.forEach((value, key) => {
       merged.set(key, value);
     });

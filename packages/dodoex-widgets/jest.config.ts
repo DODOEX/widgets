@@ -17,5 +17,5 @@ export default {
   },
   preset: 'ts-jest',
   testTimeout: 20000,
-  setupFiles: ['<rootDir>/e2e/setup.ts'],
+  // setupFiles: ['<rootDir>/e2e/setup.ts'],
 };

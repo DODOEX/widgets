@@ -1,4 +1,7 @@
+import { getFullnodeUrl, SuiClient } from '@mysten/sui/client';
 import { clusterApiUrl, Connection, PublicKey } from '@solana/web3.js';
+import { Address, fromNano } from '@ton/core';
+import { TonClient } from '@ton/ton';
 import BigNumber from 'bignumber.js';
 import { BitcoinApi } from '../../adapters/bitcoin/utils/BitcoinApi';
 import { UnitsUtil } from '../../adapters/bitcoin/utils/UnitsUtil';
@@ -8,6 +11,7 @@ import {
   contractConfig,
   platformIdMap,
   SOL_NATIVE_MINT,
+  tonEndpointByChain,
 } from '../../chainConfig';
 import { getCaipNetworkByChainId } from '../../chainConfig/utils';
 import ContractRequests, {
@@ -19,7 +23,9 @@ import { encodeFunctionData } from '../../helper/ContractRequests/encode';
 import RestApiRequest from '../../helper/RestApiRequests';
 import { tokenGraphqlQuery } from './graphqlQuery';
 import { getTokenBlackList } from './tokenBlackList';
+import { retry } from './ton-utils';
 import { isSameAddress } from './utils';
+import { convertMISTToSui } from './sui-utils';
 
 const BIG_ALLOWANCE = new BigNumber(2).pow(256).minus(1);
 
@@ -256,6 +262,77 @@ export class TokenApi {
             decimals,
             balance,
             allowance: BIG_ALLOWANCE, // SPL Token 没有 allowance 概念，这里保持结构一致
+            account,
+            spender,
+            chainId,
+          };
+        }
+
+        if (chainId === ChainId.TON || chainId === ChainId.TON_TESTNET) {
+          const caipNetwork = getCaipNetworkByChainId(chainId);
+
+          // https://github.com/ton-connect/demo-dapp-with-react-ui/blob/master/src/components/TransferUsdt/TransferUsdt.tsx
+          const client = new TonClient({
+            endpoint: tonEndpointByChain[chainId],
+          });
+          const owner = Address.parse(account);
+          const clientTonBalance = await retry(() => client.getBalance(owner), {
+            retries: 10,
+            delay: 1500,
+          });
+          const formattedBalance = fromNano(clientTonBalance);
+          console.log(
+            'clientTonBalance',
+            caipNetwork.name,
+            clientTonBalance,
+            formattedBalance,
+          );
+          return {
+            symbol: caipNetwork.nativeCurrency.symbol,
+            address,
+            name: caipNetwork.nativeCurrency.name,
+            decimals: caipNetwork.nativeCurrency.decimals,
+            balance: new BigNumber(formattedBalance),
+            allowance: BIG_ALLOWANCE,
+            account,
+            spender,
+            chainId,
+          };
+        }
+
+        if (chainId === ChainId.SUI || chainId === ChainId.SUI_TESTNET) {
+          const caipNetwork = getCaipNetworkByChainId(chainId);
+
+          // https://sdk.mystenlabs.com/typescript/hello-sui#get-some-sui-for-your-account
+
+          // replace <YOUR_SUI_ADDRESS> with your actual address, which is in the form 0x123...
+          const MY_ADDRESS = account;
+
+          // create a new SuiClient object pointing to the network you want to use
+          const suiClient = new SuiClient({
+            url: getFullnodeUrl(
+              chainId === ChainId.SUI ? 'mainnet' : 'testnet',
+            ),
+          });
+
+          // store the JSON representation for the SUI the address owns after using faucet
+          const suiBalance = await suiClient.getBalance({
+            owner: MY_ADDRESS,
+          });
+          const formattedBalance = convertMISTToSui(suiBalance);
+          console.log(
+            'suiBalance',
+            caipNetwork.name,
+            suiBalance,
+            formattedBalance,
+          );
+          return {
+            symbol: caipNetwork.nativeCurrency.symbol,
+            address,
+            name: caipNetwork.nativeCurrency.name,
+            decimals: caipNetwork.nativeCurrency.decimals,
+            balance: new BigNumber(formattedBalance),
+            allowance: BIG_ALLOWANCE,
             account,
             spender,
             chainId,

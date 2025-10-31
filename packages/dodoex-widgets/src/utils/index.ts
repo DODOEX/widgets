@@ -1,5 +1,5 @@
-export * from './formatter';
 export * from './address';
-export * from './wallet';
 export * from './chains';
+export * from './formatter';
 export * from './token';
+export * from './wallet';

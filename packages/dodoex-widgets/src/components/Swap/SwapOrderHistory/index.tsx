@@ -51,8 +51,14 @@ export default function SwapOrderHistory() {
   const lastTransactionAccountRef = useRef<string | undefined>();
   const queryClientRef = useRef(queryClient);
 
-  const { evmAccount, solanaAccount, bitcoinAccount, currentAccount } =
-    useWalletInfo();
+  const {
+    evmAccount,
+    solanaAccount,
+    bitcoinAccount,
+    suiAccount,
+    tonAccount,
+    currentAccount,
+  } = useWalletInfo();
 
   const [swapOrderHistoryTab, setSwapOrderHistoryTab] = useState(
     SwapOrderHistoryTab.sameChain,
@@ -124,6 +130,32 @@ export default function SwapOrderHistory() {
       }
     }
 
+    if (suiAccount.isConnected && suiAccount.address) {
+      const firstChain = chainListMap
+        .entries()
+        .find(([_, chain]) => chain.isSUIChain)?.[1];
+
+      if (firstChain) {
+        accounts.push({
+          account: suiAccount.address,
+          firstChain,
+        });
+      }
+    }
+
+    if (tonAccount.isConnected && tonAccount.address) {
+      const firstChain = chainListMap
+        .entries()
+        .find(([_, chain]) => chain.isTONChain)?.[1];
+
+      if (firstChain) {
+        accounts.push({
+          account: tonAccount.address,
+          firstChain,
+        });
+      }
+    }
+
     return accounts;
   }, [
     bitcoinAccount.address,
@@ -132,6 +164,10 @@ export default function SwapOrderHistory() {
     evmAccount.isConnected,
     solanaAccount.address,
     solanaAccount.isConnected,
+    suiAccount.address,
+    suiAccount.isConnected,
+    tonAccount.address,
+    tonAccount.isConnected,
   ]);
 
   useEffect(() => {

@@ -7,6 +7,13 @@ export {
   etherTokenAddress,
   platformIdMap,
   SOL_NATIVE_MINT,
+  sui,
+  SUI_NATIVE_MINT,
+  suiTestnet,
+  ton,
+  TON_NATIVE_MINT,
+  tonEndpointByChain,
+  tonTestnet,
   WSOL_NATIVE_MINT,
   zetachainTestnet,
 } from './chainConfig';

@@ -1,3 +1,11 @@
+import {
+  createNetworkConfig,
+  SuiClientProvider,
+  WalletProvider,
+} from '@mysten/dapp-kit';
+import { getFullnodeUrl } from '@mysten/sui/client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from '../configure-store';
 import { WithMuiTheme } from './theme/WithMuiTheme';
@@ -5,12 +13,14 @@ import { WithMuiTheme } from './theme/WithMuiTheme';
 import { ChainId, zetachainTestnet } from '@dodoex/api';
 import { Widget } from '@dodoex/widgets';
 // import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin';
+import { Network, WalletConnectReact } from '@dodoex/btc-connect-react';
 import { Ethers5Adapter } from '@reown/appkit-adapter-ethers5';
 import {
   SolanaAdapter,
   useAppKitConnection,
 } from '@reown/appkit-adapter-solana/react';
 import {
+  arbitrum,
   arbitrumSepolia,
   avalanche,
   base,
@@ -21,14 +31,15 @@ import {
   solana,
   solanaDevnet,
   zetachain,
-  arbitrum,
 } from '@reown/appkit/networks';
 import { createAppKit } from '@reown/appkit/react';
-
-import { Network, WalletConnectReact } from '@dodoex/btc-connect-react';
-import '@dodoex/btc-connect-react/dist/style/index.css';
 import testEnvTokenList from './testEnvTokenList';
 import tokenList from './tokenList';
+
+import '@dodoex/btc-connect-react/dist/style/index.css';
+import '@mysten/dapp-kit/dist/index.css';
+
+export const queryClient = new QueryClient();
 
 // 1. Get projectId
 const projectId = 'bc32cb5c4e5f0d1d9a3313ae139b30e9';
@@ -146,6 +157,12 @@ function getTokenLogoUrl({
   return logoUrl;
 }
 
+// Config options for the networks you want to connect to
+const { networkConfig } = createNetworkConfig({
+  testnet: { url: getFullnodeUrl('testnet') },
+  mainnet: { url: getFullnodeUrl('mainnet') },
+});
+
 export function RootPage({
   children,
   title,
@@ -161,6 +178,10 @@ export function RootPage({
   const PROD_GRAPHQL_URL = 'https://api.dodoex.io/frontend-graphql';
   const GRAPHQL_URL = process.env.STORYBOOK_GRAPHQL_URL ?? PROD_GRAPHQL_URL;
   const IS_TEST_ENV = GRAPHQL_URL !== PROD_GRAPHQL_URL;
+
+  const TONCONNECT_MANIFEST_URL = IS_TEST_ENV
+    ? 'https://zetachain-eddy-git-feat-ton-sui-dodoex-io.vercel.app/tonconnect-manifest-dev.json'
+    : 'https://zunodex.xyz/tonconnect-manifest.json';
 
   return (
     <ReduxProvider store={store}>
@@ -187,42 +208,55 @@ export function RootPage({
             // Handle disconnection error
           }}
         />
-
-        <Widget
-          apikey="ee53d6b75b12aceed4"
-          GRAPHQL_URL={GRAPHQL_URL}
-          colorMode="light"
-          tokenList={IS_TEST_ENV ? testEnvTokenList : tokenList}
-          IS_TEST_ENV={IS_TEST_ENV}
-          defaultChainId={
-            IS_TEST_ENV ? ChainId.ZETACHAIN_TESTNET : ChainId.ZETACHAIN
-          }
-          onlyChainId={
-            isSwap
-              ? undefined
-              : IS_TEST_ENV
-                ? ChainId.ZETACHAIN_TESTNET
-                : ChainId.ZETACHAIN
-          }
-          solanaConnection={solanaConnection}
-          noUI
-          crossChain={isSwap}
-          noDocumentLink={true}
-          supportAMMV2
-          supportAMMV3
-          notSupportPMM={false}
-          supportCurve
-          // routerPage={{
-          //   type: PageType.CurvePoolDetail,
-          //   params: {
-          //     address: '0xa7cf4c2a2b339d659544ae5cce1a30e28c818d94',
-          //     chainId: ChainId.ZETACHAIN_TESTNET,
-          //   },
-          // }}
-          getTokenLogoUrl={getTokenLogoUrl}
+        <TonConnectUIProvider
+          manifestUrl={TONCONNECT_MANIFEST_URL}
+          restoreConnection
         >
-          {children}
-        </Widget>
+          <QueryClientProvider client={queryClient}>
+            <SuiClientProvider
+              networks={networkConfig}
+              defaultNetwork={IS_TEST_ENV ? 'testnet' : 'mainnet'}
+            >
+              <WalletProvider enableUnsafeBurner={IS_TEST_ENV} autoConnect>
+                <Widget
+                  apikey="ee53d6b75b12aceed4"
+                  GRAPHQL_URL={GRAPHQL_URL}
+                  colorMode="light"
+                  tokenList={IS_TEST_ENV ? testEnvTokenList : tokenList}
+                  IS_TEST_ENV={IS_TEST_ENV}
+                  defaultChainId={
+                    IS_TEST_ENV ? ChainId.ZETACHAIN_TESTNET : ChainId.ZETACHAIN
+                  }
+                  onlyChainId={
+                    isSwap
+                      ? undefined
+                      : IS_TEST_ENV
+                        ? ChainId.ZETACHAIN_TESTNET
+                        : ChainId.ZETACHAIN
+                  }
+                  solanaConnection={solanaConnection}
+                  noUI
+                  crossChain={isSwap}
+                  noDocumentLink={true}
+                  supportAMMV2
+                  supportAMMV3
+                  notSupportPMM={false}
+                  supportCurve
+                  // routerPage={{
+                  //   type: PageType.CurvePoolDetail,
+                  //   params: {
+                  //     address: '0xa7cf4c2a2b339d659544ae5cce1a30e28c818d94',
+                  //     chainId: ChainId.ZETACHAIN_TESTNET,
+                  //   },
+                  // }}
+                  getTokenLogoUrl={getTokenLogoUrl}
+                >
+                  {children}
+                </Widget>
+              </WalletProvider>
+            </SuiClientProvider>
+          </QueryClientProvider>
+        </TonConnectUIProvider>
       </WithMuiTheme>
     </ReduxProvider>
   );
