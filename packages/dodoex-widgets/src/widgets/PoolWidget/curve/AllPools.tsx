@@ -2,7 +2,6 @@ import { ChainId, CurveApi } from '@dodoex/api';
 import { Box, Button, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash';
 import React, { useMemo } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -16,10 +15,7 @@ import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
-import {
-  formatExponentialNotation,
-  formatTokenAmountNumber,
-} from '../../../utils';
+import { formatTokenAmountNumber } from '../../../utils';
 import AddingOrRemovingBtn from '../PoolList/components/AddingOrRemovingBtn';
 import FilterTokenTags from '../PoolList/components/FilterTokenTags';
 import GoPoolDetailBtn from '../PoolList/components/GoPoolDetailBtn';
@@ -27,6 +23,7 @@ import LiquidityTable from '../PoolList/components/LiquidityTable';
 import LoadingCard from '../PoolList/components/LoadingCard';
 import TokenAndPoolFilter from '../PoolList/components/TokenAndPoolFilter';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
+import { toColorfulNumString } from '../utils';
 import { ApyTooltip } from './components/ApyTooltip';
 import { CoinsLogoList } from './components/CoinsLogoList';
 import FilterAddressTags from './components/FilterAddressTags';
@@ -152,7 +149,10 @@ function CardList({
                 >
                   $
                   {pool.tvl
-                    ? formatExponentialNotation(new BigNumber(pool.tvl))
+                    ? toColorfulNumString({
+                        input: pool.tvl,
+                        decimals: 2,
+                      })
                     : '-'}
                 </Box>
                 <Box
@@ -199,7 +199,10 @@ function CardList({
                     <>
                       $
                       {pool.volume
-                        ? formatExponentialNotation(new BigNumber(pool.volume))
+                        ? toColorfulNumString({
+                            input: pool.volume,
+                            decimals: 2,
+                          })
                         : '-'}
                     </>
                   )}
@@ -395,7 +398,10 @@ function TableList({
                 >
                   $
                   {pool.tvl
-                    ? formatExponentialNotation(new BigNumber(pool.tvl))
+                    ? toColorfulNumString({
+                        input: pool.tvl,
+                        decimals: 2,
+                      })
                     : '-'}
                 </Box>
               </Box>
@@ -431,7 +437,10 @@ function TableList({
                   >
                     $
                     {pool.volume
-                      ? formatExponentialNotation(new BigNumber(pool.volume))
+                      ? toColorfulNumString({
+                          input: pool.volume,
+                          decimals: 2,
+                        })
                       : '-'}
                   </Box>
                 )}

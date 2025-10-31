@@ -23,9 +23,8 @@ import { PageType } from '../../../router/types';
 import {
   byWei,
   formatApy,
-  formatExponentialNotation,
   formatPercentageNumber,
-  formatReadableNumber,
+  formatTokenAmountNumber,
 } from '../../../utils';
 import { FEE_AMOUNT_DETAIL } from '../AMMV3/components/shared';
 import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
@@ -36,6 +35,7 @@ import {
   convertLiquidityTokenToTokenInfo,
   FetchLiquidityListLqList,
   getPoolAMMOrPMM,
+  toColorfulNumString,
 } from '../utils';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import FilterAddressTags from './components/FilterAddressTags';
@@ -334,7 +334,11 @@ function CardList({
                     typography: 'h5',
                   }}
                 >
-                  ${formatExponentialNotation(new BigNumber(item.tvl))}
+                  $
+                  {toColorfulNumString({
+                    input: item.tvl,
+                    decimals: 2,
+                  })}
                 </Box>
                 <Box
                   sx={{
@@ -352,14 +356,14 @@ function CardList({
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: 4,
                     }}
                   >
                     $
-                    {formatReadableNumber({
+                    {toColorfulNumString({
                       input: item.volumeList?.find(
                         (volume) => volume?.timeRange === `${timeRange}D`,
                       )?.volume,
+                      decimals: 2,
                     })}
                   </Box>
                   <Box
@@ -642,13 +646,18 @@ function TableList({
                   }}
                   title={
                     item.tvl
-                      ? `$${formatReadableNumber({
+                      ? `$${formatTokenAmountNumber({
                           input: item.tvl,
+                          decimals: 2,
                         })}`
                       : undefined
                   }
                 >
-                  ${formatExponentialNotation(new BigNumber(item.tvl))}
+                  $
+                  {toColorfulNumString({
+                    input: item.tvl,
+                    decimals: 2,
+                  })}
                 </Box>
               </Box>
               <Box component="td">
@@ -707,10 +716,11 @@ function TableList({
                   }}
                 >
                   $
-                  {formatReadableNumber({
+                  {toColorfulNumString({
                     input: item.volumeList?.find(
                       (volume) => volume?.timeRange === `${timeRange}D`,
                     )?.volume,
+                    decimals: 2,
                   })}
                 </Box>
               )}

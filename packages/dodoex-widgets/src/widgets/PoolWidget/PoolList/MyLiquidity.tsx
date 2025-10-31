@@ -21,7 +21,6 @@ import { PageType } from '../../../router/types';
 import {
   byWei,
   formatApy,
-  formatExponentialNotation,
   formatPercentageNumber,
   formatReadableNumber,
   formatTokenAmountNumber,
@@ -38,6 +37,7 @@ import {
   convertLiquidityTokenToTokenInfo,
   FetchMyLiquidityListLqList,
   getPoolAMMOrPMM,
+  toColorfulNumString,
 } from '../utils';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import FilterAddressTags from './components/FilterAddressTags';
@@ -350,7 +350,11 @@ function CardList({
                       typography: 'h5',
                     }}
                   >
-                    ${formatExponentialNotation(new BigNumber(item.tvl || 0))}
+                    $
+                    {toColorfulNumString({
+                      input: item.tvl,
+                      decimals: 2,
+                    })}
                   </Box>
                   <Box
                     sx={{
@@ -861,7 +865,11 @@ function TableList({
                         : undefined
                     }
                   >
-                    ${formatExponentialNotation(new BigNumber(item.tvl || 0))}
+                    $
+                    {toColorfulNumString({
+                      input: item.tvl || 0,
+                      decimals: 2,
+                    })}
                   </Box>
                 </Box>
               )}

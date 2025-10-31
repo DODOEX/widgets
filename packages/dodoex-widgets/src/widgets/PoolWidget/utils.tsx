@@ -6,6 +6,7 @@ import {
   getUniswapV2FactoryContractAddressByChainId,
   getUniswapV2Router02ContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
+import { formatTokenAmountNumber } from '../../utils';
 
 export const poolApi = new PoolApi({
   contractRequests,
@@ -156,5 +157,35 @@ export function getIsAMMV2DynamicFeeContractByChainId(chainId: number) {
   return !!(
     getUniswapV2FactoryContractAddressByChainId(chainId) &&
     getUniswapV2Router02ContractAddressByChainId(chainId)
+  );
+}
+
+export function toColorfulNumString({
+  input,
+  decimals,
+}: {
+  input?: BigNumber | number | string | null;
+  decimals?: number;
+}) {
+  const rawString = formatTokenAmountNumber({
+    input,
+    decimals,
+  });
+  const [integerPart, decimalPart] = rawString.split('.');
+  return (
+    <>
+      {integerPart}
+      {decimalPart && (
+        <>
+          <span
+            style={{
+              color: 'rgba(29, 29, 29, 0.50)',
+            }}
+          >
+            .{decimalPart}
+          </span>
+        </>
+      )}
+    </>
   );
 }

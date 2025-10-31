@@ -25,15 +25,11 @@ import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { useRouterStore } from '../../../router';
 import { PageType } from '../../../router/types';
-import {
-  formatExponentialNotation,
-  formatReadableNumber,
-  truncatePoolAddress,
-} from '../../../utils';
+import { formatReadableNumber, truncatePoolAddress } from '../../../utils';
 import { getPoolTypeTag } from '../hooks/usePoolTypeTag';
 import { PoolOperateProps } from '../PoolOperate';
 import { OperateTab } from '../PoolOperate/hooks/usePoolOperateTabs';
-import { FetchMyCreateListLqList } from '../utils';
+import { FetchMyCreateListLqList, toColorfulNumString } from '../utils';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import LiquidityTable from './components/LiquidityTable';
 import LoadingCard from './components/LoadingCard';
@@ -182,7 +178,10 @@ function CardList({
                 >
                   $
                   {item.tvl
-                    ? formatExponentialNotation(new BigNumber(item.tvl))
+                    ? toColorfulNumString({
+                        input: item.tvl,
+                        decimals: 2,
+                      })
                     : '-'}
                 </Box>
                 <Box
@@ -213,7 +212,10 @@ function CardList({
                 >
                   $
                   {item.totalFee
-                    ? formatExponentialNotation(new BigNumber(item.totalFee))
+                    ? toColorfulNumString({
+                        input: item.totalFee,
+                        decimals: 2,
+                      })
                     : '-'}
                 </Box>
                 <Box
@@ -494,7 +496,10 @@ function TableList({
                 >
                   $
                   {item.tvl
-                    ? formatExponentialNotation(new BigNumber(item.tvl))
+                    ? toColorfulNumString({
+                        input: item.tvl,
+                        decimals: 2,
+                      })
                     : '-'}
                 </Box>
               </Box>
@@ -514,7 +519,10 @@ function TableList({
                 >
                   $
                   {item.totalFee
-                    ? formatExponentialNotation(new BigNumber(item.totalFee))
+                    ? toColorfulNumString({
+                        input: item.totalFee,
+                        decimals: 2,
+                      })
                     : '-'}
                 </Box>
               </Box>
