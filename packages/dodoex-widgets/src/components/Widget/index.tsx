@@ -131,6 +131,7 @@ export interface WidgetProps
   /** Default deadLine when it cannot be set. Unit: seconds */
   deadLine?: number;
   submission?: ExecutionCtx;
+  disableConnectedProviderRead?: boolean;
 }
 
 function LangProvider(props: PropsWithChildren<WidgetProps>) {
@@ -177,7 +178,8 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     contractRequests.setGetConfigProvider((getProviderChainId) => {
       const connectedProvider =
         chainId === getProviderChainId ? provider : null;
-      if (connectedProvider) return connectedProvider;
+      if (!props.disableConnectedProviderRead && connectedProvider)
+        return connectedProvider;
       if (props.getStaticJsonRpcProviderByChainId) {
         const propsGetProvider =
           props.getStaticJsonRpcProviderByChainId(getProviderChainId);
@@ -187,7 +189,11 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
       }
       return null;
     });
-  }, [provider, props.getStaticJsonRpcProviderByChainId]);
+  }, [
+    provider,
+    props.getStaticJsonRpcProviderByChainId,
+    props.disableConnectedProviderRead,
+  ]);
 
   useEffect(() => {
     if (props.onProviderChanged) {
