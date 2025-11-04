@@ -1,7 +1,7 @@
 import { PoolApi } from '@dodoex/api';
 import { Box, Button, LoadingSkeleton } from '@dodoex/components';
 import { useWeb3React } from '@web3-react/core';
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   CardPlus,
   TokenCard,
@@ -29,17 +29,24 @@ import {
 } from '@dodoex/dodo-contract-request';
 import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
 import { useSlipper } from './components/SlippageSetting';
+import BigNumber from 'bignumber.js';
 
 export function AddPoolOperate({
   submittedBack: submittedBackProps,
   onlyShowSide,
   pool,
   balanceInfo,
+  baseReserve,
+  quoteReserve,
+  totalSupplyBG
 }: {
   submittedBack?: () => void;
   onlyShowSide?: 'base' | 'quote';
   pool?: OperatePool;
   balanceInfo: ReturnType<typeof usePoolBalanceInfo>;
+  baseReserve?: BigNumber;
+  quoteReserve?: BigNumber;
+  totalSupplyBG?: BigNumber;
 }) {
   const { account } = useWeb3React();
   const {
@@ -104,6 +111,22 @@ export function AddPoolOperate({
     amount: quoteAmount,
     contractAddress: proxyContract,
   });
+  // 计算添加流动性后得到LpToken数量，低于1000会revert，需要在前端拦截
+  // uint256 baseInputRatio = DecimalMath.divFloor(baseInput, baseReserve);
+  // uint256 quoteInputRatio = DecimalMath.divFloor(quoteInput, quoteReserve);
+  // uint256 mintRatio = quoteInputRatio < baseInputRatio ? quoteInputRatio : baseInputRatio;
+  // shares = DecimalMath.mulFloor(totalSupply, mintRatio);
+  const isLowerLimitLpAmount = useMemo(() => {
+    if (!baseReserve || !quoteReserve || !totalSupplyBG || !pool) return false;
+    const baseInputRatio = new BigNumber(baseAmount || 0).pow(pool?.baseToken.decimals).div(baseReserve || 1);
+    const quoteInputRatio = new BigNumber(quoteAmount || 0).pow(pool?.quoteToken.decimals).div(quoteReserve || 1);
+    const mintRatio =
+      quoteInputRatio.isLessThan(baseInputRatio)
+        ? quoteInputRatio
+        : baseInputRatio;
+    const shares = (totalSupplyBG || new BigNumber(0)).multipliedBy(mintRatio);
+    return shares.isLessThan(1000);
+  }, [baseReserve, quoteReserve, totalSupplyBG, baseAmount, quoteAmount, pool]);
 
   const isOverBalance =
     baseTokenStatus.insufficientBalance || quoteTokenStatus.insufficientBalance;
@@ -111,6 +134,7 @@ export function AddPoolOperate({
   const disabled =
     !pool ||
     isOverBalance ||
+    isLowerLimitLpAmount ||
     !midPrice ||
     !!balanceInfo.loading ||
     !!balanceInfo.error ||
@@ -120,6 +144,9 @@ export function AddPoolOperate({
   let submitBtnText = isAMMV2 ? t`Supply` : t`Add`;
   if (isOverBalance) {
     submitBtnText = t`Insufficient balance`;
+  }
+  if (isLowerLimitLpAmount) {
+    submitBtnText = t`Add more to mint at least 1000 LP tokens`;
   }
   const submittedBack = () => {
     reset();

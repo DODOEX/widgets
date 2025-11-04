@@ -1497,6 +1497,7 @@ export class PoolApi {
           return null;
         if (type === 'AMMV2' || type === 'AMMV3') return null;
         let queryResult: PmmData | null = null;
+        let totalSupplyQueryResult: [BigNumber] | null = null;
         if (type === 'CLASSICAL') {
           const { ROUTE_V1_DATA_FETCH } = contractConfig[chainId as ChainId];
           const pmmHelperResult = await this.contractRequests.batchCallQuery(
@@ -1516,6 +1517,12 @@ export class PoolApi {
             method: 'getPMMStateForCall',
             params: [],
           });
+          totalSupplyQueryResult = await this.contractRequests.batchCallQuery(chainId, {
+            abiName: ABIName.dvmPoolABI,
+            contractAddress: poolAddress,
+            method: 'totalSupply',
+            params: [],
+          });
         } else {
           throw new Error(`type: ${type} not supported`);
         }
@@ -1528,6 +1535,10 @@ export class PoolApi {
           baseDecimals,
           quoteDecimals,
         );
+        let totalSupplyBG: BigNumber | undefined;
+        if (Array.isArray(totalSupplyQueryResult)) {
+          totalSupplyBG = new BigNumber(totalSupplyQueryResult[0].toString())
+        }
 
         let midPrice: BigNumber | undefined;
 
@@ -1562,6 +1573,7 @@ export class PoolApi {
           pmmParamsBG,
           baseReserve: pmmParamsBG.b,
           quoteReserve: pmmParamsBG.q,
+          totalSupplyBG
         };
       },
     };
