@@ -1,3 +1,11 @@
+# [@dodoex/widgets-v3.5.0-beta.1](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.4.0...@dodoex/widgets-v3.5.0-beta.1) (2025-11-04)
+
+
+### Features
+
+* add disableConnectedProviderRead props ([faffac6](https://github.com/DODOEX/widgets/commit/faffac6f83f70f2bd02e942c69c6b29d9c7a4ba6))
+* dvm add liquidity limit amount logic ([777582d](https://github.com/DODOEX/widgets/commit/777582d6a78f6eabff402f6f51a60f29bda1b651))
+
 # [@dodoex/widgets-v3.4.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.3.0...@dodoex/widgets-v3.4.0) (2025-10-24)
 
 
