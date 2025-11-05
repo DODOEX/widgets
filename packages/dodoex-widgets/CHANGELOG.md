@@ -1,3 +1,10 @@
+# [@dodoex/widgets-v3.5.0-beta.2](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.5.0-beta.1...@dodoex/widgets-v3.5.0-beta.2) (2025-11-05)
+
+
+### Features
+
+* update version ([5466e25](https://github.com/DODOEX/widgets/commit/5466e2585927e924749845bf91b3642875e1f926))
+
 # [@dodoex/widgets-v3.5.0-beta.1](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.4.0...@dodoex/widgets-v3.5.0-beta.1) (2025-11-04)
 
 
