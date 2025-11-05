@@ -197,7 +197,7 @@ export function useUniV2Pairs({
       totalSupplyStr,
     );
     if (baseAmount !== undefined && quoteAmount !== undefined) {
-      if (Number(baseAmount) && Number(quoteAmount)) {
+      if (Number(baseAmount) && Number(quoteAmount) && Number(toWei(baseAmount as string, tokenA.decimals)) > 1 && Number(toWei(quoteAmount as string, tokenB.decimals)) > 1) {
         const tokenAmountA = CurrencyAmount.fromRawAmount(
           tokenA,
           toWei(baseAmount as string, tokenA.decimals).toString(),
