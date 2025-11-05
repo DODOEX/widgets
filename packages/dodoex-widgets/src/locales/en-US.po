@@ -834,7 +834,7 @@ msgstr "End release time before adjustment"
 msgid "Stake"
 msgstr "Stake"
 
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:276
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:303
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:602
 msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 msgstr "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
@@ -1034,7 +1034,7 @@ msgstr "Fee rate"
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:305
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:25
 #: src/widgets/PoolWidget/PoolList/index.tsx:162
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:138
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:165
 msgid "Add Liquidity"
 msgstr "Add Liquidity"
 
@@ -1343,6 +1343,10 @@ msgstr "Single-Token Stake Mining"
 msgid "Suitable for most situations."
 msgstr "Suitable for most situations."
 
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:149
+msgid "Add more to mint at least 1000 LP tokens"
+msgstr "Add more to mint at least 1000 LP tokens"
+
 #: src/components/List/FailedList.tsx:47
 msgid "Something went wrong…<0>Refresh again</0>"
 msgstr "Something went wrong…<0>Refresh again</0>"
@@ -1545,7 +1549,7 @@ msgstr "per"
 msgid "Suitable for stablecoins with price fluctuations within 10%"
 msgstr "Suitable for stablecoins with price fluctuations within 10%"
 
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:270
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:297
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:596
 msgid "Confirm submission"
 msgstr "Confirm submission"
@@ -1563,7 +1567,7 @@ msgid "Fee Revenue"
 msgstr "Fee Revenue"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:384
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:120
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:144
 msgid "Supply"
 msgstr "Supply"
 
@@ -1945,7 +1949,7 @@ msgstr "My Staked"
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:268
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:564
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1211
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:120
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:144
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
 msgid "Add"
 msgstr "Add"
@@ -2276,7 +2280,7 @@ msgstr "Hide"
 msgid "In range"
 msgstr "In range"
 
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:279
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:306
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:605
 msgid "There is risk of being arbitraged if adding this liquidity."
 msgstr "There is risk of being arbitraged if adding this liquidity."
@@ -2420,7 +2424,7 @@ msgstr "Total Rewards=Daily Rewards*Duration"
 
 #: src/components/Swap/index.tsx:771
 #: src/components/TokenStatusButton.tsx:18
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:122
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:146
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:248
 msgid "Insufficient balance"
 msgstr "Insufficient balance"

@@ -832,7 +832,7 @@ msgstr "调整前结束释放时间"
 msgid "Stake"
 msgstr "质押"
 
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:276
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:303
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:602
 msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 msgstr "资金池报价与 DODO 智能路由价格相差 {lqAndDodoCompareText}"
@@ -1032,7 +1032,7 @@ msgstr "手续费费率"
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:305
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:25
 #: src/widgets/PoolWidget/PoolList/index.tsx:162
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:138
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:165
 msgid "Add Liquidity"
 msgstr "添加流动性"
 
@@ -1341,6 +1341,10 @@ msgstr "单币质押挖矿"
 msgid "Suitable for most situations."
 msgstr "适用于大部分交易对"
 
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:149
+msgid "Add more to mint at least 1000 LP tokens"
+msgstr ""
+
 #: src/components/List/FailedList.tsx:47
 msgid "Something went wrong…<0>Refresh again</0>"
 msgstr "服务遇到了一些问题...<0>尝试刷新</0>"
@@ -1543,7 +1547,7 @@ msgstr "每"
 msgid "Suitable for stablecoins with price fluctuations within 10%"
 msgstr "适用于价格波动在10%以内的稳定币"
 
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:270
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:297
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:596
 msgid "Confirm submission"
 msgstr "确认提交"
@@ -1561,7 +1565,7 @@ msgid "Fee Revenue"
 msgstr "手续费"
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:384
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:120
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:144
 msgid "Supply"
 msgstr "供应"
 
@@ -1943,7 +1947,7 @@ msgstr "已质押"
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:268
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:564
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1211
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:120
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:144
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
 msgid "Add"
 msgstr "添加"
@@ -2274,7 +2278,7 @@ msgstr "隐藏"
 msgid "In range"
 msgstr "在区间内"
 
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:279
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:306
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:605
 msgid "There is risk of being arbitraged if adding this liquidity."
 msgstr "添加资金有可能会被套利，请谨慎操作。"
@@ -2418,7 +2422,7 @@ msgstr "总奖励 = 每日奖励数量 * 时长"
 
 #: src/components/Swap/index.tsx:771
 #: src/components/TokenStatusButton.tsx:18
-#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:122
+#: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:146
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:248
 msgid "Insufficient balance"
 msgstr "余额不足"
