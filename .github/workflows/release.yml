@@ -55,8 +55,6 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install dependencies
         run: yarn install
-      - name: Build packages
-        run: yarn build
       - name: Release package api
         if: ${{ inputs.publishApi }}
         run: yarn workspace @dodoex/api release
