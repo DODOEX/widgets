@@ -1,3 +1,10 @@
+# [@dodoex/widgets-v3.5.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.4.0...@dodoex/widgets-v3.5.0) (2025-11-05)
+
+
+### Features
+
+* dvm add liquidity limit amount logic ([777582d](https://github.com/DODOEX/widgets/commit/777582d6a78f6eabff402f6f51a60f29bda1b651))
+
 # [@dodoex/widgets-v3.4.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.3.0...@dodoex/widgets-v3.4.0) (2025-10-24)
 
 
