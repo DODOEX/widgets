@@ -117,9 +117,9 @@ export function AddPoolOperate({
   // uint256 mintRatio = quoteInputRatio < baseInputRatio ? quoteInputRatio : baseInputRatio;
   // shares = DecimalMath.mulFloor(totalSupply, mintRatio);
   const isLowerLimitLpAmount = useMemo(() => {
-    if (!baseReserve || !quoteReserve || !totalSupplyBG || !pool) return false;
-    const baseInputRatio = new BigNumber(baseAmount || 0).pow(pool?.baseToken.decimals).div(baseReserve || 1);
-    const quoteInputRatio = new BigNumber(quoteAmount || 0).pow(pool?.quoteToken.decimals).div(quoteReserve || 1);
+    if (!baseReserve || !quoteReserve || !totalSupplyBG || !pool || !baseAmount || !quoteAmount || Number(baseAmount) <= 0 || Number(quoteAmount) <= 0) return false;
+    const baseInputRatio = new BigNumber(baseAmount || 0).div(baseReserve || 1);
+    const quoteInputRatio = new BigNumber(quoteAmount || 0).div(quoteReserve || 1);
     const mintRatio =
       quoteInputRatio.isLessThan(baseInputRatio)
         ? quoteInputRatio
