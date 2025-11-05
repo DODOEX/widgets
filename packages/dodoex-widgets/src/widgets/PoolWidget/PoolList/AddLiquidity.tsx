@@ -53,6 +53,7 @@ import {
   TokenAndPoolFilterUserOptions,
   usePoolListFilterTokenAndPool,
 } from './hooks/usePoolListFilterTokenAndPool';
+import { TableSortButton } from './components/TableSortButton';
 
 function CardList({
   lqList,
@@ -421,6 +422,10 @@ function TableList({
   loadMoreLoading,
   supportAMM,
   timeRange,
+  setOrderBy,
+  setOrderDirection,
+  orderBy,
+  orderDirection,
 }: {
   lqList: FetchLiquidityListLqList;
   loading: boolean;
@@ -432,6 +437,12 @@ function TableList({
   loadMoreLoading?: boolean;
   supportAMM?: boolean;
   timeRange: '1' | '7' | '14' | '30';
+  orderBy: 'updatedAt' | 'tvl' | 'apy' | 'liquidity' | 'volume';
+  orderDirection: 'asc' | 'desc';
+  setOrderBy: (
+    orderBy: 'updatedAt' | 'tvl' | 'apy' | 'liquidity' | 'volume',
+  ) => void;
+  setOrderDirection: (orderDirection: 'asc' | 'desc') => void;
 }) {
   const theme = useTheme();
   const { onSharePool } = useUserOptions();
@@ -454,14 +465,52 @@ function TableList({
             </Box>
           )}
           <Box component="th">
-            <Trans>TVL</Trans>
+            <TableSortButton
+              direction={orderBy === 'tvl' ? orderDirection : null}
+              onClick={() => {
+                if (orderBy === 'tvl') {
+                  setOrderDirection(orderDirection === 'asc' ? 'desc' : 'asc');
+                  return;
+                }
+                setOrderBy('tvl');
+                setOrderDirection('desc');
+              }}
+            >
+              TVL
+            </TableSortButton>
           </Box>
           <Box component="th">
-            {timeRange}d&nbsp;<Trans>APY</Trans>
+            <TableSortButton
+              direction={orderBy === 'apy' ? orderDirection : null}
+              onClick={() => {
+                if (orderBy === 'apy') {
+                  setOrderDirection(orderDirection === 'asc' ? 'desc' : 'asc');
+                  return;
+                }
+                setOrderBy('apy');
+                setOrderDirection('desc');
+              }}
+            >
+              {timeRange}d&nbsp;APY
+            </TableSortButton>
           </Box>
           {supportAMM && (
             <th>
-              {timeRange}d&nbsp;<Trans>Volume</Trans>
+              <TableSortButton
+                direction={orderBy === 'volume' ? orderDirection : null}
+                onClick={() => {
+                  if (orderBy === 'volume') {
+                    setOrderDirection(
+                      orderDirection === 'asc' ? 'desc' : 'asc',
+                    );
+                    return;
+                  }
+                  setOrderBy('volume');
+                  setOrderDirection('desc');
+                }}
+              >
+                {timeRange}d&nbsp;Volume
+              </TableSortButton>
             </th>
           )}
           <Box
@@ -799,6 +848,11 @@ export default function AddLiquidityList({
 
   const [poolType, setPoolType] = useState<'all' | 'pmm' | 'v2' | 'v3'>('all');
   const [timeRange, setTimeRange] = useState<'1' | '7' | '14' | '30'>('1');
+  const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>('desc');
+  // updatedAt tvl apy liquidity volume
+  const [orderBy, setOrderBy] = useState<
+    'updatedAt' | 'tvl' | 'apy' | 'liquidity' | 'volume'
+  >('tvl');
 
   const {
     filterTokens,
@@ -840,8 +894,20 @@ export default function AddLiquidityList({
         viewOnlyOwn: false,
         filterTypes,
       },
+      order: {
+        timeRange: `${timeRange}D`,
+        orderDirection,
+        orderBy,
+      },
     };
-  }, [filterChainIds, filterTypes, isMobile]);
+  }, [
+    filterChainIds,
+    filterTypes,
+    isMobile,
+    timeRange,
+    orderBy,
+    orderDirection,
+  ]);
 
   const graphQLRequests = useGraphQLRequests();
 
@@ -1148,6 +1214,10 @@ export default function AddLiquidityList({
             supportAMM={supportAMMV2 || supportAMMV3}
             timeRange={timeRange}
             getMigrationPairAndMining={getMigrationPairAndMining}
+            orderBy={orderBy}
+            orderDirection={orderDirection}
+            setOrderBy={setOrderBy}
+            setOrderDirection={setOrderDirection}
           />
           <CardStatus
             loading={fetchResult.isLoading}

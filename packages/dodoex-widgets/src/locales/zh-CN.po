@@ -39,7 +39,6 @@ msgid "Total Number of Traders"
 msgstr ""
 
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:45
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:464
 msgid "Volume"
 msgstr ""
 
@@ -56,7 +55,7 @@ msgid "{0} pending"
 msgstr "{0} 等待中"
 
 #: src/widgets/PoolWidget/curve/AllPools.tsx:327
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:513
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:562
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:344
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:745
 msgid "Removing"
@@ -123,8 +122,8 @@ msgstr ""
 msgid "Dismiss"
 msgstr "忽略"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:292
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:453
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:293
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:464
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:85
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:307
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:630
@@ -137,7 +136,7 @@ msgid "Unstaking"
 msgstr ""
 
 #: src/widgets/PoolWidget/curve/AllPools.tsx:330
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:516
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:565
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:347
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:748
 msgid "Adding"
@@ -438,7 +437,7 @@ msgstr ""
 msgid "No results found"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:449
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:460
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:298
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:626
 msgid "Pair"
@@ -659,8 +658,7 @@ msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
 #: src/widgets/PoolWidget/curve/AllPools.tsx:164
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:349
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:457
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:350
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:112
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:195
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:301
@@ -988,7 +986,7 @@ msgstr ""
 msgid "No LP pools match your criteria"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:262
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:263
 #: src/widgets/PoolWidget/PoolList/components/tags.tsx:52
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:277
 msgid "Fee rate"
@@ -1187,8 +1185,8 @@ msgstr ""
 msgid "Start Time"
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:218
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:671
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:219
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:720
 #: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:191
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:233
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:885
@@ -1777,7 +1775,7 @@ msgstr ""
 msgid "The liquidity of ZUNO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only."
 msgstr ""
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:375
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:376
 msgid "Volume ({timeRange}d)"
 msgstr ""
 
@@ -1885,8 +1883,8 @@ msgstr ""
 #: src/widgets/PoolWidget/curve/AllPools.tsx:501
 #: src/widgets/PoolWidget/curve/CurvePoolDetail.tsx:242
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:207
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:400
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:758
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:401
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:807
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:268
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:578
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1131
@@ -2060,8 +2058,7 @@ msgstr "详情"
 
 #: src/widgets/PoolWidget/curve/AllPools.tsx:126
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:239
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:315
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:460
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:316
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:100
 #: src/widgets/PoolWidget/PoolList/components/TokenListPoolItem.tsx:102
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:330
