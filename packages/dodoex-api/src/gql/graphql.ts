@@ -2419,7 +2419,7 @@ export type Cross_Chain_TransferExplorerProject = {
   launchDate?: Maybe<Scalars['String']['output']>;
   projectLogo?: Maybe<Scalars['String']['output']>;
   projectName: Scalars['String']['output'];
-  sections: Array<Scalars['String']['output']>;
+  sections: Array<Cross_Chain_TransferExplorerSection>;
   sortOrder: Scalars['Int']['output'];
   supportedChains?: Maybe<Array<Cross_Chain_TransferSupportedChain>>;
   tags?: Maybe<Array<Scalars['String']['output']>>;
@@ -2429,17 +2429,83 @@ export type Cross_Chain_TransferExplorerProject = {
   websiteUrl?: Maybe<Scalars['String']['output']>;
 };
 
+export type Cross_Chain_TransferExplorerSection =
+  | 'HOT_PROJECTS'
+  | 'MAINNET_LAUNCHES'
+  | 'RECENT_AIRDROPS'
+  | 'TESTNET_LAUNCHES'
+  | 'UPCOMING_AIRDROPS';
+
 export type Cross_Chain_TransferExplorerSectionProjects = {
   projects: Array<Cross_Chain_TransferExplorerProject>;
-  section: Scalars['String']['output'];
+  section: Cross_Chain_TransferExplorerSection;
   sectionName: Scalars['String']['output'];
   total: Scalars['Int']['output'];
+};
+
+export type Cross_Chain_TransferFeeBreakdown = {
+  crossChainFee: Scalars['String']['output'];
+  crossChainFeeUsd?: Maybe<Scalars['String']['output']>;
+  sourceSwapFee: Scalars['String']['output'];
+  sourceSwapFeeUsd?: Maybe<Scalars['String']['output']>;
+  targetSwapFee: Scalars['String']['output'];
+  targetSwapFeeUsd?: Maybe<Scalars['String']['output']>;
+  totalFee: Scalars['String']['output'];
+  totalFeeUsd?: Maybe<Scalars['String']['output']>;
 };
 
 export type Cross_Chain_TransferFuncLabelV2 = {
   key?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_TransferHeterogeneousQuoteResponse = {
+  amount: Scalars['String']['output'];
+  amountFormatted: Scalars['String']['output'];
+  bestQuote: Scalars['String']['output'];
+  bestQuoteFormatted: Scalars['String']['output'];
+  crossChainSymbol: Scalars['String']['output'];
+  estimatedCompletionTime: Scalars['Int']['output'];
+  feeBreakdown?: Maybe<Cross_Chain_TransferFeeBreakdown>;
+  fixedFee: Scalars['String']['output'];
+  fixedFeeFormatted: Scalars['String']['output'];
+  fixedFeeUsd: Scalars['String']['output'];
+  gasFee: Scalars['String']['output'];
+  gasFeeFormatted: Scalars['String']['output'];
+  gasFeeUsd: Scalars['String']['output'];
+  gasTokenPrice: Scalars['String']['output'];
+  intermediateToken?: Maybe<Cross_Chain_TransferTokenInfo>;
+  isHeterogeneous: Scalars['Boolean']['output'];
+  minReceiveQuote: Scalars['String']['output'];
+  minReceiveQuoteFormatted: Scalars['String']['output'];
+  orderId: Scalars['String']['output'];
+  rateFee: Scalars['String']['output'];
+  rateFeeFormatted: Scalars['String']['output'];
+  rateFeeUsd: Scalars['String']['output'];
+  recipient: Scalars['String']['output'];
+  slippageTolerance?: Maybe<Scalars['Float']['output']>;
+  sourceChainId: Scalars['Int']['output'];
+  sourceSwap: Cross_Chain_TransferSwapInfo;
+  sourceTokenAddress: Scalars['String']['output'];
+  sourceTokenDecimals: Scalars['Int']['output'];
+  sourceTokenName: Scalars['String']['output'];
+  sourceTokenPrice: Scalars['String']['output'];
+  sourceTokenSymbol: Scalars['String']['output'];
+  targetChainId: Scalars['Int']['output'];
+  targetSwap: Cross_Chain_TransferSwapInfo;
+  targetTokenAddress: Scalars['String']['output'];
+  targetTokenDecimals: Scalars['Int']['output'];
+  targetTokenName: Scalars['String']['output'];
+  targetTokenSymbol: Scalars['String']['output'];
+  timestamp: Scalars['String']['output'];
+  totalFee: Scalars['String']['output'];
+  totalFeeFormatted: Scalars['String']['output'];
+  totalFeeUsd: Scalars['String']['output'];
+  totalPriceImpact: Scalars['Float']['output'];
+  transactionData: Cross_Chain_TransferQuoteResponseTransactionDataDto;
+  userAddress: Scalars['String']['output'];
+  version: Scalars['String']['output'];
 };
 
 export type Cross_Chain_TransferOrderDetailFilter = {
@@ -2500,12 +2566,17 @@ export type Cross_Chain_TransferQuoteResponse = {
 
 export type Cross_Chain_TransferQuoteResponseTransactionDataDto = {
   data: Scalars['String']['output'];
-  from: Scalars['String']['output'];
-  gas: Scalars['String']['output'];
-  maxFeePerGas?: Maybe<Scalars['String']['output']>;
-  maxPriorityFeePerGas?: Maybe<Scalars['String']['output']>;
   to: Scalars['String']['output'];
   value: Scalars['String']['output'];
+};
+
+export type Cross_Chain_TransferRouteStep = {
+  amountIn: Scalars['String']['output'];
+  amountOut: Scalars['String']['output'];
+  poolAddress: Scalars['String']['output'];
+  protocol: Scalars['String']['output'];
+  tokenIn: Scalars['String']['output'];
+  tokenOut: Scalars['String']['output'];
 };
 
 export type Cross_Chain_TransferSupportedChain = {
@@ -2513,10 +2584,62 @@ export type Cross_Chain_TransferSupportedChain = {
   chainName: Scalars['String']['output'];
 };
 
+export type Cross_Chain_TransferSwapExecuteData = {
+  data: Scalars['String']['output'];
+  to: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type Cross_Chain_TransferSwapInfo = {
+  estimatedGas?: Maybe<Scalars['String']['output']>;
+  executeData?: Maybe<Cross_Chain_TransferSwapExecuteData>;
+  fromToken?: Maybe<Cross_Chain_TransferTokenInfo>;
+  priceImpact?: Maybe<Scalars['Float']['output']>;
+  quote?: Maybe<Cross_Chain_TransferSwapQuoteInfo>;
+  required: Scalars['Boolean']['output'];
+  toToken?: Maybe<Cross_Chain_TransferTokenInfo>;
+};
+
+export type Cross_Chain_TransferSwapQuoteInfo = {
+  executionPrice: Scalars['Float']['output'];
+  fromAmount: Scalars['String']['output'];
+  fromToken: Cross_Chain_TransferTokenInfo;
+  gasEstimate: Scalars['String']['output'];
+  minReceiveAmount: Scalars['String']['output'];
+  priceImpact: Scalars['Float']['output'];
+  routePath: Array<Cross_Chain_TransferRouteStep>;
+  toAmount: Scalars['String']['output'];
+  toToken: Cross_Chain_TransferTokenInfo;
+};
+
+export type Cross_Chain_TransferTokenInfo = {
+  address: Scalars['String']['output'];
+  chainId: Scalars['Int']['output'];
+  crossChainSymbol: Scalars['String']['output'];
+  decimals: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  symbol: Scalars['String']['output'];
+};
+
 export type Cross_Chain_TransferTokenListV2 = {
   chainId?: Maybe<Scalars['Int']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
+};
+
+export type Cross_Chain_TransferheterogeneousQuoteFilter = {
+  amount: Scalars['String']['input'];
+  /** 同币种跨链时必填 */
+  crossChainSymbol?: InputMaybe<Scalars['String']['input']>;
+  preferredIntermediateToken?: InputMaybe<Scalars['String']['input']>;
+  recipient: Scalars['String']['input'];
+  slippageTolerance?: InputMaybe<Scalars['Float']['input']>;
+  sourceChainId: Scalars['Int']['input'];
+  sourceTokenAddress: Scalars['String']['input'];
+  targetChainId: Scalars['Int']['input'];
+  targetTokenAddress: Scalars['String']['input'];
+  userAddress: Scalars['String']['input'];
 };
 
 export type Cross_Chain_TransferlistV2Filter = {
@@ -4435,6 +4558,13 @@ export type DashboardDataGroupByDate = {
   volumeUsd?: Maybe<Scalars['String']['output']>;
 };
 
+export type DashboardOrder = {
+  /** tvl apy volume */
+  orderBy?: InputMaybe<Scalars['String']['input']>;
+  /** desc asc' */
+  orderDirection?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type DashboardPairData = {
   /** transaction count  */
   txes?: Maybe<Scalars['String']['output']>;
@@ -4644,6 +4774,7 @@ export type Dashboardtype_List_Filter = {
   chainIds?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   creator?: InputMaybe<Scalars['String']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<DashboardOrder>;
   owner?: InputMaybe<Scalars['String']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
@@ -7011,6 +7142,85 @@ export type IncentiveRewardHistory_OrderBy =
   | 'updatedAt'
   | 'user';
 
+export type Leaderboard_ActivitiesActivityStats = {
+  addedLiquidity: Scalars['String']['output'];
+  topLPerRewards: Scalars['String']['output'];
+  topTraderRewards: Scalars['String']['output'];
+  tradingVolume: Scalars['String']['output'];
+};
+
+export type Leaderboard_ActivitiesLeaderboardInput = {
+  chain: Scalars['String']['input'];
+  date?: InputMaybe<Scalars['String']['input']>;
+  useCache?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Leaderboard_ActivitiesLeaderboardLPer = {
+  rank: Scalars['Int']['output'];
+  totalLiquidity: Scalars['String']['output'];
+  transactionCount: Scalars['Int']['output'];
+  user: Scalars['String']['output'];
+};
+
+export type Leaderboard_ActivitiesLeaderboardResult = {
+  chain?: Maybe<Scalars['String']['output']>;
+  date: Scalars['String']['output'];
+  endTime: Scalars['Int']['output'];
+  pairAddress?: Maybe<Scalars['String']['output']>;
+  period: Scalars['String']['output'];
+  startTime: Scalars['Int']['output'];
+  stats: Leaderboard_ActivitiesActivityStats;
+  topLPers: Array<Leaderboard_ActivitiesLeaderboardLPer>;
+  topTraders: Array<Leaderboard_ActivitiesLeaderboardTrader>;
+};
+
+export type Leaderboard_ActivitiesLeaderboardTrader = {
+  rank: Scalars['Int']['output'];
+  totalVolume: Scalars['String']['output'];
+  transactionCount: Scalars['Int']['output'];
+  user: Scalars['String']['output'];
+};
+
+export type Leaderboard_ActivitiesPeriodResult = {
+  endTime: Scalars['Int']['output'];
+  index: Scalars['Int']['output'];
+  startTime: Scalars['Int']['output'];
+  /** not_started ,ongoing, ended */
+  status: Scalars['String']['output'];
+};
+
+export type Leaderboard_ActivitiesPeriodsInput = {
+  chain: Scalars['String']['input'];
+};
+
+export type Leaderboard_ActivitiesPeriodsResult = {
+  activityEndTime: Scalars['Int']['output'];
+  activityStartTime: Scalars['Int']['output'];
+  period: Scalars['String']['output'];
+  periods: Array<Leaderboard_ActivitiesPeriodResult>;
+};
+
+export type Leaderboard_ActivitiesUserRankingInput = {
+  chain: Scalars['String']['input'];
+  date?: InputMaybe<Scalars['String']['input']>;
+  useCache?: InputMaybe<Scalars['Boolean']['input']>;
+  user: Scalars['String']['input'];
+};
+
+export type Leaderboard_ActivitiesUserRankingResult = {
+  chain?: Maybe<Scalars['String']['output']>;
+  date: Scalars['String']['output'];
+  endTime: Scalars['Int']['output'];
+  lperRank?: Maybe<Scalars['Int']['output']>;
+  pairAddress?: Maybe<Scalars['String']['output']>;
+  period: Scalars['String']['output'];
+  startTime: Scalars['Int']['output'];
+  totalLiquidity?: Maybe<Scalars['String']['output']>;
+  totalVolume?: Maybe<Scalars['String']['output']>;
+  traderRank?: Maybe<Scalars['Int']['output']>;
+  user: Scalars['String']['output'];
+};
+
 export type Limit_And_RfqCancelLimitOrderResponse = {
   authorization?: Maybe<Scalars['String']['output']>;
 };
@@ -7691,10 +7901,12 @@ export type LiquidityLqList = {
 };
 
 export type LiquidityOrder = {
-  /** updatedAt tvl apy liquidity */
+  /** updatedAt tvl apy liquidity volume */
   orderBy?: InputMaybe<Scalars['String']['input']>;
   /** desc asc' */
   orderDirection?: InputMaybe<Scalars['String']['input']>;
+  /** 1D 7D 14D 30D */
+  timeRange?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type LiquidityPair = {
@@ -11208,6 +11420,132 @@ export type PersistentString_Filter = {
 
 export type PersistentString_OrderBy = 'chain' | 'id';
 
+export type Points_ActivityActivityRankItem = {
+  rank?: Maybe<Scalars['Int']['output']>;
+  totalPoints?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<Scalars['String']['output']>;
+};
+
+export type Points_ActivityHistoryItem = {
+  activityId?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  inviteeAddress?: Maybe<Scalars['String']['output']>;
+  points?: Maybe<Scalars['String']['output']>;
+  time?: Maybe<Scalars['Int']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<Scalars['String']['output']>;
+};
+
+export type Points_ActivityPointsActivityHistory = {
+  count?: Maybe<Scalars['Int']['output']>;
+  list?: Maybe<Array<Maybe<Points_ActivityHistoryItem>>>;
+  page?: Maybe<Scalars['Int']['output']>;
+  pageSize?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Points_ActivityPointsActivityInviteAccept = {
+  inviterAddress?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type Points_ActivityPointsActivityInviteCode = {
+  inviteCode?: Maybe<Scalars['String']['output']>;
+  inviteUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type Points_ActivityPointsActivityInviteStatus = {
+  acceptedAt?: Maybe<Scalars['String']['output']>;
+  inviterAddress?: Maybe<Scalars['String']['output']>;
+  inviterCode?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+};
+
+export type Points_ActivityPointsActivityLeaderboard = {
+  currentUserRank?: Maybe<Points_ActivityActivityRankItem>;
+  overallRanks?: Maybe<Array<Maybe<Points_ActivityActivityRankItem>>>;
+};
+
+export type Points_ActivityPointsActivitySpecialBoost = {
+  baseSymbol?: Maybe<Scalars['String']['output']>;
+  baseToken?: Maybe<Scalars['String']['output']>;
+  multiplier?: Maybe<Scalars['String']['output']>;
+  multiplierPercentage?: Maybe<Scalars['String']['output']>;
+  poolAddress?: Maybe<Scalars['String']['output']>;
+  quoteSymbol?: Maybe<Scalars['String']['output']>;
+  quoteToken?: Maybe<Scalars['String']['output']>;
+};
+
+export type Points_ActivityPointsActivitySummary = {
+  activityId?: Maybe<Scalars['Int']['output']>;
+  activityName?: Maybe<Scalars['String']['output']>;
+  invitePoints?: Maybe<Scalars['String']['output']>;
+  inviteeCount?: Maybe<Scalars['Int']['output']>;
+  lpPoints?: Maybe<Scalars['String']['output']>;
+  socialMediaPoints?: Maybe<Scalars['String']['output']>;
+  swapPoints?: Maybe<Scalars['String']['output']>;
+  totalPoints?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<Scalars['String']['output']>;
+};
+
+export type Points_ActivityhistoryFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  domain?: InputMaybe<Scalars['String']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  sourceType?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Points_ActivityinviteAcceptFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  domain?: InputMaybe<Scalars['String']['input']>;
+  inviteCode?: InputMaybe<Scalars['String']['input']>;
+  inviteMethod?: InputMaybe<Scalars['String']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  signature?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['Int']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Points_ActivityinviteCodeFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  domain?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Points_ActivityinviteStatusFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  domain?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Points_ActivityleaderboardFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  domain?: InputMaybe<Scalars['String']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Points_ActivityspecialBoostFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  domain?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Points_ActivityuserSummaryFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  domain?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Pool = {
   allFlag: Scalars['BigInt']['output'];
   /**  Block number of this event  */
@@ -12839,6 +13177,7 @@ export type Query = {
   cross_chain_transfer_getTokenList?: Maybe<
     Array<Maybe<Cross_Chain_TransferErc20V2List>>
   >;
+  cross_chain_transfer_heterogeneousQuote: Cross_Chain_TransferHeterogeneousQuoteResponse;
   cross_chain_transfer_quote: Cross_Chain_TransferQuoteResponse;
   cross_chain_zetachain_token_list?: Maybe<
     Array<Maybe<Cross_Chain_Zetachain_TokenCrossChainTokenlist>>
@@ -13034,6 +13373,9 @@ export type Query = {
   gas_feeder_getGasPrices?: Maybe<Array<Maybe<Gas_FeederGasPrice>>>;
   incentiveRewardHistories: Array<IncentiveRewardHistory>;
   incentiveRewardHistory?: Maybe<IncentiveRewardHistory>;
+  leaderboard_activities_getLeaderboard?: Maybe<Leaderboard_ActivitiesLeaderboardResult>;
+  leaderboard_activities_getPeriods?: Maybe<Leaderboard_ActivitiesPeriodsResult>;
+  leaderboard_activities_getUserRanking?: Maybe<Leaderboard_ActivitiesUserRankingResult>;
   limit_and_rfq_createPrivateOrder?: Maybe<Scalars['String']['output']>;
   limit_and_rfq_getOrderStatusBroadcasts?: Maybe<
     Array<Maybe<Limit_And_RfqLimitOrderStatusBroadcastInfo>>
@@ -13125,6 +13467,15 @@ export type Query = {
   persistentStringArray?: Maybe<PersistentStringArray>;
   persistentStringArrays: Array<PersistentStringArray>;
   persistentStrings: Array<PersistentString>;
+  points_activity_history?: Maybe<Points_ActivityPointsActivityHistory>;
+  points_activity_inviteAccept?: Maybe<Points_ActivityPointsActivityInviteAccept>;
+  points_activity_inviteCode?: Maybe<Points_ActivityPointsActivityInviteCode>;
+  points_activity_inviteStatus?: Maybe<Points_ActivityPointsActivityInviteStatus>;
+  points_activity_leaderboard?: Maybe<Points_ActivityPointsActivityLeaderboard>;
+  points_activity_specialBoost?: Maybe<
+    Array<Maybe<Points_ActivityPointsActivitySpecialBoost>>
+  >;
+  points_activity_userSummary?: Maybe<Points_ActivityPointsActivitySummary>;
   pool?: Maybe<Pool>;
   poolDayData?: Maybe<PoolDayData>;
   poolDayDatas: Array<PoolDayData>;
@@ -13191,6 +13542,21 @@ export type Query = {
   setPoolInfos: Array<SetPoolInfo>;
   setVaultInfo?: Maybe<SetVaultInfo>;
   setVaultInfos: Array<SetVaultInfo>;
+  sigmax_limit_getOrderStatusBroadcasts?: Maybe<
+    Array<Maybe<Sigmax_LimitLimitOrderStatusBroadcastInfo>>
+  >;
+  sigmax_limit_getPendingOrderChainList?: Maybe<
+    Array<Maybe<Scalars['Int']['output']>>
+  >;
+  sigmax_limit_limitOrderAmountLimit?: Maybe<Scalars['Float']['output']>;
+  sigmax_limit_limitOrderCancel?: Maybe<Sigmax_LimitCancelLimitOrderResponse>;
+  sigmax_limit_limitOrderCreate?: Maybe<Sigmax_LimitLimitOrder>;
+  sigmax_limit_limitOrderCreateV2?: Maybe<Sigmax_LimitLimitOrderV2>;
+  /** data url:post(https://host:port/api/v1/order/graphql/rfqTakerInquiry).data */
+  sigmax_limit_limitOrderFee?: Maybe<Sigmax_LimitLimitOrderFeeInfo>;
+  sigmax_limit_limitOrderList?: Maybe<Array<Maybe<Sigmax_LimitLimitOrder>>>;
+  sigmax_limit_limitOrderListWithPage?: Maybe<Sigmax_LimitPaginateLimitOrderList>;
+  sigmax_limit_limitOrderListWithPageV2?: Maybe<Sigmax_LimitPaginateLimitOrderListV2>;
   starter?: Maybe<Starter>;
   starters: Array<Starter>;
   swap?: Maybe<Swap>;
@@ -13728,6 +14094,10 @@ export type QueryCross_Chain_Transfer_GetOrderListArgs = {
 
 export type QueryCross_Chain_Transfer_GetTokenListArgs = {
   where?: InputMaybe<Cross_Chain_TransferlistV2Filter>;
+};
+
+export type QueryCross_Chain_Transfer_HeterogeneousQuoteArgs = {
+  where?: InputMaybe<Cross_Chain_TransferheterogeneousQuoteFilter>;
 };
 
 export type QueryCross_Chain_Transfer_QuoteArgs = {
@@ -14367,6 +14737,18 @@ export type QueryIncentiveRewardHistoryArgs = {
   where?: InputMaybe<IncentiveRewardHistory_Filter>;
 };
 
+export type QueryLeaderboard_Activities_GetLeaderboardArgs = {
+  where: Leaderboard_ActivitiesLeaderboardInput;
+};
+
+export type QueryLeaderboard_Activities_GetPeriodsArgs = {
+  where: Leaderboard_ActivitiesPeriodsInput;
+};
+
+export type QueryLeaderboard_Activities_GetUserRankingArgs = {
+  where: Leaderboard_ActivitiesUserRankingInput;
+};
+
 export type QueryLimit_And_Rfq_CreatePrivateOrderArgs = {
   where?: InputMaybe<Limit_And_RfqcreatePrivateOrderInfo>;
 };
@@ -14833,6 +15215,34 @@ export type QueryPersistentStringsArgs = {
   where?: InputMaybe<PersistentString_Filter>;
 };
 
+export type QueryPoints_Activity_HistoryArgs = {
+  where?: InputMaybe<Points_ActivityhistoryFilter>;
+};
+
+export type QueryPoints_Activity_InviteAcceptArgs = {
+  data?: InputMaybe<Points_ActivityinviteAcceptFilter>;
+};
+
+export type QueryPoints_Activity_InviteCodeArgs = {
+  where?: InputMaybe<Points_ActivityinviteCodeFilter>;
+};
+
+export type QueryPoints_Activity_InviteStatusArgs = {
+  where?: InputMaybe<Points_ActivityinviteStatusFilter>;
+};
+
+export type QueryPoints_Activity_LeaderboardArgs = {
+  where?: InputMaybe<Points_ActivityleaderboardFilter>;
+};
+
+export type QueryPoints_Activity_SpecialBoostArgs = {
+  where?: InputMaybe<Points_ActivityspecialBoostFilter>;
+};
+
+export type QueryPoints_Activity_UserSummaryArgs = {
+  where?: InputMaybe<Points_ActivityuserSummaryFilter>;
+};
+
 export type QueryPoolArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
@@ -15099,6 +15509,46 @@ export type QuerySetVaultInfosArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<SetVaultInfo_Filter>;
+};
+
+export type QuerySigmax_Limit_GetOrderStatusBroadcastsArgs = {
+  where?: InputMaybe<Sigmax_LimitgetPendingLimitOrderParam>;
+};
+
+export type QuerySigmax_Limit_GetPendingOrderChainListArgs = {
+  where?: InputMaybe<Sigmax_LimitgetPendingLimitOrderParam>;
+};
+
+export type QuerySigmax_Limit_LimitOrderAmountLimitArgs = {
+  where?: InputMaybe<Sigmax_LimitlimitOrderAmountLimitParam>;
+};
+
+export type QuerySigmax_Limit_LimitOrderCancelArgs = {
+  where?: InputMaybe<Sigmax_LimituserCancelLimitOrder>;
+};
+
+export type QuerySigmax_Limit_LimitOrderCreateArgs = {
+  where?: InputMaybe<Sigmax_LimituserCreateLimitOrder>;
+};
+
+export type QuerySigmax_Limit_LimitOrderCreateV2Args = {
+  where?: InputMaybe<Sigmax_LimituserCreateLimitOrderV2>;
+};
+
+export type QuerySigmax_Limit_LimitOrderFeeArgs = {
+  where?: InputMaybe<Sigmax_LimituserQueryLimitOrderFee>;
+};
+
+export type QuerySigmax_Limit_LimitOrderListArgs = {
+  where?: InputMaybe<Sigmax_LimituserQueryLimitOrderList>;
+};
+
+export type QuerySigmax_Limit_LimitOrderListWithPageArgs = {
+  where?: InputMaybe<Sigmax_LimituserQueryLimitOrderListWithPage>;
+};
+
+export type QuerySigmax_Limit_LimitOrderListWithPageV2Args = {
+  where?: InputMaybe<Sigmax_LimituserQueryLimitOrderListWithPage>;
 };
 
 export type QueryStarterArgs = {
@@ -16447,6 +16897,209 @@ export type SetVaultInfo_OrderBy =
   | 'timestamp'
   | 'updatedAt'
   | 'vault';
+
+export type Sigmax_LimitCancelLimitOrderResponse = {
+  authorization?: Maybe<Scalars['String']['output']>;
+};
+
+export type Sigmax_LimitLimitOrder = {
+  createdAt?: Maybe<Scalars['String']['output']>;
+  expiration?: Maybe<Scalars['String']['output']>;
+  failureReason?: Maybe<Scalars['String']['output']>;
+  filledAmount?: Maybe<Scalars['String']['output']>;
+  hash?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  maker?: Maybe<Scalars['String']['output']>;
+  makerAmount?: Maybe<Scalars['String']['output']>;
+  makerToken?: Maybe<Scalars['String']['output']>;
+  makerTokenDecimal?: Maybe<Scalars['Int']['output']>;
+  makerTokenLogoImg?: Maybe<Scalars['String']['output']>;
+  makerTokenSymbol?: Maybe<Scalars['String']['output']>;
+  network?: Maybe<Scalars['String']['output']>;
+  order?: Maybe<Sigmax_LimitLimitOrderInfo>;
+  progress?: Maybe<Scalars['String']['output']>;
+  salt?: Maybe<Scalars['String']['output']>;
+  signature?: Maybe<Scalars['String']['output']>;
+  taker?: Maybe<Scalars['String']['output']>;
+  takerAmount?: Maybe<Scalars['String']['output']>;
+  takerToken?: Maybe<Scalars['String']['output']>;
+  takerTokenDecimal?: Maybe<Scalars['Int']['output']>;
+  takerTokenLogoImg?: Maybe<Scalars['String']['output']>;
+  takerTokenSymbol?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type Sigmax_LimitLimitOrderFeeInfo = {
+  baseFeeAmount?: Maybe<Scalars['String']['output']>;
+  baseFeeValue?: Maybe<Scalars['String']['output']>;
+  feeAmount?: Maybe<Scalars['String']['output']>;
+  feeId?: Maybe<Scalars['String']['output']>;
+  feeValue?: Maybe<Scalars['String']['output']>;
+  percentFeeAmount?: Maybe<Scalars['String']['output']>;
+  percentFeeValue?: Maybe<Scalars['String']['output']>;
+  priceImpactFactor?: Maybe<Scalars['Float']['output']>;
+};
+
+export type Sigmax_LimitLimitOrderInfo = {
+  expiration?: Maybe<Scalars['String']['output']>;
+  maker?: Maybe<Scalars['String']['output']>;
+  makerAmount?: Maybe<Scalars['String']['output']>;
+  makerToken?: Maybe<Scalars['String']['output']>;
+  salt?: Maybe<Scalars['String']['output']>;
+  taker?: Maybe<Scalars['String']['output']>;
+  takerAmount?: Maybe<Scalars['String']['output']>;
+  takerToken?: Maybe<Scalars['String']['output']>;
+};
+
+export type Sigmax_LimitLimitOrderStatusBroadcastInfo = {
+  chainId?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  makerToken?: Maybe<Scalars['String']['output']>;
+  makerTokenSymbol?: Maybe<Scalars['String']['output']>;
+  orderId?: Maybe<Scalars['Int']['output']>;
+  reason?: Maybe<Scalars['String']['output']>;
+  takerToken?: Maybe<Scalars['String']['output']>;
+  takerTokenSymbol?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<Scalars['String']['output']>;
+};
+
+export type Sigmax_LimitLimitOrderV2 = {
+  createdAt?: Maybe<Scalars['String']['output']>;
+  expiration?: Maybe<Scalars['String']['output']>;
+  failureReason?: Maybe<Scalars['String']['output']>;
+  feeAmount?: Maybe<Scalars['String']['output']>;
+  filledAmount?: Maybe<Scalars['String']['output']>;
+  hash?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  maker?: Maybe<Scalars['String']['output']>;
+  makerAmount?: Maybe<Scalars['String']['output']>;
+  makerToken?: Maybe<Scalars['String']['output']>;
+  makerTokenDecimal?: Maybe<Scalars['Int']['output']>;
+  makerTokenLogoImg?: Maybe<Scalars['String']['output']>;
+  makerTokenSymbol?: Maybe<Scalars['String']['output']>;
+  network?: Maybe<Scalars['String']['output']>;
+  order?: Maybe<Sigmax_LimitLimitOrderInfo>;
+  progress?: Maybe<Scalars['String']['output']>;
+  salt?: Maybe<Scalars['String']['output']>;
+  taker?: Maybe<Scalars['String']['output']>;
+  takerAmount?: Maybe<Scalars['String']['output']>;
+  takerToken?: Maybe<Scalars['String']['output']>;
+  takerTokenDecimal?: Maybe<Scalars['Int']['output']>;
+  takerTokenLogoImg?: Maybe<Scalars['String']['output']>;
+  takerTokenSymbol?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type Sigmax_LimitPaginateLimitOrderList = {
+  currentPage?: Maybe<Scalars['Int']['output']>;
+  limit?: Maybe<Scalars['Int']['output']>;
+  list?: Maybe<Array<Maybe<Sigmax_LimitLimitOrder>>>;
+  total?: Maybe<Scalars['Int']['output']>;
+  totalPage?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Sigmax_LimitPaginateLimitOrderListV2 = {
+  currentPage?: Maybe<Scalars['Int']['output']>;
+  limit?: Maybe<Scalars['Int']['output']>;
+  list?: Maybe<Array<Maybe<Sigmax_LimitLimitOrderV2>>>;
+  total?: Maybe<Scalars['Int']['output']>;
+  totalPage?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Sigmax_LimitPrivateOrderInfo = {
+  createdAt?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  network?: Maybe<Scalars['String']['output']>;
+  progress?: Maybe<Scalars['String']['output']>;
+  txid?: Maybe<Scalars['String']['output']>;
+};
+
+export type Sigmax_LimitcreateLimitOrderInfo = {
+  expiration?: InputMaybe<Scalars['String']['input']>;
+  maker?: InputMaybe<Scalars['String']['input']>;
+  makerAmount?: InputMaybe<Scalars['String']['input']>;
+  makerToken?: InputMaybe<Scalars['String']['input']>;
+  salt?: InputMaybe<Scalars['String']['input']>;
+  taker?: InputMaybe<Scalars['String']['input']>;
+  takerAmount?: InputMaybe<Scalars['String']['input']>;
+  takerToken?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Sigmax_LimitcreatePrivateOrderInfo = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+  timeout?: InputMaybe<Scalars['Int']['input']>;
+  transaction?: InputMaybe<Scalars['String']['input']>;
+  useSource?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Sigmax_LimitgetPendingLimitOrderParam = {
+  address?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Sigmax_LimitgetPrivateOrderParam = {
+  hash?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Sigmax_LimitlimitCancelSignType = 'eip191' | 'eip712' | 'eip1271';
+
+export type Sigmax_LimitlimitCreateOrderWalletType = 'common' | 'unipass';
+
+export type Sigmax_LimitlimitOrderAmountLimitParam = {
+  network?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Sigmax_LimitlimitOrderQueryEnum = 'ALL' | 'FRESH' | 'NOT_FRESH';
+
+export type Sigmax_LimituserCancelLimitOrder = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  /** limit order id */
+  id?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+  signature?: InputMaybe<Scalars['String']['input']>;
+  signkey?: InputMaybe<Scalars['String']['input']>;
+  signtime?: InputMaybe<Scalars['Int']['input']>;
+  signtype?: InputMaybe<Sigmax_LimitlimitCancelSignType>;
+};
+
+export type Sigmax_LimituserCreateLimitOrder = {
+  network?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Sigmax_LimitcreateLimitOrderInfo>;
+  signature?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Sigmax_LimituserCreateLimitOrderV2 = {
+  feeId?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Sigmax_LimitcreateLimitOrderInfo>;
+  signature?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  wallet?: InputMaybe<Sigmax_LimitlimitCreateOrderWalletType>;
+};
+
+export type Sigmax_LimituserQueryLimitOrderFee = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  stableAmount?: InputMaybe<Scalars['Int']['input']>;
+  toToken?: InputMaybe<Scalars['String']['input']>;
+  toTokenAmount?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Sigmax_LimituserQueryLimitOrderList = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Sigmax_LimituserQueryLimitOrderListWithPage = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+  orderType?: InputMaybe<Sigmax_LimitlimitOrderQueryEnum>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+};
 
 export type Starter = {
   chain: Scalars['String']['output'];
@@ -19656,6 +20309,7 @@ export type User_SwapswapFilter = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  source?: InputMaybe<Scalars['String']['input']>;
   userAddress?: InputMaybe<Scalars['String']['input']>;
 };
 

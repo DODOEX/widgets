@@ -3,7 +3,7 @@ import { Box, Button, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { debounce } from 'lodash';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
 import { CardStatus } from '../../../components/CardWidgets';
@@ -31,6 +31,8 @@ import TokenListPoolItem from './components/TokenListPoolItem';
 import { usePoolListFilterTokenAndPool } from './hooks/usePoolListFilterTokenAndPool';
 import { CurvePoolT, OperateCurvePoolT } from './types';
 import { convertRawPoolListToCurvePoolListT } from './utils';
+import { SortButtonGroup } from '../PoolList/components/SortButtonGroup';
+import { TableSortButton } from '../PoolList/components/TableSortButton';
 
 function CardList({
   poolList,
@@ -278,6 +280,10 @@ function TableList({
   hasMore,
   loadMore,
   loadMoreLoading,
+  orderBy,
+  orderDirection,
+  setOrderBy,
+  setOrderDirection,
 }: {
   poolList: CurvePoolT[];
   isMyPool: boolean;
@@ -289,6 +295,10 @@ function TableList({
   hasMore?: boolean;
   loadMore?: () => void;
   loadMoreLoading?: boolean;
+  orderBy: 'tvl' | 'apy' | 'volume' | undefined;
+  orderDirection: 'asc' | 'desc' | undefined;
+  setOrderBy: (orderBy: 'tvl' | 'apy' | 'volume' | undefined) => void;
+  setOrderDirection: (orderDirection: 'asc' | 'desc' | undefined) => void;
 }) {
   const theme = useTheme();
 
@@ -304,9 +314,77 @@ function TableList({
         <Box component="tr">
           <Box component="th">Pool</Box>
           <Box component="th">Assets</Box>
-          <Box component="th">APY</Box>
-          <Box component="th">TVL</Box>
-          <Box component="th">{isMyPool ? 'My LP tokens' : 'Volume'}</Box>
+          <Box component="th">
+            <TableSortButton
+              direction={orderBy === 'apy' ? orderDirection : undefined}
+              onClick={() => {
+                if (orderBy === 'apy') {
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
+                  return;
+                }
+
+                setOrderBy('apy');
+                setOrderDirection('desc');
+              }}
+            >
+              APY
+            </TableSortButton>
+          </Box>
+
+          <Box component="th">
+            <TableSortButton
+              direction={orderBy === 'tvl' ? orderDirection : undefined}
+              onClick={() => {
+                if (orderBy === 'tvl') {
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
+                  return;
+                }
+
+                setOrderBy('tvl');
+                setOrderDirection('desc');
+              }}
+            >
+              TVL
+            </TableSortButton>
+          </Box>
+          <Box component="th">
+            {isMyPool ? (
+              <>My LP tokens</>
+            ) : (
+              <TableSortButton
+                direction={orderBy === 'volume' ? orderDirection : undefined}
+                onClick={() => {
+                  if (orderBy === 'volume') {
+                    if (orderDirection === 'desc') {
+                      setOrderDirection('asc');
+                      return;
+                    }
+
+                    setOrderBy(undefined);
+                    setOrderDirection(undefined);
+                    return;
+                  }
+
+                  setOrderBy('volume');
+                  setOrderDirection('desc');
+                }}
+              >
+                Volume
+              </TableSortButton>
+            )}
+          </Box>
           <Box
             component="th"
             sx={{
@@ -549,13 +627,21 @@ export const AllPools = ({
     handleChangeFilterAddress,
   } = usePoolListFilterTokenAndPool();
 
+  const [orderDirection, setOrderDirection] = useState<
+    'asc' | 'desc' | undefined
+  >();
+  // undefined 默认排序
+  const [orderBy, setOrderBy] = useState<
+    'tvl' | 'apy' | 'volume' | undefined
+  >();
+
   const defaultQueryFilter = useMemo(() => {
     return {
       chainId: activeChainId,
       pageSize: isMobile ? 4 : 8,
       order: {
-        orderBy: 'tvl',
-        orderDirection: 'desc',
+        orderBy,
+        orderDirection,
       },
       user: isMyPool ? account?.toLowerCase() : null,
       filterState: {
@@ -564,7 +650,15 @@ export const AllPools = ({
         tokenAddress: filterTokens[0]?.address.toLowerCase() ?? null,
       },
     };
-  }, [activeChainId, isMobile, isMyPool, account, filterTokens]);
+  }, [
+    activeChainId,
+    isMobile,
+    orderBy,
+    orderDirection,
+    isMyPool,
+    account,
+    filterTokens,
+  ]);
 
   const query = graphQLRequests.getInfiniteQuery(
     CurveApi.graphql.curve_stableswap_ng_getAllPools,
@@ -708,12 +802,72 @@ export const AllPools = ({
           {children}
         </Box>
 
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-          }}
+        <SortButtonGroup
+          sortList={[
+            {
+              label: 'TVL',
+              direction: orderBy === 'tvl' ? orderDirection : undefined,
+              onClick: () => {
+                if (orderBy === 'tvl') {
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
+                  return;
+                }
+
+                setOrderBy('tvl');
+                setOrderDirection('desc');
+              },
+            },
+            {
+              label: 'APY',
+              direction: orderBy === 'apy' ? orderDirection : undefined,
+              onClick: () => {
+                if (orderBy === 'apy') {
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
+                  return;
+                }
+
+                setOrderBy('apy');
+                setOrderDirection('desc');
+              },
+            },
+          ].concat(
+            isMyPool
+              ? []
+              : [
+                  {
+                    label: 'Volume',
+                    direction:
+                      orderBy === 'volume' ? orderDirection : undefined,
+                    onClick: () => {
+                      if (orderBy === 'volume') {
+                        if (orderDirection === 'desc') {
+                          setOrderDirection('asc');
+                          return;
+                        }
+
+                        setOrderBy(undefined);
+                        setOrderDirection(undefined);
+                        return;
+                      }
+
+                      setOrderBy('volume');
+                      setOrderDirection('desc');
+                    },
+                  },
+                ],
+          )}
         >
           <Box
             sx={{
@@ -721,91 +875,100 @@ export const AllPools = ({
               display: 'flex',
               alignItems: 'center',
               gap: 8,
-              ...(isMobile
-                ? {}
-                : {
-                    '& > button': {
-                      flex: 1,
-                    },
-                  }),
             }}
           >
-            <TokenAndPoolFilter
-              value={filterTokens}
-              onChange={handleChangeFilterTokens}
-              searchAddress={async (address, onClose) => {
-                const query = graphQLRequests.getInfiniteQuery(
-                  CurveApi.graphql.curve_stableswap_ng_getAllPools,
-                  'currentPage',
-                  {
-                    where: {
-                      ...defaultQueryFilter,
-                      filterState: {
-                        poolAddress: address.toLowerCase(),
-                      },
-                    },
-                  },
-                );
-
-                const queryMyPool = graphQLRequests.getInfiniteQuery(
-                  CurveApi.graphql.curve_stableswap_ng_getMyLiquidity,
-                  'currentPage',
-                  {
-                    where: {
-                      ...defaultQueryFilter,
-                      filterState: {
-                        poolAddress: address.toLowerCase(),
-                      },
-                    },
-                  },
-                );
-
-                const lqList = isMyPool
-                  ? (await queryClient.fetchQuery(queryMyPool))
-                      .curve_stableswap_ng_getMyLiquidity?.lqList
-                  : (await queryClient.fetchQuery(query))
-                      .curve_stableswap_ng_getAllPools?.lqList;
-
-                const list = convertRawPoolListToCurvePoolListT(
-                  lqList,
-                  activeChainId,
-                );
-                if (list?.length) {
-                  return (
-                    <TokenListPoolItem
-                      list={list}
-                      onClick={() => {
-                        handleChangeFilterAddress(list);
-                        onClose();
-                      }}
-                    />
-                  );
-                }
-                return null;
-              }}
-            />
-          </Box>
-
-          {/* filter tag */}
-          {(hasFilterAddress || !!filterTokens.length) && (
             <Box
               sx={{
-                my: 0,
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                ...(isMobile
+                  ? {}
+                  : {
+                      '& > button': {
+                        flex: 1,
+                      },
+                    }),
               }}
             >
-              {hasFilterAddress ? (
-                <FilterAddressTags
-                  lqList={filterAddressLqList}
-                  onDeleteTag={() => handleChangeFilterAddress([])}
-                />
-              ) : null}
-              <FilterTokenTags
-                tags={filterTokens}
-                onDeleteTag={handleDeleteToken}
+              <TokenAndPoolFilter
+                value={filterTokens}
+                onChange={handleChangeFilterTokens}
+                searchAddress={async (address, onClose) => {
+                  const query = graphQLRequests.getInfiniteQuery(
+                    CurveApi.graphql.curve_stableswap_ng_getAllPools,
+                    'currentPage',
+                    {
+                      where: {
+                        ...defaultQueryFilter,
+                        filterState: {
+                          poolAddress: address.toLowerCase(),
+                        },
+                      },
+                    },
+                  );
+
+                  const queryMyPool = graphQLRequests.getInfiniteQuery(
+                    CurveApi.graphql.curve_stableswap_ng_getMyLiquidity,
+                    'currentPage',
+                    {
+                      where: {
+                        ...defaultQueryFilter,
+                        filterState: {
+                          poolAddress: address.toLowerCase(),
+                        },
+                      },
+                    },
+                  );
+
+                  const lqList = isMyPool
+                    ? (await queryClient.fetchQuery(queryMyPool))
+                        .curve_stableswap_ng_getMyLiquidity?.lqList
+                    : (await queryClient.fetchQuery(query))
+                        .curve_stableswap_ng_getAllPools?.lqList;
+
+                  const list = convertRawPoolListToCurvePoolListT(
+                    lqList,
+                    activeChainId,
+                  );
+                  if (list?.length) {
+                    return (
+                      <TokenListPoolItem
+                        list={list}
+                        onClick={() => {
+                          handleChangeFilterAddress(list);
+                          onClose();
+                        }}
+                      />
+                    );
+                  }
+                  return null;
+                }}
               />
             </Box>
-          )}
-        </Box>
+
+            {/* filter tag */}
+            {(hasFilterAddress || !!filterTokens.length) && (
+              <Box
+                sx={{
+                  my: 0,
+                }}
+              >
+                {hasFilterAddress ? (
+                  <FilterAddressTags
+                    lqList={filterAddressLqList}
+                    onDeleteTag={() => handleChangeFilterAddress([])}
+                  />
+                ) : null}
+                <FilterTokenTags
+                  tags={filterTokens}
+                  onDeleteTag={handleDeleteToken}
+                />
+              </Box>
+            )}
+          </Box>
+        </SortButtonGroup>
       </Box>
 
       {/* list */}
@@ -877,6 +1040,10 @@ export const AllPools = ({
                 fetchResultStatus.fetchNextPage();
               }
             }}
+            orderBy={orderBy}
+            orderDirection={orderDirection}
+            setOrderBy={setOrderBy}
+            setOrderDirection={setOrderDirection}
           />
           <CardStatus
             loading={fetchResultStatus.isLoading}

@@ -1,7 +1,7 @@
 import { Box, ButtonBase, useTheme } from '@dodoex/components';
 
 export interface TableSortButtonProps {
-  direction: 'asc' | 'desc' | null;
+  direction: 'asc' | 'desc' | undefined;
   children: React.ReactNode;
   onClick: () => void;
 }

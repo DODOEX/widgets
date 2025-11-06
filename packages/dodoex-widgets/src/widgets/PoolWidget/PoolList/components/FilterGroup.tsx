@@ -1,4 +1,4 @@
-import { Box, useTheme } from '@dodoex/components';
+import { Box, BoxProps, useTheme } from '@dodoex/components';
 
 export interface FilterGroupProps<T> {
   filterList: Array<{
@@ -7,10 +7,11 @@ export interface FilterGroupProps<T> {
   }>;
   value: T;
   onChange: (value: T) => void;
+  sx?: BoxProps['sx'];
 }
 
 export const FilterGroup = <T extends string>(props: FilterGroupProps<T>) => {
-  const { filterList, value, onChange } = props;
+  const { filterList, value, onChange, sx } = props;
   const theme = useTheme();
 
   return (
@@ -18,6 +19,7 @@ export const FilterGroup = <T extends string>(props: FilterGroupProps<T>) => {
       sx={{
         display: 'flex',
         alignItems: 'center',
+        ...sx,
       }}
     >
       {filterList.map((filter, index) => {

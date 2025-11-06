@@ -3,7 +3,7 @@ import { alpha, Box, Button, Tooltip, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
-import React from 'react';
+import React, { useState } from 'react';
 import { AddressWithLinkAndCopy } from '../../../components/AddressWithLinkAndCopy';
 import { CardStatus } from '../../../components/CardWidgets';
 import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
@@ -55,6 +55,8 @@ import {
   TokenAndPoolFilterUserOptions,
   usePoolListFilterTokenAndPool,
 } from './hooks/usePoolListFilterTokenAndPool';
+import { SortButtonGroup } from './components/SortButtonGroup';
+import { TableSortButton } from './components/TableSortButton';
 
 function CardList({
   account,
@@ -606,6 +608,10 @@ function TableList({
   onlyV3,
   getMigrationPairAndMining,
   timeRange,
+  setOrderBy,
+  setOrderDirection,
+  orderBy,
+  orderDirection,
 }: {
   account?: string;
   lqList: FetchMyLiquidityListLqList;
@@ -616,6 +622,12 @@ function TableList({
   onlyV3?: boolean;
   getMigrationPairAndMining?: (p: { address: string; chainId: number }) => void;
   timeRange: '1' | '7' | '14' | '30';
+  orderBy: 'updatedAt' | 'tvl' | 'apy' | 'liquidity' | 'volume' | undefined;
+  orderDirection: 'asc' | 'desc' | undefined;
+  setOrderBy: (
+    orderBy: 'updatedAt' | 'tvl' | 'apy' | 'liquidity' | 'volume' | undefined,
+  ) => void;
+  setOrderDirection: (orderDirection: 'asc' | 'desc' | undefined) => void;
 }) {
   const theme = useTheme();
   return (
@@ -632,11 +644,49 @@ function TableList({
           )}
           {onlyV3 ? null : (
             <Box component="th">
-              <Trans>TVL</Trans>
+              <TableSortButton
+                direction={orderBy === 'tvl' ? orderDirection : undefined}
+                onClick={() => {
+                  if (orderBy === 'tvl') {
+                    if (orderDirection === 'desc') {
+                      setOrderDirection('asc');
+                      return;
+                    }
+
+                    setOrderBy(undefined);
+                    setOrderDirection(undefined);
+                    return;
+                  }
+
+                  setOrderBy('tvl');
+                  setOrderDirection('desc');
+                }}
+              >
+                TVL
+              </TableSortButton>
             </Box>
           )}
           <Box component="th">
-            {timeRange}d&nbsp;<Trans>APY</Trans>
+            <TableSortButton
+              direction={orderBy === 'apy' ? orderDirection : undefined}
+              onClick={() => {
+                if (orderBy === 'apy') {
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
+                  return;
+                }
+
+                setOrderBy('apy');
+                setOrderDirection('desc');
+              }}
+            >
+              {timeRange}d&nbsp;APY
+            </TableSortButton>
           </Box>
           <Box component="th">
             <Trans>My Liquidity</Trans>
@@ -1170,10 +1220,16 @@ export default function MyLiquidity({
   const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
     useUserOptions();
 
-  const [poolType, setPoolType] = React.useState<'v3' | 'pmm&v2'>('pmm&v2');
-  const [timeRange, setTimeRange] = React.useState<'1' | '7' | '14' | '30'>(
-    '1',
-  );
+  const [poolType, setPoolType] = useState<'v3' | 'pmm&v2'>('pmm&v2');
+  const [timeRange, setTimeRange] = useState<'1' | '7' | '14' | '30'>('1');
+  const [orderDirection, setOrderDirection] = useState<
+    'asc' | 'desc' | undefined
+  >();
+  // updatedAt tvl apy liquidity volume
+  // undefined 默认排序
+  const [orderBy, setOrderBy] = useState<
+    'updatedAt' | 'tvl' | 'apy' | 'liquidity' | 'volume' | undefined
+  >();
 
   const {
     filterTokens,
@@ -1197,12 +1253,18 @@ export default function MyLiquidity({
   }
 
   const defaultQueryFilter = {
+    chainIds: filterChainIds,
     currentPage: 1,
     pageSize: 1000,
     user: account,
     filterState: {
       viewOnlyOwn: true,
       filterTypes,
+    },
+    order: {
+      timeRange: `${timeRange}D`,
+      orderDirection,
+      orderBy,
     },
   };
 
@@ -1231,8 +1293,6 @@ export default function MyLiquidity({
         filterChainIds.includes(lq?.pair?.chainId ?? 0),
       ) ?? [];
   }
-
-  const filterSmallDeviceWidth = 475;
 
   return (
     <>
@@ -1282,32 +1342,86 @@ export default function MyLiquidity({
               },
             ]}
             value={poolType}
-            onChange={(value) => setPoolType(value)}
+            onChange={(value) => {
+              setPoolType(value);
+              setOrderBy(undefined);
+              setOrderDirection(undefined);
+            }}
           />
         )}
 
-        <FilterGroup
-          filterList={[
+        <SortButtonGroup
+          sortList={(poolType === 'v3'
+            ? []
+            : [
+                {
+                  label: 'TVL',
+                  direction: orderBy === 'tvl' ? orderDirection : undefined,
+                  onClick: () => {
+                    if (orderBy === 'tvl') {
+                      if (orderDirection === 'desc') {
+                        setOrderDirection('asc');
+                        return;
+                      }
+
+                      setOrderBy(undefined);
+                      setOrderDirection(undefined);
+                      return;
+                    }
+
+                    setOrderBy('tvl');
+                    setOrderDirection('desc');
+                  },
+                },
+              ]
+          ).concat([
             {
-              label: '1d',
-              value: '1',
+              label: `${timeRange}d APY`,
+              direction: orderBy === 'apy' ? orderDirection : undefined,
+              onClick: () => {
+                if (orderBy === 'apy') {
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
+                  return;
+                }
+
+                setOrderBy('apy');
+                setOrderDirection('desc');
+              },
             },
-            {
-              label: '7d',
-              value: '7',
-            },
-            {
-              label: '14d',
-              value: '14',
-            },
-            {
-              label: '30d',
-              value: '30',
-            },
-          ]}
-          value={timeRange}
-          onChange={(value) => setTimeRange(value)}
-        />
+          ])}
+        >
+          <FilterGroup
+            filterList={[
+              {
+                label: '1d',
+                value: '1',
+              },
+              {
+                label: '7d',
+                value: '7',
+              },
+              {
+                label: '14d',
+                value: '14',
+              },
+              {
+                label: '30d',
+                value: '30',
+              },
+            ]}
+            value={timeRange}
+            onChange={(value) => setTimeRange(value)}
+            sx={{
+              flex: 1,
+            }}
+          />
+        </SortButtonGroup>
 
         <Box
           sx={{
@@ -1437,6 +1551,10 @@ export default function MyLiquidity({
             setOperatePool={setOperatePool}
             supportAMM={supportAMMV2 || supportAMMV3}
             onlyV3={poolType === 'v3'}
+            orderBy={orderBy}
+            orderDirection={orderDirection}
+            setOrderBy={setOrderBy}
+            setOrderDirection={setOrderDirection}
             getMigrationPairAndMining={getMigrationPairAndMining}
             timeRange={timeRange}
           />

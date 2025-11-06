@@ -13,7 +13,7 @@ import { ArrowRight, Edit } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
-import React from 'react';
+import React, { useState } from 'react';
 import { CardStatus } from '../../../components/CardWidgets';
 import { DataCardGroup } from '../../../components/DataCard/DataCardGroup';
 import { EmptyList } from '../../../components/List/EmptyList';
@@ -33,6 +33,8 @@ import { FetchMyCreateListLqList, toColorfulNumString } from '../utils';
 import AddingOrRemovingBtn from './components/AddingOrRemovingBtn';
 import LiquidityTable from './components/LiquidityTable';
 import LoadingCard from './components/LoadingCard';
+import { TableSortButton } from './components/TableSortButton';
+import { SortButtonGroup } from './components/SortButtonGroup';
 
 function CardList({
   account,
@@ -281,12 +283,20 @@ function TableList({
   loading,
   operatePool,
   setOperatePool,
+  setOrderBy,
+  setOrderDirection,
+  orderBy,
+  orderDirection,
 }: {
   account?: string;
   list: FetchMyCreateListLqList;
   loading: boolean;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  orderBy: 'tvl' | 'apy' | 'volume' | undefined;
+  orderDirection: 'asc' | 'desc' | undefined;
+  setOrderBy: (orderBy: 'tvl' | 'apy' | 'volume' | undefined) => void;
+  setOrderDirection: (orderDirection: 'asc' | 'desc' | undefined) => void;
 }) {
   const theme = useTheme();
   const router = useRouterStore();
@@ -298,7 +308,26 @@ function TableList({
             <Trans>Pair</Trans>
           </Box>
           <Box component="th">
-            <Trans>TVL</Trans>
+            <TableSortButton
+              direction={orderBy === 'tvl' ? orderDirection : undefined}
+              onClick={() => {
+                if (orderBy === 'tvl') {
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
+                  return;
+                }
+
+                setOrderBy('tvl');
+                setOrderDirection('desc');
+              }}
+            >
+              TVL
+            </TableSortButton>
           </Box>
           <Box component="th">
             <Trans>Total Fee Revenue</Trans>
@@ -611,10 +640,23 @@ export default function MyCreated({
   const theme = useTheme();
   const { onlyChainId } = useUserOptions();
 
+  const [orderDirection, setOrderDirection] = useState<
+    'asc' | 'desc' | undefined
+  >();
+  // tvl apy volume
+  // undefined 默认排序
+  const [orderBy, setOrderBy] = useState<
+    'tvl' | 'apy' | 'volume' | undefined
+  >();
+
   const defaultQueryFilter = {
-    limit: 1000,
+    limit: account ? 1000 : 0,
     page: 1,
     owner: account,
+    order: {
+      orderDirection,
+      orderBy,
+    },
   };
 
   const graphQLRequests = useGraphQLRequests();
@@ -675,30 +717,58 @@ export default function MyCreated({
             setChainId={handleChangeActiveChainId}
           />
         )}
-        <Box
-          component="label"
+
+        <SortButtonGroup
+          sortList={[
+            {
+              label: 'TVL',
+              direction: orderBy === 'tvl' ? orderDirection : undefined,
+              onClick: () => {
+                if (orderBy === 'tvl') {
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
+                  return;
+                }
+
+                setOrderBy('tvl');
+                setOrderDirection('desc');
+              },
+            },
+          ]}
           sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            typography: 'body2',
-            cursor: 'pointer',
-            color: 'text.secondary',
+            justifyContent: 'space-between',
           }}
         >
-          <Checkbox
+          <Box
+            component="label"
             sx={{
-              top: -1,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              typography: 'body2',
+              cursor: 'pointer',
+              color: 'text.secondary',
             }}
-            size={16}
-            checked={hideZeroTvl}
-            onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
-              const { checked } = evt.target;
-              setHideZeroTvl(checked);
-            }}
-          />
-          <Trans>Hide TVL=0 pools</Trans>
-        </Box>
+          >
+            <Checkbox
+              sx={{
+                top: -1,
+              }}
+              size={16}
+              checked={hideZeroTvl}
+              onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
+                const { checked } = evt.target;
+                setHideZeroTvl(checked);
+              }}
+            />
+            <Trans>Hide TVL=0 pools</Trans>
+          </Box>
+        </SortButtonGroup>
       </Box>
 
       {/* list */}
@@ -735,6 +805,10 @@ export default function MyCreated({
             loading={fetchResult.isLoading}
             operatePool={operatePool}
             setOperatePool={setOperatePool}
+            orderBy={orderBy}
+            orderDirection={orderDirection}
+            setOrderBy={setOrderBy}
+            setOrderDirection={setOrderDirection}
           />
           <CardStatus
             loading={fetchResult.isLoading}

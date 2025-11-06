@@ -46,6 +46,8 @@ import LiquidityTable from './components/LiquidityTable';
 import LoadingCard from './components/LoadingCard';
 import { MigrationTag } from './components/migationWidget';
 import PoolApyTooltip from './components/PoolApyTooltip';
+import { SortButtonGroup } from './components/SortButtonGroup';
+import { TableSortButton } from './components/TableSortButton';
 import { PoolFeeRateTag, PoolTypeTag } from './components/tags';
 import TokenAndPoolFilter from './components/TokenAndPoolFilter';
 import TokenListPoolItem from './components/TokenListPoolItem';
@@ -53,7 +55,6 @@ import {
   TokenAndPoolFilterUserOptions,
   usePoolListFilterTokenAndPool,
 } from './hooks/usePoolListFilterTokenAndPool';
-import { TableSortButton } from './components/TableSortButton';
 
 function CardList({
   lqList,
@@ -437,12 +438,12 @@ function TableList({
   loadMoreLoading?: boolean;
   supportAMM?: boolean;
   timeRange: '1' | '7' | '14' | '30';
-  orderBy: 'updatedAt' | 'tvl' | 'apy' | 'liquidity' | 'volume';
-  orderDirection: 'asc' | 'desc';
+  orderBy: 'updatedAt' | 'tvl' | 'apy' | 'liquidity' | 'volume' | undefined;
+  orderDirection: 'asc' | 'desc' | undefined;
   setOrderBy: (
-    orderBy: 'updatedAt' | 'tvl' | 'apy' | 'liquidity' | 'volume',
+    orderBy: 'updatedAt' | 'tvl' | 'apy' | 'liquidity' | 'volume' | undefined,
   ) => void;
-  setOrderDirection: (orderDirection: 'asc' | 'desc') => void;
+  setOrderDirection: (orderDirection: 'asc' | 'desc' | undefined) => void;
 }) {
   const theme = useTheme();
   const { onSharePool } = useUserOptions();
@@ -466,12 +467,19 @@ function TableList({
           )}
           <Box component="th">
             <TableSortButton
-              direction={orderBy === 'tvl' ? orderDirection : null}
+              direction={orderBy === 'tvl' ? orderDirection : undefined}
               onClick={() => {
                 if (orderBy === 'tvl') {
-                  setOrderDirection(orderDirection === 'asc' ? 'desc' : 'asc');
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
                   return;
                 }
+
                 setOrderBy('tvl');
                 setOrderDirection('desc');
               }}
@@ -481,12 +489,19 @@ function TableList({
           </Box>
           <Box component="th">
             <TableSortButton
-              direction={orderBy === 'apy' ? orderDirection : null}
+              direction={orderBy === 'apy' ? orderDirection : undefined}
               onClick={() => {
                 if (orderBy === 'apy') {
-                  setOrderDirection(orderDirection === 'asc' ? 'desc' : 'asc');
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
                   return;
                 }
+
                 setOrderBy('apy');
                 setOrderDirection('desc');
               }}
@@ -497,14 +512,19 @@ function TableList({
           {supportAMM && (
             <th>
               <TableSortButton
-                direction={orderBy === 'volume' ? orderDirection : null}
+                direction={orderBy === 'volume' ? orderDirection : undefined}
                 onClick={() => {
                   if (orderBy === 'volume') {
-                    setOrderDirection(
-                      orderDirection === 'asc' ? 'desc' : 'asc',
-                    );
+                    if (orderDirection === 'desc') {
+                      setOrderDirection('asc');
+                      return;
+                    }
+
+                    setOrderBy(undefined);
+                    setOrderDirection(undefined);
                     return;
                   }
+
                   setOrderBy('volume');
                   setOrderDirection('desc');
                 }}
@@ -848,11 +868,14 @@ export default function AddLiquidityList({
 
   const [poolType, setPoolType] = useState<'all' | 'pmm' | 'v2' | 'v3'>('all');
   const [timeRange, setTimeRange] = useState<'1' | '7' | '14' | '30'>('1');
-  const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>('desc');
+  const [orderDirection, setOrderDirection] = useState<
+    'asc' | 'desc' | undefined
+  >();
   // updatedAt tvl apy liquidity volume
+  // undefined 默认排序
   const [orderBy, setOrderBy] = useState<
-    'updatedAt' | 'tvl' | 'apy' | 'liquidity' | 'volume'
-  >('tvl');
+    'updatedAt' | 'tvl' | 'apy' | 'liquidity' | 'volume' | undefined
+  >();
 
   const {
     filterTokens,
@@ -1035,28 +1058,93 @@ export default function AddLiquidityList({
           />
         )}
 
-        <FilterGroup
-          filterList={[
+        <SortButtonGroup
+          sortList={[
             {
-              label: '1d',
-              value: '1',
+              label: 'TVL',
+              direction: orderBy === 'tvl' ? orderDirection : undefined,
+              onClick: () => {
+                if (orderBy === 'tvl') {
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
+                  return;
+                }
+
+                setOrderBy('tvl');
+                setOrderDirection('desc');
+              },
             },
             {
-              label: '7d',
-              value: '7',
+              label: `${timeRange}d APY`,
+              direction: orderBy === 'apy' ? orderDirection : undefined,
+              onClick: () => {
+                if (orderBy === 'apy') {
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
+                  return;
+                }
+
+                setOrderBy('apy');
+                setOrderDirection('desc');
+              },
             },
             {
-              label: '14d',
-              value: '14',
-            },
-            {
-              label: '30d',
-              value: '30',
+              label: `${timeRange}d Volume`,
+              direction: orderBy === 'volume' ? orderDirection : undefined,
+              onClick: () => {
+                if (orderBy === 'volume') {
+                  if (orderDirection === 'desc') {
+                    setOrderDirection('asc');
+                    return;
+                  }
+
+                  setOrderBy(undefined);
+                  setOrderDirection(undefined);
+                  return;
+                }
+
+                setOrderBy('volume');
+                setOrderDirection('desc');
+              },
             },
           ]}
-          value={timeRange}
-          onChange={(value) => setTimeRange(value)}
-        />
+        >
+          <FilterGroup
+            filterList={[
+              {
+                label: '1d',
+                value: '1',
+              },
+              {
+                label: '7d',
+                value: '7',
+              },
+              {
+                label: '14d',
+                value: '14',
+              },
+              {
+                label: '30d',
+                value: '30',
+              },
+            ]}
+            value={timeRange}
+            onChange={(value) => setTimeRange(value)}
+            sx={{
+              flex: 1,
+            }}
+          />
+        </SortButtonGroup>
 
         <Box
           sx={{
