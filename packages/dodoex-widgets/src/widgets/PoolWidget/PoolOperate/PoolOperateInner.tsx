@@ -60,7 +60,7 @@ export default function PoolOperateInner({
       pool?.quoteToken?.decimals,
     ),
   );
-
+  const { baseReserve, quoteReserve, totalSupplyBG } = pmmStateQuery.data || {};
   const migrationItem = pool
     ? getMigrationPairAndMining?.({
         address: pool.address,
@@ -134,6 +134,9 @@ export default function PoolOperateInner({
             pool={pool}
             balanceInfo={balanceInfo}
             submittedBack={submittedBack}
+            baseReserve={baseReserve}
+            quoteReserve={quoteReserve}
+            totalSupplyBG={totalSupplyBG}
           />
         </TabPanel>
         <TabPanel value={OperateTab.Remove}>
