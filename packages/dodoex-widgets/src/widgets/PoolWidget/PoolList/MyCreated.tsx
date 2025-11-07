@@ -650,6 +650,7 @@ export default function MyCreated({
   >();
 
   const defaultQueryFilter = {
+    chainIds: filterChainIds,
     limit: account ? 1000 : 0,
     page: 1,
     owner: account,

@@ -1617,7 +1617,7 @@ msgstr "Edit"
 msgid "Min"
 msgstr "Min"
 
-#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:769
+#: src/widgets/PoolWidget/PoolList/MyCreated.tsx:770
 msgid "Hide TVL=0 pools"
 msgstr "Hide TVL=0 pools"
 
