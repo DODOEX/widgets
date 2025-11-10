@@ -2138,20 +2138,6 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@dodoex/api@3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@dodoex/api/-/api-3.0.6.tgz#db827312beb9a522810271225c320387c3867b1b"
-  integrity sha512-EklhYXYBZ0GmWOrjgA0SyB7BL9mr+7D4tAkx3z8f904C9FgfrjV019R30EL1b+UA2B1t3062Vzf/T81PQVxJhA==
-  dependencies:
-    "@ethersproject/abi" "^5.7.0"
-    "@ethersproject/properties" "^5.7.0"
-    "@ethersproject/providers" "^5.7.2"
-    "@ethersproject/web" "^5.7.1"
-    cross-fetch "^4.0.0"
-    graphql "^16.8.1"
-    graphql-request "^6.1.0"
-    qs "^6.11.2"
-
 "@dodoex/components@3.0.9":
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/@dodoex/components/-/components-3.0.9.tgz#4c7a941b3c28f58e2eec310a2f097677ecffce36"
@@ -7821,6 +7807,11 @@
   version "15.7.13"
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.13.tgz"
   integrity sha512-hCZTSvwbzWGvhqxp/RqVqwU999pBf2vp7hzIjiYOsl8wqOmUxkQ6ddw1cV3l8811+kdUFus/q4d1Y3E3SyEifA==
+
+"@types/qs@^6.14.0":
+  version "6.14.0"
+  resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.14.0.tgz#d8b60cecf62f2db0fb68e5e006077b9178b85de5"
+  integrity sha512-eOunJqu0K1923aExK6y8p6fsihYEn/BYuQ4g0CxAAgFc4b/ZLN4CrsRZ55srTdqoiLzU2B2evC+apEIxprEzkQ==
 
 "@types/react-copy-to-clipboard@^5.0.4":
   version "5.0.4"
