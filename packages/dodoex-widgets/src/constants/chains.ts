@@ -67,6 +67,7 @@ export const rpcServerMap: {
     'https://api.zan.top/node/v1/pharos/testnet/54b49326c9f44b6e8730dc5dd4348421',
   ],
   [ChainId.MONAD_TESTNET]: ['https://testnet-rpc.monad.xyz'],
+  [ChainId.MONAD]: ['https://rpc-mainnet.monadinfra.com/rpc/VG865gUhX5I0G38kK4onvld09FhukEyP'],
 };
 
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
@@ -123,7 +124,8 @@ export const scanUrlDomainMap: {
   [ChainId.HASHKEY]: 'explorer.hsk.xyz',
   [ChainId.HEMI]: 'explorer.hemi.xyz',
   [ChainId.PHAROS_TESTNET]: 'testnet.pharosscan.xyz',
-  [ChainId.MONAD_TESTNET]: ['testnet.monadexplorer.com'],
+  [ChainId.MONAD_TESTNET]: 'testnet.monadexplorer.com',
+  [ChainId.MONAD]: 'mainnet-beta.monvision.io',
 };
 
 export const ThegraphKeyMap: {
@@ -162,6 +164,7 @@ export const ThegraphKeyMap: {
   [ChainId.HEMI]: 'hemi',
   [ChainId.PHAROS_TESTNET]: 'pharos-testnet',
   [ChainId.MONAD_TESTNET]: 'monad-testnet',
+  [ChainId.MONAD]: 'monad',
 };
 
 export const blockTimeMap: {
@@ -200,6 +203,7 @@ export const blockTimeMap: {
   [ChainId.HEMI]: 12000,
   [ChainId.PHAROS_TESTNET]: 0,
   [ChainId.MONAD_TESTNET]: 0,
+  [ChainId.MONAD]: 0,
 };
 
 export const dexKeysMap: {
@@ -238,4 +242,5 @@ export const dexKeysMap: {
   [ChainId.HEMI]: [],
   [ChainId.PHAROS_TESTNET]: [],
   [ChainId.MONAD_TESTNET]: [],
+  [ChainId.MONAD]: [],
 };

@@ -62,4 +62,6 @@ export enum ChainId {
   PHAROS_TESTNET = 688688,
   
   MONAD_TESTNET = 10143,
+
+  MONAD = 143,
 }

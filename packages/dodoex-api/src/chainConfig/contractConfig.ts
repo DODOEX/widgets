@@ -14,6 +14,7 @@ import {
   hashkey,
   hemi,
   pharosTestnet,
+  monad
 } from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
@@ -509,9 +510,23 @@ const contractMap: {
     CALLEE_HELPER: monadTestnet.DODOCalleeHelper,
 
     DODO_PROXY: monadTestnet.DODOV2Proxy02,
-    DODO_DSP_PROXY: monadTestnet.DODODspProxyWithoutGSP,
+    DODO_DSP_PROXY: monadTestnet.DODODspProxy,
     DODO_DPP_PROXY: monadTestnet.DODODppProxy,
     DODO_MINEV3_PROXY: monadTestnet.DODOMineV3Proxy,
+  },
+  [ChainId.MONAD]: {
+    MULTI_CALL: monad.MulticallWithValid,
+    DODO_APPROVE: monad.DODOApprove,
+    ERC20_HELPER: monad.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: monad.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: monad.DODOV1PmmHelper,
+    CALLEE_HELPER: monad.DODOCalleeHelper,
+
+    DODO_PROXY: monad.DODOV2Proxy02,
+    DODO_DSP_PROXY: monad.DODODspProxy,
+    DODO_DPP_PROXY: monad.DODODppProxy,
+    DODO_MINEV3_PROXY: monad.DODOMineV3Proxy,
   },
 };
 

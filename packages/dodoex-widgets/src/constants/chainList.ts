@@ -303,6 +303,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       name: 'Monad Testnet',
     },
   ],
+  [
+    ChainId.MONAD,
+    {
+      chainId: ChainId.MONAD,
+      logo: MonadLogo,
+      name: 'Monad',
+    },
+  ],
 ]);
 
 export const isTestNet = (chainId: ChainId) => {

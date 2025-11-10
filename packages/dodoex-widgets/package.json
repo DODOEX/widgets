@@ -61,7 +61,7 @@
     "@dodoex/api": "3.0.6",
     "@dodoex/components": "3.0.9",
     "@dodoex/contract-request": "^1.3.0",
-    "@dodoex/dodo-contract-request": "1.24.0",
+    "@dodoex/dodo-contract-request": "1.26.0",
     "@dodoex/icons": "^2.0.2",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
