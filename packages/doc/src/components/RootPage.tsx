@@ -181,7 +181,7 @@ export function RootPage({
 
   const TONCONNECT_MANIFEST_URL = IS_TEST_ENV
     ? 'https://zetachain-eddy-git-feat-ton-sui-dodoex-io.vercel.app/tonconnect-manifest-dev.json'
-    : 'https://zunodex.xyz/tonconnect-manifest.json';
+    : 'https://app.zunodex.xyz/tonconnect-manifest.json';
 
   return (
     <ReduxProvider store={store}>
