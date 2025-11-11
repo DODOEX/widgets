@@ -678,7 +678,7 @@ export default function AddLiquidityV3({
           }}
         >
           <Buttons
-            chainId={chainId}
+            chainId={state.baseToken?.chainId || state.quoteToken?.chainId || chainId}
             approvalA={approvalA}
             approvalB={approvalB}
             parsedAmounts={parsedAmounts}
