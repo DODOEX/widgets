@@ -23436,6 +23436,8 @@ export type Cross_Chain_Swap_Zetachain_OrderListQuery = {
       refundAmount?: string | null;
       refundUser?: string | null;
       refundToken?: string | null;
+      bridgeRefundVault?: string | null;
+      bridgeChainId?: number | null;
       status?: string | null;
       statusCode?: number | null;
       subStatus?: string | null;
@@ -23479,6 +23481,17 @@ export type Cross_Chain_Swap_Zetachain_SwapOrderListQuery = {
       nonce?: number | null;
       extra?: any | null;
     } | null> | null;
+  } | null;
+};
+
+export type Cross_Chain_Swap_Zetachain_OrderRefundClaimedQueryVariables =
+  Exact<{
+    data?: InputMaybe<Cross_Chain_Swap_ZetachainorderRefundClaimedData>;
+  }>;
+
+export type Cross_Chain_Swap_Zetachain_OrderRefundClaimedQuery = {
+  cross_chain_swap_zetachain_orderRefundClaimed?: {
+    success?: boolean | null;
   } | null;
 };
 
@@ -24790,6 +24803,8 @@ export const Cross_Chain_Swap_Zetachain_OrderListDocument =
       refundAmount
       refundUser
       refundToken
+      bridgeRefundVault
+      bridgeChainId
       status
       statusCode
       subStatus
@@ -24842,6 +24857,17 @@ export const Cross_Chain_Swap_Zetachain_SwapOrderListDocument =
     `) as unknown as TypedDocumentString<
     Cross_Chain_Swap_Zetachain_SwapOrderListQuery,
     Cross_Chain_Swap_Zetachain_SwapOrderListQueryVariables
+  >;
+export const Cross_Chain_Swap_Zetachain_OrderRefundClaimedDocument =
+  new TypedDocumentString(`
+    query Cross_chain_swap_zetachain_orderRefundClaimed($data: Cross_chain_swap_zetachainorderRefundClaimedData) {
+  cross_chain_swap_zetachain_orderRefundClaimed(data: $data) {
+    success
+  }
+}
+    `) as unknown as TypedDocumentString<
+    Cross_Chain_Swap_Zetachain_OrderRefundClaimedQuery,
+    Cross_Chain_Swap_Zetachain_OrderRefundClaimedQueryVariables
   >;
 export const FetchNoticeCenterTransactionListDocument =
   new TypedDocumentString(`

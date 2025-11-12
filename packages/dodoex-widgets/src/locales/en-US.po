@@ -118,7 +118,7 @@ msgid "Start Time"
 msgstr "Start Time"
 
 #: src/components/ErrorMessageDialog.tsx:73
-#: src/components/WithExecutionDialog/index.tsx:488
+#: src/components/WithExecutionDialog/index.tsx:495
 msgid "Dismiss"
 msgstr "Dismiss"
 
@@ -209,7 +209,7 @@ msgstr "Asset ratio within the pool"
 msgid "Rewards"
 msgstr "Rewards"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:68
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:69
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:61
 msgid "Pay"
 msgstr "Pay"
@@ -356,7 +356,7 @@ msgstr "{0} per {1}"
 msgid "Initial Tokens"
 msgstr "Initial Tokens"
 
-#: src/components/WithExecutionDialog/index.tsx:365
+#: src/components/WithExecutionDialog/index.tsx:372
 msgid "Please confirm in wallet"
 msgstr "Please confirm in wallet"
 
@@ -597,7 +597,7 @@ msgid "Swaps"
 msgstr "Swaps"
 
 #: src/components/WithExecutionDialog/index.tsx:126
-#: src/components/WithExecutionDialog/index.tsx:333
+#: src/components/WithExecutionDialog/index.tsx:340
 msgid "{0} Submitted"
 msgstr "{0} Submitted"
 
@@ -1027,7 +1027,6 @@ msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
 #: src/hooks/Token/useGetTokenStatus.ts:60
-#: src/hooks/Token/useTokenStatus.ts:140
 msgid "Reset"
 msgstr "Reset"
 
@@ -1260,7 +1259,7 @@ msgstr "Reward Rules"
 msgid "Trader"
 msgstr "Trader"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:96
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:97
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:79
 #: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:71
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:269
@@ -1296,7 +1295,7 @@ msgstr "Single-Token Stake Mining"
 msgid "Suitable for most situations."
 msgstr "Suitable for most situations."
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:81
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:82
 msgid "Refunds TX"
 msgstr "Refunds TX"
 
@@ -1419,7 +1418,6 @@ msgstr "On"
 
 #: src/components/Swap/index.tsx:984
 #: src/hooks/Token/useGetTokenStatus.ts:60
-#: src/hooks/Token/useTokenStatus.ts:140
 msgid "Approve"
 msgstr "Approve"
 
@@ -1653,7 +1651,7 @@ msgstr "My Pools"
 msgid "Approve {0}"
 msgstr "Approve {0}"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:85
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:86
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:71
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:194
 msgid "Rate"
@@ -1809,7 +1807,7 @@ msgid "The mid price needs to be greater than {min} and less than 100,000,000"
 msgstr "The mid price needs to be greater than {min} and less than 100,000,000"
 
 #: src/components/ErrorMessageDialog.tsx:46
-#: src/components/WithExecutionDialog/index.tsx:433
+#: src/components/WithExecutionDialog/index.tsx:436
 msgid "Something went wrong."
 msgstr "Something went wrong."
 
@@ -1826,7 +1824,7 @@ msgstr "Second"
 msgid "Total Swap Volume"
 msgstr "Total Swap Volume"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:72
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:73
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:65
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:519
 msgid "Receive"
@@ -2175,7 +2173,7 @@ msgstr "Amounts"
 msgid "Create One"
 msgstr "Create One"
 
-#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:76
+#: src/components/Swap/SwapOrderHistory/CrossChainOrderList.tsx:77
 #: src/components/Swap/SwapOrderHistory/SameChainOrderList.tsx:68
 msgid "Status"
 msgstr "Status"
@@ -2321,7 +2319,7 @@ msgstr "Dynamic slippage is {recommendSlippage}% , the current slippage setting 
 msgid "High"
 msgstr "High"
 
-#: src/components/WithExecutionDialog/index.tsx:488
+#: src/components/WithExecutionDialog/index.tsx:495
 msgid "Close"
 msgstr "Close"
 
@@ -2355,7 +2353,7 @@ msgstr "Claim Rewards"
 msgid "Starting price"
 msgstr "Starting price"
 
-#: src/components/WithExecutionDialog/index.tsx:357
+#: src/components/WithExecutionDialog/index.tsx:364
 msgid "OK"
 msgstr "OK"
 

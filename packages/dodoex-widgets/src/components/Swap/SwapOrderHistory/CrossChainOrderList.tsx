@@ -16,7 +16,7 @@ export default function CrossChainOrderList({
 }) {
   const { isMobile } = useWidgetDevice();
 
-  const swapOrderListQuery = useCrossSwapOrderList({
+  const orderListQuery = useCrossSwapOrderList({
     account,
     limit: isMobile ? 10 : 5,
     type,
@@ -27,8 +27,8 @@ export default function CrossChainOrderList({
   return (
     <CardStatus
       isMobile={isMobile}
-      empty={!swapOrderListQuery.orderList.length}
-      loading={swapOrderListQuery.isLoading}
+      empty={!orderListQuery.orderList.length}
+      loading={orderListQuery.isLoading}
     >
       {isMobile ? (
         <Box
@@ -40,27 +40,28 @@ export default function CrossChainOrderList({
             gap: 8,
           }}
         >
-          {swapOrderListQuery.orderList.map((item) => (
+          {orderListQuery.orderList.map((item) => (
             <CrossOrderCard
               key={item.hash}
               data={item}
               isMobile={isMobile}
               isErrorRefund={isErrorRefund}
+              refetch={orderListQuery.refetch}
             />
           ))}
           <LoadMore
-            loading={swapOrderListQuery.isFetchingNextPage}
-            onClick={swapOrderListQuery.fetchNextPage}
-            hasMore={swapOrderListQuery.hasNextPage}
+            loading={orderListQuery.isFetchingNextPage}
+            onClick={orderListQuery.fetchNextPage}
+            hasMore={orderListQuery.hasNextPage}
             height={68}
           />
         </Box>
       ) : (
         <>
           <Table
-            loadMoreLoading={swapOrderListQuery.isFetchingNextPage}
-            loadMore={swapOrderListQuery.fetchNextPage}
-            hasMore={swapOrderListQuery.hasNextPage}
+            loadMoreLoading={orderListQuery.isFetchingNextPage}
+            loadMore={orderListQuery.fetchNextPage}
+            hasMore={orderListQuery.hasNextPage}
           >
             <thead>
               <tr>
@@ -98,12 +99,13 @@ export default function CrossChainOrderList({
               </tr>
             </thead>
             <tbody>
-              {swapOrderListQuery.orderList.map((item) => (
+              {orderListQuery.orderList.map((item) => (
                 <CrossOrderCard
                   key={item.hash}
                   data={item}
                   isMobile={isMobile}
                   isErrorRefund={isErrorRefund}
+                  refetch={orderListQuery.refetch}
                 />
               ))}
             </tbody>

@@ -24,7 +24,7 @@ import {
   setContractStatus,
 } from '../../hooks/useGlobalState';
 import { getEtherscanPage } from '../../utils/address';
-import { CROSS_CHAIN_TEXT } from '../../utils/constants';
+import { CLAIM_REFUND_TEXT, CROSS_CHAIN_TEXT } from '../../utils/constants';
 import Dialog from '../Swap/components/Dialog';
 import { useUserOptions } from '../UserOptionsProvider';
 
@@ -274,6 +274,13 @@ export default function WithExecutionDialog({
 
   const isCrossChainShowingDone =
     showingDone && showing?.brief === CROSS_CHAIN_TEXT && !errorMessage;
+  const isClaimRefundShowing = showing?.brief === CLAIM_REFUND_TEXT;
+
+  const isModal = isMobile
+    ? true
+    : isClaimRefundShowing
+      ? true
+      : submissionDialogModal;
 
   const currentRequestChainId = requests?.get(transactionTx)?.[0].metadata
     ?.chainId as number;
@@ -393,7 +400,7 @@ export default function WithExecutionDialog({
         }
         onClose={closeShowing}
         id="submission"
-        modal={isMobile ? true : submissionDialogModal}
+        modal={isModal}
       >
         <Box
           sx={{
@@ -403,11 +410,7 @@ export default function WithExecutionDialog({
             pb: 20,
             flex: 1,
             overflowY: 'auto',
-            width: isMobile
-              ? undefined
-              : submissionDialogModal
-                ? 340
-                : undefined,
+            width: isMobile ? undefined : isModal ? 340 : undefined,
           }}
         >
           <Box>
@@ -467,7 +470,7 @@ export default function WithExecutionDialog({
                 increaseCrossChainSubmittedCounter();
               }}
               sx={{
-                mt: isMobile ? 20 : 'auto',
+                mt: isMobile || isModal ? 20 : 'auto',
               }}
             >
               Check in order list
@@ -482,7 +485,11 @@ export default function WithExecutionDialog({
               closeShowing();
             }}
             sx={{
-              mt: isCrossChainShowingDone ? 12 : isMobile ? 20 : 'auto',
+              mt: isCrossChainShowingDone
+                ? 12
+                : isMobile || isModal
+                  ? 20
+                  : 'auto',
             }}
           >
             {errorMessage ? <Trans>Dismiss</Trans> : <Trans>Close</Trans>}

@@ -2,13 +2,16 @@ import { ChainId } from '@dodoex/api';
 import {
   alpha,
   Box,
+  Button,
   RotatingIcon,
+  Skeleton,
   Tooltip,
   useTheme,
 } from '@dodoex/components';
 import { ArrowTopRightBorder } from '@dodoex/icons';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { chainListMap } from '../../../constants/chainList';
+import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useCrossSwapOrderList } from '../../../hooks/Swap/useCrossSwapOrderList';
 import { getEtherscanPage } from '../../../utils';
 import { formatReadableTimeDuration, getTimeText } from '../../../utils/time';
@@ -22,7 +25,7 @@ import FoldBtn, {
 import TokenLogo from '../../TokenLogo';
 import { QuestionTooltip } from '../../Tooltip';
 import { PriceWithToggle } from './PriceWithToggle';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
+import { RefundModal } from './RefundModal';
 
 function Extend({
   showFold,
@@ -225,12 +228,60 @@ function Extend({
 
 function RefundsTX({
   data,
+  refetch,
 }: {
   data: NonNullable<ReturnType<typeof useCrossSwapOrderList>['orderList'][0]>;
+  refetch: () => void;
 }) {
   const theme = useTheme();
+
+  const isWaitClaimRefund = data.subStatus === 'wait_claim_refund';
+  const isRefundPending = data.subStatus === 'refund_pending';
   const isRefundSuccess = data.subStatus === 'refund_success';
+
   const { isMobile } = useWidgetDevice();
+
+  const [claimConfirmOpen, setClaimConfirmOpen] = useState(false);
+
+  if (isWaitClaimRefund) {
+    return (
+      <>
+        <Button
+          variant={Button.Variant.contained}
+          size={Button.Size.small}
+          color="error"
+          onClick={() => {
+            setClaimConfirmOpen(true);
+          }}
+          sx={{
+            typography: 'h6',
+            lineHeight: '16px',
+            minWidth: 57,
+            height: 24,
+            py: 0,
+            px: 0,
+            [theme.breakpoints.up('tablet')]: {
+              py: 6,
+              px: 16,
+              minWidth: 98,
+              height: 28,
+            },
+          }}
+        >
+          Claim
+        </Button>
+
+        {claimConfirmOpen && (
+          <RefundModal
+            data={data}
+            refetch={refetch}
+            claimConfirmOpen={claimConfirmOpen}
+            setClaimConfirmOpen={setClaimConfirmOpen}
+          />
+        )}
+      </>
+    );
+  }
 
   return (
     <Box
@@ -325,7 +376,7 @@ function RefundsTX({
               );
             }}
           />
-        ) : (
+        ) : isMobile ? (
           <Box
             sx={{
               typography: 'h6',
@@ -337,6 +388,13 @@ function RefundsTX({
           >
             -
           </Box>
+        ) : (
+          <Skeleton
+            sx={{
+              width: 90,
+              height: 22,
+            }}
+          />
         )}
         <Box
           sx={{
@@ -348,9 +406,7 @@ function RefundsTX({
             },
           }}
         >
-          {isRefundSuccess
-            ? 'Refunded to this address.'
-            : 'Refund in progress.'}
+          {isRefundSuccess ? 'Refund successful' : 'Refund pending…'}
         </Box>
         {isRefundSuccess ? null : (
           <Box
@@ -362,7 +418,7 @@ function RefundsTX({
               },
             }}
           >
-            (Refund in progress.)
+            (Refund pending…)
           </Box>
         )}
       </Box>
@@ -374,10 +430,12 @@ export default function CrossOrderCard({
   data,
   isMobile,
   isErrorRefund,
+  refetch,
 }: {
   data: NonNullable<ReturnType<typeof useCrossSwapOrderList>['orderList'][0]>;
   isMobile: boolean;
   isErrorRefund: boolean;
+  refetch: () => void;
 }) {
   const theme = useTheme();
 
@@ -568,7 +626,7 @@ export default function CrossOrderCard({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 2,
+                    gap: 8,
                   }}
                 >
                   <Box
@@ -580,7 +638,7 @@ export default function CrossOrderCard({
                   >
                     Refunds TX:
                   </Box>
-                  <RefundsTX data={data} />
+                  <RefundsTX data={data} refetch={refetch} />
                 </Box>
               )}
             </Box>
@@ -663,7 +721,7 @@ export default function CrossOrderCard({
         </td>
         {isErrorRefund ? (
           <td>
-            <RefundsTX data={data} />
+            <RefundsTX data={data} refetch={refetch} />
           </td>
         ) : (
           <td>

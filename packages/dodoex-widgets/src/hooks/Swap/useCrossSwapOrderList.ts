@@ -90,12 +90,14 @@ export function useCrossSwapOrderList({
 
           return {
             hash: item?.fromHash,
-            refundHash: item?.refundHash,
             externalId: item?.externalId,
-            refundCridgeContract: undefined,
+            bridgeRefundVault: item?.bridgeRefundVault,
+            bridgeChainId: item?.bridgeChainId,
             refundChainId: item?.refundChainId
               ? Number(item.refundChainId)
               : undefined,
+            refundUser: item?.refundUser,
+            refundHash: item?.refundHash,
             fromToken,
             toToken,
             fromAmount,
