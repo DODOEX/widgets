@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.2.4-beta.52",
+  "version": "3.2.4-beta.54",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -61,7 +61,7 @@
     "@dodoex/api": "3.0.7-beta.2",
     "@dodoex/components": "3.0.9",
     "@dodoex/contract-request": "^1.3.0",
-    "@dodoex/dodo-contract-request": "1.26.0",
+    "@dodoex/dodo-contract-request": "1.27.0",
     "@dodoex/icons": "^2.0.2",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",

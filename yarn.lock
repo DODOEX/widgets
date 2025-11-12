@@ -2138,6 +2138,20 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
+"@dodoex/api@3.0.7-beta.2":
+  version "3.0.7-beta.2"
+  resolved "https://registry.yarnpkg.com/@dodoex/api/-/api-3.0.7-beta.2.tgz#52d5382bd6711b359ba0a8f69f64d6b898caec50"
+  integrity sha512-uhA2f3thLLjz3AD4E+ClCef4uhCUPfmu/4I+t09Y2xtxPvwDncDex7vOvGURRFg2m/ndbADRt1Y2/bqS6CG5zA==
+  dependencies:
+    "@ethersproject/abi" "^5.7.0"
+    "@ethersproject/properties" "^5.7.0"
+    "@ethersproject/providers" "^5.7.2"
+    "@ethersproject/web" "^5.7.1"
+    cross-fetch "^4.0.0"
+    graphql "^16.8.1"
+    graphql-request "^6.1.0"
+    qs "^6.11.2"
+
 "@dodoex/components@3.0.9":
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/@dodoex/components/-/components-3.0.9.tgz#4c7a941b3c28f58e2eec310a2f097677ecffce36"
@@ -2162,10 +2176,10 @@
     ethers "^6.13.2"
     https-proxy-agent "^7.0.5"
 
-"@dodoex/dodo-contract-request@1.26.0":
-  version "1.26.0"
-  resolved "https://registry.yarnpkg.com/@dodoex/dodo-contract-request/-/dodo-contract-request-1.26.0.tgz#e8936b27312aa4da756b3ac0826c5d6b39a4b5c1"
-  integrity sha512-G9GggMN+Kb1RkdfJo9aTECrEb+CFCEIL/bAjwrL/y/WHfIg3gJLrHS0Z05imMcWrPYi7CSFau8xXfleIB2Tl7g==
+"@dodoex/dodo-contract-request@1.27.0":
+  version "1.27.0"
+  resolved "https://registry.yarnpkg.com/@dodoex/dodo-contract-request/-/dodo-contract-request-1.27.0.tgz#3155fdf7529676ac3e8537246d47b426b78be278"
+  integrity sha512-e2Pfeo4EJN3xSYhJgHa2EhWRoFh44FnDGOroPnYCUy2d3GecKRr6xOYViTtdaf/y5lyznMdiGj/ga8GSkaQupg==
   dependencies:
     typescript "^5"
 
