@@ -10,8 +10,7 @@ export const SOL_NATIVE_MINT = new PublicKey(
 );
 export const WSOL_NATIVE_MINT = NATIVE_MINT;
 
-export const SUI_NATIVE_MINT =
-  '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+export const SUI_NATIVE_MINT = '0x2::sui::SUI';
 
 export const TON_NATIVE_MINT = 'Ton1111111111111111111111111111111111111111';
 

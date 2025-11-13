@@ -1,7 +1,10 @@
+import BigNumber from 'bignumber.js';
 import { CoinBalance } from '@mysten/sui/client';
-import { MIST_PER_SUI } from '@mysten/sui/utils';
 
-// Convert MIST to Sui
-export const convertMISTToSui = (balance: CoinBalance) => {
-  return Number.parseInt(balance.totalBalance) / Number(MIST_PER_SUI);
+export const formatSuiCoinBalance = (
+  balance: CoinBalance,
+  decimals: number,
+) => {
+  const divisor = new BigNumber(10).pow(decimals);
+  return new BigNumber(balance.totalBalance).div(divisor);
 };

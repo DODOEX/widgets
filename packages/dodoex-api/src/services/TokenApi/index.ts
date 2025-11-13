@@ -25,7 +25,7 @@ import { tokenGraphqlQuery } from './graphqlQuery';
 import { getTokenBlackList } from './tokenBlackList';
 import { retry } from './ton-utils';
 import { isSameAddress } from './utils';
-import { convertMISTToSui } from './sui-utils';
+import { formatSuiCoinBalance } from './sui-utils';
 
 const BIG_ALLOWANCE = new BigNumber(2).pow(256).minus(1);
 
@@ -281,6 +281,7 @@ export class TokenApi {
             delay: 1500,
           });
           const formattedBalance = fromNano(clientTonBalance);
+          // eslint-disable-next-line no-console
           console.log(
             'clientTonBalance',
             caipNetwork.name,
@@ -302,36 +303,54 @@ export class TokenApi {
 
         if (chainId === ChainId.SUI || chainId === ChainId.SUI_TESTNET) {
           const caipNetwork = getCaipNetworkByChainId(chainId);
+          const coinType = address;
+          const nativeCoinType =
+            basicTokenMap[chainId as ChainId]?.address ?? '';
+          const isNativeSui = coinType === nativeCoinType;
 
-          // https://sdk.mystenlabs.com/typescript/hello-sui#get-some-sui-for-your-account
-
-          // replace <YOUR_SUI_ADDRESS> with your actual address, which is in the form 0x123...
-          const MY_ADDRESS = account;
-
-          // create a new SuiClient object pointing to the network you want to use
           const suiClient = new SuiClient({
             url: getFullnodeUrl(
               chainId === ChainId.SUI ? 'mainnet' : 'testnet',
             ),
           });
 
-          // store the JSON representation for the SUI the address owns after using faucet
           const suiBalance = await suiClient.getBalance({
-            owner: MY_ADDRESS,
+            owner: account,
+            ...(isNativeSui ? {} : { coinType }),
           });
-          const formattedBalance = convertMISTToSui(suiBalance);
-          console.log(
-            'suiBalance',
-            caipNetwork.name,
-            suiBalance,
-            formattedBalance,
-          );
+
+          let symbol = caipNetwork.nativeCurrency.symbol;
+          let name = caipNetwork.nativeCurrency.name;
+          let decimals = caipNetwork.nativeCurrency.decimals;
+
+          if (!isNativeSui) {
+            try {
+              const metadata = await suiClient.getCoinMetadata({ coinType });
+              if (metadata) {
+                symbol = metadata.symbol || metadata.name || symbol || coinType;
+                name = metadata.name || metadata.symbol || name || coinType;
+                if (typeof metadata.decimals === 'number') {
+                  decimals = metadata.decimals;
+                }
+              } else {
+                symbol = symbol || coinType;
+                name = name || coinType;
+              }
+            } catch (error) {
+              symbol = symbol || coinType;
+              name = name || coinType;
+            }
+          }
+          symbol = symbol || coinType;
+          name = name || coinType;
+
+          const formattedBalance = formatSuiCoinBalance(suiBalance, decimals);
           return {
-            symbol: caipNetwork.nativeCurrency.symbol,
-            address,
-            name: caipNetwork.nativeCurrency.name,
-            decimals: caipNetwork.nativeCurrency.decimals,
-            balance: new BigNumber(formattedBalance),
+            symbol,
+            address: coinType,
+            name,
+            decimals,
+            balance: formattedBalance,
             allowance: BIG_ALLOWANCE,
             account,
             spender,

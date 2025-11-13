@@ -9,6 +9,35 @@ const tokenList: (TokenInfo & {
   // @ts-ignore
 })[] = [
   {
+    name: 'SUI.SUI',
+    address: '0xEb646191FcCb5Bfc1e7A121D3847590aAc840a53',
+    symbol: 'SUI.SUI',
+    decimals: 9,
+    chainId: 7000,
+  },
+  {
+    name: 'USDC.SUI',
+    address: '0xe134d947644F90486C8106Ee528b1CD3e54A385e',
+    symbol: 'USDC.SUI',
+    decimals: 6,
+    chainId: 7000,
+  },
+  {
+    name: 'USDC',
+    address:
+      '0xdba34672e30cb065b1f93e3ab55318768fd6fef66c15942c9f7cb846e2f900e7::usdc::USDC',
+    symbol: 'USDC',
+    decimals: 6,
+    chainId: 105,
+  },
+  {
+    name: 'SUI',
+    address: '0x2::sui::SUI',
+    symbol: 'SUI',
+    decimals: 9,
+    chainId: 105,
+  },
+  {
     name: 'Shared-liquidity USDT',
     address: '0x65CD2E7d7BAcDaC3AA9dAe68fb5d548dfE1fEFB5',
     symbol: 'slUSDT',

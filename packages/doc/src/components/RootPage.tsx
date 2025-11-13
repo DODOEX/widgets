@@ -179,6 +179,9 @@ export function RootPage({
   const GRAPHQL_URL = process.env.STORYBOOK_GRAPHQL_URL ?? PROD_GRAPHQL_URL;
   const IS_TEST_ENV = GRAPHQL_URL !== PROD_GRAPHQL_URL;
 
+  const SUI_DEFAULT_NETWORK = (process.env.STORYBOOK_SUI_DEFAULT_NETWORK ??
+    'mainnet') as 'testnet' | 'mainnet';
+
   const TONCONNECT_MANIFEST_URL = IS_TEST_ENV
     ? 'https://zetachain-eddy-git-feat-ton-sui-dodoex-io.vercel.app/tonconnect-manifest-dev.json'
     : 'https://app.zunodex.xyz/tonconnect-manifest.json';
@@ -215,9 +218,12 @@ export function RootPage({
           <QueryClientProvider client={queryClient}>
             <SuiClientProvider
               networks={networkConfig}
-              defaultNetwork={IS_TEST_ENV ? 'testnet' : 'mainnet'}
+              defaultNetwork={SUI_DEFAULT_NETWORK}
             >
-              <WalletProvider enableUnsafeBurner={IS_TEST_ENV} autoConnect>
+              <WalletProvider
+                enableUnsafeBurner={SUI_DEFAULT_NETWORK === 'testnet'}
+                autoConnect
+              >
                 <Widget
                   apikey="ee53d6b75b12aceed4"
                   GRAPHQL_URL={GRAPHQL_URL}

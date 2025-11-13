@@ -9,8 +9,8 @@ import { SIGNET } from '../utils/btc';
 // Stacks address validation regex
 const STACKS_ADDRESS_REGEX = /^ST[0-9A-HJ-NP-Z]{39}$/;
 
-// SUI address validation regex - 0x followed by 64 hex characters
-const SUI_ADDRESS_REGEX = /^0x[a-fA-F0-9]{64}$/;
+// SUI address validation regex - 0x followed by 1-64 hex characters with optional ::module::struct suffixes
+const SUI_ADDRESS_REGEX = /^0x[a-fA-F0-9]+(?:::[A-Za-z_][A-Za-z0-9_]*)*$/;
 
 // TON address validation regex - base64-like format
 const TON_ADDRESS_REGEX = /^[A-Za-z0-9_-]{48}$/;
@@ -50,7 +50,7 @@ export function useAddressValidation(address: string, chainId: ChainId) {
           return false;
         }
       } else if (chain.isSUIChain) {
-        // SUI address validation - must be 0x followed by 64 hex characters
+        // SUI address validation - 0x followed by hex and optional ::module::struct suffixes
         return SUI_ADDRESS_REGEX.test(address);
       } else if (chain.isTONChain) {
         // TON address validation - base64-like format
