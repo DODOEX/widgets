@@ -1,4 +1,11 @@
-# [@dodoex/api-v3.3.0-beta.1](https://github.com/DODOEX/widgets/compare/@dodoex/api-v3.2.0...@dodoex/api-v3.3.0-beta.1) (2025-11-04)
+# [@dodoex/api-v3.4.0](https://github.com/DODOEX/widgets/compare/@dodoex/api-v3.3.0...@dodoex/api-v3.4.0) (2025-11-14)
+
+
+### Features
+
+* add support for Stable Testnet in dodoex-api and widgets ([e5d316e](https://github.com/DODOEX/widgets/commit/e5d316e97b4856b35ed651553083385c53bc96da))
+
+# [@dodoex/api-v3.3.0](https://github.com/DODOEX/widgets/compare/@dodoex/api-v3.2.0...@dodoex/api-v3.3.0) (2025-11-05)
 
 
 ### Features
