@@ -1,3 +1,10 @@
+# [@dodoex/widgets-v3.5.0-beta.3](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.5.0-beta.2...@dodoex/widgets-v3.5.0-beta.3) (2025-11-14)
+
+
+### Features
+
+* add gsp modify entry ([6ee7544](https://github.com/DODOEX/widgets/commit/6ee7544554adc8b8a7caafc2c12afe99e0e72302))
+
 # [@dodoex/widgets-v3.5.0-beta.2](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.5.0-beta.1...@dodoex/widgets-v3.5.0-beta.2) (2025-11-05)
 
 
