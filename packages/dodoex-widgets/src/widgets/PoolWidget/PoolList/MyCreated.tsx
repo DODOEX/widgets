@@ -40,14 +40,21 @@ import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { CardStatus } from '../../../components/CardWidgets';
 
+export type OnModifyGspPool = (params: {
+  chainId: number;
+  address: string;
+}) => void;
+
 function CardList({
   account,
   list,
   setOperatePool,
+  onModifyGspPool,
 }: {
   account?: string;
   list: FetchMyCreateListLqList;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  onModifyGspPool?: OnModifyGspPool;
 }) {
   const theme = useTheme();
   return (
@@ -72,6 +79,8 @@ function CardList({
           item.quoteReserve ? new BigNumber(item.quoteReserve) : null,
           theme,
         );
+        const canEdit = type === 'DPP' || (!!onModifyGspPool && type === 'GSP');
+
         return (
           <Box
             key={pairAddress + chainId}
@@ -127,7 +136,7 @@ function CardList({
                 >
                   {truncatePoolAddress(pairAddress)}
                 </Box>
-                {type === 'DPP' && (
+                {canEdit && (
                   <HoverAddBackground
                     sx={{
                       ml: 2,
@@ -135,6 +144,13 @@ function CardList({
                     component={ButtonBase}
                     onClick={(evt) => {
                       evt.stopPropagation();
+                      if (type === 'GSP') {
+                        onModifyGspPool?.({
+                          chainId: chainId as ChainId,
+                          address: pairAddress as string,
+                        });
+                        return;
+                      }
                       useRouterStore.getState().push({
                         type: PageType.ModifyPool,
                         params: {
@@ -281,12 +297,14 @@ function TableList({
   loading,
   operatePool,
   setOperatePool,
+  onModifyGspPool,
 }: {
   account?: string;
   list: FetchMyCreateListLqList;
   loading: boolean;
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
+  onModifyGspPool?: OnModifyGspPool;
 }) {
   const theme = useTheme();
   const router = useRouterStore();
@@ -349,6 +367,8 @@ function TableList({
             }
           }
           const hoverBg = theme.palette.background.tag;
+          const canEdit =
+            type === 'DPP' || (!!onModifyGspPool && type === 'GSP');
 
           return (
             <Box
@@ -428,7 +448,7 @@ function TableList({
                           }}
                         />
                       </HoverAddUnderLine>
-                      {isDpp ? (
+                      {canEdit ? (
                         <Box
                           sx={{
                             typography: 'h6',
@@ -449,6 +469,13 @@ function TableList({
                             },
                           }}
                           onClick={() => {
+                            if (type === 'GSP') {
+                              onModifyGspPool?.({
+                                chainId: chainId as ChainId,
+                                address: pairAddress as string,
+                              });
+                              return;
+                            }
                             router.push({
                               type: PageType.ModifyPool,
                               params: {
@@ -583,6 +610,7 @@ export default function MyCreated({
   operatePool,
   setOperatePool,
   supportAMMIcon,
+  onModifyGspPool,
 }: {
   account?: string;
   filterChainIds?: ChainId[];
@@ -592,6 +620,7 @@ export default function MyCreated({
   operatePool: Partial<PoolOperateProps> | null;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
   supportAMMIcon?: boolean;
+  onModifyGspPool?: OnModifyGspPool;
 }) {
   const { isMobile } = useWidgetDevice();
   const { onlyChainId } = useUserOptions();
@@ -699,6 +728,7 @@ export default function MyCreated({
             account={account}
             list={list}
             setOperatePool={setOperatePool}
+            onModifyGspPool={onModifyGspPool}
           />
         </DataCardGroup>
       ) : (
@@ -709,6 +739,7 @@ export default function MyCreated({
             loading={fetchResult.isLoading}
             operatePool={operatePool}
             setOperatePool={setOperatePool}
+            onModifyGspPool={onModifyGspPool}
           />
           <CardStatus
             loading={fetchResult.isLoading}

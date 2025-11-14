@@ -25,7 +25,7 @@ import { CreatePoolBtn } from './components/CreatePoolBtn';
 import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
 import { TokenAndPoolFilterUserOptions } from './hooks/usePoolListFilterTokenAndPool';
 import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
-import MyCreated from './MyCreated';
+import MyCreated, { OnModifyGspPool } from './MyCreated';
 import MyLiquidity from './MyLiquidity';
 import { ReactComponent as LeftImage } from './pool-left.svg';
 
@@ -50,6 +50,7 @@ export default function PoolList({
   getMigrationPairAndMining,
   showMigrationPairAndMining,
   supportAMMIcon,
+  onModifyGspPool,
 }: {
   params?: Page<PageType.Pool>['params'];
   scrollRef?: React.RefObject<any>;
@@ -57,6 +58,7 @@ export default function PoolList({
   getMigrationPairAndMining?: GetMigrationPairAndMining;
   showMigrationPairAndMining?: ShowMigrationPairAndMining;
   supportAMMIcon?: boolean;
+  onModifyGspPool?: OnModifyGspPool;
 }) {
   const { isMobile } = useWidgetDevice();
 
@@ -207,6 +209,7 @@ export default function PoolList({
             operatePool={operatePool}
             setOperatePool={setOperatePool}
             supportAMMIcon={supportAMMIcon}
+            onModifyGspPool={onModifyGspPool}
           />
         </TabPanelFlexCol>
       </Tabs>
