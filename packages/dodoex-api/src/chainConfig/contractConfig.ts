@@ -14,6 +14,7 @@ import {
   hemi,
   pharosTestnet,
   pharosAtlanticTestnet,
+  stableTestnet,
 } from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
@@ -512,6 +513,20 @@ const contractMap: {
     DODO_DSP_PROXY: pharosAtlanticTestnet.DODODspProxy,
     DODO_DPP_PROXY: pharosAtlanticTestnet.DODODppProxy,
     DODO_MINEV3_PROXY: pharosAtlanticTestnet.DODOMineV3Proxy,
+  },
+  [ChainId.STABLE_TESTNET]: {
+    MULTI_CALL: stableTestnet.MulticallWithValid,
+    DODO_APPROVE: stableTestnet.DODOApprove,
+    ERC20_HELPER: stableTestnet.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: stableTestnet.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: stableTestnet.DODOV1PmmHelper,
+    CALLEE_HELPER: stableTestnet.DODOCalleeHelper,
+
+    DODO_PROXY: stableTestnet.DODOV2Proxy02,
+    DODO_DSP_PROXY: stableTestnet.DODODspProxy,
+    DODO_DPP_PROXY: stableTestnet.DODODppProxy,
+    DODO_MINEV3_PROXY: stableTestnet.DODOMineV3Proxy,
   },
 };
 
