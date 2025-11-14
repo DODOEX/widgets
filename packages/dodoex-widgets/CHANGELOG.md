@@ -1,3 +1,10 @@
+# [@dodoex/widgets-v3.7.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.6.0...@dodoex/widgets-v3.7.0) (2025-11-14)
+
+
+### Features
+
+* add support for Stable Testnet in dodoex-api and widgets ([e5d316e](https://github.com/DODOEX/widgets/commit/e5d316e97b4856b35ed651553083385c53bc96da))
+
 # [@dodoex/widgets-v3.6.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.5.0...@dodoex/widgets-v3.6.0) (2025-11-11)
 
 
