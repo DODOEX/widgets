@@ -1,3 +1,10 @@
+# [@dodoex/widgets-v3.8.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.7.0...@dodoex/widgets-v3.8.0) (2025-11-14)
+
+
+### Features
+
+* update @dodoex/api dependency to version 3.4.0 ([51e6994](https://github.com/DODOEX/widgets/commit/51e69944460b9e89e52f72668dd1ec80bc99122c))
+
 # [@dodoex/widgets-v3.7.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.6.0...@dodoex/widgets-v3.7.0) (2025-11-14)
 
 
