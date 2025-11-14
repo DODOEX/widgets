@@ -1,3 +1,12 @@
+# [@dodoex/widgets-v3.9.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.8.0...@dodoex/widgets-v3.9.0) (2025-11-14)
+
+
+### Features
+
+* add disableConnectedProviderRead props ([faffac6](https://github.com/DODOEX/widgets/commit/faffac6f83f70f2bd02e942c69c6b29d9c7a4ba6))
+* add gsp modify entry ([6ee7544](https://github.com/DODOEX/widgets/commit/6ee7544554adc8b8a7caafc2c12afe99e0e72302))
+* update version ([5466e25](https://github.com/DODOEX/widgets/commit/5466e2585927e924749845bf91b3642875e1f926))
+
 # [@dodoex/widgets-v3.8.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.7.0...@dodoex/widgets-v3.8.0) (2025-11-14)
 
 
