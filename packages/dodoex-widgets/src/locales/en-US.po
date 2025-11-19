@@ -598,7 +598,7 @@ msgstr "Add Initial Liquidity"
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:326
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:481
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
-#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
+#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:180
 msgid "Add liquidity"
 msgstr "Add liquidity"
 
@@ -911,7 +911,7 @@ msgstr "Staking"
 msgid "Claiming"
 msgstr "Claiming"
 
-#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
+#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:180
 msgid "Create AMM V2 Position"
 msgstr "Create AMM V2 Position"
 

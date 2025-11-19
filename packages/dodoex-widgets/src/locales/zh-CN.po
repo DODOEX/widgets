@@ -596,7 +596,7 @@ msgstr "添加初始流动性"
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:326
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:481
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
-#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
+#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:180
 msgid "Add liquidity"
 msgstr "添加做市资金"
 
@@ -909,7 +909,7 @@ msgstr "质押中"
 msgid "Claiming"
 msgstr "领取中"
 
-#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:176
+#: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:180
 msgid "Create AMM V2 Position"
 msgstr "创建 AMM V2 仓位"
 
