@@ -36,4 +36,5 @@ export const platformIdMap: {
   [ChainId.HEMI]: 'hemi',
   [ChainId.PHAROS_TESTNET]: 'pharos-testnet',
   [ChainId.PHAROS_ATLANTIC_TESTNET]: 'pharos-atlantic-testnet',
+  [ChainId.STABLE_TESTNET]: 'stable-testnet',
 };

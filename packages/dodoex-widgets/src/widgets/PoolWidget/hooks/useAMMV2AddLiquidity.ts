@@ -66,6 +66,10 @@ export function useAMMV2AddLiquidity({
           getUniswapV2Router02ContractAddressByChainId(chainId);
         const fixedFeeContractAddress =
           getUniswapV2Router02FixedFeeContractAddressByChainId(chainId);
+        console.log('dynamicFeeContractAddress', dynamicFeeContractAddress);
+        console.log('fixedFeeContractAddress', fixedFeeContractAddress);
+        console.log('chainId', chainId);
+
         const isFixedFee = !dynamicFeeContractAddress;
         const to = dynamicFeeContractAddress || fixedFeeContractAddress;
         if (!to) {

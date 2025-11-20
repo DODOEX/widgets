@@ -111,6 +111,7 @@ export const useCreatePoolSubmit = ({
         selectedVersion === PoolVersionE.singleToken
       ) {
         result = await PoolApi.encode.createDVMPoolABI(...createPrams);
+        console.log('createDVMPoolABI result', result);
       } else if (isPrivate) {
         result = await PoolApi.encode.createDPPPoolABI(...createPrams);
       } else if (isDsp) {

@@ -1,32 +1,35 @@
 import { ChainId } from '@dodoex/api';
-import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg';
 import { ReactComponent as ArbitrumLogo } from '../assets/logo/networks/arbitrum.svg';
-import { ReactComponent as PolygonLogo } from '../assets/logo/networks/polygon.svg';
-import { ReactComponent as BSCLogo } from '../assets/logo/networks/bsc.svg';
-import { ReactComponent as OptimismLogo } from '../assets/logo/networks/optimism.svg';
-import { ReactComponent as AvalancheLogo } from '../assets/logo/networks/avalanche.svg';
 import { ReactComponent as AuroraLogo } from '../assets/logo/networks/aurora.svg';
-import { ReactComponent as OKChainLogo } from '../assets/logo/networks/okchain.svg';
-import { ReactComponent as CFXLogo } from '../assets/logo/networks/cfx.svg';
+import { ReactComponent as AvalancheLogo } from '../assets/logo/networks/avalanche.svg';
 import { ReactComponent as BaseLogo } from '../assets/logo/networks/base.svg';
-import { ReactComponent as LINEALogo } from '../assets/logo/networks/linea.svg';
-import { ReactComponent as ScrollLogo } from '../assets/logo/networks/scroll.svg';
-import { ReactComponent as MantaLogo } from '../assets/logo/networks/manta.svg';
-import { ReactComponent as MantleLogo } from '../assets/logo/networks/mantle.svg';
-import { ReactComponent as DODOchainLogo } from '../assets/logo/networks/dodochain.svg';
-import { ReactComponent as TaikoLogo } from '../assets/logo/networks/taiko.svg';
-import { ReactComponent as PlumeLogo } from '../assets/logo/networks/plume.svg';
-import { ReactComponent as NeoxLogo } from '../assets/logo/networks/neox.svg';
-import { ReactComponent as MorphLogo } from '../assets/logo/networks/morph.svg';
-import { ReactComponent as RiseLogo } from '../assets/logo/networks/rise.svg';
-import { ReactComponent as NeroLogo } from '../assets/logo/networks/rise.svg';
 import { ReactComponent as BitlayerLogo } from '../assets/logo/networks/bitlayer.svg';
-import { ReactComponent as ZircuitLogo } from '../assets/logo/networks/zircuit.svg';
-import { ReactComponent as XLayerLogo } from '../assets/logo/networks/x-layer.svg';
-import { ReactComponent as ZeroLogo } from '../assets/logo/networks/zero.svg';
+import { ReactComponent as BSCLogo } from '../assets/logo/networks/bsc.svg';
+import { ReactComponent as CFXLogo } from '../assets/logo/networks/cfx.svg';
+import { ReactComponent as DODOchainLogo } from '../assets/logo/networks/dodochain.svg';
+import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg';
 import { ReactComponent as HashKeyLogo } from '../assets/logo/networks/haskey.svg';
 import { ReactComponent as HemiLogo } from '../assets/logo/networks/hemi.svg';
+import { ReactComponent as LINEALogo } from '../assets/logo/networks/linea.svg';
+import { ReactComponent as MantaLogo } from '../assets/logo/networks/manta.svg';
+import { ReactComponent as MantleLogo } from '../assets/logo/networks/mantle.svg';
+import { ReactComponent as MorphLogo } from '../assets/logo/networks/morph.svg';
+import { ReactComponent as NeoxLogo } from '../assets/logo/networks/neox.svg';
+import { ReactComponent as OKChainLogo } from '../assets/logo/networks/okchain.svg';
+import { ReactComponent as OptimismLogo } from '../assets/logo/networks/optimism.svg';
 import { ReactComponent as PharosLogo } from '../assets/logo/networks/pharos.svg';
+import { ReactComponent as PlumeLogo } from '../assets/logo/networks/plume.svg';
+import { ReactComponent as PolygonLogo } from '../assets/logo/networks/polygon.svg';
+import {
+  ReactComponent as NeroLogo,
+  ReactComponent as RiseLogo,
+} from '../assets/logo/networks/rise.svg';
+import { ReactComponent as ScrollLogo } from '../assets/logo/networks/scroll.svg';
+import { ReactComponent as StableTestnetLogo } from '../assets/logo/networks/stable-testnet.svg';
+import { ReactComponent as TaikoLogo } from '../assets/logo/networks/taiko.svg';
+import { ReactComponent as XLayerLogo } from '../assets/logo/networks/x-layer.svg';
+import { ReactComponent as ZeroLogo } from '../assets/logo/networks/zero.svg';
+import { ReactComponent as ZircuitLogo } from '../assets/logo/networks/zircuit.svg';
 
 export interface ChainListItem {
   chainId: ChainId;
@@ -300,6 +303,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.PHAROS_ATLANTIC_TESTNET,
       logo: PharosLogo,
       name: 'Pharos Atlantic Testnet',
+    },
+  ],
+  [
+    ChainId.STABLE_TESTNET,
+    {
+      chainId: ChainId.STABLE_TESTNET,
+      logo: StableTestnetLogo,
+      name: 'Stable Testnet',
     },
   ],
 ]);
