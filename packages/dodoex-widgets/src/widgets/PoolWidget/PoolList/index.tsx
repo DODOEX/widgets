@@ -282,15 +282,9 @@ export default function PoolList({
             ) : (
               <Box
                 sx={{
-                  position: 'absolute',
-                  top: operatePool ? 0 : '100%',
-                  height: operatePool ? 'max-content' : 0,
-                  transition: `all ${transitionTime}ms`,
                   zIndex: 20,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  display: 'flex',
+                  height: 'max-content',
+                  display: operatePool ? 'flex' : 'none',
                   flexDirection: 'column',
                   backgroundColor: 'background.paper',
                   borderRadius: 16,
