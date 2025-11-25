@@ -6,6 +6,7 @@ import defaultTokens from '../../constants/tokenList';
 import useTokenListFetchBalance from './useTokenListFetchBalance';
 import { ChainId } from '@dodoex/api';
 import { useTokenState } from '../useTokenState';
+import { isAddress } from '../../utils';
 
 enum MatchLevel {
   fully = 1,
@@ -192,6 +193,16 @@ export default function useTokenList({
     [onChange, occupiedAddrs, occupiedChainId],
   );
 
+  const { customTokenList } = useTokenState();
+  const customTokenListFilter = useMemo(() => {
+    if (!filter || !isAddress(filter)) return [];
+    return customTokenList.filter(
+      (token) =>
+        token.chainId === chainId &&
+        token.address.toLocaleLowerCase() === filter.toLocaleLowerCase(),
+    );
+  }, [customTokenList, filter, chainId]);
+
   const showTokenList = useMemo(() => {
     const needShowList = getNeedShowList(preloaded);
     const preloadedTokenAddressSet = new Set<string>();
@@ -203,8 +214,16 @@ export default function useTokenList({
         needShowList.push(token);
       }
     });
+    customTokenListFilter.forEach((token) => {
+      if (!preloadedTokenAddressSet.has(token.address)) {
+        needShowList.push({
+          ...token,
+          isCustom: true,
+        });
+      }
+    });
     return needShowList || ([] as TokenList);
-  }, [preloaded, getNeedShowList, popularTokenList]);
+  }, [preloaded, getNeedShowList, popularTokenList, customTokenListFilter]);
 
   const tokenInfoMap = useTokenListFetchBalance({
     chainId,
@@ -342,5 +361,6 @@ export default function useTokenList({
 
     popularTokenList,
     tokenInfoMap,
+    customTokenList,
   };
 }
