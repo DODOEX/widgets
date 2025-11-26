@@ -84,6 +84,7 @@ export function useAMMV2RemoveLiquidity({
         );
         const feeWei = toWei(fee, 4).toString();
         const deadline = Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60);
+
         try {
           if (baseIsETH) {
             const tokenAddress = quoteToken.address;
@@ -113,6 +114,7 @@ export function useAMMV2RemoveLiquidity({
             const tokenAddress = baseToken.address;
             const tokenInAmountMin = baseInAmountMinBg.toString();
             const ethAmountMin = quoteInAmountMinBg.toString();
+
             if (isFixedFee) {
               data = encodeUniswapV2Router02FixedFeeRemoveLiquidityETH(
                 tokenAddress,

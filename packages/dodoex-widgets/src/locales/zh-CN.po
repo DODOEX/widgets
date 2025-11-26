@@ -48,7 +48,7 @@ msgstr "交易量"
 msgid "To"
 msgstr "至"
 
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:432
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:434
 msgid "Receive {0}"
 msgstr "获得 {0}"
 
@@ -178,7 +178,7 @@ msgid "Do not remind again"
 msgstr "不再提醒"
 
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:372
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:281
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:283
 msgid "Remove Liquidity"
 msgstr "移除流动性"
 
@@ -833,7 +833,7 @@ msgid "Stake"
 msgstr "质押"
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:303
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:602
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:604
 msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 msgstr "资金池报价与 DODO 智能路由价格相差 {lqAndDodoCompareText}"
 
@@ -1548,7 +1548,7 @@ msgid "Suitable for stablecoins with price fluctuations within 10%"
 msgstr "适用于价格波动在10%以内的稳定币"
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:297
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:596
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:598
 msgid "Confirm submission"
 msgstr "确认提交"
 
@@ -1582,7 +1582,7 @@ msgstr "挖矿类型"
 msgid "Settler"
 msgstr "结算者"
 
-#: src/widgets/PoolWidget/hooks/useAMMV2RemoveLiquidity.ts:166
+#: src/widgets/PoolWidget/hooks/useAMMV2RemoveLiquidity.ts:168
 msgid "Remove liquidity"
 msgstr "移除流动性"
 
@@ -1884,7 +1884,7 @@ msgid "Total Swap Volume"
 msgstr "累计交易量"
 
 #: src/components/Swap/SwapOrderHistory/index.tsx:99
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:468
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:470
 msgid "Receive"
 msgstr "接收"
 
@@ -2194,7 +2194,7 @@ msgstr "初始价格提示"
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:597
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1198
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:248
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:249
 msgid "Remove"
 msgstr "提取"
 
@@ -2279,7 +2279,7 @@ msgid "In range"
 msgstr "在区间内"
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:306
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:605
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:607
 msgid "There is risk of being arbitraged if adding this liquidity."
 msgstr "添加资金有可能会被套利，请谨慎操作。"
 
@@ -2334,7 +2334,7 @@ msgid "WARNING"
 msgstr "警告"
 
 #: src/widgets/PoolWidget/PoolList/components/migationWidget.tsx:53
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:556
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:558
 msgid "Migrate"
 msgstr "迁移"
 
@@ -2423,7 +2423,7 @@ msgstr "总奖励 = 每日奖励数量 * 时长"
 #: src/components/Swap/index.tsx:771
 #: src/components/TokenStatusButton.tsx:18
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:146
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:248
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:249
 msgid "Insufficient balance"
 msgstr "余额不足"
 
