@@ -1,3 +1,17 @@
+# [@dodoex/api-v3.4.0](https://github.com/DODOEX/widgets/compare/@dodoex/api-v3.3.0...@dodoex/api-v3.4.0) (2025-11-14)
+
+
+### Features
+
+* add support for Stable Testnet in dodoex-api and widgets ([e5d316e](https://github.com/DODOEX/widgets/commit/e5d316e97b4856b35ed651553083385c53bc96da))
+
+# [@dodoex/api-v3.3.0](https://github.com/DODOEX/widgets/compare/@dodoex/api-v3.2.0...@dodoex/api-v3.3.0) (2025-11-05)
+
+
+### Features
+
+* dvm add liquidity limit amount logic ([777582d](https://github.com/DODOEX/widgets/commit/777582d6a78f6eabff402f6f51a60f29bda1b651))
+
 # [@dodoex/api-v3.2.0](https://github.com/DODOEX/widgets/compare/@dodoex/api-v3.1.0...@dodoex/api-v3.2.0) (2025-10-24)
 
 

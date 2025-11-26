@@ -203,4 +203,20 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WPHRS',
     wrappedTokenAddress: '0x838800b758277cc111b2d48ab01e5e164f8e9471',
   },
+  [ChainId.STABLE_TESTNET]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'gUSDT',
+    name: 'gUSDT',
+    wrappedTokenSymbol: 'wgUSDT',
+    wrappedTokenAddress: '0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb',
+  },
+  [ChainId.STABLE]: {
+    address: etherTokenAddress,
+    decimals: 18,
+    showDecimals: 4,
+    symbol: 'gUSDT',
+    name: 'gUSDT',
+    wrappedTokenSymbol: 'USDT0',
+    wrappedTokenAddress: '0x779Ded0c9e1022225f8E0630b35a9b54bE713736',
+  },
 };

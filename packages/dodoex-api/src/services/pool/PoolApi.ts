@@ -116,7 +116,7 @@ export class PoolApi {
       const { DODO_DSP_PROXY } = contractConfig[chainId as ChainId];
       const data = await encodeFunctionData(
         ABIName.dodoDspProxy,
-        'createDODOStablePair',
+        'createSETTLEXStablePair',
         [
           baseToken.address,
           quoteToken.address,
@@ -168,7 +168,7 @@ export class PoolApi {
       const { DODO_DSP_PROXY } = contractConfig[chainId as ChainId];
       const data = await encodeFunctionData(
         ABIName.dodoDspProxy,
-        'createDODOGasSavingPair',
+        'createSETTLEXGasSavingPair',
         [
           account,
           baseToken.address,
@@ -220,26 +220,28 @@ export class PoolApi {
       isOpenTWAP = false,
     ) {
       const { DODO_PROXY } = contractConfig[chainId as ChainId];
+      const params = [
+        baseToken.address,
+        quoteToken.address,
+        baseInAmount,
+        quoteInAmount,
+        new BigNumber(lpFeeRate)
+          .div(10000)
+          .multipliedBy(10 ** 18)
+          .toString(),
+        parseFixed(
+          new BigNumber(i).toString(),
+          18 - baseToken.decimals + quoteToken.decimals,
+        ).toString(),
+        parseFixed(new BigNumber(k).toString(), 18).toString(),
+        isOpenTWAP,
+        deadline,
+      ];
+      console.log('createSETTLEXVendingMachine params', params);
       const data = await encodeFunctionData(
         ABIName.dodoProxyV2,
-        'createDODOVendingMachine',
-        [
-          baseToken.address,
-          quoteToken.address,
-          baseInAmount,
-          quoteInAmount,
-          new BigNumber(lpFeeRate)
-            .div(10000)
-            .multipliedBy(10 ** 18)
-            .toString(),
-          parseFixed(
-            new BigNumber(i).toString(),
-            18 - baseToken.decimals + quoteToken.decimals,
-          ).toString(),
-          parseFixed(new BigNumber(k).toString(), 18).toString(),
-          isOpenTWAP,
-          deadline,
-        ],
+        'createSETTLEXVendingMachine',
+        params,
       );
 
       return {
@@ -274,7 +276,7 @@ export class PoolApi {
       const { DODO_DPP_PROXY } = contractConfig[chainId as ChainId];
       const data = await encodeFunctionData(
         ABIName.dodoDppProxy,
-        'createDODOPrivatePool',
+        'createSETTLEXPrivatePool',
         [
           baseToken.address,
           quoteToken.address,
@@ -396,7 +398,7 @@ export class PoolApi {
       const _newK = parseFixed(new BigNumber(newK).toString(), 18).toString();
       const data = await encodeFunctionData(
         ABIName.dodoDppProxy,
-        'resetDODOPrivatePool',
+        'resetSETTLEXPrivatePool',
         [
           dppAddress,
           [_newLpFeeRate, _newI, _newK],
@@ -1517,12 +1519,15 @@ export class PoolApi {
             method: 'getPMMStateForCall',
             params: [],
           });
-          totalSupplyQueryResult = await this.contractRequests.batchCallQuery(chainId, {
-            abiName: ABIName.dvmPoolABI,
-            contractAddress: poolAddress,
-            method: 'totalSupply',
-            params: [],
-          });
+          totalSupplyQueryResult = await this.contractRequests.batchCallQuery(
+            chainId,
+            {
+              abiName: ABIName.dvmPoolABI,
+              contractAddress: poolAddress,
+              method: 'totalSupply',
+              params: [],
+            },
+          );
         } else {
           throw new Error(`type: ${type} not supported`);
         }
@@ -1537,7 +1542,7 @@ export class PoolApi {
         );
         let totalSupplyBG: BigNumber | undefined;
         if (Array.isArray(totalSupplyQueryResult)) {
-          totalSupplyBG = new BigNumber(totalSupplyQueryResult[0].toString())
+          totalSupplyBG = new BigNumber(totalSupplyQueryResult[0].toString());
         }
 
         let midPrice: BigNumber | undefined;
@@ -1573,7 +1578,7 @@ export class PoolApi {
           pmmParamsBG,
           baseReserve: pmmParamsBG.b,
           quoteReserve: pmmParamsBG.q,
-          totalSupplyBG
+          totalSupplyBG,
         };
       },
     };

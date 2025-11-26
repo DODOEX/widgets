@@ -209,7 +209,7 @@ export const toWei = (
   if (notDp) {
     return result;
   }
-  return result.dp(0);
+  return result.dp(0, BigNumber.ROUND_DOWN);
 };
 
 export const byWei = (

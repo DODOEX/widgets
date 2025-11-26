@@ -66,7 +66,13 @@ export const rpcServerMap: {
   [ChainId.PHAROS_TESTNET]: [
     'https://api.zan.top/node/v1/pharos/testnet/54b49326c9f44b6e8730dc5dd4348421',
   ],
-  [ChainId.PHAROS_ATLANTIC_TESTNET]: ['https://api.zan.top/node/v1/pharos/atlantic/54b49326c9f44b6e8730dc5dd4348421']
+  [ChainId.PHAROS_ATLANTIC_TESTNET]: [
+    'https://api.zan.top/node/v1/pharos/atlantic/54b49326c9f44b6e8730dc5dd4348421',
+  ],
+  [ChainId.STABLE_TESTNET]: ['https://rpc.testnet.stable.xyz'],
+  [ChainId.STABLE]: [
+    'https://partners-rpc.stable.xyz/dodo.88b3272adaac2ddaa08f13c049824412d7bffe24a2c760089f6c480115ac00e1',
+  ],
 };
 
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
@@ -123,7 +129,9 @@ export const scanUrlDomainMap: {
   [ChainId.HASHKEY]: 'explorer.hsk.xyz',
   [ChainId.HEMI]: 'explorer.hemi.xyz',
   [ChainId.PHAROS_TESTNET]: 'testnet.pharosscan.xyz',
-  [ChainId.PHAROS_ATLANTIC_TESTNET]: 'atlantic.pharosscan.xyz'
+  [ChainId.PHAROS_ATLANTIC_TESTNET]: 'atlantic.pharosscan.xyz',
+  [ChainId.STABLE_TESTNET]: 'testnet.stablescan.xyz',
+  [ChainId.STABLE]: 'stablescan.xyz',
 };
 
 export const ThegraphKeyMap: {
@@ -162,6 +170,8 @@ export const ThegraphKeyMap: {
   [ChainId.HEMI]: 'hemi',
   [ChainId.PHAROS_TESTNET]: 'pharos-testnet',
   [ChainId.PHAROS_ATLANTIC_TESTNET]: 'pharos-atlantic-testnet',
+  [ChainId.STABLE_TESTNET]: 'stable-testnet',
+  [ChainId.STABLE]: 'stable',
 };
 
 export const blockTimeMap: {
@@ -200,6 +210,8 @@ export const blockTimeMap: {
   [ChainId.HEMI]: 12000,
   [ChainId.PHAROS_TESTNET]: 0,
   [ChainId.PHAROS_ATLANTIC_TESTNET]: 2777,
+  [ChainId.STABLE_TESTNET]: 700,
+  [ChainId.STABLE]: 988,
 };
 
 export const dexKeysMap: {
@@ -238,4 +250,6 @@ export const dexKeysMap: {
   [ChainId.HEMI]: [],
   [ChainId.PHAROS_TESTNET]: [],
   [ChainId.PHAROS_ATLANTIC_TESTNET]: [],
+  [ChainId.STABLE_TESTNET]: [],
+  [ChainId.STABLE]: [],
 };

@@ -94,7 +94,7 @@ export function useLiquidityOperateAmount({
     if (amount) {
       let matchQuoteAmount = addPortion
         .multipliedBy(amount)
-        .dp(quoteDecimals)
+        .dp(quoteDecimals, BigNumber.ROUND_DOWN)
         .toString();
       if (
         maxQuoteAmount &&
@@ -113,7 +113,7 @@ export function useLiquidityOperateAmount({
     if (amount) {
       let matchBaseAmount = new BigNumber(amount)
         .div(addPortion)
-        .dp(baseDecimals)
+        .dp(baseDecimals, BigNumber.ROUND_DOWN)
         .toString();
       if (
         maxBaseAmount &&

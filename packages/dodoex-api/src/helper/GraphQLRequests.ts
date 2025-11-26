@@ -15,7 +15,7 @@ export interface GraphQLRequestsConfig {
 }
 
 const defaultConfig = {
-  url: 'https://api.dodoex.io/frontend-graphql',
+  url: 'https://api.settlex.finance/frontend-graphql',
 };
 
 export default class GraphQLRequests {

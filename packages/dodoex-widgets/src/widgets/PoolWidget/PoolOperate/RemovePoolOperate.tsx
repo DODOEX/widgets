@@ -233,6 +233,7 @@ export function RemovePoolOperate({
   const isOverBalance =
     baseTokenStatus.insufficientBalance || quoteTokenStatus.insufficientBalance;
   const { isSinglePool } = balanceInfo;
+
   const disabled =
     !pool ||
     isOverBalance ||
@@ -262,6 +263,7 @@ export function RemovePoolOperate({
     liquidityAmountBg && liquidityDecimals !== undefined
       ? toWei(liquidityAmountBg, liquidityDecimals).toString()
       : '';
+
   const { operateLiquidityMutation } = useOperateLiquidity(pool);
   const removeAMMV2LiquidityMutataion = useAMMV2RemoveLiquidity({
     baseToken: withdrawBaseToken,
