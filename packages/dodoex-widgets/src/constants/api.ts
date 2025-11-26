@@ -13,7 +13,7 @@ export type APIServices = {
   [key in APIServiceKey]: string;
 };
 
-export const AppUrl = `https://app.dodoex.io`;
+export const AppUrl = `https://app.settlex.finance`;
 
 export const getCGTokenListAPI = (chainId: ChainId) => {
   const defaultCGAPI = 'https://tokens.coingecko.com/uniswap/all.json';
@@ -26,10 +26,10 @@ export const getCGTokenListAPI = (chainId: ChainId) => {
   return cgAPIMap[chainId] || defaultCGAPI;
 };
 
-const BridgeUrlPrefix = 'https://api.dodoex.io/cross-chain/widget';
+const BridgeUrlPrefix = 'https://api.settlex.finance/cross-chain/widget';
 
-export const RoutePriceAPI = `https://api.dodoex.io/route-service/v2/widget/getdodoroute`;
-export const FiatPriceAPI = `https://api.dodoex.io/frontend-price-api/current/batch`;
+export const RoutePriceAPI = `https://api.settlex.finance/route-service/v2/widget/getdodoroute`;
+export const FiatPriceAPI = `https://api.settlex.finance/frontend-price-api/current/batch`;
 const BridgeRoutePriceAPI = `${BridgeUrlPrefix}/routes`;
 const BridgeEncodeAPI = `${BridgeUrlPrefix}/transaction/encode`;
 const BridgeCreateRouteAPI = `${BridgeUrlPrefix}/order/create`;

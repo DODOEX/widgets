@@ -37,4 +37,5 @@ export const platformIdMap: {
   [ChainId.PHAROS_TESTNET]: 'pharos-testnet',
   [ChainId.PHAROS_ATLANTIC_TESTNET]: 'pharos-atlantic-testnet',
   [ChainId.STABLE_TESTNET]: 'stable-testnet',
+  [ChainId.STABLE]: 'stable',
 };

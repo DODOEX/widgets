@@ -10,7 +10,7 @@ export interface RestApiRequestConfig {
 }
 
 const defaultConfig = {
-  host: 'https://api.dodoex.io',
+  host: 'https://api.settlex.finance',
   fetch: crossFetch,
 };
 

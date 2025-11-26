@@ -151,7 +151,7 @@ Primary.args = {
   routerPage: undefined,
   supportAMMV2: true,
   supportAMMV3: true,
-  onlyChainId: 2201,
+  onlyChainId: 988,
   showSubmissionSubmittedDialog: true,
   // onlyChainId: 1,
 };
