@@ -105,7 +105,10 @@ export default function useTokenList({
   multiple?: boolean;
 }) {
   const [filter, setFilter] = useState('');
-  const { tokenList: preloadedOrigin } = useTokenState();
+  const {
+    tokenList: preloadedOrigin,
+    popularTokenList: popularTokenListOrigin,
+  } = useTokenState();
   const currentChainId = useCurrentChainId();
   const chainId = useMemo(
     () => chainIdProps ?? currentChainId,
@@ -117,9 +120,6 @@ export default function useTokenList({
     );
     return preloadedResult;
   }, [preloadedOrigin, chainId]);
-  const popularTokenListOrigin = useTokenState((state) =>
-    state.popularTokenList.filter((token) => token.chainId === chainId),
-  );
   const defaultTokenList = useMemo(() => {
     return defaultTokens?.filter((token) => token.chainId === chainId) || [];
   }, [chainId]);
@@ -190,7 +190,7 @@ export default function useTokenList({
         onChange(token, isOccupied);
       }
     },
-    [onChange, occupiedAddrs, occupiedChainId],
+    [onChange, occupiedAddrs?.join(','), occupiedChainId],
   );
 
   const { customTokenList } = useTokenState();
@@ -225,9 +225,12 @@ export default function useTokenList({
     return needShowList || ([] as TokenList);
   }, [preloaded, getNeedShowList, popularTokenList, customTokenListFilter]);
 
+  const needFetchBalanceTokenList = useMemo(() => {
+    return [...showTokenList, ...customTokenList];
+  }, [showTokenList, customTokenList]);
   const tokenInfoMap = useTokenListFetchBalance({
     chainId,
-    tokenList: showTokenList,
+    tokenList: needFetchBalanceTokenList,
     popularTokenList,
     value,
     visible,
@@ -339,7 +342,7 @@ export default function useTokenList({
     [
       filter,
       tokenInfoMap,
-      occupiedAddrs,
+      occupiedAddrs?.join(','),
       value,
       popularTokenList,
       defaultTokenList,

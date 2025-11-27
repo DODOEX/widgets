@@ -108,7 +108,7 @@ export default function TokenPicker({
   const [listType, setListType] = useState<ListType>(ListType.All);
   const tabList = [
     { key: ListType.All, value: t`ALL` },
-    { key: ListType.MyAdded, value: t`My Added` },
+    { key: ListType.MyAdded, value: t`Custom` },
   ];
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { Box, Button } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
-import { Error } from '@dodoex/icons';
+import { Alarm, Error } from '@dodoex/icons';
 import React from 'react';
 import Dialog from '../Dialog';
 import TokenLogo from '../TokenLogo';
@@ -124,6 +124,7 @@ export default function ImportToken({
                 sx={{
                   color: 'primary.main',
                   typography: 'body2',
+                  textDecoration: 'none',
                   '&:hover': {
                     opacity: 0.7,
                   },
@@ -132,6 +133,18 @@ export default function ImportToken({
                 {truncatePoolAddress(token?.address)}
               </Box>
             )}
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                color: 'error.main',
+                typography: 'body2',
+              }}
+            >
+              <Box component={Alarm} />
+              <Trans>Unknown Source</Trans>
+            </Box>
           </Box>
 
           <Button

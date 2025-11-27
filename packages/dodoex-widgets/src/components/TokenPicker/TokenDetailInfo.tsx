@@ -6,6 +6,8 @@ import React from 'react';
 import { Trans } from '@lingui/macro';
 import TokenLogo from '../TokenLogo';
 import { AddTokenToMetamask } from '../AddTokenToMetamask';
+import { CopyTooltipToast } from '../CopyTooltipToast';
+import { getEtherscanPage, truncatePoolAddress } from '../../utils';
 
 export default function TokenDetailInfo({
   token,
@@ -127,14 +129,38 @@ export default function TokenDetailInfo({
                 display: 'flex',
                 gap: 8,
                 alignItems: 'center',
-                typography: 'body2',
-                color: 'primary.main',
               }}
             >
-              ErcScan{' '}
               <Box
-                component={ArrowTopRightBorder}
-                sx={{ width: 14, height: 14 }}
+                component="a"
+                href={getEtherscanPage(token.chainId, token.address)}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  color: 'primary.main',
+                  typography: 'body2',
+                  textDecoration: 'none',
+                  '&:hover': {
+                    opacity: 0.7,
+                  },
+                }}
+              >
+                {truncatePoolAddress(token.address)}
+              </Box>
+              <CopyTooltipToast
+                size={14}
+                copyText={token.address}
+                componentProps={{
+                  sx: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'primary.main',
+                    height: 14,
+                    '&:hover': {
+                      opacity: 0.7,
+                    },
+                  },
+                }}
               />
               <Box
                 sx={{
