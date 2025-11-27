@@ -1,3 +1,48 @@
+# [@dodoex/widgets-v3.10.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.9.0...@dodoex/widgets-v3.10.0) (2025-11-27)
+
+
+### Features
+
+* add custom token ([4c74f4f](https://github.com/DODOEX/widgets/commit/4c74f4fe1f67413ee4510c03ad3803819769a04c))
+* add custom token && optimization performance ([536ae4c](https://github.com/DODOEX/widgets/commit/536ae4cdd69ee08699d80fd27fa739bc35d945c0))
+
+# [@dodoex/widgets-v3.9.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.8.0...@dodoex/widgets-v3.9.0) (2025-11-14)
+
+
+### Features
+
+* add disableConnectedProviderRead props ([faffac6](https://github.com/DODOEX/widgets/commit/faffac6f83f70f2bd02e942c69c6b29d9c7a4ba6))
+* add gsp modify entry ([6ee7544](https://github.com/DODOEX/widgets/commit/6ee7544554adc8b8a7caafc2c12afe99e0e72302))
+* update version ([5466e25](https://github.com/DODOEX/widgets/commit/5466e2585927e924749845bf91b3642875e1f926))
+
+# [@dodoex/widgets-v3.8.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.7.0...@dodoex/widgets-v3.8.0) (2025-11-14)
+
+
+### Features
+
+* update @dodoex/api dependency to version 3.4.0 ([51e6994](https://github.com/DODOEX/widgets/commit/51e69944460b9e89e52f72668dd1ec80bc99122c))
+
+# [@dodoex/widgets-v3.7.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.6.0...@dodoex/widgets-v3.7.0) (2025-11-14)
+
+
+### Features
+
+* add support for Stable Testnet in dodoex-api and widgets ([e5d316e](https://github.com/DODOEX/widgets/commit/e5d316e97b4856b35ed651553083385c53bc96da))
+
+# [@dodoex/widgets-v3.6.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.5.0...@dodoex/widgets-v3.6.0) (2025-11-11)
+
+
+### Features
+
+* fix api version ([969b4d7](https://github.com/DODOEX/widgets/commit/969b4d7832e4006fe1b2ec935197a9e46901fc9c))
+
+# [@dodoex/widgets-v3.5.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.4.0...@dodoex/widgets-v3.5.0) (2025-11-05)
+
+
+### Features
+
+* dvm add liquidity limit amount logic ([777582d](https://github.com/DODOEX/widgets/commit/777582d6a78f6eabff402f6f51a60f29bda1b651))
+
 # [@dodoex/widgets-v3.4.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.3.0...@dodoex/widgets-v3.4.0) (2025-10-24)
 
 

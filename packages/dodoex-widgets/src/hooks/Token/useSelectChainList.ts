@@ -55,8 +55,8 @@ export function useSelectChainList(side?: 'from' | 'to') {
   }, [defaultChainId]);
 
   const selectChainIdShow = useMemo(
-    () => selectChainId ?? defaultChainId,
-    [selectChainId, defaultChainId],
+    () => onlyChainId ?? selectChainId ?? defaultChainId,
+    [selectChainId, defaultChainId, onlyChainId],
   );
 
   return {

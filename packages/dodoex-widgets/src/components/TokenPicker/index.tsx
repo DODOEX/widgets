@@ -1,4 +1,13 @@
-import { Box, BoxProps, SearchInput } from '@dodoex/components';
+import {
+  Box,
+  BoxProps,
+  Button,
+  SearchInput,
+  TabPanel,
+  Tabs,
+  TabsButtonGroup,
+  TabsGroup,
+} from '@dodoex/components';
 import React, {
   CSSProperties,
   useCallback,
@@ -10,13 +19,20 @@ import { FixedSizeList as List } from 'react-window';
 import type { TokenInfo } from '../../hooks/Token';
 import { useTokenList } from '../../hooks/Token';
 import TokenItem from './TokenItem';
-import { t } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import SelectChainItem from './SelectChainItem';
 import { useSelectChainList } from '../../hooks/Token/useSelectChainList';
 import { ChainId } from '@dodoex/api';
 import { useQuery } from '@tanstack/react-query';
 import { isAddress } from '../../utils';
 import { TokenSearchLoadingSkelton } from './TokenSearchLoadingSkelton';
+import { tokenApi } from '../../constants/api';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
+import TokenLogo from '../TokenLogo';
+import TokenDetailInfo from './TokenDetailInfo';
+import { EmptyList } from '../List/EmptyList';
+import ImportToken from './ImportToken';
+import { deleteCustomTokenList } from '../../hooks/useTokenState';
 
 export interface TokenPickerProps {
   chainId?: ChainId;
@@ -40,6 +56,11 @@ export interface TokenPickerProps {
   sx?: BoxProps['sx'];
 }
 
+enum ListType {
+  All = 1,
+  MyAdded,
+}
+
 export default function TokenPicker({
   chainId,
   value,
@@ -58,6 +79,7 @@ export default function TokenPicker({
 }: TokenPickerProps) {
   const { chainList, selectChainId, setSelectChainId } =
     useSelectChainList(side);
+  const { account } = useWalletInfo();
   const {
     showTokenList,
     filter,
@@ -65,6 +87,7 @@ export default function TokenPicker({
     onSelectToken,
     popularTokenList,
     tokenInfoMap,
+    customTokenList,
   } = useTokenList({
     value,
     onChange,
@@ -81,6 +104,12 @@ export default function TokenPicker({
 
   const ref = useRef<HTMLDivElement>(null);
   const [fixedSizeHeight, setFixedSizeHeight] = useState(0);
+
+  const [listType, setListType] = useState<ListType>(ListType.All);
+  const tabList = [
+    { key: ListType.All, value: t`ALL` },
+    { key: ListType.MyAdded, value: t`Custom` },
+  ];
 
   useEffect(() => {
     if (visible && value) {
@@ -110,14 +139,27 @@ export default function TokenPicker({
     };
   }, [ref, visible, selectChainId]);
 
+  const isFilterAddress = isAddress(filter);
   const searchOtherAddressQuery = useQuery({
     queryKey: ['token-picker-searchOtherAddress', filter],
     queryFn: () => {
       if (!searchOtherAddress) return null;
       return searchOtherAddress(filter);
     },
-    enabled: isAddress(filter) && !!searchOtherAddress,
+    enabled: isFilterAddress && !!searchOtherAddress,
   });
+  const isEnableCustom =
+    isFilterAddress &&
+    !!selectChainId &&
+    !searchOtherAddress &&
+    !showTokenList.length;
+  const fetchCustomTokenQueryOptions = tokenApi.getFetchTokenQuery(
+    chainId ?? selectChainId,
+    isEnableCustom ? filter : undefined,
+    account ?? filter,
+  );
+  const fetchCustomTokenQuery = useQuery(fetchCustomTokenQueryOptions);
+  const customToken = fetchCustomTokenQuery.data;
 
   const TokenItemFixedSizeMemo = useCallback(
     ({ index, style }: { index: number; style: CSSProperties }) => {
@@ -150,7 +192,9 @@ export default function TokenPicker({
   );
 
   return (
-    <Box
+    <Tabs
+      value={listType}
+      onChange={(_, v) => setListType(v as ListType)}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -167,13 +211,11 @@ export default function TokenPicker({
         onChange={(evt: any) => setFilter(evt.target.value)}
         clearValue={() => setFilter('')}
         placeholder={searchPlaceholder ?? t`Enter the token symbol or address`}
-        sx={{
-          mb: 16,
-        }}
       />
       {chainId === undefined && chainList.length ? (
         <Box
           sx={{
+            mt: 16,
             position: 'relative',
             display: 'flex',
             gap: 8,
@@ -201,8 +243,17 @@ export default function TokenPicker({
             />
           ))}
         </Box>
+      ) : !filter ? (
+        <TabsGroup
+          tabs={tabList}
+          tabsListSx={{
+            ml: -20,
+            mb: 16,
+            width: 'calc(100% + 40px)',
+          }}
+        />
       ) : (
-        ''
+        <Box sx={{ height: 20 }} />
       )}
       <Box
         sx={{
@@ -212,32 +263,128 @@ export default function TokenPicker({
         }}
         ref={ref}
       >
-        {showTokenList.length ? (
-          <List
-            height={fixedSizeHeight}
-            itemCount={showTokenList.length}
-            itemSize={52}
-            width={'100%'}
-            className="token-list"
-          >
-            {TokenItemFixedSizeMemo as any}
-          </List>
-        ) : (
+        <TabPanel value={ListType.All}>
+          {showTokenList.length ? (
+            <List
+              height={fixedSizeHeight}
+              itemCount={showTokenList.length}
+              itemSize={52}
+              width={'100%'}
+              className="token-list"
+            >
+              {TokenItemFixedSizeMemo as any}
+            </List>
+          ) : null}
+        </TabPanel>
+        <TabPanel value={ListType.MyAdded}>
+          {customTokenList.map((token) => {
+            let disabled = false;
+            if (value) {
+              disabled = Array.isArray(value)
+                ? value.some(
+                    (valueItem) =>
+                      valueItem.address === token.address &&
+                      valueItem.chainId === token.chainId,
+                  )
+                : value.address === token.address &&
+                  value.chainId === token.chainId;
+            }
+            return (
+              <TokenItem
+                key={token.address + token.chainId}
+                token={token}
+                disabled={disabled}
+                onClick={() => onSelectToken(token)}
+                balance={
+                  tokenInfoMap.get(`${token.chainId}-${token.address}`)?.balance
+                }
+                onDelete={() => deleteCustomTokenList(token)}
+              />
+            );
+          })}
+        </TabPanel>
+        {searchOtherAddressQuery.isLoading ||
+        fetchCustomTokenQuery.isLoading ||
+        searchOtherAddressQuery.data ||
+        customToken ? (
           <Box
             sx={{
               height: fixedSizeHeight,
               overflowY: 'auto',
             }}
           >
-            {searchOtherAddressQuery.isLoading ? (
+            {searchOtherAddressQuery.isLoading ||
+            fetchCustomTokenQuery.isLoading ? (
               <TokenSearchLoadingSkelton />
             ) : (
               ''
             )}
             {searchOtherAddressQuery.data ? searchOtherAddressQuery.data : ''}
+            {!!customToken && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  typography: 'body2',
+                  px: 6,
+                  py: 5,
+                  borderRadius: 8,
+                  cursor: 'pointer',
+                  opacity: 1,
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    textAlign: 'left',
+                    opacity: 0.5,
+                  }}
+                >
+                  <TokenLogo token={customToken} />
+                  <Box>
+                    <Box
+                      sx={{
+                        fontWeight: 600,
+                      }}
+                    >
+                      {customToken.symbol}
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 4,
+                        typography: 'h6',
+                        color: 'text.secondary',
+                      }}
+                    >
+                      {customToken.name}
+                      <TokenDetailInfo token={customToken} isCustom />
+                    </Box>
+                  </Box>
+                </Box>
+                <ImportToken
+                  token={customToken}
+                  onImport={() => {
+                    onSelectToken(customToken!);
+                  }}
+                />
+              </Box>
+            )}
           </Box>
-        )}
+        ) : !(listType === ListType.MyAdded
+            ? customTokenList.length
+            : showTokenList.length) ? (
+          <EmptyList
+            hasSearch={!!filter}
+            sx={{
+              height: '100%',
+            }}
+          />
+        ) : null}
       </Box>
-    </Box>
+    </Tabs>
   );
 }

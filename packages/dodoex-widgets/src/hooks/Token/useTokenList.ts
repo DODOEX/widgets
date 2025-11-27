@@ -6,6 +6,7 @@ import defaultTokens from '../../constants/tokenList';
 import useTokenListFetchBalance from './useTokenListFetchBalance';
 import { ChainId } from '@dodoex/api';
 import { useTokenState } from '../useTokenState';
+import { isAddress } from '../../utils';
 
 enum MatchLevel {
   fully = 1,
@@ -104,7 +105,10 @@ export default function useTokenList({
   multiple?: boolean;
 }) {
   const [filter, setFilter] = useState('');
-  const { tokenList: preloadedOrigin } = useTokenState();
+  const {
+    tokenList: preloadedOrigin,
+    popularTokenList: popularTokenListOrigin,
+  } = useTokenState();
   const currentChainId = useCurrentChainId();
   const chainId = useMemo(
     () => chainIdProps ?? currentChainId,
@@ -116,9 +120,6 @@ export default function useTokenList({
     );
     return preloadedResult;
   }, [preloadedOrigin, chainId]);
-  const popularTokenListOrigin = useTokenState((state) =>
-    state.popularTokenList.filter((token) => token.chainId === chainId),
-  );
   const defaultTokenList = useMemo(() => {
     return defaultTokens?.filter((token) => token.chainId === chainId) || [];
   }, [chainId]);
@@ -189,8 +190,18 @@ export default function useTokenList({
         onChange(token, isOccupied);
       }
     },
-    [onChange, occupiedAddrs, occupiedChainId],
+    [onChange, occupiedAddrs?.join(','), occupiedChainId],
   );
+
+  const { customTokenList } = useTokenState();
+  const customTokenListFilter = useMemo(() => {
+    if (!filter || !isAddress(filter)) return [];
+    return customTokenList.filter(
+      (token) =>
+        token.chainId === chainId &&
+        token.address.toLocaleLowerCase() === filter.toLocaleLowerCase(),
+    );
+  }, [customTokenList, filter, chainId]);
 
   const showTokenList = useMemo(() => {
     const needShowList = getNeedShowList(preloaded);
@@ -203,12 +214,23 @@ export default function useTokenList({
         needShowList.push(token);
       }
     });
+    customTokenListFilter.forEach((token) => {
+      if (!preloadedTokenAddressSet.has(token.address)) {
+        needShowList.push({
+          ...token,
+          isCustom: true,
+        });
+      }
+    });
     return needShowList || ([] as TokenList);
-  }, [preloaded, getNeedShowList, popularTokenList]);
+  }, [preloaded, getNeedShowList, popularTokenList, customTokenListFilter]);
 
+  const needFetchBalanceTokenList = useMemo(() => {
+    return [...showTokenList, ...customTokenList];
+  }, [showTokenList, customTokenList]);
   const tokenInfoMap = useTokenListFetchBalance({
     chainId,
-    tokenList: showTokenList,
+    tokenList: needFetchBalanceTokenList,
     popularTokenList,
     value,
     visible,
@@ -320,7 +342,7 @@ export default function useTokenList({
     [
       filter,
       tokenInfoMap,
-      occupiedAddrs,
+      occupiedAddrs?.join(','),
       value,
       popularTokenList,
       defaultTokenList,
@@ -342,5 +364,6 @@ export default function useTokenList({
 
     popularTokenList,
     tokenInfoMap,
+    customTokenList,
   };
 }
