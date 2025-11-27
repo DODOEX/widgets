@@ -1,3 +1,11 @@
+# [@dodoex/widgets-v3.10.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.9.0...@dodoex/widgets-v3.10.0) (2025-11-27)
+
+
+### Features
+
+* add custom token ([4c74f4f](https://github.com/DODOEX/widgets/commit/4c74f4fe1f67413ee4510c03ad3803819769a04c))
+* add custom token && optimization performance ([536ae4c](https://github.com/DODOEX/widgets/commit/536ae4cdd69ee08699d80fd27fa739bc35d945c0))
+
 # [@dodoex/widgets-v3.9.0](https://github.com/DODOEX/widgets/compare/@dodoex/widgets-v3.8.0...@dodoex/widgets-v3.9.0) (2025-11-14)
 
 
