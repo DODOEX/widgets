@@ -28,7 +28,7 @@ export const getCGTokenListAPI = (chainId: ChainId) => {
 
 const BridgeUrlPrefix = 'https://api.settlex.finance/cross-chain/widget';
 
-export const RoutePriceAPI = `https://api.settlex.finance/route-service/v2/widget/getdodoroute`;
+export const RoutePriceAPI = `https://api.settlex.finance/route-service/frontend-v2/swap`;
 export const FiatPriceAPI = `https://api.settlex.finance/frontend-price-api/current/batch`;
 const BridgeRoutePriceAPI = `${BridgeUrlPrefix}/routes`;
 const BridgeEncodeAPI = `${BridgeUrlPrefix}/transaction/encode`;

@@ -106,7 +106,7 @@ export function useFetchRoutePrice({
       deadLine: apiDdl,
       apikey,
       slippage,
-      source: disableIndirectRouting ? 'noMaxHops' : 'dodoV2AndMixWasm',
+      source: disableIndirectRouting ? 'noMaxHops' : 'frontendSwap',
       toTokenAddress: toToken.address,
       fromTokenAddress: fromToken.address,
       userAddr: account || EmptyAddress,
@@ -131,7 +131,12 @@ export function useFetchRoutePrice({
     }
 
     try {
-      const resRoutePrice = await axios.get(routePriceAPI, { params });
+      const resRoutePrice = await axios.get(routePriceAPI, {
+        params,
+        headers: {
+          source: 'frontendSwap',
+        },
+      });
       // only update last id
       if (currentId < lastId.current) return;
       const routeInfo = resRoutePrice.data.data as IRouteResponse;

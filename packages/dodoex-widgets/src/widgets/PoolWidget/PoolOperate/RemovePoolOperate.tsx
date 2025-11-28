@@ -124,7 +124,7 @@ export function RemovePoolOperate({
     );
   const canWithdrawBasicToken =
     isAMMV2 && pool && (isBaseEther || isQuoteEther);
-  const [receiveWrapped, setReceiveWrapped] = React.useState(false);
+  const [receiveWrapped, setReceiveWrapped] = React.useState(true);
 
   const withdrawBaseToken =
     canWithdrawBasicToken && isBaseEther && !receiveWrapped && basicToken
