@@ -319,7 +319,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
     {
       chainId: ChainId.STABLE,
       logo: StableLogo,
-      name: 'Stable Mainnet',
+      name: 'Stable',
     },
   ],
 ]);
