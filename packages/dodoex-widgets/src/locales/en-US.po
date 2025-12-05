@@ -42,6 +42,10 @@ msgstr "Opening {0}..."
 msgid "Total Number of Traders"
 msgstr "Total Number of Traders"
 
+#: src/components/TokenPicker/TokenDetailInfo.tsx:48
+msgid "Token Info"
+msgstr "Token Info"
+
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:43
 msgid "Volume"
 msgstr "Volume"
@@ -305,7 +309,7 @@ msgstr "Liquidity"
 msgid "APR"
 msgstr "APR"
 
-#: src/components/TokenPicker/index.tsx:169
+#: src/components/TokenPicker/index.tsx:213
 msgid "Enter the token symbol or address"
 msgstr "Enter the token symbol or address"
 
@@ -377,6 +381,7 @@ msgstr "Pool Creation"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:429
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:582
+#: src/components/TokenPicker/index.tsx:111
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:198
 #: src/widgets/PoolWidget/PoolCreate/components/SelectAndInput.tsx:52
 msgid "Custom"
@@ -1142,6 +1147,10 @@ msgstr "Classical AMM-like pool. Suitable for most assets."
 msgid "Swap summary"
 msgstr "Swap summary"
 
+#: src/components/TokenPicker/ImportToken.tsx:146
+msgid "Unknown Source"
+msgstr "Unknown Source"
+
 #: src/widgets/MiningWidget/MiningList/operate-area/ClaimTips.tsx:47
 msgid "You will also claim all rewards from this pool."
 msgstr "You will also claim all rewards from this pool."
@@ -1207,6 +1216,11 @@ msgstr "Share of pool"
 #: src/widgets/MiningWidget/MiningList/components/SearchComponents.tsx:217
 msgid "Search by address"
 msgstr "Search by address"
+
+#: src/components/TokenPicker/ImportToken.tsx:77
+#: src/components/TokenPicker/TokenDetailInfo.tsx:80
+msgid "This token doesn't appear on the token list.Make sure this is the token that you want to trade."
+msgstr "This token doesn't appear on the token list.Make sure this is the token that you want to trade."
 
 #: src/widgets/PoolWidget/AMMV3/hooks/useDerivedV3BurnInfo.tsx:99
 msgid "Enter a percent"
@@ -1881,6 +1895,10 @@ msgstr "Daily Rewards"
 msgid "Second"
 msgstr "Second"
 
+#: src/components/TokenPicker/ImportToken.tsx:170
+msgid "Import"
+msgstr "Import"
+
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:398
 msgid "Total Swap Volume"
 msgstr "Total Swap Volume"
@@ -1964,6 +1982,10 @@ msgstr "Insufficient {0} balance"
 msgid "AMM V3"
 msgstr "AMM V3"
 
+#: src/components/TokenPicker/ImportToken.tsx:46
+msgid "Import Token"
+msgstr "Import Token"
+
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:114
 msgid "The dynamic slippage is provided by DODO team through analyzing historical transactions."
 msgstr "The dynamic slippage is provided by DODO team through analyzing historical transactions."
@@ -2012,6 +2034,10 @@ msgstr "Once Mining has started, it cannot be stopped."
 #: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:65
 msgid "Select a liquidity pool"
 msgstr "Select a liquidity pool"
+
+#: src/components/TokenPicker/TokenDetailInfo.tsx:85
+msgid "This is an official appear <0/>on the token list"
+msgstr "This is an official appear <0/>on the token list"
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/SingleTokenSelect.tsx:137
 msgid "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
@@ -2062,6 +2088,10 @@ msgstr "Current Market Price:"
 #: src/widgets/PoolWidget/PoolCreate/components/GasWrapGasTokenError.tsx:48
 msgid "{0}-{1} is not supported. Please select another pair."
 msgstr "{0}-{1} is not supported. Please select another pair."
+
+#: src/components/TokenPicker/index.tsx:110
+msgid "ALL"
+msgstr "ALL"
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:255
 msgid "Confirming..."
@@ -2325,6 +2355,10 @@ msgstr "Max Slippage"
 #: src/hooks/Submission/getExecutionErrorMsg.ts:25
 msgid "User denied transaction signature."
 msgstr "User denied transaction signature."
+
+#: src/components/TokenPicker/ImportToken.tsx:33
+msgid "ADD"
+msgstr "ADD"
 
 #: src/widgets/MiningWidget/MiningList/components/ShareModeSelect.tsx:30
 msgid "Copy link"

@@ -40,6 +40,10 @@ msgstr "连接 {0}..."
 msgid "Total Number of Traders"
 msgstr "累计交易用户"
 
+#: src/components/TokenPicker/TokenDetailInfo.tsx:48
+msgid "Token Info"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:43
 msgid "Volume"
 msgstr "交易量"
@@ -303,7 +307,7 @@ msgstr "流动性"
 msgid "APR"
 msgstr "APR"
 
-#: src/components/TokenPicker/index.tsx:169
+#: src/components/TokenPicker/index.tsx:213
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
@@ -375,6 +379,7 @@ msgstr "创建资金池"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:429
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:582
+#: src/components/TokenPicker/index.tsx:111
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:198
 #: src/widgets/PoolWidget/PoolCreate/components/SelectAndInput.tsx:52
 msgid "Custom"
@@ -1140,6 +1145,10 @@ msgstr "类似 AMM 做市策略，适用于大多数币种"
 msgid "Swap summary"
 msgstr "交易预览"
 
+#: src/components/TokenPicker/ImportToken.tsx:146
+msgid "Unknown Source"
+msgstr ""
+
 #: src/widgets/MiningWidget/MiningList/operate-area/ClaimTips.tsx:47
 msgid "You will also claim all rewards from this pool."
 msgstr "你也将从这个池子里领取所有奖励。"
@@ -1205,6 +1214,11 @@ msgstr "资金池份额"
 #: src/widgets/MiningWidget/MiningList/components/SearchComponents.tsx:217
 msgid "Search by address"
 msgstr "输入地址"
+
+#: src/components/TokenPicker/ImportToken.tsx:77
+#: src/components/TokenPicker/TokenDetailInfo.tsx:80
+msgid "This token doesn't appear on the token list.Make sure this is the token that you want to trade."
+msgstr ""
 
 #: src/widgets/PoolWidget/AMMV3/hooks/useDerivedV3BurnInfo.tsx:99
 msgid "Enter a percent"
@@ -1879,6 +1893,10 @@ msgstr "每日奖励"
 msgid "Second"
 msgstr "秒"
 
+#: src/components/TokenPicker/ImportToken.tsx:170
+msgid "Import"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:398
 msgid "Total Swap Volume"
 msgstr "累计交易量"
@@ -1962,6 +1980,10 @@ msgstr "{0} 余额不足"
 msgid "AMM V3"
 msgstr "AMM V3"
 
+#: src/components/TokenPicker/ImportToken.tsx:46
+msgid "Import Token"
+msgstr ""
+
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:114
 msgid "The dynamic slippage is provided by DODO team through analyzing historical transactions."
 msgstr "动态滑点是由 DODO 团队通过分析历史交易计算得出。"
@@ -2010,6 +2032,10 @@ msgstr "挖矿一旦开始，无法终止。"
 #: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:65
 msgid "Select a liquidity pool"
 msgstr "查找资金池"
+
+#: src/components/TokenPicker/TokenDetailInfo.tsx:85
+msgid "This is an official appear <0/>on the token list"
+msgstr ""
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/SingleTokenSelect.tsx:137
 msgid "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
@@ -2060,6 +2086,10 @@ msgstr "市价："
 #: src/widgets/PoolWidget/PoolCreate/components/GasWrapGasTokenError.tsx:48
 msgid "{0}-{1} is not supported. Please select another pair."
 msgstr "当前不支持 {0}-{1} 币对，请重新选择。"
+
+#: src/components/TokenPicker/index.tsx:110
+msgid "ALL"
+msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:255
 msgid "Confirming..."
@@ -2323,6 +2353,10 @@ msgstr "最大滑点"
 #: src/hooks/Submission/getExecutionErrorMsg.ts:25
 msgid "User denied transaction signature."
 msgstr "用户拒绝交易签名."
+
+#: src/components/TokenPicker/ImportToken.tsx:33
+msgid "ADD"
+msgstr ""
 
 #: src/widgets/MiningWidget/MiningList/components/ShareModeSelect.tsx:30
 msgid "Copy link"

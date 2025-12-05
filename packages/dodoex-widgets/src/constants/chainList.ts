@@ -26,6 +26,7 @@ import {
 } from '../assets/logo/networks/rise.svg';
 import { ReactComponent as ScrollLogo } from '../assets/logo/networks/scroll.svg';
 import { ReactComponent as StableTestnetLogo } from '../assets/logo/networks/stable-testnet.svg';
+import { ReactComponent as StableLogo } from '../assets/logo/networks/stable.svg';
 import { ReactComponent as TaikoLogo } from '../assets/logo/networks/taiko.svg';
 import { ReactComponent as XLayerLogo } from '../assets/logo/networks/x-layer.svg';
 import { ReactComponent as ZeroLogo } from '../assets/logo/networks/zero.svg';
@@ -311,6 +312,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.STABLE_TESTNET,
       logo: StableTestnetLogo,
       name: 'Stable Testnet',
+    },
+  ],
+  [
+    ChainId.STABLE,
+    {
+      chainId: ChainId.STABLE,
+      logo: StableLogo,
+      name: 'Stable Mainnet',
     },
   ],
 ]);
