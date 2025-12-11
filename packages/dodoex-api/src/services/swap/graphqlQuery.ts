@@ -37,6 +37,7 @@ export const swapGraphqlQuery = {
     ) {
       cross_chain_swap_zetachain_routes(where: $where) {
         routeId
+        source
         fromChainId
         fromTokenAddress
         fromAmount

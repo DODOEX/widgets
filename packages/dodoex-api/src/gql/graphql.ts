@@ -2030,6 +2030,7 @@ export type Cross_Chain_Swap_ZetachainCrossChainOrderList = {
   refundToken?: Maybe<Scalars['String']['output']>;
   refundUser?: Maybe<Scalars['String']['output']>;
   slippage?: Maybe<Scalars['Float']['output']>;
+  source?: Maybe<Scalars['String']['output']>;
   startTime?: Maybe<Scalars['Int']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   statusCode?: Maybe<Scalars['Int']['output']>;
@@ -2064,6 +2065,7 @@ export type Cross_Chain_Swap_ZetachainCrossChainRoute = {
   omniPlan?: Maybe<Scalars['JSON']['output']>;
   routeId?: Maybe<Scalars['String']['output']>;
   slippage?: Maybe<Scalars['Float']['output']>;
+  source?: Maybe<Scalars['String']['output']>;
   toAddress?: Maybe<Scalars['String']['output']>;
   toAmount?: Maybe<Scalars['String']['output']>;
   toAmountUSD?: Maybe<Scalars['String']['output']>;
@@ -2123,6 +2125,7 @@ export type Cross_Chain_Swap_ZetachainorderCreateData = {
   omniPlan?: InputMaybe<Scalars['JSON']['input']>;
   routeId?: InputMaybe<Scalars['String']['input']>;
   slippage?: InputMaybe<Scalars['Float']['input']>;
+  source?: InputMaybe<Scalars['String']['input']>;
   toAddress?: InputMaybe<Scalars['String']['input']>;
   toAmount?: InputMaybe<Scalars['String']['input']>;
   toAmountUSD?: InputMaybe<Scalars['String']['input']>;
@@ -2157,6 +2160,7 @@ export type Cross_Chain_Swap_ZetachainrouteParams = {
   fromTokenAddress?: InputMaybe<Scalars['String']['input']>;
   refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
   slippage?: InputMaybe<Scalars['Float']['input']>;
+  source?: InputMaybe<Scalars['String']['input']>;
   toAddress?: InputMaybe<Scalars['String']['input']>;
   toChainId?: InputMaybe<Scalars['Int']['input']>;
   toTokenAddress?: InputMaybe<Scalars['String']['input']>;
@@ -2566,6 +2570,7 @@ export type Cross_Chain_TransferQuoteResponse = {
 
 export type Cross_Chain_TransferQuoteResponseTransactionDataDto = {
   data: Scalars['String']['output'];
+  targetApproveAddr?: Maybe<Scalars['String']['output']>;
   to: Scalars['String']['output'];
   value: Scalars['String']['output'];
 };
@@ -13542,6 +13547,21 @@ export type Query = {
   setPoolInfos: Array<SetPoolInfo>;
   setVaultInfo?: Maybe<SetVaultInfo>;
   setVaultInfos: Array<SetVaultInfo>;
+  settlex_limit_getOrderStatusBroadcasts?: Maybe<
+    Array<Maybe<Settlex_LimitLimitOrderStatusBroadcastInfo>>
+  >;
+  settlex_limit_getPendingOrderChainList?: Maybe<
+    Array<Maybe<Scalars['Int']['output']>>
+  >;
+  settlex_limit_limitOrderAmountLimit?: Maybe<Scalars['Float']['output']>;
+  settlex_limit_limitOrderCancel?: Maybe<Settlex_LimitCancelLimitOrderResponse>;
+  settlex_limit_limitOrderCreate?: Maybe<Settlex_LimitLimitOrder>;
+  settlex_limit_limitOrderCreateV2?: Maybe<Settlex_LimitLimitOrderV2>;
+  /** data url:post(https://host:port/api/v1/order/graphql/rfqTakerInquiry).data */
+  settlex_limit_limitOrderFee?: Maybe<Settlex_LimitLimitOrderFeeInfo>;
+  settlex_limit_limitOrderList?: Maybe<Array<Maybe<Settlex_LimitLimitOrder>>>;
+  settlex_limit_limitOrderListWithPage?: Maybe<Settlex_LimitPaginateLimitOrderList>;
+  settlex_limit_limitOrderListWithPageV2?: Maybe<Settlex_LimitPaginateLimitOrderListV2>;
   sigmax_limit_getOrderStatusBroadcasts?: Maybe<
     Array<Maybe<Sigmax_LimitLimitOrderStatusBroadcastInfo>>
   >;
@@ -13610,6 +13630,7 @@ export type Query = {
     Array<Maybe<User_Swap_Pair_SlippageUserSwapPairSlippageList>>
   >;
   user_swap_pair_slippage_upsert?: Maybe<User_Swap_Pair_SlippageJwtAndList>;
+  user_swap_settlex_orderHistories?: Maybe<User_Swap_SettlexUserSwapOrder>;
   userprofile_asset?: Maybe<UserprofileUserProfile>;
   userprofile_inviteUser?: Maybe<UserprofileUserInvite>;
   userprofile_nftAssets?: Maybe<UserprofileNftAssets>;
@@ -15511,6 +15532,46 @@ export type QuerySetVaultInfosArgs = {
   where?: InputMaybe<SetVaultInfo_Filter>;
 };
 
+export type QuerySettlex_Limit_GetOrderStatusBroadcastsArgs = {
+  where?: InputMaybe<Settlex_LimitgetPendingLimitOrderParam>;
+};
+
+export type QuerySettlex_Limit_GetPendingOrderChainListArgs = {
+  where?: InputMaybe<Settlex_LimitgetPendingLimitOrderParam>;
+};
+
+export type QuerySettlex_Limit_LimitOrderAmountLimitArgs = {
+  where?: InputMaybe<Settlex_LimitlimitOrderAmountLimitParam>;
+};
+
+export type QuerySettlex_Limit_LimitOrderCancelArgs = {
+  where?: InputMaybe<Settlex_LimituserCancelLimitOrder>;
+};
+
+export type QuerySettlex_Limit_LimitOrderCreateArgs = {
+  where?: InputMaybe<Settlex_LimituserCreateLimitOrder>;
+};
+
+export type QuerySettlex_Limit_LimitOrderCreateV2Args = {
+  where?: InputMaybe<Settlex_LimituserCreateLimitOrderV2>;
+};
+
+export type QuerySettlex_Limit_LimitOrderFeeArgs = {
+  where?: InputMaybe<Settlex_LimituserQueryLimitOrderFee>;
+};
+
+export type QuerySettlex_Limit_LimitOrderListArgs = {
+  where?: InputMaybe<Settlex_LimituserQueryLimitOrderList>;
+};
+
+export type QuerySettlex_Limit_LimitOrderListWithPageArgs = {
+  where?: InputMaybe<Settlex_LimituserQueryLimitOrderListWithPage>;
+};
+
+export type QuerySettlex_Limit_LimitOrderListWithPageV2Args = {
+  where?: InputMaybe<Settlex_LimituserQueryLimitOrderListWithPage>;
+};
+
 export type QuerySigmax_Limit_GetOrderStatusBroadcastsArgs = {
   where?: InputMaybe<Sigmax_LimitgetPendingLimitOrderParam>;
 };
@@ -15877,6 +15938,10 @@ export type QueryUser_Swap_Pair_Slippage_ListArgs = {
 
 export type QueryUser_Swap_Pair_Slippage_UpsertArgs = {
   data?: InputMaybe<User_Swap_Pair_SlippageupsertData>;
+};
+
+export type QueryUser_Swap_Settlex_OrderHistoriesArgs = {
+  where?: InputMaybe<User_Swap_SettlexswapFilter>;
 };
 
 export type QueryUserprofile_AssetArgs = {
@@ -16897,6 +16962,209 @@ export type SetVaultInfo_OrderBy =
   | 'timestamp'
   | 'updatedAt'
   | 'vault';
+
+export type Settlex_LimitCancelLimitOrderResponse = {
+  authorization?: Maybe<Scalars['String']['output']>;
+};
+
+export type Settlex_LimitLimitOrder = {
+  createdAt?: Maybe<Scalars['String']['output']>;
+  expiration?: Maybe<Scalars['String']['output']>;
+  failureReason?: Maybe<Scalars['String']['output']>;
+  filledAmount?: Maybe<Scalars['String']['output']>;
+  hash?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  maker?: Maybe<Scalars['String']['output']>;
+  makerAmount?: Maybe<Scalars['String']['output']>;
+  makerToken?: Maybe<Scalars['String']['output']>;
+  makerTokenDecimal?: Maybe<Scalars['Int']['output']>;
+  makerTokenLogoImg?: Maybe<Scalars['String']['output']>;
+  makerTokenSymbol?: Maybe<Scalars['String']['output']>;
+  network?: Maybe<Scalars['String']['output']>;
+  order?: Maybe<Settlex_LimitLimitOrderInfo>;
+  progress?: Maybe<Scalars['String']['output']>;
+  salt?: Maybe<Scalars['String']['output']>;
+  signature?: Maybe<Scalars['String']['output']>;
+  taker?: Maybe<Scalars['String']['output']>;
+  takerAmount?: Maybe<Scalars['String']['output']>;
+  takerToken?: Maybe<Scalars['String']['output']>;
+  takerTokenDecimal?: Maybe<Scalars['Int']['output']>;
+  takerTokenLogoImg?: Maybe<Scalars['String']['output']>;
+  takerTokenSymbol?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type Settlex_LimitLimitOrderFeeInfo = {
+  baseFeeAmount?: Maybe<Scalars['String']['output']>;
+  baseFeeValue?: Maybe<Scalars['String']['output']>;
+  feeAmount?: Maybe<Scalars['String']['output']>;
+  feeId?: Maybe<Scalars['String']['output']>;
+  feeValue?: Maybe<Scalars['String']['output']>;
+  percentFeeAmount?: Maybe<Scalars['String']['output']>;
+  percentFeeValue?: Maybe<Scalars['String']['output']>;
+  priceImpactFactor?: Maybe<Scalars['Float']['output']>;
+};
+
+export type Settlex_LimitLimitOrderInfo = {
+  expiration?: Maybe<Scalars['String']['output']>;
+  maker?: Maybe<Scalars['String']['output']>;
+  makerAmount?: Maybe<Scalars['String']['output']>;
+  makerToken?: Maybe<Scalars['String']['output']>;
+  salt?: Maybe<Scalars['String']['output']>;
+  taker?: Maybe<Scalars['String']['output']>;
+  takerAmount?: Maybe<Scalars['String']['output']>;
+  takerToken?: Maybe<Scalars['String']['output']>;
+};
+
+export type Settlex_LimitLimitOrderStatusBroadcastInfo = {
+  chainId?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  makerToken?: Maybe<Scalars['String']['output']>;
+  makerTokenSymbol?: Maybe<Scalars['String']['output']>;
+  orderId?: Maybe<Scalars['Int']['output']>;
+  reason?: Maybe<Scalars['String']['output']>;
+  takerToken?: Maybe<Scalars['String']['output']>;
+  takerTokenSymbol?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<Scalars['String']['output']>;
+};
+
+export type Settlex_LimitLimitOrderV2 = {
+  createdAt?: Maybe<Scalars['String']['output']>;
+  expiration?: Maybe<Scalars['String']['output']>;
+  failureReason?: Maybe<Scalars['String']['output']>;
+  feeAmount?: Maybe<Scalars['String']['output']>;
+  filledAmount?: Maybe<Scalars['String']['output']>;
+  hash?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  maker?: Maybe<Scalars['String']['output']>;
+  makerAmount?: Maybe<Scalars['String']['output']>;
+  makerToken?: Maybe<Scalars['String']['output']>;
+  makerTokenDecimal?: Maybe<Scalars['Int']['output']>;
+  makerTokenLogoImg?: Maybe<Scalars['String']['output']>;
+  makerTokenSymbol?: Maybe<Scalars['String']['output']>;
+  network?: Maybe<Scalars['String']['output']>;
+  order?: Maybe<Settlex_LimitLimitOrderInfo>;
+  progress?: Maybe<Scalars['String']['output']>;
+  salt?: Maybe<Scalars['String']['output']>;
+  taker?: Maybe<Scalars['String']['output']>;
+  takerAmount?: Maybe<Scalars['String']['output']>;
+  takerToken?: Maybe<Scalars['String']['output']>;
+  takerTokenDecimal?: Maybe<Scalars['Int']['output']>;
+  takerTokenLogoImg?: Maybe<Scalars['String']['output']>;
+  takerTokenSymbol?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type Settlex_LimitPaginateLimitOrderList = {
+  currentPage?: Maybe<Scalars['Int']['output']>;
+  limit?: Maybe<Scalars['Int']['output']>;
+  list?: Maybe<Array<Maybe<Settlex_LimitLimitOrder>>>;
+  total?: Maybe<Scalars['Int']['output']>;
+  totalPage?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Settlex_LimitPaginateLimitOrderListV2 = {
+  currentPage?: Maybe<Scalars['Int']['output']>;
+  limit?: Maybe<Scalars['Int']['output']>;
+  list?: Maybe<Array<Maybe<Settlex_LimitLimitOrderV2>>>;
+  total?: Maybe<Scalars['Int']['output']>;
+  totalPage?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Settlex_LimitPrivateOrderInfo = {
+  createdAt?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  network?: Maybe<Scalars['String']['output']>;
+  progress?: Maybe<Scalars['String']['output']>;
+  txid?: Maybe<Scalars['String']['output']>;
+};
+
+export type Settlex_LimitcreateLimitOrderInfo = {
+  expiration?: InputMaybe<Scalars['String']['input']>;
+  maker?: InputMaybe<Scalars['String']['input']>;
+  makerAmount?: InputMaybe<Scalars['String']['input']>;
+  makerToken?: InputMaybe<Scalars['String']['input']>;
+  salt?: InputMaybe<Scalars['String']['input']>;
+  taker?: InputMaybe<Scalars['String']['input']>;
+  takerAmount?: InputMaybe<Scalars['String']['input']>;
+  takerToken?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Settlex_LimitcreatePrivateOrderInfo = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+  timeout?: InputMaybe<Scalars['Int']['input']>;
+  transaction?: InputMaybe<Scalars['String']['input']>;
+  useSource?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Settlex_LimitgetPendingLimitOrderParam = {
+  address?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Settlex_LimitgetPrivateOrderParam = {
+  hash?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Settlex_LimitlimitCancelSignType = 'eip191' | 'eip712' | 'eip1271';
+
+export type Settlex_LimitlimitCreateOrderWalletType = 'common' | 'unipass';
+
+export type Settlex_LimitlimitOrderAmountLimitParam = {
+  network?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Settlex_LimitlimitOrderQueryEnum = 'ALL' | 'FRESH' | 'NOT_FRESH';
+
+export type Settlex_LimituserCancelLimitOrder = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  /** limit order id */
+  id?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+  signature?: InputMaybe<Scalars['String']['input']>;
+  signkey?: InputMaybe<Scalars['String']['input']>;
+  signtime?: InputMaybe<Scalars['Int']['input']>;
+  signtype?: InputMaybe<Settlex_LimitlimitCancelSignType>;
+};
+
+export type Settlex_LimituserCreateLimitOrder = {
+  network?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Settlex_LimitcreateLimitOrderInfo>;
+  signature?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Settlex_LimituserCreateLimitOrderV2 = {
+  feeId?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Settlex_LimitcreateLimitOrderInfo>;
+  signature?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  wallet?: InputMaybe<Settlex_LimitlimitCreateOrderWalletType>;
+};
+
+export type Settlex_LimituserQueryLimitOrderFee = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  stableAmount?: InputMaybe<Scalars['Int']['input']>;
+  toToken?: InputMaybe<Scalars['String']['input']>;
+  toTokenAmount?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Settlex_LimituserQueryLimitOrderList = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Settlex_LimituserQueryLimitOrderListWithPage = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+  orderType?: InputMaybe<Settlex_LimitlimitOrderQueryEnum>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+};
 
 export type Sigmax_LimitCancelLimitOrderResponse = {
   authorization?: Maybe<Scalars['String']['output']>;
@@ -20304,6 +20572,47 @@ export type User_Swap_Pair_SlippageupsertDataPair = {
   toToken?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type User_Swap_SettlexSwapOrderList = {
+  chainId?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  extra?: Maybe<Scalars['JSON']['output']>;
+  fromAmount?: Maybe<Scalars['String']['output']>;
+  fromTokenAddress?: Maybe<Scalars['String']['output']>;
+  fromTokenDecimals?: Maybe<Scalars['Int']['output']>;
+  fromTokenLogoImg?: Maybe<Scalars['String']['output']>;
+  fromTokenPrice?: Maybe<Scalars['String']['output']>;
+  fromTokenSymbol?: Maybe<Scalars['String']['output']>;
+  hash?: Maybe<Scalars['String']['output']>;
+  key?: Maybe<Scalars['String']['output']>;
+  maxAmount?: Maybe<Scalars['String']['output']>;
+  minAmount?: Maybe<Scalars['String']['output']>;
+  nonce?: Maybe<Scalars['Int']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  toAmount?: Maybe<Scalars['String']['output']>;
+  toTokenAddress?: Maybe<Scalars['String']['output']>;
+  toTokenDecimals?: Maybe<Scalars['Int']['output']>;
+  toTokenLogoImg?: Maybe<Scalars['String']['output']>;
+  toTokenPrice?: Maybe<Scalars['String']['output']>;
+  toTokenSymbol?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<Scalars['String']['output']>;
+};
+
+export type User_Swap_SettlexUserSwapOrder = {
+  count?: Maybe<Scalars['Int']['output']>;
+  limit?: Maybe<Scalars['Int']['output']>;
+  list?: Maybe<Array<Maybe<User_Swap_SettlexSwapOrderList>>>;
+  page?: Maybe<Scalars['Int']['output']>;
+};
+
+export type User_Swap_SettlexswapFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  source?: InputMaybe<Scalars['String']['input']>;
+  userAddress?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type User_SwapswapFilter = {
   chainId?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -23362,6 +23671,7 @@ export type Cross_Chain_Swap_Zetachain_RoutesQueryVariables = Exact<{
 export type Cross_Chain_Swap_Zetachain_RoutesQuery = {
   cross_chain_swap_zetachain_routes?: {
     routeId?: string | null;
+    source?: string | null;
     fromChainId?: number | null;
     fromTokenAddress?: string | null;
     fromAmount?: string | null;
@@ -24727,6 +25037,7 @@ export const Cross_Chain_Swap_Zetachain_RoutesDocument =
     query Cross_chain_swap_zetachain_routes($where: Cross_chain_swap_zetachainrouteParams) {
   cross_chain_swap_zetachain_routes(where: $where) {
     routeId
+    source
     fromChainId
     fromTokenAddress
     fromAmount

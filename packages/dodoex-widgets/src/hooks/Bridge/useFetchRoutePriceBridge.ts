@@ -36,6 +36,7 @@ svmRentFee
 
 export type CrossChainSwapZetachainRoute = {
   routeId: string;
+  source: string;
   fromChainId: number;
   fromTokenAddress: string;
   fromAmount: string;
@@ -275,9 +276,9 @@ export function useFetchRoutePriceBridge({
           },
           // referrer: 'http://localhost:6006/',
           // referrerPolicy: 'strict-origin-when-cross-origin',
-          body: `{"query":"\\n    query Cross_chain_swap_zetachain_routes($where: Cross_chain_swap_zetachainrouteParams) {\\n  cross_chain_swap_zetachain_routes(where: $where) {\\n    routeId\\n    fromChainId\\n    fromTokenAddress\\n    fromAmount\\n    fromAmountWithOutDecimals\\n    fromAmountUSD\\n    toChainId\\n    toTokenAddress\\n    toAmount\\n    toAmountWithOutDecimals\\n    toAmountUSD\\n    fromAddress\\n    toAddress\\n    slippage\\n    approveTarget\\n    fees\\n    omniPlan\\n    encodeParams\\n  }\\n}\\n    ","variables":{"where":{"fromChainId":${
+          body: `{"query":"\\n    query Cross_chain_swap_zetachain_routes($where: Cross_chain_swap_zetachainrouteParams) {\\n  cross_chain_swap_zetachain_routes(where: $where) {\\n    routeId\\n    source\\n    fromChainId\\n    fromTokenAddress\\n    fromAmount\\n    fromAmountWithOutDecimals\\n    fromAmountUSD\\n    toChainId\\n    toTokenAddress\\n    toAmount\\n    toAmountWithOutDecimals\\n    toAmountUSD\\n    fromAddress\\n    toAddress\\n    slippage\\n    approveTarget\\n    fees\\n    omniPlan\\n    encodeParams\\n  }\\n}\\n    ","variables":{"where":{"fromChainId":${
             fromToken?.chainId
-          },"fromTokenAddress":"${fromToken?.address}","toChainId":${
+          },"source":"ZUNO","fromTokenAddress":"${fromToken?.address}","toChainId":${
             toToken?.chainId
           },"toTokenAddress":"${toToken?.address}","fromAddress":"${
             fromAddress
@@ -363,6 +364,7 @@ export function useFetchRoutePriceBridge({
 
       const {
         routeId,
+        source,
         fromChainId,
         fromTokenAddress,
         fromAmount,
