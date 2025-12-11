@@ -5,6 +5,7 @@ import {
   useTheme,
   Tooltip,
   LoadingSkeleton,
+  Checkbox,
 } from '@dodoex/components';
 import { PoolApi, PoolType } from '@dodoex/api';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -71,12 +72,14 @@ function CardList({
   setOperatePool,
   getMigrationPairAndMining,
   supportAMM,
+  isHideSmallAsset
 }: {
   account?: string;
   lqList: FetchMyLiquidityListLqList;
   setOperatePool: (operate: Partial<PoolOperateProps> | null) => void;
   getMigrationPairAndMining?: GetMigrationPairAndMining;
   supportAMM?: boolean;
+  isHideSmallAsset: boolean;
 }) {
   const theme = useTheme();
   const myLiquidityQuery = usePoolListMyLiquidity({
@@ -154,7 +157,9 @@ function CardList({
           !!item.apy?.metromMiningApy && Number(item.apy?.metromMiningApy) > 0;
 
         const position = lq.liquidityPositions?.[0];
-
+        console.log('dev gonghe position', isHideSmallAsset, position?.liquidityUSD, position?.liquidityTokenBalance);
+        if (isHideSmallAsset && position?.liquidityUSD && new BigNumber(position?.liquidityUSD).lt(0.1)) return null;
+        if (isHideSmallAsset && position?.liquidityTokenBalance && new BigNumber(position?.liquidityTokenBalance).lt(0.000001)) return null;
         const type = item.type as PoolType;
         const poolType = getPoolAMMOrPMM(type);
         const isAMMV2 = type === 'AMMV2';
@@ -631,6 +636,7 @@ function TableList({
   supportAMM,
   onlyV3,
   getMigrationPairAndMining,
+  isHideSmallAsset
 }: {
   account?: string;
   lqList: FetchMyLiquidityListLqList;
@@ -640,6 +646,7 @@ function TableList({
   supportAMM?: boolean;
   onlyV3?: boolean;
   getMigrationPairAndMining?: GetMigrationPairAndMining;
+  isHideSmallAsset: boolean;
 }) {
   const theme = useTheme();
   const myLiquidityQuery = usePoolListMyLiquidity({
@@ -762,7 +769,17 @@ function TableList({
           }
 
           const position = lq.liquidityPositions?.[0];
-
+          if (isHideSmallAsset) {
+            if (position?.liquidityUSD && Number(position?.liquidityUSD) > 0) {
+              if (new BigNumber(position?.liquidityUSD).lt(0.1)) {
+                return null
+              }
+            } else {
+              if (position?.liquidityTokenBalance && new BigNumber(position?.liquidityTokenBalance).lt(0.000001)) {
+                return null;
+              }
+            }
+          }
           const type = item.type as PoolType;
           const poolType = getPoolAMMOrPMM(type);
           const isAMMV2 = type === 'AMMV2';
@@ -1250,6 +1267,7 @@ export default function MyLiquidity({
   const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
     useUserOptions();
   const [onlyV3Checked, setOnlyV3] = React.useState(false);
+  const [isHideSmallAsset, setIsHideSmallAsset] = React.useState(true);
 
   const {
     filterTokens,
@@ -1321,6 +1339,7 @@ export default function MyLiquidity({
         sx={{
           py: 16,
           display: 'flex',
+          justifyContent: 'space-between',
           gap: 8,
           ...(minDevice(filterSmallDeviceWidth)
             ? {}
@@ -1335,108 +1354,131 @@ export default function MyLiquidity({
               }),
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            ...(minDevice(filterSmallDeviceWidth)
-              ? {}
-              : {
-                  '& > button': {
-                    flex: 1,
-                    flexBasis: '100%',
-                  },
-                }),
-            ...(isMobile
-              ? {
-                  flexWrap: 'wrap',
-                }
-              : {}),
-          }}
-        >
-          {!onlyChainId && (
-            <SelectChain
-              chainId={activeChainId}
-              setChainId={handleChangeActiveChainId}
-              sx={{
-                justifyContent: 'space-between',
-              }}
-              showNewIcon={supportAMMIcon}
-            />
-          )}
-          {showOnlyV3Checked && (
-            <OnlyV3Toggle
-              onlyV3={onlyV3}
-              setOnlyV3={setOnlyV3}
-              sx={
-                isMobile
-                  ? {
-                      flexGrow: 1,
-                      flexBasis: '100%',
-                    }
-                  : undefined
-              }
-            />
-          )}
-          {tokenAndPoolFilter?.element ?? (
-            <TokenAndPoolFilter
-              value={filterTokens}
-              onChange={handleChangeFilterTokens}
-              searchAddress={async (address, onClose) => {
-                const query = graphQLRequests.getInfiniteQuery(
-                  PoolApi.graphql.fetchLiquidityList,
-                  'currentPage',
-                  {
-                    where: {
-                      ...defaultQueryFilter,
-                      filterState: {
-                        address,
-                        ...defaultQueryFilter.filterState,
-                      },
-                    },
-                  },
-                );
-                const result = await queryClient.fetchQuery(query);
-                const lqList = result.liquidity_list?.lqList;
-                if (lqList?.length) {
-                  return (
-                    <TokenListPoolItem
-                      list={lqList}
-                      onClick={() => {
-                        handleChangeFilterAddress(lqList);
-                        onClose();
-                      }}
-                    />
-                  );
-                }
-                return null;
-              }}
-            />
-          )}
-        </Box>
-
-        {/* filter tag */}
-        {(hasFilterAddress || !!filterTokens.length) && (
+        <Box sx={{
+          display: 'flex'
+        }}>
           <Box
             sx={{
-              my: 0,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              ...(minDevice(filterSmallDeviceWidth)
+                ? {}
+                : {
+                    '& > button': {
+                      flex: 1,
+                      flexBasis: '100%',
+                    },
+                  }),
+              ...(isMobile
+                ? {
+                    flexWrap: 'wrap',
+                  }
+                : {}),
             }}
           >
-            {hasFilterAddress ? (
-              <FilterAddressTags
-                lqList={filterAddressLqList}
-                onDeleteTag={() => handleChangeFilterAddress([])}
+            {!onlyChainId && (
+              <SelectChain
+                chainId={activeChainId}
+                setChainId={handleChangeActiveChainId}
+                sx={{
+                  justifyContent: 'space-between',
+                }}
+                showNewIcon={supportAMMIcon}
               />
-            ) : (
-              ''
             )}
-            <FilterTokenTags
-              tags={filterTokens}
-              onDeleteTag={handleDeleteToken}
-            />
+            {showOnlyV3Checked && (
+              <OnlyV3Toggle
+                onlyV3={onlyV3}
+                setOnlyV3={setOnlyV3}
+                sx={
+                  isMobile
+                    ? {
+                        flexGrow: 1,
+                        flexBasis: '100%',
+                      }
+                    : undefined
+                }
+              />
+            )}
+            {tokenAndPoolFilter?.element ?? (
+              <TokenAndPoolFilter
+                value={filterTokens}
+                onChange={handleChangeFilterTokens}
+                searchAddress={async (address, onClose) => {
+                  const query = graphQLRequests.getInfiniteQuery(
+                    PoolApi.graphql.fetchLiquidityList,
+                    'currentPage',
+                    {
+                      where: {
+                        ...defaultQueryFilter,
+                        filterState: {
+                          address,
+                          ...defaultQueryFilter.filterState,
+                        },
+                      },
+                    },
+                  );
+                  const result = await queryClient.fetchQuery(query);
+                  const lqList = result.liquidity_list?.lqList;
+                  if (lqList?.length) {
+                    return (
+                      <TokenListPoolItem
+                        list={lqList}
+                        onClick={() => {
+                          handleChangeFilterAddress(lqList);
+                          onClose();
+                        }}
+                      />
+                    );
+                  }
+                  return null;
+                }}
+              />
+            )}
           </Box>
-        )}
+
+          {/* filter tag */}
+          {(hasFilterAddress || !!filterTokens.length) && (
+            <Box
+              sx={{
+                my: 0,
+              }}
+            >
+              {hasFilterAddress ? (
+                <FilterAddressTags
+                  lqList={filterAddressLqList}
+                  onDeleteTag={() => handleChangeFilterAddress([])}
+                />
+              ) : (
+                ''
+              )}
+              <FilterTokenTags
+                tags={filterTokens}
+                onDeleteTag={handleDeleteToken}
+              />
+            </Box>
+          )}
+        </Box>
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          fontSize: 14,
+          color: 'text.secondary',
+
+        }}>
+          <Checkbox
+            sx={{
+              mr: 8,
+            }}
+            checked={isHideSmallAsset}
+            onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
+              const { checked } = evt.target;
+              setIsHideSmallAsset(checked);
+            }}
+          />
+          Hide small assets
+        </Box>
       </Box>
 
       {/* list */}
@@ -1471,6 +1513,7 @@ export default function MyLiquidity({
             setOperatePool={setOperatePool}
             supportAMM={supportAMMV2 || supportAMMV3}
             getMigrationPairAndMining={getMigrationPairAndMining}
+            isHideSmallAsset={isHideSmallAsset}
           />
         </DataCardGroup>
       ) : (
@@ -1484,6 +1527,7 @@ export default function MyLiquidity({
             supportAMM={supportAMMV2 || supportAMMV3}
             onlyV3={onlyV3}
             getMigrationPairAndMining={getMigrationPairAndMining}
+            isHideSmallAsset={isHideSmallAsset}
           />
 
           <CardStatus
