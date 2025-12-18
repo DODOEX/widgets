@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.0.2-zetachain.121",
+  "version": "3.0.2-zetachain.122",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -162,4 +162,3 @@
     "typescript": "^5.6.3"
   }
 }
-
