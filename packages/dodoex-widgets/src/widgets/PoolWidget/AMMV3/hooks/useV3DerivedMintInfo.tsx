@@ -59,6 +59,7 @@ export function useV3DerivedMintInfo({
   invertPrice: boolean;
   ticksAtLimit: { [bound in Bound]?: boolean | undefined };
   isTaxed: boolean;
+  invalidPrice?: boolean;
 } {
   const { account } = useWalletInfo();
 
@@ -581,5 +582,6 @@ export function useV3DerivedMintInfo({
     invertPrice,
     ticksAtLimit,
     isTaxed,
+    invalidPrice,
   };
 }

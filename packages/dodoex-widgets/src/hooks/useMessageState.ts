@@ -1,3 +1,4 @@
+import React from 'react';
 import { create } from 'zustand';
 
 interface Notify {
@@ -6,7 +7,7 @@ interface Notify {
   timeout?: number;
   content?: string;
   link?: {
-    text: string;
+    text: React.ReactNode;
     outerLink?: string;
   };
 }

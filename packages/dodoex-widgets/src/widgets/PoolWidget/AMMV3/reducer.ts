@@ -9,6 +9,8 @@ export interface StateProps {
   quoteToken: Maybe<Currency>;
   feeAmount: FeeAmount | undefined;
 
+  step?: number;
+
   readonly independentField: Field;
   readonly typedValue: string;
   readonly startPriceTypedValue: string; // for the case when there's no liquidity
@@ -29,6 +31,7 @@ export enum Types {
   typeLeftRangeInput,
   typeRightRangeInput,
   typeInput,
+  UpdateStep,
 }
 
 type Payload = {
@@ -44,6 +47,7 @@ type Payload = {
   [Types.typeLeftRangeInput]: { typedValue: string };
   [Types.typeRightRangeInput]: { typedValue: string };
   [Types.typeInput]: { field: Field; typedValue: string; noLiquidity: boolean };
+  [Types.UpdateStep]: number;
 };
 
 export type Actions = ActionMap<Payload>[keyof ActionMap<Payload>];
@@ -170,6 +174,13 @@ export function reducer(state: StateProps, action: Actions): StateProps {
           typedValue,
         };
       }
+    }
+
+    case Types.UpdateStep: {
+      return {
+        ...state,
+        step: action.payload,
+      };
     }
 
     default:

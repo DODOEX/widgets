@@ -157,7 +157,7 @@ export default function Message() {
               [theme.breakpoints.up('tablet')]: {
                 p: 20,
                 width: 'auto',
-                maxWidth: 328,
+                maxWidth: 380,
               },
             }}
           >
@@ -193,7 +193,7 @@ export default function Message() {
               >
                 <Box
                   sx={{
-                    typography: 'caption',
+                    fontWeight: 600,
                   }}
                 >
                   {notify?.message}

@@ -981,7 +981,6 @@ export default function AddLiquidityList({
     <>
       <Box
         sx={{
-          pt: 12,
           pb: 20,
           display: 'flex',
           flexDirection: 'column',

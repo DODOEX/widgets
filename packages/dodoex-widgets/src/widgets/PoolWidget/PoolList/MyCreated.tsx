@@ -702,15 +702,17 @@ export default function MyCreated({
           },
         }}
       >
-        <Box
-          sx={{
-            [theme.breakpoints.up('tablet')]: {
-              mr: 'auto',
-            },
-          }}
-        >
-          {children}
-        </Box>
+        {!!children && (
+          <Box
+            sx={{
+              [theme.breakpoints.up('tablet')]: {
+                mr: 'auto',
+              },
+            }}
+          >
+            {children}
+          </Box>
+        )}
 
         {!onlyChainId && (
           <SelectChain
