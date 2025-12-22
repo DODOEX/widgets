@@ -106,17 +106,41 @@ export function constructSolanaBridgeRouteTransaction({
 }: {
   data: string;
 }) {
-  // Ensure rawBrief.data is a valid string
+  // // Ensure rawBrief.data is a valid string
+  // if (!data || typeof data !== 'string') {
+  //   throw new Error('Invalid transaction data');
+  // }
+
+  // // Create buffer from base64 string
+  // // 兼容 Node.js 和浏览器
+  // let serializedTransaction: Uint8Array;
+  // if (typeof Buffer !== 'undefined') {
+  //   serializedTransaction = new Uint8Array(Buffer.from(data, 'base64'));
+  // } else {
+  //   const binaryString = atob(data);
+  //   serializedTransaction = new Uint8Array(binaryString.length);
+  //   for (let i = 0; i < binaryString.length; i++) {
+  //     serializedTransaction[i] = binaryString.charCodeAt(i);
+  //   }
+  // }
+
+  // const message = Message.from(serializedTransaction);
+  // const transaction = Transaction.populate(message);
+
+  // return transaction;
+
+  // 1. 基础校验
   if (!data || typeof data !== 'string') {
     throw new Error('Invalid transaction data');
   }
 
-  // Create buffer from base64 string
-  // 兼容 Node.js 和浏览器
+  // 2. 将 Base64 转换为 Uint8Array (二进制数据)
   let serializedTransaction: Uint8Array;
   if (typeof Buffer !== 'undefined') {
+    // Node.js 环境
     serializedTransaction = new Uint8Array(Buffer.from(data, 'base64'));
   } else {
+    // 浏览器环境 (使用 atob)
     const binaryString = atob(data);
     serializedTransaction = new Uint8Array(binaryString.length);
     for (let i = 0; i < binaryString.length; i++) {
@@ -124,8 +148,9 @@ export function constructSolanaBridgeRouteTransaction({
     }
   }
 
-  const message = Message.from(serializedTransaction);
-  const transaction = Transaction.populate(message);
+  // 3. 反序列化为 VersionedTransaction
+  // 后端使用的是 transaction.serialize()，所以这里必须用 VersionedTransaction.deserialize
+  const transaction = VersionedTransaction.deserialize(serializedTransaction);
 
   return transaction;
 }
