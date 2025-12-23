@@ -14,9 +14,12 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "typescript": "^5.6.3",
     "web-vitals": "^2.1.4"
+  },
+  "resolutions": {
+    "json5": "^2.2.2"
   },
   "scripts": {
     "start": "react-scripts start",

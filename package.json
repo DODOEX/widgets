@@ -21,6 +21,9 @@
     "packages/*"
   ],
   "license": "GPL-3.0-or-later",
+  "resolutions": {
+    "json5": "^2.2.2"
+  },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
