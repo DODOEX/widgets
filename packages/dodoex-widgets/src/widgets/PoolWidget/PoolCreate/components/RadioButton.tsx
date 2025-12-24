@@ -53,6 +53,7 @@ export default function RadioButton({
           justifyContent: 'space-between',
           typography: 'caption',
           pr: 2,
+          textAlign: 'left',
           color: selected
             ? isLight
               ? theme.palette.text.primary

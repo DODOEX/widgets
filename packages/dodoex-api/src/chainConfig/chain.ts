@@ -63,4 +63,5 @@ export enum ChainId {
   PHAROS_ATLANTIC_TESTNET = 688689,
 
   STABLE_TESTNET = 2201,
+  STABLE = 988,
 }

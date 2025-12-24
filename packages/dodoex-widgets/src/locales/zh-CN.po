@@ -40,6 +40,10 @@ msgstr "连接 {0}..."
 msgid "Total Number of Traders"
 msgstr "累计交易用户"
 
+#: src/components/TokenPicker/TokenDetailInfo.tsx:48
+msgid "Token Info"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:43
 msgid "Volume"
 msgstr "交易量"
@@ -58,7 +62,7 @@ msgstr "{0} 等待中"
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:493
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:362
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:785
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:786
 msgid "Removing"
 msgstr "提取"
 
@@ -124,8 +128,8 @@ msgstr "忽略"
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:287
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:436
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:85
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:322
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:658
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:323
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:659
 msgid "Pool Type"
 msgstr "类型"
 
@@ -136,7 +140,7 @@ msgstr "赎回中"
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:496
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:365
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:788
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:789
 msgid "Adding"
 msgstr "添加"
 
@@ -303,7 +307,7 @@ msgstr "流动性"
 msgid "APR"
 msgstr "APR"
 
-#: src/components/TokenPicker/index.tsx:169
+#: src/components/TokenPicker/index.tsx:213
 msgid "Enter the token symbol or address"
 msgstr "输入代币符号或地址"
 
@@ -375,6 +379,7 @@ msgstr "创建资金池"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:429
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:582
+#: src/components/TokenPicker/index.tsx:111
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:198
 #: src/widgets/PoolWidget/PoolCreate/components/SelectAndInput.tsx:52
 msgid "Custom"
@@ -457,7 +462,7 @@ msgstr "未找到匹配结果"
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:432
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:316
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:654
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:655
 msgid "Pair"
 msgstr "交易对"
 
@@ -687,8 +692,8 @@ msgstr "跨链费用不足，至少需要 {0} {1} "
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:112
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:214
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:319
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:377
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:663
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:378
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:664
 msgid "TVL"
 msgstr "TVL"
 
@@ -796,7 +801,7 @@ msgstr "邀请"
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 msgstr "该池的价格不在你选定的区间内。你的仓位目前不能赚取交易手续费。"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:612
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:613
 msgid "{0}"
 msgstr "{0}"
 
@@ -1000,7 +1005,7 @@ msgstr "设置已切换至闪兑模式"
 msgid "Quote not available"
 msgstr "没有报价"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1081
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1082
 msgid "My pool share"
 msgstr "我的资金池份额"
 
@@ -1024,8 +1029,8 @@ msgstr "没有找到符合条件的挖矿项目"
 
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:255
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:625
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:290
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:897
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:291
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:898
 msgid "Fee rate"
 msgstr "手续费费率"
 
@@ -1140,6 +1145,10 @@ msgstr "类似 AMM 做市策略，适用于大多数币种"
 msgid "Swap summary"
 msgstr "交易预览"
 
+#: src/components/TokenPicker/ImportToken.tsx:146
+msgid "Unknown Source"
+msgstr ""
+
 #: src/widgets/MiningWidget/MiningList/operate-area/ClaimTips.tsx:47
 msgid "You will also claim all rewards from this pool."
 msgstr "你也将从这个池子里领取所有奖励。"
@@ -1206,6 +1215,11 @@ msgstr "资金池份额"
 msgid "Search by address"
 msgstr "输入地址"
 
+#: src/components/TokenPicker/ImportToken.tsx:77
+#: src/components/TokenPicker/TokenDetailInfo.tsx:80
+msgid "This token doesn't appear on the token list.Make sure this is the token that you want to trade."
+msgstr ""
+
 #: src/widgets/PoolWidget/AMMV3/hooks/useDerivedV3BurnInfo.tsx:99
 msgid "Enter a percent"
 msgstr "输入百分比"
@@ -1223,8 +1237,8 @@ msgstr "开始时间"
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:211
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:677
 #: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:190
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:246
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:953
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:247
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:954
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:20
 msgid "Mining"
 msgstr "挖矿"
@@ -1410,8 +1424,8 @@ msgstr "手续费率"
 msgid "You are making changes to the liquidity of a private pool. This is a highly discretionary operation that may cause substantial inflows/outflows of funds and changes in market prices. Please make sure you are fully aware of the implications of each parameter modification."
 msgstr "您正在修改私有池的流动性。这是一项自由度极高的操作，有可能造成资金流入/流出，也有可能造成市场价格变化。请确保您清楚每一项修改的含义。"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:568
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:682
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:569
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:683
 msgid "Price Range"
 msgstr "价格区间"
 
@@ -1423,8 +1437,8 @@ msgstr "{0} 已充值"
 #: src/widgets/PoolWidget/AMMV2Create/MyLiqidity.tsx:64
 #: src/widgets/PoolWidget/AMMV3/components/PositionAmountPreview.tsx:222
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:28
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:505
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:677
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:506
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:678
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:430
 msgid "My Liquidity"
 msgstr "我的流动性"
@@ -1742,7 +1756,7 @@ msgstr "服务升级中, 请等待或重试"
 msgid "Gas price is too low, please adjust in your wallet and try again"
 msgstr "Gas 价格过低, 请调整后重试"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:404
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:405
 msgid "My Pool Share"
 msgstr "我的资金池份额"
 
@@ -1879,6 +1893,10 @@ msgstr "每日奖励"
 msgid "Second"
 msgstr "秒"
 
+#: src/components/TokenPicker/ImportToken.tsx:170
+msgid "Import"
+msgstr ""
+
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:398
 msgid "Total Swap Volume"
 msgstr "累计交易量"
@@ -1946,7 +1964,7 @@ msgstr "已质押"
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:749
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:284
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:591
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1211
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1212
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:144
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:15
 msgid "Add"
@@ -1961,6 +1979,10 @@ msgstr "{0} 余额不足"
 #: src/widgets/PoolWidget/AMMV3/components/Badge/AMMV3.tsx:21
 msgid "AMM V3"
 msgstr "AMM V3"
+
+#: src/components/TokenPicker/ImportToken.tsx:46
+msgid "Import Token"
+msgstr ""
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:114
 msgid "The dynamic slippage is provided by DODO team through analyzing historical transactions."
@@ -2011,6 +2033,10 @@ msgstr "挖矿一旦开始，无法终止。"
 msgid "Select a liquidity pool"
 msgstr "查找资金池"
 
+#: src/components/TokenPicker/TokenDetailInfo.tsx:85
+msgid "This is an official appear <0/>on the token list"
+msgstr ""
+
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/SingleTokenSelect.tsx:137
 msgid "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
 msgstr "请勿选择非标准ERC20代币，可能导致未知错误！"
@@ -2022,7 +2048,7 @@ msgstr "请勿选择非标准ERC20代币，可能导致未知错误！"
 msgid "Create Pool"
 msgstr "创建资金池"
 
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:776
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:777
 msgid "Managing"
 msgstr "操作中"
 
@@ -2060,6 +2086,10 @@ msgstr "市价："
 #: src/widgets/PoolWidget/PoolCreate/components/GasWrapGasTokenError.tsx:48
 msgid "{0}-{1} is not supported. Please select another pair."
 msgstr "当前不支持 {0}-{1} 币对，请重新选择。"
+
+#: src/components/TokenPicker/index.tsx:110
+msgid "ALL"
+msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:255
 msgid "Confirming..."
@@ -2127,8 +2157,8 @@ msgstr "详情"
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:443
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:100
 #: src/widgets/PoolWidget/PoolList/components/TokenListPoolItem.tsx:102
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:347
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:668
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:348
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:669
 msgid "APY"
 msgstr "预估年化（APY）"
 
@@ -2191,8 +2221,8 @@ msgstr "初始价格提示"
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:212
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:269
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:579
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:597
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1198
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:598
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1199
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:248
 msgid "Remove"
@@ -2292,7 +2322,7 @@ msgid "This trading pair does not have enough historical data and has used the d
 msgstr "该交易对没有足够的历史交易数据，已使用默认滑点值"
 
 #: src/widgets/PoolWidget/AMMV3/components/PositionViewCard.tsx:249
-#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1211
+#: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1212
 msgid "Manage"
 msgstr "管理"
 
@@ -2323,6 +2353,10 @@ msgstr "最大滑点"
 #: src/hooks/Submission/getExecutionErrorMsg.ts:25
 msgid "User denied transaction signature."
 msgstr "用户拒绝交易签名."
+
+#: src/components/TokenPicker/ImportToken.tsx:33
+msgid "ADD"
+msgstr ""
 
 #: src/widgets/MiningWidget/MiningList/components/ShareModeSelect.tsx:30
 msgid "Copy link"

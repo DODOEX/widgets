@@ -5,6 +5,7 @@ import {
   useTheme,
   Tooltip,
   LoadingSkeleton,
+  Checkbox,
 } from '@dodoex/components';
 import { PoolApi, PoolType } from '@dodoex/api';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -15,7 +16,7 @@ import {
   getPoolAMMOrPMM,
 } from '../utils';
 import { ChainId } from '@dodoex/api';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { t, Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
@@ -1250,6 +1251,7 @@ export default function MyLiquidity({
   const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
     useUserOptions();
   const [onlyV3Checked, setOnlyV3] = React.useState(false);
+  const [isHideSmallAsset, setIsHideSmallAsset] = React.useState(true);
 
   const {
     filterTokens,
@@ -1302,16 +1304,44 @@ export default function MyLiquidity({
     ...query,
   });
 
-  let lqList = fetchResult.data?.liquidity_list?.lqList ?? [];
   const hasFilterAddress = !!filterAddressLqList?.length;
-  if (hasFilterAddress) {
-    lqList = [...filterAddressLqList];
-  } else if (filterChainIds) {
-    lqList =
-      fetchResult.data?.liquidity_list?.lqList?.filter((lq) =>
-        filterChainIds.includes(lq?.pair?.chainId ?? 0),
-      ) ?? [];
-  }
+  const lqList = useMemo(() => {
+    let list = fetchResult.data?.liquidity_list?.lqList ?? [];
+    if (hasFilterAddress) {
+      list = [...filterAddressLqList];
+    } else if (filterChainIds) {
+      list =
+        fetchResult.data?.liquidity_list?.lqList?.filter((lq) =>
+          filterChainIds.includes(lq?.pair?.chainId ?? 0),
+        ) ?? [];
+    }
+    if (isHideSmallAsset) {
+      list = list.filter((lq) => {
+        if (!lq) return false;
+        const position = lq.liquidityPositions?.[0];
+        if (
+          isHideSmallAsset &&
+          position?.liquidityUSD &&
+          new BigNumber(position?.liquidityUSD).lt(0.1)
+        )
+          return false;
+        if (
+          isHideSmallAsset &&
+          position?.liquidityTokenBalance &&
+          new BigNumber(position?.liquidityTokenBalance).lt(0.000001)
+        )
+          return false;
+        return true;
+      });
+    }
+    return list;
+  }, [
+    fetchResult.data?.liquidity_list?.lqList,
+    filterAddressLqList,
+    filterChainIds,
+    hasFilterAddress,
+    isHideSmallAsset,
+  ]);
 
   const filterSmallDeviceWidth = 475;
 
@@ -1321,6 +1351,7 @@ export default function MyLiquidity({
         sx={{
           py: 16,
           display: 'flex',
+          justifyContent: 'space-between',
           gap: 8,
           ...(minDevice(filterSmallDeviceWidth)
             ? {}
@@ -1338,105 +1369,136 @@ export default function MyLiquidity({
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'center',
-            gap: 8,
             ...(minDevice(filterSmallDeviceWidth)
               ? {}
               : {
-                  '& > button': {
-                    flex: 1,
-                    flexBasis: '100%',
-                  },
+                  flexDirection: 'column',
                 }),
-            ...(isMobile
-              ? {
-                  flexWrap: 'wrap',
-                }
-              : {}),
           }}
         >
-          {!onlyChainId && (
-            <SelectChain
-              chainId={activeChainId}
-              setChainId={handleChangeActiveChainId}
-              sx={{
-                justifyContent: 'space-between',
-              }}
-              showNewIcon={supportAMMIcon}
-            />
-          )}
-          {showOnlyV3Checked && (
-            <OnlyV3Toggle
-              onlyV3={onlyV3}
-              setOnlyV3={setOnlyV3}
-              sx={
-                isMobile
-                  ? {
-                      flexGrow: 1,
-                      flexBasis: '100%',
-                    }
-                  : undefined
-              }
-            />
-          )}
-          {tokenAndPoolFilter?.element ?? (
-            <TokenAndPoolFilter
-              value={filterTokens}
-              onChange={handleChangeFilterTokens}
-              searchAddress={async (address, onClose) => {
-                const query = graphQLRequests.getInfiniteQuery(
-                  PoolApi.graphql.fetchLiquidityList,
-                  'currentPage',
-                  {
-                    where: {
-                      ...defaultQueryFilter,
-                      filterState: {
-                        address,
-                        ...defaultQueryFilter.filterState,
-                      },
-                    },
-                  },
-                );
-                const result = await queryClient.fetchQuery(query);
-                const lqList = result.liquidity_list?.lqList;
-                if (lqList?.length) {
-                  return (
-                    <TokenListPoolItem
-                      list={lqList}
-                      onClick={() => {
-                        handleChangeFilterAddress(lqList);
-                        onClose();
-                      }}
-                    />
-                  );
-                }
-                return null;
-              }}
-            />
-          )}
-        </Box>
-
-        {/* filter tag */}
-        {(hasFilterAddress || !!filterTokens.length) && (
           <Box
             sx={{
-              my: 0,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              ...(minDevice(filterSmallDeviceWidth)
+                ? {}
+                : {
+                    '& > button': {
+                      flex: 1,
+                      flexBasis: '100%',
+                    },
+                  }),
+              ...(isMobile
+                ? {
+                    flexWrap: 'wrap',
+                  }
+                : {}),
             }}
           >
-            {hasFilterAddress ? (
-              <FilterAddressTags
-                lqList={filterAddressLqList}
-                onDeleteTag={() => handleChangeFilterAddress([])}
+            {!onlyChainId && (
+              <SelectChain
+                chainId={activeChainId}
+                setChainId={handleChangeActiveChainId}
+                sx={{
+                  justifyContent: 'space-between',
+                }}
+                showNewIcon={supportAMMIcon}
               />
-            ) : (
-              ''
             )}
-            <FilterTokenTags
-              tags={filterTokens}
-              onDeleteTag={handleDeleteToken}
-            />
+            {showOnlyV3Checked && (
+              <OnlyV3Toggle
+                onlyV3={onlyV3}
+                setOnlyV3={setOnlyV3}
+                sx={
+                  isMobile
+                    ? {
+                        flexGrow: 1,
+                        flexBasis: '100%',
+                      }
+                    : undefined
+                }
+              />
+            )}
+            {tokenAndPoolFilter?.element ?? (
+              <TokenAndPoolFilter
+                value={filterTokens}
+                onChange={handleChangeFilterTokens}
+                searchAddress={async (address, onClose) => {
+                  const query = graphQLRequests.getInfiniteQuery(
+                    PoolApi.graphql.fetchLiquidityList,
+                    'currentPage',
+                    {
+                      where: {
+                        ...defaultQueryFilter,
+                        filterState: {
+                          address,
+                          ...defaultQueryFilter.filterState,
+                        },
+                      },
+                    },
+                  );
+                  const result = await queryClient.fetchQuery(query);
+                  const lqList = result.liquidity_list?.lqList;
+                  if (lqList?.length) {
+                    return (
+                      <TokenListPoolItem
+                        list={lqList}
+                        onClick={() => {
+                          handleChangeFilterAddress(lqList);
+                          onClose();
+                        }}
+                      />
+                    );
+                  }
+                  return null;
+                }}
+              />
+            )}
           </Box>
-        )}
+
+          {/* filter tag */}
+          {(hasFilterAddress || !!filterTokens.length) && (
+            <Box
+              sx={{
+                my: 0,
+              }}
+            >
+              {hasFilterAddress ? (
+                <FilterAddressTags
+                  lqList={filterAddressLqList}
+                  onDeleteTag={() => handleChangeFilterAddress([])}
+                />
+              ) : (
+                ''
+              )}
+              <FilterTokenTags
+                tags={filterTokens}
+                onDeleteTag={handleDeleteToken}
+              />
+            </Box>
+          )}
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            fontSize: 14,
+            color: 'text.secondary',
+          }}
+        >
+          <Checkbox
+            sx={{
+              mr: 8,
+            }}
+            checked={isHideSmallAsset}
+            onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
+              const { checked } = evt.target;
+              setIsHideSmallAsset(checked);
+            }}
+          />
+          Hide small assets
+        </Box>
       </Box>
 
       {/* list */}
