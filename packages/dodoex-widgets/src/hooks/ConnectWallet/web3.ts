@@ -1,5 +1,4 @@
 import { initializeConnector, Web3ReactHooks } from '@web3-react/core';
-import { EIP1193 } from '@web3-react/eip1193';
 import { WalletConnect as WalletConnectV2 } from '@web3-react/walletconnect-v2';
 import { MetaMask } from '@web3-react/metamask';
 import {
@@ -10,6 +9,7 @@ import {
 import { JsonRpcProvider } from '@ethersproject/providers';
 import JsonRpcConnector from './Connectors/JsonRpcConnector';
 import { ChainId } from '@dodoex/api';
+import { EIP1193 } from './Connectors/EIP1193';
 
 export type Web3Connection = [Connector, Web3ReactHooks];
 
