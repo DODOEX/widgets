@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/icons",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "DODO icons distributed as SVG React components.",
   "main": "build/index.js",
   "source": "src/index.js",
@@ -41,8 +41,8 @@
   },
   "license": "GPL-3.0-or-later",
   "peerDependencies": {
-    "@types/react": "^17.0.0 || ^18.0.0",
-    "react": "^17.0.0 || ^18.0.0"
+    "@types/react": "^18.0.0 || ^19.0.0",
+    "react": "^18.0.0 || ^19.0.0"
   },
   "peerDependenciesMeta": {
     "@types/react": {
