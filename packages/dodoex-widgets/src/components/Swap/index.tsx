@@ -81,7 +81,7 @@ export interface SwapProps {
   onPayTokenChange?: (token: TokenInfo) => void;
   onReceiveTokenChange?: (token: TokenInfo) => void;
 }
-
+console.log('[WIDGETS DEBUG] Swap component loaded');
 export function Swap({
   showPreviewInfoCard,
   slippageQuickInput,

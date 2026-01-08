@@ -448,14 +448,9 @@ export function ReviewDialog({
               )}
             </Box>
             <Box>
-              <Trans
-                id="Price impact reaches <0>{priceImpact}</0>%, accept the quote"
-                // @ts-ignore: Unreachable code error
-                components={{
-                  0: <Box component="span" sx={{ color: 'error.main' }} />,
-                }}
-                values={{ priceImpact }}
-              />
+              <Trans>
+                Price impact reaches <Box component="span" sx={{ color: 'error.main' }}>{priceImpact}</Box>%, accept the quote
+              </Trans>
             </Box>
           </Box>
         )}

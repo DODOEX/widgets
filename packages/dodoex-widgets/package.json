@@ -67,9 +67,9 @@
     "@emotion/styled": "^11.10.0",
     "@ethersproject/bignumber": "^5.6.2",
     "@ethersproject/contracts": "^5.7.0",
-    "@lingui/core": "^4.3.0",
-    "@lingui/macro": "^4.3.0",
-    "@lingui/react": "^4.3.0",
+    "@lingui/core": "^5.7.0",
+    "@lingui/macro": "^5.7.0",
+    "@lingui/react": "^5.7.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
@@ -87,17 +87,17 @@
     "dayjs": "^1.11.11",
     "identicon.js": "^2.3.3",
     "jsbi": "^3.1.4",
-    "konva": "^9.3.6",
+    "konva": "^9.3.15",
     "lodash": "^4.17.21",
     "make-plural": "^7.0.0",
     "moment": "^2.29.4",
-    "react-datetime": "^3.1.1",
+    "react-datetime": "^3.3.0",
     "react-icons": "^5.0.1",
     "react-infinite-scroller": "^1.2.6",
-    "react-konva": "^18.2.10",
+    "react-konva": "^19.0.0",
     "react-transition-group": "^4.4.5",
-    "react-window": "^1.8.8",
-    "recharts": "^2.12.7",
+    "react-window": "^1.8.11",
+    "recharts": "^2.15.0",
     "rmc-date-picker": "^6.0.10",
     "tiny-invariant": "^1.1.0",
     "zustand": "^4.5.5"
@@ -107,12 +107,16 @@
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },
+  "peerDependenciesMeta": {
+    "react-infinite-scroller": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.16.7",
-    "@lingui/babel-preset-react": "^2.9.2",
-    "@lingui/cli": "^4.3.0",
+    "@lingui/cli": "^5.7.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
     "@nomiclabs/hardhat-ethers": "^2.1.1",
     "@rollup/plugin-babel": "^6.0.4",
@@ -151,5 +155,8 @@
     "svg-jest": "^1.0.1",
     "ts-jest": "^29.0.1",
     "typescript": "^5.6.3"
+  },
+  "optionalDependencies": {
+    "pino-pretty": "^13.1.3"
   }
 }
