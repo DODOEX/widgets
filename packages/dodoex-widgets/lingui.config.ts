@@ -9,8 +9,9 @@ export default {
     },
   ],
   format: 'po',
-  service: {
-    name: 'TranslationIO',
-    apiKey: process.env.LINGUI_KEY,
-  },
+  // Uncomment if using Translation.io service
+  // service: {
+  //   name: 'TranslationIO',
+  //   apiKey: process.env.LINGUI_KEY,
+  // },
 };

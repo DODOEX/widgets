@@ -81,7 +81,6 @@ export interface SwapProps {
   onPayTokenChange?: (token: TokenInfo) => void;
   onReceiveTokenChange?: (token: TokenInfo) => void;
 }
-
 export function Swap({
   showPreviewInfoCard,
   slippageQuickInput,
