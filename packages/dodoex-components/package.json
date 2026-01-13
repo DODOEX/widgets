@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/components",
-  "version": "3.2.0",
+  "version": "3.2.1-react.01",
   "description": "UI component library",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
@@ -14,7 +14,7 @@
     "prerelease": "yarn run build",
     "release": "semantic-release",
     "release:local": "np --any-branch --no-cleanup --no-tests",
-    "release.npm-publish-beta": "npm publish --tag beta"
+    "release.npm-publish-beta": "yarn run prerelease && npm publish --tag beta"
   },
   "author": "",
   "publishConfig": {

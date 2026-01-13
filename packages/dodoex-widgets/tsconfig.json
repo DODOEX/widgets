@@ -2,6 +2,8 @@
   "extends": "../../tsconfig",
   "compilerOptions": {
     "declarationDir": "./dist/types",
+    "outDir": "./dist",
+    "types": ["react", "react-dom", "node", "jest", "lodash", "d3"],
     "jsx": "preserve",
     "target": "es2016"
   },

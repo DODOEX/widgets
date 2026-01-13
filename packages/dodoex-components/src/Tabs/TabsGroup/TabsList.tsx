@@ -11,7 +11,7 @@ export const TabsList = React.forwardRef<
       sx?: BoxProps['sx'];
     }
 >(function TabsList({ sx, ...props }, ref) {
-  const tabListRef = React.useRef<HTMLDivElement>();
+  const tabListRef = React.useRef<HTMLDivElement>(null);
   const theme = useTheme();
   React.useEffect(() => {
     if (
