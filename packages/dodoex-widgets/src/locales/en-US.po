@@ -219,7 +219,7 @@ msgid "Pay"
 msgstr "Pay"
 
 #: src/components/Swap/components/ReviewDialog.tsx:336
-#: src/components/Swap/index.tsx:445
+#: src/components/Swap/index.tsx:428
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "Due to the market condition, market price and estimated price may have a slight difference"
 
@@ -245,7 +245,7 @@ msgstr "{0} confirmed"
 msgid "Creation Time"
 msgstr "Creation Time"
 
-#: src/components/Swap/index.tsx:554
+#: src/components/Swap/index.tsx:537
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "The current network is inconsistent with the wallet - please switch in wallet"
 
@@ -284,7 +284,7 @@ msgstr "Max price"
 msgid "Staked Tokens"
 msgstr "Staked Tokens"
 
-#: src/components/Swap/index.tsx:453
+#: src/components/Swap/index.tsx:436
 msgid "Current price impact"
 msgstr "Current price impact"
 
@@ -356,7 +356,7 @@ msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 msgid "Confirm"
 msgstr "Confirm"
 
-#: src/components/Swap/index.tsx:1030
+#: src/components/Swap/index.tsx:1013
 msgid "Powered by DODO protocol"
 msgstr "Powered by DODO protocol"
 
@@ -743,7 +743,7 @@ msgstr "Add Position"
 msgid "Emulator"
 msgstr "Emulator"
 
-#: src/components/Swap/index.tsx:710
+#: src/components/Swap/index.tsx:693
 msgid "Transaction Pending"
 msgstr "Transaction Pending"
 
@@ -886,7 +886,7 @@ msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the q
 msgstr "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
-#: src/components/Swap/index.tsx:575
+#: src/components/Swap/index.tsx:558
 msgid "Fetching best price..."
 msgstr "Fetching best price..."
 
@@ -906,7 +906,7 @@ msgstr "*Collecting fees will withdraw currently available fees for you."
 msgid "Related CrowdPooling"
 msgstr "Related CrowdPooling"
 
-#: src/components/Swap/index.tsx:799
+#: src/components/Swap/index.tsx:782
 msgid "Review Swap"
 msgstr "Review Swap"
 
@@ -943,7 +943,7 @@ msgstr "Any Ratio"
 msgid "Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes."
 msgstr "Once created, you can adjust the pool’s market-making price at any time. This option is suitable for assets with fluctuating pegged prices. Adjusting the pool’s market-making price allows for more competitive quotes."
 
-#: src/components/Swap/index.tsx:717
+#: src/components/Swap/index.tsx:700
 msgid "Select Tokens"
 msgstr "Select Tokens"
 
@@ -1035,13 +1035,13 @@ msgstr "My Pools"
 msgid "Share Of Pool"
 msgstr "Share Of Pool"
 
-#: src/components/Swap/index.tsx:897
+#: src/components/Swap/index.tsx:880
 msgid "The setting has been switched to swap mode"
 msgstr "The setting has been switched to swap mode"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:61
-#: src/components/Swap/index.tsx:630
-#: src/components/Swap/index.tsx:759
+#: src/components/Swap/index.tsx:613
+#: src/components/Swap/index.tsx:742
 msgid "Quote not available"
 msgstr "Quote not available"
 
@@ -1113,7 +1113,7 @@ msgstr "The area of the chart indicates the buy/sell volume of {baseSymbol} that
 msgid "Your position will appear here."
 msgstr "Your position will appear here."
 
-#: src/components/Swap/index.tsx:744
+#: src/components/Swap/index.tsx:727
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
 
@@ -1245,7 +1245,7 @@ msgstr "Tx"
 msgid "Single"
 msgstr "Single"
 
-#: src/components/Swap/index.tsx:789
+#: src/components/Swap/index.tsx:772
 msgid "Review Cross Chain"
 msgstr "Review Cross Chain"
 
@@ -1529,7 +1529,7 @@ msgstr "Total Swap Fee"
 msgid "On"
 msgstr "On"
 
-#: src/components/Swap/index.tsx:727
+#: src/components/Swap/index.tsx:710
 #: src/hooks/Token/useGetTokenStatus.ts:60
 #: src/hooks/Token/useTokenStatus.ts:134
 msgid "Approve"
@@ -1896,7 +1896,7 @@ msgstr "Back"
 msgid "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 msgstr "Dynamic slippage is {recommendSlippage}%,the current slippage setting is higher than the dynamic slippage, which means you are willing to accept a worse final execution price."
 
-#: src/components/Swap/index.tsx:733
+#: src/components/Swap/index.tsx:716
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:534
 msgid "Enter an amount"
 msgstr "Enter an amount"
@@ -1905,7 +1905,7 @@ msgstr "Enter an amount"
 msgid "Ratio"
 msgstr "Ratio"
 
-#: src/components/Swap/index.tsx:727
+#: src/components/Swap/index.tsx:710
 #: src/components/TokenPairStatusButton.tsx:45
 #: src/components/TokenStatusButton.tsx:31
 msgid "Approving"
@@ -2170,7 +2170,7 @@ msgstr "Traders"
 msgid "Unable to SETTLE during the cooling-off period"
 msgstr "Unable to SETTLE during the cooling-off period"
 
-#: src/components/Swap/index.tsx:895
+#: src/components/Swap/index.tsx:878
 msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
@@ -2179,7 +2179,7 @@ msgid "Buy"
 msgstr "Buy"
 
 #. placeholder {0}: getMaxSlippageWarning(fromToken?.chainId)
-#: src/components/Swap/index.tsx:520
+#: src/components/Swap/index.tsx:503
 msgid "The current slippage protection coefficient set exceeds {0}%, which may result in losses."
 msgstr "The current slippage protection coefficient set exceeds {0}%, which may result in losses."
 
@@ -2344,7 +2344,7 @@ msgstr "differs from the price quoted by DODO by {lqAndDodoCompareText}"
 msgid "Real Time"
 msgstr "Real Time"
 
-#: src/components/Swap/index.tsx:591
+#: src/components/Swap/index.tsx:574
 msgid "Unsupported network - switch to trade"
 msgstr "Unsupported network - switch to trade"
 
@@ -2360,7 +2360,7 @@ msgstr "Paid"
 msgid "Failed to add"
 msgstr "Failed to add"
 
-#: src/components/Swap/index.tsx:890
+#: src/components/Swap/index.tsx:873
 #: src/hooks/Swap/useExecuteSwap.ts:60
 msgid "Swap"
 msgstr "Swap"
@@ -2522,7 +2522,7 @@ msgstr "OK"
 msgid "Total Rewards=Daily Rewards*Duration"
 msgstr "Total Rewards=Daily Rewards*Duration"
 
-#: src/components/Swap/index.tsx:770
+#: src/components/Swap/index.tsx:753
 #: src/components/TokenStatusButton.tsx:18
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:146
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:248
