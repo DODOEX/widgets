@@ -7,7 +7,8 @@ import { getAllTokenList, useTokenState } from '../useTokenState';
 
 export function useSelectChainList(side?: 'from' | 'to') {
   const { chainId } = useWeb3React();
-  const allTokenList = useTokenState(getAllTokenList);
+  const state = useTokenState();
+  const allTokenList = useMemo(() => getAllTokenList(state), [state]);
   const { crossChain, onlyChainId } = useUserOptions();
   const hasTokenChainIds = useMemo(() => {
     const result = new Set<ChainId>();

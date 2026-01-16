@@ -1,3 +1,11 @@
+# [@dodoex/api-v3.5.0](https://github.com/DODOEX/widgets/compare/@dodoex/api-v3.4.0...@dodoex/api-v3.5.0) (2026-01-08)
+
+
+### Features
+
+* add stable mainnet ([ae8002b](https://github.com/DODOEX/widgets/commit/ae8002b377cda91f2dd4d44a6fb734e7a77b678d))
+* update versions ([cefb3da](https://github.com/DODOEX/widgets/commit/cefb3da370fc6a64b73cb69f0f9f27152bc2f1f7))
+
 # [@dodoex/api-v3.4.0](https://github.com/DODOEX/widgets/compare/@dodoex/api-v3.3.0...@dodoex/api-v3.4.0) (2025-11-14)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.10.8",
+  "version": "3.15.0",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -23,7 +23,7 @@
     "release": "semantic-release",
     "release:local": "np --any-branch --no-cleanup --no-tests",
     "release.npm-publish": "npm publish --access public",
-    "release.npm-publish-beta": "npm publish --tag beta",
+    "release.npm-publish-beta": "yarn run prerelease && npm publish --tag beta",
     "test": "jest src",
     "test:e2e": "jest e2e"
   },
@@ -58,18 +58,18 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/api": "3.5.0",
-    "@dodoex/components": "^3.1.0",
+    "@dodoex/api": "^3.6.0",
+    "@dodoex/components": "^3.3.0",
     "@dodoex/contract-request": "^1.3.0",
     "@dodoex/dodo-contract-request": "^1.32.0",
-    "@dodoex/icons": "^2.0.3",
+    "@dodoex/icons": "^2.1.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@ethersproject/bignumber": "^5.6.2",
     "@ethersproject/contracts": "^5.7.0",
-    "@lingui/core": "^4.3.0",
-    "@lingui/macro": "^4.3.0",
-    "@lingui/react": "^4.3.0",
+    "@lingui/core": "^5.7.0",
+    "@lingui/macro": "^5.7.0",
+    "@lingui/react": "^5.7.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
@@ -87,32 +87,36 @@
     "dayjs": "^1.11.11",
     "identicon.js": "^2.3.3",
     "jsbi": "^3.1.4",
-    "konva": "^9.3.6",
+    "konva": "^9.3.15",
     "lodash": "^4.17.21",
     "make-plural": "^7.0.0",
     "moment": "^2.29.4",
-    "react-datetime": "^3.1.1",
+    "react-datetime": "^3.3.0",
     "react-icons": "^5.0.1",
     "react-infinite-scroller": "^1.2.6",
-    "react-konva": "^18.2.10",
+    "react-konva": "^19.0.0",
     "react-transition-group": "^4.4.5",
-    "react-window": "^1.8.8",
-    "recharts": "^2.12.7",
+    "react-window": "^1.8.11",
+    "recharts": "^2.15.0",
     "rmc-date-picker": "^6.0.10",
     "tiny-invariant": "^1.1.0",
-    "zustand": "^4.5.5"
+    "zustand": "^5.0.0"
   },
   "peerDependencies": {
     "@babel/runtime": ">=7.17.0",
-    "react": ">=17.0.1",
-    "react-dom": ">=17.0.1"
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-infinite-scroller": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.16.7",
-    "@lingui/babel-preset-react": "^2.9.2",
-    "@lingui/cli": "^4.3.0",
+    "@lingui/cli": "^5.7.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
     "@nomiclabs/hardhat-ethers": "^2.1.1",
     "@rollup/plugin-babel": "^6.0.4",
@@ -124,8 +128,8 @@
     "@rollup/plugin-typescript": "^12.1.1",
     "@rollup/plugin-url": "^8.0.2",
     "@svgr/rollup": "^6.2.1",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/d3": "7.4.3",
     "@types/identicon.js": "^2.3.1",
@@ -151,5 +155,8 @@
     "svg-jest": "^1.0.1",
     "ts-jest": "^29.0.1",
     "typescript": "^5.6.3"
+  },
+  "optionalDependencies": {
+    "pino-pretty": "^13.1.3"
   }
 }

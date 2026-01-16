@@ -9,7 +9,8 @@ export function useDisabledTokenSwitch({
   fromToken: TokenInfo | undefined | null;
   toToken: TokenInfo | undefined | null;
 }) {
-  const tokenList = useTokenState(getAllTokenList);
+  const state = useTokenState();
+  const tokenList = useMemo(() => getAllTokenList(state), [state]);
   return useMemo(() => {
     if (
       fromToken &&

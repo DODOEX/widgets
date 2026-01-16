@@ -148,7 +148,8 @@ export function useFetchRoutePriceBridge({
   const { account, provider } = useWeb3React();
   const { defaultSlippage, loading: slippageLoading } =
     useDefaultSlippage(true);
-  const slippage = useGlobalState((state) => state.slippage || defaultSlippage);
+  const { slippage: stateSlippage } = useGlobalState();
+  const slippage = stateSlippage || defaultSlippage;
   const { apikey } = useUserOptions();
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,

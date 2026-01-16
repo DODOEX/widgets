@@ -25,7 +25,7 @@ export interface TooltipProps {
   title: React.ReactNode | string;
   maxWidth?: string | number;
   sx?: BoxProps['sx'];
-  children: ReactElement<any, string | JSXElementConstructor<any>>;
+  children: React.ReactElement<any, string | JSXElementConstructor<any>>;
   container?: PopperUnstyledProps['container'];
   direction?: PopperUnstyledProps['direction'];
   disablePortal?: PopperUnstyledProps['disablePortal'];
@@ -107,8 +107,8 @@ export default function Tooltip({
   const { isMobile } = useDevices();
   const enterTooltip = useRef(false);
   const enterTrigger = useRef(false);
-  const enterTimer = useRef<NodeJS.Timeout>();
-  const leaveTimer = useRef<NodeJS.Timeout>();
+  const enterTimer = useRef<NodeJS.Timeout | undefined>(undefined);
+  const leaveTimer = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const [childrenRef, setChildrenRef] = useState<HTMLDivElement>();
   const [arrowRef, setArrowRef] = useState<HTMLDivElement>();

@@ -11,7 +11,7 @@ export interface TooltipToastProps {
   arrow?: TooltipProps['arrow'];
   placement?: TooltipProps['placement'];
   leaveDelay?: TooltipProps['leaveDelay'];
-  children: JSX.Element;
+  children: React.ReactElement;
   tooltipSx?: BoxProps['sx'];
   open?: boolean;
   onOpen?: () => void;
