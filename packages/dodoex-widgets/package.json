@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.14.1-react.02",
+  "version": "3.14.1-react.11",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -100,7 +100,7 @@
     "recharts": "^2.15.0",
     "rmc-date-picker": "^6.0.10",
     "tiny-invariant": "^1.1.0",
-    "zustand": "^4.5.5"
+    "zustand": "^5.0.0"
   },
   "peerDependencies": {
     "@babel/runtime": ">=7.17.0",
