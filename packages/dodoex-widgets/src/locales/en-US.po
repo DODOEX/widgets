@@ -22,6 +22,14 @@ msgstr "The smaller the slippage coefficient, the lower the slippage for traders
 msgid "Transaction Time:"
 msgstr "Transaction Time:"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/PriceSettings.tsx:153
+msgid "For tokens with deflationary features enabled,<0>please check here first ></0>"
+msgstr "For tokens with deflationary features enabled,<0>please check here first ></0>"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/index.tsx:217
+msgid "Participating"
+msgstr "Participating"
+
 #: src/hooks/Bridge/useExecuteBridgeRoute.tsx:128
 msgid "Cross Chain"
 msgstr "Cross Chain"
@@ -77,6 +85,7 @@ msgstr "Traders sold ‪{0}‬ {1}, price in the pool increased to {2}"
 msgid "Balance:"
 msgstr "Balance:"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/PriceSettings.tsx:121
 #: src/widgets/PoolWidget/AMMV3/components/TokenPairSelect.tsx:105
 msgid "Select token"
 msgstr "Select token"
@@ -98,6 +107,14 @@ msgstr "Loading info..."
 msgid "* Please note that the Fee Rate cannot be modified after the pool is created"
 msgstr "* Please note that the Fee Rate cannot be modified after the pool is created"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/index.tsx:220
+msgid "History"
+msgstr "History"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:345
+msgid "Join"
+msgstr "Join"
+
 #: src/components/ConnectWallet/NeedConnectButton.tsx:84
 msgid "Switch to {0}"
 msgstr "Switch to {0}"
@@ -116,6 +133,7 @@ msgstr "Create Liquidity Mining"
 msgid "By adding liquidity you’ll earn <0>{0}</0> of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 msgstr "By adding liquidity you’ll earn <0>{0}</0> of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/TimeSettings.tsx:84
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:159
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:306
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:229
@@ -150,6 +168,7 @@ msgstr "Adding"
 msgid "Deposit Ratio"
 msgstr "Deposit Ratio"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:71
 #: src/widgets/MiningWidget/OperateArea/AssociateMine.tsx:233
 msgid "Ended"
 msgstr "Ended"
@@ -157,6 +176,10 @@ msgstr "Ended"
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:389
 msgid "The end time must be later than the start time."
 msgstr "The end time must be later than the start time."
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/index.tsx:44
+msgid "Set Intro"
+msgstr "Set Intro"
 
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:31
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:39
@@ -168,6 +191,10 @@ msgstr "Pools with lower transaction fees will attract more traders."
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:41
 msgid "Single-Token"
 msgstr "Single-Token"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:70
+msgid "Settling"
+msgstr "Settling"
 
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:301
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/TokenPairSelect.tsx:111
@@ -196,6 +223,10 @@ msgstr "Search by address"
 #: src/widgets/PoolWidget/PoolCreate/index.tsx:353
 msgid "Asset ratio within the pool"
 msgstr "Asset ratio within the pool"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/PriceSettings.tsx:185
+msgid "The portion of the Crowdpooling tokens that will be used to raise funds. The leftover tokens that are not sold and the sale proceeds will together create a liquidity pool after the Crowdpooling period ends."
+msgstr "The portion of the Crowdpooling tokens that will be used to raise funds. The leftover tokens that are not sold and the sale proceeds will together create a liquidity pool after the Crowdpooling period ends."
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:118
 #: src/widgets/MiningWidget/MiningList/operate-area/AssociatedMine.tsx:155
@@ -231,6 +262,10 @@ msgstr "Private Pool"
 msgid "{0} confirmed"
 msgstr "{0} confirmed"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/TimeSettings.tsx:110
+msgid "Participants will receive their tokens after this time."
+msgstr "Participants will receive their tokens after this time."
+
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:531
 msgid "Creation Time"
 msgstr "Creation Time"
@@ -243,9 +278,17 @@ msgstr "The current network is inconsistent with the wallet - please switch in w
 msgid "Set price range"
 msgstr "Set price range"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/MyCrowdpooling.tsx:175
+msgid "My Crowdpoolings"
+msgstr "My Crowdpoolings"
+
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:425
 msgid "Full range"
 msgstr "Full range"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/VoteConfirm.tsx:40
+msgid "Confirm Vote"
+msgstr "Confirm Vote"
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:594
 msgid "*Depending on the block time, the real amount of Daily Rewards may deviate slightly."
@@ -264,6 +307,18 @@ msgstr "Expected to start at block {0} and end at block {1}. There may be slight
 msgid "The token amount is calculated by initial price."
 msgstr "The token amount is calculated by initial price."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/TimeSettings.tsx:82
+msgid "Participants can only stake after the Crowdpooling period starts."
+msgstr "Participants can only stake after the Crowdpooling period starts."
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CrowdpoolingShareDialog.tsx:68
+msgid "Crowdpooling"
+msgstr "Crowdpooling"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/OptionalSettings.tsx:121
+msgid "Pool Transaction Fee"
+msgstr "Pool Transaction Fee"
+
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:159
 msgid "Max price"
 msgstr "Max price"
@@ -275,6 +330,14 @@ msgstr "Staked Tokens"
 #: src/components/Swap/index.tsx:454
 msgid "Current price impact"
 msgstr "Current price impact"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CrowdpoolingOverview.tsx:33
+msgid "Overview"
+msgstr "Overview"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/PriceSettings.tsx:298
+msgid "Token price during the Crowdpooling campaign"
+msgstr "Token price during the Crowdpooling campaign"
 
 #: src/utils/time.ts:17
 msgid "Minute"
@@ -291,6 +354,10 @@ msgstr "Edit Parameter Settings"
 #: src/utils/time.ts:23
 msgid "Hour"
 msgstr "Hour"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/Dashboard.tsx:286
+msgid "Retry"
+msgstr "Retry"
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:169
 #: src/widgets/PoolWidget/PoolCreate/components/StepTitle.tsx:28
@@ -325,6 +392,14 @@ msgstr "Failed"
 msgid "Community Treasury"
 msgstr "Community Treasury"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/TimeSettings.tsx:181
+msgid "{days} Days"
+msgstr "{days} Days"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/OptionalSettings.tsx:119
+msgid "This is the trading fee rate of the liquidity pool generated at the end of the Crowdpooling campaign; by default this is set to 0.3%."
+msgstr "This is the trading fee rate of the liquidity pool generated at the end of the Crowdpooling campaign; by default this is set to 0.3%."
+
 #: src/components/Bridge/BridgeRouteShortCard.tsx:137
 #: src/components/Bridge/SelectBridgeDialog/RouteCard.tsx:172
 msgid "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
@@ -335,6 +410,8 @@ msgstr "Fee includes: Cross Chain fees + Swap fees. Gas fee not included."
 #: src/components/RiskDialog.tsx:122
 #: src/components/SwitchChainDialog/index.tsx:138
 #: src/components/WidgetConfirm.tsx:130
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:778
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/VoteConfirm.tsx:85
 #: src/widgets/MiningWidget/MiningCreate/components/StepTitle.tsx:50
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:257
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:199
@@ -408,6 +485,10 @@ msgstr "LP Balance"
 msgid "The liquidity of DODO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only."
 msgstr "The liquidity of DODO is continuous, which is different from the discrete liquidity of UniV3. The ticks shown in the illustration are for demonstration purposes only."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/VoteConfirm.tsx:43
+msgid "Vote for {0} / {1}?"
+msgstr "Vote for {0} / {1}?"
+
 #: src/widgets/PoolWidget/PoolOperate/components/SlippageSetting.tsx:182
 msgid "Default value is {warnValue}%,the current slippage setting is higher than the default value, which means you are willing to accept a worse final execution price."
 msgstr "Default value is {warnValue}%,the current slippage setting is higher than the default value, which means you are willing to accept a worse final execution price."
@@ -449,6 +530,11 @@ msgid "Price impact exceeds the slippage tolerance you set. Try increasing the s
 msgstr "Price impact exceeds the slippage tolerance you set. Try increasing the slippage tolerance."
 
 #. js-lingui-explicit-id
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/NavTabs.tsx:16
+msgid "All"
+msgstr "All"
+
+#. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/index.tsx:94
 msgid "All Mining"
 msgstr "All Mining"
@@ -480,9 +566,17 @@ msgstr "Yes, I am sure"
 msgid "Add liquidity to obtain LP tokens for mining"
 msgstr "Add liquidity to obtain LP tokens for mining"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/OptionalSettings.tsx:63
+msgid "If this option is selected, the tokens will be locked up and released in a linear fashion instead of being fully claimable at the end of the Crowdpooling campaign."
+msgstr "If this option is selected, the tokens will be locked up and released in a linear fashion instead of being fully claimable at the end of the Crowdpooling campaign."
+
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:563
 msgid "Add more liquidity"
 msgstr "Add more liquidity"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/index.tsx:172
+msgid "Search by token address or Crowdpooling address"
+msgstr "Search by token address or Crowdpooling address"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:62
 msgid "This CP has been settled by other addrs"
@@ -510,6 +604,12 @@ msgstr "Slippage"
 msgid "The slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1."
 msgstr "The slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:490
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/Dashboard.tsx:158
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/MyCrowdpooling.tsx:330
+msgid "Progress"
+msgstr "Progress"
+
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/components/widgets.tsx:143
 msgid "Calculation = current rewards for a single block  × number of blocks in 24h"
@@ -533,6 +633,10 @@ msgstr "Mining Pool Setup"
 msgid "Copied"
 msgstr "Copied"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/index.tsx:128
+msgid "Address: {address}"
+msgstr "Address: {address}"
+
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:81
 msgid "The pool’s market-making price is fixed"
 msgstr "The pool’s market-making price is fixed"
@@ -541,6 +645,10 @@ msgstr "The pool’s market-making price is fixed"
 #: src/widgets/PoolWidget/AMMV3/components/RemoveButton.tsx:32
 msgid "Closed"
 msgstr "Closed"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/index.tsx:81
+msgid "Launch Campaign"
+msgstr "Launch Campaign"
 
 #: src/components/Confirm.tsx:86
 #: src/components/WidgetConfirm.tsx:90
@@ -566,6 +674,10 @@ msgstr "Current price"
 msgid "Swap Rate"
 msgstr "Swap Rate"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/LaunchCampaign.tsx:83
+msgid "{description}"
+msgstr "{description}"
+
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:169
 #: src/widgets/PoolWidget/PoolModify/index.tsx:462
 msgid "Pool not found. Please switch to another network and retry."
@@ -580,6 +692,7 @@ msgstr "Daily Rewards"
 msgid "Token Pair Mining"
 msgstr "Token Pair Mining"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/Dashboard.tsx:110
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:98
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:151
 #: src/widgets/MiningWidget/MiningCreate/components/StakingRules.tsx:144
@@ -669,6 +782,10 @@ msgstr "Released Rewards"
 msgid "The newly created mining pool can start counting APR after depositing any liquidity."
 msgstr "The newly created mining pool can start counting APR after depositing any liquidity."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/index.tsx:114
+msgid "Easy project fundraising options and equal access for users to participate in token launches."
+msgstr "Easy project fundraising options and equal access for users to participate in token launches."
+
 #: src/components/Bridge/SelectBridgeDialog/RouteTagList.tsx:52
 msgid "Unapproved"
 msgstr "Unapproved"
@@ -728,6 +845,10 @@ msgstr "Suitable for stablecoins with price fluctuations within 2%"
 msgid "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/OptionalSettings.tsx:93
+msgid "Allow Over-raising"
+msgstr "Allow Over-raising"
+
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:57
 msgid "set current mid price"
 msgstr "set current mid price"
@@ -753,6 +874,10 @@ msgstr "Traders (24H)"
 msgid "My Positions"
 msgstr "My Positions"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/MyCrowdpooling.tsx:91
+msgid "{status}"
+msgstr "{status}"
+
 #: src/utils/time.ts:27
 msgid "Day"
 msgstr "Day"
@@ -773,6 +898,10 @@ msgstr "Minimum received"
 msgid "Invalid price input"
 msgstr "Invalid price input"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/OptionalSettings.tsx:166
+msgid "How to set up a whitelist"
+msgstr "How to set up a whitelist"
+
 #: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:38
 msgid "This pool type isn't supported on your current network. You can switch networks in your wallet to create it"
 msgstr "This pool type isn't supported on your current network. You can switch networks in your wallet to create it"
@@ -789,6 +918,10 @@ msgstr "Price Impact: {0}"
 msgid "Deposit ratio is determined by the current assets ratio in the pool. The ratio does not represent the exchange price"
 msgstr "Deposit ratio is determined by the current assets ratio in the pool. The ratio does not represent the exchange price"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:241
+msgid "Sales Ends In"
+msgstr "Sales Ends In"
+
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/components/UnknownUSDPopover.tsx:22
 msgid "Insufficient market depth to capture the dollar value of [ {{symbols}} ]"
@@ -803,6 +936,8 @@ msgstr "Invite"
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 msgstr "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CrowdpoolingOverview.tsx:95
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CrowdpoolingShareDialog.tsx:91
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:613
 msgid "{0}"
 msgstr "{0}"
@@ -843,6 +978,10 @@ msgstr "Stake"
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:602
 msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 msgstr "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/VoteTopList.tsx:30
+msgid "Hot"
+msgstr "Hot"
 
 #: src/components/Swap/components/TokenPairPriceWithToggle.tsx:52
 #: src/components/Swap/index.tsx:576
@@ -924,6 +1063,10 @@ msgstr "Create AMM V2 Position"
 msgid "Suitable for stablecoins with price fluctuations within 0.5%"
 msgstr "Suitable for stablecoins with price fluctuations within 0.5%"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/index.tsx:201
+msgid "Please always double check the address, and beware of the risk of counterfeit tokens.Click to learn more."
+msgstr "Please always double check the address, and beware of the risk of counterfeit tokens.Click to learn more."
+
 #: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:45
 msgid "The slippage coefficient needs to be greater than 0, and less than 0.1."
 msgstr "The slippage coefficient needs to be greater than 0, and less than 0.1."
@@ -931,6 +1074,14 @@ msgstr "The slippage coefficient needs to be greater than 0, and less than 0.1."
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:233
 msgid "The fee tier should greater than {0}%"
 msgstr "The fee tier should greater than {0}%"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/PriceSettings.tsx:250
+msgid "The number of Crowdpooling tokens that will be distributed to participants, calculated by the number of tokens supplied * sales ratio"
+msgstr "The number of Crowdpooling tokens that will be distributed to participants, calculated by the number of tokens supplied * sales ratio"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/index.tsx:43
+msgid "Optional"
+msgstr "Optional"
 
 #: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:164
 msgid "Flexible customization, take full control of liquidity"
@@ -961,6 +1112,10 @@ msgstr "Owner"
 msgid "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 msgstr "The pegged exchange rate refers to the exchange rate between two token assets where one's value is pegged/fixed by the other. For example, the pegged exchange rate between the US Dollar and USDT is 1."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CrowdpoolingShareDialog.tsx:45
+msgid "Invite"
+msgstr "Invite"
+
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:277
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:584
 msgid "Deposit amounts"
@@ -982,6 +1137,11 @@ msgstr "Mining Pool"
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/TokenPairSelect.tsx:121
 msgid "No pools yet? Create one!"
 msgstr "No pools yet? Create one!"
+
+#. js-lingui-explicit-id
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/NavTabs.tsx:20
+msgid "My CPs"
+msgstr "My CPs"
 
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/index.tsx:98
@@ -1062,6 +1222,10 @@ msgstr "Set the fee to the same as most other pools"
 msgid "If there are no participants before the end, the rewards cannot be taken out anymore."
 msgstr "If there are no participants before the end, the rewards cannot be taken out anymore."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:385
+msgid "Upload"
+msgstr "Upload"
+
 #: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:187
 msgid "Your position will appear here."
 msgstr "Your position will appear here."
@@ -1069,6 +1233,10 @@ msgstr "Your position will appear here."
 #: src/components/Swap/index.tsx:745
 msgid "Fetching Price..."
 msgstr "Fetching Price..."
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:618
+msgid "Discord"
+msgstr "Discord"
 
 #: src/hooks/Token/useGetTokenStatus.ts:60
 #: src/hooks/Token/useTokenStatus.ts:134
@@ -1083,6 +1251,10 @@ msgstr "Best offer"
 msgid "Fresh Mining"
 msgstr "Fresh Mining"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:480
+msgid "Website"
+msgstr "Website"
+
 #: src/widgets/PoolWidget/PoolDetail/components/Overview.tsx:100
 #: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:151
 msgid "LP Fee"
@@ -1091,6 +1263,10 @@ msgstr "LP Fee"
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/RatioSetting.tsx:208
 msgid "Ratio Settings"
 msgstr "Ratio Settings"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:194
+msgid "Project name"
+msgstr "Project name"
 
 #: src/components/Bridge/BridgeSummaryDialog/index.tsx:146
 #: src/components/Swap/components/ReviewDialog.tsx:473
@@ -1101,6 +1277,10 @@ msgstr "Confirming"
 #: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:71
 msgid "The initial price needs to be greater than {min} and less than 100,000,000"
 msgstr "The initial price needs to be greater than {min} and less than 100,000,000"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:134
+msgid "Votes"
+msgstr "Votes"
 
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePercentageRemove.ts:98
 msgid "Quantity model"
@@ -1114,6 +1294,10 @@ msgstr "Fee"
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:34
 msgid "Applicable to pegged assets with a fixed price and no fluctuation"
 msgstr "Applicable to pegged assets with a fixed price and no fluctuation"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/index.tsx:41
+msgid "Set Price"
+msgstr "Set Price"
 
 #: src/widgets/PoolWidget/AMMV3/components/PositionAmountPreview.tsx:154
 msgid "Position on"
@@ -1168,6 +1352,14 @@ msgstr "Invalid pair"
 msgid "Auto"
 msgstr "Auto"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/index.tsx:42
+msgid "Set Time"
+msgstr "Set Time"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/OptionalSettings.tsx:65
+msgid "Delayed Distribution"
+msgstr "Delayed Distribution"
+
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/my-created/RewardCard.tsx:198
 msgid "Remaining rewards/Total"
@@ -1211,6 +1403,10 @@ msgstr "Review Cross Chain"
 #: src/widgets/PoolWidget/AMMV2Create/Ratio.tsx:221
 msgid "Share of pool"
 msgstr "Share of pool"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:687
+msgid "Telegram"
+msgstr "Telegram"
 
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/components/SearchComponents.tsx:217
@@ -1284,6 +1480,10 @@ msgstr "Lower than dynamic slippage"
 msgid "TVL"
 msgstr "TVL"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/OptionalSettings.tsx:146
+msgid "Whitelist setting"
+msgstr "Whitelist setting"
+
 #: src/widgets/PoolWidget/PoolOperate/index.tsx:129
 msgid "LP Tokens"
 msgstr "LP Tokens"
@@ -1291,6 +1491,10 @@ msgstr "LP Tokens"
 #: src/components/chart/i18n.ts:13
 msgid "Users sell {0} amount:"
 msgstr "Users sell {0} amount:"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/PriceSettings.tsx:187
+msgid "% of Tokens for Sale"
+msgstr "% of Tokens for Sale"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:58
 msgid "Wallet incompatibility"
@@ -1317,6 +1521,11 @@ msgstr "Reward Rules"
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:168
 msgid "Trader"
 msgstr "Trader"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/index.tsx:41
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/index.tsx:103
+msgid "Crowdpooling not found"
+msgstr "Crowdpooling not found"
 
 #: src/components/Swap/SwapOrderHistory/index.tsx:113
 #: src/components/Swap/SwapOrderHistory/SameOrderCard.tsx:55
@@ -1352,6 +1561,10 @@ msgstr "Seconds"
 #: src/widgets/MiningWidget/MiningCreate/hooks/useCreateMiningTypeList.ts:9
 msgid "Single-Token Stake Mining"
 msgstr "Single-Token Stake Mining"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/PriceSettings.tsx:247
+msgid "Tokens for Participants"
+msgstr "Tokens for Participants"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:69
 msgid "Suitable for most situations."
@@ -1392,6 +1605,10 @@ msgstr "When adding rewards, the number of rewards for a single block may be adj
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:512
 msgid "This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
 msgstr "This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/index.tsx:216
+msgid "Favorites"
+msgstr "Favorites"
 
 #: src/widgets/PoolWidget/PoolCreate/components/PriceModeCard.tsx:52
 msgid "Can the pool price be adjusted?"
@@ -1453,6 +1670,14 @@ msgstr "For"
 msgid "{lqAndDodoCompareText} Price Difference"
 msgstr "{lqAndDodoCompareText} Price Difference"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:223
+msgid "Cover Image (Optional)"
+msgstr "Cover Image (Optional)"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/OptionalSettings.tsx:91
+msgid "If this option is selected, users could still put in funds and final distribution is according to their funding ratio,after reach fund-raising cap."
+msgstr "If this option is selected, users could still put in funds and final distribution is according to their funding ratio,after reach fund-raising cap."
+
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/index.tsx:176
 msgid "You are not currently providing liquidity for any LP pools."
@@ -1470,6 +1695,14 @@ msgstr "The area of the chart indicates the buy/sell volume of {0} that can be c
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:424
 msgid "Total Swap Fee"
 msgstr "Total Swap Fee"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:232
+msgid "Supports JPG/PNG, max 2MB (2000×500 px recommended)"
+msgstr "Supports JPG/PNG, max 2MB (2000×500 px recommended)"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/index.tsx:50
+msgid "Loading..."
+msgstr "Loading..."
 
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:118
 #: src/components/Bridge/BridgeSummaryDialog/orderInfoModal/CrossStep.tsx:149
@@ -1517,6 +1750,14 @@ msgstr "Maximum slippage do not exceed 50%"
 msgid "For those who are looking to sell tokens and only need ask-side liquidity."
 msgstr "For those who are looking to sell tokens and only need ask-side liquidity."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/PriceSettings.tsx:434
+msgid "Hard Cap"
+msgstr "Hard Cap"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/PriceSettings.tsx:299
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:255
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/Dashboard.tsx:134
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/MyCrowdpooling.tsx:218
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:177
 msgid "Price"
 msgstr "Price"
@@ -1580,6 +1821,11 @@ msgstr "Asset"
 msgid "Fee Revenue"
 msgstr "Fee Revenue"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/index.tsx:131
+msgid "Chain: {chainId}"
+msgstr "Chain: {chainId}"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/MyCrowdpooling.tsx:257
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:384
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:144
 msgid "Supply"
@@ -1608,9 +1854,11 @@ msgid "Dynamic"
 msgstr "Dynamic"
 
 #: src/components/HowItWorks.tsx:70
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/index.tsx:156
 msgid "SEE HOW IT WORKS"
 msgstr "SEE HOW IT WORKS"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:329
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:470
 msgid "Delete"
 msgstr "Delete"
@@ -1618,6 +1866,10 @@ msgstr "Delete"
 #: src/components/chart/i18n.ts:9
 msgid "Initial Price {0} {1} = {2} {3}"
 msgstr "Initial Price {0} {1} = {2} {3}"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:430
+msgid "Social Links"
+msgstr "Social Links"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:24
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:46
@@ -1628,10 +1880,15 @@ msgstr "Initial Price"
 msgid "Guide Price"
 msgstr "Guide Price"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/index.tsx:134
+msgid "Tokens: {0} / {1}"
+msgstr "Tokens: {0} / {1}"
+
 #: src/components/Confirm.tsx:108
 #: src/components/DateTimePickerInput/components/MobileDateTimePicker.tsx:203
 #: src/components/SwitchChainDialog/index.tsx:127
 #: src/components/WidgetConfirm.tsx:112
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/VoteConfirm.tsx:68
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:238
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:414
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:208
@@ -1660,6 +1917,10 @@ msgstr "Select Token Pair"
 #: src/components/RiskDialog.tsx:92
 msgid "I have read, understand, and agree to the <0>Terms of Service</0>."
 msgstr "I have read, understand, and agree to the <0>Terms of Service</0>."
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/TimeSettings.tsx:141
+msgid "Liquidity Protection"
+msgstr "Liquidity Protection"
 
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:88
 msgid "Modify Confirmation"
@@ -1716,6 +1977,10 @@ msgstr "\"Created by {0}"
 msgid "Results in a more volatile price."
 msgstr "Results in a more volatile price."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/LaunchCampaign.tsx:24
+msgid "How to Launch"
+msgstr "How to Launch"
+
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:94
 #: src/widgets/MiningWidget/MiningCreate/components/PoolPicker.tsx:105
 #: src/widgets/PoolWidget/PoolCreate/components/BaseInfoCardList.tsx:53
@@ -1731,6 +1996,10 @@ msgstr "Received"
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:34
 msgid "My Pools"
 msgstr "My Pools"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/Dashboard.tsx:258
+msgid "Popular Campaigns"
+msgstr "Popular Campaigns"
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:154
 msgid "Approve {0}"
@@ -1753,6 +2022,10 @@ msgstr "fee tier"
 #: src/hooks/Submission/getExecutionErrorMsg.ts:66
 msgid "Service update, please wait and try again"
 msgstr "Service update, please wait and try again"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/index.tsx:97
+msgid "Crowdpooling Detail"
+msgstr "Crowdpooling Detail"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:44
 msgid "Gas price is too low, please adjust in your wallet and try again"
@@ -1785,6 +2058,9 @@ msgid "Total Fee Revenue"
 msgstr "Total Fee Revenue"
 
 #: src/components/DateTimePickerInput/components/MobileDateTimePicker.tsx:223
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/OptionalSettings.tsx:190
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/PriceSettings.tsx:493
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/TimeSettings.tsx:216
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:47
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:73
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:98
@@ -1800,6 +2076,10 @@ msgstr "Next"
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:92
 msgid "Create"
 msgstr "Create"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/Dashboard.tsx:173
+msgid "{0}%"
+msgstr "{0}%"
 
 #: src/widgets/PoolWidget/PoolDetail/components/TotalLiquidity.tsx:179
 msgid "Token Amount"
@@ -1828,6 +2108,9 @@ msgstr "Out of range"
 msgid "Disclaimer"
 msgstr "Disclaimer"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:768
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/OptionalSettings.tsx:187
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/TimeSettings.tsx:208
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:253
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:429
 msgid "Back"
@@ -1890,6 +2173,10 @@ msgstr "Something went wrong."
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:418
 msgid "Daily Rewards"
 msgstr "Daily Rewards"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/index.tsx:250
+msgid "Create Crowdpooling"
+msgstr "Create Crowdpooling"
 
 #: src/utils/time.ts:7
 msgid "Second"
@@ -2021,10 +2308,22 @@ msgstr "No matching pool found"
 msgid "Low"
 msgstr "Low"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:549
+msgid "X (Twitter)"
+msgstr "X (Twitter)"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/Dashboard.tsx:226
+msgid "Raised {0} {1}"
+msgstr "Raised {0} {1}"
+
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:224
 #: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:362
 msgid "Select pair"
 msgstr "Select pair"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:372
+msgid "Change"
+msgstr "Change"
 
 #: src/widgets/MiningWidget/MiningCreate/index.tsx:359
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:312
@@ -2034,6 +2333,14 @@ msgstr "Once Mining has started, it cannot be stopped."
 #: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:65
 msgid "Select a liquidity pool"
 msgstr "Select a liquidity pool"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/MyCrowdpooling.tsx:297
+msgid "Raised"
+msgstr "Raised"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/Dashboard.tsx:273
+msgid "Failed to load data"
+msgstr "Failed to load data"
 
 #: src/components/TokenPicker/TokenDetailInfo.tsx:85
 msgid "This is an official appear <0/>on the token list"
@@ -2057,6 +2364,10 @@ msgstr "Managing"
 #: src/widgets/PoolWidget/PoolDetail/components/Overview.tsx:65
 msgid "Volume (24H)"
 msgstr "Volume (24H)"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/LaunchCampaign.tsx:74
+msgid "{title}"
+msgstr "{title}"
 
 #: src/widgets/PoolWidget/PoolCreate/index.tsx:252
 #: src/widgets/PoolWidget/PoolModify/index.tsx:252
@@ -2097,10 +2408,19 @@ msgstr "ALL"
 msgid "Confirming..."
 msgstr "Confirming..."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:182
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/Dashboard.tsx:87
+msgid "Total Supply"
+msgstr "Total Supply"
+
 #: src/components/chart/i18n.ts:7
 #: src/components/chart/i18n.ts:11
 msgid "Users pay {0} {1} and receive {2} {3}\\nPrice {4} ({5}%)"
 msgstr "Users pay {0} {1} and receive {2} {3}\\nPrice {4} ({5}%)"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/index.tsx:125
+msgid "Pool Information"
+msgstr "Pool Information"
 
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:45
 msgid "Traders"
@@ -2114,7 +2434,7 @@ msgstr "Unable to SETTLE during the cooling-off period"
 msgid "The setting has been switched to cross chain mode"
 msgstr "The setting has been switched to cross chain mode"
 
-#: src/components/Swap/components/TokenCard/index.tsx:284
+#: src/components/Swap/components/TokenCard/index.tsx:286
 msgid "Buy"
 msgstr "Buy"
 
@@ -2135,12 +2455,17 @@ msgstr "Total Rewards"
 msgid "Connect to a wallet"
 msgstr "Connect to a wallet"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/TimeSettings.tsx:112
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:163
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:363
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:246
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:274
 msgid "End Time"
 msgstr "End Time"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/PriceSettings.tsx:358
+msgid "Select"
+msgstr "Select"
 
 #: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:229
 msgid "There is no liquidity data."
@@ -2206,6 +2531,10 @@ msgstr "AMM V3 Position"
 msgid "Slippage Coefficient"
 msgstr "Slippage Coefficient"
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/Dashboard.tsx:138
+msgid "1 {0} = {1} {2}"
+msgstr "1 {0} = {1} {2}"
+
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:157
 msgid "Advanced"
 msgstr "Advanced"
@@ -2247,6 +2576,10 @@ msgstr "{0}% fee tier"
 msgid "SafeERC20: low-level call failed. Please contact the DODO team."
 msgstr "SafeERC20: low-level call failed. Please contact the DODO team."
 
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/RichTextEditor/index.tsx:419
+msgid "Save"
+msgstr "Save"
+
 #: src/widgets/PoolWidget/PoolCreate/components/ConfirmInfoDialog.tsx:88
 msgid "Pool Creation Confirmation"
 msgstr "Pool Creation Confirmation"
@@ -2264,12 +2597,18 @@ msgid "Create One"
 msgstr "Create One"
 
 #: src/components/Swap/SwapOrderHistory/index.tsx:102
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:211
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/MyCrowdpooling.tsx:352
 msgid "Status"
 msgstr "Status"
 
 #: src/widgets/PoolWidget/AMMV3/components/RangeSelector.tsx:73
 msgid "Low price"
 msgstr "Low price"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:72
+msgid "Waiting"
+msgstr "Waiting"
 
 #: src/widgets/PoolWidget/PoolOperate/components/ComparePrice.tsx:64
 msgid "differs from the price quoted by DODO by {lqAndDodoCompareText}"
@@ -2286,6 +2625,14 @@ msgstr "Unsupported network - switch to trade"
 #: src/widgets/PoolWidget/PoolCreate/components/EmptyChart.tsx:20
 msgid "Enter parameters to view the yield curve"
 msgstr "Enter parameters to view the yield curve"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/IntroSettings.tsx:737
+msgid "Project Intro (Optional)"
+msgstr "Project Intro (Optional)"
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingCreate/components/TimeSettings.tsx:139
+msgid "After the end of a Crowdpooling campaign, there is a Liquidity Protection period. During this period, the Crowdpooling campaign creator's funds will be locked to guarantee sufficient market depth and liquidity."
+msgstr "After the end of a Crowdpooling campaign, there is a Liquidity Protection period. During this period, the Crowdpooling campaign creator's funds will be locked to guarantee sufficient market depth and liquidity."
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:171
 msgid "Paid"
@@ -2314,6 +2661,10 @@ msgstr "In range"
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:605
 msgid "There is risk of being arbitraged if adding this liquidity."
 msgstr "There is risk of being arbitraged if adding this liquidity."
+
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:69
+msgid "Processing"
+msgstr "Processing"
 
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/SingleTokenSelect.tsx:106
 msgid "address"
@@ -2411,6 +2762,7 @@ msgid "High"
 msgstr "High"
 
 #: src/components/WithExecutionDialog/index.tsx:458
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CrowdpoolingShareDialog.tsx:114
 msgid "Close"
 msgstr "Close"
 

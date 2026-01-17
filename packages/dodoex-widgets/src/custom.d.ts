@@ -86,3 +86,20 @@ declare type AddressTo<T> = Record<Address, T>;
 
 declare type Nullable<T> = T | null;
 declare type Maybe<T> = Nullable<T> | undefined;
+
+declare module 'compressorjs' {
+  interface CompressorOptions {
+    quality?: number;
+    maxWidth?: number;
+    maxHeight?: number;
+    mimeType?: string;
+    success?: (result: File) => void;
+    error?: (err: Error) => void;
+  }
+
+  class Compressor {
+    constructor(file: File, options: CompressorOptions);
+  }
+
+  export default Compressor;
+}

@@ -26,3 +26,19 @@ export const reloadWindow = (interval?: number) => {
     window.location.reload();
   }, interval || 100);
 };
+
+interface SignHeaderParams {
+  address: string;
+  signature: string;
+  timestamp: number;
+  message?: string;
+  type?: 'eip191' | 'eip712' | 'eip1271';
+  chainId: number;
+}
+export function getSignHeader(params: SignHeaderParams) {
+  const paramsStr = JSON.stringify(params);
+  const token = btoa(paramsStr);
+  return {
+    Authorization: `Signpck ${token}`,
+  };
+}

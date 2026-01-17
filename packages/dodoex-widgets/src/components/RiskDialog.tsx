@@ -2,21 +2,25 @@ import { Box, Button, Checkbox, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import React from 'react';
 import WidgetDialog from './WidgetDialog';
+import { useUserOptions } from './UserOptionsProvider';
+import { RiskOncePageLocalStorageKey } from '../constants/localstorage';
+import { useRiskDialogState } from '../hooks/useRiskDialogState';
 
 export default function RiskDialog({
-  open,
-  onClose,
   alertContent,
-  onConfirm,
+  type,
+  suffix,
 }: {
-  open: boolean;
-  onClose: () => void;
   alertContent?: React.ReactNode;
-  onConfirm?: () => void;
+  type: RiskOncePageLocalStorageKey;
+  suffix?: string;
 }) {
   const theme = useTheme();
   const [userReadAndChecked, setUserReadAndChecked] = React.useState(false);
   const title = t`Risk Disclaimer`;
+  const { documentUrls } = useUserOptions();
+  const { open, onClose, onConfirm } = useRiskDialogState(type, suffix);
+
   return (
     <WidgetDialog
       open={open}
@@ -92,7 +96,10 @@ export default function RiskDialog({
               <Trans>
                 I have read, understand, and agree to the{' '}
                 <a
-                  href="https://docs.dodoex.io/home/terms-of-service"
+                  href={
+                    documentUrls?.termsOfService ??
+                    'https://docs.dodoex.io/home/terms-of-service'
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                 >

@@ -229,7 +229,10 @@ export default function useExecution({
           }
 
           if (successBack) {
-            successBack(tx, onTxSuccess);
+            successBack(tx, onTxSuccess, {
+              transaction,
+              receipt
+            });
           }
           if (onTxSuccess) {
             onTxSuccess(tx, reportInfo);

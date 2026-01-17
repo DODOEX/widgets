@@ -10,6 +10,10 @@ export enum PageType {
   MiningDetail = 'miningDetail',
   createPoolAMMV2 = 'createPoolAMMV2',
   createPoolAMMV3 = 'createPoolAMMV3',
+  CrowdpoolingList = 'crowdpoolingList',
+  CrowdpoolingDetail = 'crowdpoolingDetail',
+  CreateCrowdpooling = 'createCrowdpooling',
+  MyCrowdpoolingList = 'myCrowdpoolingList',
 }
 
 interface PageTypeParams {
@@ -48,6 +52,17 @@ interface PageTypeParams {
         fee?: string;
       }
     | undefined;
+  [PageType.CrowdpoolingList]:
+    | {
+        tab?: 'all' | 'my';
+      }
+    | undefined;
+  [PageType.CrowdpoolingDetail]: {
+    address: string;
+    chainId: ChainId;
+  };
+  [PageType.CreateCrowdpooling]: undefined;
+  [PageType.MyCrowdpoolingList]: undefined;
 }
 
 export interface Page<T extends PageType = PageType> {

@@ -1,5 +1,9 @@
 import { Step as StepSpec } from './spec';
 import { ExecutionProps } from './useExecution';
+import type {
+  TransactionReceipt,
+  TransactionResponse,
+} from '@ethersproject/abstract-provider';
 
 export enum State {
   Running,
@@ -27,6 +31,11 @@ export enum MetadataFlag {
   stakeMining = 'stakeMining',
   unstakeMining = 'unstakeMining',
   claimMining = 'claimMining',
+  createCrowdpooling = 'createCrowdpooling',
+  bidCrowdpooling = 'bidCrowdpooling',
+  claimCrowdpooling = 'claimCrowdpooling',
+  settleCrowdpooling = 'settleCrowdpooling',
+  removeCrowdpooling = 'removeCrowdpooling',
   submissionCreateMetaKey = 'submissionCreateMetaKey',
   approve = 'approve',
   reset = 'reset',
@@ -97,7 +106,11 @@ export type ExecutionCtx = {
       submittedConfirmBack?: () => void;
       successBack?: (
         tx: string,
-        callback?: ExecutionProps['onTxSuccess'],
+        callback: ExecutionProps['onTxSuccess'] | undefined,
+        params: {
+          transaction: TransactionResponse;
+          receipt: TransactionReceipt;
+        },
       ) => void;
       metadata?: Metadata;
     },

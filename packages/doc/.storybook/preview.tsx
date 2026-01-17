@@ -3,6 +3,7 @@ import React, { Suspense, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setColorMode } from '../src/configure-store/actions/settings';
 import { Box } from '@dodoex/components';
+import './global.css';
 
 const SwitchTheme = ({ themeMode }) => {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ const preview = {
               sx={{
                 position: 'relative',
                 zIndex: 1,
+                height: '100vh'
               }}
             >
               <Story />

@@ -49,7 +49,7 @@ export default function GoBack({
           mr: 6,
         }}
       >
-        <ArrowBack />
+        <Box component={ArrowBack} width={16} height={16} />
       </Box>
       <Trans>Go back</Trans>
     </HoverOpacity>

@@ -11,13 +11,15 @@ export function CopyTooltipToast({
   componentProps,
   onClick,
   children,
+  notCopyIcon,
 }: {
   copyText?: string;
-  size: number;
+  size?: number;
   sx?: BoxProps['sx'];
   componentProps?: BoxProps;
   onClick?: () => void;
   children?: React.ReactNode;
+  notCopyIcon?: boolean;
 }) {
   const [open, setOpen] = React.useState(false);
   return (
@@ -44,18 +46,21 @@ export function CopyTooltipToast({
           }
         }}
         sx={{
+          display: 'inline-flex',
           cursor: 'pointer',
           ...componentProps?.sx,
         }}
       >
-        <Box
-          component={Copy}
-          sx={{
-            width: size || 'auto',
-            height: size || 'auto',
-            ...sx,
-          }}
-        />
+        {!notCopyIcon && (
+          <Box
+            component={Copy}
+            sx={{
+              width: size || 'auto',
+              height: size || 'auto',
+              ...sx,
+            }}
+          />
+        )}
         {children}
       </Box>
     </TooltipToast>

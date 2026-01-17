@@ -38,6 +38,9 @@ export { MiningCreate } from './widgets/MiningWidget/MiningCreate';
 export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidityV3';
 export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
 export { AMMV3PositionManage } from './widgets/PoolWidget/AMMV3/AMMV3PositionManage';
+export { Crowdpooling } from './widgets/CrowdpoolingWidget';
+export { default as CrowdpoolingList } from './widgets/CrowdpoolingWidget/CrowdpoolingList';
+export { default as CrowdpoolingDetail } from './widgets/CrowdpoolingWidget/CrowdpoolingDetail';
 
 export { useTokenStatus } from './hooks/Token/useTokenStatus';
 

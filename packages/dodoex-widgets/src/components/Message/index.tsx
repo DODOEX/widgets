@@ -276,6 +276,7 @@ function MessageInner() {
                   : theme.palette.background.paperDarkContrast,
                 cursor: 'pointer',
                 boxSizing: 'border-box',
+                flexShrink: 0,
                 [theme.breakpoints.up('tablet')]: {
                   ml: 28,
                 },

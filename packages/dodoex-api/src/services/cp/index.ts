@@ -1,0 +1,1 @@
+export { cpGraphqlQuery } from './graphqlQuery';

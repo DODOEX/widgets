@@ -10,13 +10,9 @@ import {
   TokenCard,
 } from '../../../components/Swap/components/TokenCard';
 import WidgetContainer from '../../../components/WidgetContainer';
-import {
-  getIsPoolEditRiskWarningOpen,
-  RiskOncePageLocalStorage,
-} from '../../../constants/localstorage';
+import { RiskOncePageLocalStorageKey } from '../../../constants/localstorage';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { useRouterStore } from '../../../router';
 import { Page, PageType } from '../../../router/types';
 import { usePoolDetail } from '../hooks/usePoolDetail';
 import { DepthChartWrapper } from '../PoolCreate/components/DepthChartWrapper';
@@ -55,8 +51,6 @@ export default function PoolModify({
     ? theme.palette.background.tag
     : theme.palette.background.paper;
 
-  const [showRiskDialog, setShowRiskDialog] = React.useState(false);
-
   const [state, dispatch] = React.useReducer<typeof reducer>(reducer, {
     currentStep: 0,
     selectedVersion: Version.marketMakerPool,
@@ -75,10 +69,6 @@ export default function PoolModify({
     peggedBaseTokenRatio: '',
     peggedQuoteTokenRatio: '',
   });
-
-  React.useEffect(() => {
-    setShowRiskDialog(getIsPoolEditRiskWarningOpen());
-  }, []);
 
   const [noResultModalVisible, setNoResultModalVisible] = React.useState<
     'inital' | 'open' | 'close'
@@ -463,17 +453,7 @@ export default function PoolModify({
       />
 
       <RiskDialog
-        open={showRiskDialog}
-        onClose={() => {
-          setShowRiskDialog(false);
-        }}
-        onConfirm={() => {
-          window.localStorage.setItem(
-            RiskOncePageLocalStorage.PoolEditPage,
-            '1',
-          );
-          setShowRiskDialog(false);
-        }}
+        type={RiskOncePageLocalStorageKey.PoolEditPage}
         alertContent={
           <Trans>
             You are making changes to the liquidity of a private pool. This is a

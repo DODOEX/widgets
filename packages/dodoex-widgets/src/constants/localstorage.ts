@@ -62,9 +62,25 @@ export function setLastSlippage(
 
 // The data stored in the corresponding Key means that it has been confirmed. After confirmation, the risk prompt will no longer be displayed.
 const RiskWarningOnceKeyPrefix = 'risk-warning-once-';
-export const RiskOncePageLocalStorage: Record<string, string> = {
-  PoolEditPage: `${RiskWarningOnceKeyPrefix}pool-edit`,
-};
-export function getIsPoolEditRiskWarningOpen() {
-  return !window.localStorage.getItem(RiskOncePageLocalStorage.PoolEditPage);
+export const enum RiskOncePageLocalStorageKey {
+  PoolEditPage = 'pool-edit',
+  CPJoinDetail = 'cp-join-detail',
+  CpJoinEntry = 'cp-join-entry',
+}
+export function getRiskOncePageStoreageIsOpen(
+  type: RiskOncePageLocalStorageKey,
+  suffix?: string,
+) {
+  return !window.localStorage.getItem(
+    `${RiskWarningOnceKeyPrefix}${type}${suffix}`,
+  );
+}
+export function setRiskOncePageStoreageIsClose(
+  type: RiskOncePageLocalStorageKey,
+  suffix?: string,
+) {
+  window.localStorage.setItem(
+    `${RiskWarningOnceKeyPrefix}${type}${suffix}`,
+    '1',
+  );
 }

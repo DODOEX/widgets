@@ -37,4 +37,5 @@ export { TokenApi } from './services/TokenApi';
 export { SwapApi } from './services/swap/SwapApi';
 export { SystemApi } from './services/system/SystemApi';
 
+export { cpGraphqlQuery } from './services/cp';
 export type ExcludeNone<T> = NonNullable<T>;

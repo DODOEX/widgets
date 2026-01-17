@@ -10,6 +10,7 @@ export function useWalletInfo() {
     account,
     chainId: (chainId || onlyChainId || defaultChainId || 1) as ChainId,
     connectedChainId: chainId,
+    queryChainId: (onlyChainId || chainId || defaultChainId || 1) as ChainId,
     defaultChainId,
     onlyChainId,
   };

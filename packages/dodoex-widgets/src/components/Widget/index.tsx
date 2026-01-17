@@ -34,7 +34,7 @@ import Message from '../Message';
 import { DialogProps } from '../Swap/components/Dialog';
 import { UserOptionsProvider, useUserOptions } from '../UserOptionsProvider';
 import WithExecutionDialog from '../WithExecutionDialog';
-import { Page } from '../../router';
+import { Page, PageType } from '../../router';
 import { useInitContractRequest } from '../../providers/useInitContractRequest';
 import {
   setAutoConnectLoading,
@@ -132,6 +132,13 @@ export interface WidgetProps
   deadLine?: number;
   submission?: ExecutionCtx;
   disableConnectedProviderRead?: boolean;
+  documentUrls?: {
+    termsOfService?: string;
+    crowdpoolingList?: string;
+    crowdpoolingCreate?: string;
+    crowdpoolingWhitelist?: string;
+  };
+  getPageUrl?: (page: PageType, params?: Record<string, any>) => string;
 }
 
 function LangProvider(props: PropsWithChildren<WidgetProps>) {

@@ -117,3 +117,11 @@ export function getTimeText(
 
   return result;
 }
+
+export const secondsToDays = (seconds: number) => {
+  return Math.ceil(seconds / 1000 / 60 / 60 / 24);
+};
+
+export const secondsToHour = (seconds: number) => {
+  return Math.ceil(seconds / 1000 / 60 / 60);
+};

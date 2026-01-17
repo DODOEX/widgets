@@ -7,6 +7,9 @@ export enum APIServiceKey {
   bridgeRoutePrice = 'bridgeRoutePrice',
   bridgeEncode = 'bridgeEncode',
   bridgeCreateRoute = 'bridgeCreateRoute',
+  cpSetIntro = 'cpSetIntro',
+  cpUploadImages = 'cpUploadImages',
+  cpGetDetail = 'cpGetDetail',
 }
 
 export type APIServices = {
@@ -33,6 +36,12 @@ export const FiatPriceAPI = `https://api.dodoex.io/frontend-price-api/current/ba
 const BridgeRoutePriceAPI = `${BridgeUrlPrefix}/routes`;
 const BridgeEncodeAPI = `${BridgeUrlPrefix}/transaction/encode`;
 const BridgeCreateRouteAPI = `${BridgeUrlPrefix}/order/create`;
+const CPSetIntroAPI =
+  'https://api-staging.dxd.ink/manage/crowdpooling_config/upsert';
+const CPUploadImagesAPI =
+  'http://api-staging.dxd.ink/manage/crowdpooling_config/uploads';
+const CPGetDetailAPI =
+  'https://api-staging.dxd.ink/manage/crowdpooling_config/detail';
 
 export function getAPIService(
   key: APIServiceKey,
@@ -49,6 +58,12 @@ export function getAPIService(
       return serviceProps.bridgeEncode ?? BridgeEncodeAPI;
     case APIServiceKey.bridgeCreateRoute:
       return serviceProps.bridgeCreateRoute ?? BridgeCreateRouteAPI;
+    case APIServiceKey.cpSetIntro:
+      return serviceProps.cpSetIntro ?? CPSetIntroAPI;
+    case APIServiceKey.cpUploadImages:
+      return serviceProps.cpUploadImages ?? CPUploadImagesAPI;
+    case APIServiceKey.cpGetDetail:
+      return serviceProps.cpGetDetail ?? CPGetDetailAPI;
 
     default:
       throw new Error(`Invalid key = ${key}`);

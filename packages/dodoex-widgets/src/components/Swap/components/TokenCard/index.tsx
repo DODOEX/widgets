@@ -27,6 +27,7 @@ import {
 } from '../../../../hooks/Submission/useBalanceUpdateLoading';
 import { useFetchTokens } from '../../../../hooks/contract';
 import { useUserOptions } from '../../../UserOptionsProvider';
+import EtherTokenSelect from './EtherTokenSelect';
 
 export interface TokenCardProps {
   amt: string;
@@ -58,6 +59,8 @@ export interface TokenCardProps {
   hideToken?: boolean;
   checkLogBalance?: BalanceData;
   notTokenPickerModal?: boolean;
+  hiddenAddrs?: string[];
+  onlyChangeEtherToken?: boolean;
 }
 
 export function CardPlus() {
@@ -137,6 +140,8 @@ export function TokenCard({
   hideToken,
   checkLogBalance,
   notTokenPickerModal,
+  hiddenAddrs,
+  onlyChangeEtherToken,
 }: TokenCardProps) {
   const { account } = useWalletInfo();
   const theme = useTheme();
@@ -200,6 +205,19 @@ export function TokenCard({
       >
         {hideToken ? (
           <Box />
+        ) : onlyChangeEtherToken && onTokenChange ? (
+          <EtherTokenSelect
+            chainId={chainId ?? token?.chainId}
+            token={token}
+            onTokenChange={onTokenChange}
+          >
+            <TokenLogoCollapse
+              token={token}
+              showChainLogo={showChainLogo}
+              showChainName={showChainName}
+              readonly
+            />
+          </EtherTokenSelect>
         ) : (
           <TokenLogoCollapse
             token={token}
@@ -351,6 +369,7 @@ export function TokenCard({
         chainId={chainId}
         occupiedAddrs={occupiedAddrs}
         occupiedChainId={occupiedChainId}
+        hiddenAddrs={hiddenAddrs}
         defaultLoadBalance={defaultLoadBalance}
         onClose={() => {
           setTokenPickerVisible(false);
