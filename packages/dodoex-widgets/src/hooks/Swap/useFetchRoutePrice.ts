@@ -66,10 +66,10 @@ export function useFetchRoutePrice({
     () => fromToken?.chainId || walletChainId || defaultChainId,
     [walletChainId, fromToken, defaultChainId],
   );
-  const ddl = useSwapSettingStore((state) => Number(state.ddl));
-  const disableIndirectRouting = useSwapSettingStore((state) =>
-    Number(state.disableIndirectRouting),
-  );
+  const { ddl: ddlStr, disableIndirectRouting: disableIndirectRoutingStr } =
+    useSwapSettingStore();
+  const ddl = Number(ddlStr);
+  const disableIndirectRouting = Number(disableIndirectRoutingStr);
   const lastId = useRef(0);
   const [status, setStatus] = useState<RoutePriceStatus>(
     RoutePriceStatus.Initial,

@@ -48,12 +48,23 @@ const baseConfig = {
       watch: true, // default: false
     }),
   ],
-  external: [
-    ...Object.keys(pkg.dependencies || {}).filter(
-      (key) => !['@dodoex/icons'].includes(key),
-    ),
-    ...Object.keys(pkg.peerDependencies || {}),
-  ],
+  external: (id) => {
+    const externals = [
+      ...Object.keys(pkg.dependencies || {}).filter(
+        (key) => !['@dodoex/icons'].includes(key),
+      ),
+      ...Object.keys(pkg.peerDependencies || {}),
+      'scheduler',
+      'react-is',
+      'react-reconciler',
+      'konva',
+      'react-konva',
+    ];
+
+    return externals.some(
+      (pkgName) => id === pkgName || id.startsWith(`${pkgName}/`),
+    );
+  },
 };
 
 const localesConfig = globby.sync('src/locales/*.js').map((inputFile) => ({

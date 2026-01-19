@@ -12,7 +12,7 @@ export const TabsList = React.forwardRef<
       variant?: TabProps['variant'];
     }
 >(function TabsList({ sx, variant, ...props }, ref) {
-  const tabListRef = React.useRef<HTMLDivElement>();
+  const tabListRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     if (
       tabListRef.current &&

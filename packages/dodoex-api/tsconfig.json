@@ -2,6 +2,8 @@
   "extends": "../../tsconfig",
   "compilerOptions": {
     "declarationDir": "./dist/types",
+    "outDir": "./dist",
+    "types": ["node", "jest", "qs"],
     "jsx": "preserve",
     "target": "es2016"
   },
