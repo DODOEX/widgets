@@ -9,13 +9,17 @@ import {
 } from '@dodoex/components';
 import { Dodo, DoubleRight, Setting, Warn } from '@dodoex/icons';
 import { t, Trans } from '@lingui/macro';
+import { ConnectModal } from '@mysten/dapp-kit';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash';
 import { useCallback, useMemo, useState } from 'react';
 import { AppUrl } from '../../constants/api';
 import { chainListMap } from '../../constants/chainList';
 import { setLastToken } from '../../constants/localstorage';
-import { PRICE_IMPACT_THRESHOLD } from '../../constants/swap';
+import {
+  BRIDGE_PRICE_IMPACT_THRESHOLD,
+  PRICE_IMPACT_THRESHOLD,
+} from '../../constants/swap';
 import {
   swapAlertEnterAmountBtn,
   swapAlertFetchPriceBtn,
@@ -52,7 +56,11 @@ import { TokenInfo } from '../../hooks/Token/type';
 import { useDisabledTokenSwitch } from '../../hooks/Token/useDisabledTokenSwitch';
 import { useTokenStatus } from '../../hooks/Token/useTokenStatus';
 import { useGlobalState } from '../../hooks/useGlobalState';
-import { formatTokenAmountNumber, namespaceToTitle } from '../../utils';
+import {
+  formatPercentageNumber,
+  formatTokenAmountNumber,
+  namespaceToTitle,
+} from '../../utils';
 import { CaipNetworksUtil } from '../../utils/CaipNetworksUtil';
 import BridgeRouteShortCard from '../Bridge/BridgeRouteShortCard';
 import BridgeSummaryDialog from '../Bridge/BridgeSummaryDialog';
@@ -67,7 +75,6 @@ import { SwapSettingsDialog } from './components/SwapSettingsDialog';
 import { SwitchBox } from './components/SwitchBox';
 import { TokenCardSwap } from './components/TokenCard/TokenCardSwap';
 import { TokenPairPriceWithToggle } from './components/TokenPairPriceWithToggle';
-import { ConnectModal } from '@mysten/dapp-kit';
 
 const debounceTime = 300;
 
@@ -481,6 +488,46 @@ export function Swap({
     );
   }, [displayPriceImpact, theme.palette.error.main]);
 
+  const bridgePriceImpactWarning = useMemo(() => {
+    if (!selectedRoute?.priceImpact) {
+      return null;
+    }
+    const bridgePriceImpactBN = new BigNumber(selectedRoute.priceImpact);
+    if (bridgePriceImpactBN.lte(BRIDGE_PRICE_IMPACT_THRESHOLD)) {
+      return null;
+    }
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          fontWeight: 600,
+          typography: 'body2',
+          alignItems: 'center',
+          justifyContent: 'center',
+          mb: 16,
+        }}
+      >
+        <QuestionTooltip
+          title={
+            <Trans>
+              Large price impact means that you will likely trade at a worse
+              price.
+            </Trans>
+          }
+          mr={8}
+        />
+        <Box sx={{ display: 'flex' }}>
+          <Trans>Current price impact</Trans>
+          <Box sx={{ color: theme.palette.error.main, ml: 4 }}>
+            {formatPercentageNumber({
+              input: selectedRoute?.priceImpact,
+            })}
+          </Box>
+        </Box>
+      </Box>
+    );
+  }, [selectedRoute?.priceImpact, theme.palette.error.main]);
+
   const tokenPairPrice = useMemo(() => {
     return (
       <TokenPairPriceWithToggle
@@ -690,6 +737,7 @@ export function Swap({
       }
       return (
         <>
+          {bridgePriceImpactWarning}
           {slippageExceedLimit}
           <BridgeRouteShortCard route={selectedRoute} />
         </>
@@ -725,18 +773,19 @@ export function Swap({
       </>
     );
   }, [
-    resPriceStatus,
-    tokenPairPrice,
-    displayingFromAmt,
-    priceImpactWarning,
-    displayPriceImpact,
-    isUnSupportChain,
+    isNotCurrentChain,
     isBridge,
     bridgeRouteStatus,
-    bridgeRouteList,
-    selectedRoute,
-    isNotCurrentChain,
+    resPriceStatus,
+    isUnSupportChain,
+    bridgeRouteList.length,
+    displayingFromAmt,
+    displayPriceImpact,
+    priceImpactWarning,
     slippageExceedLimit,
+    tokenPairPrice,
+    selectedRoute,
+    bridgePriceImpactWarning,
   ]);
 
   const fromFinalAmt = useMemo(() => {

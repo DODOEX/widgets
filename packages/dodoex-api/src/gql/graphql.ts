@@ -839,6 +839,52 @@ export type Avatar_Filter = {
 
 export type Avatar_OrderBy = 'balance' | 'chain' | 'componentsID' | 'id';
 
+export type Backend_Manage_Settlex_ServerBatchTransferList = {
+  batchId?: Maybe<Scalars['String']['output']>;
+  batchTransfers?: Maybe<Scalars['JSON']['output']>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  date?: Maybe<Scalars['String']['output']>;
+  extend?: Maybe<Scalars['JSON']['output']>;
+  hash?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  memo?: Maybe<Scalars['String']['output']>;
+  platformFeeUsd?: Maybe<Scalars['String']['output']>;
+  receiveAmount?: Maybe<Scalars['String']['output']>;
+  receiveAmountUsd?: Maybe<Scalars['String']['output']>;
+  receiveToken?: Maybe<Scalars['String']['output']>;
+  receiver?: Maybe<Scalars['String']['output']>;
+  sendAmount?: Maybe<Scalars['String']['output']>;
+  sendAmountUsd?: Maybe<Scalars['String']['output']>;
+  sendToken?: Maybe<Scalars['String']['output']>;
+  sender?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['Int']['output']>;
+  timestamp?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Backend_Manage_Settlex_ServerBatchTransferResult = {
+  count?: Maybe<Scalars['Int']['output']>;
+  list?: Maybe<Array<Maybe<Backend_Manage_Settlex_ServerBatchTransferList>>>;
+  page?: Maybe<Scalars['Int']['output']>;
+  pageSize?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Backend_Manage_Settlex_ServerbatchTransferFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  orderColumn?: InputMaybe<Scalars['String']['input']>;
+  orderValue?: InputMaybe<Scalars['String']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  sendToken?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Backend_Manage_Settlex_ServerdetailBatchTransferFilter = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Balance = {
   chain: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -2063,6 +2109,7 @@ export type Cross_Chain_Swap_ZetachainCrossChainRoute = {
   fromTokenAddress?: Maybe<Scalars['String']['output']>;
   min?: Maybe<Scalars['String']['output']>;
   omniPlan?: Maybe<Scalars['JSON']['output']>;
+  priceImpact?: Maybe<Scalars['String']['output']>;
   routeId?: Maybe<Scalars['String']['output']>;
   slippage?: Maybe<Scalars['Float']['output']>;
   source?: Maybe<Scalars['String']['output']>;
@@ -2434,11 +2481,11 @@ export type Cross_Chain_TransferExplorerProject = {
 };
 
 export type Cross_Chain_TransferExplorerSection =
-  | 'HOT_PROJECTS'
-  | 'MAINNET_LAUNCHES'
-  | 'RECENT_AIRDROPS'
-  | 'TESTNET_LAUNCHES'
-  | 'UPCOMING_AIRDROPS';
+  | 'hot_projects'
+  | 'mainnet_launches'
+  | 'recent_airdrops'
+  | 'testnet_launches'
+  | 'upcoming_airdrops';
 
 export type Cross_Chain_TransferExplorerSectionProjects = {
   projects: Array<Cross_Chain_TransferExplorerProject>;
@@ -13124,6 +13171,8 @@ export type Query = {
   avatarTransferHistories: Array<AvatarTransferHistory>;
   avatarTransferHistory?: Maybe<AvatarTransferHistory>;
   avatars: Array<Avatar>;
+  backend_manage_settlex_server_detail?: Maybe<Backend_Manage_Settlex_ServerBatchTransferList>;
+  backend_manage_settlex_server_list?: Maybe<Backend_Manage_Settlex_ServerBatchTransferResult>;
   balance?: Maybe<Balance>;
   balances: Array<Balance>;
   berachain_alm_allVaults?: Maybe<Array<Maybe<Berachain_AlmVault>>>;
@@ -13562,6 +13611,8 @@ export type Query = {
   settlex_limit_limitOrderList?: Maybe<Array<Maybe<Settlex_LimitLimitOrder>>>;
   settlex_limit_limitOrderListWithPage?: Maybe<Settlex_LimitPaginateLimitOrderList>;
   settlex_limit_limitOrderListWithPageV2?: Maybe<Settlex_LimitPaginateLimitOrderListV2>;
+  settlex_notice_center_transactionList?: Maybe<Settlex_Notice_CenterNoticeCenterTransactionList>;
+  settlex_notice_center_unread?: Maybe<Settlex_Notice_CenterNoticeCenterUnRead>;
   sigmax_limit_getOrderStatusBroadcasts?: Maybe<
     Array<Maybe<Sigmax_LimitLimitOrderStatusBroadcastInfo>>
   >;
@@ -13853,6 +13904,14 @@ export type QueryAvatarsArgs = {
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<Avatar_Filter>;
+};
+
+export type QueryBackend_Manage_Settlex_Server_DetailArgs = {
+  where?: InputMaybe<Backend_Manage_Settlex_ServerdetailBatchTransferFilter>;
+};
+
+export type QueryBackend_Manage_Settlex_Server_ListArgs = {
+  where?: InputMaybe<Backend_Manage_Settlex_ServerbatchTransferFilter>;
 };
 
 export type QueryBalanceArgs = {
@@ -15572,6 +15631,14 @@ export type QuerySettlex_Limit_LimitOrderListWithPageV2Args = {
   where?: InputMaybe<Settlex_LimituserQueryLimitOrderListWithPage>;
 };
 
+export type QuerySettlex_Notice_Center_TransactionListArgs = {
+  where?: InputMaybe<Settlex_Notice_CentertransactionListFilter>;
+};
+
+export type QuerySettlex_Notice_Center_UnreadArgs = {
+  where?: InputMaybe<Settlex_Notice_CenternoticeCenterUnreadFilter>;
+};
+
 export type QuerySigmax_Limit_GetOrderStatusBroadcastsArgs = {
   where?: InputMaybe<Sigmax_LimitgetPendingLimitOrderParam>;
 };
@@ -17164,6 +17231,44 @@ export type Settlex_LimituserQueryLimitOrderListWithPage = {
   network?: InputMaybe<Scalars['String']['input']>;
   orderType?: InputMaybe<Settlex_LimitlimitOrderQueryEnum>;
   page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Settlex_Notice_CenterNoticeCenterRead = {
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type Settlex_Notice_CenterNoticeCenterTransactionItem = {
+  chainId?: Maybe<Scalars['Int']['output']>;
+  createTime?: Maybe<Scalars['String']['output']>;
+  extend?: Maybe<Scalars['JSON']['output']>;
+  from?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  key?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+export type Settlex_Notice_CenterNoticeCenterTransactionList = {
+  count?: Maybe<Scalars['Int']['output']>;
+  limit?: Maybe<Scalars['Int']['output']>;
+  list?: Maybe<Array<Maybe<Settlex_Notice_CenterNoticeCenterTransactionItem>>>;
+  page?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Settlex_Notice_CenterNoticeCenterUnRead = {
+  transactionCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Settlex_Notice_CenternoticeCenterUnreadFilter = {
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Settlex_Notice_CentertransactionListFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Sigmax_LimitCancelLimitOrderResponse = {

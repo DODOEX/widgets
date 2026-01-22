@@ -7,3 +7,6 @@ export const DEFAULT_SWAP_DDL = 20; // minutes
 export const MIN_GAS_LIMIT = 30000;
 
 export const DEFAULT_BRIDGE_SLIPPAGE = 0.5;
+
+// 5%
+export const BRIDGE_PRICE_IMPACT_THRESHOLD = 0.05;

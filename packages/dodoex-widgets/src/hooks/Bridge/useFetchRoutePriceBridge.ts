@@ -90,6 +90,8 @@ export type CrossChainSwapZetachainRoute = {
   encodeParams: {
     interfaceParams: string;
   };
+  min: string | null;
+  priceImpact: string | null;
 };
 
 type CrossChainSwapZetachainRoutesResponse = {
@@ -194,6 +196,8 @@ export interface BridgeRouteI {
   encodeParams: CrossChainSwapZetachainRoute['encodeParams'];
   productParams: any;
   sourceRoute: Cross_Chain_Swap_Zetachain_RoutesQuery['cross_chain_swap_zetachain_routes'];
+
+  priceImpact: string | null;
 }
 
 export enum RoutePriceStatus {
@@ -276,7 +280,7 @@ export function useFetchRoutePriceBridge({
           },
           // referrer: 'http://localhost:6006/',
           // referrerPolicy: 'strict-origin-when-cross-origin',
-          body: `{"query":"\\n    query Cross_chain_swap_zetachain_routes($where: Cross_chain_swap_zetachainrouteParams) {\\n  cross_chain_swap_zetachain_routes(where: $where) {\\n    routeId\\n    source\\n    fromChainId\\n    fromTokenAddress\\n    fromAmount\\n    fromAmountWithOutDecimals\\n    fromAmountUSD\\n    toChainId\\n    toTokenAddress\\n    toAmount\\n    toAmountWithOutDecimals\\n    toAmountUSD\\n    fromAddress\\n    toAddress\\n    slippage\\n    approveTarget\\n    fees\\n    omniPlan\\n    encodeParams\\n  }\\n}\\n    ","variables":{"where":{"fromChainId":${
+          body: `{"query":"\\n    query Cross_chain_swap_zetachain_routes($where: Cross_chain_swap_zetachainrouteParams) {\\n  cross_chain_swap_zetachain_routes(where: $where) {\\n    routeId\\n    source\\n    fromChainId\\n    fromTokenAddress\\n    fromAmount\\n    fromAmountWithOutDecimals\\n    fromAmountUSD\\n    toChainId\\n    toTokenAddress\\n    toAmount\\n    toAmountWithOutDecimals\\n    toAmountUSD\\n    fromAddress\\n    toAddress\\n    slippage\\n    approveTarget\\n    fees\\n    omniPlan\\n    encodeParams\\n    min\\n    priceImpact\\n  }\\n}\\n    ","variables":{"where":{"fromChainId":${
             fromToken?.chainId
           },"source":"ZUNO","fromTokenAddress":"${fromToken?.address}","toChainId":${
             toToken?.chainId
@@ -380,6 +384,7 @@ export function useFetchRoutePriceBridge({
         fees,
         omniPlan,
         encodeParams,
+        priceImpact,
       } =
         data.cross_chain_swap_zetachain_routes as CrossChainSwapZetachainRoutesResponse['data']['cross_chain_swap_zetachain_routes'];
 
@@ -448,6 +453,7 @@ export function useFetchRoutePriceBridge({
               encodeParams,
               productParams: null,
               sourceRoute: data.cross_chain_swap_zetachain_routes,
+              priceImpact,
             };
             newBridgeRouteList.push(newBridgeRoute);
           }

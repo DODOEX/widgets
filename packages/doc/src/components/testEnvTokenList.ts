@@ -6,7 +6,6 @@ const testEnvTokenList: (TokenInfo & {
   position: number;
   slippage: number | null;
   supportTargetChain: boolean;
-  // @ts-ignore
 })[] = [
   {
     name: 'SUI.SUI',
@@ -20,6 +19,20 @@ const testEnvTokenList: (TokenInfo & {
     address: '0xe134d947644F90486C8106Ee528b1CD3e54A385e',
     symbol: 'USDC.SUI',
     decimals: 6,
+    chainId: 7000,
+  },
+  {
+    name: 'WZETA',
+    address: '0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf',
+    symbol: 'WZETA',
+    decimals: 18,
+    chainId: 7000,
+  },
+  {
+    name: 'ZETA',
+    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+    symbol: 'ZETA',
+    decimals: 18,
     chainId: 7000,
   },
   {
@@ -94,12 +107,32 @@ const testEnvTokenList: (TokenInfo & {
     supportTargetChain: true,
   },
   {
+    name: 'USDC',
+    address: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+    symbol: 'USDC',
+    decimals: 6,
+    chainId: 42161,
+  },
+  {
+    name: 'ETH',
+    address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+    symbol: 'AETH',
+    decimals: 18,
+    chainId: 42161,
+  },
+  {
+    "name": "ARB",
+    "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+    "symbol": "ARB",
+    "decimals": 18,
+    "chainId": 42161
+  },
+  {
     name: 'USDD',
     address: '0x680447595e8b7b3Aa1B43beB9f6098C79ac2Ab3f',
     symbol: 'USDD',
     decimals: 18,
     chainId: 42161,
-    supportTargetChain: false,
   },
   {
     name: 'USDC.BSC',

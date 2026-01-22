@@ -55,6 +55,8 @@ export const swapGraphqlQuery = {
         fees
         omniPlan
         encodeParams
+        min
+        priceImpact
       }
     }
   `),
