@@ -93,6 +93,39 @@ export const CrowdpoolingDetail = (props: any) => {
   );
 };
 
+export const CrowdpoolingPoolDetail = (props: any) => {
+  const [config, setConfig] = React.useState<SwapWidgetProps>({});
+  const { projectId, apiKey, ...other } = props;
+
+  React.useEffect(() => {
+    if (projectId && apiKey) {
+      const dodoService = new SwapWidgetApi();
+      dodoService
+        .getConfigSwapWidgetProps(projectId, apiKey)
+        .then(({ swapWidgetProps }) => {
+          setConfig(swapWidgetProps);
+        });
+    }
+  }, [projectId, apiKey]);
+
+  return (
+    <Widget
+      {...config}
+      {...other}
+      apikey={apiKey}
+      routerPage={{
+        type: 'crowdpoolingPoolDetail',
+        params: {
+          address: '0xfd222aab79f6db94e71479a66003051e52ee3d35',
+          chainId: ChainId.SEPOLIA,
+        },
+      }}
+    >
+      <Crowdpooling />
+    </Widget>
+  );
+};
+
 export const CreateCrowdpooling = (props: any) => {
   const [config, setConfig] = React.useState<SwapWidgetProps>({});
   const { projectId, apiKey, ...other } = props;
@@ -163,6 +196,14 @@ CrowdpoolingList.args = {
 };
 
 CrowdpoolingDetail.args = {
+  projectId: 'project2',
+  apiKey: 'ee53d6b75b12aceed4',
+  width: '100%',
+  height: '100%',
+  noDocumentLink: true,
+};
+
+CrowdpoolingPoolDetail.args = {
   projectId: 'project2',
   apiKey: 'ee53d6b75b12aceed4',
   width: '100%',

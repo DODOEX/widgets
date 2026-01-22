@@ -12,6 +12,7 @@ export enum PageType {
   createPoolAMMV3 = 'createPoolAMMV3',
   CrowdpoolingList = 'crowdpoolingList',
   CrowdpoolingDetail = 'crowdpoolingDetail',
+  CrowdpoolingPoolDetail = 'crowdpoolingPoolDetail',
   CreateCrowdpooling = 'createCrowdpooling',
   MyCrowdpoolingList = 'myCrowdpoolingList',
 }
@@ -58,6 +59,10 @@ interface PageTypeParams {
       }
     | undefined;
   [PageType.CrowdpoolingDetail]: {
+    address: string;
+    chainId: ChainId;
+  };
+  [PageType.CrowdpoolingPoolDetail]: {
     address: string;
     chainId: ChainId;
   };

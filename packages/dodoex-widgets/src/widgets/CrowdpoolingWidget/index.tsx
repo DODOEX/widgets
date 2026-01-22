@@ -5,6 +5,7 @@ import CrowdpoolingDetail from './CrowdpoolingDetail/index';
 import CrowdpoolingCreate from './CrowdpoolingCreate';
 import MyCrowdpoolingList from './MyCrowdpoolingList';
 import { useUserOptions } from '../../components/UserOptionsProvider';
+import { CrowdpoolingPoolDetail } from './CrowdpoolingDetail/components/CrowdpoolingPoolDetail';
 
 export function Crowdpooling() {
   const { routerPage } = useUserOptions();
@@ -24,6 +25,12 @@ export function Crowdpooling() {
           params={(page as Page<PageType.CrowdpoolingDetail>).params}
         />
       );
+    case PageType.CrowdpoolingPoolDetail:
+      return (
+        <CrowdpoolingPoolDetail
+          params={(page as Page<PageType.CrowdpoolingPoolDetail>).params}
+        />
+      );
     case PageType.CreateCrowdpooling:
       return <CrowdpoolingCreate />;
     case PageType.MyCrowdpoolingList:
@@ -36,3 +43,5 @@ export function Crowdpooling() {
       );
   }
 }
+
+export { CrowdpoolingPoolDetail };
