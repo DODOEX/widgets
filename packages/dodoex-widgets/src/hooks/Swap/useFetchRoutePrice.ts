@@ -200,7 +200,7 @@ export function useFetchRoutePrice({
             deadLine: apiDdl,
             // apikey,
             slippage,
-            source: disableIndirectRouting ? 'noMaxHops' : 'dodoMix',
+            source: disableIndirectRouting ? 'noMaxHops' : 'zuno',
             toTokenAddress: toToken.address,
             fromTokenAddress: fromToken.address,
             userAddr: account || getFallbackAddress(fromToken.chainId),
