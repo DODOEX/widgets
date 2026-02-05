@@ -64,4 +64,6 @@ export enum ChainId {
 
   STABLE_TESTNET = 2201,
   STABLE = 988,
+
+  ENI = 173,
 }
