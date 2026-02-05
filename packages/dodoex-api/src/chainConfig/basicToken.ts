@@ -219,4 +219,12 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'USDT0',
     wrappedTokenAddress: '0x779Ded0c9e1022225f8E0630b35a9b54bE713736',
   },
+  [ChainId.ENI]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'EGAS',
+    name: 'EGAS',
+    showDecimals: 6,
+    wrappedTokenSymbol: 'WEGAS',
+    wrappedTokenAddress: '0x6D1e851446F4D004AE2A72F9AfEd85e8829A205E',
+  },
 };

@@ -112,8 +112,8 @@ export function Swap({
     [],
   );
 
-  const [fromToken, setFromTokenOrigin] = useState<TokenInfo | null>(null);
-  const [toToken, setToTokenOrigin] = useState<TokenInfo | null>(null);
+  const [fromToken, setFromToken] = useState<TokenInfo | null>(null);
+  const [toToken, setToToken] = useState<TokenInfo | null>(null);
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState<boolean>(false);
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] =
     useState<boolean>(false);
@@ -278,44 +278,27 @@ export function Swap({
     [setDisplayingToAmt, debouncedSetToAmt, resetSwapRoute],
   );
 
-  const setFromToken: (value: React.SetStateAction<TokenInfo | null>) => void =
-    useCallback(
-      (value) => {
-        return setFromTokenOrigin((prev) => {
-          const newValue = typeof value === 'function' ? value(prev) : value;
-          // sync redux
-          if (!chainId) {
-            // The chainId is only modified when the wallet is not connected, and the chain is specified when the wallet is connected.
-            useGlobalState.setState({
-              fromTokenChainId: (newValue?.chainId ?? undefined) as
-                | ChainId
-                | undefined,
-            });
-          }
-          // callback
-          if (onPayTokenChange && newValue && newValue !== prev) {
-            onPayTokenChange(newValue);
-          }
+  useEffect(() => {
+    if (!fromToken) return;
 
-          return newValue;
-        });
-      },
-      [onPayTokenChange, chainId],
-    );
+    // sync redux
+    if (!chainId) {
+      // The chainId is only modified when the wallet is not connected, and the chain is specified when the wallet is connected.
+      useGlobalState.setState({
+        fromTokenChainId: fromToken.chainId,
+      });
+    }
+    // callback
+    if (onPayTokenChange) {
+      onPayTokenChange(fromToken);
+    }
+  }, [fromToken, chainId, onPayTokenChange]);
 
-  const setToToken: (value: React.SetStateAction<TokenInfo | null>) => void =
-    useCallback(
-      (value) => {
-        return setToTokenOrigin((prev) => {
-          const newValue = typeof value === 'function' ? value(prev) : value;
-          if (onReceiveTokenChange && newValue && newValue !== prev) {
-            onReceiveTokenChange(newValue);
-          }
-          return newValue;
-        });
-      },
-      [onReceiveTokenChange],
-    );
+  useEffect(() => {
+    if (toToken && onReceiveTokenChange) {
+      onReceiveTokenChange(toToken);
+    }
+  }, [toToken, onReceiveTokenChange]);
 
   useInitDefaultToken({
     fromToken,

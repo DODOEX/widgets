@@ -16,6 +16,7 @@ import {
   pharosAtlanticTestnet,
   stableTestnet,
   stable,
+  eni
 } from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
@@ -542,6 +543,20 @@ const contractMap: {
     DODO_DSP_PROXY: stable.DODODspProxy,
     DODO_DPP_PROXY: stable.DODODppProxy,
     DODO_MINEV3_PROXY: stable.DODOMineV3Proxy,
+  },
+  [ChainId.ENI]: {
+    MULTI_CALL: eni.MulticallWithValid,
+    DODO_APPROVE: eni.DODOApprove,
+    ERC20_HELPER: eni.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: eni.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: eni.DODOV1PmmHelper,
+    CALLEE_HELPER: eni.DODOCalleeHelper,
+
+    DODO_PROXY: eni.DODOV2Proxy02,
+    DODO_DSP_PROXY: eni.DODODspProxy,
+    DODO_DPP_PROXY: eni.DODODppProxy,
+    DODO_MINEV3_PROXY: eni.DODOMineV3Proxy,
   },
 };
 

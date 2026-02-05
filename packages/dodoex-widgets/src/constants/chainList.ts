@@ -7,6 +7,7 @@ import { ReactComponent as BitlayerLogo } from '../assets/logo/networks/bitlayer
 import { ReactComponent as BSCLogo } from '../assets/logo/networks/bsc.svg';
 import { ReactComponent as CFXLogo } from '../assets/logo/networks/cfx.svg';
 import { ReactComponent as DODOchainLogo } from '../assets/logo/networks/dodochain.svg';
+import { ReactComponent as ENILogo } from '../assets/logo/networks/eni.svg';
 import { ReactComponent as ETHereumLogo } from '../assets/logo/networks/eth.svg';
 import { ReactComponent as HashKeyLogo } from '../assets/logo/networks/haskey.svg';
 import { ReactComponent as HemiLogo } from '../assets/logo/networks/hemi.svg';
@@ -320,6 +321,14 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.STABLE,
       logo: StableLogo,
       name: 'Stable',
+    },
+  ],
+  [
+    ChainId.ENI,
+    {
+      chainId: ChainId.ENI,
+      logo: ENILogo,
+      name: 'ENI Mainnet',
     },
   ],
 ]);

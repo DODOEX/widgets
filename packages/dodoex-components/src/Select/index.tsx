@@ -62,6 +62,7 @@ const Listbox = styled('ul')(
   `,
 );
 
+// @ts-ignore
 const AnimatedListbox = React.forwardRef(function AnimatedListbox<
   Value extends {},
   Multiple extends boolean,
@@ -97,6 +98,7 @@ const AnimatedListbox = React.forwardRef(function AnimatedListbox<
   );
 });
 
+// @ts-ignore
 const Button = React.forwardRef(function Button<
   TValue extends {},
   Multiple extends boolean,
@@ -187,8 +189,10 @@ const Popup = styled('div')`
   z-index: 10;
 `;
 
-interface Props<T extends {} = SelectOption, Multiple extends boolean = false>
-  extends SelectProps<T, Multiple> {
+interface Props<
+  T extends {} = SelectOption,
+  Multiple extends boolean = false,
+> extends SelectProps<T, Multiple> {
   options?: SelectOption[];
   fullWidth?: boolean;
   px?: number;
