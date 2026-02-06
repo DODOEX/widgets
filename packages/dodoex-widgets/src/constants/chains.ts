@@ -73,6 +73,11 @@ export const rpcServerMap: {
   [ChainId.STABLE]: [
     'https://partners-rpc.stable.xyz/dodo.88b3272adaac2ddaa08f13c049824412d7bffe24a2c760089f6c480115ac00e1',
   ],
+  [ChainId.ENI]: [
+    'https://rpc.eniac.network',
+    'https://rpc1.eniac.network',
+    'https://rpc2.eniac.network',
+  ],
 };
 
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
@@ -132,6 +137,7 @@ export const scanUrlDomainMap: {
   [ChainId.PHAROS_ATLANTIC_TESTNET]: 'atlantic.pharosscan.xyz',
   [ChainId.STABLE_TESTNET]: 'testnet.stablescan.xyz',
   [ChainId.STABLE]: 'stablescan.xyz',
+  [ChainId.ENI]: 'scan.eniac.network',
 };
 
 export const ThegraphKeyMap: {
@@ -172,6 +178,7 @@ export const ThegraphKeyMap: {
   [ChainId.PHAROS_ATLANTIC_TESTNET]: 'pharos-atlantic-testnet',
   [ChainId.STABLE_TESTNET]: 'stable-testnet',
   [ChainId.STABLE]: 'stable',
+  [ChainId.ENI]: 'eni',
 };
 
 export const blockTimeMap: {
@@ -212,6 +219,7 @@ export const blockTimeMap: {
   [ChainId.PHAROS_ATLANTIC_TESTNET]: 2777,
   [ChainId.STABLE_TESTNET]: 700,
   [ChainId.STABLE]: 988,
+  [ChainId.ENI]: 1000,
 };
 
 export const dexKeysMap: {
@@ -252,4 +260,5 @@ export const dexKeysMap: {
   [ChainId.PHAROS_ATLANTIC_TESTNET]: [],
   [ChainId.STABLE_TESTNET]: [],
   [ChainId.STABLE]: [],
+  [ChainId.ENI]: [],
 };
