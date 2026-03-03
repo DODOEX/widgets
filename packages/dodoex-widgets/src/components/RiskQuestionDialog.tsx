@@ -3,7 +3,6 @@ import { t, Trans } from '@lingui/macro';
 import React from 'react';
 import WidgetDialog from './WidgetDialog';
 import { useUserOptions } from './UserOptionsProvider';
-import { RiskOncePageLocalStorageKey } from '../constants/localstorage';
 import { useRiskDialogState } from '../hooks/useRiskDialogState';
 
 export interface Question {

@@ -16,7 +16,7 @@ import { ReactComponent as TelegramIcon } from '../../../../assets/soical/telegr
 interface IntroSettingsConfirmDialogProps {
   open: boolean;
   onClose: () => void;
-  cpAddress: string;
+  cpAddress: string | undefined;
   introSettings: IntroSettingsType;
   chainId: number | undefined;
   dispatch: (action: { type: Types; payload: any }) => void;
@@ -89,6 +89,9 @@ export default function IntroSettingsConfirmDialog({
   const router = useRouterStore();
 
   const handleSave = async () => {
+    if (!cpAddress) {
+      throw new Error('cpAddress is required');
+    }
     const { coverImageUrl, description } = introSettings;
     const header = await signHeader();
 
@@ -387,6 +390,7 @@ export default function IntroSettingsConfirmDialog({
                 sx={{
                   typography: 'body2',
                   color: 'text.primary',
+                  wordBreak: 'break-all',
                   '& h2': {
                     typography: 'body1',
                     fontWeight: 600,

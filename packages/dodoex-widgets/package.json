@@ -1,11 +1,12 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.10.8",
+  "version": "3.10.8-cp.13",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
+  "style": "dist/widgets.css",
   "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/DODOEX/widgets#readme",
   "repository": "https://github.com/DODOEX/widgets",
@@ -37,7 +38,8 @@
       "types": "./dist/types/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    }
+    },
+    "./style": "./dist/widgets.css"
   },
   "keywords": [
     "dodo",
@@ -58,7 +60,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@dodoex/api": "3.5.0",
+    "@dodoex/api": "3.5.0-cp.2",
     "@dodoex/components": "^3.1.0",
     "@dodoex/contract-request": "^1.3.0",
     "@dodoex/dodo-contract-request": "^1.33.0",
@@ -157,6 +159,7 @@
     "np": "^7.6.1",
     "rollup": "^4.18.0",
     "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-css-only": "^4.5.5",
     "rollup-plugin-import-css": "^3.5.5",
     "svg-jest": "^1.0.1",
     "ts-jest": "^29.0.1",

@@ -28,6 +28,7 @@ export default function CrowdpoolingCreate() {
   const mutationCreate = useCreateCrodpooling({
     state,
     submittedBack: () => {
+      handleStepClick(StepStatus.IntroSettings);
       setShowConfirmDialog(false);
     },
   });
@@ -51,7 +52,7 @@ export default function CrowdpoolingCreate() {
   };
 
   const handleStepClick = (step: StepStatus) => {
-    if (curStep === StepStatus.OptionalSettings) return;
+    if (curStep === StepStatus.IntroSettings) return;
     dispatch({ type: Types.UpdateCurStep, payload: step });
     if (isMobile) {
       stepsScrollRef.current
@@ -120,7 +121,7 @@ export default function CrowdpoolingCreate() {
         {/* Steps Navigation */}
         <Box
           sx={{
-            backgroundColor: theme.palette.background.paperDarkContrast,
+            backgroundColor: theme.palette.background.paperContrast,
             mt: 28,
             pt: 28,
             pb: isMobile ? 20 : 28,
@@ -147,7 +148,11 @@ export default function CrowdpoolingCreate() {
               const status = getStepStatus(item.step);
               const isActive = status === 'active';
               let isCompleted = status === 'completed';
-              if (item.step === StepStatus.OptionalSettings && isCompleted && !mutationCreate.isSuccess) {
+              if (
+                item.step === StepStatus.OptionalSettings &&
+                isCompleted &&
+                !mutationCreate.isSuccess
+              ) {
                 isCompleted = false;
               }
               const isNotFirst = index !== 0;

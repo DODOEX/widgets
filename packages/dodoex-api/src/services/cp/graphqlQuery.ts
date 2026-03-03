@@ -109,4 +109,85 @@ export const cpGraphqlQuery = {
       }
     }
   `),
+  fetchBidPosition: graphql(`
+    query FetchBidPosition($where: BidPosition_filter) {
+      bidPositions(where: $where, orderBy: lastTxTime, orderDirection: desc) {
+        user {
+          id
+        }
+        cp {
+          id
+        }
+        shares
+        investedQuote
+      }
+    }
+  `),
+  fetchCPDayData: graphql(`
+    query FetchCPDayData($first: Int, $where: CrowdPoolingDayData_filter) {
+      crowdPoolingDayDatas(
+        first: $first
+        where: $where
+        orderBy: date
+        orderDirection: asc
+      ) {
+        date
+        investedQuote
+        investCount
+        newcome
+        investors
+        poolQuote
+      }
+    }
+  `),
+  fetchCPHourData: graphql(`
+    query FetchCPHourData($first: Int, $where: CrowdPoolingHourData_filter) {
+      crowdPoolingHourDatas(
+        first: $first
+        where: $where
+        orderBy: hour
+        orderDirection: asc
+      ) {
+        hour
+        investedQuote
+        investCount
+        newcome
+        investors
+        poolQuote
+      }
+    }
+  `),
+  fetchCPBids: graphql(`
+    query FetchCPBids(
+      $first: Int
+      $skip: Int
+      $where: BidHistory_filter
+      $orderBy: BidHistory_orderBy
+      $orderDirection: OrderDirection
+    ) {
+      bidHistories(
+        first: $first
+        skip: $skip
+        where: $where
+        orderBy: $orderBy
+        orderDirection: $orderDirection
+      ) {
+        id
+        timestamp
+        user {
+          id
+        }
+        action
+        cp {
+          id
+          quoteToken {
+            id
+            symbol
+          }
+        }
+        quote
+        fee
+      }
+    }
+  `),
 };

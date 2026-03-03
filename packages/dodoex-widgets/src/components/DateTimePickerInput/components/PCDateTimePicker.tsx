@@ -172,14 +172,12 @@ function PCDateTimePickerComponent({
               '.rdtPicker': {
                 width: 345,
                 height: timepickerHeight,
-                background: isLight
-                  ? '#F6F6F6'
-                  : theme.palette.background.paperContrast,
                 borderRadius: 20,
+                background: theme.palette.background.paperContrast,
                 // mt: 6,
                 p: 0,
                 px: 20,
-                border: 'none',
+                border: `solid 1px ${theme.palette.border.main}`,
                 '.rdtDays': {
                   table: {
                     borderCollapse: 'collapse',
@@ -241,7 +239,7 @@ function PCDateTimePickerComponent({
                         lineHeight: '26px',
                         '&.rdtActive': {
                           color: isLight
-                            ? theme.palette.text.primary
+                            ? theme.palette.secondary.contrastText
                             : theme.palette.primary.contrastText,
                           backgroundColor: isLight
                             ? theme.palette.secondary.main
@@ -338,7 +336,9 @@ function PCDateTimePickerComponent({
                       fontWeight: 600,
                       borderRadius: 8,
                       '&.rdtActive': {
-                        color: theme.palette.primary.contrastText,
+                        color: isLight
+                          ? theme.palette.secondary.contrastText
+                          : theme.palette.primary.contrastText,
                         backgroundColor: isLight
                           ? theme.palette.secondary.main
                           : theme.palette.primary.dark,
@@ -423,15 +423,13 @@ function PCDateTimePickerComponent({
         }
         maxWidth={345}
         sx={{
+          padding: 0,
           typography: 'body1',
-          padding: 12,
           fontWeight: 500,
-          backgroundColor: theme.palette.background.paperContrast,
+          backgroundColor: 'transparent',
           borderRadius: 8,
           color: theme.palette.text.primary,
           borderColor: 'transparent',
-          borderWidth: 1,
-          borderStyle: 'solid',
           whiteSpace: 'pre-wrap',
         }}
       >
@@ -481,9 +479,6 @@ function PCDateTimePickerComponent({
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: isLight
-                ? 'rgb(240, 240, 240)'
-                : 'rgb(37, 40, 49)',
             }}
           >
             <Box className="calendar-icon" component={CalendarIcon} sx={{}} />

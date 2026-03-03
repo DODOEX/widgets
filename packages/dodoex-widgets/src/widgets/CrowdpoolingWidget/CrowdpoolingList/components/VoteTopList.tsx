@@ -16,8 +16,10 @@ export default function VoteTopList({ cpList }: { cpList: Crowdpooling[] }) {
     [currentPage, chunkList],
   );
 
+  if (!cpList.length) return null;
+
   return (
-    <Box>
+    <Box sx={{ mb: 40 }}>
       <Box
         sx={{
           display: 'flex',
@@ -27,7 +29,7 @@ export default function VoteTopList({ cpList }: { cpList: Crowdpooling[] }) {
         }}
       >
         <Box sx={{ typography: 'h5' }}>
-          🔥<Trans>Hot</Trans>
+          🔥<Trans>Recommended</Trans>
         </Box>
         <Box
           sx={{

@@ -34,8 +34,7 @@ export default function IntroSettings({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadError, setUploadError] = useState<string>('');
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const cpAddress =
-    mutationCreate.data || '0xfd222aab79f6db94e71479a66003051e52ee3d35';
+  const cpAddress = mutationCreate.data;
 
   const { enabledSocialLinks } = state.introSettings;
 
@@ -92,6 +91,7 @@ export default function IntroSettings({
         setUploadError('Failed to compress image');
       }
     }
+    e.target.value = '';
   };
 
   const handleUploadClick = () => {
@@ -135,6 +135,9 @@ export default function IntroSettings({
       type: Types.UpdateIntroSettings,
       payload: { coverImageUrl: '' },
     });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const handleChangeImage = () => {
@@ -168,7 +171,10 @@ export default function IntroSettings({
                 display: 'flex',
                 alignItems: 'center',
                 gap: 12,
-                typography: 'h3',
+                typography: {
+                  mobile: 'caption',
+                  tablet: 'h3',
+                },
               }}
             >
               <Box
@@ -177,6 +183,7 @@ export default function IntroSettings({
                   width: 32,
                   height: 32,
                   color: theme.palette.primary.contrastText,
+                  flexShrink: 0,
                 }}
               />
               <Trans>Create successfully!</Trans>
@@ -187,13 +194,17 @@ export default function IntroSettings({
                 display: 'flex',
                 alignItems: 'center',
                 gap: 12,
-                typography: 'h3',
+                typography: {
+                  mobile: 'caption',
+                  tablet: 'h3',
+                },
               }}
             >
               <Box
                 sx={{
                   display: 'flex',
                   animation: 'loadingRotate 1.1s infinite linear',
+                  flexShrink: 0,
                   '@keyframes loadingRotate': {
                     '0%': {
                       transform: 'rotate(0deg)',
@@ -235,8 +246,14 @@ export default function IntroSettings({
           <Box
             sx={{
               mt: 8,
-              fontSize: 18,
-              lineHeight: '27px',
+              fontSize: {
+                mobile: '16px',
+                tablet: '18px',
+              },
+              lineHeight: {
+                mobile: '22px',
+                tablet: '27px',
+              },
             }}
           >
             {isCreated ? (
@@ -259,7 +276,12 @@ export default function IntroSettings({
               color: theme.palette.warning.main,
             }}
           >
-            <Warn />
+            <Box
+              component={Warn}
+              sx={{
+                flexShrink: 0,
+              }}
+            />
             <Trans>
               Please wait and do not leave this page until the project intro is
               submitted. If you leave this page, changes can only be made by
@@ -305,9 +327,6 @@ export default function IntroSettings({
             <Input
               height={48}
               fullWidth
-              sx={{
-                backgroundColor: 'background.paperContrast',
-              }}
               value={projectName}
               onChange={(e) => {
                 dispatch({
@@ -598,9 +617,6 @@ export default function IntroSettings({
                     <Input
                       height={48}
                       fullWidth
-                      sx={{
-                        backgroundColor: 'background.paperContrast',
-                      }}
                       value={websiteUrl}
                       onChange={(e) => {
                         dispatch({
@@ -667,9 +683,6 @@ export default function IntroSettings({
                     <Input
                       height={48}
                       fullWidth
-                      sx={{
-                        backgroundColor: 'background.paperContrast',
-                      }}
                       value={twitterUrl}
                       onChange={(e) => {
                         dispatch({
@@ -736,9 +749,6 @@ export default function IntroSettings({
                     <Input
                       height={48}
                       fullWidth
-                      sx={{
-                        backgroundColor: 'background.paperContrast',
-                      }}
                       value={discordUrl}
                       onChange={(e) => {
                         dispatch({
@@ -805,9 +815,6 @@ export default function IntroSettings({
                     <Input
                       height={48}
                       fullWidth
-                      sx={{
-                        backgroundColor: 'background.paperContrast',
-                      }}
                       value={telegramUrl}
                       onChange={(e) => {
                         dispatch({

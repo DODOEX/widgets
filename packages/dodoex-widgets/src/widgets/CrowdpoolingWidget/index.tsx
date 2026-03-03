@@ -2,10 +2,10 @@ import { useRouterStore } from '../../router';
 import { Page, PageType } from '../../router/types';
 import CrowdpoolingList from './CrowdpoolingList/index';
 import CrowdpoolingDetail from './CrowdpoolingDetail/index';
+import CrowdpoolingPoolDetail from './CrowdpoolingPoolDetail/index';
 import CrowdpoolingCreate from './CrowdpoolingCreate';
 import MyCrowdpoolingList from './MyCrowdpoolingList';
 import { useUserOptions } from '../../components/UserOptionsProvider';
-import { CrowdpoolingPoolDetail } from './CrowdpoolingDetail/components/CrowdpoolingPoolDetail';
 
 export function Crowdpooling() {
   const { routerPage } = useUserOptions();
@@ -43,5 +43,3 @@ export function Crowdpooling() {
       );
   }
 }
-
-export { CrowdpoolingPoolDetail };

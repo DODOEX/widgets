@@ -24,6 +24,14 @@ const documents = {
     types.FetchCpDetailDocument,
   '\n    query FetchIOPCPList(\n      $where: Crowd_pooling_read_servercrowdpoolingListFilter\n      $voteWhere: Crowd_pooling_read_servercrowdpoolingVoteListFilter\n    ) {\n      crowd_pooling_read_server_list(where: $where) {\n        address\n        votes {\n          id\n        }\n      }\n      crowd_pooling_read_server_voteList(where: $voteWhere) {\n        id\n        account {\n          address\n        }\n      }\n    }\n  ':
     types.FetchIopcpListDocument,
+  '\n    query FetchBidPosition($where: BidPosition_filter) {\n      bidPositions(where: $where, orderBy: lastTxTime, orderDirection: desc) {\n        user {\n          id\n        }\n        cp {\n          id\n        }\n        shares\n        investedQuote\n      }\n    }\n  ':
+    types.FetchBidPositionDocument,
+  '\n    query FetchCPDayData($first: Int, $where: CrowdPoolingDayData_filter) {\n      crowdPoolingDayDatas(\n        first: $first\n        where: $where\n        orderBy: date\n        orderDirection: asc\n      ) {\n        date\n        investedQuote\n        investCount\n        newcome\n        investors\n        poolQuote\n      }\n    }\n  ':
+    types.FetchCpDayDataDocument,
+  '\n    query FetchCPHourData($first: Int, $where: CrowdPoolingHourData_filter) {\n      crowdPoolingHourDatas(\n        first: $first\n        where: $where\n        orderBy: hour\n        orderDirection: asc\n      ) {\n        hour\n        investedQuote\n        investCount\n        newcome\n        investors\n        poolQuote\n      }\n    }\n  ':
+    types.FetchCpHourDataDocument,
+  '\n    query FetchCPBids(\n      $first: Int\n      $skip: Int\n      $where: BidHistory_filter\n      $orderBy: BidHistory_orderBy\n      $orderDirection: OrderDirection\n    ) {\n      bidHistories(\n        first: $first\n        skip: $skip\n        where: $where\n        orderBy: $orderBy\n        orderDirection: $orderDirection\n      ) {\n        id\n        timestamp\n        user {\n          id\n        }\n        action\n        cp {\n          id\n          quoteToken {\n            id\n            symbol\n          }\n        }\n        quote\n        fee\n      }\n    }\n  ':
+    types.FetchCpBidsDocument,
   '\n    query FetchMiningList($where: Miningmining_list_filter) {\n      mining_list(where: $where) {\n        list {\n          chainId\n          type\n          version\n          address\n          baseApy\n          baseLpToken {\n            decimals\n            address: id\n            symbol\n          }\n          baseToken {\n            decimals\n            address: id\n            price\n            symbol\n            logoImg\n          }\n          endBlock\n          miningContractAddress\n          miningTotalDollar\n          baseLpTokenMining\n          quoteLpTokenMining\n          quoteApy\n          quoteLpToken {\n            decimals\n            address: id\n            symbol\n          }\n          quoteToken {\n            decimals\n            address: id\n            price\n            symbol\n            logoImg\n          }\n          rewardTokenInfos {\n            apy\n            decimals\n            address: id\n            price\n            logoImg\n            rewardNumIndex\n            rewardPerBlock\n            startBlock\n            endBlock\n            startTime\n            endTime\n            symbol\n          }\n          rewardQuoteTokenInfos {\n            apy\n            decimals\n            address: id\n            price\n            logoImg\n            rewardNumIndex\n            rewardPerBlock\n            startBlock\n            endBlock\n            startTime\n            endTime\n            symbol\n          }\n          startBlock\n          title\n          platform\n          startTime\n          endTime\n        }\n        totalCount\n        chains\n      }\n    }\n  ':
     types.FetchMiningListDocument,
   '\n    query MiningList($where: Miningmining_list_filter) {\n      mining_list(where: $where) {\n        list {\n          chainId\n          type\n          version\n          address\n          isGSP\n          isNewERCMineV3\n          baseApy\n          baseLpToken {\n            decimals\n            id\n            symbol\n          }\n          baseToken {\n            decimals\n            id\n            price\n            symbol\n            logoImg\n          }\n          endBlock\n          miningContractAddress\n          miningTotalDollar\n          baseLpTokenMining\n          quoteLpTokenMining\n          quoteApy\n          quoteLpToken {\n            decimals\n            id\n            symbol\n          }\n          quoteToken {\n            decimals\n            id\n            price\n            symbol\n            logoImg\n          }\n          rewardTokenInfos {\n            apy\n            decimals\n            id\n            price\n            logoImg\n            rewardNumIndex\n            rewardPerBlock\n            startBlock\n            endBlock\n            startTime\n            endTime\n            symbol\n          }\n          rewardQuoteTokenInfos {\n            apy\n            decimals\n            id\n            price\n            logoImg\n            rewardNumIndex\n            rewardPerBlock\n            startBlock\n            endBlock\n            startTime\n            endTime\n            symbol\n          }\n          startBlock\n          title\n          platform\n          blockNumber\n          startTime\n          endTime\n        }\n        totalCount\n        chains\n      }\n    }\n  ':
@@ -96,6 +104,30 @@ export function graphql(
 export function graphql(
   source: '\n    query FetchIOPCPList(\n      $where: Crowd_pooling_read_servercrowdpoolingListFilter\n      $voteWhere: Crowd_pooling_read_servercrowdpoolingVoteListFilter\n    ) {\n      crowd_pooling_read_server_list(where: $where) {\n        address\n        votes {\n          id\n        }\n      }\n      crowd_pooling_read_server_voteList(where: $voteWhere) {\n        id\n        account {\n          address\n        }\n      }\n    }\n  ',
 ): typeof import('./graphql').FetchIopcpListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query FetchBidPosition($where: BidPosition_filter) {\n      bidPositions(where: $where, orderBy: lastTxTime, orderDirection: desc) {\n        user {\n          id\n        }\n        cp {\n          id\n        }\n        shares\n        investedQuote\n      }\n    }\n  ',
+): typeof import('./graphql').FetchBidPositionDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query FetchCPDayData($first: Int, $where: CrowdPoolingDayData_filter) {\n      crowdPoolingDayDatas(\n        first: $first\n        where: $where\n        orderBy: date\n        orderDirection: asc\n      ) {\n        date\n        investedQuote\n        investCount\n        newcome\n        investors\n        poolQuote\n      }\n    }\n  ',
+): typeof import('./graphql').FetchCpDayDataDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query FetchCPHourData($first: Int, $where: CrowdPoolingHourData_filter) {\n      crowdPoolingHourDatas(\n        first: $first\n        where: $where\n        orderBy: hour\n        orderDirection: asc\n      ) {\n        hour\n        investedQuote\n        investCount\n        newcome\n        investors\n        poolQuote\n      }\n    }\n  ',
+): typeof import('./graphql').FetchCpHourDataDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n    query FetchCPBids(\n      $first: Int\n      $skip: Int\n      $where: BidHistory_filter\n      $orderBy: BidHistory_orderBy\n      $orderDirection: OrderDirection\n    ) {\n      bidHistories(\n        first: $first\n        skip: $skip\n        where: $where\n        orderBy: $orderBy\n        orderDirection: $orderDirection\n      ) {\n        id\n        timestamp\n        user {\n          id\n        }\n        action\n        cp {\n          id\n          quoteToken {\n            id\n            symbol\n          }\n        }\n        quote\n        fee\n      }\n    }\n  ',
+): typeof import('./graphql').FetchCpBidsDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -23,7 +23,11 @@ export default function QuestionTooltip({
   }, [width]);
   return (
     <QuestionTooltipOrigin
-      container={document.querySelector(`.${WIDGET_CLASS_NAME}`)}
+      container={
+        typeof window === 'undefined'
+          ? undefined
+          : document.querySelector(`.${WIDGET_CLASS_NAME}`)
+      }
       maxWidth={maxWidth}
       sx={{
         cursor: 'help',

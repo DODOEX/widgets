@@ -52,10 +52,14 @@ export function MyCreatedMining({
   }, [lpToken.baseToken, lpToken.quoteToken, token, type]);
 
   const stakeTokenAddress = type === 'lptoken' ? lpToken.id : token.address;
-  const operateAreaEle = document.getElementById(
-    EARN_MINING_CREATE_AREA,
+  const operateAreaEle = (
+    typeof window !== 'undefined'
+      ? document.getElementById(EARN_MINING_CREATE_AREA)
+      : null
   ) as HTMLElement;
   const detailEle = getDetailWrapperEle();
+
+  const ele = isMobile ? detailEle : operateAreaEle;
   return (
     <>
       <MiningCardLayout
@@ -142,6 +146,7 @@ export function MyCreatedMining({
       </MiningCardLayout>
 
       {operateId === id &&
+        !!ele &&
         createPortal(
           <OperateArea
             onClose={() => {
@@ -155,7 +160,7 @@ export function MyCreatedMining({
             tokenPairs={tokenPairs}
             refetch={refetch}
           />,
-          isMobile ? detailEle : operateAreaEle,
+          ele,
         )}
     </>
   );

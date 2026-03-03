@@ -2,7 +2,6 @@ import { Box, Button, ButtonBase, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import React from 'react';
 import { StateProps, Types, StepStatus } from '../reducers';
-import QuestionTooltip from '../../../../components/Tooltip/QuestionTooltip';
 import { useTimeSettingsValidation } from '../hooks/useTimeSettingsValidation';
 import ErrorTip from './ErrorTip';
 import { DateTimePickerInput } from '../../../../components/DateTimePickerInput';
@@ -79,7 +78,10 @@ export default function TimeSettings({
           mobile: '100%',
           tablet: 458,
         },
-        mx: 'auto',
+        mx: {
+          mobile: 0,
+          tablet: 'auto',
+        },
       }}
     >
       {/* Date Inputs Row */}
@@ -89,6 +91,10 @@ export default function TimeSettings({
           gap: '12px',
           width: '100%',
           justifyContent: 'center',
+          flexDirection: {
+            mobile: 'column',
+            tablet: 'row',
+          },
         }}
       >
         {/* Start Time */}
@@ -97,7 +103,10 @@ export default function TimeSettings({
             display: 'flex',
             flexDirection: 'column',
             gap: '12px',
-            width: '217px',
+            width: {
+              mobile: '100%',
+              tablet: '217px',
+            },
           }}
         >
           <Title
@@ -125,7 +134,10 @@ export default function TimeSettings({
             display: 'flex',
             flexDirection: 'column',
             gap: '12px',
-            width: '217px',
+            width: {
+              mobile: '100%',
+              tablet: '217px',
+            },
           }}
         >
           <Title

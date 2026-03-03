@@ -64,7 +64,7 @@ export default function SwitchChainDialog({
     <WidgetModal
       open={openTarget}
       onClose={onClose}
-      container={document.querySelector(`.${WIDGET_CLASS_NAME}`)}
+      container={document?.querySelector(`.${WIDGET_CLASS_NAME}`)}
       disableEnforceFocus
     >
       <Box

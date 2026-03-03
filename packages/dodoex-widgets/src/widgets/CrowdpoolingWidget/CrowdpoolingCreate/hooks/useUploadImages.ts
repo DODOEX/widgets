@@ -43,11 +43,11 @@ async function uploadBatch(
   header: object,
 ): Promise<string[]> {
   const formData = new FormData();
+  formData.append('crowdpoolingAddress', crowdpoolingAddress);
+  formData.append('chainId', chainId?.toString() || '');
   files.forEach((file) => {
     formData.append('files', file);
   });
-  formData.append('crowdpoolingAddress', crowdpoolingAddress);
-  formData.append('chainId', chainId?.toString() || '');
 
   const response = await axios.post(uploadImagesAPI, formData, {
     headers: {

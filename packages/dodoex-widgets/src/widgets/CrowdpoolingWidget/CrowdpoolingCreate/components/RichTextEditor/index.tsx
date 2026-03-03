@@ -1,9 +1,9 @@
 import { Box, Button, useTheme } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { useEffect, useRef, useState } from 'react';
-import Quill from 'quill';
-import 'quill/dist/quill.snow.css';
+import type Quill from 'quill';
 import { compressImage } from '../../utils/imageCompression';
+import 'quill/dist/quill.snow.css';
 
 interface RichTextEditorProps {
   value: string;
@@ -24,71 +24,78 @@ export default function RichTextEditor({
   useEffect(() => {
     if (!containerRef.current || quillRef.current) return;
 
-    const quill = new Quill(containerRef.current, {
-      theme: 'snow',
-      placeholder,
-      modules: {
-        // toolbar: toolbarRef.current,
-        toolbar: [
-          [{ header: 2 }, 'blockquote'],
-          ['bold', 'link', 'image'],
-        ],
-        history: {
-          delay: 2000,
-          maxStack: 500,
-          userOnly: true,
+    let cancelled = false;
+
+    Promise.all([import('quill')]).then(([{ default: QuillClass }]) => {
+      if (cancelled || !containerRef.current || quillRef.current) return;
+
+      const quill = new QuillClass(containerRef.current, {
+        theme: 'snow',
+        placeholder,
+        modules: {
+          // toolbar: toolbarRef.current,
+          toolbar: [
+            [{ header: 2 }, 'blockquote'],
+            ['bold', 'link', 'image'],
+          ],
+          history: {
+            delay: 2000,
+            maxStack: 500,
+            userOnly: true,
+          },
         },
-      },
-      bounds: containerRef.current,
-    });
+        bounds: containerRef.current,
+      });
 
-    quillRef.current = quill;
+      quillRef.current = quill;
 
-    const toolbar = quill.getModule('toolbar') as {
-      addHandler: (name: string, handler: () => void) => void;
-    };
-    toolbar.addHandler('image', () => {
-      const input = document.createElement('input');
-      input.setAttribute('type', 'file');
-      input.setAttribute('accept', 'image/*');
-      input.click();
-
-      input.onchange = async () => {
-        const file = input.files?.[0];
-        if (!file) return;
-
-        try {
-          const compressedFile = await compressImage(file);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const range = quill.getSelection(true);
-            quill.insertEmbed(range.index, 'image', e.target?.result);
-          };
-          reader.readAsDataURL(compressedFile);
-        } catch (err) {
-          console.error('Failed to compress image:', err);
-        }
+      const toolbar = quill.getModule('toolbar') as {
+        addHandler: (name: string, handler: () => void) => void;
       };
-    });
+      toolbar.addHandler('image', () => {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.click();
 
-    // Set initial content
-    if (value) {
-      try {
-        const delta = JSON.parse(value);
-        quill.setContents(delta);
-      } catch {
-        quill.setText(value);
+        input.onchange = async () => {
+          const file = input.files?.[0];
+          if (!file) return;
+
+          try {
+            const compressedFile = await compressImage(file);
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              const range = quill.getSelection(true);
+              quill.insertEmbed(range.index, 'image', e.target?.result);
+            };
+            reader.readAsDataURL(compressedFile);
+          } catch (err) {
+            console.error('Failed to compress image:', err);
+          }
+        };
+      });
+
+      // Set initial content
+      if (value) {
+        try {
+          const delta = JSON.parse(value);
+          quill.setContents(delta);
+        } catch {
+          quill.setText(value);
+        }
       }
-    }
 
-    // Handle content changes
-    quill.on('text-change', () => {
-      onChange(quill.getSemanticHTML());
+      // Handle content changes
+      quill.on('text-change', () => {
+        onChange(quill.getSemanticHTML());
+      });
+
+      setIsInitialized(true);
     });
-
-    setIsInitialized(true);
 
     return () => {
+      cancelled = true;
       quillRef.current = null;
     };
   }, []);
@@ -107,7 +114,7 @@ export default function RichTextEditor({
     <Box
       sx={{
         borderRadius: '16px',
-        backgroundColor: 'background.paperContrast',
+        backgroundColor: 'background.input',
         border: 'solid 1px',
         borderColor: 'border.main',
         overflow: 'hidden',

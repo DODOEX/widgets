@@ -37,7 +37,9 @@ export default function WidgetDialog({
       open={open}
       onClose={onClose}
       container={
-        isMobile ? document.querySelector(`.${WIDGET_CLASS_NAME}`) : undefined
+        isMobile && typeof window !== 'undefined'
+          ? document.querySelector(`.${WIDGET_CLASS_NAME}`)
+          : undefined
       }
       disableEnforceFocus
     >

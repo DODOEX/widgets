@@ -4,6 +4,7 @@ import {
   CP_STATUS,
   Crowdpooling,
   CrowdpoolingDetail,
+  FetchBidPositionItem,
   FetchCPItem,
 } from './types';
 import { convertFetchTokenToTokenInfo } from '../../utils';
@@ -16,7 +17,7 @@ export const formatCP = ({
   chainId,
 }: {
   crowdpoolings: FetchCPItem[];
-  bidPositions?: any;
+  bidPositions?: FetchBidPositionItem[];
   iopCPList?: any;
   chainId: number;
 }) => {

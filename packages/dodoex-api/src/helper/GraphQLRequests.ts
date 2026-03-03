@@ -74,7 +74,7 @@ export default class GraphQLRequests {
       ] as const,
       queryFn: async () => {
         const data = await this.getData<TResult>(
-          document.toString(),
+          document?.toString(),
           variables as Variables,
         );
         return data as TResult;
@@ -97,7 +97,7 @@ export default class GraphQLRequests {
         variables,
       ] as const,
       queryFn: async ({ pageParam }: { pageParam: number }) => {
-        const data = await this.getData<TResult>(document.toString(), {
+        const data = await this.getData<TResult>(document?.toString(), {
           ...variables,
           where: {
             ...(variables as any)?.where,

@@ -39,7 +39,7 @@ const BridgeCreateRouteAPI = `${BridgeUrlPrefix}/order/create`;
 const CPSetIntroAPI =
   'https://api-staging.dxd.ink/manage/crowdpooling_config/upsert';
 const CPUploadImagesAPI =
-  'http://api-staging.dxd.ink/manage/crowdpooling_config/uploads';
+  'https://api-staging.dxd.ink/manage/crowdpooling_config/uploads';
 const CPGetDetailAPI =
   'https://api-staging.dxd.ink/manage/crowdpooling_config/detail';
 

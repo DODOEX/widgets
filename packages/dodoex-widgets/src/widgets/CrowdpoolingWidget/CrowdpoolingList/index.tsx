@@ -8,13 +8,13 @@ import {
   useTheme,
 } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import WidgetContainer from '../../../components/WidgetContainer';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../router';
 import { Page, PageType } from '../../../router/types';
 import { Crowdpooling, CrowdpoolingTabType } from '../types';
-import { Plus, Search } from '@dodoex/icons';
+import { Error, Plus, Search } from '@dodoex/icons';
 import VoteTopList from './components/VoteTopList';
 import { increaseArray } from '../../../utils/utils';
 import BigNumber from 'bignumber.js';
@@ -33,12 +33,8 @@ import {
   RiskOncePageLocalStorageKey,
   setRiskOncePageStoreageIsClose,
 } from '../../../constants/localstorage';
-
-export enum Filter {
-  ByAddress = 'By Address',
-  ByProject = 'By Project',
-  All = 'All',
-}
+import { isFavorite, useCPFavorites } from '../../../hooks/useCPFavorites';
+import { CardStatus } from '../../../components/CardWidgets';
 
 export enum TabType {
   ProjectCrowdpooling = 1,
@@ -57,13 +53,33 @@ export default function CrowdpoolingList({
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
   const scrollParentRef = React.useRef<HTMLDivElement>(null);
+  const tabsListRef = useRef<HTMLDivElement>(null);
   const { documentUrls, dappMetadata } = useUserOptions();
-  const { queryChainId } = useWalletInfo();
+  const { queryChainId, account } = useWalletInfo();
 
-  const [activeFilter, setActiveFilter] = useState<Filter>(Filter.ByAddress);
   const [activeType, setActiveType] = useState(TabType.ProjectCrowdpooling);
   const [search, setSearch] = useState('');
   const [showSearchResult, setShowSearchResult] = useState(false);
+
+  const handleTabChange = (_: any, value: TabType) => {
+    setActiveType(value);
+
+    // Scroll to active tab on mobile
+    if (isMobile && tabsListRef.current) {
+      setTimeout(() => {
+        const activeTab = tabsListRef.current?.querySelector(
+          '[aria-selected="true"]',
+        ) as HTMLElement;
+        if (activeTab) {
+          activeTab.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'center',
+          });
+        }
+      }, 0);
+    }
+  };
 
   const graphqlRequests = useGraphQLRequests();
   const chain = queryChainId ? ThegraphKeyMap[queryChainId] : undefined;
@@ -75,18 +91,51 @@ export default function CrowdpoolingList({
       },
     }),
   );
+  const fetchUserBidPositions = useQuery({
+    ...graphqlRequests.getQuery(cpGraphqlQuery.fetchBidPosition, {
+      where: {
+        user: account?.toLowerCase(),
+      },
+    }),
+    enabled: !!account,
+  });
+  const { favorites } = useCPFavorites();
   const showCpList = useMemo(() => {
+    const bidPositions = fetchUserBidPositions.data?.bidPositions;
     const cpList = formatCP({
       chainId: queryChainId,
       crowdpoolings: fetchCpList.data?.crowdPoolings ?? [],
+      bidPositions,
     });
+
+    if (search) {
+      const searchLow = search.toLowerCase();
+      return cpList.filter((cp) => cp.id.toLowerCase() === searchLow);
+    }
+
     switch (activeType) {
       case TabType.ProjectCrowdpooling:
         return cpList;
+      case TabType.Favorites:
+        return cpList.filter((item) =>
+          isFavorite(favorites, item.id, item.chainId),
+        );
+      case TabType.Participating:
+      case TabType.History:
+        if (!bidPositions?.length) return [];
+        return cpList.filter((item) =>
+          bidPositions.some((bp) => bp.cp.id === item.id),
+        );
       default:
         return cpList;
     }
-  }, [fetchCpList.data, activeType]);
+  }, [
+    fetchCpList.data,
+    fetchUserBidPositions.data,
+    activeType,
+    favorites,
+    search,
+  ]);
 
   const handleGotoDetail = (address: string, chainId: number) => {
     useRouterStore.getState().push({
@@ -98,27 +147,7 @@ export default function CrowdpoolingList({
     });
   };
 
-  const hotList = increaseArray(5).map(
-    (_, i) =>
-      ({
-        id: String(i),
-        status: 'waiting',
-        progress: 50,
-        price: new BigNumber(23.53),
-        baseToken: {
-          address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-          symbol: 'USDT',
-          name: 'USDT',
-          decimals: 6,
-        },
-        quoteToken: {
-          address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-          symbol: 'USDC',
-          name: 'USDC',
-          decimals: 6,
-        },
-      }) as Crowdpooling,
-  );
+  const hotList = [] as Crowdpooling[];
 
   const { i18n } = useLingui();
   const [riskId, setRiskId] = useState('');
@@ -188,7 +217,14 @@ export default function CrowdpoolingList({
           },
         }}
       >
-        <Box sx={{ typography: 'h2' }}>
+        <Box
+          sx={{
+            typography: {
+              mobile: 'h4',
+              tablet: 'h2',
+            },
+          }}
+        >
           <Trans>
             Easy project fundraising options and equal access for users to
             participate in token launches.
@@ -248,30 +284,63 @@ export default function CrowdpoolingList({
         <div>
           <Input
             fullWidth
-            height={70}
+            height={isMobile ? 48 : 70}
             placeholder={t`Search by token address or Crowdpooling address`}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             suffixGap={4}
+            sx={{
+              borderRadius: 16,
+            }}
             suffix={
-              <Box
-                component={ButtonBase}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: 62,
-                  height: 62,
-                  borderRadius: 12,
-                  backgroundColor: 'secondary.main',
-                  flexShrink: 0,
-                  '&:hover': {
-                    opacity: 0.7,
-                  },
-                }}
-              >
-                <Box component={Search} width={32} height={32} />
-              </Box>
+              <>
+                {!!search && (
+                  <ButtonBase
+                    sx={{
+                      mr: 8,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      width: 24,
+                      height: 24,
+                      borderRadius: '50%',
+                      flexShrink: 0,
+                      backgroundColor:
+                        theme.palette.background.paperDarkContrast,
+                      color: 'text.secondary',
+                      '&:hover': {
+                        color: 'text.primary',
+                      },
+                    }}
+                    onClick={() => setSearch('')}
+                  >
+                    <Box component={Error} sx={{ width: 16, height: 16 }} />
+                  </ButtonBase>
+                )}
+                <Box
+                  component={ButtonBase}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: isMobile ? 40 : 62,
+                    height: isMobile ? 40 : 62,
+                    borderRadius: isMobile ? 8 : 12,
+                    backgroundColor: 'secondary.main',
+                    color: theme.palette.secondary.contrastText,
+                    flexShrink: 0,
+                    '&:hover': {
+                      opacity: 0.7,
+                    },
+                  }}
+                >
+                  <Box
+                    component={Search}
+                    width={isMobile ? 24 : 32}
+                    height={isMobile ? 24 : 32}
+                  />
+                </Box>
+              </>
             }
           />
           <Box sx={{ mt: 8, typography: 'h6', color: 'text.secondary' }}>
@@ -286,68 +355,113 @@ export default function CrowdpoolingList({
         </div>
       </Box>
 
-      <VoteTopList cpList={hotList} />
+      <Tabs value={activeType} onChange={handleTabChange}>
+        {!search && (
+          <>
+            <VoteTopList cpList={hotList} />
+            <Box ref={tabsListRef}>
+              <TabsGroup
+                variant="default"
+                tabs={[
+                  {
+                    key: TabType.ProjectCrowdpooling,
+                    value: t`Project Crowdpooling`,
+                  },
+                  { key: TabType.Favorites, value: t`Favorites` },
+                  { key: TabType.Participating, value: t`Participating` },
+                  {
+                    key: TabType.History,
+                    value: t`History`,
+                  },
+                ]}
+                tabsListSx={{
+                  justifyContent: 'space-between',
+                  gap: 12,
+                  mb: isMobile ? 12 : 28,
+                  borderTop: `solid 1px ${theme.palette.border.main}`,
+                  ...(isMobile
+                    ? {
+                        overflowX: 'auto',
+                        scrollBehavior: 'smooth',
+                        '&::-webkit-scrollbar': {
+                          display: 'none',
+                        },
+                        scrollbarWidth: 'none',
+                      }
+                    : {}),
+                }}
+                rightSlot={
+                  !isMobile ? (
+                    <Button
+                      variant={Button.Variant.outlined}
+                      onClick={() => {
+                        useRouterStore.getState().push({
+                          type: PageType.CreateCrowdpooling,
+                        });
+                      }}
+                      sx={{
+                        height: 38,
+                        px: 8,
+                        minWidth: 'auto',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8,
+                      }}
+                    >
+                      <Box component={Plus} />
+                      <Trans>Create Crowdpooling</Trans>
+                    </Button>
+                  ) : undefined
+                }
+              />
+            </Box>
+            {isMobile && (
+              <Button
+                variant={Button.Variant.outlined}
+                onClick={() => {
+                  useRouterStore.getState().push({
+                    type: PageType.CreateCrowdpooling,
+                  });
+                }}
+                sx={{
+                  height: 38,
+                  px: 8,
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 8,
+                  mb: 28,
+                }}
+              >
+                <Box component={Plus} />
+                <Trans>Create Crowdpooling</Trans>
+              </Button>
+            )}
+          </>
+        )}
 
-      {/* Filter Bar with Create Button */}
-      <Tabs value={activeType} onChange={(_, v) => setActiveType(v as TabType)}>
-        <TabsGroup
-          variant="default"
-          tabs={[
-            {
-              key: TabType.ProjectCrowdpooling,
-              value: t`Project Crowdpooling`,
-            },
-            { key: TabType.Favorites, value: t`Favorites` },
-            { key: TabType.Participating, value: t`Participating` },
-            {
-              key: TabType.History,
-              value: t`History`,
-            },
-          ]}
-          tabsListSx={{
-            justifyContent: 'space-between',
-            gap: 12,
-            mb: 28,
-            borderTop: `solid 1px ${theme.palette.border.main}`,
-            [theme.breakpoints.down('tablet')]: {
-              flexDirection: 'column',
-            },
-          }}
-          rightSlot={
-            <Button
-              variant={Button.Variant.outlined}
-              onClick={() => {
-                useRouterStore.getState().push({
-                  type: PageType.CreateCrowdpooling,
-                });
-              }}
-              sx={{
-                height: 38,
-                px: 8,
-                minWidth: 'auto',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-              }}
-            >
-              <Box component={Plus} />
-              <Trans>Create Crowdpooling</Trans>
-            </Button>
-          }
-        />
-        <Box
-          sx={{
-            display: 'grid',
-            gap: 12,
-            [theme.breakpoints.up('tablet')]: {
-              gridTemplateColumns: 'repeat(3, 1fr)',
-            },
-          }}
+        <CardStatus
+          loading={fetchCpList.isLoading || fetchUserBidPositions.isLoading}
+          empty={!showCpList.length}
+          refetch={fetchCpList.isError ? fetchCpList.refetch : undefined}
         >
-          {showCpList.map((data) => (
-            <CPCard data={data} key={data.id} onJoin={onJoin} />
-          ))}
-        </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 12,
+              [theme.breakpoints.up('tablet')]: {
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+              },
+            }}
+          >
+            {showCpList.map((data) => (
+              <CPCard data={data} key={data.id} onJoin={onJoin} />
+            ))}
+          </Box>
+        </CardStatus>
       </Tabs>
       <RiskQuestionDialog
         state={{

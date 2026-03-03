@@ -48,6 +48,7 @@ import { useSettleCp } from '../hooks/useSettleCp';
 import SettleConfirmDialog from './SettleConfirmDialog';
 import { useRemoveCp } from '../hooks/useRemoveCp';
 import RemoveDialog from './RemoveDialog';
+import { useCpCountdownTime } from '../../hooks/useCpCountdownTime';
 
 interface ActionCardProps {
   detail: CPDetail | undefined;
@@ -616,35 +617,19 @@ function CountdownWrapper({
   const theme = useTheme();
   if (!detail) return null;
 
-  let label = '';
-  let claimEndTime: string | number = '';
-  switch (status) {
-    case CP_STATUS.WAITING:
-      label = t`Start in`;
-      claimEndTime = detail?.bidStartTime;
-      break;
-    case CP_STATUS.PROCESSING:
-      label = t`Sale Ends In`;
-      claimEndTime = detail?.bidEndTime;
-      break;
-    case CP_STATUS.CALMING:
-      label = t`Cooling-off Period`;
-      claimEndTime = detail?.calmEndTime;
-      break;
-    case CP_STATUS.ENDED:
-      if (isSettled) {
-        const time = new BigNumber(settledTime ?? 0)
-          .plus(new BigNumber(detail.tokenClaimDuration).times(1000))
-          .plus(new BigNumber(detail.tokenVestingDuration).times(1000))
-          .toNumber();
-        if (!isClaimed && time > Date.now()) {
-          label = t`Full Release In`;
-          claimEndTime = time;
-        }
-      }
-  }
+  const { label, time } = useCpCountdownTime({
+    status,
+    bidEndTime: detail?.bidEndTime,
+    bidStartTime: detail?.bidStartTime,
+    calmEndTime: detail?.calmEndTime,
+    settledTime,
+    isClaimed,
+    isSettled,
+    duration: detail?.tokenClaimDuration,
+    vestingDuration: detail?.tokenVestingDuration,
+  });
 
-  if (!label || !claimEndTime) return null;
+  if (!label || !time) return null;
 
   return (
     <Box
@@ -660,7 +645,7 @@ function CountdownWrapper({
     >
       <Box sx={{ typography: 'h6' }}>{label}</Box>
       <Box sx={{ mt: 4, typography: 'h5', color: 'primary.main' }}>
-        <CountdownTime endTime={claimEndTime} />
+        <CountdownTime endTime={time} />
       </Box>
     </Box>
   );

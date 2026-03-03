@@ -9,7 +9,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import svgr from '@svgr/rollup';
 import pkg from './package.json' with { type: 'json' };
 import globby from 'globby';
-import css from 'rollup-plugin-import-css';
+import css from 'rollup-plugin-css-only';
 import clear from 'rollup-plugin-clear';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
@@ -40,7 +40,7 @@ const baseConfig = {
       extensions,
       babelHelpers: 'bundled',
     }),
-    css(),
+    css({ output: 'widgets.css' }),
     clear({
       // required, point out which directories should be clear.
       targets: ['dist'],

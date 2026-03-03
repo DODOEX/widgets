@@ -2109,6 +2109,7 @@ export type Cross_Chain_Swap_ZetachainCrossChainRoute = {
   fromTokenAddress?: Maybe<Scalars['String']['output']>;
   min?: Maybe<Scalars['String']['output']>;
   omniPlan?: Maybe<Scalars['JSON']['output']>;
+  priceImpact?: Maybe<Scalars['String']['output']>;
   routeId?: Maybe<Scalars['String']['output']>;
   slippage?: Maybe<Scalars['Float']['output']>;
   source?: Maybe<Scalars['String']['output']>;
@@ -7192,6 +7193,52 @@ export type IncentiveRewardHistory_OrderBy =
   | 'totalUser'
   | 'updatedAt'
   | 'user';
+
+export type Kaia_VaultDetailVault = {
+  activeTvl?: Maybe<Scalars['String']['output']>;
+  activeValue?: Maybe<Scalars['String']['output']>;
+  amount?: Maybe<Scalars['String']['output']>;
+  apy?: Maybe<Scalars['Float']['output']>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  feeRevenueLast30Days?: Maybe<Scalars['String']['output']>;
+  feeRevenueTotal?: Maybe<Scalars['String']['output']>;
+  poolAddress?: Maybe<Scalars['String']['output']>;
+  reserveTvl?: Maybe<Scalars['String']['output']>;
+  reserveValue?: Maybe<Scalars['String']['output']>;
+  tokenAddress?: Maybe<Scalars['String']['output']>;
+  tokenLogo?: Maybe<Scalars['String']['output']>;
+  tokenSymbol?: Maybe<Scalars['String']['output']>;
+  tvl?: Maybe<Scalars['String']['output']>;
+  yieldTvl?: Maybe<Scalars['String']['output']>;
+  yieldValue?: Maybe<Scalars['String']['output']>;
+};
+
+export type Kaia_VaultVaultList = {
+  activeTvl?: Maybe<Scalars['String']['output']>;
+  amount?: Maybe<Scalars['String']['output']>;
+  apy?: Maybe<Scalars['Float']['output']>;
+  chainId?: Maybe<Scalars['Int']['output']>;
+  feeRevenueLast30Days?: Maybe<Scalars['String']['output']>;
+  feeRevenueTotal?: Maybe<Scalars['String']['output']>;
+  poolAddress?: Maybe<Scalars['String']['output']>;
+  reserveTvl?: Maybe<Scalars['String']['output']>;
+  tokenAddress?: Maybe<Scalars['String']['output']>;
+  tokenLogo?: Maybe<Scalars['String']['output']>;
+  tokenSymbol?: Maybe<Scalars['String']['output']>;
+  tvl?: Maybe<Scalars['String']['output']>;
+  yieldTvl?: Maybe<Scalars['String']['output']>;
+};
+
+export type Kaia_VaultdetailFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  poolAddress?: InputMaybe<Scalars['String']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Kaia_VaultlistFilter = {
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  refreshNow?: InputMaybe<Scalars['Boolean']['input']>;
+};
 
 export type Leaderboard_ActivitiesActivityStats = {
   addedLiquidity: Scalars['String']['output'];
@@ -13426,6 +13473,8 @@ export type Query = {
   gas_feeder_getGasPrices?: Maybe<Array<Maybe<Gas_FeederGasPrice>>>;
   incentiveRewardHistories: Array<IncentiveRewardHistory>;
   incentiveRewardHistory?: Maybe<IncentiveRewardHistory>;
+  kaia_vault_detail?: Maybe<Kaia_VaultDetailVault>;
+  kaia_vault_list?: Maybe<Array<Maybe<Kaia_VaultVaultList>>>;
   leaderboard_activities_getLeaderboard?: Maybe<Leaderboard_ActivitiesLeaderboardResult>;
   leaderboard_activities_getPeriods?: Maybe<Leaderboard_ActivitiesPeriodsResult>;
   leaderboard_activities_getUserRanking?: Maybe<Leaderboard_ActivitiesUserRankingResult>;
@@ -14814,6 +14863,14 @@ export type QueryIncentiveRewardHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   where?: InputMaybe<IncentiveRewardHistory_Filter>;
+};
+
+export type QueryKaia_Vault_DetailArgs = {
+  where?: InputMaybe<Kaia_VaultdetailFilter>;
+};
+
+export type QueryKaia_Vault_ListArgs = {
+  where?: InputMaybe<Kaia_VaultlistFilter>;
 };
 
 export type QueryLeaderboard_Activities_GetLeaderboardArgs = {
@@ -22848,6 +22905,71 @@ export type FetchIopcpListQuery = {
   } | null> | null;
 };
 
+export type FetchBidPositionQueryVariables = Exact<{
+  where?: InputMaybe<BidPosition_Filter>;
+}>;
+
+export type FetchBidPositionQuery = {
+  bidPositions: Array<{
+    shares: any;
+    investedQuote: any;
+    user: { id: string };
+    cp: { id: string };
+  }>;
+};
+
+export type FetchCpDayDataQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<CrowdPoolingDayData_Filter>;
+}>;
+
+export type FetchCpDayDataQuery = {
+  crowdPoolingDayDatas: Array<{
+    date: number;
+    investedQuote: any;
+    investCount: any;
+    newcome: any;
+    investors: any;
+    poolQuote: any;
+  }>;
+};
+
+export type FetchCpHourDataQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<CrowdPoolingHourData_Filter>;
+}>;
+
+export type FetchCpHourDataQuery = {
+  crowdPoolingHourDatas: Array<{
+    hour: number;
+    investedQuote: any;
+    investCount: any;
+    newcome: any;
+    investors: any;
+    poolQuote: any;
+  }>;
+};
+
+export type FetchCpBidsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<BidHistory_Filter>;
+  orderBy?: InputMaybe<BidHistory_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+}>;
+
+export type FetchCpBidsQuery = {
+  bidHistories: Array<{
+    id: string;
+    timestamp: any;
+    action: string;
+    quote: any;
+    fee: any;
+    user: { id: string };
+    cp: { id: string; quoteToken: { id: string; symbol: string } };
+  }>;
+};
+
 export type FetchMiningListQueryVariables = Exact<{
   where?: InputMaybe<Miningmining_List_Filter>;
 }>;
@@ -23798,6 +23920,93 @@ export const FetchIopcpListDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   FetchIopcpListQuery,
   FetchIopcpListQueryVariables
+>;
+export const FetchBidPositionDocument = new TypedDocumentString(`
+    query FetchBidPosition($where: BidPosition_filter) {
+  bidPositions(where: $where, orderBy: lastTxTime, orderDirection: desc) {
+    user {
+      id
+    }
+    cp {
+      id
+    }
+    shares
+    investedQuote
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchBidPositionQuery,
+  FetchBidPositionQueryVariables
+>;
+export const FetchCpDayDataDocument = new TypedDocumentString(`
+    query FetchCPDayData($first: Int, $where: CrowdPoolingDayData_filter) {
+  crowdPoolingDayDatas(
+    first: $first
+    where: $where
+    orderBy: date
+    orderDirection: asc
+  ) {
+    date
+    investedQuote
+    investCount
+    newcome
+    investors
+    poolQuote
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchCpDayDataQuery,
+  FetchCpDayDataQueryVariables
+>;
+export const FetchCpHourDataDocument = new TypedDocumentString(`
+    query FetchCPHourData($first: Int, $where: CrowdPoolingHourData_filter) {
+  crowdPoolingHourDatas(
+    first: $first
+    where: $where
+    orderBy: hour
+    orderDirection: asc
+  ) {
+    hour
+    investedQuote
+    investCount
+    newcome
+    investors
+    poolQuote
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchCpHourDataQuery,
+  FetchCpHourDataQueryVariables
+>;
+export const FetchCpBidsDocument = new TypedDocumentString(`
+    query FetchCPBids($first: Int, $skip: Int, $where: BidHistory_filter, $orderBy: BidHistory_orderBy, $orderDirection: OrderDirection) {
+  bidHistories(
+    first: $first
+    skip: $skip
+    where: $where
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+  ) {
+    id
+    timestamp
+    user {
+      id
+    }
+    action
+    cp {
+      id
+      quoteToken {
+        id
+        symbol
+      }
+    }
+    quote
+    fee
+  }
+}
+    `) as unknown as TypedDocumentString<
+  FetchCpBidsQuery,
+  FetchCpBidsQueryVariables
 >;
 export const FetchMiningListDocument = new TypedDocumentString(`
     query FetchMiningList($where: Miningmining_list_filter) {

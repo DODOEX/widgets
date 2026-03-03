@@ -192,10 +192,12 @@ export function formatDate(time: number | null) {
 }
 
 export function getOperateAreaWrapperEle() {
+  if (typeof window === 'undefined') return null;
   return document.getElementById(EARN_MINING_OPERATE_AREA) as HTMLElement;
 }
 
 export function getDetailWrapperEle() {
+  if (typeof window === 'undefined') return null;
   return document.getElementById(EARN_MINING_DETAIL_ID) as HTMLElement;
 }
 

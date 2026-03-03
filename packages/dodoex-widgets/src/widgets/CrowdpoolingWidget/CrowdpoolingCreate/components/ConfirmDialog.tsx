@@ -17,6 +17,7 @@ import {
 import Dialog from '../../../../components/Dialog';
 import { QuestionTooltip } from '../../../../components/Tooltip';
 import TokenItem from '../../../../components/Token/TokenItem';
+import { basicTokenMap, ChainId } from '@dodoex/api';
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -579,7 +580,8 @@ export default function ConfirmDialog({
         {/* Footer Button */}
         <Box
           sx={{
-            py: 20,
+            pt: 20,
+            pb: 8,
             position: 'sticky',
             bottom: 0,
             backgroundColor: 'background.paper',
@@ -594,6 +596,17 @@ export default function ConfirmDialog({
           >
             {isSubmitting ? <Trans>Creating...</Trans> : <Trans>Create</Trans>}
           </Button>
+          <Box
+            sx={{
+              mt: 8,
+              typography: 'h6',
+              color: 'text.secondary',
+              textAlign: 'center',
+            }}
+          >
+            <Trans>Gas fee:</Trans>
+            {` 0.2 ${baseToken ? basicTokenMap[baseToken?.chainId as ChainId].symbol : ''}`}
+          </Box>
         </Box>
       </Box>
     </Dialog>

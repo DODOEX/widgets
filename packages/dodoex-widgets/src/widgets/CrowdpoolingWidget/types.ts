@@ -6,6 +6,10 @@ export type FetchCPItem = ReturnType<
   NonNullable<typeof cpGraphqlQuery.fetchCPList.__apiType>
 >['crowdPoolings']['0'];
 
+export type FetchBidPositionItem = ReturnType<
+  NonNullable<typeof cpGraphqlQuery.fetchBidPosition.__apiType>
+>['bidPositions']['0'];
+
 export type CrowdpoolingDetail = any;
 
 export const CP_STATUS = {
@@ -25,35 +29,13 @@ export const CP_OP_RANK = {
 type valueof<T> = T[keyof T];
 export type CPStatusType = valueof<typeof CP_STATUS>;
 
-export interface FetchBidPosition_bidPositions {
-  /**
-   * user
-   */
-  user: {
-    id: string;
-  };
-  /**
-   * cp address
-   */
-  cp: {
-    id: string;
-  };
-  /**
-   * shares
-   */
-  shares: any;
-  /**
-   * total quote invested
-   */
-  investedQuote: any;
-}
 export interface Crowdpooling
   extends Omit<FetchCPItem, 'baseToken' | 'quoteToken' | 'settled'> {
   id: string;
   chainId: ChainId;
   status: CPStatusType;
   progress: number;
-  bidPosition?: FetchBidPosition_bidPositions;
+  bidPosition?: FetchBidPositionItem;
   bidStartTime: number;
   bidEndTime: number;
   calmEndTime: number;

@@ -77,7 +77,8 @@ export function CrowdpoolingInfo({ detail }: CrowdpoolingInfoProps) {
         {!!detail && (
           <Box
             sx={{
-              display: 'flex',
+              // display: 'flex',
+              display: 'none',
               alignItems: 'center',
               gap: 8,
               typography: 'body1',

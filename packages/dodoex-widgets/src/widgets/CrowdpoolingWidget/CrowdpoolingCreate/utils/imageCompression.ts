@@ -87,7 +87,7 @@ async function compressImageUsingCanvas(
 ): Promise<File> {
   const img = await loadImage(file);
 
-  const canvas = document.createElement('canvas');
+  const canvas = document?.createElement('canvas');
   canvas.width = img.width;
   canvas.height = img.height;
 

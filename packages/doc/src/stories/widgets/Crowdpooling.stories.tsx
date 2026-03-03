@@ -149,30 +149,51 @@ export const CreateCrowdpooling = (props: any) => {
       routerPage={{
         type: 'createCrowdpooling',
       }}
-      onlyChainId={ChainId.PHAROS_ATLANTIC_TESTNET}
+      onlyChainId={ChainId.SEPOLIA}
       tokenList={[
         {
+          chainId: 11155111,
           address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
           name: 'Ether',
           decimals: 18,
           symbol: 'ETH',
-          chainId: ChainId.PHAROS_ATLANTIC_TESTNET,
+          logoURI:
+            'https://images.dodoex.io/prKmKP8yDTuPMHTCZ_DcxG8BqsuHNO8w5KDmJWmPodg/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vOUVaWU1ER2ZVN3g2N3ZBZThqWkUxZzA0RExUaFhaV0JIb09wZFhpeXhHRS9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyaDBkSEJ6WDNNeVgyTnZhVzV0WVhKclpYUmpZWEJmWTI5dFgzTjBZWFJwWTE5cGJXZGZZMjlwYm5OZk5qUjROalJmTVRBeU4xOHhNekkyTjJGbE5EY3dMbkJ1WncucG5n.webp',
         },
         {
-          address: '0x838800b758277CC111B2d48Ab01e5E164f8E9471',
+          chainId: 11155111,
+          address: '0x7B07164ecFaF0F0D85DFC062Bc205a4674c75Aa0',
           name: 'Wrapped Ether',
           decimals: 18,
           symbol: 'WETH',
-          chainId: ChainId.PHAROS_ATLANTIC_TESTNET,
-        },
-        {
-          address: '0xE7E84B8B4f39C507499c40B4ac199B050e2882d5',
-          symbol: 'USDT',
-          name: 'USDT',
-          decimals: 6,
-          chainId: ChainId.PHAROS_ATLANTIC_TESTNET,
+          logoURI:
+            'https://images.dodoex.io/mI69kq-S-tNT1W57qYizPd5r2WNFzpAq5y6NhOcrTkY/rs:fit:96:96:0/g:no/aHR0cHM6Ly9pbWFnZS1wcm94eS5kb2RvZXguaW8vVEZhSVNLVVZIWThLTVhyTkVmZDRXRUJmMGJoSHRweHY3Q1hDT0dKbGY2by9hSFIwY0hNNkx5OWpaRzR0YldWa2FXRXVaRzlrYjJWNExtbHZMMlZ5WXpJd0wyeHZaMjlmT0dVeFpEaG1PVEEyWlM1d2JtYy5wbmc.webp',
         },
       ]}
+      // onlyChainId={ChainId.PHAROS_ATLANTIC_TESTNET}
+      // tokenList={[
+      //   {
+      //     address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+      //     name: 'Ether',
+      //     decimals: 18,
+      //     symbol: 'ETH',
+      //     chainId: ChainId.PHAROS_ATLANTIC_TESTNET,
+      //   },
+      //   {
+      //     address: '0x838800b758277CC111B2d48Ab01e5E164f8E9471',
+      //     name: 'Wrapped Ether',
+      //     decimals: 18,
+      //     symbol: 'WETH',
+      //     chainId: ChainId.PHAROS_ATLANTIC_TESTNET,
+      //   },
+      //   {
+      //     address: '0xE7E84B8B4f39C507499c40B4ac199B050e2882d5',
+      //     symbol: 'USDT',
+      //     name: 'USDT',
+      //     decimals: 6,
+      //     chainId: ChainId.PHAROS_ATLANTIC_TESTNET,
+      //   },
+      // ]}
     >
       <Crowdpooling />
     </Widget>

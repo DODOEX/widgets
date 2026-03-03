@@ -34,7 +34,7 @@ export const usePreventWheel = ({ id }: Props) => {
     } catch (err) {
       passiveSupported = false;
     }
-    const container = document.getElementById(id);
+    const container = document?.getElementById?.(id);
     // https://github.com/inuyaksa/jquery.nicescroll/issues/799
     const options = passiveSupported ? { passive: false } : false;
     container?.addEventListener('wheel', handleWheelEvt, options);

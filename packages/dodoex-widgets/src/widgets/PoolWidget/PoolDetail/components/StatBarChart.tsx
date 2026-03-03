@@ -1,34 +1,48 @@
-import { alpha, Box, useTheme } from '@dodoex/components';
+import { alpha, Box, useTheme, ButtonBase } from '@dodoex/components';
 import dayjs from 'dayjs';
 import React from 'react';
 import { formatReadableNumber, formatShortNumber } from '../../../../utils';
-import { usePoolDayData } from '../hooks/usePoolDayData';
-import {
-  Bar,
-  BarChart,
-  Cell,
-  ReferenceLine,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { Bar, BarChart, ReferenceLine, Tooltip, XAxis, YAxis } from 'recharts';
 import BigNumber from 'bignumber.js';
-import { Trans } from '@lingui/macro';
+import { t } from '@lingui/macro';
+import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 
-type DayData = ReturnType<typeof usePoolDayData>['dayDataList']['0'];
+type BaseData = Record<string, number>;
 
-export default function StatBarChart({
+export default function StatBarChart<T extends BaseData, U extends BaseData>({
   unit,
   data,
+  dayData,
+  hourData,
   masterKey,
   sumKey,
+  investorsCount,
 }: {
   unit: string;
-  data: DayData[];
-  masterKey: keyof DayData;
-  sumKey: keyof DayData;
+  data?: T[];
+  dayData?: Array<T & { date: number }>;
+  hourData?: Array<U & { hour: number }>;
+  masterKey: keyof U;
+  sumKey: keyof U;
+  investorsCount?: string | number;
 }) {
+  const [active, setActive] = React.useState<'hour' | 'date'>('hour');
+  const [currentData, setCurrentData] = React.useState<
+    (U & { date?: number; hour?: number }) | null
+  >(null);
+
+  // Support both old API (single data) and new API (dayData + hourData)
+  const actualData = React.useMemo(() => {
+    if (dayData && hourData) {
+      return active === 'hour' ? hourData : dayData;
+    }
+    return data || [];
+  }, [data, dayData, hourData, active]);
+
+  const showTimePicker = !!(dayData && hourData);
+
   const theme = useTheme();
+  const { isMobile } = useWidgetDevice();
   const chartParentRef = React.useRef<HTMLDivElement>(null);
   const [referenceLineX, setReferenceLineX] = React.useState<number | null>(
     null,
@@ -52,105 +66,131 @@ export default function StatBarChart({
     theme.palette.mode === 'light'
       ? theme.palette.secondary.main
       : theme.palette.primary.main;
-  const chartBgCurrentDay = '#ff9553';
 
-  const lastData = data[data.length - 2];
-  const active = 'date';
-  let ticksY: number[] = [];
-  if (data?.length) {
-    let max = data[0][masterKey];
-    data.forEach((d) => {
+  const lastData = actualData[actualData.length - 1];
+  const ticksY = React.useMemo(() => {
+    if (!actualData || actualData.length === 0) return [0];
+    let max = (actualData[0] as U)[masterKey] || 0;
+    actualData.forEach((d: any) => {
       if (d[masterKey] > max) max = d[masterKey];
     });
-    if (max) {
-      ticksY = [0, Math.ceil(max / 3), Math.ceil((max / 3) * 2), max];
-    } else {
-      ticksY = [0];
-    }
-  }
-  let maxLen = 0;
-  ticksY.forEach((num) => {
-    const text = formatShortNumber(new BigNumber(num));
-    let len = text.replace('.', '').length;
-    if (text.indexOf('.') > -1) {
-      len += 0.11;
-    }
-    if (len > maxLen) {
-      maxLen = len;
-    }
-  });
-  const ticksYWidth = maxLen * 10 + 2;
+    // If max is 0 or very small, return a simple tick array to avoid duplicate keys
+    if (max === 0) return [0];
+    return [0, Math.ceil(max / 3), Math.ceil((max / 3) * 2), max];
+  }, [actualData, masterKey]);
+
+  if (!lastData) return null;
 
   return (
     <Box
       ref={chartParentRef}
       sx={{
         position: 'relative',
+        flexGrow: 1,
+        mt: 12,
       }}
     >
       <Box
         sx={{
-          minHeight: 62,
           mb: 10,
         }}
       >
         <Box
           sx={{
-            typography: 'caption',
             mb: 8,
+            lineHeight: '33px',
+            fontSize: 20,
+            fontWeight: 500,
           }}
         >
-          {unit || <span>&nbsp;</span>}
-          {formatReadableNumber({ input: lastData?.[sumKey] })}
+          {formatReadableNumber({
+            input:
+              (currentData
+                ? (currentData as U)[masterKey]
+                : sumKey === 'investors'
+                  ? investorsCount
+                  : (lastData as U)[sumKey]) || '',
+          })}{' '}
+          {unit}
         </Box>
         <Box
           sx={{
+            fontSize: 14,
             color: 'text.secondary',
           }}
         >
-          {dayjs(lastData?.[active]).format('LL')}
+          {dayjs(currentData ? currentData[active] : lastData[active]).format(
+            active === 'date' ? 'LL' : 'LLL',
+          )}
         </Box>
       </Box>
 
+      {showTimePicker && (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 7,
+            right: 0,
+            display: 'flex',
+            background: 'background.paper',
+            border: '1px solid',
+            borderColor: 'border.main',
+            borderRadius: '4px',
+          }}
+        >
+          <ButtonBase
+            onClick={() => setActive('hour')}
+            sx={{
+              borderRadius: '2px',
+              color: active === 'hour' ? 'text.primary' : 'text.secondary',
+              px: 8,
+              py: 3,
+              fontSize: 12,
+              fontWeight: active === 'hour' ? 500 : 400,
+              backgroundColor:
+                active === 'hour' ? 'border.main' : 'transparent',
+            }}
+          >
+            {t`1H`}
+          </ButtonBase>
+          <ButtonBase
+            onClick={() => setActive('date')}
+            sx={{
+              borderRadius: '2px',
+              color: active === 'date' ? 'text.primary' : 'text.secondary',
+              px: 8,
+              py: 3,
+              fontSize: 12,
+              fontWeight: active === 'date' ? 500 : 400,
+              backgroundColor:
+                active === 'date' ? 'border.main' : 'transparent',
+            }}
+          >
+            {t`1D`}
+          </ButtonBase>
+        </Box>
+      )}
+
       <BarChart
+        barGap={2}
+        barSize={44}
         width={chartWidth}
-        height={364}
-        data={data}
+        height={isMobile ? 261 : 400}
+        data={actualData}
         margin={{
-          top: 5,
-          right: 10,
-          left: 0,
-          bottom: 5,
+          top: 15,
+          right: -8,
+          left: -8,
+          bottom: -8,
         }}
       >
         <defs>
-          {data.map((entry, index) => (
-            <linearGradient
-              key={entry.date}
-              id={`colorBar${entry.date}`}
-              x1="0"
-              x2="0"
-              y1="0"
-              y2="1"
-            >
-              <stop
-                offset="0%"
-                stopColor={
-                  index === data.length - 1 ? chartBgCurrentDay : chartBg
-                }
-              />
-              <stop
-                offset="100%"
-                stopColor={alpha(
-                  index === data.length - 1 ? chartBgCurrentDay : chartBg,
-                  0.04,
-                )}
-              />
-            </linearGradient>
-          ))}
+          <linearGradient id="colorBar" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor={chartBg} />
+            <stop offset="100%" stopColor={alpha(chartBg, 0.04)} />
+          </linearGradient>
         </defs>
         <XAxis
-          hide
           dataKey={active}
           axisLine={false}
           tickFormatter={(value) =>
@@ -160,62 +200,65 @@ export default function StatBarChart({
         <YAxis
           orientation="right"
           axisLine={false}
+          width={30}
           ticks={ticksY}
-          width={ticksYWidth}
+          domain={['dataMin', 'dataMax']}
           tickFormatter={(value) => formatShortNumber(new BigNumber(value))}
+        />
+        <Bar
+          dataKey={masterKey as string}
+          fill="url(#colorBar)"
+          onMouseMove={(barData) => {
+            setReferenceLineX(barData[active]);
+            setCurrentData(barData.payload);
+          }}
+          onMouseLeave={() => {
+            setReferenceLineX(null);
+            setCurrentData(null);
+          }}
         />
         <Tooltip
           isAnimationActive={false}
           content={({ active: tActive, payload, label }) => {
-            const open = tActive && payload && payload.length;
-            if (!open) return null;
-            const isRealTime =
-              dayjs(label).format('YYYY-MM-DD') ===
-              dayjs().format('YYYY-MM-DD');
-            return (
-              <Box
-                sx={{
-                  px: 10,
-                  py: 12,
-                  maxWidth: 240,
-                  borderRadius: 8,
-                  backgroundColor: 'background.paperContrast',
-                  typography: 'h6',
-                  color: 'text.secondary',
-                }}
-              >
-                <Box sx={{ mr: 8 }}>{dayjs(label).format('MM-DD HH:mm')}</Box>
-                <Box>{payload[0].value}</Box>
-                {isRealTime ? (
-                  <Box>
-                    <Trans>Real Time</Trans>
+            if (tActive && payload && label) {
+              const { value } = payload[0];
+              return (
+                <Box
+                  sx={{
+                    px: 12,
+                    py: 12,
+                    borderRadius: 8,
+                    backgroundColor: 'border.main',
+                    fontSize: 12,
+                    fontWeight: 500,
+                  }}
+                >
+                  <Box sx={{ mr: 8 }}>
+                    {dayjs(label).format(
+                      active === 'date' ? 'MM-DD' : 'MM-DD HH:mm',
+                    )}
                   </Box>
-                ) : (
-                  ''
-                )}
-              </Box>
-            );
+                  <Box>
+                    {value !== undefined
+                      ? formatReadableNumber({
+                          input: String(value),
+                          showDecimals: 4,
+                        })
+                      : '-'}
+                    {unit}
+                  </Box>
+                </Box>
+              );
+            }
+            return null;
           }}
           cursor={false}
           coordinate={{ x: 0, y: 0 }}
         />
-        <Bar
-          dataKey={masterKey}
-          onMouseMove={(barData) => {
-            setReferenceLineX(barData[active]);
-          }}
-          onMouseLeave={() => {
-            setReferenceLineX(null);
-          }}
-        >
-          {data.map((entry) => (
-            <Cell key={entry.date} fill={`url(#colorBar${entry.date})`} />
-          ))}
-        </Bar>
         {referenceLineX && (
           <ReferenceLine
             x={referenceLineX}
-            stroke={chartBg}
+            stroke="#ffe804"
             strokeDasharray="3 3"
           />
         )}

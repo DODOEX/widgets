@@ -211,9 +211,6 @@ export default function PriceSettings({
         >
           <Input
             height={48}
-            sx={{
-              backgroundColor: theme.palette.background.paperContrast,
-            }}
             value={salesRatio == null ? '' : salesRatio}
             onChange={(e) => {
               const value = e.target.value;
@@ -235,7 +232,7 @@ export default function PriceSettings({
           {/* Tokens for Participants Display */}
           <Box
             sx={{
-              backgroundColor: theme.palette.background.paperContrast,
+              backgroundColor: theme.palette.background.input,
               borderRadius: 8,
               border: 'solid 1px',
               borderColor: 'border.main',
@@ -398,7 +395,7 @@ export default function PriceSettings({
             <Input
               height={48}
               sx={{
-                backgroundColor: theme.palette.background.paperContrast,
+                flex: 1,
               }}
               value={price ?? ''}
               onChange={(e) => {
@@ -422,7 +419,7 @@ export default function PriceSettings({
           {/* Hard Cap Display */}
           <Box
             sx={{
-              backgroundColor: theme.palette.background.paperContrast,
+              backgroundColor: theme.palette.background.input,
               borderRadius: 8,
               border: 'solid 1px',
               borderColor: 'border.main',
