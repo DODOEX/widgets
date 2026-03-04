@@ -16,6 +16,8 @@ import MoreDetail from './components/MoreDetail';
 import Overview from './components/Overview';
 import TitleInfo from './components/TitleInfo';
 import TotalLiquidity from './components/TotalLiquidity';
+import { BifrostMintPanel } from './components/BifrostMint';
+import { BIFROST_MINT_TOKENS } from './components/BifrostMint/config';
 
 export default function PoolDetail({
   params,
@@ -83,6 +85,19 @@ export default function PoolDetail({
 
   const hasMining = !!pool?.miningAddress;
 
+  // Check if any configured bifrost mint token matches this pool's tokens
+  const bifrostMintConfig = React.useMemo(() => {
+    if (!pool) return undefined;
+    return BIFROST_MINT_TOKENS.find(
+      (cfg) =>
+        cfg.chainId === pool.chainId &&
+        (cfg.wrapToken.address.toLowerCase() ===
+          pool.baseToken?.address?.toLowerCase() ||
+          cfg.wrapToken.address.toLowerCase() ===
+            pool.quoteToken?.address?.toLowerCase()),
+    );
+  }, [pool]);
+
   return (
     <WidgetContainer
       sx={
@@ -125,6 +140,9 @@ export default function PoolDetail({
             }}
           />
           <TitleInfo poolDetail={pool} loading={fetchPoolQuery.isPending} />
+          {bifrostMintConfig && (
+            <BifrostMintPanel config={bifrostMintConfig} />
+          )}
           <ChartInfo poolDetail={pool} chart24hDataFirst />
           <Overview poolDetail={pool} cardBg={cardBg} />
           <TotalLiquidity poolDetail={pool} cardBg={cardBg} />
@@ -143,22 +161,29 @@ export default function PoolDetail({
             }}
           />
         ) : (
-          <PoolOperate
-            account={account}
-            operate={operateType}
-            hasMining={hasMining}
+          <Box
             sx={{
               width: 375,
-              height: 'max-content',
-              backgroundColor: 'background.paper',
-              borderRadius: 16,
-              overflow: 'hidden',
               position: 'relative',
               top: cardMode ? 0 : 44,
+              height: 'max-content',
             }}
-            pool={operatePool}
-            hidePoolInfo
-          />
+          >
+            <PoolOperate
+              account={account}
+              operate={operateType}
+              hasMining={hasMining}
+              sx={{
+                height: 'max-content',
+                backgroundColor: 'background.paper',
+                borderRadius: 16,
+                overflow: 'hidden',
+                position: 'relative',
+              }}
+              pool={operatePool}
+              hidePoolInfo
+            />
+          </Box>
         )}
       </Box>
       <WidgetConfirm

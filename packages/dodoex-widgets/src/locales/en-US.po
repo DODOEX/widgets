@@ -257,6 +257,11 @@ msgstr "Set price range"
 msgid "Full range"
 msgstr "Full range"
 
+#: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintDialog.tsx:113
+#: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintDialog.tsx:125
+msgid "Mint"
+msgstr "Mint"
+
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:594
 msgid "*Depending on the block time, the real amount of Daily Rewards may deviate slightly."
 msgstr "*Depending on the block time, the real amount of Daily Rewards may deviate slightly."
@@ -582,7 +587,7 @@ msgstr "Current price"
 msgid "Swap Rate"
 msgstr "Swap Rate"
 
-#: src/widgets/PoolWidget/PoolDetail/index.tsx:169
+#: src/widgets/PoolWidget/PoolDetail/index.tsx:194
 #: src/widgets/PoolWidget/PoolModify/index.tsx:462
 msgid "Pool not found. Please switch to another network and retry."
 msgstr "Pool not found. Please switch to another network and retry."
@@ -934,6 +939,12 @@ msgstr "Attention: High slippage tolerance will increase the success rate of tra
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:228
 msgid "Set pool parameters"
 msgstr "Set pool parameters"
+
+#. placeholder {0}: wrapToken.symbol
+#: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintDialog.tsx:73
+#: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintPanel.tsx:111
+msgid "Mint {0}"
+msgstr "Mint {0}"
 
 #: src/widgets/PoolWidget/PoolOperate/components/Ratio.tsx:258
 msgid "Any Ratio"
@@ -1403,6 +1414,10 @@ msgstr "Suitable for most situations."
 msgid "Add more to mint at least 1000 LP tokens"
 msgstr "Add more to mint at least 1000 LP tokens"
 
+#: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintDialog.tsx:300
+msgid "by"
+msgstr "by"
+
 #: src/components/List/FailedList.tsx:47
 msgid "Something went wrong…<0>Refresh again</0>"
 msgstr "Something went wrong…<0>Refresh again</0>"
@@ -1747,7 +1762,7 @@ msgstr "V2 & PMM"
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:81
 #: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:66
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:147
-#: src/widgets/PoolWidget/PoolDetail/index.tsx:201
+#: src/widgets/PoolWidget/PoolDetail/index.tsx:226
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:488
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/FeeRateSetting.tsx:84
 msgid "Edit"
@@ -1898,6 +1913,7 @@ msgstr "Dynamic slippage is {recommendSlippage}%,the current slippage setting is
 
 #: src/components/Swap/index.tsx:716
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:534
+#: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintDialog.tsx:110
 msgid "Enter an amount"
 msgstr "Enter an amount"
 
@@ -2021,7 +2037,7 @@ msgstr "My Staked"
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:478
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:451
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
-#: src/widgets/PoolWidget/PoolDetail/index.tsx:219
+#: src/widgets/PoolWidget/PoolDetail/index.tsx:244
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:385
 #: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:749
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:284
@@ -2284,7 +2300,7 @@ msgstr "Initial Price Alert"
 
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:452
 #: src/widgets/PoolWidget/AMMV3/components/RemoveButton.tsx:32
-#: src/widgets/PoolWidget/PoolDetail/index.tsx:212
+#: src/widgets/PoolWidget/PoolDetail/index.tsx:237
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:269
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:579
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:598
@@ -2319,6 +2335,10 @@ msgstr "Pool Creation Confirmation"
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:824
 msgid "Claim fees"
 msgstr "Claim fees"
+
+#: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintDialog.tsx:112
+msgid "Minting..."
+msgstr "Minting..."
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:125
 msgid "Amounts"
@@ -2383,6 +2403,10 @@ msgstr "There is risk of being arbitraged if adding this liquidity."
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/SingleTokenSelect.tsx:106
 msgid "address"
 msgstr "address"
+
+#: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintDialog.tsx:211
+msgid "Will receive"
+msgstr "Will receive"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:265
 msgid "This trading pair does not have enough historical data and has used the default dynamic slippage."
@@ -2524,6 +2548,7 @@ msgstr "Total Rewards=Daily Rewards*Duration"
 
 #: src/components/Swap/index.tsx:753
 #: src/components/TokenStatusButton.tsx:18
+#: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintDialog.tsx:111
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:146
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:248
 msgid "Insufficient balance"

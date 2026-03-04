@@ -30,6 +30,7 @@ export enum MetadataFlag {
   submissionCreateMetaKey = 'submissionCreateMetaKey',
   approve = 'approve',
   reset = 'reset',
+  mintToken = 'mintToken',
 }
 
 export type Metadata = Record<string, any>;
