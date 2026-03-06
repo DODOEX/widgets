@@ -34,7 +34,6 @@ msgstr "99% Default"
 msgid "Your position is  empty"
 msgstr "Your position is  empty"
 
-#. placeholder {0}: connectingWallet.name
 #: src/components/ConnectWallet/ConnectWalletDialog.tsx:76
 msgid "Opening {0}..."
 msgstr "Opening {0}..."
@@ -55,12 +54,10 @@ msgstr "Volume"
 msgid "To"
 msgstr "To"
 
-#. placeholder {0}: receiveWrapped ? basicToken?.symbol : basicToken?.wrappedTokenSymbol
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:432
 msgid "Receive {0}"
 msgstr "Receive {0}"
 
-#. placeholder {0}: showing?.brief
 #: src/components/WithExecutionDialog/index.tsx:122
 msgid "{0} pending"
 msgstr "{0} pending"
@@ -71,9 +68,6 @@ msgstr "{0} pending"
 msgid "Removing"
 msgstr "Removing"
 
-#. placeholder {0}: params.amount
-#. placeholder {1}: params.symbol
-#. placeholder {2}: params.price
 #: src/components/chart/i18n.ts:31
 msgid "Traders sold ‪{0}‬ {1}, price in the pool increased to {2}"
 msgstr "Traders sold ‪{0}‬ {1}, price in the pool increased to {2}"
@@ -104,7 +98,6 @@ msgstr "Loading info..."
 msgid "* Please note that the Fee Rate cannot be modified after the pool is created"
 msgstr "* Please note that the Fee Rate cannot be modified after the pool is created"
 
-#. placeholder {0}: chainListMap.get(chainId)?.name ?? 'unknown'
 #: src/components/ConnectWallet/NeedConnectButton.tsx:84
 msgid "Switch to {0}"
 msgstr "Switch to {0}"
@@ -118,8 +111,6 @@ msgstr "{tokenB} per {tokenA}"
 msgid "Create Liquidity Mining"
 msgstr "Create Liquidity Mining"
 
-#. placeholder {0}: formatPercentageNumber({ input: fee })
-#. placeholder {0}: formatPercentageNumber({ input: feeRate })
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:336
 #: src/widgets/PoolWidget/PoolOperate/components/LiquidityInfo.tsx:336
 msgid "By adding liquidity you’ll earn <0>{0}</0> of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity."
@@ -236,7 +227,6 @@ msgstr "Pegged Exchange Rate"
 msgid "Private Pool"
 msgstr "Private Pool"
 
-#. placeholder {0}: showing?.brief
 #: src/components/WithExecutionDialog/index.tsx:121
 msgid "{0} confirmed"
 msgstr "{0} confirmed"
@@ -270,8 +260,6 @@ msgstr "*Depending on the block time, the real amount of Daily Rewards may devia
 msgid "Since this pool uses the PMM algorithm, which is different from the normal AMM pool mechanism, the initial price calculation is also different from AMM."
 msgstr "Since this pool uses the PMM algorithm, which is different from the normal AMM pool mechanism, the initial price calculation is also different from AMM."
 
-#. placeholder {0}: startBlock ?? '-'
-#. placeholder {1}: endBlock ?? '-'
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:445
 msgid "Expected to start at block {0} and end at block {1}. There may be slight differences between actual and expected block numbers."
 msgstr "Expected to start at block {0} and end at block {1}. There may be slight differences between actual and expected block numbers."
@@ -369,8 +357,6 @@ msgstr "Powered by DODO protocol"
 msgid "Fees (24H)"
 msgstr "Fees (24H)"
 
-#. placeholder {0}: quoteCurrency.symbol
-#. placeholder {1}: baseCurrency.symbol
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:109
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:167
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:221
@@ -570,8 +556,6 @@ msgstr "Done"
 msgid "Results in a relatively fixed price."
 msgstr "Results in a relatively fixed price."
 
-#. placeholder {0}: approvalA.token?.symbol
-#. placeholder {0}: approvalB.token?.symbol
 #: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:72
 #: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:88
 msgid "Approving {0}..."
@@ -607,6 +591,10 @@ msgstr "Token Pair Mining"
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:211
 msgid "Address"
 msgstr "Address"
+
+#: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:219
+msgid "The area of the chart indicates the buy/sell volume of {baseSymbol} that can be carried by the market when the current price changes to the hover price."
+msgstr "The area of the chart indicates the buy/sell volume of {baseSymbol} that can be carried by the market when the current price changes to the hover price."
 
 #: src/components/AddTokenToMetamask.tsx:48
 msgid "Added successful"
@@ -650,7 +638,6 @@ msgstr "Are you sure swapping to another chain?"
 msgid "Swaps"
 msgstr "Swaps"
 
-#. placeholder {0}: showing.brief
 #: src/components/WithExecutionDialog/index.tsx:318
 msgid "{0} Submitted"
 msgstr "{0} Submitted"
@@ -687,25 +674,6 @@ msgstr "Destination"
 msgid "Released Rewards"
 msgstr "Released Rewards"
 
-#. placeholder {0}: params.amountText
-#. placeholder {0}: params.oppositeAmountText
-#. placeholder {1}: params.baseTokenSymbol
-#. placeholder {1}: params.quoteTokenSymbol
-#. placeholder {2}: params.amountText
-#. placeholder {2}: params.oppositeAmountText
-#. placeholder {3}: params.baseTokenSymbol
-#. placeholder {3}: params.quoteTokenSymbol
-#. placeholder {4}: params.priceText
-#. placeholder {5}: params.slippageText
-#: src/components/chart/i18n.ts:7
-#: src/components/chart/i18n.ts:11
-msgid ""
-"Users pay {0} {1} and receive {2} {3}\n"
-"Price {4} ({5}%)"
-msgstr ""
-"Users pay {0} {1} and receive {2} {3}\n"
-"Price {4} ({5}%)"
-
 #: src/widgets/MiningWidget/MiningList/components/APRSection.tsx:61
 msgid "The newly created mining pool can start counting APR after depositing any liquidity."
 msgstr "The newly created mining pool can start counting APR after depositing any liquidity."
@@ -718,12 +686,14 @@ msgstr "Unapproved"
 msgid "Parameters"
 msgstr "Parameters"
 
+#: src/components/chart/i18n.ts:17
+msgid "Users buy {0} amount:"
+msgstr "Users buy {0} amount:"
+
 #: src/components/Swap/components/SwapSettingsDialog/MoreTradeSetting.tsx:37
 msgid "More trade settings"
 msgstr "More trade settings"
 
-#. placeholder {0}: formatTokenAmountNumber( { input: bridgeFee, decimals: etherToken?.decimals ?? 18, }, )
-#. placeholder {1}: etherToken?.symbol ?? '-'
 #: src/hooks/Bridge/useSendRoute.ts:94
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "Insufficient cross-chain fees, need at least {0} {1}"
@@ -779,11 +749,6 @@ msgstr "Canceled"
 msgid "The fee rate must be between 0.01% to 10%"
 msgstr "The fee rate must be between 0.01% to 10%"
 
-#. placeholder {0}: params.baseTokenSymbol
-#: src/components/chart/i18n.ts:27
-msgid "The area of the chart indicates the buy/sell volume of {0} that can be carried by the market when the current price changes to the hover price. "
-msgstr "The area of the chart indicates the buy/sell volume of {0} that can be carried by the market when the current price changes to the hover price. "
-
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/components/GoBack.tsx:49
 msgid "Go back"
@@ -825,7 +790,6 @@ msgstr "This pool type isn't supported on your current network. You can switch n
 msgid "Days"
 msgstr "Days"
 
-#. placeholder {0}: params.amount
 #: src/components/chart/i18n.ts:15
 msgid "Price Impact: {0}"
 msgstr "Price Impact: {0}"
@@ -848,7 +812,6 @@ msgstr "Invite"
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 msgstr "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 
-#. placeholder {0}: isAMMV3 ? 'Manage' : 'Add'
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:613
 msgid "{0}"
 msgstr "{0}"
@@ -940,7 +903,6 @@ msgstr "Attention: High slippage tolerance will increase the success rate of tra
 msgid "Set pool parameters"
 msgstr "Set pool parameters"
 
-#. placeholder {0}: wrapToken.symbol
 #: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintDialog.tsx:73
 #: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintPanel.tsx:111
 msgid "Mint {0}"
@@ -976,7 +938,10 @@ msgstr "Create AMM V2 Position"
 msgid "Suitable for stablecoins with price fluctuations within 0.5%"
 msgstr "Suitable for stablecoins with price fluctuations within 0.5%"
 
-#. placeholder {0}: MIN_FEE * 100
+#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:45
+msgid "The slippage coefficient needs to be greater than 0, and less than 0.1."
+msgstr "The slippage coefficient needs to be greater than 0, and less than 0.1."
+
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:233
 msgid "The fee tier should greater than {0}%"
 msgstr "The fee tier should greater than {0}%"
@@ -1065,11 +1030,6 @@ msgstr "My pool share"
 msgid "Learn More"
 msgstr "Learn More"
 
-#. placeholder {0}: params.symbol
-#: src/components/chart/i18n.ts:13
-msgid "Users sell {0} amount: "
-msgstr "Users sell {0} amount: "
-
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/RatioSetting.tsx:349
 msgid "Use the recommended ratio"
 msgstr "Use the recommended ratio"
@@ -1115,10 +1075,6 @@ msgstr "Set the fee to the same as most other pools"
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:313
 msgid "If there are no participants before the end, the rewards cannot be taken out anymore."
 msgstr "If there are no participants before the end, the rewards cannot be taken out anymore."
-
-#: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:219
-msgid "The area of the chart indicates the buy/sell volume of {baseSymbol} that can be carried by the market when the current price changes to the hover price. "
-msgstr "The area of the chart indicates the buy/sell volume of {baseSymbol} that can be carried by the market when the current price changes to the hover price. "
 
 #: src/widgets/PoolWidget/AMMV3/components/LiquidityChartRangeInput/index.tsx:187
 msgid "Your position will appear here."
@@ -1341,13 +1297,14 @@ msgstr "TVL"
 msgid "LP Tokens"
 msgstr "LP Tokens"
 
+#: src/components/chart/i18n.ts:13
+msgid "Users sell {0} amount:"
+msgstr "Users sell {0} amount:"
+
 #: src/hooks/Submission/getExecutionErrorMsg.ts:58
 msgid "Wallet incompatibility"
 msgstr "Wallet incompatibility"
 
-#. placeholder {0}: params.amount
-#. placeholder {1}: params.symbol
-#. placeholder {2}: params.price
 #: src/components/chart/i18n.ts:29
 msgid "Bought {0} {1}, price in the pool decreased to {2}"
 msgstr "Bought {0} {1}, price in the pool decreased to {2}"
@@ -1393,7 +1350,6 @@ msgstr "Upcoming"
 msgid "Users"
 msgstr "Users"
 
-#. placeholder {0}: wallet.name
 #: src/components/ConnectWallet/ConnectWalletDialog.tsx:154
 msgid "Connect to your {0} Wallet"
 msgstr "Connect to your {0} Wallet"
@@ -1414,7 +1370,7 @@ msgstr "Suitable for most situations."
 msgid "Add more to mint at least 1000 LP tokens"
 msgstr "Add more to mint at least 1000 LP tokens"
 
-#: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintDialog.tsx:300
+#: src/widgets/PoolWidget/PoolDetail/components/BifrostMint/BifrostMintDialog.tsx:301
 msgid "by"
 msgstr "by"
 
@@ -1428,11 +1384,6 @@ msgstr "Something went wrong…<0>Refresh again</0>"
 msgid "SELECT"
 msgstr "SELECT"
 
-#. placeholder {0}: params.symbol
-#: src/components/chart/i18n.ts:17
-msgid "Users buy {0} amount: "
-msgstr "Users buy {0} amount: "
-
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/SingleTokenSelect.tsx:56
 msgid "Select Token"
 msgstr "Select Token"
@@ -1441,8 +1392,6 @@ msgstr "Select Token"
 msgid "End mining"
 msgstr "End mining"
 
-#. placeholder {0}: baseCurrency?.symbol
-#. placeholder {0}: quoteCurrency?.symbol
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:132
 #: src/widgets/PoolWidget/AMMV3/components/PositionSelectedRangePreview.tsx:191
 msgid "Your position will be 100% composed of {0} at this price"
@@ -1495,8 +1444,6 @@ msgstr "You are making changes to the liquidity of a private pool. This is a hig
 msgid "Price Range"
 msgstr "Price Range"
 
-#. placeholder {0}: baseToken?.symbol
-#. placeholder {0}: quoteToken?.symbol
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:154
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:177
 msgid "{0} deposited"
@@ -1519,10 +1466,6 @@ msgstr "For"
 msgid "{lqAndDodoCompareText} Price Difference"
 msgstr "{lqAndDodoCompareText} Price Difference"
 
-#: src/widgets/PoolWidget/PoolCreate/hooks/useValidation.ts:45
-msgid "The slippage coefficient needs to be greater than 0, and less than 0.1. "
-msgstr "The slippage coefficient needs to be greater than 0, and less than 0.1. "
-
 #. js-lingui-explicit-id
 #: src/widgets/MiningWidget/MiningList/index.tsx:176
 msgid "You are not currently providing liquidity for any LP pools."
@@ -1532,6 +1475,10 @@ msgstr "You are not currently providing liquidity for any LP pools."
 #: src/widgets/MiningWidget/MiningList/my-created/index.tsx:35
 msgid "You have not create any mining"
 msgstr "You have not create any mining"
+
+#: src/components/chart/i18n.ts:27
+msgid "The area of the chart indicates the buy/sell volume of {0} that can be carried by the market when the current price changes to the hover price."
+msgstr "The area of the chart indicates the buy/sell volume of {0} that can be carried by the market when the current price changes to the hover price."
 
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:424
 msgid "Total Swap Fee"
@@ -1566,7 +1513,6 @@ msgstr "The start time is too soon, please set a later time"
 msgid "Current liquidity pool token price"
 msgstr "Current liquidity pool token price"
 
-#. placeholder {0}: index + 1
 #: src/widgets/MiningWidget/MiningCreate/components/RewardDetailList.tsx:85
 #: src/widgets/MiningWidget/MiningDetail/RewardCard.tsx:170
 msgid "Reward {0}"
@@ -1601,7 +1547,6 @@ msgstr "The price of this pool is within your selected range. Your position is c
 msgid "You are creating a pool"
 msgstr "You are creating a pool"
 
-#. placeholder {0}: truncatePoolAddress( '0xca143ce32fe78f1f7019d7d551a6402fc5350c73', )
 #: src/widgets/MiningWidget/MiningCreate/components/PoolCard.tsx:213
 msgid "Created by {0}"
 msgstr "Created by {0}"
@@ -1683,10 +1628,6 @@ msgstr "SEE HOW IT WORKS"
 msgid "Delete"
 msgstr "Delete"
 
-#. placeholder {0}: params.amountText
-#. placeholder {1}: params.baseTokenSymbol
-#. placeholder {2}: params.oppositeAmountText
-#. placeholder {3}: params.quoteTokenSymbol
 #: src/components/chart/i18n.ts:9
 msgid "Initial Price {0} {1} = {2} {3}"
 msgstr "Initial Price {0} {1} = {2} {3}"
@@ -1780,7 +1721,6 @@ msgstr "Hide TVL=0 pools"
 msgid "Transaction rejected."
 msgstr "Transaction rejected."
 
-#. placeholder {0}: truncatePoolAddress(creator)
 #: src/widgets/MiningWidget/MiningCreate/components/PoolCard.tsx:216
 msgid "\"Created by {0}"
 msgstr "\"Created by {0}"
@@ -1805,7 +1745,6 @@ msgstr "Received"
 msgid "My Pools"
 msgstr "My Pools"
 
-#. placeholder {0}: insufficientRewardToken?.token?.symbol
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:154
 msgid "Approve {0}"
 msgstr "Approve {0}"
@@ -1927,7 +1866,6 @@ msgstr "Ratio"
 msgid "Approving"
 msgstr "Approving"
 
-#. placeholder {0}: lpToken?.symbol ?? '-'
 #: src/widgets/MiningWidget/MiningList/operate-area/InputArea.tsx:123
 msgid "{0} Balance"
 msgstr "{0} Balance"
@@ -2048,9 +1986,6 @@ msgstr "My Staked"
 msgid "Add"
 msgstr "Add"
 
-#. placeholder {0}: currencies[Field.CURRENCY_A]?.symbol
-#. placeholder {0}: currencies[Field.CURRENCY_B]?.symbol
-#. placeholder {0}: insufficientBalanceStatus.token?.symbol
 #: src/components/TokenPairStatusButton.tsx:25
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:546
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:553
@@ -2164,8 +2099,6 @@ msgstr "All chains"
 msgid "Current Market Price:"
 msgstr "Current Market Price:"
 
-#. placeholder {0}: baseToken?.symbol
-#. placeholder {1}: quoteToken?.symbol
 #: src/widgets/PoolWidget/PoolCreate/components/GasWrapGasTokenError.tsx:48
 msgid "{0}-{1} is not supported. Please select another pair."
 msgstr "{0}-{1} is not supported. Please select another pair."
@@ -2177,6 +2110,11 @@ msgstr "ALL"
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:255
 msgid "Confirming..."
 msgstr "Confirming..."
+
+#: src/components/chart/i18n.ts:7
+#: src/components/chart/i18n.ts:11
+msgid "Users pay {0} {1} and receive {2} {3}\\nPrice {4} ({5}%)"
+msgstr "Users pay {0} {1} and receive {2} {3}\\nPrice {4} ({5}%)"
 
 #: src/widgets/PoolWidget/PoolDetail/components/ChartInfo.tsx:45
 msgid "Traders"
@@ -2194,7 +2132,6 @@ msgstr "The setting has been switched to cross chain mode"
 msgid "Buy"
 msgstr "Buy"
 
-#. placeholder {0}: getMaxSlippageWarning(fromToken?.chainId)
 #: src/components/Swap/index.tsx:503
 msgid "The current slippage protection coefficient set exceeds {0}%, which may result in losses."
 msgstr "The current slippage protection coefficient set exceeds {0}%, which may result in losses."
@@ -2223,7 +2160,6 @@ msgstr "End Time"
 msgid "There is no liquidity data."
 msgstr "There is no liquidity data."
 
-#. placeholder {0}: formatPercentageNumber({ input: slippage })
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:134
 msgid "Output is estimated. If the price changes by more than {0} your transaction will revert."
 msgstr "Output is estimated. If the price changes by more than {0} your transaction will revert."
@@ -2288,8 +2224,6 @@ msgstr "Slippage Coefficient"
 msgid "Advanced"
 msgstr "Advanced"
 
-#. placeholder {0}: baseToken?.symbol
-#. placeholder {1}: quoteToken?.symbol
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:107
 msgid "{0}/{1} Pool Tokens"
 msgstr "{0}/{1} Pool Tokens"
@@ -2319,7 +2253,6 @@ msgstr "ratio is 0"
 msgid "Cross Chain Summary"
 msgstr "Cross Chain Summary"
 
-#. placeholder {0}: fee ? new BigNumber(fee).times(100).toString() : '-'
 #: src/widgets/PoolWidget/AMMV2Create/FeeEdit.tsx:61
 msgid "{0}% fee tier"
 msgstr "{0}% fee tier"
@@ -2425,7 +2358,6 @@ msgstr "Source"
 msgid "You may modify the transaction deadline, the maximum time allowed for a trade to be processed on-chain. However, please note that this may lead to your trade executing at a subpar price, as the market price may change during that time."
 msgstr "You may modify the transaction deadline, the maximum time allowed for a trade to be processed on-chain. However, please note that this may lead to your trade executing at a subpar price, as the market price may change during that time."
 
-#. placeholder {0}: insufficientRewardToken?.token?.symbol
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:137
 msgid "{0}  Approval Pending"
 msgstr "{0}  Approval Pending"

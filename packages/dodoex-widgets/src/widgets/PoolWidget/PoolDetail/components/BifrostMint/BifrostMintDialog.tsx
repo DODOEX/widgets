@@ -217,6 +217,7 @@ export function BifrostMintDialog({ config, open, onClose }: Props) {
                 height={24}
                 chainId={wrapToken.chainId}
                 noShowChain
+                marginRight={0}
               />
               <Box>
                 <Box

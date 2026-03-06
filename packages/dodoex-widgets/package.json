@@ -1,6 +1,6 @@
 {
   "name": "@dodoex/widgets",
-  "version": "3.19.0-mint.1",
+  "version": "3.19.0-mint.2",
   "description": "DODO Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
