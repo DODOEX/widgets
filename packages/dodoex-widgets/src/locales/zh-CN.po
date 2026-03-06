@@ -32,7 +32,7 @@ msgstr ""
 msgid "Participating"
 msgstr ""
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:339
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:341
 msgid "Swap Price"
 msgstr ""
 
@@ -48,7 +48,7 @@ msgstr "99% 选择此参数"
 msgid "Your position is  empty"
 msgstr "您的仓位为空"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:316
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:258
 msgid "Please provide amount of token"
 msgstr ""
 
@@ -92,7 +92,7 @@ msgstr "{0} 等待中"
 msgid "Removing"
 msgstr "提取"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:422
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:424
 msgid "This is the maximum allocation amount you are allowed to spend for this campaign"
 msgstr ""
 
@@ -217,7 +217,7 @@ msgstr "结束时间必须晚于开始时间"
 msgid "End Calm Time"
 msgstr ""
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:411
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:413
 msgid "Free"
 msgstr ""
 
@@ -243,7 +243,7 @@ msgstr ""
 msgid "Select Pool"
 msgstr "选择做市池"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:495
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:497
 msgid "Claimable Amounts"
 msgstr ""
 
@@ -407,7 +407,7 @@ msgstr ""
 msgid "Cooling-off Period"
 msgstr ""
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:319
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:261
 msgid "Your participation amount must be less than or equal to your allocation"
 msgstr ""
 
@@ -605,7 +605,7 @@ msgstr "APR"
 msgid "APR = Reward Token Value per Year / TVL"
 msgstr "APR 计算公式：以当前奖励代币价格估算每年奖励价值 / 总挖矿资金"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:522
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:524
 msgid "Tokens to be released"
 msgstr ""
 
@@ -1071,7 +1071,7 @@ msgstr "价格滑点：{0}"
 msgid "Deposit ratio is determined by the current assets ratio in the pool. The ratio does not represent the exchange price"
 msgstr "充值比例由池内流动资产的比例决定，该比例不代表资产之间的兑换价格"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:251
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:270
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/SettleConfirmDialog.tsx:71
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:112
 #: src/widgets/CrowdpoolingWidget/MyCrowdpoolingList/components/OperationButton.tsx:46
@@ -1346,7 +1346,7 @@ msgstr "我的资金池"
 msgid "Share Of Pool"
 msgstr "资金池份额"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:428
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:430
 msgid "Unlimited"
 msgstr ""
 
@@ -1500,7 +1500,7 @@ msgid "Quantity model"
 msgstr "按照数量"
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:246
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:406
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:408
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingPoolDetail/components/SwapsTable.tsx:141
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:197
 msgid "Fee"
@@ -1976,7 +1976,7 @@ msgid ""
 "Cryptocurrencies are a high-risk asset class, so please always proceed with caution and beware of various risks. Participation in Crowdpooling is NOT risk-free. {0} is not liable and will not be offering compensations for any asset losses caused by factors such as project mismanagement, arbitrary and/or malicious token minting, and secondary market manipulation."
 msgstr ""
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:432
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:434
 msgid "You Have Paid"
 msgstr ""
 
@@ -2301,7 +2301,7 @@ msgstr "隐藏 TVL=0 的池子"
 msgid "Transaction rejected."
 msgstr "交易被拒绝."
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:421
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:423
 msgid "Your Allocation"
 msgstr ""
 
@@ -2440,7 +2440,7 @@ msgstr "代币数量"
 msgid "Select Pool Version"
 msgstr "选择模式"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:268
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:287
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/hooks/useClaimCp.ts:34
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:119
 #: src/widgets/MiningWidget/hooks/useClaimMiningSubmit.ts:46
@@ -2650,7 +2650,7 @@ msgstr "发送至："
 msgid "My Staked"
 msgstr "已质押"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:284
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:303
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:478
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:451
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
@@ -2732,7 +2732,7 @@ msgstr ""
 msgid "Low"
 msgstr "低"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:387
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:389
 msgid "Total Expected Gain"
 msgstr ""
 
@@ -2762,7 +2762,7 @@ msgstr "挖矿一旦开始，无法终止。"
 msgid "Select a liquidity pool"
 msgstr "查找资金池"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:284
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:303
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/MyCrowdpooling.tsx:297
 msgid "Raised"
 msgstr ""
@@ -2771,7 +2771,7 @@ msgstr ""
 msgid "False"
 msgstr ""
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:515
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:517
 msgid "Tokens you have claimed"
 msgstr ""
 
@@ -2950,7 +2950,7 @@ msgstr "AMM V2"
 msgid "Preview"
 msgstr "预览"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:407
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:409
 msgid "Participating in crowdfunding pool construction will charge a certain percentage of the amount of participation fee"
 msgstr ""
 
@@ -3008,8 +3008,8 @@ msgstr "{0}/{1} 资金池代币"
 msgid "Initial Price Alert"
 msgstr "初始价格提示"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:295
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:457
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:314
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:459
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/RemoveDialog.tsx:42
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/RemoveDialog.tsx:126
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:129
@@ -3182,7 +3182,7 @@ msgstr ""
 msgid "This trading pair does not have enough historical data and has used the default dynamic slippage."
 msgstr "该交易对没有足够的历史交易数据，已使用默认滑点值"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:471
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:473
 msgid "When the Crowdpooling campaign has exceeded 100% hard cap, your share will be allocated according to the proportion of your investment. Any excess funds will be returned to you."
 msgstr ""
 

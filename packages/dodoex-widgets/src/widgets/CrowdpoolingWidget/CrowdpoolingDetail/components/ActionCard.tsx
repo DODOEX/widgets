@@ -242,6 +242,25 @@ export function ActionCard({
     },
   });
 
+  const overflowUserCap = useMemo(
+    () =>
+      !!(
+        status !== CP_STATUS.CALMING &&
+        fetchFeeInfo.data?.isHaveCap &&
+        Number(amount) &&
+        new BigNumber(amount).gt(Number(fetchFeeInfo.data?.curQuota))
+      ),
+    [amount, fetchFeeInfo.data],
+  );
+
+  let errorMessage = '';
+  if (!Number(amount)) {
+    errorMessage = t`Please provide amount of token`;
+  }
+  if (overflowUserCap) {
+    errorMessage = t`Your participation amount must be less than or equal to your allocation`;
+  }
+
   const renderActionButton = () => {
     if (!detail) return null;
     switch (status) {
@@ -300,24 +319,7 @@ export function ActionCard({
   };
   const buttonAction = renderActionButton();
 
-  const overflowUserCap = useMemo(
-    () =>
-      !!(
-        status !== CP_STATUS.CALMING &&
-        fetchFeeInfo.data?.isHaveCap &&
-        Number(amount) &&
-        new BigNumber(amount).gt(Number(fetchFeeInfo.data?.curQuota))
-      ),
-    [amount, fetchFeeInfo.data],
-  );
 
-  let errorMessage = '';
-  if (!Number(amount)) {
-    errorMessage = t`Please provide amount of token`;
-  }
-  if (overflowUserCap) {
-    errorMessage = t`Your participation amount must be less than or equal to your allocation`;
-  }
 
   return (
     <Box

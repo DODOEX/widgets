@@ -34,7 +34,7 @@ msgstr "Liquidity Protection Period"
 msgid "Participating"
 msgstr "Participating"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:339
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:341
 msgid "Swap Price"
 msgstr "Swap Price"
 
@@ -50,7 +50,7 @@ msgstr "99% Default"
 msgid "Your position is  empty"
 msgstr "Your position is  empty"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:316
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:258
 msgid "Please provide amount of token"
 msgstr "Please provide amount of token"
 
@@ -94,7 +94,7 @@ msgstr "{0} pending"
 msgid "Removing"
 msgstr "Removing"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:422
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:424
 msgid "This is the maximum allocation amount you are allowed to spend for this campaign"
 msgstr "This is the maximum allocation amount you are allowed to spend for this campaign"
 
@@ -219,7 +219,7 @@ msgstr "The end time must be later than the start time."
 msgid "End Calm Time"
 msgstr "End Calm Time"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:411
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:413
 msgid "Free"
 msgstr "Free"
 
@@ -245,7 +245,7 @@ msgstr "Settling"
 msgid "Select Pool"
 msgstr "Select Pool"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:495
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:497
 msgid "Claimable Amounts"
 msgstr "Claimable Amounts"
 
@@ -409,7 +409,7 @@ msgstr "Token price during the Crowdpooling campaign"
 msgid "Cooling-off Period"
 msgstr "Cooling-off Period"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:319
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:261
 msgid "Your participation amount must be less than or equal to your allocation"
 msgstr "Your participation amount must be less than or equal to your allocation"
 
@@ -607,7 +607,7 @@ msgstr "APR"
 msgid "APR = Reward Token Value per Year / TVL"
 msgstr "APR = Reward Token Value per Year / TVL"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:522
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:524
 msgid "Tokens to be released"
 msgstr "Tokens to be released"
 
@@ -1073,7 +1073,7 @@ msgstr "Price Impact: {0}"
 msgid "Deposit ratio is determined by the current assets ratio in the pool. The ratio does not represent the exchange price"
 msgstr "Deposit ratio is determined by the current assets ratio in the pool. The ratio does not represent the exchange price"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:251
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:270
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/SettleConfirmDialog.tsx:71
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:112
 #: src/widgets/CrowdpoolingWidget/MyCrowdpoolingList/components/OperationButton.tsx:46
@@ -1348,7 +1348,7 @@ msgstr "My Pools"
 msgid "Share Of Pool"
 msgstr "Share Of Pool"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:428
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:430
 msgid "Unlimited"
 msgstr "Unlimited"
 
@@ -1502,7 +1502,7 @@ msgid "Quantity model"
 msgstr "Quantity model"
 
 #: src/components/Bridge/BridgeSummaryDialog/BridgeSummaryDetail.tsx:246
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:406
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:408
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingPoolDetail/components/SwapsTable.tsx:141
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:197
 msgid "Fee"
@@ -1980,7 +1980,7 @@ msgstr ""
 "Please double check that you have the correct token contract address. Note that malicious actors can create tokens that claim to represent other projects with the same names and you may incur significant losses by trading these fake tokens.\n"
 "Cryptocurrencies are a high-risk asset class, so please always proceed with caution and beware of various risks. Participation in Crowdpooling is NOT risk-free. {0} is not liable and will not be offering compensations for any asset losses caused by factors such as project mismanagement, arbitrary and/or malicious token minting, and secondary market manipulation."
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:432
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:434
 msgid "You Have Paid"
 msgstr "You Have Paid"
 
@@ -2305,7 +2305,7 @@ msgstr "Hide TVL=0 pools"
 msgid "Transaction rejected."
 msgstr "Transaction rejected."
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:421
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:423
 msgid "Your Allocation"
 msgstr "Your Allocation"
 
@@ -2444,7 +2444,7 @@ msgstr "Token Amount"
 msgid "Select Pool Version"
 msgstr "Select Pool Version"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:268
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:287
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/hooks/useClaimCp.ts:34
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:119
 #: src/widgets/MiningWidget/hooks/useClaimMiningSubmit.ts:46
@@ -2657,7 +2657,7 @@ msgstr "Send to:"
 msgid "My Staked"
 msgstr "My Staked"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:284
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:303
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/RewardForm.tsx:478
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:451
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
@@ -2739,7 +2739,7 @@ msgstr "Pool Building Fee (%)"
 msgid "Low"
 msgstr "Low"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:387
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:389
 msgid "Total Expected Gain"
 msgstr "Total Expected Gain"
 
@@ -2769,7 +2769,7 @@ msgstr "Once Mining has started, it cannot be stopped."
 msgid "Select a liquidity pool"
 msgstr "Select a liquidity pool"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:284
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:303
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/MyCrowdpooling.tsx:297
 msgid "Raised"
 msgstr "Raised"
@@ -2778,7 +2778,7 @@ msgstr "Raised"
 msgid "False"
 msgstr "False"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:515
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:517
 msgid "Tokens you have claimed"
 msgstr "Tokens you have claimed"
 
@@ -2959,7 +2959,7 @@ msgstr "AMM V2"
 msgid "Preview"
 msgstr "Preview"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:407
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:409
 msgid "Participating in crowdfunding pool construction will charge a certain percentage of the amount of participation fee"
 msgstr "Participating in crowdfunding pool construction will charge a certain percentage of the amount of participation fee"
 
@@ -3017,8 +3017,8 @@ msgstr "{0}/{1} Pool Tokens"
 msgid "Initial Price Alert"
 msgstr "Initial Price Alert"
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:295
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:457
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:314
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:459
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/RemoveDialog.tsx:42
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/RemoveDialog.tsx:126
 #: src/widgets/CrowdpoolingWidget/CrowdpoolingList/components/CPCard.tsx:129
@@ -3191,7 +3191,7 @@ msgstr "Project Intro"
 msgid "This trading pair does not have enough historical data and has used the default dynamic slippage."
 msgstr "This trading pair does not have enough historical data and has used the default dynamic slippage."
 
-#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:471
+#: src/widgets/CrowdpoolingWidget/CrowdpoolingDetail/components/ActionCard.tsx:473
 msgid "When the Crowdpooling campaign has exceeded 100% hard cap, your share will be allocated according to the proportion of your investment. Any excess funds will be returned to you."
 msgstr "When the Crowdpooling campaign has exceeded 100% hard cap, your share will be allocated according to the proportion of your investment. Any excess funds will be returned to you."
 
