@@ -195,6 +195,11 @@ export default function IntroSettingsConfirmDialog({
     enabledSocialLinks,
   } = introSettings;
 
+  const normalizeUrl = (url: string | undefined) => {
+    if (!url) return url;
+    return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+  };
+
   return (
     <Dialog
       modal
@@ -343,25 +348,25 @@ export default function IntroSettingsConfirmDialog({
               >
                 <SocialIconWrapper
                   enabled={enabledSocialLinks.website}
-                  href={websiteUrl}
+                  href={normalizeUrl(websiteUrl)}
                 >
                   <WebsiteIcon />
                 </SocialIconWrapper>
                 <SocialIconWrapper
                   enabled={enabledSocialLinks.twitter}
-                  href={twitterUrl}
+                  href={normalizeUrl(twitterUrl)}
                 >
                   <TwitterIcon />
                 </SocialIconWrapper>
                 <SocialIconWrapper
                   enabled={enabledSocialLinks.discord}
-                  href={discordUrl}
+                  href={normalizeUrl(discordUrl)}
                 >
                   <DiscordIcon />
                 </SocialIconWrapper>
                 <SocialIconWrapper
                   enabled={enabledSocialLinks.telegram}
-                  href={telegramUrl}
+                  href={normalizeUrl(telegramUrl)}
                 >
                   <TelegramIcon />
                 </SocialIconWrapper>

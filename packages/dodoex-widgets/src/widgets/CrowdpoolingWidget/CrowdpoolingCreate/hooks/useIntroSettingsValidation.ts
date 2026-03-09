@@ -7,12 +7,21 @@ interface IntroSettingsValidationResult {
   reCheck: (getErrorState?: (isError: boolean) => void) => void;
 }
 
-// URL validation regex - matches http://, https://, and valid URLs
-const URL_REGEX = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+const IP_REGEX = /^(\d{1,3}\.){3}\d{1,3}$/;
 
 function isValidUrl(url: string): boolean {
-  if (!url) return true; // Empty URLs are valid (optional fields)
-  return URL_REGEX.test(url);
+  if (!url) return true;
+  const normalized = /^https?:\/\//i.test(url) ? url : `https://${url}`;
+  try {
+    const parsed = new URL(normalized);
+    const { hostname } = parsed;
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return false;
+    if (!hostname.includes('.')) return false;
+    if (hostname === 'localhost' || IP_REGEX.test(hostname)) return false;
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export const useIntroSettingsValidation = (

@@ -1,6 +1,6 @@
 import { Box, Button, useTheme } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import type Quill from 'quill';
 import { compressImage } from '../../utils/imageCompression';
 import 'quill/dist/quill.snow.css';
@@ -18,7 +18,6 @@ export default function RichTextEditor({
 }: RichTextEditorProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const quillRef = useRef<Quill | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
   const theme = useTheme();
 
   useEffect(() => {
@@ -78,20 +77,15 @@ export default function RichTextEditor({
 
       // Set initial content
       if (value) {
-        try {
-          const delta = JSON.parse(value);
-          quill.setContents(delta);
-        } catch {
-          quill.setText(value);
-        }
+        isInternalUpdate.current = true;
+        quill.clipboard.dangerouslyPasteHTML(value);
+        isInternalUpdate.current = false;
       }
 
       // Handle content changes
       quill.on('text-change', () => {
         onChange(quill.getSemanticHTML());
       });
-
-      setIsInitialized(true);
     });
 
     return () => {
@@ -99,16 +93,6 @@ export default function RichTextEditor({
       quillRef.current = null;
     };
   }, []);
-
-  // Update value prop changes
-  useEffect(() => {
-    if (quillRef.current && value && isInitialized) {
-      const currentText = quillRef.current.getSemanticHTML();
-      if (currentText !== value) {
-        quillRef.current.setText(value);
-      }
-    }
-  }, [value, isInitialized]);
 
   return (
     <Box
@@ -164,6 +148,22 @@ export default function RichTextEditor({
               fontFamily: 'inherit',
               border: 'none',
               padding: '24px 20px',
+              '& h2': {
+                typography: 'body1',
+                fontWeight: 600,
+              },
+              '& h1, & h2, & h3, & h4, & h5, & h6, & img, & blockquote': {
+                my: 12,
+              },
+              '& a': {
+                color: 'text.primary',
+                textDecoration: 'underline',
+              },
+              '& blockquote': {
+                borderLeft: `4px solid ${theme.palette.border.main}`,
+                ml: 0,
+                pl: 16,
+              },
             },
             '& .ql-container': {
               border: 'none',
@@ -177,10 +177,6 @@ export default function RichTextEditor({
               top: 20,
             },
             typography: 'body2',
-            '& h2': {
-              typography: 'body1',
-              fontWeight: 600,
-            },
           }}
         />
       </Box>

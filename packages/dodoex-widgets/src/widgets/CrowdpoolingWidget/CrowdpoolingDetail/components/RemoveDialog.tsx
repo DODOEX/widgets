@@ -42,20 +42,26 @@ export default function RemoveDialog({
     <Dialog modal open={open} onClose={onClose} title={<Trans>Remove</Trans>}>
       <Box
         sx={{
-          p: theme.spacing(8, 20, 20),
+          p: theme.spacing(8, 0, 0),
           width: {
             mobile: '100%',
             tablet: 420,
           },
         }}
       >
-        <TokenCard
-          token={token}
-          amt={value}
-          onInputChange={setValue}
-          overrideBalance={baseTokenPosition}
-          overrideBalanceLoading={balanceLoading}
-        />
+        <Box
+          sx={{
+            px: 20,
+          }}
+        >
+          <TokenCard
+            token={token}
+            amt={value}
+            onInputChange={setValue}
+            overrideBalance={baseTokenPosition}
+            overrideBalanceLoading={balanceLoading}
+          />
+        </Box>
         <Box
           sx={{
             display: 'flex',
@@ -106,11 +112,21 @@ export default function RemoveDialog({
               </Box>
             </Box>
           </Box>
-          <TokenStatusButton status={tokenStatus}>
+          <TokenStatusButton
+            status={tokenStatus}
+            buttonProps={{
+              fullWidth: false,
+              sx: {
+                width: 131,
+              },
+            }}
+          >
             <Button
-              fullWidth
               isLoading={loading}
               disabled={!Number(value)}
+              sx={{
+                width: 131,
+              }}
               onClick={() => {
                 if (!token) return;
                 onConfirm({

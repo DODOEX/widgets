@@ -128,7 +128,7 @@ export function ActionCard({
     () =>
       fetchUserShares.data
         ? new BigNumber(
-            formatUnits(fetchUserShares.data, detail?.baseToken.decimals),
+            formatUnits(fetchUserShares.data, detail?.quoteToken.decimals),
           )
         : new BigNumber(0),
     [fetchUserShares.data, detail],
@@ -157,7 +157,7 @@ export function ActionCard({
 
     const baseTokenPosition = fetchUserShares.data
       ? new BigNumber(
-          formatUnits(fetchUserShares.data, detail?.baseToken.decimals),
+          formatUnits(fetchUserShares.data, detail?.quoteToken.decimals),
         )
       : new BigNumber(0);
     const { price, poolQuote, poolQuoteCap, isEscalation } = detail;
@@ -319,8 +319,6 @@ export function ActionCard({
   };
   const buttonAction = renderActionButton();
 
-
-
   return (
     <Box
       sx={{
@@ -447,6 +445,12 @@ export function ActionCard({
           >
             <Box
               sx={{
+                display: 'inline-block',
+                px: 8,
+                height: 24,
+                lineHeight: '24px',
+                borderRadius: 8,
+                border: `solid 1px ${theme.palette.border.main}`,
                 cursor: 'pointer',
                 color: 'primary.main',
                 '&:hover': {
@@ -480,6 +484,7 @@ export function ActionCard({
         <Box
           sx={{
             display: 'flex',
+            gap: 12,
           }}
         >
           <Box

@@ -21,15 +21,20 @@ export function useSaveCPIntro() {
       introSettings: StateProps['introSettings'];
       cpAddress: string;
     }) => {
+      const normalizeUrl = (url: string | undefined) => {
+        if (!url) return url;
+        return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+      };
+
       const params = {
         chainId: String(chainId),
         name: introSettings.projectName,
         crowdpoolingAddress: cpAddress,
         description: introSettings.description,
-        website: introSettings.websiteUrl,
-        twitter: introSettings.twitterUrl,
-        telegram: introSettings.telegramUrl,
-        discord: introSettings.discordUrl,
+        website: normalizeUrl(introSettings.websiteUrl),
+        twitter: normalizeUrl(introSettings.twitterUrl),
+        telegram: normalizeUrl(introSettings.telegramUrl),
+        discord: normalizeUrl(introSettings.discordUrl),
         coverImg: introSettings.coverImageUrl,
       };
       const response = await axios.post(cpSetIntroAPI, params, {

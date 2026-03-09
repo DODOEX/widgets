@@ -35,6 +35,11 @@ export default function ProjectInfo({
     account && account.toLowerCase() === detail?.creator?.toLowerCase()
   );
 
+  const descriptionHtml = (fetchIntro.data?.description ?? '').replace(
+    /(<a\s[^>]*href=")(?!https?:\/\/|\/\/|#|mailto:)([^"]*")/gi,
+    '$1https://$2',
+  );
+
   return (
     <Box
       sx={{
@@ -44,7 +49,10 @@ export default function ProjectInfo({
           mobile: 0,
           tablet: 24,
         },
-        backgroundColor: 'background.paper',
+        backgroundColor: {
+          mobile: undefined,
+          tablet: 'background.paper',
+        },
       }}
     >
       {!!fetchIntro.data?.coverImg && (
@@ -66,43 +74,7 @@ export default function ProjectInfo({
           }}
         />
       )}
-      {isCreator && (
-        <Tooltip
-          title={<Trans>Please contact our team to edit project intro</Trans>}
-          maxWidth={240}
-        >
-          <Box
-            sx={{
-              position: 'absolute',
-              top: 14,
-              left: 20,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              px: 8,
-              py: 4,
-              borderRadius: 8,
-              backgroundColor: alpha(theme.palette.primary.contrastText, 0.3),
-              typography: 'body2',
-              color: alpha(theme.palette.primary.contrastText, 0.5),
-            }}
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12.8 4L18.5 9.7L10.8 17.4H5.1V11.7L12.8 4ZM7 12.4V15.4H10L15.5 9.7L12.8 6.9L7 12.4ZM5 18.4H8V20.4H5V18.4ZM9 18.4H13V20.4H9V18.4ZM14 18.4H19V20.4H14V18.4Z"
-                fill="currentColor"
-              />
-            </svg>
-            <Trans>Request Edit Access</Trans>
-          </Box>
-        </Tooltip>
-      )}
+
       <Box
         sx={{
           display: 'flex',
@@ -139,11 +111,43 @@ export default function ProjectInfo({
             {!!fetchIntro.data?.name && (
               <Box
                 sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
                   mt: 8,
                   typography: 'h3',
                 }}
               >
                 {fetchIntro.data.name}
+                {isCreator && (
+                  <Tooltip
+                    title={
+                      <Trans>
+                        Please contact our team to edit project intro
+                      </Trans>
+                    }
+                    maxWidth={240}
+                  >
+                    <Box
+                      sx={{
+                        color: alpha(theme.palette.text.secondary, 0.5),
+                      }}
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12.8 4L18.5 9.7L10.8 17.4H5.1V11.7L12.8 4ZM7 12.4V15.4H10L15.5 9.7L12.8 6.9L7 12.4ZM5 18.4H8V20.4H5V18.4ZM9 18.4H13V20.4H9V18.4ZM14 18.4H19V20.4H14V18.4Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </Box>
+                  </Tooltip>
+                )}
               </Box>
             )}
             <Box
@@ -194,6 +198,33 @@ export default function ProjectInfo({
                   />
                 </svg>
               </Tooltip>
+              {isCreator && !fetchIntro.data?.name && (
+                <Tooltip
+                  title={
+                    <Trans>Please contact our team to edit project intro</Trans>
+                  }
+                  maxWidth={240}
+                >
+                  <Box
+                    sx={{
+                      color: alpha(theme.palette.text.secondary, 0.5),
+                    }}
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12.8 4L18.5 9.7L10.8 17.4H5.1V11.7L12.8 4ZM7 12.4V15.4H10L15.5 9.7L12.8 6.9L7 12.4ZM5 18.4H8V20.4H5V18.4ZM9 18.4H13V20.4H9V18.4ZM14 18.4H19V20.4H14V18.4Z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </Box>
+                </Tooltip>
+              )}
             </Box>
           </>
         )}
@@ -226,6 +257,7 @@ export default function ProjectInfo({
           fetchIntro.data?.telegram ? (
             <Box
               sx={{
+                display: 'none',
                 width: '1px',
                 height: 24,
                 backgroundColor: theme.palette.border.main,
@@ -236,7 +268,8 @@ export default function ProjectInfo({
           <Box
             component={ButtonBase}
             sx={{
-              display: 'flex',
+              // display: 'flex',
+              display: 'none',
               alignItems: 'center',
               justifyContent: 'center',
               width: 34,
@@ -278,7 +311,10 @@ export default function ProjectInfo({
             sx={{
               mt: 20,
               px: 20,
-              position: 'relative',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 12,
               width: '100%',
             }}
           >
@@ -286,11 +322,13 @@ export default function ProjectInfo({
               sx={{
                 typography: 'body2',
                 color: 'text.primary',
-                display: '-webkit-box',
                 WebkitBoxOrient: 'vertical',
                 WebkitLineClamp: isExpanded ? 'unset' : 3,
                 overflow: 'hidden',
-                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                '& p:empty, & p:has(br:only-child)': {
+                  minHeight: '1em',
+                },
                 '& h2': {
                   typography: 'body1',
                   fontWeight: 600,
@@ -298,73 +336,55 @@ export default function ProjectInfo({
                 '& img': {
                   width: '100%',
                 },
+                '& h1, & h2, & h3, & h4, & h5, & h6, & img, & blockquote': {
+                  my: 12,
+                },
                 '& p': {
                   margin: 0,
                 },
+                '& a': {
+                  textDecoration: 'underline',
+                },
                 '& blockquote': {
                   borderLeft: `4px solid ${theme.palette.border.main}`,
-                  my: 5,
                   ml: 0,
                   pl: 16,
                 },
               }}
               dangerouslySetInnerHTML={{
-                __html: fetchIntro.data?.description ?? '',
+                __html: descriptionHtml,
               }}
             />
-            {isExpanded ? (
+            <Box
+              component={ButtonBase}
+              onClick={() => setIsExpanded((prev) => !prev)}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                px: 12,
+                py: 8,
+                borderRadius: 40,
+                border: 'solid 1px',
+                borderColor: 'divider',
+                color: 'primary.main',
+                typography: 'body2',
+                fontWeight: 600,
+                '&:hover': {
+                  opacity: 0.5,
+                },
+              }}
+            >
+              {isExpanded ? <Trans>Fold Up</Trans> : <Trans>View More</Trans>}
               <Box
-                component={ButtonBase}
-                onClick={() => setIsExpanded((prev) => !prev)}
+                component={ArrowRight}
                 sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  width: 'max-content',
-                  mt: 12,
-                  ml: 'auto',
-                  color: 'primary.main',
-                  typography: 'body2',
-                  fontWeight: 600,
-                  '&:hover': {
-                    opacity: 0.5,
-                  },
+                  width: 18,
+                  height: 18,
+                  transform: isExpanded ? 'rotate(-90deg)' : 'rotate(90deg)',
                 }}
-              >
-                <Trans>Fold Up</Trans>
-                <Box
-                  component={ArrowRight}
-                  sx={{
-                    transform: 'rotate(-90deg)',
-                  }}
-                />
-              </Box>
-            ) : (
-              <Box
-                component={ButtonBase}
-                onClick={() => setIsExpanded((prev) => !prev)}
-                sx={{
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                  backgroundColor: theme.palette.background.paper,
-                  px: 2,
-                  color: 'primary.main',
-                  typography: 'body2',
-                  fontWeight: 600,
-                  '&:hover': {
-                    opacity: 0.5,
-                  },
-                }}
-              >
-                <Trans>View More</Trans>
-                <Box
-                  component={ArrowRight}
-                  sx={{
-                    transform: 'rotate(90deg)',
-                  }}
-                />
-              </Box>
-            )}
+              />
+            </Box>
           </Box>
         )}
       </Box>
@@ -431,12 +451,13 @@ const SocialIconWrapper = ({
 }) => {
   const theme = useTheme();
   if (!href) return null;
+  const normalizedHref = /^https?:\/\//i.test(href) ? href : `https://${href}`;
   return (
     <Box
       component="a"
       target="_blank"
       rel="noopener noreferrer"
-      href={href}
+      href={normalizedHref}
       sx={{
         display: 'flex',
         alignItems: 'center',
