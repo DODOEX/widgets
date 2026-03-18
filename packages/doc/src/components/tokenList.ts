@@ -376,7 +376,7 @@ const tokenList: (TokenInfo & {
     address: 'Btc1111111111111111111111111111111111111111',
     symbol: 'BTC',
     decimals: 8,
-    chainId: 8223,
+    chainId: 8332,
   },
   {
     name: 'USDC',

@@ -57,7 +57,7 @@ export enum ChainId {
   // https://mempool.space/signet/address/tb1psrnnfc3s0kxuunw0rz3czd0vs7js7elufwahrxcpea632s0pgxvsum3hdy
   BTC_SIGNET = 18333,
 
-  BTC = 8223,
+  BTC = 8332,
 
   SUI = 105,
   SUI_TESTNET = 103,
