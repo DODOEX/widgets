@@ -149,6 +149,10 @@ export const basicTokenMap: {
     ...DEFAULT_BASIC_TOKEN,
     wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
   },
+  [ChainId.RISE]: {
+    ...DEFAULT_BASIC_TOKEN,
+    wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
+  },
   [ChainId.NEROCHAIN]: {
     ...DEFAULT_BASIC_TOKEN,
     symbol: 'NERO',
@@ -202,6 +206,13 @@ export const basicTokenMap: {
     name: 'PHRS',
     wrappedTokenSymbol: 'WPHRS',
     wrappedTokenAddress: '0x838800b758277cc111b2d48ab01e5e164f8e9471',
+  },
+  [ChainId.PHAROS]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'PHRS',
+    name: 'PHRS',
+    wrappedTokenSymbol: 'WPHRS',
+    wrappedTokenAddress: '0x52c48d4213107b20bc583832b0d951fb9ca8f0b0',
   },
   [ChainId.STABLE_TESTNET]: {
     ...DEFAULT_BASIC_TOKEN,
