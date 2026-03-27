@@ -15,13 +15,11 @@ const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
 
   addons: [
-    getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
     getAbsolutePath('@storybook/addon-onboarding'),
     getAbsolutePath('@storybook/addon-links'),
     getAbsolutePath('@storybook/addon-essentials'),
     getAbsolutePath('@chromatic-com/storybook'),
     getAbsolutePath('@storybook/addon-interactions'),
-    getAbsolutePath('@storybook/addon-webpack5-compiler-babel'),
   ],
 
   framework: {
@@ -103,6 +101,20 @@ const config: StorybookConfig = {
       module: {
         rules: [
           ...(config.module?.rules ?? []),
+          {
+            test: /\.(ts|tsx)$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: [
+                  '@babel/preset-env',
+                  ['@babel/preset-react', { runtime: 'automatic' }],
+                  '@babel/preset-typescript',
+                ],
+              },
+            },
+          },
           {
             test: /\.svg$/,
             // type: 'asset/inline',

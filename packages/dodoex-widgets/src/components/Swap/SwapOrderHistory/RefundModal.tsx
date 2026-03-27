@@ -6,9 +6,14 @@ import {
 } from '@dodoex/api';
 import { Box, Button, useTheme } from '@dodoex/components';
 import { Interface } from '@ethersproject/abi';
+import {
+  JsonRpcProvider,
+  StaticJsonRpcProvider,
+} from '@ethersproject/providers';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useMemo } from 'react';
 import { swapApi } from '../../../constants/api';
+import { rpcServerMap } from '../../../constants/chains';
 import { chainListMap } from '../../../constants/chainList';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useSubmission } from '../../../hooks/Submission';
@@ -123,6 +128,36 @@ export const RefundModal = ({
         return;
       }
 
+      // Estimate gas for an ERC20 transfer on the refund chain to get customGasLimit
+      let customGasLimit = BigInt(100000);
+      if (data.refundChainId && data.toToken?.address && data.refundUser) {
+        const rpcUrls = rpcServerMap[data.refundChainId as ChainId];
+        const rpcUrl = rpcUrls?.[0];
+        if (rpcUrl) {
+          try {
+            const erc20Iface = new Interface([
+              'function transfer(address to, uint256 amount) returns (bool)',
+            ]);
+            const transferData = erc20Iface.encodeFunctionData('transfer', [
+              data.refundUser,
+              1,
+            ]);
+            const refundChainProvider = new StaticJsonRpcProvider(
+              rpcUrl,
+              data.refundChainId,
+            );
+            const estimated = await refundChainProvider.estimateGas({
+              from: account ?? undefined,
+              to: data.toToken.address,
+              data: transferData,
+            });
+            customGasLimit = estimated.toBigInt();
+          } catch (e) {
+            console.error('estimateGas on refund chain failed', e);
+          }
+        }
+      }
+
       const iface = new Interface([
         {
           inputs: [
@@ -131,16 +166,22 @@ export const RefundModal = ({
               name: 'externalId',
               type: 'bytes32',
             },
+            {
+              internalType: 'uint256',
+              name: 'customGasLimit',
+              type: 'uint256',
+            },
           ],
-          name: 'claimRefund',
+          name: 'claimRefundWithCustomGasLimit',
           outputs: [],
           stateMutability: 'nonpayable',
           type: 'function',
         },
       ]);
-      const encodedData = iface.encodeFunctionData('claimRefund', [
-        data.externalId,
-      ]);
+      const encodedData = iface.encodeFunctionData(
+        'claimRefundWithCustomGasLimit',
+        [data.externalId, customGasLimit],
+      );
       const result = await submission.execute(
         CLAIM_REFUND_TEXT,
         {
@@ -213,7 +254,6 @@ export const RefundModal = ({
     needApprove ||
     isApproving ||
     isGetApproveLoading;
-  // const isStep1 = true;
 
   const button1 = useMemo(() => {
     if (!isInCurrentChain) {

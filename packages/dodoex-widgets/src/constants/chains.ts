@@ -20,7 +20,7 @@ export const rpcServerMap: {
     'https://bsc-dataseed3.binance.org',
   ],
   [ChainId.POLYGON]: [
-    'https://polygon-rpc.com',
+    'https://poly.api.pocket.network',
     'https://rpc-mainnet.maticvigil.com',
     'https://rpc-mainnet.matic.quiknode.pro',
     'https://poly-rpc.gateway.pokt.network',
