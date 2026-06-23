@@ -1,6 +1,5 @@
 import { Tabs, TabPanel, TabsButtonGroup, Box } from '@dodoex/components';
 import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import { FailedList } from '../../../components/List/FailedList';
 import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
 import { poolApi } from '../utils';
@@ -14,6 +13,7 @@ import {
 } from './types';
 import { RemovePoolOperate } from './RemovePoolOperate';
 import { MigrationTag } from '../PoolList/components/migationWidget';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 
 export interface PoolOperateInnerProps {
   pool: OperatePool;
@@ -36,7 +36,7 @@ export default function PoolOperateInner({
 }: PoolOperateInnerProps) {
   const { operateTab, operateTabs, handleChangeTab } =
     usePoolOperateTabs(operate);
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const balanceInfo = usePoolBalanceInfo({
     account,
     pool: pool

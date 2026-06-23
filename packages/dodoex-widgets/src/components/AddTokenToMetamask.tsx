@@ -1,6 +1,6 @@
 import { Box, BoxProps } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
+import { useWalletInfo } from '../hooks/ConnectWallet/useWalletInfo';
 import { merge } from 'lodash';
 import { MouseEventHandler, useState } from 'react';
 import { ReactComponent as metamaskLogo } from '../assets/logo/metamask.svg';
@@ -21,7 +21,7 @@ export function AddTokenToMetamask({
   children?: React.ReactNode;
 }) {
   const [addLoading, setLoading] = useState(false);
-  const { provider, chainId: currentChainId } = useWeb3React();
+  const { provider, chainId: currentChainId } = useWalletInfo();
   const switchChain = useSwitchChain(token.chainId);
 
   const handleAdd: MouseEventHandler = async (e) => {

@@ -6,7 +6,6 @@ import {
   WidgetModal,
 } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { chainListMap } from '../../constants/chainList';
 import { ChainId } from '@dodoex/api';
@@ -17,6 +16,7 @@ import {
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
 import { WIDGET_CLASS_NAME } from '../Widget';
 import { useGlobalState } from '../../hooks/useGlobalState';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 
 export default function SwitchChainDialog({
   chainId,
@@ -29,7 +29,7 @@ export default function SwitchChainDialog({
 }) {
   const theme = useTheme();
   const [openTarget, setOpenTarget] = useState(false);
-  const { chainId: currentChainId } = useWeb3React();
+  const { chainId: currentChainId } = useWalletInfo();
   const [autoSwitch, setAutoSwitch] = useState(getAuthSwitchCache());
   const switchChain = useSwitchChain(chainId);
   const { autoConnectLoading } = useGlobalState();

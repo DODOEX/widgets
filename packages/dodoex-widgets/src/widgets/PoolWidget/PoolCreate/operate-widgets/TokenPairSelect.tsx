@@ -1,7 +1,6 @@
 import { Box, ButtonBase, RotatingIcon, useTheme } from '@dodoex/components';
 import { Trans } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { TokenPickerDialog } from '../../../../components/Swap/components/TokenCard/TokenPickerDialog';
 import TokenLogo from '../../../../components/TokenLogo';
@@ -11,6 +10,7 @@ import { formatTokenAmountNumber } from '../../../../utils/formatter';
 import { Actions, StateProps, Types } from '../reducer';
 import { SettingItemWrapper } from './widgets';
 import { ReactComponent as Arrow } from './arrow.svg';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 
 function TokenPickSelect({
   token,
@@ -24,7 +24,7 @@ function TokenPickSelect({
   tokenSelectOnChange: (value: TokenInfo) => void;
 }) {
   const theme = useTheme();
-  const { chainId, account } = useWeb3React();
+  const { chainId, account } = useWalletInfo();
 
   const [tokenPickerVisible, setTokenPickerVisible] = React.useState(false);
 

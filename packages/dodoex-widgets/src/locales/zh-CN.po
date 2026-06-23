@@ -103,7 +103,7 @@ msgid "* Please note that the Fee Rate cannot be modified after the pool is crea
 msgstr "* 请注意，资金池创建完成后，费率无法修改"
 
 #. placeholder {0}: chainListMap.get(chainId)?.name ?? 'unknown'
-#: src/components/ConnectWallet/NeedConnectButton.tsx:84
+#: src/components/ConnectWallet/NeedConnectButton.tsx:87
 msgid "Switch to {0}"
 msgstr "切换至 {0} 网络"
 
@@ -844,7 +844,7 @@ msgstr "该池的价格不在你选定的区间内。你的仓位目前不能赚
 msgid "{0}"
 msgstr "{0}"
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:82
+#: src/components/ConnectWallet/NeedConnectButton.tsx:85
 msgid "Connecting..."
 msgstr "连接中..."
 
@@ -2185,7 +2185,7 @@ msgstr ""
 msgid "Total Rewards"
 msgstr "总奖励"
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:86
+#: src/components/ConnectWallet/NeedConnectButton.tsx:89
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:55
 #: src/widgets/PoolWidget/AMMV3/hooks/useDerivedV3BurnInfo.tsx:96
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:519

@@ -138,7 +138,7 @@ export const scanUrlDomainMap: {
   [ChainId.HEMI]: 'explorer.hemi.xyz',
   [ChainId.PHAROS_TESTNET]: 'testnet.pharosscan.xyz',
   [ChainId.PHAROS_ATLANTIC_TESTNET]: 'atlantic.pharosscan.xyz',
-  [ChainId.PHAROS]: 'pharos.socialscan.io',
+  [ChainId.PHAROS]: 'www.pharosscan.xyz',
   [ChainId.STABLE_TESTNET]: 'testnet.stablescan.xyz',
   [ChainId.STABLE]: 'stablescan.xyz',
   [ChainId.ENI]: 'scan.eniac.network',

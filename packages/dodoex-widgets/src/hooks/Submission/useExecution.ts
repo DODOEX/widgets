@@ -1,6 +1,6 @@
 import { ChainId, CONTRACT_QUERY_KEY } from '@dodoex/api';
-import { useWeb3React } from '@web3-react/core';
 import type { TransactionResponse } from '@ethersproject/abstract-provider';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { useCallback, useMemo, useState } from 'react';
 import { useFetchBlockNumber } from '../contract';
 import { approve, getEstimateGas, sendTransaction } from '../contract/wallet';
@@ -45,7 +45,7 @@ export default function useExecution({
   onTxSuccess,
   onTxReverted,
 }: ExecutionProps = {}) {
-  const { account, provider } = useWeb3React();
+  const { account, provider } = useWalletInfo();
   const { noSubmissionDialog } = useUserOptions();
   const queryClient = useQueryClient();
   const chainId = useCurrentChainId();
@@ -93,7 +93,7 @@ export default function useExecution({
       setShowing({ spec, brief, subtitle, submitState: 'loading' });
       try {
         setWaitingSubmit(true);
-        await updatePharosTestnetRpc(chainId, provider?.provider ?? provider);
+        await updatePharosTestnetRpc(chainId, (provider as any)?.provider ?? provider);
         if (spec.opcode === OpCode.Approval) {
           transaction = await approve(
             spec.token.address,

@@ -1,6 +1,5 @@
 import { PoolApi } from '@dodoex/api';
 import { Box, Button, LoadingSkeleton } from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
 import React, { useMemo } from 'react';
 import {
   CardPlus,
@@ -28,6 +27,7 @@ import {
   getUniswapV2Router02FixedFeeContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
 import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useSlipper } from './components/SlippageSetting';
 import BigNumber from 'bignumber.js';
 
@@ -48,7 +48,7 @@ export function AddPoolOperate({
   quoteReserve?: BigNumber;
   totalSupplyBG?: BigNumber;
 }) {
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const {
     baseAmount,
     quoteAmount,

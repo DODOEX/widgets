@@ -1,4 +1,5 @@
 import { ChainId, ContractRequests, GraphQLRequests } from '@dodoex/api';
+import { JsonRpcProvider } from '@ethersproject/providers';
 import {
   Box,
   createTheme,
@@ -20,6 +21,7 @@ import {
   useWeb3Connectors,
   Web3ConnectorsProps,
 } from '../../hooks/ConnectWallet';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 import { useFetchBlockNumber } from '../../hooks/contract';
 import { ExecutionProps } from '../../hooks/Submission';
 import { DefaultTokenInfo, TokenInfo } from '../../hooks/Token/type';
@@ -85,6 +87,16 @@ export interface WidgetProps
   noSubmissionDialog?: boolean;
   showSubmissionSubmittedDialog?: boolean;
 
+  /**
+   * External wallet state. When provided, the widget reads account/chainId/provider
+   * directly from this object instead of managing its own wallet connection.
+   * The integrator is responsible for keeping this up-to-date.
+   */
+  walletState?: {
+    account?: string;
+    chainId?: number;
+    provider?: JsonRpcProvider;
+  };
   onProviderChanged?: (provider?: any) => void;
   getStaticJsonRpcProviderByChainId?: Exclude<
     ConstructorParameters<typeof ContractRequests>[0],
@@ -149,11 +161,12 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useInitTokenList(props);
   useFetchBlockNumber();
   useInitContractRequest();
-  const { provider, connector, chainId } = useWeb3React();
+  const { connector } = useWeb3React();
+  const { provider, chainId } = useWalletInfo();
   const { autoConnectLoading } = useGlobalState();
   useEffect(() => {
     if (autoConnectLoading === undefined) {
-      if (props.noAutoConnect) {
+      if (props.noAutoConnect || props.walletState) {
         setAutoConnectLoading(false);
       } else {
         setAutoConnectLoading(true);
@@ -199,7 +212,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     if (props.onProviderChanged) {
       props.onProviderChanged(provider);
     }
-    const _provider = provider?.provider as any;
+    const _provider = (provider as any)?.provider ?? provider;
     const handleChainChanged = async () => {
       setAutoConnectLoading(true);
       try {
@@ -266,6 +279,7 @@ function Web3Provider(props: PropsWithChildren<WidgetProps>) {
     provider: props.provider,
     jsonRpcUrlMap: props.jsonRpcUrlMap,
     defaultChainId,
+    walletState: props.walletState,
   });
 
   return (

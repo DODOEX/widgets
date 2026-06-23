@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber';
 import BigNumber from 'bignumber.js';
 import React, { useCallback, useMemo } from 'react';
@@ -10,9 +9,10 @@ import { MIN_GAS_LIMIT } from '../../constants/swap';
 import { useSubmission } from '../Submission';
 import { OpCode } from '../Submission/spec';
 import { MetadataFlag } from '../Submission/types';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 
 export default function useExecuteSwap() {
-  const { chainId, account } = useWeb3React();
+  const { chainId, account } = useWalletInfo();
   const submission = useSubmission();
 
   const execute = useCallback(

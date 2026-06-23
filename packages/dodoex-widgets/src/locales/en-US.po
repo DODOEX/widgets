@@ -105,7 +105,7 @@ msgid "* Please note that the Fee Rate cannot be modified after the pool is crea
 msgstr "* Please note that the Fee Rate cannot be modified after the pool is created"
 
 #. placeholder {0}: chainListMap.get(chainId)?.name ?? 'unknown'
-#: src/components/ConnectWallet/NeedConnectButton.tsx:84
+#: src/components/ConnectWallet/NeedConnectButton.tsx:87
 msgid "Switch to {0}"
 msgstr "Switch to {0}"
 
@@ -848,7 +848,7 @@ msgstr "The price of this pool is outside of your selected range. Your position 
 msgid "{0}"
 msgstr "{0}"
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:82
+#: src/components/ConnectWallet/NeedConnectButton.tsx:85
 msgid "Connecting..."
 msgstr "Connecting..."
 
@@ -2189,7 +2189,7 @@ msgstr "The current slippage protection coefficient set exceeds {0}%, which may 
 msgid "Total Rewards"
 msgstr "Total Rewards"
 
-#: src/components/ConnectWallet/NeedConnectButton.tsx:86
+#: src/components/ConnectWallet/NeedConnectButton.tsx:89
 #: src/widgets/MiningWidget/MiningCreate/operate-widgets/BottomButtonGroup.tsx:55
 #: src/widgets/PoolWidget/AMMV3/hooks/useDerivedV3BurnInfo.tsx:96
 #: src/widgets/PoolWidget/AMMV3/hooks/useV3DerivedMintInfo.tsx:519
