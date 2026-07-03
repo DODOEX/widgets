@@ -27,6 +27,7 @@ export enum MetadataFlag {
   stakeMining = 'stakeMining',
   unstakeMining = 'unstakeMining',
   claimMining = 'claimMining',
+  claimLpFeeReward = 'claimLpFeeReward',
   submissionCreateMetaKey = 'submissionCreateMetaKey',
   approve = 'approve',
   reset = 'reset',

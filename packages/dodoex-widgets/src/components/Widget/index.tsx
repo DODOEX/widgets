@@ -47,6 +47,34 @@ import { TokenPickerDialogProps } from '../Swap/components/TokenCard/TokenPicker
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
+/**
+ * Liquidity mining (LP fee reward) activity config. When provided, a reward banner
+ * is shown on the pool list page, and pools carrying an `apy.lpFeeRewardApy` value
+ * get a 🔥 badge and can be filtered via "Mining Only".
+ *
+ * The reward amount and claim state are read from the `lp_fee_reward_getUserReward`
+ * GraphQL query; the per-pool bonus APY comes from the liquidity list's
+ * `apy.lpFeeRewardApy` field.
+ */
+export interface LpFeeRewardActivity {
+  /** Activity id passed to `lp_fee_reward_getUserReward`. Required. */
+  activity: string;
+  /** Banner title. Defaults to a generic "Liquidity Mining" title when omitted. */
+  title?: string;
+  /** Banner description line. */
+  description?: string;
+  /** "View more" external link shown in the banner description. */
+  viewMoreLink?: string;
+  /** Reward token symbol, e.g. "PROS". */
+  rewardTokenSymbol?: string;
+  /** Reward token logo url shown next to the reward amount. */
+  rewardTokenLogo?: string;
+  /** Tooltip text shown in the question mark next to the "My rewards" label. When omitted, the tooltip is hidden. */
+  myRewardsTooltip?: string;
+  /** Optional reward period id. When omitted, the backend picks the current/most-recent period. */
+  periodId?: string;
+}
+
 export interface WidgetProps
   extends Web3ConnectorsProps,
     InitTokenListProps,
@@ -81,6 +109,8 @@ export interface WidgetProps
   notSupportPMM?: boolean;
   supportAMMV2?: boolean;
   supportAMMV3?: boolean;
+  /** Liquidity mining (LP fee reward) activity config shown on the pool list page. */
+  lpFeeRewardActivity?: LpFeeRewardActivity;
   executionDialogExtra?: any;
 
   /** When the winding status changes, no pop-up window will be displayed. */

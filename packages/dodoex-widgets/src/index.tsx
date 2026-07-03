@@ -14,6 +14,7 @@ import { Pool } from './widgets/PoolWidget';
 export { Widget, UnstyleWidget, Message } from './components/Widget';
 export { WIDGET_MODULE_CLASS_NAME } from './components/WidgetContainer';
 export type { WidgetProps } from './components/Widget';
+export type { LpFeeRewardActivity } from './components/Widget';
 export type SwapWidgetProps = WidgetProps & SwapProps;
 export type { TokenInfo } from './hooks/Token/type';
 export { useMessageState } from './hooks/useMessageState';

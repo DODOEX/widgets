@@ -63,7 +63,7 @@ msgstr "获得 {0}"
 msgid "{0} pending"
 msgstr "{0} 等待中"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:493
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:524
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:362
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:786
 msgid "Removing"
@@ -134,8 +134,8 @@ msgstr "开始时间"
 msgid "Dismiss"
 msgstr "忽略"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:287
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:436
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:309
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:467
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:85
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:323
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:659
@@ -147,7 +147,7 @@ msgstr "类型"
 msgid "Unstaking"
 msgstr "赎回中"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:496
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:527
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:365
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:789
 msgid "Adding"
@@ -220,6 +220,10 @@ msgstr "支付"
 #: src/components/Swap/index.tsx:428
 msgid "Due to the market condition, market price and estimated price may have a slight difference"
 msgstr "由于市场情况不同，市场价格与估算价格可能略有差异。"
+
+#: src/widgets/PoolWidget/PoolList/components/LpFeeRewardBanner.tsx:206
+msgid "View more"
+msgstr "查看更多"
 
 #: src/widgets/PoolWidget/PoolList/components/TokenAndPoolFilter.tsx:66
 msgid "Search by token or pool address"
@@ -309,7 +313,7 @@ msgid "Pricing Model"
 msgstr "定价模式"
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:74
-#: src/widgets/PoolWidget/PoolList/index.tsx:228
+#: src/widgets/PoolWidget/PoolList/index.tsx:241
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:17
 msgid "Liquidity"
 msgstr "流动性"
@@ -318,6 +322,10 @@ msgstr "流动性"
 #: src/widgets/MiningWidget/MiningDetail/MiningInfo.tsx:213
 msgid "APR"
 msgstr "APR"
+
+#: src/widgets/PoolWidget/PoolList/components/LpFeeRewardBanner.tsx:240
+msgid "My rewards"
+msgstr "我的奖励"
 
 #: src/components/TokenPicker/index.tsx:213
 msgid "Enter the token symbol or address"
@@ -474,7 +482,7 @@ msgstr "当前挖矿获得的代币奖励"
 msgid "No results found"
 msgstr "未找到匹配结果"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:432
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:463
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:316
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:655
 msgid "Pair"
@@ -719,8 +727,8 @@ msgstr "更多设置"
 msgid "Insufficient cross-chain fees, need at least {0} {1}"
 msgstr "跨链费用不足，至少需要 {0} {1} "
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:340
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:440
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:371
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:471
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:112
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:214
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:319
@@ -1068,8 +1076,8 @@ msgstr "质押 做市 LP 代币，获得挖矿奖励"
 msgid "No LP pools match your criteria"
 msgstr "没有找到符合条件的挖矿项目"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:255
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:625
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:277
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:660
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:291
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:898
 msgid "Fee rate"
@@ -1077,7 +1085,7 @@ msgstr "手续费费率"
 
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:305
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:25
-#: src/widgets/PoolWidget/PoolList/index.tsx:164
+#: src/widgets/PoolWidget/PoolList/index.tsx:176
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:165
 msgid "Add Liquidity"
 msgstr "添加流动性"
@@ -1166,8 +1174,8 @@ msgstr "仓位在"
 msgid "Confirm Cross Chain"
 msgstr "确认跨链交易"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:361
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:447
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:392
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:478
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:125
 msgid "Volume (1D)"
 msgstr "交易量（1天）"
@@ -1177,7 +1185,7 @@ msgid "Estimated Time"
 msgstr "预计时间"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:20
-#: src/widgets/PoolWidget/PoolList/index.tsx:229
+#: src/widgets/PoolWidget/PoolList/index.tsx:242
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr "类似 AMM 做市策略，适用于大多数币种"
 
@@ -1274,8 +1282,8 @@ msgstr "已质押"
 msgid "Start Time"
 msgstr "开始时间"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:211
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:677
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:231
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:713
 #: src/widgets/PoolWidget/PoolList/components/PoolApyTooltip.tsx:190
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:247
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:954
@@ -1379,7 +1387,7 @@ msgid "Users"
 msgstr "用户"
 
 #. placeholder {0}: wallet.name
-#: src/components/ConnectWallet/ConnectWalletDialog.tsx:154
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:155
 msgid "Connect to your {0} Wallet"
 msgstr "连接你的{0}钱包"
 
@@ -1681,6 +1689,10 @@ msgstr "初始价格"
 msgid "Guide Price"
 msgstr "指导价"
 
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:1046
+msgid "Mining Only"
+msgstr "仅挖矿"
+
 #: src/components/Confirm.tsx:108
 #: src/components/DateTimePickerInput/components/MobileDateTimePicker.tsx:203
 #: src/components/SwitchChainDialog/index.tsx:127
@@ -1871,6 +1883,7 @@ msgstr "选择模式"
 #: src/widgets/MiningWidget/MiningList/operate-area/index.tsx:204
 #: src/widgets/MiningWidget/OperateArea/index.tsx:74
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:453
+#: src/widgets/PoolWidget/PoolList/components/LpFeeRewardBanner.tsx:124
 msgid "Claim"
 msgstr "领取"
 
@@ -2018,8 +2031,8 @@ msgstr "已质押"
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:451
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:79
 #: src/widgets/PoolWidget/PoolDetail/index.tsx:219
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:385
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:749
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:416
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:786
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:284
 #: src/widgets/PoolWidget/PoolList/MyCreated.tsx:591
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1212
@@ -2213,8 +2226,8 @@ msgid "Detail"
 msgstr "详情"
 
 #: src/widgets/PoolWidget/PoolDetail/components/TitleInfo.tsx:239
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:310
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:443
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:341
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:474
 #: src/widgets/PoolWidget/PoolList/components/LoadingCard.tsx:100
 #: src/widgets/PoolWidget/PoolList/components/TokenListPoolItem.tsx:102
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:348
@@ -2263,6 +2276,11 @@ msgstr "AMM V3 仓位"
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:596
 msgid "Slippage Coefficient"
 msgstr "滑点系数"
+
+#: src/widgets/PoolWidget/PoolList/components/LpFeeRewardBadge.tsx:21
+#: src/widgets/PoolWidget/PoolList/components/LpFeeRewardBanner.tsx:181
+msgid "Liquidity Mining"
+msgstr "流动性挖矿"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:157
 msgid "Advanced"

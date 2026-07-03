@@ -22,6 +22,7 @@ import {
 } from '../PoolOperate/types';
 import AddLiquidityList from './AddLiquidity';
 import { CreatePoolBtn } from './components/CreatePoolBtn';
+import LpFeeRewardBanner from './components/LpFeeRewardBanner';
 import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
 import { TokenAndPoolFilterUserOptions } from './hooks/usePoolListFilterTokenAndPool';
 import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
@@ -90,7 +91,18 @@ export default function PoolList({
       }}
       ref={scrollParentRef}
     >
-      <Tabs
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          gap: 12,
+          minWidth: 0,
+          overflow: 'hidden',
+        }}
+      >
+        <LpFeeRewardBanner />
+        <Tabs
         value={poolTab}
         onChange={(_, value) => {
           handleChangePoolTab(value as PoolTab);
@@ -212,7 +224,8 @@ export default function PoolList({
             onModifyGspPool={onModifyGspPool}
           />
         </TabPanelFlexCol>
-      </Tabs>
+        </Tabs>
+      </Box>
       <Box
         sx={{
           position: 'relative',
