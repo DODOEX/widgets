@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { isEqual } from 'lodash';
 import { chainListMap } from '../../constants/chainList';
 import { useChainList } from './useChainList';

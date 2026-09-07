@@ -1,6 +1,6 @@
 import { useFetchFiatPrice } from './useFetchFiatPrice';
 import tokenList from '../../constants/tokenList';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 import BigNumber from 'bignumber.js';
 import axios from 'axios';
 
@@ -42,6 +42,9 @@ describe('useFetchFiatPrice', () => {
   );
 
   it('toFiatPrice & fromFiatPrice', async () => {
+    await waitFor(() =>
+      expect(result.current.toFiatPrice).toBe('1285.86000000'),
+    );
     const { toFiatPrice, fromFiatPrice } = result.current;
     expect(toFiatPrice).toBe('1285.86000000');
     expect(fromFiatPrice).toBe('1.23');
