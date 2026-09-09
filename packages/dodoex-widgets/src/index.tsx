@@ -73,7 +73,10 @@ export function SwapWidget(props: SwapWidgetProps) {
 export function PoolWidget(props: SwapWidgetProps) {
   return (
     <Widget {...props}>
-      <Pool />
+      <Pool
+        poolAddress={props.poolAddress}
+        onPoolAddressChange={props.onPoolAddressChange}
+      />
     </Widget>
   );
 }

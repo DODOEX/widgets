@@ -313,7 +313,7 @@ msgid "Pricing Model"
 msgstr "定价模式"
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:74
-#: src/widgets/PoolWidget/PoolList/index.tsx:241
+#: src/widgets/PoolWidget/PoolList/index.tsx:247
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:17
 msgid "Liquidity"
 msgstr "流动性"
@@ -1085,7 +1085,7 @@ msgstr "手续费费率"
 
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:305
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:25
-#: src/widgets/PoolWidget/PoolList/index.tsx:176
+#: src/widgets/PoolWidget/PoolList/index.tsx:180
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:165
 msgid "Add Liquidity"
 msgstr "添加流动性"
@@ -1185,7 +1185,7 @@ msgid "Estimated Time"
 msgstr "预计时间"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:20
-#: src/widgets/PoolWidget/PoolList/index.tsx:242
+#: src/widgets/PoolWidget/PoolList/index.tsx:248
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr "类似 AMM 做市策略，适用于大多数币种"
 
@@ -1689,7 +1689,7 @@ msgstr "初始价格"
 msgid "Guide Price"
 msgstr "指导价"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:1059
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:1099
 msgid "Mining Only"
 msgstr "仅挖矿"
 

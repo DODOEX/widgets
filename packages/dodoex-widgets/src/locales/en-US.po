@@ -315,7 +315,7 @@ msgid "Pricing Model"
 msgstr "Pricing Model"
 
 #: src/widgets/PoolWidget/PoolCreate/components/DepthAndLiquidityChart.tsx:74
-#: src/widgets/PoolWidget/PoolList/index.tsx:241
+#: src/widgets/PoolWidget/PoolList/index.tsx:247
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOrMiningTabs.ts:17
 msgid "Liquidity"
 msgstr "Liquidity"
@@ -1089,7 +1089,7 @@ msgstr "Fee rate"
 
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:305
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:25
-#: src/widgets/PoolWidget/PoolList/index.tsx:176
+#: src/widgets/PoolWidget/PoolList/index.tsx:180
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:165
 msgid "Add Liquidity"
 msgstr "Add Liquidity"
@@ -1189,7 +1189,7 @@ msgid "Estimated Time"
 msgstr "Estimated Time"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useVersionList.ts:20
-#: src/widgets/PoolWidget/PoolList/index.tsx:242
+#: src/widgets/PoolWidget/PoolList/index.tsx:248
 msgid "Classical AMM-like pool. Suitable for most assets."
 msgstr "Classical AMM-like pool. Suitable for most assets."
 
@@ -1693,7 +1693,7 @@ msgstr "Initial Price"
 msgid "Guide Price"
 msgstr "Guide Price"
 
-#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:1059
+#: src/widgets/PoolWidget/PoolList/AddLiquidity.tsx:1099
 msgid "Mining Only"
 msgstr "Mining Only"
 

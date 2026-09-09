@@ -819,6 +819,8 @@ export default function AddLiquidityList({
   tokenAndPoolFilter,
   getMigrationPairAndMining,
   supportAMMIcon,
+  poolAddress,
+  onPoolAddressChange,
 }: {
   scrollParentRef: React.MutableRefObject<HTMLDivElement | null>;
   account?: string;
@@ -831,6 +833,8 @@ export default function AddLiquidityList({
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
   getMigrationPairAndMining?: GetMigrationPairAndMining;
   supportAMMIcon?: boolean;
+  poolAddress?: string;
+  onPoolAddressChange?: (address?: string) => void;
 }) {
   const theme = useTheme();
   const {
@@ -842,6 +846,7 @@ export default function AddLiquidityList({
   } = useUserOptions();
   const { minDevice, isMobile } = useWidgetDevice();
   const queryClient = useQueryClient();
+  const graphQLRequests = useGraphQLRequests();
   const [miningOnly, setMiningOnly] = React.useState(false);
   const hasLpFeeRewardActivity = !!lpFeeRewardActivity?.activity;
 
@@ -872,7 +877,38 @@ export default function AddLiquidityList({
     },
   };
 
-  const graphQLRequests = useGraphQLRequests();
+  // Resolve an externally supplied address into the same pool filter used by
+  // the picker. This also keeps the widget usable when the address is changed
+  // by the host application after mount.
+  React.useEffect(() => {
+    let active = true;
+    if (!poolAddress) {
+      handleChangeFilterAddress([]);
+      return () => {
+        active = false;
+      };
+    }
+    const query = graphQLRequests.getInfiniteQuery(
+      PoolApi.graphql.fetchLiquidityList,
+      'currentPage',
+      {
+        where: {
+          ...defaultQueryFilter,
+          filterState: {
+            address: poolAddress,
+            ...defaultQueryFilter.filterState,
+          },
+        },
+      },
+    );
+    queryClient.fetchQuery(query).then((result) => {
+      const lqList = result.liquidity_list?.lqList;
+      if (active && lqList?.length) handleChangeFilterAddress(lqList);
+    });
+    return () => {
+      active = false;
+    };
+  }, [poolAddress]);
 
   const query = graphQLRequests.getInfiniteQuery(
     PoolApi.graphql.fetchLiquidityList,
@@ -997,6 +1033,7 @@ export default function AddLiquidityList({
                       list={lqList}
                       onClick={() => {
                         handleChangeFilterAddress(lqList);
+                        onPoolAddressChange?.(lqList[0]?.pair?.id ?? undefined);
                         onClose();
                       }}
                     />
@@ -1018,7 +1055,10 @@ export default function AddLiquidityList({
             {hasFilterAddress ? (
               <FilterAddressTags
                 lqList={filterAddressLqList}
-                onDeleteTag={() => handleChangeFilterAddress([])}
+                onDeleteTag={() => {
+                  handleChangeFilterAddress([]);
+                  onPoolAddressChange?.(undefined);
+                }}
               />
             ) : (
               ''

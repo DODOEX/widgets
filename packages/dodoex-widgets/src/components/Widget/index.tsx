@@ -76,9 +76,7 @@ export interface LpFeeRewardActivity {
 }
 
 export interface WidgetProps
-  extends Web3ConnectorsProps,
-    InitTokenListProps,
-    ExecutionProps {
+  extends Web3ConnectorsProps, InitTokenListProps, ExecutionProps {
   apikey?: string;
   theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
@@ -112,6 +110,10 @@ export interface WidgetProps
   /** Liquidity mining (LP fee reward) activity config shown on the pool list page. */
   lpFeeRewardActivity?: LpFeeRewardActivity;
   executionDialogExtra?: any;
+  /** Pool address to preselect in the Pool widget's Add Liquidity search. */
+  poolAddress?: string;
+  /** Called when the pool selected in Add Liquidity search changes or is removed. */
+  onPoolAddressChange?: (address?: string) => void;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
