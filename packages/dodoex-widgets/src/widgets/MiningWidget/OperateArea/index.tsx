@@ -8,7 +8,6 @@ import {
 } from '@dodoex/components';
 import { t } from '@lingui/macro';
 import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 import { TokenCard } from '../../../components/Swap/components/TokenCard';
@@ -29,6 +28,7 @@ import { RewardListCard } from './RewardListCard';
 import { StakeButton } from './StakeButton';
 import UnstakeButton from './UnstakeButton';
 import { OperateButtonWrapper } from './Widgets';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 
 export default function OperateArea({
   chainId,
@@ -52,7 +52,7 @@ export default function OperateArea({
   goLpLink?: () => void;
 }) {
   const theme = useTheme();
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const { miningContractAddress } = miningItem ?? {};
   const baseToken = convertFetchTokenToTokenInfo(
     miningItem?.baseToken,

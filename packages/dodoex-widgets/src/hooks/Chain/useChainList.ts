@@ -1,11 +1,11 @@
-import { useWeb3React } from '@web3-react/core';
 import { useMemo } from 'react';
 import { ChainId } from '@dodoex/api';
 import { ChainListItem, chainListMap } from '../../constants/chainList';
 import { useUserOptions } from '../../components/UserOptionsProvider';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 
 export function useChainList() {
-  const { chainId } = useWeb3React();
+  const { chainId } = useWalletInfo();
   const { supportChainIds } = useUserOptions();
   const chainList = useMemo(() => {
     const currentChainListMap = new Map<ChainId, ChainListItem>();

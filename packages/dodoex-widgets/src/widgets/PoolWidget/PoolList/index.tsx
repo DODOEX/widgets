@@ -22,6 +22,7 @@ import {
 } from '../PoolOperate/types';
 import AddLiquidityList from './AddLiquidity';
 import { CreatePoolBtn } from './components/CreatePoolBtn';
+import LpFeeRewardBanner from './components/LpFeeRewardBanner';
 import { usePoolListFilterChainId } from './hooks/usePoolListFilterChainId';
 import { TokenAndPoolFilterUserOptions } from './hooks/usePoolListFilterTokenAndPool';
 import { PoolTab, usePoolListTabs } from './hooks/usePoolListTabs';
@@ -51,6 +52,8 @@ export default function PoolList({
   showMigrationPairAndMining,
   supportAMMIcon,
   onModifyGspPool,
+  poolAddress,
+  onPoolAddressChange,
 }: {
   params?: Page<PageType.Pool>['params'];
   scrollRef?: React.RefObject<any>;
@@ -59,6 +62,8 @@ export default function PoolList({
   showMigrationPairAndMining?: ShowMigrationPairAndMining;
   supportAMMIcon?: boolean;
   onModifyGspPool?: OnModifyGspPool;
+  poolAddress?: string;
+  onPoolAddressChange?: (address?: string) => void;
 }) {
   const { isMobile } = useWidgetDevice();
 
@@ -90,129 +95,143 @@ export default function PoolList({
       }}
       ref={scrollParentRef}
     >
-      <Tabs
-        value={poolTab}
-        onChange={(_, value) => {
-          handleChangePoolTab(value as PoolTab);
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          gap: 12,
+          minWidth: 0,
+          overflow: 'hidden',
         }}
-        sx={
-          isMobile
-            ? {}
-            : {
-                display: 'flex',
-                flexDirection: 'column',
-                borderRadius: 16,
-                backgroundColor: 'background.paper',
-                flex: 1,
-                overflow: 'hidden',
-                height: 'max-content',
-                maxHeight: '100%',
-              }
-        }
-        className={isMobile ? undefined : 'gradient-card-border'}
       >
-        <Box
-          sx={{
-            ...(isMobile
-              ? {
-                  ...(!account && {
-                    pb: 20,
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    borderStyle: 'solid',
-                    borderWidth: '0 0 1px',
-                  }),
-                }
+        <LpFeeRewardBanner />
+        <Tabs
+          value={poolTab}
+          onChange={(_, value) => {
+            handleChangePoolTab(value as PoolTab);
+          }}
+          sx={
+            isMobile
+              ? {}
               : {
                   display: 'flex',
-                  justifyContent: 'space-between',
-                  p: 20,
-                  borderBottomWidth: 1,
-                }),
-          }}
+                  flexDirection: 'column',
+                  borderRadius: 16,
+                  backgroundColor: 'background.paper',
+                  flex: 1,
+                  overflow: 'hidden',
+                  height: 'max-content',
+                  maxHeight: '100%',
+                }
+          }
+          className={isMobile ? undefined : 'gradient-card-border'}
         >
-          {account ? (
-            <TabsGroup
-              tabs={tabs}
-              variant="rounded"
-              tabsListSx={{
-                justifyContent: 'space-between',
-                ...(isMobile
-                  ? {
-                      mb: 16,
-                    }
-                  : {
-                      borderBottomWidth: 0,
+          <Box
+            sx={{
+              ...(isMobile
+                ? {
+                    ...(!account && {
+                      pb: 20,
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      borderStyle: 'solid',
+                      borderWidth: '0 0 1px',
                     }),
-              }}
-              tabSx={
-                isMobile
-                  ? undefined
-                  : {
-                      mb: 0,
-                    }
-              }
+                  }
+                : {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    p: 20,
+                    borderBottomWidth: 1,
+                  }),
+            }}
+          >
+            {account ? (
+              <TabsGroup
+                tabs={tabs}
+                variant="rounded"
+                tabsListSx={{
+                  justifyContent: 'space-between',
+                  ...(isMobile
+                    ? {
+                        mb: 16,
+                      }
+                    : {
+                        borderBottomWidth: 0,
+                      }),
+                }}
+                tabSx={
+                  isMobile
+                    ? undefined
+                    : {
+                        mb: 0,
+                      }
+                }
+              />
+            ) : (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  fontWeight: 600,
+                }}
+              >
+                <Trans>Add Liquidity</Trans>
+              </Box>
+            )}
+            <CreatePoolBtn />
+          </Box>
+          <TabPanelFlexCol
+            value={PoolTab.addLiquidity}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
+            <AddLiquidityList
+              account={account}
+              filterChainIds={filterChainIds}
+              scrollParentRef={scrollParentRefProps ?? scrollParentRef}
+              activeChainId={activeChainId}
+              handleChangeActiveChainId={handleChangeActiveChainId}
+              operatePool={operatePool}
+              setOperatePool={setOperatePool}
+              tokenAndPoolFilter={tokenAndPoolFilter}
+              getMigrationPairAndMining={getMigrationPairAndMining}
+              supportAMMIcon={supportAMMIcon}
+              poolAddress={poolAddress}
+              onPoolAddressChange={onPoolAddressChange}
             />
-          ) : (
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                fontWeight: 600,
-              }}
-            >
-              <Trans>Add Liquidity</Trans>
-            </Box>
-          )}
-          <CreatePoolBtn />
-        </Box>
-        <TabPanelFlexCol
-          value={PoolTab.addLiquidity}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-          }}
-        >
-          <AddLiquidityList
-            account={account}
-            filterChainIds={filterChainIds}
-            scrollParentRef={scrollParentRefProps ?? scrollParentRef}
-            activeChainId={activeChainId}
-            handleChangeActiveChainId={handleChangeActiveChainId}
-            operatePool={operatePool}
-            setOperatePool={setOperatePool}
-            tokenAndPoolFilter={tokenAndPoolFilter}
-            getMigrationPairAndMining={getMigrationPairAndMining}
-            supportAMMIcon={supportAMMIcon}
-          />
-        </TabPanelFlexCol>
-        <TabPanelFlexCol value={PoolTab.myLiquidity}>
-          <MyLiquidity
-            account={account}
-            filterChainIds={filterChainIds}
-            activeChainId={activeChainId}
-            handleChangeActiveChainId={handleChangeActiveChainId}
-            operatePool={operatePool}
-            setOperatePool={setOperatePool}
-            tokenAndPoolFilter={tokenAndPoolFilter}
-            getMigrationPairAndMining={getMigrationPairAndMining}
-            supportAMMIcon={supportAMMIcon}
-          />
-        </TabPanelFlexCol>
-        <TabPanelFlexCol value={PoolTab.myCreated}>
-          <MyCreated
-            account={account}
-            filterChainIds={filterChainIds}
-            activeChainId={activeChainId}
-            handleChangeActiveChainId={handleChangeActiveChainId}
-            operatePool={operatePool}
-            setOperatePool={setOperatePool}
-            supportAMMIcon={supportAMMIcon}
-            onModifyGspPool={onModifyGspPool}
-          />
-        </TabPanelFlexCol>
-      </Tabs>
+          </TabPanelFlexCol>
+          <TabPanelFlexCol value={PoolTab.myLiquidity}>
+            <MyLiquidity
+              account={account}
+              filterChainIds={filterChainIds}
+              activeChainId={activeChainId}
+              handleChangeActiveChainId={handleChangeActiveChainId}
+              operatePool={operatePool}
+              setOperatePool={setOperatePool}
+              tokenAndPoolFilter={tokenAndPoolFilter}
+              getMigrationPairAndMining={getMigrationPairAndMining}
+              supportAMMIcon={supportAMMIcon}
+            />
+          </TabPanelFlexCol>
+          <TabPanelFlexCol value={PoolTab.myCreated}>
+            <MyCreated
+              account={account}
+              filterChainIds={filterChainIds}
+              activeChainId={activeChainId}
+              handleChangeActiveChainId={handleChangeActiveChainId}
+              operatePool={operatePool}
+              setOperatePool={setOperatePool}
+              supportAMMIcon={supportAMMIcon}
+              onModifyGspPool={onModifyGspPool}
+            />
+          </TabPanelFlexCol>
+        </Tabs>
+      </Box>
       <Box
         sx={{
           position: 'relative',

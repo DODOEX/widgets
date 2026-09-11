@@ -1,6 +1,5 @@
 import { MiningStatusE } from '@dodoex/api';
 import { Box, Skeleton, useTheme } from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
 import { useEffect, useMemo, useState } from 'react';
 import Dialog from '../../../components/Dialog';
 import WidgetContainer from '../../../components/WidgetContainer';
@@ -211,7 +210,7 @@ export function MiningDetail({
   }) => void;
 }) {
   const theme = useTheme();
-  const { account, chainId: currentChainId } = useWeb3React();
+  const { account, chainId: currentChainId } = useWalletInfo();
   const { isMobile } = useWidgetDevice();
 
   const { miningItem, error, loading, refetch } = useMiningItem({

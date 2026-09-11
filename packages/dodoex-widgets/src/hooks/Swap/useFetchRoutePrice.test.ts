@@ -1,6 +1,6 @@
 import { useFetchRoutePrice, RoutePriceStatus } from './useFetchRoutePrice';
 import tokenList from '../../constants/tokenList';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 import BigNumber from 'bignumber.js';
 import axios from 'axios';
 
@@ -54,7 +54,10 @@ describe('useFetchRoutePrice: request success', () => {
     }),
   );
 
-  it('Returns params', () => {
+  it('Returns params', async () => {
+    await waitFor(() =>
+      expect(result.current.status).toBe(RoutePriceStatus.Success),
+    );
     const { status, rawBrief } = result.current;
     const {
       resAmount,
@@ -122,7 +125,10 @@ describe('useFetchRoutePrice: request failed', () => {
     }),
   );
 
-  it('Returns params', () => {
+  it('Returns params', async () => {
+    await waitFor(() =>
+      expect(result.current.status).toBe(RoutePriceStatus.Failed),
+    );
     const { status } = result.current;
     expect(status).toBe(RoutePriceStatus.Failed);
   });

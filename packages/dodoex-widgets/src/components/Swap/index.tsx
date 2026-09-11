@@ -33,7 +33,6 @@ import {
   useFetchRoutePrice,
 } from '../../hooks/Swap';
 import { formatReadableNumber } from '../../utils/formatter';
-import { useWeb3React } from '@web3-react/core';
 import { AppUrl } from '../../constants/api';
 import { ChainId } from '@dodoex/api';
 import { basicTokenMap } from '../../constants/chains';
@@ -72,6 +71,7 @@ import { SwapSettingsDialog } from './components/SwapSettingsDialog';
 import { useSwapSlippage } from '../../hooks/Swap/useSwapSlippage';
 import { useGlobalState } from '../../hooks/useGlobalState';
 import SwapPreviewInfoCard from './components/SwapPreviewInfoCard';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 
 export interface SwapProps {
   showPreviewInfoCard?: boolean;
@@ -90,7 +90,7 @@ export function Swap({
 }: SwapProps = {}) {
   const theme = useTheme();
   const { isInflight } = useInflights();
-  const { chainId, account } = useWeb3React();
+  const { chainId, account } = useWalletInfo();
   const { defaultChainId, noPowerBy, onlyChainId } = useUserOptions();
   const [isReverseRouting, setIsReverseRouting] = useState(false);
   const basicTokenAddress = useMemo(
@@ -462,8 +462,8 @@ export function Swap({
 
   const isUnSupportChain = useMemo(() => !ChainId[chainId || 1], [chainId]);
   const isNotCurrentChain = useMemo(
-    () => !!chainId && !!fromToken?.chainId && fromToken?.chainId !== chainId,
-    [chainId, fromToken?.chainId],
+    () => !!account && !!chainId && !!fromToken?.chainId && fromToken?.chainId !== chainId,
+    [account, chainId, fromToken?.chainId],
   );
 
   const disabledSwitch = useDisabledTokenSwitch({

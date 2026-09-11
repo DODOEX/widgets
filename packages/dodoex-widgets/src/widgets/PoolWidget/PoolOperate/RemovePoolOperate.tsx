@@ -1,6 +1,5 @@
 import { basicTokenMap, ChainId, PoolApi } from '@dodoex/api';
 import { Box, Button, LoadingSkeleton, Select } from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import {
   CardPlus,
@@ -39,6 +38,7 @@ import { poolApi } from '../utils';
 import { toWei } from '../../../utils';
 import { TokenInfo } from '../../../hooks/Token';
 import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 
 export function RemovePoolOperate({
   submittedBack: submittedBackProps,
@@ -55,7 +55,7 @@ export function RemovePoolOperate({
   getMigrationPairAndMining?: GetMigrationPairAndMining;
   showMigrationPairAndMining?: ShowMigrationPairAndMining;
 }) {
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const baseOverride = balanceInfo.userBaseLpToTokenBalance;
   const quoteOverride = balanceInfo.userQuoteLpToTokenBalance;
   const overrideBalanceLoading = balanceInfo.loading;
@@ -224,7 +224,7 @@ export function RemovePoolOperate({
       })
     : undefined;
 
-  const { baseTokenStatus, quoteTokenStatus } = useRemoveLiquidityTokenStatus({
+  const { baseTokenStatus, quoteTokenStatus, routerLoading } = useRemoveLiquidityTokenStatus({
     pool,
     baseAmount,
     quoteAmount,
@@ -243,7 +243,8 @@ export function RemovePoolOperate({
     !!withdrawInfo.error ||
     withdrawInfo.loading ||
     !!withdrawInfo.receiveAmountBg?.lte(0) ||
-    feeRateQuery.isLoading;
+    feeRateQuery.isLoading ||
+    routerLoading;
 
   const submitBtnText = isOverBalance ? t`Insufficient balance` : t`Remove`;
 
@@ -271,6 +272,7 @@ export function RemovePoolOperate({
     liquidityAmount: liquidityAmountWei,
     slippage: slipperValue,
     fee: feeRate,
+    poolAddress: pool?.address,
     submittedBack,
   });
   const submitLq = () => {

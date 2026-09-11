@@ -16,8 +16,8 @@ import {
   ArrowSubmit,
 } from '@dodoex/icons';
 import { Showing } from '../../hooks/Submission/types';
-import { useWeb3React } from '@web3-react/core';
 import { scanUrlDomainMap } from '../../constants/chains';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 import { ChainId } from '@dodoex/api';
 import { useUserOptions } from '../UserOptionsProvider';
 import { useWidgetDevice } from '../../hooks/style/useWidgetDevice';
@@ -147,7 +147,7 @@ function TransactionTime({
   tx: string;
 }) {
   const [time, setTime] = useState(0);
-  const { chainId } = useWeb3React();
+  const { chainId } = useWalletInfo();
 
   const scanUrl = useMemo(() => {
     const domain = scanUrlDomainMap[(chainId as ChainId) || 1];

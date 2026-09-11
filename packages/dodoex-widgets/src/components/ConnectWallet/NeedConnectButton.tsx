@@ -5,6 +5,7 @@ import React from 'react';
 import { ChainId } from '@dodoex/api';
 import { chainListMap } from '../../constants/chainList';
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 import { useUserOptions } from '../UserOptionsProvider';
 import { useGlobalState } from '../../hooks/useGlobalState';
 
@@ -17,11 +18,13 @@ export default function NeedConnectButton({
   chainId?: ChainId;
   includeButton?: boolean;
 }) {
-  const { account, chainId: currentChainId, connector } = useWeb3React();
+  const { account, chainId: currentChainId } = useWalletInfo();
+  const { connector } = useWeb3React();
   const { onConnectWalletClick, onSwitchChain } = useUserOptions();
   const [loading, setLoading] = React.useState(false);
   const switchChain = useSwitchChain(chainId);
   const needSwitchNetwork =
+    !!account &&
     currentChainId !== undefined &&
     chainId !== undefined &&
     currentChainId !== chainId;

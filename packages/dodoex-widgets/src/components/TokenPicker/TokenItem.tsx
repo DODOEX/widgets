@@ -6,8 +6,8 @@ import { TokenInfo } from './../../hooks/Token';
 import { ArrowTopRightBorder, Delete, Loading } from '@dodoex/icons';
 import { tokenPickerItem } from '../../constants/testId';
 import { useTheme } from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 import TokenDetailInfo from './TokenDetailInfo';
 
 export default function TokenItem({
@@ -26,7 +26,7 @@ export default function TokenItem({
   onDelete?: () => void;
 }) {
   const theme = useTheme();
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const balance = balanceBigNumber
     ? formatReadableNumber({
         input: balanceBigNumber,

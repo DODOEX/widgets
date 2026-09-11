@@ -1,4 +1,5 @@
 import { ChainId, ContractRequests, GraphQLRequests } from '@dodoex/api';
+import { JsonRpcProvider } from '@ethersproject/providers';
 import {
   Box,
   createTheme,
@@ -20,6 +21,7 @@ import {
   useWeb3Connectors,
   Web3ConnectorsProps,
 } from '../../hooks/ConnectWallet';
+import { useWalletInfo } from '../../hooks/ConnectWallet/useWalletInfo';
 import { useFetchBlockNumber } from '../../hooks/contract';
 import { ExecutionProps } from '../../hooks/Submission';
 import { DefaultTokenInfo, TokenInfo } from '../../hooks/Token/type';
@@ -45,10 +47,36 @@ import { TokenPickerDialogProps } from '../Swap/components/TokenCard/TokenPicker
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
+/**
+ * Liquidity mining (LP fee reward) activity config. When provided, a reward banner
+ * is shown on the pool list page, and pools carrying an `apy.lpFeeRewardApy` value
+ * get a 🔥 badge and can be filtered via "Mining Only".
+ *
+ * The reward amount and claim state are read from the `lp_fee_reward_getUserReward`
+ * GraphQL query; the per-pool bonus APY comes from the liquidity list's
+ * `apy.lpFeeRewardApy` field.
+ */
+export interface LpFeeRewardActivity {
+  /** Activity id passed to `lp_fee_reward_getUserReward`. Required. */
+  activity: string;
+  /** Banner title. Defaults to a generic "Liquidity Mining" title when omitted. */
+  title?: string;
+  /** Banner description line. */
+  description?: string;
+  /** "View more" external link shown in the banner description. */
+  viewMoreLink?: string;
+  /** Reward token symbol, e.g. "PROS". */
+  rewardTokenSymbol?: string;
+  /** Reward token logo url shown next to the reward amount. */
+  rewardTokenLogo?: string;
+  /** Tooltip text shown in the question mark next to the "My rewards" label. When omitted, the tooltip is hidden. */
+  myRewardsTooltip?: string;
+  /** Optional reward period id. When omitted, the backend picks the current/most-recent period. */
+  periodId?: string;
+}
+
 export interface WidgetProps
-  extends Web3ConnectorsProps,
-    InitTokenListProps,
-    ExecutionProps {
+  extends Web3ConnectorsProps, InitTokenListProps, ExecutionProps {
   apikey?: string;
   theme?: PartialDeep<ThemeOptions>;
   colorMode?: PaletteMode;
@@ -79,12 +107,28 @@ export interface WidgetProps
   notSupportPMM?: boolean;
   supportAMMV2?: boolean;
   supportAMMV3?: boolean;
+  /** Liquidity mining (LP fee reward) activity config shown on the pool list page. */
+  lpFeeRewardActivity?: LpFeeRewardActivity;
   executionDialogExtra?: any;
+  /** Pool address to preselect in the Pool widget's Add Liquidity search. */
+  poolAddress?: string;
+  /** Called when the pool selected in Add Liquidity search changes or is removed. */
+  onPoolAddressChange?: (address?: string) => void;
 
   /** When the winding status changes, no pop-up window will be displayed. */
   noSubmissionDialog?: boolean;
   showSubmissionSubmittedDialog?: boolean;
 
+  /**
+   * External wallet state. When provided, the widget reads account/chainId/provider
+   * directly from this object instead of managing its own wallet connection.
+   * The integrator is responsible for keeping this up-to-date.
+   */
+  walletState?: {
+    account?: string;
+    chainId?: number;
+    provider?: JsonRpcProvider;
+  };
   onProviderChanged?: (provider?: any) => void;
   getStaticJsonRpcProviderByChainId?: Exclude<
     ConstructorParameters<typeof ContractRequests>[0],
@@ -149,11 +193,12 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
   useInitTokenList(props);
   useFetchBlockNumber();
   useInitContractRequest();
-  const { provider, connector, chainId } = useWeb3React();
+  const { connector } = useWeb3React();
+  const { provider, chainId } = useWalletInfo();
   const { autoConnectLoading } = useGlobalState();
   useEffect(() => {
     if (autoConnectLoading === undefined) {
-      if (props.noAutoConnect) {
+      if (props.noAutoConnect || props.walletState) {
         setAutoConnectLoading(false);
       } else {
         setAutoConnectLoading(true);
@@ -199,7 +244,7 @@ function InitStatus(props: PropsWithChildren<WidgetProps>) {
     if (props.onProviderChanged) {
       props.onProviderChanged(provider);
     }
-    const _provider = provider?.provider as any;
+    const _provider = (provider as any)?.provider ?? provider;
     const handleChainChanged = async () => {
       setAutoConnectLoading(true);
       try {
@@ -266,6 +311,7 @@ function Web3Provider(props: PropsWithChildren<WidgetProps>) {
     provider: props.provider,
     jsonRpcUrlMap: props.jsonRpcUrlMap,
     defaultChainId,
+    walletState: props.walletState,
   });
 
   return (

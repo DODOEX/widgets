@@ -1,14 +1,14 @@
 import tokenList from '../../constants/tokenList';
 import useFindTokenByAddress from './useFindTokenByAddress';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 
 jest.mock('../useTokenState', () => ({
   useTokenState: () => ({
     tokenList,
   }),
 }));
-jest.mock('@web3-react/core', () => ({
-  useWeb3React: () => ({
+jest.mock('../ConnectWallet/useWalletInfo', () => ({
+  useWalletInfo: () => ({
     chainId: 1,
   }),
 }));
