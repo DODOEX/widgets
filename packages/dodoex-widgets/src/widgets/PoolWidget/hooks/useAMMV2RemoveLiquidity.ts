@@ -5,7 +5,6 @@ import {
   encodeUniswapV2Router02RemoveLiquidity,
   encodeUniswapV2Router02RemoveLiquidityETH,
   getUniswapV2Router02ContractAddressByChainId,
-  getUniswapV2Router02FixedFeeContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
@@ -19,6 +18,7 @@ import { TokenInfo } from '../../../hooks/Token';
 import { toWei } from '../../../utils';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { useMessageState } from '../../../hooks/useMessageState';
+import { getAMMV2RouterAddress } from '../utils';
 
 export function useAMMV2RemoveLiquidity({
   baseToken,
@@ -28,6 +28,7 @@ export function useAMMV2RemoveLiquidity({
   liquidityAmount,
   slippage,
   fee,
+  poolAddress,
   submittedBack,
 }: {
   baseToken: TokenInfo | undefined;
@@ -37,6 +38,7 @@ export function useAMMV2RemoveLiquidity({
   liquidityAmount: string;
   slippage: number;
   fee: number | undefined;
+  poolAddress?: string;
   submittedBack?: () => void;
 }) {
   const submission = useSubmission();
@@ -61,10 +63,8 @@ export function useAMMV2RemoveLiquidity({
         const basicTokenAddressLow = basicToken.address.toLowerCase();
         const dynamicFeeContractAddress =
           getUniswapV2Router02ContractAddressByChainId(chainId);
-        const fixedFeeContractAddress =
-          getUniswapV2Router02FixedFeeContractAddressByChainId(chainId);
         const isFixedFee = !dynamicFeeContractAddress;
-        const to = dynamicFeeContractAddress || fixedFeeContractAddress;
+        const to = await getAMMV2RouterAddress(chainId, poolAddress);
         if (!to) {
           throw new Error('AMMV2 contract address is not valid.');
         }

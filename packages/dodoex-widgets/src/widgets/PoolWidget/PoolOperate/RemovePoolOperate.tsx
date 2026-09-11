@@ -224,7 +224,7 @@ export function RemovePoolOperate({
       })
     : undefined;
 
-  const { baseTokenStatus, quoteTokenStatus } = useRemoveLiquidityTokenStatus({
+  const { baseTokenStatus, quoteTokenStatus, routerLoading } = useRemoveLiquidityTokenStatus({
     pool,
     baseAmount,
     quoteAmount,
@@ -243,7 +243,8 @@ export function RemovePoolOperate({
     !!withdrawInfo.error ||
     withdrawInfo.loading ||
     !!withdrawInfo.receiveAmountBg?.lte(0) ||
-    feeRateQuery.isLoading;
+    feeRateQuery.isLoading ||
+    routerLoading;
 
   const submitBtnText = isOverBalance ? t`Insufficient balance` : t`Remove`;
 
@@ -271,6 +272,7 @@ export function RemovePoolOperate({
     liquidityAmount: liquidityAmountWei,
     slippage: slipperValue,
     fee: feeRate,
+    poolAddress: pool?.address,
     submittedBack,
   });
   const submitLq = () => {
