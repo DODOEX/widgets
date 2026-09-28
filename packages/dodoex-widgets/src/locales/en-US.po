@@ -56,7 +56,7 @@ msgid "To"
 msgstr "To"
 
 #. placeholder {0}: receiveWrapped ? basicToken?.symbol : basicToken?.wrappedTokenSymbol
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:434
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:439
 msgid "Receive {0}"
 msgstr "Receive {0}"
 
@@ -193,7 +193,7 @@ msgid "Do not remind again"
 msgstr "Do not remind again"
 
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:372
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:283
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:288
 msgid "Remove Liquidity"
 msgstr "Remove Liquidity"
 
@@ -889,7 +889,7 @@ msgid "Stake"
 msgstr "Stake"
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:305
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:604
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:609
 msgid "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 msgstr "Price discrepancy {lqAndDodoCompareText} between liquidity pool and the quote price on DODO."
 
@@ -1625,7 +1625,7 @@ msgid "Suitable for stablecoins with price fluctuations within 10%"
 msgstr "Suitable for stablecoins with price fluctuations within 10%"
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:299
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:598
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:603
 msgid "Confirm submission"
 msgstr "Confirm submission"
 
@@ -1982,7 +1982,7 @@ msgid "Total Swap Volume"
 msgstr "Total Swap Volume"
 
 #: src/components/Swap/SwapOrderHistory/index.tsx:99
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:470
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:475
 msgid "Receive"
 msgstr "Receive"
 
@@ -2313,7 +2313,7 @@ msgstr "Initial Price Alert"
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:598
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1199
 #: src/widgets/PoolWidget/PoolOperate/hooks/usePoolOperateTabs.ts:16
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:249
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:254
 msgid "Remove"
 msgstr "Remove"
 
@@ -2399,7 +2399,7 @@ msgid "In range"
 msgstr "In range"
 
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:308
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:607
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:612
 msgid "There is risk of being arbitraged if adding this liquidity."
 msgstr "There is risk of being arbitraged if adding this liquidity."
 
@@ -2459,7 +2459,7 @@ msgid "WARNING"
 msgstr "WARNING"
 
 #: src/widgets/PoolWidget/PoolList/components/migationWidget.tsx:53
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:558
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:563
 msgid "Migrate"
 msgstr "Migrate"
 
@@ -2548,7 +2548,7 @@ msgstr "Total Rewards=Daily Rewards*Duration"
 #: src/components/Swap/index.tsx:753
 #: src/components/TokenStatusButton.tsx:18
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:147
-#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:249
+#: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:254
 msgid "Insufficient balance"
 msgstr "Insufficient balance"
 

@@ -16,7 +16,7 @@ export const ammV3Api = new AMMV3Api({
   contractRequests,
 });
 
-const LP_MT_CURATOR_ROUTER = '0x728e1Fd63Fa38b350B206bFC2d60a351EBb9A995';
+const LP_MT_CURATOR_ROUTER = '0x14f06FE99a1264825C99FB1C8E05A90036e89d0A';
 const LP_MT_CURATOR_ABI = ['function lpMtCurator() view returns (address)'];
 
 function isMissingLpMtCurator(error: unknown) {

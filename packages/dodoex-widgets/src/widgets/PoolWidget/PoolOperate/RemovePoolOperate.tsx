@@ -84,6 +84,11 @@ export function RemovePoolOperate({
     pool,
     maxBaseAmount: baseOverride,
     maxQuoteAmount: quoteOverride,
+    // Removing liquidity must clamp the paired amount to the current
+    // maximum balance. This is especially important for the 100% shortcut,
+    // where deriving the other token amount can otherwise overshoot due to
+    // precision rounding.
+    isRemove: true,
   });
   const [baseAmountDelay, setBaseAmountDelay] = React.useState('');
   const [quoteAmountDelay, setQuoteAmountDelay] = React.useState('');
