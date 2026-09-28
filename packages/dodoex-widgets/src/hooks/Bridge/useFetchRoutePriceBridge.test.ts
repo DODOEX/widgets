@@ -3,7 +3,7 @@ import {
   RoutePriceStatus,
 } from './useFetchRoutePriceBridge';
 import tokenList from '../../constants/tokenList';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 import axios from 'axios';
 
 const tokenEther = tokenList[0];
@@ -104,7 +104,10 @@ describe('useFetchRoutePriceBridge: request success', () => {
     }),
   );
 
-  it('Returns params', () => {
+  it('Returns params', async () => {
+    await waitFor(() =>
+      expect(result.current.status).toBe(RoutePriceStatus.Success),
+    );
     const { status, bridgeRouteList } = result.current;
     expect(status).toBe(RoutePriceStatus.Success);
     expect(bridgeRouteList.length).toBe(1);
@@ -155,7 +158,10 @@ describe('useFetchRoutePrice: request failed', () => {
     }),
   );
 
-  it('Returns params', () => {
+  it('Returns params', async () => {
+    await waitFor(() =>
+      expect(result.current.status).toBe(RoutePriceStatus.Failed),
+    );
     const { status } = result.current;
     expect(status).toBe(RoutePriceStatus.Failed);
   });

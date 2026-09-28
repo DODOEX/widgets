@@ -63,4 +63,25 @@ export const systemGraphqlQuery = {
       }
     }
   `),
+  fetchLpFeeRewardUserReward: graphql(`
+    query FetchLpFeeRewardUserReward(
+      $where: Lp_fee_rewardLpFeeRewardUserInput
+    ) {
+      lp_fee_reward_getUserReward(where: $where) {
+        estimatedReward
+        estimatedRewardRaw
+        claimableReward
+        claimableRewardRaw
+        claimStatus
+        claimContract
+        periodId
+        periodLabel
+        periodStartTime
+        periodEndTime
+        merkleRoot
+        index
+        proof
+      }
+    }
+  `),
 };

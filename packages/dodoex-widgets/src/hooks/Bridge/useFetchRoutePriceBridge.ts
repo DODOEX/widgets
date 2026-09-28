@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useWeb3React } from '@web3-react/core';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { parseFixed } from '@ethersproject/bignumber';
 import { useCallback, useMemo, useState } from 'react';
 import { EmptyAddress } from '../../constants/address';
@@ -145,7 +145,7 @@ export function useFetchRoutePriceBridge({
   fromToken,
   fromAmount,
 }: FetchRoutePrice) {
-  const { account, provider } = useWeb3React();
+  const { account, provider } = useWalletInfo();
   const { defaultSlippage, loading: slippageLoading } =
     useDefaultSlippage(true);
   const { slippage: stateSlippage } = useGlobalState();

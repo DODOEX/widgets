@@ -1,7 +1,6 @@
 import { Box, ButtonBase, useTheme } from '@dodoex/components';
 import { Switch, ArrowRight } from '@dodoex/icons';
 import { useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import dayjs from 'dayjs';
 import { Trans } from '@lingui/macro';
@@ -17,6 +16,7 @@ import { AddressWithLinkAndCopy } from '../../../../../components/AddressWithLin
 import TokenLogo from '../../../../../components/TokenLogo';
 import BigNumber from 'bignumber.js';
 import { CardStatus } from '../../../../../components/CardWidgets';
+import { useWalletInfo } from '../../../../../hooks/ConnectWallet/useWalletInfo';
 
 export function formatDateTimeStr(timestamp?: number, short?: boolean): string {
   if (!timestamp) {
@@ -90,7 +90,7 @@ export default function SwapsTable({
 }) {
   const { isMobile } = useWidgetDevice();
   const theme = useTheme();
-  const { account, chainId } = useWeb3React();
+  const { account, chainId } = useWalletInfo();
   const feeRateQuery = useQuery(
     poolApi.getFeeRateQuery(
       poolDetail?.chainId,

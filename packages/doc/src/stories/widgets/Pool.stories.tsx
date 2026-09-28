@@ -89,4 +89,19 @@ Primary.args = {
   // onlyChainId: 688689,
   showSubmissionSubmittedDialog: true,
   // onlyChainId: 1,
+  // LP fee reward (liquidity mining) activity demo config.
+  // The per-pool 🔥 badge / "Mining Only" filter is driven by the liquidity
+  // list's `apy.lpFeeRewardApy`; the banner reward comes from
+  // `lp_fee_reward_getUserReward` (needs a connected wallet).
+  lpFeeRewardActivity: {
+    activity: 'pharos_amm_v3_lp_fee_reward',
+    title: 'FBTC Liquidity Mining',
+    description: 'Earn extra $PROS from Jul 01 to Jul 25.',
+    viewMoreLink: 'https://dodoex.io',
+    rewardTokenSymbol: 'PROS',
+    rewardTokenLogo:
+      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png',
+    myRewardsTooltip:
+      'Rewards are settled daily and can be claimed once the activity ends.',
+  },
 };

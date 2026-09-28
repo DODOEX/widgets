@@ -233,6 +233,15 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.RISE_TESTNET,
       logo: RiseLogo,
       name: 'Rise-Sepolia',
+      mainnet: ChainId.RISE,
+    },
+  ],
+  [
+    ChainId.RISE,
+    {
+      chainId: ChainId.RISE,
+      logo: RiseLogo,
+      name: 'Rise',
     },
   ],
   [
@@ -297,6 +306,7 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.PHAROS_TESTNET,
       logo: PharosLogo,
       name: 'Pharos Testnet',
+      mainnet: ChainId.PHAROS,
     },
   ],
   [
@@ -305,6 +315,15 @@ export const chainListMap: Map<ChainId, ChainListItem> = new Map([
       chainId: ChainId.PHAROS_ATLANTIC_TESTNET,
       logo: PharosLogo,
       name: 'Pharos Atlantic Testnet',
+      mainnet: ChainId.PHAROS,
+    },
+  ],
+  [
+    ChainId.PHAROS,
+    {
+      chainId: ChainId.PHAROS,
+      logo: PharosLogo,
+      name: 'Pharos',
     },
   ],
   [

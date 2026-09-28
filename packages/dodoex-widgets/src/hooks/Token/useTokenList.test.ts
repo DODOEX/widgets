@@ -1,6 +1,6 @@
 import tokenList from '../../constants/tokenList';
 import useTokenList, { getFuzzySearchTokenSort } from './useTokenList';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import useTokenListFetchBalance from './useTokenListFetchBalance';
 
 jest.mock('../../components/UserOptionsProvider', () => ({

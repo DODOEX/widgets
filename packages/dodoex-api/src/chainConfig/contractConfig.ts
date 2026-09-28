@@ -16,7 +16,9 @@ import {
   pharosAtlanticTestnet,
   stableTestnet,
   stable,
-  eni
+  eni,
+  rise,
+  pharos
 } from '@dodoex/dodo-contract-request';
 import { ChainId } from './chain';
 
@@ -390,6 +392,20 @@ const contractMap: {
     DODO_DPP_PROXY: riseTestnet.DODODppProxy,
     DODO_MINEV3_PROXY: riseTestnet.DODOMineV3Proxy,
   },
+  [ChainId.RISE]: {
+    MULTI_CALL: rise.MulticallWithValid,
+    DODO_APPROVE: rise.DODOApprove,
+    ERC20_HELPER: rise.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: rise.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: rise.DODOV1PmmHelper,
+    CALLEE_HELPER: rise.DODOCalleeHelper,
+
+    DODO_PROXY: rise.DODOV2Proxy02,
+    DODO_DSP_PROXY: rise.DODODspProxy,
+    DODO_DPP_PROXY: rise.DODODppProxy,
+    DODO_MINEV3_PROXY: rise.DODOMineV3Proxy,
+  },
   [ChainId.NEROCHAIN]: {
     MULTI_CALL: nero.MulticallWithValid,
     DODO_APPROVE: nero.DODOApprove,
@@ -515,6 +531,20 @@ const contractMap: {
     DODO_DSP_PROXY: pharosAtlanticTestnet.DODODspProxy,
     DODO_DPP_PROXY: pharosAtlanticTestnet.DODODppProxy,
     DODO_MINEV3_PROXY: pharosAtlanticTestnet.DODOMineV3Proxy,
+  },
+  [ChainId.PHAROS]: {
+    MULTI_CALL: pharos.MulticallWithValid,
+    DODO_APPROVE: pharos.DODOApprove,
+    ERC20_HELPER: pharos.ERC20Helper,
+
+    ROUTE_V2_DATA_FETCH: pharos.DODOV2RouteHelper,
+    ROUTE_V1_DATA_FETCH: pharos.DODOV1PmmHelper,
+    CALLEE_HELPER: pharos.DODOCalleeHelper,
+
+    DODO_PROXY: pharos.DODOV2Proxy02,
+    DODO_DSP_PROXY: pharos.DODODspProxy,
+    DODO_DPP_PROXY: pharos.DODODppProxy,
+    DODO_MINEV3_PROXY: pharos.DODOMineV3Proxy,
   },
   [ChainId.STABLE_TESTNET]: {
     MULTI_CALL: stableTestnet.MulticallWithValid,

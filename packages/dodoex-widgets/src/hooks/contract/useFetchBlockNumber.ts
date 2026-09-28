@@ -1,9 +1,9 @@
-import { useWeb3React } from '@web3-react/core';
 import { useCallback, useEffect } from 'react';
 import { useGlobalState } from '../useGlobalState';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 
 export default function useFetchBlockNumber() {
-  const { provider, chainId } = useWeb3React();
+  const { provider, chainId } = useWalletInfo();
 
   const updateBlockNumber = useCallback(async () => {
     if (!provider || !chainId) {

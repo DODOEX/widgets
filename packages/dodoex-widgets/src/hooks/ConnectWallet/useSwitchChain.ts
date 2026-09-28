@@ -1,5 +1,5 @@
-import { useWeb3React } from '@web3-react/core';
 import { useMemo } from 'react';
+import { useWalletInfo } from './useWalletInfo';
 import { chainListMap } from '../../constants/chainList';
 import {
   basicTokenMap,
@@ -154,11 +154,11 @@ export async function registerNetworkWithMetamask({
 }
 
 export function useSwitchChain(chainId?: ChainId) {
-  const { provider } = useWeb3React();
+  const { provider } = useWalletInfo();
 
   const switchChain = useMemo(() => {
-    const providerResult: any = provider?.provider ?? provider;
-    if (!chainId || !providerResult?.isMetaMask) {
+    const providerResult: any = (provider as any)?.provider ?? provider;
+    if (!chainId || !providerResult) {
       return undefined;
     }
     return () => {

@@ -1,5 +1,5 @@
 import { TokenInfo } from './type';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import BigNumber from 'bignumber.js';
 import { useTokenStatus } from './useTokenStatus';
 import { useMutation, useQuery } from '@tanstack/react-query';

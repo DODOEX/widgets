@@ -1,6 +1,5 @@
 import { PoolApi } from '@dodoex/api';
 import { Box, Button, LoadingSkeleton } from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
 import React, { useMemo } from 'react';
 import {
   CardPlus,
@@ -21,13 +20,10 @@ import { SLIPPAGE_PROTECTION } from '../../../constants/pool';
 import ErrorMessageDialog from '../../../components/ErrorMessageDialog';
 import ConfirmDialog from '../AMMV2Create/ConfirmDialog';
 import { useQuery } from '@tanstack/react-query';
-import { poolApi } from '../utils';
+import { getAMMV2RouterAddress, poolApi } from '../utils';
 import { useAMMV2AddLiquidity } from '../hooks/useAMMV2AddLiquidity';
-import {
-  getUniswapV2Router02ContractAddressByChainId,
-  getUniswapV2Router02FixedFeeContractAddressByChainId,
-} from '@dodoex/dodo-contract-request';
 import { usePrevious } from '../../MiningWidget/hooks/usePrevious';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useSlipper } from './components/SlippageSetting';
 import BigNumber from 'bignumber.js';
 
@@ -48,7 +44,7 @@ export function AddPoolOperate({
   quoteReserve?: BigNumber;
   totalSupplyBG?: BigNumber;
 }) {
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const {
     baseAmount,
     quoteAmount,
@@ -72,6 +68,11 @@ export function AddPoolOperate({
     ?.plus(feeRateQuery.data?.lpFeeRate ?? 0)
     ?.toNumber();
   const isAMMV2 = pool?.type === 'AMMV2';
+  const ammV2RouterQuery = useQuery({
+    queryKey: ['amm-v2-router', pool?.chainId, pool?.address],
+    enabled: isAMMV2 && !!pool?.chainId && !!pool?.address,
+    queryFn: () => getAMMV2RouterAddress(pool?.chainId, pool?.address),
+  });
   const [showConfirmAMMV2, setShowConfirmAMMV2] = React.useState(false);
   const { slipper, setSlipper, slipperValue, resetSlipper } = useSlipper({
     address: pool?.address,
@@ -97,19 +98,16 @@ export function AddPoolOperate({
   const { isShowCompare, lqAndDodoCompareText, isWarnCompare } =
     useComparePrice(pool?.baseToken, pool?.quoteToken, midPrice);
 
-  const proxyContract = isAMMV2
-    ? pool.chainId
-      ? getUniswapV2Router02ContractAddressByChainId(pool.chainId) ||
-        getUniswapV2Router02FixedFeeContractAddressByChainId(pool.chainId)
-      : undefined
-    : undefined;
+  const proxyContract = isAMMV2 ? ammV2RouterQuery.data ?? '' : undefined;
   const baseTokenStatus = useTokenStatus(pool?.baseToken, {
     amount: baseAmount,
     contractAddress: proxyContract,
+    skipQuery: isAMMV2 && !proxyContract,
   });
   const quoteTokenStatus = useTokenStatus(pool?.quoteToken, {
     amount: quoteAmount,
     contractAddress: proxyContract,
+    skipQuery: isAMMV2 && !proxyContract,
   });
   // 计算添加流动性后得到LpToken数量，低于1000会revert，需要在前端拦截
   // uint256 baseInputRatio = DecimalMath.divFloor(baseInput, baseReserve);
@@ -139,7 +137,10 @@ export function AddPoolOperate({
     !!balanceInfo.loading ||
     !!balanceInfo.error ||
     amountCheckedDisabled ||
-    feeRateQuery.isLoading;
+    feeRateQuery.isLoading ||
+    ammV2RouterQuery.isLoading ||
+    ammV2RouterQuery.isError ||
+    (isAMMV2 && !proxyContract);
 
   let submitBtnText = isAMMV2 ? t`Supply` : t`Add`;
   if (isOverBalance) {
@@ -179,6 +180,7 @@ export function AddPoolOperate({
     baseAmount,
     quoteAmount,
     fee: feeNumber,
+    poolAddress: pool?.address,
     isExists: true,
     slippage: slipperValue,
     submittedBack: () => {

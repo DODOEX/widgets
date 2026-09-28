@@ -1,7 +1,6 @@
 import { MiningStatusE } from '@dodoex/api';
 import { Box, Tabs, TabsButtonGroup, useTheme } from '@dodoex/components';
 import { t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { useCallback, useMemo, useState } from 'react';
 import { AddressWithLinkAndCopy } from '../../../../components/AddressWithLinkAndCopy';
@@ -28,6 +27,7 @@ import { StakeTokenSelect } from './StakeTokenSelect';
 import { UnstakeButton } from './UnstakeButton';
 import { getOptToken } from './utils';
 import { OperateButtonWrapper } from '../components/widgets';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 
 export function OperateArea(props: OperateDataProps) {
   const {
@@ -68,7 +68,7 @@ export function OperateArea(props: OperateDataProps) {
 
   const theme = useTheme();
 
-  const { chainId: currentChainId, account } = useWeb3React();
+  const { chainId: currentChainId, account } = useWalletInfo();
 
   const isInCurrentChain = currentChainId === chainId;
   const skipApprove =

@@ -110,7 +110,8 @@ export default function ConnectWalletDialog({
                     if (webReact.chainId && webReact.chainId !== chainId) {
                       if (
                         wallet.type === WalletType.METAMASK &&
-                        webReact.provider?.provider?.isMetaMask &&
+                        ((webReact.provider as any)?.provider ?? webReact.provider)
+                          ?.isMetaMask &&
                         switchChain
                       ) {
                         await switchChain();

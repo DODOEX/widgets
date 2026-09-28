@@ -1,7 +1,6 @@
 import { ChainId } from '@dodoex/api';
 import { Box, BoxProps, useTheme } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useTradeSwapOrderList } from '../../../hooks/Swap/useTradeSwapOrderList';
@@ -11,6 +10,7 @@ import SelectChain from '../../SelectChain';
 import Table from '../../Table';
 import { useUserOptions } from '../../UserOptionsProvider';
 import SameOrderCard from './SameOrderCard';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 
 export default function SwapOrderHistory({
   swapOrderListQuery: swapOrderListQueryProps,
@@ -20,7 +20,7 @@ export default function SwapOrderHistory({
   const theme = useTheme();
   const { onlyChainId } = useUserOptions();
   const { isMobile } = useWidgetDevice();
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const [filterChainId, setFilterChainId] =
     React.useState<ChainId | undefined>();
   const swapOrderListQueryLocal = useTradeSwapOrderList({
