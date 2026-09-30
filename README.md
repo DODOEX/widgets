@@ -30,10 +30,10 @@ npm i --save @dodoex/widgets
 
 ## Documentation
 
-You can find the DODO Widget documentation [on the website](https://docs.dodoex.io/english/developers/swap-widget) and check out the [Getting Started](https://docs.dodoex.io/english/developers/swap-widget/getting-started) page for a quick overview.
+You can find the DODO Widget documentation [on the website](https://docs.dodoex.io/en/developer/developers-portal/widget) and check out the [Getting Started](https://docs.dodoex.io/en/developer/developers-portal/widget/getting-started) page for a quick overview.
 
-- [Profit-Sharing Instructions](https://docs.dodoex.io/english/developers/swap-widget/profit-sharing-instructions)
-- [API](https://docs.dodoex.io/english/developers/swap-widget/api)
+- [Profit-Sharing Instructions](https://docs.dodoex.io/en/developer/developers-portal/widget/profit-sharing-instructions)
+- [API](https://docs.dodoex.io/en/developer/developers-portal/widget/widget-config)
 
 ## Examples
 
