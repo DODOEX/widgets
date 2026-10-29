@@ -1,8 +1,9 @@
+import OathWalletConnection from './OathWalletConnection';
 import { Box, RotatingIcon } from '@dodoex/components';
 import { t, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { useWeb3React } from '@web3-react/core';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { WalletMap, WalletType } from '../../constants/wallet';
 import { connectToWallet } from '../../hooks/ConnectWallet';
 import { useSwitchChain } from '../../hooks/ConnectWallet/useSwitchChain';
@@ -30,6 +31,9 @@ export default function ConnectWalletDialog({
   const connectingWallet = connectingType
     ? WalletMap[connectingType]
     : undefined;
+  useEffect(() => {
+    if (!open) setConnectingType(null);
+  }, [open]);
   const switchChain = useSwitchChain(chainId);
   const webReact = useWeb3React();
   return (
@@ -48,9 +52,19 @@ export default function ConnectWalletDialog({
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
+          overflowY: 'auto',
         }}
       >
-        {connectingWallet ? (
+        {connectingType === WalletType.OATH ? (
+          <OathWalletConnection
+            chainId={chainId}
+            onConnected={() => {
+              setConnectingType(null);
+              onClose();
+            }}
+            onBack={() => setConnectingType(null)}
+          />
+        ) : connectingWallet ? (
           <Box
             sx={{
               display: 'flex',
@@ -90,12 +104,20 @@ export default function ConnectWalletDialog({
             {Object.values(WalletMap).map((wallet) => (
               <Box
                 key={wallet.type}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    event.currentTarget.click();
+                  }
+                }}
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
                   flexDirection: 'column',
                   mt: 20,
-                  p: 20,
+                  p: 12,
                   backgroundColor: 'background.tag',
                   borderRadius: 12,
                   cursor: 'pointer',
@@ -106,6 +128,7 @@ export default function ConnectWalletDialog({
                 onClick={async () => {
                   try {
                     setConnectingType(wallet.type as keyof typeof WalletMap);
+                    if (wallet.type === WalletType.OATH) return;
                     // When the wallet is already connected, switch chains
                     if (webReact.chainId && webReact.chainId !== chainId) {
                       if (
@@ -151,7 +174,11 @@ export default function ConnectWalletDialog({
                     color: 'text.secondary',
                   }}
                 >
-                  <Trans>Connect to your {wallet.name} Wallet</Trans>
+                  {wallet.type === WalletType.OATH ? (
+                    <Trans>Connect your iPhone with WalletConnect</Trans>
+                  ) : (
+                    <Trans>Connect to your {wallet.name} Wallet</Trans>
+                  )}
                 </Box>
               </Box>
             ))}

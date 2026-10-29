@@ -1,3 +1,4 @@
+import { OathConnectorContext } from '../../hooks/ConnectWallet/OathConnectorContext';
 import { ChainId, ContractRequests, GraphQLRequests } from '@dodoex/api';
 import {
   Box,
@@ -262,7 +263,7 @@ function Web3Provider(props: PropsWithChildren<WidgetProps>) {
     () => fromTokenChainId ?? props.defaultChainId ?? 1,
     [props.defaultChainId, fromTokenChainId],
   );
-  const { connectors, key } = useWeb3Connectors({
+  const { connectors, key, oathConnector } = useWeb3Connectors({
     provider: props.provider,
     jsonRpcUrlMap: props.jsonRpcUrlMap,
     defaultChainId,
@@ -270,7 +271,9 @@ function Web3Provider(props: PropsWithChildren<WidgetProps>) {
 
   return (
     <Web3ReactProvider connectors={connectors} key={key} lookupENS={false}>
-      <InitStatus {...props} />
+      <OathConnectorContext.Provider value={oathConnector}>
+        <InitStatus {...props} />
+      </OathConnectorContext.Provider>
     </Web3ReactProvider>
   );
 }

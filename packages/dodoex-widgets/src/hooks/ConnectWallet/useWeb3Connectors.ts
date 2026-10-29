@@ -1,3 +1,5 @@
+import { initializeConnector } from '@web3-react/core';
+import OathWalletConnector from './Connectors/OathWalletConnector';
 import { Provider as Eip1193Provider } from '@web3-react/types';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { ChainId } from '@dodoex/api';
@@ -56,6 +58,13 @@ export function useWeb3Connectors({
     [jsonRpcUrlMap, defaultChainId, onError],
   );
 
+  const oathConnection = useMemo(() => {
+    const [connector, hooks] = initializeConnector(
+      (actions) => new OathWalletConnector(actions, jsonRpcUrlMap),
+    );
+    return [connector, hooks] as [OathWalletConnector, Web3Connection[1]];
+  }, [jsonRpcUrlMap]);
+
   const changedCount = useRef(0);
   const connectors = useMemo(() => {
     if (integratorConnection) {
@@ -65,8 +74,13 @@ export function useWeb3Connectors({
     connectorCacheMap[WalletType.WALLET_CONNECT] = walletConnectConnectionPopup;
     changedCount.current += 1;
 
-    return Object.values(connectorCacheMap);
-  }, [integratorConnection, metaMaskConnection, walletConnectConnectionPopup]);
+    return [...Object.values(connectorCacheMap), oathConnection];
+  }, [
+    integratorConnection,
+    metaMaskConnection,
+    walletConnectConnectionPopup,
+    oathConnection,
+  ]);
 
   useEffect(() => {
     // Sync provider status
@@ -80,6 +94,7 @@ export function useWeb3Connectors({
   return {
     connectors,
     key: changedCount.current,
+    oathConnector: oathConnection[0],
   };
 }
 

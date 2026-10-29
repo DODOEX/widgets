@@ -35,7 +35,7 @@ msgid "Your position is  empty"
 msgstr "Your position is  empty"
 
 #. placeholder {0}: connectingWallet.name
-#: src/components/ConnectWallet/ConnectWalletDialog.tsx:76
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:90
 msgid "Opening {0}..."
 msgstr "Opening {0}..."
 
@@ -284,6 +284,10 @@ msgstr "Max price"
 msgid "Staked Tokens"
 msgstr "Staked Tokens"
 
+#: src/components/ConnectWallet/OathWalletConnection.tsx:132
+msgid "Open Oath on this iPhone"
+msgstr "Open Oath on this iPhone"
+
 #: src/components/Swap/index.tsx:436
 msgid "Current price impact"
 msgstr "Current price impact"
@@ -497,6 +501,10 @@ msgstr "Add liquidity to obtain LP tokens for mining"
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:563
 msgid "Add more liquidity"
 msgstr "Add more liquidity"
+
+#: src/components/ConnectWallet/OathWalletConnection.tsx:146
+msgid "Back to wallets"
+msgstr "Back to wallets"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:62
 msgid "This CP has been settled by other addrs"
@@ -839,6 +847,10 @@ msgstr "Insufficient market depth to capture the dollar value of [ {{symbols}} ]
 msgid "Invite"
 msgstr "Invite"
 
+#: src/components/ConnectWallet/OathWalletConnection.tsx:143
+msgid "Get Oath for iPhone"
+msgstr "Get Oath for iPhone"
+
 #: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:44
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 msgstr "The price of this pool is outside of your selected range. Your position is not currently earning fees."
@@ -930,6 +942,10 @@ msgstr "Succeeded"
 #: src/components/Swap/components/SettingsDialog/index.tsx:48
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
+
+#: src/components/ConnectWallet/OathWalletConnection.tsx:109
+msgid "Try again"
+msgstr "Try again"
 
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:228
 msgid "Set pool parameters"
@@ -1048,6 +1064,10 @@ msgstr "Quote not available"
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1082
 msgid "My pool share"
 msgstr "My pool share"
+
+#: src/components/ConnectWallet/OathWalletConnection.tsx:125
+msgid "Open Oath on your iPhone and scan this QR code. Review the website and requested network in Oath before approving."
+msgstr "Open Oath on your iPhone and scan this QR code. Review the website and requested network in Oath before approving."
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:132
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:114
@@ -1383,7 +1403,7 @@ msgid "Users"
 msgstr "Users"
 
 #. placeholder {0}: wallet.name
-#: src/components/ConnectWallet/ConnectWalletDialog.tsx:154
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:180
 msgid "Connect to your {0} Wallet"
 msgstr "Connect to your {0} Wallet"
 
@@ -1518,6 +1538,10 @@ msgstr "You are not currently providing liquidity for any LP pools."
 msgid "You have not create any mining"
 msgstr "You have not create any mining"
 
+#: src/components/ConnectWallet/OathWalletConnection.tsx:106
+msgid "Could not connect. Please try again."
+msgstr "Could not connect. Please try again."
+
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:424
 msgid "Total Swap Fee"
 msgstr "Total Swap Fee"
@@ -1572,6 +1596,10 @@ msgstr "For those who are looking to sell tokens and only need ask-side liquidit
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:177
 msgid "Price"
 msgstr "Price"
+
+#: src/components/ConnectWallet/OathWalletConnection.tsx:101
+msgid "Connect Oath Wallet"
+msgstr "Connect Oath Wallet"
 
 #: src/components/SelectChain.tsx:87
 #: src/components/SelectChain.tsx:128
@@ -1705,6 +1733,10 @@ msgstr "Auto switch network"
 msgid "Get {tokenSymbol}"
 msgstr "Get {tokenSymbol}"
 
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:178
+msgid "Connect your iPhone with WalletConnect"
+msgstr "Connect your iPhone with WalletConnect"
+
 #: src/widgets/MiningWidget/MiningList/operate-area/ClaimButton.tsx:42
 #: src/widgets/MiningWidget/OperateArea/ClaimButton.tsx:37
 msgid "One-Click Claim"
@@ -1834,7 +1866,7 @@ msgstr "Estimated transaction time"
 msgid "Collect fees"
 msgstr "Collect fees"
 
-#: src/components/ConnectWallet/ConnectWalletDialog.tsx:37
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:41
 msgid "Connect to your wallet"
 msgstr "Connect to your wallet"
 

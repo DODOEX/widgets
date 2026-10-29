@@ -33,7 +33,7 @@ msgid "Your position is  empty"
 msgstr "您的仓位为空"
 
 #. placeholder {0}: connectingWallet.name
-#: src/components/ConnectWallet/ConnectWalletDialog.tsx:76
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:90
 msgid "Opening {0}..."
 msgstr "连接 {0}..."
 
@@ -282,6 +282,10 @@ msgstr "最高价格"
 msgid "Staked Tokens"
 msgstr "质押代币"
 
+#: src/components/ConnectWallet/OathWalletConnection.tsx:132
+msgid "Open Oath on this iPhone"
+msgstr "在此 iPhone 上打开 Oath"
+
 #: src/components/Swap/index.tsx:436
 msgid "Current price impact"
 msgstr "当前价格冲击"
@@ -495,6 +499,10 @@ msgstr "添加流动性后，可以获取 LP 代币。质押 LP 代币，开启�
 #: src/widgets/PoolWidget/AMMV3/AMMV3PositionManage.tsx:563
 msgid "Add more liquidity"
 msgstr "添加更多流动性"
+
+#: src/components/ConnectWallet/OathWalletConnection.tsx:146
+msgid "Back to wallets"
+msgstr "返回钱包列表"
 
 #: src/hooks/Submission/getExecutionErrorMsg.ts:62
 msgid "This CP has been settled by other addrs"
@@ -835,6 +843,10 @@ msgstr "市场深度不足，无法统计【{{symbols}}代币】的美元价值"
 msgid "Invite"
 msgstr "邀请"
 
+#: src/components/ConnectWallet/OathWalletConnection.tsx:143
+msgid "Get Oath for iPhone"
+msgstr "下载 iPhone 版 Oath"
+
 #: src/widgets/PoolWidget/AMMV3/components/Badge/RangeBadge.tsx:44
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 msgstr "该池的价格不在你选定的区间内。你的仓位目前不能赚取交易手续费。"
@@ -926,6 +938,10 @@ msgstr "成功"
 #: src/components/Swap/components/SettingsDialog/index.tsx:48
 msgid "Attention: High slippage tolerance will increase the success rate of transaction, but might not get the best quote."
 msgstr "注意：滑点越高，交易的成功率越高，但是交易的价格可能不会是最好的市场价格。请谨慎调整滑点。"
+
+#: src/components/ConnectWallet/OathWalletConnection.tsx:109
+msgid "Try again"
+msgstr "重试"
 
 #: src/widgets/PoolWidget/PoolModify/operate-widgets/BottomButtonGroup.tsx:228
 msgid "Set pool parameters"
@@ -1044,6 +1060,10 @@ msgstr "没有报价"
 #: src/widgets/PoolWidget/PoolList/MyLiquidity.tsx:1082
 msgid "My pool share"
 msgstr "我的资金池份额"
+
+#: src/components/ConnectWallet/OathWalletConnection.tsx:125
+msgid "Open Oath on your iPhone and scan this QR code. Review the website and requested network in Oath before approving."
+msgstr "在 iPhone 上打开 Oath 并扫描此二维码。在 Oath 中确认网站和请求连接的网络后再批准。"
 
 #: src/components/Swap/components/SwapSettingsDialog/SlippageSetting.tsx:132
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/InitPriceSetting.tsx:114
@@ -1379,7 +1399,7 @@ msgid "Users"
 msgstr "用户"
 
 #. placeholder {0}: wallet.name
-#: src/components/ConnectWallet/ConnectWalletDialog.tsx:154
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:180
 msgid "Connect to your {0} Wallet"
 msgstr "连接你的{0}钱包"
 
@@ -1514,6 +1534,10 @@ msgstr "您没有参与任何挖矿项目"
 msgid "You have not create any mining"
 msgstr "暂未创建任何挖矿"
 
+#: src/components/ConnectWallet/OathWalletConnection.tsx:106
+msgid "Could not connect. Please try again."
+msgstr "无法连接，请重试。"
+
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/ParametersTable.tsx:424
 msgid "Total Swap Fee"
 msgstr "累计手续费"
@@ -1568,6 +1592,10 @@ msgstr "适用于新资产发行，为其提供卖盘流动性"
 #: src/widgets/PoolWidget/PoolDetail/components/MoreDetail/SwapsTable.tsx:177
 msgid "Price"
 msgstr "价格"
+
+#: src/components/ConnectWallet/OathWalletConnection.tsx:101
+msgid "Connect Oath Wallet"
+msgstr "连接 Oath 钱包"
 
 #: src/components/SelectChain.tsx:87
 #: src/components/SelectChain.tsx:128
@@ -1701,6 +1729,10 @@ msgstr "自动切换网络"
 msgid "Get {tokenSymbol}"
 msgstr "获取 {tokenSymbol}"
 
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:178
+msgid "Connect your iPhone with WalletConnect"
+msgstr "通过 WalletConnect 连接你的 iPhone"
+
 #: src/widgets/MiningWidget/MiningList/operate-area/ClaimButton.tsx:42
 #: src/widgets/MiningWidget/OperateArea/ClaimButton.tsx:37
 msgid "One-Click Claim"
@@ -1830,7 +1862,7 @@ msgstr "预计交易时长"
 msgid "Collect fees"
 msgstr "收取手续费"
 
-#: src/components/ConnectWallet/ConnectWalletDialog.tsx:37
+#: src/components/ConnectWallet/ConnectWalletDialog.tsx:41
 msgid "Connect to your wallet"
 msgstr "连接钱包"
 
