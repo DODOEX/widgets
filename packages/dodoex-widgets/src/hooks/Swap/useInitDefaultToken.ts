@@ -1,6 +1,7 @@
 import { useWeb3React } from '@web3-react/core';
 import { useEffect } from 'react';
 import { useUserOptions } from '../../components/UserOptionsProvider';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { getLastToken } from '../../constants/localstorage';
 import { DefaultTokenInfo, TokenInfo, TokenList } from '../Token';
 import { useGlobalState } from '../useGlobalState';
@@ -84,7 +85,8 @@ export function useInitDefaultToken({
   const { crossChain, defaultFromToken, defaultToToken, onlyChainId } =
     useUserOptions();
   const { autoConnectLoading } = useGlobalState();
-  const { chainId, isActivating } = useWeb3React();
+  const { chainId } = useWalletInfo();
+  const { isActivating } = useWeb3React();
 
   const initToken = () => {
     let findFromToken: TokenInfo | null = null;

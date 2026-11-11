@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useWeb3React } from '@web3-react/core';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { parseFixed } from '@ethersproject/bignumber';
 import React, {
   useCallback,
@@ -60,7 +60,7 @@ export function useFetchRoutePrice({
   slippage,
   slippageLoading,
 }: FetchRoutePrice) {
-  const { account, chainId: walletChainId, provider } = useWeb3React();
+  const { account, chainId: walletChainId, provider } = useWalletInfo();
   const { defaultChainId, feeRate, rebateTo, apikey } = useUserOptions();
   const chainId = useMemo(
     () => fromToken?.chainId || walletChainId || defaultChainId,

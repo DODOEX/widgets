@@ -1,5 +1,4 @@
 import { Box } from '@dodoex/components';
-import { useWeb3React } from '@web3-react/core';
 import { memo, useContext } from 'react';
 import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 import {
@@ -23,6 +22,7 @@ import { useStakedInfo } from '../hooks/useStakedInfo';
 import { useStatusAndStartBlockNumber } from '../hooks/useStatusAndStartBlockNumber';
 import { OperateArea } from '../operate-area';
 import { getDetailWrapperEle, getOperateAreaWrapperEle } from '../utils';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 
 export default memo(function BaseMiningCard({
   contractData,
@@ -66,7 +66,7 @@ export default memo(function BaseMiningCard({
   const { operateId, viewType, refetchContractData } =
     useContext(MiningContext);
   const { isMobile } = useWidgetDevice();
-  const { chainId: currentChainId, account } = useWeb3React();
+  const { chainId: currentChainId, account } = useWalletInfo();
 
   const {
     rewardTokenWithAprListArray,

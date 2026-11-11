@@ -1,5 +1,5 @@
 import { Box, Input, BoxProps, useTheme, ButtonBase } from '@dodoex/components';
-import { forwardRef, useMemo, ForwardedRef } from 'react';
+import { forwardRef, useMemo, useEffect, useRef, useState, ForwardedRef } from 'react';
 import { Error, Clear } from '@dodoex/icons';
 import {
   formatReadableNumber,
@@ -38,6 +38,15 @@ export const NumberInput = forwardRef(function NumberInput(
   ref: ForwardedRef<HTMLInputElement>,
 ) {
   const theme = useTheme();
+  const isFocused = useRef(false);
+  const [innerValue, setInnerValue] = useState(value || '');
+
+  // Sync display from external value changes only when not typing
+  useEffect(() => {
+    if (!isFocused.current) {
+      setInnerValue(value || '');
+    }
+  }, [value]);
 
   const endAdornment = useMemo(() => {
     if (suffix) {
@@ -82,17 +91,26 @@ export const NumberInput = forwardRef(function NumberInput(
   return (
     <Input
       fullWidth
-      value={value}
+      value={innerValue}
       readOnly={readOnly}
       placeholder={placeholder || '0.00'}
-      onFocus={onFocus}
+      onFocus={() => {
+        isFocused.current = true;
+        onFocus?.();
+      }}
+      onBlur={() => {
+        isFocused.current = false;
+        // Sync display to the sanitized value once user leaves
+        setInnerValue(value || '');
+      }}
       onChange={(evt: any) => {
         const inputVal = evt.target.value;
-        const input =
+        const sanitized =
           inputVal.length === 0
             ? ''
             : fixedInputStringToFormattedNumber(inputVal, decimals as number);
-        onChange && onChange(input as string);
+        setInnerValue(inputVal); // keep raw input on screen while typing
+        onChange && onChange(sanitized as string);
       }}
       data-testid={numberInputWrapper}
       suffix={(!readOnly || readonlyShowSuffix) && endAdornment}

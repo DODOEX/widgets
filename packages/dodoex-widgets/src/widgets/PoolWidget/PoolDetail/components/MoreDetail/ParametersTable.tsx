@@ -16,8 +16,8 @@ import { usePoolDashboard } from '../../hooks/usePoolDashboard';
 import { useQuery } from '@tanstack/react-query';
 import { poolApi } from '../../../utils';
 import { t } from '@lingui/macro';
-import { useWeb3React } from '@web3-react/core';
 import { useWidgetDevice } from '../../../../../hooks/style/useWidgetDevice';
+import { useWalletInfo } from '../../../../../hooks/ConnectWallet/useWalletInfo';
 import { isNotEmpty } from '../../../../../utils/utils';
 
 export function formatDateTimeStr(timestamp?: number, short?: boolean): string {
@@ -337,7 +337,7 @@ export default function ParametersTable({
       showDecimals: 2,
     })}`
   );
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const feeRateQuery = useQuery(
     poolApi.getFeeRateQuery(
       detail?.chainId,

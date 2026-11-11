@@ -1,4 +1,11 @@
-import { alpha, Box, Button, useTheme, Tooltip } from '@dodoex/components';
+import {
+  alpha,
+  Box,
+  Button,
+  Checkbox,
+  useTheme,
+  Tooltip,
+} from '@dodoex/components';
 import { PoolApi, PoolType } from '@dodoex/api';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -52,6 +59,22 @@ import { Share } from '@dodoex/icons';
 import { MigrationTag } from './components/migationWidget';
 import TokenAndPoolFilter from './components/TokenAndPoolFilter';
 import { GetMigrationPairAndMining } from '../PoolOperate/types';
+import LpFeeRewardBadge from './components/LpFeeRewardBadge';
+
+/**
+ * Returns the pool's LP fee reward bonus APY (a fraction from
+ * `pair.apy.lpFeeRewardApy`) when the reward activity is enabled and the pool
+ * actually carries a positive value; otherwise undefined.
+ */
+function getLpFeeRewardApy(
+  apy: { lpFeeRewardApy?: any } | null | undefined,
+  enabled: boolean,
+): string | undefined {
+  if (!enabled) return undefined;
+  const value = apy?.lpFeeRewardApy;
+  if (value == null || value === '') return undefined;
+  return new BigNumber(value).gt(0) ? String(value) : undefined;
+}
 
 function CardList({
   lqList,
@@ -65,12 +88,14 @@ function CardList({
   supportAMM?: boolean;
 }) {
   const theme = useTheme();
-  const { onSharePool } = useUserOptions();
+  const { onSharePool, lpFeeRewardActivity } = useUserOptions();
+  const lpFeeRewardEnabled = !!lpFeeRewardActivity?.activity;
   return (
     <>
       {lqList?.map((lq) => {
         if (!lq?.pair) return null;
         const item = lq.pair;
+        const lpRewardApy = getLpFeeRewardApy(item.apy, lpFeeRewardEnabled);
         const baseToken = convertLiquidityTokenToTokenInfo(
           item.baseToken,
           item.chainId,
@@ -196,19 +221,31 @@ function CardList({
               {hasMining || hasMetromMining ? (
                 <Box
                   sx={{
-                    p: 8,
-                    typography: 'h6',
-                    fontWeight: 'bold',
-                    background: `linear-gradient(180deg, ${alpha(
-                      theme.palette.secondary.main,
-                      0.3,
-                    )} 0%, ${alpha(theme.palette.purple.main, 0.3)} 100%)`,
-                    borderRadius: 8,
-                    color: 'purple.main',
-                    whiteSpace: 'nowrap',
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    justifyContent: 'flex-end',
+                    gap: 8,
                   }}
                 >
-                  ✨ <Trans>Mining</Trans>
+                  {hasMining || hasMetromMining ? (
+                    <Box
+                      sx={{
+                        p: 8,
+                        typography: 'h6',
+                        fontWeight: 'bold',
+                        background: `linear-gradient(180deg, ${alpha(
+                          theme.palette.secondary.main,
+                          0.3,
+                        )} 0%, ${alpha(theme.palette.purple.main, 0.3)} 100%)`,
+                        borderRadius: 8,
+                        color: 'purple.main',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      ✨ <Trans>Mining</Trans>
+                    </Box>
+                  ) : null}
                 </Box>
               ) : (
                 ''
@@ -292,12 +329,21 @@ function CardList({
               <Box>
                 <Box
                   sx={{
-                    typography: 'h5',
-                    color: 'success.main',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
                   }}
                 >
-                  {baseApy}
-                  {quoteApy ? `/${quoteApy}` : ''}
+                  <Box
+                    sx={{
+                      typography: 'h5',
+                      color: 'success.main',
+                    }}
+                  >
+                    {baseApy}
+                    {quoteApy ? `/${quoteApy}` : ''}
+                  </Box>
+                  {lpRewardApy ? <LpFeeRewardBadge apy={lpRewardApy} /> : null}
                 </Box>
                 <Box
                   sx={{
@@ -417,7 +463,8 @@ function TableList({
   supportAMM?: boolean;
 }) {
   const theme = useTheme();
-  const { onSharePool } = useUserOptions();
+  const { onSharePool, lpFeeRewardActivity } = useUserOptions();
+  const lpFeeRewardEnabled = !!lpFeeRewardActivity?.activity;
   return (
     <LiquidityTable
       hasMore={hasMore}
@@ -502,6 +549,7 @@ function TableList({
           const hasMetromMining =
             !!item.apy?.metromMiningApy &&
             Number(item.apy?.metromMiningApy) > 0;
+          const lpRewardApy = getLpFeeRewardApy(item.apy, lpFeeRewardEnabled);
 
           const type = item.type as PoolType;
           const poolType = getPoolAMMOrPMM(type);
@@ -671,6 +719,7 @@ function TableList({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    gap: 4,
                   }}
                 >
                   {hasMining || hasMetromMining ? (
@@ -712,6 +761,7 @@ function TableList({
                       {quoteApy ? `/${quoteApy}` : ''}
                     </Box>
                   </PoolApyTooltip>
+                  {lpRewardApy ? <LpFeeRewardBadge apy={lpRewardApy} /> : null}
                 </Box>
               </Box>
               {supportAMM && (
@@ -769,6 +819,8 @@ export default function AddLiquidityList({
   tokenAndPoolFilter,
   getMigrationPairAndMining,
   supportAMMIcon,
+  poolAddress,
+  onPoolAddressChange,
 }: {
   scrollParentRef: React.MutableRefObject<HTMLDivElement | null>;
   account?: string;
@@ -781,12 +833,22 @@ export default function AddLiquidityList({
   tokenAndPoolFilter?: TokenAndPoolFilterUserOptions;
   getMigrationPairAndMining?: GetMigrationPairAndMining;
   supportAMMIcon?: boolean;
+  poolAddress?: string;
+  onPoolAddressChange?: (address?: string) => void;
 }) {
   const theme = useTheme();
-  const { onlyChainId, supportAMMV2, supportAMMV3, notSupportPMM } =
-    useUserOptions();
+  const {
+    onlyChainId,
+    supportAMMV2,
+    supportAMMV3,
+    notSupportPMM,
+    lpFeeRewardActivity,
+  } = useUserOptions();
   const { minDevice, isMobile } = useWidgetDevice();
   const queryClient = useQueryClient();
+  const graphQLRequests = useGraphQLRequests();
+  const [miningOnly, setMiningOnly] = React.useState(false);
+  const hasLpFeeRewardActivity = !!lpFeeRewardActivity?.activity;
 
   const {
     filterTokens,
@@ -815,7 +877,38 @@ export default function AddLiquidityList({
     },
   };
 
-  const graphQLRequests = useGraphQLRequests();
+  // Resolve an externally supplied address into the same pool filter used by
+  // the picker. This also keeps the widget usable when the address is changed
+  // by the host application after mount.
+  React.useEffect(() => {
+    let active = true;
+    if (!poolAddress) {
+      handleChangeFilterAddress([]);
+      return () => {
+        active = false;
+      };
+    }
+    const query = graphQLRequests.getInfiniteQuery(
+      PoolApi.graphql.fetchLiquidityList,
+      'currentPage',
+      {
+        where: {
+          ...defaultQueryFilter,
+          filterState: {
+            address: poolAddress,
+            ...defaultQueryFilter.filterState,
+          },
+        },
+      },
+    );
+    queryClient.fetchQuery(query).then((result) => {
+      const lqList = result.liquidity_list?.lqList;
+      if (active && lqList?.length) handleChangeFilterAddress(lqList);
+    });
+    return () => {
+      active = false;
+    };
+  }, [poolAddress]);
 
   const query = graphQLRequests.getInfiniteQuery(
     PoolApi.graphql.fetchLiquidityList,
@@ -858,9 +951,20 @@ export default function AddLiquidityList({
     });
   }
 
+  if (miningOnly && hasLpFeeRewardActivity) {
+    lqList = (lqList ?? []).filter(
+      (lq) => !!getLpFeeRewardApy(lq?.pair?.apy, true),
+    );
+  }
+
   const filterSmallDeviceWidth = 475;
 
-  const hasMore = fetchResult.hasNextPage && !hasFilterAddress;
+  // When the mining filter is active the list is fully client-side filtered,
+  // so disable server pagination to avoid showing a misleading "load more".
+  const hasMore =
+    fetchResult.hasNextPage &&
+    !hasFilterAddress &&
+    !(miningOnly && hasLpFeeRewardActivity);
 
   return (
     <>
@@ -929,6 +1033,7 @@ export default function AddLiquidityList({
                       list={lqList}
                       onClick={() => {
                         handleChangeFilterAddress(lqList);
+                        onPoolAddressChange?.(lqList[0]?.pair?.id ?? undefined);
                         onClose();
                       }}
                     />
@@ -950,7 +1055,10 @@ export default function AddLiquidityList({
             {hasFilterAddress ? (
               <FilterAddressTags
                 lqList={filterAddressLqList}
-                onDeleteTag={() => handleChangeFilterAddress([])}
+                onDeleteTag={() => {
+                  handleChangeFilterAddress([]);
+                  onPoolAddressChange?.(undefined);
+                }}
               />
             ) : (
               ''
@@ -959,6 +1067,37 @@ export default function AddLiquidityList({
               tags={filterTokens}
               onDeleteTag={handleDeleteToken}
             />
+          </Box>
+        )}
+
+        {hasLpFeeRewardActivity && (
+          <Box
+            component="label"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              ...(minDevice(filterSmallDeviceWidth) ? { ml: 'auto' } : {}),
+            }}
+          >
+            <Checkbox
+              checked={miningOnly}
+              onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>
+                setMiningOnly(evt.target.checked)
+              }
+            />
+            <Box
+              component="span"
+              sx={{
+                typography: 'body2',
+                color: 'text.primary',
+              }}
+            >
+              {'🔥 '}
+              <Trans>Mining Only</Trans>
+            </Box>
           </Box>
         )}
       </Box>

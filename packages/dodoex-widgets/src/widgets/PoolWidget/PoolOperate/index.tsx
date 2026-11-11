@@ -21,8 +21,8 @@ import { convertFetchPoolToOperateData } from '../utils';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { ThegraphKeyMap } from '../../../constants/chains';
 import LpTokenMiningOperate from '../../MiningWidget/LpTokenMiningOperate';
-import { useWeb3React } from '@web3-react/core';
 import { usePoolBalanceInfo } from '../hooks/usePoolBalanceInfo';
+import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { t } from '@lingui/macro';
 import { useGraphQLRequests } from '../../../hooks/useGraphQLRequests';
 import { GSPPairRiskWarning } from './components/GSPPairRiskWarning';
@@ -34,6 +34,7 @@ export interface PoolOperateProps {
   pool?: PoolOperateInnerProps['pool'];
   address?: string;
   operate?: PoolOperateInnerProps['operate'];
+  onOperateChange?: PoolOperateInnerProps['onOperateChange'];
   chainId?: number;
   hasMining?: boolean;
   hidePoolInfo?: boolean;
@@ -47,6 +48,7 @@ export function PoolOperate({
   pool: poolProps,
   address,
   operate,
+  onOperateChange,
   chainId,
   hasMining,
   hidePoolInfo,
@@ -54,7 +56,7 @@ export function PoolOperate({
   getMigrationPairAndMining,
   showMigrationPairAndMining,
 }: PoolOperateProps) {
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const chain = chainId ? ThegraphKeyMap[chainId as ChainId] : '';
 
   const graphQLRequests = useGraphQLRequests();
@@ -191,6 +193,7 @@ export function PoolOperate({
           <PoolOperateInner
             pool={pool}
             operate={operate}
+            onOperateChange={onOperateChange}
             hidePoolInfo={hidePoolInfo}
             errorRefetch={poolErrorRefetch}
             submittedBack={() => {

@@ -25,28 +25,27 @@ export default class JsonRpcConnector extends Connector {
       this.provider = provider;
     }
     const eventProvider = provider ?? customProvider;
-    eventProvider
-      .on('connect', ({ chainId }: ProviderConnectInfo): void => {
-        setTimeout(() => {
-          this.actions.update({ chainId: parseChainId(chainId) });
-        });
-      })
-      .on('disconnect', (error: ProviderRpcError): void => {
-        setTimeout(() => {
-          this.onError?.(error);
-          this.actions.resetState();
-        });
-      })
-      .on('chainChanged', (chainId: string): void => {
-        setTimeout(() => {
-          this.actions.update({ chainId: parseChainId(chainId) });
-        });
-      })
-      .on('accountsChanged', (accounts: string[]): void => {
-        setTimeout(() => {
-          this.actions.update({ accounts });
-        });
+    eventProvider.on('connect', ({ chainId }: ProviderConnectInfo): void => {
+      setTimeout(() => {
+        this.actions.update({ chainId: parseChainId(chainId) });
       });
+    });
+    eventProvider.on('disconnect', (error: ProviderRpcError): void => {
+      setTimeout(() => {
+        this.onError?.(error);
+        this.actions.resetState();
+      });
+    });
+    eventProvider.on('chainChanged', (chainId: string): void => {
+      setTimeout(() => {
+        this.actions.update({ chainId: parseChainId(chainId) });
+      });
+    });
+    eventProvider.on('accountsChanged', (accounts: string[]): void => {
+      setTimeout(() => {
+        this.actions.update({ accounts });
+      });
+    });
   }
 
   private async activateAccounts(): Promise<void> {

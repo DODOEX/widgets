@@ -1,10 +1,10 @@
 import { useQueries } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { isEqual } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import { tokenApi } from '../../constants/api';
 import { TokenList } from '../Token';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 
 type TokenInfoMap = Map<
   string,
@@ -27,7 +27,7 @@ export default function useFetchTokens({
   chainId?: number;
   skip?: boolean;
 }) {
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const [tokenInfoMap, setTokenInfoMap] = useState<TokenInfoMap>(new Map());
   const addresses = useMemo(() => {
     return [

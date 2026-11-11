@@ -16,6 +16,7 @@ export interface Web3ConnectorsProps {
   provider?: Eip1193Provider | JsonRpcProvider;
   jsonRpcUrlMap?: { [chainId: number]: string[] };
   defaultChainId?: ChainId;
+  walletState?: { account?: string; chainId?: number; provider?: any };
 }
 
 const connectorCacheMap: {
@@ -26,11 +27,12 @@ export function useWeb3Connectors({
   provider,
   jsonRpcUrlMap: jsonRpcUrlMapProps,
   defaultChainId,
+  walletState,
 }: Web3ConnectorsProps) {
   const onError = useMemo(() => console.error, []);
   const integratorConnection = useMemo(
-    () => getConnectionFromProvider(onError, provider),
-    [onError, provider],
+    () => walletState ? undefined : getConnectionFromProvider(onError, provider),
+    [onError, provider, walletState],
   );
   const metaMaskConnection = useMemo(
     () => getConnectionFromMetaMask(onError),
@@ -69,13 +71,13 @@ export function useWeb3Connectors({
   }, [integratorConnection, metaMaskConnection, walletConnectConnectionPopup]);
 
   useEffect(() => {
-    // Sync provider status
-    if (provider && integratorConnection) {
+    // Sync provider status (skip when walletState is managing state externally)
+    if (!walletState && provider && integratorConnection) {
       connectToWallet(WalletType.INTEGRATOR, undefined, (error) => {
         console.error(error);
       });
     }
-  }, [provider]);
+  }, [provider, walletState]);
 
   return {
     connectors,

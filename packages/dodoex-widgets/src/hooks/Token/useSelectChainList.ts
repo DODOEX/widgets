@@ -1,12 +1,12 @@
-import { useWeb3React } from '@web3-react/core';
 import { useEffect, useMemo, useState } from 'react';
 import { ChainId } from '@dodoex/api';
 import { ChainListItem, chainListMap } from '../../constants/chainList';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 import { getAllTokenList, useTokenState } from '../useTokenState';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 
 export function useSelectChainList(side?: 'from' | 'to') {
-  const { chainId } = useWeb3React();
+  const { chainId } = useWalletInfo();
   const state = useTokenState();
   const allTokenList = useMemo(() => getAllTokenList(state), [state]);
   const { crossChain, onlyChainId } = useUserOptions();

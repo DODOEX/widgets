@@ -45,6 +45,8 @@ export enum ChainId {
 
   RISE_TESTNET = 11155931,
 
+  RISE = 4153,
+
   NEROCHAIN = 1689,
 
   BITLAYER = 200901,
@@ -61,6 +63,7 @@ export enum ChainId {
 
   PHAROS_TESTNET = 688688,
   PHAROS_ATLANTIC_TESTNET = 688689,
+  PHAROS = 1672,
 
   STABLE_TESTNET = 2201,
   STABLE = 988,

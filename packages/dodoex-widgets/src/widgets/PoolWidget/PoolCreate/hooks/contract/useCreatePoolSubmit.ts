@@ -62,11 +62,11 @@ export const useCreatePoolSubmit = ({
       quoteAmount || '0',
       quoteDecimals,
     ).toString();
-    // lpFeeRate is the lp fee rate
-    //The actual handling fee is 80% of the input value
-    const lpFeeRate = isPrivate
-      ? feeRateNumber.times(100).toNumber()
-      : feeRateNumber.times(80).toNumber();
+    // DPP and GSP use the full input fee; DVM and DSP use 80% for LPs.
+    const lpFeeRate =
+      isPrivate || isGSP
+        ? feeRateNumber.times(100).toNumber()
+        : feeRateNumber.times(80).toNumber();
     // i = min price
     let i =
       isPrivate && isStandard

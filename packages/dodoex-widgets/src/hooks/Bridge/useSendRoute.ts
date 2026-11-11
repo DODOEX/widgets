@@ -6,7 +6,7 @@ import { basicTokenMap } from '../../constants/chains';
 import { ChainId } from '@dodoex/api';
 import { byWei, formatTokenAmountNumber } from '../../utils';
 import { BridgeRouteI } from './useFetchRoutePriceBridge';
-import { useWeb3React } from '@web3-react/core';
+import { useWalletInfo } from '../ConnectWallet/useWalletInfo';
 import { getEstimateGas } from '../contract/wallet';
 import { BridgeTXRequest } from '../../components/Bridge/BridgeSummaryDialog';
 import { useGetAPIService } from '../setting/useGetAPIService';
@@ -15,7 +15,7 @@ import { EmptyAddress } from '../../constants/address';
 import { useUserOptions } from '../../components/UserOptionsProvider';
 
 export function useSendRoute() {
-  const { provider } = useWeb3React();
+  const { provider } = useWalletInfo();
   const [bridgeOrderTxRequest, setBridgeOrderTxRequest] =
     useState<BridgeTXRequest | undefined>();
   const [sendRouteLoading, setSendRouteLoading] = useState(false);

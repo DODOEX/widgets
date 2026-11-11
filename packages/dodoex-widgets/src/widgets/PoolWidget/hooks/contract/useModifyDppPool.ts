@@ -1,6 +1,5 @@
 import { PoolType } from '@dodoex/api';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useWeb3React } from '@web3-react/core';
 import BigNumber from 'bignumber.js';
 import { SLIPPAGE_PROTECTION } from '../../../../constants/pool';
 import { useSubmission } from '../../../../hooks/Submission';
@@ -11,6 +10,7 @@ import { poolApi } from '../../utils';
 import { getModifyDPPPoolParams } from './getModifyDPPPoolParams';
 import { useUserOptions } from '../../../../components/UserOptionsProvider';
 import { useMessageState } from '../../../../hooks/useMessageState';
+import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
 
 const computeAmount = (
   newAmount: string,
@@ -38,7 +38,7 @@ export function useModifyDppPool({
     quoteToken: TokenInfo;
   };
 }) {
-  const { account } = useWeb3React();
+  const { account } = useWalletInfo();
   const submission = useSubmission();
   const pmmStateQuery = useQuery(
     poolApi.getPMMStateQuery(

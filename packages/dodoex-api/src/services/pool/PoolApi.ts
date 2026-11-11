@@ -1517,12 +1517,18 @@ export class PoolApi {
             method: 'getPMMStateForCall',
             params: [],
           });
-          totalSupplyQueryResult = await this.contractRequests.batchCallQuery(chainId, {
-            abiName: ABIName.dvmPoolABI,
-            contractAddress: poolAddress,
-            method: 'totalSupply',
-            params: [],
-          });
+          // Private pools do not issue LP tokens or implement totalSupply.
+          if (type !== 'DPP') {
+            totalSupplyQueryResult = await this.contractRequests.batchCallQuery(
+              chainId,
+              {
+                abiName: ABIName.dvmPoolABI,
+                contractAddress: poolAddress,
+                method: 'totalSupply',
+                params: [],
+              },
+            );
+          }
         } else {
           throw new Error(`type: ${type} not supported`);
         }

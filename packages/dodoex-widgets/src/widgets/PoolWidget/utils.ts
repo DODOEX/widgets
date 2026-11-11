@@ -5,6 +5,7 @@ import { OperatePool } from './PoolOperate/types';
 import {
   getUniswapV2FactoryContractAddressByChainId,
   getUniswapV2Router02ContractAddressByChainId,
+  getUniswapV2Router02FixedFeeContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
 
 export const poolApi = new PoolApi({
@@ -14,6 +15,47 @@ export const poolApi = new PoolApi({
 export const ammV3Api = new AMMV3Api({
   contractRequests,
 });
+
+const LP_MT_CURATOR_ROUTER = '0x14f06FE99a1264825C99FB1C8E05A90036e89d0A';
+const LP_MT_CURATOR_ABI = ['function lpMtCurator() view returns (address)'];
+
+function isMissingLpMtCurator(error: unknown) {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'code' in error &&
+    error.code === 'CALL_EXCEPTION'
+  );
+}
+
+export async function getAMMV2RouterAddress(
+  chainId: number | undefined,
+  poolAddress: string | undefined,
+) {
+  if (!chainId) return undefined;
+
+  if (poolAddress) {
+    try {
+      const pool = contractRequests.getContract(
+        chainId,
+        poolAddress,
+        LP_MT_CURATOR_ABI,
+      );
+      await pool.lpMtCurator();
+      return LP_MT_CURATOR_ROUTER;
+    } catch (error) {
+      if (!isMissingLpMtCurator(error)) {
+        throw error;
+      }
+      // Standard AMM V2 pools do not implement lpMtCurator.
+    }
+  }
+
+  return (
+    getUniswapV2Router02ContractAddressByChainId(chainId) ||
+    getUniswapV2Router02FixedFeeContractAddressByChainId(chainId)
+  );
+}
 
 export type FetchLiquidityListLqList = ExcludeNone<
   ReturnType<

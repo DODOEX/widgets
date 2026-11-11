@@ -7,7 +7,10 @@ export enum OperateTab {
   Remove,
 }
 
-export function usePoolOperateTabs(defaultValue = OperateTab.Add) {
+export function usePoolOperateTabs(
+  defaultValue = OperateTab.Add,
+  onChange?: (operate: OperateTab) => void,
+) {
   const { i18n } = useLingui();
   const [operateTab, setOperateTab] = React.useState(defaultValue);
   const operateTabs = React.useMemo(
@@ -19,7 +22,11 @@ export function usePoolOperateTabs(defaultValue = OperateTab.Add) {
   );
 
   const handleChangeTab = (poolTab: OperateTab) => {
-    setOperateTab(poolTab);
+    if (onChange) {
+      onChange(poolTab);
+    } else {
+      setOperateTab(poolTab);
+    }
   };
 
   React.useEffect(() => {
@@ -27,7 +34,7 @@ export function usePoolOperateTabs(defaultValue = OperateTab.Add) {
   }, [defaultValue]);
 
   return {
-    operateTab,
+    operateTab: onChange ? defaultValue : operateTab,
     operateTabs,
     handleChangeTab,
   };

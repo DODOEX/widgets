@@ -1,12 +1,10 @@
 import { ChainId, contractConfig } from '@dodoex/api';
-import {
-  getUniswapV2Router02ContractAddressByChainId,
-  getUniswapV2Router02FixedFeeContractAddressByChainId,
-} from '@dodoex/dodo-contract-request';
+import { useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useTokenStatus } from '../../../../hooks/Token/useTokenStatus';
 import { usePoolBalanceInfo } from '../../hooks/usePoolBalanceInfo';
 import { OperatePool } from '../types';
+import { getAMMV2RouterAddress } from '../../utils';
 
 export function useRemoveLiquidityTokenStatus({
   pool,
@@ -23,13 +21,16 @@ export function useRemoveLiquidityTokenStatus({
 
   let proxyContractAddress = '';
   const isAMMV2 = pool?.type === 'AMMV2';
+  const ammV2RouterQuery = useQuery({
+    queryKey: ['amm-v2-router', chainId, pool?.address],
+    enabled: isAMMV2 && !!chainId && !!pool?.address,
+    queryFn: () => getAMMV2RouterAddress(chainId, pool?.address),
+  });
   if (chainId) {
     proxyContractAddress =
       contractConfig[chainId as ChainId].DODO_V1_PAIR_PROXY ?? '';
     if (isAMMV2) {
-      proxyContractAddress =
-        getUniswapV2Router02ContractAddressByChainId(chainId) ||
-        getUniswapV2Router02FixedFeeContractAddressByChainId(pool.chainId);
+      proxyContractAddress = ammV2RouterQuery.data ?? '';
     }
   }
   const baseLpTokenId = pool?.baseLpToken?.id ?? '';
@@ -81,5 +82,10 @@ export function useRemoveLiquidityTokenStatus({
   return {
     baseTokenStatus,
     quoteTokenStatus,
+    routerLoading:
+      isAMMV2 &&
+      (ammV2RouterQuery.isLoading ||
+        ammV2RouterQuery.isError ||
+        !ammV2RouterQuery.data),
   };
 }

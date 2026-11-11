@@ -16,10 +16,10 @@ import {
   encodeUniswapV2Router02FixedFeeAddLiquidity,
   encodeUniswapV2Router02FixedFeeAddLiquidityETH,
   getUniswapV2Router02ContractAddressByChainId,
-  getUniswapV2Router02FixedFeeContractAddressByChainId,
 } from '@dodoex/dodo-contract-request';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { useMessageState } from '../../../hooks/useMessageState';
+import { getAMMV2RouterAddress } from '../utils';
 
 export function useAMMV2AddLiquidity({
   baseToken,
@@ -28,6 +28,7 @@ export function useAMMV2AddLiquidity({
   quoteAmount,
   slippage,
   fee,
+  poolAddress,
   isExists,
   successBack,
   submittedBack,
@@ -38,6 +39,7 @@ export function useAMMV2AddLiquidity({
   quoteAmount: string;
   slippage: number;
   fee: number | undefined;
+  poolAddress?: string;
   isExists?: boolean;
   successBack?: () => void;
   submittedBack?: () => void;
@@ -64,10 +66,8 @@ export function useAMMV2AddLiquidity({
         const basicTokenAddressLow = basicToken.address.toLowerCase();
         const dynamicFeeContractAddress =
           getUniswapV2Router02ContractAddressByChainId(chainId);
-        const fixedFeeContractAddress =
-          getUniswapV2Router02FixedFeeContractAddressByChainId(chainId);
         const isFixedFee = !dynamicFeeContractAddress;
-        const to = dynamicFeeContractAddress || fixedFeeContractAddress;
+        const to = await getAMMV2RouterAddress(chainId, poolAddress);
         if (!to) {
           throw new Error('AMMV2 contract address is not valid.');
         }

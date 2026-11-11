@@ -12,14 +12,26 @@ export { default as AMMV3Create } from './AMMV3/AddLiquidityV3';
 export { AMMV3PositionsView } from './AMMV3/AMMV3PositionsView';
 export { AMMV3PositionManage } from './AMMV3/AMMV3PositionManage';
 
-export function Pool() {
+export function Pool({
+  poolAddress,
+  onPoolAddressChange,
+}: {
+  poolAddress?: string;
+  onPoolAddressChange?: (address?: string) => void;
+} = {}) {
   const { routerPage } = useUserOptions();
   const pageLocal = useRouterStore((state) => state.page);
   const page = routerPage ?? pageLocal;
 
   switch (page?.type) {
     case PageType.Pool:
-      return <PoolList params={(page as Page<PageType.Pool>).params} />;
+      return (
+        <PoolList
+          params={(page as Page<PageType.Pool>).params}
+          poolAddress={poolAddress}
+          onPoolAddressChange={onPoolAddressChange}
+        />
+      );
     case PageType.CreatePool:
       return <PoolCreate />;
     case PageType.ModifyPool:
@@ -45,6 +57,12 @@ export function Pool() {
         />
       );
     default:
-      return <PoolList params={(page as Page<PageType.Pool>)?.params} />;
+      return (
+        <PoolList
+          params={(page as Page<PageType.Pool>)?.params}
+          poolAddress={poolAddress}
+          onPoolAddressChange={onPoolAddressChange}
+        />
+      );
   }
 }
