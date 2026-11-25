@@ -661,11 +661,11 @@ msgstr "{0} 已提交"
 msgid "Edit"
 msgstr "编辑"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:162
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:171
 msgid "PMM Pool"
 msgstr "PMM 资金池"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:193
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:202
 msgid "Concentrated liquidity, higher efficiency"
 msgstr "集中流动性，更高的资金利用率"
 
@@ -974,7 +974,7 @@ msgstr "适用于价格波动在0.5%以内的稳定币"
 msgid "The fee tier should greater than {0}%"
 msgstr "手续费必须大于 {0}%"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:164
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:173
 msgid "Flexible customization, take full control of liquidity"
 msgstr "灵活自定义，高度掌控流动性"
 
@@ -1987,11 +1987,11 @@ msgstr "接收"
 msgid "Select Network"
 msgstr "选择网络"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:178
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:187
 msgid "Simple, full-range liquidity"
 msgstr "简单的全价格区间作市资金池"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:177
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:186
 msgid "AMM V2 Position"
 msgstr "AMM V2 仓位"
 
@@ -2120,10 +2120,10 @@ msgstr ""
 msgid "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
 msgstr "请勿选择非标准ERC20代币，可能导致未知错误！"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:218
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:222
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:267
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:292
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:227
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:231
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:276
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:301
 msgid "Create Pool"
 msgstr "创建资金池"
 
@@ -2269,7 +2269,7 @@ msgstr "添加代币"
 msgid "Total Liquidity"
 msgstr "总资金"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:192
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:201
 msgid "AMM V3 Position"
 msgstr "AMM V3 仓位"
 

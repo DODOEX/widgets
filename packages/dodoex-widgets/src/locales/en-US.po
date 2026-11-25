@@ -663,11 +663,11 @@ msgstr "{0} Submitted"
 msgid "Edit"
 msgstr "Edit"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:162
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:171
 msgid "PMM Pool"
 msgstr "PMM Pool"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:193
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:202
 msgid "Concentrated liquidity, higher efficiency"
 msgstr "Concentrated liquidity, higher efficiency"
 
@@ -978,7 +978,7 @@ msgstr "Suitable for stablecoins with price fluctuations within 0.5%"
 msgid "The fee tier should greater than {0}%"
 msgstr "The fee tier should greater than {0}%"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:164
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:173
 msgid "Flexible customization, take full control of liquidity"
 msgstr "Flexible customization, take full control of liquidity"
 
@@ -1991,11 +1991,11 @@ msgstr "Receive"
 msgid "Select Network"
 msgstr "Select Network"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:178
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:187
 msgid "Simple, full-range liquidity"
 msgstr "Simple, full-range liquidity"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:177
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:186
 msgid "AMM V2 Position"
 msgstr "AMM V2 Position"
 
@@ -2124,10 +2124,10 @@ msgstr "This is an official appear <0/>on the token list"
 msgid "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
 msgstr "Do not select non-standard ERC20 tokens as this may lead to unknown errors！"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:218
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:222
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:267
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:292
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:227
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:231
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:276
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:301
 msgid "Create Pool"
 msgstr "Create Pool"
 
@@ -2273,7 +2273,7 @@ msgstr "Add Token"
 msgid "Total Liquidity"
 msgstr "Total Liquidity"
 
-#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:192
+#: src/widgets/PoolWidget/PoolList/components/CreatePoolBtn.tsx:201
 msgid "AMM V3 Position"
 msgstr "AMM V3 Position"
 

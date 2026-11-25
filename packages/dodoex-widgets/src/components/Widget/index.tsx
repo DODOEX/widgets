@@ -47,6 +47,8 @@ import { TokenPickerDialogProps } from '../Swap/components/TokenCard/TokenPicker
 
 export const WIDGET_CLASS_NAME = 'dodo-widget-container';
 
+export type CreatePoolType = 'PMM' | 'AMMV2' | 'AMMV3';
+
 /**
  * Liquidity mining (LP fee reward) activity config. When provided, a reward banner
  * is shown on the pool list page, and pools carrying an `apy.lpFeeRewardApy` value
@@ -107,6 +109,8 @@ export interface WidgetProps
   notSupportPMM?: boolean;
   supportAMMV2?: boolean;
   supportAMMV3?: boolean;
+  /** Pool types whose create entry is hidden. Only hides the create entry; pools of these types are still listed. */
+  hideCreatePoolTypes?: CreatePoolType[];
   /** Liquidity mining (LP fee reward) activity config shown on the pool list page. */
   lpFeeRewardActivity?: LpFeeRewardActivity;
   executionDialogExtra?: any;

@@ -132,14 +132,19 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
   const theme = useTheme();
   const { isMobile } = useWidgetDevice();
   const { account, chainId } = useWalletInfo();
-  const { supportAMMV2, supportAMMV3, notSupportPMM } = useUserOptions();
+  const { supportAMMV2, supportAMMV3, notSupportPMM, hideCreatePoolTypes } =
+    useUserOptions();
 
   const [selectTypeModalOpen, setSelectTypeModalOpen] = React.useState(false);
 
+  const showPMM = !notSupportPMM && !hideCreatePoolTypes?.includes('PMM');
+  const showAMMV2 = !!supportAMMV2 && !hideCreatePoolTypes?.includes('AMMV2');
+  const showAMMV3 = !!supportAMMV3 && !hideCreatePoolTypes?.includes('AMMV3');
+
   const poolTypeSupportObject = {
-    [PageType.CreatePool]: !notSupportPMM,
-    [PageType.createPoolAMMV2]: !!supportAMMV2,
-    [PageType.createPoolAMMV3]: !!supportAMMV3,
+    [PageType.CreatePool]: showPMM,
+    [PageType.createPoolAMMV2]: showAMMV2,
+    [PageType.createPoolAMMV3]: showAMMV3,
   };
   const activePoolTypes = Object.entries(poolTypeSupportObject).filter(
     ([_, value]) => value === true,
@@ -149,10 +154,14 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
       ? (activePoolTypes[0][0] as PageType)
       : undefined;
 
+  if (!activePoolTypes.length) {
+    return null;
+  }
+
   if (!singleActiveCreatePoolType) {
     const items = (
       <>
-        {!notSupportPMM && (
+        {showPMM && (
           <CreateItem
             onClick={() => {
               useRouterStore.getState().push({
@@ -167,7 +176,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
             }
           />
         )}
-        {supportAMMV2 && (
+        {showAMMV2 && (
           <CreateItem
             onClick={() => {
               useRouterStore.getState().push({
@@ -182,7 +191,7 @@ export const CreatePoolBtn = (props: CreatePoolBtnProps) => {
             }
           />
         )}
-        {supportAMMV3 && (
+        {showAMMV3 && (
           <CreateItem
             onClick={() => {
               useRouterStore.getState().push({
